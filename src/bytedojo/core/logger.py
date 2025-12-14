@@ -180,33 +180,3 @@ def get_logger():
     if _logger is None:
         raise RuntimeError("Logger not initialized. Call setup_logger() first.")
     return _logger
-
-
-def main():
-    """Demo of ByteDojo logging functionality."""
-    import time
-    
-    # Production mode
-    print("=== Production Mode ===")
-    prod_logger = setup_logger(debug=False)
-    prod_logger.debug("This debug message won't appear")
-    prod_logger.info("Starting ByteDojo...")
-    prod_logger.info("Fetching problem from LeetCode")
-    prod_logger.warning("Network latency detected")
-    prod_logger.error("Failed to fetch problem: Connection timeout")
-    
-    time.sleep(1)
-    print("\n=== Debug Mode ===")
-    
-    # Debug mode
-    debug_logger = setup_logger(debug=True)
-    debug_logger.debug("This debug message WILL appear")
-    debug_logger.debug("Parsing problem IDs: 1..5")
-    debug_logger.info("Starting problem fetch")
-    debug_logger.info("Connecting to api.leetcode.com")
-    debug_logger.warning("Rate limit approaching")
-    debug_logger.error("API request failed")
-
-
-if __name__ == "__main__":
-    main()
