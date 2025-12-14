@@ -13,6 +13,8 @@ from bytedojo.core.logger import setup_logger, get_logger
 
 from bytedojo.__init__ import __version__, __author__
 
+from bytedojo.commands import init
+
 def print_version(ctx, param, value):
     """Print version information and exit."""
     if not value or ctx.resilient_parsing:
@@ -62,3 +64,5 @@ def bytedojo(ctx, debug: bool, config: Optional[Path]):
     # Create and store context
     ctx.ensure_object(dict)
     ctx.obj = Context(debug=debug, config_path=config)
+
+bytedojo.add_command(init)
