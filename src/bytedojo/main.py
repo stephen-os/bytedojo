@@ -3,14 +3,14 @@ ByteDojo - Main entry point.
 """
 
 import sys
-from bytedojo.commands.bytedojo import bytedojo
+from bytedojo.commands.dojo import dojo
 from bytedojo.core.logger import get_logger
 
 
 def main():
     """Entry point for the ByteDojo CLI."""
     try:
-        bytedojo()
+        dojo()
     except Exception as e:
         try:
             logger = get_logger()

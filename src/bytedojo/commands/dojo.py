@@ -50,7 +50,7 @@ def print_description(ctx, param, value):
 
 # Define main command
 @click.pass_context
-def bytedojo(ctx, debug: bool, config: Optional[Path]):
+def dojo(ctx, debug: bool, config: Optional[Path]):
     """
     ByteDojo - A CLI tool for practicing programming problems through spaced repetition.
 
@@ -65,4 +65,4 @@ def bytedojo(ctx, debug: bool, config: Optional[Path]):
     ctx.ensure_object(dict)
     ctx.obj = Context(debug=debug, config_path=config)
 
-bytedojo.add_command(init)
+dojo.add_command(init)
