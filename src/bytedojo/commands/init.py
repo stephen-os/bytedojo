@@ -170,6 +170,8 @@ def create_readme(dojo_dir: Path):
         Just make sure to add `.dojo/logs/` to your `.gitignore` if you don't want to commit logs.
     """).strip()
 
+    readme.write_text(content, encoding='utf-8')
+
 
 @click.command()
 
