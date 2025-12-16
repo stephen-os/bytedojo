@@ -5,8 +5,8 @@ Tests for the main dojo command.
 import pytest
 from click.testing import CliRunner
 
-from src.bytedojo.commands.dojo import dojo
-from src.bytedojo import __version__, __author__
+from bytedojo.commands.dojo import dojo
+from bytedojo import __version__, __author__
 
 
 class TestDojoCommand:

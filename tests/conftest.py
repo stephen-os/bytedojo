@@ -40,7 +40,7 @@ def setup_logger():
     Fixture that automatically sets up the logger before each test.
     This ensures get_logger() doesn't fail in tests.
     """
-    from src.bytedojo.core.logger import setup_logger as _setup_logger
+    from bytedojo.core.logger import setup_logger as _setup_logger
     _setup_logger(debug=False)
     yield
     # Cleanup happens automatically

@@ -5,7 +5,7 @@ Tests for ByteDojo logging system.
 import pytest
 import logging
 
-from src.bytedojo.core.logger import (
+from bytedojo.core.logger import (
     Theme,
     TerminalFormatter,
     get_config,
@@ -21,8 +21,8 @@ def reset_logger():
     yield
     
     # After test - cleanup
-    import src.bytedojo.core.logger
-    src.bytedojo.core.logger._logger = None
+    import bytedojo.core.logger
+    bytedojo.core.logger._logger = None
     
     # Remove all handlers from bytedojo logger and close them
     logger = logging.getLogger('bytedojo')
@@ -226,8 +226,8 @@ class TestGetLogger:
     
     def test_raises_if_not_initialized(self):
         """Test that get_logger raises if setup_logger hasn't been called."""
-        import src.bytedojo.core.logger
-        src.bytedojo.core.logger._logger = None
+        import bytedojo.core.logger
+        bytedojo.core.logger._logger = None
         
         with pytest.raises(RuntimeError, match="Logger not initialized"):
             get_logger()
@@ -425,7 +425,7 @@ class TestFileOutput:
     
     def test_debug_logs_to_file(self, tmp_path):
         """Test that debug messages are written to file."""
-        import src.bytedojo.core.logger
+        import bytedojo.core.logger
         from pathlib import Path
         from unittest.mock import patch
         
@@ -454,7 +454,7 @@ class TestFileOutput:
     
     def test_file_format_no_colors(self, tmp_path):
         """Test that file output has no ANSI color codes."""
-        import src.bytedojo.core.logger
+        import bytedojo.core.logger
         from pathlib import Path
         from unittest.mock import patch
         

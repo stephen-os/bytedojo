@@ -7,7 +7,7 @@ import sqlite3
 from pathlib import Path
 from click.testing import CliRunner
 
-from src.bytedojo.commands.dojo import dojo
+from bytedojo.commands.dojo import dojo
 
 
 class TestInitCommand:
