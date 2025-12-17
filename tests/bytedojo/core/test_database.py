@@ -65,6 +65,24 @@ class TestCreateDatabaseSchema:
         assert config['default_source'] == 'leetcode'
         
         conn.close()
+    
+    def test_problems_table_has_test_fields(self, tmp_path):
+        """Test that problems table has test-related fields."""
+        db_path = tmp_path / "test.db"
+        
+        create_database_schema(db_path)
+        
+        conn = sqlite3.connect(db_path)
+        cursor = conn.cursor()
+        
+        cursor.execute("PRAGMA table_info(problems)")
+        columns = {row[1] for row in cursor.fetchall()}
+        
+        assert 'test_status' in columns
+        assert 'last_test_run' in columns
+        assert 'test_output' in columns
+        
+        conn.close()
 
 
 class TestDatabaseManagerInit:
@@ -321,6 +339,126 @@ class TestDatabaseManagerListProblems:
         
         assert len(results) == 1
         assert results[0]['difficulty'] == 'Easy'
+
+
+class TestDatabaseManagerUpdateTestStatus:
+    """Test update_test_status method."""
+    
+    def test_update_test_status_sets_status(self, tmp_path):
+        """Test that update_test_status updates the status."""
+        db_path = tmp_path / "test.db"
+        create_database_schema(db_path)
+        
+        # Insert a problem
+        conn = sqlite3.connect(db_path)
+        cursor = conn.cursor()
+        cursor.execute("""
+            INSERT INTO problems (source, problem_id, title, difficulty)
+            VALUES ('leetcode', '1', 'Test', 'Easy')
+        """)
+        conn.commit()
+        problem_id = cursor.lastrowid
+        conn.close()
+        
+        # Update status
+        with DatabaseManager(db_path) as db:
+            result = db.update_test_status(problem_id, 'passed', 'All tests passed')
+        
+        assert result is True
+        
+        # Verify
+        conn = sqlite3.connect(db_path)
+        cursor = conn.cursor()
+        cursor.execute("SELECT test_status, test_output FROM problems WHERE id=?", (problem_id,))
+        row = cursor.fetchone()
+        
+        assert row[0] == 'passed'
+        assert row[1] == 'All tests passed'
+        conn.close()
+    
+    def test_update_test_status_sets_timestamp(self, tmp_path):
+        """Test that update_test_status sets timestamp."""
+        db_path = tmp_path / "test.db"
+        create_database_schema(db_path)
+        
+        # Insert a problem
+        conn = sqlite3.connect(db_path)
+        cursor = conn.cursor()
+        cursor.execute("""
+            INSERT INTO problems (source, problem_id, title, difficulty)
+            VALUES ('leetcode', '1', 'Test', 'Easy')
+        """)
+        conn.commit()
+        problem_id = cursor.lastrowid
+        conn.close()
+        
+        # Update status
+        with DatabaseManager(db_path) as db:
+            db.update_test_status(problem_id, 'failed', 'Test failed')
+        
+        # Verify timestamp exists
+        conn = sqlite3.connect(db_path)
+        cursor = conn.cursor()
+        cursor.execute("SELECT last_test_run FROM problems WHERE id=?", (problem_id,))
+        timestamp = cursor.fetchone()[0]
+        
+        assert timestamp is not None
+        conn.close()
+
+
+class TestDatabaseManagerGetProblemsByTestStatus:
+    """Test get_problems_by_test_status method."""
+    
+    def test_get_problems_by_test_status_all(self, tmp_path):
+        """Test getting all problems."""
+        db_path = tmp_path / "test.db"
+        create_database_schema(db_path)
+        
+        conn = sqlite3.connect(db_path)
+        conn.execute("INSERT INTO problems (source, problem_id, title, difficulty, test_status) VALUES ('leetcode', '1', 'One', 'Easy', 'passed')")
+        conn.execute("INSERT INTO problems (source, problem_id, title, difficulty, test_status) VALUES ('leetcode', '2', 'Two', 'Easy', 'failed')")
+        conn.commit()
+        conn.close()
+        
+        with DatabaseManager(db_path) as db:
+            results = db.get_problems_by_test_status()
+        
+        assert len(results) == 2
+    
+    def test_get_problems_by_test_status_passed(self, tmp_path):
+        """Test filtering by passed status."""
+        db_path = tmp_path / "test.db"
+        create_database_schema(db_path)
+        
+        conn = sqlite3.connect(db_path)
+        conn.execute("INSERT INTO problems (source, problem_id, title, difficulty, test_status) VALUES ('leetcode', '1', 'One', 'Easy', 'passed')")
+        conn.execute("INSERT INTO problems (source, problem_id, title, difficulty, test_status) VALUES ('leetcode', '2', 'Two', 'Easy', 'failed')")
+        conn.execute("INSERT INTO problems (source, problem_id, title, difficulty, test_status) VALUES ('leetcode', '3', 'Three', 'Easy', 'passed')")
+        conn.commit()
+        conn.close()
+        
+        with DatabaseManager(db_path) as db:
+            results = db.get_problems_by_test_status('passed')
+        
+        assert len(results) == 2
+        assert all(r['test_status'] == 'passed' for r in results)
+    
+    def test_get_problems_by_test_status_failed(self, tmp_path):
+        """Test filtering by failed status."""
+        db_path = tmp_path / "test.db"
+        create_database_schema(db_path)
+        
+        conn = sqlite3.connect(db_path)
+        conn.execute("INSERT INTO problems (source, problem_id, title, difficulty, test_status) VALUES ('leetcode', '1', 'One', 'Easy', 'passed')")
+        conn.execute("INSERT INTO problems (source, problem_id, title, difficulty, test_status) VALUES ('leetcode', '2', 'Two', 'Easy', 'failed')")
+        conn.commit()
+        conn.close()
+        
+        with DatabaseManager(db_path) as db:
+            results = db.get_problems_by_test_status('failed')
+        
+        assert len(results) == 1
+        assert results[0]['test_status'] == 'failed'
 
 
 class TestDatabaseManagerGetSummaryStats:

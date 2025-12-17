@@ -35,6 +35,9 @@ def create_database_schema(db_path: Path):
             tags TEXT,
             description TEXT,
             file_path TEXT,
+            test_status TEXT DEFAULT 'untested',
+            last_test_run TIMESTAMP,
+            test_output TEXT,
             fetched_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
             UNIQUE(source, problem_id)
         )
@@ -321,3 +324,54 @@ class DatabaseManager:
             'by_difficulty': by_difficulty,
             'by_source': by_source
         }
+    
+    def update_test_status(
+        self,
+        problem_db_id: int,
+        status: str,
+        output: Optional[str] = None
+    ) -> bool:
+        """
+        Update test status for a problem.
+        
+        Args:
+            problem_db_id: Database ID of the problem
+            status: Test status ('passed', 'failed', 'error', 'untested')
+            output: Test output/error message
+            
+        Returns:
+            True if updated successfully
+        """
+        cursor = self.conn.cursor()
+        
+        cursor.execute("""
+            UPDATE problems
+            SET test_status = ?, last_test_run = ?, test_output = ?
+            WHERE id = ?
+        """, (status, datetime.now().isoformat(), output, problem_db_id))
+        
+        self.conn.commit()
+        return True
+    
+    def get_problems_by_test_status(self, status: Optional[str] = None) -> List[Dict[str, Any]]:
+        """
+        Get problems filtered by test status.
+        
+        Args:
+            status: Filter by test status ('passed', 'failed', 'error', 'untested')
+                None returns all problems
+        
+        Returns:
+            List of problem dictionaries
+        """
+        cursor = self.conn.cursor()
+        
+        if status:
+            cursor.execute(
+                "SELECT * FROM problems WHERE test_status = ? ORDER BY problem_id ASC",
+                (status,)
+            )
+        else:
+            cursor.execute("SELECT * FROM problems ORDER BY problem_id ASC")
+        
+        return [dict(row) for row in cursor.fetchall()]
