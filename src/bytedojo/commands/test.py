@@ -68,6 +68,8 @@ def test(ctx, verbose: bool, stop_on_fail: bool):
         
         for problem in problems:
             file_path = problem.get('file_path')
+
+            logger.debug(f"File: {file_path}")
             
             if not file_path:
                 logger.warning(f"Problem #{problem['problem_id']}: No file path")
@@ -93,7 +95,7 @@ def test(ctx, verbose: bool, stop_on_fail: bool):
             
             # Display result
             if result.status == 'passed':
-                logger.info(f"{Theme.GREEN}  ✓ PASSED{Theme.RESET}")
+                logger.info(f"{Theme.GREEN} PASSED{Theme.RESET}")
                 passed += 1
                 
                 if verbose and result.output:
@@ -102,7 +104,7 @@ def test(ctx, verbose: bool, stop_on_fail: bool):
                         logger.info(f"    {line}")
             
             elif result.status == 'failed':
-                logger.error(f"{Theme.RED}  ✗ FAILED{Theme.RESET}")
+                logger.error(f"{Theme.RED} FAILED{Theme.RESET}")
                 failed += 1
                 
                 if result.error:
@@ -117,7 +119,7 @@ def test(ctx, verbose: bool, stop_on_fail: bool):
                     break
             
             else:  # error
-                logger.error(f"{Theme.ORANGE}  ⚠ ERROR{Theme.RESET}")
+                logger.error(f"{Theme.ORANGE} ERROR{Theme.RESET}")
                 errors += 1
                 
                 if result.error:

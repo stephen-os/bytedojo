@@ -56,7 +56,7 @@ class Executor:
         try:
             # Run the file as a Python script
             result = subprocess.run(
-                [sys.executable, str(file_path)],
+                [sys.executable, str(file_path.resolve())],
                 capture_output=True,
                 text=True,
                 timeout=self.timeout,
