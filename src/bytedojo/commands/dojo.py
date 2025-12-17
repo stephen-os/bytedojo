@@ -15,6 +15,7 @@ from bytedojo.__init__ import __version__, __author__
 
 from bytedojo.commands import init
 from bytedojo.commands import stats
+from bytedojo.commands import test
 from bytedojo.commands.leetcode import leetcode
 
 def print_version(ctx, param, value):
@@ -70,3 +71,4 @@ def dojo(ctx, debug: bool, config: Optional[Path]):
 dojo.add_command(init)
 dojo.add_command(leetcode)
 dojo.add_command(stats)
+dojo.add_command(test) 
