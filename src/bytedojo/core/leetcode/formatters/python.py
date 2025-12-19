@@ -3,6 +3,8 @@ from textwrap import dedent
 from bytedojo.core.leetcode.models import Problem
 from bytedojo.core.leetcode.formatters.base import BaseFormatter
 
+from bytedojo.core.logger import get_logger
+
 
 class PythonFormatter(BaseFormatter):
     """Formats LeetCode problems as Python files."""
@@ -11,7 +13,8 @@ class PythonFormatter(BaseFormatter):
         """Generate complete Python file content."""
         code_template = self._get_python_code(problem)
         description = self._format_description(problem.description)
-        test_cases = self._format_test_cases(problem.test_cases, code_template)
+        expected_outputs = self._extract_expected_outputs(problem.description)  
+        test_cases = self._format_test_cases(problem.test_cases, expected_outputs, code_template)
         
         content = f'''"""
 LeetCode Problem #{problem.id}: {problem.title}
@@ -74,7 +77,36 @@ if __name__ == "__main__":
         lines = text.strip().split('\n')
         return '\n'.join(f"# {line}" if line else "#" for line in lines)
     
-    def _format_test_cases(self, test_cases: str, code: str) -> str:
+    def _extract_expected_outputs(self, description: str) -> list:
+        """
+        Extract expected outputs from problem description.
+        
+        Args:
+            description: HTML description containing examples
+            
+        Returns:
+            List of expected output strings
+        """
+        import re
+        from html import unescape
+        
+        # Remove HTML tags
+        text = re.sub(r'<[^>]+>', ' ', description)
+        text = unescape(text)
+        
+        # Find all "Output: ..." patterns
+        outputs = []
+        output_pattern = r'Output:\s*([^\n]+)'
+        
+        for match in re.finditer(output_pattern, text):
+            output = match.group(1).strip()
+            # Clean up the output
+            output = output.replace('\n', '').replace(' ', '')
+            outputs.append(output)
+        
+        return outputs
+
+    def _format_test_cases(self, test_cases: str, expected_outputs: list, code: str) -> str:
         """Format test cases into runnable code."""
         if not test_cases:
             return '    # Add your test cases here\n    pass'
@@ -92,8 +124,9 @@ if __name__ == "__main__":
         # Try to parse test cases intelligently
         test_groups = self._parse_test_groups(lines, param_count)
         
-        if test_groups:
-            for test_num, (inputs, expected) in enumerate(test_groups, 1):
+        if test_groups and expected_outputs:
+            # Match inputs with expected outputs
+            for test_num, ((inputs, _), expected) in enumerate(zip(test_groups, expected_outputs), 1):
                 # Generate the function call
                 if len(inputs) == 1:
                     call = f'solution.{method_name}({inputs[0]})'
@@ -101,26 +134,23 @@ if __name__ == "__main__":
                     params_str = ', '.join(inputs)
                     call = f'solution.{method_name}({params_str})'
                 
-                test_code.append(f'    result{test_num} = {call}')
-                
-                # Show expected vs actual
-                if expected:
-                    test_code.append(f'    expected{test_num} = {expected}')
-                    test_code.append(f'    print(f"Test {test_num}: Expected {{expected{test_num}}}, Got {{result{test_num}}}")')
-                else:
-                    test_code.append(f'    print(f"Test {test_num}: {{result{test_num}}}")')
-                
+                # Simple assertion: expected == actual
+                test_code.append(f'    assert {expected} == {call}')
                 test_code.append('')
+            
+            test_code.append('    print("All tests passed!")')
         else:
-            # Fallback to commented format
-            test_code.append('    # Inputs:')
-            for line in lines:
-                test_code.append(f'    # {line}')
-            test_code.append('')
-            test_code.append(f'    # result = solution.{method_name}(...)')
-            test_code.append('    # print(f"Result: {result}")')
-            test_code.append('')
-            test_code.append('    pass')
+            # Fallback - just print results
+            for test_num, (inputs, _) in enumerate(test_groups, 1):
+                if len(inputs) == 1:
+                    call = f'solution.{method_name}({inputs[0]})'
+                else:
+                    params_str = ', '.join(inputs)
+                    call = f'solution.{method_name}({params_str})'
+                
+                test_code.append(f'    result{test_num} = {call}')
+                test_code.append(f'    print(f"Test {test_num}: {{result{test_num}}}")')
+                test_code.append('')
         
         return '\n'.join(test_code)
 
@@ -130,23 +160,13 @@ if __name__ == "__main__":
         if param_count == 0:
             return []
         
-        # Try pattern: param_count inputs + 1 expected output
-        group_size = param_count + 1
-        
-        if len(lines) % group_size == 0:
-            test_groups = []
-            for i in range(0, len(lines), group_size):
-                inputs = lines[i:i + param_count]
-                expected = lines[i + param_count]
-                test_groups.append((inputs, expected))
-            return test_groups
-        
-        # Try pattern: just inputs (no expected outputs)
+        # LeetCode's exampleTestcases only contains inputs, not outputs
+        # So we group by param_count lines (no expected output)
         if len(lines) % param_count == 0:
             test_groups = []
             for i in range(0, len(lines), param_count):
                 inputs = lines[i:i + param_count]
-                test_groups.append((inputs, None))
+                test_groups.append((inputs, None))  # No expected output
             return test_groups
         
         return []
