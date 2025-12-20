@@ -1,8 +1,8 @@
 import re
 from textwrap import dedent
+from typing import Tuple, List, Optional
 from bytedojo.core.leetcode.models import Problem
 from bytedojo.core.leetcode.formatters.base import BaseFormatter
-
 from bytedojo.core.logger import get_logger
 
 
@@ -13,8 +13,7 @@ class PythonFormatter(BaseFormatter):
         """Generate complete Python file content."""
         code_template = self._get_python_code(problem)
         description = self._format_description(problem.description)
-        expected_outputs = self._extract_expected_outputs(problem.description)  
-        test_cases = self._format_test_cases(problem.test_cases, expected_outputs, code_template)
+        test_cases = self._format_test_cases(problem, code_template)
         
         content = f'''"""
 LeetCode Problem #{problem.id}: {problem.title}
@@ -47,7 +46,6 @@ def run_tests():
 if __name__ == "__main__":
     run_tests()
 '''
-    
         return content
     
     def _get_python_code(self, problem: Problem) -> str:
@@ -56,7 +54,6 @@ if __name__ == "__main__":
         if not code:
             return "# No Python template available"
         
-        # Process code (uncomment classes, add imports, etc.)
         code = self._uncomment_class_definitions(code)
         imports = self._extract_imports(code)
         code = self._ensure_pass_in_methods(code)
@@ -77,71 +74,173 @@ if __name__ == "__main__":
         lines = text.strip().split('\n')
         return '\n'.join(f"# {line}" if line else "#" for line in lines)
     
-    def _extract_expected_outputs(self, description: str) -> list:
+    def _extract_test_examples(self, description: str) -> List[Tuple[str, str, str]]:
         """
-        Extract expected outputs from problem description.
+        Extract test examples from problem description.
         
-        Args:
-            description: HTML description containing examples
-            
         Returns:
-            List of expected output strings
+            List of (input_text, output_text, explanation) tuples
         """
-        import re
         from html import unescape
         
-        # Remove HTML tags
-        text = re.sub(r'<[^>]+>', ' ', description)
+        # Remove HTML tags but preserve structure
+        text = re.sub(r'<[^>]+>', '\n', description)
         text = unescape(text)
         
-        # Find all "Output: ..." patterns
-        outputs = []
-        output_pattern = r'Output:\s*([^\n]+)'
+        examples = []
         
-        for match in re.finditer(output_pattern, text):
-            output = match.group(1).strip()
-            # Clean up the output
-            output = output.replace('\n', '').replace(' ', '')
-            outputs.append(output)
+        # Find all "Example N:" blocks
+        example_pattern = r'Example\s+\d+:(.*?)(?=Example\s+\d+:|Constraints:|$)'
         
-        return outputs
+        for match in re.finditer(example_pattern, text, re.DOTALL | re.IGNORECASE):
+            example_text = match.group(1).strip()
+            
+            # Extract Input
+            input_match = re.search(r'Input:\s*([^\n]+(?:\n(?!Output:)[^\n]+)*)', example_text)
+            input_text = input_match.group(1).strip() if input_match else ""
+            
+            # Extract Output
+            output_match = re.search(r'Output:\s*([^\n]+(?:\n(?!Explanation:)[^\n]+)*)', example_text)
+            output_text = output_match.group(1).strip() if output_match else ""
+            
+            # Extract Explanation
+            explanation_match = re.search(r'Explanation:\s*([^\n]+.*?)$', example_text, re.DOTALL)
+            explanation = explanation_match.group(1).strip() if explanation_match else ""
+            
+            if input_text:
+                examples.append((input_text, output_text, explanation))
+        
+        return examples
+    
+    def _parse_input_line(self, input_text: str) -> List[str]:
+        """
+        Parse input line to extract parameter values.
+        
+        Examples:
+            "nums = [3,2,2,3], val = 3" -> ["[3,2,2,3]", "3"]
+            "n = 5" -> ["5"]
+        """
+        params = []
+        
+        # Split by comma but not within brackets
+        parts = re.split(r',\s*(?![^\[\]]*\])', input_text)
+        
+        for part in parts:
+            # Extract value after = sign
+            match = re.search(r'=\s*(.+)', part.strip())
+            if match:
+                value = match.group(1).strip()
+                params.append(value)
+        
+        return params
+    
+    def _parse_output_line(self, output_text: str) -> str:
+        """
+        Parse output line to extract just the return value.
+        
+        Examples:
+            "[0,1]" -> "[0,1]"
+            "2, nums = [2,2,_,_]" -> "2"
+            "[7,0,8]" -> "[7,0,8]"
+            "true" -> "true"
+        
+        Returns:
+            Just the return value (handles lists/arrays properly)
+        """
+        output_text = output_text.strip()
+        
+        # If output starts with '[', it's a list - find the matching ']'
+        if output_text.startswith('['):
+            bracket_count = 0
+            for i, char in enumerate(output_text):
+                if char == '[':
+                    bracket_count += 1
+                elif char == ']':
+                    bracket_count -= 1
+                    if bracket_count == 0:
+                        # Found the closing bracket
+                        return output_text[:i+1]
+            # If we get here, return everything (malformed but try anyway)
+            return output_text
+        
+        # If output starts with '{', it's a dict/set - find matching '}'
+        if output_text.startswith('{'):
+            bracket_count = 0
+            for i, char in enumerate(output_text):
+                if char == '{':
+                    bracket_count += 1
+                elif char == '}':
+                    bracket_count -= 1
+                    if bracket_count == 0:
+                        return output_text[:i+1]
+            return output_text
+        
+        # Otherwise, take everything before the first comma (if exists)
+        if ',' in output_text:
+            return output_text.split(',')[0].strip()
+        
+        return output_text
 
-    def _format_test_cases(self, test_cases: str, expected_outputs: list, code: str) -> str:
+    def _format_test_cases(self, problem: Problem, code: str) -> str:
         """Format test cases into runnable code."""
+        method_name = self._extract_method_name(code)
+        
+        # Extract examples from description
+        examples = self._extract_test_examples(problem.description)
+        
+        if not examples:
+            return self._format_basic_test_cases(problem.test_cases, code)
+        
+        test_code = []
+        test_code.append('    # Test cases from LeetCode')
+        test_code.append('')
+        
+        for test_num, (input_text, output_text, explanation) in enumerate(examples, 1):
+            # Parse inputs
+            params = self._parse_input_line(input_text)
+            
+            if not params:
+                continue
+            
+            # Parse output - just get the return value
+            expected_return = self._parse_output_line(output_text)
+            
+            # Generate function call
+            params_str = ', '.join(params)
+            call = f'solution.{method_name}({params_str})'
+            
+            # Convert boolean strings
+            if expected_return.lower() in ('true', 'false'):
+                expected_return = expected_return.capitalize()
+            
+            # Simple assertion
+            test_code.append(f'    assert {expected_return} == {call}')
+            test_code.append('')
+        
+        test_code.append('    print("All tests passed!")')
+        
+        return '\n'.join(test_code)
+    
+    def _format_basic_test_cases(self, test_cases: str, code: str) -> str:
+        """Fallback: format basic test cases when examples can't be parsed."""
         if not test_cases:
             return '    # Add your test cases here\n    pass'
         
         method_name = self._extract_method_name(code)
         lines = test_cases.strip().split('\n')
-        test_code = []
-        
-        test_code.append('    # Test cases from LeetCode')
-        test_code.append('')
-        
-        # Count parameters to determine grouping
         param_count = self._count_method_params(code)
         
-        # Try to parse test cases intelligently
-        test_groups = self._parse_test_groups(lines, param_count)
+        test_code = []
+        test_code.append('    # Test cases from LeetCode')
+        test_code.append('    # NOTE: Expected outputs not available - add assertions manually')
+        test_code.append('')
         
-        if test_groups and expected_outputs:
-            # Match inputs with expected outputs
-            for test_num, ((inputs, _), expected) in enumerate(zip(test_groups, expected_outputs), 1):
-                # Generate the function call
-                if len(inputs) == 1:
-                    call = f'solution.{method_name}({inputs[0]})'
-                else:
-                    params_str = ', '.join(inputs)
-                    call = f'solution.{method_name}({params_str})'
+        # Group by parameter count
+        if param_count > 0 and len(lines) % param_count == 0:
+            for i in range(0, len(lines), param_count):
+                test_num = (i // param_count) + 1
+                inputs = lines[i:i + param_count]
                 
-                # Simple assertion: expected == actual
-                test_code.append(f'    assert {expected} == {call}')
-                test_code.append('')
-            
-            test_code.append('    print("All tests passed!")')
-        else:
-            # Fallback - just print results
-            for test_num, (inputs, _) in enumerate(test_groups, 1):
                 if len(inputs) == 1:
                     call = f'solution.{method_name}({inputs[0]})'
                 else:
@@ -153,69 +252,48 @@ if __name__ == "__main__":
                 test_code.append('')
         
         return '\n'.join(test_code)
-
-
-    def _parse_test_groups(self, lines: list, param_count: int) -> list:
-        """Parse test case lines into groups of (inputs, expected_output)."""
-        if param_count == 0:
-            return []
-        
-        # LeetCode's exampleTestcases only contains inputs, not outputs
-        # So we group by param_count lines (no expected output)
-        if len(lines) % param_count == 0:
-            test_groups = []
-            for i in range(0, len(lines), param_count):
-                inputs = lines[i:i + param_count]
-                test_groups.append((inputs, None))  # No expected output
-            return test_groups
-        
-        return []
-
-
+    
+    def _extract_return_type(self, code: str) -> Optional[str]:
+        """Extract return type from method signature."""
+        match = re.search(r'->\s*([^:]+):', code)
+        if match:
+            return match.group(1).strip()
+        return None
+    
     def _extract_method_name(self, code: str) -> str:
         """Extract the method name from the Solution class."""
         lines = code.split('\n')
         in_solution_class = False
         
         for line in lines:
-            stripped = line.strip()
-            
-            # Check if we're entering the Solution class
             if 'class Solution' in line:
                 in_solution_class = True
                 continue
             
-            # Check if we've left the Solution class
             if in_solution_class and line and not line[0].isspace() and 'class' in line:
                 in_solution_class = False
             
-            # Look for method definitions in Solution class
             if in_solution_class:
                 match = re.search(r'def\s+(\w+)\s*\(', line)
                 if match:
                     method = match.group(1)
-                    # Skip dunder methods
                     if not method.startswith('__'):
                         return method
         
-        # Fallback: find any non-dunder method
         match = re.search(r'def\s+(?!__)(\w+)\s*\(', code)
         if match:
             return match.group(1)
         
         return 'solve'
-
-
+    
     def _count_method_params(self, code: str) -> int:
         """Count the number of parameters in the method (excluding self)."""
         match = re.search(r'def\s+\w+\s*\(([^)]+)\)', code)
         if match:
             params = match.group(1).split(',')
-            # Exclude 'self' parameter
             return len([p for p in params if 'self' not in p.strip()])
         return 0
-
-
+    
     def _uncomment_class_definitions(self, code: str) -> str:
         """Uncomment ListNode, TreeNode, etc."""
         lines = code.split('\n')
@@ -227,14 +305,12 @@ if __name__ == "__main__":
         for line in lines:
             stripped = line.strip()
             
-            # Check if this is a commented class definition
             if stripped.startswith('# class ') and ':' in stripped:
                 in_comment_block = True
                 base_indent = len(line) - len(line.lstrip())
                 uncommented = line[base_indent:].lstrip('#').lstrip()
                 comment_block = [uncommented]
             elif in_comment_block and stripped.startswith('#'):
-                # Continue collecting the commented class
                 line_indent = len(line) - len(line.lstrip())
                 if line_indent >= base_indent:
                     uncommented_line = line[base_indent:].lstrip('#')
@@ -247,7 +323,6 @@ if __name__ == "__main__":
                 else:
                     comment_block.append(line.lstrip('#').lstrip())
             elif in_comment_block and not stripped.startswith('#'):
-                # End of comment block
                 result.extend(comment_block)
                 result.append('')
                 in_comment_block = False
@@ -256,19 +331,16 @@ if __name__ == "__main__":
             else:
                 result.append(line)
         
-        # Handle case where comment block is at the end
         if comment_block:
             result.extend(comment_block)
             result.append('')
         
         return '\n'.join(result)
-
-
+    
     def _extract_imports(self, code: str) -> str:
         """Extract required typing imports."""
         imports = set()
         
-        # Check for common type hints that need imports
         if 'List[' in code:
             imports.add('List')
         if 'Optional[' in code:
@@ -284,14 +356,12 @@ if __name__ == "__main__":
         if 'Deque[' in code or 'deque' in code:
             imports.add('Deque')
         
-        # Generate import statement
         if imports:
             typing_imports = sorted(imports)
             return f"from typing import {', '.join(typing_imports)}"
         
         return ""
-
-
+    
     def _ensure_pass_in_methods(self, code: str) -> str:
         """Add pass to empty methods."""
         lines = code.split('\n')
@@ -302,33 +372,26 @@ if __name__ == "__main__":
             line = lines[i]
             result.append(line)
             
-            # Skip if this line is a comment
             stripped = line.strip()
             if stripped.startswith('#'):
                 i += 1
                 continue
             
-            # Check if this is a method definition
             if 'def ' in line and line.strip().endswith(':'):
-                # Check if next line is another def, class, or end of code
                 if i + 1 < len(lines):
                     next_line = lines[i + 1]
                     next_stripped = next_line.strip()
                     
-                    # Skip if next line is a comment
                     if next_stripped.startswith('#'):
                         i += 1
                         continue
                     
-                    # If next line is not indented more than current, method is empty
                     current_indent = len(line) - len(line.lstrip())
                     next_indent = len(next_line) - len(next_line.lstrip()) if next_line.strip() else current_indent
                     
                     if next_indent <= current_indent or not next_line.strip():
-                        # Empty method body, add pass
                         result.append(' ' * (current_indent + 4) + 'pass')
                 else:
-                    # Last line is a method def, add pass
                     current_indent = len(line) - len(line.lstrip())
                     result.append(' ' * (current_indent + 4) + 'pass')
             
