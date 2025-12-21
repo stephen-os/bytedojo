@@ -1,14 +1,88 @@
+"""
+Python formatter for LeetCode problems with intelligent test generation.
+"""
+
 import re
-from textwrap import dedent
-from typing import Tuple, List, Optional
+from typing import Tuple, List, Optional, Dict
 from bytedojo.core.leetcode.models import Problem
 from bytedojo.core.leetcode.formatters.base import BaseFormatter
 from bytedojo.core.logger import get_logger
 
 
 class PythonFormatter(BaseFormatter):
-    """Formats LeetCode problems as Python files."""
+    """Formats LeetCode problems as Python files with smart test generation."""
     
+    # Helper function templates
+    LISTNODE_HELPERS = '''
+    def list_to_listnode(arr):
+        """Convert array to ListNode."""
+        if not arr:
+            return None
+        head = ListNode(arr[0])
+        current = head
+        for val in arr[1:]:
+            current.next = ListNode(val)
+            current = current.next
+        return head
+    
+    def listnode_to_list(node):
+        """Convert ListNode to array."""
+        result = []
+        while node:
+            result.append(node.val)
+            node = node.next
+        return result
+'''
+
+    TREENODE_HELPERS = '''
+    def list_to_treenode(arr):
+        """Convert array to TreeNode (level-order)."""
+        if not arr or arr[0] is None:
+            return None
+        
+        root = TreeNode(arr[0])
+        queue = [root]
+        i = 1
+        
+        while queue and i < len(arr):
+            node = queue.pop(0)
+            
+            if i < len(arr) and arr[i] is not None:
+                node.left = TreeNode(arr[i])
+                queue.append(node.left)
+            i += 1
+            
+            if i < len(arr) and arr[i] is not None:
+                node.right = TreeNode(arr[i])
+                queue.append(node.right)
+            i += 1
+        
+        return root
+    
+    def treenode_to_list(root):
+        """Convert TreeNode to array (level-order)."""
+        if not root:
+            return []
+        
+        result = []
+        queue = [root]
+        
+        while queue:
+            node = queue.pop(0)
+            if node:
+                result.append(node.val)
+                queue.append(node.left)
+                queue.append(node.right)
+            else:
+                result.append(None)
+        
+        # Remove trailing None values
+        while result and result[-1] is None:
+            result.pop()
+        
+        return result
+'''
+
     def format(self, problem: Problem) -> str:
         """Generate complete Python file content."""
         code_template = self._get_python_code(problem)
@@ -39,7 +113,6 @@ Difficulty: {problem.difficulty}
 def run_tests():
     """Run test cases for the problem."""
     solution = Solution()
-    
 {test_cases}
 
 
@@ -74,6 +147,92 @@ if __name__ == "__main__":
         lines = text.strip().split('\n')
         return '\n'.join(f"# {line}" if line else "#" for line in lines)
     
+    def _detect_helpers_needed(self, code: str) -> Dict[str, bool]:
+        """
+        Detect what helper functions are needed by analyzing the code.
+        
+        Args:
+            code: Python code template
+            
+        Returns:
+            Dictionary of helper types needed
+        """
+        return {
+            'listnode': 'ListNode' in code and 'class ListNode' in code,
+            'treenode': 'TreeNode' in code and 'class TreeNode' in code,
+        }
+    
+    def _extract_parameter_info(self, code: str) -> List[Tuple[str, str]]:
+        """
+        Extract parameter names and types from method signature.
+        
+        Returns:
+            List of (param_name, param_type) tuples
+        """
+        # Find the Solution class method specifically
+        lines = code.split('\n')
+        in_solution = False
+        
+        for line in lines:
+            # Enter Solution class
+            if 'class Solution' in line:
+                in_solution = True
+                continue
+            
+            # Exit Solution class when we hit another class
+            if in_solution and line.strip().startswith('class ') and 'Solution' not in line:
+                in_solution = False
+                continue
+            
+            # Found a method in Solution class (skip __init__ and other dunder methods)
+            if in_solution and 'def ' in line and not '__' in line:
+                # Extract parameters between (self, ...) and ):
+                match = re.search(r'def\s+\w+\s*\(\s*self\s*(?:,\s*([^)]+))?\)', line)
+                
+                if not match or not match.group(1):
+                    # No parameters besides self
+                    return []
+                
+                params_str = match.group(1)
+                params = []
+                
+                # Split by comma, but respect brackets
+                current_param = ""
+                bracket_depth = 0
+                
+                for char in params_str + ',':
+                    if char in '[{(':
+                        bracket_depth += 1
+                        current_param += char
+                    elif char in ']})':
+                        bracket_depth -= 1
+                        current_param += char
+                    elif char == ',' and bracket_depth == 0:
+                        # End of parameter
+                        if current_param.strip():
+                            # Remove default values (e.g., "val=0" -> "val")
+                            param_clean = current_param.split('=')[0].strip()
+                            
+                            if ':' in param_clean:
+                                name, type_hint = param_clean.split(':', 1)
+                                params.append((name.strip(), type_hint.strip()))
+                            else:
+                                params.append((param_clean, 'Any'))
+                        current_param = ""
+                    else:
+                        current_param += char
+                
+                return params
+        
+        return []
+    
+    def _get_return_type(self, code: str) -> str:
+        """Extract return type from method signature."""
+        match = re.search(r'->\s*([^:]+):', code)
+        if match:
+            return match.group(1).strip()
+        return 'Any'
+    
     def _extract_test_examples(self, description: str) -> List[Tuple[str, str, str]]:
         """
         Extract test examples from problem description.
@@ -83,27 +242,24 @@ if __name__ == "__main__":
         """
         from html import unescape
         
-        # Remove HTML tags but preserve structure
+        # First, unescape HTML entities BEFORE removing tags
+        description = unescape(description)
+        
+        # Then remove HTML tags
         text = re.sub(r'<[^>]+>', '\n', description)
-        text = unescape(text)
         
         examples = []
-        
-        # Find all "Example N:" blocks
         example_pattern = r'Example\s+\d+:(.*?)(?=Example\s+\d+:|Constraints:|$)'
         
         for match in re.finditer(example_pattern, text, re.DOTALL | re.IGNORECASE):
             example_text = match.group(1).strip()
             
-            # Extract Input
             input_match = re.search(r'Input:\s*([^\n]+(?:\n(?!Output:)[^\n]+)*)', example_text)
             input_text = input_match.group(1).strip() if input_match else ""
             
-            # Extract Output
             output_match = re.search(r'Output:\s*([^\n]+(?:\n(?!Explanation:)[^\n]+)*)', example_text)
             output_text = output_match.group(1).strip() if output_match else ""
             
-            # Extract Explanation
             explanation_match = re.search(r'Explanation:\s*([^\n]+.*?)$', example_text, re.DOTALL)
             explanation = explanation_match.group(1).strip() if explanation_match else ""
             
@@ -112,25 +268,53 @@ if __name__ == "__main__":
         
         return examples
     
-    def _parse_input_line(self, input_text: str) -> List[str]:
+    def _parse_input_line(self, input_text: str) -> List[Tuple[str, str]]:
         """
-        Parse input line to extract parameter values.
+        Parse input line to extract parameter names and values.
         
-        Examples:
-            "nums = [3,2,2,3], val = 3" -> ["[3,2,2,3]", "3"]
-            "n = 5" -> ["5"]
+        Handles strings with commas correctly.
         """
         params = []
         
-        # Split by comma but not within brackets
-        parts = re.split(r',\s*(?![^\[\]]*\])', input_text)
+        # More sophisticated parsing - track if we're inside quotes
+        current_part = ""
+        in_quotes = False
+        quote_char = None
+        bracket_depth = 0
         
-        for part in parts:
-            # Extract value after = sign
-            match = re.search(r'=\s*(.+)', part.strip())
-            if match:
-                value = match.group(1).strip()
-                params.append(value)
+        for char in input_text + ',':
+            if char in ('"', "'") and (not in_quotes or char == quote_char):
+                in_quotes = not in_quotes
+                quote_char = char if in_quotes else None
+                current_part += char
+            elif char in '[{(':
+                bracket_depth += 1
+                current_part += char
+            elif char in ']})':
+                bracket_depth -= 1
+                current_part += char
+            elif char == ',' and not in_quotes and bracket_depth == 0:
+                # End of parameter
+                if current_part.strip():
+                    match = re.search(r'(\w+)\s*=\s*(.+)', current_part.strip())
+                    if match:
+                        name = match.group(1).strip()
+                        value = match.group(2).strip()
+                        
+                        # Replace null with None
+                        value = value.replace('null', 'None')
+                        
+                        # If value has double quotes, convert to single quotes
+                        if value.startswith('"') and value.endswith('"'):
+                            inner_value = value[1:-1]
+                            # Escape any single quotes in the string
+                            inner_value = inner_value.replace("'", "\\'")
+                            value = f"'{inner_value}'"
+                        
+                        params.append((name, value))
+                current_part = ""
+            else:
+                current_part += char
         
         return params
     
@@ -158,9 +342,7 @@ if __name__ == "__main__":
                 elif char == ']':
                     bracket_count -= 1
                     if bracket_count == 0:
-                        # Found the closing bracket
                         return output_text[:i+1]
-            # If we get here, return everything (malformed but try anyway)
             return output_text
         
         # If output starts with '{', it's a dict/set - find matching '}'
@@ -180,11 +362,33 @@ if __name__ == "__main__":
             return output_text.split(',')[0].strip()
         
         return output_text
-
-    def _format_test_cases(self, problem: Problem, code: str) -> str:
-        """Format test cases into runnable code."""
-        method_name = self._extract_method_name(code)
+    
+    def _needs_conversion(self, param_type: str) -> Optional[str]:
+        """
+        Check if parameter type needs conversion.
         
+        Returns:
+            Conversion function name or None
+        """
+        if 'ListNode' in param_type:
+            return 'list_to_listnode'
+        elif 'TreeNode' in param_type:
+            return 'list_to_treenode'
+        return None
+    
+    def _format_test_cases(self, problem: Problem, code: str) -> str:
+        """Format test cases into runnable code with smart helper detection."""
+        method_name = self._extract_method_name(code)
+        helpers_needed = self._detect_helpers_needed(code)
+        param_info = self._extract_parameter_info(code)
+        return_type = self._get_return_type(code)
+        
+
+        logger = get_logger()
+        logger.debug(f"Method name: {method_name}")
+        logger.debug(f"Param info: {param_info}")
+        logger.debug(f"Return type: {return_type}")
+
         # Extract examples from description
         examples = self._extract_test_examples(problem.description)
         
@@ -192,28 +396,67 @@ if __name__ == "__main__":
             return self._format_basic_test_cases(problem.test_cases, code)
         
         test_code = []
+        
+        # Add helper functions if needed
+        if helpers_needed.get('listnode'):
+            test_code.extend(self.LISTNODE_HELPERS.split('\n'))
+        
+        if helpers_needed.get('treenode'):
+            test_code.extend(self.TREENODE_HELPERS.split('\n'))
+        
         test_code.append('    # Test cases from LeetCode')
         test_code.append('')
         
         for test_num, (input_text, output_text, explanation) in enumerate(examples, 1):
-            # Parse inputs
-            params = self._parse_input_line(input_text)
+            # Parse inputs with names
+            input_params = self._parse_input_line(input_text)
             
-            if not params:
+            if not input_params:
                 continue
             
-            # Parse output - just get the return value
+            # Parse expected output
             expected_return = self._parse_output_line(output_text)
-            
-            # Generate function call
-            params_str = ', '.join(params)
-            call = f'solution.{method_name}({params_str})'
             
             # Convert boolean strings
             if expected_return.lower() in ('true', 'false'):
                 expected_return = expected_return.capitalize()
             
-            # Simple assertion
+            # Build function call with conversions
+            call_params = []
+            
+            for param_name, param_value in input_params:
+                # Find matching parameter type
+                param_type = None
+                for info_name, info_type in param_info:
+                    if info_name == param_name:
+                        param_type = info_type
+                        break
+                
+                # Check if conversion needed
+                converter = self._needs_conversion(param_type) if param_type else None
+                
+                if converter:
+                    call_params.append(f'{converter}({param_value})')
+                else:
+                    call_params.append(param_value)
+            
+            # Build the call
+            params_str = ', '.join(call_params)
+            call = f'solution.{method_name}({params_str})'
+            
+            # Check if return type needs conversion
+            return_converter = None
+            if 'ListNode' in return_type:
+                return_converter = 'listnode_to_list'
+            elif 'TreeNode' in return_type:
+                return_converter = 'treenode_to_list'
+            
+            if return_converter:
+                call = f'{return_converter}({call})'
+            
+            expected_return = expected_return.replace('null', 'None')
+
+            # Generate assertion
             test_code.append(f'    assert {expected_return} == {call}')
             test_code.append('')
         
@@ -235,7 +478,6 @@ if __name__ == "__main__":
         test_code.append('    # NOTE: Expected outputs not available - add assertions manually')
         test_code.append('')
         
-        # Group by parameter count
         if param_count > 0 and len(lines) % param_count == 0:
             for i in range(0, len(lines), param_count):
                 test_num = (i // param_count) + 1
@@ -252,13 +494,6 @@ if __name__ == "__main__":
                 test_code.append('')
         
         return '\n'.join(test_code)
-    
-    def _extract_return_type(self, code: str) -> Optional[str]:
-        """Extract return type from method signature."""
-        match = re.search(r'->\s*([^:]+):', code)
-        if match:
-            return match.group(1).strip()
-        return None
     
     def _extract_method_name(self, code: str) -> str:
         """Extract the method name from the Solution class."""
