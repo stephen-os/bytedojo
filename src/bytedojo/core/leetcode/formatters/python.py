@@ -113,6 +113,9 @@ class PythonFormatter(BaseFormatter):
     
     def _build_file_content(self, problem: Problem, description: str, code_template: str, test_cases: str) -> str:
         """Build the complete file content from components."""
+        class_name = self._extract_class_name(code_template)
+        instance_name = class_name.lower()
+        
         return f'''"""
 LeetCode Problem #{problem.id}: {problem.title}
 Difficulty: {problem.difficulty}
@@ -136,7 +139,7 @@ Difficulty: {problem.difficulty}
 
 def run_tests():
     """Run test cases for the problem."""
-    solution = Solution()
+    {instance_name} = {class_name}()
 {test_cases}
 
 
@@ -317,25 +320,48 @@ if __name__ == "__main__":
         return text
     
     # ========================================================================
-    # Method Analysis
+    # Class and Method Analysis
     # ========================================================================
     
-    def _extract_method_name(self, code: str) -> str:
-        """Extract the method name from the Solution class."""
-        self.logger.debug("Extracting method name from Solution class")
-        
+    def _extract_class_name(self, code: str) -> str:
+        """Extract the main class name (Solution, Codec, etc.)."""
         lines = code.split('\n')
-        in_solution_class = False
         
+        # Priority: Solution class first
         for line in lines:
             if 'class Solution' in line:
-                in_solution_class = True
+                return 'Solution'
+        
+        # Otherwise find first non-node class
+        for line in lines:
+            match = re.match(r'^\s*class\s+(\w+)', line)
+            if match:
+                class_name = match.group(1)
+                # Skip node/data structure classes
+                if class_name not in ['TreeNode', 'ListNode', 'Node']:
+                    self.logger.debug(f"Found main class: {class_name}")
+                    return class_name
+        
+        self.logger.warning("No main class found, defaulting to 'Solution'")
+        return 'Solution'
+    
+    def _extract_method_name(self, code: str) -> str:
+        """Extract the method name from the main class."""
+        self.logger.debug("Extracting method name from main class")
+        
+        lines = code.split('\n')
+        class_name = self._extract_class_name(code)
+        in_target_class = False
+        
+        for line in lines:
+            if f'class {class_name}' in line:
+                in_target_class = True
                 continue
             
-            if in_solution_class and line and not line[0].isspace() and 'class' in line:
-                in_solution_class = False
+            if in_target_class and line and not line[0].isspace() and 'class' in line:
+                in_target_class = False
             
-            if in_solution_class:
+            if in_target_class:
                 match = re.search(r'def\s+(\w+)\s*\(', line)
                 if match:
                     method = match.group(1)
@@ -358,18 +384,19 @@ if __name__ == "__main__":
         self.logger.debug("Extracting parameter information")
         
         lines = code.split('\n')
-        in_solution = False
+        class_name = self._extract_class_name(code)
+        in_target_class = False
         
         for line in lines:
-            if 'class Solution' in line:
-                in_solution = True
+            if f'class {class_name}' in line:
+                in_target_class = True
                 continue
             
-            if in_solution and line.strip().startswith('class ') and 'Solution' not in line:
-                in_solution = False
+            if in_target_class and line.strip().startswith('class ') and class_name not in line:
+                in_target_class = False
                 continue
             
-            if in_solution and 'def ' in line and '__' not in line:
+            if in_target_class and 'def ' in line and '__' not in line:
                 params = self._parse_method_signature(line)
                 if params is not None:
                     self.logger.debug(f"Extracted parameters: {params}")
@@ -460,7 +487,9 @@ if __name__ == "__main__":
                 params.append(current.strip())
             
             # Exclude 'self' parameter
-            return len([p for p in params if 'self' not in p.strip()])
+            count = len([p for p in params if 'self' not in p.strip()])
+            self.logger.debug(f"Method has {count} parameters")
+            return count
         return 0
     
     # ========================================================================
@@ -634,6 +663,7 @@ if __name__ == "__main__":
         
         try:
             method_name = self._extract_method_name(code)
+            class_name = self._extract_class_name(code)
             helpers_needed = self._detect_helpers_needed(code)
             param_info = self._extract_parameter_info(code)
             return_type = self._get_return_type(code)
@@ -644,17 +674,16 @@ if __name__ == "__main__":
                 self.logger.debug("No examples found, using basic test case format")
                 return self._format_basic_test_cases(problem.test_cases, code)
             
-            return self._build_test_code(
-                examples, method_name, helpers_needed, param_info, return_type
-            )
+            return self._build_test_code(examples, method_name, class_name, helpers_needed, param_info, return_type)
             
         except Exception as e:
             self.logger.error(f"Error formatting test cases: {e}", exc_info=True)
             return '    # Error generating test cases\n    pass'
     
-    def _build_test_code(self, examples: List[Tuple[str, str, str]], method_name: str, helpers_needed: Dict[str, bool], param_info: List[Tuple[str, str]], return_type: str) -> str:
+    def _build_test_code(self, examples: List[Tuple[str, str, str]], method_name: str, class_name: str, helpers_needed: Dict[str, bool], param_info: List[Tuple[str, str]], return_type: str) -> str:
         """Build the complete test code from examples."""
         test_code = []
+        instance_name = class_name.lower()
         
         # Add helper functions
         if helpers_needed.get('listnode'): test_code.extend(self.LISTNODE_HELPERS.split('\n'))
@@ -664,7 +693,7 @@ if __name__ == "__main__":
         
         # Generate test assertions
         for test_num, (input_text, output_text, explanation) in enumerate(examples, 1):
-            assertion = self._build_test_assertion(input_text, output_text, method_name, param_info, return_type)
+            assertion = self._build_test_assertion(input_text, output_text, method_name, instance_name, param_info, return_type)
             
             if assertion:
                 test_code.append(assertion)
@@ -672,7 +701,7 @@ if __name__ == "__main__":
         
         return '\n'.join(test_code)
     
-    def _build_test_assertion(self, input_text: str, output_text: str, method_name: str, param_info: List[Tuple[str, str]], return_type: str) -> Optional[str]:
+    def _build_test_assertion(self, input_text: str, output_text: str, method_name: str, instance_name: str, param_info: List[Tuple[str, str]], return_type: str) -> Optional[str]:
         """Build a single test assertion."""
         try:
             input_params = self._parse_input_line(input_text)
@@ -685,7 +714,7 @@ if __name__ == "__main__":
             # Build function call
             call_params = self._build_call_parameters(input_params, param_info)
             params_str = ', '.join(call_params)
-            call = f'solution.{method_name}({params_str})'
+            call = f'{instance_name}.{method_name}({params_str})'
             
             # Apply return type conversion if needed
             call = self._apply_return_conversion(call, return_type)
@@ -747,6 +776,8 @@ if __name__ == "__main__":
         if not test_cases: return '    # Add your test cases here\n    pass'
         
         method_name = self._extract_method_name(code)
+        class_name = self._extract_class_name(code)
+        instance_name = class_name.lower()
         lines = test_cases.strip().split('\n')
         param_count = self._count_method_params(code)
         
@@ -760,13 +791,13 @@ if __name__ == "__main__":
                 inputs = lines[i:i + param_count]
                 
                 if len(inputs) == 1:
-                    call = f'solution.{method_name}({inputs[0]})'
+                    call = f'{instance_name}.{method_name}({inputs[0]})'
                 else:
                     params_str = ', '.join(inputs)
-                    call = f'solution.{method_name}({params_str})'
+                    call = f'{instance_name}.{method_name}({params_str})'
                 
-                test_code.append(f'result{test_num} = {call}')
-                test_code.append(f'print(f"Test {test_num}: {{result{test_num}}}")')
+                test_code.append(f'    result{test_num} = {call}')
+                test_code.append(f'    print(f"Test {test_num}: {{result{test_num}}}")')
                 test_code.append('')
         
         return '\n'.join(test_code)
