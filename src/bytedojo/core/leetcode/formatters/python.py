@@ -306,17 +306,8 @@ if __name__ == "__main__":
         """Convert HTML content to plain text."""
         text = re.sub(r'<[^>]+>', '', html_content)
         
-        # HTML entity replacements
-        entities = {
-            '&nbsp;': ' ',
-            '&lt;': '<',
-            '&gt;': '>',
-            '&amp;': '&',
-        }
-        
-        for entity, replacement in entities.items():
-            text = text.replace(entity, replacement)
-        
+        text = unescape(text)
+
         return text
     
     # ========================================================================
