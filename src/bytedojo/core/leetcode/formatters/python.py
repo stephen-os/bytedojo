@@ -751,7 +751,7 @@ if __name__ == "__main__":
         param_count = self._count_method_params(code)
         
         test_code = []
-        test_code.append('# NOTE: Expected outputs not available - add assertions manually')
+        test_code.append('    # NOTE: Expected outputs not available - add assertions manually')
         test_code.append('')
         
         if param_count > 0 and len(lines) % param_count == 0:
