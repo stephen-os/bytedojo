@@ -7,7 +7,7 @@ import pytest
 from unittest.mock import Mock, MagicMock, patch
 import re
 from bytedojo.core.leetcode.models import Problem
-from bytedojo.core.leetcode.formatters.python import PythonFormatter
+from bytedojo.core.leetcode.formatters.python import FormatContext, PythonFormatter
 
 
 # ============================================================================
@@ -314,23 +314,25 @@ class Solution:
 # ============================================================================
 
 class TestMethodExtraction:
-    """Test method name and parameter extraction."""
+    """Test method name and parameter extraction through FormatContext."""
     
     def test_extract_simple_method_name(self, formatter):
         """Extract method name from simple signature."""
         code = """class Solution:
     def twoSum(self, nums: List[int], target: int) -> List[int]:
         pass"""
-        method = formatter._extract_method_name(code)
-        assert method == "twoSum"
+        
+        ctx = FormatContext(code=code, description="", test_cases="")
+        assert ctx.method_name == "twoSum"
     
     def test_extract_method_with_no_params(self, formatter):
         """Extract method with only self parameter."""
         code = """class Solution:
     def solve(self) -> int:
         pass"""
-        method = formatter._extract_method_name(code)
-        assert method == "solve"
+        
+        ctx = FormatContext(code=code, description="", test_cases="")
+        assert ctx.method_name == "solve"
     
     def test_extract_method_multiline(self, formatter):
         """Extract method from multiline signature."""
@@ -341,8 +343,9 @@ class TestMethodExtraction:
         y: str
     ) -> bool:
         pass"""
-        method = formatter._extract_method_name(code)
-        assert method == "complexMethod"
+        
+        ctx = FormatContext(code=code, description="", test_cases="")
+        assert ctx.method_name == "complexMethod"
     
     def test_ignore_dunder_methods(self, formatter):
         """Should skip __init__ and other dunder methods."""
@@ -352,8 +355,9 @@ class TestMethodExtraction:
     
     def solve(self, x: int) -> int:
         pass"""
-        method = formatter._extract_method_name(code)
-        assert method == "solve"
+        
+        ctx = FormatContext(code=code, description="", test_cases="")
+        assert ctx.method_name == "solve"
     
     def test_multiple_classes(self, formatter):
         """Extract from Solution class when multiple classes present."""
@@ -364,38 +368,102 @@ class TestMethodExtraction:
 class Solution:
     def process(self, head: ListNode) -> ListNode:
         pass"""
-        method = formatter._extract_method_name(code)
-        assert method == "process"
+        
+        ctx = FormatContext(code=code, description="", test_cases="")
+        assert ctx.method_name == "process"
     
     def test_no_solution_class(self, formatter):
         """Fallback when no Solution class exists."""
         code = """class MyClass:
     def myMethod(self, x: int) -> int:
         pass"""
-        method = formatter._extract_method_name(code)
-        # Should find first non-dunder method
-        assert method == "myMethod"
+        
+        ctx = FormatContext(code=code, description="", test_cases="")
+        assert ctx.method_name == "myMethod"
     
     def test_count_params_simple(self, formatter):
         """Count parameters excluding self."""
         code = """def method(self, x: int, y: int) -> int:
     pass"""
-        count = formatter._count_method_params(code)
-        assert count == 2
+        
+        ctx = FormatContext(code=code, description="", test_cases="")
+        assert ctx.param_count == 2
     
     def test_count_params_complex_types(self, formatter):
         """Count parameters with complex type hints."""
         code = """def method(self, nums: List[List[int]], target: Dict[str, int]) -> bool:
     pass"""
-        count = formatter._count_method_params(code)
-        assert count == 2
+        
+        ctx = FormatContext(code=code, description="", test_cases="")
+        assert ctx.param_count == 2
     
     def test_count_params_none(self, formatter):
         """Count when only self parameter."""
         code = """def method(self) -> int:
     pass"""
-        count = formatter._count_method_params(code)
-        assert count == 0
+        
+        ctx = FormatContext(code=code, description="", test_cases="")
+        assert ctx.param_count == 0
+    
+    def test_extract_class_name_solution(self, formatter):
+        """Extract Solution class name."""
+        code = """class Solution:
+    def solve(self) -> int:
+        pass"""
+        
+        ctx = FormatContext(code=code, description="", test_cases="")
+        assert ctx.class_name == "Solution"
+    
+    def test_extract_class_name_codec(self, formatter):
+        """Extract non-Solution class name."""
+        code = """class Codec:
+    def serialize(self, root):
+        pass"""
+        
+        ctx = FormatContext(code=code, description="", test_cases="")
+        assert ctx.class_name == "Codec"
+    
+    def test_extract_class_name_skip_nodes(self, formatter):
+        """Skip TreeNode/ListNode classes."""
+        code = """class TreeNode:
+    def __init__(self, val=0):
+        pass
+
+class Codec:
+    def serialize(self, root):
+        pass"""
+        
+        ctx = FormatContext(code=code, description="", test_cases="")
+        assert ctx.class_name == "Codec"
+    
+    def test_extract_parameter_info(self, formatter):
+        """Extract parameter names and types."""
+        code = """class Solution:
+    def method(self, nums: List[int], target: int) -> int:
+        pass"""
+        
+        ctx = FormatContext(code=code, description="", test_cases="")
+        assert len(ctx.param_info) == 2
+        assert ctx.param_info[0] == ("nums", "List[int]")
+        assert ctx.param_info[1] == ("target", "int")
+    
+    def test_extract_return_type(self, formatter):
+        """Extract return type from signature."""
+        code = """class Solution:
+    def method(self, x: int) -> List[int]:
+        pass"""
+        
+        ctx = FormatContext(code=code, description="", test_cases="")
+        assert ctx.return_type == "List[int]"
+    
+    def test_instance_name_property(self, formatter):
+        """Test instance_name property."""
+        code = """class Codec:
+    def serialize(self, root):
+        pass"""
+        
+        ctx = FormatContext(code=code, description="", test_cases="")
+        assert ctx.instance_name == "codec"
 
 
 # ============================================================================
