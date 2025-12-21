@@ -114,6 +114,8 @@ class LeetCodeClient:
         if not data:
             return None
         
+        self.logger.debug(f"{data}")
+
         # Parse into Problem dataclass
         return Problem(
             id=int(data['questionId']),
@@ -124,7 +126,7 @@ class LeetCodeClient:
             test_cases=data.get('exampleTestcases', ''),
             code_snippets=[
                 CodeSnippet(lang=s['lang'], code=s['code'])
-                for s in data.get('codeSnippets', [])
+                for s in (data.get('codeSnippets') or [])
             ]
         )
     
