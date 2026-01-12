@@ -94,7 +94,8 @@ def create_database_schema(db_path: Path):
         ('initialized_at', ?),
         ('default_language', 'python'),
         ('default_source', 'leetcode'),
-        ('problems_dir', 'problems')
+        ('problems_dir', 'problems'),
+        ('review_frequency_days', '7')
     """, (datetime.now().isoformat(),))
     
     conn.commit()
@@ -356,16 +357,16 @@ class DatabaseManager:
     def get_problems_by_test_status(self, status: Optional[str] = None) -> List[Dict[str, Any]]:
         """
         Get problems filtered by test status.
-        
+
         Args:
             status: Filter by test status ('passed', 'failed', 'error', 'untested')
                 None returns all problems
-        
+
         Returns:
             List of problem dictionaries
         """
         cursor = self.conn.cursor()
-        
+
         if status:
             cursor.execute(
                 "SELECT * FROM problems WHERE test_status = ? ORDER BY problem_id ASC",
@@ -373,5 +374,203 @@ class DatabaseManager:
             )
         else:
             cursor.execute("SELECT * FROM problems ORDER BY problem_id ASC")
-        
+
         return [dict(row) for row in cursor.fetchall()]
+
+    # ========================================================================
+    # Configuration Methods
+    # ========================================================================
+
+    def get_config(self, key: str, default: Optional[str] = None) -> Optional[str]:
+        """
+        Get a configuration value.
+
+        Args:
+            key: Configuration key
+            default: Default value if not found
+
+        Returns:
+            Configuration value or default
+        """
+        cursor = self.conn.cursor()
+        cursor.execute("SELECT value FROM config WHERE key = ?", (key,))
+        row = cursor.fetchone()
+        return row[0] if row else default
+
+    def set_config(self, key: str, value: str) -> bool:
+        """
+        Set a configuration value.
+
+        Args:
+            key: Configuration key
+            value: Configuration value
+
+        Returns:
+            True if set successfully
+        """
+        cursor = self.conn.cursor()
+        cursor.execute(
+            "INSERT OR REPLACE INTO config (key, value) VALUES (?, ?)",
+            (key, value)
+        )
+        self.conn.commit()
+        return True
+
+    def get_all_config(self) -> Dict[str, str]:
+        """
+        Get all configuration values.
+
+        Returns:
+            Dictionary of all config key-value pairs
+        """
+        cursor = self.conn.cursor()
+        cursor.execute("SELECT key, value FROM config")
+        return {row[0]: row[1] for row in cursor.fetchall()}
+
+    # ========================================================================
+    # Review/Spaced Repetition Methods
+    # ========================================================================
+
+    def schedule_review(self, problem_db_id: int, days_from_now: Optional[int] = None) -> bool:
+        """
+        Schedule a problem for review.
+
+        Args:
+            problem_db_id: Database ID of the problem
+            days_from_now: Days until next review (uses config default if None)
+
+        Returns:
+            True if scheduled successfully
+        """
+        cursor = self.conn.cursor()
+
+        # Get review frequency from config if not specified
+        if days_from_now is None:
+            freq = self.get_config('review_frequency_days', '7')
+            days_from_now = int(freq)
+
+        # Calculate next review date
+        from datetime import date, timedelta
+        next_review = date.today() + timedelta(days=days_from_now)
+
+        # Check if review entry exists
+        cursor.execute(
+            "SELECT id, repetitions FROM reviews WHERE problem_id = ?",
+            (problem_db_id,)
+        )
+        existing = cursor.fetchone()
+
+        if existing:
+            # Update existing review
+            new_reps = existing[1] + 1
+            cursor.execute("""
+                UPDATE reviews
+                SET next_review_date = ?, interval_days = ?, repetitions = ?
+                WHERE problem_id = ?
+            """, (next_review.isoformat(), days_from_now, new_reps, problem_db_id))
+        else:
+            # Create new review entry
+            cursor.execute("""
+                INSERT INTO reviews (problem_id, next_review_date, interval_days, repetitions)
+                VALUES (?, ?, ?, 1)
+            """, (problem_db_id, next_review.isoformat(), days_from_now))
+
+        self.conn.commit()
+        self.logger.debug(f"Scheduled review for problem {problem_db_id} on {next_review}")
+        return True
+
+    def get_due_reviews(self, include_future: bool = False) -> List[Dict[str, Any]]:
+        """
+        Get problems due for review.
+
+        Args:
+            include_future: If True, include future reviews with their dates
+
+        Returns:
+            List of problem dictionaries with review info
+        """
+        cursor = self.conn.cursor()
+        from datetime import date
+        today = date.today().isoformat()
+
+        if include_future:
+            query = """
+                SELECT p.*, r.next_review_date, r.interval_days, r.repetitions
+                FROM problems p
+                INNER JOIN reviews r ON p.id = r.problem_id
+                ORDER BY r.next_review_date ASC
+            """
+            cursor.execute(query)
+        else:
+            query = """
+                SELECT p.*, r.next_review_date, r.interval_days, r.repetitions
+                FROM problems p
+                INNER JOIN reviews r ON p.id = r.problem_id
+                WHERE r.next_review_date <= ?
+                ORDER BY r.next_review_date ASC
+            """
+            cursor.execute(query, (today,))
+
+        return [dict(row) for row in cursor.fetchall()]
+
+    def get_review_stats(self) -> Dict[str, Any]:
+        """
+        Get review statistics.
+
+        Returns:
+            Dictionary with review statistics
+        """
+        cursor = self.conn.cursor()
+        from datetime import date, timedelta
+        today = date.today()
+
+        # Due today
+        cursor.execute(
+            "SELECT COUNT(*) FROM reviews WHERE next_review_date <= ?",
+            (today.isoformat(),)
+        )
+        due_today = cursor.fetchone()[0]
+
+        # Due this week
+        week_end = today + timedelta(days=7)
+        cursor.execute(
+            "SELECT COUNT(*) FROM reviews WHERE next_review_date <= ?",
+            (week_end.isoformat(),)
+        )
+        due_this_week = cursor.fetchone()[0]
+
+        # Total in review system
+        cursor.execute("SELECT COUNT(*) FROM reviews")
+        total_in_review = cursor.fetchone()[0]
+
+        # Problems with most reviews
+        cursor.execute("""
+            SELECT p.problem_id, p.title, p.source, r.repetitions
+            FROM problems p
+            INNER JOIN reviews r ON p.id = r.problem_id
+            ORDER BY r.repetitions DESC
+            LIMIT 5
+        """)
+        most_reviewed = [dict(row) for row in cursor.fetchall()]
+
+        return {
+            'due_today': due_today,
+            'due_this_week': due_this_week,
+            'total_in_review': total_in_review,
+            'most_reviewed': most_reviewed
+        }
+
+    def remove_from_review(self, problem_db_id: int) -> bool:
+        """
+        Remove a problem from the review schedule.
+
+        Args:
+            problem_db_id: Database ID of the problem
+
+        Returns:
+            True if removed successfully
+        """
+        cursor = self.conn.cursor()
+        cursor.execute("DELETE FROM reviews WHERE problem_id = ?", (problem_db_id,))
+        self.conn.commit()
+        return True

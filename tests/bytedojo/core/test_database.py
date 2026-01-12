@@ -5,7 +5,7 @@ Tests for DatabaseManager and database operations.
 import pytest
 import sqlite3
 from pathlib import Path
-from datetime import datetime
+from datetime import datetime, date, timedelta
 
 from bytedojo.core.database import DatabaseManager, create_database_schema
 from bytedojo.core.leetcode.models import Problem, CodeSnippet
@@ -479,8 +479,330 @@ class TestDatabaseManagerGetSummaryStats:
         
         with DatabaseManager(db_path) as db:
             stats = db.get_summary_stats()
-        
+
         assert stats['total_problems'] == 3
         assert stats['by_difficulty']['Easy'] == 2
         assert stats['by_difficulty']['Hard'] == 1
         assert stats['by_source']['leetcode'] == 3
+
+
+class TestDatabaseManagerConfig:
+    """Test configuration methods."""
+
+    def test_get_config_default_value(self, tmp_path):
+        """Test get_config returns default when key not found."""
+        db_path = tmp_path / "test.db"
+        create_database_schema(db_path)
+
+        with DatabaseManager(db_path) as db:
+            result = db.get_config('nonexistent_key', 'default_value')
+
+        assert result == 'default_value'
+
+    def test_get_config_existing_value(self, tmp_path):
+        """Test get_config returns existing value."""
+        db_path = tmp_path / "test.db"
+        create_database_schema(db_path)
+
+        with DatabaseManager(db_path) as db:
+            result = db.get_config('default_language')
+
+        assert result == 'python'
+
+    def test_get_config_review_frequency_default(self, tmp_path):
+        """Test get_config returns default review frequency."""
+        db_path = tmp_path / "test.db"
+        create_database_schema(db_path)
+
+        with DatabaseManager(db_path) as db:
+            result = db.get_config('review_frequency_days', '7')
+
+        assert result == '7'
+
+    def test_set_config_creates_new_key(self, tmp_path):
+        """Test set_config creates a new config entry."""
+        db_path = tmp_path / "test.db"
+        create_database_schema(db_path)
+
+        with DatabaseManager(db_path) as db:
+            db.set_config('new_key', 'new_value')
+            result = db.get_config('new_key')
+
+        assert result == 'new_value'
+
+    def test_set_config_updates_existing_key(self, tmp_path):
+        """Test set_config updates existing config entry."""
+        db_path = tmp_path / "test.db"
+        create_database_schema(db_path)
+
+        with DatabaseManager(db_path) as db:
+            db.set_config('review_frequency_days', '14')
+            result = db.get_config('review_frequency_days')
+
+        assert result == '14'
+
+    def test_get_all_config(self, tmp_path):
+        """Test get_all_config returns all config values."""
+        db_path = tmp_path / "test.db"
+        create_database_schema(db_path)
+
+        with DatabaseManager(db_path) as db:
+            config = db.get_all_config()
+
+        assert 'default_language' in config
+        assert 'default_source' in config
+        assert 'review_frequency_days' in config
+        assert config['default_language'] == 'python'
+
+
+class TestDatabaseManagerReview:
+    """Test review/spaced repetition methods."""
+
+    def test_schedule_review_creates_entry(self, tmp_path):
+        """Test schedule_review creates a new review entry."""
+        db_path = tmp_path / "test.db"
+        create_database_schema(db_path)
+
+        # Insert a problem
+        conn = sqlite3.connect(db_path)
+        cursor = conn.cursor()
+        cursor.execute("""
+            INSERT INTO problems (source, problem_id, title, difficulty)
+            VALUES ('leetcode', '1', 'Two Sum', 'Easy')
+        """)
+        conn.commit()
+        problem_db_id = cursor.lastrowid
+        conn.close()
+
+        with DatabaseManager(db_path) as db:
+            result = db.schedule_review(problem_db_id, days_from_now=7)
+
+        assert result is True
+
+        # Verify review entry exists
+        conn = sqlite3.connect(db_path)
+        cursor = conn.cursor()
+        cursor.execute("SELECT * FROM reviews WHERE problem_id=?", (problem_db_id,))
+        row = cursor.fetchone()
+        conn.close()
+
+        assert row is not None
+
+    def test_schedule_review_uses_config_default(self, tmp_path):
+        """Test schedule_review uses config default when days_from_now not specified."""
+        db_path = tmp_path / "test.db"
+        create_database_schema(db_path)
+
+        # Insert a problem
+        conn = sqlite3.connect(db_path)
+        cursor = conn.cursor()
+        cursor.execute("""
+            INSERT INTO problems (source, problem_id, title, difficulty)
+            VALUES ('leetcode', '1', 'Two Sum', 'Easy')
+        """)
+        conn.commit()
+        problem_db_id = cursor.lastrowid
+        conn.close()
+
+        with DatabaseManager(db_path) as db:
+            db.set_config('review_frequency_days', '14')
+            db.schedule_review(problem_db_id)
+
+        # Verify interval
+        conn = sqlite3.connect(db_path)
+        cursor = conn.cursor()
+        cursor.execute("SELECT interval_days FROM reviews WHERE problem_id=?", (problem_db_id,))
+        interval = cursor.fetchone()[0]
+        conn.close()
+
+        assert interval == 14
+
+    def test_schedule_review_increments_repetitions(self, tmp_path):
+        """Test schedule_review increments repetitions on subsequent calls."""
+        db_path = tmp_path / "test.db"
+        create_database_schema(db_path)
+
+        # Insert a problem
+        conn = sqlite3.connect(db_path)
+        cursor = conn.cursor()
+        cursor.execute("""
+            INSERT INTO problems (source, problem_id, title, difficulty)
+            VALUES ('leetcode', '1', 'Two Sum', 'Easy')
+        """)
+        conn.commit()
+        problem_db_id = cursor.lastrowid
+        conn.close()
+
+        with DatabaseManager(db_path) as db:
+            db.schedule_review(problem_db_id, days_from_now=7)
+            db.schedule_review(problem_db_id, days_from_now=7)
+            db.schedule_review(problem_db_id, days_from_now=7)
+
+        # Verify repetitions
+        conn = sqlite3.connect(db_path)
+        cursor = conn.cursor()
+        cursor.execute("SELECT repetitions FROM reviews WHERE problem_id=?", (problem_db_id,))
+        reps = cursor.fetchone()[0]
+        conn.close()
+
+        assert reps == 3
+
+    def test_get_due_reviews_returns_due_problems(self, tmp_path):
+        """Test get_due_reviews returns problems due for review."""
+        db_path = tmp_path / "test.db"
+        create_database_schema(db_path)
+
+        # Insert problem and schedule past review
+        conn = sqlite3.connect(db_path)
+        cursor = conn.cursor()
+        cursor.execute("""
+            INSERT INTO problems (source, problem_id, title, difficulty)
+            VALUES ('leetcode', '1', 'Two Sum', 'Easy')
+        """)
+        problem_db_id = cursor.lastrowid
+
+        yesterday = (date.today() - timedelta(days=1)).isoformat()
+        cursor.execute("""
+            INSERT INTO reviews (problem_id, next_review_date, interval_days, repetitions)
+            VALUES (?, ?, 7, 1)
+        """, (problem_db_id, yesterday))
+        conn.commit()
+        conn.close()
+
+        with DatabaseManager(db_path) as db:
+            reviews = db.get_due_reviews(include_future=False)
+
+        assert len(reviews) == 1
+        assert reviews[0]['problem_id'] == '1'
+
+    def test_get_due_reviews_excludes_future_reviews(self, tmp_path):
+        """Test get_due_reviews excludes future reviews by default."""
+        db_path = tmp_path / "test.db"
+        create_database_schema(db_path)
+
+        # Insert problem and schedule future review
+        conn = sqlite3.connect(db_path)
+        cursor = conn.cursor()
+        cursor.execute("""
+            INSERT INTO problems (source, problem_id, title, difficulty)
+            VALUES ('leetcode', '1', 'Two Sum', 'Easy')
+        """)
+        problem_db_id = cursor.lastrowid
+
+        future = (date.today() + timedelta(days=7)).isoformat()
+        cursor.execute("""
+            INSERT INTO reviews (problem_id, next_review_date, interval_days, repetitions)
+            VALUES (?, ?, 7, 1)
+        """, (problem_db_id, future))
+        conn.commit()
+        conn.close()
+
+        with DatabaseManager(db_path) as db:
+            reviews = db.get_due_reviews(include_future=False)
+
+        assert len(reviews) == 0
+
+    def test_get_due_reviews_includes_future_when_requested(self, tmp_path):
+        """Test get_due_reviews includes future reviews when requested."""
+        db_path = tmp_path / "test.db"
+        create_database_schema(db_path)
+
+        # Insert problem and schedule future review
+        conn = sqlite3.connect(db_path)
+        cursor = conn.cursor()
+        cursor.execute("""
+            INSERT INTO problems (source, problem_id, title, difficulty)
+            VALUES ('leetcode', '1', 'Two Sum', 'Easy')
+        """)
+        problem_db_id = cursor.lastrowid
+
+        future = (date.today() + timedelta(days=7)).isoformat()
+        cursor.execute("""
+            INSERT INTO reviews (problem_id, next_review_date, interval_days, repetitions)
+            VALUES (?, ?, 7, 1)
+        """, (problem_db_id, future))
+        conn.commit()
+        conn.close()
+
+        with DatabaseManager(db_path) as db:
+            reviews = db.get_due_reviews(include_future=True)
+
+        assert len(reviews) == 1
+
+    def test_get_review_stats(self, tmp_path):
+        """Test get_review_stats returns correct statistics."""
+        db_path = tmp_path / "test.db"
+        create_database_schema(db_path)
+
+        # Insert problems and reviews
+        conn = sqlite3.connect(db_path)
+        cursor = conn.cursor()
+
+        # Problem 1 - due today
+        cursor.execute("""
+            INSERT INTO problems (source, problem_id, title, difficulty)
+            VALUES ('leetcode', '1', 'Two Sum', 'Easy')
+        """)
+        p1_id = cursor.lastrowid
+        today = date.today().isoformat()
+        cursor.execute("""
+            INSERT INTO reviews (problem_id, next_review_date, interval_days, repetitions)
+            VALUES (?, ?, 7, 3)
+        """, (p1_id, today))
+
+        # Problem 2 - due in 3 days
+        cursor.execute("""
+            INSERT INTO problems (source, problem_id, title, difficulty)
+            VALUES ('leetcode', '2', 'Add Two Numbers', 'Medium')
+        """)
+        p2_id = cursor.lastrowid
+        in_3_days = (date.today() + timedelta(days=3)).isoformat()
+        cursor.execute("""
+            INSERT INTO reviews (problem_id, next_review_date, interval_days, repetitions)
+            VALUES (?, ?, 7, 1)
+        """, (p2_id, in_3_days))
+
+        conn.commit()
+        conn.close()
+
+        with DatabaseManager(db_path) as db:
+            stats = db.get_review_stats()
+
+        assert stats['due_today'] == 1
+        assert stats['due_this_week'] == 2
+        assert stats['total_in_review'] == 2
+        assert len(stats['most_reviewed']) > 0
+
+    def test_remove_from_review(self, tmp_path):
+        """Test remove_from_review removes the review entry."""
+        db_path = tmp_path / "test.db"
+        create_database_schema(db_path)
+
+        # Insert a problem and schedule review
+        conn = sqlite3.connect(db_path)
+        cursor = conn.cursor()
+        cursor.execute("""
+            INSERT INTO problems (source, problem_id, title, difficulty)
+            VALUES ('leetcode', '1', 'Two Sum', 'Easy')
+        """)
+        problem_db_id = cursor.lastrowid
+        today = date.today().isoformat()
+        cursor.execute("""
+            INSERT INTO reviews (problem_id, next_review_date, interval_days, repetitions)
+            VALUES (?, ?, 7, 1)
+        """, (problem_db_id, today))
+        conn.commit()
+        conn.close()
+
+        with DatabaseManager(db_path) as db:
+            # Verify review exists
+            reviews = db.get_due_reviews(include_future=True)
+            assert len(reviews) == 1
+
+            # Remove from review
+            result = db.remove_from_review(problem_db_id)
+            assert result is True
+
+            # Verify removed
+            reviews = db.get_due_reviews(include_future=True)
+            assert len(reviews) == 0

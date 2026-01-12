@@ -19,6 +19,7 @@ from bytedojo.commands import test
 from bytedojo.commands.settings import settings
 from bytedojo.commands.leetcode import leetcode
 from bytedojo.commands.codeforces import codeforces
+from bytedojo.commands.review import review
 
 def print_version(ctx, param, value):
     """Print version information and exit."""
@@ -76,3 +77,4 @@ dojo.add_command(codeforces)
 dojo.add_command(stats)
 dojo.add_command(test)
 dojo.add_command(settings)
+dojo.add_command(review)

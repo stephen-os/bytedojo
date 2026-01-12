@@ -1,29 +1,42 @@
 """
 Test runner for executing problem tests.
 
-Runs tests against user solutions using test data from JSON.
+Runs tests against user solutions using internal test data.
 """
 
+import json
 import subprocess
 import sys
 import tempfile
 from pathlib import Path
-from typing import Optional
-from dataclasses import dataclass
+from typing import Optional, List, Any
+from dataclasses import dataclass, field
 
 from bytedojo.core.logger import get_logger
-from bytedojo.core.test_store import TestData
+from bytedojo.core.test_data import TestDataLoader, ProblemTestData, TestCase
+
+
+@dataclass
+class TestResult:
+    """Result of a single test case."""
+    test_num: int
+    input: List[Any]
+    expected: Any
+    actual: Any
+    passed: bool
+    error: Optional[str] = None
 
 
 @dataclass
 class ExecutionResult:
-    """Result from running a test."""
+    """Result from running all tests for a problem."""
     passed: bool
     output: str
     error: Optional[str] = None
     status: str = 'untested'  # 'passed', 'failed', 'error', 'untested'
     tests_run: int = 0
     tests_passed: int = 0
+    test_results: List[TestResult] = field(default_factory=list)
 
 
 class Executor:
@@ -120,18 +133,44 @@ def treenode_to_list(root):
         """
         self.timeout = timeout
         self.logger = get_logger()
+        self.test_data_loader = TestDataLoader()
 
-    def run_test(self, test_data: TestData) -> ExecutionResult:
+    def run_tests_for_problem(
+        self,
+        source: str,
+        problem_id: int,
+        solution_path: Path,
+        class_name: str = "Solution",
+        method_name: str = None,
+        needs_listnode: bool = False,
+        needs_treenode: bool = False
+    ) -> ExecutionResult:
         """
-        Run tests for a problem using test data.
+        Run tests for a problem using internal test data.
 
         Args:
-            test_data: TestData containing problem metadata and test cases
+            source: Problem source (e.g., 'leetcode')
+            problem_id: Problem ID
+            solution_path: Path to solution file
+            class_name: Class name in solution
+            method_name: Method to call
+            needs_listnode: Whether ListNode helpers are needed
+            needs_treenode: Whether TreeNode helpers are needed
 
         Returns:
             ExecutionResult with execution details
         """
-        solution_path = Path(test_data.file_path)
+        # Load test data
+        test_data = self.test_data_loader.get_test_data(source, problem_id)
+        if not test_data:
+            return ExecutionResult(
+                passed=False,
+                output="",
+                error=f"No test data found for {source} problem #{problem_id}",
+                status='error'
+            )
+
+        solution_path = Path(solution_path).resolve()
 
         if not solution_path.exists():
             return ExecutionResult(
@@ -142,7 +181,14 @@ def treenode_to_list(root):
             )
 
         # Generate test runner script
-        test_script = self._generate_test_script(test_data, solution_path)
+        test_script = self._generate_test_script(
+            test_data=test_data,
+            solution_path=solution_path,
+            class_name=class_name,
+            method_name=method_name,
+            needs_listnode=needs_listnode,
+            needs_treenode=needs_treenode
+        )
 
         # Write to temp file and execute
         try:
@@ -168,12 +214,9 @@ def treenode_to_list(root):
             output = result.stdout
             error = result.stderr if result.returncode != 0 else None
 
-            # Extract test counts from output
-            tests_run, tests_passed = self._parse_test_output(output)
+            # Parse the JSON results from output
+            test_results, tests_run, tests_passed = self._parse_test_results(output)
 
-            # Determine if tests passed:
-            # - Subprocess must exit 0 (no crash)
-            # - All tests must pass (tests_passed == tests_run)
             if result.returncode == 0 and tests_run > 0 and tests_passed == tests_run:
                 return ExecutionResult(
                     passed=True,
@@ -181,26 +224,18 @@ def treenode_to_list(root):
                     error=None,
                     status='passed',
                     tests_run=tests_run,
-                    tests_passed=tests_passed
+                    tests_passed=tests_passed,
+                    test_results=test_results
                 )
-            elif result.returncode != 0:
+            else:
                 return ExecutionResult(
                     passed=False,
                     output=output,
                     error=error,
                     status='failed',
                     tests_run=tests_run,
-                    tests_passed=tests_passed
-                )
-            else:
-                # Subprocess succeeded but some tests failed
-                return ExecutionResult(
-                    passed=False,
-                    output=output,
-                    error="Some tests failed" if tests_run > tests_passed else None,
-                    status='failed',
-                    tests_run=tests_run,
-                    tests_passed=tests_passed
+                    tests_passed=tests_passed,
+                    test_results=test_results
                 )
 
         except subprocess.TimeoutExpired:
@@ -226,106 +261,137 @@ def treenode_to_list(root):
             except Exception:
                 pass
 
-    def _generate_test_script(self, test_data: TestData, solution_path: Path) -> str:
+    def _generate_test_script(
+        self,
+        test_data: ProblemTestData,
+        solution_path: Path,
+        class_name: str,
+        method_name: str,
+        needs_listnode: bool,
+        needs_treenode: bool
+    ) -> str:
         """Generate a test runner script for the problem."""
         lines = []
 
         # Add imports
         lines.append("import sys")
+        lines.append("import json")
         lines.append("import importlib.util")
         lines.append("")
 
         # Add helper classes/functions if needed
-        if test_data.helpers_needed.get('listnode'):
+        if needs_listnode:
             lines.append(self.LISTNODE_HELPERS)
-        if test_data.helpers_needed.get('treenode'):
+        if needs_treenode:
             lines.append(self.TREENODE_HELPERS)
 
-        # Load the solution module dynamically (handles filenames starting with numbers)
+        # Load the solution module dynamically
         lines.append(f"solution_path = {repr(str(solution_path))}")
         lines.append("spec = importlib.util.spec_from_file_location('solution', solution_path)")
         lines.append("module = importlib.util.module_from_spec(spec)")
         lines.append("spec.loader.exec_module(module)")
-        lines.append(f"{test_data.class_name} = getattr(module, '{test_data.class_name}')")
+        lines.append(f"{class_name} = getattr(module, '{class_name}')")
+        lines.append("")
+
+        # Build test cases
+        tests_json = json.dumps([
+            {"input": t.input, "expected": t.expected}
+            for t in test_data.tests
+        ])
+
+        lines.append(f"test_cases = {tests_json}")
         lines.append("")
 
         # Add test runner
         lines.append("def run_tests():")
-        lines.append(f"    instance = {test_data.class_name}()")
-        lines.append("    test_cases = " + repr(test_data.test_cases))
-        lines.append("    ")
-        lines.append("    # Parse test cases")
-        lines.append("    lines = [l.strip() for l in test_cases.strip().split('\\n') if l.strip()]")
-        lines.append("    ")
-        lines.append(f"    param_count = {len(test_data.params)}")
+        lines.append(f"    instance = {class_name}()")
+        lines.append("    results = []")
         lines.append("    tests_run = 0")
         lines.append("    tests_passed = 0")
-        lines.append("    ")
-        lines.append("    if param_count == 0:")
-        lines.append("        print('No parameters defined for this problem')")
-        lines.append("        return")
-        lines.append("    ")
-        lines.append("    # Group lines into test cases")
-        lines.append("    i = 0")
-        lines.append("    test_num = 1")
-        lines.append("    while i < len(lines):")
-        lines.append("        if i + param_count > len(lines):")
-        lines.append("            break")
-        lines.append("        ")
-        lines.append("        # Get inputs for this test")
-        lines.append("        inputs = []")
-        lines.append("        for j in range(param_count):")
-        lines.append("            try:")
-        lines.append("                value = eval(lines[i + j])")
-        lines.append("            except:")
-        lines.append("                value = lines[i + j]")
-        lines.append("            inputs.append(value)")
-        lines.append("        ")
-
-        # Apply conversions for ListNode/TreeNode
-        for idx, param in enumerate(test_data.params):
-            param_type = param.get('type', 'Any')
-            if 'ListNode' in param_type:
-                lines.append(f"        inputs[{idx}] = list_to_listnode(inputs[{idx}])")
-            elif 'TreeNode' in param_type:
-                lines.append(f"        inputs[{idx}] = list_to_treenode(inputs[{idx}])")
-
-        lines.append("        ")
-        lines.append("        # Call the solution")
+        lines.append("")
+        lines.append("    for i, test in enumerate(test_cases, 1):")
+        lines.append("        inputs = test['input']")
+        lines.append("        expected = test['expected']")
+        lines.append("        tests_run += 1")
+        lines.append("")
         lines.append("        try:")
-        lines.append(f"            result = instance.{test_data.method_name}(*inputs)")
 
-        # Apply return type conversion
-        if 'ListNode' in test_data.return_type:
-            lines.append("            result = listnode_to_list(result)")
-        elif 'TreeNode' in test_data.return_type:
-            lines.append("            result = treenode_to_list(result)")
+        # Call the method
+        if method_name:
+            lines.append(f"            actual = instance.{method_name}(*inputs)")
+        else:
+            lines.append("            # Method name not specified")
+            lines.append("            actual = None")
 
-        lines.append("            tests_run += 1")
-        lines.append("            print(f'Test {test_num}: {result}')")
-        lines.append("            tests_passed += 1  # No assertion, just run")
+        lines.append("")
+        lines.append("            # Compare results")
+        lines.append("            passed = actual == expected")
+        lines.append("            if passed:")
+        lines.append("                tests_passed += 1")
+        lines.append("")
+        lines.append("            results.append({")
+        lines.append("                'test_num': i,")
+        lines.append("                'input': inputs,")
+        lines.append("                'expected': expected,")
+        lines.append("                'actual': actual,")
+        lines.append("                'passed': passed,")
+        lines.append("                'error': None")
+        lines.append("            })")
+        lines.append("")
         lines.append("        except Exception as e:")
-        lines.append("            tests_run += 1")
-        lines.append("            print(f'Test {test_num} ERROR: {e}')")
-        lines.append("        ")
-        lines.append("        i += param_count")
-        lines.append("        test_num += 1")
-        lines.append("    ")
-        lines.append("    print()")
-        lines.append("    print(f'Tests run: {tests_run}, Passed: {tests_passed}')")
+        lines.append("            results.append({")
+        lines.append("                'test_num': i,")
+        lines.append("                'input': inputs,")
+        lines.append("                'expected': expected,")
+        lines.append("                'actual': None,")
+        lines.append("                'passed': False,")
+        lines.append("                'error': str(e)")
+        lines.append("            })")
+        lines.append("")
+        lines.append("    # Output results as JSON")
+        lines.append("    print('===RESULTS===')")
+        lines.append("    print(json.dumps({")
+        lines.append("        'tests_run': tests_run,")
+        lines.append("        'tests_passed': tests_passed,")
+        lines.append("        'results': results")
+        lines.append("    }))")
         lines.append("")
         lines.append("if __name__ == '__main__':")
         lines.append("    run_tests()")
 
         return "\n".join(lines)
 
-    def _parse_test_output(self, output: str) -> tuple:
-        """Parse test output to extract counts."""
+    def _parse_test_results(self, output: str) -> tuple:
+        """Parse test output to extract results."""
+        import json
         import re
-        match = re.search(r'Tests run: (\d+), Passed: (\d+)', output)
+
+        test_results = []
+        tests_run = 0
+        tests_passed = 0
+
+        # Find the JSON results section
+        match = re.search(r'===RESULTS===\n(.+)', output, re.DOTALL)
         if match:
-            return int(match.group(1)), int(match.group(2))
-        return 0, 0
+            try:
+                data = json.loads(match.group(1).strip())
+                tests_run = data.get('tests_run', 0)
+                tests_passed = data.get('tests_passed', 0)
+
+                for r in data.get('results', []):
+                    test_results.append(TestResult(
+                        test_num=r.get('test_num', 0),
+                        input=r.get('input', []),
+                        expected=r.get('expected'),
+                        actual=r.get('actual'),
+                        passed=r.get('passed', False),
+                        error=r.get('error')
+                    ))
+
+            except json.JSONDecodeError:
+                pass
+
+        return test_results, tests_run, tests_passed
 
     def validate_solution_file(self, file_path: Path) -> bool:
         """
