@@ -10,6 +10,17 @@ class CodeSnippet:
 
 
 @dataclass
+class ProblemSummary:
+    """Summary of a LeetCode problem from query results."""
+    id: int
+    title: str
+    title_slug: str
+    difficulty: str  # "Easy", "Medium", "Hard"
+    paid_only: bool
+    tags: List[str]
+
+
+@dataclass
 class Problem:
     """LeetCode problem data."""
     id: int
