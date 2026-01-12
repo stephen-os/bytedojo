@@ -81,9 +81,8 @@ class TestBasicFormatting:
         result = formatter.format(basic_problem)
         assert "PROBLEM DESCRIPTION" in result
         assert "SOLUTION" in result
-        assert "TESTS" in result
-        assert "def run_tests():" in result
-        assert 'if __name__ == "__main__":' in result
+        # Tests are now stored separately as JSON, not in the file
+        assert "class Solution:" in result
     
     def test_code_template_included(self, formatter, basic_problem):
         """Verify solution code is included."""
@@ -121,7 +120,9 @@ class TestNullAndEmptyInputs:
         """Handle empty test cases."""
         basic_problem.test_cases = ""
         result = formatter.format(basic_problem)
-        assert "Add your test cases here" in result or "pass" in result
+        # Tests are stored separately now, file should still be valid
+        assert isinstance(result, str)
+        assert "class Solution:" in result
     
     def test_none_test_cases(self, formatter, basic_problem):
         """Handle None test cases."""
@@ -467,14 +468,17 @@ class Codec:
 
 
 # ============================================================================
-# TEST CASE PARSING TESTS
+# TEST CASE PARSING TESTS (now tests format output only)
 # ============================================================================
 
 class TestTestCaseParsing:
-    """Test test case parsing through public interface."""
-    
+    """Test that formatter produces valid output without test code.
+
+    Note: Tests are now stored separately as JSON, not in the generated file.
+    """
+
     def test_parse_simple_test_groups(self, formatter):
-        """Parse simple input/output groups."""
+        """Format with test cases (stored externally)."""
         problem = Mock(spec=Problem)
         problem.id = 1
         problem.title = "Test"
@@ -484,16 +488,15 @@ class TestTestCaseParsing:
         problem.get_snippet.return_value = """class Solution:
     def method(self, x: int) -> int:
         pass"""
-        
+
         result = formatter.format(problem)
-        # Verify it doesn't crash and produces test code
+        # Verify it produces valid output (no tests in file)
         assert isinstance(result, str)
-        assert "def run_tests():" in result
-        # Should have test output with the inputs
-        assert "result1" in result or "[1,2,3]" in result or "Expected" in result
-    
+        assert "class Solution:" in result
+        assert "def method" in result
+
     def test_parse_multiple_params(self, formatter):
-        """Parse test cases with multiple parameters."""
+        """Format with multiple parameter method."""
         problem = Mock(spec=Problem)
         problem.id = 1
         problem.title = "Test"
@@ -503,15 +506,14 @@ class TestTestCaseParsing:
         problem.get_snippet.return_value = """class Solution:
     def method(self, nums: List[int], target: int) -> int:
         pass"""
-        
+
         result = formatter.format(problem)
         assert isinstance(result, str)
-        assert "def run_tests():" in result
-        # Should handle multiple parameters
-        assert "result" in result or "Expected" in result
-    
+        assert "class Solution:" in result
+        assert "def method" in result
+
     def test_parse_no_expected_output(self, formatter):
-        """Parse when only inputs provided."""
+        """Format when only inputs provided."""
         problem = Mock(spec=Problem)
         problem.id = 1
         problem.title = "Test"
@@ -521,13 +523,11 @@ class TestTestCaseParsing:
         problem.get_snippet.return_value = """class Solution:
     def method(self, nums: List[int]) -> int:
         pass"""
-        
+
         result = formatter.format(problem)
         assert isinstance(result, str)
-        assert "def run_tests():" in result
-        # Should still generate test code even without expected outputs
-        assert "result" in result or "print" in result
-    
+        assert "class Solution:" in result
+
     def test_parse_mismatched_lines(self, formatter):
         """Handle mismatched line counts."""
         problem = Mock(spec=Problem)
@@ -535,17 +535,16 @@ class TestTestCaseParsing:
         problem.title = "Test"
         problem.difficulty = "Easy"
         problem.description = "<p>Test</p>"
-        # 3 lines that don't divide evenly by param count
         problem.test_cases = "[1,2]\n3\n5"
         problem.get_snippet.return_value = """class Solution:
     def method(self, nums: List[int], target: int) -> int:
         pass"""
-        
+
         result = formatter.format(problem)
-        # Should not crash - might fall back to commented format
+        # Should not crash
         assert isinstance(result, str)
-        assert "def run_tests():" in result
-    
+        assert "class Solution:" in result
+
     def test_parse_zero_params(self, formatter):
         """Handle zero parameter methods."""
         problem = Mock(spec=Problem)
@@ -557,12 +556,11 @@ class TestTestCaseParsing:
         problem.get_snippet.return_value = """class Solution:
     def method(self) -> int:
         pass"""
-        
+
         result = formatter.format(problem)
         assert isinstance(result, str)
-        assert "def run_tests():" in result
-        # With zero params, should still generate some test structure
-        assert "pass" in result or "result" in result
+        assert "class Solution:" in result
+        assert "pass" in result
 
 
 # ============================================================================
@@ -683,18 +681,16 @@ class TestIntegration:
     def test_full_workflow_simple_problem(self, formatter, basic_problem):
         """Complete workflow for simple problem."""
         result = formatter.format(basic_problem)
-        
+
         # Verify structure
         assert "LeetCode Problem #1: Two Sum" in result
         assert "PROBLEM DESCRIPTION" in result
         assert "SOLUTION" in result
-        assert "TESTS" in result
-        
+        # Tests are now stored separately as JSON
+
         # Verify it's runnable Python
         assert result.count('"""') >= 2  # Has docstrings
         assert "class Solution:" in result
-        assert "def run_tests():" in result
-        assert 'if __name__ == "__main__":' in result
     
     def test_full_workflow_complex_problem(self, formatter, complex_problem):
         """Complete workflow for complex problem."""

@@ -319,78 +319,7 @@ class FormatContext:
 # ==========================================================================
 
 class PythonFormatter(BaseFormatter):
-    """Formats LeetCode problems as Python files with smart test generation."""
-    
-    # Helper function templates
-    LISTNODE_HELPERS = '''
-    def list_to_listnode(arr):
-        """Convert array to ListNode."""
-        if not arr:
-            return None
-        head = ListNode(arr[0])
-        current = head
-        for val in arr[1:]:
-            current.next = ListNode(val)
-            current = current.next
-        return head
-    
-    def listnode_to_list(node):
-        """Convert ListNode to array."""
-        result = []
-        while node:
-            result.append(node.val)
-            node = node.next
-        return result
-'''
-
-    TREENODE_HELPERS = '''
-    def list_to_treenode(arr):
-        """Convert array to TreeNode (level-order)."""
-        if not arr or arr[0] is None:
-            return None
-        
-        root = TreeNode(arr[0])
-        queue = [root]
-        i = 1
-        
-        while queue and i < len(arr):
-            node = queue.pop(0)
-            
-            if i < len(arr) and arr[i] is not None:
-                node.left = TreeNode(arr[i])
-                queue.append(node.left)
-            i += 1
-            
-            if i < len(arr) and arr[i] is not None:
-                node.right = TreeNode(arr[i])
-                queue.append(node.right)
-            i += 1
-        
-        return root
-    
-    def treenode_to_list(root):
-        """Convert TreeNode to array (level-order)."""
-        if not root:
-            return []
-        
-        result = []
-        queue = [root]
-        
-        while queue:
-            node = queue.pop(0)
-            if node:
-                result.append(node.val)
-                queue.append(node.left)
-                queue.append(node.right)
-            else:
-                result.append(None)
-        
-        # Remove trailing None values
-        while result and result[-1] is None:
-            result.pop()
-        
-        return result
-'''
+    """Formats LeetCode problems as Python files."""
 
     def __init__(self):
         """Initialize the formatter with a logger."""
@@ -399,12 +328,12 @@ class PythonFormatter(BaseFormatter):
     def format(self, problem: Problem) -> str:
         """Generate complete Python file content."""
         self.logger.debug(f"Starting format for problem #{problem.id}: {problem.title}")
-        
+
         try:
             # Extract and process code
             code_template = self._get_python_code(problem)
             description = self._format_description(problem.description)
-            
+
             # Create context with all metadata
             ctx = FormatContext(
                 code=code_template,
@@ -412,16 +341,13 @@ class PythonFormatter(BaseFormatter):
                 test_cases=problem.test_cases,
                 _logger=self.logger
             )
-            
-            # Generate test cases using context
-            test_cases = self._format_test_cases(ctx)
-            
-            # Build final content
-            content = self._build_file_content(problem, description, code_template, test_cases, ctx)
-            
+
+            # Build final content (no test generation - tests are stored separately)
+            content = self._build_file_content(problem, description, code_template, ctx)
+
             self.logger.debug(f"Successfully formatted problem #{problem.id}")
             return content
-            
+
         except Exception as e:
             self.logger.error(f"Error formatting problem #{problem.id}: {e}", exc_info=True)
             raise
@@ -430,7 +356,7 @@ class PythonFormatter(BaseFormatter):
     # Main Content Building
     # ========================================================================
     
-    def _build_file_content(self, problem: Problem, description: str, code_template: str, test_cases: str, ctx: FormatContext) -> str:
+    def _build_file_content(self, problem: Problem, description: str, code_template: str, ctx: FormatContext) -> str:
         """Build the complete file content from components."""
         return f'''"""
 LeetCode Problem #{problem.id}: {problem.title}
@@ -447,20 +373,6 @@ Difficulty: {problem.difficulty}
 # ============================================================================
 
 {code_template}
-
-
-# ============================================================================
-# TESTS
-# ============================================================================
-
-def run_tests():
-    """Run test cases for the problem."""
-    {ctx.instance_name} = {ctx.class_name}()
-{test_cases}
-
-
-if __name__ == "__main__":
-    run_tests()
 '''
     
     # ========================================================================
@@ -622,235 +534,4 @@ if __name__ == "__main__":
         """Convert HTML content to plain text."""
         text = re.sub(r'<[^>]+>', '', html_content)
         text = unescape(text)
-        return text
-    
-    # ========================================================================
-    # Test Case Formatting
-    # ========================================================================
-    
-    def _format_test_cases(self, ctx: FormatContext) -> str:
-        """Format test cases into runnable code with smart helper detection."""
-        self.logger.debug("Formatting test cases")
-        
-        try:
-            # Use test examples from context if available
-            if ctx.test_examples:
-                return self._build_test_code(ctx)
-            else:
-                self.logger.debug("No examples found, using basic test case format")
-                return self._format_basic_test_cases(ctx)
-            
-        except Exception as e:
-            self.logger.error(f"Error formatting test cases: {e}", exc_info=True)
-            return '    # Error generating test cases\n    pass'
-    
-    def _build_test_code(self, ctx: FormatContext) -> str:
-        """Build the complete test code from examples."""
-        test_code = []
-        
-        # Add helper functions
-        if ctx.helpers_needed.get('listnode'):
-            test_code.extend(self.LISTNODE_HELPERS.split('\n'))
-        if ctx.helpers_needed.get('treenode'):
-            test_code.extend(self.TREENODE_HELPERS.split('\n'))
-        
-        test_code.append('')
-        
-        # Generate test assertions
-        for test_num, (input_text, output_text, explanation) in enumerate(ctx.test_examples, 1):
-            assertion = self._build_test_assertion(input_text, output_text, ctx)
-            
-            if assertion:
-                test_code.append(assertion)
-                test_code.append('')
-        
-        return '\n'.join(test_code)
-    
-    def _build_test_assertion(self, input_text: str, output_text: str, ctx: FormatContext) -> Optional[str]:
-        """Build a single test assertion."""
-        try:
-            input_params = self._parse_input_line(input_text)
-            if not input_params:
-                return None
-            
-            expected_return = self._parse_output_line(output_text)
-            expected_return = self._normalize_value(expected_return)
-            
-            # Build function call
-            call_params = self._build_call_parameters(input_params, ctx)
-            params_str = ', '.join(call_params)
-            call = f'{ctx.instance_name}.{ctx.method_name}({params_str})'
-            
-            # Apply return type conversion if needed
-            call = self._apply_return_conversion(call, ctx.return_type)
-            
-            return f'    assert {expected_return} == {call}'
-            
-        except Exception as e:
-            self.logger.error(f"Error building test assertion: {e}")
-            return None
-    
-    def _build_call_parameters(self, input_params: List[Tuple[str, str]], ctx: FormatContext) -> List[str]:
-        """Build the list of function call parameters with conversions."""
-        call_params = []
-        
-        for param_name, param_value in input_params:
-            param_type = ctx.find_param_type(param_name)
-            converter = ctx.needs_conversion(param_type) if param_type else None
-            
-            if converter:
-                call_params.append(f'{converter}({param_value})')
-                self.logger.debug(f"Applying {converter} to {param_name}")
-            else:
-                call_params.append(param_value)
-        
-        return call_params
-    
-    def _apply_return_conversion(self, call: str, return_type: str) -> str:
-        """Apply conversion to return value if needed."""
-        if 'ListNode' in return_type:
-            self.logger.debug("Applying listnode_to_list to return value")
-            return f'listnode_to_list({call})'
-        elif 'TreeNode' in return_type:
-            self.logger.debug("Applying treenode_to_list to return value")
-            return f'treenode_to_list({call})'
-        return call
-    
-    def _normalize_value(self, value: str) -> str:
-        """Normalize a value string (convert true/false/null)."""
-        value = value.replace('null', 'None')
-        
-        if value.lower() == 'true':
-            return 'True'
-        elif value.lower() == 'false':
-            return 'False'
-        
-        return value
-    
-    def _format_basic_test_cases(self, ctx: FormatContext) -> str:
-        """Fallback: format basic test cases when examples can't be parsed."""
-        self.logger.debug("Using basic test case format")
-        
-        if not ctx.test_cases:
-            return '    # Add your test cases here\n    pass'
-        
-        lines = ctx.test_cases.strip().split('\n')
-        
-        test_code = []
-        test_code.append('    # NOTE: Expected outputs not available - add assertions manually')
-        test_code.append('')
-        
-        if ctx.param_count > 0 and len(lines) % ctx.param_count == 0:
-            for i in range(0, len(lines), ctx.param_count):
-                test_num = (i // ctx.param_count) + 1
-                inputs = lines[i:i + ctx.param_count]
-                
-                if len(inputs) == 1:
-                    call = f'{ctx.instance_name}.{ctx.method_name}({inputs[0]})'
-                else:
-                    params_str = ', '.join(inputs)
-                    call = f'{ctx.instance_name}.{ctx.method_name}({params_str})'
-                
-                test_code.append(f'    result{test_num} = {call}')
-                test_code.append(f'    print(f"Test {test_num}: {{result{test_num}}}")')
-                test_code.append('')
-        
-        return '\n'.join(test_code)
-    
-    # ========================================================================
-    # Input/Output Parsing
-    # ========================================================================
-    
-    def _parse_input_line(self, input_text: str) -> List[Tuple[str, str]]:
-        """Parse input line to extract parameter names and values."""
-        self.logger.debug(f"Parsing input line: {input_text[:100]}...")
-        
-        params = []
-        current_part = ""
-        in_quotes = False
-        quote_char = None
-        bracket_depth = 0
-        
-        for char in input_text + ',':
-            if char in ('"', "'") and (not in_quotes or char == quote_char):
-                in_quotes = not in_quotes
-                quote_char = char if in_quotes else None
-                current_part += char
-            elif char in '[{(':
-                bracket_depth += 1
-                current_part += char
-            elif char in ']})':
-                bracket_depth -= 1
-                current_part += char
-            elif char == ',' and not in_quotes and bracket_depth == 0:
-                if current_part.strip():
-                    param = self._parse_input_parameter(current_part.strip())
-                    if param:
-                        params.append(param)
-                current_part = ""
-            else:
-                current_part += char
-        
-        self.logger.debug(f"Parsed {len(params)} input parameters")
-        return params
-    
-    def _parse_input_parameter(self, param_str: str) -> Optional[Tuple[str, str]]:
-        """Parse a single input parameter string."""
-        match = re.search(r'(\w+)\s*=\s*(.+)', param_str)
-        if not match:
-            return None
-        
-        name = match.group(1).strip()
-        value = match.group(2).strip()
-        
-        # Normalize value
-        value = value.replace('null', 'None')
-        
-        # Convert double quotes to single quotes
-        if value.startswith('"') and value.endswith('"'):
-            inner_value = value[1:-1].replace("'", "\\'")
-            value = f"'{inner_value}'"
-        
-        return (name, value)
-    
-    def _parse_output_line(self, output_text: str) -> str:
-        """Parse output line to extract just the return value."""
-        output_text = output_text.strip()
-        
-        # Handle list output
-        if output_text.startswith('['):
-            return self._extract_list_value(output_text)
-        
-        # Handle dict/set output
-        if output_text.startswith('{'):
-            return self._extract_dict_value(output_text)
-        
-        # Handle comma-separated output (take first value)
-        if ',' in output_text:
-            return output_text.split(',')[0].strip()
-        
-        return output_text
-    
-    def _extract_list_value(self, text: str) -> str:
-        """Extract a complete list value from text."""
-        bracket_count = 0
-        for i, char in enumerate(text):
-            if char == '[':
-                bracket_count += 1
-            elif char == ']':
-                bracket_count -= 1
-                if bracket_count == 0:
-                    return text[:i+1]
-        return text
-    
-    def _extract_dict_value(self, text: str) -> str:
-        """Extract a complete dict/set value from text."""
-        bracket_count = 0
-        for i, char in enumerate(text):
-            if char == '{':
-                bracket_count += 1
-            elif char == '}':
-                bracket_count -= 1
-                if bracket_count == 0:
-                    return text[:i+1]
         return text

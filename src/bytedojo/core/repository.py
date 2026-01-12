@@ -39,6 +39,12 @@ class DojoRepository:
         if not self.is_initialized():
             raise RuntimeError("Repository not initialized. Run 'dojo init' first.")
         return self.db_path
+
+    def get_dojo_path(self) -> Path:
+        """Get path to .dojo directory."""
+        if not self.is_initialized():
+            raise RuntimeError("Repository not initialized. Run 'dojo init' first.")
+        return self.dojo_dir
     
     def initialize(self, force: bool = False):
         """
