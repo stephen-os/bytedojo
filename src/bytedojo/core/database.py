@@ -377,6 +377,36 @@ class DatabaseManager:
 
         return [dict(row) for row in cursor.fetchall()]
 
+    def get_problems_by_status(self, status: Optional[str] = None) -> List[Dict[str, Any]]:
+        """
+        Get problems filtered by grade status.
+
+        Args:
+            status: Filter by status ('passed', 'failed', 'skipped', 'ungraded')
+                   Also accepts legacy values ('untested' -> 'ungraded')
+                   None returns all problems
+
+        Returns:
+            List of problem dictionaries ordered by fetched_at descending
+        """
+        cursor = self.conn.cursor()
+
+        # Map legacy status values
+        if status == 'ungraded':
+            # Match both 'ungraded' and legacy 'untested'
+            cursor.execute(
+                "SELECT * FROM problems WHERE test_status IN ('ungraded', 'untested') ORDER BY fetched_at DESC",
+            )
+        elif status:
+            cursor.execute(
+                "SELECT * FROM problems WHERE test_status = ? ORDER BY fetched_at DESC",
+                (status,)
+            )
+        else:
+            cursor.execute("SELECT * FROM problems ORDER BY fetched_at DESC")
+
+        return [dict(row) for row in cursor.fetchall()]
+
     # ========================================================================
     # Configuration Methods
     # ========================================================================

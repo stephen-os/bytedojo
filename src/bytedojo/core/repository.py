@@ -126,34 +126,33 @@ class DojoRepository:
             .dojo/
             ├── db.sqlite          # Problem tracking database
             ├── settings.json      # User preferences
-            ├── tests/             # Test data for problems
             ├── logs/              # Debug logs (created in --debug mode)
             ├── .gitignore         # Git ignore rules
             └── README.md          # This file
 ```
-            
+
             ## Database Schema
-            
+
             - **problems**: Fetched problems and metadata
             - **attempts**: Your solution attempts and results
             - **reviews**: Spaced repetition schedule
             - **stats**: Daily statistics
             - **config**: Repository preferences
-            
+
             ## Usage
 ```bash
             # Fetch problems
             dojo leetcode fetch 1
-            
-            # Run tests
-            dojo test
-            
+
+            # Grade your solutions
+            dojo grade last --pass
+
             # View stats
             dojo stats
 ```
-            
+
             ## Tip
-            
+
             You can commit the `.dojo/` directory to track your progress across machines.
             Just make sure to add `.dojo/logs/` to your `.gitignore` if you don't want to commit logs.
         """).strip()

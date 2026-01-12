@@ -7,9 +7,11 @@ A CLI tool for fetching, solving, and tracking programming problems from LeetCod
 - **Multi-Platform Support**: Fetch problems from LeetCode and Codeforces
 - **Smart Problem Discovery**: Query and filter problems by difficulty, rating, and tags
 - **Random Problem Picker**: Get random unsolved problems matching your criteria
-- **Progress Tracking**: Track solved problems with pass/fail status in a local database
+- **Manual Grading**: Grade your solutions after verifying on the actual platform
+- **Spaced Repetition**: Passed problems are scheduled for review to reinforce learning
+- **Progress Tracking**: Track solved problems with pass/fail/skip status in a local database
 - **Interactive Navigation**: Browse problem lists with pagination without re-fetching
-- **Ready-to-Run Files**: Generated problem files include solution templates and test cases
+- **Ready-to-Run Files**: Generated problem files include solution templates
 
 ## Installation
 
@@ -51,8 +53,8 @@ dojo leetcode fetch 1
 # 3. Solve the problem in the generated file
 # Edit: problems/leetcode/easy/1-two-sum.py
 
-# 4. Test your solution
-dojo test problems/leetcode/easy/1-two-sum.py
+# 4. Submit to LeetCode to verify, then grade your solution
+dojo grade last --pass
 
 # 5. Check your progress
 dojo stats
@@ -127,10 +129,10 @@ dojo leetcode query --per-page 50        # 50 problems per page
 - `q` - Quit
 
 **Status Indicators:**
-- `[P]` - Passed (tests passing)
-- `[F]` - Failed (tests failing)
-- `[U]` - Untested (fetched but not tested)
-- `[ ]` - Not fetched
+- `[P]` - Passed
+- `[F]` - Failed
+- `[S]` - Skipped
+- `[ ]` - Not graded/fetched
 
 #### Pick Random Problem
 
@@ -210,16 +212,49 @@ dojo codeforces pick -t dp
 
 ---
 
-### Test Solutions
+### Grade Solutions
 
-Run tests on your solution files.
+Mark your solutions as passed, failed, or skipped. When you grade a problem as passed, it gets scheduled for spaced repetition review.
 
 ```bash
-# Test a specific file
-dojo test problems/leetcode/easy/1-two-sum.py
+# Interactive batch grading (shows all ungraded problems)
+dojo grade
 
-# Test with verbose output
-dojo test problems/leetcode/easy/1-two-sum.py --verbose
+# Grade the last fetched problem
+dojo grade last                          # Interactive prompt
+dojo grade last --pass                   # Quick pass
+dojo grade last --fail -n "TLE issue"    # Fail with notes
+
+# Grade a specific problem
+dojo grade problem 1                     # LeetCode #1 (interactive)
+dojo grade problem 4A --pass             # Codeforces 4A (quick pass)
+dojo grade problem 1 -f -n "Need DP"     # Fail with notes
+```
+
+**Flags:**
+- `--pass` / `-p` - Mark as passed (schedules review)
+- `--fail` / `-f` - Mark as failed
+- `--skip` / `-s` - Mark as skipped
+- `--notes` / `-n` - Add notes (works with any status)
+
+---
+
+### Spaced Repetition Review
+
+Problems you pass are automatically scheduled for review to reinforce learning.
+
+```bash
+# Show problems due for review
+dojo review
+
+# Show all scheduled reviews
+dojo review --all
+
+# Pick a random problem to review
+dojo review pick
+
+# View review statistics
+dojo review stats
 ```
 
 ---

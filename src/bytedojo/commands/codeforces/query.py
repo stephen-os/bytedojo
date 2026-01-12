@@ -22,7 +22,9 @@ DIFFICULTY_RATINGS = {
 STATUS_ICONS = {
     'passed': click.style('[P]', fg='green'),
     'failed': click.style('[F]', fg='red'),
-    'untested': click.style('[U]', fg='yellow'),
+    'skipped': click.style('[S]', fg='yellow'),
+    'untested': click.style('[ ]', fg='bright_black'),  # Legacy ungraded
+    'ungraded': click.style('[ ]', fg='bright_black'),
     None: click.style('[ ]', fg='bright_black'),  # Not in db
 }
 
@@ -187,7 +189,7 @@ def query(ctx, difficulty: str, rating_min: int, rating_max: int, tag: tuple,
     Search Codeforces problems with local status.
 
     Status indicators:
-      [P] Passed    [F] Failed    [U] Untested    [ ] Not fetched
+      [P] Passed    [F] Failed    [S] Skipped    [ ] Not graded/fetched
 
     Navigation (after results display):
       n = next page    p = prev page    # = jump to page    q = quit

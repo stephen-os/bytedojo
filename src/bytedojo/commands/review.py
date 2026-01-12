@@ -51,7 +51,7 @@ def review(ctx, show_all: bool):
     Spaced repetition review system.
 
     Shows problems that are due for review based on your review frequency setting.
-    When you pass a problem's tests, it gets scheduled for review.
+    When you grade a problem as passed, it gets scheduled for review.
 
     Examples:
       dojo review                  # Show problems due for review
@@ -82,7 +82,7 @@ def _show_due_reviews(show_all: bool = False):
         if not reviews:
             if show_all:
                 click.echo("\nNo problems scheduled for review yet.")
-                click.echo("Problems are added to review when you pass their tests.")
+                click.echo("Problems are added to review when you grade them as passed.")
             else:
                 click.echo(click.style("\nNo problems due for review!", fg='green'))
                 click.echo("Great job staying on top of your reviews.")
@@ -220,8 +220,9 @@ def pick(ctx):
         # Instructions
         if file_path:
             click.echo(f"  1. Open the file and solve it again")
-            click.echo(f"  2. Run: dojo test problem {problem_id}")
-            click.echo(f"  3. Passing the test will schedule the next review")
+            click.echo(f"  2. Submit to {source.capitalize()} to verify your solution")
+            click.echo(f"  3. Run: dojo grade problem {problem_id} --pass")
+            click.echo(f"  4. Grading as passed will schedule the next review")
         click.echo("")
 
 

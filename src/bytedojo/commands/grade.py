@@ -1,0 +1,421 @@
+"""
+Grade command - Mark problems as passed, failed, or skipped.
+"""
+
+import click
+from datetime import datetime
+
+from bytedojo.core.logger import get_logger, Theme
+from bytedojo.core.repository import DojoRepository
+from bytedojo.core.database import DatabaseManager
+
+
+# Status display helpers
+STATUS_COLORS = {
+    'passed': 'green',
+    'failed': 'red',
+    'skipped': 'yellow',
+    'ungraded': 'bright_black',
+}
+
+DIFFICULTY_COLORS = {
+    'Easy': 'green',
+    'Medium': 'yellow',
+    'Hard': 'red',
+}
+
+SOURCE_COLORS = {
+    'leetcode': 'yellow',
+    'codeforces': 'cyan',
+}
+
+
+def _get_repo_and_db():
+    """Get repository and database manager, or raise error if not initialized."""
+    logger = get_logger()
+    repo = DojoRepository()
+
+    if not repo.is_initialized():
+        logger.error("No .dojo repository found. Run 'dojo init' first.")
+        raise click.ClickException("Repository not initialized")
+
+    return repo
+
+
+def _display_problem_header(problem: dict):
+    """Display problem details header."""
+    problem_id = problem['problem_id']
+    source = problem['source']
+    title = problem['title']
+    difficulty = problem.get('difficulty') or 'Unknown'
+    file_path = problem.get('file_path', '')
+    current_status = problem.get('test_status', 'ungraded')
+
+    click.echo("")
+    click.echo(click.style("=" * 60, fg='bright_black'))
+    click.echo(click.style("  GRADE PROBLEM", fg='cyan', bold=True))
+    click.echo(click.style("=" * 60, fg='bright_black'))
+    click.echo("")
+    click.echo(f"  {problem_id}: {click.style(title, bold=True)}")
+    click.echo(f"  Source: {click.style(source.capitalize(), fg=SOURCE_COLORS.get(source, 'white'))}")
+    click.echo(f"  Difficulty: {click.style(difficulty, fg=DIFFICULTY_COLORS.get(difficulty, 'white'))}")
+    click.echo(f"  Current Status: {click.style(current_status, fg=STATUS_COLORS.get(current_status, 'white'))}")
+
+    if file_path:
+        click.echo(f"  File: {file_path}")
+
+    click.echo("")
+
+
+def _prompt_for_grade() -> tuple[str, str]:
+    """
+    Prompt user to select a grade interactively.
+
+    Returns:
+        Tuple of (status, notes) where status is 'passed', 'failed', 'skipped', or None to cancel
+    """
+    click.echo("  Grade: ", nl=False)
+    click.echo(
+        f"{click.style('[P]', fg='green')}ass  "
+        f"{click.style('[F]', fg='red')}ail  "
+        f"{click.style('[S]', fg='yellow')}kip  "
+        f"{click.style('[Q]', fg='bright_black')}uit"
+    )
+    click.echo("")
+
+    while True:
+        choice = click.prompt("  Select", default="q", show_default=False).strip().lower()
+
+        if choice in ('p', 'pass'):
+            status = 'passed'
+            break
+        elif choice in ('f', 'fail'):
+            status = 'failed'
+            break
+        elif choice in ('s', 'skip'):
+            status = 'skipped'
+            break
+        elif choice in ('q', 'quit', ''):
+            return None, None
+        else:
+            click.echo("  Invalid choice. Use p/f/s/q.")
+
+    # Prompt for optional notes
+    notes = click.prompt("  Notes (optional, Enter to skip)", default="", show_default=False).strip()
+
+    return status, notes if notes else None
+
+
+def _apply_grade(db: DatabaseManager, problem: dict, status: str, notes: str = None):
+    """
+    Apply a grade to a problem and handle review scheduling.
+
+    Args:
+        db: Database manager
+        problem: Problem dict
+        status: Grade status ('passed', 'failed', 'skipped')
+        notes: Optional notes
+    """
+    logger = get_logger()
+    problem_db_id = problem['id']
+
+    # Update the status
+    db.update_test_status(problem_db_id, status, notes)
+
+    # Schedule review if passed
+    if status == 'passed':
+        db.schedule_review(problem_db_id)
+        review_freq = db.get_config('review_frequency_days', '7')
+
+        click.echo("")
+        click.echo(f"  {click.style('PASSED', fg='green', bold=True)}")
+        click.echo(f"  {Theme.AQUA}Scheduled for review in {review_freq} days{Theme.RESET}")
+    elif status == 'failed':
+        click.echo("")
+        click.echo(f"  {click.style('FAILED', fg='red', bold=True)}")
+        if notes:
+            click.echo(f"  Notes: {notes}")
+    elif status == 'skipped':
+        click.echo("")
+        click.echo(f"  {click.style('SKIPPED', fg='yellow', bold=True)}")
+        if notes:
+            click.echo(f"  Notes: {notes}")
+
+    click.echo("")
+
+
+def _grade_single_problem(problem: dict, status: str = None, notes: str = None):
+    """
+    Grade a single problem, either with provided status or interactively.
+
+    Args:
+        problem: Problem dict from database
+        status: Optional status ('passed', 'failed', 'skipped')
+        notes: Optional notes
+
+    Returns:
+        True if graded, False if cancelled
+    """
+    repo = _get_repo_and_db()
+
+    with DatabaseManager(repo.get_db_path()) as db:
+        _display_problem_header(problem)
+
+        # If no status provided, prompt interactively
+        if status is None:
+            status, notes = _prompt_for_grade()
+            if status is None:
+                click.echo("  Cancelled.")
+                return False
+
+        _apply_grade(db, problem, status, notes)
+        return True
+
+
+def _display_ungraded_page(problems: list, page: int, per_page: int) -> tuple[int, int]:
+    """
+    Display a page of ungraded problems.
+
+    Returns:
+        Tuple of (current_page, total_pages)
+    """
+    total = len(problems)
+    total_pages = max(1, (total + per_page - 1) // per_page)
+    page = max(1, min(page, total_pages))
+
+    start_idx = (page - 1) * per_page
+    end_idx = min(start_idx + per_page, total)
+    page_problems = problems[start_idx:end_idx]
+
+    click.echo("")
+    click.echo(click.style("=" * 60, fg='bright_black'))
+    click.echo(click.style(f"  UNGRADED PROBLEMS (Page {page}/{total_pages})", fg='cyan', bold=True))
+    click.echo(click.style("=" * 60, fg='bright_black'))
+    click.echo("")
+    click.echo(f"  {'#':>3}  {'ID':>8}  {'Source':10}  {'Diff':6}  Title")
+    click.echo(f"  {'-' * 3}  {'-' * 8}  {'-' * 10}  {'-' * 6}  {'-' * 25}")
+
+    for i, problem in enumerate(page_problems, start=1):
+        problem_id = problem['problem_id']
+        source = problem['source']
+        difficulty = (problem.get('difficulty') or '?')[:6]
+        title = problem['title'][:25] + ('...' if len(problem['title']) > 25 else '')
+
+        source_styled = click.style(f"{source:10}", fg=SOURCE_COLORS.get(source, 'white'))
+        diff_styled = click.style(f"{difficulty:6}", fg=DIFFICULTY_COLORS.get(problem.get('difficulty'), 'white'))
+
+        click.echo(f"  {i:>3}  {problem_id:>8}  {source_styled}  {diff_styled}  {title}")
+
+    click.echo("")
+    click.echo(click.style("-" * 60, fg='bright_black'))
+    click.echo(f"  Showing {start_idx + 1}-{end_idx} of {total}")
+    click.echo(click.style("-" * 60, fg='bright_black'))
+
+    return page, total_pages, page_problems
+
+
+def _batch_grading_loop(problems: list, per_page: int = 10):
+    """Run interactive batch grading loop."""
+    if not problems:
+        click.echo("")
+        click.echo(click.style("  No ungraded problems found!", fg='green'))
+        click.echo("  All your problems have been graded.")
+        click.echo("")
+        return
+
+    current_page = 1
+
+    while problems:  # Re-fetch to account for graded problems
+        repo = _get_repo_and_db()
+        with DatabaseManager(repo.get_db_path()) as db:
+            # Refresh ungraded list
+            problems = db.get_problems_by_status('ungraded')
+
+        if not problems:
+            click.echo("")
+            click.echo(click.style("  All problems graded!", fg='green'))
+            click.echo("")
+            break
+
+        current_page, total_pages, page_problems = _display_ungraded_page(problems, current_page, per_page)
+
+        # Navigation prompt
+        nav_hints = []
+        nav_hints.append("1-{} select".format(len(page_problems)))
+        if current_page > 1:
+            nav_hints.append("p=prev")
+        if current_page < total_pages:
+            nav_hints.append("n=next")
+        nav_hints.append("q=quit")
+
+        click.echo("")
+        prompt = f"  [{' | '.join(nav_hints)}]: "
+
+        try:
+            user_input = click.prompt("", prompt_suffix=prompt, default="q", show_default=False).strip().lower()
+        except click.Abort:
+            break
+
+        if user_input in ('q', 'quit', ''):
+            break
+        elif user_input in ('n', 'next', '>'):
+            if current_page < total_pages:
+                current_page += 1
+            else:
+                click.echo("  Already on last page.")
+        elif user_input in ('p', 'prev', '<'):
+            if current_page > 1:
+                current_page -= 1
+            else:
+                click.echo("  Already on first page.")
+        else:
+            # Try to parse as selection number
+            try:
+                selection = int(user_input)
+                if 1 <= selection <= len(page_problems):
+                    selected_problem = page_problems[selection - 1]
+                    _grade_single_problem(selected_problem)
+
+                    # Pause before returning to list
+                    click.prompt("  Press Enter to continue", default="", show_default=False)
+                else:
+                    click.echo(f"  Invalid selection. Enter 1-{len(page_problems)}.")
+            except ValueError:
+                click.echo("  Invalid input. Use number/n/p/q.")
+
+
+@click.group(invoke_without_command=True)
+@click.option('--per-page', '-n', type=int, default=10, help='Problems per page in batch mode')
+@click.pass_context
+def grade(ctx, per_page: int):
+    """
+    Grade problems as passed, failed, or skipped.
+
+    When a problem is marked as passed, it gets scheduled for spaced repetition review.
+
+    Examples:
+      dojo grade                       # Interactive batch grading
+      dojo grade last                  # Grade the last fetched problem
+      dojo grade 1                     # Grade LeetCode problem #1
+      dojo grade 4A                    # Grade Codeforces problem 4A
+      dojo grade last --pass           # Quick pass the last problem
+      dojo grade 1 -f -n "TLE issue"   # Fail with notes
+    """
+    ctx.ensure_object(dict)
+    ctx.obj['per_page'] = per_page
+
+    # If no subcommand and no arguments, run batch mode
+    if ctx.invoked_subcommand is None:
+        repo = _get_repo_and_db()
+        with DatabaseManager(repo.get_db_path()) as db:
+            ungraded = db.get_problems_by_status('ungraded')
+
+        _batch_grading_loop(ungraded, per_page)
+
+
+@grade.command()
+@click.option('--pass', '-p', 'status_pass', is_flag=True, help='Mark as passed')
+@click.option('--fail', '-f', 'status_fail', is_flag=True, help='Mark as failed')
+@click.option('--skip', '-s', 'status_skip', is_flag=True, help='Mark as skipped')
+@click.option('--notes', '-n', type=str, default=None, help='Add notes')
+@click.pass_context
+def last(ctx, status_pass: bool, status_fail: bool, status_skip: bool, notes: str):
+    """
+    Grade the most recently fetched problem.
+
+    Examples:
+      dojo grade last                  # Interactive grading
+      dojo grade last --pass           # Quick pass
+      dojo grade last -f -n "Need DP"  # Fail with notes
+    """
+    # Determine status from flags
+    status = None
+    flag_count = sum([status_pass, status_fail, status_skip])
+
+    if flag_count > 1:
+        raise click.ClickException("Cannot specify multiple status flags. Use one of --pass, --fail, or --skip.")
+
+    if status_pass:
+        status = 'passed'
+    elif status_fail:
+        status = 'failed'
+    elif status_skip:
+        status = 'skipped'
+
+    repo = _get_repo_and_db()
+
+    with DatabaseManager(repo.get_db_path()) as db:
+        problems = db.list_problems()
+
+        if not problems:
+            click.echo("No problems found. Fetch some problems first.")
+            return
+
+        # Get the last fetched problem (most recent by fetched_at)
+        problem = max(problems, key=lambda p: p.get('fetched_at', ''))
+
+    _grade_single_problem(problem, status, notes)
+
+
+@grade.command()
+@click.argument('problem_id', type=str)
+@click.option('--pass', '-p', 'status_pass', is_flag=True, help='Mark as passed')
+@click.option('--fail', '-f', 'status_fail', is_flag=True, help='Mark as failed')
+@click.option('--skip', '-s', 'status_skip', is_flag=True, help='Mark as skipped')
+@click.option('--notes', '-n', type=str, default=None, help='Add notes')
+@click.option('--source', type=click.Choice(['leetcode', 'codeforces']), default=None,
+              help='Source platform (auto-detected if possible)')
+def problem(problem_id: str, status_pass: bool, status_fail: bool, status_skip: bool, notes: str, source: str):
+    """
+    Grade a specific problem by ID.
+
+    The source is auto-detected based on ID format:
+    - Numeric IDs (1, 42, 100) -> LeetCode
+    - Alphanumeric IDs (4A, 1850B) -> Codeforces
+
+    Examples:
+      dojo grade problem 1             # Grade LeetCode #1
+      dojo grade problem 4A            # Grade Codeforces 4A
+      dojo grade problem 1 --pass      # Quick pass
+      dojo grade problem 1 -f -n "TLE" # Fail with notes
+    """
+    import re
+
+    # Determine status from flags
+    status = None
+    flag_count = sum([status_pass, status_fail, status_skip])
+
+    if flag_count > 1:
+        raise click.ClickException("Cannot specify multiple status flags. Use one of --pass, --fail, or --skip.")
+
+    if status_pass:
+        status = 'passed'
+    elif status_fail:
+        status = 'failed'
+    elif status_skip:
+        status = 'skipped'
+
+    # Auto-detect source if not specified
+    if source is None:
+        if re.match(r'^\d+$', problem_id):
+            source = 'leetcode'
+        elif re.match(r'^\d+[A-Za-z]\d?$', problem_id):
+            source = 'codeforces'
+        else:
+            raise click.ClickException(
+                f"Cannot auto-detect source for '{problem_id}'. "
+                "Use --source to specify leetcode or codeforces."
+            )
+
+    repo = _get_repo_and_db()
+
+    with DatabaseManager(repo.get_db_path()) as db:
+        problem_data = db.get_problem(source, problem_id)
+
+        if not problem_data:
+            raise click.ClickException(
+                f"Problem '{problem_id}' not found in database. "
+                f"Fetch it first with: dojo {source} fetch {problem_id}"
+            )
+
+    _grade_single_problem(problem_data, status, notes)

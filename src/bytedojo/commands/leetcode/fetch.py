@@ -9,11 +9,9 @@ from pathlib import Path
 from bytedojo.core.logger import get_logger
 from bytedojo.core.leetcode import LeetCodeClient
 from bytedojo.core.leetcode.formatters import PythonFormatter
-from bytedojo.core.leetcode.formatters.python import FormatContext
 from bytedojo.core.file_writer import FileWriter
 from bytedojo.core.repository import DojoRepository
 from bytedojo.core.database import DatabaseManager
-from bytedojo.core.test_store import TestStore, TestData
 from bytedojo.core.settings import SettingsManager
 
 def parse_arguments(arguments: tuple[str, ...]) -> list[int]:
@@ -78,7 +76,6 @@ def fetch(ctx, arguments: tuple, output_dir: Path, force: bool):
     client = LeetCodeClient()
     formatter = PythonFormatter()
     writer = FileWriter()
-    test_store = TestStore(repo.get_dojo_path())
 
     success_count = 0
     skip_count = 0
@@ -109,31 +106,6 @@ def fetch(ctx, arguments: tuple, output_dir: Path, force: bool):
 
             # Write to file
             writer.write(content, filepath)
-
-            # Extract metadata for test storage
-            code_template = problem.get_snippet('Python3') or ""
-            ctx = FormatContext(
-                code=code_template,
-                description=problem.description,
-                test_cases=problem.test_cases,
-                _logger=logger
-            )
-
-            # Create and save test data
-            test_data = TestData(
-                problem_id=problem.id,
-                source='leetcode',
-                title=problem.title,
-                difficulty=problem.difficulty,
-                class_name=ctx.class_name or 'Solution',
-                method_name=ctx.method_name or 'solve',
-                params=[{"name": name, "type": ptype} for name, ptype in ctx.param_info],
-                return_type=ctx.return_type or 'Any',
-                helpers_needed=ctx.helpers_needed,
-                test_cases=problem.test_cases,
-                file_path=str(filepath)
-            )
-            test_store.save(test_data)
 
             # Register in database
             db.register_problem(
