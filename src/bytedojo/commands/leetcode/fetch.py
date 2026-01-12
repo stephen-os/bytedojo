@@ -14,6 +14,7 @@ from bytedojo.core.file_writer import FileWriter
 from bytedojo.core.repository import DojoRepository
 from bytedojo.core.database import DatabaseManager
 from bytedojo.core.test_store import TestStore, TestData
+from bytedojo.core.settings import SettingsManager
 
 def parse_arguments(arguments: tuple[str, ...]) -> list[int]:
     problem_ids: list[int] = []
@@ -45,14 +46,14 @@ def parse_arguments(arguments: tuple[str, ...]) -> list[int]:
 @click.argument('arguments', nargs=-1, required=True)
 
 # Define options
-@click.option('--output-dir', type=click.Path(path_type=Path), default='problems/leetcode', help='Output directory for problem files')
+@click.option('--output-dir', type=click.Path(path_type=Path), default='leetcode', help='Output directory for problem files')
 @click.option('--force', is_flag=True, help='Overwrite existing problems')
 
 @click.pass_obj
 def fetch(ctx, arguments: tuple, output_dir: Path, force: bool):
     """
     Fetch LeetCode problems.
-    
+
     Examples:
       dojo leetcode fetch 1              # Single problem
       dojo leetcode fetch 1,2,3          # Multiple problems
@@ -67,6 +68,11 @@ def fetch(ctx, arguments: tuple, output_dir: Path, force: bool):
     if not repo.is_initialized():
         logger.error("No .dojo repository found. Run 'dojo init' first.")
         raise click.ClickException("Repository not initialized")
+
+    # Load settings for organization mode
+    settings_manager = SettingsManager(repo.get_dojo_path())
+    settings = settings_manager.load()
+    organization = settings.leetcode.organization  # "flat" or "difficulty"
 
     # Initialize components
     client = LeetCodeClient()
@@ -95,8 +101,13 @@ def fetch(ctx, arguments: tuple, output_dir: Path, force: bool):
             # Format to string
             content = formatter.format(problem)
 
+            # Build file path based on organization setting
+            if organization == "difficulty":
+                filepath = output_dir / problem.difficulty.lower() / problem.filename
+            else:  # flat (default)
+                filepath = output_dir / problem.filename
+
             # Write to file
-            filepath = output_dir / problem.difficulty.lower() / problem.filename
             writer.write(content, filepath)
 
             # Extract metadata for test storage

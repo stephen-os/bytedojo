@@ -36,16 +36,23 @@ class TestInitCommand:
             assert db_path.exists()
             assert db_path.is_file()
     
-    def test_init_creates_problems_directory(self, tmp_path):
-        """Test that init creates problems directory."""
+    def test_init_creates_settings_file(self, tmp_path):
+        """Test that init creates settings.json."""
         runner = CliRunner()
-        
+
         with runner.isolated_filesystem(temp_dir=tmp_path):
             result = runner.invoke(dojo, ['init'])
-            
+
             assert result.exit_code == 0
-            assert Path('problems').exists()
-            assert Path('problems').is_dir()
+            settings_path = Path('.dojo/settings.json')
+            assert settings_path.exists()
+            assert settings_path.is_file()
+
+            # Verify default settings
+            import json
+            with open(settings_path) as f:
+                settings = json.load(f)
+            assert settings.get('leetcode', {}).get('organization') == 'flat'
     
     def test_init_creates_gitignore(self, tmp_path):
         """Test that init creates .gitignore."""

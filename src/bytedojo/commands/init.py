@@ -42,10 +42,11 @@ def init(ctx, force: bool):
         logger.info("ByteDojo repository initialized successfully!")
         logger.info(f"Location: {repo.dojo_dir}")
         logger.info(f"Database: {repo.db_path}")
-        logger.info(f"Problems: {repo.problems_dir}")
+        logger.info(f"Settings: {repo.settings_path}")
         logger.info("")
         logger.info("Next steps:")
         logger.info("  dojo leetcode fetch 1    # Fetch a problem")
+        logger.info("  dojo settings            # View/change settings")
         logger.info("  dojo stats               # View statistics")
         
     except Exception as e:

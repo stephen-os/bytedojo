@@ -13,18 +13,18 @@ from bytedojo.core.database import create_database_schema
 
 class DojoRepository:
     """Manages .dojo repository operations."""
-    
+
     def __init__(self, root_dir: Optional[Path] = None):
         """
         Initialize repository manager.
-        
+
         Args:
             root_dir: Root directory to search for .dojo. Defaults to cwd.
         """
         self.root_dir = root_dir or Path.cwd()
         self.dojo_dir = self.root_dir / ".dojo"
         self.db_path = self.dojo_dir / "db.sqlite"
-        self.problems_dir = self.root_dir / "problems"
+        self.settings_path = self.dojo_dir / "settings.json"
     
     def exists(self) -> bool:
         """Check if .dojo directory exists."""
@@ -45,30 +45,44 @@ class DojoRepository:
         if not self.is_initialized():
             raise RuntimeError("Repository not initialized. Run 'dojo init' first.")
         return self.dojo_dir
-    
+
+    def get_settings_path(self) -> Path:
+        """Get path to settings file."""
+        if not self.is_initialized():
+            raise RuntimeError("Repository not initialized. Run 'dojo init' first.")
+        return self.settings_path
+
     def initialize(self, force: bool = False):
         """
         Initialize the repository.
-        
+
         Args:
             force: If True, reinitialize even if exists
         """
         if self.exists() and not force:
             raise RuntimeError("Repository already initialized")
-        
-        # Create directories
+
+        # Create .dojo directory
         self.dojo_dir.mkdir(exist_ok=True)
-        self.problems_dir.mkdir(exist_ok=True)
-        
+
         # Create database
         create_database_schema(self.db_path)
-        
+
+        # Create default settings
+        self._create_default_settings()
+
         # Create .gitignore
         self._create_gitignore()
-        
+
         # Create README
         self._create_readme()
     
+    def _create_default_settings(self):
+        """Create default settings.json file."""
+        from bytedojo.core.settings import SettingsManager
+        settings_manager = SettingsManager(self.dojo_dir)
+        settings_manager.create_default()
+
     def _create_gitignore(self):
         """Create .gitignore for the .dojo directory."""
         gitignore = self.dojo_dir / ".gitignore"
@@ -104,13 +118,15 @@ class DojoRepository:
         
         content = dedent("""
             # ByteDojo Repository
-            
+
             This directory contains your ByteDojo data:
-            
+
             ## Structure
 ```
             .dojo/
             ├── db.sqlite          # Problem tracking database
+            ├── settings.json      # User preferences
+            ├── tests/             # Test data for problems
             ├── logs/              # Debug logs (created in --debug mode)
             ├── .gitignore         # Git ignore rules
             └── README.md          # This file

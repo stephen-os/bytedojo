@@ -17,7 +17,7 @@ class TestDojoRepositoryInit:
         assert repo.root_dir == Path.cwd()
         assert repo.dojo_dir == Path.cwd() / ".dojo"
         assert repo.db_path == Path.cwd() / ".dojo" / "db.sqlite"
-        assert repo.problems_dir == Path.cwd() / "problems"
+        assert repo.settings_path == Path.cwd() / ".dojo" / "settings.json"
     
     def test_init_with_custom_directory(self, tmp_path):
         """Test initialization with custom directory."""
@@ -104,13 +104,13 @@ class TestDojoRepositoryInitialize:
     """Test initialize() method."""
     
     def test_initialize_creates_directories(self, tmp_path):
-        """Test initialize creates .dojo and problems directories."""
+        """Test initialize creates .dojo directory and settings file."""
         repo = DojoRepository(root_dir=tmp_path)
-        
+
         repo.initialize()
-        
+
         assert repo.dojo_dir.exists()
-        assert repo.problems_dir.exists()
+        assert repo.settings_path.exists()
     
     def test_initialize_creates_database(self, tmp_path):
         """Test initialize creates database file."""
