@@ -1,1 +1,0 @@
-"""Codeforces formatter tests."""

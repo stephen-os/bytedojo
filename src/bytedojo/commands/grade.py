@@ -26,7 +26,6 @@ DIFFICULTY_COLORS = {
 
 SOURCE_COLORS = {
     'leetcode': 'yellow',
-    'codeforces': 'cyan',
 }
 
 
@@ -296,10 +295,9 @@ def grade(ctx, per_page: int):
     Examples:
       dojo grade                       # Interactive batch grading
       dojo grade last                  # Grade the last fetched problem
-      dojo grade 1                     # Grade LeetCode problem #1
-      dojo grade 4A                    # Grade Codeforces problem 4A
+      dojo grade problem 1             # Grade LeetCode problem #1
       dojo grade last --pass           # Quick pass the last problem
-      dojo grade 1 -f -n "TLE issue"   # Fail with notes
+      dojo grade problem 1 -f -n "TLE" # Fail with notes
     """
     ctx.ensure_object(dict)
     ctx.obj['per_page'] = per_page
@@ -363,24 +361,15 @@ def last(ctx, status_pass: bool, status_fail: bool, status_skip: bool, notes: st
 @click.option('--fail', '-f', 'status_fail', is_flag=True, help='Mark as failed')
 @click.option('--skip', '-s', 'status_skip', is_flag=True, help='Mark as skipped')
 @click.option('--notes', '-n', type=str, default=None, help='Add notes')
-@click.option('--source', type=click.Choice(['leetcode', 'codeforces']), default=None,
-              help='Source platform (auto-detected if possible)')
-def problem(problem_id: str, status_pass: bool, status_fail: bool, status_skip: bool, notes: str, source: str):
+def problem(problem_id: str, status_pass: bool, status_fail: bool, status_skip: bool, notes: str):
     """
     Grade a specific problem by ID.
 
-    The source is auto-detected based on ID format:
-    - Numeric IDs (1, 42, 100) -> LeetCode
-    - Alphanumeric IDs (4A, 1850B) -> Codeforces
-
     Examples:
       dojo grade problem 1             # Grade LeetCode #1
-      dojo grade problem 4A            # Grade Codeforces 4A
       dojo grade problem 1 --pass      # Quick pass
       dojo grade problem 1 -f -n "TLE" # Fail with notes
     """
-    import re
-
     # Determine status from flags
     status = None
     flag_count = sum([status_pass, status_fail, status_skip])
@@ -395,27 +384,15 @@ def problem(problem_id: str, status_pass: bool, status_fail: bool, status_skip: 
     elif status_skip:
         status = 'skipped'
 
-    # Auto-detect source if not specified
-    if source is None:
-        if re.match(r'^\d+$', problem_id):
-            source = 'leetcode'
-        elif re.match(r'^\d+[A-Za-z]\d?$', problem_id):
-            source = 'codeforces'
-        else:
-            raise click.ClickException(
-                f"Cannot auto-detect source for '{problem_id}'. "
-                "Use --source to specify leetcode or codeforces."
-            )
-
     repo = _get_repo_and_db()
 
     with DatabaseManager(repo.get_db_path()) as db:
-        problem_data = db.get_problem(source, problem_id)
+        problem_data = db.get_problem('leetcode', problem_id)
 
         if not problem_data:
             raise click.ClickException(
                 f"Problem '{problem_id}' not found in database. "
-                f"Fetch it first with: dojo {source} fetch {problem_id}"
+                f"Fetch it first with: dojo leetcode fetch {problem_id}"
             )
 
     _grade_single_problem(problem_data, status, notes)

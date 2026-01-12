@@ -18,7 +18,6 @@ from bytedojo.commands import stats
 from bytedojo.commands.grade import grade
 from bytedojo.commands.settings import settings
 from bytedojo.commands.leetcode import leetcode
-from bytedojo.commands.codeforces import codeforces
 from bytedojo.commands.review import review
 
 def print_version(ctx, param, value):
@@ -73,7 +72,6 @@ def dojo(ctx, debug: bool, config: Optional[Path]):
 
 dojo.add_command(init)
 dojo.add_command(leetcode)
-dojo.add_command(codeforces)
 dojo.add_command(stats)
 dojo.add_command(grade)
 dojo.add_command(settings)

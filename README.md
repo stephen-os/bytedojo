@@ -1,13 +1,13 @@
 # ByteDojo
 
-A CLI tool for fetching, solving, and tracking programming problems from LeetCode and Codeforces. Master coding through structured practice and track your progress.
+A CLI tool for fetching, solving, and tracking LeetCode problems. Master coding through structured practice and track your progress.
 
 ## Features
 
-- **Multi-Platform Support**: Fetch problems from LeetCode and Codeforces
-- **Smart Problem Discovery**: Query and filter problems by difficulty, rating, and tags
+- **LeetCode Integration**: Fetch problems directly from LeetCode
+- **Smart Problem Discovery**: Query and filter problems by difficulty and tags
 - **Random Problem Picker**: Get random unsolved problems matching your criteria
-- **Manual Grading**: Grade your solutions after verifying on the actual platform
+- **Manual Grading**: Grade your solutions after verifying on LeetCode
 - **Spaced Repetition**: Passed problems are scheduled for review to reinforce learning
 - **Progress Tracking**: Track solved problems with pass/fail/skip status in a local database
 - **Interactive Navigation**: Browse problem lists with pagination without re-fetching
@@ -51,7 +51,7 @@ dojo init
 dojo leetcode fetch 1
 
 # 3. Solve the problem in the generated file
-# Edit: problems/leetcode/easy/1-two-sum.py
+# Edit: problems/easy/0001-two-sum.py
 
 # 4. Submit to LeetCode to verify, then grade your solution
 dojo grade last --pass
@@ -157,61 +157,6 @@ dojo leetcode pick --include-premium
 
 ---
 
-### Codeforces Commands
-
-#### Fetch Problems
-
-```bash
-# Fetch by problem ID (contestId + index)
-dojo codeforces fetch 4A                 # Fetch "Watermelon"
-dojo codeforces fetch 1A 4A 71A          # Fetch multiple problems
-dojo codeforces fetch 1850A --force      # Overwrite existing
-```
-
-#### Query Problems
-
-Browse Codeforces problems with rating-based filtering.
-
-```bash
-# Browse all problems
-dojo codeforces query
-
-# Filter by difficulty level
-dojo codeforces query -d easy            # Rating < 1200
-dojo codeforces query -d medium          # Rating 1200-1599
-dojo codeforces query -d hard            # Rating 1600-2099
-dojo codeforces query -d expert          # Rating 2100+
-
-# Filter by exact rating range
-dojo codeforces query -r 1200 -R 1600    # Min 1200, max 1600
-
-# Filter by tag
-dojo codeforces query -t dp              # Dynamic programming
-dojo codeforces query -t graphs -t trees # Multiple tags
-
-# List all available tags
-dojo codeforces query --list-tags
-```
-
-#### Pick Random Problem
-
-```bash
-# Random unsolved problem
-dojo codeforces pick
-
-# Filter by difficulty
-dojo codeforces pick -d easy
-dojo codeforces pick -d hard
-
-# Filter by rating range
-dojo codeforces pick -r 1200 -R 1800
-
-# Filter by tag
-dojo codeforces pick -t dp
-```
-
----
-
 ### Grade Solutions
 
 Mark your solutions as passed, failed, or skipped. When you grade a problem as passed, it gets scheduled for spaced repetition review.
@@ -227,7 +172,7 @@ dojo grade last --fail -n "TLE issue"    # Fail with notes
 
 # Grade a specific problem
 dojo grade problem 1                     # LeetCode #1 (interactive)
-dojo grade problem 4A --pass             # Codeforces 4A (quick pass)
+dojo grade problem 1 --pass              # Quick pass
 dojo grade problem 1 -f -n "Need DP"     # Fail with notes
 ```
 
@@ -267,9 +212,7 @@ dojo stats                               # View overall progress
 
 ---
 
-## Problem File Examples
-
-### LeetCode Problem File
+## Problem File Example
 
 When you fetch a LeetCode problem, ByteDojo generates a Python file like this:
 
@@ -304,122 +247,6 @@ class Solution:
         pass  # Your solution here
 ```
 
-### Codeforces Problem File
-
-Codeforces problems use stdin/stdout and generate files like this:
-
-```python
-"""
-Codeforces Problem 4A: Watermelon
-Difficulty: Easy (800)
-URL: https://codeforces.com/problemset/problem/4/A
-Time Limit: 1 second
-Memory Limit: 64 megabytes
-Tags: brute force, math
-"""
-
-# ============================================================================
-# PROBLEM DESCRIPTION
-# ============================================================================
-# One hot summer day Pete and his friend Billy decided to buy a watermelon.
-# They chose the biggest one, but the seller refused to sell it to them in a
-# single piece. The seller agreed to cut it into two parts. Pete and Billy
-# want both parts to weigh even number of kilograms each.
-#
-# INPUT:
-# The first line contains a single integer w (1 <= w <= 100) - the weight
-# of the watermelon bought by the boys.
-#
-# OUTPUT:
-# Print YES if the boys can divide the watermelon, NO otherwise.
-#
-# EXAMPLES:
-#   Example 1:
-#     Input:
-#       8
-#     Output:
-#       YES
-
-# ============================================================================
-# SOLUTION
-# ============================================================================
-
-def solve():
-    """
-    Solve the problem.
-
-    Read input from stdin and print output to stdout.
-    """
-    # Read input
-    # w = int(input())
-
-    # Your solution here
-    pass
-
-
-if __name__ == "__main__":
-    solve()
-
-# ============================================================================
-# TESTS
-# ============================================================================
-
-import io
-import sys
-
-
-def run_tests():
-    """Run sample test cases."""
-    test_cases = [
-        ("8", "YES"),
-    ]
-
-    passed = 0
-    failed = 0
-
-    for i, (test_input, expected) in enumerate(test_cases, 1):
-        # Capture stdin/stdout
-        old_stdin = sys.stdin
-        old_stdout = sys.stdout
-        sys.stdin = io.StringIO(test_input.replace("\\n", "\n"))
-        sys.stdout = io.StringIO()
-
-        try:
-            solve()
-            actual = sys.stdout.getvalue().strip()
-            expected_clean = expected.replace("\\n", "\n").strip()
-
-            if actual == expected_clean:
-                print(f"Test {i}: PASSED", file=sys.stderr)
-                passed += 1
-            else:
-                print(f"Test {i}: FAILED", file=sys.stderr)
-                print(f"  Expected: {expected_clean!r}", file=sys.stderr)
-                print(f"  Actual: {actual!r}", file=sys.stderr)
-                failed += 1
-        except Exception as e:
-            print(f"Test {i}: ERROR - {e}", file=sys.stderr)
-            failed += 1
-        finally:
-            sys.stdin = old_stdin
-            sys.stdout = old_stdout
-
-    print(f"\nResults: {passed} passed, {failed} failed")
-
-
-if __name__ == "__main__":
-    import sys
-    if len(sys.argv) > 1 and sys.argv[1] == "test":
-        run_tests()
-    else:
-        solve()
-```
-
-Run Codeforces tests with:
-```bash
-python problems/codeforces/easy/4A-watermelon.py test
-```
-
 ---
 
 ## Directory Structure
@@ -431,38 +258,22 @@ your-project/
 ├── .dojo/
 │   └── dojo.db              # SQLite database for tracking progress
 ├── problems/
-│   ├── leetcode/
-│   │   ├── easy/
-│   │   │   └── 1-two-sum.py
-│   │   ├── medium/
-│   │   └── hard/
-│   └── codeforces/
-│       ├── easy/
-│       │   └── 4A-watermelon.py
-│       ├── medium/
-│       ├── hard/
-│       └── expert/
+│   ├── easy/
+│   │   └── 0001-two-sum.py
+│   ├── medium/
+│   └── hard/
 └── README.md
 ```
 
 ---
 
-## Rating Systems
+## LeetCode Difficulty
 
-### LeetCode Difficulty
 | Level | Description |
 |-------|-------------|
 | Easy | Beginner-friendly problems |
 | Medium | Intermediate complexity |
 | Hard | Advanced algorithmic challenges |
-
-### Codeforces Rating
-| Level | Rating Range | Description |
-|-------|--------------|-------------|
-| Easy | < 1200 | Newbie/Pupil level |
-| Medium | 1200-1599 | Specialist level |
-| Hard | 1600-2099 | Expert level |
-| Expert | 2100+ | Master/Grandmaster level |
 
 ---
 
