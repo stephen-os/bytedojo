@@ -28,6 +28,12 @@ SOURCE_COLORS = {
     'leetcode': 'yellow',
 }
 
+LANGUAGE_COLORS = {
+    'python': 'blue',
+    'java': 'red',
+    'cpp': 'cyan',
+}
+
 
 def _get_repo_and_db():
     """Get repository and database manager, or raise error if not initialized."""
@@ -47,6 +53,7 @@ def _display_problem_header(problem: dict):
     source = problem['source']
     title = problem['title']
     difficulty = problem.get('difficulty') or 'Unknown'
+    language = problem.get('language', 'python')
     file_path = problem.get('file_path', '')
     current_status = problem.get('test_status', 'ungraded')
 
@@ -57,6 +64,7 @@ def _display_problem_header(problem: dict):
     click.echo("")
     click.echo(f"  {problem_id}: {click.style(title, bold=True)}")
     click.echo(f"  Source: {click.style(source.capitalize(), fg=SOURCE_COLORS.get(source, 'white'))}")
+    click.echo(f"  Language: {click.style(language.upper(), fg=LANGUAGE_COLORS.get(language, 'white'))}")
     click.echo(f"  Difficulty: {click.style(difficulty, fg=DIFFICULTY_COLORS.get(difficulty, 'white'))}")
     click.echo(f"  Current Status: {click.style(current_status, fg=STATUS_COLORS.get(current_status, 'white'))}")
 
@@ -187,28 +195,28 @@ def _display_ungraded_page(problems: list, page: int, per_page: int) -> tuple[in
     page_problems = problems[start_idx:end_idx]
 
     click.echo("")
-    click.echo(click.style("=" * 60, fg='bright_black'))
+    click.echo(click.style("=" * 70, fg='bright_black'))
     click.echo(click.style(f"  UNGRADED PROBLEMS (Page {page}/{total_pages})", fg='cyan', bold=True))
-    click.echo(click.style("=" * 60, fg='bright_black'))
+    click.echo(click.style("=" * 70, fg='bright_black'))
     click.echo("")
-    click.echo(f"  {'#':>3}  {'ID':>8}  {'Source':10}  {'Diff':6}  Title")
-    click.echo(f"  {'-' * 3}  {'-' * 8}  {'-' * 10}  {'-' * 6}  {'-' * 25}")
+    click.echo(f"  {'#':>3}  {'ID':>8}  {'Lang':6}  {'Diff':6}  Title")
+    click.echo(f"  {'-' * 3}  {'-' * 8}  {'-' * 6}  {'-' * 6}  {'-' * 30}")
 
     for i, problem in enumerate(page_problems, start=1):
         problem_id = problem['problem_id']
-        source = problem['source']
+        language = (problem.get('language') or 'py')[:6]
         difficulty = (problem.get('difficulty') or '?')[:6]
-        title = problem['title'][:25] + ('...' if len(problem['title']) > 25 else '')
+        title = problem['title'][:30] + ('...' if len(problem['title']) > 30 else '')
 
-        source_styled = click.style(f"{source:10}", fg=SOURCE_COLORS.get(source, 'white'))
+        lang_styled = click.style(f"{language:6}", fg=LANGUAGE_COLORS.get(problem.get('language'), 'white'))
         diff_styled = click.style(f"{difficulty:6}", fg=DIFFICULTY_COLORS.get(problem.get('difficulty'), 'white'))
 
-        click.echo(f"  {i:>3}  {problem_id:>8}  {source_styled}  {diff_styled}  {title}")
+        click.echo(f"  {i:>3}  {problem_id:>8}  {lang_styled}  {diff_styled}  {title}")
 
     click.echo("")
-    click.echo(click.style("-" * 60, fg='bright_black'))
+    click.echo(click.style("-" * 70, fg='bright_black'))
     click.echo(f"  Showing {start_idx + 1}-{end_idx} of {total}")
-    click.echo(click.style("-" * 60, fg='bright_black'))
+    click.echo(click.style("-" * 70, fg='bright_black'))
 
     return page, total_pages, page_problems
 
@@ -361,13 +369,16 @@ def last(ctx, status_pass: bool, status_fail: bool, status_skip: bool, notes: st
 @click.option('--fail', '-f', 'status_fail', is_flag=True, help='Mark as failed')
 @click.option('--skip', '-s', 'status_skip', is_flag=True, help='Mark as skipped')
 @click.option('--notes', '-n', type=str, default=None, help='Add notes')
-def problem(problem_id: str, status_pass: bool, status_fail: bool, status_skip: bool, notes: str):
+@click.option('--language', '-l', type=click.Choice(['python', 'java', 'cpp']),
+              default='python', help='Language of the solution (default: python)')
+def problem(problem_id: str, status_pass: bool, status_fail: bool, status_skip: bool, notes: str, language: str):
     """
     Grade a specific problem by ID.
 
     Examples:
-      dojo grade problem 1             # Grade LeetCode #1
+      dojo grade problem 1             # Grade LeetCode #1 (Python)
       dojo grade problem 1 --pass      # Quick pass
+      dojo grade problem 1 -l java     # Grade Java version
       dojo grade problem 1 -f -n "TLE" # Fail with notes
     """
     # Determine status from flags
@@ -387,12 +398,12 @@ def problem(problem_id: str, status_pass: bool, status_fail: bool, status_skip: 
     repo = _get_repo_and_db()
 
     with DatabaseManager(repo.get_db_path()) as db:
-        problem_data = db.get_problem('leetcode', problem_id)
+        problem_data = db.get_problem('leetcode', problem_id, language)
 
         if not problem_data:
             raise click.ClickException(
-                f"Problem '{problem_id}' not found in database. "
-                f"Fetch it first with: dojo leetcode fetch {problem_id}"
+                f"Problem '{problem_id}' ({language}) not found in database. "
+                f"Fetch it first with: dojo leetcode fetch {problem_id} --{language}"
             )
 
     _grade_single_problem(problem_data, status, notes)

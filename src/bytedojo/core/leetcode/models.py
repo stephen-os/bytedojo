@@ -40,5 +40,23 @@ class Problem:
     
     @property
     def filename(self) -> str:
-        """Generate filename for this problem."""
-        return f"{self.id:04d}-{self.title_slug}.py"
+        """Generate filename for this problem (Python by default)."""
+        return self.get_filename('python')
+
+    def get_filename(self, language: str = 'python') -> str:
+        """
+        Generate filename for this problem in the specified language.
+
+        Args:
+            language: Programming language ('python', 'java', 'cpp')
+
+        Returns:
+            Filename with appropriate extension
+        """
+        extensions = {
+            'python': '.py',
+            'java': '.java',
+            'cpp': '.cpp',
+        }
+        ext = extensions.get(language.lower(), '.py')
+        return f"{self.id:04d}-{self.title_slug}{ext}"

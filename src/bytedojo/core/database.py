@@ -29,6 +29,7 @@ def create_database_schema(db_path: Path):
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             source TEXT NOT NULL,
             problem_id TEXT NOT NULL,
+            language TEXT NOT NULL DEFAULT 'python',
             title TEXT NOT NULL,
             difficulty TEXT,
             category TEXT,
@@ -39,9 +40,15 @@ def create_database_schema(db_path: Path):
             last_test_run TIMESTAMP,
             test_output TEXT,
             fetched_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-            UNIQUE(source, problem_id)
+            UNIQUE(source, problem_id, language)
         )
     """)
+
+    # Migration: Add language column to existing databases
+    try:
+        cursor.execute("ALTER TABLE problems ADD COLUMN language TEXT NOT NULL DEFAULT 'python'")
+    except sqlite3.OperationalError:
+        pass  # Column already exists
     
     # Attempts table - tracks solution attempts
     cursor.execute("""
@@ -138,21 +145,22 @@ class DatabaseManager:
         """Context manager exit."""
         self.close()
     
-    def is_problem_registered(self, source: str, problem_id: int) -> bool:
+    def is_problem_registered(self, source: str, problem_id: int, language: str = 'python') -> bool:
         """
         Check if problem is already registered.
-        
+
         Args:
             source: Problem source (e.g., 'leetcode')
             problem_id: Problem ID number
-            
+            language: Programming language (default: 'python')
+
         Returns:
             True if problem exists in database
         """
         cursor = self.conn.cursor()
         cursor.execute(
-            "SELECT COUNT(*) FROM problems WHERE source = ? AND problem_id = ?",
-            (source, str(problem_id))
+            "SELECT COUNT(*) FROM problems WHERE source = ? AND problem_id = ? AND language = ?",
+            (source, str(problem_id), language)
         )
         count = cursor.fetchone()[0]
         return count > 0
@@ -161,36 +169,39 @@ class DatabaseManager:
         self,
         problem: Problem,
         source: str = "leetcode",
+        language: str = "python",
         file_path: Optional[str] = None,
         force: bool = False
     ) -> bool:
         """
         Register a problem in the database.
-        
+
         Args:
             problem: Problem object to register
             source: Problem source (default: 'leetcode')
+            language: Programming language (default: 'python')
             file_path: Path to the problem file
             force: If True, overwrite existing entry
-            
+
         Returns:
             True if registered successfully
         """
         cursor = self.conn.cursor()
-        
+
         # Check if already exists
-        if self.is_problem_registered(source, problem.id) and not force:
+        if self.is_problem_registered(source, problem.id, language) and not force:
             return False
-        
+
         # Insert or replace
         cursor.execute("""
             INSERT OR REPLACE INTO problems (
-                source, problem_id, title, difficulty, category, 
+                source, problem_id, language, title, difficulty, category,
                 tags, description, file_path, fetched_at
-            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         """, (
             source,
             str(problem.id),
+            language,
             problem.title,
             problem.difficulty,
             None,  # category - TODO: extract from tags
@@ -199,25 +210,26 @@ class DatabaseManager:
             str(file_path) if file_path else None,
             datetime.now().isoformat()
         ))
-        
+
         self.conn.commit()
         return True
     
-    def get_problem(self, source: str, problem_id: int) -> Optional[Dict[str, Any]]:
+    def get_problem(self, source: str, problem_id: int, language: str = 'python') -> Optional[Dict[str, Any]]:
         """
         Get problem from database.
-        
+
         Args:
             source: Problem source
             problem_id: Problem ID
-            
+            language: Programming language (default: 'python')
+
         Returns:
             Problem data as dict or None
         """
         cursor = self.conn.cursor()
         cursor.execute(
-            "SELECT * FROM problems WHERE source = ? AND problem_id = ?",
-            (source, str(problem_id))
+            "SELECT * FROM problems WHERE source = ? AND problem_id = ? AND language = ?",
+            (source, str(problem_id), language)
         )
         row = cursor.fetchone()
         return dict(row) if row else None
@@ -226,38 +238,44 @@ class DatabaseManager:
         self,
         source: Optional[str] = None,
         difficulty: Optional[str] = None,
+        language: Optional[str] = None,
         limit: Optional[int] = None
     ) -> List[Dict[str, Any]]:
         """
         List problems from database.
-        
+
         Args:
             source: Filter by source (e.g., 'leetcode')
             difficulty: Filter by difficulty (e.g., 'Easy')
+            language: Filter by language (e.g., 'python', 'java', 'cpp')
             limit: Maximum number of results
-            
+
         Returns:
             List of problem dictionaries
         """
         cursor = self.conn.cursor()
-        
+
         query = "SELECT * FROM problems WHERE 1=1"
         params = []
-        
+
         if source:
             query += " AND source = ?"
             params.append(source)
-        
+
         if difficulty:
             query += " AND difficulty = ?"
             params.append(difficulty)
-        
+
+        if language:
+            query += " AND language = ?"
+            params.append(language)
+
         query += " ORDER BY problem_id ASC"
-        
+
         if limit:
             query += " LIMIT ?"
             params.append(limit)
-        
+
         cursor.execute(query, params)
         return [dict(row) for row in cursor.fetchall()]
     

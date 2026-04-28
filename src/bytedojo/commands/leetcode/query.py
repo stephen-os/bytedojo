@@ -37,14 +37,33 @@ DIFFICULTY_SHORT = {
 
 
 def _get_status_map(problems, repo):
-    """Get status map for a list of problems from the database."""
+    """
+    Get status map for a list of problems from the database.
+
+    Returns the best status across all languages for each problem.
+    Priority: passed > failed > skipped > ungraded
+    """
     status_map = {}
     if repo.is_initialized():
         with DatabaseManager(repo.get_db_path()) as db:
             for problem in problems:
-                db_problem = db.get_problem('leetcode', problem.id)
-                if db_problem:
-                    status_map[problem.id] = db_problem.get('test_status')
+                # Check all languages for this problem
+                statuses = []
+                for lang in ['python', 'java', 'cpp']:
+                    db_problem = db.get_problem('leetcode', problem.id, lang)
+                    if db_problem:
+                        statuses.append(db_problem.get('test_status'))
+
+                if statuses:
+                    # Return best status (passed > failed > skipped > ungraded)
+                    if 'passed' in statuses:
+                        status_map[problem.id] = 'passed'
+                    elif 'failed' in statuses:
+                        status_map[problem.id] = 'failed'
+                    elif 'skipped' in statuses:
+                        status_map[problem.id] = 'skipped'
+                    else:
+                        status_map[problem.id] = statuses[0]  # ungraded/untested
     return status_map
 
 

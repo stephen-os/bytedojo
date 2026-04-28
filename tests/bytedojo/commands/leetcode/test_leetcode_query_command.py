@@ -299,7 +299,7 @@ class TestQueryCommandWithDatabase:
         mock_db = Mock()
         mock_db.__enter__ = Mock(return_value=mock_db)
         mock_db.__exit__ = Mock(return_value=False)
-        mock_db.get_problem.side_effect = lambda source, pid: (
+        mock_db.get_problem.side_effect = lambda source, pid, lang='python': (
             {'test_status': 'passed'} if pid == 1 else
             {'test_status': 'failed'} if pid == 2 else
             None

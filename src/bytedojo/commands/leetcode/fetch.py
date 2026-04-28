@@ -8,11 +8,19 @@ from pathlib import Path
 
 from bytedojo.core.logger import get_logger
 from bytedojo.core.leetcode import LeetCodeClient
-from bytedojo.core.leetcode.formatters import PythonFormatter
+from bytedojo.core.leetcode.formatters import PythonFormatter, JavaFormatter, CppFormatter
 from bytedojo.core.file_writer import FileWriter
 from bytedojo.core.repository import DojoRepository
 from bytedojo.core.database import DatabaseManager
 from bytedojo.core.settings import SettingsManager
+
+
+# Language to formatter mapping
+FORMATTERS = {
+    'python': PythonFormatter,
+    'java': JavaFormatter,
+    'cpp': CppFormatter,
+}
 
 def parse_arguments(arguments: tuple[str, ...]) -> list[int]:
     problem_ids: list[int] = []
@@ -46,14 +54,19 @@ def parse_arguments(arguments: tuple[str, ...]) -> list[int]:
 # Define options
 @click.option('--output-dir', type=click.Path(path_type=Path), default='leetcode', help='Output directory for problem files')
 @click.option('--force', is_flag=True, help='Overwrite existing problems')
+@click.option('--python', 'language', flag_value='python', default=True, help='Fetch as Python (default)')
+@click.option('--java', 'language', flag_value='java', help='Fetch as Java')
+@click.option('--cpp', 'language', flag_value='cpp', help='Fetch as C++')
 
 @click.pass_obj
-def fetch(ctx, arguments: tuple, output_dir: Path, force: bool):
+def fetch(ctx, arguments: tuple, output_dir: Path, force: bool, language: str):
     """
     Fetch LeetCode problems.
 
     Examples:
-      dojo leetcode fetch 1              # Single problem
+      dojo leetcode fetch 1              # Single problem (Python)
+      dojo leetcode fetch 1 --java       # Fetch as Java
+      dojo leetcode fetch 1 --cpp        # Fetch as C++
       dojo leetcode fetch 1,2,3          # Multiple problems
       dojo leetcode fetch 1..10          # Range
       dojo leetcode fetch 1 --force      # Overwrite existing
@@ -74,11 +87,14 @@ def fetch(ctx, arguments: tuple, output_dir: Path, force: bool):
 
     # Initialize components
     client = LeetCodeClient()
-    formatter = PythonFormatter()
+    formatter_class = FORMATTERS.get(language, PythonFormatter)
+    formatter = formatter_class()
     writer = FileWriter()
 
     success_count = 0
     skip_count = 0
+
+    logger.info(f"Fetching problems as {language.upper()}")
 
     # Use database with context manager
     with DatabaseManager(repo.get_db_path()) as db:
@@ -89,36 +105,40 @@ def fetch(ctx, arguments: tuple, output_dir: Path, force: bool):
                 logger.error(f"Problem {problem_id} not found")
                 continue
 
-            # Check if already registered (unless force)
-            if not force and db.is_problem_registered('leetcode', problem.id):
-                logger.info(f"Problem #{problem.id} already registered (use --force to overwrite)")
+            # Check if already registered for this language (unless force)
+            if not force and db.is_problem_registered('leetcode', problem.id, language):
+                logger.info(f"Problem #{problem.id} ({language}) already registered (use --force to overwrite)")
                 skip_count += 1
                 continue
 
             # Format to string
             content = formatter.format(problem)
 
+            # Get filename with correct extension for language
+            filename = problem.get_filename(language)
+
             # Build file path based on organization setting
             if organization == "difficulty":
-                filepath = output_dir / problem.difficulty.lower() / problem.filename
+                filepath = output_dir / problem.difficulty.lower() / filename
             else:  # flat (default)
-                filepath = output_dir / problem.filename
+                filepath = output_dir / filename
 
             # Write to file
             writer.write(content, filepath)
 
-            # Register in database
+            # Register in database with language
             db.register_problem(
                 problem,
                 source='leetcode',
+                language=language,
                 file_path=filepath,
                 force=force
             )
 
-            logger.info(f"Problem #{problem.id}: {problem.title}")
+            logger.info(f"Problem #{problem.id}: {problem.title} ({language})")
             logger.info(f"  Saved to: {filepath}")
             success_count += 1
 
     # Summary
     logger.info("")
-    logger.info(f"Fetch complete: {success_count} fetched, {skip_count} skipped")
+    logger.info(f"Fetch complete: {success_count} fetched, {skip_count} skipped ({language})")
