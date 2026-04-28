@@ -358,6 +358,8 @@ class PythonFormatter(BaseFormatter):
     
     def _build_file_content(self, problem: Problem, description: str, code_template: str, ctx: FormatContext) -> str:
         """Build the complete file content from components."""
+        main_block = self._generate_main_block(ctx)
+
         return f'''"""
 LeetCode Problem #{problem.id}: {problem.title}
 Difficulty: {problem.difficulty}
@@ -373,7 +375,117 @@ Difficulty: {problem.difficulty}
 # ============================================================================
 
 {code_template}
+
+# ============================================================================
+# TEST
+# ============================================================================
+
+{main_block}
 '''
+
+    def _generate_main_block(self, ctx: FormatContext) -> str:
+        """Generate main block with test examples."""
+        lines = ['if __name__ == "__main__":']
+        lines.append(f'    {ctx.instance_name} = {ctx.class_name}()')
+        lines.append('')
+
+        if ctx.test_examples:
+            for i, (input_text, output_text, _) in enumerate(ctx.test_examples, 1):
+                lines.append(f'    # Example {i}')
+                test_call = self._generate_test_call(ctx, input_text, output_text, i)
+                lines.extend(test_call)
+                lines.append('')
+        else:
+            # Default placeholder
+            lines.append('    # TODO: Add test cases')
+            args = ', '.join(self._get_default_arg(p[1]) for p in ctx.param_info)
+            lines.append(f'    result = {ctx.instance_name}.{ctx.method_name}({args})')
+            lines.append('    print(result)')
+
+        return '\n'.join(lines)
+
+    def _generate_test_call(self, ctx: FormatContext, input_text: str, output_text: str, index: int) -> List[str]:
+        """Generate Python code for a single test case."""
+        lines = []
+
+        # Parse input variables
+        input_vars = self._parse_input_variables(input_text)
+
+        # Generate variable assignments
+        for param_name, param_type in ctx.param_info:
+            if param_name in input_vars:
+                value = self._convert_to_python_literal(input_vars[param_name])
+                lines.append(f'    {param_name}{index} = {value}')
+
+        # Generate method call
+        args = ', '.join(f'{p[0]}{index}' for p in ctx.param_info if p[0] in input_vars)
+        if not args:
+            args = ', '.join(self._get_default_arg(p[1]) for p in ctx.param_info)
+
+        lines.append(f'    result{index} = {ctx.instance_name}.{ctx.method_name}({args})')
+        lines.append(f'    print(f"Result {index}: {{result{index}}}")')
+
+        if output_text:
+            lines.append(f'    # Expected: {output_text}')
+
+        return lines
+
+    def _parse_input_variables(self, input_text: str) -> Dict[str, str]:
+        """Parse input line like 'nums = [2,7,11,15], target = 9' into dict."""
+        result = {}
+        pattern = r'(\w+)\s*=\s*'
+        var_matches = list(re.finditer(pattern, input_text))
+
+        for i, match in enumerate(var_matches):
+            var_name = match.group(1)
+            start = match.end()
+
+            if i + 1 < len(var_matches):
+                end = var_matches[i + 1].start()
+                value = input_text[start:end].rstrip().rstrip(',').strip()
+            else:
+                value = input_text[start:].strip()
+
+            value = value.rstrip(',').strip()
+            result[var_name] = value
+
+        return result
+
+    def _convert_to_python_literal(self, value: str) -> str:
+        """Convert LeetCode test case value to Python literal."""
+        value = value.strip()
+
+        # Boolean conversion
+        if value.lower() == 'true':
+            return 'True'
+        if value.lower() == 'false':
+            return 'False'
+
+        # null -> None
+        if value.lower() == 'null':
+            return 'None'
+
+        return value
+
+    def _get_default_arg(self, param_type: str) -> str:
+        """Get default argument value for a Python type."""
+        defaults = {
+            'int': '0',
+            'float': '0.0',
+            'str': '""',
+            'bool': 'False',
+            'List': '[]',
+            'Optional': 'None',
+        }
+
+        for type_name, default in defaults.items():
+            if type_name in param_type:
+                return default
+
+        if 'List' in param_type:
+            return '[]'
+
+        return 'None'
     
     # ========================================================================
     # Code Extraction and Processing
