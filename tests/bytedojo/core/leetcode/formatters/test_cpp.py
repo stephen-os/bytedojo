@@ -245,6 +245,93 @@ public:
 
 
 # ============================================================================
+# DEFAULT RETURN INJECTION TESTS
+# ============================================================================
+
+class TestDefaultReturnInjection:
+    """Test that default return statements are injected for runnable output."""
+
+    def test_vector_int_return_injected(self, formatter, basic_problem):
+        """Empty vector<int> method gets default return."""
+        basic_problem.get_snippet.return_value = """class Solution {
+public:
+    vector<int> twoSum(vector<int>& nums, int target) {
+
+    }
+};"""
+        result = formatter.format(basic_problem)
+        assert "return {};" in result
+
+    def test_int_return_injected(self, formatter, basic_problem):
+        """Empty int method gets default return."""
+        basic_problem.get_snippet.return_value = """class Solution {
+public:
+    int solve(int x) {
+
+    }
+};"""
+        result = formatter.format(basic_problem)
+        assert "return 0;" in result
+
+    def test_bool_return_injected(self, formatter, basic_problem):
+        """Empty bool method gets default return."""
+        basic_problem.get_snippet.return_value = """class Solution {
+public:
+    bool isValid(string s) {
+
+    }
+};"""
+        result = formatter.format(basic_problem)
+        assert "return false;" in result
+
+    def test_string_return_injected(self, formatter, basic_problem):
+        """Empty string method gets default return."""
+        basic_problem.get_snippet.return_value = """class Solution {
+public:
+    string convert(string s) {
+
+    }
+};"""
+        result = formatter.format(basic_problem)
+        assert 'return "";' in result
+
+    def test_nested_vector_return_injected(self, formatter, basic_problem):
+        """Empty vector<vector<int>> method gets default return."""
+        basic_problem.get_snippet.return_value = """class Solution {
+public:
+    vector<vector<int>> threeSum(vector<int>& nums) {
+
+    }
+};"""
+        result = formatter.format(basic_problem)
+        assert "return {};" in result
+
+    def test_void_no_return_injected(self, formatter, basic_problem):
+        """Void method does not get return injected."""
+        basic_problem.get_snippet.return_value = """class Solution {
+public:
+    void solve(vector<int>& nums) {
+
+    }
+};"""
+        result = formatter.format(basic_problem)
+        # Should not have a return statement in the Solution class
+        solution_section = result.split("int main()")[0]
+        assert "return" not in solution_section
+
+    def test_existing_code_not_modified(self, formatter, basic_problem):
+        """Method with existing code is not modified."""
+        basic_problem.get_snippet.return_value = """class Solution {
+public:
+    vector<int> twoSum(vector<int>& nums, int target) {
+        return {0, 1};
+    }
+};"""
+        result = formatter.format(basic_problem)
+        assert "return {0, 1};" in result
+
+
+# ============================================================================
 # INTEGRATION TESTS
 # ============================================================================
 

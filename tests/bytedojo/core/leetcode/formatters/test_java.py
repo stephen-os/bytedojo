@@ -212,6 +212,86 @@ class TestEdgeCases:
 
 
 # ============================================================================
+# DEFAULT RETURN INJECTION TESTS
+# ============================================================================
+
+class TestDefaultReturnInjection:
+    """Test that default return statements are injected for runnable output."""
+
+    def test_int_array_return_injected(self, formatter, basic_problem):
+        """Empty int[] method gets default return."""
+        basic_problem.get_snippet.return_value = """class Solution {
+    public int[] twoSum(int[] nums, int target) {
+
+    }
+}"""
+        result = formatter.format(basic_problem)
+        assert "return new int[]{};" in result
+
+    def test_int_return_injected(self, formatter, basic_problem):
+        """Empty int method gets default return."""
+        basic_problem.get_snippet.return_value = """class Solution {
+    public int solve(int x) {
+
+    }
+}"""
+        result = formatter.format(basic_problem)
+        assert "return 0;" in result
+
+    def test_boolean_return_injected(self, formatter, basic_problem):
+        """Empty boolean method gets default return."""
+        basic_problem.get_snippet.return_value = """class Solution {
+    public boolean isValid(String s) {
+
+    }
+}"""
+        result = formatter.format(basic_problem)
+        assert "return false;" in result
+
+    def test_string_return_injected(self, formatter, basic_problem):
+        """Empty String method gets default return."""
+        basic_problem.get_snippet.return_value = """class Solution {
+    public String convert(String s) {
+
+    }
+}"""
+        result = formatter.format(basic_problem)
+        assert 'return "";' in result
+
+    def test_list_return_injected(self, formatter, basic_problem):
+        """Empty List method gets default return."""
+        basic_problem.get_snippet.return_value = """class Solution {
+    public List<Integer> solve(int[] nums) {
+
+    }
+}"""
+        result = formatter.format(basic_problem)
+        assert "return new ArrayList<>();" in result
+
+    def test_void_no_return_injected(self, formatter, basic_problem):
+        """Void method does not get return injected."""
+        basic_problem.get_snippet.return_value = """class Solution {
+    public void solve(int[] nums) {
+
+    }
+}"""
+        result = formatter.format(basic_problem)
+        # Should not have a return statement in the Solution class method
+        assert "return" not in result.split("class Main")[0]
+
+    def test_existing_code_not_modified(self, formatter, basic_problem):
+        """Method with existing code is not modified."""
+        basic_problem.get_snippet.return_value = """class Solution {
+    public int[] twoSum(int[] nums, int target) {
+        return new int[]{0, 1};
+    }
+}"""
+        result = formatter.format(basic_problem)
+        assert "return new int[]{0, 1};" in result
+        assert "return new int[]{};" not in result
+
+
+# ============================================================================
 # INTEGRATION TESTS
 # ============================================================================
 
