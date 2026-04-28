@@ -232,14 +232,10 @@ def convert_to_cpp_literal(value: str, cpp_type: str) -> str:
     if cpp_type in ('int', 'long', 'long long', 'double', 'float'):
         return value
 
-    if 'string' in cpp_type.lower():
-        if not value.startswith('"'):
-            return f'"{value}"'
-        return value
-
-    if 'vector<int>' in cpp_type:
-        # [1,2,3] -> {1,2,3}
-        if value.startswith('[') and value.endswith(']'):
+    # Check vector types before simple string to avoid matching 'string' in 'vector<string>'
+    if 'vector<string>' in cpp_type.lower():
+        # ["a","b"] -> {"a","b"}
+        if value.startswith('['):
             inner = value[1:-1]
             return f'{{{inner}}}'
         return value
@@ -252,11 +248,17 @@ def convert_to_cpp_literal(value: str, cpp_type: str) -> str:
             return f'{{{inner}}}'
         return value
 
-    if 'vector<string>' in cpp_type.lower():
-        # ["a","b"] -> {"a","b"}
-        if value.startswith('['):
+    if 'vector<int>' in cpp_type:
+        # [1,2,3] -> {1,2,3}
+        if value.startswith('[') and value.endswith(']'):
             inner = value[1:-1]
             return f'{{{inner}}}'
+        return value
+
+    # Simple string type (not vector<string>)
+    if cpp_type == 'string' or cpp_type == 'string&':
+        if not value.startswith('"'):
+            return f'"{value}"'
         return value
 
     if cpp_type == 'bool':
