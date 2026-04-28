@@ -45,7 +45,7 @@ def init(ctx, force: bool):
         logger.info(f"Settings: {repo.settings_path}")
         logger.info("")
         logger.info("Next steps:")
-        logger.info("  dojo leetcode fetch 1    # Fetch a problem")
+        logger.info("  dojo fetch 1             # Fetch a problem")
         logger.info("  dojo settings            # View/change settings")
         logger.info("  dojo stats               # View statistics")
         

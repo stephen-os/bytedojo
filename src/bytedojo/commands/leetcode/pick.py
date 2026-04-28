@@ -9,6 +9,7 @@ from bytedojo.core.logger import get_logger
 from bytedojo.core.leetcode import LeetCodeClient
 from bytedojo.core.repository import DojoRepository
 from bytedojo.core.database import DatabaseManager
+from bytedojo.commands.utils import DIFFICULTY_COLORS
 
 
 DIFFICULTY_MAP = {
@@ -18,12 +19,6 @@ DIFFICULTY_MAP = {
     '1': 1,
     '2': 2,
     '3': 3,
-}
-
-DIFFICULTY_COLORS = {
-    'Easy': 'green',
-    'Medium': 'yellow',
-    'Hard': 'red',
 }
 
 

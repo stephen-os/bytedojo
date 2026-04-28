@@ -10,9 +10,9 @@ from bytedojo.core.logger import get_logger
 from bytedojo.core.leetcode import LeetCodeClient
 from bytedojo.core.leetcode.formatters import PythonFormatter, JavaFormatter, CppFormatter
 from bytedojo.core.file_writer import FileWriter
-from bytedojo.core.repository import DojoRepository
 from bytedojo.core.database import DatabaseManager
 from bytedojo.core.settings import SettingsManager
+from bytedojo.commands.utils import get_initialized_repo
 
 
 # Language to formatter mapping
@@ -73,12 +73,7 @@ def fetch(ctx, arguments: tuple, output_dir: Path, force: bool, language: str):
     """
     logger = get_logger()
     problem_ids = parse_arguments(arguments)
-
-    # Check if repository is initialized
-    repo = DojoRepository()
-    if not repo.is_initialized():
-        logger.error("No .dojo repository found. Run 'dojo init' first.")
-        raise click.ClickException("Repository not initialized")
+    repo = get_initialized_repo()
 
     # Load settings for organization mode
     settings_manager = SettingsManager(repo.get_dojo_path())

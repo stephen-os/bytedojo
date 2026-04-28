@@ -44,12 +44,6 @@ def create_database_schema(db_path: Path):
         )
     """)
 
-    # Migration: Add language column to existing databases
-    try:
-        cursor.execute("ALTER TABLE problems ADD COLUMN language TEXT NOT NULL DEFAULT 'python'")
-    except sqlite3.OperationalError:
-        pass  # Column already exists
-    
     # Attempts table - tracks solution attempts
     cursor.execute("""
         CREATE TABLE IF NOT EXISTS attempts (

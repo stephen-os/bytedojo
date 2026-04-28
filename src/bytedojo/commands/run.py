@@ -9,29 +9,13 @@ from pathlib import Path
 from typing import Optional
 
 from bytedojo.core.logger import get_logger
-from bytedojo.core.repository import DojoRepository
 from bytedojo.core.database import DatabaseManager
 from bytedojo.core.search import find_problems, select_problem
+from bytedojo.commands.utils import get_initialized_repo, LANGUAGE_COLORS
 
 
-# Language display colors
-LANGUAGE_COLORS = {
-    'python': 'blue',
-    'java': 'red',
-    'cpp': 'cyan',
-}
-
-
-def _get_repo():
-    """Get repository or raise error if not initialized."""
-    logger = get_logger()
-    repo = DojoRepository()
-
-    if not repo.is_initialized():
-        logger.error("No .dojo repository found. Run 'dojo init' first.")
-        raise click.ClickException("Repository not initialized")
-
-    return repo
+# Default timeout for subprocess execution (5 minutes)
+DEFAULT_TIMEOUT_SECONDS = 300
 
 
 def _display_run_header(problem: dict):
@@ -58,17 +42,21 @@ def _display_run_header(problem: dict):
 
 def _run_python(file_path: Path) -> int:
     """Run a Python file and return exit code."""
-    result = subprocess.run(
-        ['python', str(file_path)],
-        cwd=file_path.parent
-    )
-    return result.returncode
+    try:
+        result = subprocess.run(
+            ['python', str(file_path)],
+            cwd=file_path.parent,
+            timeout=DEFAULT_TIMEOUT_SECONDS
+        )
+        return result.returncode
+    except subprocess.TimeoutExpired:
+        click.echo(click.style(f"Execution timed out after {DEFAULT_TIMEOUT_SECONDS} seconds", fg='red'))
+        return 1
 
 
 def _run_java(file_path: Path, build_dir: Path) -> int:
     """Compile and run a Java file, return exit code."""
     logger = get_logger()
-    source_dir = file_path.parent
 
     # Ensure build directory exists
     build_dir.mkdir(parents=True, exist_ok=True)
@@ -87,12 +75,16 @@ def _run_java(file_path: Path, build_dir: Path) -> int:
         return compile_result.returncode
 
     # Run from build directory
-    run_result = subprocess.run(
-        ['java', 'Main'],
-        cwd=build_dir
-    )
-
-    return run_result.returncode
+    try:
+        run_result = subprocess.run(
+            ['java', 'Main'],
+            cwd=build_dir,
+            timeout=DEFAULT_TIMEOUT_SECONDS
+        )
+        return run_result.returncode
+    except subprocess.TimeoutExpired:
+        click.echo(click.style(f"Execution timed out after {DEFAULT_TIMEOUT_SECONDS} seconds", fg='red'))
+        return 1
 
 
 def _run_cpp(file_path: Path, build_dir: Path) -> int:
@@ -125,12 +117,16 @@ def _run_cpp(file_path: Path, build_dir: Path) -> int:
         return compile_result.returncode
 
     # Run
-    run_result = subprocess.run(
-        [str(output_path)],
-        cwd=build_dir
-    )
-
-    return run_result.returncode
+    try:
+        run_result = subprocess.run(
+            [str(output_path)],
+            cwd=build_dir,
+            timeout=DEFAULT_TIMEOUT_SECONDS
+        )
+        return run_result.returncode
+    except subprocess.TimeoutExpired:
+        click.echo(click.style(f"Execution timed out after {DEFAULT_TIMEOUT_SECONDS} seconds", fg='red'))
+        return 1
 
 
 def _run_problem(problem: dict, repo: DojoRepository) -> int:
@@ -199,7 +195,7 @@ def run(identifier: Optional[str], name_search: Optional[str], desc_search: Opti
       dojo run --name "Two Sum"     # Search by name
       dojo run --last               # Run last fetched problem
     """
-    repo = _get_repo()
+    repo = get_initialized_repo()
 
     with DatabaseManager(repo.get_db_path()) as db:
         # Handle --last flag

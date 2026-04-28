@@ -4,49 +4,18 @@ Grade command - Mark problems as passed, failed, or skipped.
 
 import click
 from datetime import datetime
-from typing import Optional
+from typing import Optional, List
 
 from bytedojo.core.logger import get_logger, Theme
-from bytedojo.core.repository import DojoRepository
 from bytedojo.core.database import DatabaseManager
 from bytedojo.core.search import find_problems, select_problem
-
-
-# Status display helpers
-STATUS_COLORS = {
-    'passed': 'green',
-    'failed': 'red',
-    'skipped': 'yellow',
-    'ungraded': 'bright_black',
-}
-
-DIFFICULTY_COLORS = {
-    'Easy': 'green',
-    'Medium': 'yellow',
-    'Hard': 'red',
-}
-
-SOURCE_COLORS = {
-    'leetcode': 'yellow',
-}
-
-LANGUAGE_COLORS = {
-    'python': 'blue',
-    'java': 'red',
-    'cpp': 'cyan',
-}
-
-
-def _get_repo():
-    """Get repository or raise error if not initialized."""
-    logger = get_logger()
-    repo = DojoRepository()
-
-    if not repo.is_initialized():
-        logger.error("No .dojo repository found. Run 'dojo init' first.")
-        raise click.ClickException("Repository not initialized")
-
-    return repo
+from bytedojo.commands.utils import (
+    get_initialized_repo,
+    STATUS_COLORS,
+    DIFFICULTY_COLORS,
+    SOURCE_COLORS,
+    LANGUAGE_COLORS,
+)
 
 
 def _display_problem_header(problem: dict):
@@ -76,7 +45,7 @@ def _display_problem_header(problem: dict):
     click.echo("")
 
 
-def _prompt_for_grade() -> tuple[str, str]:
+def _prompt_for_grade() -> tuple[Optional[str], Optional[str]]:
     """
     Prompt user to select a grade interactively.
 
@@ -165,7 +134,7 @@ def _grade_single_problem(problem: dict, status: str = None, notes: str = None):
     Returns:
         True if graded, False if cancelled
     """
-    repo = _get_repo()
+    repo = get_initialized_repo()
 
     with DatabaseManager(repo.get_db_path()) as db:
         _display_problem_header(problem)
@@ -181,12 +150,12 @@ def _grade_single_problem(problem: dict, status: str = None, notes: str = None):
         return True
 
 
-def _display_ungraded_page(problems: list, page: int, per_page: int) -> tuple[int, int]:
+def _display_ungraded_page(problems: list, page: int, per_page: int) -> tuple[int, int, List[dict]]:
     """
     Display a page of ungraded problems.
 
     Returns:
-        Tuple of (current_page, total_pages)
+        Tuple of (current_page, total_pages, page_problems)
     """
     total = len(problems)
     total_pages = max(1, (total + per_page - 1) // per_page)
@@ -235,7 +204,7 @@ def _batch_grading_loop(problems: list, per_page: int = 10):
     current_page = 1
 
     while problems:  # Re-fetch to account for graded problems
-        repo = _get_repo()
+        repo = get_initialized_repo()
         with DatabaseManager(repo.get_db_path()) as db:
             # Refresh ungraded list
             problems = db.get_problems_by_status('ungraded')
@@ -336,7 +305,7 @@ def grade(
       dojo grade 1 --pass              # Quick pass problem #1
       dojo grade 1 -f --notes "TLE"    # Fail with notes
     """
-    repo = _get_repo()
+    repo = get_initialized_repo()
 
     # Determine status from flags
     status = None

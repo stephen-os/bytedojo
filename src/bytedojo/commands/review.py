@@ -2,13 +2,13 @@
 Review command - Spaced repetition review system for problems.
 """
 
+import re
 import random
 import click
 from datetime import date, datetime
 
-from bytedojo.core.logger import get_logger
-from bytedojo.core.repository import DojoRepository
 from bytedojo.core.database import DatabaseManager
+from bytedojo.commands.utils import get_initialized_repo, SOURCE_COLORS
 
 
 def _format_date(date_str: str) -> str:
@@ -36,11 +36,7 @@ def _format_date(date_str: str) -> str:
 
 def _get_source_color(source: str) -> str:
     """Get color for source platform."""
-    if source == 'leetcode':
-        return 'yellow'
-    elif source == 'codeforces':
-        return 'cyan'
-    return 'white'
+    return SOURCE_COLORS.get(source, 'white')
 
 
 @click.group(invoke_without_command=True)
@@ -68,12 +64,7 @@ def review(ctx, show_all: bool):
 
 def _show_due_reviews(show_all: bool = False):
     """Show problems due for review."""
-    logger = get_logger()
-
-    repo = DojoRepository()
-    if not repo.is_initialized():
-        logger.error("No .dojo repository found. Run 'dojo init' first.")
-        raise click.ClickException("Repository not initialized")
+    repo = get_initialized_repo()
 
     with DatabaseManager(repo.get_db_path()) as db:
         reviews = db.get_due_reviews(include_future=show_all)
@@ -153,12 +144,7 @@ def pick(ctx):
     Examples:
       dojo review pick             # Pick a random due problem
     """
-    logger = get_logger()
-
-    repo = DojoRepository()
-    if not repo.is_initialized():
-        logger.error("No .dojo repository found. Run 'dojo init' first.")
-        raise click.ClickException("Repository not initialized")
+    repo = get_initialized_repo()
 
     with DatabaseManager(repo.get_db_path()) as db:
         due_reviews = db.get_due_reviews(include_future=False)
@@ -196,12 +182,12 @@ def pick(ctx):
 
         # Generate URL
         if source == 'leetcode':
-            # Get title slug from file path or use problem_id
-            url = f"https://leetcode.com/problems/"
+            # Derive slug from title (lowercase, replace spaces with hyphens)
+            title_slug = re.sub(r'[^a-z0-9]+', '-', title.lower()).strip('-')
+            url = f"https://leetcode.com/problems/{title_slug}/"
             click.echo(f"  URL: {url}")
         elif source == 'codeforces':
             # Parse contest_id and index from problem_id
-            import re
             match = re.match(r'^(\d+)([A-Za-z]\d?)$', problem_id)
             if match:
                 contest_id, index = match.groups()
@@ -221,7 +207,7 @@ def pick(ctx):
         if file_path:
             click.echo(f"  1. Open the file and solve it again")
             click.echo(f"  2. Submit to {source.capitalize()} to verify your solution")
-            click.echo(f"  3. Run: dojo grade problem {problem_id} --pass")
+            click.echo(f"  3. Run: dojo grade {problem_id} --pass")
             click.echo(f"  4. Grading as passed will schedule the next review")
         click.echo("")
 
@@ -236,12 +222,7 @@ def stats():
     Examples:
       dojo review stats
     """
-    logger = get_logger()
-
-    repo = DojoRepository()
-    if not repo.is_initialized():
-        logger.error("No .dojo repository found. Run 'dojo init' first.")
-        raise click.ClickException("Repository not initialized")
+    repo = get_initialized_repo()
 
     with DatabaseManager(repo.get_db_path()) as db:
         review_stats = db.get_review_stats()

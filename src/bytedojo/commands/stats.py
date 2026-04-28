@@ -4,8 +4,8 @@ Stats command - View statistics about problems in the repository.
 
 import click
 from bytedojo.core.logger import get_logger
-from bytedojo.core.repository import DojoRepository
 from bytedojo.core.database import DatabaseManager
+from bytedojo.commands.utils import get_initialized_repo
 
 
 @click.command()
@@ -27,13 +27,8 @@ def stats(ctx, list_problems: bool, verbose: bool, source: str, difficulty: str)
       dojo stats --list --difficulty Easy # List easy problems
     """
     logger = get_logger()
-    
-    # Check if repository is initialized
-    repo = DojoRepository()
-    if not repo.is_initialized():
-        logger.error("No .dojo repository found. Run 'dojo init' first.")
-        raise click.ClickException("Repository not initialized")
-    
+    repo = get_initialized_repo()
+
     with DatabaseManager(repo.get_db_path()) as db:
         if list_problems:
             _list_problems(db, verbose, source, difficulty, logger)

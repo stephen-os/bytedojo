@@ -5,9 +5,9 @@ Settings command - View and modify bytedojo settings.
 import click
 
 from bytedojo.core.logger import get_logger
-from bytedojo.core.repository import DojoRepository
 from bytedojo.core.settings import SettingsManager
 from bytedojo.core.database import DatabaseManager
+from bytedojo.commands.utils import get_initialized_repo
 
 
 @click.group(invoke_without_command=True)
@@ -29,12 +29,7 @@ def settings(ctx):
 def show_settings():
     """Display all current settings."""
     logger = get_logger()
-
-    # Check if repository is initialized
-    repo = DojoRepository()
-    if not repo.is_initialized():
-        logger.error("No .dojo repository found. Run 'dojo init' first.")
-        raise click.ClickException("Repository not initialized")
+    repo = get_initialized_repo()
 
     # Load and display settings
     settings_manager = SettingsManager(repo.get_dojo_path())
@@ -74,12 +69,7 @@ def set(key: str, value: str):
       dojo settings set leetcode.organization difficulty
     """
     logger = get_logger()
-
-    # Check if repository is initialized
-    repo = DojoRepository()
-    if not repo.is_initialized():
-        logger.error("No .dojo repository found. Run 'dojo init' first.")
-        raise click.ClickException("Repository not initialized")
+    repo = get_initialized_repo()
 
     # Validate known settings
     valid_settings = {
@@ -117,12 +107,7 @@ def get(key: str):
       dojo settings get leetcode.organization
     """
     logger = get_logger()
-
-    # Check if repository is initialized
-    repo = DojoRepository()
-    if not repo.is_initialized():
-        logger.error("No .dojo repository found. Run 'dojo init' first.")
-        raise click.ClickException("Repository not initialized")
+    repo = get_initialized_repo()
 
     # Get the value
     settings_manager = SettingsManager(repo.get_dojo_path())
@@ -157,10 +142,7 @@ def review_frequency(days: int):
     if days > 365:
         raise click.ClickException("Review frequency cannot exceed 365 days")
 
-    repo = DojoRepository()
-    if not repo.is_initialized():
-        logger.error("No .dojo repository found. Run 'dojo init' first.")
-        raise click.ClickException("Repository not initialized")
+    repo = get_initialized_repo()
 
     with DatabaseManager(repo.get_db_path()) as db:
         old_value = db.get_config('review_frequency_days', '7')
