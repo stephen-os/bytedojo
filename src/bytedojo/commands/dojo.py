@@ -19,6 +19,7 @@ from bytedojo.commands.grade import grade
 from bytedojo.commands.settings import settings
 from bytedojo.commands.leetcode import leetcode
 from bytedojo.commands.review import review
+from bytedojo.commands.run import run
 
 def print_version(ctx, param, value):
     """Print version information and exit."""
@@ -74,5 +75,6 @@ dojo.add_command(init)
 dojo.add_command(leetcode)
 dojo.add_command(stats)
 dojo.add_command(grade)
+dojo.add_command(run)
 dojo.add_command(settings)
 dojo.add_command(review)
