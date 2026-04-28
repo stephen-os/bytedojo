@@ -18,6 +18,9 @@ from bytedojo.commands import stats
 from bytedojo.commands.grade import grade
 from bytedojo.commands.settings import settings
 from bytedojo.commands.leetcode import leetcode
+from bytedojo.commands.leetcode.fetch import fetch
+from bytedojo.commands.leetcode.query import query
+from bytedojo.commands.leetcode.pick import pick
 from bytedojo.commands.review import review
 from bytedojo.commands.run import run
 
@@ -72,9 +75,14 @@ def dojo(ctx, debug: bool, config: Optional[Path]):
     ctx.obj = Context(debug=debug, config_path=config)
 
 dojo.add_command(init)
-dojo.add_command(leetcode)
+dojo.add_command(fetch)
+dojo.add_command(query)
+dojo.add_command(pick)
 dojo.add_command(stats)
 dojo.add_command(grade)
 dojo.add_command(run)
 dojo.add_command(settings)
 dojo.add_command(review)
+
+# Keep leetcode group for backwards compatibility
+dojo.add_command(leetcode)

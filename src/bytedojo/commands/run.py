@@ -6,10 +6,12 @@ import click
 import subprocess
 import os
 from pathlib import Path
+from typing import Optional
 
 from bytedojo.core.logger import get_logger
 from bytedojo.core.repository import DojoRepository
 from bytedojo.core.database import DatabaseManager
+from bytedojo.core.search import find_problems, select_problem
 
 
 # Language display colors
@@ -63,16 +65,18 @@ def _run_python(file_path: Path) -> int:
     return result.returncode
 
 
-def _run_java(file_path: Path, clean: bool) -> int:
+def _run_java(file_path: Path, build_dir: Path) -> int:
     """Compile and run a Java file, return exit code."""
     logger = get_logger()
-    directory = file_path.parent
+    source_dir = file_path.parent
 
-    # Compile
-    logger.debug(f"Compiling {file_path.name}...")
+    # Ensure build directory exists
+    build_dir.mkdir(parents=True, exist_ok=True)
+
+    # Compile to build directory
+    logger.debug(f"Compiling {file_path.name} to {build_dir}...")
     compile_result = subprocess.run(
-        ['javac', file_path.name],
-        cwd=directory,
+        ['javac', '-d', str(build_dir), str(file_path)],
         capture_output=True,
         text=True
     )
@@ -82,23 +86,21 @@ def _run_java(file_path: Path, clean: bool) -> int:
         click.echo(compile_result.stderr)
         return compile_result.returncode
 
-    # Run
+    # Run from build directory
     run_result = subprocess.run(
         ['java', 'Main'],
-        cwd=directory
+        cwd=build_dir
     )
-
-    # Clean up if requested
-    if clean:
-        _clean_java_artifacts(directory)
 
     return run_result.returncode
 
 
-def _run_cpp(file_path: Path, clean: bool) -> int:
+def _run_cpp(file_path: Path, build_dir: Path) -> int:
     """Compile and run a C++ file, return exit code."""
     logger = get_logger()
-    directory = file_path.parent
+
+    # Ensure build directory exists
+    build_dir.mkdir(parents=True, exist_ok=True)
 
     # Determine output name
     stem = file_path.stem
@@ -107,13 +109,12 @@ def _run_cpp(file_path: Path, clean: bool) -> int:
     else:
         output_name = stem
 
-    output_path = directory / output_name
+    output_path = build_dir / output_name
 
-    # Compile
-    logger.debug(f"Compiling {file_path.name}...")
+    # Compile to build directory
+    logger.debug(f"Compiling {file_path.name} to {output_path}...")
     compile_result = subprocess.run(
-        ['g++', '-o', output_name, file_path.name],
-        cwd=directory,
+        ['g++', '-o', str(output_path), str(file_path)],
         capture_output=True,
         text=True
     )
@@ -126,37 +127,18 @@ def _run_cpp(file_path: Path, clean: bool) -> int:
     # Run
     run_result = subprocess.run(
         [str(output_path)],
-        cwd=directory
+        cwd=build_dir
     )
-
-    # Clean up if requested
-    if clean:
-        _clean_cpp_artifacts(output_path)
 
     return run_result.returncode
 
 
-def _clean_java_artifacts(directory: Path):
-    """Remove .class files from directory."""
-    logger = get_logger()
-    for class_file in directory.glob('*.class'):
-        class_file.unlink()
-        logger.debug(f"Removed {class_file.name}")
-
-
-def _clean_cpp_artifacts(output_path: Path):
-    """Remove compiled binary."""
-    logger = get_logger()
-    if output_path.exists():
-        output_path.unlink()
-        logger.debug(f"Removed {output_path.name}")
-
-
-def _run_problem(problem: dict, clean: bool) -> int:
+def _run_problem(problem: dict, repo: DojoRepository) -> int:
     """Run a problem and return exit code."""
     logger = get_logger()
     language = problem.get('language', 'python')
     file_path_str = problem.get('file_path')
+    problem_id = problem.get('problem_id', 'unknown')
 
     if not file_path_str:
         raise click.ClickException("Problem has no associated file path")
@@ -171,108 +153,103 @@ def _run_problem(problem: dict, clean: bool) -> int:
 
     _display_run_header(problem)
 
+    # Get build directory for compiled languages
+    build_dir = repo.get_build_path(problem_id)
+
     # Run based on language
     if language == 'python':
         return _run_python(file_path)
     elif language == 'java':
-        return _run_java(file_path, clean)
+        return _run_java(file_path, build_dir)
     elif language == 'cpp':
-        return _run_cpp(file_path, clean)
+        return _run_cpp(file_path, build_dir)
     else:
         raise click.ClickException(f"Unsupported language: {language}")
+
+
+def _display_result(exit_code: int):
+    """Display execution result."""
+    click.echo("")
+    if exit_code == 0:
+        click.echo(click.style("  Execution completed successfully", fg='green'))
+    else:
+        click.echo(click.style(f"  Execution failed (exit code: {exit_code})", fg='red'))
 
 
 # ============================================================================
 # CLI COMMANDS
 # ============================================================================
 
-@click.group(invoke_without_command=True)
-@click.pass_context
-def run(ctx):
-    """
-    Run problem solutions for testing.
-
-    Execute your solution code to see the output.
-
-    Examples:
-      dojo run problem 1              # Run problem #1 (Python)
-      dojo run problem 1 --java       # Run Java version
-      dojo run problem 1 --cpp --clean  # Run C++, clean up after
-      dojo run last                   # Run last fetched problem
-    """
-    if ctx.invoked_subcommand is None:
-        click.echo(ctx.get_help())
-
-
-@run.command()
-@click.argument('problem_id', type=str)
+@click.command()
+@click.argument('identifier', required=False)
+@click.option('--name', '-n', 'name_search', help='Search by problem name')
+@click.option('--desc', '-d', 'desc_search', help='Search by description keywords')
 @click.option('--python', 'language', flag_value='python', default=True, help='Run Python version (default)')
 @click.option('--java', 'language', flag_value='java', help='Run Java version')
 @click.option('--cpp', 'language', flag_value='cpp', help='Run C++ version')
-@click.option('--clean', is_flag=True, help='Remove compiled artifacts after execution')
-def problem(problem_id: str, language: str, clean: bool):
+@click.option('--last', is_flag=True, help='Run most recently fetched problem')
+def run(identifier: Optional[str], name_search: Optional[str], desc_search: Optional[str], language: str, last: bool):
     """
-    Run a specific problem by ID.
+    Run a problem solution.
 
     Examples:
-      dojo run problem 1             # Run Python version
-      dojo run problem 1 --java      # Run Java version
-      dojo run problem 1 --cpp --clean  # Run C++, clean after
+      dojo run 1                    # Run problem #1 (Python)
+      dojo run 1 --java             # Run Java version
+      dojo run 1 --cpp              # Run C++ version
+      dojo run --name "Two Sum"     # Search by name
+      dojo run --last               # Run last fetched problem
     """
-    logger = get_logger()
     repo = _get_repo()
 
     with DatabaseManager(repo.get_db_path()) as db:
-        problem_data = db.get_problem('leetcode', problem_id, language)
+        # Handle --last flag
+        if last:
+            problems = db.list_problems(language=language, limit=1)
+            if not problems:
+                raise click.ClickException(
+                    f"No {language} problems found. "
+                    f"Fetch one first with: dojo fetch <id> --{language}"
+                )
+            problem_data = problems[0]
+        else:
+            # Require either identifier, name, or desc
+            if not identifier and not name_search and not desc_search:
+                raise click.ClickException(
+                    "Please specify a problem ID, --name, --desc, or --last\n"
+                    "Examples:\n"
+                    "  dojo run 1\n"
+                    "  dojo run --name 'Two Sum'\n"
+                    "  dojo run --last"
+                )
 
-        if not problem_data:
-            raise click.ClickException(
-                f"Problem '{problem_id}' ({language}) not found in database. "
-                f"Fetch it first with: dojo leetcode fetch {problem_id} --{language}"
+            # Find matching problems
+            matches = find_problems(
+                db,
+                identifier=identifier,
+                name=name_search,
+                desc=desc_search,
+                language=language
             )
 
-    exit_code = _run_problem(problem_data, clean)
+            if not matches:
+                criteria = []
+                if identifier:
+                    criteria.append(f"ID '{identifier}'")
+                if name_search:
+                    criteria.append(f"name '{name_search}'")
+                if desc_search:
+                    criteria.append(f"description '{desc_search}'")
 
-    click.echo("")
-    if exit_code == 0:
-        click.echo(click.style("  Execution completed successfully", fg='green'))
-    else:
-        click.echo(click.style(f"  Execution failed (exit code: {exit_code})", fg='red'))
+                criteria_str = ", ".join(criteria) if criteria else "given criteria"
+                raise click.ClickException(
+                    f"No {language} problems found matching {criteria_str}. "
+                    f"Fetch one first with: dojo fetch <id> --{language}"
+                )
 
+            # Select problem (interactive if multiple)
+            problem_data = select_problem(matches)
+            if not problem_data:
+                raise click.Abort()
 
-@run.command()
-@click.option('--python', 'language', flag_value='python', default=True, help='Run Python version (default)')
-@click.option('--java', 'language', flag_value='java', help='Run Java version')
-@click.option('--cpp', 'language', flag_value='cpp', help='Run C++ version')
-@click.option('--clean', is_flag=True, help='Remove compiled artifacts after execution')
-def last(language: str, clean: bool):
-    """
-    Run the most recently fetched problem.
-
-    Examples:
-      dojo run last              # Run last fetched (Python)
-      dojo run last --java       # Run last fetched Java
-      dojo run last --cpp --clean  # Run last C++, clean after
-    """
-    logger = get_logger()
-    repo = _get_repo()
-
-    with DatabaseManager(repo.get_db_path()) as db:
-        # Get the most recently fetched problem for this language
-        problems = db.list_problems(language=language, limit=1)
-
-        if not problems:
-            raise click.ClickException(
-                f"No {language} problems found. "
-                f"Fetch one first with: dojo leetcode fetch <id> --{language}"
-            )
-
-        problem_data = problems[0]
-
-    exit_code = _run_problem(problem_data, clean)
-
-    click.echo("")
-    if exit_code == 0:
-        click.echo(click.style("  Execution completed successfully", fg='green'))
-    else:
-        click.echo(click.style(f"  Execution failed (exit code: {exit_code})", fg='red'))
+    exit_code = _run_problem(problem_data, repo)
+    _display_result(exit_code)

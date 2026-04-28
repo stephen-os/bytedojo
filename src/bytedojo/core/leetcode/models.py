@@ -60,3 +60,30 @@ class Problem:
         }
         ext = extensions.get(language.lower(), '.py')
         return f"{self.id:04d}-{self.title_slug}{ext}"
+
+    def get_folder_name(self) -> str:
+        """
+        Get problem folder name.
+
+        Returns:
+            Folder name like '0001-two-sum'
+        """
+        return f"{self.id:04d}-{self.title_slug}"
+
+    def get_solution_filename(self, language: str = 'python') -> str:
+        """
+        Get solution filename for problem-first organization.
+
+        Args:
+            language: Programming language ('python', 'java', 'cpp')
+
+        Returns:
+            Solution filename like 'solution.py'
+        """
+        extensions = {
+            'python': '.py',
+            'java': '.java',
+            'cpp': '.cpp',
+        }
+        ext = extensions.get(language.lower(), '.py')
+        return f"solution{ext}"

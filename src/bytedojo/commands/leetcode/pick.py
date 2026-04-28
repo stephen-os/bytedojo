@@ -61,10 +61,10 @@ def pick(ctx, difficulty: str, tag: tuple, include_premium: bool):
     Selects from problems not yet in your .dojo database.
 
     Examples:
-      dojo leetcode pick                    # Random unsolved problem
-      dojo leetcode pick -d easy            # Random easy problem
-      dojo leetcode pick -t array           # Random array problem
-      dojo leetcode pick -d medium -t tree  # Random medium tree problem
+      dojo pick                    # Random unsolved problem
+      dojo pick -d easy            # Random easy problem
+      dojo pick -t array           # Random array problem
+      dojo pick -d medium -t tree  # Random medium tree problem
     """
     logger = get_logger()
     client = LeetCodeClient()
@@ -136,5 +136,5 @@ def pick(ctx, difficulty: str, tag: tuple, include_premium: bool):
     click.echo("")
 
     # Offer to fetch
-    click.echo(f"  Fetch with: dojo leetcode fetch {problem.id}")
+    click.echo(f"  Fetch with: dojo fetch {problem.id}")
     click.echo("")

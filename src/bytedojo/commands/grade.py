@@ -4,10 +4,12 @@ Grade command - Mark problems as passed, failed, or skipped.
 
 import click
 from datetime import datetime
+from typing import Optional
 
 from bytedojo.core.logger import get_logger, Theme
 from bytedojo.core.repository import DojoRepository
 from bytedojo.core.database import DatabaseManager
+from bytedojo.core.search import find_problems, select_problem
 
 
 # Status display helpers
@@ -35,8 +37,8 @@ LANGUAGE_COLORS = {
 }
 
 
-def _get_repo_and_db():
-    """Get repository and database manager, or raise error if not initialized."""
+def _get_repo():
+    """Get repository or raise error if not initialized."""
     logger = get_logger()
     repo = DojoRepository()
 
@@ -163,7 +165,7 @@ def _grade_single_problem(problem: dict, status: str = None, notes: str = None):
     Returns:
         True if graded, False if cancelled
     """
-    repo = _get_repo_and_db()
+    repo = _get_repo()
 
     with DatabaseManager(repo.get_db_path()) as db:
         _display_problem_header(problem)
@@ -233,7 +235,7 @@ def _batch_grading_loop(problems: list, per_page: int = 10):
     current_page = 1
 
     while problems:  # Re-fetch to account for graded problems
-        repo = _get_repo_and_db()
+        repo = _get_repo()
         with DatabaseManager(repo.get_db_path()) as db:
             # Refresh ungraded list
             problems = db.get_problems_by_status('ungraded')
@@ -291,10 +293,35 @@ def _batch_grading_loop(problems: list, per_page: int = 10):
                 click.echo("  Invalid input. Use number/n/p/q.")
 
 
-@click.group(invoke_without_command=True)
-@click.option('--per-page', '-n', type=int, default=10, help='Problems per page in batch mode')
-@click.pass_context
-def grade(ctx, per_page: int):
+# ============================================================================
+# CLI COMMANDS
+# ============================================================================
+
+@click.command()
+@click.argument('identifier', required=False)
+@click.option('--name', '-n', 'name_search', help='Search by problem name')
+@click.option('--desc', '-d', 'desc_search', help='Search by description keywords')
+@click.option('--last', is_flag=True, help='Grade most recently fetched problem')
+@click.option('--pass', '-p', 'status_pass', is_flag=True, help='Mark as passed')
+@click.option('--fail', '-f', 'status_fail', is_flag=True, help='Mark as failed')
+@click.option('--skip', '-s', 'status_skip', is_flag=True, help='Mark as skipped')
+@click.option('--notes', type=str, default=None, help='Add notes')
+@click.option('--python', 'language', flag_value='python', default=True, help='Grade Python version (default)')
+@click.option('--java', 'language', flag_value='java', help='Grade Java version')
+@click.option('--cpp', 'language', flag_value='cpp', help='Grade C++ version')
+@click.option('--per-page', type=int, default=10, help='Problems per page in batch mode')
+def grade(
+    identifier: Optional[str],
+    name_search: Optional[str],
+    desc_search: Optional[str],
+    last: bool,
+    status_pass: bool,
+    status_fail: bool,
+    status_skip: bool,
+    notes: Optional[str],
+    language: str,
+    per_page: int
+):
     """
     Grade problems as passed, failed, or skipped.
 
@@ -302,38 +329,15 @@ def grade(ctx, per_page: int):
 
     Examples:
       dojo grade                       # Interactive batch grading
-      dojo grade last                  # Grade the last fetched problem
-      dojo grade problem 1             # Grade LeetCode problem #1
-      dojo grade last --pass           # Quick pass the last problem
-      dojo grade problem 1 -f -n "TLE" # Fail with notes
+      dojo grade 1                     # Grade problem #1 (Python)
+      dojo grade 1 --java              # Grade Java version
+      dojo grade --name "Two Sum"      # Search by name
+      dojo grade --last                # Grade last fetched problem
+      dojo grade 1 --pass              # Quick pass problem #1
+      dojo grade 1 -f --notes "TLE"    # Fail with notes
     """
-    ctx.ensure_object(dict)
-    ctx.obj['per_page'] = per_page
+    repo = _get_repo()
 
-    # If no subcommand and no arguments, run batch mode
-    if ctx.invoked_subcommand is None:
-        repo = _get_repo_and_db()
-        with DatabaseManager(repo.get_db_path()) as db:
-            ungraded = db.get_problems_by_status('ungraded')
-
-        _batch_grading_loop(ungraded, per_page)
-
-
-@grade.command()
-@click.option('--pass', '-p', 'status_pass', is_flag=True, help='Mark as passed')
-@click.option('--fail', '-f', 'status_fail', is_flag=True, help='Mark as failed')
-@click.option('--skip', '-s', 'status_skip', is_flag=True, help='Mark as skipped')
-@click.option('--notes', '-n', type=str, default=None, help='Add notes')
-@click.pass_context
-def last(ctx, status_pass: bool, status_fail: bool, status_skip: bool, notes: str):
-    """
-    Grade the most recently fetched problem.
-
-    Examples:
-      dojo grade last                  # Interactive grading
-      dojo grade last --pass           # Quick pass
-      dojo grade last -f -n "Need DP"  # Fail with notes
-    """
     # Determine status from flags
     status = None
     flag_count = sum([status_pass, status_fail, status_skip])
@@ -348,62 +352,51 @@ def last(ctx, status_pass: bool, status_fail: bool, status_skip: bool, notes: st
     elif status_skip:
         status = 'skipped'
 
-    repo = _get_repo_and_db()
-
     with DatabaseManager(repo.get_db_path()) as db:
-        problems = db.list_problems()
-
-        if not problems:
-            click.echo("No problems found. Fetch some problems first.")
+        # Batch mode: no identifier, name, desc, or last
+        if not identifier and not name_search and not desc_search and not last:
+            ungraded = db.get_problems_by_status('ungraded')
+            _batch_grading_loop(ungraded, per_page)
             return
 
-        # Get the last fetched problem (most recent by fetched_at)
-        problem = max(problems, key=lambda p: p.get('fetched_at', ''))
-
-    _grade_single_problem(problem, status, notes)
-
-
-@grade.command()
-@click.argument('problem_id', type=str)
-@click.option('--pass', '-p', 'status_pass', is_flag=True, help='Mark as passed')
-@click.option('--fail', '-f', 'status_fail', is_flag=True, help='Mark as failed')
-@click.option('--skip', '-s', 'status_skip', is_flag=True, help='Mark as skipped')
-@click.option('--notes', '-n', type=str, default=None, help='Add notes')
-@click.option('--language', '-l', type=click.Choice(['python', 'java', 'cpp']),
-              default='python', help='Language of the solution (default: python)')
-def problem(problem_id: str, status_pass: bool, status_fail: bool, status_skip: bool, notes: str, language: str):
-    """
-    Grade a specific problem by ID.
-
-    Examples:
-      dojo grade problem 1             # Grade LeetCode #1 (Python)
-      dojo grade problem 1 --pass      # Quick pass
-      dojo grade problem 1 -l java     # Grade Java version
-      dojo grade problem 1 -f -n "TLE" # Fail with notes
-    """
-    # Determine status from flags
-    status = None
-    flag_count = sum([status_pass, status_fail, status_skip])
-
-    if flag_count > 1:
-        raise click.ClickException("Cannot specify multiple status flags. Use one of --pass, --fail, or --skip.")
-
-    if status_pass:
-        status = 'passed'
-    elif status_fail:
-        status = 'failed'
-    elif status_skip:
-        status = 'skipped'
-
-    repo = _get_repo_and_db()
-
-    with DatabaseManager(repo.get_db_path()) as db:
-        problem_data = db.get_problem('leetcode', problem_id, language)
-
-        if not problem_data:
-            raise click.ClickException(
-                f"Problem '{problem_id}' ({language}) not found in database. "
-                f"Fetch it first with: dojo leetcode fetch {problem_id} --{language}"
+        # Handle --last flag
+        if last:
+            problems = db.list_problems(language=language, limit=1)
+            if not problems:
+                raise click.ClickException(
+                    f"No {language} problems found. "
+                    f"Fetch one first with: dojo fetch <id> --{language}"
+                )
+            # Get most recent by fetched_at
+            problem_data = max(problems, key=lambda p: p.get('fetched_at', ''))
+        else:
+            # Find matching problems
+            matches = find_problems(
+                db,
+                identifier=identifier,
+                name=name_search,
+                desc=desc_search,
+                language=language
             )
+
+            if not matches:
+                criteria = []
+                if identifier:
+                    criteria.append(f"ID '{identifier}'")
+                if name_search:
+                    criteria.append(f"name '{name_search}'")
+                if desc_search:
+                    criteria.append(f"description '{desc_search}'")
+
+                criteria_str = ", ".join(criteria) if criteria else "given criteria"
+                raise click.ClickException(
+                    f"No {language} problems found matching {criteria_str}. "
+                    f"Fetch one first with: dojo fetch <id> --{language}"
+                )
+
+            # Select problem (interactive if multiple)
+            problem_data = select_problem(matches)
+            if not problem_data:
+                raise click.Abort()
 
     _grade_single_problem(problem_data, status, notes)

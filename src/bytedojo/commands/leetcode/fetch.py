@@ -52,7 +52,7 @@ def parse_arguments(arguments: tuple[str, ...]) -> list[int]:
 @click.argument('arguments', nargs=-1, required=True)
 
 # Define options
-@click.option('--output-dir', type=click.Path(path_type=Path), default='leetcode', help='Output directory for problem files')
+@click.option('--output-dir', type=click.Path(path_type=Path), default='problems', help='Output directory for problem files')
 @click.option('--force', is_flag=True, help='Overwrite existing problems')
 @click.option('--python', 'language', flag_value='python', default=True, help='Fetch as Python (default)')
 @click.option('--java', 'language', flag_value='java', help='Fetch as Java')
@@ -64,12 +64,12 @@ def fetch(ctx, arguments: tuple, output_dir: Path, force: bool, language: str):
     Fetch LeetCode problems.
 
     Examples:
-      dojo leetcode fetch 1              # Single problem (Python)
-      dojo leetcode fetch 1 --java       # Fetch as Java
-      dojo leetcode fetch 1 --cpp        # Fetch as C++
-      dojo leetcode fetch 1,2,3          # Multiple problems
-      dojo leetcode fetch 1..10          # Range
-      dojo leetcode fetch 1 --force      # Overwrite existing
+      dojo fetch 1              # Single problem (Python)
+      dojo fetch 1 --java       # Fetch as Java
+      dojo fetch 1 --cpp        # Fetch as C++
+      dojo fetch 1,2,3          # Multiple problems
+      dojo fetch 1..10          # Range
+      dojo fetch 1 --force      # Overwrite existing
     """
     logger = get_logger()
     problem_ids = parse_arguments(arguments)
@@ -114,14 +114,16 @@ def fetch(ctx, arguments: tuple, output_dir: Path, force: bool, language: str):
             # Format to string
             content = formatter.format(problem)
 
-            # Get filename with correct extension for language
-            filename = problem.get_filename(language)
+            # Get folder name and solution filename
+            folder_name = problem.get_folder_name()
+            solution_filename = problem.get_solution_filename(language)
 
-            # Build file path based on organization setting
+            # Build file path: problems/0001-two-sum/solution.py
+            # Organization setting affects whether difficulty subfolders are used
             if organization == "difficulty":
-                filepath = output_dir / problem.difficulty.lower() / filename
+                filepath = output_dir / problem.difficulty.lower() / folder_name / solution_filename
             else:  # flat (default)
-                filepath = output_dir / filename
+                filepath = output_dir / folder_name / solution_filename
 
             # Write to file
             writer.write(content, filepath)

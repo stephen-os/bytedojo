@@ -193,11 +193,11 @@ def query(ctx, difficulty: str, tag: tuple, page: int, per_page: int, list_tags:
       n = next page    p = prev page    # = jump to page    q = quit
 
     Examples:
-      dojo leetcode query                          # Browse all problems
-      dojo leetcode query -d easy                  # Easy problems only
-      dojo leetcode query -t array                 # Array problems
-      dojo leetcode query -d medium -t dp -n 50   # 50 per page
-      dojo leetcode query --list-tags              # Show all tags
+      dojo query                          # Browse all problems
+      dojo query -d easy                  # Easy problems only
+      dojo query -t array                 # Array problems
+      dojo query -d medium -t dp -n 50    # 50 per page
+      dojo query --list-tags              # Show all tags
     """
     logger = get_logger()
     client = LeetCodeClient()

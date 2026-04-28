@@ -203,7 +203,7 @@ class TestPickCommand:
         runner = CliRunner()
         result = runner.invoke(dojo, ['leetcode', 'pick'])
 
-        assert 'dojo leetcode fetch 42' in result.output
+        assert 'dojo fetch 42' in result.output
 
     @patch('bytedojo.commands.leetcode.pick.DojoRepository')
     @patch('bytedojo.commands.leetcode.pick.LeetCodeClient')

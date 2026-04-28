@@ -52,6 +52,25 @@ class DojoRepository:
             raise RuntimeError("Repository not initialized. Run 'dojo init' first.")
         return self.settings_path
 
+    def get_build_path(self, problem_id: Optional[str] = None) -> Path:
+        """
+        Get path to build directory for compiled artifacts.
+
+        Args:
+            problem_id: Optional problem ID to get problem-specific build dir
+
+        Returns:
+            Path to build directory (.dojo/build/ or .dojo/build/<problem_id>/)
+        """
+        build_dir = self.dojo_dir / "build"
+        if problem_id:
+            return build_dir / problem_id
+        return build_dir
+
+    def get_problems_path(self) -> Path:
+        """Get path to problems directory."""
+        return self.root_dir / "problems"
+
     def initialize(self, force: bool = False):
         """
         Initialize the repository.
@@ -142,10 +161,13 @@ class DojoRepository:
             ## Usage
 ```bash
             # Fetch problems
-            dojo leetcode fetch 1
+            dojo fetch 1
+
+            # Run your solution
+            dojo run 1
 
             # Grade your solutions
-            dojo grade last --pass
+            dojo grade 1 --pass
 
             # View stats
             dojo stats

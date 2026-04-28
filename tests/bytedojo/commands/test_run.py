@@ -36,11 +36,11 @@ def repo_with_python_problem(tmp_path):
     repo = DojoRepository(root_dir=tmp_path)
     repo.initialize()
 
-    # Create leetcode directory and Python file
-    leetcode_dir = tmp_path / "leetcode"
-    leetcode_dir.mkdir()
+    # Create problems directory and Python file
+    problems_dir = tmp_path / "problems" / "0001-two-sum"
+    problems_dir.mkdir(parents=True)
 
-    python_file = leetcode_dir / "0001-two-sum.py"
+    python_file = problems_dir / "solution.py"
     python_file.write_text('''
 print("Hello from Python!")
 print("Test output")
@@ -51,7 +51,7 @@ print("Test output")
     conn = sqlite3.connect(db_path)
     conn.execute("""
         INSERT INTO problems (source, problem_id, language, title, difficulty, file_path, fetched_at)
-        VALUES ('leetcode', '1', 'python', 'Two Sum', 'Easy', 'leetcode/0001-two-sum.py', '2024-01-01 10:00:00')
+        VALUES ('leetcode', '1', 'python', 'Two Sum', 'Easy', 'problems/0001-two-sum/solution.py', '2024-01-01 10:00:00')
     """)
     conn.commit()
     conn.close()
@@ -70,11 +70,11 @@ def repo_with_java_problem(tmp_path):
     repo = DojoRepository(root_dir=tmp_path)
     repo.initialize()
 
-    # Create leetcode directory and Java file
-    leetcode_dir = tmp_path / "leetcode"
-    leetcode_dir.mkdir()
+    # Create problems directory and Java file
+    problems_dir = tmp_path / "problems" / "0001-two-sum"
+    problems_dir.mkdir(parents=True)
 
-    java_file = leetcode_dir / "0001-two-sum.java"
+    java_file = problems_dir / "solution.java"
     java_file.write_text('''
 class Solution {
     public int[] twoSum(int[] nums, int target) {
@@ -94,7 +94,7 @@ class Main {
     conn = sqlite3.connect(db_path)
     conn.execute("""
         INSERT INTO problems (source, problem_id, language, title, difficulty, file_path, fetched_at)
-        VALUES ('leetcode', '1', 'java', 'Two Sum', 'Easy', 'leetcode/0001-two-sum.java', '2024-01-01 10:00:00')
+        VALUES ('leetcode', '1', 'java', 'Two Sum', 'Easy', 'problems/0001-two-sum/solution.java', '2024-01-01 10:00:00')
     """)
     conn.commit()
     conn.close()
@@ -113,11 +113,11 @@ def repo_with_cpp_problem(tmp_path):
     repo = DojoRepository(root_dir=tmp_path)
     repo.initialize()
 
-    # Create leetcode directory and C++ file
-    leetcode_dir = tmp_path / "leetcode"
-    leetcode_dir.mkdir()
+    # Create problems directory and C++ file
+    problems_dir = tmp_path / "problems" / "0001-two-sum"
+    problems_dir.mkdir(parents=True)
 
-    cpp_file = leetcode_dir / "0001-two-sum.cpp"
+    cpp_file = problems_dir / "solution.cpp"
     cpp_file.write_text('''
 #include <iostream>
 using namespace std;
@@ -133,7 +133,7 @@ int main() {
     conn = sqlite3.connect(db_path)
     conn.execute("""
         INSERT INTO problems (source, problem_id, language, title, difficulty, file_path, fetched_at)
-        VALUES ('leetcode', '1', 'cpp', 'Two Sum', 'Easy', 'leetcode/0001-two-sum.cpp', '2024-01-01 10:00:00')
+        VALUES ('leetcode', '1', 'cpp', 'Two Sum', 'Easy', 'problems/0001-two-sum/solution.cpp', '2024-01-01 10:00:00')
     """)
     conn.commit()
     conn.close()
@@ -152,16 +152,16 @@ def repo_with_all_languages(tmp_path):
     repo = DojoRepository(root_dir=tmp_path)
     repo.initialize()
 
-    # Create leetcode directory
-    leetcode_dir = tmp_path / "leetcode"
-    leetcode_dir.mkdir()
+    # Create problems directory
+    problems_dir = tmp_path / "problems" / "0001-two-sum"
+    problems_dir.mkdir(parents=True)
 
     # Python file
-    python_file = leetcode_dir / "0001-two-sum.py"
+    python_file = problems_dir / "solution.py"
     python_file.write_text('print("Python")')
 
     # Java file
-    java_file = leetcode_dir / "0001-two-sum.java"
+    java_file = problems_dir / "solution.java"
     java_file.write_text('''
 class Main {
     public static void main(String[] args) {
@@ -171,7 +171,7 @@ class Main {
 ''')
 
     # C++ file
-    cpp_file = leetcode_dir / "0001-two-sum.cpp"
+    cpp_file = problems_dir / "solution.cpp"
     cpp_file.write_text('''
 #include <iostream>
 int main() { std::cout << "C++" << std::endl; return 0; }
@@ -182,15 +182,15 @@ int main() { std::cout << "C++" << std::endl; return 0; }
     conn = sqlite3.connect(db_path)
     conn.execute("""
         INSERT INTO problems (source, problem_id, language, title, difficulty, file_path, fetched_at)
-        VALUES ('leetcode', '1', 'python', 'Two Sum', 'Easy', 'leetcode/0001-two-sum.py', '2024-01-01 10:00:00')
+        VALUES ('leetcode', '1', 'python', 'Two Sum', 'Easy', 'problems/0001-two-sum/solution.py', '2024-01-01 10:00:00')
     """)
     conn.execute("""
         INSERT INTO problems (source, problem_id, language, title, difficulty, file_path, fetched_at)
-        VALUES ('leetcode', '1', 'java', 'Two Sum', 'Easy', 'leetcode/0001-two-sum.java', '2024-01-01 11:00:00')
+        VALUES ('leetcode', '1', 'java', 'Two Sum', 'Easy', 'problems/0001-two-sum/solution.java', '2024-01-01 11:00:00')
     """)
     conn.execute("""
         INSERT INTO problems (source, problem_id, language, title, difficulty, file_path, fetched_at)
-        VALUES ('leetcode', '1', 'cpp', 'Two Sum', 'Easy', 'leetcode/0001-two-sum.cpp', '2024-01-01 12:00:00')
+        VALUES ('leetcode', '1', 'cpp', 'Two Sum', 'Easy', 'problems/0001-two-sum/solution.cpp', '2024-01-01 12:00:00')
     """)
     conn.commit()
     conn.close()
@@ -213,39 +213,34 @@ class TestRunCommandHelp:
         result = runner.invoke(dojo, ['run', '--help'])
 
         assert result.exit_code == 0
-        assert "Run problem solutions" in result.output
-        assert "problem" in result.output
-        assert "last" in result.output
-
-    def test_run_problem_help(self):
-        """Test run problem --help output."""
-        runner = CliRunner()
-        result = runner.invoke(dojo, ['run', 'problem', '--help'])
-
-        assert result.exit_code == 0
+        assert "Run a problem solution" in result.output
         assert "--python" in result.output
         assert "--java" in result.output
         assert "--cpp" in result.output
-        assert "--clean" in result.output
 
-    def test_run_last_help(self):
-        """Test run last --help output."""
+    def test_run_shows_name_option(self):
+        """Test run --help shows --name option."""
         runner = CliRunner()
-        result = runner.invoke(dojo, ['run', 'last', '--help'])
+        result = runner.invoke(dojo, ['run', '--help'])
 
         assert result.exit_code == 0
-        assert "--python" in result.output
-        assert "--java" in result.output
-        assert "--cpp" in result.output
-        assert "--clean" in result.output
+        assert "--name" in result.output
 
-    def test_run_without_subcommand_shows_help(self, initialized_repo):
-        """Test that run without subcommand shows help."""
+    def test_run_shows_last_option(self):
+        """Test run --help shows --last option."""
+        runner = CliRunner()
+        result = runner.invoke(dojo, ['run', '--help'])
+
+        assert result.exit_code == 0
+        assert "--last" in result.output
+
+    def test_run_without_args_shows_error(self, initialized_repo):
+        """Test that run without args shows error."""
         runner = CliRunner()
         result = runner.invoke(dojo, ['run'])
 
-        assert result.exit_code == 0
-        assert "Usage:" in result.output
+        assert result.exit_code != 0
+        assert "Please specify" in result.output
 
 
 # ============================================================================
@@ -255,22 +250,22 @@ class TestRunCommandHelp:
 class TestRunCommandNoRepo:
     """Test run command when no repository exists."""
 
-    def test_run_problem_fails_without_repo(self, tmp_path):
-        """Test that run problem fails when no .dojo exists."""
+    def test_run_fails_without_repo(self, tmp_path):
+        """Test that run fails when no .dojo exists."""
         runner = CliRunner()
 
         with runner.isolated_filesystem(temp_dir=tmp_path):
-            result = runner.invoke(dojo, ['run', 'problem', '1'])
+            result = runner.invoke(dojo, ['run', '1'])
 
             assert result.exit_code != 0
             assert "No .dojo repository found" in result.output
 
     def test_run_last_fails_without_repo(self, tmp_path):
-        """Test that run last fails when no .dojo exists."""
+        """Test that run --last fails when no .dojo exists."""
         runner = CliRunner()
 
         with runner.isolated_filesystem(temp_dir=tmp_path):
-            result = runner.invoke(dojo, ['run', 'last'])
+            result = runner.invoke(dojo, ['run', '--last'])
 
             assert result.exit_code != 0
             assert "No .dojo repository found" in result.output
@@ -286,16 +281,15 @@ class TestRunCommandProblemNotFound:
     def test_run_problem_not_in_database(self, initialized_repo):
         """Test run with problem ID not in database."""
         runner = CliRunner()
-        result = runner.invoke(dojo, ['run', 'problem', '999'])
+        result = runner.invoke(dojo, ['run', '999'])
 
         assert result.exit_code != 0
-        assert "not found in database" in result.output
-        assert "Fetch it first" in result.output
+        assert "No python problems found" in result.output
 
     def test_run_last_no_problems(self, initialized_repo):
-        """Test run last with no problems in database."""
+        """Test run --last with no problems in database."""
         runner = CliRunner()
-        result = runner.invoke(dojo, ['run', 'last'])
+        result = runner.invoke(dojo, ['run', '--last'])
 
         assert result.exit_code != 0
         assert "No python problems found" in result.output
@@ -311,7 +305,7 @@ class TestRunPython:
     def test_run_python_problem(self, repo_with_python_problem):
         """Test running a Python problem."""
         runner = CliRunner()
-        result = runner.invoke(dojo, ['run', 'problem', '1'])
+        result = runner.invoke(dojo, ['run', '1'])
 
         assert result.exit_code == 0
         assert "RUN PROBLEM" in result.output
@@ -321,15 +315,15 @@ class TestRunPython:
     def test_run_python_with_explicit_flag(self, repo_with_python_problem):
         """Test running Python with --python flag."""
         runner = CliRunner()
-        result = runner.invoke(dojo, ['run', 'problem', '1', '--python'])
+        result = runner.invoke(dojo, ['run', '1', '--python'])
 
         assert result.exit_code == 0
         assert "Execution completed successfully" in result.output
 
     def test_run_last_python(self, repo_with_python_problem):
-        """Test run last with Python problem."""
+        """Test run --last with Python problem."""
         runner = CliRunner()
-        result = runner.invoke(dojo, ['run', 'last'])
+        result = runner.invoke(dojo, ['run', '--last'])
 
         assert result.exit_code == 0
         assert "Execution completed successfully" in result.output
@@ -349,7 +343,7 @@ class TestRunJava:
     def test_run_java_problem(self, repo_with_java_problem):
         """Test running a Java problem."""
         runner = CliRunner()
-        result = runner.invoke(dojo, ['run', 'problem', '1', '--java'])
+        result = runner.invoke(dojo, ['run', '1', '--java'])
 
         assert result.exit_code == 0
         assert "RUN PROBLEM" in result.output
@@ -360,33 +354,21 @@ class TestRunJava:
         os.system('javac --version > nul 2>&1') != 0 if os.name == 'nt' else os.system('javac --version > /dev/null 2>&1') != 0,
         reason="Java compiler not available"
     )
-    def test_run_java_creates_class_files(self, repo_with_java_problem):
-        """Test that running Java creates .class files."""
+    def test_run_java_uses_build_dir(self, repo_with_java_problem):
+        """Test that running Java compiles to build directory."""
         runner = CliRunner()
-        result = runner.invoke(dojo, ['run', 'problem', '1', '--java'])
+        result = runner.invoke(dojo, ['run', '1', '--java'])
 
         assert result.exit_code == 0
 
-        # Check that class files were created
-        leetcode_dir = repo_with_java_problem / "leetcode"
-        class_files = list(leetcode_dir.glob("*.class"))
-        assert len(class_files) > 0
+        # Check that class files are in build directory, not source directory
+        problems_dir = repo_with_java_problem / "problems" / "0001-two-sum"
+        class_files = list(problems_dir.glob("*.class"))
+        assert len(class_files) == 0  # No class files in source dir
 
-    @pytest.mark.skipif(
-        os.system('javac --version > nul 2>&1') != 0 if os.name == 'nt' else os.system('javac --version > /dev/null 2>&1') != 0,
-        reason="Java compiler not available"
-    )
-    def test_run_java_clean_removes_class_files(self, repo_with_java_problem):
-        """Test that --clean removes .class files."""
-        runner = CliRunner()
-        result = runner.invoke(dojo, ['run', 'problem', '1', '--java', '--clean'])
-
-        assert result.exit_code == 0
-
-        # Check that class files were removed
-        leetcode_dir = repo_with_java_problem / "leetcode"
-        class_files = list(leetcode_dir.glob("*.class"))
-        assert len(class_files) == 0
+        build_dir = repo_with_java_problem / ".dojo" / "build" / "1"
+        build_class_files = list(build_dir.glob("*.class"))
+        assert len(build_class_files) > 0  # Class files in build dir
 
 
 # ============================================================================
@@ -403,7 +385,7 @@ class TestRunCpp:
     def test_run_cpp_problem(self, repo_with_cpp_problem):
         """Test running a C++ problem."""
         runner = CliRunner()
-        result = runner.invoke(dojo, ['run', 'problem', '1', '--cpp'])
+        result = runner.invoke(dojo, ['run', '1', '--cpp'])
 
         assert result.exit_code == 0
         assert "RUN PROBLEM" in result.output
@@ -414,36 +396,20 @@ class TestRunCpp:
         os.system('g++ --version > nul 2>&1') != 0 if os.name == 'nt' else os.system('g++ --version > /dev/null 2>&1') != 0,
         reason="G++ compiler not available"
     )
-    def test_run_cpp_creates_executable(self, repo_with_cpp_problem):
-        """Test that running C++ creates executable."""
+    def test_run_cpp_uses_build_dir(self, repo_with_cpp_problem):
+        """Test that running C++ compiles to build directory."""
         runner = CliRunner()
-        result = runner.invoke(dojo, ['run', 'problem', '1', '--cpp'])
+        result = runner.invoke(dojo, ['run', '1', '--cpp'])
 
         assert result.exit_code == 0
 
-        # Check that executable was created
-        leetcode_dir = repo_with_cpp_problem / "leetcode"
+        # Check executable is in build directory
+        build_dir = repo_with_cpp_problem / ".dojo" / "build" / "1"
         if os.name == 'nt':
-            exe_files = list(leetcode_dir.glob("*.exe"))
+            exe_files = list(build_dir.glob("*.exe"))
         else:
-            exe_files = [f for f in leetcode_dir.iterdir() if f.is_file() and f.stat().st_mode & 0o111]
+            exe_files = [f for f in build_dir.iterdir() if f.is_file() and f.stat().st_mode & 0o111]
         assert len(exe_files) > 0
-
-    @pytest.mark.skipif(
-        os.system('g++ --version > nul 2>&1') != 0 if os.name == 'nt' else os.system('g++ --version > /dev/null 2>&1') != 0,
-        reason="G++ compiler not available"
-    )
-    def test_run_cpp_clean_removes_executable(self, repo_with_cpp_problem):
-        """Test that --clean removes executable."""
-        runner = CliRunner()
-        result = runner.invoke(dojo, ['run', 'problem', '1', '--cpp', '--clean'])
-
-        assert result.exit_code == 0
-
-        # Check that executable was removed
-        leetcode_dir = repo_with_cpp_problem / "leetcode"
-        exe_file = leetcode_dir / ("0001-two-sum.exe" if os.name == 'nt' else "0001-two-sum")
-        assert not exe_file.exists()
 
 
 # ============================================================================
@@ -456,7 +422,7 @@ class TestRunLanguageSelection:
     def test_run_defaults_to_python(self, repo_with_all_languages):
         """Test that run defaults to Python."""
         runner = CliRunner()
-        result = runner.invoke(dojo, ['run', 'problem', '1'])
+        result = runner.invoke(dojo, ['run', '1'])
 
         assert result.exit_code == 0
         assert "Language: PYTHON" in result.output
@@ -465,10 +431,10 @@ class TestRunLanguageSelection:
     def test_run_wrong_language_not_found(self, repo_with_python_problem):
         """Test running with language that wasn't fetched."""
         runner = CliRunner()
-        result = runner.invoke(dojo, ['run', 'problem', '1', '--java'])
+        result = runner.invoke(dojo, ['run', '1', '--java'])
 
         assert result.exit_code != 0
-        assert "not found in database" in result.output
+        assert "No java problems found" in result.output
 
 
 # ============================================================================
@@ -481,11 +447,11 @@ class TestRunFileNotFound:
     def test_run_file_deleted(self, repo_with_python_problem):
         """Test run when file has been deleted."""
         # Delete the file
-        file_path = repo_with_python_problem / "leetcode" / "0001-two-sum.py"
+        file_path = repo_with_python_problem / "problems" / "0001-two-sum" / "solution.py"
         file_path.unlink()
 
         runner = CliRunner()
-        result = runner.invoke(dojo, ['run', 'problem', '1'])
+        result = runner.invoke(dojo, ['run', '1'])
 
         assert result.exit_code != 0
         assert "File not found" in result.output
@@ -501,7 +467,7 @@ class TestRunOutputDisplay:
     def test_run_shows_header(self, repo_with_python_problem):
         """Test that run shows problem header."""
         runner = CliRunner()
-        result = runner.invoke(dojo, ['run', 'problem', '1'])
+        result = runner.invoke(dojo, ['run', '1'])
 
         assert "RUN PROBLEM" in result.output
         assert "Two Sum" in result.output
@@ -511,15 +477,39 @@ class TestRunOutputDisplay:
     def test_run_shows_output_section(self, repo_with_python_problem):
         """Test that run shows OUTPUT section."""
         runner = CliRunner()
-        result = runner.invoke(dojo, ['run', 'problem', '1'])
+        result = runner.invoke(dojo, ['run', '1'])
 
         assert "OUTPUT" in result.output
 
     def test_run_shows_success_message(self, repo_with_python_problem):
         """Test that successful run shows success message."""
         runner = CliRunner()
-        result = runner.invoke(dojo, ['run', 'problem', '1'])
+        result = runner.invoke(dojo, ['run', '1'])
 
+        assert "Execution completed successfully" in result.output
+
+
+# ============================================================================
+# NAME SEARCH TESTS
+# ============================================================================
+
+class TestRunNameSearch:
+    """Test run command with --name option."""
+
+    def test_run_by_name(self, repo_with_python_problem):
+        """Test running by problem name."""
+        runner = CliRunner()
+        result = runner.invoke(dojo, ['run', '--name', 'Two Sum'])
+
+        assert result.exit_code == 0
+        assert "Execution completed successfully" in result.output
+
+    def test_run_by_partial_name(self, repo_with_python_problem):
+        """Test running by partial problem name."""
+        runner = CliRunner()
+        result = runner.invoke(dojo, ['run', '--name', 'Two'])
+
+        assert result.exit_code == 0
         assert "Execution completed successfully" in result.output
 
 
@@ -543,9 +533,9 @@ class TestRunCompilationErrors:
         repo.initialize()
 
         # Create invalid Java file
-        leetcode_dir = tmp_path / "leetcode"
-        leetcode_dir.mkdir()
-        java_file = leetcode_dir / "0001-bad.java"
+        problems_dir = tmp_path / "problems" / "0001-bad"
+        problems_dir.mkdir(parents=True)
+        java_file = problems_dir / "solution.java"
         java_file.write_text('class Main { invalid syntax }')
 
         # Insert into database
@@ -553,13 +543,13 @@ class TestRunCompilationErrors:
         conn = sqlite3.connect(db_path)
         conn.execute("""
             INSERT INTO problems (source, problem_id, language, title, difficulty, file_path, fetched_at)
-            VALUES ('leetcode', '1', 'java', 'Bad', 'Easy', 'leetcode/0001-bad.java', '2024-01-01')
+            VALUES ('leetcode', '1', 'java', 'Bad', 'Easy', 'problems/0001-bad/solution.java', '2024-01-01')
         """)
         conn.commit()
         conn.close()
 
         runner = CliRunner()
-        result = runner.invoke(dojo, ['run', 'problem', '1', '--java'])
+        result = runner.invoke(dojo, ['run', '1', '--java'])
 
         os.chdir(original_dir)
 
