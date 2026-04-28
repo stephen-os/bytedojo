@@ -202,6 +202,9 @@ class JavaFormatter(BaseFormatter):
                 _logger=self.logger
             )
 
+            # Inject default return statement if needed
+            code_template = self._inject_default_return(code_template, ctx.return_type)
+
             content = self._build_file_content(problem, code_template, ctx)
 
             self.logger.debug(f"Successfully formatted problem #{problem.id} as Java")
@@ -358,6 +361,34 @@ class JavaFormatter(BaseFormatter):
             return "// No Java template available"
 
         return code
+
+    def _inject_default_return(self, code: str, return_type: str) -> str:
+        """
+        Inject a default return statement into an empty method body.
+
+        Args:
+            code: The Java code template
+            return_type: The method's return type
+
+        Returns:
+            Code with default return statement injected
+        """
+        if return_type == 'void':
+            return code
+
+        default_value = get_java_default(return_type)
+
+        # Pattern to find empty or whitespace-only method body
+        # Matches: { followed by optional whitespace/newlines, then }
+        pattern = r'(\{\s*)\n(\s*)\}'
+
+        def replacer(match):
+            opening = match.group(1)
+            indent = match.group(2)
+            return f'{opening}\n{indent}    return {default_value};\n{indent}}}'
+
+        # Only replace the first occurrence (the main method)
+        return re.sub(pattern, replacer, code, count=1)
 
     # ========================================================================
     # Description Formatting
