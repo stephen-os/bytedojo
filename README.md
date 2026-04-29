@@ -1,37 +1,44 @@
-# ByteDojo
+<p align="center">
+  <img src="assets/banner.png" alt="ByteDojo Banner" width="100%">
+</p>
 
-A CLI tool for fetching, solving, and tracking LeetCode problems. Master coding through structured practice and track your progress.
+<p align="center">
+  <strong>A CLI for fetching, solving, and tracking LeetCode problems</strong>
+</p>
+
+<p align="center">
+  <a href="#installation">Installation</a> •
+  <a href="#quick-start">Quick Start</a> •
+  <a href="#commands">Commands</a> •
+  <a href="#features">Features</a>
+</p>
+
+---
 
 ## Features
 
-- **LeetCode Integration**: Fetch problems directly from LeetCode
-- **Smart Problem Discovery**: Query and filter problems by difficulty and tags
-- **Random Problem Picker**: Get random unsolved problems matching your criteria
-- **Manual Grading**: Grade your solutions after verifying on LeetCode
-- **Spaced Repetition**: Passed problems are scheduled for review to reinforce learning
-- **Progress Tracking**: Track solved problems with pass/fail/skip status in a local database
-- **Interactive Navigation**: Browse problem lists with pagination without re-fetching
-- **Ready-to-Run Files**: Generated problem files include solution templates
+- **Multi-Language Support** - Fetch and solve problems in Python, Java, or C++
+- **Configurable Defaults** - Set your preferred language and settings
+- **LeetCode Integration** - Fetch problems directly with solution templates
+- **Smart Search** - Find problems by ID, name, or description
+- **Scheduled Review** - Passed problems are scheduled for periodic review
+- **Progress Tracking** - Track solved problems with pass/fail/skip status
+- **Interactive Grading** - Browse and grade problems with pagination
+- **Build Directory** - Compiled artifacts kept separate in `.dojo/build/`
 
 ## Installation
 
 ### Requirements
 
-- Python 3.8 or higher
+- Python 3.10+
 - pip
 
 ### Install from Source
 
 ```bash
-# Clone the repository
 git clone https://github.com/stephen-os/bytedojo.git
 cd bytedojo
-
-# Install in development mode
 pip install -e .
-
-# Or install with dev dependencies
-pip install -e ".[dev]"
 ```
 
 ### Verify Installation
@@ -44,275 +51,141 @@ dojo --help
 ## Quick Start
 
 ```bash
-# 1. Initialize a new dojo repository in your project
+# 1. Initialize a dojo repository
 dojo init
 
-# 2. Fetch a LeetCode problem
-dojo leetcode fetch 1
+# 2. Fetch a problem (uses your default language)
+dojo fetch 1
 
 # 3. Solve the problem in the generated file
-# Edit: problems/easy/0001-two-sum.py
+#    problems/0001-two-sum/solution.py
 
-# 4. Submit to LeetCode to verify, then grade your solution
-dojo grade last --pass
+# 4. Run your solution locally
+dojo run 1
 
-# 5. Check your progress
-dojo stats
+# 5. Submit to LeetCode, then grade your solution
+dojo grade 1 --pass
+
+# 6. Review problems on schedule
+dojo review
 ```
 
 ## Commands
 
-### Global Options
+### Initialize
 
 ```bash
-dojo --help          # Show help
-dojo --version       # Show version
-dojo --author        # Show author info
-dojo --desc          # Show full description
-dojo --debug [cmd]   # Enable debug mode
+dojo init                    # Create .dojo repository
 ```
 
-### Initialize Repository
+### Fetch Problems
 
 ```bash
-dojo init            # Initialize .dojo repository in current directory
+dojo fetch 1                 # Fetch problem #1 (default language)
+dojo fetch 1 --python        # Fetch as Python
+dojo fetch 1 --java          # Fetch as Java
+dojo fetch 1 --cpp           # Fetch as C++
+dojo fetch 1,2,3             # Fetch multiple
+dojo fetch 1..10             # Fetch range
+dojo fetch 1 --force         # Overwrite existing
 ```
 
-Creates a `.dojo` directory with a SQLite database to track your progress.
-
----
-
-### LeetCode Commands
-
-#### Fetch Problems
+### Run Solutions
 
 ```bash
-# Fetch by problem number
-dojo leetcode fetch 1                    # Fetch "Two Sum"
-dojo leetcode fetch 1 2 3                # Fetch multiple problems
-dojo leetcode fetch 42 --force           # Overwrite existing problem
+dojo run 1                   # Run problem #1
+dojo run 1 --java            # Run Java version
+dojo run --name "Two Sum"    # Search by name
+dojo run --last              # Run most recent
 ```
-
-#### Query Problems
-
-Browse and search LeetCode problems with interactive pagination.
-
-```bash
-# Browse all problems
-dojo leetcode query
-
-# Filter by difficulty
-dojo leetcode query -d easy              # Easy problems only
-dojo leetcode query -d medium            # Medium problems only
-dojo leetcode query -d hard              # Hard problems only
-
-# Filter by tag
-dojo leetcode query -t array             # Array problems
-dojo leetcode query -t "dynamic-programming"  # DP problems
-dojo leetcode query -t array -t tree     # Multiple tags (OR)
-
-# Combined filters
-dojo leetcode query -d easy -t array
-
-# List all available tags
-dojo leetcode query --list-tags
-
-# Pagination options
-dojo leetcode query --page 5             # Start at page 5
-dojo leetcode query --per-page 50        # 50 problems per page
-```
-
-**Interactive Navigation:**
-- `n` - Next page
-- `p` - Previous page
-- `#` - Jump to page number
-- `q` - Quit
-
-**Status Indicators:**
-- `[P]` - Passed
-- `[F]` - Failed
-- `[S]` - Skipped
-- `[ ]` - Not graded/fetched
-
-#### Pick Random Problem
-
-Get a random unsolved problem matching your criteria.
-
-```bash
-# Random unsolved problem
-dojo leetcode pick
-
-# Filter by difficulty
-dojo leetcode pick -d easy
-dojo leetcode pick -d medium
-dojo leetcode pick -d hard
-
-# Filter by tag
-dojo leetcode pick -t array
-dojo leetcode pick -t tree -t graph
-
-# Include premium problems
-dojo leetcode pick --include-premium
-```
-
----
 
 ### Grade Solutions
 
-Mark your solutions as passed, failed, or skipped. When you grade a problem as passed, it gets scheduled for spaced repetition review.
+```bash
+dojo grade                   # Interactive batch grading
+dojo grade 1                 # Grade problem #1
+dojo grade 1 --pass          # Quick pass
+dojo grade 1 --fail          # Mark as failed
+dojo grade 1 --skip          # Skip for now
+dojo grade --last --pass     # Pass most recent
+```
+
+### Query & Pick Problems
 
 ```bash
-# Interactive batch grading (shows all ungraded problems)
-dojo grade
+dojo query                   # Browse all problems
+dojo query -d easy           # Filter by difficulty
+dojo query -t array          # Filter by tag
+dojo query --list-tags       # Show all tags
 
-# Grade the last fetched problem
-dojo grade last                          # Interactive prompt
-dojo grade last --pass                   # Quick pass
-dojo grade last --fail -n "TLE issue"    # Fail with notes
-
-# Grade a specific problem
-dojo grade problem 1                     # LeetCode #1 (interactive)
-dojo grade problem 1 --pass              # Quick pass
-dojo grade problem 1 -f -n "Need DP"     # Fail with notes
+dojo pick                    # Random unsolved problem
+dojo pick -d medium          # Random medium problem
+dojo pick -t tree            # Random tree problem
 ```
 
-**Flags:**
-- `--pass` / `-p` - Mark as passed (schedules review)
-- `--fail` / `-f` - Mark as failed
-- `--skip` / `-s` - Mark as skipped
-- `--notes` / `-n` - Add notes (works with any status)
-
----
-
-### Spaced Repetition Review
-
-Problems you pass are automatically scheduled for review to reinforce learning.
+### Review System
 
 ```bash
-# Show problems due for review
-dojo review
-
-# Show all scheduled reviews
-dojo review --all
-
-# Pick a random problem to review
-dojo review pick
-
-# View review statistics
-dojo review stats
+dojo review                  # Show problems due for review
+dojo review --all            # Show all scheduled reviews
+dojo review pick             # Pick random due problem
+dojo review stats            # Review statistics
 ```
 
----
-
-### View Statistics
+### Settings
 
 ```bash
-dojo stats                               # View overall progress
+dojo settings                # View all settings
+dojo settings list           # Same as above
+
+# Change default language
+dojo settings default-language python
+dojo settings default-language java
+dojo settings default-language cpp
+
+# Change review frequency
+dojo settings review-frequency 7     # Weekly (default)
+dojo settings review-frequency 14    # Bi-weekly
 ```
 
----
+### Statistics
 
-## Problem File Example
-
-When you fetch a LeetCode problem, ByteDojo generates a Python file like this:
-
-```python
-"""
-LeetCode Problem #1: Two Sum
-Difficulty: Easy
-"""
-
-# ============================================================================
-# PROBLEM DESCRIPTION
-# ============================================================================
-# Given an array of integers nums and an integer target, return indices of
-# the two numbers such that they add up to target.
-#
-# You may assume that each input would have exactly one solution, and you
-# may not use the same element twice.
-#
-# Example 1:
-# Input: nums = [2,7,11,15], target = 9
-# Output: [0,1]
-# Explanation: Because nums[0] + nums[1] == 9, we return [0, 1].
-
-# ============================================================================
-# SOLUTION
-# ============================================================================
-
-from typing import List
-
-class Solution:
-    def twoSum(self, nums: List[int], target: int) -> List[int]:
-        pass  # Your solution here
+```bash
+dojo stats                   # View progress summary
+dojo stats --list            # List all problems
 ```
-
----
 
 ## Directory Structure
-
-After initialization, your project will look like this:
 
 ```
 your-project/
 ├── .dojo/
-│   └── dojo.db              # SQLite database for tracking progress
+│   ├── db.sqlite            # Progress database
+│   ├── settings.json        # Configuration
+│   └── build/               # Compiled artifacts (Java/C++)
+│       └── 0001/
+│           └── Main.class
 ├── problems/
-│   ├── easy/
-│   │   └── 0001-two-sum.py
-│   ├── medium/
-│   └── hard/
+│   └── 0001-two-sum/
+│       ├── solution.py
+│       ├── solution.java
+│       └── solution.cpp
 └── README.md
 ```
 
----
-
-## LeetCode Difficulty
-
-| Level | Description |
-|-------|-------------|
-| Easy | Beginner-friendly problems |
-| Medium | Intermediate complexity |
-| Hard | Advanced algorithmic challenges |
-
----
-
 ## Development
 
-### Running Tests
-
 ```bash
-# Run all tests
+# Install with dev dependencies
+pip install -e ".[dev]"
+
+# Run tests
 pytest
 
 # Run with coverage
 pytest --cov=bytedojo
-
-# Run specific test file
-pytest tests/bytedojo/core/leetcode/test_client.py
 ```
-
-### Code Style
-
-```bash
-# Format code
-black src/
-
-# Lint
-flake8 src/
-
-# Type check
-mypy src/
-```
-
----
 
 ## License
 
 MIT License - see [LICENSE](LICENSE) for details.
-
----
-
-## Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
