@@ -11,6 +11,7 @@ from bytedojo.core.database import DatabaseManager
 from bytedojo.core.search import find_problems, select_problem
 from bytedojo.commands.utils import (
     get_initialized_repo,
+    get_default_language,
     STATUS_COLORS,
     DIFFICULTY_COLORS,
     SOURCE_COLORS,
@@ -275,7 +276,7 @@ def _batch_grading_loop(problems: list, per_page: int = 10):
 @click.option('--fail', '-f', 'status_fail', is_flag=True, help='Mark as failed')
 @click.option('--skip', '-s', 'status_skip', is_flag=True, help='Mark as skipped')
 @click.option('--notes', type=str, default=None, help='Add notes')
-@click.option('--python', 'language', flag_value='python', default=True, help='Grade Python version (default)')
+@click.option('--python', '-py', 'language', flag_value='python', help='Grade Python version')
 @click.option('--java', 'language', flag_value='java', help='Grade Java version')
 @click.option('--cpp', 'language', flag_value='cpp', help='Grade C++ version')
 @click.option('--per-page', type=int, default=10, help='Problems per page in batch mode')
@@ -288,17 +289,18 @@ def grade(
     status_fail: bool,
     status_skip: bool,
     notes: Optional[str],
-    language: str,
+    language: str | None,
     per_page: int
 ):
     """
     Grade problems as passed, failed, or skipped.
 
     When a problem is marked as passed, it gets scheduled for spaced repetition review.
+    Uses configured default language (see: dojo settings default-language).
 
     Examples:
       dojo grade                       # Interactive batch grading
-      dojo grade 1                     # Grade problem #1 (Python)
+      dojo grade 1                     # Grade problem #1 (uses default language)
       dojo grade 1 --java              # Grade Java version
       dojo grade --name "Two Sum"      # Search by name
       dojo grade --last                # Grade last fetched problem
@@ -306,6 +308,10 @@ def grade(
       dojo grade 1 -f --notes "TLE"    # Fail with notes
     """
     repo = get_initialized_repo()
+
+    # Use configured default if no language flag specified
+    if language is None:
+        language = get_default_language()
 
     # Determine status from flags
     status = None

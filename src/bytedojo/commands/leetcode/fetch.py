@@ -12,7 +12,7 @@ from bytedojo.core.leetcode.formatters import PythonFormatter, JavaFormatter, Cp
 from bytedojo.core.file_writer import FileWriter
 from bytedojo.core.database import DatabaseManager
 from bytedojo.core.settings import SettingsManager
-from bytedojo.commands.utils import get_initialized_repo
+from bytedojo.commands.utils import get_initialized_repo, get_default_language
 
 
 # Language to formatter mapping
@@ -54,17 +54,20 @@ def parse_arguments(arguments: tuple[str, ...]) -> list[int]:
 # Define options
 @click.option('--output-dir', type=click.Path(path_type=Path), default='problems', help='Output directory for problem files')
 @click.option('--force', is_flag=True, help='Overwrite existing problems')
-@click.option('--python', 'language', flag_value='python', default=True, help='Fetch as Python (default)')
+@click.option('--python', '-py', 'language', flag_value='python', help='Fetch as Python')
 @click.option('--java', 'language', flag_value='java', help='Fetch as Java')
 @click.option('--cpp', 'language', flag_value='cpp', help='Fetch as C++')
 
 @click.pass_obj
-def fetch(ctx, arguments: tuple, output_dir: Path, force: bool, language: str):
+def fetch(ctx, arguments: tuple, output_dir: Path, force: bool, language: str | None):
     """
     Fetch LeetCode problems.
 
+    Uses configured default language (see: dojo settings default-language).
+
     Examples:
-      dojo fetch 1              # Single problem (Python)
+      dojo fetch 1              # Single problem (uses default language)
+      dojo fetch 1 --python     # Fetch as Python
       dojo fetch 1 --java       # Fetch as Java
       dojo fetch 1 --cpp        # Fetch as C++
       dojo fetch 1,2,3          # Multiple problems
@@ -74,6 +77,10 @@ def fetch(ctx, arguments: tuple, output_dir: Path, force: bool, language: str):
     logger = get_logger()
     problem_ids = parse_arguments(arguments)
     repo = get_initialized_repo()
+
+    # Use configured default if no language flag specified
+    if language is None:
+        language = get_default_language()
 
     # Load settings for organization mode
     settings_manager = SettingsManager(repo.get_dojo_path())

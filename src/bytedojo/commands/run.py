@@ -11,7 +11,7 @@ from typing import Optional
 from bytedojo.core.logger import get_logger
 from bytedojo.core.database import DatabaseManager
 from bytedojo.core.search import find_problems, select_problem
-from bytedojo.commands.utils import get_initialized_repo, LANGUAGE_COLORS
+from bytedojo.commands.utils import get_initialized_repo, get_default_language, LANGUAGE_COLORS
 
 
 # Default timeout for subprocess execution (5 minutes)
@@ -180,22 +180,28 @@ def _display_result(exit_code: int):
 @click.argument('identifier', required=False)
 @click.option('--name', '-n', 'name_search', help='Search by problem name')
 @click.option('--desc', '-d', 'desc_search', help='Search by description keywords')
-@click.option('--python', 'language', flag_value='python', default=True, help='Run Python version (default)')
+@click.option('--python', '-py', 'language', flag_value='python', help='Run Python version')
 @click.option('--java', 'language', flag_value='java', help='Run Java version')
 @click.option('--cpp', 'language', flag_value='cpp', help='Run C++ version')
 @click.option('--last', is_flag=True, help='Run most recently fetched problem')
-def run(identifier: Optional[str], name_search: Optional[str], desc_search: Optional[str], language: str, last: bool):
+def run(identifier: Optional[str], name_search: Optional[str], desc_search: Optional[str], language: str | None, last: bool):
     """
     Run a problem solution.
 
+    Uses configured default language (see: dojo settings default-language).
+
     Examples:
-      dojo run 1                    # Run problem #1 (Python)
+      dojo run 1                    # Run problem #1 (uses default language)
       dojo run 1 --java             # Run Java version
       dojo run 1 --cpp              # Run C++ version
       dojo run --name "Two Sum"     # Search by name
       dojo run --last               # Run last fetched problem
     """
     repo = get_initialized_repo()
+
+    # Use configured default if no language flag specified
+    if language is None:
+        language = get_default_language()
 
     with DatabaseManager(repo.get_db_path()) as db:
         # Handle --last flag

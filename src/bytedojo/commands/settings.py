@@ -7,7 +7,7 @@ import click
 from bytedojo.core.logger import get_logger
 from bytedojo.core.settings import SettingsManager
 from bytedojo.core.database import DatabaseManager
-from bytedojo.commands.utils import get_initialized_repo
+from bytedojo.commands.utils import get_initialized_repo, SUPPORTED_LANGUAGES
 
 
 @click.group(invoke_without_command=True)
@@ -18,15 +18,16 @@ def settings(ctx):
 
     Examples:
       dojo settings                              # Show all settings
-      dojo settings set leetcode.organization flat
-      dojo settings set leetcode.organization difficulty
+      dojo settings list                         # Same as above
+      dojo settings default-language cpp         # Set default language
+      dojo settings review-frequency 7           # Set review frequency
     """
     # If no subcommand, show all settings
     if ctx.invoked_subcommand is None:
-        show_settings()
+        _show_settings()
 
 
-def show_settings():
+def _show_settings():
     """Display all current settings."""
     logger = get_logger()
     repo = get_initialized_repo()
@@ -41,20 +42,64 @@ def show_settings():
         default_lang = db.get_config('default_language', 'python')
         default_source = db.get_config('default_source', 'leetcode')
 
-    logger.info("Current settings:")
-    logger.info("")
-    logger.info("  leetcode:")
-    logger.info(f"    organization: {current_settings.leetcode.organization}")
-    logger.info("")
-    logger.info("  review:")
-    logger.info(f"    frequency: {review_freq} days")
-    logger.info("")
-    logger.info("  defaults:")
-    logger.info(f"    language: {default_lang}")
-    logger.info(f"    source: {default_source}")
-    logger.info("")
-    logger.info("Use 'dojo settings set <key> <value>' to change settings.")
-    logger.info("Use 'dojo settings review-frequency <days>' to change review frequency.")
+    click.echo("")
+    click.echo(click.style("=" * 50, fg='bright_black'))
+    click.echo(click.style("  BYTEDOJO SETTINGS", fg='cyan', bold=True))
+    click.echo(click.style("=" * 50, fg='bright_black'))
+    click.echo("")
+    click.echo("  defaults:")
+    click.echo(f"    language:     {click.style(default_lang, fg='blue', bold=True)}")
+    click.echo(f"    source:       {default_source}")
+    click.echo("")
+    click.echo("  review:")
+    click.echo(f"    frequency:    {review_freq} days")
+    click.echo("")
+    click.echo("  leetcode:")
+    click.echo(f"    organization: {current_settings.leetcode.organization}")
+    click.echo("")
+    click.echo(click.style("-" * 50, fg='bright_black'))
+    click.echo("  Change with:")
+    click.echo("    dojo settings default-language <python|java|cpp>")
+    click.echo("    dojo settings review-frequency <days>")
+    click.echo(click.style("-" * 50, fg='bright_black'))
+    click.echo("")
+
+
+@settings.command('list')
+def list_settings():
+    """
+    List all current settings.
+
+    Examples:
+      dojo settings list
+    """
+    _show_settings()
+
+
+@settings.command('default-language')
+@click.argument('language', type=click.Choice(SUPPORTED_LANGUAGES, case_sensitive=False))
+def default_language(language: str):
+    """
+    Set the default programming language.
+
+    This sets the default language for fetch, run, and grade commands.
+    You can still override with --python, --java, or --cpp flags.
+
+    Examples:
+      dojo settings default-language python    # Default (Python)
+      dojo settings default-language java      # Use Java by default
+      dojo settings default-language cpp       # Use C++ by default
+    """
+    logger = get_logger()
+    repo = get_initialized_repo()
+
+    with DatabaseManager(repo.get_db_path()) as db:
+        old_value = db.get_config('default_language', 'python')
+        new_value = language.lower()
+        db.set_config('default_language', new_value)
+
+        logger.info(f"Default language updated: {old_value} -> {new_value}")
+        logger.info(f"Commands like 'dojo fetch 1' will now use {new_value.upper()}.")
 
 
 @settings.command()

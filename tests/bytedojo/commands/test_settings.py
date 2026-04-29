@@ -49,8 +49,8 @@ class TestSettingsCommand:
         result = runner.invoke(dojo, ['settings'])
 
         assert result.exit_code == 0
-        assert "Current settings" in result.output
-        assert "review" in result.output.lower() or "frequency" in result.output.lower()
+        assert "BYTEDOJO SETTINGS" in result.output
+        assert "frequency" in result.output.lower()
 
 
 class TestSettingsReviewFrequencyCommand:

@@ -10,6 +10,7 @@ from typing import Callable, TypeVar, Any
 
 from bytedojo.core.logger import get_logger
 from bytedojo.core.repository import DojoRepository
+from bytedojo.core.database import DatabaseManager
 
 
 # ============================================================================
@@ -71,6 +72,22 @@ def get_initialized_repo() -> DojoRepository:
         raise click.ClickException("Repository not initialized")
 
     return repo
+
+
+def get_default_language() -> str:
+    """
+    Get the configured default language from database.
+
+    Returns:
+        Default language ('python', 'java', or 'cpp'). Falls back to 'python'
+        if repository is not initialized or config is missing.
+    """
+    repo = DojoRepository()
+    if not repo.is_initialized():
+        return 'python'  # Fallback before repo init
+
+    with DatabaseManager(repo.get_db_path()) as db:
+        return db.get_config('default_language', 'python')
 
 
 F = TypeVar('F', bound=Callable[..., Any])
