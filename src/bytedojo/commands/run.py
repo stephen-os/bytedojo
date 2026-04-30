@@ -3,19 +3,12 @@ Run command - Execute problem solutions for testing.
 """
 
 import click
-import subprocess
-import os
-from pathlib import Path
 from typing import Optional
 
-from bytedojo.core.logger import get_logger
 from bytedojo.core.database import DatabaseManager
 from bytedojo.core.search import find_problems, select_problem
+from bytedojo.core.execution import ProblemExecutor, ExecutionResult
 from bytedojo.commands.utils import get_initialized_repo, get_default_language, LANGUAGE_COLORS
-
-
-# Default timeout for subprocess execution (5 minutes)
-DEFAULT_TIMEOUT_SECONDS = 300
 
 
 def _display_run_header(problem: dict):
@@ -40,136 +33,36 @@ def _display_run_header(problem: dict):
     click.echo("")
 
 
-def _run_python(file_path: Path) -> int:
-    """Run a Python file and return exit code."""
-    try:
-        result = subprocess.run(
-            ['python', str(file_path)],
-            cwd=file_path.parent,
-            timeout=DEFAULT_TIMEOUT_SECONDS
-        )
-        return result.returncode
-    except subprocess.TimeoutExpired:
-        click.echo(click.style(f"Execution timed out after {DEFAULT_TIMEOUT_SECONDS} seconds", fg='red'))
-        return 1
-
-
-def _run_java(file_path: Path, build_dir: Path) -> int:
-    """Compile and run a Java file, return exit code."""
-    logger = get_logger()
-
-    # Ensure build directory exists
-    build_dir.mkdir(parents=True, exist_ok=True)
-
-    # Compile to build directory
-    logger.debug(f"Compiling {file_path.name} to {build_dir}...")
-    compile_result = subprocess.run(
-        ['javac', '-d', str(build_dir), str(file_path)],
-        capture_output=True,
-        text=True
-    )
-
-    if compile_result.returncode != 0:
+def _display_execution_result(result: ExecutionResult):
+    """Display execution output and result."""
+    # Show compilation error if applicable
+    if result.compile_error:
         click.echo(click.style("Compilation failed:", fg='red', bold=True))
-        click.echo(compile_result.stderr)
-        return compile_result.returncode
+        click.echo(result.compile_error)
+        return
 
-    # Run from build directory
-    try:
-        run_result = subprocess.run(
-            ['java', 'Main'],
-            cwd=build_dir,
-            timeout=DEFAULT_TIMEOUT_SECONDS
-        )
-        return run_result.returncode
-    except subprocess.TimeoutExpired:
-        click.echo(click.style(f"Execution timed out after {DEFAULT_TIMEOUT_SECONDS} seconds", fg='red'))
-        return 1
+    # Show stdout if any
+    if result.stdout:
+        click.echo(result.stdout, nl=False)
+        if not result.stdout.endswith('\n'):
+            click.echo("")
 
+    # Show stderr if any (and not a timeout message already shown)
+    if result.stderr and not result.timed_out:
+        click.echo(click.style(result.stderr, fg='yellow'), nl=False)
+        if not result.stderr.endswith('\n'):
+            click.echo("")
 
-def _run_cpp(file_path: Path, build_dir: Path) -> int:
-    """Compile and run a C++ file, return exit code."""
-    logger = get_logger()
+    # Show timeout message
+    if result.timed_out:
+        click.echo(click.style(result.stderr, fg='red'))
 
-    # Ensure build directory exists
-    build_dir.mkdir(parents=True, exist_ok=True)
-
-    # Determine output name
-    stem = file_path.stem
-    if os.name == 'nt':  # Windows
-        output_name = f"{stem}.exe"
-    else:
-        output_name = stem
-
-    output_path = build_dir / output_name
-
-    # Compile to build directory
-    logger.debug(f"Compiling {file_path.name} to {output_path}...")
-    compile_result = subprocess.run(
-        ['g++', '-o', str(output_path), str(file_path)],
-        capture_output=True,
-        text=True
-    )
-
-    if compile_result.returncode != 0:
-        click.echo(click.style("Compilation failed:", fg='red', bold=True))
-        click.echo(compile_result.stderr)
-        return compile_result.returncode
-
-    # Run
-    try:
-        run_result = subprocess.run(
-            [str(output_path)],
-            cwd=build_dir,
-            timeout=DEFAULT_TIMEOUT_SECONDS
-        )
-        return run_result.returncode
-    except subprocess.TimeoutExpired:
-        click.echo(click.style(f"Execution timed out after {DEFAULT_TIMEOUT_SECONDS} seconds", fg='red'))
-        return 1
-
-
-def _run_problem(problem: dict, repo: DojoRepository) -> int:
-    """Run a problem and return exit code."""
-    logger = get_logger()
-    language = problem.get('language', 'python')
-    file_path_str = problem.get('file_path')
-    problem_id = problem.get('problem_id', 'unknown')
-
-    if not file_path_str:
-        raise click.ClickException("Problem has no associated file path")
-
-    # Resolve relative path from current directory
-    file_path = Path(file_path_str)
-    if not file_path.is_absolute():
-        file_path = Path.cwd() / file_path
-
-    if not file_path.exists():
-        raise click.ClickException(f"File not found: {file_path}")
-
-    _display_run_header(problem)
-
-    # Get build directory for compiled languages
-    build_dir = repo.get_build_path(problem_id)
-
-    # Run based on language
-    if language == 'python':
-        return _run_python(file_path)
-    elif language == 'java':
-        return _run_java(file_path, build_dir)
-    elif language == 'cpp':
-        return _run_cpp(file_path, build_dir)
-    else:
-        raise click.ClickException(f"Unsupported language: {language}")
-
-
-def _display_result(exit_code: int):
-    """Display execution result."""
+    # Show final status
     click.echo("")
-    if exit_code == 0:
+    if result.exit_code == 0:
         click.echo(click.style("  Execution completed successfully", fg='green'))
     else:
-        click.echo(click.style(f"  Execution failed (exit code: {exit_code})", fg='red'))
+        click.echo(click.style(f"  Execution failed (exit code: {result.exit_code})", fg='red'))
 
 
 # ============================================================================
@@ -253,5 +146,12 @@ def run(identifier: Optional[str], name_search: Optional[str], desc_search: Opti
             if not problem_data:
                 raise click.Abort()
 
-    exit_code = _run_problem(problem_data, repo)
-    _display_result(exit_code)
+    # Display header and execute
+    _display_run_header(problem_data)
+
+    try:
+        executor = ProblemExecutor(repo)
+        result = executor.execute(problem_data)
+        _display_execution_result(result)
+    except ValueError as e:
+        raise click.ClickException(str(e))

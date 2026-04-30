@@ -9,6 +9,7 @@ from typing import Optional, List
 from bytedojo.core.logger import get_logger, Theme
 from bytedojo.core.database import DatabaseManager
 from bytedojo.core.search import find_problems, select_problem
+from bytedojo.core.grading import GradingService, GradeResult
 from bytedojo.commands.utils import (
     get_initialized_repo,
     get_default_language,
@@ -87,7 +88,7 @@ def _prompt_for_grade() -> tuple[Optional[str], Optional[str]]:
 
 def _apply_grade(db: DatabaseManager, problem: dict, status: str, notes: str = None):
     """
-    Apply a grade to a problem and handle review scheduling.
+    Apply a grade to a problem and display the result.
 
     Args:
         db: Database manager
@@ -95,30 +96,32 @@ def _apply_grade(db: DatabaseManager, problem: dict, status: str, notes: str = N
         status: Grade status ('passed', 'failed', 'skipped')
         notes: Optional notes
     """
-    logger = get_logger()
     problem_db_id = problem['id']
 
-    # Update the status
-    db.update_test_status(problem_db_id, status, notes)
+    # Use grading service for business logic
+    service = GradingService(db)
+    result = service.grade_problem(problem_db_id, status, notes)
 
-    # Schedule review if passed
-    if status == 'passed':
-        db.schedule_review(problem_db_id)
-        review_freq = db.get_config('review_frequency_days', '7')
+    # Display the result
+    _display_grade_result(result)
 
-        click.echo("")
+
+def _display_grade_result(result: GradeResult):
+    """Display the grading result to the user."""
+    click.echo("")
+
+    if result.status == 'passed':
         click.echo(f"  {click.style('PASSED', fg='green', bold=True)}")
-        click.echo(f"  {Theme.AQUA}Scheduled for review in {review_freq} days{Theme.RESET}")
-    elif status == 'failed':
-        click.echo("")
+        if result.scheduled_review:
+            click.echo(f"  {Theme.AQUA}Scheduled for review in {result.review_frequency_days} days{Theme.RESET}")
+    elif result.status == 'failed':
         click.echo(f"  {click.style('FAILED', fg='red', bold=True)}")
-        if notes:
-            click.echo(f"  Notes: {notes}")
-    elif status == 'skipped':
-        click.echo("")
+        if result.notes:
+            click.echo(f"  Notes: {result.notes}")
+    elif result.status == 'skipped':
         click.echo(f"  {click.style('SKIPPED', fg='yellow', bold=True)}")
-        if notes:
-            click.echo(f"  Notes: {notes}")
+        if result.notes:
+            click.echo(f"  Notes: {result.notes}")
 
     click.echo("")
 
@@ -207,8 +210,9 @@ def _batch_grading_loop(problems: list, per_page: int = 10):
     while problems:  # Re-fetch to account for graded problems
         repo = get_initialized_repo()
         with DatabaseManager(repo.get_db_path()) as db:
-            # Refresh ungraded list
-            problems = db.get_problems_by_status('ungraded')
+            # Refresh ungraded list using grading service
+            service = GradingService(db)
+            problems = service.get_ungraded_problems()
 
         if not problems:
             click.echo("")
@@ -330,7 +334,8 @@ def grade(
     with DatabaseManager(repo.get_db_path()) as db:
         # Batch mode: no identifier, name, desc, or last
         if not identifier and not name_search and not desc_search and not last:
-            ungraded = db.get_problems_by_status('ungraded')
+            service = GradingService(db)
+            ungraded = service.get_ungraded_problems()
             _batch_grading_loop(ungraded, per_page)
             return
 

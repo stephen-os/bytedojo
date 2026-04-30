@@ -23,6 +23,7 @@ from bytedojo.commands.leetcode.query import query
 from bytedojo.commands.leetcode.pick import pick
 from bytedojo.commands.review import review
 from bytedojo.commands.run import run
+from bytedojo.commands.enter import enter
 
 def print_version(ctx, param, value):
     """Print version information and exit."""
@@ -83,6 +84,7 @@ dojo.add_command(grade)
 dojo.add_command(run)
 dojo.add_command(settings)
 dojo.add_command(review)
+dojo.add_command(enter)
 
 # Keep leetcode group for backwards compatibility
 dojo.add_command(leetcode)

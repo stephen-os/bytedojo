@@ -2,36 +2,11 @@
 Review command - Spaced repetition review system for problems.
 """
 
-import re
-import random
 import click
-from datetime import date, datetime
 
 from bytedojo.core.database import DatabaseManager
+from bytedojo.core.review_service import ReviewService, ReviewProblem
 from bytedojo.commands.utils import get_initialized_repo, SOURCE_COLORS
-
-
-def _format_date(date_str: str) -> str:
-    """Format a date string for display."""
-    if not date_str:
-        return "N/A"
-    try:
-        d = datetime.fromisoformat(date_str).date()
-        today = date.today()
-        delta = (d - today).days
-
-        if delta < 0:
-            return f"{abs(delta)} days overdue"
-        elif delta == 0:
-            return "Today"
-        elif delta == 1:
-            return "Tomorrow"
-        elif delta < 7:
-            return f"In {delta} days"
-        else:
-            return d.strftime("%Y-%m-%d")
-    except (ValueError, TypeError):
-        return date_str
 
 
 def _get_source_color(source: str) -> str:
@@ -67,8 +42,9 @@ def _show_due_reviews(show_all: bool = False):
     repo = get_initialized_repo()
 
     with DatabaseManager(repo.get_db_path()) as db:
-        reviews = db.get_due_reviews(include_future=show_all)
-        review_freq = db.get_config('review_frequency_days', '7')
+        service = ReviewService(db)
+        reviews = service.get_due_reviews(include_future=show_all)
+        review_freq = service.get_review_frequency()
 
         if not reviews:
             if show_all:
@@ -83,9 +59,7 @@ def _show_due_reviews(show_all: bool = False):
             return
 
         # Count due vs upcoming
-        today = date.today()
-        due_count = sum(1 for r in reviews
-                       if datetime.fromisoformat(r['next_review_date']).date() <= today)
+        due_count = sum(1 for r in reviews if r.days_until_due <= 0)
 
         # Header
         click.echo("")
@@ -103,24 +77,20 @@ def _show_due_reviews(show_all: bool = False):
         click.echo(f"  {'-' * 8}  {'-' * 10}  {'-' * 15}  {'-' * 7}  {'-' * 20}")
 
         for r in reviews:
-            problem_id = r['problem_id']
-            source = r['source']
-            title = r['title'][:30] + '...' if len(r['title']) > 30 else r['title']
-            due_date = _format_date(r['next_review_date'])
-            reps = r['repetitions']
+            title = r.title[:30] + '...' if len(r.title) > 30 else r.title
+            due_date = ReviewService.format_due_date(r.next_review_date)
 
             # Color based on due status
-            review_date = datetime.fromisoformat(r['next_review_date']).date()
-            if review_date < today:
+            if r.is_overdue:
                 due_styled = click.style(f"{due_date:15}", fg='red')
-            elif review_date == today:
+            elif r.is_due_today:
                 due_styled = click.style(f"{due_date:15}", fg='yellow')
             else:
                 due_styled = click.style(f"{due_date:15}", fg='green')
 
-            source_styled = click.style(f"{source:10}", fg=_get_source_color(source))
+            source_styled = click.style(f"{r.source:10}", fg=_get_source_color(r.source))
 
-            click.echo(f"  {problem_id:>8}  {source_styled}  {due_styled}  {reps:>7}  {title}")
+            click.echo(f"  {r.problem_id:>8}  {source_styled}  {due_styled}  {r.repetitions:>7}  {title}")
 
         click.echo("")
         click.echo(click.style("-" * 60, fg='bright_black'))
@@ -147,23 +117,15 @@ def pick(ctx):
     repo = get_initialized_repo()
 
     with DatabaseManager(repo.get_db_path()) as db:
-        due_reviews = db.get_due_reviews(include_future=False)
+        service = ReviewService(db)
+        problem = service.pick_random_due()
 
-        if not due_reviews:
+        if not problem:
             click.echo(click.style("\nNo problems due for review!", fg='green'))
             click.echo("You're all caught up. Check back later.")
             return
 
-        # Pick a random problem
-        problem = random.choice(due_reviews)
-
-        problem_id = problem['problem_id']
-        source = problem['source']
-        title = problem['title']
-        difficulty = problem['difficulty'] or 'Unknown'
-        file_path = problem.get('file_path', '')
-        reps = problem['repetitions']
-        due_date = _format_date(problem['next_review_date'])
+        due_date = ReviewService.format_due_date(problem.next_review_date)
 
         # Display the picked problem
         click.echo("")
@@ -171,43 +133,32 @@ def pick(ctx):
         click.echo(click.style("  REVIEW THIS PROBLEM", fg='yellow', bold=True))
         click.echo(click.style("=" * 60, fg='bright_black'))
         click.echo("")
-        click.echo(f"  {problem_id}: {click.style(title, bold=True)}")
-        click.echo(f"  Source: {click.style(source.capitalize(), fg=_get_source_color(source))}")
-        click.echo(f"  Difficulty: {difficulty}")
-        click.echo(f"  Times Reviewed: {reps}")
+        click.echo(f"  {problem.problem_id}: {click.style(problem.title, bold=True)}")
+        click.echo(f"  Source: {click.style(problem.source.capitalize(), fg=_get_source_color(problem.source))}")
+        click.echo(f"  Difficulty: {problem.difficulty}")
+        click.echo(f"  Times Reviewed: {problem.repetitions}")
         click.echo(f"  Due: {due_date}")
 
-        if file_path:
-            click.echo(f"  File: {file_path}")
+        if problem.file_path:
+            click.echo(f"  File: {problem.file_path}")
 
-        # Generate URL
-        if source == 'leetcode':
-            # Derive slug from title (lowercase, replace spaces with hyphens)
-            title_slug = re.sub(r'[^a-z0-9]+', '-', title.lower()).strip('-')
-            url = f"https://leetcode.com/problems/{title_slug}/"
-            click.echo(f"  URL: {url}")
-        elif source == 'codeforces':
-            # Parse contest_id and index from problem_id
-            match = re.match(r'^(\d+)([A-Za-z]\d?)$', problem_id)
-            if match:
-                contest_id, index = match.groups()
-                url = f"https://codeforces.com/problemset/problem/{contest_id}/{index}"
-                click.echo(f"  URL: {url}")
+        if problem.url:
+            click.echo(f"  URL: {problem.url}")
 
         click.echo("")
         click.echo(click.style("-" * 60, fg='bright_black'))
 
         # Show stats
-        due_count = len(due_reviews)
+        due_count = service.get_due_count()
         click.echo(f"  Due for review: {due_count} problem(s)")
         click.echo(click.style("-" * 60, fg='bright_black'))
         click.echo("")
 
         # Instructions
-        if file_path:
+        if problem.file_path:
             click.echo(f"  1. Open the file and solve it again")
-            click.echo(f"  2. Submit to {source.capitalize()} to verify your solution")
-            click.echo(f"  3. Run: dojo grade {problem_id} --pass")
+            click.echo(f"  2. Submit to {problem.source.capitalize()} to verify your solution")
+            click.echo(f"  3. Run: dojo grade {problem.problem_id} --pass")
             click.echo(f"  4. Grading as passed will schedule the next review")
         click.echo("")
 
@@ -225,8 +176,8 @@ def stats():
     repo = get_initialized_repo()
 
     with DatabaseManager(repo.get_db_path()) as db:
-        review_stats = db.get_review_stats()
-        review_freq = db.get_config('review_frequency_days', '7')
+        service = ReviewService(db)
+        review_stats = service.get_stats()
 
         click.echo("")
         click.echo(click.style("=" * 60, fg='bright_black'))
@@ -234,16 +185,16 @@ def stats():
         click.echo(click.style("=" * 60, fg='bright_black'))
         click.echo("")
 
-        click.echo(f"  Review Frequency: {review_freq} days")
+        click.echo(f"  Review Frequency: {review_stats.review_frequency_days} days")
         click.echo("")
-        click.echo(f"  Due Today:        {click.style(str(review_stats['due_today']), fg='yellow' if review_stats['due_today'] > 0 else 'green')}")
-        click.echo(f"  Due This Week:    {review_stats['due_this_week']}")
-        click.echo(f"  Total in Review:  {review_stats['total_in_review']}")
+        click.echo(f"  Due Today:        {click.style(str(review_stats.due_today), fg='yellow' if review_stats.due_today > 0 else 'green')}")
+        click.echo(f"  Due This Week:    {review_stats.due_this_week}")
+        click.echo(f"  Total in Review:  {review_stats.total_in_review}")
 
-        if review_stats['most_reviewed']:
+        if review_stats.most_reviewed:
             click.echo("")
             click.echo("  Most Reviewed Problems:")
-            for p in review_stats['most_reviewed']:
+            for p in review_stats.most_reviewed:
                 click.echo(f"    {p['problem_id']:>8} ({p['source']}) - {p['repetitions']} reviews")
 
         click.echo("")
