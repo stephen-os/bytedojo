@@ -2,12 +2,11 @@
 Commands package for bytedojo/dojo.
 """
 
-# ByteDojo
 from bytedojo.commands.init import init
 from bytedojo.commands.stats import stats
 from bytedojo.commands.grade import grade
+from bytedojo.commands.fetch import fetch
+from bytedojo.commands.query import query
+from bytedojo.commands.pick import pick
 
-# LeetCode
-from bytedojo.commands.leetcode import leetcode
-
-__all__ = ['init', 'stats', 'grade', 'leetcode']
+__all__ = ['init', 'stats', 'grade', 'fetch', 'query', 'pick']

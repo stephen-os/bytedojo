@@ -1,32 +1,22 @@
 """
-LeetCode query command.
+Query command - Search LeetCode problems.
 """
 
 import click
 
 from bytedojo.core.logger import get_logger
-from bytedojo.core.leetcode import LeetCodeClient
+from bytedojo.core.query import QueryService
 from bytedojo.core.repository import DojoRepository
-from bytedojo.core.database import DatabaseManager
 
 
-DIFFICULTY_MAP = {
-    'easy': 1,
-    'medium': 2,
-    'hard': 3,
-    '1': 1,
-    '2': 2,
-    '3': 3,
-}
-
-# Status indicators
+# Status indicators for CLI display
 STATUS_ICONS = {
     'passed': click.style('[P]', fg='green'),
     'failed': click.style('[F]', fg='red'),
     'skipped': click.style('[S]', fg='yellow'),
-    'untested': click.style('[ ]', fg='bright_black'),  # Legacy ungraded
+    'untested': click.style('[ ]', fg='bright_black'),
     'ungraded': click.style('[ ]', fg='bright_black'),
-    None: click.style('[ ]', fg='bright_black'),  # Not in db
+    None: click.style('[ ]', fg='bright_black'),
 }
 
 DIFFICULTY_SHORT = {
@@ -36,49 +26,15 @@ DIFFICULTY_SHORT = {
 }
 
 
-def _get_status_map(problems, repo):
-    """
-    Get status map for a list of problems from the database.
-
-    Returns the best status across all languages for each problem.
-    Priority: passed > failed > skipped > ungraded
-    """
-    status_map = {}
-    if repo.is_initialized():
-        with DatabaseManager(repo.get_db_path()) as db:
-            for problem in problems:
-                # Check all languages for this problem
-                statuses = []
-                for lang in ['python', 'java', 'cpp']:
-                    db_problem = db.get_problem('leetcode', problem.id, lang)
-                    if db_problem:
-                        statuses.append(db_problem.get('test_status'))
-
-                if statuses:
-                    # Return best status (passed > failed > skipped > ungraded)
-                    if 'passed' in statuses:
-                        status_map[problem.id] = 'passed'
-                    elif 'failed' in statuses:
-                        status_map[problem.id] = 'failed'
-                    elif 'skipped' in statuses:
-                        status_map[problem.id] = 'skipped'
-                    else:
-                        status_map[problem.id] = statuses[0]  # ungraded/untested
-    return status_map
-
-
-def _display_page(all_problems, page, per_page, repo):
+def _display_page(all_problems, page, per_page, status_map):
     """Display a single page of problems."""
     total = len(all_problems)
     total_pages = (total + per_page - 1) // per_page
-    page = max(1, min(page, total_pages))  # Clamp to valid range
+    page = max(1, min(page, total_pages))
 
     start_idx = (page - 1) * per_page
     end_idx = min(start_idx + per_page, total)
     page_problems = all_problems[start_idx:end_idx]
-
-    # Get database status for problems on this page
-    status_map = _get_status_map(page_problems, repo)
 
     # Display header
     click.echo(f"\nLeetCode Problems (Page {page}/{total_pages}, {total} total)\n")
@@ -105,13 +61,13 @@ def _display_page(all_problems, page, per_page, repo):
     return page, total_pages
 
 
-def _interactive_loop(all_problems, start_page, per_page, repo):
+def _interactive_loop(all_problems, start_page, per_page, status_map):
     """Run interactive pagination loop."""
     total_pages = (len(all_problems) + per_page - 1) // per_page
     current_page = start_page
 
     while True:
-        current_page, total_pages = _display_page(all_problems, current_page, per_page, repo)
+        current_page, total_pages = _display_page(all_problems, current_page, per_page, status_map)
 
         # Show navigation help
         nav_hints = []
@@ -200,12 +156,13 @@ def query(ctx, difficulty: str, tag: tuple, page: int, per_page: int, list_tags:
       dojo query --list-tags              # Show all tags
     """
     logger = get_logger()
-    client = LeetCodeClient()
+    repo = DojoRepository()
+    query_service = QueryService(repo)
 
     # Handle --list-tags
     if list_tags:
         logger.info("Fetching available tags...")
-        tags = client.get_available_tags()
+        tags = query_service.get_available_tags()
         if tags:
             click.echo(f"Available tags ({len(tags)}):")
             for t in tags:
@@ -214,27 +171,20 @@ def query(ctx, difficulty: str, tag: tuple, page: int, per_page: int, list_tags:
             logger.warning("No tags found")
         return
 
-    # Convert difficulty to int
-    difficulty_int = None
-    if difficulty:
-        difficulty_int = DIFFICULTY_MAP.get(difficulty.lower())
-
     # Convert tag tuple to list
     tags_list = list(tag) if tag else None
 
-    # Query problems from LeetCode (once)
+    # Query problems using service
     logger.info("Fetching problems from LeetCode...")
-    all_problems = client.query_problems(
-        difficulty=difficulty_int,
-        tags=tags_list
+    result = query_service.query(
+        difficulty=difficulty,
+        tags=tags_list,
+        include_status=True
     )
 
-    if not all_problems:
+    if not result.problems:
         logger.warning("No problems found matching your criteria")
         return
 
-    # Get repository for status lookups
-    repo = DojoRepository()
-
     # Enter interactive pagination loop
-    _interactive_loop(all_problems, page, per_page, repo)
+    _interactive_loop(result.problems, page, per_page, result.status_map)

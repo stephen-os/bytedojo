@@ -1,5 +1,5 @@
 """
-LeetCode fetch command.
+Fetch command - Fetch problems from LeetCode.
 """
 
 import click

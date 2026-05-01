@@ -1,35 +1,13 @@
 """
-LeetCode pick command - randomly select an unsolved problem.
+Pick command - Randomly select an unsolved problem.
 """
 
-import random
 import click
 
 from bytedojo.core.logger import get_logger
-from bytedojo.core.leetcode import LeetCodeClient
+from bytedojo.core.picker import ProblemPicker
 from bytedojo.core.repository import DojoRepository
-from bytedojo.core.database import DatabaseManager
 from bytedojo.commands.utils import DIFFICULTY_COLORS
-
-
-DIFFICULTY_MAP = {
-    'easy': 1,
-    'medium': 2,
-    'hard': 3,
-    '1': 1,
-    '2': 2,
-    '3': 3,
-}
-
-
-def _get_fetched_problem_ids(repo):
-    """Get set of problem IDs already in the database."""
-    fetched_ids = set()
-    if repo.is_initialized():
-        with DatabaseManager(repo.get_db_path()) as db:
-            problems = db.list_problems(source='leetcode')
-            fetched_ids = {int(p['problem_id']) for p in problems}
-    return fetched_ids
 
 
 @click.command()
@@ -62,51 +40,31 @@ def pick(ctx, difficulty: str, tag: tuple, include_premium: bool):
       dojo pick -d medium -t tree  # Random medium tree problem
     """
     logger = get_logger()
-    client = LeetCodeClient()
     repo = DojoRepository()
-
-    # Convert difficulty to int
-    difficulty_int = None
-    if difficulty:
-        difficulty_int = DIFFICULTY_MAP.get(difficulty.lower())
+    picker = ProblemPicker(repo)
 
     # Convert tag tuple to list
     tags_list = list(tag) if tag else None
 
-    # Query all matching problems from LeetCode
+    # Pick a problem using service
     logger.info("Fetching problems from LeetCode...")
-    all_problems = client.query_problems(
-        difficulty=difficulty_int,
-        tags=tags_list
+    result = picker.pick(
+        difficulty=difficulty,
+        tags=tags_list,
+        include_premium=include_premium
     )
 
-    if not all_problems:
+    if result.total_count == 0:
         logger.warning("No problems found matching your criteria")
         return
 
-    # Filter out premium problems unless requested
-    if not include_premium:
-        all_problems = [p for p in all_problems if not p.paid_only]
-
-    if not all_problems:
-        logger.warning("No free problems found matching your criteria")
-        return
-
-    # Get problems already in database
-    fetched_ids = _get_fetched_problem_ids(repo)
-
-    # Filter to unsolved problems only
-    unsolved = [p for p in all_problems if p.id not in fetched_ids]
-
-    if not unsolved:
+    if result.problem is None:
         click.echo(click.style("You've solved all problems matching your criteria!", fg='green'))
-        click.echo(f"Total matching: {len(all_problems)}, All fetched: {len(fetched_ids)}")
+        click.echo(f"Total matching: {result.total_count}, All fetched: {result.solved_count}")
         return
-
-    # Pick a random problem
-    problem = random.choice(unsolved)
 
     # Display the picked problem
+    problem = result.problem
     diff_color = DIFFICULTY_COLORS.get(problem.difficulty, 'white')
 
     click.echo("")
@@ -126,7 +84,7 @@ def pick(ctx, difficulty: str, tag: tuple, include_premium: bool):
     click.echo(f"  URL: https://leetcode.com/problems/{problem.title_slug}/")
     click.echo("")
     click.echo(click.style("-" * 60, fg='bright_black'))
-    click.echo(f"  Unsolved: {len(unsolved)} | Solved: {len(fetched_ids)} | Total: {len(all_problems)}")
+    click.echo(f"  Unsolved: {result.unsolved_count} | Solved: {result.solved_count} | Total: {result.total_count}")
     click.echo(click.style("-" * 60, fg='bright_black'))
     click.echo("")
 

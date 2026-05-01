@@ -17,10 +17,9 @@ from bytedojo.commands import init
 from bytedojo.commands import stats
 from bytedojo.commands.grade import grade
 from bytedojo.commands.settings import settings
-from bytedojo.commands.leetcode import leetcode
-from bytedojo.commands.leetcode.fetch import fetch
-from bytedojo.commands.leetcode.query import query
-from bytedojo.commands.leetcode.pick import pick
+from bytedojo.commands.fetch import fetch
+from bytedojo.commands.query import query
+from bytedojo.commands.pick import pick
 from bytedojo.commands.review import review
 from bytedojo.commands.run import run
 from bytedojo.commands.enter import enter
@@ -85,6 +84,3 @@ dojo.add_command(run)
 dojo.add_command(settings)
 dojo.add_command(review)
 dojo.add_command(enter)
-
-# Keep leetcode group for backwards compatibility
-dojo.add_command(leetcode)

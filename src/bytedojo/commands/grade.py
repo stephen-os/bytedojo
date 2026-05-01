@@ -3,7 +3,6 @@ Grade command - Mark problems as passed, failed, or skipped.
 """
 
 import click
-from datetime import datetime
 from typing import Optional, List
 
 from bytedojo.core.logger import get_logger, Theme
