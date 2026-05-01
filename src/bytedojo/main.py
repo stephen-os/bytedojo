@@ -1,24 +1,13 @@
 """
 ByteDojo - Main entry point.
 """
+import bytedojo
 
-import sys
-from bytedojo.commands.dojo import dojo
-from bytedojo.core.logger import get_logger
-
+from bytedojo.commands.bytedojo import bytedojo
 
 def main():
     """Entry point for the ByteDojo CLI."""
-    try:
-        dojo()
-    except Exception as e:
-        try:
-            logger = get_logger()
-            logger.critical(f"Unhandled exception: {e}", exc_info=True)
-        except RuntimeError:
-            print(f"CRITICAL ERROR: {e}", file=sys.stderr)
-        sys.exit(1)
-
+    bytedojo()
 
 if __name__ == '__main__':
     main()
