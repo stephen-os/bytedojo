@@ -13,16 +13,18 @@ from bytedojo.core.logger import setup_logger, get_logger
 
 from bytedojo.__init__ import __version__, __author__
 
-from bytedojo.commands import init
-from bytedojo.commands import stats
-from bytedojo.commands.grade import grade
-from bytedojo.commands.settings import settings
-from bytedojo.commands.fetch import fetch
-from bytedojo.commands.query import query
-from bytedojo.commands.pick import pick
-from bytedojo.commands.review import review
-from bytedojo.commands.run import run
-from bytedojo.commands.enter import enter
+from bytedojo.commands.subcommands import (
+    init,
+    stats,
+    grade,
+    settings,
+    fetch,
+    query,
+    pick,
+    review,
+    run,
+    enter,
+)
 
 def print_version(ctx, param, value):
     """Print version information and exit."""

@@ -7,7 +7,7 @@ import click
 from bytedojo.core.logger import get_logger
 from bytedojo.core.settings import SettingsManager
 from bytedojo.core.database import DatabaseManager
-from bytedojo.commands.utils import get_initialized_repo, SUPPORTED_LANGUAGES
+from bytedojo.commands.subcommands.utils import get_initialized_repo, SUPPORTED_LANGUAGES
 
 
 @click.group(invoke_without_command=True)

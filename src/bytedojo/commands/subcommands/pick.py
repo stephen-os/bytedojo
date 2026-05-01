@@ -7,7 +7,7 @@ import click
 from bytedojo.core.logger import get_logger
 from bytedojo.core.picker import ProblemPicker
 from bytedojo.core.repository import DojoRepository
-from bytedojo.commands.utils import DIFFICULTY_COLORS
+from bytedojo.commands.subcommands.utils import DIFFICULTY_COLORS
 
 
 @click.command()

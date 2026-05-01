@@ -26,7 +26,7 @@ class TestPickCommand:
         assert '--tag' in result.output
         assert '--include-premium' in result.output
 
-    @patch('bytedojo.commands.pick.ProblemPicker')
+    @patch('bytedojo.commands.subcommands.pick.ProblemPicker')
     def test_pick_selects_random_problem(self, mock_picker_class):
         """Test that pick selects a random unsolved problem."""
         mock_picker = Mock()
@@ -47,7 +47,7 @@ class TestPickCommand:
         assert 'PICKED FOR YOU' in result.output
         assert 'Two Sum' in result.output
 
-    @patch('bytedojo.commands.pick.ProblemPicker')
+    @patch('bytedojo.commands.subcommands.pick.ProblemPicker')
     def test_pick_filters_by_difficulty(self, mock_picker_class):
         """Test that pick filters by difficulty."""
         mock_picker = Mock()
@@ -65,7 +65,7 @@ class TestPickCommand:
             include_premium=False
         )
 
-    @patch('bytedojo.commands.pick.ProblemPicker')
+    @patch('bytedojo.commands.subcommands.pick.ProblemPicker')
     def test_pick_filters_by_tag(self, mock_picker_class):
         """Test that pick filters by tag."""
         mock_picker = Mock()
@@ -83,7 +83,7 @@ class TestPickCommand:
             include_premium=False
         )
 
-    @patch('bytedojo.commands.pick.ProblemPicker')
+    @patch('bytedojo.commands.subcommands.pick.ProblemPicker')
     def test_pick_no_problems_found(self, mock_picker_class):
         """Test message when no problems match criteria."""
         mock_picker = Mock()
@@ -98,7 +98,7 @@ class TestPickCommand:
         assert result.exit_code == 0
         assert 'No problems found' in result.output
 
-    @patch('bytedojo.commands.pick.ProblemPicker')
+    @patch('bytedojo.commands.subcommands.pick.ProblemPicker')
     def test_pick_all_solved(self, mock_picker_class):
         """Test message when all matching problems are solved."""
         mock_picker = Mock()
@@ -112,7 +112,7 @@ class TestPickCommand:
 
         assert "You've solved all problems" in result.output
 
-    @patch('bytedojo.commands.pick.ProblemPicker')
+    @patch('bytedojo.commands.subcommands.pick.ProblemPicker')
     def test_pick_shows_url(self, mock_picker_class):
         """Test that pick shows the LeetCode URL."""
         mock_picker = Mock()
@@ -128,7 +128,7 @@ class TestPickCommand:
 
         assert 'https://leetcode.com/problems/two-sum/' in result.output
 
-    @patch('bytedojo.commands.pick.ProblemPicker')
+    @patch('bytedojo.commands.subcommands.pick.ProblemPicker')
     def test_pick_shows_fetch_hint(self, mock_picker_class):
         """Test that pick shows how to fetch the problem."""
         mock_picker = Mock()
@@ -144,7 +144,7 @@ class TestPickCommand:
 
         assert 'dojo fetch 42' in result.output
 
-    @patch('bytedojo.commands.pick.ProblemPicker')
+    @patch('bytedojo.commands.subcommands.pick.ProblemPicker')
     def test_pick_shows_stats(self, mock_picker_class):
         """Test that pick shows unsolved/solved/total stats."""
         mock_picker = Mock()

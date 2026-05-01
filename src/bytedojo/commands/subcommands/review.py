@@ -6,7 +6,7 @@ import click
 
 from bytedojo.core.database import DatabaseManager
 from bytedojo.core.review_service import ReviewService, ReviewProblem
-from bytedojo.commands.utils import get_initialized_repo, SOURCE_COLORS
+from bytedojo.commands.subcommands.utils import get_initialized_repo, SOURCE_COLORS
 
 
 def _get_source_color(source: str) -> str:

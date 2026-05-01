@@ -8,7 +8,7 @@ from typing import Optional
 from bytedojo.core.database import DatabaseManager
 from bytedojo.core.search import find_problems, select_problem
 from bytedojo.core.execution import ProblemExecutor, ExecutionResult
-from bytedojo.commands.utils import get_initialized_repo, get_default_language, LANGUAGE_COLORS
+from bytedojo.commands.subcommands.utils import get_initialized_repo, get_default_language, LANGUAGE_COLORS
 
 
 def _display_run_header(problem: dict):

@@ -9,7 +9,7 @@ from bytedojo.core.logger import get_logger, Theme
 from bytedojo.core.database import DatabaseManager
 from bytedojo.core.search import find_problems, select_problem
 from bytedojo.core.grading import GradingService, GradeResult
-from bytedojo.commands.utils import (
+from bytedojo.commands.subcommands.utils import (
     get_initialized_repo,
     get_default_language,
     STATUS_COLORS,

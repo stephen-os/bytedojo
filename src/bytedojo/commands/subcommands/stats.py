@@ -5,7 +5,7 @@ Stats command - View statistics about problems in the repository.
 import click
 from bytedojo.core.logger import get_logger
 from bytedojo.core.database import DatabaseManager
-from bytedojo.commands.utils import get_initialized_repo
+from bytedojo.commands.subcommands.utils import get_initialized_repo
 
 
 @click.command()

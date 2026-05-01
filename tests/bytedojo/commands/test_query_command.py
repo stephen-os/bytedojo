@@ -28,7 +28,7 @@ class TestQueryCommand:
         assert '--per-page' in result.output
         assert '--list-tags' in result.output
 
-    @patch('bytedojo.commands.query.QueryService')
+    @patch('bytedojo.commands.subcommands.query.QueryService')
     def test_query_displays_problems(self, mock_service_class):
         """Test query displays problems in table format."""
         mock_service = Mock()
@@ -50,7 +50,7 @@ class TestQueryCommand:
         assert 'Two Sum' in result.output
         assert 'Page 1/1' in result.output
 
-    @patch('bytedojo.commands.query.QueryService')
+    @patch('bytedojo.commands.subcommands.query.QueryService')
     def test_query_by_difficulty(self, mock_service_class):
         """Test query filtering by difficulty."""
         mock_service = Mock()
@@ -66,7 +66,7 @@ class TestQueryCommand:
             include_status=True
         )
 
-    @patch('bytedojo.commands.query.QueryService')
+    @patch('bytedojo.commands.subcommands.query.QueryService')
     def test_query_by_tag(self, mock_service_class):
         """Test query filtering by tag."""
         mock_service = Mock()
@@ -82,7 +82,7 @@ class TestQueryCommand:
             include_status=True
         )
 
-    @patch('bytedojo.commands.query.QueryService')
+    @patch('bytedojo.commands.subcommands.query.QueryService')
     def test_query_pagination_next(self, mock_service_class):
         """Test pagination with 'n' for next page."""
         mock_service = Mock()
@@ -103,7 +103,7 @@ class TestQueryCommand:
         assert 'Page 1/2' in result.output
         assert 'Page 2/2' in result.output
 
-    @patch('bytedojo.commands.query.QueryService')
+    @patch('bytedojo.commands.subcommands.query.QueryService')
     def test_query_already_on_last_page(self, mock_service_class):
         """Test message when trying to go past last page."""
         mock_service = Mock()
@@ -123,7 +123,7 @@ class TestQueryCommand:
 
         assert 'Already on last page' in result.output
 
-    @patch('bytedojo.commands.query.QueryService')
+    @patch('bytedojo.commands.subcommands.query.QueryService')
     def test_query_shows_premium_marker(self, mock_service_class):
         """Test that premium problems show $ marker."""
         mock_service = Mock()
@@ -143,7 +143,7 @@ class TestQueryCommand:
 
         assert '$' in result.output
 
-    @patch('bytedojo.commands.query.QueryService')
+    @patch('bytedojo.commands.subcommands.query.QueryService')
     def test_list_tags(self, mock_service_class):
         """Test --list-tags option."""
         mock_service = Mock()
@@ -159,7 +159,7 @@ class TestQueryCommand:
         assert 'Dynamic Programming' in result.output
         assert 'Tree' in result.output
 
-    @patch('bytedojo.commands.query.QueryService')
+    @patch('bytedojo.commands.subcommands.query.QueryService')
     def test_query_no_results(self, mock_service_class):
         """Test query with no matching results."""
         mock_service = Mock()
@@ -195,7 +195,7 @@ class TestQueryCommandValidation:
 class TestQueryCommandOutput:
     """Test query command output formatting."""
 
-    @patch('bytedojo.commands.query.QueryService')
+    @patch('bytedojo.commands.subcommands.query.QueryService')
     def test_output_has_header(self, mock_service_class):
         """Test that output has proper header."""
         mock_service = Mock()
@@ -216,7 +216,7 @@ class TestQueryCommandOutput:
         assert 'ID' in result.output
         assert 'Title' in result.output
 
-    @patch('bytedojo.commands.query.QueryService')
+    @patch('bytedojo.commands.subcommands.query.QueryService')
     def test_navigation_hints_shown(self, mock_service_class):
         """Test that navigation hints are displayed."""
         mock_service = Mock()
