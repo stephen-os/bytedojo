@@ -3,10 +3,11 @@ Query command - Search LeetCode problems.
 """
 
 import click
+from pathlib import Path
 
 from bytedojo.core.logger import get_logger
 from bytedojo.core.query import QueryService
-from bytedojo.core.repository import DojoRepository
+from bytedojo.core.repository import Repository
 
 
 # Status indicators for CLI display
@@ -156,7 +157,7 @@ def query(ctx, difficulty: str, tag: tuple, page: int, per_page: int, list_tags:
       dojo query --list-tags              # Show all tags
     """
     logger = get_logger()
-    repo = DojoRepository()
+    repo = Repository(Path.cwd())
     query_service = QueryService(repo)
 
     # Handle --list-tags

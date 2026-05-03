@@ -11,7 +11,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Optional
 
-from bytedojo.core.repository import DojoRepository
+from bytedojo.core.repository import Repository
 
 
 # Default timeout for subprocess execution (5 minutes)
@@ -34,12 +34,12 @@ class ExecutionResult:
 class ProblemExecutor:
     """Executes problem solutions across different languages."""
 
-    def __init__(self, repo: DojoRepository):
+    def __init__(self, repo: Repository):
         """
         Initialize executor with repository context.
 
         Args:
-            repo: The DojoRepository instance for build paths
+            repo: The Repository instance for build paths
         """
         self.repo = repo
 
@@ -74,7 +74,7 @@ class ProblemExecutor:
             raise ValueError(f"File not found: {file_path}")
 
         # Get build directory for compiled languages
-        build_dir = self.repo.get_build_path(problem_id)
+        build_dir = self.repo.build_dir / problem_id
 
         # Execute based on language
         if language == 'python':

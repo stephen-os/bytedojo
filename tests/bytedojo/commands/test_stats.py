@@ -8,8 +8,8 @@ from click.testing import CliRunner
 from pathlib import Path
 from datetime import datetime
 
-from bytedojo.commands.dojo import dojo
-from bytedojo.core.repository import DojoRepository
+from bytedojo.commands.bytedojo import dojo
+from bytedojo.core.repository import Repository
 from bytedojo.core.database import create_database_schema
 
 
@@ -21,8 +21,8 @@ def initialized_repo(tmp_path):
     original_dir = Path.cwd()
     os.chdir(tmp_path)
     
-    repo = DojoRepository(root_dir=tmp_path)
-    repo.initialize()
+    repo = Repository(root_dir=tmp_path)
+    repo.create()
     
     yield tmp_path
     
@@ -37,8 +37,8 @@ def repo_with_problems(tmp_path):
     original_dir = Path.cwd()
     os.chdir(tmp_path)
     
-    repo = DojoRepository(root_dir=tmp_path)
-    repo.initialize()
+    repo = Repository(root_dir=tmp_path)
+    repo.create()
     
     db_path = tmp_path / ".dojo" / "db.sqlite"
     conn = sqlite3.connect(db_path)
@@ -76,8 +76,8 @@ def repo_with_attempts(tmp_path):
     original_dir = Path.cwd()
     os.chdir(tmp_path)
     
-    repo = DojoRepository(root_dir=tmp_path)
-    repo.initialize()
+    repo = Repository(root_dir=tmp_path)
+    repo.create()
     
     db_path = tmp_path / ".dojo" / "db.sqlite"
     conn = sqlite3.connect(db_path)

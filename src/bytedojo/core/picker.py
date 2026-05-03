@@ -6,9 +6,10 @@ This module provides problem picking functionality for both CLI and TUI.
 
 import random
 from dataclasses import dataclass
+from pathlib import Path
 from typing import List, Optional, Set
 
-from bytedojo.core.repository import DojoRepository
+from bytedojo.core.repository import Repository
 from bytedojo.core.database import DatabaseManager
 from bytedojo.core.leetcode import LeetCodeClient
 from bytedojo.core.leetcode.models import ProblemSummary
@@ -36,14 +37,14 @@ class PickResult:
 class ProblemPicker:
     """Service for picking random unsolved problems."""
 
-    def __init__(self, repo: Optional[DojoRepository] = None):
+    def __init__(self, repo: Optional[Repository] = None):
         """
         Initialize picker service.
 
         Args:
-            repo: Optional DojoRepository. If None, creates one.
+            repo: Optional Repository. If None, creates one.
         """
-        self.repo = repo or DojoRepository()
+        self.repo = repo or Repository(Path.cwd())
         self.client = LeetCodeClient()
 
     def pick(
@@ -122,8 +123,8 @@ class ProblemPicker:
         """Get set of problem IDs already in the database."""
         fetched_ids: Set[int] = set()
 
-        if self.repo.is_initialized():
-            with DatabaseManager(self.repo.get_db_path()) as db:
+        if self.repo.is_initialized:
+            with DatabaseManager(self.repo.db_path) as db:
                 problems = db.list_problems(source='leetcode')
                 fetched_ids = {int(p['problem_id']) for p in problems}
 

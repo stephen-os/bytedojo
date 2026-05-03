@@ -6,10 +6,11 @@ Common functionality used across multiple command modules.
 
 import click
 from functools import wraps
+from pathlib import Path
 from typing import Callable, TypeVar, Any
 
 from bytedojo.core.logger import get_logger
-from bytedojo.core.repository import DojoRepository
+from bytedojo.core.repository import Repository
 from bytedojo.core.database import DatabaseManager
 
 
@@ -54,20 +55,20 @@ STATUS_COLORS = {
 # REPOSITORY HELPERS
 # ============================================================================
 
-def get_initialized_repo() -> DojoRepository:
+def get_initialized_repo() -> Repository:
     """
     Get repository or raise error if not initialized.
 
     Returns:
-        Initialized DojoRepository instance
+        Initialized Repository instance
 
     Raises:
         click.ClickException: If repository is not initialized
     """
     logger = get_logger()
-    repo = DojoRepository()
+    repo = Repository(Path.cwd())
 
-    if not repo.is_initialized():
+    if not repo.is_initialized:
         logger.error("No .dojo repository found. Run 'dojo init' first.")
         raise click.ClickException("Repository not initialized")
 
@@ -82,11 +83,11 @@ def get_default_language() -> str:
         Default language ('python', 'java', or 'cpp'). Falls back to 'python'
         if repository is not initialized or config is missing.
     """
-    repo = DojoRepository()
-    if not repo.is_initialized():
+    repo = Repository(Path.cwd())
+    if not repo.is_initialized:
         return 'python'  # Fallback before repo init
 
-    with DatabaseManager(repo.get_db_path()) as db:
+    with DatabaseManager(repo.db_path) as db:
         return db.get_config('default_language', 'python')
 
 

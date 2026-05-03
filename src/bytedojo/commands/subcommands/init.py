@@ -1,54 +1,34 @@
 """
-Init command - Creates a .dojo directory in the current folder.
+Init command - Creates a .dojo directory.
 """
 
 import click
 from pathlib import Path
 
-from bytedojo.core.logger import get_logger
-from bytedojo.core.repository import DojoRepository
+from bytedojo.core.repository import Repository
 
 
 @click.command()
+@click.option('--path', '-p', type=click.Path(path_type=Path), default=None,
+              help='Directory to initialize (defaults to current directory)')
 @click.option('--force', is_flag=True, help='Reinitialize even if .dojo already exists')
 @click.pass_obj
-def init(ctx, force: bool):
+def init(ctx, path: Path, force: bool):
     """
-    Initialize a ByteDojo repository in the current directory.
-    
+    Initialize a ByteDojo repository.
+
     Creates a .dojo directory with:
-    - SQLite database for tracking problems and stats
-    - Configuration file
-    - Directory structure
+    - db.sqlite for tracking problems and stats
+    - settings.json for configuration
+    - .gitignore to exclude build artifacts
+    - README with instructions
     """
-    logger = get_logger()
-    
-    repo = DojoRepository()
-    
-    # Check if already initialized
-    if repo.exists() and not force:
-        logger.error("ByteDojo repository already initialized in this directory")
-        logger.info(f"Location: {repo.dojo_dir}")
-        logger.info("Use --force to reinitialize")
-        raise click.ClickException("Already initialized")
-    
-    try:
-        logger.info("Initializing ByteDojo repository...")
-        
-        # Initialize repository
-        repo.initialize(force=force)
-        
-        # Success!
-        logger.info("ByteDojo repository initialized successfully!")
-        logger.info(f"Location: {repo.dojo_dir}")
-        logger.info(f"Database: {repo.db_path}")
-        logger.info(f"Settings: {repo.settings_path}")
-        logger.info("")
-        logger.info("Next steps:")
-        logger.info("  dojo fetch 1             # Fetch a problem")
-        logger.info("  dojo settings            # View/change settings")
-        logger.info("  dojo stats               # View statistics")
-        
-    except Exception as e:
-        logger.error(f"Failed to initialize ByteDojo: {e}", exc_info=ctx.debug)
-        raise click.ClickException(f"Initialization failed: {e}")
+
+    repository = Repository(root_dir=path or Path.cwd())
+
+    result = repository.create(force=force)
+    if result.success:
+        click.secho(result.message, fg="green")
+    else:
+        click.secho(result.message, fg="red")
+        raise SystemExit(1)

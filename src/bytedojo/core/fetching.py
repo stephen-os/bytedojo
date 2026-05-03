@@ -8,7 +8,7 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import List, Optional, Callable
 
-from bytedojo.core.repository import DojoRepository
+from bytedojo.core.repository import Repository
 from bytedojo.core.database import DatabaseManager
 from bytedojo.core.leetcode import LeetCodeClient
 from bytedojo.core.leetcode.formatters import PythonFormatter, JavaFormatter, CppFormatter
@@ -48,12 +48,12 @@ class FetchResult:
 class ProblemFetcher:
     """Fetches problems from LeetCode and saves them locally."""
 
-    def __init__(self, repo: DojoRepository):
+    def __init__(self, repo: Repository):
         """
         Initialize fetcher with repository context.
 
         Args:
-            repo: The DojoRepository instance
+            repo: The Repository instance
         """
         self.repo = repo
         self.client = LeetCodeClient()
@@ -81,7 +81,7 @@ class ProblemFetcher:
             FetchResult with counts and problem details
         """
         # Load settings for organization mode
-        settings_manager = SettingsManager(self.repo.get_dojo_path())
+        settings_manager = SettingsManager(self.repo.dojo_dir)
         settings = settings_manager.load()
         organization = settings.leetcode.organization
 
@@ -94,7 +94,7 @@ class ProblemFetcher:
         error_count = 0
         problems: List[FetchedProblem] = []
 
-        with DatabaseManager(self.repo.get_db_path()) as db:
+        with DatabaseManager(self.repo.db_path) as db:
             for problem_id in problem_ids:
                 result = self._fetch_single(
                     db=db,

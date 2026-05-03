@@ -96,7 +96,7 @@ def run(identifier: Optional[str], name_search: Optional[str], desc_search: Opti
     if language is None:
         language = get_default_language()
 
-    with DatabaseManager(repo.get_db_path()) as db:
+    with DatabaseManager(repo.db_path) as db:
         # Handle --last flag
         if last:
             problems = db.list_problems(language=language, limit=1)

@@ -139,7 +139,7 @@ def _grade_single_problem(problem: dict, status: str = None, notes: str = None):
     """
     repo = get_initialized_repo()
 
-    with DatabaseManager(repo.get_db_path()) as db:
+    with DatabaseManager(repo.db_path) as db:
         _display_problem_header(problem)
 
         # If no status provided, prompt interactively
@@ -208,7 +208,7 @@ def _batch_grading_loop(problems: list, per_page: int = 10):
 
     while problems:  # Re-fetch to account for graded problems
         repo = get_initialized_repo()
-        with DatabaseManager(repo.get_db_path()) as db:
+        with DatabaseManager(repo.db_path) as db:
             # Refresh ungraded list using grading service
             service = GradingService(db)
             problems = service.get_ungraded_problems()
@@ -330,7 +330,7 @@ def grade(
     elif status_skip:
         status = 'skipped'
 
-    with DatabaseManager(repo.get_db_path()) as db:
+    with DatabaseManager(repo.db_path) as db:
         # Batch mode: no identifier, name, desc, or last
         if not identifier and not name_search and not desc_search and not last:
             service = GradingService(db)

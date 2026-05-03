@@ -3,10 +3,11 @@ Pick command - Randomly select an unsolved problem.
 """
 
 import click
+from pathlib import Path
 
 from bytedojo.core.logger import get_logger
 from bytedojo.core.picker import ProblemPicker
-from bytedojo.core.repository import DojoRepository
+from bytedojo.core.repository import Repository
 from bytedojo.commands.subcommands.utils import DIFFICULTY_COLORS
 
 
@@ -40,7 +41,7 @@ def pick(ctx, difficulty: str, tag: tuple, include_premium: bool):
       dojo pick -d medium -t tree  # Random medium tree problem
     """
     logger = get_logger()
-    repo = DojoRepository()
+    repo = Repository(Path.cwd())
     picker = ProblemPicker(repo)
 
     # Convert tag tuple to list

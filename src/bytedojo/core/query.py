@@ -5,9 +5,10 @@ This module provides problem querying functionality for both CLI and TUI.
 """
 
 from dataclasses import dataclass
+from pathlib import Path
 from typing import List, Optional
 
-from bytedojo.core.repository import DojoRepository
+from bytedojo.core.repository import Repository
 from bytedojo.core.database import DatabaseManager
 from bytedojo.core.leetcode import LeetCodeClient
 from bytedojo.core.leetcode.models import ProblemSummary
@@ -41,14 +42,14 @@ class QueryResult:
 class QueryService:
     """Service for querying LeetCode problems with local status."""
 
-    def __init__(self, repo: Optional[DojoRepository] = None):
+    def __init__(self, repo: Optional[Repository] = None):
         """
         Initialize query service.
 
         Args:
-            repo: Optional DojoRepository. If None, creates one.
+            repo: Optional Repository. If None, creates one.
         """
-        self.repo = repo or DojoRepository()
+        self.repo = repo or Repository(Path.cwd())
         self.client = LeetCodeClient()
 
     def query(
@@ -109,10 +110,10 @@ class QueryService:
         """
         status_map = {}
 
-        if not self.repo.is_initialized():
+        if not self.repo.is_initialized:
             return status_map
 
-        with DatabaseManager(self.repo.get_db_path()) as db:
+        with DatabaseManager(self.repo.db_path) as db:
             for problem in problems:
                 # Check all languages for this problem
                 statuses = []
@@ -144,10 +145,10 @@ class QueryService:
         Returns:
             Status string or None if not in database
         """
-        if not self.repo.is_initialized():
+        if not self.repo.is_initialized:
             return None
 
-        with DatabaseManager(self.repo.get_db_path()) as db:
+        with DatabaseManager(self.repo.db_path) as db:
             statuses = []
             for lang in ['python', 'java', 'cpp']:
                 db_problem = db.get_problem('leetcode', problem_id, lang)

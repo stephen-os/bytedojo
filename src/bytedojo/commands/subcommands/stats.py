@@ -29,7 +29,7 @@ def stats(ctx, list_problems: bool, verbose: bool, source: str, difficulty: str)
     logger = get_logger()
     repo = get_initialized_repo()
 
-    with DatabaseManager(repo.get_db_path()) as db:
+    with DatabaseManager(repo.db_path) as db:
         if list_problems:
             _list_problems(db, verbose, source, difficulty, logger)
         else:

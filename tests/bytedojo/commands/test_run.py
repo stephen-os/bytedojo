@@ -9,8 +9,8 @@ from click.testing import CliRunner
 from pathlib import Path
 from unittest.mock import patch, MagicMock
 
-from bytedojo.commands.dojo import dojo
-from bytedojo.core.repository import DojoRepository
+from bytedojo.commands.bytedojo import dojo
+from bytedojo.core.repository import Repository
 
 
 @pytest.fixture
@@ -19,8 +19,8 @@ def initialized_repo(tmp_path):
     original_dir = Path.cwd()
     os.chdir(tmp_path)
 
-    repo = DojoRepository(root_dir=tmp_path)
-    repo.initialize()
+    repo = Repository(root_dir=tmp_path)
+    repo.create()
 
     yield tmp_path
 
@@ -33,8 +33,8 @@ def repo_with_python_problem(tmp_path):
     original_dir = Path.cwd()
     os.chdir(tmp_path)
 
-    repo = DojoRepository(root_dir=tmp_path)
-    repo.initialize()
+    repo = Repository(root_dir=tmp_path)
+    repo.create()
 
     # Create problems directory and Python file
     problems_dir = tmp_path / "problems" / "0001-two-sum"
@@ -67,8 +67,8 @@ def repo_with_java_problem(tmp_path):
     original_dir = Path.cwd()
     os.chdir(tmp_path)
 
-    repo = DojoRepository(root_dir=tmp_path)
-    repo.initialize()
+    repo = Repository(root_dir=tmp_path)
+    repo.create()
 
     # Create problems directory and Java file
     problems_dir = tmp_path / "problems" / "0001-two-sum"
@@ -110,8 +110,8 @@ def repo_with_cpp_problem(tmp_path):
     original_dir = Path.cwd()
     os.chdir(tmp_path)
 
-    repo = DojoRepository(root_dir=tmp_path)
-    repo.initialize()
+    repo = Repository(root_dir=tmp_path)
+    repo.create()
 
     # Create problems directory and C++ file
     problems_dir = tmp_path / "problems" / "0001-two-sum"
@@ -149,8 +149,8 @@ def repo_with_all_languages(tmp_path):
     original_dir = Path.cwd()
     os.chdir(tmp_path)
 
-    repo = DojoRepository(root_dir=tmp_path)
-    repo.initialize()
+    repo = Repository(root_dir=tmp_path)
+    repo.create()
 
     # Create problems directory
     problems_dir = tmp_path / "problems" / "0001-two-sum"
@@ -529,8 +529,8 @@ class TestRunCompilationErrors:
         original_dir = Path.cwd()
         os.chdir(tmp_path)
 
-        repo = DojoRepository(root_dir=tmp_path)
-        repo.initialize()
+        repo = Repository(root_dir=tmp_path)
+        repo.create()
 
         # Create invalid Java file
         problems_dir = tmp_path / "problems" / "0001-bad"

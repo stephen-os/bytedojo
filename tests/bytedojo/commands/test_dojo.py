@@ -5,7 +5,7 @@ Tests for the main dojo command.
 import pytest
 from click.testing import CliRunner
 
-from bytedojo.commands.dojo import dojo
+from bytedojo.commands.bytedojo import dojo
 from bytedojo import __version__, __author__
 
 
@@ -95,9 +95,8 @@ class TestDojoDebugFlag:
         with runner.isolated_filesystem(temp_dir=tmp_path):
             result = runner.invoke(dojo, ['init'])
             
-            # Should NOT show debug details (like file locations)
-            # Just clean user-facing messages
-            assert 'Initializing' in result.output or 'initialized' in result.output
+            # Should show success message
+            assert 'initialized successfully' in result.output
 
 
 class TestDojoConfigFlag:

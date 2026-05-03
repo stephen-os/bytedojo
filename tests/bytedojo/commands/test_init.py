@@ -7,7 +7,7 @@ import sqlite3
 from pathlib import Path
 from click.testing import CliRunner
 
-from bytedojo.commands.dojo import dojo
+from bytedojo.commands.bytedojo import dojo
 
 
 class TestInitCommand:
@@ -97,7 +97,7 @@ class TestInitCommand:
             # Second init - should fail
             result = runner.invoke(dojo, ['init'])
             assert result.exit_code != 0
-            assert 'already initialized' in result.output.lower()
+            assert 'already exists' in result.output.lower()
     
     def test_init_force_flag_reinitializes(self, tmp_path):
         """Test that --force flag allows reinitializing."""
@@ -116,14 +116,12 @@ class TestInitCommand:
     def test_init_output_messages(self, tmp_path):
         """Test that init shows appropriate messages."""
         runner = CliRunner()
-        
+
         with runner.isolated_filesystem(temp_dir=tmp_path):
             result = runner.invoke(dojo, ['init'])
-            
+
             assert result.exit_code == 0
-            assert 'Initializing ByteDojo repository' in result.output
             assert 'initialized successfully' in result.output
-            assert 'Next steps' in result.output
 
 
 class TestDatabaseSchema:

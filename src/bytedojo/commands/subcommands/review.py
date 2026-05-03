@@ -41,7 +41,7 @@ def _show_due_reviews(show_all: bool = False):
     """Show problems due for review."""
     repo = get_initialized_repo()
 
-    with DatabaseManager(repo.get_db_path()) as db:
+    with DatabaseManager(repo.db_path) as db:
         service = ReviewService(db)
         reviews = service.get_due_reviews(include_future=show_all)
         review_freq = service.get_review_frequency()
@@ -116,7 +116,7 @@ def pick(ctx):
     """
     repo = get_initialized_repo()
 
-    with DatabaseManager(repo.get_db_path()) as db:
+    with DatabaseManager(repo.db_path) as db:
         service = ReviewService(db)
         problem = service.pick_random_due()
 
@@ -175,7 +175,7 @@ def stats():
     """
     repo = get_initialized_repo()
 
-    with DatabaseManager(repo.get_db_path()) as db:
+    with DatabaseManager(repo.db_path) as db:
         service = ReviewService(db)
         review_stats = service.get_stats()
 
