@@ -4,8 +4,8 @@ Test suite for JavaFormatter.
 
 import pytest
 from unittest.mock import Mock
-from bytedojo.core.leetcode.models import Problem
-from bytedojo.core.leetcode.formatters.java import JavaFormatContext, JavaFormatter
+from bytedojo.core.models import Problem
+from bytedojo.core.formatters.java import JavaFormatContext, JavaFormatter
 
 
 # ============================================================================

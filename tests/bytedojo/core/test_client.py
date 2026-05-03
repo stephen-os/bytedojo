@@ -7,8 +7,8 @@ import requests
 from unittest.mock import Mock, patch, MagicMock
 import click
 
-from bytedojo.core.leetcode.client import LeetCodeClient
-from bytedojo.core.leetcode.models import Problem, CodeSnippet
+from bytedojo.core.client import LeetCodeClient
+from bytedojo.core.models import Problem, CodeSnippet
 
 
 class TestLeetCodeClientInit:
@@ -63,7 +63,7 @@ class TestGetProblemById:
         
         assert result is None
     
-    @patch('bytedojo.core.leetcode.client.requests.Session')
+    @patch('bytedojo.core.client.requests.Session')
     def test_get_problem_by_id_success(self, mock_session_class):
         """Test successful problem fetch by ID."""
         # Mock session
@@ -108,7 +108,7 @@ class TestGetProblemById:
         assert problem.id == 1
         assert problem.title == 'Two Sum'
     
-    @patch('bytedojo.core.leetcode.client.requests.Session')
+    @patch('bytedojo.core.client.requests.Session')
     def test_get_problem_by_id_not_found(self, mock_session_class):
         """Test problem not found by ID."""
         mock_session = Mock()
@@ -126,7 +126,7 @@ class TestGetProblemById:
         
         assert problem is None
     
-    @patch('bytedojo.core.leetcode.client.requests.Session')
+    @patch('bytedojo.core.client.requests.Session')
     def test_get_problem_by_id_network_error(self, mock_session_class):
         """Test network error handling."""
         mock_session = Mock()
@@ -160,7 +160,7 @@ class TestGetProblemByName:
         
         assert result is None
     
-    @patch('bytedojo.core.leetcode.client.requests.Session')
+    @patch('bytedojo.core.client.requests.Session')
     def test_get_problem_by_name_success(self, mock_session_class):
         """Test successful problem fetch by name."""
         mock_session = Mock()
@@ -202,7 +202,7 @@ class TestGetProblemByName:
             # Should convert to lowercase with hyphens
             mock_fetch.assert_called_once_with('two-sum')
     
-    @patch('bytedojo.core.leetcode.client.requests.Session')
+    @patch('bytedojo.core.client.requests.Session')
     def test_get_problem_by_name_network_error(self, mock_session_class):
         """Test network error handling for name lookup."""
         mock_session = Mock()
@@ -219,7 +219,7 @@ class TestGetProblemByName:
 class TestFetchProblem:
     """Test _fetch_problem internal method."""
     
-    @patch('bytedojo.core.leetcode.client.requests.Session')
+    @patch('bytedojo.core.client.requests.Session')
     def test_fetch_problem_creates_problem_object(self, mock_session_class):
         """Test that _fetch_problem creates a Problem object."""
         mock_session = Mock()
@@ -252,7 +252,7 @@ class TestFetchProblem:
         assert problem.title == 'Two Sum'
         assert len(problem.code_snippets) == 2
     
-    @patch('bytedojo.core.leetcode.client.requests.Session')
+    @patch('bytedojo.core.client.requests.Session')
     def test_fetch_problem_returns_none_for_no_data(self, mock_session_class):
         """Test that _fetch_problem returns None when no data."""
         mock_session = Mock()
@@ -271,7 +271,7 @@ class TestFetchProblem:
 class TestFetchRawData:
     """Test _fetch_raw_data internal method."""
     
-    @patch('bytedojo.core.leetcode.client.requests.Session')
+    @patch('bytedojo.core.client.requests.Session')
     def test_fetch_raw_data_makes_graphql_request(self, mock_session_class):
         """Test that _fetch_raw_data makes GraphQL request."""
         mock_session = Mock()
@@ -297,7 +297,7 @@ class TestFetchRawData:
         assert 'query' in call_args[1]['json']
         assert 'variables' in call_args[1]['json']
     
-    @patch('bytedojo.core.leetcode.client.requests.Session')
+    @patch('bytedojo.core.client.requests.Session')
     def test_fetch_raw_data_returns_question_data(self, mock_session_class):
         """Test that _fetch_raw_data returns question data."""
         mock_session = Mock()
@@ -322,7 +322,7 @@ class TestFetchRawData:
         
         assert result == expected_data
     
-    @patch('bytedojo.core.leetcode.client.requests.Session')
+    @patch('bytedojo.core.client.requests.Session')
     def test_fetch_raw_data_returns_none_for_invalid(self, mock_session_class):
         """Test that _fetch_raw_data returns None for invalid response."""
         mock_session = Mock()
@@ -341,7 +341,7 @@ class TestFetchRawData:
 class TestGetTitleSlugById:
     """Test _get_title_slug_by_id internal method."""
     
-    @patch('bytedojo.core.leetcode.client.requests.Session')
+    @patch('bytedojo.core.client.requests.Session')
     def test_get_title_slug_by_id_success(self, mock_session_class):
         """Test successful slug lookup."""
         mock_session = Mock()
@@ -361,7 +361,7 @@ class TestGetTitleSlugById:
         
         assert slug == 'two-sum'
     
-    @patch('bytedojo.core.leetcode.client.requests.Session')
+    @patch('bytedojo.core.client.requests.Session')
     def test_get_title_slug_by_id_not_found(self, mock_session_class):
         """Test slug lookup for non-existent ID."""
         mock_session = Mock()
@@ -380,7 +380,7 @@ class TestGetTitleSlugById:
         
         assert slug is None
     
-    @patch('bytedojo.core.leetcode.client.requests.Session')
+    @patch('bytedojo.core.client.requests.Session')
     def test_get_title_slug_missing_stat_status_pairs(self, mock_session_class):
         """Test handling of malformed API response."""
         mock_session = Mock()
@@ -399,7 +399,7 @@ class TestGetTitleSlugById:
 class TestLeetCodeClientIntegration:
     """Integration tests for LeetCodeClient."""
     
-    @patch('bytedojo.core.leetcode.client.requests.Session')
+    @patch('bytedojo.core.client.requests.Session')
     def test_full_fetch_workflow_by_id(self, mock_session_class):
         """Test complete workflow: ID -> slug -> problem."""
         mock_session = Mock()
@@ -439,7 +439,7 @@ class TestLeetCodeClientIntegration:
         assert problem.title == 'Test Problem'
         assert problem.difficulty == 'Medium'
     
-    @patch('bytedojo.core.leetcode.client.requests.Session')
+    @patch('bytedojo.core.client.requests.Session')
     def test_multiple_fetches_same_client(self, mock_session_class):
         """Test multiple fetches with same client instance."""
         mock_session = Mock()

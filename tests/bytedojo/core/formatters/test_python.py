@@ -6,8 +6,8 @@ Tests cover edge cases, malformed inputs, stress scenarios, and error handling.
 import pytest
 from unittest.mock import Mock, MagicMock, patch
 import re
-from bytedojo.core.leetcode.models import Problem
-from bytedojo.core.leetcode.formatters.python import FormatContext, PythonFormatter
+from bytedojo.core.models import Problem
+from bytedojo.core.formatters.python import FormatContext, PythonFormatter
 
 
 # ============================================================================

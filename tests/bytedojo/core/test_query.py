@@ -7,14 +7,14 @@ import requests
 from unittest.mock import Mock, patch
 import click
 
-from bytedojo.core.leetcode.client import LeetCodeClient
-from bytedojo.core.leetcode.models import ProblemSummary
+from bytedojo.core.client import LeetCodeClient
+from bytedojo.core.models import ProblemSummary
 
 
 class TestQueryProblems:
     """Test query_problems method."""
 
-    @patch('bytedojo.core.leetcode.client.requests.Session')
+    @patch('bytedojo.core.client.requests.Session')
     def test_query_problems_returns_list(self, mock_session_class):
         """Test that query_problems returns a list of ProblemSummary."""
         mock_session = Mock()
@@ -63,7 +63,7 @@ class TestQueryProblems:
         assert results[0].id == 1
         assert results[0].title == 'Two Sum'
 
-    @patch('bytedojo.core.leetcode.client.requests.Session')
+    @patch('bytedojo.core.client.requests.Session')
     def test_query_problems_sorted_by_id(self, mock_session_class):
         """Test that results are sorted by ID ascending."""
         mock_session = Mock()
@@ -105,7 +105,7 @@ class TestQueryProblems:
         assert results[1].id == 50
         assert results[2].id == 100
 
-    @patch('bytedojo.core.leetcode.client.requests.Session')
+    @patch('bytedojo.core.client.requests.Session')
     def test_query_problems_filter_by_difficulty(self, mock_session_class):
         """Test filtering by difficulty."""
         mock_session = Mock()
@@ -156,7 +156,7 @@ class TestQueryProblems:
         assert len(hard_results) == 1
         assert hard_results[0].difficulty == 'Hard'
 
-    @patch('bytedojo.core.leetcode.client.requests.Session')
+    @patch('bytedojo.core.client.requests.Session')
     def test_query_problems_filter_by_tag(self, mock_session_class):
         """Test filtering by tag."""
         mock_session = Mock()
@@ -205,7 +205,7 @@ class TestQueryProblems:
         assert len(tree_results) == 1
         assert tree_results[0].title == 'Tree Problem'
 
-    @patch('bytedojo.core.leetcode.client.requests.Session')
+    @patch('bytedojo.core.client.requests.Session')
     def test_query_problems_returns_all_matches(self, mock_session_class):
         """Test that all matching problems are returned (no internal limit)."""
         mock_session = Mock()
@@ -236,7 +236,7 @@ class TestQueryProblems:
         # Should return all 100 problems
         assert len(results) == 100
 
-    @patch('bytedojo.core.leetcode.client.requests.Session')
+    @patch('bytedojo.core.client.requests.Session')
     def test_query_problems_empty_results(self, mock_session_class):
         """Test query with no matching results."""
         mock_session = Mock()
@@ -256,7 +256,7 @@ class TestQueryProblems:
 
         assert results == []
 
-    @patch('bytedojo.core.leetcode.client.requests.Session')
+    @patch('bytedojo.core.client.requests.Session')
     def test_query_problems_network_error(self, mock_session_class):
         """Test network error handling."""
         mock_session = Mock()
@@ -271,7 +271,7 @@ class TestQueryProblems:
 
         assert "Failed to query problems" in str(exc_info.value)
 
-    @patch('bytedojo.core.leetcode.client.requests.Session')
+    @patch('bytedojo.core.client.requests.Session')
     def test_query_problems_includes_paid_only(self, mock_session_class):
         """Test that paid_only flag is correctly captured."""
         mock_session = Mock()
@@ -309,7 +309,7 @@ class TestQueryProblems:
 class TestFetchAllProblems:
     """Test _fetch_all_problems method."""
 
-    @patch('bytedojo.core.leetcode.client.requests.Session')
+    @patch('bytedojo.core.client.requests.Session')
     def test_fetch_all_problems_returns_list(self, mock_session_class):
         """Test that _fetch_all_problems returns stat_status_pairs."""
         mock_session = Mock()
@@ -325,7 +325,7 @@ class TestFetchAllProblems:
 
         assert result == expected_problems
 
-    @patch('bytedojo.core.leetcode.client.requests.Session')
+    @patch('bytedojo.core.client.requests.Session')
     def test_fetch_all_problems_empty(self, mock_session_class):
         """Test handling of empty response."""
         mock_session = Mock()
@@ -344,7 +344,7 @@ class TestFetchAllProblems:
 class TestFetchProblemTags:
     """Test _fetch_problem_tags method."""
 
-    @patch('bytedojo.core.leetcode.client.requests.Session')
+    @patch('bytedojo.core.client.requests.Session')
     def test_fetch_problem_tags_returns_dict(self, mock_session_class):
         """Test that _fetch_problem_tags returns tag mapping."""
         mock_session = Mock()
@@ -375,7 +375,7 @@ class TestFetchProblemTags:
         assert 'Array' in result[1]
         assert 'Hash Table' in result[1]
 
-    @patch('bytedojo.core.leetcode.client.requests.Session')
+    @patch('bytedojo.core.client.requests.Session')
     def test_fetch_problem_tags_handles_error(self, mock_session_class):
         """Test that errors are handled gracefully."""
         mock_session = Mock()
@@ -392,7 +392,7 @@ class TestFetchProblemTags:
 class TestGetAvailableTags:
     """Test get_available_tags method."""
 
-    @patch('bytedojo.core.leetcode.client.requests.Session')
+    @patch('bytedojo.core.client.requests.Session')
     def test_get_available_tags_returns_sorted_list(self, mock_session_class):
         """Test that get_available_tags returns sorted unique tags."""
         mock_session = Mock()
@@ -416,7 +416,7 @@ class TestGetAvailableTags:
 
         assert result == ['Array', 'Tree']
 
-    @patch('bytedojo.core.leetcode.client.requests.Session')
+    @patch('bytedojo.core.client.requests.Session')
     def test_get_available_tags_handles_error(self, mock_session_class):
         """Test that errors return empty list."""
         mock_session = Mock()

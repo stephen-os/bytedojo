@@ -8,7 +8,7 @@ from pathlib import Path
 from datetime import datetime, date, timedelta
 
 from bytedojo.core.database import DatabaseManager, create_database_schema
-from bytedojo.core.leetcode.models import Problem, CodeSnippet
+from bytedojo.core.models import Problem, CodeSnippet
 
 
 class TestCreateDatabaseSchema:

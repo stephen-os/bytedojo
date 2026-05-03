@@ -4,8 +4,8 @@ Test suite for CppFormatter.
 
 import pytest
 from unittest.mock import Mock
-from bytedojo.core.leetcode.models import Problem
-from bytedojo.core.leetcode.formatters.cpp import CppFormatContext, CppFormatter
+from bytedojo.core.models import Problem
+from bytedojo.core.formatters.cpp import CppFormatContext, CppFormatter
 
 
 # ============================================================================

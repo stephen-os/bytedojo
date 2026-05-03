@@ -7,8 +7,8 @@ from click.testing import CliRunner
 from unittest.mock import patch, Mock
 from pathlib import Path
 
-from bytedojo.commands.dojo import dojo
-from bytedojo.core.leetcode.models import ProblemSummary
+from bytedojo.commands.bytedojo import dojo
+from bytedojo.core.models import ProblemSummary
 from bytedojo.core.query import QueryResult
 
 

@@ -10,8 +10,8 @@ from typing import List, Optional
 
 from bytedojo.core.repository import Repository
 from bytedojo.core.database import DatabaseManager
-from bytedojo.core.leetcode import LeetCodeClient
-from bytedojo.core.leetcode.models import ProblemSummary
+from bytedojo.core.client import LeetCodeClient
+from bytedojo.core.models import ProblemSummary
 
 
 DIFFICULTY_MAP = {

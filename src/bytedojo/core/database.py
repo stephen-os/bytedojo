@@ -9,7 +9,7 @@ from pathlib import Path
 from typing import Optional, List, Dict, Any
 from datetime import datetime
 
-from bytedojo.core.leetcode.models import Problem
+from bytedojo.core.models import Problem
 from bytedojo.core.logger import get_logger
 
 

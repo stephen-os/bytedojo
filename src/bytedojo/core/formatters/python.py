@@ -7,8 +7,8 @@ from dataclasses import dataclass, field
 from typing import List, Tuple, Optional, Dict
 from html import unescape
 
-from bytedojo.core.leetcode.models import Problem
-from bytedojo.core.leetcode.formatters.base import BaseFormatter
+from bytedojo.core.models import Problem
+from bytedojo.core.formatters.base import BaseFormatter
 from bytedojo.core.logger import get_logger
 
 # =========================================================================

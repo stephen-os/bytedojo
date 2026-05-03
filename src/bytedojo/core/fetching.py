@@ -10,8 +10,8 @@ from typing import List, Optional, Callable
 
 from bytedojo.core.repository import Repository
 from bytedojo.core.database import DatabaseManager
-from bytedojo.core.leetcode import LeetCodeClient
-from bytedojo.core.leetcode.formatters import PythonFormatter, JavaFormatter, CppFormatter
+from bytedojo.core.client import LeetCodeClient
+from bytedojo.core.formatters import PythonFormatter, JavaFormatter, CppFormatter
 from bytedojo.core.file_writer import FileWriter
 from bytedojo.core.settings import SettingsManager
 

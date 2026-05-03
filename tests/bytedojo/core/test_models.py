@@ -3,7 +3,7 @@ Tests for LeetCode models (Problem and CodeSnippet).
 """
 
 import pytest
-from bytedojo.core.leetcode.models import CodeSnippet, Problem
+from bytedojo.core.models import CodeSnippet, Problem
 
 
 class TestCodeSnippet:

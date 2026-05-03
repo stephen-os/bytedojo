@@ -4,7 +4,7 @@ import requests
 import click
 from typing import Optional, List
 from bytedojo.core.logger import get_logger
-from bytedojo.core.leetcode.models import Problem, CodeSnippet, ProblemSummary
+from bytedojo.core.models import Problem, CodeSnippet, ProblemSummary
 
 
 class LeetCodeClient:

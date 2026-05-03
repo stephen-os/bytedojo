@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from bytedojo.core.leetcode.models import Problem
+from bytedojo.core.models import Problem
 
 
 class BaseFormatter(ABC):
