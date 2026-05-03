@@ -9,7 +9,7 @@ from typing import List, Dict, Any, Optional
 from pathlib import Path
 
 from bytedojo.core.database import DatabaseManager
-from bytedojo.core.repository import DojoRepository
+from bytedojo.core.repository import Repository
 
 
 def _normalize(text: str) -> str:
@@ -229,12 +229,12 @@ def resolve_problem(
     Raises:
         click.ClickException: If no problems found or repo not initialized
     """
-    repo = DojoRepository()
+    repo = Repository(Path.cwd())
 
-    if not repo.is_initialized():
+    if not repo.is_initialized:
         raise click.ClickException("No .dojo repository found. Run 'dojo init' first.")
 
-    with DatabaseManager(repo.get_db_path()) as db:
+    with DatabaseManager(repo.db_path) as db:
         matches = find_problems(
             db,
             identifier=identifier,
