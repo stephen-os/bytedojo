@@ -6,5 +6,6 @@ LeetCode problems and reviews.
 """
 
 from bytedojo.tui.app import DojoApp
+from bytedojo.tui import theme
 
-__all__ = ['DojoApp']
+__all__ = ['DojoApp', 'theme']

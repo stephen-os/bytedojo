@@ -4,9 +4,11 @@ ByteDojo TUI Application.
 Main Textual application for the ByteDojo terminal user interface.
 """
 
-from textual.app import App, ComposeResult
-from textual.widgets import Header, Footer, Static
-from textual.containers import Container
+from textual.app import App
+
+from bytedojo.core.repository import Repository
+from bytedojo.tui.screens import InitScreen, MainScreen
+from bytedojo.tui.theme import THEME_CSS
 
 
 class DojoApp(App):
@@ -15,49 +17,22 @@ class DojoApp(App):
     TITLE = "ByteDojo"
     SUB_TITLE = "LeetCode Practice Tracker"
 
-    CSS = """
-    Screen {
-        background: $surface;
-    }
+    CSS = THEME_CSS
 
-    #welcome {
-        width: 100%;
-        height: auto;
-        padding: 2 4;
-        text-align: center;
+    SCREENS = {
+        "init": InitScreen,
+        "main": MainScreen,
     }
-
-    #welcome Static {
-        text-align: center;
-    }
-
-    .title {
-        text-style: bold;
-        color: $accent;
-    }
-
-    .subtitle {
-        color: $text-muted;
-    }
-    """
 
     BINDINGS = [
         ("q", "quit", "Quit"),
-        ("?", "help", "Help"),
     ]
 
-    def compose(self) -> ComposeResult:
-        """Compose the application layout."""
-        yield Header()
-        yield Container(
-            Static("Welcome to ByteDojo", classes="title"),
-            Static("Your LeetCode practice companion", classes="subtitle"),
-            Static(""),
-            Static("Press ? for help or q to quit"),
-            id="welcome"
-        )
-        yield Footer()
+    def on_mount(self) -> None:
+        """Called when the app is mounted. Determine which screen to show."""
+        repo = Repository(Path.cwd())
 
-    def action_help(self) -> None:
-        """Show help information."""
-        self.notify("Help panel coming soon!", title="Help")
+        if repo.is_initialized:
+            self.push_screen("main")
+        else:
+            self.push_screen("init")
