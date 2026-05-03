@@ -33,11 +33,11 @@ def _show_settings():
     repo = get_initialized_repo()
 
     # Load and display settings
-    settings_manager = SettingsManager(repo.get_dojo_path())
+    settings_manager = SettingsManager(repo.dojo_dir)
     current_settings = settings_manager.load()
 
     # Get database config
-    with DatabaseManager(repo.get_db_path()) as db:
+    with DatabaseManager(repo.db_path) as db:
         review_freq = db.get_config('review_frequency_days', '7')
         default_lang = db.get_config('default_language', 'python')
         default_source = db.get_config('default_source', 'leetcode')
@@ -93,7 +93,7 @@ def default_language(language: str):
     logger = get_logger()
     repo = get_initialized_repo()
 
-    with DatabaseManager(repo.get_db_path()) as db:
+    with DatabaseManager(repo.db_path) as db:
         old_value = db.get_config('default_language', 'python')
         new_value = language.lower()
         db.set_config('default_language', new_value)
@@ -135,7 +135,7 @@ def set(key: str, value: str):
         raise click.ClickException(f"Invalid value: {value}")
 
     # Set the value
-    settings_manager = SettingsManager(repo.get_dojo_path())
+    settings_manager = SettingsManager(repo.dojo_dir)
     if settings_manager.set(key, value):
         logger.info(f"Set {key} = {value}")
     else:
@@ -155,7 +155,7 @@ def get(key: str):
     repo = get_initialized_repo()
 
     # Get the value
-    settings_manager = SettingsManager(repo.get_dojo_path())
+    settings_manager = SettingsManager(repo.dojo_dir)
     value = settings_manager.get(key)
 
     if value is None:
@@ -189,7 +189,7 @@ def review_frequency(days: int):
 
     repo = get_initialized_repo()
 
-    with DatabaseManager(repo.get_db_path()) as db:
+    with DatabaseManager(repo.db_path) as db:
         old_value = db.get_config('review_frequency_days', '7')
         db.set_config('review_frequency_days', str(days))
 

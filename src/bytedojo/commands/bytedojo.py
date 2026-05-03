@@ -100,3 +100,6 @@ bytedojo.add_command(review)
 bytedojo.add_command(run)
 bytedojo.add_command(settings)
 bytedojo.add_command(stats)
+
+# Backwards compatibility alias
+dojo = bytedojo

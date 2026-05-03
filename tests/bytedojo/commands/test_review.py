@@ -7,7 +7,7 @@ from click.testing import CliRunner
 from datetime import date, timedelta
 import sqlite3
 
-from bytedojo.commands.dojo import dojo
+from bytedojo.commands.bytedojo import dojo
 from bytedojo.core.database import create_database_schema
 
 
