@@ -15,25 +15,25 @@ class TestLeetCodeAPIInit:
     
     def test_init_creates_session(self):
         """Test that initialization creates a requests session."""
-        client = LeetCodeAPI()
+        api = LeetCodeAPI()
         
-        assert hasattr(client, 'session')
-        assert isinstance(client.session, requests.Session)
+        assert hasattr(api, 'session')
+        assert isinstance(api.session, requests.Session)
     
     def test_init_sets_headers(self):
         """Test that initialization sets correct headers."""
-        client = LeetCodeAPI()
+        api = LeetCodeAPI()
         
-        assert 'Content-Type' in client.session.headers
-        assert client.session.headers['Content-Type'] == 'application/json'
-        assert 'User-Agent' in client.session.headers
+        assert 'Content-Type' in api.session.headers
+        assert api.session.headers['Content-Type'] == 'application/json'
+        assert 'User-Agent' in api.session.headers
     
     def test_init_has_logger(self):
-        """Test that client has a logger."""
-        client = LeetCodeAPI()
-        
-        assert hasattr(client, 'logger')
-        assert client.logger is not None
+        """Test that api has a logger."""
+        api = LeetCodeAPI()
+
+        assert hasattr(api, 'logger')
+        assert api.logger is not None
     
     def test_class_has_constants(self):
         """Test that class has URL constants."""
@@ -50,15 +50,15 @@ class TestGetProblemById:
     
     def test_get_problem_by_id_returns_none_for_zero(self):
         """Test that problem_id=0 returns None."""
-        client = LeetCodeAPI()
-        result = client.get_problem_by_id(0)
+        api = LeetCodeAPI()
+        result = api.get_problem_by_id(0)
         
         assert result is None
     
     def test_get_problem_by_id_returns_none_for_none(self):
         """Test that problem_id=None returns None."""
-        client = LeetCodeAPI()
-        result = client.get_problem_by_id(None)
+        api = LeetCodeAPI()
+        result = api.get_problem_by_id(None)
         
         assert result is None
     
@@ -99,8 +99,8 @@ class TestGetProblemById:
         mock_session.get.return_value = list_response
         mock_session.post.return_value = graphql_response
         
-        client = LeetCodeAPI()
-        problem = client.get_problem_by_id(1)
+        api = LeetCodeAPI()
+        problem = api.get_problem_by_id(1)
         
         assert problem is not None
         assert isinstance(problem, Problem)
@@ -120,8 +120,8 @@ class TestGetProblemById:
         }
         mock_session.get.return_value = list_response
         
-        client = LeetCodeAPI()
-        problem = client.get_problem_by_id(9999)
+        api = LeetCodeAPI()
+        problem = api.get_problem_by_id(9999)
         
         assert problem is None
     
@@ -145,15 +145,15 @@ class TestGetProblemByName:
     
     def test_get_problem_by_name_returns_none_for_empty(self):
         """Test that empty name returns None."""
-        client = LeetCodeAPI()
-        result = client.get_problem_by_name("")
+        api = LeetCodeAPI()
+        result = api.get_problem_by_name("")
         
         assert result is None
     
     def test_get_problem_by_name_returns_none_for_none(self):
         """Test that None name returns None."""
-        client = LeetCodeAPI()
-        result = client.get_problem_by_name(None)
+        api = LeetCodeAPI()
+        result = api.get_problem_by_name(None)
         
         assert result is None
     
@@ -180,21 +180,21 @@ class TestGetProblemByName:
         }
         mock_session.post.return_value = graphql_response
         
-        client = LeetCodeAPI()
-        problem = client.get_problem_by_name("two sum")
+        api = LeetCodeAPI()
+        problem = api.get_problem_by_name("two sum")
         
         assert problem is not None
         assert problem.title == 'Two Sum'
     
     def test_get_problem_by_name_converts_to_slug(self):
         """Test that name is converted to slug format."""
-        client = LeetCodeAPI()
+        api = LeetCodeAPI()
         
         # Mock _fetch_problem to check what slug is passed
-        with patch.object(client, '_fetch_problem') as mock_fetch:
+        with patch.object(api, '_fetch_problem') as mock_fetch:
             mock_fetch.return_value = None
             
-            client.get_problem_by_name("Two Sum")
+            api.get_problem_by_name("Two Sum")
             
             # Should convert to lowercase with hyphens
             mock_fetch.assert_called_once_with('two-sum')
@@ -241,8 +241,8 @@ class TestFetchProblem:
         }
         mock_session.post.return_value = graphql_response
         
-        client = LeetCodeAPI()
-        problem = client._fetch_problem('two-sum')
+        api = LeetCodeAPI()
+        problem = api._fetch_problem('two-sum')
         
         assert isinstance(problem, Problem)
         assert problem.id == 1
@@ -259,8 +259,8 @@ class TestFetchProblem:
         graphql_response.json.return_value = {'data': {}}
         mock_session.post.return_value = graphql_response
         
-        client = LeetCodeAPI()
-        problem = client._fetch_problem('nonexistent')
+        api = LeetCodeAPI()
+        problem = api._fetch_problem('nonexistent')
         
         assert problem is None
 
@@ -282,8 +282,8 @@ class TestFetchRawData:
         }
         mock_session.post.return_value = response
         
-        client = LeetCodeAPI()
-        result = client._fetch_raw_data('test-slug')
+        api = LeetCodeAPI()
+        result = api._fetch_raw_data('test-slug')
         
         # Should call POST with GraphQL query
         mock_session.post.assert_called_once()
@@ -314,8 +314,8 @@ class TestFetchRawData:
         }
         mock_session.post.return_value = response
         
-        client = LeetCodeAPI()
-        result = client._fetch_raw_data('test')
+        api = LeetCodeAPI()
+        result = api._fetch_raw_data('test')
         
         assert result == expected_data
     
@@ -329,8 +329,8 @@ class TestFetchRawData:
         response.json.return_value = {'error': 'not found'}
         mock_session.post.return_value = response
         
-        client = LeetCodeAPI()
-        result = client._fetch_raw_data('invalid')
+        api = LeetCodeAPI()
+        result = api._fetch_raw_data('invalid')
         
         assert result is None
 
@@ -353,8 +353,8 @@ class TestGetTitleSlugById:
         }
         mock_session.get.return_value = response
         
-        client = LeetCodeAPI()
-        slug = client._get_title_slug_by_id(1)
+        api = LeetCodeAPI()
+        slug = api._get_title_slug_by_id(1)
         
         assert slug == 'two-sum'
     
@@ -372,8 +372,8 @@ class TestGetTitleSlugById:
         }
         mock_session.get.return_value = response
         
-        client = LeetCodeAPI()
-        slug = client._get_title_slug_by_id(999)
+        api = LeetCodeAPI()
+        slug = api._get_title_slug_by_id(999)
         
         assert slug is None
     
@@ -387,13 +387,13 @@ class TestGetTitleSlugById:
         response.json.return_value = {}
         mock_session.get.return_value = response
         
-        client = LeetCodeAPI()
-        slug = client._get_title_slug_by_id(1)
+        api = LeetCodeAPI()
+        slug = api._get_title_slug_by_id(1)
         
         assert slug is None
 
 
-class TestRequestIntegration:
+class TestLeetCodeAPIIntegration:
     """Integration tests for LeetCodeAPI."""
     
     @patch('bytedojo.core.leetcode_api.requests.Session')
@@ -429,8 +429,8 @@ class TestRequestIntegration:
         mock_session.get.return_value = list_response
         mock_session.post.return_value = graphql_response
         
-        client = LeetCodeAPI()
-        problem = client.get_problem_by_id(42)
+        api = LeetCodeAPI()
+        problem = api.get_problem_by_id(42)
         
         assert problem.id == 42
         assert problem.title == 'Test Problem'
@@ -438,7 +438,7 @@ class TestRequestIntegration:
     
     @patch('bytedojo.core.leetcode_api.requests.Session')
     def test_multiple_fetches_same_client(self, mock_session_class):
-        """Test multiple fetches with same client instance."""
+        """Test multiple fetches with same api instance."""
         mock_session = Mock()
         mock_session_class.return_value = mock_session
         
@@ -474,10 +474,10 @@ class TestRequestIntegration:
         mock_session.get.side_effect = get_side_effect
         mock_session.post.side_effect = post_side_effect
         
-        client = LeetCodeAPI()
+        api = LeetCodeAPI()
         
-        problem1 = client.get_problem_by_id(1)
-        problem2 = client.get_problem_by_id(2)
+        problem1 = api.get_problem_by_id(1)
+        problem2 = api.get_problem_by_id(2)
         
         assert problem1.id == 1
         assert problem2.id == 2

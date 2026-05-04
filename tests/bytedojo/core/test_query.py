@@ -53,8 +53,8 @@ class TestQueryProblems:
         mock_session.get.return_value = problemset_response
         mock_session.post.return_value = tags_response
 
-        client = LeetCodeAPI()
-        results = client.query_problems()
+        api = LeetCodeAPI()
+        results = api.query_problems()
 
         assert isinstance(results, list)
         assert len(results) == 1
@@ -96,8 +96,8 @@ class TestQueryProblems:
         mock_session.get.return_value = problemset_response
         mock_session.post.return_value = tags_response
 
-        client = LeetCodeAPI()
-        results = client.query_problems()
+        api = LeetCodeAPI()
+        results = api.query_problems()
 
         assert len(results) == 3
         assert results[0].id == 1
@@ -138,20 +138,20 @@ class TestQueryProblems:
         mock_session.get.return_value = problemset_response
         mock_session.post.return_value = tags_response
 
-        client = LeetCodeAPI()
+        api = LeetCodeAPI()
 
         # Filter for easy (level 1)
-        easy_results = client.query_problems(difficulty=1)
+        easy_results = api.query_problems(difficulty=1)
         assert len(easy_results) == 1
         assert easy_results[0].difficulty == 'Easy'
 
         # Filter for medium (level 2)
-        medium_results = client.query_problems(difficulty=2)
+        medium_results = api.query_problems(difficulty=2)
         assert len(medium_results) == 1
         assert medium_results[0].difficulty == 'Medium'
 
         # Filter for hard (level 3)
-        hard_results = client.query_problems(difficulty=3)
+        hard_results = api.query_problems(difficulty=3)
         assert len(hard_results) == 1
         assert hard_results[0].difficulty == 'Hard'
 
@@ -192,15 +192,15 @@ class TestQueryProblems:
         mock_session.get.return_value = problemset_response
         mock_session.post.return_value = tags_response
 
-        client = LeetCodeAPI()
+        api = LeetCodeAPI()
 
         # Filter by array tag
-        array_results = client.query_problems(tags=['array'])
+        array_results = api.query_problems(tags=['array'])
         assert len(array_results) == 1
         assert array_results[0].title == 'Array Problem'
 
         # Filter by tree tag
-        tree_results = client.query_problems(tags=['tree'])
+        tree_results = api.query_problems(tags=['tree'])
         assert len(tree_results) == 1
         assert tree_results[0].title == 'Tree Problem'
 
@@ -229,8 +229,8 @@ class TestQueryProblems:
         mock_session.get.return_value = problemset_response
         mock_session.post.return_value = tags_response
 
-        client = LeetCodeAPI()
-        results = client.query_problems()
+        api = LeetCodeAPI()
+        results = api.query_problems()
 
         # Should return all 100 problems
         assert len(results) == 100
@@ -250,8 +250,8 @@ class TestQueryProblems:
         mock_session.get.return_value = problemset_response
         mock_session.post.return_value = tags_response
 
-        client = LeetCodeAPI()
-        results = client.query_problems()
+        api = LeetCodeAPI()
+        results = api.query_problems()
 
         assert results == []
 
@@ -296,8 +296,8 @@ class TestQueryProblems:
         mock_session.get.return_value = problemset_response
         mock_session.post.return_value = tags_response
 
-        client = LeetCodeAPI()
-        results = client.query_problems()
+        api = LeetCodeAPI()
+        results = api.query_problems()
 
         assert results[0].paid_only is False
         assert results[1].paid_only is True
@@ -317,8 +317,8 @@ class TestFetchAllProblems:
         response.json.return_value = {'stat_status_pairs': expected_problems}
         mock_session.get.return_value = response
 
-        client = LeetCodeAPI()
-        result = client._fetch_all_problems()
+        api = LeetCodeAPI()
+        result = api._fetch_all_problems()
 
         assert result == expected_problems
 
@@ -332,8 +332,8 @@ class TestFetchAllProblems:
         response.json.return_value = {}
         mock_session.get.return_value = response
 
-        client = LeetCodeAPI()
-        result = client._fetch_all_problems()
+        api = LeetCodeAPI()
+        result = api._fetch_all_problems()
 
         assert result == []
 
@@ -365,8 +365,8 @@ class TestFetchProblemTags:
         }
         mock_session.post.return_value = response
 
-        client = LeetCodeAPI()
-        result = client._fetch_problem_tags()
+        api = LeetCodeAPI()
+        result = api._fetch_problem_tags()
 
         assert 1 in result
         assert 'Array' in result[1]
@@ -380,8 +380,8 @@ class TestFetchProblemTags:
 
         mock_session.post.side_effect = Exception("API Error")
 
-        client = LeetCodeAPI()
-        result = client._fetch_problem_tags()
+        api = LeetCodeAPI()
+        result = api._fetch_problem_tags()
 
         assert result == {}
 
@@ -408,8 +408,8 @@ class TestGetAvailableTags:
         }
         mock_session.post.return_value = response
 
-        client = LeetCodeAPI()
-        result = client.get_available_tags()
+        api = LeetCodeAPI()
+        result = api.get_available_tags()
 
         assert result == ['Array', 'Tree']
 
@@ -421,8 +421,8 @@ class TestGetAvailableTags:
 
         mock_session.post.side_effect = Exception("Error")
 
-        client = LeetCodeAPI()
-        result = client.get_available_tags()
+        api = LeetCodeAPI()
+        result = api.get_available_tags()
 
         assert result == []
 

@@ -30,7 +30,7 @@ class LeetCodeAPI:
     """
     
     def __init__(self) -> None:
-        """Initialize the client with a requests session."""
+        """Initialize the API with a requests session."""
         self.session = requests.Session()
         self.session.headers.update({
             'Content-Type': 'application/json',

@@ -45,7 +45,7 @@ class ProblemPicker:
             repo: Optional Repository. If None, creates one.
         """
         self.repo = repo or Repository(Path.cwd())
-        self.client = LeetCodeAPI()
+        self.api = LeetCodeAPI()
 
     def pick(
         self,
@@ -70,7 +70,7 @@ class ProblemPicker:
             difficulty_int = DIFFICULTY_MAP.get(difficulty.lower())
 
         # Query all matching problems from LeetCode
-        all_problems = self.client.query_problems(
+        all_problems = self.api.query_problems(
             difficulty=difficulty_int,
             tags=tags
         )
@@ -153,7 +153,7 @@ class ProblemPicker:
             difficulty_int = DIFFICULTY_MAP.get(difficulty.lower())
 
         # Query all matching problems
-        all_problems = self.client.query_problems(
+        all_problems = self.api.query_problems(
             difficulty=difficulty_int,
             tags=tags
         )

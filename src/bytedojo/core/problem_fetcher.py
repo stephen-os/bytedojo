@@ -56,7 +56,7 @@ class ProblemFetcher:
             repo: The Repository instance
         """
         self.repo = repo
-        self.client = LeetCodeAPI()
+        self.api = LeetCodeAPI()
         self.writer = FileWriter()
 
     def fetch(
@@ -152,7 +152,7 @@ class ProblemFetcher:
             FetchedProblem with details
         """
         # Fetch problem from LeetCode
-        problem = self.client.get_problem_by_id(problem_id)
+        problem = self.api.get_problem_by_id(problem_id)
         if not problem:
             return FetchedProblem(
                 problem_id=problem_id,

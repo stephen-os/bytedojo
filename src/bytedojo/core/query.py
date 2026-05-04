@@ -50,7 +50,7 @@ class QueryService:
             repo: Optional Repository. If None, creates one.
         """
         self.repo = repo or Repository(Path.cwd())
-        self.client = LeetCodeAPI()
+        self.api = LeetCodeAPI()
 
     def query(
         self,
@@ -75,7 +75,7 @@ class QueryService:
             difficulty_int = DIFFICULTY_MAP.get(difficulty.lower())
 
         # Query from LeetCode
-        problems = self.client.query_problems(
+        problems = self.api.query_problems(
             difficulty=difficulty_int,
             tags=tags
         )
@@ -93,7 +93,7 @@ class QueryService:
 
     def get_available_tags(self) -> List[str]:
         """Get list of available algorithm tags."""
-        return self.client.get_available_tags()
+        return self.api.get_available_tags()
 
     def _get_status_map(self, problems: List[ProblemSummary]) -> dict:
         """
