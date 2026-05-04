@@ -13,7 +13,7 @@ from textual import work
 
 from bytedojo.core.repository import Repository
 from bytedojo.core.database import DatabaseManager
-from bytedojo.core.fetching import ProblemFetcher
+from bytedojo.core.problem_fetcher import ProblemFetcher
 from bytedojo.core.execution import ProblemExecutor
 from bytedojo.core.grading import GradingService
 from bytedojo.core.review_service import ReviewService

@@ -11,7 +11,7 @@ from textual import work
 
 from bytedojo.core.repository import Repository
 from bytedojo.core.database import DatabaseManager
-from bytedojo.core.fetching import ProblemFetcher, FetchedProblem
+from bytedojo.core.problem_fetcher import ProblemFetcher, FetchedProblem
 
 
 class FetchModal(ModalScreen):

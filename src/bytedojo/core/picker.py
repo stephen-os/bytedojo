@@ -11,7 +11,7 @@ from typing import List, Optional, Set
 
 from bytedojo.core.repository import Repository
 from bytedojo.core.database import DatabaseManager
-from bytedojo.core.client import LeetCodeClient
+from bytedojo.core.leetcode_api import LeetCodeAPI
 from bytedojo.core.models import ProblemSummary
 
 
@@ -45,7 +45,7 @@ class ProblemPicker:
             repo: Optional Repository. If None, creates one.
         """
         self.repo = repo or Repository(Path.cwd())
-        self.client = LeetCodeClient()
+        self.client = LeetCodeAPI()
 
     def pick(
         self,

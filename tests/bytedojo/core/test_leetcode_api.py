@@ -1,29 +1,28 @@
 """
-Tests for LeetCodeClient.
+Tests for LeetCodeAPI.
 """
 
 import pytest
 import requests
 from unittest.mock import Mock, patch, MagicMock
-import click
 
-from bytedojo.core.client import LeetCodeClient
+from bytedojo.core.leetcode_api import LeetCodeAPI
 from bytedojo.core.models import Problem, CodeSnippet
 
 
-class TestLeetCodeClientInit:
-    """Test LeetCodeClient initialization."""
+class TestLeetCodeAPIInit:
+    """Test LeetCodeAPI initialization."""
     
     def test_init_creates_session(self):
         """Test that initialization creates a requests session."""
-        client = LeetCodeClient()
+        client = LeetCodeAPI()
         
         assert hasattr(client, 'session')
         assert isinstance(client.session, requests.Session)
     
     def test_init_sets_headers(self):
         """Test that initialization sets correct headers."""
-        client = LeetCodeClient()
+        client = LeetCodeAPI()
         
         assert 'Content-Type' in client.session.headers
         assert client.session.headers['Content-Type'] == 'application/json'
@@ -31,19 +30,19 @@ class TestLeetCodeClientInit:
     
     def test_init_has_logger(self):
         """Test that client has a logger."""
-        client = LeetCodeClient()
+        client = LeetCodeAPI()
         
         assert hasattr(client, 'logger')
         assert client.logger is not None
     
     def test_class_has_constants(self):
         """Test that class has URL constants."""
-        assert hasattr(LeetCodeClient, 'GRAPHQL_URL')
-        assert hasattr(LeetCodeClient, 'PROBLEMSET_URL')
-        assert hasattr(LeetCodeClient, 'QUERY')
-        
-        assert 'leetcode.com' in LeetCodeClient.GRAPHQL_URL
-        assert 'leetcode.com' in LeetCodeClient.PROBLEMSET_URL
+        assert hasattr(LeetCodeAPI, 'GRAPHQL_URL')
+        assert hasattr(LeetCodeAPI, 'PROBLEMSET_URL')
+        assert hasattr(LeetCodeAPI, 'QUERY')
+
+        assert 'leetcode.com' in LeetCodeAPI.GRAPHQL_URL
+        assert 'leetcode.com' in LeetCodeAPI.PROBLEMSET_URL
 
 
 class TestGetProblemById:
@@ -51,19 +50,19 @@ class TestGetProblemById:
     
     def test_get_problem_by_id_returns_none_for_zero(self):
         """Test that problem_id=0 returns None."""
-        client = LeetCodeClient()
+        client = LeetCodeAPI()
         result = client.get_problem_by_id(0)
         
         assert result is None
     
     def test_get_problem_by_id_returns_none_for_none(self):
         """Test that problem_id=None returns None."""
-        client = LeetCodeClient()
+        client = LeetCodeAPI()
         result = client.get_problem_by_id(None)
         
         assert result is None
     
-    @patch('bytedojo.core.client.requests.Session')
+    @patch('bytedojo.core.leetcode_api.requests.Session')
     def test_get_problem_by_id_success(self, mock_session_class):
         """Test successful problem fetch by ID."""
         # Mock session
@@ -100,7 +99,7 @@ class TestGetProblemById:
         mock_session.get.return_value = list_response
         mock_session.post.return_value = graphql_response
         
-        client = LeetCodeClient()
+        client = LeetCodeAPI()
         problem = client.get_problem_by_id(1)
         
         assert problem is not None
@@ -108,7 +107,7 @@ class TestGetProblemById:
         assert problem.id == 1
         assert problem.title == 'Two Sum'
     
-    @patch('bytedojo.core.client.requests.Session')
+    @patch('bytedojo.core.leetcode_api.requests.Session')
     def test_get_problem_by_id_not_found(self, mock_session_class):
         """Test problem not found by ID."""
         mock_session = Mock()
@@ -121,26 +120,24 @@ class TestGetProblemById:
         }
         mock_session.get.return_value = list_response
         
-        client = LeetCodeClient()
+        client = LeetCodeAPI()
         problem = client.get_problem_by_id(9999)
         
         assert problem is None
     
-    @patch('bytedojo.core.client.requests.Session')
+    @patch('bytedojo.core.leetcode_api.requests.Session')
     def test_get_problem_by_id_network_error(self, mock_session_class):
-        """Test network error handling."""
+        """Test network error returns None."""
         mock_session = Mock()
         mock_session_class.return_value = mock_session
-        
+
         # Mock network error
         mock_session.get.side_effect = requests.RequestException("Network error")
-        
-        client = LeetCodeClient()
-        
-        with pytest.raises(click.ClickException) as exc_info:
-            client.get_problem_by_id(1)
-        
-        assert "Failed to fetch problem 1" in str(exc_info.value)
+
+        api = LeetCodeAPI()
+        result = api.get_problem_by_id(1)
+
+        assert result is None
 
 
 class TestGetProblemByName:
@@ -148,19 +145,19 @@ class TestGetProblemByName:
     
     def test_get_problem_by_name_returns_none_for_empty(self):
         """Test that empty name returns None."""
-        client = LeetCodeClient()
+        client = LeetCodeAPI()
         result = client.get_problem_by_name("")
         
         assert result is None
     
     def test_get_problem_by_name_returns_none_for_none(self):
         """Test that None name returns None."""
-        client = LeetCodeClient()
+        client = LeetCodeAPI()
         result = client.get_problem_by_name(None)
         
         assert result is None
     
-    @patch('bytedojo.core.client.requests.Session')
+    @patch('bytedojo.core.leetcode_api.requests.Session')
     def test_get_problem_by_name_success(self, mock_session_class):
         """Test successful problem fetch by name."""
         mock_session = Mock()
@@ -183,7 +180,7 @@ class TestGetProblemByName:
         }
         mock_session.post.return_value = graphql_response
         
-        client = LeetCodeClient()
+        client = LeetCodeAPI()
         problem = client.get_problem_by_name("two sum")
         
         assert problem is not None
@@ -191,7 +188,7 @@ class TestGetProblemByName:
     
     def test_get_problem_by_name_converts_to_slug(self):
         """Test that name is converted to slug format."""
-        client = LeetCodeClient()
+        client = LeetCodeAPI()
         
         # Mock _fetch_problem to check what slug is passed
         with patch.object(client, '_fetch_problem') as mock_fetch:
@@ -202,24 +199,24 @@ class TestGetProblemByName:
             # Should convert to lowercase with hyphens
             mock_fetch.assert_called_once_with('two-sum')
     
-    @patch('bytedojo.core.client.requests.Session')
+    @patch('bytedojo.core.leetcode_api.requests.Session')
     def test_get_problem_by_name_network_error(self, mock_session_class):
-        """Test network error handling for name lookup."""
+        """Test network error returns None."""
         mock_session = Mock()
         mock_session_class.return_value = mock_session
-        
+
         mock_session.post.side_effect = requests.RequestException("Network error")
-        
-        client = LeetCodeClient()
-        
-        with pytest.raises(click.ClickException):
-            client.get_problem_by_name("two sum")
+
+        api = LeetCodeAPI()
+        result = api.get_problem_by_name("two sum")
+
+        assert result is None
 
 
 class TestFetchProblem:
     """Test _fetch_problem internal method."""
     
-    @patch('bytedojo.core.client.requests.Session')
+    @patch('bytedojo.core.leetcode_api.requests.Session')
     def test_fetch_problem_creates_problem_object(self, mock_session_class):
         """Test that _fetch_problem creates a Problem object."""
         mock_session = Mock()
@@ -244,7 +241,7 @@ class TestFetchProblem:
         }
         mock_session.post.return_value = graphql_response
         
-        client = LeetCodeClient()
+        client = LeetCodeAPI()
         problem = client._fetch_problem('two-sum')
         
         assert isinstance(problem, Problem)
@@ -252,7 +249,7 @@ class TestFetchProblem:
         assert problem.title == 'Two Sum'
         assert len(problem.code_snippets) == 2
     
-    @patch('bytedojo.core.client.requests.Session')
+    @patch('bytedojo.core.leetcode_api.requests.Session')
     def test_fetch_problem_returns_none_for_no_data(self, mock_session_class):
         """Test that _fetch_problem returns None when no data."""
         mock_session = Mock()
@@ -262,7 +259,7 @@ class TestFetchProblem:
         graphql_response.json.return_value = {'data': {}}
         mock_session.post.return_value = graphql_response
         
-        client = LeetCodeClient()
+        client = LeetCodeAPI()
         problem = client._fetch_problem('nonexistent')
         
         assert problem is None
@@ -271,7 +268,7 @@ class TestFetchProblem:
 class TestFetchRawData:
     """Test _fetch_raw_data internal method."""
     
-    @patch('bytedojo.core.client.requests.Session')
+    @patch('bytedojo.core.leetcode_api.requests.Session')
     def test_fetch_raw_data_makes_graphql_request(self, mock_session_class):
         """Test that _fetch_raw_data makes GraphQL request."""
         mock_session = Mock()
@@ -285,19 +282,19 @@ class TestFetchRawData:
         }
         mock_session.post.return_value = response
         
-        client = LeetCodeClient()
+        client = LeetCodeAPI()
         result = client._fetch_raw_data('test-slug')
         
         # Should call POST with GraphQL query
         mock_session.post.assert_called_once()
         call_args = mock_session.post.call_args
         
-        assert LeetCodeClient.GRAPHQL_URL in call_args[0]
+        assert LeetCodeAPI.GRAPHQL_URL in call_args[0]
         assert 'json' in call_args[1]
         assert 'query' in call_args[1]['json']
         assert 'variables' in call_args[1]['json']
     
-    @patch('bytedojo.core.client.requests.Session')
+    @patch('bytedojo.core.leetcode_api.requests.Session')
     def test_fetch_raw_data_returns_question_data(self, mock_session_class):
         """Test that _fetch_raw_data returns question data."""
         mock_session = Mock()
@@ -317,12 +314,12 @@ class TestFetchRawData:
         }
         mock_session.post.return_value = response
         
-        client = LeetCodeClient()
+        client = LeetCodeAPI()
         result = client._fetch_raw_data('test')
         
         assert result == expected_data
     
-    @patch('bytedojo.core.client.requests.Session')
+    @patch('bytedojo.core.leetcode_api.requests.Session')
     def test_fetch_raw_data_returns_none_for_invalid(self, mock_session_class):
         """Test that _fetch_raw_data returns None for invalid response."""
         mock_session = Mock()
@@ -332,7 +329,7 @@ class TestFetchRawData:
         response.json.return_value = {'error': 'not found'}
         mock_session.post.return_value = response
         
-        client = LeetCodeClient()
+        client = LeetCodeAPI()
         result = client._fetch_raw_data('invalid')
         
         assert result is None
@@ -341,7 +338,7 @@ class TestFetchRawData:
 class TestGetTitleSlugById:
     """Test _get_title_slug_by_id internal method."""
     
-    @patch('bytedojo.core.client.requests.Session')
+    @patch('bytedojo.core.leetcode_api.requests.Session')
     def test_get_title_slug_by_id_success(self, mock_session_class):
         """Test successful slug lookup."""
         mock_session = Mock()
@@ -356,12 +353,12 @@ class TestGetTitleSlugById:
         }
         mock_session.get.return_value = response
         
-        client = LeetCodeClient()
+        client = LeetCodeAPI()
         slug = client._get_title_slug_by_id(1)
         
         assert slug == 'two-sum'
     
-    @patch('bytedojo.core.client.requests.Session')
+    @patch('bytedojo.core.leetcode_api.requests.Session')
     def test_get_title_slug_by_id_not_found(self, mock_session_class):
         """Test slug lookup for non-existent ID."""
         mock_session = Mock()
@@ -375,12 +372,12 @@ class TestGetTitleSlugById:
         }
         mock_session.get.return_value = response
         
-        client = LeetCodeClient()
+        client = LeetCodeAPI()
         slug = client._get_title_slug_by_id(999)
         
         assert slug is None
     
-    @patch('bytedojo.core.client.requests.Session')
+    @patch('bytedojo.core.leetcode_api.requests.Session')
     def test_get_title_slug_missing_stat_status_pairs(self, mock_session_class):
         """Test handling of malformed API response."""
         mock_session = Mock()
@@ -390,16 +387,16 @@ class TestGetTitleSlugById:
         response.json.return_value = {}
         mock_session.get.return_value = response
         
-        client = LeetCodeClient()
+        client = LeetCodeAPI()
         slug = client._get_title_slug_by_id(1)
         
         assert slug is None
 
 
-class TestLeetCodeClientIntegration:
-    """Integration tests for LeetCodeClient."""
+class TestRequestIntegration:
+    """Integration tests for LeetCodeAPI."""
     
-    @patch('bytedojo.core.client.requests.Session')
+    @patch('bytedojo.core.leetcode_api.requests.Session')
     def test_full_fetch_workflow_by_id(self, mock_session_class):
         """Test complete workflow: ID -> slug -> problem."""
         mock_session = Mock()
@@ -432,14 +429,14 @@ class TestLeetCodeClientIntegration:
         mock_session.get.return_value = list_response
         mock_session.post.return_value = graphql_response
         
-        client = LeetCodeClient()
+        client = LeetCodeAPI()
         problem = client.get_problem_by_id(42)
         
         assert problem.id == 42
         assert problem.title == 'Test Problem'
         assert problem.difficulty == 'Medium'
     
-    @patch('bytedojo.core.client.requests.Session')
+    @patch('bytedojo.core.leetcode_api.requests.Session')
     def test_multiple_fetches_same_client(self, mock_session_class):
         """Test multiple fetches with same client instance."""
         mock_session = Mock()
@@ -477,7 +474,7 @@ class TestLeetCodeClientIntegration:
         mock_session.get.side_effect = get_side_effect
         mock_session.post.side_effect = post_side_effect
         
-        client = LeetCodeClient()
+        client = LeetCodeAPI()
         
         problem1 = client.get_problem_by_id(1)
         problem2 = client.get_problem_by_id(2)

@@ -10,7 +10,7 @@ from typing import List, Optional, Callable
 
 from bytedojo.core.repository import Repository
 from bytedojo.core.database import DatabaseManager
-from bytedojo.core.client import LeetCodeClient
+from bytedojo.core.leetcode_api import LeetCodeAPI
 from bytedojo.core.formatters import PythonFormatter, JavaFormatter, CppFormatter
 from bytedojo.core.file_writer import FileWriter
 from bytedojo.core.settings import SettingsManager
@@ -56,7 +56,7 @@ class ProblemFetcher:
             repo: The Repository instance
         """
         self.repo = repo
-        self.client = LeetCodeClient()
+        self.client = LeetCodeAPI()
         self.writer = FileWriter()
 
     def fetch(

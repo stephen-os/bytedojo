@@ -1,14 +1,13 @@
-"""LeetCode API client."""
+"""LeetCode API wrapper."""
 
 import requests
-import click
 from typing import Optional, List
 from bytedojo.core.logger import get_logger
 from bytedojo.core.models import Problem, CodeSnippet, ProblemSummary
 
 
-class LeetCodeClient:
-    """LeetCode API client - handles only API interactions."""
+class LeetCodeAPI:
+    """LeetCode API - fetches problems and metadata."""
     
     GRAPHQL_URL: str = "https://leetcode.com/graphql"
     PROBLEMSET_URL: str = "https://leetcode.com/api/problems/all/"
@@ -66,10 +65,10 @@ class LeetCodeClient:
             
         except requests.RequestException as e:
             self.logger.error(f"Network error fetching problem {problem_id}: {e}")
-            raise click.ClickException(f"Failed to fetch problem {problem_id}: {e}")
+            return None
         except Exception as e:
             self.logger.error(f"Unexpected error fetching problem {problem_id}: {e}")
-            raise click.ClickException(f"Unexpected error: {e}")
+            return None
     
     def get_problem_by_name(self, problem_name: str) -> Optional[Problem]:
         """
@@ -95,10 +94,10 @@ class LeetCodeClient:
             
         except requests.RequestException as e:
             self.logger.error(f"Network error fetching problem '{problem_name}': {e}")
-            raise click.ClickException(f"Failed to fetch problem '{problem_name}': {e}")
+            return None
         except Exception as e:
             self.logger.error(f"Unexpected error fetching problem '{problem_name}': {e}")
-            raise click.ClickException(f"Unexpected error: {e}")
+            return None
     
     def _fetch_problem(self, title_slug: str) -> Optional[Problem]:
         """
@@ -254,10 +253,10 @@ class LeetCodeClient:
 
         except requests.RequestException as e:
             self.logger.error(f"Network error querying problems: {e}")
-            raise click.ClickException(f"Failed to query problems: {e}")
+            return []
         except Exception as e:
             self.logger.error(f"Unexpected error querying problems: {e}")
-            raise click.ClickException(f"Unexpected error: {e}")
+            return []
 
     def _fetch_all_problems(self) -> Optional[List[dict]]:
         """

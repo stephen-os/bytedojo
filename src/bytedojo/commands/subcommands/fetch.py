@@ -7,7 +7,7 @@ import click
 from pathlib import Path
 
 from bytedojo.core.logger import get_logger
-from bytedojo.core.fetching import ProblemFetcher, FetchedProblem
+from bytedojo.core.problem_fetcher import ProblemFetcher, FetchedProblem
 from bytedojo.commands.subcommands.utils import get_initialized_repo, get_default_language
 
 
