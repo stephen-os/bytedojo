@@ -1,390 +1,511 @@
 """
-Tests for LeetCode models (Problem and CodeSnippet).
+Tests for models (Language, Difficulty, CodeSnippet, Problem, etc).
 """
 
 import pytest
-from bytedojo.core.models import CodeSnippet, Problem
+from bytedojo.core.models import (
+    Language, Difficulty, CodeSnippet, Problem, ProblemSummary, TestExample
+)
+
+
+class TestLanguageEnum:
+    """Test Language enum."""
+
+    def test_language_values(self):
+        """Test that language values are lowercase strings."""
+        assert Language.PYTHON3.value == "python3"
+        assert Language.JAVA.value == "java"
+        assert Language.CPP.value == "cpp"
+
+    def test_from_string_valid(self):
+        """Test parsing valid language strings."""
+        assert Language.from_string("python3") == Language.PYTHON3
+        assert Language.from_string("java") == Language.JAVA
+        assert Language.from_string("cpp") == Language.CPP
+
+    def test_from_string_case_insensitive(self):
+        """Test that from_string handles different cases."""
+        assert Language.from_string("PYTHON3") == Language.PYTHON3
+        assert Language.from_string("Python3") == Language.PYTHON3
+        assert Language.from_string("JAVA") == Language.JAVA
+
+    def test_from_string_unknown(self):
+        """Test that unknown languages return None."""
+        assert Language.from_string("unknown") is None
+        assert Language.from_string("") is None
+        assert Language.from_string("fortran") is None
+
+    def test_extension_python(self):
+        """Test Python file extensions."""
+        assert Language.PYTHON.extension == ".py"
+        assert Language.PYTHON3.extension == ".py"
+
+    def test_extension_java(self):
+        """Test Java file extension."""
+        assert Language.JAVA.extension == ".java"
+
+    def test_extension_cpp(self):
+        """Test C++ file extension."""
+        assert Language.CPP.extension == ".cpp"
+
+    def test_extension_fallback(self):
+        """Test that unknown extensions fall back to .txt."""
+        assert Language.BASH.extension == ".txt"
+        assert Language.MYSQL.extension == ".txt"
+
+
+class TestDifficultyEnum:
+    """Test Difficulty enum."""
+
+    def test_difficulty_values(self):
+        """Test difficulty values."""
+        assert Difficulty.EASY.value == "Easy"
+        assert Difficulty.MEDIUM.value == "Medium"
+        assert Difficulty.HARD.value == "Hard"
+        assert Difficulty.NONE.value == "None"
+
+    def test_from_string_valid(self):
+        """Test parsing valid difficulty strings."""
+        assert Difficulty.from_string("Easy") == Difficulty.EASY
+        assert Difficulty.from_string("Medium") == Difficulty.MEDIUM
+        assert Difficulty.from_string("Hard") == Difficulty.HARD
+
+    def test_from_string_case_insensitive(self):
+        """Test that from_string handles case variations."""
+        assert Difficulty.from_string("easy") == Difficulty.EASY
+        assert Difficulty.from_string("MEDIUM") == Difficulty.MEDIUM
+        assert Difficulty.from_string("hard") == Difficulty.HARD
+
+    def test_from_string_empty(self):
+        """Test that empty string returns NONE."""
+        assert Difficulty.from_string("") == Difficulty.NONE
+        assert Difficulty.from_string(None) == Difficulty.NONE
+
+    def test_from_string_unknown(self):
+        """Test that unknown difficulty returns NONE."""
+        assert Difficulty.from_string("Unknown") == Difficulty.NONE
+        assert Difficulty.from_string("invalid") == Difficulty.NONE
 
 
 class TestCodeSnippet:
     """Test CodeSnippet dataclass."""
-    
+
     def test_create_code_snippet(self):
         """Test creating a CodeSnippet."""
-        snippet = CodeSnippet(lang="Python3", code="print('hello')")
-        
-        assert snippet.lang == "Python3"
+        snippet = CodeSnippet(lang=Language.PYTHON3, code="print('hello')")
+
+        assert snippet.lang == Language.PYTHON3
         assert snippet.code == "print('hello')"
-    
-    def test_code_snippet_has_lang_attribute(self):
-        """Test that CodeSnippet has lang attribute."""
-        snippet = CodeSnippet(lang="Java", code="")
-        assert hasattr(snippet, 'lang')
-    
-    def test_code_snippet_has_code_attribute(self):
-        """Test that CodeSnippet has code attribute."""
-        snippet = CodeSnippet(lang="Python3", code="code here")
-        assert hasattr(snippet, 'code')
-    
+
     def test_code_snippet_with_empty_code(self):
         """Test CodeSnippet with empty code."""
-        snippet = CodeSnippet(lang="Python3", code="")
+        snippet = CodeSnippet(lang=Language.PYTHON3, code="")
         assert snippet.code == ""
-    
+
     def test_code_snippet_with_multiline_code(self):
         """Test CodeSnippet with multiline code."""
         code = "def hello():\n    print('world')"
-        snippet = CodeSnippet(lang="Python3", code=code)
+        snippet = CodeSnippet(lang=Language.PYTHON3, code=code)
         assert snippet.code == code
-    
+
     def test_code_snippet_equality(self):
         """Test that two identical CodeSnippets are equal."""
-        snippet1 = CodeSnippet(lang="Python3", code="test")
-        snippet2 = CodeSnippet(lang="Python3", code="test")
-        
+        snippet1 = CodeSnippet(lang=Language.PYTHON3, code="test")
+        snippet2 = CodeSnippet(lang=Language.PYTHON3, code="test")
+
         assert snippet1 == snippet2
-    
+
     def test_code_snippet_inequality(self):
         """Test that different CodeSnippets are not equal."""
-        snippet1 = CodeSnippet(lang="Python3", code="test1")
-        snippet2 = CodeSnippet(lang="Python3", code="test2")
-        
+        snippet1 = CodeSnippet(lang=Language.PYTHON3, code="test1")
+        snippet2 = CodeSnippet(lang=Language.PYTHON3, code="test2")
+
         assert snippet1 != snippet2
+
+
+class TestTestExample:
+    """Test TestExample dataclass."""
+
+    def test_create_test_example(self):
+        """Test creating a TestExample."""
+        example = TestExample(input="nums = [1,2]", output="[0,1]")
+
+        assert example.input == "nums = [1,2]"
+        assert example.output == "[0,1]"
+
+    def test_test_example_equality(self):
+        """Test that identical TestExamples are equal."""
+        ex1 = TestExample(input="x = 1", output="1")
+        ex2 = TestExample(input="x = 1", output="1")
+
+        assert ex1 == ex2
+
+
+class TestProblemSummary:
+    """Test ProblemSummary dataclass."""
+
+    def test_create_problem_summary(self):
+        """Test creating a ProblemSummary."""
+        summary = ProblemSummary(
+            id=1,
+            title="Two Sum",
+            title_slug="two-sum",
+            difficulty=Difficulty.EASY,
+            tags=["Array", "Hash Table"]
+        )
+
+        assert summary.id == 1
+        assert summary.title == "Two Sum"
+        assert summary.difficulty == Difficulty.EASY
+        assert "Array" in summary.tags
 
 
 class TestProblemInit:
     """Test Problem dataclass initialization."""
-    
+
     def test_create_problem(self):
         """Test creating a Problem."""
         problem = Problem(
             id=1,
             title="Two Sum",
             title_slug="two-sum",
-            difficulty="Easy",
+            difficulty=Difficulty.EASY,
             description="<p>Given an array...</p>",
-            test_cases="[2,7,11,15]\n9",
             code_snippets=[
-                CodeSnippet(lang="Python3", code="class Solution: pass")
-            ]
+                CodeSnippet(lang=Language.PYTHON3, code="class Solution: pass")
+            ],
+            test_examples=[]
         )
-        
+
         assert problem.id == 1
         assert problem.title == "Two Sum"
         assert problem.title_slug == "two-sum"
-        assert problem.difficulty == "Easy"
-    
+        assert problem.difficulty == Difficulty.EASY
+
     def test_problem_with_multiple_snippets(self):
         """Test Problem with multiple code snippets."""
         problem = Problem(
             id=1,
             title="Test",
             title_slug="test",
-            difficulty="Easy",
+            difficulty=Difficulty.EASY,
             description="desc",
-            test_cases="cases",
             code_snippets=[
-                CodeSnippet(lang="Python3", code="python code"),
-                CodeSnippet(lang="Java", code="java code"),
-                CodeSnippet(lang="JavaScript", code="js code")
-            ]
+                CodeSnippet(lang=Language.PYTHON3, code="python code"),
+                CodeSnippet(lang=Language.JAVA, code="java code"),
+                CodeSnippet(lang=Language.JAVASCRIPT, code="js code")
+            ],
+            test_examples=[]
         )
-        
+
         assert len(problem.code_snippets) == 3
-    
-    def test_problem_with_empty_snippets(self):
-        """Test Problem with empty code snippets list."""
+
+    def test_problem_with_test_examples(self):
+        """Test Problem with test examples."""
         problem = Problem(
             id=1,
             title="Test",
             title_slug="test",
-            difficulty="Easy",
+            difficulty=Difficulty.EASY,
             description="desc",
-            test_cases="",
-            code_snippets=[]
+            code_snippets=[],
+            test_examples=[
+                TestExample(input="nums = [1,2]", output="[0,1]"),
+                TestExample(input="nums = [3,4]", output="[1,0]")
+            ]
         )
-        
-        assert problem.code_snippets == []
+
+        assert len(problem.test_examples) == 2
+        assert problem.test_examples[0].input == "nums = [1,2]"
 
 
 class TestProblemGetSnippet:
     """Test Problem.get_snippet method."""
-    
+
     def test_get_snippet_python3(self):
         """Test getting Python3 snippet."""
         problem = Problem(
             id=1,
             title="Test",
             title_slug="test",
-            difficulty="Easy",
+            difficulty=Difficulty.EASY,
             description="desc",
-            test_cases="",
             code_snippets=[
-                CodeSnippet(lang="Python3", code="python code"),
-                CodeSnippet(lang="Java", code="java code")
-            ]
+                CodeSnippet(lang=Language.PYTHON3, code="python code"),
+                CodeSnippet(lang=Language.JAVA, code="java code")
+            ],
+            test_examples=[]
         )
-        
-        code = problem.get_snippet("Python3")
+
+        code = problem.get_snippet(Language.PYTHON3)
         assert code == "python code"
-    
-    def test_get_snippet_case_insensitive(self):
-        """Test that get_snippet is case-insensitive."""
-        problem = Problem(
-            id=1,
-            title="Test",
-            title_slug="test",
-            difficulty="Easy",
-            description="desc",
-            test_cases="",
-            code_snippets=[
-                CodeSnippet(lang="Python3", code="python code")
-            ]
-        )
-        
-        # Should work with different cases
-        assert problem.get_snippet("python3") == "python code"
-        assert problem.get_snippet("PYTHON3") == "python code"
-        assert problem.get_snippet("Python3") == "python code"
-    
+
     def test_get_snippet_not_found(self):
         """Test getting snippet for language that doesn't exist."""
         problem = Problem(
             id=1,
             title="Test",
             title_slug="test",
-            difficulty="Easy",
+            difficulty=Difficulty.EASY,
             description="desc",
-            test_cases="",
             code_snippets=[
-                CodeSnippet(lang="Python3", code="python code")
-            ]
+                CodeSnippet(lang=Language.PYTHON3, code="python code")
+            ],
+            test_examples=[]
         )
-        
-        code = problem.get_snippet("Ruby")
+
+        code = problem.get_snippet(Language.RUBY)
         assert code is None
-    
+
     def test_get_snippet_from_multiple(self):
         """Test getting specific snippet from multiple options."""
         problem = Problem(
             id=1,
             title="Test",
             title_slug="test",
-            difficulty="Easy",
+            difficulty=Difficulty.EASY,
             description="desc",
-            test_cases="",
             code_snippets=[
-                CodeSnippet(lang="Python3", code="python code"),
-                CodeSnippet(lang="Java", code="java code"),
-                CodeSnippet(lang="JavaScript", code="js code")
-            ]
+                CodeSnippet(lang=Language.PYTHON3, code="python code"),
+                CodeSnippet(lang=Language.JAVA, code="java code"),
+                CodeSnippet(lang=Language.JAVASCRIPT, code="js code")
+            ],
+            test_examples=[]
         )
-        
-        assert problem.get_snippet("Java") == "java code"
-        assert problem.get_snippet("JavaScript") == "js code"
-        assert problem.get_snippet("Python3") == "python code"
-    
+
+        assert problem.get_snippet(Language.JAVA) == "java code"
+        assert problem.get_snippet(Language.JAVASCRIPT) == "js code"
+        assert problem.get_snippet(Language.PYTHON3) == "python code"
+
     def test_get_snippet_empty_list(self):
         """Test getting snippet when no snippets exist."""
         problem = Problem(
             id=1,
             title="Test",
             title_slug="test",
-            difficulty="Easy",
+            difficulty=Difficulty.EASY,
             description="desc",
-            test_cases="",
-            code_snippets=[]
+            code_snippets=[],
+            test_examples=[]
         )
-        
-        code = problem.get_snippet("Python3")
+
+        code = problem.get_snippet(Language.PYTHON3)
         assert code is None
 
 
-class TestProblemFilename:
-    """Test Problem.filename property."""
-    
-    def test_filename_property(self):
-        """Test that filename property generates correct filename."""
+class TestProblemFolderName:
+    """Test Problem.get_folder_name method."""
+
+    def test_folder_name(self):
+        """Test that folder name is generated correctly."""
         problem = Problem(
             id=1,
             title="Two Sum",
             title_slug="two-sum",
-            difficulty="Easy",
+            difficulty=Difficulty.EASY,
             description="desc",
-            test_cases="",
-            code_snippets=[]
+            code_snippets=[],
+            test_examples=[]
         )
-        
-        assert problem.filename == "0001-two-sum.py"
-    
-    def test_filename_with_large_id(self):
-        """Test filename with large problem ID."""
+
+        assert problem.get_folder_name() == "0001-two-sum"
+
+    def test_folder_name_large_id(self):
+        """Test folder name with large problem ID."""
         problem = Problem(
             id=2500,
             title="Test",
             title_slug="test-problem",
-            difficulty="Hard",
+            difficulty=Difficulty.HARD,
             description="desc",
-            test_cases="",
-            code_snippets=[]
+            code_snippets=[],
+            test_examples=[]
         )
-        
-        assert problem.filename == "2500-test-problem.py"
-    
-    def test_filename_pads_zeros(self):
-        """Test that filename pads with zeros."""
+
+        assert problem.get_folder_name() == "2500-test-problem"
+
+    def test_folder_name_pads_zeros(self):
+        """Test that folder name pads with zeros."""
         problem = Problem(
             id=5,
             title="Test",
             title_slug="test",
-            difficulty="Easy",
+            difficulty=Difficulty.EASY,
             description="desc",
-            test_cases="",
-            code_snippets=[]
+            code_snippets=[],
+            test_examples=[]
         )
-        
-        assert problem.filename == "0005-test.py"
-    
-    def test_filename_always_ends_with_py(self):
-        """Test that filename always ends with .py."""
+
+        assert problem.get_folder_name() == "0005-test"
+
+
+class TestProblemSolutionFilename:
+    """Test Problem.get_solution_filename method."""
+
+    def test_solution_filename_python(self):
+        """Test solution filename for Python."""
         problem = Problem(
             id=1,
             title="Test",
-            title_slug="any-slug",
-            difficulty="Easy",
+            title_slug="test",
+            difficulty=Difficulty.EASY,
             description="desc",
-            test_cases="",
-            code_snippets=[]
+            code_snippets=[],
+            test_examples=[]
         )
-        
-        assert problem.filename.endswith(".py")
+
+        assert problem.get_solution_filename(Language.PYTHON3) == "solution.py"
+
+    def test_solution_filename_java(self):
+        """Test solution filename for Java."""
+        problem = Problem(
+            id=1,
+            title="Test",
+            title_slug="test",
+            difficulty=Difficulty.EASY,
+            description="desc",
+            code_snippets=[],
+            test_examples=[]
+        )
+
+        assert problem.get_solution_filename(Language.JAVA) == "solution.java"
+
+    def test_solution_filename_cpp(self):
+        """Test solution filename for C++."""
+        problem = Problem(
+            id=1,
+            title="Test",
+            title_slug="test",
+            difficulty=Difficulty.EASY,
+            description="desc",
+            code_snippets=[],
+            test_examples=[]
+        )
+
+        assert problem.get_solution_filename(Language.CPP) == "solution.cpp"
+
+    def test_solution_filename_none(self):
+        """Test solution filename returns None for None input."""
+        problem = Problem(
+            id=1,
+            title="Test",
+            title_slug="test",
+            difficulty=Difficulty.EASY,
+            description="desc",
+            code_snippets=[],
+            test_examples=[]
+        )
+
+        assert problem.get_solution_filename(None) is None
+
+    def test_solution_filename_default(self):
+        """Test solution filename defaults to Python3."""
+        problem = Problem(
+            id=1,
+            title="Test",
+            title_slug="test",
+            difficulty=Difficulty.EASY,
+            description="desc",
+            code_snippets=[],
+            test_examples=[]
+        )
+
+        assert problem.get_solution_filename() == "solution.py"
 
 
 class TestProblemDifficulty:
     """Test Problem difficulty levels."""
-    
+
     def test_easy_difficulty(self):
         """Test problem with Easy difficulty."""
         problem = Problem(
             id=1,
             title="Test",
             title_slug="test",
-            difficulty="Easy",
+            difficulty=Difficulty.EASY,
             description="desc",
-            test_cases="",
-            code_snippets=[]
+            code_snippets=[],
+            test_examples=[]
         )
-        
-        assert problem.difficulty == "Easy"
-    
+
+        assert problem.difficulty == Difficulty.EASY
+
     def test_medium_difficulty(self):
         """Test problem with Medium difficulty."""
         problem = Problem(
             id=1,
             title="Test",
             title_slug="test",
-            difficulty="Medium",
+            difficulty=Difficulty.MEDIUM,
             description="desc",
-            test_cases="",
-            code_snippets=[]
+            code_snippets=[],
+            test_examples=[]
         )
-        
-        assert problem.difficulty == "Medium"
-    
+
+        assert problem.difficulty == Difficulty.MEDIUM
+
     def test_hard_difficulty(self):
         """Test problem with Hard difficulty."""
         problem = Problem(
             id=1,
             title="Test",
             title_slug="test",
-            difficulty="Hard",
+            difficulty=Difficulty.HARD,
             description="desc",
-            test_cases="",
-            code_snippets=[]
+            code_snippets=[],
+            test_examples=[]
         )
-        
-        assert problem.difficulty == "Hard"
+
+        assert problem.difficulty == Difficulty.HARD
 
 
 class TestProblemEquality:
     """Test Problem equality."""
-    
+
     def test_identical_problems_are_equal(self):
         """Test that identical problems are equal."""
         problem1 = Problem(
             id=1,
             title="Test",
             title_slug="test",
-            difficulty="Easy",
+            difficulty=Difficulty.EASY,
             description="desc",
-            test_cases="cases",
-            code_snippets=[CodeSnippet(lang="Python3", code="code")]
+            code_snippets=[CodeSnippet(lang=Language.PYTHON3, code="code")],
+            test_examples=[]
         )
-        
+
         problem2 = Problem(
             id=1,
             title="Test",
             title_slug="test",
-            difficulty="Easy",
+            difficulty=Difficulty.EASY,
             description="desc",
-            test_cases="cases",
-            code_snippets=[CodeSnippet(lang="Python3", code="code")]
+            code_snippets=[CodeSnippet(lang=Language.PYTHON3, code="code")],
+            test_examples=[]
         )
-        
+
         assert problem1 == problem2
-    
+
     def test_different_problems_are_not_equal(self):
         """Test that different problems are not equal."""
         problem1 = Problem(
             id=1,
             title="Test 1",
             title_slug="test-1",
-            difficulty="Easy",
+            difficulty=Difficulty.EASY,
             description="desc",
-            test_cases="",
-            code_snippets=[]
+            code_snippets=[],
+            test_examples=[]
         )
-        
+
         problem2 = Problem(
             id=2,
             title="Test 2",
             title_slug="test-2",
-            difficulty="Hard",
+            difficulty=Difficulty.HARD,
             description="desc",
-            test_cases="",
-            code_snippets=[]
+            code_snippets=[],
+            test_examples=[]
         )
-        
+
         assert problem1 != problem2
-
-
-class TestProblemRealisticData:
-    """Test Problem with realistic LeetCode data."""
-    
-    def test_two_sum_problem(self):
-        """Test creating a realistic Two Sum problem."""
-        problem = Problem(
-            id=1,
-            title="Two Sum",
-            title_slug="two-sum",
-            difficulty="Easy",
-            description="<p>Given an array of integers <code>nums</code>...</p>",
-            test_cases="[2,7,11,15]\n9\n[0,1]",
-            code_snippets=[
-                CodeSnippet(
-                    lang="Python3",
-                    code="class Solution:\n    def twoSum(self, nums: List[int], target: int) -> List[int]:\n        pass"
-                ),
-                CodeSnippet(
-                    lang="Java",
-                    code="class Solution {\n    public int[] twoSum(int[] nums, int target) {\n    }\n}"
-                )
-            ]
-        )
-        
-        assert problem.id == 1
-        assert problem.title == "Two Sum"
-        assert problem.filename == "0001-two-sum.py"
-        assert len(problem.code_snippets) == 2
-        assert problem.get_snippet("Python3") is not None
-        assert problem.get_snippet("Java") is not None
