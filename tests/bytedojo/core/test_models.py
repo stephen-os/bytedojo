@@ -2,9 +2,12 @@
 Tests for models (Language, Difficulty, CodeSnippet, Problem, etc).
 """
 
+from datetime import datetime
+
 import pytest
 from bytedojo.core.models import (
-    Language, Difficulty, CodeSnippet, Problem, ProblemSummary, TestExample
+    Language, Difficulty, Status, CodeSnippet, Problem, ProblemSummary,
+    Case, Attempt, AttemptStats
 )
 
 
@@ -87,6 +90,41 @@ class TestDifficultyEnum:
         assert Difficulty.from_string("invalid") == Difficulty.NONE
 
 
+class TestStatusEnum:
+    """Test Status enum."""
+
+    def test_status_values(self):
+        """Test status values are lowercase strings."""
+        assert Status.NONE.value == "none"
+        assert Status.PASSED.value == "passed"
+        assert Status.FAILED.value == "failed"
+        assert Status.SKIPPED.value == "skipped"
+        assert Status.UNGRADED.value == "ungraded"
+
+    def test_from_string_valid(self):
+        """Test parsing valid status strings."""
+        assert Status.from_string("passed") == Status.PASSED
+        assert Status.from_string("failed") == Status.FAILED
+        assert Status.from_string("skipped") == Status.SKIPPED
+        assert Status.from_string("ungraded") == Status.UNGRADED
+
+    def test_from_string_case_insensitive(self):
+        """Test that from_string handles case variations."""
+        assert Status.from_string("PASSED") == Status.PASSED
+        assert Status.from_string("Failed") == Status.FAILED
+        assert Status.from_string("SKIPPED") == Status.SKIPPED
+
+    def test_from_string_empty(self):
+        """Test that empty string returns NONE."""
+        assert Status.from_string("") == Status.NONE
+        assert Status.from_string(None) == Status.NONE
+
+    def test_from_string_unknown(self):
+        """Test that unknown status returns NONE."""
+        assert Status.from_string("unknown") == Status.NONE
+        assert Status.from_string("invalid") == Status.NONE
+
+
 class TestCodeSnippet:
     """Test CodeSnippet dataclass."""
 
@@ -123,20 +161,20 @@ class TestCodeSnippet:
         assert snippet1 != snippet2
 
 
-class TestTestExample:
-    """Test TestExample dataclass."""
+class TestCase:
+    """Test Case dataclass."""
 
     def test_create_test_example(self):
-        """Test creating a TestExample."""
-        example = TestExample(input="nums = [1,2]", output="[0,1]")
+        """Test creating a Case."""
+        example = Case(input="nums = [1,2]", output="[0,1]")
 
         assert example.input == "nums = [1,2]"
         assert example.output == "[0,1]"
 
     def test_test_example_equality(self):
-        """Test that identical TestExamples are equal."""
-        ex1 = TestExample(input="x = 1", output="1")
-        ex2 = TestExample(input="x = 1", output="1")
+        """Test that identical Cases are equal."""
+        ex1 = Case(input="x = 1", output="1")
+        ex2 = Case(input="x = 1", output="1")
 
         assert ex1 == ex2
 
@@ -174,7 +212,7 @@ class TestProblemInit:
             code_snippets=[
                 CodeSnippet(lang=Language.PYTHON3, code="class Solution: pass")
             ],
-            test_examples=[]
+            test_cases=[]
         )
 
         assert problem.id == 1
@@ -195,12 +233,12 @@ class TestProblemInit:
                 CodeSnippet(lang=Language.JAVA, code="java code"),
                 CodeSnippet(lang=Language.JAVASCRIPT, code="js code")
             ],
-            test_examples=[]
+            test_cases=[]
         )
 
         assert len(problem.code_snippets) == 3
 
-    def test_problem_with_test_examples(self):
+    def test_problem_with_test_cases(self):
         """Test Problem with test examples."""
         problem = Problem(
             id=1,
@@ -209,14 +247,14 @@ class TestProblemInit:
             difficulty=Difficulty.EASY,
             description="desc",
             code_snippets=[],
-            test_examples=[
-                TestExample(input="nums = [1,2]", output="[0,1]"),
-                TestExample(input="nums = [3,4]", output="[1,0]")
+            test_cases=[
+                Case(input="nums = [1,2]", output="[0,1]"),
+                Case(input="nums = [3,4]", output="[1,0]")
             ]
         )
 
-        assert len(problem.test_examples) == 2
-        assert problem.test_examples[0].input == "nums = [1,2]"
+        assert len(problem.test_cases) == 2
+        assert problem.test_cases[0].input == "nums = [1,2]"
 
 
 class TestProblemGetSnippet:
@@ -234,7 +272,7 @@ class TestProblemGetSnippet:
                 CodeSnippet(lang=Language.PYTHON3, code="python code"),
                 CodeSnippet(lang=Language.JAVA, code="java code")
             ],
-            test_examples=[]
+            test_cases=[]
         )
 
         code = problem.get_snippet(Language.PYTHON3)
@@ -251,7 +289,7 @@ class TestProblemGetSnippet:
             code_snippets=[
                 CodeSnippet(lang=Language.PYTHON3, code="python code")
             ],
-            test_examples=[]
+            test_cases=[]
         )
 
         code = problem.get_snippet(Language.RUBY)
@@ -270,7 +308,7 @@ class TestProblemGetSnippet:
                 CodeSnippet(lang=Language.JAVA, code="java code"),
                 CodeSnippet(lang=Language.JAVASCRIPT, code="js code")
             ],
-            test_examples=[]
+            test_cases=[]
         )
 
         assert problem.get_snippet(Language.JAVA) == "java code"
@@ -286,7 +324,7 @@ class TestProblemGetSnippet:
             difficulty=Difficulty.EASY,
             description="desc",
             code_snippets=[],
-            test_examples=[]
+            test_cases=[]
         )
 
         code = problem.get_snippet(Language.PYTHON3)
@@ -305,7 +343,7 @@ class TestProblemFolderName:
             difficulty=Difficulty.EASY,
             description="desc",
             code_snippets=[],
-            test_examples=[]
+            test_cases=[]
         )
 
         assert problem.get_folder_name() == "0001-two-sum"
@@ -319,7 +357,7 @@ class TestProblemFolderName:
             difficulty=Difficulty.HARD,
             description="desc",
             code_snippets=[],
-            test_examples=[]
+            test_cases=[]
         )
 
         assert problem.get_folder_name() == "2500-test-problem"
@@ -333,7 +371,7 @@ class TestProblemFolderName:
             difficulty=Difficulty.EASY,
             description="desc",
             code_snippets=[],
-            test_examples=[]
+            test_cases=[]
         )
 
         assert problem.get_folder_name() == "0005-test"
@@ -351,7 +389,7 @@ class TestProblemSolutionFilename:
             difficulty=Difficulty.EASY,
             description="desc",
             code_snippets=[],
-            test_examples=[]
+            test_cases=[]
         )
 
         assert problem.get_solution_filename(Language.PYTHON3) == "solution.py"
@@ -365,7 +403,7 @@ class TestProblemSolutionFilename:
             difficulty=Difficulty.EASY,
             description="desc",
             code_snippets=[],
-            test_examples=[]
+            test_cases=[]
         )
 
         assert problem.get_solution_filename(Language.JAVA) == "solution.java"
@@ -379,7 +417,7 @@ class TestProblemSolutionFilename:
             difficulty=Difficulty.EASY,
             description="desc",
             code_snippets=[],
-            test_examples=[]
+            test_cases=[]
         )
 
         assert problem.get_solution_filename(Language.CPP) == "solution.cpp"
@@ -393,7 +431,7 @@ class TestProblemSolutionFilename:
             difficulty=Difficulty.EASY,
             description="desc",
             code_snippets=[],
-            test_examples=[]
+            test_cases=[]
         )
 
         assert problem.get_solution_filename(None) is None
@@ -407,7 +445,7 @@ class TestProblemSolutionFilename:
             difficulty=Difficulty.EASY,
             description="desc",
             code_snippets=[],
-            test_examples=[]
+            test_cases=[]
         )
 
         assert problem.get_solution_filename() == "solution.py"
@@ -425,7 +463,7 @@ class TestProblemDifficulty:
             difficulty=Difficulty.EASY,
             description="desc",
             code_snippets=[],
-            test_examples=[]
+            test_cases=[]
         )
 
         assert problem.difficulty == Difficulty.EASY
@@ -439,7 +477,7 @@ class TestProblemDifficulty:
             difficulty=Difficulty.MEDIUM,
             description="desc",
             code_snippets=[],
-            test_examples=[]
+            test_cases=[]
         )
 
         assert problem.difficulty == Difficulty.MEDIUM
@@ -453,7 +491,7 @@ class TestProblemDifficulty:
             difficulty=Difficulty.HARD,
             description="desc",
             code_snippets=[],
-            test_examples=[]
+            test_cases=[]
         )
 
         assert problem.difficulty == Difficulty.HARD
@@ -471,7 +509,7 @@ class TestProblemEquality:
             difficulty=Difficulty.EASY,
             description="desc",
             code_snippets=[CodeSnippet(lang=Language.PYTHON3, code="code")],
-            test_examples=[]
+            test_cases=[]
         )
 
         problem2 = Problem(
@@ -481,7 +519,7 @@ class TestProblemEquality:
             difficulty=Difficulty.EASY,
             description="desc",
             code_snippets=[CodeSnippet(lang=Language.PYTHON3, code="code")],
-            test_examples=[]
+            test_cases=[]
         )
 
         assert problem1 == problem2
@@ -495,7 +533,7 @@ class TestProblemEquality:
             difficulty=Difficulty.EASY,
             description="desc",
             code_snippets=[],
-            test_examples=[]
+            test_cases=[]
         )
 
         problem2 = Problem(
@@ -505,7 +543,151 @@ class TestProblemEquality:
             difficulty=Difficulty.HARD,
             description="desc",
             code_snippets=[],
-            test_examples=[]
+            test_cases=[]
         )
 
         assert problem1 != problem2
+
+
+class TestAttempt:
+    """Test Attempt dataclass."""
+
+    def test_create_attempt(self):
+        """Test creating an Attempt."""
+        now = datetime.now()
+        attempt = Attempt(
+            problem_id=1,
+            language=Language.PYTHON3,
+            version=1,
+            status=Status.UNGRADED,
+            created_at=now,
+            run_count=0,
+            notes=""
+        )
+
+        assert attempt.problem_id == 1
+        assert attempt.language == Language.PYTHON3
+        assert attempt.version == 1
+        assert attempt.status == Status.UNGRADED
+        assert attempt.created_at == now
+        assert attempt.run_count == 0
+        assert attempt.notes == ""
+
+    def test_attempt_defaults(self):
+        """Test Attempt default values."""
+        attempt = Attempt(
+            problem_id=1,
+            language=Language.JAVA,
+            version=2,
+            status=Status.PASSED,
+            created_at=datetime.now()
+        )
+
+        assert attempt.run_count == 0
+        assert attempt.notes == ""
+
+    def test_get_version_string(self):
+        """Test version string formatting."""
+        attempt = Attempt(
+            problem_id=1,
+            language=Language.PYTHON3,
+            version=1,
+            status=Status.UNGRADED,
+            created_at=datetime.now()
+        )
+        assert attempt.get_version_string() == "v001"
+
+    def test_get_version_string_double_digit(self):
+        """Test version string with double digits."""
+        attempt = Attempt(
+            problem_id=1,
+            language=Language.PYTHON3,
+            version=42,
+            status=Status.PASSED,
+            created_at=datetime.now()
+        )
+        assert attempt.get_version_string() == "v042"
+
+    def test_get_version_string_triple_digit(self):
+        """Test version string with triple digits."""
+        attempt = Attempt(
+            problem_id=1,
+            language=Language.PYTHON3,
+            version=100,
+            status=Status.PASSED,
+            created_at=datetime.now()
+        )
+        assert attempt.get_version_string() == "v100"
+
+    def test_attempt_equality(self):
+        """Test that identical attempts are equal."""
+        now = datetime.now()
+        attempt1 = Attempt(
+            problem_id=1,
+            language=Language.PYTHON3,
+            version=1,
+            status=Status.PASSED,
+            created_at=now
+        )
+        attempt2 = Attempt(
+            problem_id=1,
+            language=Language.PYTHON3,
+            version=1,
+            status=Status.PASSED,
+            created_at=now
+        )
+        assert attempt1 == attempt2
+
+
+class TestAttemptStats:
+    """Test AttemptStats dataclass."""
+
+    def test_create_attempt_stats(self):
+        """Test creating AttemptStats."""
+        stats = AttemptStats(
+            problem_id=1,
+            language=Language.PYTHON3,
+            total_attempts=3,
+            latest_version=3,
+            latest_status=Status.PASSED,
+            pass_count=2,
+            fail_count=1,
+            skip_count=0,
+            total_runs=15
+        )
+
+        assert stats.problem_id == 1
+        assert stats.language == Language.PYTHON3
+        assert stats.total_attempts == 3
+        assert stats.latest_version == 3
+        assert stats.latest_status == Status.PASSED
+        assert stats.pass_count == 2
+        assert stats.fail_count == 1
+        assert stats.skip_count == 0
+        assert stats.total_runs == 15
+
+    def test_attempt_stats_equality(self):
+        """Test that identical AttemptStats are equal."""
+        stats1 = AttemptStats(
+            problem_id=1,
+            language=Language.JAVA,
+            total_attempts=1,
+            latest_version=1,
+            latest_status=Status.UNGRADED,
+            pass_count=0,
+            fail_count=0,
+            skip_count=0,
+            total_runs=0
+        )
+        stats2 = AttemptStats(
+            problem_id=1,
+            language=Language.JAVA,
+            total_attempts=1,
+            latest_version=1,
+            latest_status=Status.UNGRADED,
+            pass_count=0,
+            fail_count=0,
+            skip_count=0,
+            total_runs=0
+        )
+        assert stats1 == stats2

@@ -1,4 +1,5 @@
 from dataclasses import dataclass, field
+from datetime import datetime
 from enum import Enum
 from typing import Optional, List
 
@@ -81,6 +82,25 @@ class Difficulty(str, Enum):
             return cls.NONE
 
 
+class Status(str, Enum):
+    """Problem completion status."""
+    NONE = "none"
+    PASSED = "passed"
+    FAILED = "failed"
+    SKIPPED = "skipped"
+    UNGRADED = "ungraded"
+
+    @classmethod
+    def from_string(cls, value: str) -> "Status":
+        """Parse status from string (case-insensitive)."""
+        if not value:
+            return cls.NONE
+        try:
+            return cls(value.lower())
+        except ValueError:
+            return cls.NONE
+
+
 @dataclass
 class CodeSnippet:
     """Code snippet in a specific language."""
@@ -99,8 +119,8 @@ class ProblemSummary:
 
 
 @dataclass
-class TestExample:
-    """A test example with input and expected output."""
+class Case:
+    """A test case with input and expected output."""
     input: str
     output: str  
 
@@ -114,7 +134,7 @@ class Problem:
     difficulty: Difficulty
     description: str
     code_snippets: List[CodeSnippet]
-    test_examples: List[TestExample]
+    test_cases: List[Case]
 
     def get_snippet(self, language: Language) -> Optional[str]:
         """Get code snippet for a specific language."""
@@ -132,3 +152,33 @@ class Problem:
         if language is None:
             return None
         return f"solution{language.extension}"
+
+
+@dataclass
+class Attempt:
+    """A single versioned attempt at solving a problem in a language."""
+    problem_id: int
+    language: Language
+    version: int
+    status: Status
+    created_at: datetime
+    run_count: int = 0
+    notes: str = ""
+
+    def get_version_string(self) -> str:
+        """Get version as v001, v002, etc."""
+        return f"v{self.version:03d}"
+
+
+@dataclass
+class AttemptStats:
+    """Aggregated stats for a problem/language combination."""
+    problem_id: int
+    language: Language
+    total_attempts: int
+    latest_version: int
+    latest_status: Status
+    pass_count: int
+    fail_count: int
+    skip_count: int
+    total_runs: int
