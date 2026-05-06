@@ -1,23 +1,31 @@
 """
 Centralized path constants for bytedojo package.
-
-All package-level paths should be defined here to avoid
-scattered Path(__file__).parent chains throughout the codebase.
 """
 
 from pathlib import Path
 
-# Package root (src/bytedojo)
+# Define key paths relative to this file's location
 PACKAGE_ROOT = Path(__file__).parent.parent
 
-# Project root (contains src/, data/, tests/)
+# Define project-level paths
 PROJECT_ROOT = PACKAGE_ROOT.parent.parent
 
-# Data directories
+# Define data directory
 DATA_DIR = PROJECT_ROOT / "data"
-TEST_CASES_DIR = DATA_DIR / "test_cases"
 
-# Data files
-PROBLEMS_FILE = TEST_CASES_DIR / "problems.json"
-TESTS_FILE = TEST_CASES_DIR / "tests.json"
-UNSUPPORTED_FILE = TEST_CASES_DIR / "unsupported_tests.json"
+# Define problems directory
+PROBLEMS_DIR = DATA_DIR / "problems"
+
+# Define path to problems index file
+PROBLEMS_INDEX = PROBLEMS_DIR / "index.json"
+
+# Define tests directory
+TESTS_DIR = DATA_DIR / "tests"
+
+def get_problem_file(problem_id: int) -> Path:
+    """Get path to individual problem JSON file."""
+    return PROBLEMS_DIR / f"{problem_id}.json"
+
+def get_test_file(problem_id: int) -> Path:
+    """Get path to individual test JSON file."""
+    return TESTS_DIR / f"{problem_id}.json"
