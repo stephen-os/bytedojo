@@ -1,0 +1,463 @@
+{
+  "id": 1792,
+  "title": "Maximum Average Pass Ratio",
+  "slug": "maximum-average-pass-ratio",
+  "difficulty": "Medium",
+  "topics": [
+    "Array",
+    "Greedy",
+    "Heap (Priority Queue)"
+  ],
+  "description": "There is a school that has classes of students and each class will be having a final exam. You are given a 2D integer array classes, where classes[i] = [passi, totali]. You know beforehand that in the ith class, there are totali total students, but only passi number of students will pass the exam.\nYou are also given an integer extraStudents. There are another extraStudents brilliant students that are guaranteed to pass the exam of any class they are assigned to. You want to assign each of the extraStudents students to a class in a way that maximizes the average pass ratio across all the classes.\nThe pass ratio of a class is equal to the number of students of the class that will pass the exam divided by the total number of students of the class. The average pass ratio is the sum of pass ratios of all the classes divided by the number of the classes.\nReturn the maximum possible average pass ratio after assigning the extraStudents students. Answers within 10-5 of the actual answer will be accepted.\nExample 1:\nExample 2:\nConstraints:",
+  "examples": [
+    {
+      "example_num": 1,
+      "example_text": "Input: classes = [[1,2],[3,5],[2,2]], extraStudents = 2\nOutput: 0.78333\nExplanation: You can assign the two extra students to the first class. The average pass ratio will be equal to (3/4 + 3/5 + 2/2) / 3 = 0.78333.",
+      "images": []
+    },
+    {
+      "example_num": 2,
+      "example_text": "Input: classes = [[2,4],[3,9],[4,5],[2,10]], extraStudents = 4\nOutput: 0.53485",
+      "images": []
+    }
+  ],
+  "constraints": [
+    "1 <= classes.length <= 105",
+    "classes[i].length == 2",
+    "1 <= passi <= totali <= 105",
+    "1 <= extraStudents <= 105"
+  ],
+  "hints": [
+    "Pay attention to how much the pass ratio changes when you add a student to the class. If you keep adding students, what happens to the change in pass ratio? The more students you add to a class, the smaller the change in pass ratio becomes.",
+    "Since the change in the pass ratio is always decreasing with the more students you add, then the very first student you add to each class is the one that makes the biggest change in the pass ratio.",
+    "Because each class's pass ratio is weighted equally, it's always optimal to put the student in the class that makes the biggest change among all the other classes.",
+    "Keep a max heap of the current class sizes and order them by the change in pass ratio. For each extra student, take the top of the heap, update the class size, and put it back in the heap."
+  ],
+  "code_snippets": {
+    "cpp": "class Solution {\npublic:\n    double maxAverageRatio(vector<vector<int>>& classes, int extraStudents) {\n        \n    }\n};",
+    "java": "class Solution {\n    public double maxAverageRatio(int[][] classes, int extraStudents) {\n        \n    }\n}",
+    "python": "class Solution(object):\n    def maxAverageRatio(self, classes, extraStudents):\n        \"\"\"\n        :type classes: List[List[int]]\n        :type extraStudents: int\n        :rtype: float\n        \"\"\"\n        ",
+    "python3": "class Solution:\n    def maxAverageRatio(self, classes: List[List[int]], extraStudents: int) -> float:\n        ",
+    "c": "double maxAverageRatio(int** classes, int classesSize, int* classesColSize, int extraStudents) {\n    \n}",
+    "csharp": "public class Solution {\n    public double MaxAverageRatio(int[][] classes, int extraStudents) {\n        \n    }\n}",
+    "javascript": "/**\n * @param {number[][]} classes\n * @param {number} extraStudents\n * @return {number}\n */\nvar maxAverageRatio = function(classes, extraStudents) {\n    \n};",
+    "typescript": "function maxAverageRatio(classes: number[][], extraStudents: number): number {\n    \n};",
+    "php": "class Solution {\n\n    /**\n     * @param Integer[][] $classes\n     * @param Integer $extraStudents\n     * @return Float\n     */\n    function maxAverageRatio($classes, $extraStudents) {\n        \n    }\n}",
+    "swift": "class Solution {\n    func maxAverageRatio(_ classes: [[Int]], _ extraStudents: Int) -> Double {\n        \n    }\n}",
+    "kotlin": "class Solution {\n    fun maxAverageRatio(classes: Array<IntArray>, extraStudents: Int): Double {\n        \n    }\n}",
+    "dart": "class Solution {\n  double maxAverageRatio(List<List<int>> classes, int extraStudents) {\n    \n  }\n}",
+    "golang": "func maxAverageRatio(classes [][]int, extraStudents int) float64 {\n    \n}",
+    "ruby": "# @param {Integer[][]} classes\n# @param {Integer} extra_students\n# @return {Float}\ndef max_average_ratio(classes, extra_students)\n    \nend",
+    "scala": "object Solution {\n    def maxAverageRatio(classes: Array[Array[Int]], extraStudents: Int): Double = {\n        \n    }\n}",
+    "rust": "impl Solution {\n    pub fn max_average_ratio(classes: Vec<Vec<i32>>, extra_students: i32) -> f64 {\n        \n    }\n}",
+    "racket": "(define/contract (max-average-ratio classes extraStudents)\n  (-> (listof (listof exact-integer?)) exact-integer? flonum?)\n  )",
+    "erlang": "-spec max_average_ratio(Classes :: [[integer()]], ExtraStudents :: integer()) -> float().\nmax_average_ratio(Classes, ExtraStudents) ->\n  .",
+    "elixir": "defmodule Solution do\n  @spec max_average_ratio(classes :: [[integer]], extra_students :: integer) :: float\n  def max_average_ratio(classes, extra_students) do\n    \n  end\nend"
+  },
+  "input_output": [
+    {
+      "input": "classes = [[5,10],[6,10],[7,10]], extraStudents = 1",
+      "output": "0.6151515151515151"
+    },
+    {
+      "input": "classes = [[2,4],[3,9],[4,5],[2,10]], extraStudents = 4",
+      "output": "0.5348484848484849"
+    },
+    {
+      "input": "classes = [[1,1],[1,1],[1,1]], extraStudents = 1",
+      "output": "1.0"
+    },
+    {
+      "input": "classes = [[1,2],[3,5],[2,2]], extraStudents = 2",
+      "output": "0.7833333333333333"
+    },
+    {
+      "input": "classes = [[10,20],[20,30],[30,40]], extraStudents = 5",
+      "output": "0.6722222222222222"
+    },
+    {
+      "input": "classes = [[5,5],[10,10]], extraStudents = 10",
+      "output": "1.0"
+    },
+    {
+      "input": "classes = [[1,1],[1,2],[1,3]], extraStudents = 3",
+      "output": "0.7555555555555555"
+    },
+    {
+      "input": "classes = [[99,100],[999,1000],[9999,10000]], extraStudents = 1000",
+      "output": "0.999331746031746"
+    },
+    {
+      "input": "classes = [[1,1],[1,1],[1,1],[1,1],[1,1],[1,1],[1,1],[1,1],[1,1],[1,1]], extraStudents = 10",
+      "output": "1.0"
+    },
+    {
+      "input": "classes = [[1,1],[1,2],[1,3],[1,4],[1,5]], extraStudents = 10",
+      "output": "0.6842857142857143"
+    },
+    {
+      "input": "classes = [[100,200],[200,300],[300,400],[400,500],[500,600],[600,700],[700,800],[800,900],[900,1000]], extraStudents = 45",
+      "output": "0.7958742756361804"
+    },
+    {
+      "input": "classes = [[1,10],[2,20],[3,30],[4,40],[5,50]], extraStudents = 15",
+      "output": "0.2273449131513648"
+    },
+    {
+      "input": "classes = [[1,2],[2,3],[3,4],[4,5],[5,6]], extraStudents = 15",
+      "output": "0.8571428571428571"
+    },
+    {
+      "input": "classes = [[1,100],[10,1000],[100,10000],[1000,100000]], extraStudents = 1000",
+      "output": "0.3008176852167975"
+    },
+    {
+      "input": "classes = [[1,1],[1,2],[1,3],[1,4],[1,5],[1,6],[1,7],[1,8],[1,9],[1,10]], extraStudents = 50",
+      "output": "0.6412325174825175"
+    },
+    {
+      "input": "classes = [[99,100],[999,1000],[9999,10000],[99999,100000]], extraStudents = 10",
+      "output": "0.9974497727272728"
+    },
+    {
+      "input": "classes = [[5,10],[10,20],[15,30],[20,40],[25,50]], extraStudents = 25",
+      "output": "0.5977592214345788"
+    },
+    {
+      "input": "classes = [[1,1],[2,2],[3,3],[4,4],[5,5],[6,6],[7,7],[8,8],[9,9]], extraStudents = 1000",
+      "output": "1.0"
+    },
+    {
+      "input": "classes = [[1000,2000],[1500,3000],[2000,4000],[2500,5000],[3000,6000]], extraStudents = 1000",
+      "output": "0.5350170085037467"
+    },
+    {
+      "input": "classes = [[1,3],[2,6],[3,9],[4,12],[5,15]], extraStudents = 10",
+      "output": "0.4884670884670885"
+    },
+    {
+      "input": "classes = [[1,1],[1,2],[1,3],[1,4],[1,5],[1,6],[1,7],[1,8],[1,9],[1,10]], extraStudents = 10",
+      "output": "0.4164285714285715"
+    },
+    {
+      "input": "classes = [[1,100],[10,100],[50,100]], extraStudents = 50",
+      "output": "0.3296191939890711"
+    },
+    {
+      "input": "classes = [[100,200],[150,250],[200,300],[250,350]], extraStudents = 50",
+      "output": "0.6452380952380952"
+    },
+    {
+      "input": "classes = [[1,2],[1,3],[1,4],[1,5],[1,6]], extraStudents = 5",
+      "output": "0.4371428571428571"
+    },
+    {
+      "input": "classes = [[10,10],[20,20],[30,30],[40,40],[50,50],[60,60],[70,70],[80,80],[90,90],[100,100]], extraStudents = 50",
+      "output": "1.0"
+    },
+    {
+      "input": "classes = [[10000,10001],[20000,20001],[30000,30001],[40000,40001]], extraStudents = 1000",
+      "output": "0.9999501925188506"
+    },
+    {
+      "input": "classes = [[50, 100], [75, 150], [125, 250], [200, 400], [300, 600], [450, 900]], extraStudents = 300",
+      "output": "0.5992478200634347"
+    },
+    {
+      "input": "classes = [[5,8],[5,8],[5,8],[5,8],[5,8]], extraStudents = 20",
+      "output": "0.75"
+    },
+    {
+      "input": "classes = [[10,20],[20,30],[30,40],[40,50],[50,60],[60,70],[70,80],[80,90],[90,100]], extraStudents = 100",
+      "output": "0.8541887125220459"
+    },
+    {
+      "input": "classes = [[99,100],[98,100],[97,100],[96,100],[95,100]], extraStudents = 5",
+      "output": "0.9704761904761904"
+    },
+    {
+      "input": "classes = [[99999,100000],[50000,100000],[25000,50000],[10000,20000]], extraStudents = 5000",
+      "output": "0.6499975"
+    },
+    {
+      "input": "classes = [[1,100000],[2,100000],[3,100000]], extraStudents = 100000",
+      "output": "0.2500150000093752"
+    },
+    {
+      "input": "classes = [[100,200],[200,500],[300,800],[400,1000]], extraStudents = 100",
+      "output": "0.4604967738352485"
+    },
+    {
+      "input": "classes = [[1,2],[3,6],[5,10],[7,14],[9,18]], extraStudents = 15",
+      "output": "0.6531926406926407"
+    },
+    {
+      "input": "classes = [[1,100000],[2,100000],[3,100000],[4,100000],[5,100000]], extraStudents = 100000",
+      "output": "0.16669166670370508"
+    },
+    {
+      "input": "classes = [[10000,20000],[5000,10000],[2500,5000],[1000,2000],[500,1000],[250,500],[100,200],[50,100],[25,50],[10,20]], extraStudents = 10000",
+      "output": "0.7885364227868774"
+    },
+    {
+      "input": "classes = [[1,1],[2,2],[3,3],[4,4],[5,5]], extraStudents = 5",
+      "output": "1.0"
+    },
+    {
+      "input": "classes = [[50,100],[150,300],[250,500],[350,700]], extraStudents = 150",
+      "output": "0.5803610885401075"
+    },
+    {
+      "input": "classes = [[1,1], [2,3], [3,4], [4,5], [5,6], [6,7]], extraStudents = 20",
+      "output": "0.9074074074074074"
+    },
+    {
+      "input": "classes = [[9, 10], [99, 100], [999, 1000], [9999, 10000], [99999, 100000]], extraStudents = 50000",
+      "output": "0.9999456354114968"
+    },
+    {
+      "input": "classes = [[99,100],[98,100],[97,100],[96,100],[95,100],[94,100],[93,100],[92,100],[91,100],[90,100]], extraStudents = 10",
+      "output": "0.945917211328976"
+    },
+    {
+      "input": "classes = [[1,2], [1,3], [1,4], [1,5], [1,6], [1,7], [1,8], [1,9], [1,10], [1,11]], extraStudents = 10",
+      "output": "0.3255194805194805"
+    },
+    {
+      "input": "classes = [[50,100],[100,200],[150,300],[200,400]], extraStudents = 100",
+      "output": "0.567861188343116"
+    },
+    {
+      "input": "classes = [[1,2],[1,3],[1,4],[1,5],[1,6],[1,7],[1,8],[1,9],[1,10]], extraStudents = 9",
+      "output": "0.341005291005291"
+    },
+    {
+      "input": "classes = [[1,2],[2,3],[3,4],[4,5],[5,6]], extraStudents = 5",
+      "output": "0.7966666666666666"
+    },
+    {
+      "input": "classes = [[10,11],[20,22],[30,33],[40,44]], extraStudents = 5",
+      "output": "0.9161931818181818"
+    },
+    {
+      "input": "classes = [[10,20],[20,30],[30,40],[40,50],[50,60]], extraStudents = 15",
+      "output": "0.7535606060606062"
+    },
+    {
+      "input": "classes = [[1,3],[2,5],[3,7],[4,9]], extraStudents = 5",
+      "output": "0.528968253968254"
+    },
+    {
+      "input": "classes = [[1,1000],[10,1000],[100,1000],[1000,1000]], extraStudents = 100",
+      "output": "0.30143093489681594"
+    },
+    {
+      "input": "classes = [[10, 15], [20, 25], [30, 35], [40, 45], [50, 55], [60, 65]], extraStudents = 100",
+      "output": "0.9114219114219114"
+    },
+    {
+      "input": "classes = [[1,100],[20,50],[30,40],[40,60]], extraStudents = 10",
+      "output": "0.4822964571623233"
+    },
+    {
+      "input": "classes = [[1,100000],[100000,100000],[100000,100000],[100000,100000],[1,100000]], extraStudents = 100000",
+      "output": "0.733336"
+    },
+    {
+      "input": "classes = [[5,6],[10,12],[15,18],[20,24],[25,30]], extraStudents = 50",
+      "output": "0.8996095210091154"
+    },
+    {
+      "input": "classes = [[1,2],[2,4],[3,8],[4,16],[5,32],[6,64],[7,128],[8,256],[9,512]], extraStudents = 256",
+      "output": "0.56112903154186"
+    },
+    {
+      "input": "classes = [[99999,100000],[99998,100000],[99997,100000]], extraStudents = 3",
+      "output": "0.999980000299991"
+    },
+    {
+      "input": "classes = [[1,10], [2,20], [3,30], [4,40], [5,50], [6,60], [7,70], [8,80], [9,90], [10,100]], extraStudents = 100",
+      "output": "0.29977994676131325"
+    },
+    {
+      "input": "classes = [[1, 2], [1, 3], [1, 4], [1, 5], [1, 6], [1, 7], [1, 8], [1, 9], [1, 10]], extraStudents = 45",
+      "output": "0.5812816812816812"
+    },
+    {
+      "input": "classes = [[1,3],[2,5],[3,7],[4,9],[5,11]], extraStudents = 5",
+      "output": "0.5140836940836941"
+    },
+    {
+      "input": "classes = [[100, 200], [200, 300], [50, 150], [250, 500], [100, 250]], extraStudents = 50",
+      "output": "0.5133333333333333"
+    },
+    {
+      "input": "classes = [[1,2],[1,3],[1,4],[1,5]], extraStudents = 5",
+      "output": "0.5"
+    },
+    {
+      "input": "classes = [[1,2], [2,4], [3,6], [4,8], [5,10], [6,12], [7,14], [8,16], [9,18], [10,20]], extraStudents = 5",
+      "output": "0.5488095238095239"
+    },
+    {
+      "input": "classes = [[1000, 10000], [2000, 20000], [3000, 30000], [4000, 40000]], extraStudents = 2000",
+      "output": "0.1375"
+    },
+    {
+      "input": "classes = [[1,10],[2,20],[3,30],[4,40],[5,50]], extraStudents = 200",
+      "output": "0.638637428727642"
+    },
+    {
+      "input": "classes = [[1, 2], [2, 3], [3, 4], [4, 5], [5, 6], [6, 7], [7, 8], [8, 9], [9, 10], [10, 11]], extraStudents = 50",
+      "output": "0.9128787878787878"
+    },
+    {
+      "input": "classes = [[100,101],[200,201],[300,301],[400,401],[500,501]], extraStudents = 500",
+      "output": "0.9974701296361822"
+    },
+    {
+      "input": "classes = [[1,100000],[2,100000],[3,100000],[4,100000],[5,100000]], extraStudents = 500000",
+      "output": "0.5000150000250008"
+    },
+    {
+      "input": "classes = [[1,2], [1,2], [1,2], [1,2], [1,2], [1,2], [1,2], [1,2], [1,2], [1,2]], extraStudents = 5",
+      "output": "0.5833333333333333"
+    },
+    {
+      "input": "classes = [[1,100000],[100000,200000],[1,100000],[1,100000]], extraStudents = 50000",
+      "output": "0.23214928570379018"
+    },
+    {
+      "input": "classes = [[50,100],[40,80],[30,60],[20,40],[10,20]], extraStudents = 20",
+      "output": "0.554287556415216"
+    },
+    {
+      "input": "classes = [[1,2], [2,5], [3,10], [4,20], [5,50], [6,100], [7,200], [8,500], [9,1000], [10,10000]], extraStudents = 5000",
+      "output": "0.7736090641036538"
+    },
+    {
+      "input": "classes = [[1,1000],[1,2000],[1,3000],[1,4000],[1,5000]], extraStudents = 1500",
+      "output": "0.14190236063451128"
+    },
+    {
+      "input": "classes = [[10,20],[20,40],[30,60],[40,80]], extraStudents = 20",
+      "output": "0.56785944551902"
+    },
+    {
+      "input": "classes = [[99,100],[199,200],[299,300],[399,400],[499,500]], extraStudents = 1000",
+      "output": "0.998"
+    },
+    {
+      "input": "classes = [[1,100],[2,200],[3,300],[4,400],[5,500],[6,600],[7,700],[8,800],[9,900],[10,1000]], extraStudents = 4500",
+      "output": "0.5002246672081883"
+    },
+    {
+      "input": "classes = [[10000,100000],[20000,100000],[30000,100000],[40000,100000]], extraStudents = 10000",
+      "output": "0.27058853870831734"
+    },
+    {
+      "input": "classes = [[1, 100], [1, 100], [1, 100], [1, 100], [1, 100]], extraStudents = 500",
+      "output": "0.505"
+    },
+    {
+      "input": "classes = [[1,1],[1,1],[1,1],[1,1],[1,1]], extraStudents = 5",
+      "output": "1.0"
+    },
+    {
+      "input": "classes = [[1,10],[2,15],[3,20],[4,25],[5,30]], extraStudents = 15",
+      "output": "0.2816248934356351"
+    },
+    {
+      "input": "classes = [[10,20],[15,25],[20,30],[25,35]], extraStudents = 10",
+      "output": "0.6633597883597884"
+    },
+    {
+      "input": "classes = [[1,100],[10,100],[100,100],[1000,1000],[10000,10000]], extraStudents = 10000",
+      "output": "0.9925924392888745"
+    },
+    {
+      "input": "classes = [[1,100000], [100000,100000], [50000,100000]], extraStudents = 50000",
+      "output": "0.6114404678259185"
+    },
+    {
+      "input": "classes = [[10, 20], [15, 30], [5, 15], [25, 50]], extraStudents = 15",
+      "output": "0.55"
+    },
+    {
+      "input": "classes = [[10000,100000], [20000,100000], [30000,100000], [40000,100000], [50000,100000], [60000,100000], [70000,100000], [80000,100000], [90000,100000], [100000,100000]], extraStudents = 10000",
+      "output": "0.5582354154833269"
+    },
+    {
+      "input": "classes = [[50,100],[40,80],[30,60],[20,40],[10,20]], extraStudents = 30",
+      "output": "0.5707749766573296"
+    },
+    {
+      "input": "classes = [[1,100000],[1,100000],[1,100000],[1,100000],[1,100000]], extraStudents = 100000",
+      "output": "0.166675"
+    },
+    {
+      "input": "classes = [[1,2],[2,3],[3,4],[4,5],[5,6],[6,7],[7,8],[8,9],[9,10]], extraStudents = 100",
+      "output": "0.9415395787944808"
+    },
+    {
+      "input": "classes = [[10,100],[20,200],[30,300],[40,400],[50,500]], extraStudents = 50",
+      "output": "0.16025231286795627"
+    },
+    {
+      "input": "classes = [[1,2],[1,3],[1,4],[1,5],[1,6]], extraStudents = 15",
+      "output": "0.5976190476190476"
+    },
+    {
+      "input": "classes = [[50,100],[75,150],[25,75],[10,50]], extraStudents = 20",
+      "output": "0.44060351413292587"
+    },
+    {
+      "input": "classes = [[1,100],[2,100],[3,100],[4,100],[5,100]], extraStudents = 250",
+      "output": "0.3533647454875556"
+    },
+    {
+      "input": "classes = [[50000,100000],[40000,100000],[30000,100000],[20000,100000],[10000,100000]], extraStudents = 50000",
+      "output": "0.3696598823228846"
+    },
+    {
+      "input": "classes = [[1,2],[2,4],[3,6],[4,8],[5,10],[6,12],[7,14],[8,16],[9,18],[10,20]], extraStudents = 100",
+      "output": "0.7595597403486419"
+    },
+    {
+      "input": "classes = [[3,4],[4,5],[5,6],[6,7],[7,8]], extraStudents = 3",
+      "output": "0.8464285714285715"
+    },
+    {
+      "input": "classes = [[1,2],[2,3],[3,4],[4,5],[5,6],[6,7],[7,8],[8,9],[9,10]], extraStudents = 9",
+      "output": "0.8504850088183421"
+    },
+    {
+      "input": "classes = [[10,12],[20,25],[30,35],[40,45],[50,55]], extraStudents = 30",
+      "output": "0.8916472416472416"
+    },
+    {
+      "input": "classes = [[1,2],[2,4],[4,8],[8,16],[16,32]], extraStudents = 64",
+      "output": "0.7993434343434344"
+    },
+    {
+      "input": "classes = [[1,10],[2,20],[3,30],[4,40],[5,50]], extraStudents = 100",
+      "output": "0.49407730392552046"
+    },
+    {
+      "input": "classes = [[1,2],[1,3],[1,4],[1,5],[1,6],[1,7]], extraStudents = 21",
+      "output": "0.5919612794612795"
+    },
+    {
+      "input": "classes = [[1,10],[2,20],[3,30],[4,40],[5,50],[6,60],[7,70],[8,80],[9,90],[10,100]], extraStudents = 500",
+      "output": "0.5672899020682859"
+    },
+    {
+      "input": "classes = [[1,2],[2,3],[3,4],[4,5],[5,6],[6,7],[7,8],[8,9],[9,10]], extraStudents = 10",
+      "output": "0.8541887125220459"
+    },
+    {
+      "input": "classes = [[999,1000],[998,1000],[997,1000],[996,1000],[995,1000]], extraStudents = 10",
+      "output": "0.997009900990099"
+    }
+  ]
+}

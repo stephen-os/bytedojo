@@ -1,0 +1,402 @@
+{
+  "id": 2273,
+  "title": "Find Resultant Array After Removing Anagrams",
+  "slug": "find-resultant-array-after-removing-anagrams",
+  "difficulty": "Easy",
+  "topics": [
+    "Array",
+    "Hash Table",
+    "String",
+    "Sorting"
+  ],
+  "description": "You are given a 0-indexed string array words, where words[i] consists of lowercase English letters.\nIn one operation, select any index i such that 0 < i < words.length and words[i - 1] and words[i] are anagrams, and delete words[i] from words. Keep performing this operation as long as you can select an index that satisfies the conditions.\nReturn words after performing all operations. It can be shown that selecting the indices for each operation in any arbitrary order will lead to the same result.\nAn Anagram is a word or phrase formed by rearranging the letters of a different word or phrase using all the original letters exactly once. For example, \"dacb\" is an anagram of \"abdc\".\nExample 1:\nExample 2:\nConstraints:",
+  "examples": [
+    {
+      "example_num": 1,
+      "example_text": "Input: words = [\"abba\",\"baba\",\"bbaa\",\"cd\",\"cd\"]\nOutput: [\"abba\",\"cd\"]\nExplanation:\nOne of the ways we can obtain the resultant array is by using the following operations:\n- Since words[2] = \"bbaa\" and words[1] = \"baba\" are anagrams, we choose index 2 and delete words[2].\n  Now words = [\"abba\",\"baba\",\"cd\",\"cd\"].\n- Since words[1] = \"baba\" and words[0] = \"abba\" are anagrams, we choose index 1 and delete words[1].\n  Now words = [\"abba\",\"cd\",\"cd\"].\n- Since words[2] = \"cd\" and words[1] = \"cd\" are anagrams, we choose index 2 and delete words[2].\n  Now words = [\"abba\",\"cd\"].\nWe can no longer perform any operations, so [\"abba\",\"cd\"] is the final answer.",
+      "images": []
+    },
+    {
+      "example_num": 2,
+      "example_text": "Input: words = [\"a\",\"b\",\"c\",\"d\",\"e\"]\nOutput: [\"a\",\"b\",\"c\",\"d\",\"e\"]\nExplanation:\nNo two adjacent strings in words are anagrams of each other, so no operations are performed.",
+      "images": []
+    }
+  ],
+  "constraints": [
+    "1 <= words.length <= 100",
+    "1 <= words[i].length <= 10",
+    "words[i] consists of lowercase English letters."
+  ],
+  "hints": [
+    "Instead of removing each repeating anagram, try to find all the strings in words which will not be present in the final answer.",
+    "For every index i, find the largest index j < i such that words[j] will be present in the final answer.",
+    "Check if words[i] and words[j] are anagrams. If they are, then it can be confirmed that words[i] will not be present in the final answer."
+  ],
+  "code_snippets": {
+    "cpp": "class Solution {\npublic:\n    vector<string> removeAnagrams(vector<string>& words) {\n        \n    }\n};",
+    "java": "class Solution {\n    public List<String> removeAnagrams(String[] words) {\n        \n    }\n}",
+    "python": "class Solution(object):\n    def removeAnagrams(self, words):\n        \"\"\"\n        :type words: List[str]\n        :rtype: List[str]\n        \"\"\"\n        ",
+    "python3": "class Solution:\n    def removeAnagrams(self, words: List[str]) -> List[str]:\n        ",
+    "c": "/**\n * Note: The returned array must be malloced, assume caller calls free().\n */\nchar** removeAnagrams(char** words, int wordsSize, int* returnSize) {\n    \n}",
+    "csharp": "public class Solution {\n    public IList<string> RemoveAnagrams(string[] words) {\n        \n    }\n}",
+    "javascript": "/**\n * @param {string[]} words\n * @return {string[]}\n */\nvar removeAnagrams = function(words) {\n    \n};",
+    "typescript": "function removeAnagrams(words: string[]): string[] {\n    \n};",
+    "php": "class Solution {\n\n    /**\n     * @param String[] $words\n     * @return String[]\n     */\n    function removeAnagrams($words) {\n        \n    }\n}",
+    "swift": "class Solution {\n    func removeAnagrams(_ words: [String]) -> [String] {\n        \n    }\n}",
+    "kotlin": "class Solution {\n    fun removeAnagrams(words: Array<String>): List<String> {\n        \n    }\n}",
+    "dart": "class Solution {\n  List<String> removeAnagrams(List<String> words) {\n    \n  }\n}",
+    "golang": "func removeAnagrams(words []string) []string {\n    \n}",
+    "ruby": "# @param {String[]} words\n# @return {String[]}\ndef remove_anagrams(words)\n    \nend",
+    "scala": "object Solution {\n    def removeAnagrams(words: Array[String]): List[String] = {\n        \n    }\n}",
+    "rust": "impl Solution {\n    pub fn remove_anagrams(words: Vec<String>) -> Vec<String> {\n        \n    }\n}",
+    "racket": "(define/contract (remove-anagrams words)\n  (-> (listof string?) (listof string?))\n  )",
+    "erlang": "-spec remove_anagrams(Words :: [unicode:unicode_binary()]) -> [unicode:unicode_binary()].\nremove_anagrams(Words) ->\n  .",
+    "elixir": "defmodule Solution do\n  @spec remove_anagrams(words :: [String.t]) :: [String.t]\n  def remove_anagrams(words) do\n    \n  end\nend"
+  },
+  "input_output": [
+    {
+      "input": "words = [\"abc\",\"cab\",\"bca\",\"xyz\",\"zyx\",\"yxz\"]",
+      "output": "['abc', 'xyz']"
+    },
+    {
+      "input": "words = [\"abc\",\"cba\",\"bca\",\"xyz\",\"zyx\"]",
+      "output": "['abc', 'xyz']"
+    },
+    {
+      "input": "words = [\"unique\",\"words\",\"here\",\"now\"]",
+      "output": "['unique', 'words', 'here', 'now']"
+    },
+    {
+      "input": "words = [\"test\",\"sett\",\"tset\",\"ttew\"]",
+      "output": "['test', 'ttew']"
+    },
+    {
+      "input": "words = [\"same\",\"same\",\"same\",\"same\",\"same\"]",
+      "output": "['same']"
+    },
+    {
+      "input": "words = [\"a\",\"b\",\"c\",\"d\",\"e\"]",
+      "output": "['a', 'b', 'c', 'd', 'e']"
+    },
+    {
+      "input": "words = [\"aabbcc\",\"abcabc\",\"bcaacb\",\"bacbac\",\"cababc\"]",
+      "output": "['aabbcc']"
+    },
+    {
+      "input": "words = [\"test\",\"sett\",\"tset\",\"stet\",\"ttes\"]",
+      "output": "['test']"
+    },
+    {
+      "input": "words = [\"one\",\"two\",\"three\",\"four\",\"five\",\"six\",\"seven\",\"eight\",\"nine\",\"ten\"]",
+      "output": "['one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten']"
+    },
+    {
+      "input": "words = [\"hello\",\"billion\",\"oellh\",\"llheo\",\"note\",\"tone\"]",
+      "output": "['hello', 'billion', 'oellh', 'note']"
+    },
+    {
+      "input": "words = [\"abc\",\"cab\",\"bac\",\"bca\",\"xyz\"]",
+      "output": "['abc', 'xyz']"
+    },
+    {
+      "input": "words = [\"abcd\",\"dcba\",\"abcd\",\"dcba\",\"abcd\"]",
+      "output": "['abcd']"
+    },
+    {
+      "input": "words = [\"hello\",\"olleh\",\"world\",\"dlrow\",\"python\",\"nohtyp\"]",
+      "output": "['hello', 'world', 'python']"
+    },
+    {
+      "input": "words = [\"abba\",\"baba\",\"bbaa\",\"cd\",\"cd\"]",
+      "output": "['abba', 'cd']"
+    },
+    {
+      "input": "words = [\"deed\",\"deep\",\"peed\",\"depe\",\"dpee\"]",
+      "output": "['deed', 'deep']"
+    },
+    {
+      "input": "words = [\"hello\",\"world\",\"dlrow\",\"owrld\",\"worlc\"]",
+      "output": "['hello', 'world', 'worlc']"
+    },
+    {
+      "input": "words = [\"same\",\"same\",\"same\",\"same\"]",
+      "output": "['same']"
+    },
+    {
+      "input": "words = [\"abc\",\"cba\",\"bac\",\"bca\",\"cab\",\"acb\"]",
+      "output": "['abc']"
+    },
+    {
+      "input": "words = [\"aaa\",\"aa\",\"a\",\"aaaa\",\"aaa\"]",
+      "output": "['aaa', 'aa', 'a', 'aaaa', 'aaa']"
+    },
+    {
+      "input": "words = [\"aabbcc\",\"baccab\",\"abcabc\",\"xyz\",\"zyx\",\"yxz\"]",
+      "output": "['aabbcc', 'xyz']"
+    },
+    {
+      "input": "words = [\"listen\",\"silent\",\"enlist\",\"google\",\"gooegl\"]",
+      "output": "['listen', 'google']"
+    },
+    {
+      "input": "words = [\"abc\",\"cab\",\"bac\",\"bca\",\"acb\",\"cba\"]",
+      "output": "['abc']"
+    },
+    {
+      "input": "words = [\"aaa\",\"aa\",\"a\"]",
+      "output": "['aaa', 'aa', 'a']"
+    },
+    {
+      "input": "words = [\"deed\",\"deed\",\"deed\",\"deed\",\"deed\"]",
+      "output": "['deed']"
+    },
+    {
+      "input": "words = [\"hello\",\"world\",\"dlrow\",\"owrld\",\"werld\",\"hello\",\"olleh\",\"dlrow\",\"world\",\"rowld\",\"dlrow\",\"hello\",\"hello\",\"world\",\"world\",\"world\",\"dlrow\",\"dlrow\",\"dlrow\",\"dlrow\"]",
+      "output": "['hello', 'world', 'werld', 'hello', 'dlrow', 'hello', 'world']"
+    },
+    {
+      "input": "words = [\"triangle\",\"integral\",\"integral\",\"integral\",\"integral\",\"integral\",\"integral\",\"integral\"]",
+      "output": "['triangle']"
+    },
+    {
+      "input": "words = [\"a\",\"b\",\"c\",\"d\",\"e\",\"a\",\"b\",\"c\",\"d\",\"e\",\"a\",\"b\",\"c\",\"d\",\"e\",\"a\",\"b\",\"c\",\"d\",\"e\",\"a\",\"b\",\"c\",\"d\",\"e\",\"a\",\"b\",\"c\",\"d\",\"e\",\"a\",\"b\",\"c\",\"d\",\"e\",\"a\",\"b\",\"c\",\"d\",\"e\",\"a\",\"b\",\"c\",\"d\",\"e\",\"a\",\"b\",\"c\",\"d\",\"e\",\"a\",\"b\",\"c\",\"d\",\"e\",\"a\",\"b\",\"c\",\"d\",\"e\"]",
+      "output": "['a', 'b', 'c', 'd', 'e', 'a', 'b', 'c', 'd', 'e', 'a', 'b', 'c', 'd', 'e', 'a', 'b', 'c', 'd', 'e', 'a', 'b', 'c', 'd', 'e', 'a', 'b', 'c', 'd', 'e', 'a', 'b', 'c', 'd', 'e', 'a', 'b', 'c', 'd', 'e', 'a', 'b', 'c', 'd', 'e', 'a', 'b', 'c', 'd', 'e', 'a', 'b', 'c', 'd', 'e', 'a', 'b', 'c', 'd', 'e']"
+    },
+    {
+      "input": "words = [\"listen\",\"silent\",\"enlist\",\"google\",\"gooegl\",\"abc\",\"cab\",\"bac\",\"xyz\",\"zyx\",\"yxz\"]",
+      "output": "['listen', 'google', 'abc', 'xyz']"
+    },
+    {
+      "input": "words = [\"rat\",\"car\",\"tar\",\"arc\",\"art\",\"cat\",\"tac\",\"act\",\"rat\",\"car\"]",
+      "output": "['rat', 'car', 'tar', 'arc', 'art', 'cat', 'rat', 'car']"
+    },
+    {
+      "input": "words = [\"racecar\",\"carrace\",\"acecar\",\"enlist\",\"inlets\",\"silent\",\"google\",\"gooegl\",\"abc\",\"bac\",\"cba\",\"xyz\",\"zyx\",\"yxz\",\"zyx\",\"xyz\",\"listen\",\"silent\",\"enlist\"]",
+      "output": "['racecar', 'acecar', 'enlist', 'google', 'abc', 'xyz', 'listen']"
+    },
+    {
+      "input": "words = [\"aabbcc\",\"aabbc\",\"aabc\",\"abc\",\"ab\",\"a\",\"abcd\",\"dcba\",\"bacd\",\"cadb\",\"abdc\",\"cabd\",\"mnop\",\"ponm\",\"omnp\",\"nmop\",\"mpno\",\"pmno\"]",
+      "output": "['aabbcc', 'aabbc', 'aabc', 'abc', 'ab', 'a', 'abcd', 'mnop']"
+    },
+    {
+      "input": "words = [\"ab\",\"ba\",\"ab\",\"ba\",\"ab\",\"ba\",\"ab\",\"ba\",\"ab\",\"ba\",\"ab\",\"ba\",\"ab\",\"ba\",\"ab\",\"ba\",\"ab\",\"ba\",\"ab\",\"ba\",\"ab\",\"ba\",\"ab\",\"ba\",\"ab\",\"ba\",\"ab\",\"ba\",\"ab\",\"ba\"]",
+      "output": "['ab']"
+    },
+    {
+      "input": "words = [\"hello\",\"olleh\",\"loleh\",\"ohell\",\"ehlol\",\"world\",\"dlrow\",\"rowld\",\"owlrd\",\"wrold\",\"hello\",\"olleh\",\"loleh\",\"ohell\",\"ehlol\"]",
+      "output": "['hello', 'world', 'hello']"
+    },
+    {
+      "input": "words = [\"listen\",\"silent\",\"enlist\",\"google\",\"gooegl\",\"abc\",\"cab\",\"bac\",\"xyz\",\"zyx\",\"zyxw\",\"wxyz\"]",
+      "output": "['listen', 'google', 'abc', 'xyz', 'zyxw']"
+    },
+    {
+      "input": "words = [\"abcd\",\"dcba\",\"bacd\",\"cadb\",\"abdc\",\"cabd\",\"abcd\",\"dcba\",\"bacd\",\"cadb\",\"abdc\",\"cabd\",\"mnop\",\"ponm\",\"omnp\",\"nmop\",\"mpno\",\"pmno\"]",
+      "output": "['abcd', 'mnop']"
+    },
+    {
+      "input": "words = [\"aabbcc\",\"baccab\",\"abcabc\",\"xyz\",\"zyx\",\"yxz\",\"test\",\"sett\",\"tset\",\"stet\",\"ttes\"]",
+      "output": "['aabbcc', 'xyz', 'test']"
+    },
+    {
+      "input": "words = [\"listen\",\"silent\",\"enlist\",\"google\",\"gooegl\",\"abc\",\"cab\",\"bac\",\"bca\",\"acb\",\"cba\",\"xyz\",\"zyx\",\"yxz\"]",
+      "output": "['listen', 'google', 'abc', 'xyz']"
+    },
+    {
+      "input": "words = [\"rat\",\"tar\",\"art\",\"star\",\"rats\",\"tars\",\"arts\",\"tsar\",\"chart\",\"arch\",\"cart\",\"ract\",\"track\",\"krat\",\"tract\",\"crat\",\"carr\",\"rack\",\"crab\",\"back\",\"bark\",\"park\",\"parking\",\"arking\",\"king\",\"gnik\",\"pink\",\"kimp\",\"pink\",\"knip\",\"kpin\"]",
+      "output": "['rat', 'star', 'chart', 'arch', 'cart', 'track', 'krat', 'tract', 'crat', 'carr', 'rack', 'crab', 'back', 'bark', 'park', 'parking', 'arking', 'king', 'pink', 'kimp', 'pink']"
+    },
+    {
+      "input": "words = [\"rat\",\"tar\",\"art\",\"car\",\"arc\",\"par\",\"arp\",\"arc\",\"rac\",\"cat\",\"tac\",\"act\",\"cta\",\"atc\",\"tca\",\"pqr\",\"qrp\",\"rpq\",\"prq\",\"rqp\",\"qpr\",\"aabb\",\"bbaa\",\"abab\",\"abba\",\"aaaa\",\"bbba\",\"baab\",\"aabb\",\"baba\",\"bbaa\",\"cd\",\"cd\",\"efg\",\"feg\",\"gfe\",\"geg\",\"eee\",\"fff\",\"ggg\",\"hhh\",\"iii\",\"jjj\",\"kkk\",\"lll\",\"mmm\",\"nnn\",\"ooo\",\"ppp\",\"qqq\",\"rrr\",\"sss\",\"ttt\",\"uuu\",\"vvv\",\"www\",\"xxx\",\"yyy\",\"zzz\"]",
+      "output": "['rat', 'car', 'par', 'arc', 'cat', 'pqr', 'aabb', 'aaaa', 'bbba', 'baab', 'cd', 'efg', 'geg', 'eee', 'fff', 'ggg', 'hhh', 'iii', 'jjj', 'kkk', 'lll', 'mmm', 'nnn', 'ooo', 'ppp', 'qqq', 'rrr', 'sss', 'ttt', 'uuu', 'vvv', 'www', 'xxx', 'yyy', 'zzz']"
+    },
+    {
+      "input": "words = [\"race\",\"care\",\"acre\",\"racecar\",\"carrace\",\"racecar\",\"carrace\",\"abc\",\"bca\",\"cab\",\"xyz\",\"zyx\",\"yxz\",\"zyxzyx\",\"xzyzyz\",\"yzyzyx\"]",
+      "output": "['race', 'racecar', 'abc', 'xyz', 'zyxzyx', 'xzyzyz', 'yzyzyx']"
+    },
+    {
+      "input": "words = [\"abcd\",\"dcba\",\"abcd\",\"dcba\",\"abcd\",\"dcba\",\"abcd\",\"dcba\",\"abcd\",\"dcba\",\"abcd\",\"dcba\",\"abcd\",\"dcba\",\"abcd\",\"dcba\",\"abcd\",\"dcba\",\"abcd\",\"dcba\",\"abcd\",\"dcba\",\"abcd\",\"dcba\",\"abcd\",\"dcba\",\"abcd\",\"dcba\",\"abcd\",\"dcba\",\"abcd\",\"dcba\"]",
+      "output": "['abcd']"
+    },
+    {
+      "input": "words = [\"aaaa\",\"aaab\",\"aabb\",\"abbb\",\"bbbb\",\"bbb\",\"bb\",\"b\",\"a\",\"abc\",\"bac\",\"cba\",\"bca\",\"cab\",\"acb\",\"xyz\",\"zyx\",\"yxz\"]",
+      "output": "['aaaa', 'aaab', 'aabb', 'abbb', 'bbbb', 'bbb', 'bb', 'b', 'a', 'abc', 'xyz']"
+    },
+    {
+      "input": "words = [\"rat\",\"tar\",\"art\",\"dog\",\"god\",\"cat\",\"act\",\"tac\",\"tack\",\"rack\",\"track\",\"chart\",\"cart\"]",
+      "output": "['rat', 'dog', 'cat', 'tack', 'rack', 'track', 'chart', 'cart']"
+    },
+    {
+      "input": "words = [\"abcde\",\"edcba\",\"decba\",\"acdeb\",\"badce\",\"abcde\",\"edcba\",\"decba\",\"acdeb\",\"badce\",\"abcde\",\"edcba\",\"decba\",\"acdeb\",\"badce\",\"abcde\",\"edcba\",\"decba\",\"acdeb\",\"badce\"]",
+      "output": "['abcde']"
+    },
+    {
+      "input": "words = [\"anagram\",\"nagaram\",\"margana\",\"anagram\",\"margana\",\"anagram\",\"nagaram\",\"margana\",\"anagram\",\"nagaram\",\"margana\",\"anagram\",\"nagaram\",\"margana\",\"anagram\",\"nagaram\",\"margana\",\"anagram\",\"nagaram\",\"margana\"]",
+      "output": "['anagram']"
+    },
+    {
+      "input": "words = [\"python\",\"typhon\",\"hypton\",\"ypthon\",\"phonto\",\"opynth\",\"ypthon\",\"phonto\",\"opynth\",\"ypthon\",\"phonto\",\"opynth\",\"ypthon\",\"phonto\",\"opynth\"]",
+      "output": "['python', 'phonto', 'opynth', 'phonto', 'opynth', 'phonto', 'opynth', 'phonto', 'opynth']"
+    },
+    {
+      "input": "words = [\"dormitory\",\"dirtyroom\",\"dirtyroom\",\"dormitory\",\"dirtyroom\",\"dirtyroom\",\"dormitory\"]",
+      "output": "['dormitory']"
+    },
+    {
+      "input": "words = [\"abcd\",\"dcba\",\"abcd\",\"dcba\",\"abcd\",\"dcba\",\"abcd\",\"dcba\",\"abcd\",\"dcba\",\"abcd\",\"dcba\",\"abcd\",\"dcba\",\"abcd\",\"dcba\",\"abcd\",\"dcba\",\"abcd\",\"dcba\"]",
+      "output": "['abcd']"
+    },
+    {
+      "input": "words = [\"aaaaa\",\"aaabb\",\"aabba\",\"abbaa\",\"baaab\",\"baaba\",\"bbaaa\",\"abcde\",\"edcba\",\"decba\",\"cbade\",\"badec\"]",
+      "output": "['aaaaa', 'aaabb', 'abcde']"
+    },
+    {
+      "input": "words = [\"listen\",\"silent\",\"enlist\",\"google\",\"gooegl\",\"abc\",\"bca\",\"cab\",\"xyz\",\"zyx\",\"yxz\"]",
+      "output": "['listen', 'google', 'abc', 'xyz']"
+    },
+    {
+      "input": "words = [\"race\",\"care\",\"acre\",\"barc\",\"racecar\",\"carrace\",\"racecar\",\"carecar\",\"abcde\",\"edcba\",\"bcdea\",\"deabc\",\"acdeb\",\"decab\"]",
+      "output": "['race', 'barc', 'racecar', 'abcde']"
+    },
+    {
+      "input": "words = [\"triangle\",\"integral\",\"integral\",\"integral\",\"integral\",\"integral\",\"integral\",\"integral\",\"integral\",\"integral\",\"integral\",\"integral\",\"integral\",\"integral\",\"integral\",\"integral\",\"integral\",\"integral\",\"integral\",\"integral\",\"integral\",\"integral\",\"integral\",\"integral\",\"integral\",\"integral\",\"integral\",\"integral\",\"integral\",\"integral\",\"integral\",\"integral\",\"integral\",\"integral\",\"integral\"]",
+      "output": "['triangle']"
+    },
+    {
+      "input": "words = [\"aabbcc\",\"abcabc\",\"baccab\",\"abccba\",\"bacabc\",\"aabbcc\",\"abcd\",\"dcba\",\"cdab\",\"bcda\",\"badc\",\"cabd\"]",
+      "output": "['aabbcc', 'abcd']"
+    },
+    {
+      "input": "words = [\"abcd\",\"dcba\",\"abcd\",\"abcd\",\"dcba\",\"abcd\",\"dcba\",\"abcd\",\"dcba\"]",
+      "output": "['abcd']"
+    },
+    {
+      "input": "words = [\"rat\",\"tar\",\"art\",\"dog\",\"god\",\"cat\",\"act\",\"tac\",\"abc\",\"bca\",\"cab\",\"xyz\",\"zyx\",\"yxz\"]",
+      "output": "['rat', 'dog', 'cat', 'abc', 'xyz']"
+    },
+    {
+      "input": "words = [\"abcdefghijklmnopqrstuvwxyz\",\"zyxwvutsrqponmlkjihgfedcba\",\"mnopqrstuvwxyzabcdefghijkl\",\"defghijklmnopqrstuvwxyzabc\",\"jklmnopqrstuvwxyzabcdefghi\",\"pqrsutvwxyzabcdefghijklmno\",\"nopqrstuvwxyzabcdefghijklm\",\"mnopqrstuvwxyzabcdefghijklmno\",\"opqrstuvwxyzabcdefghijklmno\",\"pqrsutvwxyzabcdefghijklmno\",\"nopqrstuvwxyzabcdefghijklm\",\"mnopqrstuvwxyzabcdefghijklmno\",\"opqrstuvwxyzabcdefghijklmno\",\"pqrsutvwxyzabcdefghijklmno\",\"nopqrstuvwxyzabcdefghijklm\",\"mnopqrstuvwxyzabcdefghijklmno\",\"opqrstuvwxyzabcdefghijklmno\",\"pqrsutvwxyzabcdefghijklmno\",\"nopqrstuvwxyzabcdefghijklm\",\"mnopqrstuvwxyzabcdefghijklmno\",\"opqrstuvwxyzabcdefghijklmno\",\"pqrsutvwxyzabcdefghijklmno\"]",
+      "output": "['abcdefghijklmnopqrstuvwxyz', 'mnopqrstuvwxyzabcdefghijklmno', 'opqrstuvwxyzabcdefghijklmno', 'pqrsutvwxyzabcdefghijklmno', 'mnopqrstuvwxyzabcdefghijklmno', 'opqrstuvwxyzabcdefghijklmno', 'pqrsutvwxyzabcdefghijklmno', 'mnopqrstuvwxyzabcdefghijklmno', 'opqrstuvwxyzabcdefghijklmno', 'pqrsutvwxyzabcdefghijklmno', 'mnopqrstuvwxyzabcdefghijklmno', 'opqrstuvwxyzabcdefghijklmno', 'pqrsutvwxyzabcdefghijklmno']"
+    },
+    {
+      "input": "words = [\"hello\",\"olleh\",\"world\",\"dlrow\",\"python\",\"nothpy\",\"java\",\"avaj\",\"abcd\",\"dcba\",\"bacd\",\"cadb\",\"abdc\",\"cabd\"]",
+      "output": "['hello', 'world', 'python', 'java', 'abcd']"
+    },
+    {
+      "input": "words = [\"anagram\",\"nagaram\",\"margana\",\"ramnaga\",\"gnamar\",\"gnamar\",\"gnamra\",\"gnamra\",\"gnamra\",\"gnamra\",\"gnamra\",\"gnamra\",\"gnamra\"]",
+      "output": "['anagram', 'gnamar']"
+    },
+    {
+      "input": "words = [\"listen\",\"silent\",\"enlist\",\"google\",\"gooegl\",\"abc\",\"bca\",\"cab\",\"xyz\",\"zyx\",\"zyx\",\"xyz\"]",
+      "output": "['listen', 'google', 'abc', 'xyz']"
+    },
+    {
+      "input": "words = [\"aabbcc\",\"baccab\",\"cbaabc\",\"abc\",\"acb\",\"bac\",\"bca\",\"cab\",\"cba\",\"xyz\",\"zyx\",\"yxz\",\"zyx\",\"xyz\"]",
+      "output": "['aabbcc', 'abc', 'xyz']"
+    },
+    {
+      "input": "words = [\"listen\",\"silent\",\"enlist\",\"google\",\"gooegl\",\"abc\",\"cab\",\"bac\",\"xyz\",\"zyx\",\"yxz\",\"uvw\",\"vuw\",\"wuv\"]",
+      "output": "['listen', 'google', 'abc', 'xyz', 'uvw']"
+    },
+    {
+      "input": "words = [\"abcd\",\"dcba\",\"bacd\",\"cadb\",\"abdc\",\"cabd\",\"abcd\",\"dcba\",\"bacd\",\"cadb\",\"abdc\",\"cabd\"]",
+      "output": "['abcd']"
+    },
+    {
+      "input": "words = [\"python\",\"typhon\",\"nohtyp\",\"ypthon\",\"hypnot\",\"python\",\"typhon\",\"nohtyp\",\"ypthon\",\"hypnot\",\"python\",\"typhon\",\"nohtyp\",\"ypthon\",\"hypnot\",\"python\",\"typhon\",\"nohtyp\",\"ypthon\",\"hypnot\"]",
+      "output": "['python']"
+    },
+    {
+      "input": "words = [\"listen\",\"silent\",\"enlist\",\"google\",\"gooegl\",\"inlets\"]",
+      "output": "['listen', 'google', 'inlets']"
+    },
+    {
+      "input": "words = [\"aabbcc\",\"abcabc\",\"baccab\",\"cabcab\",\"abacbc\",\"bbacac\",\"acbbca\",\"aabbbc\",\"aabbbc\",\"aabbbc\"]",
+      "output": "['aabbcc', 'aabbbc']"
+    },
+    {
+      "input": "words = [\"abcd\",\"dcba\",\"cdab\",\"bacd\",\"cadb\",\"abcd\",\"dcba\",\"abcd\",\"dcba\",\"abcd\",\"dcba\",\"abcd\",\"dcba\",\"abcd\",\"dcba\",\"abcd\",\"dcba\",\"abcd\",\"dcba\",\"abcd\",\"dcba\",\"abcd\",\"dcba\",\"abcd\",\"dcba\",\"abcd\",\"dcba\",\"abcd\",\"dcba\",\"abcd\",\"dcba\",\"abcd\",\"dcba\"]",
+      "output": "['abcd']"
+    },
+    {
+      "input": "words = [\"aabbcc\",\"abcabc\",\"baccab\",\"xyz\",\"zyx\",\"yxz\",\"mnop\",\"ponm\",\"omnp\",\"nmop\",\"mpno\",\"pmno\"]",
+      "output": "['aabbcc', 'xyz', 'mnop']"
+    },
+    {
+      "input": "words = [\"abc\",\"acb\",\"bac\",\"bca\",\"cab\",\"cba\",\"abcd\",\"abdc\",\"acbd\",\"acdb\",\"adbc\",\"adcb\",\"bacd\",\"badc\",\"bcad\",\"bcda\",\"bdac\",\"bdca\",\"cabd\",\"cadb\",\"cbad\",\"cbda\",\"cdab\",\"cdba\",\"dabc\",\"dacb\",\"dbac\",\"dbca\",\"dcab\",\"dcba\",\"zzzz\",\"zzz\",\"zz\",\"z\"]",
+      "output": "['abc', 'abcd', 'zzzz', 'zzz', 'zz', 'z']"
+    },
+    {
+      "input": "words = [\"ab\",\"ba\",\"aabb\",\"bbaa\",\"abab\",\"baba\",\"abba\",\"baab\",\"ab\",\"ba\"]",
+      "output": "['ab', 'aabb', 'ab']"
+    },
+    {
+      "input": "words = [\"aabbcc\",\"baccab\",\"abcabc\",\"abc\",\"bac\",\"cab\",\"bac\",\"abc\",\"bac\",\"cab\",\"bac\",\"abc\",\"bac\",\"abc\",\"bac\",\"abc\",\"bac\",\"abc\",\"bac\",\"abc\",\"bac\",\"abc\",\"bac\",\"abc\",\"bac\",\"abc\",\"bac\",\"abc\",\"bac\",\"abc\",\"bac\",\"abc\"]",
+      "output": "['aabbcc', 'abc']"
+    },
+    {
+      "input": "words = [\"abcd\",\"dcba\",\"abdc\",\"cbad\",\"bcad\",\"adbc\",\"dabc\",\"cdab\",\"dacb\",\"cadb\",\"acbd\",\"bdac\",\"bdca\",\"abcd\",\"dcba\",\"abdc\",\"cbad\",\"bcad\",\"adbc\",\"dabc\",\"cdab\",\"dacb\",\"cadb\",\"acbd\",\"bdac\",\"bdca\",\"abcd\",\"dcba\",\"abdc\",\"cbad\",\"bcad\",\"adbc\",\"dabc\",\"cdab\",\"dacb\",\"cadb\",\"acbd\",\"bdac\",\"bdca\",\"abcd\",\"dcba\",\"abdc\",\"cbad\",\"bcad\",\"adbc\",\"dabc\",\"cdab\",\"dacb\",\"cadb\",\"acbd\",\"bdac\",\"bdca\"]",
+      "output": "['abcd']"
+    },
+    {
+      "input": "words = [\"aabbcc\",\"abcabc\",\"baccab\",\"ccabba\",\"cabacb\",\"abcabc\",\"aabbcc\",\"xyzxyz\",\"zyxzyx\",\"yxzyxz\",\"zyxzyx\"]",
+      "output": "['aabbcc', 'xyzxyz']"
+    },
+    {
+      "input": "words = [\"anagram\",\"nagaram\",\"margana\",\"gnarama\",\"granama\",\"aaagmnr\",\"ab\",\"ba\",\"abc\",\"cba\",\"abcd\",\"dcba\",\"xyz\",\"zyx\",\"yxz\",\"test\",\"sett\",\"tset\",\"stet\",\"ttes\",\"deed\",\"deep\",\"peed\",\"depe\",\"dpee\",\"aabbcc\",\"baccab\",\"abcabc\",\"rat\",\"tar\",\"art\",\"dog\",\"god\",\"cat\",\"act\",\"tac\",\"abcd\",\"abdc\",\"acbd\",\"acdb\",\"adbc\",\"adcb\",\"bacd\",\"badc\",\"bcad\",\"bcda\",\"bdac\",\"bdca\",\"cabd\",\"cadb\",\"cbad\",\"cbda\",\"cdab\",\"cdba\",\"dabc\",\"dacb\",\"dbac\",\"dbca\",\"dcab\",\"dcba\",\"zzzz\",\"zzz\",\"zz\",\"z\"]",
+      "output": "['anagram', 'ab', 'abc', 'abcd', 'xyz', 'test', 'deed', 'deep', 'aabbcc', 'rat', 'dog', 'cat', 'abcd', 'zzzz', 'zzz', 'zz', 'z']"
+    },
+    {
+      "input": "words = [\"word\",\"drow\",\"dwor\",\"owrd\",\"abcd\",\"dcba\",\"cadb\",\"bdac\",\"abcd\",\"dcba\",\"cabd\",\"bdac\"]",
+      "output": "['word', 'abcd']"
+    },
+    {
+      "input": "words = [\"abcd\",\"dcba\",\"abcd\",\"abdc\",\"abcd\",\"dcba\",\"abcd\",\"dcba\",\"abcd\"]",
+      "output": "['abcd']"
+    },
+    {
+      "input": "words = [\"anagram\",\"nagaram\",\"margana\",\"anagram\",\"nagaram\",\"margana\",\"anagram\",\"nagaram\"]",
+      "output": "['anagram']"
+    },
+    {
+      "input": "words = [\"evil\",\"vile\",\"live\",\"veil\",\"liVE\",\"EVIL\"]",
+      "output": "['evil', 'liVE', 'EVIL']"
+    },
+    {
+      "input": "words = [\"abcd\",\"dcba\",\"cdab\",\"bacd\",\"adcb\",\"cbad\",\"bcda\",\"abcd\",\"dcba\",\"cdab\",\"bacd\",\"adcb\",\"cbad\",\"bcda\"]",
+      "output": "['abcd']"
+    },
+    {
+      "input": "words = [\"rat\",\"tar\",\"art\",\"car\",\"arc\",\"arc\",\"rca\",\"arc\",\"cat\",\"tac\",\"act\",\"dog\",\"god\",\"god\",\"ogd\"]",
+      "output": "['rat', 'car', 'cat', 'dog']"
+    },
+    {
+      "input": "words = [\"hello\",\"billion\",\"nillion\",\"illonbi\",\"onbilin\",\"nnoblli\",\"olnibin\",\"lobinin\",\"ollinbi\",\"bloninl\",\"bnoloni\",\"noblinl\",\"llinbon\",\"lobinln\",\"nilonbl\",\"nonlibl\",\"oblinln\",\"nlonbil\",\"oninlb\",\"nobinll\",\"binlonl\",\"onlibnl\",\"nbinlol\",\"inlboon\",\"libnoln\",\"onilnbl\",\"inlobnl\",\"lnoibnl\",\"nobllin\",\"oinlnbl\",\"onilb\",\"nlibl\",\"inlbn\",\"lnbol\",\"onbil\",\"ilnob\",\"lnoib\",\"nlobi\",\"olnib\",\"blnio\",\"bnlio\",\"nliob\",\"libon\",\"inlob\",\"onilb\",\"nobil\",\"inobl\",\"onlbi\",\"nobil\",\"lobin\",\"linbo\",\"inolb\",\"nolbi\",\"libno\",\"inlob\",\"onilb\",\"nobli\",\"inobl\",\"onlbi\",\"nobil\",\"lobin\",\"linbo\",\"inolb\",\"nolbi\",\"libno\"]",
+      "output": "['hello', 'billion', 'nillion', 'illonbi', 'onbilin', 'nnoblli', 'olnibin', 'ollinbi', 'bloninl', 'bnoloni', 'noblinl', 'oninlb', 'nobinll', 'inlboon', 'libnoln', 'onilb', 'nlibl', 'inlbn', 'lnbol', 'onbil']"
+    },
+    {
+      "input": "words = [\"aabb\",\"abab\",\"bbaa\",\"abcd\",\"dcba\",\"cdab\",\"bcda\",\"mnop\",\"ponm\",\"opnm\",\"nmop\",\"qrst\",\"srqt\",\"qstr\",\"tqrs\",\"stqr\",\"abcd\",\"dcba\",\"abcd\",\"dcba\",\"abcd\"]",
+      "output": "['aabb', 'abcd', 'mnop', 'qrst', 'abcd']"
+    },
+    {
+      "input": "words = [\"triangle\",\"integral\",\"integral\",\"integral\",\"triangle\",\"integral\"]",
+      "output": "['triangle']"
+    },
+    {
+      "input": "words = [\"listen\",\"silent\",\"enlist\",\"google\",\"gooegl\",\"abc\",\"cab\",\"bac\",\"xyz\",\"zyx\",\"yxz\",\"test\",\"sett\",\"tset\",\"stet\",\"ttes\",\"deed\",\"deep\",\"peed\",\"depe\",\"dpee\"]",
+      "output": "['listen', 'google', 'abc', 'xyz', 'test', 'deed', 'deep']"
+    },
+    {
+      "input": "words = [\"deed\",\"deep\",\"peed\",\"depe\",\"dpee\",\"abcd\",\"dcba\",\"cbad\",\"adcb\",\"bacd\",\"cabd\",\"abcd\",\"dcba\",\"abcd\",\"dcba\",\"abcd\",\"dcba\",\"abcd\",\"dcba\",\"abcd\",\"dcba\",\"abcd\",\"dcba\",\"abcd\",\"dcba\"]",
+      "output": "['deed', 'deep', 'abcd']"
+    },
+    {
+      "input": "words = [\"aabbcc\",\"bbaacc\",\"abcabc\",\"cccccc\",\"bbbaaa\",\"aabbcc\",\"ccbbdd\"]",
+      "output": "['aabbcc', 'cccccc', 'bbbaaa', 'aabbcc', 'ccbbdd']"
+    },
+    {
+      "input": "words = [\"anagram\",\"nagaram\",\"margana\",\"gnarham\",\"ramnaga\",\"gramana\",\"amnagar\",\"mangara\",\"gnarama\",\"ramagna\",\"amnagra\",\"agranam\",\"mangnra\",\"gnanram\",\"rangnam\",\"anagram\",\"nagaram\",\"margana\",\"gnarham\",\"ramnaga\",\"gramana\",\"amnagar\",\"mangara\",\"gnarama\",\"ramagna\",\"amnagra\",\"agranam\",\"mangnra\",\"gnanram\",\"rangnam\"]",
+      "output": "['anagram', 'gnarham', 'ramnaga', 'mangnra', 'anagram', 'gnarham', 'ramnaga', 'mangnra']"
+    }
+  ]
+}

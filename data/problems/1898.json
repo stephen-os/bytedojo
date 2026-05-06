@@ -1,0 +1,465 @@
+{
+  "id": 1898,
+  "title": "Maximum Number of Removable Characters",
+  "slug": "maximum-number-of-removable-characters",
+  "difficulty": "Medium",
+  "topics": [
+    "Array",
+    "Two Pointers",
+    "String",
+    "Binary Search"
+  ],
+  "description": "You are given two strings s and p where p is a subsequence of s. You are also given a distinct 0-indexed integer array removable containing a subset of indices of s (s is also 0-indexed).\nYou want to choose an integer k (0 <= k <= removable.length) such that, after removing k characters from s using the first k indices in removable, p is still a subsequence of s. More formally, you will mark the character at s[removable[i]] for each 0 <= i < k, then remove all marked characters and check if p is still a subsequence.\nReturn the maximum k you can choose such that p is still a subsequence of s after the removals.\nA subsequence of a string is a new string generated from the original string with some characters (can be none) deleted without changing the relative order of the remaining characters.\nExample 1:\nExample 2:\nExample 3:\nConstraints:",
+  "examples": [
+    {
+      "example_num": 1,
+      "example_text": "Input: s = \"abcacb\", p = \"ab\", removable = [3,1,0]\nOutput: 2\nExplanation: After removing the characters at indices 3 and 1, \"abcacb\" becomes \"accb\".\n\"ab\" is a subsequence of \"accb\".\nIf we remove the characters at indices 3, 1, and 0, \"abcacb\" becomes \"ccb\", and \"ab\" is no longer a subsequence.\nHence, the maximum k is 2.",
+      "images": []
+    },
+    {
+      "example_num": 2,
+      "example_text": "Input: s = \"abcbddddd\", p = \"abcd\", removable = [3,2,1,4,5,6]\nOutput: 1\nExplanation: After removing the character at index 3, \"abcbddddd\" becomes \"abcddddd\".\n\"abcd\" is a subsequence of \"abcddddd\".",
+      "images": []
+    },
+    {
+      "example_num": 3,
+      "example_text": "Input: s = \"abcab\", p = \"abc\", removable = [0,1,2,3,4]\nOutput: 0\nExplanation: If you remove the first index in the array removable, \"abc\" is no longer a subsequence.",
+      "images": []
+    }
+  ],
+  "constraints": [
+    "1 <= p.length <= s.length <= 105",
+    "0 <= removable.length < s.length",
+    "0 <= removable[i] < s.length",
+    "p is a subsequence of s.",
+    "s and p both consist of lowercase English letters.",
+    "The elements in removable are distinct."
+  ],
+  "hints": [
+    "First, we need to think about solving an easier problem, If we remove a set of indices from the string does P exist in S as a subsequence",
+    "We can binary search the K and check by solving the above problem."
+  ],
+  "code_snippets": {
+    "cpp": "class Solution {\npublic:\n    int maximumRemovals(string s, string p, vector<int>& removable) {\n        \n    }\n};",
+    "java": "class Solution {\n    public int maximumRemovals(String s, String p, int[] removable) {\n        \n    }\n}",
+    "python": "class Solution(object):\n    def maximumRemovals(self, s, p, removable):\n        \"\"\"\n        :type s: str\n        :type p: str\n        :type removable: List[int]\n        :rtype: int\n        \"\"\"\n        ",
+    "python3": "class Solution:\n    def maximumRemovals(self, s: str, p: str, removable: List[int]) -> int:\n        ",
+    "c": "int maximumRemovals(char* s, char* p, int* removable, int removableSize) {\n    \n}",
+    "csharp": "public class Solution {\n    public int MaximumRemovals(string s, string p, int[] removable) {\n        \n    }\n}",
+    "javascript": "/**\n * @param {string} s\n * @param {string} p\n * @param {number[]} removable\n * @return {number}\n */\nvar maximumRemovals = function(s, p, removable) {\n    \n};",
+    "typescript": "function maximumRemovals(s: string, p: string, removable: number[]): number {\n    \n};",
+    "php": "class Solution {\n\n    /**\n     * @param String $s\n     * @param String $p\n     * @param Integer[] $removable\n     * @return Integer\n     */\n    function maximumRemovals($s, $p, $removable) {\n        \n    }\n}",
+    "swift": "class Solution {\n    func maximumRemovals(_ s: String, _ p: String, _ removable: [Int]) -> Int {\n        \n    }\n}",
+    "kotlin": "class Solution {\n    fun maximumRemovals(s: String, p: String, removable: IntArray): Int {\n        \n    }\n}",
+    "dart": "class Solution {\n  int maximumRemovals(String s, String p, List<int> removable) {\n    \n  }\n}",
+    "golang": "func maximumRemovals(s string, p string, removable []int) int {\n    \n}",
+    "ruby": "# @param {String} s\n# @param {String} p\n# @param {Integer[]} removable\n# @return {Integer}\ndef maximum_removals(s, p, removable)\n    \nend",
+    "scala": "object Solution {\n    def maximumRemovals(s: String, p: String, removable: Array[Int]): Int = {\n        \n    }\n}",
+    "rust": "impl Solution {\n    pub fn maximum_removals(s: String, p: String, removable: Vec<i32>) -> i32 {\n        \n    }\n}",
+    "racket": "(define/contract (maximum-removals s p removable)\n  (-> string? string? (listof exact-integer?) exact-integer?)\n  )",
+    "erlang": "-spec maximum_removals(S :: unicode:unicode_binary(), P :: unicode:unicode_binary(), Removable :: [integer()]) -> integer().\nmaximum_removals(S, P, Removable) ->\n  .",
+    "elixir": "defmodule Solution do\n  @spec maximum_removals(s :: String.t, p :: String.t, removable :: [integer]) :: integer\n  def maximum_removals(s, p, removable) do\n    \n  end\nend"
+  },
+  "input_output": [
+    {
+      "input": "s = \"pqrstu\", p = \"psu\", removable = [5,4,3,2,1,0]",
+      "output": "0"
+    },
+    {
+      "input": "s = \"abcdefghij\", p = \"acegi\", removable = [0,1,2,3,4,5,6,7,8,9]",
+      "output": "0"
+    },
+    {
+      "input": "s = \"deeddeede\", p = \"dee\", removable = [5,3,4,6]",
+      "output": "4"
+    },
+    {
+      "input": "s = \"deeedbbcccbdaa\", p = \"ddccbb\", removable = [8,2,3,0,7]",
+      "output": "0"
+    },
+    {
+      "input": "s = \"abcdefghijklmnopqrstuvwxyz\", p = \"acegikmoqsuwy\", removable = [1,3,5,7,9,11,13,15,17,19,21,23,25]",
+      "output": "13"
+    },
+    {
+      "input": "s = \"zzzzzzzzzz\", p = \"zz\", removable = [1,3,5,7]",
+      "output": "4"
+    },
+    {
+      "input": "s = \"aaaabbbb\", p = \"ab\", removable = [2,3,4,5]",
+      "output": "4"
+    },
+    {
+      "input": "s = \"abcdef\", p = \"abc\", removable = [5,4,3,2,1,0]",
+      "output": "3"
+    },
+    {
+      "input": "s = \"aabcbcb\", p = \"abc\", removable = [3,1,0,4]",
+      "output": "2"
+    },
+    {
+      "input": "s = \"abcdxyz\", p = \"ad\", removable = [0,1,2,3,4,5,6]",
+      "output": "0"
+    },
+    {
+      "input": "s = \"abcabcabc\", p = \"abc\", removable = [0,9,5,7]",
+      "output": "Error: list assignment index out of range"
+    },
+    {
+      "input": "s = \"abcacb\", p = \"ab\", removable = [3,1,0]",
+      "output": "2"
+    },
+    {
+      "input": "s = \"abcdefghijklmnopqrstuvwxyz\", p = \"acegikmoqsuwy\", removable = [0,2,4,6,8,10,12,14,16,18,20,22,24]",
+      "output": "0"
+    },
+    {
+      "input": "s = \"ababababab\", p = \"aaaa\", removable = [0,2,4,6,8]",
+      "output": "1"
+    },
+    {
+      "input": "s = \"mississippi\", p = \"issi\", removable = [0,1,2,3,4,5,6,7,8,9,10]",
+      "output": "4"
+    },
+    {
+      "input": "s = \"zpqom\", p = \"z\", removable = [0,1,2,3,4]",
+      "output": "0"
+    },
+    {
+      "input": "s = \"abcab\", p = \"abc\", removable = [0,1,2,3,4]",
+      "output": "0"
+    },
+    {
+      "input": "s = \"xyz\", p = \"xyz\", removable = [0,1,2]",
+      "output": "0"
+    },
+    {
+      "input": "s = \"abcdef\", p = \"af\", removable = [1,2,3,4]",
+      "output": "4"
+    },
+    {
+      "input": "s = \"abcbddddd\", p = \"abcd\", removable = [3,2,1,4,5,6]",
+      "output": "1"
+    },
+    {
+      "input": "s = \"zazbzczdzezfzgzhzi\", p = \"abcdefg\", removable = [0,2,4,6,8,10,12,14,16]",
+      "output": "9"
+    },
+    {
+      "input": "s = \"pythonprogramming\", p = \"ppn\", removable = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17]",
+      "output": "0"
+    },
+    {
+      "input": "s = \"thisisaverylongstringthatweneedtoremovesomecharactersfrom\", p = \"thisisalong\", removable = [1,3,5,7,9,11,13,15,17,19,21,23,25,27,29,31,33,35,37,39]",
+      "output": "0"
+    },
+    {
+      "input": "s = \"mississippi\", p = \"miss\", removable = [0,1,2,3,4,5,6,7,8,9,10]",
+      "output": "0"
+    },
+    {
+      "input": "s = \"onetwothreefourfivesixseveneightnine\", p = \"onefivesix\", removable = [1,3,5,7,9,11,13,15,17,19,21,23,25,27,29,31,33,35,37,39,41]",
+      "output": "0"
+    },
+    {
+      "input": "s = \"abcdefghijklnmopqrstuvwxyz\", p = \"zyxwvutsrqponmlkjihgfedcba\", removable = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25]",
+      "output": "0"
+    },
+    {
+      "input": "s = \"abracadabra\", p = \"aca\", removable = [1,3,5,7,9,10]",
+      "output": "5"
+    },
+    {
+      "input": "s = \"aaaaaaaaaaaaaaaaaaaaaaaaaaab\", p = \"aaaab\", removable = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40]",
+      "output": "Error: list assignment index out of range"
+    },
+    {
+      "input": "s = \"leetcodeleetcodeleetcode\", p = \"leetcode\", removable = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23]",
+      "output": "16"
+    },
+    {
+      "input": "s = \"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", p = \"abcdefghijklnopqrstuvwxyz\", removable = [1,3,5,7,9,11,13,15,17,19,21,23,25,27,29,31,33,35,37,39,41,43,45,47,49,51,53,55,57,59]",
+      "output": "Error: list assignment index out of range"
+    },
+    {
+      "input": "s = \"qwertyuiopasdfghjklzxcvbnm\", p = \"qwerty\", removable = [0,1,2,3,4,5,10,11,12,13,14,15,20,21,22,23,24,25,30,31,32,33,34,35]",
+      "output": "0"
+    },
+    {
+      "input": "s = \"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", p = \"zzzz\", removable = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29]",
+      "output": "30"
+    },
+    {
+      "input": "s = \"abracadabra\", p = \"aa\", removable = [0,2,4,6,8,10]",
+      "output": "6"
+    },
+    {
+      "input": "s = \"thisisaverylongstringtocheckfortheedgecases\", p = \"this\", removable = [0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54,56,58,60,62,64,66,68,70,72,74,76,78,80,82,84,86,88,90,92,94,96]",
+      "output": "Error: list assignment index out of range"
+    },
+    {
+      "input": "s = \"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", p = \"abcdefghijklmnopqrstuvxyz\", removable = [0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54,56,58,60,62,64,66,68,70]",
+      "output": "Error: list assignment index out of range"
+    },
+    {
+      "input": "s = \"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", p = \"zzz\", removable = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39]",
+      "output": "29"
+    },
+    {
+      "input": "s = \"abcdefghijabcdefghijabcdefghij\", p = \"acegi\", removable = [0,3,6,9,12,15,18,21,24,27,30,33,36,39,42,45,48,51,54,57,60,63,66,69,72,75,78,80,81,82,83,84,85,86,87,88,89]",
+      "output": "Error: list assignment index out of range"
+    },
+    {
+      "input": "s = \"abacabadabacaba\", p = \"abc\", removable = [2, 5, 8, 11, 14]",
+      "output": "5"
+    },
+    {
+      "input": "s = \"abcdefghijklm\", p = \"abc\", removable = [0,1,2,3,4,5,6,7,8,9,10]",
+      "output": "0"
+    },
+    {
+      "input": "s = \"zzzzzzzzzz\", p = \"zz\", removable = [1,3,5,7,9]",
+      "output": "5"
+    },
+    {
+      "input": "s = \"thequickbrownfoxjumpsoverthelazydog\", p = \"quickbrownfox\", removable = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40]",
+      "output": "3"
+    },
+    {
+      "input": "s = \"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", p = \"abcdefghijklmnopqrstuvwxyz\", removable = [50,49,48,47,46,45,44,43,42,41,40,39,38,37,36,35,34,33,32,31,30,29,28,27,26,25,24,23,22,21,20,19,18,17,16,15,14,13,12,11,10,9,8,7,6,5,4,3,2,1,0]",
+      "output": "2"
+    },
+    {
+      "input": "s = \"zzzzzzzzzzzzzzzzzzzz\", p = \"zzzzz\", removable = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19]",
+      "output": "15"
+    },
+    {
+      "input": "s = \"abcdefghijklmnopqrstuvwxyz\", p = \"az\", removable = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24]",
+      "output": "0"
+    },
+    {
+      "input": "s = \"abcdeffedcba\", p = \"abcdef\", removable = [0,1,2,3,4,5,6,7,8,9,10,11]",
+      "output": "0"
+    },
+    {
+      "input": "s = \"mississippi\", p = \"issi\", removable = [2,3,4,5,6,7,8,9,10]",
+      "output": "3"
+    },
+    {
+      "input": "s = \"abcdefghijklmno\", p = \"def\", removable = [0,1,2,3,4,5,6,7,8,9,10,11,12,13]",
+      "output": "3"
+    },
+    {
+      "input": "s = \"zzzzzzzzzzzzzzzzzzzz\", p = \"zzzz\", removable = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19]",
+      "output": "16"
+    },
+    {
+      "input": "s = \"pneumonoultramicroscopicsilicovolcanoconiosis\", p = \"pus\", removable = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47]",
+      "output": "7"
+    },
+    {
+      "input": "s = \"aaaaaaabbbbbbb\", p = \"aabbb\", removable = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14]",
+      "output": "5"
+    },
+    {
+      "input": "s = \"abcdefghijklmnop\", p = \"mnop\", removable = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]",
+      "output": "12"
+    },
+    {
+      "input": "s = \"abcdefgabcdefgabcdefg\", p = \"abcdefgabcdefg\", removable = [7, 14, 21, 28, 35, 42, 49]",
+      "output": "Error: list assignment index out of range"
+    },
+    {
+      "input": "s = \"xyxzyzyzyxzyzyzyx\", p = \"xyz\", removable = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]",
+      "output": "9"
+    },
+    {
+      "input": "s = \"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", p = \"acegikmoqsuwy\", removable = [1,3,5,7,9,11,13,15,17,19,21,23,25,27,29,31,33,35,37,39,41,43,45,47,49,51,53,55,57,59]",
+      "output": "Error: list assignment index out of range"
+    },
+    {
+      "input": "s = \"banana\", p = \"ban\", removable = [0, 2, 4]",
+      "output": "0"
+    },
+    {
+      "input": "s = \"aaaabbbbccccdddd\", p = \"abcd\", removable = [3,7,11,15]",
+      "output": "4"
+    },
+    {
+      "input": "s = \"abracadabra\", p = \"aca\", removable = [1,3,5,7,9]",
+      "output": "5"
+    },
+    {
+      "input": "s = \"banana\", p = \"ban\", removable = [0,1,2,3,4,5]",
+      "output": "0"
+    },
+    {
+      "input": "s = \"ababababababababa\", p = \"aaa\", removable = [1,3,5,7,9,11,13,15,17]",
+      "output": "Error: list assignment index out of range"
+    },
+    {
+      "input": "s = \"abcdefffffghijklmnopqrstuvwxyz\", p = \"acegikmoqsuwy\", removable = [5,5,5,5,5,5,5,5,5,5,10,10,10,10,10,10,10,10,10,10,15,15,15,15,15,15,15,15,15,15,20,20,20,20,20,20,20,20,20,20]",
+      "output": "10"
+    },
+    {
+      "input": "s = \"aabbccddeeffgghhii\", p = \"abcdefghi\", removable = [1, 3, 5, 7, 9, 11, 13, 15, 17]",
+      "output": "9"
+    },
+    {
+      "input": "s = \"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", p = \"abcdefghijklmnopqrstuvwxzy\", removable = [0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38]",
+      "output": "0"
+    },
+    {
+      "input": "s = \"abcdabcdabcd\", p = \"abc\", removable = [0,1,2,3,4,5,6,7,8,9,10,11]",
+      "output": "8"
+    },
+    {
+      "input": "s = \"abcdabcdabcdabcdabcd\", p = \"abcdabcdabcd\", removable = [4, 8, 12, 16, 20, 24, 28, 32, 36]",
+      "output": "Error: list assignment index out of range"
+    },
+    {
+      "input": "s = \"thisisateststring\", p = \"tst\", removable = [1,3,5,7,9,11,13,15,17,19,20,21,22,23,24]",
+      "output": "5"
+    },
+    {
+      "input": "s = \"xyzxyzxyzxyzxyzxyz\", p = \"xyz\", removable = [0,3,6,9,12,15,18,1,4,7,10,13,16,19,2,5,8,11,14,17,20]",
+      "output": "Error: list assignment index out of range"
+    },
+    {
+      "input": "s = \"qwertyuiopasdfghjklzxcvbnm\", p = \"qz\", removable = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25]",
+      "output": "0"
+    },
+    {
+      "input": "s = \"abcabcabcabcabc\", p = \"abcabcabc\", removable = [1, 3, 5, 7, 9, 11, 13, 15, 17]",
+      "output": "4"
+    },
+    {
+      "input": "s = \"xyzzxyzzxyzz\", p = \"xyz\", removable = [0,2,4,6,8,10]",
+      "output": "4"
+    },
+    {
+      "input": "s = \"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", p = \"zz\", removable = [0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54,56,58,60,62,64,66,68,70,72,74,76,78,80,82,84,86,88,90,92,94,96,98,100,102,104,106,108,110,112,114,116,118,120,122,124,126,128,130,132,134,136,138,140,142,144,146,148,150,152,154,156,158,160,162,164,166,168,170,172,174,176,178,180,182,184,186,188,190,192,194,196,198,200,202,204,206,208,210,212,214,216,218,220,222,224,226,228,230,232,234,236,238,240,242,244,246,248,250,252,254]",
+      "output": "Error: list assignment index out of range"
+    },
+    {
+      "input": "s = \"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", p = \"abcdefghijklmnopqrstuvwxyz\", removable = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59]",
+      "output": "1"
+    },
+    {
+      "input": "s = \"aaaaaaaaaaa\", p = \"aaaaa\", removable = [1,3,5,7,9]",
+      "output": "5"
+    },
+    {
+      "input": "s = \"abcdabcdabcdabcdabcdabcd\", p = \"abcd\", removable = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29]",
+      "output": "20"
+    },
+    {
+      "input": "s = \"abababababababababab\", p = \"aabbaabb\", removable = [0,2,4,6,8,10,12,14,16,18]",
+      "output": "4"
+    },
+    {
+      "input": "s = \"hellohellohellohello\", p = \"heo\", removable = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35]",
+      "output": "15"
+    },
+    {
+      "input": "s = \"xyzzxyzzxyzz\", p = \"xyz\", removable = [1,3,5,7,9,11]",
+      "output": "4"
+    },
+    {
+      "input": "s = \"mississippi\", p = \"issi\", removable = [3,1,0,4,5,2,6,7,8,9,10]",
+      "output": "3"
+    },
+    {
+      "input": "s = \"ababababababababababababababababab\", p = \"aaaaaaa\", removable = [1,3,5,7,9,11,13,15,17,19,21,23,25,27,29,31,33,35,37,39,41,43,45,47,49,51,53,55,57,59]",
+      "output": "Error: list assignment index out of range"
+    },
+    {
+      "input": "s = \"xyzzxyzzxyzz\", p = \"xyz\", removable = [1, 4, 7, 10, 13, 16]",
+      "output": "Error: list assignment index out of range"
+    },
+    {
+      "input": "s = \"abracadabra\", p = \"ac\", removable = [0,1,2,3,4,5,6,7,8,9,10]",
+      "output": "3"
+    },
+    {
+      "input": "s = \"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", p = \"zzzzzz\", removable = [1,3,5,7,9,11,13,15,17,19,21,23,25,27,29,31,33,35,37,39,41,43,45,47,49,51,53,55,57,59]",
+      "output": "Error: list assignment index out of range"
+    },
+    {
+      "input": "s = \"bcaabcbabcabc\", p = \"abc\", removable = [0,1,2,3,4,5,6,7,8,9,10,11]",
+      "output": "10"
+    },
+    {
+      "input": "s = \"zzzzzzzzzzzzzzzzzzzz\", p = \"zzz\", removable = [1, 3, 5, 7, 9, 11, 13, 15, 17, 19]",
+      "output": "10"
+    },
+    {
+      "input": "s = \"abcdefghijklmnopqrstuvwxyz\", p = \"bdfhjlnprtvxz\", removable = [1,5,9,13,17,21,25]",
+      "output": "0"
+    },
+    {
+      "input": "s = \"abcdeffedcba\", p = \"abcdef\", removable = [0,2,4,6,8,10]",
+      "output": "0"
+    },
+    {
+      "input": "s = \"findinganagrams\", p = \"anag\", removable = [1,3,5,7,9,11,13,15,17]",
+      "output": "3"
+    },
+    {
+      "input": "s = \"xyzxyzxyzxyzxyzxyz\", p = \"xyz\", removable = [0,3,6,9,12,15,18,21,24,27,1,4,7,10,13,16,19,22,25,28,2,5,8,11,14,17,20,23,26,29]",
+      "output": "Error: list assignment index out of range"
+    },
+    {
+      "input": "s = \"mississippi\", p = \"miss\", removable = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]",
+      "output": "0"
+    },
+    {
+      "input": "s = \"abcdefghijklmnopqrstuvwxyz\", p = \"adgjmpsvy\", removable = [0,2,4,6,8,10,12,14,16,18,20,22,24]",
+      "output": "0"
+    },
+    {
+      "input": "s = \"aaaaabbbbbccccdddddeeeee\", p = \"abcde\", removable = [5,10,15,20,25]",
+      "output": "Error: list assignment index out of range"
+    },
+    {
+      "input": "s = \"hellotherehowareyou\", p = \"heoy\", removable = [1,3,5,7,9,11,13,15,17]",
+      "output": "4"
+    },
+    {
+      "input": "s = \"xyzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", p = \"xyz\", removable = [1,3,5,7,9,11,13,15,17,19,21,23,25,27,29,31,33,35,37,39,41,43,45,47,49,51,53,55,57,59]",
+      "output": "0"
+    },
+    {
+      "input": "s = \"aaaaabbbbbcccc\", p = \"abc\", removable = [5,6,7,8,9,10]",
+      "output": "4"
+    },
+    {
+      "input": "s = \"pneumonoultramicroscopicsilicovolcanoconiosis\", p = \"pneumo\", removable = [0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54]",
+      "output": "0"
+    },
+    {
+      "input": "s = \"thisisaverylongstring\", p = \"tils\", removable = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]",
+      "output": "3"
+    },
+    {
+      "input": "s = \"leetcodeleetcodeleetcodeleetcode\", p = \"leetcodelt\", removable = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31]",
+      "output": "16"
+    },
+    {
+      "input": "s = \"abcdefghijklmnopqrstuvwxyz\", p = \"acegikmoqsuwy\", removable = [1,3,5,7,9,11,13,15,17,19,21,23]",
+      "output": "12"
+    },
+    {
+      "input": "s = \"aaaaaaabbbbbbcccccc\", p = \"abc\", removable = [0,7,14,1,8,15,2,9,16,3,10,17,4,11,18,5,12,19,6,13,20]",
+      "output": "Error: list assignment index out of range"
+    },
+    {
+      "input": "s = \"abcdefghijabcdefghij\", p = \"acegik\", removable = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19]",
+      "output": "0"
+    },
+    {
+      "input": "s = \"nnnnoooooommmm\", p = \"nom\", removable = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14]",
+      "output": "3"
+    }
+  ]
+}

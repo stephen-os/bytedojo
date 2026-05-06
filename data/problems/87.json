@@ -1,0 +1,509 @@
+{
+  "id": 87,
+  "title": "Scramble String",
+  "slug": "scramble-string",
+  "difficulty": "Hard",
+  "topics": [
+    "String",
+    "Dynamic Programming"
+  ],
+  "description": "We can scramble a string s to get a string t using the following algorithm:\nGiven two strings s1 and s2 of the same length, return true if s2 is a scrambled string of s1, otherwise, return false.\nExample 1:\nExample 2:\nExample 3:\nConstraints:",
+  "examples": [
+    {
+      "example_num": 1,
+      "example_text": "Input: s1 = \"great\", s2 = \"rgeat\"\nOutput: true\nExplanation: One possible scenario applied on s1 is:\n\"great\" --> \"gr/eat\" // divide at random index.\n\"gr/eat\" --> \"gr/eat\" // random decision is not to swap the two substrings and keep them in order.\n\"gr/eat\" --> \"g/r / e/at\" // apply the same algorithm recursively on both substrings. divide at random index each of them.\n\"g/r / e/at\" --> \"r/g / e/at\" // random decision was to swap the first substring and to keep the second substring in the same order.\n\"r/g / e/at\" --> \"r/g / e/ a/t\" // again apply the algorithm recursively, divide \"at\" to \"a/t\".\n\"r/g / e/ a/t\" --> \"r/g / e/ a/t\" // random decision is to keep both substrings in the same order.\nThe algorithm stops now, and the result string is \"rgeat\" which is s2.\nAs one possible scenario led s1 to be scrambled to s2, we return true.",
+      "images": []
+    },
+    {
+      "example_num": 2,
+      "example_text": "Input: s1 = \"abcde\", s2 = \"caebd\"\nOutput: false",
+      "images": []
+    },
+    {
+      "example_num": 3,
+      "example_text": "Input: s1 = \"a\", s2 = \"a\"\nOutput: true",
+      "images": []
+    }
+  ],
+  "constraints": [
+    "s1.length == s2.length",
+    "1 <= s1.length <= 30",
+    "s1 and s2 consist of lowercase English letters."
+  ],
+  "hints": [],
+  "code_snippets": {
+    "cpp": "class Solution {\npublic:\n    bool isScramble(string s1, string s2) {\n        \n    }\n};",
+    "java": "class Solution {\n    public boolean isScramble(String s1, String s2) {\n        \n    }\n}",
+    "python": "class Solution(object):\n    def isScramble(self, s1, s2):\n        \"\"\"\n        :type s1: str\n        :type s2: str\n        :rtype: bool\n        \"\"\"\n        ",
+    "python3": "class Solution:\n    def isScramble(self, s1: str, s2: str) -> bool:\n        ",
+    "c": "bool isScramble(char* s1, char* s2) {\n    \n}",
+    "csharp": "public class Solution {\n    public bool IsScramble(string s1, string s2) {\n        \n    }\n}",
+    "javascript": "/**\n * @param {string} s1\n * @param {string} s2\n * @return {boolean}\n */\nvar isScramble = function(s1, s2) {\n    \n};",
+    "typescript": "function isScramble(s1: string, s2: string): boolean {\n    \n};",
+    "php": "class Solution {\n\n    /**\n     * @param String $s1\n     * @param String $s2\n     * @return Boolean\n     */\n    function isScramble($s1, $s2) {\n        \n    }\n}",
+    "swift": "class Solution {\n    func isScramble(_ s1: String, _ s2: String) -> Bool {\n        \n    }\n}",
+    "kotlin": "class Solution {\n    fun isScramble(s1: String, s2: String): Boolean {\n        \n    }\n}",
+    "dart": "class Solution {\n  bool isScramble(String s1, String s2) {\n    \n  }\n}",
+    "golang": "func isScramble(s1 string, s2 string) bool {\n    \n}",
+    "ruby": "# @param {String} s1\n# @param {String} s2\n# @return {Boolean}\ndef is_scramble(s1, s2)\n    \nend",
+    "scala": "object Solution {\n    def isScramble(s1: String, s2: String): Boolean = {\n        \n    }\n}",
+    "rust": "impl Solution {\n    pub fn is_scramble(s1: String, s2: String) -> bool {\n        \n    }\n}",
+    "racket": "(define/contract (is-scramble s1 s2)\n  (-> string? string? boolean?)\n  )",
+    "erlang": "-spec is_scramble(S1 :: unicode:unicode_binary(), S2 :: unicode:unicode_binary()) -> boolean().\nis_scramble(S1, S2) ->\n  .",
+    "elixir": "defmodule Solution do\n  @spec is_scramble(s1 :: String.t, s2 :: String.t) :: boolean\n  def is_scramble(s1, s2) do\n    \n  end\nend"
+  },
+  "input_output": [
+    {
+      "input": "s1 = \"abcdefghij\", s2 = \"ihgfedcbaj\"",
+      "output": "True"
+    },
+    {
+      "input": "s1 = \"noon\", s2 = \"onon\"",
+      "output": "True"
+    },
+    {
+      "input": "s1 = \"abc\", s2 = \"cab\"",
+      "output": "True"
+    },
+    {
+      "input": "s1 = \"abcdefghijklmnop\", s2 = \"ponmlkjihgfedcba\"",
+      "output": "True"
+    },
+    {
+      "input": "s1 = \"abcde\", s2 = \"caebd\"",
+      "output": "False"
+    },
+    {
+      "input": "s1 = \"abcdefghijk\", s2 = \"abcdefghijk\"",
+      "output": "True"
+    },
+    {
+      "input": "s1 = \"abc\", s2 = \"bca\"",
+      "output": "True"
+    },
+    {
+      "input": "s1 = \"abcdefgh\", s2 = \"hgfedcba\"",
+      "output": "True"
+    },
+    {
+      "input": "s1 = \"abcdefghij\", s2 = \"ijabcdefgh\"",
+      "output": "True"
+    },
+    {
+      "input": "s1 = \"eebaacbcbcadaaedceaaacadccd\", s2 = \"eadcaacabaddaceacbceaabe\"",
+      "output": "False"
+    },
+    {
+      "input": "s1 = \"ab\", s2 = \"ba\"",
+      "output": "True"
+    },
+    {
+      "input": "s1 = \"abcdefghij\", s2 = \"jihgfedcba\"",
+      "output": "True"
+    },
+    {
+      "input": "s1 = \"aabbcc\", s2 = \"abcabc\"",
+      "output": "True"
+    },
+    {
+      "input": "s1 = \"aabbcc\", s2 = \"ccbbaa\"",
+      "output": "True"
+    },
+    {
+      "input": "s1 = \"great\", s2 = \"rgeat\"",
+      "output": "True"
+    },
+    {
+      "input": "s1 = \"abcd\", s2 = \"abcd\"",
+      "output": "True"
+    },
+    {
+      "input": "s1 = \"abcd\", s2 = \"bdac\"",
+      "output": "False"
+    },
+    {
+      "input": "s1 = \"hello\", s2 = \"lohel\"",
+      "output": "True"
+    },
+    {
+      "input": "s1 = \"abcd\", s2 = \"dcba\"",
+      "output": "True"
+    },
+    {
+      "input": "s1 = \"aabb\", s2 = \"baba\"",
+      "output": "True"
+    },
+    {
+      "input": "s1 = \"abcdefgh\", s2 = \"efghabcd\"",
+      "output": "True"
+    },
+    {
+      "input": "s1 = \"eebaacb\", s2 = \"aceebbb\"",
+      "output": "False"
+    },
+    {
+      "input": "s1 = \"xstjzkfpqczbdy\", s2 = \"bdyxzcqpzkjfst\"",
+      "output": "True"
+    },
+    {
+      "input": "s1 = \"hello\", s2 = \"olelh\"",
+      "output": "True"
+    },
+    {
+      "input": "s1 = \"xyzz\", s2 = \"zzyx\"",
+      "output": "True"
+    },
+    {
+      "input": "s1 = \"xyz\", s2 = \"zyx\"",
+      "output": "True"
+    },
+    {
+      "input": "s1 = \"abcdefg\", s2 = \"efgabcd\"",
+      "output": "True"
+    },
+    {
+      "input": "s1 = \"abcdefghijk\", s2 = \"kabcdefghij\"",
+      "output": "True"
+    },
+    {
+      "input": "s1 = \"a\", s2 = \"a\"",
+      "output": "True"
+    },
+    {
+      "input": "s1 = \"algorithm\", s2 = \"logarithm\"",
+      "output": "True"
+    },
+    {
+      "input": "s1 = \"introduction\", s2 = \"oitrnuduinc\"",
+      "output": "False"
+    },
+    {
+      "input": "s1 = \"abcdabcd\", s2 = \"ddddcccc\"",
+      "output": "False"
+    },
+    {
+      "input": "s1 = \"abcdexyz\", s2 = \"zyxdecba\"",
+      "output": "True"
+    },
+    {
+      "input": "s1 = \"abcdxyz\", s2 = \"yzabcdx\"",
+      "output": "True"
+    },
+    {
+      "input": "s1 = \"abcdefghij\", s2 = \"efghijklabdc\"",
+      "output": "False"
+    },
+    {
+      "input": "s1 = \"recursion\", s2 = \"rursiicno\"",
+      "output": "False"
+    },
+    {
+      "input": "s1 = \"abcdefghij\", s2 = \"jihgfecdba\"",
+      "output": "True"
+    },
+    {
+      "input": "s1 = \"abcdefgh\", s2 = \"abcdghfe\"",
+      "output": "True"
+    },
+    {
+      "input": "s1 = \"abcdefghij\", s2 = \"abijhgfedc\"",
+      "output": "True"
+    },
+    {
+      "input": "s1 = \"xylophone\", s2 = \"eponhloxy\"",
+      "output": "True"
+    },
+    {
+      "input": "s1 = \"abcdefg\", s2 = \"gfedcba\"",
+      "output": "True"
+    },
+    {
+      "input": "s1 = \"scramble\", s2 = \"elmacrbs\"",
+      "output": "True"
+    },
+    {
+      "input": "s1 = \"interview\", s2 = \"wetneivrt\"",
+      "output": "False"
+    },
+    {
+      "input": "s1 = \"abababab\", s2 = \"babababa\"",
+      "output": "True"
+    },
+    {
+      "input": "s1 = \"backtracking\", s2 = \"tcgakknbirn\"",
+      "output": "False"
+    },
+    {
+      "input": "s1 = \"abcdefgh\", s2 = \"ghfedcba\"",
+      "output": "True"
+    },
+    {
+      "input": "s1 = \"abcdexyz\", s2 = \"xyzexbcd\"",
+      "output": "False"
+    },
+    {
+      "input": "s1 = \"abcdefgh\", s2 = \"cdabefgh\"",
+      "output": "True"
+    },
+    {
+      "input": "s1 = \"qwertyuiop\", s2 = \"yuiopqwert\"",
+      "output": "True"
+    },
+    {
+      "input": "s1 = \"intention\", s2 = \"tennotiin\"",
+      "output": "True"
+    },
+    {
+      "input": "s1 = \"abcdefghij\", s2 = \"jihgfedabc\"",
+      "output": "True"
+    },
+    {
+      "input": "s1 = \"abcd\", s2 = \"cdab\"",
+      "output": "True"
+    },
+    {
+      "input": "s1 = \"scramble\", s2 = \"melbrcsa\"",
+      "output": "True"
+    },
+    {
+      "input": "s1 = \"abcdexyz\", s2 = \"xyzabcde\"",
+      "output": "True"
+    },
+    {
+      "input": "s1 = \"algorithm\", s2 = \"rhtaglmoi\"",
+      "output": "False"
+    },
+    {
+      "input": "s1 = \"dynamicprogramming\", s2 = \"nmmagorpdynci\"",
+      "output": "Error: string index out of range"
+    },
+    {
+      "input": "s1 = \"optimization\", s2 = \"tivioonpmzas\"",
+      "output": "False"
+    },
+    {
+      "input": "s1 = \"interview\", s2 = \"ewrotnive\"",
+      "output": "False"
+    },
+    {
+      "input": "s1 = \"programming\", s2 = \"gnimmargorp\"",
+      "output": "True"
+    },
+    {
+      "input": "s1 = \"abcdefghij\", s2 = \"efghabcdij\"",
+      "output": "True"
+    },
+    {
+      "input": "s1 = \"recursion\", s2 = \"suoncire\"",
+      "output": "False"
+    },
+    {
+      "input": "s1 = \"abcdefghij\", s2 = \"abcdjihgfe\"",
+      "output": "True"
+    },
+    {
+      "input": "s1 = \"abcdefghij\", s2 = \"fedcbaighj\"",
+      "output": "True"
+    },
+    {
+      "input": "s1 = \"waterbottle\", s2 = \"elbottlewat\"",
+      "output": "False"
+    },
+    {
+      "input": "s1 = \"abcdefghij\", s2 = \"ghfedcbaab\"",
+      "output": "False"
+    },
+    {
+      "input": "s1 = \"scramble\", s2 = \"leacrbms\"",
+      "output": "True"
+    },
+    {
+      "input": "s1 = \"mississippi\", s2 = \"ppiimssiss\"",
+      "output": "Error: string index out of range"
+    },
+    {
+      "input": "s1 = \"scramble\", s2 = \"rscmable\"",
+      "output": "True"
+    },
+    {
+      "input": "s1 = \"abcdefghij\", s2 = \"ihgfedcba\"",
+      "output": "Error: string index out of range"
+    },
+    {
+      "input": "s1 = \"algorithm\", s2 = \"rhtlgmaoi\"",
+      "output": "False"
+    },
+    {
+      "input": "s1 = \"scrambledstring\", s2 = \"stgimrebldstring\"",
+      "output": "False"
+    },
+    {
+      "input": "s1 = \"abcdefghij\", s2 = \"ijklmnopqr\", s2 = \"mnopqrjkl\"",
+      "output": "False"
+    },
+    {
+      "input": "s1 = \"abcdefghij\", s2 = \"hgfecdba\"",
+      "output": "Error: string index out of range"
+    },
+    {
+      "input": "s1 = \"abcdefghijk\", s2 = \"efghijkabcd\"",
+      "output": "True"
+    },
+    {
+      "input": "s1 = \"abracadabra\", s2 = \"carrabbadaba\"",
+      "output": "False"
+    },
+    {
+      "input": "s1 = \"abcdefghij\", s2 = \"ihgfedcbaa\"",
+      "output": "False"
+    },
+    {
+      "input": "s1 = \"abcdefghij\", s2 = \"hgfedcbaij\"",
+      "output": "True"
+    },
+    {
+      "input": "s1 = \"abcdefghij\", s2 = \"abcdghfjie\"",
+      "output": "True"
+    },
+    {
+      "input": "s1 = \"abcdefghij\", s2 = \"abcdefghij\"",
+      "output": "True"
+    },
+    {
+      "input": "s1 = \"abcdefghij\", s2 = \"ihgfjedcba\"",
+      "output": "True"
+    },
+    {
+      "input": "s1 = \"abcdefghij\", s2 = \"ijklabefgh\"",
+      "output": "False"
+    },
+    {
+      "input": "s1 = \"abcdefghij\", s2 = \"ghijefabcd\"",
+      "output": "True"
+    },
+    {
+      "input": "s1 = \"abcdefghij\", s2 = \"ihgfjklmno\"",
+      "output": "False"
+    },
+    {
+      "input": "s1 = \"interview\", s2 = \"reterivne\"",
+      "output": "False"
+    },
+    {
+      "input": "s1 = \"python\", s2 = \"nohtyp\"",
+      "output": "True"
+    },
+    {
+      "input": "s1 = \"abcdefghij\", s2 = \"bcdefghiaj\"",
+      "output": "True"
+    },
+    {
+      "input": "s1 = \"abcdefghij\", s2 = \"cdabefghij\"",
+      "output": "True"
+    },
+    {
+      "input": "s1 = \"abcdabcd\", s2 = \"dcbacabd\"",
+      "output": "True"
+    },
+    {
+      "input": "s1 = \"scramble\", s2 = \"blecrmas\"",
+      "output": "True"
+    },
+    {
+      "input": "s1 = \"abcdefghij\", s2 = \"cbadefghij\"",
+      "output": "True"
+    },
+    {
+      "input": "s1 = \"optimization\", s2 = \"nizationopti\"",
+      "output": "False"
+    },
+    {
+      "input": "s1 = \"intvw\", s2 = \"nvtiw\"",
+      "output": "True"
+    },
+    {
+      "input": "s1 = \"abcdefghij\", s2 = \"cdefghijab\"",
+      "output": "True"
+    },
+    {
+      "input": "s1 = \"intervw\", s2 = \"wvnreit\"",
+      "output": "False"
+    },
+    {
+      "input": "s1 = \"abcdefghij\", s2 = \"efghijabcd\"",
+      "output": "True"
+    },
+    {
+      "input": "s1 = \"optimization\", s2 = \"nizaitpmosio\"",
+      "output": "False"
+    },
+    {
+      "input": "s1 = \"algorithm\", s2 = \"rhtgmialo\"",
+      "output": "False"
+    },
+    {
+      "input": "s1 = \"interview\", s2 = \"terviewin\"",
+      "output": "True"
+    },
+    {
+      "input": "s1 = \"abcdabcd\", s2 = \"abcdabcd\"",
+      "output": "True"
+    },
+    {
+      "input": "s1 = \"abcdefghij\", s2 = \"jabcdefghi\"",
+      "output": "True"
+    },
+    {
+      "input": "s1 = \"abcdefghijk\", s2 = \"kjiabcdefgh\"",
+      "output": "True"
+    },
+    {
+      "input": "s1 = \"abab\", s2 = \"baba\"",
+      "output": "True"
+    },
+    {
+      "input": "s1 = \"scramble\", s2 = \"melcarbs\"",
+      "output": "False"
+    },
+    {
+      "input": "s1 = \"thisisatest\", s2 = \"tsaistestihis\"",
+      "output": "True"
+    },
+    {
+      "input": "s1 = \"abcdefghij\", s2 = \"fghebacijd\"",
+      "output": "False"
+    },
+    {
+      "input": "s1 = \"abcdefghij\", s2 = \"ijklabcdefgh\"",
+      "output": "False"
+    },
+    {
+      "input": "s1 = \"scramble\", s2 = \"ercmsbal\"",
+      "output": "False"
+    },
+    {
+      "input": "s1 = \"scramblestring\", s2 = \"gterinmbscrl\"",
+      "output": "False"
+    },
+    {
+      "input": "s1 = \"abcdefghij\", s2 = \"cbadefghji\"",
+      "output": "True"
+    },
+    {
+      "input": "s1 = \"introduction\", s2 = \"ntrioduicton\"",
+      "output": "True"
+    },
+    {
+      "input": "s1 = \"abcdefghij\", s2 = \"abjihgfedc\"",
+      "output": "True"
+    },
+    {
+      "input": "s1 = \"abcdefghij\", s2 = \"abcdefghijab\"",
+      "output": "True"
+    },
+    {
+      "input": "s1 = \"recursion\", s2 = \"insrucero\"",
+      "output": "False"
+    }
+  ]
+}

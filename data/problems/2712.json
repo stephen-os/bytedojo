@@ -1,0 +1,704 @@
+{
+  "id": 2712,
+  "title": "Minimum Cost to Make All Characters Equal",
+  "slug": "minimum-cost-to-make-all-characters-equal",
+  "difficulty": "Medium",
+  "topics": [
+    "String",
+    "Dynamic Programming",
+    "Greedy"
+  ],
+  "description": "You are given a 0-indexed binary string s of length n on which you can apply two types of operations:\nReturn the minimum cost to make all characters of the string equal.\nInvert a character means\u00a0if its value is '0' it becomes '1' and vice-versa.\nExample 1:\nExample 2:\nConstraints:",
+  "examples": [
+    {
+      "example_num": 1,
+      "example_text": "Input: s = \"0011\"\nOutput: 2\nExplanation: Apply the second operation with i = 2 to obtain s = \"0000\" for a cost of 2. It can be shown that 2 is the minimum cost to make all characters equal.",
+      "images": []
+    },
+    {
+      "example_num": 2,
+      "example_text": "Input: s = \"010101\"\nOutput: 9\nExplanation: Apply the first operation with i = 2 to obtain s = \"101101\" for a cost of 3.\nApply the first operation with i = 1 to obtain s = \"011101\" for a cost of 2. \nApply the first operation with i = 0 to obtain s = \"111101\" for a cost of 1. \nApply the second operation with i = 4 to obtain s = \"111110\" for a cost of 2.\nApply the second operation with i = 5 to obtain s = \"111111\" for a cost of 1. \nThe total cost to make all characters equal is 9. It can be shown that 9 is the minimum cost to make all characters equal.",
+      "images": []
+    }
+  ],
+  "constraints": [
+    "1 <= s.length == n <= 105",
+    "s[i] is either '0' or '1'"
+  ],
+  "hints": [
+    "For every index i, calculate the number of operations required to make the prefix [0, i - 1] equal to the character at index i, denoted prefix[i].",
+    "For every index i, calculate the number of operations required to make the suffix [i + 1, n - 1] equal to the character at index i, denoted suffix[i].",
+    "The final string will contain at least one character that is left unchanged; Therefore, the answer is the minimum of prefix[i] + suffix[i] for every i in [0, n - 1]."
+  ],
+  "code_snippets": {
+    "cpp": "class Solution {\npublic:\n    long long minimumCost(string s) {\n        \n    }\n};",
+    "java": "class Solution {\n    public long minimumCost(String s) {\n        \n    }\n}",
+    "python": "class Solution(object):\n    def minimumCost(self, s):\n        \"\"\"\n        :type s: str\n        :rtype: int\n        \"\"\"\n        ",
+    "python3": "class Solution:\n    def minimumCost(self, s: str) -> int:\n        ",
+    "c": "long long minimumCost(char* s) {\n    \n}",
+    "csharp": "public class Solution {\n    public long MinimumCost(string s) {\n        \n    }\n}",
+    "javascript": "/**\n * @param {string} s\n * @return {number}\n */\nvar minimumCost = function(s) {\n    \n};",
+    "typescript": "function minimumCost(s: string): number {\n    \n};",
+    "php": "class Solution {\n\n    /**\n     * @param String $s\n     * @return Integer\n     */\n    function minimumCost($s) {\n        \n    }\n}",
+    "swift": "class Solution {\n    func minimumCost(_ s: String) -> Int {\n        \n    }\n}",
+    "kotlin": "class Solution {\n    fun minimumCost(s: String): Long {\n        \n    }\n}",
+    "dart": "class Solution {\n  int minimumCost(String s) {\n    \n  }\n}",
+    "golang": "func minimumCost(s string) int64 {\n    \n}",
+    "ruby": "# @param {String} s\n# @return {Integer}\ndef minimum_cost(s)\n    \nend",
+    "scala": "object Solution {\n    def minimumCost(s: String): Long = {\n        \n    }\n}",
+    "rust": "impl Solution {\n    pub fn minimum_cost(s: String) -> i64 {\n        \n    }\n}",
+    "racket": "(define/contract (minimum-cost s)\n  (-> string? exact-integer?)\n  )",
+    "erlang": "-spec minimum_cost(S :: unicode:unicode_binary()) -> integer().\nminimum_cost(S) ->\n  .",
+    "elixir": "defmodule Solution do\n  @spec minimum_cost(s :: String.t) :: integer\n  def minimum_cost(s) do\n    \n  end\nend"
+  },
+  "input_output": [
+    {
+      "input": "s = \"100100100\"",
+      "output": "13"
+    },
+    {
+      "input": "s = \"00000000000000000000000000000000000000000000000000\"",
+      "output": "0"
+    },
+    {
+      "input": "s = \"110011\"",
+      "output": "4"
+    },
+    {
+      "input": "s = \"11110000\"",
+      "output": "4"
+    },
+    {
+      "input": "s = \"1000100010001\"",
+      "output": "20"
+    },
+    {
+      "input": "s = \"111000\"",
+      "output": "3"
+    },
+    {
+      "input": "s = \"101010101010\"",
+      "output": "36"
+    },
+    {
+      "input": "s = \"0100100100\"",
+      "output": "17"
+    },
+    {
+      "input": "s = \"1111111111\"",
+      "output": "0"
+    },
+    {
+      "input": "s = \"000111\"",
+      "output": "3"
+    },
+    {
+      "input": "s = \"11111\"",
+      "output": "0"
+    },
+    {
+      "input": "s = \"0101010101010101010101010101\"",
+      "output": "196"
+    },
+    {
+      "input": "s = \"01010101010\"",
+      "output": "30"
+    },
+    {
+      "input": "s = \"1010101010\"",
+      "output": "25"
+    },
+    {
+      "input": "s = \"010101\"",
+      "output": "9"
+    },
+    {
+      "input": "s = \"010101010101010101\"",
+      "output": "81"
+    },
+    {
+      "input": "s = \"0000000000\"",
+      "output": "0"
+    },
+    {
+      "input": "s = \"1100110011\"",
+      "output": "12"
+    },
+    {
+      "input": "s = \"101010\"",
+      "output": "9"
+    },
+    {
+      "input": "s = \"0011\"",
+      "output": "2"
+    },
+    {
+      "input": "s = \"0101010101\"",
+      "output": "25"
+    },
+    {
+      "input": "s = \"00000\"",
+      "output": "0"
+    },
+    {
+      "input": "s = \"101010101010101010\"",
+      "output": "81"
+    },
+    {
+      "input": "s = \"0000111100001111000011110000111100001111000011110000111100001111\"",
+      "output": "256"
+    },
+    {
+      "input": "s = \"101010101010101\"",
+      "output": "56"
+    },
+    {
+      "input": "s = \"000000111111000000\"",
+      "output": "12"
+    },
+    {
+      "input": "s = \"00000000001\"",
+      "output": "1"
+    },
+    {
+      "input": "s = \"10101010101\"",
+      "output": "30"
+    },
+    {
+      "input": "s = \"010101010101010101010101010101010101\"",
+      "output": "324"
+    },
+    {
+      "input": "s = \"11111111111111111111111111111111111111111111111111111111111111101\"",
+      "output": "3"
+    },
+    {
+      "input": "s = \"0110011001100110011001100110\"",
+      "output": "98"
+    },
+    {
+      "input": "s = \"1111100001111100001111100001111100001111100001111100001111100001\"",
+      "output": "228"
+    },
+    {
+      "input": "s = \"11111111111111111111111111111111111111111111111111111111111111010\"",
+      "output": "6"
+    },
+    {
+      "input": "s = \"010101010101010101010101\"",
+      "output": "144"
+    },
+    {
+      "input": "s = \"0100100100100100100100100100\"",
+      "output": "131"
+    },
+    {
+      "input": "s = \"0110110110\"",
+      "output": "16"
+    },
+    {
+      "input": "s = \"10101010101010101010101010\"",
+      "output": "169"
+    },
+    {
+      "input": "s = \"00000111111\"",
+      "output": "5"
+    },
+    {
+      "input": "s = \"111000111000111\"",
+      "output": "18"
+    },
+    {
+      "input": "s = \"0000000000000000000000000000000011111111111111111111\"",
+      "output": "20"
+    },
+    {
+      "input": "s = \"101010101010101010101010\"",
+      "output": "144"
+    },
+    {
+      "input": "s = \"00000000001000000000\"",
+      "output": "19"
+    },
+    {
+      "input": "s = \"00000000000000\"",
+      "output": "0"
+    },
+    {
+      "input": "s = \"11001100110011001100110011001100\"",
+      "output": "128"
+    },
+    {
+      "input": "s = \"101010101010101010101010101010\"",
+      "output": "225"
+    },
+    {
+      "input": "s = \"000000111111000000111111000000111111\"",
+      "output": "54"
+    },
+    {
+      "input": "s = \"111100001111000011110000111100001111\"",
+      "output": "80"
+    },
+    {
+      "input": "s = \"111100001111000011110000\"",
+      "output": "36"
+    },
+    {
+      "input": "s = \"111111111111111111110\"",
+      "output": "1"
+    },
+    {
+      "input": "s = \"000000000000000000001\"",
+      "output": "1"
+    },
+    {
+      "input": "s = \"00000000000000000000000000000000000000000000000000000000000000010\"",
+      "output": "3"
+    },
+    {
+      "input": "s = \"00000000000000000000000000000000000000000000000000000000000000000\"",
+      "output": "0"
+    },
+    {
+      "input": "s = \"100100100100100100100100\"",
+      "output": "96"
+    },
+    {
+      "input": "s = \"0011001100110011001100110011001100110011\"",
+      "output": "200"
+    },
+    {
+      "input": "s = \"0000111100001111000011110000\"",
+      "output": "48"
+    },
+    {
+      "input": "s = \"0000000000000000000000000000000000000000000000000000000000000000\"",
+      "output": "0"
+    },
+    {
+      "input": "s = \"00110011001100110011001100110011\"",
+      "output": "128"
+    },
+    {
+      "input": "s = \"111111111111\"",
+      "output": "0"
+    },
+    {
+      "input": "s = \"1001001001001001001001001001001\"",
+      "output": "160"
+    },
+    {
+      "input": "s = \"11110000111100001111\"",
+      "output": "24"
+    },
+    {
+      "input": "s = \"01010101010101010101010101\"",
+      "output": "169"
+    },
+    {
+      "input": "s = \"0000000000000000000000000000000000000000000000000000000000000001\"",
+      "output": "1"
+    },
+    {
+      "input": "s = \"1011011011011011011011011011\"",
+      "output": "131"
+    },
+    {
+      "input": "s = \"010101010101010101010101010101010101010101010101\"",
+      "output": "576"
+    },
+    {
+      "input": "s = \"111111111100000000001111111111\"",
+      "output": "20"
+    },
+    {
+      "input": "s = \"111111000000111111\"",
+      "output": "12"
+    },
+    {
+      "input": "s = \"010010010010010010010010010010\"",
+      "output": "150"
+    },
+    {
+      "input": "s = \"1111000011110000111100001111000011110000111100001111000011110000\"",
+      "output": "256"
+    },
+    {
+      "input": "s = \"0000011111\"",
+      "output": "5"
+    },
+    {
+      "input": "s = \"11111111111111111111\"",
+      "output": "0"
+    },
+    {
+      "input": "s = \"000011110000\"",
+      "output": "8"
+    },
+    {
+      "input": "s = \"101010010101010\"",
+      "output": "50"
+    },
+    {
+      "input": "s = \"1001001001\"",
+      "output": "16"
+    },
+    {
+      "input": "s = \"1111111111111111111111111111111111111111111111111111111111111111\"",
+      "output": "0"
+    },
+    {
+      "input": "s = \"111111111111111111\"",
+      "output": "0"
+    },
+    {
+      "input": "s = \"11110000001111000000\"",
+      "output": "20"
+    },
+    {
+      "input": "s = \"000001111000001111000001111000001111000001111000001111000001111\"",
+      "output": "220"
+    },
+    {
+      "input": "s = \"1010101010101010101010101010101010\"",
+      "output": "289"
+    },
+    {
+      "input": "s = \"10010010010010\"",
+      "output": "33"
+    },
+    {
+      "input": "s = \"111111000000111111000000111111\"",
+      "output": "36"
+    },
+    {
+      "input": "s = \"1010101010101010101010101010101010101010101010101010101010101010\"",
+      "output": "1024"
+    },
+    {
+      "input": "s = \"000000000000\"",
+      "output": "0"
+    },
+    {
+      "input": "s = \"010101010101010101010101010101\"",
+      "output": "225"
+    },
+    {
+      "input": "s = \"10101010101010101010101010101010101010101010101010101010101010100\"",
+      "output": "1055"
+    },
+    {
+      "input": "s = \"1111111111111111111111111111111111111111111111111111\"",
+      "output": "0"
+    },
+    {
+      "input": "s = \"1001001001001001\"",
+      "output": "42"
+    },
+    {
+      "input": "s = \"1111111111111111000000000000\"",
+      "output": "12"
+    },
+    {
+      "input": "s = \"0110011001100110011001100\"",
+      "output": "78"
+    },
+    {
+      "input": "s = \"11001100110011001100\"",
+      "output": "50"
+    },
+    {
+      "input": "s = \"110011110011001111001100111100110011\"",
+      "output": "130"
+    },
+    {
+      "input": "s = \"01010101010101010101010101010101\"",
+      "output": "256"
+    },
+    {
+      "input": "s = \"0101010101010101010101010101010101010101\"",
+      "output": "400"
+    },
+    {
+      "input": "s = \"1010101010101010101010101010\"",
+      "output": "196"
+    },
+    {
+      "input": "s = \"1000000000000000000000000000000000000000\"",
+      "output": "1"
+    },
+    {
+      "input": "s = \"111000111000\"",
+      "output": "12"
+    },
+    {
+      "input": "s = \"1111111100000000\"",
+      "output": "8"
+    },
+    {
+      "input": "s = \"111100001111\"",
+      "output": "8"
+    },
+    {
+      "input": "s = \"1100110011001100110011001100\"",
+      "output": "98"
+    },
+    {
+      "input": "s = \"10101001010101010101010101010101\"",
+      "output": "250"
+    },
+    {
+      "input": "s = \"11110000111100001111000011110000\"",
+      "output": "64"
+    },
+    {
+      "input": "s = \"010101010101\"",
+      "output": "36"
+    },
+    {
+      "input": "s = \"111111111100000000111111111100000000\"",
+      "output": "36"
+    },
+    {
+      "input": "s = \"11011011011011011011\"",
+      "output": "66"
+    },
+    {
+      "input": "s = \"101010101010101010101010101010101010101010101010101010101010101011\"",
+      "output": "1088"
+    },
+    {
+      "input": "s = \"00000000000000000000000000000000000000000000000000000000000000101\"",
+      "output": "6"
+    },
+    {
+      "input": "s = \"0101010101010101\"",
+      "output": "64"
+    },
+    {
+      "input": "s = \"1111111111111111111111111111\"",
+      "output": "0"
+    },
+    {
+      "input": "s = \"0101010101010101010101010101010101010101010101010101010101010101\"",
+      "output": "1024"
+    },
+    {
+      "input": "s = \"111111110000000011111111\"",
+      "output": "16"
+    },
+    {
+      "input": "s = \"010101010101010101010101010101010101010101010101010101\"",
+      "output": "729"
+    },
+    {
+      "input": "s = \"01001010010100101001010010100101001010010100101001010010100101000\"",
+      "output": "843"
+    },
+    {
+      "input": "s = \"111100001111000011\"",
+      "output": "20"
+    },
+    {
+      "input": "s = \"011001100110\"",
+      "output": "18"
+    },
+    {
+      "input": "s = \"000011110000111100001111\"",
+      "output": "36"
+    },
+    {
+      "input": "s = \"000000000011111111110000000000\"",
+      "output": "20"
+    },
+    {
+      "input": "s = \"10011001100110011001100110011001\"",
+      "output": "128"
+    },
+    {
+      "input": "s = \"11111111111111111111111111111111111111111111111111\"",
+      "output": "0"
+    },
+    {
+      "input": "s = \"00001111000011110000111100001111\"",
+      "output": "64"
+    },
+    {
+      "input": "s = \"0100110011001100110011\"",
+      "output": "61"
+    },
+    {
+      "input": "s = \"1100101100\"",
+      "output": "17"
+    },
+    {
+      "input": "s = \"00110011001100110011\"",
+      "output": "50"
+    },
+    {
+      "input": "s = \"11111111110\"",
+      "output": "1"
+    },
+    {
+      "input": "s = \"00000000000000000000\"",
+      "output": "0"
+    },
+    {
+      "input": "s = \"1111100000\"",
+      "output": "5"
+    },
+    {
+      "input": "s = \"0000000011111111\"",
+      "output": "8"
+    },
+    {
+      "input": "s = \"1001001001001001001001001\"",
+      "output": "104"
+    },
+    {
+      "input": "s = \"0000000000000000111111111111\"",
+      "output": "12"
+    },
+    {
+      "input": "s = \"111111111111111111111111111111111111111111111111111111111111111111\"",
+      "output": "0"
+    },
+    {
+      "input": "s = \"000000000000000000\"",
+      "output": "0"
+    },
+    {
+      "input": "s = \"01010101010101\"",
+      "output": "49"
+    },
+    {
+      "input": "s = \"0000000000000000000000000000000000000000000000000000\"",
+      "output": "0"
+    },
+    {
+      "input": "s = \"01010110101010101010101010101010\"",
+      "output": "250"
+    },
+    {
+      "input": "s = \"001100110011001\"",
+      "output": "28"
+    },
+    {
+      "input": "s = \"1010101010101010101010101010101010101010\"",
+      "output": "400"
+    },
+    {
+      "input": "s = \"0100101001010010100101001010010100101001010010100101001010010100\"",
+      "output": "819"
+    },
+    {
+      "input": "s = \"000001111111\"",
+      "output": "5"
+    },
+    {
+      "input": "s = \"100100100100\"",
+      "output": "24"
+    },
+    {
+      "input": "s = \"01010101010101010101010101010101010101010101010101010101010101010\"",
+      "output": "1056"
+    },
+    {
+      "input": "s = \"11111000001111\"",
+      "output": "9"
+    },
+    {
+      "input": "s = \"1010101010101010101010101010101010101010101010101010\"",
+      "output": "676"
+    },
+    {
+      "input": "s = \"110011001100110011001100110011\"",
+      "output": "112"
+    },
+    {
+      "input": "s = \"01010101010101010101\"",
+      "output": "100"
+    },
+    {
+      "input": "s = \"01111111111111111110\"",
+      "output": "2"
+    },
+    {
+      "input": "s = \"11001100110011\"",
+      "output": "24"
+    },
+    {
+      "input": "s = \"111110000000\"",
+      "output": "5"
+    },
+    {
+      "input": "s = \"0110011001100110011001100110011\"",
+      "output": "120"
+    },
+    {
+      "input": "s = \"10000000000000000001\"",
+      "output": "2"
+    },
+    {
+      "input": "s = \"11111000000\"",
+      "output": "5"
+    },
+    {
+      "input": "s = \"0000000000000000000000000000000000000001\"",
+      "output": "1"
+    },
+    {
+      "input": "s = \"11111111111111\"",
+      "output": "0"
+    },
+    {
+      "input": "s = \"010101010101010\"",
+      "output": "56"
+    },
+    {
+      "input": "s = \"11111111111111110000000000000000\"",
+      "output": "16"
+    },
+    {
+      "input": "s = \"10101010101010101010\"",
+      "output": "100"
+    },
+    {
+      "input": "s = \"1101010101\"",
+      "output": "24"
+    },
+    {
+      "input": "s = \"000000111111000000111111000000\"",
+      "output": "36"
+    },
+    {
+      "input": "s = \"00100100100100100100\"",
+      "output": "66"
+    },
+    {
+      "input": "s = \"1111111111111111111111111111111111111111111111111111111111111110\"",
+      "output": "1"
+    },
+    {
+      "input": "s = \"0110110110110110110110110110110\"",
+      "output": "160"
+    },
+    {
+      "input": "s = \"0000000000000000000000000000\"",
+      "output": "0"
+    },
+    {
+      "input": "s = \"001100110011001100110011001100\"",
+      "output": "112"
+    },
+    {
+      "input": "s = \"000111000111000\"",
+      "output": "18"
+    },
+    {
+      "input": "s = \"0000111100001111\"",
+      "output": "16"
+    }
+  ]
+}

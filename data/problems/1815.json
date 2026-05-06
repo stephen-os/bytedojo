@@ -1,0 +1,560 @@
+{
+  "id": 1815,
+  "title": "Maximum Number of Groups Getting Fresh Donuts",
+  "slug": "maximum-number-of-groups-getting-fresh-donuts",
+  "difficulty": "Hard",
+  "topics": [
+    "Array",
+    "Dynamic Programming",
+    "Bit Manipulation",
+    "Memoization",
+    "Bitmask"
+  ],
+  "description": "There is a donuts shop that bakes donuts in batches of batchSize. They have a rule where they must serve all of the donuts of a batch before serving any donuts of the next batch. You are given an integer batchSize and an integer array groups, where groups[i] denotes that there is a group of groups[i] customers that will visit the shop. Each customer will get exactly one donut.\nWhen a group visits the shop, all customers of the group must be served before serving any of the following groups. A group will be happy if they all get fresh donuts. That is, the first customer of the group does not receive a donut that was left over from the previous group.\nYou can freely rearrange the ordering of the groups. Return the maximum possible number of happy groups after rearranging the groups.\nExample 1:\nExample 2:\nConstraints:",
+  "examples": [
+    {
+      "example_num": 1,
+      "example_text": "Input: batchSize = 3, groups = [1,2,3,4,5,6]\nOutput: 4\nExplanation: You can arrange the groups as [6,2,4,5,1,3]. Then the 1st, 2nd, 4th, and 6th groups will be happy.",
+      "images": []
+    },
+    {
+      "example_num": 2,
+      "example_text": "Input: batchSize = 4, groups = [1,3,2,5,2,2,1,6]\nOutput: 4",
+      "images": []
+    }
+  ],
+  "constraints": [
+    "1 <= batchSize <= 9",
+    "1 <= groups.length <= 30",
+    "1 <= groups[i] <= 109"
+  ],
+  "hints": [
+    "The maximum number of happy groups is the maximum number of partitions you can split the groups into such that the sum of group sizes in each partition is 0 mod batchSize. At most one partition is allowed to have a different remainder (the first group will get fresh donuts anyway).",
+    "Suppose you have an array freq of length k where freq[i] = number of groups of size i mod batchSize. How can you utilize this in a dp solution?",
+    "Make a DP state dp[freq][r] that represents \"the maximum number of partitions you can form given the current freq and current remainder r\". You can hash the freq array to store it more easily in the dp table.",
+    "For each i from 0 to batchSize-1, the next DP state is dp[freq`][(r+i)%batchSize] where freq` is freq but with freq[i] decremented by 1. Take the largest of all of the next states and store it in ans. If r == 0, then return ans+1 (because you can form a new partition), otherwise return ans (continuing the current partition)."
+  ],
+  "code_snippets": {
+    "cpp": "class Solution {\npublic:\n    int maxHappyGroups(int batchSize, vector<int>& groups) {\n        \n    }\n};",
+    "java": "class Solution {\n    public int maxHappyGroups(int batchSize, int[] groups) {\n        \n    }\n}",
+    "python": "class Solution(object):\n    def maxHappyGroups(self, batchSize, groups):\n        \"\"\"\n        :type batchSize: int\n        :type groups: List[int]\n        :rtype: int\n        \"\"\"\n        ",
+    "python3": "class Solution:\n    def maxHappyGroups(self, batchSize: int, groups: List[int]) -> int:\n        ",
+    "c": "int maxHappyGroups(int batchSize, int* groups, int groupsSize) {\n    \n}",
+    "csharp": "public class Solution {\n    public int MaxHappyGroups(int batchSize, int[] groups) {\n        \n    }\n}",
+    "javascript": "/**\n * @param {number} batchSize\n * @param {number[]} groups\n * @return {number}\n */\nvar maxHappyGroups = function(batchSize, groups) {\n    \n};",
+    "typescript": "function maxHappyGroups(batchSize: number, groups: number[]): number {\n    \n};",
+    "php": "class Solution {\n\n    /**\n     * @param Integer $batchSize\n     * @param Integer[] $groups\n     * @return Integer\n     */\n    function maxHappyGroups($batchSize, $groups) {\n        \n    }\n}",
+    "swift": "class Solution {\n    func maxHappyGroups(_ batchSize: Int, _ groups: [Int]) -> Int {\n        \n    }\n}",
+    "kotlin": "class Solution {\n    fun maxHappyGroups(batchSize: Int, groups: IntArray): Int {\n        \n    }\n}",
+    "dart": "class Solution {\n  int maxHappyGroups(int batchSize, List<int> groups) {\n    \n  }\n}",
+    "golang": "func maxHappyGroups(batchSize int, groups []int) int {\n    \n}",
+    "ruby": "# @param {Integer} batch_size\n# @param {Integer[]} groups\n# @return {Integer}\ndef max_happy_groups(batch_size, groups)\n    \nend",
+    "scala": "object Solution {\n    def maxHappyGroups(batchSize: Int, groups: Array[Int]): Int = {\n        \n    }\n}",
+    "rust": "impl Solution {\n    pub fn max_happy_groups(batch_size: i32, groups: Vec<i32>) -> i32 {\n        \n    }\n}",
+    "racket": "(define/contract (max-happy-groups batchSize groups)\n  (-> exact-integer? (listof exact-integer?) exact-integer?)\n  )",
+    "erlang": "-spec max_happy_groups(BatchSize :: integer(), Groups :: [integer()]) -> integer().\nmax_happy_groups(BatchSize, Groups) ->\n  .",
+    "elixir": "defmodule Solution do\n  @spec max_happy_groups(batch_size :: integer, groups :: [integer]) :: integer\n  def max_happy_groups(batch_size, groups) do\n    \n  end\nend"
+  },
+  "input_output": [
+    {
+      "input": "batchSize = 7, groups = [7,14,21,28,35,42,49]",
+      "output": "7"
+    },
+    {
+      "input": "batchSize = 2, groups = [2,2,2,2,2,2]",
+      "output": "6"
+    },
+    {
+      "input": "batchSize = 7, groups = [7,7,7,7,7,7,7,7,7,7,7,7]",
+      "output": "12"
+    },
+    {
+      "input": "batchSize = 4, groups = [4,8,12,16,20]",
+      "output": "5"
+    },
+    {
+      "input": "batchSize = 9, groups = [1,2,3,4,5,6,7,8,9]",
+      "output": "5"
+    },
+    {
+      "input": "batchSize = 7, groups = [7,14,21,28,35,42]",
+      "output": "6"
+    },
+    {
+      "input": "batchSize = 3, groups = [1,2,3,4,5,6]",
+      "output": "4"
+    },
+    {
+      "input": "batchSize = 4, groups = [1,3,2,5,2,2,1,6]",
+      "output": "4"
+    },
+    {
+      "input": "batchSize = 3, groups = [3,6,9,12,15]",
+      "output": "5"
+    },
+    {
+      "input": "batchSize = 5, groups = [5,10,15,20,25]",
+      "output": "5"
+    },
+    {
+      "input": "batchSize = 8, groups = [8,16,24,32,40,48,56,64,72]",
+      "output": "9"
+    },
+    {
+      "input": "batchSize = 1, groups = [1,1,1,1,1,1,1,1,1,1]",
+      "output": "10"
+    },
+    {
+      "input": "batchSize = 5, groups = [1,2,3,4,5]",
+      "output": "3"
+    },
+    {
+      "input": "batchSize = 5, groups = [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]",
+      "output": "4"
+    },
+    {
+      "input": "batchSize = 9, groups = [9,18,27,36,45,54,63,72,81]",
+      "output": "9"
+    },
+    {
+      "input": "batchSize = 3, groups = [3,6,9,12,15,18,21,24,27,30]",
+      "output": "10"
+    },
+    {
+      "input": "batchSize = 8, groups = [8,8,8,8,8,8,8,8,8,8,8,8,8,8,8]",
+      "output": "15"
+    },
+    {
+      "input": "batchSize = 5, groups = [5,5,5,5,5,5]",
+      "output": "6"
+    },
+    {
+      "input": "batchSize = 7, groups = [7,14,21,28,35,42,49,56]",
+      "output": "8"
+    },
+    {
+      "input": "batchSize = 9, groups = [9,8,7,6,5,4,3,2,1]",
+      "output": "5"
+    },
+    {
+      "input": "batchSize = 9, groups = [9,9,9,9,9,9,9,9,9]",
+      "output": "9"
+    },
+    {
+      "input": "batchSize = 2, groups = [1,2,3,4,5]",
+      "output": "4"
+    },
+    {
+      "input": "batchSize = 6, groups = [6,12,18,24,30,36,42,48,54]",
+      "output": "9"
+    },
+    {
+      "input": "batchSize = 8, groups = [8,16,24,32,40,48,56,64]",
+      "output": "8"
+    },
+    {
+      "input": "batchSize = 5, groups = [5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100, 105, 110, 115, 120, 125, 130, 135, 140, 145, 150]",
+      "output": "30"
+    },
+    {
+      "input": "batchSize = 9, groups = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]",
+      "output": "11"
+    },
+    {
+      "input": "batchSize = 8, groups = [1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25, 27, 29, 31]",
+      "output": "8"
+    },
+    {
+      "input": "batchSize = 3, groups = [1000000000,2000000000,3000000000,4000000000,5000000000]",
+      "output": "3"
+    },
+    {
+      "input": "batchSize = 7, groups = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150, 160, 170, 180, 190, 200]",
+      "output": "11"
+    },
+    {
+      "input": "batchSize = 6, groups = [6, 12, 18, 24, 30, 36, 42, 48, 54, 60]",
+      "output": "10"
+    },
+    {
+      "input": "batchSize = 5, groups = [5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5]",
+      "output": "30"
+    },
+    {
+      "input": "batchSize = 4, groups = [3,6,9,12,15,18,21,24,27,30,33,36,39,42,45,48,51,54,57,60,63,66,69,72,75,78,81,84,87,90]",
+      "output": "19"
+    },
+    {
+      "input": "batchSize = 9, groups = [9, 18, 27, 36, 45, 54, 63, 72, 81, 90]",
+      "output": "10"
+    },
+    {
+      "input": "batchSize = 7, groups = [7, 14, 21, 28, 35, 42, 49, 56, 63, 70, 77, 84, 91, 98, 105, 112, 119, 126, 133, 140, 147]",
+      "output": "21"
+    },
+    {
+      "input": "batchSize = 8, groups = [4,7,9,12,14,15,18,20,22,23,25,26,27,29,31,32]",
+      "output": "8"
+    },
+    {
+      "input": "batchSize = 2, groups = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]",
+      "output": "15"
+    },
+    {
+      "input": "batchSize = 5, groups = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]",
+      "output": "6"
+    },
+    {
+      "input": "batchSize = 7, groups = [14, 28, 42, 56, 70, 84, 98, 112, 126, 140, 154, 168, 182]",
+      "output": "13"
+    },
+    {
+      "input": "batchSize = 9, groups = [9, 18, 27, 36, 45, 54, 63, 72, 81, 90, 99, 108, 117, 126]",
+      "output": "14"
+    },
+    {
+      "input": "batchSize = 6, groups = [12, 24, 36, 48, 60, 72, 84, 96, 108, 120, 132, 144, 156, 168, 180, 192, 204, 216, 228, 240, 252, 264, 276, 288, 300, 312, 324, 336, 348, 360]",
+      "output": "30"
+    },
+    {
+      "input": "batchSize = 5, groups = [8, 9, 10, 11, 12, 13, 14, 15]",
+      "output": "5"
+    },
+    {
+      "input": "batchSize = 5, groups = [5, 10, 15, 20, 25, 30, 35, 40]",
+      "output": "8"
+    },
+    {
+      "input": "batchSize = 9, groups = [9, 18, 27, 36, 45, 54, 63, 72, 81, 90, 99, 108, 117, 126, 135, 144, 153, 162, 171, 180, 189, 198, 207, 216, 225, 234, 243, 252, 261, 270]",
+      "output": "30"
+    },
+    {
+      "input": "batchSize = 5, groups = [10, 11, 12, 13, 14, 15, 16, 17, 18, 19]",
+      "output": "6"
+    },
+    {
+      "input": "batchSize = 6, groups = [6, 12, 18, 24, 30, 36, 42, 48, 54, 60, 66, 72, 78, 84, 90]",
+      "output": "15"
+    },
+    {
+      "input": "batchSize = 4, groups = [5,8,10,11,13,16,17,19,21,22,25,28,30]",
+      "output": "8"
+    },
+    {
+      "input": "batchSize = 8, groups = [8, 16, 24, 32, 40, 48, 56, 64, 72, 80]",
+      "output": "10"
+    },
+    {
+      "input": "batchSize = 2, groups = [1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8, 9, 9, 10, 10, 11, 11, 12, 12, 13, 13, 14, 14]",
+      "output": "21"
+    },
+    {
+      "input": "batchSize = 5, groups = [2,3,7,8,10,12,15,17]",
+      "output": "5"
+    },
+    {
+      "input": "batchSize = 3, groups = [9, 15, 2, 7, 8, 11, 13, 4, 1]",
+      "output": "6"
+    },
+    {
+      "input": "batchSize = 4, groups = [3, 6, 9, 12, 15, 18, 21, 24, 27, 30, 33, 36, 39, 42, 45, 48, 51, 54, 57, 60]",
+      "output": "13"
+    },
+    {
+      "input": "batchSize = 3, groups = [3, 6, 9, 12, 15, 18, 21, 24, 27, 30, 33, 36, 39, 42, 45, 48, 51, 54, 57, 60]",
+      "output": "20"
+    },
+    {
+      "input": "batchSize = 6, groups = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]",
+      "output": "7"
+    },
+    {
+      "input": "batchSize = 5, groups = [11, 22, 33, 44, 55, 66, 77, 88, 99, 110, 121, 132, 143, 154, 165]",
+      "output": "9"
+    },
+    {
+      "input": "batchSize = 8, groups = [7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7]",
+      "output": "3"
+    },
+    {
+      "input": "batchSize = 9, groups = [1,8,16,24,32,40,48,56,64,72,80,88,96,104,112]",
+      "output": "8"
+    },
+    {
+      "input": "batchSize = 5, groups = [2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2]",
+      "output": "6"
+    },
+    {
+      "input": "batchSize = 5, groups = [1000000000, 1000000000, 1000000000, 1000000000, 1000000000, 1000000000, 1000000000, 1000000000, 1000000000, 1000000000]",
+      "output": "10"
+    },
+    {
+      "input": "batchSize = 7, groups = [1, 8, 15, 22, 29, 36, 43, 50, 57, 64, 71, 78, 85, 92]",
+      "output": "2"
+    },
+    {
+      "input": "batchSize = 9, groups = [3, 6, 9, 12, 15, 18, 21, 24, 27, 30, 33, 36, 39, 42, 45, 48, 51, 54, 57, 60, 63, 66, 69, 72, 75, 78, 81, 84, 87, 90]",
+      "output": "20"
+    },
+    {
+      "input": "batchSize = 5, groups = [101,102,103,104,105,106,107,108,109,110]",
+      "output": "6"
+    },
+    {
+      "input": "batchSize = 5, groups = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150, 160, 170, 180, 190, 200, 210, 220, 230, 240, 250, 260, 270, 280, 290, 300]",
+      "output": "30"
+    },
+    {
+      "input": "batchSize = 3, groups = [1, 4, 7, 10, 13, 16, 19, 22, 25, 28, 31, 34, 37, 40]",
+      "output": "5"
+    },
+    {
+      "input": "batchSize = 7, groups = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]",
+      "output": "5"
+    },
+    {
+      "input": "batchSize = 4, groups = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100]",
+      "output": "8"
+    },
+    {
+      "input": "batchSize = 8, groups = [7, 14, 21, 28, 35, 42, 49, 56, 63, 70, 77, 84, 91, 98, 105, 112, 119]",
+      "output": "10"
+    },
+    {
+      "input": "batchSize = 6, groups = [1,2,3,4,5,6,7,8,9,10]",
+      "output": "6"
+    },
+    {
+      "input": "batchSize = 4, groups = [1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21]",
+      "output": "6"
+    },
+    {
+      "input": "batchSize = 5, groups = [2,4,6,8,10,12,14,16]",
+      "output": "5"
+    },
+    {
+      "input": "batchSize = 9, groups = [10, 11, 12, 13, 14, 15, 16, 17, 18, 19]",
+      "output": "6"
+    },
+    {
+      "input": "batchSize = 9, groups = [8, 7, 6, 5, 4, 3, 2, 1, 9, 18, 27, 36, 45, 54, 63, 72, 81]",
+      "output": "13"
+    },
+    {
+      "input": "batchSize = 4, groups = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]",
+      "output": "9"
+    },
+    {
+      "input": "batchSize = 4, groups = [13,19,22,29,31,37,41,43,47,53,59]",
+      "output": "6"
+    },
+    {
+      "input": "batchSize = 9, groups = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]",
+      "output": "8"
+    },
+    {
+      "input": "batchSize = 3, groups = [2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2]",
+      "output": "10"
+    },
+    {
+      "input": "batchSize = 9, groups = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25]",
+      "output": "14"
+    },
+    {
+      "input": "batchSize = 8, groups = [8, 16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104]",
+      "output": "13"
+    },
+    {
+      "input": "batchSize = 8, groups = [15,22,33,44,55,66,77,88,99]",
+      "output": "5"
+    },
+    {
+      "input": "batchSize = 8, groups = [8, 16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96]",
+      "output": "12"
+    },
+    {
+      "input": "batchSize = 6, groups = [6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6]",
+      "output": "30"
+    },
+    {
+      "input": "batchSize = 4, groups = [3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25, 27, 29, 31, 33, 35, 37, 39, 41]",
+      "output": "10"
+    },
+    {
+      "input": "batchSize = 6, groups = [5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65]",
+      "output": "8"
+    },
+    {
+      "input": "batchSize = 8, groups = [8, 16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120]",
+      "output": "15"
+    },
+    {
+      "input": "batchSize = 5, groups = [10, 20, 30, 40, 50, 60, 70, 80, 90]",
+      "output": "9"
+    },
+    {
+      "input": "batchSize = 6, groups = [6, 12, 18, 24, 30, 36, 42, 48, 54, 60, 66, 72]",
+      "output": "12"
+    },
+    {
+      "input": "batchSize = 9, groups = [1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4]",
+      "output": "7"
+    },
+    {
+      "input": "batchSize = 7, groups = [7, 14, 21, 28, 35, 42, 49, 56, 63, 70, 77, 84, 91, 98, 105, 112, 119, 126, 133, 140, 147, 154, 161, 168, 175, 182, 189, 196, 203, 210]",
+      "output": "30"
+    },
+    {
+      "input": "batchSize = 9, groups = [81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93]",
+      "output": "7"
+    },
+    {
+      "input": "batchSize = 5, groups = [2, 3, 4, 1, 5, 6, 7, 8, 9]",
+      "output": "5"
+    },
+    {
+      "input": "batchSize = 8, groups = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]",
+      "output": "4"
+    },
+    {
+      "input": "batchSize = 3, groups = [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]",
+      "output": "10"
+    },
+    {
+      "input": "batchSize = 9, groups = [2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30]",
+      "output": "8"
+    },
+    {
+      "input": "batchSize = 5, groups = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]",
+      "output": "9"
+    },
+    {
+      "input": "batchSize = 6, groups = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30]",
+      "output": "18"
+    },
+    {
+      "input": "batchSize = 8, groups = [7, 14, 21, 28, 35, 42, 49, 56, 63, 70, 77, 84, 91, 98, 105, 112]",
+      "output": "9"
+    },
+    {
+      "input": "batchSize = 6, groups = [12, 24, 36, 48, 60, 72, 84, 96, 108]",
+      "output": "9"
+    },
+    {
+      "input": "batchSize = 3, groups = [3, 6, 9, 12, 15, 18, 21, 24, 27, 30, 33, 36, 39]",
+      "output": "13"
+    },
+    {
+      "input": "batchSize = 7, groups = [3, 6, 9, 12, 15, 18, 21, 24, 27, 30, 33, 36, 39, 42, 45, 48, 51, 54, 57, 60, 63, 66, 69, 72, 75]",
+      "output": "14"
+    },
+    {
+      "input": "batchSize = 9, groups = [1,10,19,28,37,46,55,64,73,82,91]",
+      "output": "2"
+    },
+    {
+      "input": "batchSize = 8, groups = [8, 16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120, 128, 136, 144, 152, 160, 168, 176, 184, 192, 200, 208, 216, 224, 232, 240]",
+      "output": "30"
+    },
+    {
+      "input": "batchSize = 9, groups = [1, 2, 3, 4, 5, 6, 7, 8, 9]",
+      "output": "5"
+    },
+    {
+      "input": "batchSize = 6, groups = [1, 6, 11, 16, 21, 26, 31, 36, 41, 46, 51]",
+      "output": "7"
+    },
+    {
+      "input": "batchSize = 6, groups = [11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59]",
+      "output": "6"
+    },
+    {
+      "input": "batchSize = 3, groups = [100, 101, 102, 103, 104, 105, 106, 107, 108, 109]",
+      "output": "7"
+    },
+    {
+      "input": "batchSize = 3, groups = [3, 6, 9, 12, 15, 18, 21, 24, 27, 30, 33, 36, 39, 42, 45, 48, 51, 54, 57, 60, 63, 66, 69, 72, 75, 78, 81, 84, 87, 90]",
+      "output": "30"
+    },
+    {
+      "input": "batchSize = 4, groups = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]",
+      "output": "10"
+    },
+    {
+      "input": "batchSize = 3, groups = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]",
+      "output": "10"
+    },
+    {
+      "input": "batchSize = 9, groups = [1, 2, 3, 4, 5, 6, 7, 8, 9, 1, 2, 3, 4, 5, 6, 7, 8, 9, 1, 2, 3, 4, 5, 6, 7, 8, 9, 1]",
+      "output": "16"
+    },
+    {
+      "input": "batchSize = 5, groups = [5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85]",
+      "output": "17"
+    },
+    {
+      "input": "batchSize = 6, groups = [1,2,3,4,5,6,7,8,9,10,11,12]",
+      "output": "7"
+    },
+    {
+      "input": "batchSize = 7, groups = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]",
+      "output": "9"
+    },
+    {
+      "input": "batchSize = 7, groups = [1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4]",
+      "output": "10"
+    },
+    {
+      "input": "batchSize = 3, groups = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30]",
+      "output": "20"
+    },
+    {
+      "input": "batchSize = 7, groups = [3,6,9,12,15,18,21,24,27,30,33,36,39,42,45]",
+      "output": "9"
+    },
+    {
+      "input": "batchSize = 5, groups = [5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75]",
+      "output": "15"
+    },
+    {
+      "input": "batchSize = 3, groups = [2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24]",
+      "output": "8"
+    },
+    {
+      "input": "batchSize = 4, groups = [9, 13, 17, 21, 25, 29, 33, 37, 41, 45]",
+      "output": "3"
+    },
+    {
+      "input": "batchSize = 4, groups = [1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25, 27, 29, 31]",
+      "output": "8"
+    },
+    {
+      "input": "batchSize = 7, groups = [7, 14, 21, 28, 35, 42, 49, 56, 63, 70, 77, 84, 91, 98, 105, 112]",
+      "output": "16"
+    },
+    {
+      "input": "batchSize = 9, groups = [9, 18, 27, 36, 45, 54, 63, 72, 81, 90, 99, 108, 117, 126, 135, 144, 153, 162, 171, 180]",
+      "output": "20"
+    },
+    {
+      "input": "batchSize = 9, groups = [8,17,26,35,44,53,62,71,80,89,98,107,116,125,134,143,152]",
+      "output": "2"
+    },
+    {
+      "input": "batchSize = 9, groups = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]",
+      "output": "11"
+    },
+    {
+      "input": "batchSize = 5, groups = [5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100]",
+      "output": "20"
+    },
+    {
+      "input": "batchSize = 3, groups = [3, 6, 9, 12, 15, 18, 21, 24, 27, 30, 33, 36]",
+      "output": "12"
+    },
+    {
+      "input": "batchSize = 5, groups = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100]",
+      "output": "10"
+    }
+  ]
+}

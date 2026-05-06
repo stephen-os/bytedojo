@@ -1,0 +1,557 @@
+{
+  "problem_id": 758,
+  "input_output": [
+    {
+      "input": "words = [], s = \"nothingtoboldhere\"",
+      "output": "nothingtoboldhere"
+    },
+    {
+      "input": "words = [], s = \"abcdefg\"",
+      "output": "abcdefg"
+    },
+    {
+      "input": "words = [\"aaa\"], s = \"aaaaa\"",
+      "output": "<b>aaaaa</b>"
+    },
+    {
+      "input": "words = [\"ab\",\"bc\"], s = \"aabcd\"",
+      "output": "a<b>abc</b>d"
+    },
+    {
+      "input": "words = [\"is\",\"in\"], s = \"this is an interesting string\"",
+      "output": "th<b>is</b> <b>is</b> an <b>in</b>terest<b>in</b>g str<b>in</b>g"
+    },
+    {
+      "input": "words = [\"foo\",\"bar\"], s = \"foobarbaz\"",
+      "output": "<b>foobar</b>baz"
+    },
+    {
+      "input": "words = [\"z\"], s = \"zzz\"",
+      "output": "<b>zzz</b>"
+    },
+    {
+      "input": "words = [\"abc\",\"bcd\"], s = \"abcde\"",
+      "output": "<b>abcd</b>e"
+    },
+    {
+      "input": "words = [\"a\",\"b\",\"c\"], s = \"abcabc\"",
+      "output": "<b>abcabc</b>"
+    },
+    {
+      "input": "words = [\"hello\",\"world\"], s = \"helloworld\"",
+      "output": "<b>helloworld</b>"
+    },
+    {
+      "input": "words = [\"z\",\"zz\"], s = \"zzz\"",
+      "output": "<b>zzz</b>"
+    },
+    {
+      "input": "words = [\"x\",\"y\",\"z\"], s = \"xyzxyz\"",
+      "output": "<b>xyzxyz</b>"
+    },
+    {
+      "input": "words = [\"a\",\"b\",\"c\"], s = \"abcabcabc\"",
+      "output": "<b>abcabcabc</b>"
+    },
+    {
+      "input": "words = [\"ab\",\"cb\"], s = \"aabcd\"",
+      "output": "a<b>ab</b>cd"
+    },
+    {
+      "input": "words = [\"test\"], s = \"this is a test string\"",
+      "output": "this is a <b>test</b> string"
+    },
+    {
+      "input": "words = [\"cat\", \"dog\"], s = \"cat and dog are friends, but catdog is a special creature\"",
+      "output": "<b>cat</b> and <b>dog</b> are friends, but <b>catdog</b> is a special creature"
+    },
+    {
+      "input": "words = [\"xy\", \"yx\"], s = \"xyyxxyyx\"",
+      "output": "<b>xyyxxyyx</b>"
+    },
+    {
+      "input": "words = [\"one\", \"two\", \"three\"], s = \"onetwothreeonethree\"",
+      "output": "<b>onetwothreeonethree</b>"
+    },
+    {
+      "input": "words = [\"x\", \"xx\", \"xxx\", \"xxxx\"], s = \"xxxxxxx\"",
+      "output": "<b>xxxxxxx</b>"
+    },
+    {
+      "input": "words = [\"aaa\", \"aaaa\", \"aaaaa\"], s = \"aaaaaaaaa\"",
+      "output": "<b>aaaaaaaaa</b>"
+    },
+    {
+      "input": "words = [\"one\", \"two\", \"three\"], s = \"onetwothreefouronetwothree\"",
+      "output": "<b>onetwothree</b>four<b>onetwothree</b>"
+    },
+    {
+      "input": "words = [\"abc\", \"def\"], s = \"abcdefgabcdef\"",
+      "output": "<b>abcdef</b>g<b>abcdef</b>"
+    },
+    {
+      "input": "words = [\"test\", \"testing\"], s = \"this is a test testing string\"",
+      "output": "this is a <b>test</b> <b>testing</b> string"
+    },
+    {
+      "input": "words = [\"aaa\", \"aa\"], s = \"aaaaaaaaaaaaaaaa\"",
+      "output": "<b>aaaaaaaaaaaaaaaa</b>"
+    },
+    {
+      "input": "words = [\"a\", \"aa\", \"aaa\"], s = \"aaaaaaaa\"",
+      "output": "<b>aaaaaaaa</b>"
+    },
+    {
+      "input": "words = [\"is\", \"island\", \"sand\"], s = \"this is an island surrounded by sand\"",
+      "output": "th<b>is</b> <b>is</b> an <b>island</b> surrounded by <b>sand</b>"
+    },
+    {
+      "input": "words = [\"start\", \"middle\", \"end\"], s = \"startmiddleend\"",
+      "output": "<b>startmiddleend</b>"
+    },
+    {
+      "input": "words = [\"zz\", \"z\"], s = \"zzzzzzzzz\"",
+      "output": "<b>zzzzzzzzz</b>"
+    },
+    {
+      "input": "words = [\"overlap\", \"lap\"], s = \"overlaplap\"",
+      "output": "<b>overlaplap</b>"
+    },
+    {
+      "input": "words = [\"overlap\", \"lap\", \"ap\"], s = \"overlaplap\"",
+      "output": "<b>overlaplap</b>"
+    },
+    {
+      "input": "words = [\"a\", \"aa\", \"aaa\"], s = \"aaaaaaaaa\"",
+      "output": "<b>aaaaaaaaa</b>"
+    },
+    {
+      "input": "words = [\"overlap\", \"lapping\"], s = \"overlappinglapping\"",
+      "output": "<b>overlappinglapping</b>"
+    },
+    {
+      "input": "words = [\"aaa\", \"aa\", \"a\"], s = \"aaaaaaaaa\"",
+      "output": "<b>aaaaaaaaa</b>"
+    },
+    {
+      "input": "words = [\"same\", \"same\", \"same\"], s = \"samesamesame\"",
+      "output": "<b>samesamesame</b>"
+    },
+    {
+      "input": "words = [\"is\", \"in\"], s = \"this is an interesting situation\"",
+      "output": "th<b>is</b> <b>is</b> an <b>in</b>terest<b>in</b>g situation"
+    },
+    {
+      "input": "words = [\"a\", \"b\", \"c\"], s = \"abcabcabc\"",
+      "output": "<b>abcabcabc</b>"
+    },
+    {
+      "input": "words = [\"abc\", \"def\", \"ghi\"], s = \"abcdefghi\"",
+      "output": "<b>abcdefghi</b>"
+    },
+    {
+      "input": "words = [\"unique\", \"words\"], s = \"uniquewordswordsunique\"",
+      "output": "<b>uniquewordswordsunique</b>"
+    },
+    {
+      "input": "words = [\"in\", \"inception\", \"ception\"], s = \"inceptionception\"",
+      "output": "<b>inceptionception</b>"
+    },
+    {
+      "input": "words = [\"xy\", \"yx\"], s = \"xyxxyxyyx\"",
+      "output": "<b>xyxxyxyyx</b>"
+    },
+    {
+      "input": "words = [\"abc\", \"bcd\"], s = \"abcbcd\"",
+      "output": "<b>abcbcd</b>"
+    },
+    {
+      "input": "words = [\"hello\", \"world\"], s = \"hello world, hello universe\"",
+      "output": "<b>hello</b> <b>world</b>, <b>hello</b> universe"
+    },
+    {
+      "input": "words = [\"cat\", \"bat\", \"rat\"], s = \"thequickbrownfoxjumpsoverthelazydog\"",
+      "output": "thequickbrownfoxjumpsoverthelazydog"
+    },
+    {
+      "input": "words = [\"overlap\", \"lap\", \"lapel\"], s = \"overlaplapel\"",
+      "output": "<b>overlaplapel</b>"
+    },
+    {
+      "input": "words = [\"hello\", \"world\"], s = \"hello world! hello universe\"",
+      "output": "<b>hello</b> <b>world</b>! <b>hello</b> universe"
+    },
+    {
+      "input": "words = [\"ab\", \"bc\", \"cd\"], s = \"abcbcd\"",
+      "output": "<b>abcbcd</b>"
+    },
+    {
+      "input": "words = [\"bold\", \"word\", \"words\"], s = \"boldwords\"",
+      "output": "<b>boldwords</b>"
+    },
+    {
+      "input": "words = [\"banana\", \"anana\"], s = \"bananabanana\"",
+      "output": "<b>bananabanana</b>"
+    },
+    {
+      "input": "words = [\"hello\", \"world\"], s = \"hello world hello\"",
+      "output": "<b>hello</b> <b>world</b> <b>hello</b>"
+    },
+    {
+      "input": "words = [\"abc\", \"abcd\", \"abcde\"], s = \"abcde\"",
+      "output": "<b>abcde</b>"
+    },
+    {
+      "input": "words = [\"aaa\", \"bbb\", \"ccc\"], s = \"aaabbbccc\"",
+      "output": "<b>aaabbbccc</b>"
+    },
+    {
+      "input": "words = [\"a\", \"b\", \"c\", \"d\", \"e\"], s = \"edcbaedcba\"",
+      "output": "<b>edcbaedcba</b>"
+    },
+    {
+      "input": "words = [\"nested\", \"nest\", \"set\"], s = \"nestedset\"",
+      "output": "<b>nestedset</b>"
+    },
+    {
+      "input": "words = [\"abcde\", \"bcdef\", \"cdefg\"], s = \"abcdefghij\"",
+      "output": "<b>abcdefg</b>hij"
+    },
+    {
+      "input": "words = [\"repeated\", \"repeat\", \"rep\"], s = \"repeated repeated repeat reprepeated\"",
+      "output": "<b>repeated</b> <b>repeated</b> <b>repeat</b> <b>reprepeated</b>"
+    },
+    {
+      "input": "words = [\"overlap\", \"lapping\", \"overlappping\"], s = \"overlappingslappinglappingpings\"",
+      "output": "<b>overlapping</b>s<b>lappinglapping</b>pings"
+    },
+    {
+      "input": "words = [\"short\", \"longword\", \"tiny\"], s = \"shortlongwordtinyshort\"",
+      "output": "<b>shortlongwordtinyshort</b>"
+    },
+    {
+      "input": "words = [\"one\", \"two\", \"three\"], s = \"onetwothreeone\"",
+      "output": "<b>onetwothreeone</b>"
+    },
+    {
+      "input": "words = [\"cat\", \"dog\", \"rat\"], s = \"thecatandthedogandtherat\"",
+      "output": "the<b>cat</b>andthe<b>dog</b>andthe<b>rat</b>"
+    },
+    {
+      "input": "words = [\"quick\", \"brown\", \"fox\"], s = \"the quick brown fox jumps over the lazy dog\"",
+      "output": "the <b>quick</b> <b>brown</b> <b>fox</b> jumps over the lazy dog"
+    },
+    {
+      "input": "words = [\"xy\", \"yx\"], s = \"xyyxxy\"",
+      "output": "<b>xyyxxy</b>"
+    },
+    {
+      "input": "words = [\"cat\", \"dog\", \"bird\"], s = \"thecatandthedogandthebird\"",
+      "output": "the<b>cat</b>andthe<b>dog</b>andthe<b>bird</b>"
+    },
+    {
+      "input": "words = [\"apple\", \"app\", \"ple\"], s = \"appleapples\"",
+      "output": "<b>appleapple</b>s"
+    },
+    {
+      "input": "words = [\"aaa\", \"aab\", \"abc\"], s = \"aaaabacababc\"",
+      "output": "<b>aaaab</b>acab<b>abc</b>"
+    },
+    {
+      "input": "words = [\"in\", \"inside\", \"side\"], s = \"insideinsideinside\"",
+      "output": "<b>insideinsideinside</b>"
+    },
+    {
+      "input": "words = [\"foo\", \"bar\", \"baz\"], s = \"foobarbazfoobarbaz\"",
+      "output": "<b>foobarbazfoobarbaz</b>"
+    },
+    {
+      "input": "words = [\"mississippi\", \"issi\", \"issipp\"], s = \"mississippiississippi\"",
+      "output": "<b>mississippiississipp</b>i"
+    },
+    {
+      "input": "words = [\"a\", \"aa\", \"aaa\", \"aaaa\", \"aaaaa\"], s = \"aaaaaaaaaaaaaaaaa\"",
+      "output": "<b>aaaaaaaaaaaaaaaaa</b>"
+    },
+    {
+      "input": "words = [\"repeat\", \"peat\", \"eat\"], s = \"repeatpeatpeatpeat\"",
+      "output": "<b>repeatpeatpeatpeat</b>"
+    },
+    {
+      "input": "words = [\"short\", \"longerword\"], s = \"shortlongerwordshort\"",
+      "output": "<b>shortlongerwordshort</b>"
+    },
+    {
+      "input": "words = [\"cat\", \"bat\"], s = \"the cattle were battling the bat\"",
+      "output": "the <b>cat</b>tle were <b>bat</b>tling the <b>bat</b>"
+    },
+    {
+      "input": "words = [\"shorter\", \"short\", \"sho\", \"sh\"], s = \"shortershortershosh\"",
+      "output": "<b>shortershortershosh</b>"
+    },
+    {
+      "input": "words = [\"hello\", \"hell\", \"he\", \"h\"], s = \"hellohelhekhhh\"",
+      "output": "<b>hellohe</b>l<b>he</b>k<b>hhh</b>"
+    },
+    {
+      "input": "words = [\"one\", \"two\", \"three\"], s = \"onetwothree\"",
+      "output": "<b>onetwothree</b>"
+    },
+    {
+      "input": "words = [\"short\", \"longerword\", \"tiny\"], s = \"thisisalongerword\"",
+      "output": "thisisa<b>longerword</b>"
+    },
+    {
+      "input": "words = [\"overlap\", \"lapping\"], s = \"overlapping\"",
+      "output": "<b>overlapping</b>"
+    },
+    {
+      "input": "words = [\"substring\", \"string\"], s = \"this is a substring string\"",
+      "output": "this is a <b>substring</b> <b>string</b>"
+    },
+    {
+      "input": "words = [\"jump\", \"jumps\"], s = \"hejumpsjumpproperly\"",
+      "output": "he<b>jumpsjump</b>properly"
+    },
+    {
+      "input": "words = [\"word\", \"world\", \"wor\"], s = \"worldwide world of words\"",
+      "output": "<b>world</b>wide <b>world</b> of <b>word</b>s"
+    },
+    {
+      "input": "words = [\"apple\", \"banana\", \"cherry\"], s = \"applebananaapplecherry\"",
+      "output": "<b>applebananaapplecherry</b>"
+    },
+    {
+      "input": "words = [\"python\", \"java\", \"c\"], s = \"pythonjavaandcsareprogramminglanguages\"",
+      "output": "<b>pythonjava</b>and<b>c</b>sareprogramminglanguages"
+    },
+    {
+      "input": "words = [\"xy\", \"yx\"], s = \"xyxxyyxxyx\"",
+      "output": "<b>xyxxyyxxyx</b>"
+    },
+    {
+      "input": "words = [\"a\", \"aa\", \"aaa\"], s = \"aaaaaaaaaa\"",
+      "output": "<b>aaaaaaaaaa</b>"
+    },
+    {
+      "input": "words = [\"apple\", \"banana\", \"cherry\"], s = \"applebananacherry\"",
+      "output": "<b>applebananacherry</b>"
+    },
+    {
+      "input": "words = [\"hello\", \"world\"], s = \"hello world! welcome to the hello world\"",
+      "output": "<b>hello</b> <b>world</b>! welcome to the <b>hello</b> <b>world</b>"
+    },
+    {
+      "input": "words = [\"one\", \"two\", \"three\"], s = \"onetwothreeonetwothree\"",
+      "output": "<b>onetwothreeonetwothree</b>"
+    },
+    {
+      "input": "words = [\"test\", \"testing\", \"tested\"], s = \"testtestingtested\"",
+      "output": "<b>testtestingtested</b>"
+    },
+    {
+      "input": "words = [\"apple\", \"pineapple\"], s = \"pineappleapple\"",
+      "output": "<b>pineappleapple</b>"
+    },
+    {
+      "input": "words = [\"cat\", \"dog\", \"bird\"], s = \"dogcatbirdbirdcat\"",
+      "output": "<b>dogcatbirdbirdcat</b>"
+    },
+    {
+      "input": "words = [\"example\", \"sample\", \"text\"], s = \"example sample text\"",
+      "output": "<b>example</b> <b>sample</b> <b>text</b>"
+    },
+    {
+      "input": "words = [\"abc\", \"bcd\", \"cde\"], s = \"abcdexyzcde\"",
+      "output": "<b>abcde</b>xyz<b>cde</b>"
+    },
+    {
+      "input": "words = [\"aaa\", \"aaaa\"], s = \"aaaaaaaaa\"",
+      "output": "<b>aaaaaaaaa</b>"
+    },
+    {
+      "input": "words = [\"ab\", \"abc\", \"abcd\"], s = \"abcdabcab\"",
+      "output": "<b>abcdabcab</b>"
+    },
+    {
+      "input": "words = [\"xy\", \"yx\"], s = \"xyxxyxyxyxxyyx\"",
+      "output": "<b>xyxxyxyxyxxyyx</b>"
+    },
+    {
+      "input": "words = [\"xy\", \"yx\"], s = \"xyxyxyyxxyxxy\"",
+      "output": "<b>xyxyxyyxxyxxy</b>"
+    },
+    {
+      "input": "words = [\"aaa\", \"aa\", \"a\"], s = \"aaaaaa\"",
+      "output": "<b>aaaaaa</b>"
+    },
+    {
+      "input": "words = [\"abc\", \"bcd\"], s = \"abcde\"",
+      "output": "<b>abcd</b>e"
+    },
+    {
+      "input": "words = [\"a\", \"b\", \"c\", \"d\"], s = \"abcdabcdabcd\"",
+      "output": "<b>abcdabcdabcd</b>"
+    },
+    {
+      "input": "words = [\"repeat\", \"eat\", \"peat\"], s = \"repeatpeatpeat\"",
+      "output": "<b>repeatpeatpeat</b>"
+    },
+    {
+      "input": "words = [\"jump\", \"jumps\", \"jumping\"], s = \"he was jumping over the jumps while he jump\"",
+      "output": "he was <b>jumping</b> over the <b>jumps</b> while he <b>jump</b>"
+    },
+    {
+      "input": "words = [\"aaa\", \"bbbb\", \"cc\"], s = \"aaabbbbbc\"",
+      "output": "<b>aaabbbbb</b>c"
+    },
+    {
+      "input": "words = [\"overlap\", \"lapping\"], s = \"overlapping strings can be tricky\"",
+      "output": "<b>overlapping</b> strings can be tricky"
+    },
+    {
+      "input": "words = [\"xx\", \"xxx\", \"xxxx\"], s = \"xxxxxxxxxxxxxx\"",
+      "output": "<b>xxxxxxxxxxxxxx</b>"
+    },
+    {
+      "input": "words = [\"a\", \"b\", \"c\"], s = \"abacabadabacaba\"",
+      "output": "<b>abacaba</b>d<b>abacaba</b>"
+    },
+    {
+      "input": "words = [\"aba\", \"bab\", \"abc\"], s = \"abababc\"",
+      "output": "<b>abababc</b>"
+    },
+    {
+      "input": "words = [\"ab\", \"bc\", \"cd\"], s = \"abcd\"",
+      "output": "<b>abcd</b>"
+    },
+    {
+      "input": "words = [\"nested\", \"nest\", \"nesting\"], s = \"nestednestingneste\"",
+      "output": "<b>nestednestingnest</b>e"
+    },
+    {
+      "input": "words = [\"xyz\", \"zyx\", \"yzx\"], s = \"xyzzyxzyxzyxzyx\"",
+      "output": "<b>xyzzyxzyxzyxzyx</b>"
+    },
+    {
+      "input": "words = [\"quick\", \"brown\", \"fox\"], s = \"thequickbrownfoxjumpsoverthelazydog\"",
+      "output": "the<b>quickbrownfox</b>jumpsoverthelazydog"
+    },
+    {
+      "input": "words = [\"cat\", \"dog\"], s = \"the cat and the dog went to the market\"",
+      "output": "the <b>cat</b> and the <b>dog</b> went to the market"
+    },
+    {
+      "input": "words = [\"abc\", \"bcd\"], s = \"abcdabc\"",
+      "output": "<b>abcdabc</b>"
+    },
+    {
+      "input": "words = [\"unique\"], s = \"uniqueuniqueunique\"",
+      "output": "<b>uniqueuniqueunique</b>"
+    },
+    {
+      "input": "words = [\"overlap\", \"laphover\"], s = \"laphoverlap\"",
+      "output": "<b>laphoverlap</b>"
+    },
+    {
+      "input": "words = [\"apple\", \"apples\", \"app\"], s = \"applesarefruitapples\"",
+      "output": "<b>apples</b>arefruit<b>apples</b>"
+    },
+    {
+      "input": "words = [\"cat\", \"dog\", \"fish\"], s = \"thecatandthedogandthefish\"",
+      "output": "the<b>cat</b>andthe<b>dog</b>andthe<b>fish</b>"
+    },
+    {
+      "input": "words = [\"aba\", \"aaa\"], s = \"aaabaabaa\"",
+      "output": "<b>aaabaaba</b>a"
+    },
+    {
+      "input": "words = [\"short\", \"shorter\", \"shortest\"], s = \"shortshortershortest\"",
+      "output": "<b>shortshortershortest</b>"
+    },
+    {
+      "input": "words = [\"xyz\", \"zyx\"], s = \"xyzzyxzyxzyxxyz\"",
+      "output": "<b>xyzzyxzyxzyxxyz</b>"
+    },
+    {
+      "input": "words = [\"xy\", \"yx\"], s = \"xyyxxyyxxy\"",
+      "output": "<b>xyyxxyyxxy</b>"
+    },
+    {
+      "input": "words = [\"test\", \"testing\", \"tested\"], s = \"testtestedtesting\"",
+      "output": "<b>testtestedtesting</b>"
+    },
+    {
+      "input": "words = [\"same\", \"same\", \"same\"], s = \"samesamesamesame\"",
+      "output": "<b>samesamesamesame</b>"
+    },
+    {
+      "input": "words = [\"test\", \"testing\"], s = \"testtestingtest\"",
+      "output": "<b>testtestingtest</b>"
+    },
+    {
+      "input": "words = [\"word\", \"wording\", \"wordings\"], s = \"wordwordingwordingsword\"",
+      "output": "<b>wordwordingwordingsword</b>"
+    },
+    {
+      "input": "words = [\"hello\", \"world\"], s = \"helloworldhello\"",
+      "output": "<b>helloworldhello</b>"
+    },
+    {
+      "input": "words = [\"programming\", \"is\", \"fun\"], s = \"programmingisfunandfunisprogramming\"",
+      "output": "<b>programmingisfun</b>and<b>funisprogramming</b>"
+    },
+    {
+      "input": "words = [\"word\", \"wording\"], s = \"wordingword\"",
+      "output": "<b>wordingword</b>"
+    },
+    {
+      "input": "words = [\"dog\", \"ogg\", \"log\"], s = \"dog log ogg\"",
+      "output": "<b>dog</b> <b>log</b> <b>ogg</b>"
+    },
+    {
+      "input": "words = [\"repeated\", \"repeat\", \"repe\"], s = \"repeatedrepeatrepeatere\"",
+      "output": "<b>repeatedrepeatrepeat</b>ere"
+    },
+    {
+      "input": "words = [\"aaa\", \"aa\", \"a\"], s = \"aaaaaaaa\"",
+      "output": "<b>aaaaaaaa</b>"
+    },
+    {
+      "input": "words = [\"abc\", \"bcd\", \"cde\"], s = \"abcde\"",
+      "output": "<b>abcde</b>"
+    },
+    {
+      "input": "words = [\"a\", \"b\", \"c\", \"d\", \"e\"], s = \"abcdeedcba\"",
+      "output": "<b>abcdeedcba</b>"
+    },
+    {
+      "input": "words = [\"hello\", \"world\"], s = \"helloworld\"",
+      "output": "<b>helloworld</b>"
+    },
+    {
+      "input": "words = [\"aaa\", \"bbb\"], s = \"aaabbbccc\"",
+      "output": "<b>aaabbb</b>ccc"
+    },
+    {
+      "input": "words = [\"this\", \"that\"], s = \"this is a test, that should be bold, but this is not that\"",
+      "output": "<b>this</b> is a test, <b>that</b> should be bold, but <b>this</b> is not <b>that</b>"
+    },
+    {
+      "input": "words = [\"aa\", \"aaa\"], s = \"aaaaaaaaaaaaaaaa\"",
+      "output": "<b>aaaaaaaaaaaaaaaa</b>"
+    },
+    {
+      "input": "words = [\"short\", \"longerword\", \"longestword\"], s = \"shortlongerwordlongestword\"",
+      "output": "<b>shortlongerwordlongestword</b>"
+    },
+    {
+      "input": "words = [\"xx\", \"yy\", \"zz\"], s = \"xyxzyzyxzyzyzyzx\"",
+      "output": "xyxzyzyxzyzyzyzx"
+    },
+    {
+      "input": "words = [\"aabb\", \"bbaa\", \"abba\"], s = \"aabbabbaabba\"",
+      "output": "<b>aabbabbaabba</b>"
+    }
+  ]
+}

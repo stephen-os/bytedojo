@@ -1,0 +1,667 @@
+{
+  "id": 3291,
+  "title": "Minimum Number of Valid Strings to Form Target I",
+  "slug": "minimum-number-of-valid-strings-to-form-target-i",
+  "difficulty": "Medium",
+  "topics": [
+    "Array",
+    "String",
+    "Binary Search",
+    "Dynamic Programming",
+    "Trie",
+    "Segment Tree",
+    "Rolling Hash",
+    "String Matching",
+    "Hash Function"
+  ],
+  "description": "You are given an array of strings words and a string target.\nA string x is called valid if x is a prefix of any string in words.\nReturn the minimum number of valid strings that can be concatenated to form target. If it is not possible to form target, return -1.\nExample 1:\nExample 2:\nExample 3:\nConstraints:",
+  "examples": [
+    {
+      "example_num": 1,
+      "example_text": "Input: words = [\"abc\",\"aaaaa\",\"bcdef\"], target = \"aabcdabc\"\nOutput: 3\nExplanation:\nThe target string can be formed by concatenating:",
+      "images": []
+    },
+    {
+      "example_num": 2,
+      "example_text": "Input: words = [\"abababab\",\"ab\"], target = \"ababaababa\"\nOutput: 2\nExplanation:\nThe target string can be formed by concatenating:",
+      "images": []
+    },
+    {
+      "example_num": 3,
+      "example_text": "Input: words = [\"abcdef\"], target = \"xyz\"\nOutput: -1",
+      "images": []
+    }
+  ],
+  "constraints": [
+    "1 <= words.length <= 100",
+    "1 <= words[i].length <= 5 * 103",
+    "The input is generated such that sum(words[i].length) <= 105.",
+    "words[i] consists only of lowercase English letters.",
+    "1 <= target.length <= 5 * 103",
+    "target consists only of lowercase English letters."
+  ],
+  "hints": [
+    "Let <code>dp[i]</code> be the minimum cost to form the prefix of length <code>i</code> of <code>target</code>.",
+    "If <code>target[(i + 1)..j]</code> matches any prefix, update the range <code>dp[(i + 1)..j]</code> to minimum between original value and <code>dp[i] + 1</code>.",
+    "Use a Trie to check prefix matching."
+  ],
+  "code_snippets": {
+    "cpp": "class Solution {\npublic:\n    int minValidStrings(vector<string>& words, string target) {\n        \n    }\n};",
+    "java": "class Solution {\n    public int minValidStrings(String[] words, String target) {\n        \n    }\n}",
+    "python": "class Solution(object):\n    def minValidStrings(self, words, target):\n        \"\"\"\n        :type words: List[str]\n        :type target: str\n        :rtype: int\n        \"\"\"\n        ",
+    "python3": "class Solution:\n    def minValidStrings(self, words: List[str], target: str) -> int:\n        ",
+    "c": "int minValidStrings(char** words, int wordsSize, char* target) {\n    \n}",
+    "csharp": "public class Solution {\n    public int MinValidStrings(string[] words, string target) {\n        \n    }\n}",
+    "javascript": "/**\n * @param {string[]} words\n * @param {string} target\n * @return {number}\n */\nvar minValidStrings = function(words, target) {\n    \n};",
+    "typescript": "function minValidStrings(words: string[], target: string): number {\n    \n};",
+    "php": "class Solution {\n\n    /**\n     * @param String[] $words\n     * @param String $target\n     * @return Integer\n     */\n    function minValidStrings($words, $target) {\n        \n    }\n}",
+    "swift": "class Solution {\n    func minValidStrings(_ words: [String], _ target: String) -> Int {\n        \n    }\n}",
+    "kotlin": "class Solution {\n    fun minValidStrings(words: Array<String>, target: String): Int {\n        \n    }\n}",
+    "dart": "class Solution {\n  int minValidStrings(List<String> words, String target) {\n    \n  }\n}",
+    "golang": "func minValidStrings(words []string, target string) int {\n    \n}",
+    "ruby": "# @param {String[]} words\n# @param {String} target\n# @return {Integer}\ndef min_valid_strings(words, target)\n    \nend",
+    "scala": "object Solution {\n    def minValidStrings(words: Array[String], target: String): Int = {\n        \n    }\n}",
+    "rust": "impl Solution {\n    pub fn min_valid_strings(words: Vec<String>, target: String) -> i32 {\n        \n    }\n}",
+    "racket": "(define/contract (min-valid-strings words target)\n  (-> (listof string?) string? exact-integer?)\n  )",
+    "erlang": "-spec min_valid_strings(Words :: [unicode:unicode_binary()], Target :: unicode:unicode_binary()) -> integer().\nmin_valid_strings(Words, Target) ->\n  .",
+    "elixir": "defmodule Solution do\n  @spec min_valid_strings(words :: [String.t], target :: String.t) :: integer\n  def min_valid_strings(words, target) do\n    \n  end\nend"
+  },
+  "input_output": [
+    {
+      "input": "words = [\"abc\"], target = \"abcabc\"",
+      "output": "2"
+    },
+    {
+      "input": "words = [\"ab\", \"ba\"], target = \"abab\"",
+      "output": "2"
+    },
+    {
+      "input": "words = [\"a\",\"b\",\"c\",\"d\"], target = \"abcdabcdabcd\"",
+      "output": "12"
+    },
+    {
+      "input": "words = [\"abcde\", \"fghij\", \"klmno\"], target = \"abcdefghijklmno\"",
+      "output": "3"
+    },
+    {
+      "input": "words = [\"z\"], target = \"zzzzzzzzzz\"",
+      "output": "10"
+    },
+    {
+      "input": "words = [\"abababab\",\"ab\"], target = \"ababaababa\"",
+      "output": "2"
+    },
+    {
+      "input": "words = [\"abc\", \"abc\", \"abc\"], target = \"abcabcabc\"",
+      "output": "3"
+    },
+    {
+      "input": "words = [\"a\",\"aa\",\"aaa\"], target = \"aaaaaa\"",
+      "output": "2"
+    },
+    {
+      "input": "words = [\"hello\",\"world\"], target = \"hello\"",
+      "output": "1"
+    },
+    {
+      "input": "words = [\"abcdef\"], target = \"xyz\"",
+      "output": "-1"
+    },
+    {
+      "input": "words = [\"prefix\",\"pre\",\"fix\"], target = \"prefixfix\"",
+      "output": "2"
+    },
+    {
+      "input": "words = [\"a\",\"aa\",\"aaa\"], target = \"aaaaaaaaaa\"",
+      "output": "4"
+    },
+    {
+      "input": "words = [\"hello\", \"world\"], target = \"hello\"",
+      "output": "1"
+    },
+    {
+      "input": "words = [\"aaa\",\"aa\",\"a\"], target = \"aaaaaa\"",
+      "output": "2"
+    },
+    {
+      "input": "words = [\"aa\", \"bb\", \"cc\"], target = \"aabbcc\"",
+      "output": "3"
+    },
+    {
+      "input": "words = [\"ab\",\"bc\",\"cd\"], target = \"abcd\"",
+      "output": "2"
+    },
+    {
+      "input": "words = [\"abcd\", \"efgh\", \"ijkl\"], target = \"abcdefghijl\"",
+      "output": "-1"
+    },
+    {
+      "input": "words = [\"a\", \"b\", \"c\"], target = \"abc\"",
+      "output": "3"
+    },
+    {
+      "input": "words = [\"hello\",\"world\"], target = \"helloworld\"",
+      "output": "2"
+    },
+    {
+      "input": "words = [\"a\",\"ab\",\"abc\"], target = \"abcabcabc\"",
+      "output": "3"
+    },
+    {
+      "input": "words = [\"a\",\"b\",\"c\"], target = \"abc\"",
+      "output": "3"
+    },
+    {
+      "input": "words = [\"abc\", \"def\", \"ghi\"], target = \"abcdef\"",
+      "output": "2"
+    },
+    {
+      "input": "words = [\"prefix\", \"pre\", \"fix\"], target = \"prefixfix\"",
+      "output": "2"
+    },
+    {
+      "input": "words = [\"hello\", \"world\"], target = \"world\"",
+      "output": "1"
+    },
+    {
+      "input": "words = [\"a\"], target = \"aaaaa\"",
+      "output": "5"
+    },
+    {
+      "input": "words = [\"a\", \"ab\", \"abc\"], target = \"abc\"",
+      "output": "1"
+    },
+    {
+      "input": "words = [\"prefix\",\"suffix\"], target = \"prefixsuffix\"",
+      "output": "2"
+    },
+    {
+      "input": "words = [\"abc\",\"aaaaa\",\"bcdef\"], target = \"aabcdabc\"",
+      "output": "3"
+    },
+    {
+      "input": "words = [\"abc\", \"def\", \"ghi\", \"jkl\", \"mno\"], target = \"abcdefghijklmno\"",
+      "output": "5"
+    },
+    {
+      "input": "words = [\"a\",\"ab\",\"abc\",\"abcd\"], target = \"abcdabcdabcd\"",
+      "output": "3"
+    },
+    {
+      "input": "words = [\"prefix\",\"pre\",\"fix\",\"suffix\"], target = \"prefixsuffix\"",
+      "output": "2"
+    },
+    {
+      "input": "words = [\"abc\",\"bca\",\"cab\"], target = \"abcabcabcabc\"",
+      "output": "4"
+    },
+    {
+      "input": "words = [\"aaa\",\"aaaa\",\"aaaaa\",\"aaaaaa\"], target = \"aaaaaaaaaaaaaaaaaa\"",
+      "output": "3"
+    },
+    {
+      "input": "words = [\"jump\",\"jum\",\"ju\",\"j\"], target = \"jumpjumpjump\"",
+      "output": "3"
+    },
+    {
+      "input": "words = [\"ab\",\"ba\",\"aba\",\"bab\",\"abab\"], target = \"ababbababababa\"",
+      "output": "4"
+    },
+    {
+      "input": "words = [\"brown\",\"brow\",\"bro\",\"br\",\"b\"], target = \"brownbrownbrow\"",
+      "output": "3"
+    },
+    {
+      "input": "words = [\"aaa\", \"aa\", \"a\", \"aaaa\"], target = \"aaaaaaaaa\"",
+      "output": "3"
+    },
+    {
+      "input": "words = [\"abc\", \"def\", \"ghi\", \"jkl\"], target = \"abcdefghijk\"",
+      "output": "4"
+    },
+    {
+      "input": "words = [\"abcdefghij\",\"jihgfedcba\",\"abcdefgh\",\"hgfedcba\"], target = \"abcdefghijhgfedcbahgfedcba\"",
+      "output": "3"
+    },
+    {
+      "input": "words = [\"abc\",\"def\",\"ghi\",\"jkl\",\"mno\"], target = \"abcdefghijklmnopqrstuvwxyza\"",
+      "output": "-1"
+    },
+    {
+      "input": "words = [\"lazy\",\"laz\",\"la\",\"l\"], target = \"lazylazy\"",
+      "output": "2"
+    },
+    {
+      "input": "words = [\"a\",\"aa\",\"aaa\",\"aaaa\",\"aaaaa\"], target = \"aaaaaaaaaaaaaaaaaa\"",
+      "output": "4"
+    },
+    {
+      "input": "words = [\"one\",\"two\",\"three\",\"four\",\"five\",\"six\",\"seven\",\"eight\",\"nine\",\"ten\"], target = \"onetwothreefourfivesixseveneightnineten\"",
+      "output": "10"
+    },
+    {
+      "input": "words = [\"repeated\",\"repeat\",\"re\",\"rep\",\"repe\"], target = \"repeatedrepeated\"",
+      "output": "2"
+    },
+    {
+      "input": "words = [\"abcd\",\"bcd\",\"cd\",\"d\"], target = \"abcdbcdbcd\"",
+      "output": "3"
+    },
+    {
+      "input": "words = [\"one\",\"two\",\"three\"], target = \"onetwothree\"",
+      "output": "3"
+    },
+    {
+      "input": "words = [\"hello\",\"world\",\"hello\",\"world\"], target = \"helloworldhello\"",
+      "output": "3"
+    },
+    {
+      "input": "words = [\"xyz\",\"zyx\",\"yz\",\"zx\",\"yx\"], target = \"zyxzyxzyx\"",
+      "output": "3"
+    },
+    {
+      "input": "words = [\"prefix\",\"pre\",\"fix\",\"fixx\",\"fixxx\"], target = \"prefixfixfixxxfixfixfixx\"",
+      "output": "6"
+    },
+    {
+      "input": "words = [\"one\",\"two\",\"three\",\"four\"], target = \"onetwothreefour\"",
+      "output": "4"
+    },
+    {
+      "input": "words = [\"xyz\",\"xy\",\"x\"], target = \"xyzyzyxzyzyx\"",
+      "output": "-1"
+    },
+    {
+      "input": "words = [\"longprefix\",\"longerprefix\",\"longestprefix\"], target = \"longestprefixlongprefixlongerprefix\"",
+      "output": "3"
+    },
+    {
+      "input": "words = [\"dog\",\"do\",\"d\"], target = \"dogdogdog\"",
+      "output": "3"
+    },
+    {
+      "input": "words = [\"short\",\"longer\",\"longestword\"], target = \"shortlongerlongestwordshortlongerlongestwordshortlongerlongestword\"",
+      "output": "9"
+    },
+    {
+      "input": "words = [\"abcd\",\"abc\",\"ab\",\"a\"], target = \"abcabcabcabc\"",
+      "output": "4"
+    },
+    {
+      "input": "words = [\"abcdefg\",\"bcdefgh\",\"cdefghi\",\"defghij\",\"efghijk\"], target = \"abcdefghijk\"",
+      "output": "2"
+    },
+    {
+      "input": "words = [\"unique\",\"words\",\"only\",\"here\"], target = \"uniquewordsonlyhere\"",
+      "output": "4"
+    },
+    {
+      "input": "words = [\"abcdefgh\",\"ijklmnop\",\"qrstuvwx\",\"yz\"], target = \"abcdefghijklmnopqrstuvwxyzyz\"",
+      "output": "5"
+    },
+    {
+      "input": "words = [\"abab\",\"baba\",\"abba\",\"baab\",\"aaaa\"], target = \"ababbabaabbaab\"",
+      "output": "4"
+    },
+    {
+      "input": "words = [\"hello\",\"world\",\"hello\",\"world\"], target = \"helloworldhelloworld\"",
+      "output": "4"
+    },
+    {
+      "input": "words = [\"longword\",\"longerword\",\"longestword\"], target = \"longwordlongerwordlongestwordlongestwordlongestword\"",
+      "output": "5"
+    },
+    {
+      "input": "words = [\"hello\",\"hell\",\"he\",\"h\"], target = \"hellohello\"",
+      "output": "2"
+    },
+    {
+      "input": "words = [\"prefix\", \"prefixprefix\", \"prefixprefixprefix\"], target = \"prefixprefixprefixprefix\"",
+      "output": "2"
+    },
+    {
+      "input": "words = [\"ab\",\"abc\",\"abcd\"], target = \"abcabcdab\"",
+      "output": "3"
+    },
+    {
+      "input": "words = [\"aaa\",\"aab\",\"aac\",\"aad\"], target = \"aaabaaacaaad\"",
+      "output": "6"
+    },
+    {
+      "input": "words = [\"small\",\"big\",\"medium\"], target = \"smallbigmediumbig\"",
+      "output": "4"
+    },
+    {
+      "input": "words = [\"one\", \"two\", \"three\", \"four\"], target = \"onetwothreefour\"",
+      "output": "4"
+    },
+    {
+      "input": "words = [\"hello\",\"world\",\"hel\",\"lo\",\"wor\",\"ld\"], target = \"helloworld\"",
+      "output": "2"
+    },
+    {
+      "input": "words = [\"giraffe\",\"gira\",\"gir\",\"gi\",\"g\"], target = \"giraffegiraffe\"",
+      "output": "2"
+    },
+    {
+      "input": "words = [\"a\",\"aa\",\"aaa\",\"aaaa\",\"aaaaa\"], target = \"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\"",
+      "output": "8"
+    },
+    {
+      "input": "words = [\"one\",\"on\",\"o\"], target = \"ononeone\"",
+      "output": "3"
+    },
+    {
+      "input": "words = [\"x\",\"y\",\"z\",\"xy\",\"yz\",\"xz\",\"xyz\"], target = \"xyzxyzxyz\"",
+      "output": "3"
+    },
+    {
+      "input": "words = [\"prefix\", \"fix\", \"pre\", \"prefixfix\"], target = \"prefixprefix\"",
+      "output": "2"
+    },
+    {
+      "input": "words = [\"a\",\"b\",\"c\",\"d\",\"e\",\"f\",\"g\",\"h\",\"i\",\"j\",\"k\",\"l\",\"m\",\"n\",\"o\",\"p\",\"q\",\"r\",\"s\",\"t\",\"u\",\"v\",\"w\",\"x\",\"y\",\"z\"], target = \"abcdefghijklmnopqrstuvwxyz\"",
+      "output": "26"
+    },
+    {
+      "input": "words = [\"prefix\",\"pre\",\"fix\",\"prefixfix\"], target = \"prefixprefixfix\"",
+      "output": "2"
+    },
+    {
+      "input": "words = [\"aabb\",\"ab\",\"aab\",\"aa\"], target = \"aabbabaaababaab\"",
+      "output": "6"
+    },
+    {
+      "input": "words = [\"pqr\",\"pq\",\"p\"], target = \"pqrpqppqrpqpp\"",
+      "output": "7"
+    },
+    {
+      "input": "words = [\"abc\",\"abcabc\",\"abcabcabc\",\"abcabcabcabc\"], target = \"abcabcabcabcabcabcabcabcabcabc\"",
+      "output": "3"
+    },
+    {
+      "input": "words = [\"xyz\", \"xy\", \"x\"], target = \"xyzyxzyz\"",
+      "output": "-1"
+    },
+    {
+      "input": "words = [\"prefix\",\"suffix\",\"pre\",\"fix\",\"postfix\"], target = \"prefixpostfix\"",
+      "output": "2"
+    },
+    {
+      "input": "words = [\"a\", \"b\", \"c\", \"d\", \"e\"], target = \"abcdeabcdeabcde\"",
+      "output": "15"
+    },
+    {
+      "input": "words = [\"abcd\",\"abcde\",\"abcdef\",\"abcdefg\"], target = \"abcdefgabcdefgabcdefg\"",
+      "output": "3"
+    },
+    {
+      "input": "words = [\"abcd\",\"bcde\",\"cdef\",\"defg\"], target = \"abcdefg\"",
+      "output": "2"
+    },
+    {
+      "input": "words = [\"abcd\", \"abc\", \"ab\", \"a\"], target = \"abcdabc\"",
+      "output": "2"
+    },
+    {
+      "input": "words = [\"abc\",\"bcd\",\"cde\",\"def\"], target = \"abcdef\"",
+      "output": "2"
+    },
+    {
+      "input": "words = [\"hello\",\"hellohello\",\"hellohellohello\"], target = \"hellohellohellohellohellohello\"",
+      "output": "2"
+    },
+    {
+      "input": "words = [\"quick\",\"qui\",\"qu\",\"q\"], target = \"quickquick\"",
+      "output": "2"
+    },
+    {
+      "input": "words = [\"xyz\",\"yz\",\"z\"], target = \"xyzxyz\"",
+      "output": "2"
+    },
+    {
+      "input": "words = [\"longword\",\"long\",\"lo\",\"l\"], target = \"longwordlongwordlongword\"",
+      "output": "3"
+    },
+    {
+      "input": "words = [\"panda\",\"pan\",\"pa\",\"p\"], target = \"pandapanpapanda\"",
+      "output": "4"
+    },
+    {
+      "input": "words = [\"abc\",\"def\",\"ghi\",\"jkl\"], target = \"abcdefghijkl\"",
+      "output": "4"
+    },
+    {
+      "input": "words = [\"abc\",\"b\",\"c\"], target = \"abcbabcbabc\"",
+      "output": "5"
+    },
+    {
+      "input": "words = [\"repeated\",\"repeat\",\"rep\",\"r\"], target = \"repeatedrepeatedrepeated\"",
+      "output": "3"
+    },
+    {
+      "input": "words = [\"zebra\",\"zeb\",\"ze\",\"z\"], target = \"zebrazebrazebra\"",
+      "output": "3"
+    },
+    {
+      "input": "words = [\"abc\",\"cba\",\"bac\"], target = \"abcbacbac\"",
+      "output": "3"
+    },
+    {
+      "input": "words = [\"a\", \"ab\", \"abc\", \"abcd\"], target = \"abcdabcdabcd\"",
+      "output": "3"
+    },
+    {
+      "input": "words = [\"aaaa\",\"aaa\",\"aa\",\"a\"], target = \"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\"",
+      "output": "8"
+    },
+    {
+      "input": "words = [\"a\",\"aa\",\"aaa\",\"aaaa\"], target = \"aaaaaaaaaaaa\"",
+      "output": "3"
+    },
+    {
+      "input": "words = [\"ab\",\"a\",\"b\"], target = \"abababababab\"",
+      "output": "6"
+    },
+    {
+      "input": "words = [\"aaaa\",\"aaa\",\"aa\",\"a\"], target = \"aaaaaaaaaaaa\"",
+      "output": "3"
+    },
+    {
+      "input": "words = [\"longprefix\",\"prefix\",\"fix\",\"suffix\"], target = \"longprefixsuffix\"",
+      "output": "2"
+    },
+    {
+      "input": "words = [\"fox\",\"fo\",\"f\"], target = \"foxfoxfoxfox\"",
+      "output": "4"
+    },
+    {
+      "input": "words = [\"abcd\",\"abc\",\"ab\",\"a\"], target = \"abcdabcaba\"",
+      "output": "4"
+    },
+    {
+      "input": "words = [\"pqr\",\"pq\",\"p\"], target = \"ppppqqqrrr\"",
+      "output": "-1"
+    },
+    {
+      "input": "words = [\"prefix\", \"prefi\", \"pref\", \"pre\", \"pr\"], target = \"prefixprefix\"",
+      "output": "2"
+    },
+    {
+      "input": "words = [\"cat\",\"ca\",\"c\"], target = \"catcatcatcat\"",
+      "output": "4"
+    },
+    {
+      "input": "words = [\"prefix\",\"pref\",\"pre\",\"p\"], target = \"prefixprefix\"",
+      "output": "2"
+    },
+    {
+      "input": "words = [\"abc\",\"bcd\",\"cde\",\"def\"], target = \"abcdefg\"",
+      "output": "-1"
+    },
+    {
+      "input": "words = [\"apple\",\"banana\",\"cherry\"], target = \"applebananaapple\"",
+      "output": "3"
+    },
+    {
+      "input": "words = [\"partial\",\"part\",\"par\",\"pa\",\"p\"], target = \"partialpartparpap\"",
+      "output": "5"
+    },
+    {
+      "input": "words = [\"abcd\",\"abc\",\"ab\",\"a\"], target = \"abcdabcab\"",
+      "output": "3"
+    },
+    {
+      "input": "words = [\"prefix\",\"pre\",\"fix\",\"fixx\"], target = \"prefixprefixfixfixxfix\"",
+      "output": "5"
+    },
+    {
+      "input": "words = [\"aaa\",\"aa\",\"a\"], target = \"aaaaaaaaaaaaaaaa\"",
+      "output": "6"
+    },
+    {
+      "input": "words = [\"prefix\",\"prefixing\",\"pre\",\"fix\",\"fixing\"], target = \"prefixprefixfix\"",
+      "output": "3"
+    },
+    {
+      "input": "words = [\"qwerty\",\"werty\",\"erty\",\"rty\",\"ty\",\"y\",\"yt\",\"tyu\"], target = \"qwertytyutytutytutytutytutytutytutytutu\"",
+      "output": "-1"
+    },
+    {
+      "input": "words = [\"abac\",\"bac\",\"cab\",\"abc\"], target = \"abacbacabc\"",
+      "output": "3"
+    },
+    {
+      "input": "words = [\"over\",\"ove\",\"ov\",\"o\"], target = \"overoverover\"",
+      "output": "3"
+    },
+    {
+      "input": "words = [\"aaaaa\",\"aaaa\",\"aaa\",\"aa\",\"a\"], target = \"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\"",
+      "output": "21"
+    },
+    {
+      "input": "words = [\"abcde\",\"cdefg\",\"efghi\",\"fghij\"], target = \"abcdefghij\"",
+      "output": "2"
+    },
+    {
+      "input": "words = [\"a\", \"b\", \"c\", \"d\", \"e\"], target = \"edcba\"",
+      "output": "5"
+    },
+    {
+      "input": "words = [\"one\",\"two\",\"three\"], target = \"onetwothreeonetwo\"",
+      "output": "5"
+    },
+    {
+      "input": "words = [\"abc\",\"ab\",\"a\"], target = \"abcabcabc\"",
+      "output": "3"
+    },
+    {
+      "input": "words = [\"a\",\"ab\",\"abc\",\"abcd\"], target = \"abcdabcd\"",
+      "output": "2"
+    },
+    {
+      "input": "words = [\"hello\",\"hi\",\"h\",\"he\",\"hel\"], target = \"hellohellohi\"",
+      "output": "3"
+    },
+    {
+      "input": "words = [\"xyz\", \"zyx\", \"yyz\", \"xzy\"], target = \"zyxzyxzyx\"",
+      "output": "3"
+    },
+    {
+      "input": "words = [\"same\",\"same\",\"same\"], target = \"samesamesamesamesame\"",
+      "output": "5"
+    },
+    {
+      "input": "words = [\"pqr\",\"pr\",\"qr\",\"r\",\"pq\",\"q\"], target = \"pqrprqrpqr\"",
+      "output": "4"
+    },
+    {
+      "input": "words = [\"test\", \"testing\", \"testcase\"], target = \"testtestingtestcase\"",
+      "output": "3"
+    },
+    {
+      "input": "words = [\"abcd\",\"bcd\",\"cde\",\"def\",\"efg\",\"fgh\"], target = \"abcdefg\"",
+      "output": "2"
+    },
+    {
+      "input": "words = [\"abc\", \"abcd\", \"abcde\"], target = \"abcdeabcdeabcde\"",
+      "output": "3"
+    },
+    {
+      "input": "words = [\"complex\",\"words\",\"example\"], target = \"complexwordscomplex\"",
+      "output": "3"
+    },
+    {
+      "input": "words = [\"elephant\",\"elepha\",\"eleph\",\"elep\",\"ele\",\"el\",\"e\"], target = \"elephantelephant\"",
+      "output": "2"
+    },
+    {
+      "input": "words = [\"abc\", \"bc\", \"c\", \"abcd\"], target = \"abcabcabc\"",
+      "output": "3"
+    },
+    {
+      "input": "words = [\"xyz\",\"zyx\",\"yzx\"], target = \"xyzzyxyzzyx\"",
+      "output": "4"
+    },
+    {
+      "input": "words = [\"xy\",\"xyz\",\"xyza\",\"xyzabc\"], target = \"xyzabcxyzabcxyz\"",
+      "output": "3"
+    },
+    {
+      "input": "words = [\"xyz\",\"xy\",\"x\"], target = \"xyzyxyzyx\"",
+      "output": "-1"
+    },
+    {
+      "input": "words = [\"a\",\"b\",\"c\",\"d\",\"e\",\"f\",\"g\",\"h\",\"i\",\"j\"], target = \"abcdefghij\"",
+      "output": "10"
+    },
+    {
+      "input": "words = [\"aaa\",\"bbb\",\"ccc\"], target = \"aaabbbccc\"",
+      "output": "3"
+    },
+    {
+      "input": "words = [\"abc\", \"abcd\", \"ab\", \"bcde\"], target = \"abcdabcde\"",
+      "output": "3"
+    },
+    {
+      "input": "words = [\"a\",\"ab\",\"abc\",\"abcd\",\"abcde\"], target = \"abcdeabcde\"",
+      "output": "2"
+    },
+    {
+      "input": "words = [\"xyz\",\"zyx\",\"yxz\",\"yxzyx\"], target = \"xyzzyxzyxzyxzyxzyx\"",
+      "output": "6"
+    },
+    {
+      "input": "words = [\"zzz\",\"zz\",\"z\"], target = \"zzzzzzzzzzzzzzzzzzzz\"",
+      "output": "7"
+    },
+    {
+      "input": "words = [\"z\", \"yz\", \"xyz\", \"wxyz\"], target = \"wxyzwxyzwxyz\"",
+      "output": "3"
+    },
+    {
+      "input": "words = [\"abc\",\"acb\",\"bac\",\"bca\",\"cab\",\"cba\"], target = \"abcacbabcabc\"",
+      "output": "4"
+    },
+    {
+      "input": "words = [\"abcde\",\"bcd\",\"cde\",\"efg\"], target = \"abcdecdefg\"",
+      "output": "3"
+    },
+    {
+      "input": "words = [\"repeated\",\"repeate\",\"repea\",\"repe\",\"rep\",\"re\",\"r\"], target = \"repeatedrepeatedrepeated\"",
+      "output": "3"
+    },
+    {
+      "input": "words = [\"aaaa\", \"aa\", \"a\"], target = \"aaaaaaaaaaaaaaaaaaaaaaaa\"",
+      "output": "6"
+    },
+    {
+      "input": "words = [\"onetwo\", \"one\", \"two\", \"three\"], target = \"onetwothreeonetwo\"",
+      "output": "3"
+    },
+    {
+      "input": "words = [\"abc\",\"def\",\"ghi\",\"jkl\"], target = \"abcdefghijk\"",
+      "output": "4"
+    }
+  ]
+}

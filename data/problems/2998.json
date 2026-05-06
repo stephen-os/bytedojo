@@ -1,0 +1,594 @@
+{
+  "id": 2998,
+  "title": "Minimum Number of Operations to Make X and Y Equal",
+  "slug": "minimum-number-of-operations-to-make-x-and-y-equal",
+  "difficulty": "Medium",
+  "topics": [
+    "Dynamic Programming",
+    "Breadth-First Search",
+    "Memoization"
+  ],
+  "description": "You are given two positive integers x and y.\nIn one operation, you can do one of the four following operations:\nReturn the minimum number of operations required to make  x and y equal.\nExample 1:\nExample 2:\nExample 3:\nConstraints:",
+  "examples": [
+    {
+      "example_num": 1,
+      "example_text": "Input: x = 26, y = 1\nOutput: 3\nExplanation: We can make 26 equal to 1 by applying the following operations: \n1. Decrement x by 1\n2. Divide x by 5\n3. Divide x by 5\nIt can be shown that 3 is the minimum number of operations required to make 26 equal to 1.",
+      "images": []
+    },
+    {
+      "example_num": 2,
+      "example_text": "Input: x = 54, y = 2\nOutput: 4\nExplanation: We can make 54 equal to 2 by applying the following operations: \n1. Increment x by 1\n2. Divide x by 11 \n3. Divide x by 5\n4. Increment x by 1\nIt can be shown that 4 is the minimum number of operations required to make 54 equal to 2.",
+      "images": []
+    },
+    {
+      "example_num": 3,
+      "example_text": "Input: x = 25, y = 30\nOutput: 5\nExplanation: We can make 25 equal to 30 by applying the following operations: \n1. Increment x by 1\n2. Increment x by 1\n3. Increment x by 1\n4. Increment x by 1\n5. Increment x by 1\nIt can be shown that 5 is the minimum number of operations required to make 25 equal to 30.",
+      "images": []
+    }
+  ],
+  "constraints": [
+    "1 <= x, y <= 104"
+  ],
+  "hints": [
+    "The only way to make <code>x</code> larger is to increase it by <code>1</code> so if <code>y >= x</code> the answer is <code>y - x</code>.",
+    "For <code>y < x</code>, <code>x - y</code> is always a candidate answer since we can repeatedly decrease <code>x</code> by one to reach <code>y</code>.",
+    "We can also increase <code>x</code> and then use the division operations. For example, if <code>x = 10</code> and <code>y = 1</code>, we can increment <code>x</code> by <code>1</code> then divide it by <code>11</code>.",
+    "Find an upper bound <code>U</code> on the maximum value of <code>x</code> we will reach an optimal solution. Since all values of <code>x</code> will be in the range <code>[1, U]</code>, we can use BFS to find the answer.",
+    "One possible upper bound on <code>x</code> is <code>U = x + (x - y) </code>. To reach any number strictly greater than <code>U</code> from <code>x</code>, we will need more than <code>x - y</code> operations which is not optimal since we can always reach <code>y</code> in <code>x - y</code> operations."
+  ],
+  "code_snippets": {
+    "cpp": "class Solution {\npublic:\n    int minimumOperationsToMakeEqual(int x, int y) {\n        \n    }\n};",
+    "java": "class Solution {\n    public int minimumOperationsToMakeEqual(int x, int y) {\n        \n    }\n}",
+    "python": "class Solution(object):\n    def minimumOperationsToMakeEqual(self, x, y):\n        \"\"\"\n        :type x: int\n        :type y: int\n        :rtype: int\n        \"\"\"\n        ",
+    "python3": "class Solution:\n    def minimumOperationsToMakeEqual(self, x: int, y: int) -> int:\n        ",
+    "c": "int minimumOperationsToMakeEqual(int x, int y) {\n    \n}",
+    "csharp": "public class Solution {\n    public int MinimumOperationsToMakeEqual(int x, int y) {\n        \n    }\n}",
+    "javascript": "/**\n * @param {number} x\n * @param {number} y\n * @return {number}\n */\nvar minimumOperationsToMakeEqual = function(x, y) {\n    \n};",
+    "typescript": "function minimumOperationsToMakeEqual(x: number, y: number): number {\n    \n};",
+    "php": "class Solution {\n\n    /**\n     * @param Integer $x\n     * @param Integer $y\n     * @return Integer\n     */\n    function minimumOperationsToMakeEqual($x, $y) {\n        \n    }\n}",
+    "swift": "class Solution {\n    func minimumOperationsToMakeEqual(_ x: Int, _ y: Int) -> Int {\n        \n    }\n}",
+    "kotlin": "class Solution {\n    fun minimumOperationsToMakeEqual(x: Int, y: Int): Int {\n        \n    }\n}",
+    "dart": "class Solution {\n  int minimumOperationsToMakeEqual(int x, int y) {\n    \n  }\n}",
+    "golang": "func minimumOperationsToMakeEqual(x int, y int) int {\n    \n}",
+    "ruby": "# @param {Integer} x\n# @param {Integer} y\n# @return {Integer}\ndef minimum_operations_to_make_equal(x, y)\n    \nend",
+    "scala": "object Solution {\n    def minimumOperationsToMakeEqual(x: Int, y: Int): Int = {\n        \n    }\n}",
+    "rust": "impl Solution {\n    pub fn minimum_operations_to_make_equal(x: i32, y: i32) -> i32 {\n        \n    }\n}",
+    "racket": "(define/contract (minimum-operations-to-make-equal x y)\n  (-> exact-integer? exact-integer? exact-integer?)\n  )",
+    "erlang": "-spec minimum_operations_to_make_equal(X :: integer(), Y :: integer()) -> integer().\nminimum_operations_to_make_equal(X, Y) ->\n  .",
+    "elixir": "defmodule Solution do\n  @spec minimum_operations_to_make_equal(x :: integer, y :: integer) :: integer\n  def minimum_operations_to_make_equal(x, y) do\n    \n  end\nend"
+  },
+  "input_output": [
+    {
+      "input": "x = 1, y = 10000",
+      "output": "9999"
+    },
+    {
+      "input": "x = 11, y = 5",
+      "output": "5"
+    },
+    {
+      "input": "x = 10000, y = 1",
+      "output": "8"
+    },
+    {
+      "input": "x = 111, y = 11",
+      "output": "3"
+    },
+    {
+      "input": "x = 77, y = 7",
+      "output": "1"
+    },
+    {
+      "input": "x = 500, y = 20",
+      "output": "2"
+    },
+    {
+      "input": "x = 25, y = 30",
+      "output": "5"
+    },
+    {
+      "input": "x = 11, y = 1",
+      "output": "1"
+    },
+    {
+      "input": "x = 55, y = 11",
+      "output": "1"
+    },
+    {
+      "input": "x = 2, y = 20",
+      "output": "18"
+    },
+    {
+      "input": "x = 1234, y = 4321",
+      "output": "3087"
+    },
+    {
+      "input": "x = 100, y = 1",
+      "output": "4"
+    },
+    {
+      "input": "x = 26, y = 1",
+      "output": "3"
+    },
+    {
+      "input": "x = 54, y = 2",
+      "output": "4"
+    },
+    {
+      "input": "x = 99, y = 9",
+      "output": "1"
+    },
+    {
+      "input": "x = 9999, y = 9999",
+      "output": "0"
+    },
+    {
+      "input": "x = 55, y = 10",
+      "output": "2"
+    },
+    {
+      "input": "x = 10, y = 10",
+      "output": "0"
+    },
+    {
+      "input": "x = 55, y = 5",
+      "output": "1"
+    },
+    {
+      "input": "x = 100, y = 10",
+      "output": "3"
+    },
+    {
+      "input": "x = 5, y = 1",
+      "output": "1"
+    },
+    {
+      "input": "x = 15, y = 6",
+      "output": "4"
+    },
+    {
+      "input": "x = 1, y = 100",
+      "output": "99"
+    },
+    {
+      "input": "x = 1111, y = 5555",
+      "output": "4444"
+    },
+    {
+      "input": "x = 6666, y = 3333",
+      "output": "2002"
+    },
+    {
+      "input": "x = 9876, y = 5432",
+      "output": "3459"
+    },
+    {
+      "input": "x = 8888, y = 111",
+      "output": "45"
+    },
+    {
+      "input": "x = 3000, y = 2500",
+      "output": "500"
+    },
+    {
+      "input": "x = 1111, y = 100",
+      "output": "2"
+    },
+    {
+      "input": "x = 7777, y = 6666",
+      "output": "1111"
+    },
+    {
+      "input": "x = 100, y = 2500",
+      "output": "2400"
+    },
+    {
+      "input": "x = 5555, y = 22",
+      "output": "6"
+    },
+    {
+      "input": "x = 1234, y = 8765",
+      "output": "7531"
+    },
+    {
+      "input": "x = 7000, y = 3500",
+      "output": "2101"
+    },
+    {
+      "input": "x = 9876, y = 1234",
+      "output": "339"
+    },
+    {
+      "input": "x = 55, y = 15",
+      "output": "5"
+    },
+    {
+      "input": "x = 3333, y = 6666",
+      "output": "3333"
+    },
+    {
+      "input": "x = 3333, y = 33",
+      "output": "12"
+    },
+    {
+      "input": "x = 1010, y = 10",
+      "output": "7"
+    },
+    {
+      "input": "x = 550, y = 10",
+      "output": "2"
+    },
+    {
+      "input": "x = 100, y = 10000",
+      "output": "9900"
+    },
+    {
+      "input": "x = 6666, y = 66",
+      "output": "14"
+    },
+    {
+      "input": "x = 5000, y = 5005",
+      "output": "5"
+    },
+    {
+      "input": "x = 5000, y = 50",
+      "output": "13"
+    },
+    {
+      "input": "x = 441, y = 121",
+      "output": "35"
+    },
+    {
+      "input": "x = 5000, y = 2500",
+      "output": "1501"
+    },
+    {
+      "input": "x = 330, y = 3",
+      "output": "5"
+    },
+    {
+      "input": "x = 9999, y = 10000",
+      "output": "1"
+    },
+    {
+      "input": "x = 5000, y = 6000",
+      "output": "1000"
+    },
+    {
+      "input": "x = 9999, y = 1000",
+      "output": "92"
+    },
+    {
+      "input": "x = 500, y = 1000",
+      "output": "500"
+    },
+    {
+      "input": "x = 2222, y = 2222",
+      "output": "0"
+    },
+    {
+      "input": "x = 9000, y = 9009",
+      "output": "9"
+    },
+    {
+      "input": "x = 1000, y = 345",
+      "output": "146"
+    },
+    {
+      "input": "x = 4444, y = 4445",
+      "output": "1"
+    },
+    {
+      "input": "x = 220, y = 385",
+      "output": "165"
+    },
+    {
+      "input": "x = 300, y = 105",
+      "output": "46"
+    },
+    {
+      "input": "x = 9999, y = 1",
+      "output": "9"
+    },
+    {
+      "input": "x = 1234, y = 654",
+      "output": "409"
+    },
+    {
+      "input": "x = 5000, y = 5",
+      "output": "7"
+    },
+    {
+      "input": "x = 55, y = 77",
+      "output": "22"
+    },
+    {
+      "input": "x = 4999, y = 5001",
+      "output": "2"
+    },
+    {
+      "input": "x = 1000, y = 10000",
+      "output": "9000"
+    },
+    {
+      "input": "x = 3000, y = 2990",
+      "output": "10"
+    },
+    {
+      "input": "x = 300, y = 150",
+      "output": "91"
+    },
+    {
+      "input": "x = 220, y = 20",
+      "output": "1"
+    },
+    {
+      "input": "x = 4567, y = 890",
+      "output": "26"
+    },
+    {
+      "input": "x = 1111, y = 1000",
+      "output": "111"
+    },
+    {
+      "input": "x = 1000, y = 995",
+      "output": "5"
+    },
+    {
+      "input": "x = 4444, y = 44",
+      "output": "12"
+    },
+    {
+      "input": "x = 123, y = 321",
+      "output": "198"
+    },
+    {
+      "input": "x = 1000, y = 999",
+      "output": "1"
+    },
+    {
+      "input": "x = 6000, y = 1000",
+      "output": "201"
+    },
+    {
+      "input": "x = 880, y = 15",
+      "output": "3"
+    },
+    {
+      "input": "x = 880, y = 55",
+      "output": "23"
+    },
+    {
+      "input": "x = 1100, y = 50",
+      "output": "8"
+    },
+    {
+      "input": "x = 1331, y = 110",
+      "output": "12"
+    },
+    {
+      "input": "x = 1000, y = 990",
+      "output": "10"
+    },
+    {
+      "input": "x = 7777, y = 2222",
+      "output": "670"
+    },
+    {
+      "input": "x = 1100, y = 10",
+      "output": "4"
+    },
+    {
+      "input": "x = 4000, y = 2000",
+      "output": "1201"
+    },
+    {
+      "input": "x = 9876, y = 4321",
+      "output": "2348"
+    },
+    {
+      "input": "x = 9876, y = 4567",
+      "output": "2594"
+    },
+    {
+      "input": "x = 1234, y = 5678",
+      "output": "4444"
+    },
+    {
+      "input": "x = 495, y = 660",
+      "output": "165"
+    },
+    {
+      "input": "x = 6110, y = 55",
+      "output": "12"
+    },
+    {
+      "input": "x = 1111, y = 222",
+      "output": "2"
+    },
+    {
+      "input": "x = 45, y = 33",
+      "output": "12"
+    },
+    {
+      "input": "x = 9876, y = 11",
+      "output": "11"
+    },
+    {
+      "input": "x = 5500, y = 220",
+      "output": "2"
+    },
+    {
+      "input": "x = 1024, y = 128",
+      "output": "37"
+    },
+    {
+      "input": "x = 24, y = 29",
+      "output": "5"
+    },
+    {
+      "input": "x = 8000, y = 8008",
+      "output": "8"
+    },
+    {
+      "input": "x = 88, y = 22",
+      "output": "7"
+    },
+    {
+      "input": "x = 495, y = 4",
+      "output": "3"
+    },
+    {
+      "input": "x = 7000, y = 7000",
+      "output": "0"
+    },
+    {
+      "input": "x = 825, y = 17",
+      "output": "4"
+    },
+    {
+      "input": "x = 5555, y = 5",
+      "output": "6"
+    },
+    {
+      "input": "x = 1234, y = 88",
+      "output": "27"
+    },
+    {
+      "input": "x = 1024, y = 512",
+      "output": "309"
+    },
+    {
+      "input": "x = 9999, y = 8888",
+      "output": "1111"
+    },
+    {
+      "input": "x = 8000, y = 2000",
+      "output": "401"
+    },
+    {
+      "input": "x = 5432, y = 6789",
+      "output": "1357"
+    },
+    {
+      "input": "x = 111, y = 55",
+      "output": "35"
+    },
+    {
+      "input": "x = 7500, y = 7400",
+      "output": "100"
+    },
+    {
+      "input": "x = 242, y = 11",
+      "output": "7"
+    },
+    {
+      "input": "x = 121, y = 1",
+      "output": "2"
+    },
+    {
+      "input": "x = 6105, y = 1221",
+      "output": "1"
+    },
+    {
+      "input": "x = 3333, y = 999",
+      "output": "335"
+    },
+    {
+      "input": "x = 2020, y = 202",
+      "output": "23"
+    },
+    {
+      "input": "x = 121, y = 110",
+      "output": "11"
+    },
+    {
+      "input": "x = 4321, y = 9876",
+      "output": "5555"
+    },
+    {
+      "input": "x = 4444, y = 8888",
+      "output": "4444"
+    },
+    {
+      "input": "x = 2222, y = 222",
+      "output": "21"
+    },
+    {
+      "input": "x = 1234, y = 890",
+      "output": "344"
+    },
+    {
+      "input": "x = 7, y = 143",
+      "output": "136"
+    },
+    {
+      "input": "x = 7777, y = 77",
+      "output": "18"
+    },
+    {
+      "input": "x = 5555, y = 1111",
+      "output": "1"
+    },
+    {
+      "input": "x = 8888, y = 7777",
+      "output": "1111"
+    },
+    {
+      "input": "x = 9876, y = 123",
+      "output": "48"
+    },
+    {
+      "input": "x = 2000, y = 10000",
+      "output": "8000"
+    },
+    {
+      "input": "x = 8000, y = 8010",
+      "output": "10"
+    },
+    {
+      "input": "x = 88, y = 13",
+      "output": "6"
+    },
+    {
+      "input": "x = 7777, y = 1111",
+      "output": "405"
+    },
+    {
+      "input": "x = 3333, y = 4444",
+      "output": "1111"
+    },
+    {
+      "input": "x = 6000, y = 6005",
+      "output": "5"
+    },
+    {
+      "input": "x = 9999, y = 9990",
+      "output": "9"
+    },
+    {
+      "input": "x = 2222, y = 7777",
+      "output": "5555"
+    },
+    {
+      "input": "x = 77, y = 22",
+      "output": "10"
+    },
+    {
+      "input": "x = 2000, y = 10",
+      "output": "9"
+    },
+    {
+      "input": "x = 1111, y = 9999",
+      "output": "8888"
+    },
+    {
+      "input": "x = 1234, y = 987",
+      "output": "247"
+    },
+    {
+      "input": "x = 8888, y = 1111",
+      "output": "304"
+    }
+  ]
+}

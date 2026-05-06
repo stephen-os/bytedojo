@@ -1,0 +1,493 @@
+{
+  "id": 3500,
+  "title": "Minimum Cost to Divide Array Into Subarrays",
+  "slug": "minimum-cost-to-divide-array-into-subarrays",
+  "difficulty": "Hard",
+  "topics": [
+    "Array",
+    "Dynamic Programming",
+    "Prefix Sum"
+  ],
+  "description": "You are given two integer arrays, nums and cost, of the same size, and an integer k.\nYou can divide nums into subarrays. The cost of the ith subarray consisting of elements nums[l..r] is:\nNote that i represents the order of the subarray: 1 for the first subarray, 2 for the second, and so on.\nReturn the minimum total cost possible from any valid division.\nExample 1:\nExample 2:\nConstraints:",
+  "examples": [
+    {
+      "example_num": 1,
+      "example_text": "Input: nums = [3,1,4], cost = [4,6,6], k = 1\nOutput: 110\nExplanation:",
+      "images": []
+    },
+    {
+      "example_num": 2,
+      "example_text": "Input: nums = [4,8,5,1,14,2,2,12,1], cost = [7,2,8,4,2,2,1,1,2], k = 7\nOutput: 985\nExplanation:",
+      "images": []
+    }
+  ],
+  "constraints": [
+    "1 <= nums.length <= 1000",
+    "cost.length == nums.length",
+    "1 <= nums[i], cost[i] <= 1000",
+    "1 <= k <= 1000"
+  ],
+  "hints": [
+    "<code>dp[i]</code> is the minimum cost to split the array suffix starting at <code>i</code>.",
+    "Observe that no matter how many subarrays we have, if we have the first subarray on the left, the total cost of the previous subarrays increases by <code>k * total_cost_of_the_subarray</code>. This is because when we increase <code>i</code> to <code>(i + 1)</code>, the cost increase is just the suffix sum of the cost array."
+  ],
+  "code_snippets": {
+    "cpp": "class Solution {\npublic:\n    long long minimumCost(vector<int>& nums, vector<int>& cost, int k) {\n        \n    }\n};",
+    "java": "class Solution {\n    public long minimumCost(int[] nums, int[] cost, int k) {\n        \n    }\n}",
+    "python": "class Solution(object):\n    def minimumCost(self, nums, cost, k):\n        \"\"\"\n        :type nums: List[int]\n        :type cost: List[int]\n        :type k: int\n        :rtype: int\n        \"\"\"\n        ",
+    "python3": "class Solution:\n    def minimumCost(self, nums: List[int], cost: List[int], k: int) -> int:\n        ",
+    "c": "long long minimumCost(int* nums, int numsSize, int* cost, int costSize, int k) {\n    \n}",
+    "csharp": "public class Solution {\n    public long MinimumCost(int[] nums, int[] cost, int k) {\n        \n    }\n}",
+    "javascript": "/**\n * @param {number[]} nums\n * @param {number[]} cost\n * @param {number} k\n * @return {number}\n */\nvar minimumCost = function(nums, cost, k) {\n    \n};",
+    "typescript": "function minimumCost(nums: number[], cost: number[], k: number): number {\n    \n};",
+    "php": "class Solution {\n\n    /**\n     * @param Integer[] $nums\n     * @param Integer[] $cost\n     * @param Integer $k\n     * @return Integer\n     */\n    function minimumCost($nums, $cost, $k) {\n        \n    }\n}",
+    "swift": "class Solution {\n    func minimumCost(_ nums: [Int], _ cost: [Int], _ k: Int) -> Int {\n        \n    }\n}",
+    "kotlin": "class Solution {\n    fun minimumCost(nums: IntArray, cost: IntArray, k: Int): Long {\n        \n    }\n}",
+    "dart": "class Solution {\n  int minimumCost(List<int> nums, List<int> cost, int k) {\n    \n  }\n}",
+    "golang": "func minimumCost(nums []int, cost []int, k int) int64 {\n    \n}",
+    "ruby": "# @param {Integer[]} nums\n# @param {Integer[]} cost\n# @param {Integer} k\n# @return {Integer}\ndef minimum_cost(nums, cost, k)\n    \nend",
+    "scala": "object Solution {\n    def minimumCost(nums: Array[Int], cost: Array[Int], k: Int): Long = {\n        \n    }\n}",
+    "rust": "impl Solution {\n    pub fn minimum_cost(nums: Vec<i32>, cost: Vec<i32>, k: i32) -> i64 {\n        \n    }\n}",
+    "racket": "(define/contract (minimum-cost nums cost k)\n  (-> (listof exact-integer?) (listof exact-integer?) exact-integer? exact-integer?)\n  )",
+    "erlang": "-spec minimum_cost(Nums :: [integer()], Cost :: [integer()], K :: integer()) -> integer().\nminimum_cost(Nums, Cost, K) ->\n  .",
+    "elixir": "defmodule Solution do\n  @spec minimum_cost(nums :: [integer], cost :: [integer], k :: integer) :: integer\n  def minimum_cost(nums, cost, k) do\n    \n  end\nend"
+  },
+  "input_output": [
+    {
+      "input": "nums = [1], cost = [1], k = 1",
+      "output": "2"
+    },
+    {
+      "input": "nums = [4,8,5,1,14,2,2,12,1], cost = [7,2,8,4,2,2,1,1,2], k = 7",
+      "output": "985"
+    },
+    {
+      "input": "nums = [1,2,3,4,5], cost = [5,4,3,2,1], k = 2",
+      "output": "130"
+    },
+    {
+      "input": "nums = [3,1,4], cost = [4,6,6], k = 1",
+      "output": "110"
+    },
+    {
+      "input": "nums = [10,20,30], cost = [1,2,3], k = 5",
+      "output": "315"
+    },
+    {
+      "input": "nums = [5,5,5,5,5], cost = [5,5,5,5,5], k = 10",
+      "output": "825"
+    },
+    {
+      "input": "nums = [1,2,3,4,5], cost = [1,1,1,1,1], k = 2",
+      "output": "59"
+    },
+    {
+      "input": "nums = [10,10,10], cost = [10,10,10], k = 5",
+      "output": "900"
+    },
+    {
+      "input": "nums = [10,10,10], cost = [10,10,10], k = 10",
+      "output": "1100"
+    },
+    {
+      "input": "nums = [5,3,8,9,2], cost = [2,4,3,5,1], k = 3",
+      "output": "341"
+    },
+    {
+      "input": "nums = [1,2,3,4,5], cost = [5,4,3,2,1], k = 3",
+      "output": "155"
+    },
+    {
+      "input": "nums = [10,20,30], cost = [100,200,300], k = 5",
+      "output": "31500"
+    },
+    {
+      "input": "nums = [5,5,5,5], cost = [1,1,1,1], k = 2",
+      "output": "69"
+    },
+    {
+      "input": "nums = [1,2,3], cost = [1,1,1], k = 1",
+      "output": "16"
+    },
+    {
+      "input": "nums = [5, 10, 15, 20, 25, 30, 35, 40, 45, 50], cost = [50, 45, 40, 35, 30, 25, 20, 15, 10, 5], k = 50",
+      "output": "46700"
+    },
+    {
+      "input": "nums = [100, 200, 300, 400, 500, 600, 700, 800, 900], cost = [1, 1, 1, 1, 1, 1, 1, 1, 1], k = 50",
+      "output": "18550"
+    },
+    {
+      "input": "nums = [3, 1, 4, 1, 5, 9, 2, 6, 5], cost = [4, 6, 6, 3, 2, 1, 5, 7, 8], k = 5",
+      "output": "1289"
+    },
+    {
+      "input": "nums = [1,2,1,2,1,2,1,2], cost = [1,2,1,2,1,2,1,2], k = 4",
+      "output": "177"
+    },
+    {
+      "input": "nums = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10], cost = [10, 9, 8, 7, 6, 5, 4, 3, 2, 1], k = 15",
+      "output": "2285"
+    },
+    {
+      "input": "nums = [1, 1, 1, 1, 1, 1, 1, 1, 1], cost = [9, 8, 7, 6, 5, 4, 3, 2, 1], k = 10",
+      "output": "798"
+    },
+    {
+      "input": "nums = [5, 5, 5, 5, 5, 5, 5, 5, 5, 5], cost = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1], k = 5",
+      "output": "425"
+    },
+    {
+      "input": "nums = [100,200,300,400,500,600,700,800,900,1000], cost = [10,20,30,40,50,60,70,80,90,100], k = 50",
+      "output": "1853000"
+    },
+    {
+      "input": "nums = [999, 998, 997, 996, 995], cost = [1000, 1000, 1000, 1000, 1000], k = 1000",
+      "output": "25952000"
+    },
+    {
+      "input": "nums = [10,20,30,40,50,60,70,80,90,100], cost = [1,2,3,4,5,6,7,8,9,10], k = 1",
+      "output": "17401"
+    },
+    {
+      "input": "nums = [9,9,9,9,9,9,9,9,9,9], cost = [9,9,9,9,9,9,9,9,9,9], k = 1",
+      "output": "4950"
+    },
+    {
+      "input": "nums = [1, 1, 2, 2, 3, 3, 4, 4, 5, 5], cost = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10], k = 1",
+      "output": "1179"
+    },
+    {
+      "input": "nums = [1,2,3,4,5,6,7,8,9,10], cost = [10,9,8,7,6,5,4,3,2,1], k = 5",
+      "output": "1402"
+    },
+    {
+      "input": "nums = [3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5, 9, 7, 9, 3, 2, 3, 8, 4, 6], cost = [6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6], k = 1",
+      "output": "6270"
+    },
+    {
+      "input": "nums = [3,1,4,1,5,9,2,6,5,3,5,9], cost = [9,2,6,5,3,5,8,9,7,9,3,2], k = 7",
+      "output": "2829"
+    },
+    {
+      "input": "nums = [9,8,7,6,5,4,3,2,1], cost = [1,2,3,4,5,6,7,8,9], k = 1",
+      "output": "1901"
+    },
+    {
+      "input": "nums = [100, 200, 300, 400, 500, 600, 700, 800, 900, 1000], cost = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1], k = 1",
+      "output": "22055"
+    },
+    {
+      "input": "nums = [1,2,3,4,5,6,7,8,9,10], cost = [10,9,8,7,6,5,4,3,2,1], k = 15",
+      "output": "2285"
+    },
+    {
+      "input": "nums = [5,10,15,20,25], cost = [2,4,6,8,10], k = 5",
+      "output": "1800"
+    },
+    {
+      "input": "nums = [999,998,997,996,995,994,993,992,991,990], cost = [1000,999,998,997,996,995,994,993,992,991], k = 1000",
+      "output": "84261650"
+    },
+    {
+      "input": "nums = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15], cost = [15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1], k = 5",
+      "output": "5011"
+    },
+    {
+      "input": "nums = [1,3,5,7,9,11,13,15,17,19], cost = [19,17,15,13,11,9,7,5,3,1], k = 7",
+      "output": "3817"
+    },
+    {
+      "input": "nums = [5, 5, 5, 5, 5, 5, 5, 5, 5, 5], cost = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10], k = 5",
+      "output": "2705"
+    },
+    {
+      "input": "nums = [100,200,300,400,500], cost = [10,20,30,40,50], k = 50",
+      "output": "162500"
+    },
+    {
+      "input": "nums = [3, 3, 3, 3, 3, 3, 3, 3, 3, 3], cost = [100, 100, 100, 100, 100, 100, 100, 100, 100, 100], k = 10",
+      "output": "36700"
+    },
+    {
+      "input": "nums = [5, 5, 5, 5, 5], cost = [1, 2, 3, 4, 5], k = 10",
+      "output": "525"
+    },
+    {
+      "input": "nums = [5, 5, 5, 5, 5, 5], cost = [10, 10, 10, 10, 10, 10], k = 5",
+      "output": "1750"
+    },
+    {
+      "input": "nums = [1,1,1,1,1,1,1,1,1,1], cost = [1,1,1,1,1,1,1,1,1,1], k = 10",
+      "output": "200"
+    },
+    {
+      "input": "nums = [10,20,30,40,50], cost = [1,2,3,4,5], k = 10",
+      "output": "1800"
+    },
+    {
+      "input": "nums = [100,200,300,400,500,600,700,800,900,1000], cost = [10,20,30,40,50,60,70,80,90,100], k = 10",
+      "output": "1740100"
+    },
+    {
+      "input": "nums = [9,7,5,3,1], cost = [9,7,5,3,1], k = 2",
+      "output": "505"
+    },
+    {
+      "input": "nums = [500, 500, 500, 500, 500, 500, 500, 500, 500, 500], cost = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10], k = 500",
+      "output": "270500"
+    },
+    {
+      "input": "nums = [1000,1,1000,1,1000,1,1000,1,1000,1], cost = [1,1000,1,1000,1,1000,1,1000,1,1000], k = 1000",
+      "output": "26043017"
+    },
+    {
+      "input": "nums = [1, 3, 5, 7, 9, 11, 13, 15, 17, 19], cost = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1], k = 1",
+      "output": "434"
+    },
+    {
+      "input": "nums = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10], cost = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1], k = 5",
+      "output": "369"
+    },
+    {
+      "input": "nums = [5,3,8,1,9], cost = [2,3,4,1,5], k = 3",
+      "output": "345"
+    },
+    {
+      "input": "nums = [5, 4, 3, 2, 1], cost = [5, 4, 3, 2, 1], k = 3",
+      "output": "232"
+    },
+    {
+      "input": "nums = [5,4,3,2,1], cost = [10,20,30,40,50], k = 5",
+      "output": "3000"
+    },
+    {
+      "input": "nums = [10,20,30,40,50], cost = [5,4,3,2,1], k = 5",
+      "output": "875"
+    },
+    {
+      "input": "nums = [9,8,7,6,5,4,3,2,1], cost = [1,2,3,4,5,6,7,8,9], k = 3",
+      "output": "2100"
+    },
+    {
+      "input": "nums = [3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3], cost = [3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3], k = 3",
+      "output": "2655"
+    },
+    {
+      "input": "nums = [2,4,6,8,10,12,14,16,18,20], cost = [20,18,16,14,12,10,8,6,4,2], k = 100",
+      "output": "18820"
+    },
+    {
+      "input": "nums = [10, 20, 30, 40, 50], cost = [5, 4, 3, 2, 1], k = 5",
+      "output": "875"
+    },
+    {
+      "input": "nums = [1,10,1,10,1,10,1,10,1,10], cost = [10,1,10,1,10,1,10,1,10,1], k = 30",
+      "output": "4052"
+    },
+    {
+      "input": "nums = [100, 100, 100, 100, 100, 100, 100], cost = [1, 1, 1, 1, 1, 1, 1], k = 100",
+      "output": "4600"
+    },
+    {
+      "input": "nums = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100], cost = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1], k = 50",
+      "output": "3690"
+    },
+    {
+      "input": "nums = [1,10,1,10,1,10,1,10], cost = [10,1,10,1,10,1,10,1], k = 2",
+      "output": "1041"
+    },
+    {
+      "input": "nums = [100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 1100, 1200, 1300, 1400, 1500], cost = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1], k = 10",
+      "output": "69200"
+    },
+    {
+      "input": "nums = [5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20], cost = [20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5], k = 25",
+      "output": "25751"
+    },
+    {
+      "input": "nums = [5,5,5,5,5,5,5,5,5,5], cost = [5,5,5,5,5,5,5,5,5,5], k = 5",
+      "output": "2125"
+    },
+    {
+      "input": "nums = [3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5], cost = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110], k = 7",
+      "output": "30420"
+    },
+    {
+      "input": "nums = [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1], cost = [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1], k = 1",
+      "output": "295"
+    },
+    {
+      "input": "nums = [10, 9, 8, 7, 6, 5, 4, 3, 2, 1], cost = [10, 9, 8, 7, 6, 5, 4, 3, 2, 1], k = 10",
+      "output": "3019"
+    },
+    {
+      "input": "nums = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15], cost = [15,14,13,12,11,10,9,8,7,6,5,4,3,2,1], k = 7",
+      "output": "5537"
+    },
+    {
+      "input": "nums = [2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2], cost = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20], k = 10",
+      "output": "10152"
+    },
+    {
+      "input": "nums = [10,20,30,40,50,60,70,80,90,100], cost = [1,1,1,1,1,1,1,1,1,1], k = 1",
+      "output": "2255"
+    },
+    {
+      "input": "nums = [1,3,5,7,9,11,13,15,17,19], cost = [2,4,6,8,10,12,14,16,18,20], k = 7",
+      "output": "8542"
+    },
+    {
+      "input": "nums = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20], cost = [20,19,18,17,16,15,14,13,12,11,10,9,8,7,6,5,4,3,2,1], k = 10",
+      "output": "15636"
+    },
+    {
+      "input": "nums = [1, 3, 2, 4, 5, 6, 7, 8, 9], cost = [9, 8, 7, 6, 5, 4, 3, 2, 1], k = 15",
+      "output": "1713"
+    },
+    {
+      "input": "nums = [1,3,5,7,9,11,13,15,17,19], cost = [1,2,3,4,5,6,7,8,9,10], k = 3",
+      "output": "3706"
+    },
+    {
+      "input": "nums = [5,5,5,5,5,5,5,5,5,5], cost = [1,1,1,1,1,1,1,1,1,1], k = 5",
+      "output": "425"
+    },
+    {
+      "input": "nums = [1,1,1,1,1,1,1,1,1,1], cost = [1,1,1,1,1,1,1,1,1,1], k = 1",
+      "output": "85"
+    },
+    {
+      "input": "nums = [2,7,1,8,2,8,1,8,2,8], cost = [8,2,8,4,5,9,0,4,5,2], k = 4",
+      "output": "1485"
+    },
+    {
+      "input": "nums = [1,2,3,4,5,6,7,8,9,10], cost = [10,9,8,7,6,5,4,3,2,1], k = 10",
+      "output": "1868"
+    },
+    {
+      "input": "nums = [1, 3, 2, 4, 5, 6, 7, 8, 9, 10], cost = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100], k = 3",
+      "output": "22850"
+    },
+    {
+      "input": "nums = [5,3,8,9,2], cost = [2,3,1,4,5], k = 3",
+      "output": "385"
+    },
+    {
+      "input": "nums = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10], cost = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10], k = 20",
+      "output": "3821"
+    },
+    {
+      "input": "nums = [10,20,30,40,50,60,70,80,90], cost = [10,10,10,10,10,10,10,10,10], k = 5",
+      "output": "18550"
+    },
+    {
+      "input": "nums = [9, 8, 7, 6, 5, 4, 3, 2, 1], cost = [1, 1, 1, 1, 1, 1, 1, 1, 1], k = 3",
+      "output": "378"
+    },
+    {
+      "input": "nums = [1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2], cost = [2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,1], k = 2",
+      "output": "673"
+    },
+    {
+      "input": "nums = [10,20,30,40,50,60], cost = [60,50,40,30,20,10], k = 3",
+      "output": "14280"
+    },
+    {
+      "input": "nums = [9, 8, 7, 6, 5, 4, 3, 2, 1], cost = [1, 2, 3, 4, 5, 6, 7, 8, 9], k = 1",
+      "output": "1901"
+    },
+    {
+      "input": "nums = [5, 10, 15, 20, 25, 30, 35, 40, 45, 50], cost = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1], k = 15",
+      "output": "1615"
+    },
+    {
+      "input": "nums = [500,500,500,500,500,500,500,500,500,500], cost = [1000,1000,1000,1000,1000,1000,1000,1000,1000,1000], k = 500",
+      "output": "42500000"
+    },
+    {
+      "input": "nums = [10, 20, 30, 40, 50], cost = [5, 4, 3, 2, 1], k = 10",
+      "output": "1050"
+    },
+    {
+      "input": "nums = [7, 10, 4, 3, 20, 15], cost = [2, 3, 4, 5, 6, 7], k = 10",
+      "output": "1483"
+    },
+    {
+      "input": "nums = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1], cost = [10, 10, 10, 10, 10, 10, 10, 10, 10, 10], k = 5",
+      "output": "1440"
+    },
+    {
+      "input": "nums = [1,3,5,7,9,11,13,15,17,19], cost = [2,4,6,8,10,12,14,16,18,20], k = 2",
+      "output": "7040"
+    },
+    {
+      "input": "nums = [100, 90, 80, 70, 60, 50, 40, 30, 20, 10], cost = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1], k = 1",
+      "output": "3905"
+    },
+    {
+      "input": "nums = [1, 3, 5, 7, 9, 11, 13, 15, 17, 19], cost = [19, 17, 15, 13, 11, 9, 7, 5, 3, 1], k = 7",
+      "output": "3817"
+    },
+    {
+      "input": "nums = [1,3,5,7,9,11,13,15,17,19], cost = [19,17,15,13,11,9,7,5,3,1], k = 1",
+      "output": "2396"
+    },
+    {
+      "input": "nums = [10,20,30,40,50,60,70,80,90], cost = [9,8,7,6,5,4,3,2,1], k = 10",
+      "output": "6420"
+    },
+    {
+      "input": "nums = [1, 1, 2, 2, 3, 3, 4, 4, 5, 5], cost = [2, 3, 4, 5, 6, 7, 8, 9, 10, 11], k = 7",
+      "output": "2107"
+    },
+    {
+      "input": "nums = [6,2,5,8,1,4,7,3], cost = [4,1,3,2,5,6,1,2], k = 2",
+      "output": "626"
+    },
+    {
+      "input": "nums = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15], cost = [15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1], k = 20",
+      "output": "8312"
+    },
+    {
+      "input": "nums = [5, 10, 15, 20, 25, 30], cost = [2, 3, 5, 7, 11, 13], k = 20",
+      "output": "4545"
+    },
+    {
+      "input": "nums = [1,1,2,2,3,3,4,4,5,5,6,6,7,7,8,8,9,9,10,10], cost = [1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2], k = 5",
+      "output": "1860"
+    },
+    {
+      "input": "nums = [2, 3, 5, 7, 11, 13, 17, 19], cost = [19, 17, 13, 11, 7, 5, 3, 2], k = 15",
+      "output": "3355"
+    },
+    {
+      "input": "nums = [1, 2, 1, 2, 1, 2, 1, 2, 1, 2], cost = [2, 3, 2, 3, 2, 3, 2, 3, 2, 3], k = 2",
+      "output": "341"
+    },
+    {
+      "input": "nums = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100], cost = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100], k = 20",
+      "output": "213400"
+    },
+    {
+      "input": "nums = [7,1,5,3,6,4], cost = [10,20,30,40,50,60], k = 5",
+      "output": "6060"
+    },
+    {
+      "input": "nums = [9, 8, 7, 6, 5, 4, 3, 2, 1, 1, 2, 3, 4, 5, 6, 7, 8, 9], cost = [1, 2, 3, 4, 5, 6, 7, 8, 9, 8, 7, 6, 5, 4, 3, 2, 1], k = 10",
+      "output": "Error: list index out of range"
+    },
+    {
+      "input": "nums = [1,1,1,1,1,1,1,1,1,1], cost = [1,1,1,1,1,1,1,1,1,1], k = 5",
+      "output": "144"
+    },
+    {
+      "input": "nums = [10, 20, 30, 40, 50], cost = [1, 2, 3, 4, 5], k = 10",
+      "output": "1800"
+    },
+    {
+      "input": "nums = [10, 20, 30, 40, 50], cost = [1, 2, 3, 4, 5], k = 5",
+      "output": "1625"
+    }
+  ]
+}

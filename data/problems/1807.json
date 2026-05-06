@@ -1,0 +1,592 @@
+{
+  "id": 1807,
+  "title": "Evaluate the Bracket Pairs of a String",
+  "slug": "evaluate-the-bracket-pairs-of-a-string",
+  "difficulty": "Medium",
+  "topics": [
+    "Array",
+    "Hash Table",
+    "String"
+  ],
+  "description": "You are given a string s that contains some bracket pairs, with each pair containing a non-empty key.\nYou know the values of a wide range of keys. This is represented by a 2D string array knowledge where each knowledge[i] = [keyi, valuei] indicates that key keyi has a value of valuei.\nYou are tasked to evaluate all of the bracket pairs. When you evaluate a bracket pair that contains some key keyi, you will:\nEach key will appear at most once in your knowledge. There will not be any nested brackets in s.\nReturn the resulting string after evaluating all of the bracket pairs.\nExample 1:\nExample 2:\nExample 3:\nConstraints:",
+  "examples": [
+    {
+      "example_num": 1,
+      "example_text": "Input: s = \"(name)is(age)yearsold\", knowledge = [[\"name\",\"bob\"],[\"age\",\"two\"]]\nOutput: \"bobistwoyearsold\"\nExplanation:\nThe key \"name\" has a value of \"bob\", so replace \"(name)\" with \"bob\".\nThe key \"age\" has a value of \"two\", so replace \"(age)\" with \"two\".",
+      "images": []
+    },
+    {
+      "example_num": 2,
+      "example_text": "Input: s = \"hi(name)\", knowledge = [[\"a\",\"b\"]]\nOutput: \"hi?\"\nExplanation: As you do not know the value of the key \"name\", replace \"(name)\" with \"?\".",
+      "images": []
+    },
+    {
+      "example_num": 3,
+      "example_text": "Input: s = \"(a)(a)(a)aaa\", knowledge = [[\"a\",\"yes\"]]\nOutput: \"yesyesyesaaa\"\nExplanation: The same key can appear multiple times.\nThe key \"a\" has a value of \"yes\", so replace all occurrences of \"(a)\" with \"yes\".\nNotice that the \"a\"s not in a bracket pair are not evaluated.",
+      "images": []
+    }
+  ],
+  "constraints": [
+    "1 <= s.length <= 105",
+    "0 <= knowledge.length <= 105",
+    "knowledge[i].length == 2",
+    "1 <= keyi.length, valuei.length <= 10",
+    "s consists of lowercase English letters and round brackets '(' and ')'.",
+    "Every open bracket '(' in s will have a corresponding close bracket ')'.",
+    "The key in each bracket pair of s will be non-empty.",
+    "There will not be any nested bracket pairs in s.",
+    "keyi and valuei consist of lowercase English letters.",
+    "Each keyi in knowledge is unique."
+  ],
+  "hints": [
+    "Process pairs from right to left to handle repeats",
+    "Keep track of the current enclosed string using another string"
+  ],
+  "code_snippets": {
+    "cpp": "class Solution {\npublic:\n    string evaluate(string s, vector<vector<string>>& knowledge) {\n        \n    }\n};",
+    "java": "class Solution {\n    public String evaluate(String s, List<List<String>> knowledge) {\n        \n    }\n}",
+    "python": "class Solution(object):\n    def evaluate(self, s, knowledge):\n        \"\"\"\n        :type s: str\n        :type knowledge: List[List[str]]\n        :rtype: str\n        \"\"\"\n        ",
+    "python3": "class Solution:\n    def evaluate(self, s: str, knowledge: List[List[str]]) -> str:\n        ",
+    "c": "char* evaluate(char* s, char*** knowledge, int knowledgeSize, int* knowledgeColSize) {\n    \n}",
+    "csharp": "public class Solution {\n    public string Evaluate(string s, IList<IList<string>> knowledge) {\n        \n    }\n}",
+    "javascript": "/**\n * @param {string} s\n * @param {string[][]} knowledge\n * @return {string}\n */\nvar evaluate = function(s, knowledge) {\n    \n};",
+    "typescript": "function evaluate(s: string, knowledge: string[][]): string {\n    \n};",
+    "php": "class Solution {\n\n    /**\n     * @param String $s\n     * @param String[][] $knowledge\n     * @return String\n     */\n    function evaluate($s, $knowledge) {\n        \n    }\n}",
+    "swift": "class Solution {\n    func evaluate(_ s: String, _ knowledge: [[String]]) -> String {\n        \n    }\n}",
+    "kotlin": "class Solution {\n    fun evaluate(s: String, knowledge: List<List<String>>): String {\n        \n    }\n}",
+    "dart": "class Solution {\n  String evaluate(String s, List<List<String>> knowledge) {\n    \n  }\n}",
+    "golang": "func evaluate(s string, knowledge [][]string) string {\n    \n}",
+    "ruby": "# @param {String} s\n# @param {String[][]} knowledge\n# @return {String}\ndef evaluate(s, knowledge)\n    \nend",
+    "scala": "object Solution {\n    def evaluate(s: String, knowledge: List[List[String]]): String = {\n        \n    }\n}",
+    "rust": "impl Solution {\n    pub fn evaluate(s: String, knowledge: Vec<Vec<String>>) -> String {\n        \n    }\n}",
+    "racket": "(define/contract (evaluate s knowledge)\n  (-> string? (listof (listof string?)) string?)\n  )",
+    "erlang": "-spec evaluate(S :: unicode:unicode_binary(), Knowledge :: [[unicode:unicode_binary()]]) -> unicode:unicode_binary().\nevaluate(S, Knowledge) ->\n  .",
+    "elixir": "defmodule Solution do\n  @spec evaluate(s :: String.t, knowledge :: [[String.t]]) :: String.t\n  def evaluate(s, knowledge) do\n    \n  end\nend"
+  },
+  "input_output": [
+    {
+      "input": "s = \"(a)(a)(a)aaa\", knowledge = [[\"a\",\"yes\"]] ",
+      "output": "yesyesyesaaa"
+    },
+    {
+      "input": "s = \"(a)(b)(c)(d)\", knowledge = [[\"a\",\"1\"],[\"b\",\"2\"],[\"c\",\"3\"]]",
+      "output": "123?"
+    },
+    {
+      "input": "s = \"hi(name)\", knowledge = [[\"a\",\"b\"]] ",
+      "output": "hi?"
+    },
+    {
+      "input": "s = \"(a)(a)(a)aaa\", knowledge = [[\"a\",\"yes\"]]",
+      "output": "yesyesyesaaa"
+    },
+    {
+      "input": "s = \"\", knowledge = []",
+      "output": ""
+    },
+    {
+      "input": "s = \"noknowledgehere\", knowledge = []",
+      "output": "noknowledgehere"
+    },
+    {
+      "input": "s = \"no(brackets)here\", knowledge = []",
+      "output": "no?here"
+    },
+    {
+      "input": "s = \"hi(name)\", knowledge = [[\"a\",\"b\"]]",
+      "output": "hi?"
+    },
+    {
+      "input": "s = \"(nested)but(not)really\", knowledge = [[\"nested\",\"nested\"],[\"not\",\"not\"]]",
+      "output": "nestedbutnotreally"
+    },
+    {
+      "input": "s = \"(key1)(key2)(key3)\", knowledge = [[\"key1\",\"value1\"],[\"key2\",\"value2\"]]",
+      "output": "value1value2?"
+    },
+    {
+      "input": "s = \"this(is)a(test)\", knowledge = [[\"is\",\"was\"],[\"test\",\"trial\"]]",
+      "output": "thiswasatrial"
+    },
+    {
+      "input": "s = \"(name)is(age)yearsold\", knowledge = [[\"name\",\"bob\"],[\"age\",\"two\"]]",
+      "output": "bobistwoyearsold"
+    },
+    {
+      "input": "s = \"(key1)(key2)\", knowledge = [[\"key1\",\"value1\"],[\"key2\",\"value2\"]]",
+      "output": "value1value2"
+    },
+    {
+      "input": "s = \"(single)\", knowledge = [[\"single\",\"one\"]]",
+      "output": "one"
+    },
+    {
+      "input": "s = \"(last)one\", knowledge = [[\"last\",\"final\"]]",
+      "output": "finalone"
+    },
+    {
+      "input": "s = \"single\", knowledge = [[\"single\",\"word\"]]",
+      "output": "single"
+    },
+    {
+      "input": "s = \"hello\", knowledge = []",
+      "output": "hello"
+    },
+    {
+      "input": "s = \"(unknown)key\", knowledge = [[\"known\",\"value\"]]",
+      "output": "?key"
+    },
+    {
+      "input": "s = \"(name)is(age)yearsold\", knowledge = [[\"name\",\"bob\"],[\"age\",\"two\"]] ",
+      "output": "bobistwoyearsold"
+    },
+    {
+      "input": "s = \"(key1)(key2)(key3)\", knowledge = [[\"key1\",\"val1\"],[\"key2\",\"val2\"],[\"key3\",\"val3\"]]",
+      "output": "val1val2val3"
+    },
+    {
+      "input": "s = \"(book)written(by)(author)\", knowledge = [[\"book\",\"1984\"],[\"author\",\"George\"]]",
+      "output": "1984written?George"
+    },
+    {
+      "input": "s = \"(x)(y)(z)(w)\", knowledge = [[\"x\",\"one\"],[\"y\",\"two\"],[\"z\",\"three\"],[\"a\",\"four\"]]\"",
+      "output": "Error: Solution.evaluate() missing 1 required positional argument: 'knowledge'"
+    },
+    {
+      "input": "s = \"(city)(in)(country)\", knowledge = [[\"city\",\"Tokyo\"],[\"country\",\"Japan\"]]",
+      "output": "Tokyo?Japan"
+    },
+    {
+      "input": "s = \"(country)(capital)\", knowledge = [[\"country\",\"France\"],[\"capital\",\"Paris\"]",
+      "output": "Error: Solution.evaluate() missing 1 required positional argument: 'knowledge'"
+    },
+    {
+      "input": "s = \"(nested)(key)(nested)\", knowledge = [[\"key\",\"value\"],[\"nested\",\"deep\"]]",
+      "output": "deepvaluedeep"
+    },
+    {
+      "input": "s = \"(ingredient)requiresto(cooktime)mins\", knowledge = [[\"ingredient\",\"Cookies\"],[\"cooktime\",\"15\"]]",
+      "output": "Cookiesrequiresto15mins"
+    },
+    {
+      "input": "s = \"(one)(two)(three)(four)(five)\", knowledge = [[\"one\",\"1\"],[\"two\",\"2\"],[\"three\",\"3\"],[\"four\",\"4\"]]",
+      "output": "1234?"
+    },
+    {
+      "input": "s = \"(customer)(order)at(store)\", knowledge = [[\"customer\",\"Alice\"],[\"order\",\"Order123\"]]",
+      "output": "AliceOrder123at?"
+    },
+    {
+      "input": "s = \"(keyA)and(keyB)and(keyC)and(keyD)\", knowledge = [[\"keyA\",\"valA\"],[\"keyB\",\"valB\"]]",
+      "output": "valAandvalBand?and?"
+    },
+    {
+      "input": "s = \"(a)bc(d)efg(h)ij(k)lmn(o)\", knowledge = [[\"a\",\"x\"],[\"d\",\"y\"],[\"h\",\"z\"],[\"k\",\"w\"],[\"o\",\"v\"]]\"",
+      "output": "Error: Solution.evaluate() missing 1 required positional argument: 'knowledge'"
+    },
+    {
+      "input": "s = \"(key)with(missing)knowledge\", knowledge = [[\"key\",\"value1\"],[\"missing\",\"value2\"],[\"knowledge\",\"value3\"]]",
+      "output": "value1withvalue2knowledge"
+    },
+    {
+      "input": "s = \"(greeting)(world)(planet)\", knowledge = [[\"greeting\",\"hello\"],[\"world\",\"earth\"],[\"planet\",\"mars\"]] ",
+      "output": "helloearthmars"
+    },
+    {
+      "input": "s = \"(this)(is)(a)(test)(string)(with)(multiple)(keys)\", knowledge = [[\"this\",\"it\"],[\"is\",\"be\"],[\"a\",\"an\"],[\"test\",\"example\"],[\"string\",\"sequence\"],[\"with\",\"having\"],[\"multiple\",\"several\"],[\"keys\",\"identifiers\"]] ",
+      "output": "itbeanexamplesequencehavingseveralidentifiers"
+    },
+    {
+      "input": "s = \"(language)programmingis(fun)\", knowledge = [[\"language\",\"python\"],[\"fun\",\"awesome\"]]",
+      "output": "pythonprogrammingisawesome"
+    },
+    {
+      "input": "s = \"(fruit)(vegetable)\", knowledge = [[\"fruit\",\"apple\"],[\"vegetable\",\"carrot\"]]",
+      "output": "applecarrot"
+    },
+    {
+      "input": "s = \"(animal)lives(in)(habitat)\", knowledge = [[\"animal\",\"tiger\"],[\"habitat\",\"jungle\"]]",
+      "output": "tigerlives?jungle"
+    },
+    {
+      "input": "s = \"nested(brackets)are(not)allowed(but)we(have)multiple(keys)here\", knowledge = [[\"brackets\",\"bracketValue\"],[\"allowed\",\"allowedValue\"],[\"but\",\"butValue\"],[\"we\",\"weValue\"],[\"have\",\"haveValue\"],[\"multiple\",\"multipleValue\"],[\"keys\",\"keysValue\"]]\"",
+      "output": "Error: Solution.evaluate() missing 1 required positional argument: 'knowledge'"
+    },
+    {
+      "input": "s = \"(name)has(age)yearsand(occupation)\", knowledge = [[\"name\",\"Alice\"],[\"age\",\"30\"]]",
+      "output": "Alicehas30yearsand?"
+    },
+    {
+      "input": "s = \"(longkey)(anotherkey)(yetanotherkey)\", knowledge = [[\"longkey\",\"averylongvalue\"],[\"anotherkey\",\"shortval\"],[\"yetanotherkey\",\"value\"]]",
+      "output": "averylongvalueshortvalvalue"
+    },
+    {
+      "input": "s = \"(language)is(cool)\", knowledge = [[\"language\",\"Python\"],[\"cool\",\"awesome\"]]",
+      "output": "Pythonisawesome"
+    },
+    {
+      "input": "s = \"(first)and(last)name\", knowledge = [[\"first\",\"john\"],[\"last\",\"doe\"]]",
+      "output": "johnanddoename"
+    },
+    {
+      "input": "s = \"(name)is(living)(in)(city)\", knowledge = [[\"name\",\"bob\"],[\"in\",\"at\"],[\"city\",\"london\"]] ",
+      "output": "bobis?atlondon"
+    },
+    {
+      "input": "s = \"(animal)(eats)(food)\", knowledge = [[\"animal\",\"lion\"],[\"food\",\"meat\"]]",
+      "output": "lion?meat"
+    },
+    {
+      "input": "s = \"(user)likes(to)(eat)(food)\", knowledge = [[\"user\",\"alice\"],[\"eat\",\"enjoy\"],[\"food\",\"pizza\"]] ",
+      "output": "alicelikes?enjoypizza"
+    },
+    {
+      "input": "s = \"(prefix)middle(suffix)\", knowledge = [[\"prefix\",\"start\"],[\"suffix\",\"end\"]]",
+      "output": "startmiddleend"
+    },
+    {
+      "input": "s = \"(flower)grows(in)(soil)\", knowledge = [[\"flower\",\"rose\"],[\"soil\",\"dirt\"]]",
+      "output": "rosegrows?dirt"
+    },
+    {
+      "input": "s = \"(first)nameis(last)name\", knowledge = [[\"first\",\"john\"],[\"last\",\"doe\"]]",
+      "output": "johnnameisdoename"
+    },
+    {
+      "input": "s = \"(longkey1)and(longkey2)and(longkey3)and(longkey4)\", knowledge = [[\"longkey1\",\"value1\"],[\"longkey2\",\"value2\"],[\"longkey3\",\"value3\"],[\"longkey4\",\"value4\"]] ",
+      "output": "value1andvalue2andvalue3andvalue4"
+    },
+    {
+      "input": "s = \"(first)(second)(third)(fourth)(fifth)\", knowledge = [[\"first\",\"one\"],[\"second\",\"two\"],[\"third\",\"three\"]",
+      "output": "Error: Solution.evaluate() missing 1 required positional argument: 'knowledge'"
+    },
+    {
+      "input": "s = \"(department)islocatedat(address)\", knowledge = [[\"department\",\"Sales\"],[\"address\",\"123BusinessSt\"]] ",
+      "output": "Salesislocatedat123BusinessSt"
+    },
+    {
+      "input": "s = \"(key1)(key2)(key3)(key4)(key5)\", knowledge = [[\"key1\",\"val1\"],[\"key3\",\"val3\"]]\"",
+      "output": "Error: Solution.evaluate() missing 1 required positional argument: 'knowledge'"
+    },
+    {
+      "input": "s = \"(name)has(a)(pet)\", knowledge = [[\"name\",\"Mary\"],[\"pet\",\"dog\"]]",
+      "output": "Maryhas?dog"
+    },
+    {
+      "input": "s = \"(drink)is(served)in(glass)\", knowledge = [[\"drink\",\"water\"],[\"glass\",\"big\"]]",
+      "output": "wateris?inbig"
+    },
+    {
+      "input": "s = \"prefix(key1)middle(key2)suffix\", knowledge = [[\"key1\",\"value1\"],[\"key2\",\"value2\"]] ",
+      "output": "prefixvalue1middlevalue2suffix"
+    },
+    {
+      "input": "s = \"(key1)(key2)(key1)\", knowledge = [[\"key1\",\"value1\"],[\"key2\",\"value2\"]]",
+      "output": "value1value2value1"
+    },
+    {
+      "input": "s = \"(item1)(item2)(item3)(item4)\", knowledge = [[\"item1\",\"itemA\"],[\"item2\",\"itemB\"],[\"item4\",\"itemD\"]]",
+      "output": "itemAitemB?itemD"
+    },
+    {
+      "input": "s = \"(greeting)world\", knowledge = [[\"greeting\",\"hello\"],[\"farewell\",\"bye\"]]",
+      "output": "helloworld"
+    },
+    {
+      "input": "s = \"(user)(name)livesin(city)with(zip)\", knowledge = [[\"user\",\"John\"],[\"city\",\"San Francisco\"],[\"zip\",\"94111\"]]",
+      "output": "John?livesinSan Franciscowith94111"
+    },
+    {
+      "input": "s = \"(person)(from)(place)isvisiting(placeofinterest)\", knowledge = [[\"person\",\"Bob\"],[\"from\",\"LosAngeles\"],[\"place\",\"SanFrancisco\"],[\"placeofinterest\",\"Alcatraz\"]] ",
+      "output": "BobLosAngelesSanFranciscoisvisitingAlcatraz"
+    },
+    {
+      "input": "s = \"(longkeyname)is(longervaluename)\", knowledge = [[\"longkeyname\",\"longervaluename\"]]",
+      "output": "longervaluenameis?"
+    },
+    {
+      "input": "s = \"(name)has(a)(pet)(dog)\", knowledge = [[\"name\",\"john\"],[\"pet\",\"dog\"],[\"dog\",\"buddy\"]] ",
+      "output": "johnhas?dogbuddy"
+    },
+    {
+      "input": "s = \"(key1)and(key2)and(key3)and(key4)and(key5)\", knowledge = [[\"key1\",\"value1\"],[\"key2\",\"value2\"],[\"key3\",\"value3\"],[\"key4\",\"value4\"]] ",
+      "output": "value1andvalue2andvalue3andvalue4and?"
+    },
+    {
+      "input": "s = \"(prefix)and(suffix)and(middle)\", knowledge = [[\"prefix\",\"pre\"],[\"suffix\",\"suf\"],[\"middle\",\"mid\"]]\"",
+      "output": "Error: Solution.evaluate() missing 1 required positional argument: 'knowledge'"
+    },
+    {
+      "input": "s = \"(prefix)_(suffix)\", knowledge = [[\"prefix\",\"start\"],[\"suffix\",\"end\"]]",
+      "output": "start_end"
+    },
+    {
+      "input": "s = \"(number)plus(number)equals(twice_number)\", knowledge = [[\"number\",\"10\"],[\"twice_number\",\"20\"]] ",
+      "output": "10plus10equals20"
+    },
+    {
+      "input": "s = \"(name)livesat(address)andworksat(company)\", knowledge = [[\"name\",\"Alice\"],[\"address\",\"Wonderland\"],[\"company\",\"TechCorp\"]]",
+      "output": "AlicelivesatWonderlandandworksatTechCorp"
+    },
+    {
+      "input": "s = \"(repeated)(key)(repeated)(key)\", knowledge = [[\"key\",\"value\"]]",
+      "output": "?value?value"
+    },
+    {
+      "input": "s = \"(planet)(orbits)around(star)\", knowledge = [[\"planet\",\"Earth\"],[\"star\",\"Sun\"]]",
+      "output": "Earth?aroundSun"
+    },
+    {
+      "input": "s = \"(user)likes(to)play(games)\", knowledge = [[\"user\",\"Alice\"],[\"to\",\"really\"],[\"games\",\"chess\"]]\"",
+      "output": "Error: Solution.evaluate() missing 1 required positional argument: 'knowledge'"
+    },
+    {
+      "input": "s = \"(item)isavaliablefrom(date)\", knowledge = [[\"item\",\"Smartphone\"],[\"date\",\"2023-12-15\"]] ",
+      "output": "Smartphoneisavaliablefrom2023-12-15"
+    },
+    {
+      "input": "s = \"(animal)(color)(size)\", knowledge = [[\"animal\",\"dog\"],[\"color\",\"black\"],[\"size\",\"big\"],[\"weight\",\"10kg\"]",
+      "output": "Error: Solution.evaluate() missing 1 required positional argument: 'knowledge'"
+    },
+    {
+      "input": "s = \"(conference)heldon(date)\", knowledge = [[\"conference\",\"GDC\"],[\"date\",\"2024-03-19\"]]",
+      "output": "GDCheldon2024-03-19"
+    },
+    {
+      "input": "s = \"(first)(second)(third)(fourth)\", knowledge = [[\"first\",\"one\"],[\"second\",\"two\"],[\"third\",\"three\"]]",
+      "output": "onetwothree?"
+    },
+    {
+      "input": "s = \"(color)(animal)\", knowledge = [[\"color\",\"blue\"],[\"animal\",\"dog\"],[\"bird\",\"sparrow\"]]",
+      "output": "bluedog"
+    },
+    {
+      "input": "s = \"(name)isfrom(city)andworksas(job)\", knowledge = [[\"name\",\"alice\"],[\"city\",\"newyork\"],[\"job\",\"engineer\"]]\"",
+      "output": "Error: Solution.evaluate() missing 1 required positional argument: 'knowledge'"
+    },
+    {
+      "input": "s = \"(firstName)(lastName)isfrom(city)in(country)\", knowledge = [[\"firstName\",\"Alice\"],[\"lastName\",\"Wonderland\"],[\"city\",\"Wonderland\"],[\"country\",\"Fantasia\"]] ",
+      "output": "AliceWonderlandisfromWonderlandinFantasia"
+    },
+    {
+      "input": "s = \"(product)costs(dollars)and(euros)\", knowledge = [[\"product\",\"Laptop\"],[\"dollars\",\"1200\"],[\"euros\",\"1020\"]] ",
+      "output": "Laptopcosts1200and1020"
+    },
+    {
+      "input": "s = \"(nested)but(notreally)nested\", knowledge = [[\"nested\",\"deep\"],[\"notreally\",\"shallow\"]]",
+      "output": "deepbutshallownested"
+    },
+    {
+      "input": "s = \"(first)(last)(age)\", knowledge = [[\"first\",\"john\"],[\"last\",\"doe\"],[\"age\",\"thirty\"]]",
+      "output": "johndoethirty"
+    },
+    {
+      "input": "s = \"(city)(has)(many)(buildings)\", knowledge = [[\"city\",\"newyork\"],[\"many\",\"lots\"]]",
+      "output": "newyork?lots?"
+    },
+    {
+      "input": "s = \"(language)(framework)\", knowledge = [[\"language\",\"Python\"],[\"framework\",\"Django\"],[\"version\",\"3.9\"]]",
+      "output": "PythonDjango"
+    },
+    {
+      "input": "s = \"(model)releasedon(year)\", knowledge = [[\"model\",\"iPhone15\"],[\"year\",\"2023\"]] ",
+      "output": "iPhone15releasedon2023"
+    },
+    {
+      "input": "s = \"(multiple)(keys)(here)\", knowledge = [[\"multiple\",\"many\"],[\"keys\",\"some\"],[\"here\",\"there\"]]",
+      "output": "manysomethere"
+    },
+    {
+      "input": "s = \"(key1)and(key2)and(key3)and(key4)\", knowledge = [[\"key1\",\"value1\"],[\"key2\",\"value2\"]]\"",
+      "output": "Error: Solution.evaluate() missing 1 required positional argument: 'knowledge'"
+    },
+    {
+      "input": "s = \"(planet)(moon)\", knowledge = [[\"planet\",\"Earth\"],[\"moon\",\"Moon\"]",
+      "output": "Error: Solution.evaluate() missing 1 required positional argument: 'knowledge'"
+    },
+    {
+      "input": "s = \"(username)lastloggedin(on)\", knowledge = [[\"username\",\"Alice\"],[\"on\",\"2023-10-01\"]]",
+      "output": "Alicelastloggedin2023-10-01"
+    },
+    {
+      "input": "s = \"(planet)is(almost)full\", knowledge = [[\"planet\",\"Earth\"],[\"almost\",\"not\"],[\"full\",\"occupied\"]]",
+      "output": "Earthisnotfull"
+    },
+    {
+      "input": "s = \"(person)loves(to)(eat)\", knowledge = [[\"person\",\"John\"],[\"eat\",\"pizza\"]]",
+      "output": "Johnloves?pizza"
+    },
+    {
+      "input": "s = \"(name)isfrom(city)andlivesin(state)\", knowledge = [[\"name\",\"John\"],[\"city\",\"NewYork\"],[\"state\",\"NY\"]]\"",
+      "output": "Error: Solution.evaluate() missing 1 required positional argument: 'knowledge'"
+    },
+    {
+      "input": "s = \"(car)is(fast)and(economical)\", knowledge = [[\"car\",\"Ferrari\"],[\"fast\",\"very\"],[\"economical\",\"not\"]]",
+      "output": "Ferrariisveryandnot"
+    },
+    {
+      "input": "s = \"(key1)and(key2)and(key3)and(key4)\", knowledge = [[\"key1\",\"value1\"],[\"key2\",\"value2\"],[\"key4\",\"value4\"]] ",
+      "output": "value1andvalue2and?andvalue4"
+    },
+    {
+      "input": "s = \"(part1)(part2)(part3)\", knowledge = [[\"part1\",\"first\"],[\"part2\",\"second\"],[\"part3\",\"third\"]]",
+      "output": "firstsecondthird"
+    },
+    {
+      "input": "s = \"(color)(is)(used)in(art)\", knowledge = [[\"color\",\"red\"],[\"used\",\"frequently\"]]",
+      "output": "red?frequentlyin?"
+    },
+    {
+      "input": "s = \"(key1)is(key2)and(key3)is(key4)\", knowledge = [[\"key1\",\"value1\"],[\"key2\",\"value2\"],[\"key3\",\"value3\"]] ",
+      "output": "value1isvalue2andvalue3is?"
+    },
+    {
+      "input": "s = \"(a)(b)(c)(d)(e)(f)(g)(h)(i)(j)\", knowledge = [[\"a\",\"A\"],[\"b\",\"B\"],[\"c\",\"C\"],[\"d\",\"D\"],[\"e\",\"E\"],[\"f\",\"F\"],[\"g\",\"G\"],[\"h\",\"H\"],[\"i\",\"I\"],[\"j\",\"J\"]]\"",
+      "output": "Error: Solution.evaluate() missing 1 required positional argument: 'knowledge'"
+    },
+    {
+      "input": "s = \"(name)from(country)is(visitor)\", knowledge = [[\"name\",\"Bob\"],[\"country\",\"USA\"]]",
+      "output": "BobfromUSAis?"
+    },
+    {
+      "input": "s = \"(prefix)example(suffix)\", knowledge = [[\"prefix\",\"pre\"],[\"suffix\",\"post\"]]",
+      "output": "preexamplepost"
+    },
+    {
+      "input": "s = \"(unknown)(key)(not)(present)\", knowledge = [[\"present\",\"available\"]] ",
+      "output": "???available"
+    },
+    {
+      "input": "s = \"(unknown)(key1)(unknown)(key2)(unknown)\", knowledge = [[\"key1\",\"value1\"],[\"key2\",\"value2\"]] ",
+      "output": "?value1?value2?"
+    },
+    {
+      "input": "s = \"(book)writtenby(author)publishedby(publisher)\", knowledge = [[\"book\",\"GreatExpectations\"],[\"author\",\"CharlesDickens\"],[\"publisher\",\"ChapmanandHall\"]] ",
+      "output": "GreatExpectationswrittenbyCharlesDickenspublishedbyChapmanandHall"
+    },
+    {
+      "input": "s = \"(user)likes(to)(eat)(food)\", knowledge = [[\"user\",\"Alice\"],[\"food\",\"pizza\"]",
+      "output": "Error: Solution.evaluate() missing 1 required positional argument: 'knowledge'"
+    },
+    {
+      "input": "s = \"(instrument)plays(music)\", knowledge = [[\"instrument\",\"guitar\"],[\"music\",\"beautiful\"]]",
+      "output": "guitarplaysbeautiful"
+    },
+    {
+      "input": "s = \"(prefix)(middle)(suffix)\", knowledge = [[\"prefix\",\"pre\"],[\"middle\",\"mid\"],[\"suffix\",\"suf\"]]",
+      "output": "premidsuf"
+    },
+    {
+      "input": "s = \"(fruit)are(sweet)and(healthy)\", knowledge = [[\"fruit\",\"apples\"],[\"sweet\",\"very\"],[\"healthy\",\"indeed\"]]",
+      "output": "applesareveryandindeed"
+    },
+    {
+      "input": "s = \"(repeated)repeated(repeated)\", knowledge = [[\"repeated\",\"again\"]]",
+      "output": "againrepeatedagain"
+    },
+    {
+      "input": "s = \"(planet)(moon)orbiting(planet)\", knowledge = [[\"planet\",\"Earth\"],[\"moon\",\"Moon\"]]",
+      "output": "EarthMoonorbitingEarth"
+    },
+    {
+      "input": "s = \"(key1)(key1)(key1)(key1)(key1)\", knowledge = [[\"key1\",\"repeat\"]] ",
+      "output": "repeatrepeatrepeatrepeatrepeat"
+    },
+    {
+      "input": "s = \"(product)(model)(year)\", knowledge = [[\"product\",\"laptop\"],[\"model\",\"XPS13\"]",
+      "output": "Error: Solution.evaluate() missing 1 required positional argument: 'knowledge'"
+    },
+    {
+      "input": "s = \"(repeated)(repeated)(repeated)\", knowledge = [[\"repeated\",\"yes\"]]\"",
+      "output": "Error: Solution.evaluate() missing 1 required positional argument: 'knowledge'"
+    },
+    {
+      "input": "s = \"(key1)is(key2)yearsold(key3)\", knowledge = [[\"key1\",\"bob\"],[\"key2\",\"two\"]]",
+      "output": "bobistwoyearsold?"
+    },
+    {
+      "input": "s = \"(greeting)everyone(my)name(is)(unknown)\", knowledge = [[\"greeting\",\"hi\"],[\"my\",\"my\"]]",
+      "output": "hieveryonemyname??"
+    },
+    {
+      "input": "s = \"(bird)can(fly)high\", knowledge = [[\"bird\",\"eagle\"],[\"fly\",\"soar\"]]",
+      "output": "eaglecansoarhigh"
+    },
+    {
+      "input": "s = \"(country)has(a)(capital)\", knowledge = [[\"country\",\"India\"],[\"capital\",\"Delhi\"]]",
+      "output": "Indiahas?Delhi"
+    },
+    {
+      "input": "s = \"(a)(b)(c)(d)(e)(f)\", knowledge = [[\"a\",\"one\"],[\"b\",\"two\"],[\"c\",\"three\"],[\"d\",\"four\"],[\"e\",\"five\"],[\"f\",\"six\"]] ",
+      "output": "onetwothreefourfivesix"
+    },
+    {
+      "input": "s = \"(a)(b)(c)(d)(e)(f)(g)(h)(i)(j)(k)(l)(m)(n)(o)(p)(q)(r)(s)(t)(u)(v)(w)(x)(y)(z)\", knowledge = [[\"a\",\"A\"],[\"b\",\"B\"],[\"c\",\"C\"],[\"d\",\"D\"],[\"e\",\"E\"],[\"f\",\"F\"],[\"g\",\"G\"],[\"h\",\"H\"],[\"i\",\"I\"],[\"j\",\"J\"],[\"k\",\"K\"],[\"l\",\"L\"],[\"m\",\"M\"],[\"n\",\"N\"],[\"o\",\"O\"],[\"p\",\"P\"],[\"q\",\"Q\"],[\"r\",\"R\"],[\"s\",\"S\"],[\"t\",\"T\"],[\"u\",\"U\"],[\"v\",\"V\"],[\"w\",\"W\"],[\"x\",\"X\"],[\"y\",\"Y\"],[\"z\",\"Z\"]]",
+      "output": "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+    },
+    {
+      "input": "s = \"(color)(of)the(sky)\", knowledge = [[\"color\",\"blue\"],[\"sky\",\"beautiful\"]]",
+      "output": "blue?thebeautiful"
+    },
+    {
+      "input": "s = \"(name)is(unknown)but(age)yearsold\", knowledge = [[\"name\",\"alice\"],[\"age\",\"30\"]]",
+      "output": "aliceis?but30yearsold"
+    },
+    {
+      "input": "s = \"(product)priceis(price)and(quantity)itemsareavailable\", knowledge = [[\"product\",\"laptop\"],[\"price\",\"1000\"],[\"quantity\",\"5\"]]",
+      "output": "laptoppriceis1000and5itemsareavailable"
+    },
+    {
+      "input": "s = \"(item)costs(amount)currency\", knowledge = [[\"item\",\"book\"],[\"amount\",\"10\"],[\"currency\",\"dollars\"]] ",
+      "output": "bookcosts10currency"
+    },
+    {
+      "input": "s = \"(a)(b)(c)(d)(e)\", knowledge = [[\"a\",\"alpha\"],[\"b\",\"beta\"],[\"c\",\"gamma\"],[\"d\",\"delta\"],[\"e\",\"epsilon\"]] ",
+      "output": "alphabetagammadeltaepsilon"
+    },
+    {
+      "input": "s = \"(a)(b)(c)(d)(e)(f)(g)(h)(i)(j)(k)(l)(m)(n)(o)(p)(q)(r)(s)(t)(u)(v)(w)(x)(y)(z)\", knowledge = [[\"a\",\"a\"],[\"b\",\"b\"],[\"c\",\"c\"],[\"d\",\"d\"],[\"e\",\"e\"],[\"f\",\"f\"],[\"g\",\"g\"],[\"h\",\"h\"],[\"i\",\"i\"],[\"j\",\"j\"],[\"k\",\"k\"],[\"l\",\"l\"],[\"m\",\"m\"],[\"n\",\"n\"],[\"o\",\"o\"],[\"p\",\"p\"],[\"q\",\"q\"],[\"r\",\"r\"],[\"s\",\"s\"],[\"t\",\"t\"],[\"u\",\"u\"],[\"v\",\"v\"],[\"w\",\"w\"],[\"x\",\"x\"],[\"y\",\"y\"],[\"z\",\"z\"]]",
+      "output": "abcdefghijklmnopqrstuvwxyz"
+    },
+    {
+      "input": "s = \"(repeated)(repeated)(repeated)\", knowledge = [[\"repeated\",\"rep\"]]",
+      "output": "repreprep"
+    },
+    {
+      "input": "s = \"(key1)and(key2)and(key3)and(key4)and(key5)and(key6)and(key7)\", knowledge = [[\"key1\",\"value1\"],[\"key2\",\"value2\"],[\"key3\",\"value3\"],[\"key4\",\"value4\"],[\"key5\",\"value5\"],[\"key6\",\"value6\"],[\"key7\",\"value7\"]] ",
+      "output": "value1andvalue2andvalue3andvalue4andvalue5andvalue6andvalue7"
+    },
+    {
+      "input": "s = \"(a)(b)(c)(d)(e)(f)(g)(h)(i)(j)\", knowledge = [[\"a\",\"one\"],[\"b\",\"two\"],[\"c\",\"three\"],[\"d\",\"four\"],[\"e\",\"five\"],[\"f\",\"six\"],[\"g\",\"seven\"],[\"h\",\"eight\"],[\"i\",\"nine\"],[\"j\",\"ten\"]]",
+      "output": "onetwothreefourfivesixseveneightnineten"
+    },
+    {
+      "input": "s = \"(a)(b)(c)(d)(e)(f)(g)(h)(i)(j)\", knowledge = [[\"a\",\"yes\"],[\"b\",\"no\"],[\"c\",\"maybe\"],[\"d\",\"sure\"],[\"e\",\"never\"],[\"f\",\"always\"],[\"g\",\"often\"],[\"h\",\"rarely\"],[\"i\",\"sometimes\"],[\"j\",\"usually\"]] ",
+      "output": "yesnomaybesureneveralwaysoftenrarelysometimesusually"
+    },
+    {
+      "input": "s = \"(user)hasposted(numberofposts)times\", knowledge = [[\"user\",\"Charlie\"],[\"numberofposts\",\"250\"]] ",
+      "output": "Charliehasposted250times"
+    },
+    {
+      "input": "s = \"(complex)(string)(with)(multiple)(keys)\", knowledge = [[\"complex\",\"com\"],[\"string\",\"str\"],[\"with\",\"wi\"],[\"multiple\",\"mul\"],[\"keys\",\"ke\"]]",
+      "output": "comstrwimulke"
+    },
+    {
+      "input": "s = \"(key1)is(key2)yearsold(key3)and(key4)livesin(key5)\", knowledge = [[\"key1\",\"bob\"],[\"key2\",\"two\"],[\"key5\",\"NYC\"]] ",
+      "output": "bobistwoyearsold?and?livesinNYC"
+    },
+    {
+      "input": "s = \"(a)(b)(c)(d)(e)(f)\", knowledge = [[\"a\",\"alpha\"],[\"b\",\"beta\"],[\"c\",\"gamma\"],[\"d\",\"delta\"],[\"e\",\"epsilon\"]]",
+      "output": "alphabetagammadeltaepsilon?"
+    },
+    {
+      "input": "s = \"(nested)brackets(are)not(allowed)\", knowledge = [[\"nested\",\"nested\"],[\"brackets\",\"brackets\"],[\"not\",\"not\"]]",
+      "output": "nestedbrackets?not?"
+    },
+    {
+      "input": "s = \"(first)(second)(third)(fourth)\", knowledge = [[\"third\",\"thirdValue\"],[\"fourth\",\"fourthValue\"]]\"",
+      "output": "Error: Solution.evaluate() missing 1 required positional argument: 'knowledge'"
+    }
+  ]
+}

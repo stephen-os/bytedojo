@@ -1,0 +1,520 @@
+{
+  "id": 1023,
+  "title": "Camelcase Matching",
+  "slug": "camelcase-matching",
+  "difficulty": "Medium",
+  "topics": [
+    "Array",
+    "Two Pointers",
+    "String",
+    "Trie",
+    "String Matching"
+  ],
+  "description": "Given an array of strings queries and a string pattern, return a boolean array answer where answer[i] is true if queries[i] matches pattern, and false otherwise.\nA query word queries[i] matches pattern if you can insert lowercase English letters into the pattern so that it equals the query. You may insert a character at any position in pattern or you may choose not to insert any characters at all.\nExample 1:\nExample 2:\nExample 3:\nConstraints:",
+  "examples": [
+    {
+      "example_num": 1,
+      "example_text": "Input: queries = [\"FooBar\",\"FooBarTest\",\"FootBall\",\"FrameBuffer\",\"ForceFeedBack\"], pattern = \"FB\"\nOutput: [true,false,true,true,false]\nExplanation: \"FooBar\" can be generated like this \"F\" + \"oo\" + \"B\" + \"ar\".\n\"FootBall\" can be generated like this \"F\" + \"oot\" + \"B\" + \"all\".\n\"FrameBuffer\" can be generated like this \"F\" + \"rame\" + \"B\" + \"uffer\".",
+      "images": []
+    },
+    {
+      "example_num": 2,
+      "example_text": "Input: queries = [\"FooBar\",\"FooBarTest\",\"FootBall\",\"FrameBuffer\",\"ForceFeedBack\"], pattern = \"FoBa\"\nOutput: [true,false,true,false,false]\nExplanation: \"FooBar\" can be generated like this \"Fo\" + \"o\" + \"Ba\" + \"r\".\n\"FootBall\" can be generated like this \"Fo\" + \"ot\" + \"Ba\" + \"ll\".",
+      "images": []
+    },
+    {
+      "example_num": 3,
+      "example_text": "Input: queries = [\"FooBar\",\"FooBarTest\",\"FootBall\",\"FrameBuffer\",\"ForceFeedBack\"], pattern = \"FoBaT\"\nOutput: [false,true,false,false,false]\nExplanation: \"FooBarTest\" can be generated like this \"Fo\" + \"o\" + \"Ba\" + \"r\" + \"T\" + \"est\".",
+      "images": []
+    }
+  ],
+  "constraints": [
+    "1 <= pattern.length, queries.length <= 100",
+    "1 <= queries[i].length <= 100",
+    "queries[i] and pattern consist of English letters."
+  ],
+  "hints": [
+    "Given a single pattern and word, how can we solve it?",
+    "One way to do it is using a DP (pos1, pos2) where pos1 is a pointer to the word and pos2 to the pattern and returns true if we can match the pattern with the given word.",
+    "We have two scenarios: The first one is when `word[pos1] == pattern[pos2]`, then the transition will be just DP(pos1 + 1, pos2 + 1). The second scenario is when `word[pos1]` is lowercase then we can add this character to the pattern so that the transition is just DP(pos1 + 1, pos2)\r\nThe case base is `if (pos1 == n && pos2 == m) return true;` Where n and m are the sizes of the strings word and pattern respectively."
+  ],
+  "code_snippets": {
+    "cpp": "class Solution {\npublic:\n    vector<bool> camelMatch(vector<string>& queries, string pattern) {\n        \n    }\n};",
+    "java": "class Solution {\n    public List<Boolean> camelMatch(String[] queries, String pattern) {\n        \n    }\n}",
+    "python": "class Solution(object):\n    def camelMatch(self, queries, pattern):\n        \"\"\"\n        :type queries: List[str]\n        :type pattern: str\n        :rtype: List[bool]\n        \"\"\"\n        ",
+    "python3": "class Solution:\n    def camelMatch(self, queries: List[str], pattern: str) -> List[bool]:\n        ",
+    "c": "/**\n * Note: The returned array must be malloced, assume caller calls free().\n */\nbool* camelMatch(char** queries, int queriesSize, char* pattern, int* returnSize) {\n    \n}",
+    "csharp": "public class Solution {\n    public IList<bool> CamelMatch(string[] queries, string pattern) {\n        \n    }\n}",
+    "javascript": "/**\n * @param {string[]} queries\n * @param {string} pattern\n * @return {boolean[]}\n */\nvar camelMatch = function(queries, pattern) {\n    \n};",
+    "typescript": "function camelMatch(queries: string[], pattern: string): boolean[] {\n    \n};",
+    "php": "class Solution {\n\n    /**\n     * @param String[] $queries\n     * @param String $pattern\n     * @return Boolean[]\n     */\n    function camelMatch($queries, $pattern) {\n        \n    }\n}",
+    "swift": "class Solution {\n    func camelMatch(_ queries: [String], _ pattern: String) -> [Bool] {\n        \n    }\n}",
+    "kotlin": "class Solution {\n    fun camelMatch(queries: Array<String>, pattern: String): List<Boolean> {\n        \n    }\n}",
+    "dart": "class Solution {\n  List<bool> camelMatch(List<String> queries, String pattern) {\n    \n  }\n}",
+    "golang": "func camelMatch(queries []string, pattern string) []bool {\n    \n}",
+    "ruby": "# @param {String[]} queries\n# @param {String} pattern\n# @return {Boolean[]}\ndef camel_match(queries, pattern)\n    \nend",
+    "scala": "object Solution {\n    def camelMatch(queries: Array[String], pattern: String): List[Boolean] = {\n        \n    }\n}",
+    "rust": "impl Solution {\n    pub fn camel_match(queries: Vec<String>, pattern: String) -> Vec<bool> {\n        \n    }\n}",
+    "racket": "(define/contract (camel-match queries pattern)\n  (-> (listof string?) string? (listof boolean?))\n  )",
+    "erlang": "-spec camel_match(Queries :: [unicode:unicode_binary()], Pattern :: unicode:unicode_binary()) -> [boolean()].\ncamel_match(Queries, Pattern) ->\n  .",
+    "elixir": "defmodule Solution do\n  @spec camel_match(queries :: [String.t], pattern :: String.t) :: [boolean]\n  def camel_match(queries, pattern) do\n    \n  end\nend"
+  },
+  "input_output": [
+    {
+      "input": "queries = [\"FooBar\",\"FooBarTest\",\"FootBall\",\"FrameBuffer\",\"ForceFeedBack\"], pattern = \"FB\"",
+      "output": "[True, False, True, True, False]"
+    },
+    {
+      "input": "queries = [\"FooBar\",\"FooBarTest\",\"FootBall\",\"FrameBuffer\",\"ForceFeedBack\"], pattern = \"FoBa\"",
+      "output": "[True, False, True, False, False]"
+    },
+    {
+      "input": "queries = [\"FooBar\",\"FooBarTest\",\"FootBall\",\"FrameBuffer\",\"ForceFeedBack\"], pattern = \"FoBaT\"",
+      "output": "[False, True, False, False, False]"
+    },
+    {
+      "input": "queries = [\"Interleaving\",\"InTerLeaVing\",\"InterLeaving\",\"InterLEAVING\"], pattern = \"InLeV\"",
+      "output": "[False, False, False, False]"
+    },
+    {
+      "input": "queries = [\"MixedCASE\",\"MxCs\",\"MxCASE\",\"MixCsE\",\"MxCsECASE\"], pattern = \"MxCsE\"",
+      "output": "[False, False, False, True, False]"
+    },
+    {
+      "input": "queries = [\"AaAaAaAaAa\",\"aAaAaAaAa\",\"AaAaAaA\",\"AaAa\",\"Aa\"], pattern = \"Aa\"",
+      "output": "[False, False, False, False, True]"
+    },
+    {
+      "input": "queries = [\"samePattern\", \"samePatternEverywhere\", \"same\", \"pattern\"], pattern = \"sP\"",
+      "output": "[True, False, False, False]"
+    },
+    {
+      "input": "queries = [\"ComplexPattern\",\"CompPat\",\"ComplexPatt\",\"ComplPtn\",\"CompPattn\"], pattern = \"CompPtn\"",
+      "output": "[True, False, False, True, True]"
+    },
+    {
+      "input": "queries = [\"SoftwareEngineering\", \"softwareENGINEERING\", \"SoftWaReEnGiNeErInG\", \"SOFTWAREENGINEERING\"], pattern = \"SWE\"",
+      "output": "[False, False, False, False]"
+    },
+    {
+      "input": "queries = [\"PatternMatching\",\"Pattern\",\"Pat\",\"PatMatch\",\"PatternMatchInString\"], pattern = \"Pat\"",
+      "output": "[False, True, True, False, False]"
+    },
+    {
+      "input": "queries = [\"testCase\",\"testCase1\",\"testCase2\",\"testCase3\",\"testCase4\"], pattern = \"testCase\"",
+      "output": "[True, False, False, False, False]"
+    },
+    {
+      "input": "queries = [\"xYzAbCdEfG\",\"xYzAbCdEfGhI\",\"xYzAbCd\",\"xYzAbCdEfGhIjK\",\"xYzAbCdEfGhIjKlM\"], pattern = \"xYzAbCd\"",
+      "output": "[False, False, True, False, False]"
+    },
+    {
+      "input": "queries = [\"ComplexPattern\",\"ComplexPatternQuery\",\"ComplexPatternMatch\",\"ComplexPatternMismatch\",\"ComplexPatternCase\"], pattern = \"CPM\"",
+      "output": "[False, False, True, True, False]"
+    },
+    {
+      "input": "queries = [\"ComplexPatternMatching\", \"ComplexPattern\", \"ComplexMatch\", \"PatternMatching\", \"PatternMatch\"], pattern = \"CPM\"",
+      "output": "[True, False, False, False, False]"
+    },
+    {
+      "input": "queries = [\"Java\",\"JavaScript\",\"JavaS\",\"JavaScr\",\"JavaScriptAndMore\"], pattern = \"JS\"",
+      "output": "[False, True, True, True, False]"
+    },
+    {
+      "input": "queries = [\"TestCase1\",\"TestCase2\",\"TestCase3\",\"testCase4\",\"testCase5\",\"testCase6\"], pattern = \"TestCase\"",
+      "output": "[False, False, False, False, False, False]"
+    },
+    {
+      "input": "queries = [\"CamelCase\", \"CamelCasePattern\", \"Camel\", \"Case\"], pattern = \"CCP\"",
+      "output": "[False, True, False, False]"
+    },
+    {
+      "input": "queries = [\"MultipleUpperCaseLetters\", \"MultipleLowerCaseLetters\", \"MixOfUpperAndLowerCase\", \"OnlyUpperCase\", \"OnlyLowerCase\"], pattern = \"MUCL\"",
+      "output": "[True, False, False, False, False]"
+    },
+    {
+      "input": "queries = [\"LongPatternMatchingExample\",\"LongPattern\",\"Long\",\"LongPatternExample\",\"LongPatternMatchingExampleInPython\"], pattern = \"Long\"",
+      "output": "[False, False, True, False, False]"
+    },
+    {
+      "input": "queries = [\"CamelHump\",\"CamelHumpQuery\",\"CamelHouse\",\"CamelHousekeeping\",\"CamelHorseRace\"], pattern = \"CH\"",
+      "output": "[True, False, True, True, False]"
+    },
+    {
+      "input": "queries = [\"EdgeCase\",\"EdgeCaseQuery\",\"EdgeCaseMatch\",\"EdgeCaseMismatch\",\"EdgeCaseCase\"], pattern = \"ECMc\"",
+      "output": "[False, False, True, True, False]"
+    },
+    {
+      "input": "queries = [\"ABcDeFgHiJkLmNoPqRsTuVwXyZ\",\"abcdefgHIJKLmnopQRstUVwxYZ\",\"AbCdEfGhIjKlMnOpQrStUvWxYz\"], pattern = \"AbCdEfG\"",
+      "output": "[False, False, False]"
+    },
+    {
+      "input": "queries = [\"MixedCasePattern\",\"Mixed\",\"Case\",\"Pattern\",\"MixedPatternCase\"], pattern = \"Mix\"",
+      "output": "[False, True, False, False, False]"
+    },
+    {
+      "input": "queries = [\"ExamplePattern\",\"Ex\",\"ExPat\",\"Example\",\"PatternExample\"], pattern = \"Ex\"",
+      "output": "[False, True, False, True, False]"
+    },
+    {
+      "input": "queries = [\"DeepLearning\", \"deepLEARNING\", \"DeEpLeArNiNg\", \"DEEPLEARNING\"], pattern = \"DL\"",
+      "output": "[True, False, False, False]"
+    },
+    {
+      "input": "queries = [\"veryComplexPattern\", \"veryComplexPat\", \"veryComp\", \"very\"], pattern = \"vCP\"",
+      "output": "[True, True, False, False]"
+    },
+    {
+      "input": "queries = [\"LeetCode\",\"Leet_Code\",\"Leet_Co_Dee\",\"L_C_D\",\"L_C_D_E_T\"], pattern = \"LCDE\"",
+      "output": "[False, False, False, False, False]"
+    },
+    {
+      "input": "queries = [\"ComplexPatternMatching\",\"Complex\",\"Pat\",\"ComplexPat\",\"PatternComplex\"], pattern = \"Com\"",
+      "output": "[False, True, False, False, False]"
+    },
+    {
+      "input": "queries = [\"aAaAaAaA\",\"AAAAAAAA\",\"aAaAaAa\",\"AaAaAaAaAaAaAaAa\",\"aAaAaAaAaAaAaAaAa\",\"AaAaAaAaAaAaAaAaAaAa\",\"AaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAa\"], pattern = \"aAaAaAaA\"",
+      "output": "[True, False, False, False, False, False, False]"
+    },
+    {
+      "input": "queries = [\"CamelCase\",\"camelCase\",\"Camelcase\",\"camelCASE\"], pattern = \"Camel\"",
+      "output": "[False, False, True, False]"
+    },
+    {
+      "input": "queries = [\"CamelCaseExample\",\"CamelCase\",\"CamelExample\",\"ExampleCamel\",\"Camel\"], pattern = \"CamEx\"",
+      "output": "[False, False, True, False, False]"
+    },
+    {
+      "input": "queries = [\"CamelCase\",\"Camel\",\"CamelCasePattern\",\"CamelPattern\",\"PatternCamel\"], pattern = \"Cam\"",
+      "output": "[False, True, False, False, False]"
+    },
+    {
+      "input": "queries = [\"Match\",\"MaTch\",\"MatCh\",\"MatcH\",\"MatchiNg\"], pattern = \"Match\"",
+      "output": "[True, False, False, False, False]"
+    },
+    {
+      "input": "queries = [\"aAbBcC\",\"aabbcc\",\"aaBbCc\",\"aAaBbCc\",\"aAbbcC\"], pattern = \"abc\"",
+      "output": "[False, True, False, False, False]"
+    },
+    {
+      "input": "queries = [\"testCase\",\"TestCase\",\"testCase1\",\"testCase2\",\"testCase3\"], pattern = \"tc\"",
+      "output": "[False, False, False, False, False]"
+    },
+    {
+      "input": "queries = [\"VariableLength\",\"VarLen\",\"VarLenPattern\",\"VL\",\"VariablePatLen\"], pattern = \"VarPatLen\"",
+      "output": "[False, False, False, False, True]"
+    },
+    {
+      "input": "queries = [\"lowerCasePattern\", \"lowercasepattern\", \"LOWERCASEPATTERN\", \"lowerCASE\"], pattern = \"lCP\"",
+      "output": "[True, False, False, False]"
+    },
+    {
+      "input": "queries = [\"Python\",\"PythoN\",\"PythOn\",\"PyThOn\",\"PYTHOn\",\"PYTHOnS\"], pattern = \"PyTh\"",
+      "output": "[False, False, False, False, False, False]"
+    },
+    {
+      "input": "queries = [\"aAbBcCdDeEfF\",\"aabbccddeeff\",\"Aabbccddeeff\",\"aAbbccddeeff\"], pattern = \"aBcDeF\"",
+      "output": "[False, False, False, False]"
+    },
+    {
+      "input": "queries = [\"Programming\", \"PrograMMing\", \"PROGRAMMING\", \"programming\"], pattern = \"PrM\"",
+      "output": "[False, False, False, False]"
+    },
+    {
+      "input": "queries = [\"helloWorld\",\"HELLOworld\",\"hElLoWoRlD\",\"HeLLoWoRLd\",\"HELLOWORLD\"], pattern = \"hELo\"",
+      "output": "[False, False, False, False, False]"
+    },
+    {
+      "input": "queries = [\"aAbB\", \"aabb\", \"AABB\", \"aAaA\"], pattern = \"aAbB\"",
+      "output": "[True, False, False, False]"
+    },
+    {
+      "input": "queries = [\"aAbBcCdDeE\", \"aabbccddeeff\", \"AaBbCcDdEeFf\", \"AABBCCDDEEFF\"], pattern = \"aBcDeF\"",
+      "output": "[False, False, False, False]"
+    },
+    {
+      "input": "queries = [\"DataScience\",\"Data_Science\",\"DaSc\",\"DaTaSci\",\"DaTaSceNiCe\"], pattern = \"DaS\"",
+      "output": "[True, False, True, False, False]"
+    },
+    {
+      "input": "queries = [\"AlGoRiThM\",\"algoRiThm\",\"AlgorIthM\",\"Algorithm\"], pattern = \"AlGoRiThM\"",
+      "output": "[True, False, False, False]"
+    },
+    {
+      "input": "queries = [\"ThisIsJustARandomQuery\", \"ThisIsJustAQuery\", \"ThisIsARandomQuery\", \"ThisJustARandomQuery\", \"ThisIsJustARandomQ\"], pattern = \"TIJARQ\"",
+      "output": "[True, False, False, False, True]"
+    },
+    {
+      "input": "queries = [\"ComplexPattern\",\"ComplexPAttern\",\"ComplexPattern1\",\"ComplexPattern2\",\"ComplexPattern3\"], pattern = \"ComplexPat\"",
+      "output": "[True, False, False, False, False]"
+    },
+    {
+      "input": "queries = [\"QuantumComputing\", \"quantumCOMPUTING\", \"QuAnTuMCoMpUtInG\", \"QUANTUMCOMPUTING\"], pattern = \"QC\"",
+      "output": "[True, False, False, False]"
+    },
+    {
+      "input": "queries = [\"ComplexPattern\",\"complexPattern\",\"ComplexPATTERN\",\"complexpATTERN\",\"ComplexpAtTeRn\"], pattern = \"CP\"",
+      "output": "[True, False, False, False, False]"
+    },
+    {
+      "input": "queries = [\"a\",\"b\",\"c\",\"d\",\"e\",\"f\",\"g\",\"h\",\"i\",\"j\",\"k\",\"l\",\"m\",\"n\",\"o\",\"p\",\"q\",\"r\",\"s\",\"t\",\"u\",\"v\",\"w\",\"x\",\"y\",\"z\"], pattern = \"a\"",
+      "output": "[True, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False]"
+    },
+    {
+      "input": "queries = [\"aBcDeFgHiJ\",\"aBcDeFgHiJkLmNoPqR\",\"aBcDeFgHiJkL\",\"aBcDeFgHiJkLmNoP\",\"aBcDeFgHiJkLmNoPqRsTuVwXyZ\"], pattern = \"aBcDeFgHiJ\"",
+      "output": "[True, False, False, False, False]"
+    },
+    {
+      "input": "queries = [\"EdgeCase\",\"EdgeCaseQuery\",\"EdgeCaseMatch\",\"EdgeCaseMismatch\",\"EdgeCaseCase\"], pattern = \"ECq\"",
+      "output": "[False, False, False, False, False]"
+    },
+    {
+      "input": "queries = [\"EdgeCase\",\"EdgeCaseQuery\",\"EdgeCaseMatch\",\"EdgeCaseMismatch\",\"EdgeCaseCase\"], pattern = \"ECM\"",
+      "output": "[False, False, True, True, False]"
+    },
+    {
+      "input": "queries = [\"Pattern\",\"Pattern1\",\"Pattern2\",\"Pattern3\",\"Pattern4\"], pattern = \"Pattern\"",
+      "output": "[True, False, False, False, False]"
+    },
+    {
+      "input": "queries = [\"ArtificialIntelligence\", \"artificialINTELLIGENCE\", \"ArTiFiCiAlInTeLlIgEnCe\", \"ARTIFICIALINTELLIGENCE\"], pattern = \"AI\"",
+      "output": "[True, False, False, False]"
+    },
+    {
+      "input": "queries = [\"ComplexPattern\",\"ComplexPatternQuery\",\"ComplexPatternMatch\",\"ComplexPatternMismatch\",\"ComplexPatternCase\"], pattern = \"CPMc\"",
+      "output": "[False, False, True, True, False]"
+    },
+    {
+      "input": "queries = [\"camelMatch\",\"CamelMatch\",\"camelMATCH\",\"CamelMATCH\",\"camelMatchTEST\"], pattern = \"CMt\"",
+      "output": "[False, True, False, False, False]"
+    },
+    {
+      "input": "queries = [\"MiXeDcAsE\",\"MiXeDcAsEc\",\"MiXeDcAsEcc\",\"MiXeDcAsEcce\",\"MiXeDcAsEcces\",\"MiXeDcAsEccese\"], pattern = \"MiXeDcAsEcces\"",
+      "output": "[False, False, False, False, True, True]"
+    },
+    {
+      "input": "queries = [\"upperCASE\",\"UpperCASE\",\"upperCase\",\"UPPERcase\",\"uPPERCase\"], pattern = \"uPR\"",
+      "output": "[False, False, False, False, False]"
+    },
+    {
+      "input": "queries = [\"AbCdEfGh\", \"AbCdEfGhIj\", \"AbCdEfGhIjKl\", \"AbCdEfGhIjKlMn\"], pattern = \"ACEGIK\"",
+      "output": "[False, False, True, False]"
+    },
+    {
+      "input": "queries = [\"SubsequenceMatching\",\"SubseqMatch\",\"SubSeqMatch\",\"SbqMtch\",\"SubsqMtch\"], pattern = \"SbqMtch\"",
+      "output": "[True, True, False, True, True]"
+    },
+    {
+      "input": "queries = [\"TestPattern\",\"TestPatternQuery\",\"TestPatternMatch\",\"TestPatternMismatch\",\"TestPatternCase\"], pattern = \"TPq\"",
+      "output": "[False, False, False, False, False]"
+    },
+    {
+      "input": "queries = [\"xYzXyZ\", \"xyzyxzyx\", \"XYXYXY\", \"xyXyXy\"], pattern = \"XyZ\"",
+      "output": "[False, False, False, False]"
+    },
+    {
+      "input": "queries = [\"multipleUpperCases\", \"multipleUPPERCASES\", \"MULTIPLEUPPERCASES\", \"multipleUPPER\"], pattern = \"mUC\"",
+      "output": "[True, False, False, False]"
+    },
+    {
+      "input": "queries = [\"CamelMatch\",\"camelMatch\",\"CaMeLmAtCh\",\"CAMELMATCH\",\"camelMATCH\"], pattern = \"CaM\"",
+      "output": "[True, False, False, False, False]"
+    },
+    {
+      "input": "queries = [\"PatternMatching\",\"PatternMATching\",\"PatternMATCHing\",\"PatternMATCHINg\"], pattern = \"PatternMATCHINg\"",
+      "output": "[False, False, False, True]"
+    },
+    {
+      "input": "queries = [\"ComplexPattern\",\"ComplexPatternQuery\",\"ComplexPatternMatch\",\"ComplexPatternMismatch\",\"ComplexPatternCase\"], pattern = \"CPq\"",
+      "output": "[False, False, False, False, False]"
+    },
+    {
+      "input": "queries = [\"XyZ\",\"XYZabc\",\"xYzAbC\",\"xyZabc\",\"XyZABC\"], pattern = \"XyZ\"",
+      "output": "[True, False, False, False, False]"
+    },
+    {
+      "input": "queries = [\"MachineLearning\", \"machineLEARNING\", \"MaChInELeArNiNg\", \"MACHINELEARNING\"], pattern = \"ML\"",
+      "output": "[True, False, False, False]"
+    },
+    {
+      "input": "queries = [\"aBcDeFgHiJ\",\"aBcDeFgHiJkL\",\"aBcDeFgHiJkLmN\",\"aBcDeFgHiJkLmNoP\",\"aBcDeFgHiJkLmNoPqR\"], pattern = \"aBcFj\"",
+      "output": "[False, False, False, False, False]"
+    },
+    {
+      "input": "queries = [\"SamePatternSamePattern\", \"SamePattern\", \"Pattern\", \"Same\", \"\"], pattern = \"SPSP\"",
+      "output": "[True, False, False, False, False]"
+    },
+    {
+      "input": "queries = [\"CamelCasePatternMatching\", \"camelCasePatternMatching\", \"CamelCasePattern\", \"CamelCasePatternMatch\", \"CamelCasePatt\"], pattern = \"CCPM\"",
+      "output": "[True, False, False, True, False]"
+    },
+    {
+      "input": "queries = [\"AbCdEfG\", \"AbcDeFG\", \"AbCDefg\", \"AbcDefgHiJk\", \"AbCdEfGhIjk\"], pattern = \"ACEG\"",
+      "output": "[True, False, False, False, False]"
+    },
+    {
+      "input": "queries = [\"TestPattern\",\"TestPatternQuery\",\"TestPatternMatch\",\"TestPatternMismatch\",\"TestPatternCase\"], pattern = \"TPM\"",
+      "output": "[False, False, True, True, False]"
+    },
+    {
+      "input": "queries = [\"CamelCase\", \"camelCase\", \"CamelCASE\", \"CAMELcase\"], pattern = \"CaC\"",
+      "output": "[True, False, False, False]"
+    },
+    {
+      "input": "queries = [\"aAbBcCdDeEfFgGhHiIjJkKlLmMnNoOpPqQrRsStTuUvVwWxXyYzZ\", \"abcdefghijklmnopqrstuvwxyz\", \"ABCDEFGHIJKLMNOPQRSTUVWXYZ\", \"aBcDeFgHiJkLmNoPqRsTuVwXyZ\", \"AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz\"], pattern = \"aBcEfHjLpTz\"",
+      "output": "[False, False, False, False, False]"
+    },
+    {
+      "input": "queries = [\"OneTwoThreeFourFiveSixSevenEightNineTen\", \"OneTwoThreeFourFiveSixSevenEightNine\", \"OneTwoThreeFourFiveSixSevenEight\", \"OneTwoThreeFourFiveSixSeven\", \"OneTwoThreeFourFiveSix\"], pattern = \"OTFSF\"",
+      "output": "[False, False, False, False, False]"
+    },
+    {
+      "input": "queries = [\"CamelCasePatternMatching\",\"camelCasePatternMatching\",\"CAMELCASEPATTERNMATCHING\",\"camelcasepatternmatching\"], pattern = \"CamElCaSePaTtErNmAtChInG\"",
+      "output": "[False, False, False, False]"
+    },
+    {
+      "input": "queries = [\"aAbBcCdDeEfFgGhHiIjJkKlLmMnNoOpPqQrRsStTuUvVwWxXyYzZ\",\"aAbBcCdDeEfFgGhHiIjJkKlLmMnNoOpPqQrRsStTuUvVwWxXyY\"], pattern = \"aBcDeFgHiJkLmNoPqRsTuVwXyZ\"",
+      "output": "[False, False]"
+    },
+    {
+      "input": "queries = [\"AnotherExample\",\"Another\",\"An\",\"AnotherExampleString\",\"ExampleAnotherString\"], pattern = \"An\"",
+      "output": "[False, True, True, False, False]"
+    },
+    {
+      "input": "queries = [\"TestCase\",\"Test\",\"TestCasePattern\",\"TestPattern\",\"PatternTest\"], pattern = \"Tes\"",
+      "output": "[False, True, False, False, False]"
+    },
+    {
+      "input": "queries = [\"MachineLearning\",\"ML\",\"MaChine_Learning\",\"MachLeaRning\",\"MachineLearNiNg\"], pattern = \"MLe\"",
+      "output": "[True, False, False, False, False]"
+    },
+    {
+      "input": "queries = [\"PatternMatching\", \"PatternMatchingExample\", \"PatMatch\", \"PatMatchEx\"], pattern = \"PM\"",
+      "output": "[True, False, True, False]"
+    },
+    {
+      "input": "queries = [\"abAB\",\"abab\",\"ABab\",\"abABab\",\"abABAB\"], pattern = \"abAB\"",
+      "output": "[True, False, False, True, False]"
+    },
+    {
+      "input": "queries = [\"PatternMatchingIsFun\", \"PatternMatching\", \"PatternMatchingIs\", \"PatternIsFun\", \"PatternMatchingFun\"], pattern = \"PMIF\"",
+      "output": "[True, False, False, False, False]"
+    },
+    {
+      "input": "queries = [\"AlGoRiThM\",\"algoR\",\"alGOrIthM\",\"aLGOrIth\",\"AlgOrIthM\"], pattern = \"aGI\"",
+      "output": "[False, False, False, False, False]"
+    },
+    {
+      "input": "queries = [\"aBcDeFgHiJ\",\"aBcDeFgHiJkL\",\"aBcDeFgHiJkLmN\",\"aBcDeFgHiJkLmNoP\",\"aBcDeFgHiJkLmNoPqR\"], pattern = \"aBcDFgHj\"",
+      "output": "[False, False, False, False, False]"
+    },
+    {
+      "input": "queries = [\"PaTtErN123\",\"Pattern123\",\"pAtTeRn123\",\"PaTtErN\",\"Pattern\",\"pAtTeRn\"], pattern = \"PaTtErN\"",
+      "output": "[False, False, False, True, False, False]"
+    },
+    {
+      "input": "queries = [\"aBCdEf\",\"abcdef\",\"abDef\",\"aBcDE\",\"aBcDeF\",\"aBcDEf\"], pattern = \"aBcEf\"",
+      "output": "[False, False, False, False, False, False]"
+    },
+    {
+      "input": "queries = [\"TestCasesWithDifferentLengths\", \"TestCasesWithDifferentLength\", \"TestCasesWithDifferent\", \"TestCasesWith\", \"TestCases\"], pattern = \"TCWDL\"",
+      "output": "[True, True, False, False, False]"
+    },
+    {
+      "input": "queries = [\"Pattern\",\"pattern\",\"PatternMatch\",\"PAtTERNmAtCH\",\"PaTtErNmAtCh\"], pattern = \"PaT\"",
+      "output": "[False, False, False, False, False]"
+    },
+    {
+      "input": "queries = [\"ComputerVision\", \"computerVISION\", \"CoMpUtErViSiOn\", \"COMPUTERVISION\"], pattern = \"CV\"",
+      "output": "[True, False, False, False]"
+    },
+    {
+      "input": "queries = [\"Xylophone\",\"xylophone\",\"XyLopHone\",\"XyLoPhone\",\"xyLoPhOnE\"], pattern = \"XyLoPhOnE\"",
+      "output": "[False, False, False, False, False]"
+    },
+    {
+      "input": "queries = [\"CoMpLeXqUeRiEs\",\"complexqueries\",\"CoMpLeXqUeRiE\",\"CoMpLeXqUeRiEz\",\"CoMpLeXqUeRiEsZ\",\"CoMpLeXqUeRiEsZz\"], pattern = \"CoMpLeXqUeRiEs\"",
+      "output": "[True, False, False, False, False, False]"
+    },
+    {
+      "input": "queries = [\"CamelHump\",\"CamelHumpQuery\",\"CamelHouse\",\"CamelHousekeeping\",\"CamelHorseRace\"], pattern = \"CHq\"",
+      "output": "[False, False, False, False, False]"
+    },
+    {
+      "input": "queries = [\"OpenAI\",\"Open_Artificial_Intelligence\",\"O_A_I\",\"OpenA\",\"OpenAIAI\"], pattern = \"OAI\"",
+      "output": "[True, False, False, False, False]"
+    },
+    {
+      "input": "queries = [\"looongPattern\",\"looongPattern\",\"longPattern\",\"lOnGPattern\",\"LoNgPatTerN\"], pattern = \"LoNgPat\"",
+      "output": "[False, False, False, False, False]"
+    },
+    {
+      "input": "queries = [\"Algorithm\", \"AlgoRhythm\", \"AlGoRiThM\", \"ALGORITHM\"], pattern = \"AlGM\"",
+      "output": "[False, False, False, False]"
+    },
+    {
+      "input": "queries = [\"TestString\",\"TestingString\",\"TeststrIng\",\"TstStr\",\"TestStrng\"], pattern = \"TstStr\"",
+      "output": "[True, True, False, True, True]"
+    },
+    {
+      "input": "queries = [\"OneTwoThreeFour\",\"OTFT\",\"OneTwoF\",\"OneTwoThrFor\",\"OTFTF\"], pattern = \"OTFT\"",
+      "output": "[False, True, False, False, False]"
+    },
+    {
+      "input": "queries = [\"qWeRtY\",\"qwerty\",\"QwErTy\",\"QwErTyUiOp\"], pattern = \"qWeRtY\"",
+      "output": "[True, False, False, False]"
+    },
+    {
+      "input": "queries = [\"TestPattern\",\"TestPatternQuery\",\"TestPatternMatch\",\"TestPatternMismatch\",\"TestPatternCase\"], pattern = \"TPMc\"",
+      "output": "[False, False, True, True, False]"
+    },
+    {
+      "input": "queries = [\"NaturalLanguageProcessing\", \"naturalLANGUAGEPROCESSING\", \"NaTuRaLlAnGuAgEPrOcEsSiNg\", \"NATURALLANGUAGEPROCESSING\"], pattern = \"NLP\"",
+      "output": "[True, False, False, False]"
+    },
+    {
+      "input": "queries = [\"MIXEDcase\",\"MiXEDcase\",\"MiXeDCase\",\"MIXeDCase\",\"MiXEdCASE\"], pattern = \"MXc\"",
+      "output": "[False, False, False, False, False]"
+    },
+    {
+      "input": "queries = [\"MiXeDcASe\",\"MiXeDCase\",\"MiXeD\",\"MiX\",\"MixeDCase\"], pattern = \"MiX\"",
+      "output": "[False, False, False, True, False]"
+    },
+    {
+      "input": "queries = [\"aAaAaA\",\"aaaaaa\",\"Aaaaaa\",\"aAaaaa\",\"aaaaAa\"], pattern = \"aAa\"",
+      "output": "[False, False, False, True, True]"
+    },
+    {
+      "input": "queries = [\"CamelHump\",\"CamelHumpQuery\",\"CamelHouse\",\"CamelHousekeeping\",\"CamelHorseRace\"], pattern = \"CHH\"",
+      "output": "[False, False, False, False, False]"
+    },
+    {
+      "input": "queries = [\"PatternMatching\",\"PatMat\",\"PatrnMtch\",\"PatternMtching\",\"PatMatch\"], pattern = \"PtnMtch\"",
+      "output": "[True, False, True, True, False]"
+    },
+    {
+      "input": "queries = [\"AlphabetPattern\",\"Al\",\"Alpha\",\"Pattern\",\"AlphabetPatternInString\"], pattern = \"Al\"",
+      "output": "[False, True, True, False, False]"
+    },
+    {
+      "input": "queries = [\"lowercase\",\"Lowercase\",\"LOWERCASE\",\"lowerCASE\",\"lowERCASE\"], pattern = \"lwr\"",
+      "output": "[True, False, False, False, False]"
+    },
+    {
+      "input": "queries = [\"aAbBcCdDeEfFgG\",\"aBcDeFg\",\"aBcD\",\"aB\",\"a\"], pattern = \"aBcD\"",
+      "output": "[False, False, True, False, False]"
+    },
+    {
+      "input": "queries = [\"AlGoRiThM\",\"algorithm\",\"AlGoRiThMs\",\"AlGoRiThMuS\",\"algorithms\",\"AlGoRiThmSUs\",\"AlGoRiThMuSiC\"], pattern = \"AlGoRiThMuS\"",
+      "output": "[False, False, False, True, False, False, False]"
+    },
+    {
+      "input": "queries = [\"exampleQuery\",\"ExampleQUERY\",\"exampleQUERY\",\"exampleQueryTest\",\"exampleQueryTestTest\"], pattern = \"eQ\"",
+      "output": "[True, False, False, False, False]"
+    },
+    {
+      "input": "queries = [\"DataStructure\", \"dataStructure\", \"DataSTRUCTURE\", \"DATAstructure\"], pattern = \"DtS\"",
+      "output": "[True, False, False, False]"
+    }
+  ]
+}

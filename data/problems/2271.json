@@ -1,0 +1,509 @@
+{
+  "id": 2271,
+  "title": "Maximum White Tiles Covered by a Carpet",
+  "slug": "maximum-white-tiles-covered-by-a-carpet",
+  "difficulty": "Medium",
+  "topics": [
+    "Array",
+    "Binary Search",
+    "Greedy",
+    "Sliding Window",
+    "Sorting",
+    "Prefix Sum"
+  ],
+  "description": "You are given a 2D integer array tiles where tiles[i] = [li, ri] represents that every tile j in the range li <= j <= ri is colored white.\nYou are also given an integer carpetLen, the length of a single carpet that can be placed anywhere.\nReturn the maximum number of white tiles that can be covered by the carpet.\nExample 1:\nExample 2:\nConstraints:",
+  "examples": [
+    {
+      "example_num": 1,
+      "example_text": "Input: tiles = [[1,5],[10,11],[12,18],[20,25],[30,32]], carpetLen = 10\nOutput: 9\nExplanation: Place the carpet starting on tile 10. \nIt covers 9 white tiles, so we return 9.\nNote that there may be other places where the carpet covers 9 white tiles.\nIt can be shown that the carpet cannot cover more than 9 white tiles.",
+      "images": [
+        "https://assets.leetcode.com/uploads/2022/03/25/example1drawio3.png"
+      ]
+    },
+    {
+      "example_num": 2,
+      "example_text": "Input: tiles = [[10,11],[1,1]], carpetLen = 2\nOutput: 2\nExplanation: Place the carpet starting on tile 10. \nIt covers 2 white tiles, so we return 2.",
+      "images": [
+        "https://assets.leetcode.com/uploads/2022/03/24/example2drawio.png"
+      ]
+    }
+  ],
+  "constraints": [
+    "1 <= tiles.length <= 5 * 104",
+    "tiles[i].length == 2",
+    "1 <= li <= ri <= 109",
+    "1 <= carpetLen <= 109",
+    "The tiles are non-overlapping."
+  ],
+  "hints": [
+    "Think about the potential placements of the carpet in an optimal solution.",
+    "Can we use Prefix Sum and Binary Search to determine how many tiles are covered for a given placement?"
+  ],
+  "code_snippets": {
+    "cpp": "class Solution {\npublic:\n    int maximumWhiteTiles(vector<vector<int>>& tiles, int carpetLen) {\n        \n    }\n};",
+    "java": "class Solution {\n    public int maximumWhiteTiles(int[][] tiles, int carpetLen) {\n        \n    }\n}",
+    "python": "class Solution(object):\n    def maximumWhiteTiles(self, tiles, carpetLen):\n        \"\"\"\n        :type tiles: List[List[int]]\n        :type carpetLen: int\n        :rtype: int\n        \"\"\"\n        ",
+    "python3": "class Solution:\n    def maximumWhiteTiles(self, tiles: List[List[int]], carpetLen: int) -> int:\n        ",
+    "c": "int maximumWhiteTiles(int** tiles, int tilesSize, int* tilesColSize, int carpetLen) {\n    \n}",
+    "csharp": "public class Solution {\n    public int MaximumWhiteTiles(int[][] tiles, int carpetLen) {\n        \n    }\n}",
+    "javascript": "/**\n * @param {number[][]} tiles\n * @param {number} carpetLen\n * @return {number}\n */\nvar maximumWhiteTiles = function(tiles, carpetLen) {\n    \n};",
+    "typescript": "function maximumWhiteTiles(tiles: number[][], carpetLen: number): number {\n    \n};",
+    "php": "class Solution {\n\n    /**\n     * @param Integer[][] $tiles\n     * @param Integer $carpetLen\n     * @return Integer\n     */\n    function maximumWhiteTiles($tiles, $carpetLen) {\n        \n    }\n}",
+    "swift": "class Solution {\n    func maximumWhiteTiles(_ tiles: [[Int]], _ carpetLen: Int) -> Int {\n        \n    }\n}",
+    "kotlin": "class Solution {\n    fun maximumWhiteTiles(tiles: Array<IntArray>, carpetLen: Int): Int {\n        \n    }\n}",
+    "dart": "class Solution {\n  int maximumWhiteTiles(List<List<int>> tiles, int carpetLen) {\n    \n  }\n}",
+    "golang": "func maximumWhiteTiles(tiles [][]int, carpetLen int) int {\n    \n}",
+    "ruby": "# @param {Integer[][]} tiles\n# @param {Integer} carpet_len\n# @return {Integer}\ndef maximum_white_tiles(tiles, carpet_len)\n    \nend",
+    "scala": "object Solution {\n    def maximumWhiteTiles(tiles: Array[Array[Int]], carpetLen: Int): Int = {\n        \n    }\n}",
+    "rust": "impl Solution {\n    pub fn maximum_white_tiles(tiles: Vec<Vec<i32>>, carpet_len: i32) -> i32 {\n        \n    }\n}",
+    "racket": "(define/contract (maximum-white-tiles tiles carpetLen)\n  (-> (listof (listof exact-integer?)) exact-integer? exact-integer?)\n  )",
+    "erlang": "-spec maximum_white_tiles(Tiles :: [[integer()]], CarpetLen :: integer()) -> integer().\nmaximum_white_tiles(Tiles, CarpetLen) ->\n  .",
+    "elixir": "defmodule Solution do\n  @spec maximum_white_tiles(tiles :: [[integer]], carpet_len :: integer) :: integer\n  def maximum_white_tiles(tiles, carpet_len) do\n    \n  end\nend"
+  },
+  "input_output": [
+    {
+      "input": "tiles = [[1,1000000000]], carpetLen = 1000000000",
+      "output": "1000000000"
+    },
+    {
+      "input": "tiles = [[1,10],[11,20],[21,30]], carpetLen = 15",
+      "output": "15"
+    },
+    {
+      "input": "tiles = [[1,2],[4,5],[7,8],[10,11]], carpetLen = 3",
+      "output": "2"
+    },
+    {
+      "input": "tiles = [[5,5],[6,6],[7,7],[8,8],[9,9]], carpetLen = 3",
+      "output": "3"
+    },
+    {
+      "input": "tiles = [[1,100]], carpetLen = 50",
+      "output": "50"
+    },
+    {
+      "input": "tiles = [[1,3],[5,7],[9,11]], carpetLen = 10",
+      "output": "8"
+    },
+    {
+      "input": "tiles = [[3,6],[8,10],[12,15],[18,20]], carpetLen = 8",
+      "output": "7"
+    },
+    {
+      "input": "tiles = [[3,7],[10,15],[18,20]], carpetLen = 8",
+      "output": "6"
+    },
+    {
+      "input": "tiles = [[1,10],[20,30],[40,50]], carpetLen = 15",
+      "output": "11"
+    },
+    {
+      "input": "tiles = [[3,6],[8,10],[12,15]], carpetLen = 5",
+      "output": "4"
+    },
+    {
+      "input": "tiles = [[1,3],[6,8],[9,12]], carpetLen = 5",
+      "output": "5"
+    },
+    {
+      "input": "tiles = [[1,3],[6,10],[12,14],[16,18]], carpetLen = 5",
+      "output": "5"
+    },
+    {
+      "input": "tiles = [[1,5],[10,11],[12,18],[20,25],[30,32]], carpetLen = 10",
+      "output": "9"
+    },
+    {
+      "input": "tiles = [[10,11],[1,1]], carpetLen = 2",
+      "output": "2"
+    },
+    {
+      "input": "tiles = [[1,2],[3,4],[5,6],[7,8],[9,10]], carpetLen = 10",
+      "output": "10"
+    },
+    {
+      "input": "tiles = [[2,5],[8,10],[12,15],[18,25],[30,35],[40,50]], carpetLen = 12",
+      "output": "11"
+    },
+    {
+      "input": "tiles = [[1,2],[4,8],[10,14],[16,20],[22,26],[28,32],[34,38],[40,44],[46,50]], carpetLen = 10",
+      "output": "9"
+    },
+    {
+      "input": "tiles = [[1,3],[5,7],[9,11],[13,15],[17,19],[21,23],[25,27],[29,31]], carpetLen = 4",
+      "output": "3"
+    },
+    {
+      "input": "tiles = [[5,10],[15,20],[25,30],[35,40],[45,50],[55,60],[65,70]], carpetLen = 25",
+      "output": "17"
+    },
+    {
+      "input": "tiles = [[1,5],[7,10],[15,20],[25,30],[35,40]], carpetLen = 12",
+      "output": "9"
+    },
+    {
+      "input": "tiles = [[1,2],[4,6],[8,10],[12,14],[16,18],[20,22],[24,26],[28,30],[32,34],[36,38],[40,42]], carpetLen = 10",
+      "output": "8"
+    },
+    {
+      "input": "tiles = [[1,2],[4,5],[7,8],[10,11],[13,14]], carpetLen = 4",
+      "output": "3"
+    },
+    {
+      "input": "tiles = [[1,5],[10,15],[20,25],[30,35],[40,45],[50,55],[60,65],[70,75]], carpetLen = 12",
+      "output": "8"
+    },
+    {
+      "input": "tiles = [[1,100],[200,300],[400,500],[600,700],[800,900]], carpetLen = 150",
+      "output": "101"
+    },
+    {
+      "input": "tiles = [[1,1000000000]], carpetLen = 500000000",
+      "output": "500000000"
+    },
+    {
+      "input": "tiles = [[10,15],[20,25],[30,35],[40,45],[50,55],[60,65],[70,75],[80,85],[90,95]], carpetLen = 30",
+      "output": "18"
+    },
+    {
+      "input": "tiles = [[1,100],[200,300],[400,500],[600,700],[800,900]], carpetLen = 200",
+      "output": "101"
+    },
+    {
+      "input": "tiles = [[1,5],[10,14],[20,24],[30,34],[40,44],[50,54]], carpetLen = 10",
+      "output": "6"
+    },
+    {
+      "input": "tiles = [[1,5],[6,10],[11,15],[16,20],[21,25],[26,30],[31,35]], carpetLen = 10",
+      "output": "10"
+    },
+    {
+      "input": "tiles = [[1,3],[6,8],[11,13],[16,18],[21,23],[26,28],[31,33],[36,38],[41,43],[46,48]], carpetLen = 5",
+      "output": "3"
+    },
+    {
+      "input": "tiles = [[5,9],[15,29],[35,49],[55,69],[75,89],[95,109]], carpetLen = 20",
+      "output": "15"
+    },
+    {
+      "input": "tiles = [[10,20],[30,40],[50,60],[70,80],[90,100]], carpetLen = 15",
+      "output": "11"
+    },
+    {
+      "input": "tiles = [[10,15],[20,25],[30,35],[40,45],[50,55],[60,65],[70,75],[80,85]], carpetLen = 20",
+      "output": "12"
+    },
+    {
+      "input": "tiles = [[1,10],[20,30],[40,50],[60,70],[80,90]], carpetLen = 15",
+      "output": "11"
+    },
+    {
+      "input": "tiles = [[1,20],[25,40],[45,60],[65,80],[85,100]], carpetLen = 20",
+      "output": "20"
+    },
+    {
+      "input": "tiles = [[1,3],[5,7],[9,11],[13,15],[17,19],[21,23],[25,27],[29,31],[33,35],[37,39]], carpetLen = 7",
+      "output": "6"
+    },
+    {
+      "input": "tiles = [[1,10],[21,30],[41,50],[61,70],[81,90],[101,110]], carpetLen = 20",
+      "output": "10"
+    },
+    {
+      "input": "tiles = [[10,20],[30,40],[50,60],[70,80],[90,100],[110,120],[130,140],[150,160]], carpetLen = 25",
+      "output": "16"
+    },
+    {
+      "input": "tiles = [[1,200],[400,600],[800,1000],[1200,1400],[1600,1800]], carpetLen = 350",
+      "output": "201"
+    },
+    {
+      "input": "tiles = [[1,2],[4,6],[8,10],[12,14],[16,18],[20,22],[24,26],[28,30]], carpetLen = 5",
+      "output": "4"
+    },
+    {
+      "input": "tiles = [[2,6],[9,14],[17,22],[25,30],[33,38],[41,46]], carpetLen = 20",
+      "output": "16"
+    },
+    {
+      "input": "tiles = [[5,10],[20,25],[35,40],[55,60],[65,70]], carpetLen = 15",
+      "output": "11"
+    },
+    {
+      "input": "tiles = [[1,3],[5,7],[9,11],[13,15],[17,19],[21,23],[25,27]], carpetLen = 5",
+      "output": "4"
+    },
+    {
+      "input": "tiles = [[10,20],[30,40],[50,60],[70,80],[90,100]], carpetLen = 35",
+      "output": "22"
+    },
+    {
+      "input": "tiles = [[1,5],[8,12],[15,20],[25,30],[35,40]], carpetLen = 15",
+      "output": "11"
+    },
+    {
+      "input": "tiles = [[1,2],[4,5],[7,8],[10,11],[13,14],[16,17],[19,20]], carpetLen = 3",
+      "output": "2"
+    },
+    {
+      "input": "tiles = [[2,5],[8,15],[18,25],[30,35],[40,50],[55,60]], carpetLen = 15",
+      "output": "13"
+    },
+    {
+      "input": "tiles = [[1,2],[4,6],[8,10],[12,14],[16,18],[20,22],[24,26],[28,30]], carpetLen = 7",
+      "output": "6"
+    },
+    {
+      "input": "tiles = [[1,2],[4,5],[7,8],[10,11],[13,14],[16,17]], carpetLen = 3",
+      "output": "2"
+    },
+    {
+      "input": "tiles = [[1,5],[10,14],[20,24],[30,34],[40,44],[50,54],[60,64],[70,74],[80,84],[90,94]], carpetLen = 10",
+      "output": "6"
+    },
+    {
+      "input": "tiles = [[1,20],[25,40],[45,60],[65,80],[85,100]], carpetLen = 30",
+      "output": "26"
+    },
+    {
+      "input": "tiles = [[1,2],[2,3],[3,4],[4,5],[5,6],[6,7],[7,8],[8,9],[9,10]], carpetLen = 4",
+      "output": "7"
+    },
+    {
+      "input": "tiles = [[1,3],[6,8],[11,13],[16,18],[21,23],[26,28]], carpetLen = 5",
+      "output": "3"
+    },
+    {
+      "input": "tiles = [[5,10],[20,25],[35,40],[50,55],[60,65],[70,75],[80,85]], carpetLen = 20",
+      "output": "12"
+    },
+    {
+      "input": "tiles = [[1,3],[5,7],[9,11],[13,15],[17,19],[21,23]], carpetLen = 12",
+      "output": "9"
+    },
+    {
+      "input": "tiles = [[1,2],[2,3],[3,4],[4,5],[5,6],[6,7],[7,8],[8,9],[9,10]], carpetLen = 5",
+      "output": "9"
+    },
+    {
+      "input": "tiles = [[1,5],[7,15],[20,30],[35,45],[50,60],[65,75]], carpetLen = 12",
+      "output": "11"
+    },
+    {
+      "input": "tiles = [[1,5],[10,15],[20,25],[30,35],[40,45]], carpetLen = 12",
+      "output": "8"
+    },
+    {
+      "input": "tiles = [[1,3],[10,12],[20,22],[30,32],[40,42],[50,52],[60,62]], carpetLen = 5",
+      "output": "3"
+    },
+    {
+      "input": "tiles = [[5,10],[15,20],[25,30],[35,40],[45,50],[55,60]], carpetLen = 15",
+      "output": "11"
+    },
+    {
+      "input": "tiles = [[1,3],[10,12],[20,22],[30,32],[40,42]], carpetLen = 4",
+      "output": "3"
+    },
+    {
+      "input": "tiles = [[1,3],[4,6],[7,9],[10,12],[13,15],[16,18],[19,21],[22,24]], carpetLen = 10",
+      "output": "10"
+    },
+    {
+      "input": "tiles = [[1,3],[5,8],[10,14],[18,22],[26,30],[34,38]], carpetLen = 6",
+      "output": "5"
+    },
+    {
+      "input": "tiles = [[1,5],[10,14],[19,23],[28,32],[37,41],[46,50]], carpetLen = 10",
+      "output": "6"
+    },
+    {
+      "input": "tiles = [[1,500000000],[500000001,1000000000]], carpetLen = 600000000",
+      "output": "600000000"
+    },
+    {
+      "input": "tiles = [[1,2],[4,5],[7,8],[10,11],[13,14],[16,17],[19,20]], carpetLen = 4",
+      "output": "3"
+    },
+    {
+      "input": "tiles = [[2,5],[8,11],[15,18],[22,25],[29,32]], carpetLen = 10",
+      "output": "8"
+    },
+    {
+      "input": "tiles = [[1,5],[6,10],[11,15],[16,20],[21,25],[26,30]], carpetLen = 12",
+      "output": "12"
+    },
+    {
+      "input": "tiles = [[1,2],[5,6],[9,10],[13,14],[17,18],[21,22],[25,26],[29,30]], carpetLen = 3",
+      "output": "2"
+    },
+    {
+      "input": "tiles = [[1,50],[100,150],[200,250],[300,350],[400,450],[500,550]], carpetLen = 75",
+      "output": "51"
+    },
+    {
+      "input": "tiles = [[1,3],[6,8],[11,13],[16,18],[21,23],[26,28],[31,33]], carpetLen = 6",
+      "output": "4"
+    },
+    {
+      "input": "tiles = [[2,4],[8,12],[16,20],[24,28],[32,36]], carpetLen = 8",
+      "output": "5"
+    },
+    {
+      "input": "tiles = [[1,3],[6,9],[12,15],[18,21],[24,27],[30,33]], carpetLen = 10",
+      "output": "8"
+    },
+    {
+      "input": "tiles = [[5,7],[10,12],[15,17],[20,22],[25,27],[30,32],[35,37]], carpetLen = 7",
+      "output": "5"
+    },
+    {
+      "input": "tiles = [[1,5],[7,11],[13,17],[19,23],[25,29],[31,35]], carpetLen = 15",
+      "output": "13"
+    },
+    {
+      "input": "tiles = [[1,1000000],[2000000,3000000],[4000000,5000000],[6000000,7000000]], carpetLen = 1500000",
+      "output": "1000001"
+    },
+    {
+      "input": "tiles = [[5,10],[20,25],[35,40],[55,60],[75,80],[95,100]], carpetLen = 30",
+      "output": "12"
+    },
+    {
+      "input": "tiles = [[1,10],[20,30],[40,50],[60,70],[80,90]], carpetLen = 25",
+      "output": "16"
+    },
+    {
+      "input": "tiles = [[100,200],[300,400],[500,600],[700,800],[900,1000]], carpetLen = 150",
+      "output": "101"
+    },
+    {
+      "input": "tiles = [[1,50],[100,150],[200,250],[300,350],[400,450]], carpetLen = 100",
+      "output": "51"
+    },
+    {
+      "input": "tiles = [[1,5],[10,14],[18,22],[26,30]], carpetLen = 7",
+      "output": "5"
+    },
+    {
+      "input": "tiles = [[1,10],[20,30],[40,50],[60,70],[80,90],[100,110]], carpetLen = 25",
+      "output": "16"
+    },
+    {
+      "input": "tiles = [[1,3],[6,8],[11,13],[16,18],[21,23]], carpetLen = 7",
+      "output": "5"
+    },
+    {
+      "input": "tiles = [[1,2],[4,8],[10,14],[16,20],[22,26],[28,32]], carpetLen = 8",
+      "output": "7"
+    },
+    {
+      "input": "tiles = [[1,2],[4,6],[8,10],[12,14],[16,18],[20,22],[24,26],[28,30],[32,34]], carpetLen = 10",
+      "output": "8"
+    },
+    {
+      "input": "tiles = [[1,1000000000]], carpetLen = 999999999",
+      "output": "999999999"
+    },
+    {
+      "input": "tiles = [[1,100],[200,300],[400,500],[600,700],[800,900]], carpetLen = 100",
+      "output": "100"
+    },
+    {
+      "input": "tiles = [[1,100],[200,300],[400,500],[600,700],[800,900]], carpetLen = 50",
+      "output": "50"
+    },
+    {
+      "input": "tiles = [[100,200],[300,400],[500,600],[700,800],[900,1000]], carpetLen = 500",
+      "output": "302"
+    },
+    {
+      "input": "tiles = [[1,10],[15,20],[25,30],[35,40],[45,50]], carpetLen = 15",
+      "output": "11"
+    },
+    {
+      "input": "tiles = [[1,1],[2,2],[3,3],[4,4],[5,5],[6,6],[7,7],[8,8],[9,9],[10,10]], carpetLen = 5",
+      "output": "5"
+    },
+    {
+      "input": "tiles = [[1,10],[15,20],[25,30],[35,40],[45,50],[55,60],[65,70]], carpetLen = 18",
+      "output": "14"
+    },
+    {
+      "input": "tiles = [[1,10],[15,20],[25,30],[35,40],[45,50]], carpetLen = 12",
+      "output": "10"
+    },
+    {
+      "input": "tiles = [[1,5],[6,10],[11,15],[16,20],[21,25]], carpetLen = 15",
+      "output": "15"
+    },
+    {
+      "input": "tiles = [[1,50],[100,150],[200,250],[300,350],[400,450]], carpetLen = 150",
+      "output": "101"
+    },
+    {
+      "input": "tiles = [[1,20],[40,60],[80,100],[120,140],[160,180]], carpetLen = 35",
+      "output": "21"
+    },
+    {
+      "input": "tiles = [[1,2],[3,4],[5,6],[7,8],[9,10],[11,12],[13,14],[15,16],[17,18],[19,20]], carpetLen = 5",
+      "output": "5"
+    },
+    {
+      "input": "tiles = [[1,5],[10,20],[25,30],[35,40],[45,50],[55,60]], carpetLen = 10",
+      "output": "10"
+    },
+    {
+      "input": "tiles = [[100,150],[200,250],[300,350],[400,450],[500,550],[600,650],[700,750]], carpetLen = 100",
+      "output": "51"
+    },
+    {
+      "input": "tiles = [[1,3],[5,7],[9,11],[13,15],[17,19],[21,23]], carpetLen = 5",
+      "output": "4"
+    },
+    {
+      "input": "tiles = [[2,5],[8,15],[20,25],[30,40],[45,55]], carpetLen = 12",
+      "output": "11"
+    },
+    {
+      "input": "tiles = [[5,9],[15,19],[25,29],[35,39],[45,49]], carpetLen = 10",
+      "output": "5"
+    },
+    {
+      "input": "tiles = [[10,14],[15,19],[20,24],[25,29],[30,34],[35,39]], carpetLen = 15",
+      "output": "15"
+    },
+    {
+      "input": "tiles = [[1,3],[5,7],[9,11],[13,15],[17,19]], carpetLen = 6",
+      "output": "5"
+    },
+    {
+      "input": "tiles = [[1,2],[4,5],[7,8],[10,11],[13,14],[16,17],[19,20]], carpetLen = 5",
+      "output": "4"
+    },
+    {
+      "input": "tiles = [[1,10],[20,30],[40,50],[60,70],[80,90],[100,110]], carpetLen = 15",
+      "output": "11"
+    },
+    {
+      "input": "tiles = [[1,10],[15,20],[25,30],[35,40],[45,50],[55,60]], carpetLen = 12",
+      "output": "10"
+    },
+    {
+      "input": "tiles = [[100,200],[300,400],[500,600],[700,800],[900,1000]], carpetLen = 250",
+      "output": "151"
+    },
+    {
+      "input": "tiles = [[10,20],[30,40],[50,60],[70,80],[90,100],[110,120],[130,140]], carpetLen = 25",
+      "output": "16"
+    },
+    {
+      "input": "tiles = [[5,10],[15,20],[25,30],[35,40],[45,50]], carpetLen = 15",
+      "output": "11"
+    },
+    {
+      "input": "tiles = [[1,2],[10,11],[20,21],[30,31],[40,41],[50,51],[60,61],[70,71],[80,81],[90,91]], carpetLen = 2",
+      "output": "2"
+    }
+  ]
+}

@@ -1,0 +1,796 @@
+{
+  "id": 648,
+  "title": "Replace Words",
+  "slug": "replace-words",
+  "difficulty": "Medium",
+  "topics": [
+    "Array",
+    "Hash Table",
+    "String",
+    "Trie"
+  ],
+  "description": "In English, we have a concept called root, which can be followed by some other word to form another longer word - let's call this word derivative. For example, when the root \"help\" is followed by the word \"ful\", we can form a derivative \"helpful\".\nGiven a dictionary consisting of many roots and a sentence consisting of words separated by spaces, replace all the derivatives in the sentence with the root forming it. If a derivative can be replaced by more than one root, replace it with the root that has the shortest length.\nReturn the sentence after the replacement.\nExample 1:\nExample 2:\nConstraints:",
+  "examples": [
+    {
+      "example_num": 1,
+      "example_text": "Input: dictionary = [\"cat\",\"bat\",\"rat\"], sentence = \"the cattle was rattled by the battery\"\nOutput: \"the cat was rat by the bat\"",
+      "images": []
+    },
+    {
+      "example_num": 2,
+      "example_text": "Input: dictionary = [\"a\",\"b\",\"c\"], sentence = \"aadsfasf absbs bbab cadsfafs\"\nOutput: \"a a b c\"",
+      "images": []
+    }
+  ],
+  "constraints": [
+    "1 <= dictionary.length <= 1000",
+    "1 <= dictionary[i].length <= 100",
+    "dictionary[i] consists of only lower-case letters.",
+    "1 <= sentence.length <= 106",
+    "sentence consists of only lower-case letters and spaces.",
+    "The number of words in sentence is in the range [1, 1000]",
+    "The length of each word in sentence is in the range [1, 1000]",
+    "Every two consecutive words in sentence will be separated by exactly one space.",
+    "sentence does not have leading or trailing spaces."
+  ],
+  "hints": [],
+  "code_snippets": {
+    "cpp": "class Solution {\npublic:\n    string replaceWords(vector<string>& dictionary, string sentence) {\n        \n    }\n};",
+    "java": "class Solution {\n    public String replaceWords(List<String> dictionary, String sentence) {\n        \n    }\n}",
+    "python": "class Solution(object):\n    def replaceWords(self, dictionary, sentence):\n        \"\"\"\n        :type dictionary: List[str]\n        :type sentence: str\n        :rtype: str\n        \"\"\"\n        ",
+    "python3": "class Solution:\n    def replaceWords(self, dictionary: List[str], sentence: str) -> str:\n        ",
+    "c": "char* replaceWords(char** dictionary, int dictionarySize, char* sentence) {\n    \n}",
+    "csharp": "public class Solution {\n    public string ReplaceWords(IList<string> dictionary, string sentence) {\n        \n    }\n}",
+    "javascript": "/**\n * @param {string[]} dictionary\n * @param {string} sentence\n * @return {string}\n */\nvar replaceWords = function(dictionary, sentence) {\n    \n};",
+    "typescript": "function replaceWords(dictionary: string[], sentence: string): string {\n    \n};",
+    "php": "class Solution {\n\n    /**\n     * @param String[] $dictionary\n     * @param String $sentence\n     * @return String\n     */\n    function replaceWords($dictionary, $sentence) {\n        \n    }\n}",
+    "swift": "class Solution {\n    func replaceWords(_ dictionary: [String], _ sentence: String) -> String {\n        \n    }\n}",
+    "kotlin": "class Solution {\n    fun replaceWords(dictionary: List<String>, sentence: String): String {\n        \n    }\n}",
+    "dart": "class Solution {\n  String replaceWords(List<String> dictionary, String sentence) {\n    \n  }\n}",
+    "golang": "func replaceWords(dictionary []string, sentence string) string {\n    \n}",
+    "ruby": "# @param {String[]} dictionary\n# @param {String} sentence\n# @return {String}\ndef replace_words(dictionary, sentence)\n    \nend",
+    "scala": "object Solution {\n    def replaceWords(dictionary: List[String], sentence: String): String = {\n        \n    }\n}",
+    "rust": "impl Solution {\n    pub fn replace_words(dictionary: Vec<String>, sentence: String) -> String {\n        \n    }\n}",
+    "racket": "(define/contract (replace-words dictionary sentence)\n  (-> (listof string?) string? string?)\n  )",
+    "erlang": "-spec replace_words(Dictionary :: [unicode:unicode_binary()], Sentence :: unicode:unicode_binary()) -> unicode:unicode_binary().\nreplace_words(Dictionary, Sentence) ->\n  .",
+    "elixir": "defmodule Solution do\n  @spec replace_words(dictionary :: [String.t], sentence :: String.t) :: String.t\n  def replace_words(dictionary, sentence) do\n    \n  end\nend"
+  },
+  "input_output": [
+    {
+      "input": "dictionary = [\"a\",\"aa\",\"aaa\"], sentence = \"aaaa aaa aa a\"",
+      "output": "a a a a"
+    },
+    {
+      "input": "dictionary = [\"base\",\"bat\",\"ba\"], sentence = \"baseball batman bat\"",
+      "output": "ba ba ba"
+    },
+    {
+      "input": "dictionary = [\"dog\",\"cat\"], sentence = \"dog cat\"",
+      "output": "dog cat"
+    },
+    {
+      "input": "dictionary = [\"hello\",\"hell\",\"he\",\"h\"], sentence = \"hello hello hello\"",
+      "output": "h h h"
+    },
+    {
+      "input": "dictionary = [\"base\",\"bat\"], sentence = \"baseball bat\"",
+      "output": "base bat"
+    },
+    {
+      "input": "dictionary = [\"appl\",\"app\",\"ap\"], sentence = \"apple apples applying apply\"",
+      "output": "ap ap ap ap"
+    },
+    {
+      "input": "dictionary = [\"dog\",\"cat\"], sentence = \"cattledog\"",
+      "output": "cat"
+    },
+    {
+      "input": "dictionary = [\"hello\"], sentence = \"hellonow\"",
+      "output": "hello"
+    },
+    {
+      "input": "dictionary = [\"dog\",\"cat\"], sentence = \"thecatwasadog\"",
+      "output": "thecatwasadog"
+    },
+    {
+      "input": "dictionary = [\"a\",\"b\",\"c\"], sentence = \"aadsfasf absbs bbab cadsfafs\"",
+      "output": "a a b c"
+    },
+    {
+      "input": "dictionary = [\"car\",\"card\",\"care\",\"cared\"], sentence = \"car card care cared carding careds\"",
+      "output": "car car car car car car"
+    },
+    {
+      "input": "dictionary = [\"hello\",\"hell\",\"he\"], sentence = \"hello there helpful helper\"",
+      "output": "he there he he"
+    },
+    {
+      "input": "dictionary = [\"zebra\",\"dog\"], sentence = \"dog zebra zoo\"",
+      "output": "dog zebra zoo"
+    },
+    {
+      "input": "dictionary = [\"base\",\"bas\",\"ba\"], sentence = \"baseball basebasket baskeyball\"",
+      "output": "ba ba ba"
+    },
+    {
+      "input": "dictionary = [\"dog\",\"cat\"], sentence = \"caterpillar catalog dogmatic\"",
+      "output": "cat cat dog"
+    },
+    {
+      "input": "dictionary = [\"apple\",\"app\",\"ap\"], sentence = \"apple app ap appleapp appapple\"",
+      "output": "ap ap ap ap ap"
+    },
+    {
+      "input": "dictionary = [\"hi\",\"him\",\"himself\"], sentence = \"himself\"",
+      "output": "hi"
+    },
+    {
+      "input": "dictionary = [\"go\",\"gone\"], sentence = \"go going gone\"",
+      "output": "go go go"
+    },
+    {
+      "input": "dictionary = [\"quick\",\"qui\",\"q\"], sentence = \"quick quietly quicking quiquick\"",
+      "output": "q q q q"
+    },
+    {
+      "input": "dictionary = [\"sun\",\"sungod\"], sentence = \"sunshine sungod solar system\"",
+      "output": "sun sun solar system"
+    },
+    {
+      "input": "dictionary = [\"hello\",\"hell\",\"he\"], sentence = \"hello world hellish heaven\"",
+      "output": "he world he he"
+    },
+    {
+      "input": "dictionary = [\"a\",\"aa\",\"aaa\"], sentence = \"aa aaa\"",
+      "output": "a a"
+    },
+    {
+      "input": "dictionary = [\"hello\",\"hell\",\"he\"], sentence = \"hello hell\"",
+      "output": "he he"
+    },
+    {
+      "input": "dictionary = [\"c\",\"cc\"], sentence = \"c cc ccc cccc\"",
+      "output": "c c c c"
+    },
+    {
+      "input": "dictionary = [\"car\",\"cat\"], sentence = \"carmodel carshow cat\"",
+      "output": "car car cat"
+    },
+    {
+      "input": "dictionary = [\"baseball\",\"bat\",\"ba\"], sentence = \"baseball bat ball baseball bat\"",
+      "output": "ba ba ba ba ba"
+    },
+    {
+      "input": "dictionary = [\"do\",\"don\",\"donate\",\"donation\"], sentence = \"donation do donate don\"",
+      "output": "do do do do"
+    },
+    {
+      "input": "dictionary = [\"tree\",\"trie\",\"tr\"], sentence = \"the tree is an evergreen tree\"",
+      "output": "the tr is an evergreen tr"
+    },
+    {
+      "input": "dictionary = [\"a\"], sentence = \"a aa aaa aaaa aaaaa\"",
+      "output": "a a a a a"
+    },
+    {
+      "input": "dictionary = [\"him\",\"himm\"], sentence = \"him\"",
+      "output": "him"
+    },
+    {
+      "input": "dictionary = [\"rat\",\"cat\",\"bat\"], sentence = \"rat cat bat ratcatbat\"",
+      "output": "rat cat bat rat"
+    },
+    {
+      "input": "dictionary = [\"cat\",\"bat\",\"rat\"], sentence = \"the cattle was rattled by the battery\"",
+      "output": "the cat was rat by the bat"
+    },
+    {
+      "input": "dictionary = [\"go\",\"gone\",\"going\"], sentence = \"go going gone\"",
+      "output": "go go go"
+    },
+    {
+      "input": "dictionary = [\"go\",\"gone\",\"going\"], sentence = \"going gone go\"",
+      "output": "go go go"
+    },
+    {
+      "input": "dictionary = [\"hi\",\"him\",\"hii\"], sentence = \"him hii\"",
+      "output": "hi hi"
+    },
+    {
+      "input": "dictionary = [\"a\", \"aa\", \"aaa\"], sentence = \"aa aaa aaaa\"",
+      "output": "a a a"
+    },
+    {
+      "input": "dictionary = [\"quest\", \"questi\", \"questio\", \"questioo\"], sentence = \"question questioo quest questio\"",
+      "output": "quest quest quest quest"
+    },
+    {
+      "input": "dictionary = [\"auto\",\"automotive\",\"automatic\",\"autograph\",\"automobile\"], sentence = \"automobile automatic auto autograph automotive\"",
+      "output": "auto auto auto auto auto"
+    },
+    {
+      "input": "dictionary = [\"micro\",\"mic\",\"mi\",\"m\"], sentence = \"microscopic microscopic microscopy micro\"",
+      "output": "m m m m"
+    },
+    {
+      "input": "dictionary = [\"ab\", \"abc\", \"abcd\", \"abcde\"], sentence = \"ab abc abcd abcde abcdef\"",
+      "output": "ab ab ab ab ab"
+    },
+    {
+      "input": "dictionary = [\"in\",\"int\",\"inte\",\"inter\",\"intera\",\"interac\",\"interact\",\"interactiv\",\"interactive\",\"interactivit\"], sentence = \"interactive interact interactivit interactiv interac inter inte int in\"",
+      "output": "in in in in in in in in in"
+    },
+    {
+      "input": "dictionary = [\"eco\",\"ec\",\"e\"], sentence = \"ecological ecofriendly ecosphere eco\"",
+      "output": "e e e e"
+    },
+    {
+      "input": "dictionary = [\"test\", \"testing\", \"tested\"], sentence = \"testing tested test testable\"",
+      "output": "test test test test"
+    },
+    {
+      "input": "dictionary = [\"tech\",\"techi\",\"techno\",\"technol\",\"technolog\"], sentence = \"technology technological technologist technologic\"",
+      "output": "tech tech tech tech"
+    },
+    {
+      "input": "dictionary = [\"trans\",\"tran\",\"tr\",\"t\"], sentence = \"transmission transfer transmigration transmit\"",
+      "output": "t t t t"
+    },
+    {
+      "input": "dictionary = [\"quick\",\"qui\",\"qu\",\"q\"], sentence = \"quickly quitting qu quack quest\"",
+      "output": "q q q q q"
+    },
+    {
+      "input": "dictionary = [\"pro\",\"progr\",\"progra\",\"progran\",\"program\",\"programm\",\"programmi\",\"programmin\",\"programming\"], sentence = \"programming programmatic programmer\"",
+      "output": "pro pro pro"
+    },
+    {
+      "input": "dictionary = [\"complex\",\"comple\",\"complx\",\"compl\",\"com\"], sentence = \"complex comple complx compl com\"",
+      "output": "com com com com com"
+    },
+    {
+      "input": "dictionary = [\"hyper\",\"hyp\",\"hy\",\"h\"], sentence = \"hyperactive hyperbole hypercritical hyper\"",
+      "output": "h h h h"
+    },
+    {
+      "input": "dictionary = [\"app\",\"appl\",\"apple\",\"applet\"], sentence = \"apples apple applet application apparatus\"",
+      "output": "app app app app app"
+    },
+    {
+      "input": "dictionary = [\"micro\",\"microwave\",\"microchip\",\"microphone\",\"microscope\"], sentence = \"microchip microphone microscope microwave\"",
+      "output": "micro micro micro micro"
+    },
+    {
+      "input": "dictionary = [\"pre\",\"pres\",\"presi\",\"presid\",\"preside\"], sentence = \"presidential presidency preside presides president\"",
+      "output": "pre pre pre pre pre"
+    },
+    {
+      "input": "dictionary = [\"aardvark\",\"aard\",\"aardva\",\"aardvar\"], sentence = \"aardvark aard aardva aardvar aardvarcoal\"",
+      "output": "aard aard aard aard aard"
+    },
+    {
+      "input": "dictionary = [\"con\",\"cons\",\"consc\",\"consci\",\"conscio\",\"consciou\",\"conscious\"], sentence = \"conscious conscience consciousless consciously\"",
+      "output": "con con con con"
+    },
+    {
+      "input": "dictionary = [\"tech\",\"te\",\"techno\",\"television\",\"techology\"], sentence = \"technology television tech techology\"",
+      "output": "te te te te"
+    },
+    {
+      "input": "dictionary = [\"micro\",\"microb\",\"microbi\",\"microbia\",\"microbian\",\"microbiana\"], sentence = \"microbial microbials microbially\"",
+      "output": "micro micro micro"
+    },
+    {
+      "input": "dictionary = [\"fast\",\"faster\",\"fastest\"], sentence = \"he runs fast but his friend runs faster and is the fastest\"",
+      "output": "he runs fast but his friend runs fast and is the fast"
+    },
+    {
+      "input": "dictionary = [\"pre\", \"pres\", \"presi\", \"presid\"], sentence = \"presidency president preside preside\"",
+      "output": "pre pre pre pre"
+    },
+    {
+      "input": "dictionary = [\"re\",\"replay\",\"rewrite\",\"remark\",\"remarkable\"], sentence = \"after rewriting the script he gave a remarkable replay of his remarkable performance\"",
+      "output": "after re the script he gave a re re of his re performance"
+    },
+    {
+      "input": "dictionary = [\"macro\",\"mac\",\"ma\",\"m\"], sentence = \"macroeconomic macroeconomics macroscopic macro\"",
+      "output": "m m m m"
+    },
+    {
+      "input": "dictionary = [\"multi\", \"mult\", \"mul\", \"mu\"], sentence = \"multi mult mul mu\"",
+      "output": "mu mu mu mu"
+    },
+    {
+      "input": "dictionary = [\"qu\",\"qui\",\"quic\",\"quick\",\"quicks\",\"quickly\"], sentence = \"quick quicks quickness quickly quicker quickening\"",
+      "output": "qu qu qu qu qu qu"
+    },
+    {
+      "input": "dictionary = [\"photo\",\"phot\",\"photog\",\"photogr\"], sentence = \"photography photographer photograph photogenic\"",
+      "output": "phot phot phot phot"
+    },
+    {
+      "input": "dictionary = [\"tiny\",\"tin\",\"tinny\"], sentence = \"tin tinny tiny tinnytin\"",
+      "output": "tin tin tin tin"
+    },
+    {
+      "input": "dictionary = [\"th\",\"the\",\"ther\",\"therm\",\"thermal\"], sentence = \"thermal the thermals thermalize thermalization\"",
+      "output": "th th th th th"
+    },
+    {
+      "input": "dictionary = [\"un\",\"un\",\"un\",\"un\",\"un\"], sentence = \"united unification uncomfortable underway undone\"",
+      "output": "un un un un un"
+    },
+    {
+      "input": "dictionary = [\"incredible\",\"inc\",\"incr\",\"incredi\",\"incredi\",\"incredib\"], sentence = \"incredible incr incredible incredi incredi incredib\"",
+      "output": "inc inc inc inc inc inc"
+    },
+    {
+      "input": "dictionary = [\"auto\",\"autom\",\"automobi\",\"automobil\",\"automobile\",\"automobiles\"], sentence = \"automobile automobile's\"",
+      "output": "auto auto"
+    },
+    {
+      "input": "dictionary = [\"pre\",\"prefix\",\"preprocessing\",\"preprocessor\"], sentence = \"preprocessing the prefix of a string using a preprocessor\"",
+      "output": "pre the pre of a string using a pre"
+    },
+    {
+      "input": "dictionary = [\"fast\", \"faster\", \"fastest\"], sentence = \"fastest fast fasterr fastestest\"",
+      "output": "fast fast fast fast"
+    },
+    {
+      "input": "dictionary = [\"co\",\"con\",\"cons\",\"const\",\"consti\",\"constit\",\"constitu\",\"constitue\"], sentence = \"constituent constituents constitution constitutionalize constitutional\"",
+      "output": "co co co co co"
+    },
+    {
+      "input": "dictionary = [\"quick\",\"qui\",\"quit\"], sentence = \"the quick brown fox quit quietly\"",
+      "output": "the qui brown fox qui qui"
+    },
+    {
+      "input": "dictionary = [\"inter\",\"in\",\"interac\",\"interact\"], sentence = \"interaction interactive intercept intercepting\"",
+      "output": "in in in in"
+    },
+    {
+      "input": "dictionary = [\"pre\",\"prel\",\"preli\",\"prelim\",\"prelimi\",\"prelimin\",\"prelimina\",\"preliminar\",\"preliminary\"], sentence = \"preliminary preliminarys\"",
+      "output": "pre pre"
+    },
+    {
+      "input": "dictionary = [\"hello\",\"hell\",\"he\",\"h\"], sentence = \"hello helpful hercules\"",
+      "output": "h h h"
+    },
+    {
+      "input": "dictionary = [\"base\",\"basic\",\"basics\",\"basis\"], sentence = \"baseline base basic basics basis basket\"",
+      "output": "base base basic basic basis basket"
+    },
+    {
+      "input": "dictionary = [\"micro\",\"microscope\",\"microprocessor\",\"microphone\"], sentence = \"microscopy microprocessor microphone microscopic micro\"",
+      "output": "micro micro micro micro micro"
+    },
+    {
+      "input": "dictionary = [\"auto\",\"autom\",\"automat\",\"automate\",\"automation\"], sentence = \"automotive automation automated automobile automatic\"",
+      "output": "auto auto auto auto auto"
+    },
+    {
+      "input": "dictionary = [\"graph\",\"graphic\",\"graphite\",\"graphing\",\"graphology\"], sentence = \"graphology graphite graph graphic graphing\"",
+      "output": "graph graph graph graph graph"
+    },
+    {
+      "input": "dictionary = [\"cat\",\"ca\",\"bat\",\"ba\",\"rat\"], sentence = \"the cattle was rattled by the battery\"",
+      "output": "the ca was rat by the ba"
+    },
+    {
+      "input": "dictionary = [\"ca\",\"cat\",\"catt\",\"cattl\",\"cattle\"], sentence = \"cattle cattleshed\"",
+      "output": "ca ca"
+    },
+    {
+      "input": "dictionary = [\"pro\", \"prom\", \"promo\"], sentence = \"promotional promising programmer promote\"",
+      "output": "pro pro pro pro"
+    },
+    {
+      "input": "dictionary = [\"a\",\"aa\",\"aaa\",\"aaaa\"], sentence = \"aaaaaaaaa abababab abab aa\"",
+      "output": "a a a a"
+    },
+    {
+      "input": "dictionary = [\"throne\",\"thr\",\"th\"], sentence = \"throne thrilled thrush thorn thieves\"",
+      "output": "th th th th th"
+    },
+    {
+      "input": "dictionary = [\"bat\",\"banana\",\"band\",\"bandana\",\"bandwidth\"], sentence = \"bandanna batman band bandana bandwidth\"",
+      "output": "band bat band band band"
+    },
+    {
+      "input": "dictionary = [\"super\",\"superman\",\"superhero\",\"supervillain\"], sentence = \"superman is a superhero but lex luthor is a supervillain\"",
+      "output": "super is a super but lex luthor is a super"
+    },
+    {
+      "input": "dictionary = [\"in\", \"inn\", \"inne\", \"inner\"], sentence = \"inner inne inn in\"",
+      "output": "in in in in"
+    },
+    {
+      "input": "dictionary = [\"superduper\",\"super\",\"superdup\",\"superdu\",\"superdupera\"], sentence = \"superduper super superdup superdu superdupera\"",
+      "output": "super super super super super"
+    },
+    {
+      "input": "dictionary = [\"tr\",\"tre\",\"tree\",\"treet\",\"treeto\"], sentence = \"tree treehouse treelike treetops\"",
+      "output": "tr tr tr tr"
+    },
+    {
+      "input": "dictionary = [\"sun\",\"sunny\",\"sunshine\",\"sunbeam\"], sentence = \"sunset sunny sunshine sunbeam\"",
+      "output": "sun sun sun sun"
+    },
+    {
+      "input": "dictionary = [\"nano\",\"nanop\",\"nanopo\",\"nanopol\",\"nanopoli\",\"nanopolym\",\"nanopolyme\",\"nanopolymers\"], sentence = \"nanopolymers nanoparticle nanoparticle's nanoparticle\"",
+      "output": "nano nano nano nano"
+    },
+    {
+      "input": "dictionary = [\"a\",\"ab\",\"abc\",\"abcd\"], sentence = \"abcd abc abc ab a\"",
+      "output": "a a a a a"
+    },
+    {
+      "input": "dictionary = [\"micro\",\"microwave\",\"microscope\"], sentence = \"microscopy microwave microprocessor micro\"",
+      "output": "micro micro micro micro"
+    },
+    {
+      "input": "dictionary = [\"b\",\"be\",\"bee\",\"been\",\"beef\"], sentence = \"beef bee been before being beefy\"",
+      "output": "b b b b b b"
+    },
+    {
+      "input": "dictionary = [\"rat\",\"ratt\",\"ratta\",\"rattle\"], sentence = \"rattling rattlesnake rattan ratter\"",
+      "output": "rat rat rat rat"
+    },
+    {
+      "input": "dictionary = [\"inter\",\"inte\",\"int\",\"in\",\"i\"], sentence = \"inter integration interim interfere interfere\"",
+      "output": "i i i i i"
+    },
+    {
+      "input": "dictionary = [\"pre\",\"prefix\",\"preference\",\"presume\",\"presumably\"], sentence = \"prefer prefix presumption presumably\"",
+      "output": "pre pre pre pre"
+    },
+    {
+      "input": "dictionary = [\"small\", \"smal\", \"sma\", \"sm\"], sentence = \"smaller small smallness sm\"",
+      "output": "sm sm sm sm"
+    },
+    {
+      "input": "dictionary = [\"nano\",\"nanob\",\"nanobo\",\"nanobio\",\"nanobiol\",\"nanobiolo\",\"nanobiolog\",\"nanobiologi\",\"nanobiologic\",\"nanobiological\"], sentence = \"nanobiological nanobiologicals\"",
+      "output": "nano nano"
+    },
+    {
+      "input": "dictionary = [\"over\",\"overly\",\"overall\"], sentence = \"he was overly critical of the overall performance\"",
+      "output": "he was over critical of the over performance"
+    },
+    {
+      "input": "dictionary = [\"auto\",\"autom\",\"automat\",\"automate\"], sentence = \"automatic automobile automate automaton\"",
+      "output": "auto auto auto auto"
+    },
+    {
+      "input": "dictionary = [\"super\",\"supera\",\"superb\",\"superba\",\"superba\",\"superba\",\"superba\"], sentence = \"superb superlative superabound superbest superbowl\"",
+      "output": "super super super super super"
+    },
+    {
+      "input": "dictionary = [\"a\", \"an\", \"and\", \"ands\"], sentence = \"and ands anding anderson\"",
+      "output": "a a a a"
+    },
+    {
+      "input": "dictionary = [\"elephant\",\"ele\",\"eleph\",\"elepha\",\"elephantastic\"], sentence = \"elephant elephants eleph elepha elephantastic\"",
+      "output": "ele ele ele ele ele"
+    },
+    {
+      "input": "dictionary = [\"a\",\"ab\",\"abc\",\"abcd\",\"abcde\",\"abcdef\",\"abcdefg\"], sentence = \"abcdefghi abcdefghij\"",
+      "output": "a a"
+    },
+    {
+      "input": "dictionary = [\"pro\",\"pre\",\"pros\",\"pres\",\"presi\",\"presid\"], sentence = \"president proportional prefix pseudoprefix preprocess\"",
+      "output": "pre pro pre pseudoprefix pre"
+    },
+    {
+      "input": "dictionary = [\"a\",\"ab\",\"abc\",\"abcd\",\"abcde\"], sentence = \"abcdefgh abcdefg abcdef abcde abcd abc ab a\"",
+      "output": "a a a a a a a a"
+    },
+    {
+      "input": "dictionary = [\"edu\",\"educ\",\"educc\",\"educat\",\"educati\",\"educatio\",\"education\"], sentence = \"educational education educations\"",
+      "output": "edu edu edu"
+    },
+    {
+      "input": "dictionary = [\"car\",\"cart\",\"card\",\"cartographer\"], sentence = \"car cartography card catalog carter\"",
+      "output": "car car car catalog car"
+    },
+    {
+      "input": "dictionary = [\"inter\",\"in\",\"i\"], sentence = \"international intergalactic interconnected inter\"",
+      "output": "i i i i"
+    },
+    {
+      "input": "dictionary = [\"big\", \"bigger\", \"biggest\"], sentence = \"bigger biggerest big biggger\"",
+      "output": "big big big big"
+    },
+    {
+      "input": "dictionary = [\"hello\",\"hell\",\"he\",\"h\"], sentence = \"hello hellish helper high heels\"",
+      "output": "h h h h h"
+    },
+    {
+      "input": "dictionary = [\"in\",\"inside\",\"into\",\"input\",\"insert\"], sentence = \"he went inside the building and then into the room to insert an input\"",
+      "output": "he went in the building and then in the room to in an in"
+    },
+    {
+      "input": "dictionary = [\"bat\", \"ba\", \"batt\"], sentence = \"battery batten batted\"",
+      "output": "ba ba ba"
+    },
+    {
+      "input": "dictionary = [\"prefix\",\"prefixe\",\"prefixes\"], sentence = \"prefix prefixer prefixest prefixes\"",
+      "output": "prefix prefix prefix prefix"
+    },
+    {
+      "input": "dictionary = [\"micro\",\"micr\",\"micros\",\"microso\",\"microsof\",\"microsoft\"], sentence = \"microsoft microsofts microsof microso micros micr micro\"",
+      "output": "micr micr micr micr micr micr micr"
+    },
+    {
+      "input": "dictionary = [\"hello\",\"hell\",\"he\",\"h\"], sentence = \"hello hell he h\"",
+      "output": "h h h h"
+    },
+    {
+      "input": "dictionary = [\"geo\",\"ge\",\"g\"], sentence = \"geography geological geomorphology geo\"",
+      "output": "g g g g"
+    },
+    {
+      "input": "dictionary = [\"quick\",\"qui\",\"quic\"], sentence = \"quick quicky quic quickness\"",
+      "output": "qui qui qui qui"
+    },
+    {
+      "input": "dictionary = [\"mi\",\"min\",\"mine\",\"minera\",\"mineral\",\"minerals\"], sentence = \"minerals mineral mining mine\"",
+      "output": "mi mi mi mi"
+    },
+    {
+      "input": "dictionary = [\"re\", \"rep\", \"repl\", \"repla\"], sentence = \"replace replacement replacer replacable\"",
+      "output": "re re re re"
+    },
+    {
+      "input": "dictionary = [\"algorithm\",\"algo\",\"algori\",\"algorit\"], sentence = \"algorithm algorithms algo algori algorit\"",
+      "output": "algo algo algo algo algo"
+    },
+    {
+      "input": "dictionary = [\"un\", \"unp\", \"unpr\", \"unpre\"], sentence = \"unpredictable unpre un unpr\"",
+      "output": "un un un un"
+    },
+    {
+      "input": "dictionary = [\"hel\",\"help\",\"helpl\"], sentence = \"helpful helpline helpless helper\"",
+      "output": "hel hel hel hel"
+    },
+    {
+      "input": "dictionary = [\"fast\",\"faster\",\"fastest\"], sentence = \"fast fasters fastest\"",
+      "output": "fast fast fast"
+    },
+    {
+      "input": "dictionary = [\"sub\",\"suba\",\"subac\",\"subact\",\"subacti\",\"subacti\",\"subacti\"], sentence = \"subact subact subact subactive subacted\"",
+      "output": "sub sub sub sub sub"
+    },
+    {
+      "input": "dictionary = [\"inter\",\"intera\",\"interac\",\"interact\",\"interacti\",\"interacti\",\"interacti\"], sentence = \"interactive interact interaction intersect\"",
+      "output": "inter inter inter inter"
+    },
+    {
+      "input": "dictionary = [\"supercalifragilisticexpialidocious\",\"supercalifragilisticexpi\",\"supercali\",\"super\"], sentence = \"supercalifragilisticexpialidocious supercalifragilisticexpi supercali super\"",
+      "output": "super super super super"
+    },
+    {
+      "input": "dictionary = [\"root\",\"rooting\",\"roots\",\"rooted\"], sentence = \"rooting is a fundamental concept rooted in the roots of understanding\"",
+      "output": "root is a fundamental concept root in the root of understanding"
+    },
+    {
+      "input": "dictionary = [\"ba\",\"bat\",\"batt\",\"batte\",\"battea\"], sentence = \"batman battled batted battle batt\"",
+      "output": "ba ba ba ba ba"
+    },
+    {
+      "input": "dictionary = [\"boundary\",\"bound\",\"bounda\",\"boundar\"], sentence = \"boundary boundaries bound bounda boundar\"",
+      "output": "bound bound bound bound bound"
+    },
+    {
+      "input": "dictionary = [\"tele\",\"telev\",\"telec\",\"tel\"], sentence = \"telephone telegraph telecommunication tele\"",
+      "output": "tel tel tel tel"
+    },
+    {
+      "input": "dictionary = [\"super\",\"su\",\"s\"], sentence = \"superhero superpower supernatural super\"",
+      "output": "s s s s"
+    },
+    {
+      "input": "dictionary = [\"tr\",\"try\",\"trie\",\"tried\"], sentence = \"trier tries trying triangle\"",
+      "output": "tr tr tr tr"
+    },
+    {
+      "input": "dictionary = [\"progr\", \"progra\", \"program\", \"programm\"], sentence = \"program programm programing programmer\"",
+      "output": "progr progr progr progr"
+    },
+    {
+      "input": "dictionary = [\"uni\",\"univ\",\"unive\",\"univer\",\"univers\",\"universi\",\"universit\",\"universiti\",\"university\"], sentence = \"university universities\"",
+      "output": "uni uni"
+    },
+    {
+      "input": "dictionary = [\"ex\",\"exa\",\"exac\",\"exact\",\"exactly\",\"exactly\",\"exactly\"], sentence = \"exactly exactly exact exactitude exacter\"",
+      "output": "ex ex ex ex ex"
+    },
+    {
+      "input": "dictionary = [\"rat\",\"ratt\",\"ratta\",\"rattl\",\"rattled\"], sentence = \"rattled rattler rattlesnake\"",
+      "output": "rat rat rat"
+    },
+    {
+      "input": "dictionary = [\"mo\",\"mon\",\"mond\",\"monde\",\"monday\"], sentence = \"monday mondo mondaying mondane\"",
+      "output": "mo mo mo mo"
+    },
+    {
+      "input": "dictionary = [\"a\",\"ap\",\"app\",\"appl\",\"apple\"], sentence = \"apple app application apples\"",
+      "output": "a a a a"
+    },
+    {
+      "input": "dictionary = [\"un\",\"uni\",\"university\",\"universe\"], sentence = \"the university is in the universe\"",
+      "output": "the un is in the un"
+    },
+    {
+      "input": "dictionary = [\"a\",\"an\",\"and\",\"andw\",\"anda\"], sentence = \"and andw anda andanda and wander andwind\"",
+      "output": "a a a a a wander a"
+    },
+    {
+      "input": "dictionary = [\"transformation\",\"trans\",\"tran\",\"transfo\",\"transfo\",\"transformat\",\"transforma\",\"transfor\"], sentence = \"transformation trans tran transfo transfo transformat transforma transfor\"",
+      "output": "tran tran tran tran tran tran tran tran"
+    },
+    {
+      "input": "dictionary = [\"dis\", \"disa\", \"disab\", \"disabl\"], sentence = \"disable disabling disabled disablity\"",
+      "output": "dis dis dis dis"
+    },
+    {
+      "input": "dictionary = [\"hel\",\"help\",\"helpl\",\"helpf\",\"helpfu\",\"helpful\"], sentence = \"helpful helpfulness\"",
+      "output": "hel hel"
+    },
+    {
+      "input": "dictionary = [\"fantastic\",\"fant\",\"fan\",\"fantasy\"], sentence = \"fantastic fantasies fanta fantasticastic\"",
+      "output": "fan fan fan fan"
+    },
+    {
+      "input": "dictionary = [\"re\",\"rec\",\"rece\",\"recei\",\"receiv\",\"receiving\"], sentence = \"receiving reception recipient receiver\"",
+      "output": "re re re re"
+    },
+    {
+      "input": "dictionary = [\"prefix\",\"pre\",\"pref\",\"preference\"], sentence = \"preference prefix prefixed prefixing\"",
+      "output": "pre pre pre pre"
+    },
+    {
+      "input": "dictionary = [\"a\",\"ab\",\"abc\",\"abcd\"], sentence = \"abc abd ab ac abcd\"",
+      "output": "a a a a a"
+    },
+    {
+      "input": "dictionary = [\"hel\",\"help\",\"helpl\"], sentence = \"helpful helpline helps help\"",
+      "output": "hel hel hel hel"
+    },
+    {
+      "input": "dictionary = [\"prefix\",\"pre\",\"p\"], sentence = \"prefix prediction preprint perimeter\"",
+      "output": "p p p p"
+    },
+    {
+      "input": "dictionary = [\"computer\",\"com\",\"co\",\"c\"], sentence = \"computer computing compute coherence\"",
+      "output": "c c c c"
+    },
+    {
+      "input": "dictionary = [\"con\", \"cons\", \"const\", \"consti\", \"constit\"], sentence = \"con constitution constant consistency construct\"",
+      "output": "con con con con con"
+    },
+    {
+      "input": "dictionary = [\"micro\",\"microscope\",\"microorganism\",\"micron\"], sentence = \"microscopes are used to see microorganisms which are smaller than a micron\"",
+      "output": "micro are used to see micro which are smaller than a micro"
+    },
+    {
+      "input": "dictionary = [\"bio\",\"biol\",\"biolo\",\"biolog\",\"biologica\",\"biological\",\"biologically\"], sentence = \"biological biologically biologicallys\"",
+      "output": "bio bio bio"
+    },
+    {
+      "input": "dictionary = [\"multi\",\"multimedia\",\"multiply\",\"multiplication\",\"multiplier\"], sentence = \"multiply multiplication multimedia multiplier\"",
+      "output": "multi multi multi multi"
+    },
+    {
+      "input": "dictionary = [\"pro\",\"prov\",\"provi\",\"provii\",\"proviii\"], sentence = \"providence provision providential\"",
+      "output": "pro pro pro"
+    },
+    {
+      "input": "dictionary = [\"re\",\"republic\",\"republican\",\"reproduce\",\"reproduction\"], sentence = \"republic republican reproduce reproduction resentful\"",
+      "output": "re re re re re"
+    },
+    {
+      "input": "dictionary = [\"nano\",\"nan\",\"na\",\"n\"], sentence = \"nanometer nanotechnology nanobot nan\"",
+      "output": "n n n n"
+    },
+    {
+      "input": "dictionary = [\"hel\",\"help\",\"hell\",\"helper\"], sentence = \"helpful helpline helpfulness hellhole\"",
+      "output": "hel hel hel hel"
+    },
+    {
+      "input": "dictionary = [\"re\",\"ref\",\"refer\",\"referen\",\"referenc\"], sentence = \"reference references referencing referential\"",
+      "output": "re re re re"
+    },
+    {
+      "input": "dictionary = [\"algorithm\",\"algo\",\"alg\",\"a\"], sentence = \"algorithm algorithms algorithmic algorithmically\"",
+      "output": "a a a a"
+    },
+    {
+      "input": "dictionary = [\"happy\",\"happiness\",\"hap\",\"happily\"], sentence = \"happily living a happy life brings much happiness\"",
+      "output": "hap living a hap life brings much hap"
+    },
+    {
+      "input": "dictionary = [\"ba\",\"bat\",\"batt\",\"batta\",\"battery\"], sentence = \"batteries battery batty batting battled\"",
+      "output": "ba ba ba ba ba"
+    },
+    {
+      "input": "dictionary = [\"auto\",\"automobile\",\"automotive\"], sentence = \"automobile automotives automatic automation\"",
+      "output": "auto auto auto auto"
+    },
+    {
+      "input": "dictionary = [\"hello\",\"hell\",\"he\"], sentence = \"hello hell h ello he\"",
+      "output": "he he h ello he"
+    },
+    {
+      "input": "dictionary = [\"un\",\"unp\",\"unpr\",\"unpre\",\"unprem\",\"unpreme\",\"unpremier\"], sentence = \"unpremier unprepared unpremeditated unpreventable\"",
+      "output": "un un un un"
+    },
+    {
+      "input": "dictionary = [\"nano\",\"nanot\",\"nanoto\",\"nanoton\",\"nanotube\",\"nanotubes\"], sentence = \"nanotube nanotubes\"",
+      "output": "nano nano"
+    },
+    {
+      "input": "dictionary = [\"inter\", \"inte\", \"int\", \"in\"], sentence = \"international integrate inter inter\"",
+      "output": "in in in in"
+    },
+    {
+      "input": "dictionary = [\"television\",\"tele\",\"telegraph\",\"telecom\"], sentence = \"telegraph telecommunication telescope television tele\"",
+      "output": "tele tele tele tele tele"
+    },
+    {
+      "input": "dictionary = [\"apple\",\"app\",\"bat\",\"ba\",\"batman\"], sentence = \"apples are batman and batmen\"",
+      "output": "app are ba and ba"
+    },
+    {
+      "input": "dictionary = [\"un\",\"uno\",\"united\"], sentence = \"united nations unification unstoppable\"",
+      "output": "un nations un un"
+    },
+    {
+      "input": "dictionary = [\"xylophone\",\"xylo\",\"xylop\",\"xylopho\"], sentence = \"xylophone xylo xylop xylopho xylophonic\"",
+      "output": "xylo xylo xylo xylo xylo"
+    },
+    {
+      "input": "dictionary = [\"com\", \"comm\", \"comma\", \"commaa\"], sentence = \"commas comma commaa communicate\"",
+      "output": "com com com com"
+    },
+    {
+      "input": "dictionary = [\"auto\",\"autom\",\"automat\",\"automati\",\"automati\",\"automatiz\",\"automatize\"], sentence = \"automatically automatize automation automaton\"",
+      "output": "auto auto auto auto"
+    },
+    {
+      "input": "dictionary = [\"apple\",\"app\",\"application\"], sentence = \"apples are appetizing and application development is fun\"",
+      "output": "app are app and app development is fun"
+    },
+    {
+      "input": "dictionary = [\"inter\",\"internal\",\"internet\",\"interface\"], sentence = \"internet interface internals interaction\"",
+      "output": "inter inter inter inter"
+    },
+    {
+      "input": "dictionary = [\"int\",\"inte\",\"integ\",\"integri\",\"integr\",\"integrit\",\"integriti\",\"integrity\"], sentence = \"integrity integritys\"",
+      "output": "int int"
+    },
+    {
+      "input": "dictionary = [\"ex\", \"exa\", \"exam\", \"examp\"], sentence = \"example examine examination exam\"",
+      "output": "ex ex ex ex"
+    },
+    {
+      "input": "dictionary = [\"unbelievable\",\"un\",\"unbe\",\"unbeli\",\"unbeliev\"], sentence = \"unbelievable unbelieve unbeliev un unbe\"",
+      "output": "un un un un un"
+    },
+    {
+      "input": "dictionary = [\"hel\",\"help\",\"helpl\"], sentence = \"helpful helpfulness helpfulhelper\"",
+      "output": "hel hel hel"
+    },
+    {
+      "input": "dictionary = [\"bio\",\"bi\",\"b\"], sentence = \"biological biotechnology biochemistry bio\"",
+      "output": "b b b b"
+    },
+    {
+      "input": "dictionary = [\"micro\",\"microc\",\"microce\",\"microcel\",\"microcell\",\"microcells\"], sentence = \"microcell microcells microcellular microcellulars\"",
+      "output": "micro micro micro micro"
+    },
+    {
+      "input": "dictionary = [\"nano\",\"nanos\",\"nanoso\",\"nanosol\",\"nanosolu\",\"nanosolut\",\"nanosolute\",\"nanosolutes\"], sentence = \"nanosolute nanosolutes\"",
+      "output": "nano nano"
+    }
+  ]
+}

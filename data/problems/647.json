@@ -1,0 +1,616 @@
+{
+  "id": 647,
+  "title": "Palindromic Substrings",
+  "slug": "palindromic-substrings",
+  "difficulty": "Medium",
+  "topics": [
+    "Two Pointers",
+    "String",
+    "Dynamic Programming"
+  ],
+  "description": "Given a string s, return the number of palindromic substrings in it.\nA string is a palindrome when it reads the same backward as forward.\nA substring is a contiguous sequence of characters within the string.\nExample 1:\nExample 2:\nConstraints:",
+  "examples": [
+    {
+      "example_num": 1,
+      "example_text": "Input: s = \"abc\"\nOutput: 3\nExplanation: Three palindromic strings: \"a\", \"b\", \"c\".",
+      "images": []
+    },
+    {
+      "example_num": 2,
+      "example_text": "Input: s = \"aaa\"\nOutput: 6\nExplanation: Six palindromic strings: \"a\", \"a\", \"a\", \"aa\", \"aa\", \"aaa\".",
+      "images": []
+    }
+  ],
+  "constraints": [
+    "1 <= s.length <= 1000",
+    "s consists of lowercase English letters."
+  ],
+  "hints": [
+    "How can we reuse a previously computed palindrome to compute a larger palindrome?",
+    "If \u201caba\u201d is a palindrome, is \u201cxabax\u201d a palindrome? Similarly is \u201cxabay\u201d a palindrome?",
+    "Complexity based hint:</br>\r\nIf we use brute force and check whether for every start and end position a substring is a palindrome we have O(n^2) start - end pairs and O(n) palindromic checks. Can we reduce the time for palindromic checks to O(1) by reusing some previous computation?"
+  ],
+  "code_snippets": {
+    "cpp": "class Solution {\npublic:\n    int countSubstrings(string s) {\n        \n    }\n};",
+    "java": "class Solution {\n    public int countSubstrings(String s) {\n        \n    }\n}",
+    "python": "class Solution(object):\n    def countSubstrings(self, s):\n        \"\"\"\n        :type s: str\n        :rtype: int\n        \"\"\"\n        ",
+    "python3": "class Solution:\n    def countSubstrings(self, s: str) -> int:\n        ",
+    "c": "int countSubstrings(char* s) {\n    \n}",
+    "csharp": "public class Solution {\n    public int CountSubstrings(string s) {\n        \n    }\n}",
+    "javascript": "/**\n * @param {string} s\n * @return {number}\n */\nvar countSubstrings = function(s) {\n    \n};",
+    "typescript": "function countSubstrings(s: string): number {\n    \n};",
+    "php": "class Solution {\n\n    /**\n     * @param String $s\n     * @return Integer\n     */\n    function countSubstrings($s) {\n        \n    }\n}",
+    "swift": "class Solution {\n    func countSubstrings(_ s: String) -> Int {\n        \n    }\n}",
+    "kotlin": "class Solution {\n    fun countSubstrings(s: String): Int {\n        \n    }\n}",
+    "dart": "class Solution {\n  int countSubstrings(String s) {\n    \n  }\n}",
+    "golang": "func countSubstrings(s string) int {\n    \n}",
+    "ruby": "# @param {String} s\n# @return {Integer}\ndef count_substrings(s)\n    \nend",
+    "scala": "object Solution {\n    def countSubstrings(s: String): Int = {\n        \n    }\n}",
+    "rust": "impl Solution {\n    pub fn count_substrings(s: String) -> i32 {\n        \n    }\n}",
+    "racket": "(define/contract (count-substrings s)\n  (-> string? exact-integer?)\n  )",
+    "erlang": "-spec count_substrings(S :: unicode:unicode_binary()) -> integer().\ncount_substrings(S) ->\n  .",
+    "elixir": "defmodule Solution do\n  @spec count_substrings(s :: String.t) :: integer\n  def count_substrings(s) do\n    \n  end\nend"
+  },
+  "input_output": [
+    {
+      "input": "s = \"abba\"",
+      "output": "6"
+    },
+    {
+      "input": "s = \"aaaaa\"",
+      "output": "15"
+    },
+    {
+      "input": "s = \"babad\"",
+      "output": "7"
+    },
+    {
+      "input": "s = \"noon\"",
+      "output": "6"
+    },
+    {
+      "input": "s = \"banana\"",
+      "output": "10"
+    },
+    {
+      "input": "s = \"aabbbaa\"",
+      "output": "14"
+    },
+    {
+      "input": "s = \"abc\"",
+      "output": "3"
+    },
+    {
+      "input": "s = \"level\"",
+      "output": "7"
+    },
+    {
+      "input": "s = \"\"",
+      "output": "0"
+    },
+    {
+      "input": "s = \"aaa\"",
+      "output": "6"
+    },
+    {
+      "input": "s = \"civic\"",
+      "output": "7"
+    },
+    {
+      "input": "s = \"rotor\"",
+      "output": "7"
+    },
+    {
+      "input": "s = \"racecar\"",
+      "output": "10"
+    },
+    {
+      "input": "s = \"a\"",
+      "output": "1"
+    },
+    {
+      "input": "s = \"abcdefg\"",
+      "output": "7"
+    },
+    {
+      "input": "s = \"zxcvbnmmlkjhgfdsapoiuytrewq\"",
+      "output": "28"
+    },
+    {
+      "input": "s = \"abcbaabccbaabcba\"",
+      "output": "34"
+    },
+    {
+      "input": "s = \"amoreinimorac\"",
+      "output": "14"
+    },
+    {
+      "input": "s = \"atoyota\"",
+      "output": "10"
+    },
+    {
+      "input": "s = \"aabbcccbbbaa\"",
+      "output": "23"
+    },
+    {
+      "input": "s = \"abccbaabcbaabc\"",
+      "output": "28"
+    },
+    {
+      "input": "s = \"rotorrotor\"",
+      "output": "19"
+    },
+    {
+      "input": "s = \"abracadabra\"",
+      "output": "13"
+    },
+    {
+      "input": "s = \"levelmadam\"",
+      "output": "14"
+    },
+    {
+      "input": "s = \"ab\"",
+      "output": "2"
+    },
+    {
+      "input": "s = \"steponnopets\"",
+      "output": "18"
+    },
+    {
+      "input": "s = \"noonnoon\"",
+      "output": "16"
+    },
+    {
+      "input": "s = \"aaaaabbbb\"",
+      "output": "25"
+    },
+    {
+      "input": "s = \"aaaaaaaaaa\"",
+      "output": "55"
+    },
+    {
+      "input": "s = \"abcddcbaabcddcba\"",
+      "output": "32"
+    },
+    {
+      "input": "s = \"racecarracecarracecarracecar\"",
+      "output": "82"
+    },
+    {
+      "input": "s = \"madaminnadammadam\"",
+      "output": "27"
+    },
+    {
+      "input": "s = \"xyxzyzyzyxzyzyxzyzyxzyx\"",
+      "output": "34"
+    },
+    {
+      "input": "s = \"noonabnoon\"",
+      "output": "14"
+    },
+    {
+      "input": "s = \"bbaabbccddeebbaabbccddee\"",
+      "output": "40"
+    },
+    {
+      "input": "s = \"qwertyuiopoiuytrewq\"",
+      "output": "28"
+    },
+    {
+      "input": "s = \"abccbaabccba\"",
+      "output": "24"
+    },
+    {
+      "input": "s = \"aba\"",
+      "output": "4"
+    },
+    {
+      "input": "s = \"xyzyzyzyzyzyzyzy\"",
+      "output": "65"
+    },
+    {
+      "input": "s = \"abacbacbacbacba\"",
+      "output": "16"
+    },
+    {
+      "input": "s = \"noonnoonnoonnoon\"",
+      "output": "48"
+    },
+    {
+      "input": "s = \"aabbccddeee\"",
+      "output": "18"
+    },
+    {
+      "input": "s = \"abacaba\"",
+      "output": "12"
+    },
+    {
+      "input": "s = \"madamracecar\"",
+      "output": "17"
+    },
+    {
+      "input": "s = \"rotorcarrot\"",
+      "output": "14"
+    },
+    {
+      "input": "s = \"abca\"",
+      "output": "4"
+    },
+    {
+      "input": "s = \"aabbcccbbbbaaa\"",
+      "output": "30"
+    },
+    {
+      "input": "s = \"aabbccddeeeeeddccbbaa\"",
+      "output": "47"
+    },
+    {
+      "input": "s = \"aaaaaabbbb\"",
+      "output": "31"
+    },
+    {
+      "input": "s = \"aabbabaabbaa\"",
+      "output": "23"
+    },
+    {
+      "input": "s = \"abcba\"",
+      "output": "7"
+    },
+    {
+      "input": "s = \"abcdcba\"",
+      "output": "10"
+    },
+    {
+      "input": "s = \"xyzzyxzyxzyzyxzyz\"",
+      "output": "23"
+    },
+    {
+      "input": "s = \"madaminnakayak\"",
+      "output": "20"
+    },
+    {
+      "input": "s = \"abccbaabccbaabccba\"",
+      "output": "45"
+    },
+    {
+      "input": "s = \"aabbccccbbaa\"",
+      "output": "26"
+    },
+    {
+      "input": "s = \"rotorcentralrotor\"",
+      "output": "21"
+    },
+    {
+      "input": "s = \"racecarracecarracecar\"",
+      "output": "51"
+    },
+    {
+      "input": "s = \"aabbbaaabbbaaa\"",
+      "output": "37"
+    },
+    {
+      "input": "s = \"xxyyyxyxx\"",
+      "output": "17"
+    },
+    {
+      "input": "s = \"aabbccddeeefffggghhhh\"",
+      "output": "40"
+    },
+    {
+      "input": "s = \"abacdfgdcabaabacdfgdcaba\"",
+      "output": "33"
+    },
+    {
+      "input": "s = \"racecarbanana\"",
+      "output": "20"
+    },
+    {
+      "input": "s = \"levelup\"",
+      "output": "9"
+    },
+    {
+      "input": "s = \"abcdeedcba\"",
+      "output": "15"
+    },
+    {
+      "input": "s = \"deeee\"",
+      "output": "11"
+    },
+    {
+      "input": "s = \"abaaabaaab\"",
+      "output": "24"
+    },
+    {
+      "input": "s = \"abbaabbaba\"",
+      "output": "20"
+    },
+    {
+      "input": "s = \"abcbaabcbaabcbaabcba\"",
+      "output": "58"
+    },
+    {
+      "input": "s = \"bcbcbcbcbcbcbc\"",
+      "output": "56"
+    },
+    {
+      "input": "s = \"abaaabbaaabaaa\"",
+      "output": "35"
+    },
+    {
+      "input": "s = \"abcababcababc\"",
+      "output": "17"
+    },
+    {
+      "input": "s = \"levellevel\"",
+      "output": "19"
+    },
+    {
+      "input": "s = \"abcdefedcba\"",
+      "output": "16"
+    },
+    {
+      "input": "s = \"abcdefgfedcbafedcbagfedcbafedcbagfedcba\"",
+      "output": "45"
+    },
+    {
+      "input": "s = \"acdcacdcacdc\"",
+      "output": "27"
+    },
+    {
+      "input": "s = \"zxcvbnmmnbvcxz\"",
+      "output": "21"
+    },
+    {
+      "input": "s = \"thisisnotapalindrome\"",
+      "output": "23"
+    },
+    {
+      "input": "s = \"abbaeae\"",
+      "output": "11"
+    },
+    {
+      "input": "s = \"aaaaaaa\"",
+      "output": "28"
+    },
+    {
+      "input": "s = \"levellevellevel\"",
+      "output": "36"
+    },
+    {
+      "input": "s = \"abcdcbaabcdcba\"",
+      "output": "27"
+    },
+    {
+      "input": "s = \"abccbaabc\"",
+      "output": "15"
+    },
+    {
+      "input": "s = \"xyzyzyxzyzyzyx\"",
+      "output": "25"
+    },
+    {
+      "input": "s = \"abacdfgdcabaabacdfgdcabaabacdfgdcaba\"",
+      "output": "52"
+    },
+    {
+      "input": "s = \"leveloneeleven\"",
+      "output": "19"
+    },
+    {
+      "input": "s = \"babcbabcba\"",
+      "output": "20"
+    },
+    {
+      "input": "s = \"zyzzyzzyzyzy\"",
+      "output": "29"
+    },
+    {
+      "input": "s = \"abababa\"",
+      "output": "16"
+    },
+    {
+      "input": "s = \"xyxzyxyzyx\"",
+      "output": "15"
+    },
+    {
+      "input": "s = \"abacabadabacaba\"",
+      "output": "32"
+    },
+    {
+      "input": "s = \"civicciviccivicciviccivic\"",
+      "output": "85"
+    },
+    {
+      "input": "s = \"zzzzzzzzzzzzzzzzzzzz\"",
+      "output": "210"
+    },
+    {
+      "input": "s = \"abcbaba\"",
+      "output": "11"
+    },
+    {
+      "input": "s = \"abcbabcba\"",
+      "output": "17"
+    },
+    {
+      "input": "s = \"deifiedrotor\"",
+      "output": "17"
+    },
+    {
+      "input": "s = \"noonracecarrace\"",
+      "output": "24"
+    },
+    {
+      "input": "s = \"civiccivic\"",
+      "output": "19"
+    },
+    {
+      "input": "s = \"aabbccddeeffgg\"",
+      "output": "21"
+    },
+    {
+      "input": "s = \"abccba\"",
+      "output": "9"
+    },
+    {
+      "input": "s = \"aabbccddeeff\"",
+      "output": "18"
+    },
+    {
+      "input": "s = \"madamimadam\"",
+      "output": "20"
+    },
+    {
+      "input": "s = \"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\"",
+      "output": "78"
+    },
+    {
+      "input": "s = \"racecarannakayak\"",
+      "output": "25"
+    },
+    {
+      "input": "s = \"amanaplanacanalpanama\"",
+      "output": "37"
+    },
+    {
+      "input": "s = \"abbabababa\"",
+      "output": "24"
+    },
+    {
+      "input": "s = \"abcdefgfeijklmmlkjihgf\"",
+      "output": "29"
+    },
+    {
+      "input": "s = \"racecarracecar\"",
+      "output": "27"
+    },
+    {
+      "input": "s = \"noonnoonnoon\"",
+      "output": "30"
+    },
+    {
+      "input": "s = \"deified\"",
+      "output": "10"
+    },
+    {
+      "input": "s = \"bcbcbcbcb\"",
+      "output": "25"
+    },
+    {
+      "input": "s = \"abcdef\"",
+      "output": "6"
+    },
+    {
+      "input": "s = \"rotorrotorrotor\"",
+      "output": "36"
+    },
+    {
+      "input": "s = \"abcdedcba\"",
+      "output": "13"
+    },
+    {
+      "input": "s = \"noonhighnoon\"",
+      "output": "16"
+    },
+    {
+      "input": "s = \"abcbaabcbaabcba\"",
+      "output": "36"
+    },
+    {
+      "input": "s = \"rotorrotorrotorrotor\"",
+      "output": "58"
+    },
+    {
+      "input": "s = \"abacdfgdcaba\"",
+      "output": "14"
+    },
+    {
+      "input": "s = \"abbaabba\"",
+      "output": "16"
+    },
+    {
+      "input": "s = \"ababababab\"",
+      "output": "30"
+    },
+    {
+      "input": "s = \"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzzzzzzzzzzz\"",
+      "output": "141"
+    },
+    {
+      "input": "s = \"abcddcba\"",
+      "output": "12"
+    },
+    {
+      "input": "s = \"aaaaabaaa\"",
+      "output": "25"
+    },
+    {
+      "input": "s = \"abcdefghihgfedcba\"",
+      "output": "25"
+    },
+    {
+      "input": "s = \"xyzyxzyzyx\"",
+      "output": "14"
+    },
+    {
+      "input": "s = \"xyxxyxyxxyxyxyx\"",
+      "output": "40"
+    },
+    {
+      "input": "s = \"xyzzzyzx\"",
+      "output": "13"
+    },
+    {
+      "input": "s = \"abcdefgfedcbafedcbagfedcba\"",
+      "output": "32"
+    },
+    {
+      "input": "s = \"aabbccddeeaabbccddee\"",
+      "output": "30"
+    },
+    {
+      "input": "s = \"abacdfgdcababa\"",
+      "output": "19"
+    },
+    {
+      "input": "s = \"civicciviccivic\"",
+      "output": "36"
+    },
+    {
+      "input": "s = \"aabbcc\"",
+      "output": "9"
+    },
+    {
+      "input": "s = \"mississippi\"",
+      "output": "20"
+    },
+    {
+      "input": "s = \"xyzyxyzyx\"",
+      "output": "17"
+    },
+    {
+      "input": "s = \"abbababaabbaba\"",
+      "output": "28"
+    },
+    {
+      "input": "s = \"xyxzyzyxzyzyzyxzyxzyzyzyxzyzyzyzyx\"",
+      "output": "61"
+    },
+    {
+      "input": "s = \"forgeeksskeegfor\"",
+      "output": "23"
+    },
+    {
+      "input": "s = \"bananaabababa\"",
+      "output": "27"
+    },
+    {
+      "input": "s = \"abcbba\"",
+      "output": "8"
+    },
+    {
+      "input": "s = \"zzzzzzzzzzz\"",
+      "output": "66"
+    }
+  ]
+}

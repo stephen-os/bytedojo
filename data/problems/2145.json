@@ -1,0 +1,555 @@
+{
+  "id": 2145,
+  "title": "Count the Hidden Sequences",
+  "slug": "count-the-hidden-sequences",
+  "difficulty": "Medium",
+  "topics": [
+    "Array",
+    "Prefix Sum"
+  ],
+  "description": "You are given a 0-indexed array of n integers differences, which describes the differences between each pair of consecutive integers of a hidden sequence of length (n + 1). More formally, call the hidden sequence hidden, then we have that differences[i] = hidden[i + 1] - hidden[i].\nYou are further given two integers lower and upper that describe the inclusive range of values [lower, upper] that the hidden sequence can contain.\nReturn the number of possible hidden sequences there are. If there are no possible sequences, return 0.\nExample 1:\nExample 2:\nExample 3:\nConstraints:",
+  "examples": [
+    {
+      "example_num": 1,
+      "example_text": "Input: differences = [1,-3,4], lower = 1, upper = 6\nOutput: 2\nExplanation: The possible hidden sequences are:\n- [3, 4, 1, 5]\n- [4, 5, 2, 6]\nThus, we return 2.",
+      "images": []
+    },
+    {
+      "example_num": 2,
+      "example_text": "Input: differences = [3,-4,5,1,-2], lower = -4, upper = 5\nOutput: 4\nExplanation: The possible hidden sequences are:\n- [-3, 0, -4, 1, 2, 0]\n- [-2, 1, -3, 2, 3, 1]\n- [-1, 2, -2, 3, 4, 2]\n- [0, 3, -1, 4, 5, 3]\nThus, we return 4.",
+      "images": []
+    },
+    {
+      "example_num": 3,
+      "example_text": "Input: differences = [4,-7,2], lower = 3, upper = 6\nOutput: 0\nExplanation: There are no possible hidden sequences. Thus, we return 0.",
+      "images": []
+    }
+  ],
+  "constraints": [
+    "n == differences.length",
+    "1 <= n <= 105",
+    "-105 <= differences[i] <= 105",
+    "-105 <= lower <= upper <= 105"
+  ],
+  "hints": [
+    "Fix the first element of the hidden sequence to any value x and ignore the given bounds. Notice that we can then determine all the other elements of the sequence by using the differences array.",
+    "We will also be able to determine the difference between the minimum and maximum elements of the sequence. Notice that the value of x does not affect this.",
+    "We now have the \u2018range\u2019 of the sequence (difference between min and max element), we can then calculate how many ways there are to fit this range into the given range of lower to upper.",
+    "Answer is (upper - lower + 1) - (range of sequence)"
+  ],
+  "code_snippets": {
+    "cpp": "class Solution {\npublic:\n    int numberOfArrays(vector<int>& differences, int lower, int upper) {\n        \n    }\n};",
+    "java": "class Solution {\n    public int numberOfArrays(int[] differences, int lower, int upper) {\n        \n    }\n}",
+    "python": "class Solution(object):\n    def numberOfArrays(self, differences, lower, upper):\n        \"\"\"\n        :type differences: List[int]\n        :type lower: int\n        :type upper: int\n        :rtype: int\n        \"\"\"\n        ",
+    "python3": "class Solution:\n    def numberOfArrays(self, differences: List[int], lower: int, upper: int) -> int:\n        ",
+    "c": "int numberOfArrays(int* differences, int differencesSize, int lower, int upper) {\n    \n}",
+    "csharp": "public class Solution {\n    public int NumberOfArrays(int[] differences, int lower, int upper) {\n        \n    }\n}",
+    "javascript": "/**\n * @param {number[]} differences\n * @param {number} lower\n * @param {number} upper\n * @return {number}\n */\nvar numberOfArrays = function(differences, lower, upper) {\n    \n};",
+    "typescript": "function numberOfArrays(differences: number[], lower: number, upper: number): number {\n    \n};",
+    "php": "class Solution {\n\n    /**\n     * @param Integer[] $differences\n     * @param Integer $lower\n     * @param Integer $upper\n     * @return Integer\n     */\n    function numberOfArrays($differences, $lower, $upper) {\n        \n    }\n}",
+    "swift": "class Solution {\n    func numberOfArrays(_ differences: [Int], _ lower: Int, _ upper: Int) -> Int {\n        \n    }\n}",
+    "kotlin": "class Solution {\n    fun numberOfArrays(differences: IntArray, lower: Int, upper: Int): Int {\n        \n    }\n}",
+    "dart": "class Solution {\n  int numberOfArrays(List<int> differences, int lower, int upper) {\n    \n  }\n}",
+    "golang": "func numberOfArrays(differences []int, lower int, upper int) int {\n    \n}",
+    "ruby": "# @param {Integer[]} differences\n# @param {Integer} lower\n# @param {Integer} upper\n# @return {Integer}\ndef number_of_arrays(differences, lower, upper)\n    \nend",
+    "scala": "object Solution {\n    def numberOfArrays(differences: Array[Int], lower: Int, upper: Int): Int = {\n        \n    }\n}",
+    "rust": "impl Solution {\n    pub fn number_of_arrays(differences: Vec<i32>, lower: i32, upper: i32) -> i32 {\n        \n    }\n}",
+    "racket": "(define/contract (number-of-arrays differences lower upper)\n  (-> (listof exact-integer?) exact-integer? exact-integer? exact-integer?)\n  )",
+    "erlang": "-spec number_of_arrays(Differences :: [integer()], Lower :: integer(), Upper :: integer()) -> integer().\nnumber_of_arrays(Differences, Lower, Upper) ->\n  .",
+    "elixir": "defmodule Solution do\n  @spec number_of_arrays(differences :: [integer], lower :: integer, upper :: integer) :: integer\n  def number_of_arrays(differences, lower, upper) do\n    \n  end\nend"
+  },
+  "input_output": [
+    {
+      "input": "differences = [0,0,0], lower = 1, upper = 1",
+      "output": "1"
+    },
+    {
+      "input": "differences = [5,-5,5,-5], lower = -10, upper = 10",
+      "output": "16"
+    },
+    {
+      "input": "differences = [3,-4,5,1,-2], lower = -4, upper = 5",
+      "output": "4"
+    },
+    {
+      "input": "differences = [1,-3,4], lower = 1, upper = 6",
+      "output": "2"
+    },
+    {
+      "input": "differences = [-1,-1,-1], lower = -3, upper = 3",
+      "output": "4"
+    },
+    {
+      "input": "differences = [-1], lower = -2, upper = -1",
+      "output": "1"
+    },
+    {
+      "input": "differences = [-1,-2,-3,-4,-5], lower = -100, upper = 1",
+      "output": "87"
+    },
+    {
+      "input": "differences = [100000,-100000,100000,-100000], lower = -100000, upper = 100000",
+      "output": "100001"
+    },
+    {
+      "input": "differences = [10,-5,15,-10], lower = -10, upper = 10",
+      "output": "1"
+    },
+    {
+      "input": "differences = [0,0,0], lower = 1, upper = 5",
+      "output": "5"
+    },
+    {
+      "input": "differences = [1,1,1], lower = -5, upper = -1",
+      "output": "2"
+    },
+    {
+      "input": "differences = [100000,-100000], lower = -100000, upper = 100000",
+      "output": "100001"
+    },
+    {
+      "input": "differences = [1,2,3], lower = 0, upper = 10",
+      "output": "5"
+    },
+    {
+      "input": "differences = [-1,-2,-3], lower = -10, upper = 0",
+      "output": "5"
+    },
+    {
+      "input": "differences = [10,-10,10,-10], lower = -5, upper = 5",
+      "output": "1"
+    },
+    {
+      "input": "differences = [100000,-100000,100000], lower = -100000, upper = 100000",
+      "output": "100001"
+    },
+    {
+      "input": "differences = [0,0,0], lower = 0, upper = 0",
+      "output": "1"
+    },
+    {
+      "input": "differences = [1], lower = 1, upper = 2",
+      "output": "1"
+    },
+    {
+      "input": "differences = [-1,-2,-3], lower = -5, upper = 5",
+      "output": "5"
+    },
+    {
+      "input": "differences = [-1,-1,-1], lower = 1, upper = 5",
+      "output": "2"
+    },
+    {
+      "input": "differences = [1,2,3,4,5], lower = 1, upper = 100",
+      "output": "85"
+    },
+    {
+      "input": "differences = [0,0,0], lower = 0, upper = 10",
+      "output": "11"
+    },
+    {
+      "input": "differences = [4,-7,2], lower = 3, upper = 6",
+      "output": "0"
+    },
+    {
+      "input": "differences = [2, -2, 3, -3, 4, -4, 5, -5, 6, -6, 7, -7, 8, -8, 9, -9, 10, -10], lower = -15, upper = 15",
+      "output": "21"
+    },
+    {
+      "input": "differences = [-1, 2, -3, 4, -5, 6, -7, 8, -9, 10], lower = -10, upper = 10",
+      "output": "11"
+    },
+    {
+      "input": "differences = [2, 3, 4, 5, 6, 7, 8, 9, 10], lower = 0, upper = 100",
+      "output": "47"
+    },
+    {
+      "input": "differences = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100, -100, -90, -80, -70, -60, -50, -40, -30, -20, -10], lower = 0, upper = 500",
+      "output": "0"
+    },
+    {
+      "input": "differences = [5,10,15,20,25,30], lower = 0, upper = 100",
+      "output": "0"
+    },
+    {
+      "input": "differences = [1000, -500, 200, -100, 50, -25, 10], lower = -1000, upper = 1000",
+      "output": "1001"
+    },
+    {
+      "input": "differences = [100000, 0, -100000, 0, 100000, 0, -100000], lower = -200000, upper = 200000",
+      "output": "300001"
+    },
+    {
+      "input": "differences = [-5,-10,-15,-20,-25,-30], lower = -100, upper = 0",
+      "output": "0"
+    },
+    {
+      "input": "differences = [1,-1,1,-1,1,-1,1,-1,1,-1,1,-1], lower = 0, upper = 2",
+      "output": "2"
+    },
+    {
+      "input": "differences = [5, 5, 5, 5, 5, 5, 5, 5, 5, 5], lower = 10, upper = 60",
+      "output": "1"
+    },
+    {
+      "input": "differences = [5, -2, 8, -3, 7], lower = -5, upper = 20",
+      "output": "11"
+    },
+    {
+      "input": "differences = [10000, -20000, 30000, -40000, 50000], lower = -100000, upper = 100000",
+      "output": "150001"
+    },
+    {
+      "input": "differences = [-1, 2, -1, 2, -1], lower = -10, upper = 10",
+      "output": "18"
+    },
+    {
+      "input": "differences = [-1,0,1,0,-1], lower = -5, upper = 5",
+      "output": "10"
+    },
+    {
+      "input": "differences = [-1, -2, -3, -4, -5, -6, -7, -8, -9, -10], lower = -20, upper = -10",
+      "output": "0"
+    },
+    {
+      "input": "differences = [3,3,3,3,3,3,3,3,3,3], lower = 1, upper = 50",
+      "output": "20"
+    },
+    {
+      "input": "differences = [1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1, -1], lower = 0, upper = 1",
+      "output": "1"
+    },
+    {
+      "input": "differences = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1], lower = 0, upper = 10",
+      "output": "1"
+    },
+    {
+      "input": "differences = [50000, -50000, 50000, -50000, 50000, -50000, 50000, -50000], lower = -100000, upper = 100000",
+      "output": "150001"
+    },
+    {
+      "input": "differences = [100000, 100000, 100000, -300000, 100000, 100000, 100000], lower = -100000, upper = 100000",
+      "output": "0"
+    },
+    {
+      "input": "differences = [-1, 1, -1, 1, -1], lower = 0, upper = 5",
+      "output": "5"
+    },
+    {
+      "input": "differences = [10000, -10000, 20000, -20000], lower = -50000, upper = 50000",
+      "output": "80001"
+    },
+    {
+      "input": "differences = [1, -2, 3, -4, 5, -6, 7, -8, 9, -10], lower = -10, upper = 10",
+      "output": "11"
+    },
+    {
+      "input": "differences = [-5, 10, -15, 20, -25], lower = -30, upper = 30",
+      "output": "36"
+    },
+    {
+      "input": "differences = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], lower = 5, upper = 5",
+      "output": "1"
+    },
+    {
+      "input": "differences = [0, 0, 0, 0, 0], lower = -1, upper = 1",
+      "output": "3"
+    },
+    {
+      "input": "differences = [-1, 2, -3, 4, -5, 6, -7, 8], lower = -10, upper = 10",
+      "output": "13"
+    },
+    {
+      "input": "differences = [-1, 2, -3, 4, -5, 6, -7], lower = -20, upper = 20",
+      "output": "34"
+    },
+    {
+      "input": "differences = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15], lower = 0, upper = 100",
+      "output": "0"
+    },
+    {
+      "input": "differences = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100], lower = 1, upper = 1000",
+      "output": "450"
+    },
+    {
+      "input": "differences = [5,-2,3,7,-4], lower = 1, upper = 20",
+      "output": "7"
+    },
+    {
+      "input": "differences = [-1, -2, -3, -4, -5, -6, -7, -8, -9, -10, -11, -12, -13, -14, -15], lower = -100, upper = 0",
+      "output": "0"
+    },
+    {
+      "input": "differences = [5, -5, 5, -5, 5, -5], lower = -10, upper = 10",
+      "output": "16"
+    },
+    {
+      "input": "differences = [0, 0, 0, 0, 0], lower = 1, upper = 1",
+      "output": "1"
+    },
+    {
+      "input": "differences = [-1, 2, -2, 1, -1], lower = -5, upper = 5",
+      "output": "9"
+    },
+    {
+      "input": "differences = [10, 20, 30, 40, 50], lower = 0, upper = 200",
+      "output": "51"
+    },
+    {
+      "input": "differences = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1], lower = 1, upper = 10",
+      "output": "0"
+    },
+    {
+      "input": "differences = [50, -25, 75, -37, 100, -50, 125, -62, 150, -75, 175, -87, 200, -93, 225, -100, 250, -112, 275, -125], lower = 0, upper = 300",
+      "output": "0"
+    },
+    {
+      "input": "differences = [100000, -100000, 100000, -100000, 100000], lower = -50000, upper = 50000",
+      "output": "1"
+    },
+    {
+      "input": "differences = [10, -10, 20, -20, 30, -30, 40, -40, 50, -50], lower = -100, upper = 100",
+      "output": "151"
+    },
+    {
+      "input": "differences = [1, -1, 1, -1, 1], lower = 1, upper = 5",
+      "output": "4"
+    },
+    {
+      "input": "differences = [-1, -2, -3, -4, -5, -6, -7, -8, -9, -10], lower = -55, upper = -45",
+      "output": "0"
+    },
+    {
+      "input": "differences = [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1], lower = -10, upper = 0",
+      "output": "0"
+    },
+    {
+      "input": "differences = [1, 2, -3, 4, -5, 6], lower = 1, upper = 10",
+      "output": "4"
+    },
+    {
+      "input": "differences = [100, -50, 200, -100, 50, -200, 100], lower = -1000, upper = 1000",
+      "output": "1751"
+    },
+    {
+      "input": "differences = [-1, 1, -1, 1, -1, 1, -1, 1, -1, 1], lower = -1, upper = 1",
+      "output": "2"
+    },
+    {
+      "input": "differences = [-1, -2, -3, -4, -5, -6], lower = -15, upper = -5",
+      "output": "0"
+    },
+    {
+      "input": "differences = [-10, -20, -30, -40, -50, -60, -70, -80, -90, -100], lower = -1000, upper = 1",
+      "output": "452"
+    },
+    {
+      "input": "differences = [-15, 14, -13, 12, -11, 10, -9, 8, -7, 6, -5, 4, -3, 2, -1], lower = -20, upper = 20",
+      "output": "26"
+    },
+    {
+      "input": "differences = [1,-1,2,-2,3,-3,4,-4,5,-5], lower = -10, upper = 10",
+      "output": "16"
+    },
+    {
+      "input": "differences = [5, 10, -15, 20, -25], lower = -100, upper = 100",
+      "output": "176"
+    },
+    {
+      "input": "differences = [100000, -50000, 50000, -100000, 50000], lower = -100000, upper = 100000",
+      "output": "100001"
+    },
+    {
+      "input": "differences = [100, -50, 25, -10, 5], lower = 0, upper = 200",
+      "output": "101"
+    },
+    {
+      "input": "differences = [-5, -5, -5, -5, -5, -5, -5, -5, -5, -5], lower = -50, upper = 0",
+      "output": "1"
+    },
+    {
+      "input": "differences = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10], lower = 10, upper = 20",
+      "output": "0"
+    },
+    {
+      "input": "differences = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100], lower = 100, upper = 1000",
+      "output": "351"
+    },
+    {
+      "input": "differences = [5, -2, 3, -4, 1], lower = 1, upper = 10",
+      "output": "4"
+    },
+    {
+      "input": "differences = [2, -1, 3, -2, 4, -3, 5, -4], lower = -5, upper = 10",
+      "output": "8"
+    },
+    {
+      "input": "differences = [0, 0, 0, 0, 0], lower = 0, upper = 10",
+      "output": "11"
+    },
+    {
+      "input": "differences = [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1], lower = -10, upper = -1",
+      "output": "0"
+    },
+    {
+      "input": "differences = [5, -2, 3, -1, 4], lower = -5, upper = 5",
+      "output": "2"
+    },
+    {
+      "input": "differences = [100000, -50000, 25000, -12500, 6250, -3125, 1562, -781, 390, -195], lower = 0, upper = 100000",
+      "output": "1"
+    },
+    {
+      "input": "differences = [-10, 20, -30, 40, -50, 60], lower = -20, upper = 20",
+      "output": "0"
+    },
+    {
+      "input": "differences = [-10, -20, -30, -40, -50], lower = -200, upper = 0",
+      "output": "51"
+    },
+    {
+      "input": "differences = [5, 10, -5, -10, 15, -15, 20, -20], lower = -100, upper = 100",
+      "output": "181"
+    },
+    {
+      "input": "differences = [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1], lower = -10, upper = 0",
+      "output": "1"
+    },
+    {
+      "input": "differences = [5, 5, 5, 5, 5, 5, 5, 5, 5, 5], lower = 0, upper = 50",
+      "output": "1"
+    },
+    {
+      "input": "differences = [1, -2, 3, -4, 5, -6, 7, -8, 9, -10], lower = -50, upper = 50",
+      "output": "91"
+    },
+    {
+      "input": "differences = [20,-10,30,-15,5,-1], lower = -100, upper = 100",
+      "output": "161"
+    },
+    {
+      "input": "differences = [2, 3, -2, 1, -3, 2], lower = -5, upper = 15",
+      "output": "16"
+    },
+    {
+      "input": "differences = [2, 3, -5, 2, 3, -5], lower = -3, upper = 3",
+      "output": "2"
+    },
+    {
+      "input": "differences = [100, -50, 25, -10, 5], lower = -20, upper = 200",
+      "output": "121"
+    },
+    {
+      "input": "differences = [100000, 0, -100000, 0, 100000], lower = 50000, upper = 150000",
+      "output": "1"
+    },
+    {
+      "input": "differences = [-100000, 50000, -50000, 100000, -50000], lower = -100000, upper = 100000",
+      "output": "100001"
+    },
+    {
+      "input": "differences = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], lower = -1, upper = 1",
+      "output": "3"
+    },
+    {
+      "input": "differences = [1, -1, 1, -1, 1, -1], lower = 1, upper = 5",
+      "output": "4"
+    },
+    {
+      "input": "differences = [1, 2, 3, -1, -2, -3, 1, 2, 3, -1, -2, -3], lower = -5, upper = 5",
+      "output": "5"
+    },
+    {
+      "input": "differences = [10, -10, 10, -10, 10, -10, 10, -10], lower = 0, upper = 20",
+      "output": "11"
+    },
+    {
+      "input": "differences = [10, -20, 30, -40, 50], lower = 5, upper = 15",
+      "output": "0"
+    },
+    {
+      "input": "differences = [2, 4, -6, 8, -10, 12, -14], lower = -15, upper = 15",
+      "output": "17"
+    },
+    {
+      "input": "differences = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1], lower = 0, upper = 10",
+      "output": "0"
+    },
+    {
+      "input": "differences = [10, 20, 30, 40, 50], lower = 100, upper = 200",
+      "output": "0"
+    },
+    {
+      "input": "differences = [5, -5, 10, -10, 15, -15], lower = -50, upper = 50",
+      "output": "86"
+    },
+    {
+      "input": "differences = [-1, -2, -3, -4, -5, -6, -7, -8, -9, -10], lower = -50, upper = 0",
+      "output": "0"
+    },
+    {
+      "input": "differences = [1, -1, 1, -1, 1, -1, 1, -1, 1, -1], lower = -1, upper = 1",
+      "output": "2"
+    },
+    {
+      "input": "differences = [5, -2, 8, -6, 3], lower = 2, upper = 12",
+      "output": "0"
+    },
+    {
+      "input": "differences = [100,-50,25,-12,6,-3,1], lower = 0, upper = 500",
+      "output": "401"
+    },
+    {
+      "input": "differences = [1, 2, 3, 4, 5, 6], lower = 5, upper = 15",
+      "output": "0"
+    },
+    {
+      "input": "differences = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10], lower = 0, upper = 50",
+      "output": "0"
+    },
+    {
+      "input": "differences = [1, -1, 2, -2, 3, -3, 4, -4, 5, -5], lower = -10, upper = 10",
+      "output": "16"
+    },
+    {
+      "input": "differences = [0, 0, 0, 0, 0], lower = 0, upper = 0",
+      "output": "1"
+    },
+    {
+      "input": "differences = [5, -2, 3, -4, 7, -1], lower = -5, upper = 15",
+      "output": "12"
+    },
+    {
+      "input": "differences = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], lower = 0, upper = 0",
+      "output": "1"
+    },
+    {
+      "input": "differences = [-3,-3,-3,-3,-3,-3,-3,-3,-3,-3], lower = -50, upper = -1",
+      "output": "20"
+    },
+    {
+      "input": "differences = [1, -2, 3, -4, 5, -6, 7, -8, 9, -10, 11, -12, 13, -14, 15, -16], lower = -100, upper = 100",
+      "output": "185"
+    },
+    {
+      "input": "differences = [1, -2, 3, -4, 5, -6, 7, -8, 9, -10, 11, -12, 13, -14, 15], lower = -50, upper = 50",
+      "output": "86"
+    },
+    {
+      "input": "differences = [-10, -20, -30, -40, -50, -60, -70, -80, -90, -100], lower = -1000, upper = -100",
+      "output": "351"
+    },
+    {
+      "input": "differences = [5, -2, 3, 7, -5, 8, -6], lower = -10, upper = 20",
+      "output": "15"
+    },
+    {
+      "input": "differences = [-1, 2, -3, 4, -5, 6, -7, 8, -9, 10], lower = -5, upper = 5",
+      "output": "1"
+    },
+    {
+      "input": "differences = [-1, -2, -3, -4, -5], lower = -15, upper = -5",
+      "output": "0"
+    }
+  ]
+}

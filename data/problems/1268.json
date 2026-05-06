@@ -1,0 +1,608 @@
+{
+  "id": 1268,
+  "title": "Search Suggestions System",
+  "slug": "search-suggestions-system",
+  "difficulty": "Medium",
+  "topics": [
+    "Array",
+    "String",
+    "Binary Search",
+    "Trie",
+    "Sorting",
+    "Heap (Priority Queue)"
+  ],
+  "description": "You are given an array of strings products and a string searchWord.\nDesign a system that suggests at most three product names from products after each character of searchWord is typed. Suggested products should have common prefix with searchWord. If there are more than three products with a common prefix return the three lexicographically minimums products.\nReturn a list of lists of the suggested products after each character of searchWord is typed.\nExample 1:\nExample 2:\nConstraints:",
+  "examples": [
+    {
+      "example_num": 1,
+      "example_text": "Input: products = [\"mobile\",\"mouse\",\"moneypot\",\"monitor\",\"mousepad\"], searchWord = \"mouse\"\nOutput: [[\"mobile\",\"moneypot\",\"monitor\"],[\"mobile\",\"moneypot\",\"monitor\"],[\"mouse\",\"mousepad\"],[\"mouse\",\"mousepad\"],[\"mouse\",\"mousepad\"]]\nExplanation: products sorted lexicographically = [\"mobile\",\"moneypot\",\"monitor\",\"mouse\",\"mousepad\"].\nAfter typing m and mo all products match and we show user [\"mobile\",\"moneypot\",\"monitor\"].\nAfter typing mou, mous and mouse the system suggests [\"mouse\",\"mousepad\"].",
+      "images": []
+    },
+    {
+      "example_num": 2,
+      "example_text": "Input: products = [\"havana\"], searchWord = \"havana\"\nOutput: [[\"havana\"],[\"havana\"],[\"havana\"],[\"havana\"],[\"havana\"],[\"havana\"]]\nExplanation: The only word \"havana\" will be always suggested while typing the search word.",
+      "images": []
+    }
+  ],
+  "constraints": [
+    "1 <= products.length <= 1000",
+    "1 <= products[i].length <= 3000",
+    "1 <= sum(products[i].length) <= 2 * 104",
+    "All the strings of products are unique.",
+    "products[i] consists of lowercase English letters.",
+    "1 <= searchWord.length <= 1000",
+    "searchWord consists of lowercase English letters."
+  ],
+  "hints": [
+    "Brute force is a good choice because length of the string is \u2264 1000.",
+    "Binary search the answer.",
+    "Use Trie data structure to store the best three matching. Traverse the Trie."
+  ],
+  "code_snippets": {
+    "cpp": "class Solution {\npublic:\n    vector<vector<string>> suggestedProducts(vector<string>& products, string searchWord) {\n        \n    }\n};",
+    "java": "class Solution {\n    public List<List<String>> suggestedProducts(String[] products, String searchWord) {\n        \n    }\n}",
+    "python": "class Solution(object):\n    def suggestedProducts(self, products, searchWord):\n        \"\"\"\n        :type products: List[str]\n        :type searchWord: str\n        :rtype: List[List[str]]\n        \"\"\"\n        ",
+    "python3": "class Solution:\n    def suggestedProducts(self, products: List[str], searchWord: str) -> List[List[str]]:\n        ",
+    "c": "/**\n * Return an array of arrays of size *returnSize.\n * The sizes of the arrays are returned as *returnColumnSizes array.\n * Note: Both returned array and *columnSizes array must be malloced, assume caller calls free().\n */\nchar*** suggestedProducts(char** products, int productsSize, char* searchWord, int* returnSize, int** returnColumnSizes) {\n    \n}",
+    "csharp": "public class Solution {\n    public IList<IList<string>> SuggestedProducts(string[] products, string searchWord) {\n        \n    }\n}",
+    "javascript": "/**\n * @param {string[]} products\n * @param {string} searchWord\n * @return {string[][]}\n */\nvar suggestedProducts = function(products, searchWord) {\n    \n};",
+    "typescript": "function suggestedProducts(products: string[], searchWord: string): string[][] {\n    \n};",
+    "php": "class Solution {\n\n    /**\n     * @param String[] $products\n     * @param String $searchWord\n     * @return String[][]\n     */\n    function suggestedProducts($products, $searchWord) {\n        \n    }\n}",
+    "swift": "class Solution {\n    func suggestedProducts(_ products: [String], _ searchWord: String) -> [[String]] {\n        \n    }\n}",
+    "kotlin": "class Solution {\n    fun suggestedProducts(products: Array<String>, searchWord: String): List<List<String>> {\n        \n    }\n}",
+    "dart": "class Solution {\n  List<List<String>> suggestedProducts(List<String> products, String searchWord) {\n    \n  }\n}",
+    "golang": "func suggestedProducts(products []string, searchWord string) [][]string {\n    \n}",
+    "ruby": "# @param {String[]} products\n# @param {String} search_word\n# @return {String[][]}\ndef suggested_products(products, search_word)\n    \nend",
+    "scala": "object Solution {\n    def suggestedProducts(products: Array[String], searchWord: String): List[List[String]] = {\n        \n    }\n}",
+    "rust": "impl Solution {\n    pub fn suggested_products(products: Vec<String>, search_word: String) -> Vec<Vec<String>> {\n        \n    }\n}",
+    "racket": "(define/contract (suggested-products products searchWord)\n  (-> (listof string?) string? (listof (listof string?)))\n  )",
+    "erlang": "-spec suggested_products(Products :: [unicode:unicode_binary()], SearchWord :: unicode:unicode_binary()) -> [[unicode:unicode_binary()]].\nsuggested_products(Products, SearchWord) ->\n  .",
+    "elixir": "defmodule Solution do\n  @spec suggested_products(products :: [String.t], search_word :: String.t) :: [[String.t]]\n  def suggested_products(products, search_word) do\n    \n  end\nend"
+  },
+  "input_output": [
+    {
+      "input": "products = [\"keyboard\",\"keypad\",\"keys\",\"kick\"], searchWord = \"key\"",
+      "output": "[['keyboard', 'keypad', 'keys'], ['keyboard', 'keypad', 'keys'], ['keyboard', 'keypad', 'keys']]"
+    },
+    {
+      "input": "products = [\"keyboard\",\"keypad\",\"mousepad\"], searchWord = \"key\"",
+      "output": "[['keyboard', 'keypad'], ['keyboard', 'keypad'], ['keyboard', 'keypad']]"
+    },
+    {
+      "input": "products = [\"apple\",\"banana\",\"grape\",\"orange\"], searchWord = \"or\"",
+      "output": "[['orange'], ['orange']]"
+    },
+    {
+      "input": "products = [\"aaa\",\"aaab\",\"aaac\",\"aab\"], searchWord = \"aa\"",
+      "output": "[['aaa', 'aaab', 'aaac'], ['aaa', 'aaab', 'aaac']]"
+    },
+    {
+      "input": "products = [\"charger\",\"cable\",\"case\"], searchWord = \"ca\"",
+      "output": "[['cable', 'case', 'charger'], ['cable', 'case']]"
+    },
+    {
+      "input": "products = [\"bag\",\"bags\",\"banner\",\"box\",\"car\"], searchWord = \"ba\"",
+      "output": "[['bag', 'bags', 'banner'], ['bag', 'bags', 'banner']]"
+    },
+    {
+      "input": "products = [\"aaa\",\"aab\",\"aac\",\"aad\",\"aae\"], searchWord = \"aa\"",
+      "output": "[['aaa', 'aab', 'aac'], ['aaa', 'aab', 'aac']]"
+    },
+    {
+      "input": "products = [\"aaa\",\"aab\",\"aac\",\"aad\"], searchWord = \"aa\"",
+      "output": "[['aaa', 'aab', 'aac'], ['aaa', 'aab', 'aac']]"
+    },
+    {
+      "input": "products = [\"apple\",\"apples\",\"application\"], searchWord = \"app\"",
+      "output": "[['apple', 'apples', 'application'], ['apple', 'apples', 'application'], ['apple', 'apples', 'application']]"
+    },
+    {
+      "input": "products = [\"apple\",\"banana\",\"grape\",\"orange\"], searchWord = \"ba\"",
+      "output": "[['banana'], ['banana']]"
+    },
+    {
+      "input": "products = [\"keyboard\",\"keypad\",\"keyboard\",\"keychain\"], searchWord = \"key\"",
+      "output": "[['keyboard', 'keyboard', 'keychain'], ['keyboard', 'keyboard', 'keychain'], ['keyboard', 'keyboard', 'keychain']]"
+    },
+    {
+      "input": "products = [\"havana\"], searchWord = \"havana\"",
+      "output": "[['havana'], ['havana'], ['havana'], ['havana'], ['havana'], ['havana']]"
+    },
+    {
+      "input": "products = [\"keyboard\",\"keypad\",\"kiosk\"], searchWord = \"key\"",
+      "output": "[['keyboard', 'keypad', 'kiosk'], ['keyboard', 'keypad'], ['keyboard', 'keypad']]"
+    },
+    {
+      "input": "products = [\"apple\",\"banana\",\"grape\",\"orange\",\"peach\"], searchWord = \"app\"",
+      "output": "[['apple'], ['apple'], ['apple']]"
+    },
+    {
+      "input": "products = [\"apple\",\"apricot\",\"banana\",\"bat\",\"berry\"], searchWord = \"ba\"",
+      "output": "[['banana', 'bat', 'berry'], ['banana', 'bat']]"
+    },
+    {
+      "input": "products = [\"keyboard\",\"keypad\",\"keyboardpad\"], searchWord = \"key\"",
+      "output": "[['keyboard', 'keyboardpad', 'keypad'], ['keyboard', 'keyboardpad', 'keypad'], ['keyboard', 'keyboardpad', 'keypad']]"
+    },
+    {
+      "input": "products = [\"mobile\",\"mouse\",\"moneypot\",\"monitor\",\"mousepad\"], searchWord = \"mouse\"",
+      "output": "[['mobile', 'moneypot', 'monitor'], ['mobile', 'moneypot', 'monitor'], ['mouse', 'mousepad'], ['mouse', 'mousepad'], ['mouse', 'mousepad']]"
+    },
+    {
+      "input": "s",
+      "output": "Error: Solution.suggestedProducts() missing 2 required positional arguments: 'products' and 'searchWord'"
+    },
+    {
+      "input": "products = [\"aardvark\",\"aardwolf\",\"albatross\",\"alligator\",\"alpaca\",\"antelope\",\"anteater\"], searchWord = \"aa\"",
+      "output": "[['aardvark', 'aardwolf', 'albatross'], ['aardvark', 'aardwolf']]"
+    },
+    {
+      "input": "products = [\"xylophone\",\"xylography\",\"xylem\",\"xenon\",\"xerox\",\"xerophyte\",\"xenodochial\"], searchWord = \"xero\"",
+      "output": "[['xenodochial', 'xenon', 'xerophyte'], ['xenodochial', 'xenon', 'xerophyte'], ['xerophyte', 'xerox'], ['xerophyte', 'xerox']]"
+    },
+    {
+      "input": "products = [\"jacket\",\"jaguar\",\"jar\",\"jasmine\",\"jeep\"], searchWord = \"ja\"",
+      "output": "[['jacket', 'jaguar', 'jar'], ['jacket', 'jaguar', 'jar']]"
+    },
+    {
+      "input": "e",
+      "output": "Error: Solution.suggestedProducts() missing 2 required positional arguments: 'products' and 'searchWord'"
+    },
+    {
+      "input": "products = [\"ant\",\"anteater\",\"antelope\",\"antenna\",\"antique\",\"antfarm\",\"antler\"], searchWord = \"ant\"",
+      "output": "[['ant', 'anteater', 'antelope'], ['ant', 'anteater', 'antelope'], ['ant', 'anteater', 'antelope']]"
+    },
+    {
+      "input": "products = [\"television\",\"telescope\",\"temperature\",\"tennis\",\"tense\"], searchWord = \"te\"",
+      "output": "[['telescope', 'television', 'temperature'], ['telescope', 'television', 'temperature']]"
+    },
+    {
+      "input": "products = [\"apple\",\"apricot\",\"banana\",\"bat\",\"berry\",\"blackberry\",\"blueberry\"], searchWord = \"b\"",
+      "output": "[['banana', 'bat', 'berry']]"
+    },
+    {
+      "input": "a",
+      "output": "Error: Solution.suggestedProducts() missing 2 required positional arguments: 'products' and 'searchWord'"
+    },
+    {
+      "input": "products = [\"grape\",\"grapefruit\",\"grapevine\",\"graph\",\"grapejuice\"], searchWord = \"gr\"",
+      "output": "[['grape', 'grapefruit', 'grapejuice'], ['grape', 'grapefruit', 'grapejuice']]"
+    },
+    {
+      "input": "products = [\"dog\",\"dolphin\",\"dome\",\"domestic\",\"domino\"], searchWord = \"dom\"",
+      "output": "[['dog', 'dolphin', 'dome'], ['dog', 'dolphin', 'dome'], ['dome', 'domestic', 'domino']]"
+    },
+    {
+      "input": "products = [\"magnifier\",\"magnificent\",\"magnet\",\"magnolia\",\"magnitude\"], searchWord = \"magn\"",
+      "output": "[['magnet', 'magnificent', 'magnifier'], ['magnet', 'magnificent', 'magnifier'], ['magnet', 'magnificent', 'magnifier'], ['magnet', 'magnificent', 'magnifier']]"
+    },
+    {
+      "input": "products = [\"apple\",\"application\",\"appliance\",\"appropriate\",\"appetizer\"], searchWord = \"appl\"",
+      "output": "[['appetizer', 'apple', 'appliance'], ['appetizer', 'apple', 'appliance'], ['appetizer', 'apple', 'appliance'], ['apple', 'appliance', 'application']]"
+    },
+    {
+      "input": "products = [\"grape\",\"grapefruit\",\"grapejuice\",\"graphite\",\"grapevine\",\"grapefruitjuice\"], searchWord = \"grape\"",
+      "output": "[['grape', 'grapefruit', 'grapefruitjuice'], ['grape', 'grapefruit', 'grapefruitjuice'], ['grape', 'grapefruit', 'grapefruitjuice'], ['grape', 'grapefruit', 'grapefruitjuice'], ['grape', 'grapefruit', 'grapefruitjuice']]"
+    },
+    {
+      "input": "products = [\"algorithm\",\"array\",\"binary\",\"bit\",\"bitset\",\"bucket\",\"class\",\"collection\",\"datatype\",\"enumerate\",\"file\",\"float\",\"function\",\"garbage\",\"graph\",\"hash\",\"id\",\"implementation\",\"integer\",\"java\",\"keyword\",\"list\",\"map\",\"namespace\",\"null\",\"object\",\"operator\",\"pair\",\"pointer\",\"queue\",\"range\",\"reference\",\"set\",\"stack\",\"string\",\"struct\",\"template\",\"typedef\",\"union\",\"variable\",\"while\",\"xor\"], searchWord = \"algo\"",
+      "output": "[['algorithm', 'array'], ['algorithm'], ['algorithm'], ['algorithm']]"
+    },
+    {
+      "input": "products = [\"hamburger\",\"hammock\",\"hammer\",\"hammerhead\",\"handheld\"], searchWord = \"ham\"",
+      "output": "[['hamburger', 'hammer', 'hammerhead'], ['hamburger', 'hammer', 'hammerhead'], ['hamburger', 'hammer', 'hammerhead']]"
+    },
+    {
+      "input": "products = [\"watermelon\",\"water\",\"wave\",\"wonder\",\"wonderland\"], searchWord = \"wat\"",
+      "output": "[['water', 'watermelon', 'wave'], ['water', 'watermelon', 'wave'], ['water', 'watermelon']]"
+    },
+    {
+      "input": "products = [\"amazon\",\"amazing\",\"ambassador\",\"ambient\",\"amplifier\"], searchWord = \"ambi\"",
+      "output": "[['amazing', 'amazon', 'ambassador'], ['amazing', 'amazon', 'ambassador'], ['ambassador', 'ambient'], ['ambient']]"
+    },
+    {
+      "input": "products = [\"xylophone\",\"xylography\",\"xylophone\",\"xylophone\",\"xylophone\"], searchWord = \"xylo\"",
+      "output": "[['xylography', 'xylophone', 'xylophone'], ['xylography', 'xylophone', 'xylophone'], ['xylography', 'xylophone', 'xylophone'], ['xylography', 'xylophone', 'xylophone']]"
+    },
+    {
+      "input": "products = [\"car\",\"card\",\"cardboard\",\"cargo\",\"cartoon\"], searchWord = \"car\"",
+      "output": "[['car', 'card', 'cardboard'], ['car', 'card', 'cardboard'], ['car', 'card', 'cardboard']]"
+    },
+    {
+      "input": "products = [\"abcd\",\"abce\",\"abcf\",\"abcg\",\"abch\",\"abci\",\"abcj\",\"abck\",\"abcl\",\"abcm\"], searchWord = \"abc\"",
+      "output": "[['abcd', 'abce', 'abcf'], ['abcd', 'abce', 'abcf'], ['abcd', 'abce', 'abcf']]"
+    },
+    {
+      "input": "products = [\"zebra\",\"zinc\",\"zoo\",\"zesty\",\"zoning\",\"zest\",\"zookeeper\"], searchWord = \"ze\"",
+      "output": "[['zebra', 'zest', 'zesty'], ['zebra', 'zest', 'zesty']]"
+    },
+    {
+      "input": "products = [\"aardvark\",\"aardwolf\",\"aardvark\",\"aardvark\",\"aardvark\"], searchWord = \"aard\"",
+      "output": "[['aardvark', 'aardvark', 'aardvark'], ['aardvark', 'aardvark', 'aardvark'], ['aardvark', 'aardvark', 'aardvark'], ['aardvark', 'aardvark', 'aardvark']]"
+    },
+    {
+      "input": "h",
+      "output": "Error: Solution.suggestedProducts() missing 2 required positional arguments: 'products' and 'searchWord'"
+    },
+    {
+      "input": "f",
+      "output": "Error: Solution.suggestedProducts() missing 2 required positional arguments: 'products' and 'searchWord'"
+    },
+    {
+      "input": "products = [\"umbrella\",\"umber\",\"umbilical\",\"umbrella\",\"umbrella\"], searchWord = \"umb\"",
+      "output": "[['umber', 'umbilical', 'umbrella'], ['umber', 'umbilical', 'umbrella'], ['umber', 'umbilical', 'umbrella']]"
+    },
+    {
+      "input": "products = [\"a\",\"ab\",\"abc\",\"abcd\",\"abcde\",\"abcdef\",\"abcdefg\",\"abcdefgh\",\"abcdefghi\",\"abcdefghij\"], searchWord = \"abcdefghijk\"",
+      "output": "[['a', 'ab', 'abc'], ['ab', 'abc', 'abcd'], ['abc', 'abcd', 'abcde'], ['abcd', 'abcde', 'abcdef'], ['abcde', 'abcdef', 'abcdefg'], ['abcdef', 'abcdefg', 'abcdefgh'], ['abcdefg', 'abcdefgh', 'abcdefghi'], ['abcdefgh', 'abcdefghi', 'abcdefghij'], ['abcdefghi', 'abcdefghij'], ['abcdefghij'], []]"
+    },
+    {
+      "input": "products = [\"apple\",\"apricot\",\"banana\",\"bat\",\"berry\",\"blueberry\",\"blackberry\"], searchWord = \"ba\"",
+      "output": "[['banana', 'bat', 'berry'], ['banana', 'bat']]"
+    },
+    {
+      "input": "products = [\"zebra\",\"zebrafish\",\"zebrafly\",\"zebratail\",\"zebralight\",\"zebrashoe\",\"zebragram\",\"zebratic\",\"zebrastriped\"], searchWord = \"zebra\"",
+      "output": "[['zebra', 'zebrafish', 'zebrafly'], ['zebra', 'zebrafish', 'zebrafly'], ['zebra', 'zebrafish', 'zebrafly'], ['zebra', 'zebrafish', 'zebrafly'], ['zebra', 'zebrafish', 'zebrafly']]"
+    },
+    {
+      "input": "products = [\"infinite\",\"infinity\",\"infinitesimal\",\"infinity\",\"infinitary\"], searchWord = \"inf\"",
+      "output": "[['infinitary', 'infinite', 'infinitesimal'], ['infinitary', 'infinite', 'infinitesimal'], ['infinitary', 'infinite', 'infinitesimal']]"
+    },
+    {
+      "input": "products = [\"orange\",\"oregano\",\"organ\",\"organize\",\"organism\"], searchWord = \"org\"",
+      "output": "[['orange', 'oregano', 'organ'], ['orange', 'oregano', 'organ'], ['organ', 'organism', 'organize']]"
+    },
+    {
+      "input": "products = [\"xenon\",\"xerox\",\"xenophobe\",\"xenial\",\"xenolith\",\"xenoliths\",\"xenonarc\",\"xenonarcosis\",\"xenolithologist\"], searchWord = \"xen\"",
+      "output": "[['xenial', 'xenolith', 'xenolithologist'], ['xenial', 'xenolith', 'xenolithologist'], ['xenial', 'xenolith', 'xenolithologist']]"
+    },
+    {
+      "input": "r",
+      "output": "Error: Solution.suggestedProducts() missing 2 required positional arguments: 'products' and 'searchWord'"
+    },
+    {
+      "input": "n",
+      "output": "Error: Solution.suggestedProducts() missing 2 required positional arguments: 'products' and 'searchWord'"
+    },
+    {
+      "input": "products = [\"a\",\"aa\",\"aaa\",\"aaaa\",\"aaaaa\",\"aab\",\"aac\",\"aad\",\"aaf\",\"aag\"], searchWord = \"aa\"",
+      "output": "[['a', 'aa', 'aaa'], ['aa', 'aaa', 'aaaa']]"
+    },
+    {
+      "input": "products = [\"laptop\",\"laptopbag\",\"laser\",\"lateral\",\"latitude\"], searchWord = \"lap\"",
+      "output": "[['laptop', 'laptopbag', 'laser'], ['laptop', 'laptopbag', 'laser'], ['laptop', 'laptopbag']]"
+    },
+    {
+      "input": "products = [\"cherry\",\"cranberry\",\"cantaloupe\",\"carrot\",\"corn\",\"cucumber\"], searchWord = \"car\"",
+      "output": "[['cantaloupe', 'carrot', 'cherry'], ['cantaloupe', 'carrot'], ['carrot']]"
+    },
+    {
+      "input": "products = [\"umbrella\",\"umbrella\",\"umbrella\",\"umbrella\",\"umbrella\",\"umbrella\",\"umbrella\",\"umbrella\",\"umbrella\",\"umbrella\"], searchWord = \"umbrella\"",
+      "output": "[['umbrella', 'umbrella', 'umbrella'], ['umbrella', 'umbrella', 'umbrella'], ['umbrella', 'umbrella', 'umbrella'], ['umbrella', 'umbrella', 'umbrella'], ['umbrella', 'umbrella', 'umbrella'], ['umbrella', 'umbrella', 'umbrella'], ['umbrella', 'umbrella', 'umbrella'], ['umbrella', 'umbrella', 'umbrella']]"
+    },
+    {
+      "input": "products = [\"umbrella\",\"umbrella stand\",\"umbrella frame\",\"umbrella holder\",\"umbrella cover\"], searchWord = \"umb\"",
+      "output": "Error: list index out of range"
+    },
+    {
+      "input": "l",
+      "output": "Error: Solution.suggestedProducts() missing 2 required positional arguments: 'products' and 'searchWord'"
+    },
+    {
+      "input": "d",
+      "output": "Error: Solution.suggestedProducts() missing 2 required positional arguments: 'products' and 'searchWord'"
+    },
+    {
+      "input": "products = [\"aardvark\",\"aardwolf\",\"albatross\",\"albino\",\"alligator\",\"alpaca\",\"almighty\"], searchWord = \"al\"",
+      "output": "[['aardvark', 'aardwolf', 'albatross'], ['albatross', 'albino', 'alligator']]"
+    },
+    {
+      "input": "products = [\"zebra\",\"zealot\",\"zealous\",\"zebrafish\",\"zebra\",\"zebrahead\"], searchWord = \"ze\"",
+      "output": "[['zealot', 'zealous', 'zebra'], ['zealot', 'zealous', 'zebra']]"
+    },
+    {
+      "input": "t",
+      "output": "Error: Solution.suggestedProducts() missing 2 required positional arguments: 'products' and 'searchWord'"
+    },
+    {
+      "input": "products = [\"navigate\",\"navigation\",\"navigator\",\"navy\",\"navel\"], searchWord = \"nav\"",
+      "output": "[['navel', 'navigate', 'navigation'], ['navel', 'navigate', 'navigation'], ['navel', 'navigate', 'navigation']]"
+    },
+    {
+      "input": "u",
+      "output": "Error: Solution.suggestedProducts() missing 2 required positional arguments: 'products' and 'searchWord'"
+    },
+    {
+      "input": "products = [\"electronics\",\"electric\",\"elephant\",\"elbow\",\"eleven\"], searchWord = \"ele\"",
+      "output": "[['elbow', 'electric', 'electronics'], ['elbow', 'electric', 'electronics'], ['electric', 'electronics', 'elephant']]"
+    },
+    {
+      "input": "c",
+      "output": "Error: Solution.suggestedProducts() missing 2 required positional arguments: 'products' and 'searchWord'"
+    },
+    {
+      "input": "products = [\"apple\",\"apricot\",\"banana\",\"bat\",\"berry\",\"blackberry\",\"blueberry\",\"bluebird\",\"bluetooth\"], searchWord = \"bl\"",
+      "output": "[['banana', 'bat', 'berry'], ['blackberry', 'blueberry', 'bluebird']]"
+    },
+    {
+      "input": "p",
+      "output": "Error: Solution.suggestedProducts() missing 2 required positional arguments: 'products' and 'searchWord'"
+    },
+    {
+      "input": "products = [\"abacaxi\",\"abalone\",\"abana\",\"abanga\",\"abaperture\",\"abara\",\"abaraxas\",\"abarth\",\"abart\",\"abat\",\"abate\",\"abati\",\"abatis\",\"abator\",\"abatt\",\"abature\",\"abavure\",\"abaya\",\"abaze\",\"abba\",\"abbe\",\"abbe\",\"abbe\",\"abbe\",\"abbe\",\"abbe\",\"abbe\",\"abbe\",\"abbe\",\"abbe\"], searchWord = \"ab\"",
+      "output": "[['abacaxi', 'abalone', 'abana'], ['abacaxi', 'abalone', 'abana']]"
+    },
+    {
+      "input": "products = [\"applepie\",\"applesauce\",\"appleskin\",\"apple\",\"applejack\"], searchWord = \"appl\"",
+      "output": "[['apple', 'applejack', 'applepie'], ['apple', 'applejack', 'applepie'], ['apple', 'applejack', 'applepie'], ['apple', 'applejack', 'applepie']]"
+    },
+    {
+      "input": "]",
+      "output": "Error: Solution.suggestedProducts() missing 2 required positional arguments: 'products' and 'searchWord'"
+    },
+    {
+      "input": "o",
+      "output": "Error: Solution.suggestedProducts() missing 2 required positional arguments: 'products' and 'searchWord'"
+    },
+    {
+      "input": "products = [\"camera\",\"camcorder\",\"cameralens\",\"cameraman\",\"cameraobscura\",\"camouflage\",\"camcorder\",\"camera\",\"camcorder\"], searchWord = \"cam\"",
+      "output": "[['camcorder', 'camcorder', 'camcorder'], ['camcorder', 'camcorder', 'camcorder'], ['camcorder', 'camcorder', 'camcorder']]"
+    },
+    {
+      "input": "products = [\"chocolate\",\"chocolatebar\",\"chocolatechip\",\"chocolate\",\"chocolatefudge\"], searchWord = \"chocolate\"",
+      "output": "[['chocolate', 'chocolate', 'chocolatebar'], ['chocolate', 'chocolate', 'chocolatebar'], ['chocolate', 'chocolate', 'chocolatebar'], ['chocolate', 'chocolate', 'chocolatebar'], ['chocolate', 'chocolate', 'chocolatebar'], ['chocolate', 'chocolate', 'chocolatebar'], ['chocolate', 'chocolate', 'chocolatebar'], ['chocolate', 'chocolate', 'chocolatebar'], ['chocolate', 'chocolate', 'chocolatebar']]"
+    },
+    {
+      "input": "products = [\"queen\",\"queens\",\"queenship\",\"queer\",\"queue\"], searchWord = \"quee\"",
+      "output": "[['queen', 'queens', 'queenship'], ['queen', 'queens', 'queenship'], ['queen', 'queens', 'queenship'], ['queen', 'queens', 'queenship']]"
+    },
+    {
+      "input": "products = [\"apple\",\"apricot\",\"avocado\",\"banana\",\"bat\",\"berry\",\"blackberry\",\"blueberry\",\"cherry\",\"cantaloupe\",\"cranberry\"], searchWord = \"ap\"",
+      "output": "[['apple', 'apricot', 'avocado'], ['apple', 'apricot']]"
+    },
+    {
+      "input": "products = [\"applepie\",\"applesauce\",\"apple\",\"appletart\",\"apples\",\"apricot\"], searchWord = \"apple\"",
+      "output": "[['apple', 'applepie', 'apples'], ['apple', 'applepie', 'apples'], ['apple', 'applepie', 'apples'], ['apple', 'applepie', 'apples'], ['apple', 'applepie', 'apples']]"
+    },
+    {
+      "input": "products = [\"guitar\",\"guitarcase\",\"guitarhero\",\"guitarpick\",\"guitarstand\",\"guitartuner\",\"guitarstring\"], searchWord = \"gu\"",
+      "output": "[['guitar', 'guitarcase', 'guitarhero'], ['guitar', 'guitarcase', 'guitarhero']]"
+    },
+    {
+      "input": " ",
+      "output": "Error: Solution.suggestedProducts() missing 2 required positional arguments: 'products' and 'searchWord'"
+    },
+    {
+      "input": "products = [\"ocean\",\"ocelot\",\"octopus\",\"octagon\",\"octagonal\"], searchWord = \"oct\"",
+      "output": "[['ocean', 'ocelot', 'octagon'], ['ocean', 'ocelot', 'octagon'], ['octagon', 'octagonal', 'octopus']]"
+    },
+    {
+      "input": "products = [\"elephant\",\"elephant\",\"elephant\",\"elephant\",\"elephant\",\"elephant\",\"elephant\",\"elephant\",\"elephant\",\"elephant\"], searchWord = \"elephant\"",
+      "output": "[['elephant', 'elephant', 'elephant'], ['elephant', 'elephant', 'elephant'], ['elephant', 'elephant', 'elephant'], ['elephant', 'elephant', 'elephant'], ['elephant', 'elephant', 'elephant'], ['elephant', 'elephant', 'elephant'], ['elephant', 'elephant', 'elephant'], ['elephant', 'elephant', 'elephant']]"
+    },
+    {
+      "input": "products = [\"chocolate\",\"chips\",\"chipmunk\",\"cheese\",\"cherry\",\"chili\"], searchWord = \"ch\"",
+      "output": "[['cheese', 'cherry', 'chili'], ['cheese', 'cherry', 'chili']]"
+    },
+    {
+      "input": "products = [\"abcd\",\"abce\",\"abcf\",\"abcg\",\"abch\"], searchWord = \"abc\"",
+      "output": "[['abcd', 'abce', 'abcf'], ['abcd', 'abce', 'abcf'], ['abcd', 'abce', 'abcf']]"
+    },
+    {
+      "input": "products = [\"zebra\",\"zulu\",\"zymurgy\",\"zestful\",\"zestfully\",\"zestless\",\"zippy\",\"zoo\",\"zoology\",\"zucchini\"], searchWord = \"zoo\"",
+      "output": "[['zebra', 'zestful', 'zestfully'], ['zoo', 'zoology'], ['zoo', 'zoology']]"
+    },
+    {
+      "input": "products = [\"fishing\",\"fishtank\",\"fish\",\"fishmonger\",\"fisherman\",\"fishhook\",\"fishnet\"], searchWord = \"fish\"",
+      "output": "[['fish', 'fisherman', 'fishhook'], ['fish', 'fisherman', 'fishhook'], ['fish', 'fisherman', 'fishhook'], ['fish', 'fisherman', 'fishhook']]"
+    },
+    {
+      "input": "products = [\"watermelon\",\"water\",\"waterproof\",\"watering\",\"waterfall\",\"watermelon\",\"watercolor\",\"watergun\",\"watermelon\",\"watermark\"], searchWord = \"waterm\"",
+      "output": "[['water', 'watercolor', 'waterfall'], ['water', 'watercolor', 'waterfall'], ['water', 'watercolor', 'waterfall'], ['water', 'watercolor', 'waterfall'], ['water', 'watercolor', 'waterfall'], ['watermark', 'watermelon', 'watermelon']]"
+    },
+    {
+      "input": ",",
+      "output": "Error: Solution.suggestedProducts() missing 2 required positional arguments: 'products' and 'searchWord'"
+    },
+    {
+      "input": "products = [\"banana\",\"band\",\"bangalore\",\"bank\",\"banner\"], searchWord = \"ban\"",
+      "output": "[['banana', 'band', 'bangalore'], ['banana', 'band', 'bangalore'], ['banana', 'band', 'bangalore']]"
+    },
+    {
+      "input": "products = [\"paint\",\"painter\",\"painting\",\"paintball\",\"paintbrush\"], searchWord = \"pain\"",
+      "output": "[['paint', 'paintball', 'paintbrush'], ['paint', 'paintball', 'paintbrush'], ['paint', 'paintball', 'paintbrush'], ['paint', 'paintball', 'paintbrush']]"
+    },
+    {
+      "input": "products = [\"xyz\",\"xylophone\",\"xylography\",\"xylograph\",\"xylography\",\"xylographer\",\"xylographs\",\"xylography\",\"xylography\"], searchWord = \"xylo\"",
+      "output": "[['xylograph', 'xylographer', 'xylographs'], ['xylograph', 'xylographer', 'xylographs'], ['xylograph', 'xylographer', 'xylographs'], ['xylograph', 'xylographer', 'xylographs']]"
+    },
+    {
+      "input": "products = [\"microphone\",\"microwave\",\"microscope\",\"microphone\",\"micronutrient\"], searchWord = \"micr\"",
+      "output": "[['micronutrient', 'microphone', 'microphone'], ['micronutrient', 'microphone', 'microphone'], ['micronutrient', 'microphone', 'microphone'], ['micronutrient', 'microphone', 'microphone']]"
+    },
+    {
+      "input": "products = [\"flower\",\"flour\",\"flow\",\"flourish\",\"flourmill\"], searchWord = \"flow\"",
+      "output": "[['flour', 'flourish', 'flourmill'], ['flour', 'flourish', 'flourmill'], ['flour', 'flourish', 'flourmill'], ['flow', 'flower']]"
+    },
+    {
+      "input": "products = [\"car\",\"card\",\"care\",\"careful\",\"careless\"], searchWord = \"ca\"",
+      "output": "[['car', 'card', 'care'], ['car', 'card', 'care']]"
+    },
+    {
+      "input": "products = [\"football\",\"footwear\",\"footbridge\",\"footnote\",\"footrest\",\"footlocker\",\"footrace\",\"footlight\"], searchWord = \"foot\"",
+      "output": "[['football', 'footbridge', 'footlight'], ['football', 'footbridge', 'footlight'], ['football', 'footbridge', 'footlight'], ['football', 'footbridge', 'footlight']]"
+    },
+    {
+      "input": "W",
+      "output": "Error: Solution.suggestedProducts() missing 2 required positional arguments: 'products' and 'searchWord'"
+    },
+    {
+      "input": "products = [\"bicycle\",\"bicycling\",\"bicycle\",\"bicycle\",\"bicycle\"], searchWord = \"bicy\"",
+      "output": "[['bicycle', 'bicycle', 'bicycle'], ['bicycle', 'bicycle', 'bicycle'], ['bicycle', 'bicycle', 'bicycle'], ['bicycle', 'bicycle', 'bicycle']]"
+    },
+    {
+      "input": "products = [\"giraffe\",\"giraffe\",\"giraffe\",\"giraffe\",\"giraffe\",\"giraffe\",\"giraffe\",\"giraffe\",\"giraffe\",\"giraffe\"], searchWord = \"giraff\"",
+      "output": "[['giraffe', 'giraffe', 'giraffe'], ['giraffe', 'giraffe', 'giraffe'], ['giraffe', 'giraffe', 'giraffe'], ['giraffe', 'giraffe', 'giraffe'], ['giraffe', 'giraffe', 'giraffe'], ['giraffe', 'giraffe', 'giraffe']]"
+    },
+    {
+      "input": "products = [\"strawberry\",\"straw\",\"stratosphere\",\"stranger\",\"strategy\"], searchWord = \"stra\"",
+      "output": "[['stranger', 'strategy', 'stratosphere'], ['stranger', 'strategy', 'stratosphere'], ['stranger', 'strategy', 'stratosphere'], ['stranger', 'strategy', 'stratosphere']]"
+    },
+    {
+      "input": "m",
+      "output": "Error: Solution.suggestedProducts() missing 2 required positional arguments: 'products' and 'searchWord'"
+    },
+    {
+      "input": "products = [\"apple\",\"apricot\",\"banana\",\"bat\",\"berry\",\"blackberry\",\"blueberry\"], searchWord = \"ba\"",
+      "output": "[['banana', 'bat', 'berry'], ['banana', 'bat']]"
+    },
+    {
+      "input": "products = [\"watermelon\",\"water\",\"waterfall\",\"watershed\",\"watercolor\"], searchWord = \"water\"",
+      "output": "[['water', 'watercolor', 'waterfall'], ['water', 'watercolor', 'waterfall'], ['water', 'watercolor', 'waterfall'], ['water', 'watercolor', 'waterfall'], ['water', 'watercolor', 'waterfall']]"
+    },
+    {
+      "input": "products = [\"computer\",\"computational\",\"compute\",\"computing\",\"computerized\"], searchWord = \"compute\"",
+      "output": "[['computational', 'compute', 'computer'], ['computational', 'compute', 'computer'], ['computational', 'compute', 'computer'], ['computational', 'compute', 'computer'], ['computational', 'compute', 'computer'], ['computational', 'compute', 'computer'], ['compute', 'computer', 'computerized']]"
+    },
+    {
+      "input": "products = [\"photography\",\"photoalbum\",\"photobook\",\"photoframe\",\"photograph\",\"photokino\",\"photocopy\",\"photography\"], searchWord = \"phot\"",
+      "output": "[['photoalbum', 'photobook', 'photocopy'], ['photoalbum', 'photobook', 'photocopy'], ['photoalbum', 'photobook', 'photocopy'], ['photoalbum', 'photobook', 'photocopy']]"
+    },
+    {
+      "input": "products = [\"strawberry\",\"straw\",\"strange\",\"strategy\",\"stranger\"], searchWord = \"stra\"",
+      "output": "[['strange', 'stranger', 'strategy'], ['strange', 'stranger', 'strategy'], ['strange', 'stranger', 'strategy'], ['strange', 'stranger', 'strategy']]"
+    },
+    {
+      "input": "products = [\"elephant\",\"elephantine\",\"elegant\",\"elevate\",\"elementary\"], searchWord = \"ele\"",
+      "output": "[['elegant', 'elementary', 'elephant'], ['elegant', 'elementary', 'elephant'], ['elegant', 'elementary', 'elephant']]"
+    },
+    {
+      "input": "products = [\"orange\",\"ornament\",\"organ\",\"orchid\",\"orchard\",\"organize\"], searchWord = \"or\"",
+      "output": "[['orange', 'orchard', 'orchid'], ['orange', 'orchard', 'orchid']]"
+    },
+    {
+      "input": "products = [\"aaab\",\"aaac\",\"aaad\",\"aaae\",\"aaaf\",\"aaag\",\"aaah\",\"aaai\",\"aaaj\",\"aaak\",\"aaal\",\"aaam\",\"aaan\",\"aaao\",\"aaap\",\"aaaq\",\"aaar\",\"aaas\",\"aaat\",\"aaau\",\"aaav\",\"aaaw\",\"aaax\",\"aaay\",\"aaaz\"], searchWord = \"aaa\"",
+      "output": "[['aaab', 'aaac', 'aaad'], ['aaab', 'aaac', 'aaad'], ['aaab', 'aaac', 'aaad']]"
+    },
+    {
+      "input": "products = [\"piano\",\"piano\",\"piano\",\"piano\",\"piano\",\"piano\",\"piano\",\"piano\",\"piano\",\"piano\"], searchWord = \"piano\"",
+      "output": "[['piano', 'piano', 'piano'], ['piano', 'piano', 'piano'], ['piano', 'piano', 'piano'], ['piano', 'piano', 'piano'], ['piano', 'piano', 'piano']]"
+    },
+    {
+      "input": "products = [\"firefly\",\"fireworks\",\"firefly\",\"firearm\",\"firetruck\",\"firewall\",\"firefly\",\"firefly\",\"firefly\",\"firefly\"], searchWord = \"fire\"",
+      "output": "[['firearm', 'firefly', 'firefly'], ['firearm', 'firefly', 'firefly'], ['firearm', 'firefly', 'firefly'], ['firearm', 'firefly', 'firefly']]"
+    },
+    {
+      "input": "products = [\"internet\",\"interact\",\"interest\",\"interior\",\"interfere\"], searchWord = \"inte\"",
+      "output": "[['interact', 'interest', 'interfere'], ['interact', 'interest', 'interfere'], ['interact', 'interest', 'interfere'], ['interact', 'interest', 'interfere']]"
+    },
+    {
+      "input": "products = [\"computer\",\"compute\",\"computation\",\"compositor\",\"composite\",\"compress\",\"compression\",\"compressor\",\"compressed\"], searchWord = \"compre\"",
+      "output": "[['composite', 'compositor', 'compress'], ['composite', 'compositor', 'compress'], ['composite', 'compositor', 'compress'], ['composite', 'compositor', 'compress'], ['compress', 'compressed', 'compression'], ['compress', 'compressed', 'compression']]"
+    },
+    {
+      "input": "=",
+      "output": "Error: Solution.suggestedProducts() missing 2 required positional arguments: 'products' and 'searchWord'"
+    },
+    {
+      "input": "products = [\"apple\",\"banana\",\"cherry\",\"date\",\"elderberry\",\"fig\",\"grape\",\"honeydew\",\"kiwi\",\"lemon\",\"mango\",\"nectarine\",\"orange\",\"papaya\",\"quince\",\"raspberry\",\"strawberry\",\"tangerine\",\"ugli\",\"vanilla\",\"watermelon\",\"xigua\",\"yellow\",\"zucchini\"], searchWord = \"a\"",
+      "output": "[['apple']]"
+    },
+    {
+      "input": "products = [\"dog\",\"doghouse\",\"dogwood\",\"dog\",\"doghouse\"], searchWord = \"dog\"",
+      "output": "[['dog', 'dog', 'doghouse'], ['dog', 'dog', 'doghouse'], ['dog', 'dog', 'doghouse']]"
+    },
+    {
+      "input": "products = [\"abcd\",\"abce\",\"abcg\",\"abch\",\"abci\",\"abcj\",\"abck\",\"abcl\",\"abcm\",\"abcn\",\"abcd\",\"abce\",\"abcg\",\"abch\",\"abci\",\"abcj\",\"abck\",\"abcl\",\"abcm\",\"abcn\"], searchWord = \"abc\"",
+      "output": "[['abcd', 'abcd', 'abce'], ['abcd', 'abcd', 'abce'], ['abcd', 'abcd', 'abce']]"
+    },
+    {
+      "input": "k",
+      "output": "Error: Solution.suggestedProducts() missing 2 required positional arguments: 'products' and 'searchWord'"
+    },
+    {
+      "input": "products = [\"radio\",\"radiance\",\"radiant\",\"radioactive\",\"radioactivity\"], searchWord = \"radi\"",
+      "output": "[['radiance', 'radiant', 'radio'], ['radiance', 'radiant', 'radio'], ['radiance', 'radiant', 'radio'], ['radiance', 'radiant', 'radio']]"
+    },
+    {
+      "input": "products = [\"keyboard\",\"keychain\",\"keyhole\",\"keylogger\",\"keynote\"], searchWord = \"key\"",
+      "output": "[['keyboard', 'keychain', 'keyhole'], ['keyboard', 'keychain', 'keyhole'], ['keyboard', 'keychain', 'keyhole']]"
+    },
+    {
+      "input": "j",
+      "output": "Error: Solution.suggestedProducts() missing 2 required positional arguments: 'products' and 'searchWord'"
+    },
+    {
+      "input": "w",
+      "output": "Error: Solution.suggestedProducts() missing 2 required positional arguments: 'products' and 'searchWord'"
+    },
+    {
+      "input": "\"",
+      "output": "Error: Solution.suggestedProducts() missing 2 required positional arguments: 'products' and 'searchWord'"
+    },
+    {
+      "input": "products = [\"starship\",\"stars\",\"start\",\"star\",\"startrek\",\"starfish\"], searchWord = \"star\"",
+      "output": "[['star', 'starfish', 'stars'], ['star', 'starfish', 'stars'], ['star', 'starfish', 'stars'], ['star', 'starfish', 'stars']]"
+    },
+    {
+      "input": "products = [\"ant\",\"antelope\",\"antibody\",\"antacid\",\"antaeus\",\"antarctica\",\"anteater\",\"antelope\",\"antelope\",\"antler\"], searchWord = \"ante\"",
+      "output": "[['ant', 'antacid', 'antaeus'], ['ant', 'antacid', 'antaeus'], ['ant', 'antacid', 'antaeus'], ['anteater', 'antelope', 'antelope']]"
+    },
+    {
+      "input": "products = [\"dog\",\"dove\",\"donkey\",\"dragon\",\"drone\",\"drill\",\"door\"], searchWord = \"dr\"",
+      "output": "[['dog', 'donkey', 'door'], ['dragon', 'drill', 'drone']]"
+    },
+    {
+      "input": "b",
+      "output": "Error: Solution.suggestedProducts() missing 2 required positional arguments: 'products' and 'searchWord'"
+    },
+    {
+      "input": "products = [\"guitar\",\"guitarist\",\"guilt\",\"guilty\",\"gully\"], searchWord = \"guil\"",
+      "output": "[['guilt', 'guilty', 'guitar'], ['guilt', 'guilty', 'guitar'], ['guilt', 'guilty', 'guitar'], ['guilt', 'guilty']]"
+    },
+    {
+      "input": "products = [\"algorithm\",\"algebra\",\"alabama\",\"alaska\",\"alligator\"], searchWord = \"al\"",
+      "output": "[['alabama', 'alaska', 'algebra'], ['alabama', 'alaska', 'algebra']]"
+    },
+    {
+      "input": "products = [\"zebra\",\"zebrafish\",\"zebra\",\"zebrahead\",\"zebra\"], searchWord = \"zebra\"",
+      "output": "[['zebra', 'zebra', 'zebra'], ['zebra', 'zebra', 'zebra'], ['zebra', 'zebra', 'zebra'], ['zebra', 'zebra', 'zebra'], ['zebra', 'zebra', 'zebra']]"
+    },
+    {
+      "input": "products = [\"abcd\",\"abce\",\"abcf\",\"abcg\",\"abch\",\"abci\",\"abcj\",\"abck\",\"abcl\",\"abcm\",\"abcn\"], searchWord = \"abcd\"",
+      "output": "[['abcd', 'abce', 'abcf'], ['abcd', 'abce', 'abcf'], ['abcd', 'abce', 'abcf'], ['abcd']]"
+    },
+    {
+      "input": "products = [\"zebra\",\"zeal\",\"zero\",\"zone\",\"zoo\",\"zap\",\"zest\"], searchWord = \"ze\"",
+      "output": "[['zap', 'zeal', 'zebra'], ['zeal', 'zebra', 'zero']]"
+    },
+    {
+      "input": "products = [\"zebra\",\"zoo\",\"zoom\",\"zoning\",\"zone\",\"zany\",\"zap\",\"zest\",\"zigzag\",\"zither\"], searchWord = \"z\"",
+      "output": "[['zany', 'zap', 'zebra']]"
+    },
+    {
+      "input": "products = [\"piano\",\"piccolo\",\"pipe\",\"pipeorgan\",\"pitchfork\"], searchWord = \"pi\"",
+      "output": "[['piano', 'piccolo', 'pipe'], ['piano', 'piccolo', 'pipe']]"
+    },
+    {
+      "input": "products = [\"umbrella\",\"underwear\",\"universe\",\"unique\",\"unit\",\"unity\",\"university\",\"unicycle\",\"unicorn\",\"unzip\"], searchWord = \"uni\"",
+      "output": "[['umbrella', 'underwear', 'unicorn'], ['underwear', 'unicorn', 'unicycle'], ['unicorn', 'unicycle', 'unique']]"
+    },
+    {
+      "input": "products = [\"product\",\"produces\",\"productivity\",\"productive\",\"productize\",\"production\",\"productivity\",\"productize\",\"productivity\",\"productize\"], searchWord = \"product\"",
+      "output": "[['produces', 'product', 'production'], ['produces', 'product', 'production'], ['produces', 'product', 'production'], ['produces', 'product', 'production'], ['produces', 'product', 'production'], ['produces', 'product', 'production'], ['product', 'production', 'productive']]"
+    },
+    {
+      "input": "[",
+      "output": "Error: Solution.suggestedProducts() missing 2 required positional arguments: 'products' and 'searchWord'"
+    },
+    {
+      "input": "products = [\"umbrella\",\"umbilical\",\"umbrella\",\"umbrella\",\"umbrella\"], searchWord = \"umb\"",
+      "output": "[['umbilical', 'umbrella', 'umbrella'], ['umbilical', 'umbrella', 'umbrella'], ['umbilical', 'umbrella', 'umbrella']]"
+    },
+    {
+      "input": "products = [\"banana\",\"bandanna\",\"bandage\",\"band\",\"bandwidth\"], searchWord = \"band\"",
+      "output": "[['banana', 'band', 'bandage'], ['banana', 'band', 'bandage'], ['banana', 'band', 'bandage'], ['band', 'bandage', 'bandanna']]"
+    }
+  ]
+}

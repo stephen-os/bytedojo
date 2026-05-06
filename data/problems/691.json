@@ -1,0 +1,674 @@
+{
+  "id": 691,
+  "title": "Stickers to Spell Word",
+  "slug": "stickers-to-spell-word",
+  "difficulty": "Hard",
+  "topics": [
+    "Array",
+    "Hash Table",
+    "String",
+    "Dynamic Programming",
+    "Backtracking",
+    "Bit Manipulation",
+    "Memoization",
+    "Bitmask"
+  ],
+  "description": "We are given n different types of stickers. Each sticker has a lowercase English word on it.\nYou would like to spell out the given string target by cutting individual letters from your collection of stickers and rearranging them. You can use each sticker more than once if you want, and you have infinite quantities of each sticker.\nReturn the minimum number of stickers that you need to spell out target. If the task is impossible, return -1.\nNote: In all test cases, all words were chosen randomly from the 1000 most common US English words, and target was chosen as a concatenation of two random words.\nExample 1:\nExample 2:\nConstraints:",
+  "examples": [
+    {
+      "example_num": 1,
+      "example_text": "Input: stickers = [\"with\",\"example\",\"science\"], target = \"thehat\"\nOutput: 3\nExplanation:\nWe can use 2 \"with\" stickers, and 1 \"example\" sticker.\nAfter cutting and rearrange the letters of those stickers, we can form the target \"thehat\".\nAlso, this is the minimum number of stickers necessary to form the target string.",
+      "images": []
+    },
+    {
+      "example_num": 2,
+      "example_text": "Input: stickers = [\"notice\",\"possible\"], target = \"basicbasic\"\nOutput: -1\nExplanation:\nWe cannot form the target \"basicbasic\" from cutting letters from the given stickers.",
+      "images": []
+    }
+  ],
+  "constraints": [
+    "n == stickers.length",
+    "1 <= n <= 50",
+    "1 <= stickers[i].length <= 10",
+    "1 <= target.length <= 15",
+    "stickers[i] and target consist of lowercase English letters."
+  ],
+  "hints": [
+    "We want to perform an exhaustive search, but we need to speed it up based on the input data being random.  \r\n\r\nFor all stickers, we can ignore any letters that are not in the target word.  \r\n\r\nWhen our candidate answer won't be smaller than an answer we have already found, we can stop searching this path.  \r\n\r\nWhen a sticker dominates another, we shouldn't include the dominated sticker in our sticker collection.  [Here, we say a sticker `A` dominates `B` if `A.count(letter) >= B.count(letter)` for all letters.]"
+  ],
+  "code_snippets": {
+    "cpp": "class Solution {\npublic:\n    int minStickers(vector<string>& stickers, string target) {\n        \n    }\n};",
+    "java": "class Solution {\n    public int minStickers(String[] stickers, String target) {\n        \n    }\n}",
+    "python": "class Solution(object):\n    def minStickers(self, stickers, target):\n        \"\"\"\n        :type stickers: List[str]\n        :type target: str\n        :rtype: int\n        \"\"\"\n        ",
+    "python3": "class Solution:\n    def minStickers(self, stickers: List[str], target: str) -> int:\n        ",
+    "c": "int minStickers(char** stickers, int stickersSize, char* target) {\n    \n}",
+    "csharp": "public class Solution {\n    public int MinStickers(string[] stickers, string target) {\n        \n    }\n}",
+    "javascript": "/**\n * @param {string[]} stickers\n * @param {string} target\n * @return {number}\n */\nvar minStickers = function(stickers, target) {\n    \n};",
+    "typescript": "function minStickers(stickers: string[], target: string): number {\n    \n};",
+    "php": "class Solution {\n\n    /**\n     * @param String[] $stickers\n     * @param String $target\n     * @return Integer\n     */\n    function minStickers($stickers, $target) {\n        \n    }\n}",
+    "swift": "class Solution {\n    func minStickers(_ stickers: [String], _ target: String) -> Int {\n        \n    }\n}",
+    "kotlin": "class Solution {\n    fun minStickers(stickers: Array<String>, target: String): Int {\n        \n    }\n}",
+    "dart": "class Solution {\n  int minStickers(List<String> stickers, String target) {\n    \n  }\n}",
+    "golang": "func minStickers(stickers []string, target string) int {\n    \n}",
+    "ruby": "# @param {String[]} stickers\n# @param {String} target\n# @return {Integer}\ndef min_stickers(stickers, target)\n    \nend",
+    "scala": "object Solution {\n    def minStickers(stickers: Array[String], target: String): Int = {\n        \n    }\n}",
+    "rust": "impl Solution {\n    pub fn min_stickers(stickers: Vec<String>, target: String) -> i32 {\n        \n    }\n}",
+    "racket": "(define/contract (min-stickers stickers target)\n  (-> (listof string?) string? exact-integer?)\n  )",
+    "erlang": "-spec min_stickers(Stickers :: [unicode:unicode_binary()], Target :: unicode:unicode_binary()) -> integer().\nmin_stickers(Stickers, Target) ->\n  .",
+    "elixir": "defmodule Solution do\n  @spec min_stickers(stickers :: [String.t], target :: String.t) :: integer\n  def min_stickers(stickers, target) do\n    \n  end\nend"
+  },
+  "input_output": [
+    {
+      "input": "stickers = [\"aaa\",\"bbb\"], target = \"aabbbccc\"",
+      "output": "-1"
+    },
+    {
+      "input": "stickers = [\"a\",\"b\",\"c\"], target = \"abc\"",
+      "output": "3"
+    },
+    {
+      "input": "stickers = [\"abc\",\"abc\"], target = \"abcabc\"",
+      "output": "2"
+    },
+    {
+      "input": "stickers = [\"abcd\"], target = \"abcdabcd\"",
+      "output": "2"
+    },
+    {
+      "input": "stickers = [\"abc\"], target = \"d\"",
+      "output": "-1"
+    },
+    {
+      "input": "stickers = [\"notice\",\"possible\"], target = \"basicbasic\"",
+      "output": "-1"
+    },
+    {
+      "input": "stickers = [\"abc\"], target = \"abcd\"",
+      "output": "-1"
+    },
+    {
+      "input": "stickers = [\"abc\",\"ab\",\"bc\"], target = \"abc\"",
+      "output": "1"
+    },
+    {
+      "input": "stickers = [\"abc\",\"def\"], target = \"abcdef\"",
+      "output": "2"
+    },
+    {
+      "input": "stickers = [\"a\"], target = \"a\"",
+      "output": "1"
+    },
+    {
+      "input": "stickers = [\"aabbcc\",\"abc\"], target = \"aabbbccc\"",
+      "output": "2"
+    },
+    {
+      "input": "stickers = [\"hello\",\"world\"], target = \"hold\"",
+      "output": "2"
+    },
+    {
+      "input": "stickers = [\"abc\",\"def\",\"ghi\"], target = \"adgbehcfi\"",
+      "output": "3"
+    },
+    {
+      "input": "stickers = [\"aabb\",\"ccdd\"], target = \"abcd\"",
+      "output": "2"
+    },
+    {
+      "input": "stickers = [\"with\",\"example\",\"science\"], target = \"thehat\"",
+      "output": "3"
+    },
+    {
+      "input": "stickers = [\"hello\",\"world\"], target = \"helloworld\"",
+      "output": "2"
+    },
+    {
+      "input": "stickers = [\"aaa\",\"aa\",\"a\"], target = \"aaaaaaaaa\"",
+      "output": "3"
+    },
+    {
+      "input": "stickers = [\"hello\",\"world\",\"abc\",\"def\",\"ghi\"], target = \"helloworldabcdefghidefghidefghidefghidefghidefghidefghidefghi\"",
+      "output": null
+    },
+    {
+      "input": "stickers = [\"xyz\",\"zyx\",\"yxz\"], target = \"zyxyzyxyzyx\"",
+      "output": "5"
+    },
+    {
+      "input": "stickers = [\"hello\",\"world\",\"again\"], target = \"aginwodlloleh\"",
+      "output": "3"
+    },
+    {
+      "input": "stickers = [\"abcdef\",\"ghijkl\",\"mnopqr\"], target = \"abcdefghijklmnopqr\"",
+      "output": "3"
+    },
+    {
+      "input": "stickers = [\"mississippi\",\"helloworld\"], target = \"mississippiworldhello\"",
+      "output": "2"
+    },
+    {
+      "input": "stickers = [\"aabb\",\"bbcc\",\"cdda\"], target = \"aabbccddaabb\"",
+      "output": "4"
+    },
+    {
+      "input": "stickers = [\"sun\",\"moon\",\"star\"], target = \"starstarsun\"",
+      "output": "3"
+    },
+    {
+      "input": "stickers = [\"one\",\"two\",\"three\",\"four\",\"five\"], target = \"onetwothreefourfive\"",
+      "output": "5"
+    },
+    {
+      "input": "stickers = [\"mississippi\",\"pennsylvania\"], target = \"mississippipennsylvania\"",
+      "output": "2"
+    },
+    {
+      "input": "stickers = [\"aaaaa\",\"bbbbb\",\"ccccc\",\"ddddd\",\"eeeee\"], target = \"abcdeabcde\"",
+      "output": "5"
+    },
+    {
+      "input": "stickers = [\"flower\",\"garden\",\"sun\",\"moon\",\"star\"], target = \"flowergardenstar\"",
+      "output": "3"
+    },
+    {
+      "input": "stickers = [\"aabbcc\",\"abcabc\",\"aabbc\"], target = \"abcabcabc\"",
+      "output": "2"
+    },
+    {
+      "input": "stickers = [\"alphabet\",\"soup\",\"letters\",\"words\",\"sticker\",\"pack\"], target = \"alphabetwordsoupstickersoup\"",
+      "output": "5"
+    },
+    {
+      "input": "stickers = [\"ab\",\"bc\",\"cd\"], target = \"abcdabcd\"",
+      "output": "4"
+    },
+    {
+      "input": "stickers = [\"quick\",\"brown\",\"fox\"], target = \"quickbrownfox\"",
+      "output": "3"
+    },
+    {
+      "input": "stickers = [\"abcd\",\"efgh\",\"ijkl\"], target = \"dgheijlkfabci\"",
+      "output": "4"
+    },
+    {
+      "input": "stickers = [\"apple\",\"banana\",\"cherry\"], target = \"bananaapple\"",
+      "output": "2"
+    },
+    {
+      "input": "stickers = [\"red\",\"blue\",\"green\"], target = \"bluegreenred\"",
+      "output": "3"
+    },
+    {
+      "input": "stickers = [\"abcd\",\"dcba\",\"abdc\",\"bacd\"], target = \"abcdabcd\"",
+      "output": "2"
+    },
+    {
+      "input": "stickers = [\"zzz\",\"zzzz\",\"zzzzz\"], target = \"zzzzzzzzzzzzzzz\"",
+      "output": "3"
+    },
+    {
+      "input": "stickers = [\"programming\",\"is\",\"fun\"], target = \"funisprogramming\"",
+      "output": "3"
+    },
+    {
+      "input": "stickers = [\"leetcode\",\"love\",\"coding\"], target = \"lovecodingleetcode\"",
+      "output": "3"
+    },
+    {
+      "input": "stickers = [\"hello\",\"world\",\"python\"], target = \"pythonhello\"",
+      "output": "2"
+    },
+    {
+      "input": "stickers = [\"aabbcc\",\"abc\",\"abac\"], target = \"aabbccabc\"",
+      "output": "2"
+    },
+    {
+      "input": "stickers = [\"abacd\",\"bdfgh\",\"cdhij\",\"efgik\",\"ghklm\"], target = \"abcdefghijklim\"",
+      "output": "4"
+    },
+    {
+      "input": "stickers = [\"hello\",\"world\",\"again\"], target = \"againhelloagainworld\"",
+      "output": "4"
+    },
+    {
+      "input": "stickers = [\"puzzle\",\"piece\",\"fit\"], target = \"fittingpuzzle\"",
+      "output": "-1"
+    },
+    {
+      "input": "stickers = [\"happy\",\"birthday\",\"friend\"], target = \"happybirthdayfriend\"",
+      "output": "3"
+    },
+    {
+      "input": "stickers = [\"aaa\",\"bbb\",\"ccc\"], target = \"aabbbccc\"",
+      "output": "3"
+    },
+    {
+      "input": "stickers = [\"hello\",\"world\",\"abc\",\"def\",\"ghi\",\"jkl\"], target = \"helloworldabcdefghijk\"",
+      "output": "6"
+    },
+    {
+      "input": "stickers = [\"sunshine\",\"rainbow\",\"cloud\"], target = \"sunshinecloud\"",
+      "output": "2"
+    },
+    {
+      "input": "stickers = [\"xyz\",\"abc\",\"def\",\"ghi\"], target = \"zyxwvutsrqponmlkjihgfedcba\"",
+      "output": "-1"
+    },
+    {
+      "input": "stickers = [\"zoo\",\"book\",\"look\"], target = \"bookzoolook\"",
+      "output": "3"
+    },
+    {
+      "input": "stickers = [\"magic\",\"wand\",\"spell\"], target = \"spellmagic\"",
+      "output": "2"
+    },
+    {
+      "input": "stickers = [\"aabbcc\",\"bbccdd\",\"aaccdd\"], target = \"aabbccddee\"",
+      "output": "-1"
+    },
+    {
+      "input": "stickers = [\"cat\",\"dog\",\"bird\"], target = \"cattog\"",
+      "output": "3"
+    },
+    {
+      "input": "stickers = [\"orange\",\"juice\",\"smoothie\"], target = \"smoothieorangejuice\"",
+      "output": "3"
+    },
+    {
+      "input": "stickers = [\"aabb\",\"bbcc\",\"ccdd\"], target = \"bbaaccd\"",
+      "output": "2"
+    },
+    {
+      "input": "stickers = [\"quick\",\"brown\",\"fox\",\"jumps\",\"over\",\"lazy\"], target = \"quickbrownfoxjumpsoveralazydog\"",
+      "output": "-1"
+    },
+    {
+      "input": "stickers = [\"algorithm\",\"data\",\"structure\"], target = \"datadstructure\"",
+      "output": "3"
+    },
+    {
+      "input": "stickers = [\"cat\",\"bat\",\"rat\",\"car\"], target = \"catabtar\"",
+      "output": "3"
+    },
+    {
+      "input": "stickers = [\"zebra\",\"lion\",\"tiger\"], target = \"tigerlionzebra\"",
+      "output": "3"
+    },
+    {
+      "input": "stickers = [\"zebra\",\"xylophone\",\"quartz\",\"violet\",\"umbrella\"], target = \"quartzxylophonevioletzebraumbrella\"",
+      "output": "Execution timed out"
+    },
+    {
+      "input": "stickers = [\"apple\",\"banana\",\"cherry\"], target = \"bananaapplecherry\"",
+      "output": "3"
+    },
+    {
+      "input": "stickers = [\"algorithm\",\"data\",\"structure\"], target = \"algorithmdatastructure\"",
+      "output": "3"
+    },
+    {
+      "input": "stickers = [\"repeat\",\"again\",\"once\"], target = \"repeatagainonce\"",
+      "output": "3"
+    },
+    {
+      "input": "stickers = [\"sticker\",\"stamps\",\"books\"], target = \"tsickerbomskps\"",
+      "output": "3"
+    },
+    {
+      "input": "stickers = [\"abcd\",\"dcba\",\"efgh\",\"hgf\",\"ijkl\",\"lkji\"], target = \"abcdefghijklij\"",
+      "output": "4"
+    },
+    {
+      "input": "stickers = [\"abcdefg\",\"ghijklm\",\"nopqrstu\",\"vwxyz\"], target = \"abcdefghijklmnopqrstuvwxyz\"",
+      "output": "4"
+    },
+    {
+      "input": "stickers = [\"aaaa\",\"bbbb\",\"cccc\"], target = \"aabbcc\"",
+      "output": "3"
+    },
+    {
+      "input": "stickers = [\"aabbccddeeff\",\"bbccddeeffgghh\",\"ccddeeffgghhiijj\"], target = \"aabbccddeeffgghhiijj\"",
+      "output": "2"
+    },
+    {
+      "input": "stickers = [\"sticker\",\"book\",\"a\"], target = \"stickers\"",
+      "output": "2"
+    },
+    {
+      "input": "stickers = [\"x\",\"y\",\"z\"], target = \"zyxzyxzyx\"",
+      "output": "9"
+    },
+    {
+      "input": "stickers = [\"abcd\",\"efgh\",\"ijkl\"], target = \"ijklabcdeffgh\"",
+      "output": "4"
+    },
+    {
+      "input": "stickers = [\"sticker\",\"book\",\"target\"], target = \"booktarget\"",
+      "output": "2"
+    },
+    {
+      "input": "stickers = [\"hello\",\"world\",\"python\"], target = \"pythonworldhello\"",
+      "output": "3"
+    },
+    {
+      "input": "stickers = [\"aabbcc\",\"ddeeff\",\"gghhii\",\"jjkkll\",\"mmnnoo\"], target = \"aabbccddeeffgghhiijjkkllmmnnoo\"",
+      "output": "5"
+    },
+    {
+      "input": "stickers = [\"jump\",\"over\",\"lazy\"], target = \"jumplazyover\"",
+      "output": "3"
+    },
+    {
+      "input": "stickers = [\"abcdef\",\"ghijkl\",\"mnopqr\",\"stuvwx\",\"yzabcd\"], target = \"abcdefghijklmnopqrstuvwxyz\"",
+      "output": "5"
+    },
+    {
+      "input": "stickers = [\"abcdefghij\",\"klmnopqrst\",\"uvwxyz\",\"mnopqrstuv\",\"wxyzabcde\"], target = \"zyxwvutsrqponmlkjihgfedcba\"",
+      "output": "3"
+    },
+    {
+      "input": "stickers = [\"hello\",\"world\",\"again\"], target = \"helloworldhelloagainworld\"",
+      "output": "5"
+    },
+    {
+      "input": "stickers = [\"unique\",\"letters\"], target = \"uniquelettersuniqueletters\"",
+      "output": "4"
+    },
+    {
+      "input": "stickers = [\"cat\",\"dog\",\"bird\"], target = \"birdcatdog\"",
+      "output": "3"
+    },
+    {
+      "input": "stickers = [\"example\",\"science\",\"with\"], target = \"thehatexample\"",
+      "output": "4"
+    },
+    {
+      "input": "stickers = [\"abcdef\",\"ghijkl\",\"mnopqr\",\"stuvwx\",\"yz\"], target = \"abcdefghijklmnopqrstuvwxyz\"",
+      "output": "5"
+    },
+    {
+      "input": "stickers = [\"laptop\",\"phone\",\"tablet\"], target = \"telephonetablet\"",
+      "output": "4"
+    },
+    {
+      "input": "stickers = [\"abcd\",\"efgh\",\"ijkl\"], target = \"abcdefghijlkl\"",
+      "output": "4"
+    },
+    {
+      "input": "stickers = [\"random\",\"words\",\"here\",\"to\",\"test\",\"sticker\",\"functionality\"], target = \"randomwordsherefunctionalityteststicker\"",
+      "output": "Execution timed out"
+    },
+    {
+      "input": "stickers = [\"abcdef\",\"ghijkl\",\"mnopqr\"], target = \"mnopqrfedcba\"",
+      "output": "2"
+    },
+    {
+      "input": "stickers = [\"overlap\",\"partial\",\"coverage\"], target = \"overlappartialcoverage\"",
+      "output": "3"
+    },
+    {
+      "input": "stickers = [\"aabb\",\"bbcc\",\"ccdd\",\"ddeeff\",\"ffgg\"], target = \"aabbccddeeffgg\"",
+      "output": "4"
+    },
+    {
+      "input": "stickers = [\"zzz\",\"yyy\",\"xxx\",\"www\"], target = \"zzzyyyxxxwww\"",
+      "output": "4"
+    },
+    {
+      "input": "stickers = [\"coding\",\"is\",\"fun\"], target = \"sindgnif\"",
+      "output": "3"
+    },
+    {
+      "input": "stickers = [\"happy\",\"birthday\",\"party\"], target = \"birthdaypartyparty\"",
+      "output": "3"
+    },
+    {
+      "input": "stickers = [\"zzzz\",\"yyyy\",\"xxxx\"], target = \"zyxwvutsrqponmlkjihgfedcba\"",
+      "output": "-1"
+    },
+    {
+      "input": "stickers = [\"pizza\",\"pie\",\"cake\"], target = \"pizzacakepie\"",
+      "output": "3"
+    },
+    {
+      "input": "stickers = [\"fox\",\"quick\",\"brown\"], target = \"brownquickfox\"",
+      "output": "3"
+    },
+    {
+      "input": "stickers = [\"sticky\",\"loop\",\"again\"], target = \"programming\"",
+      "output": "-1"
+    },
+    {
+      "input": "stickers = [\"python\",\"java\",\"cplus\"], target = \"javapythoncpluspython\"",
+      "output": "4"
+    },
+    {
+      "input": "stickers = [\"steak\",\"egg\",\"bacon\"], target = \"eggnestake\"",
+      "output": "4"
+    },
+    {
+      "input": "stickers = [\"xy\",\"yz\",\"zx\"], target = \"xyzyzxzyxzyzx\"",
+      "output": "7"
+    },
+    {
+      "input": "stickers = [\"abcdef\",\"ghijkl\",\"mnopqr\",\"stuvwx\",\"yzabcd\",\"efghij\",\"klmnop\",\"qrstuv\",\"wxzyab\"], target = \"abcdefghijklmnopqrstuvwxyzabc\"",
+      "output": "5"
+    },
+    {
+      "input": "stickers = [\"one\",\"two\",\"three\",\"four\",\"five\",\"six\"], target = \"onetwothreefourfivesix\"",
+      "output": "6"
+    },
+    {
+      "input": "stickers = [\"one\",\"two\",\"three\"], target = \"onetwothreeonetwothree\"",
+      "output": "6"
+    },
+    {
+      "input": "stickers = [\"dog\",\"cat\",\"bird\"], target = \"catdogbird\"",
+      "output": "3"
+    },
+    {
+      "input": "stickers = [\"one\",\"two\",\"three\"], target = \"onetwothree\"",
+      "output": "3"
+    },
+    {
+      "input": "stickers = [\"red\",\"green\",\"blue\"], target = \"greenbluegreengreen\"",
+      "output": "4"
+    },
+    {
+      "input": "stickers = [\"a\",\"b\",\"c\",\"d\",\"e\",\"f\",\"g\",\"h\",\"i\",\"j\",\"k\",\"l\",\"m\",\"n\",\"o\",\"p\",\"q\",\"r\",\"s\",\"t\",\"u\",\"v\",\"w\",\"x\",\"y\",\"z\"], target = \"abcdefghijklmnopqrstuvwxyz\"",
+      "output": "Execution timed out"
+    },
+    {
+      "input": "stickers = [\"up\",\"down\",\"left\",\"right\"], target = \"rightleftdownup\"",
+      "output": "4"
+    },
+    {
+      "input": "stickers = [\"red\",\"blue\",\"green\",\"yellow\",\"purple\"], target = \"bluegreenyellowpurple\"",
+      "output": "4"
+    },
+    {
+      "input": "stickers = [\"one\",\"two\",\"three\"], target = \"threetwoone\"",
+      "output": "3"
+    },
+    {
+      "input": "stickers = [\"quick\",\"brown\",\"fox\"], target = \"uqcfkibrowno\"",
+      "output": "3"
+    },
+    {
+      "input": "stickers = [\"a\",\"ab\",\"abc\",\"abcd\",\"abcde\"], target = \"abcdeabcde\"",
+      "output": "2"
+    },
+    {
+      "input": "stickers = [\"cat\",\"dog\",\"bird\"], target = \"cogbat\"",
+      "output": "3"
+    },
+    {
+      "input": "stickers = [\"programming\",\"in\",\"python\"], target = \"grammipnnoingtih\"",
+      "output": "4"
+    },
+    {
+      "input": "stickers = [\"aabbcc\",\"bbccdd\",\"ccddeeff\",\"ddeeffgg\"], target = \"aabbccddeeffgg\"",
+      "output": "2"
+    },
+    {
+      "input": "stickers = [\"apple\",\"banana\",\"cherry\",\"date\"], target = \"abacaxibananacherry\"",
+      "output": "-1"
+    },
+    {
+      "input": "stickers = [\"abcdefgh\",\"ijklmnop\",\"qrstuvwx\",\"yz\"], target = \"abcdefghijklmnopqrstuvwxyz\"",
+      "output": "4"
+    },
+    {
+      "input": "stickers = [\"abc\",\"bcd\",\"cde\",\"def\",\"efg\"], target = \"abcdefg\"",
+      "output": "3"
+    },
+    {
+      "input": "stickers = [\"red\",\"blue\",\"green\"], target = \"greengreenblue\"",
+      "output": "3"
+    },
+    {
+      "input": "stickers = [\"hello\",\"world\",\"python\"], target = \"worldhellopython\"",
+      "output": "3"
+    },
+    {
+      "input": "stickers = [\"zzz\",\"yyy\",\"xxx\"], target = \"zzzyyyxxx\"",
+      "output": "3"
+    },
+    {
+      "input": "stickers = [\"fast\",\"food\",\"truck\"], target = \"truckfastfood\"",
+      "output": "3"
+    },
+    {
+      "input": "stickers = [\"abcd\",\"dcba\",\"abcd\"], target = \"abcdabcdabcd\"",
+      "output": "3"
+    },
+    {
+      "input": "stickers = [\"test\",\"cases\",\"here\",\"for\",\"the\",\"sticker\",\"problem\"], target = \"testcaseshereforthestickerproblem\"",
+      "output": "Execution timed out"
+    },
+    {
+      "input": "stickers = [\"aabbcc\",\"ddeeff\",\"gghhii\"], target = \"abcdefghi\"",
+      "output": "3"
+    },
+    {
+      "input": "stickers = [\"hello\",\"world\",\"foo\",\"bar\",\"baz\"], target = \"helloworldfoobarbaz\"",
+      "output": "5"
+    },
+    {
+      "input": "stickers = [\"hello\",\"world\",\"python\",\"programming\"], target = \"helloprogrammingworld\"",
+      "output": "3"
+    },
+    {
+      "input": "stickers = [\"repeated\",\"words\",\"here\"], target = \"repeatedwordshere\"",
+      "output": "3"
+    },
+    {
+      "input": "stickers = [\"happy\",\"new\",\"year\"], target = \"happynewyear\"",
+      "output": "3"
+    },
+    {
+      "input": "stickers = [\"jump\",\"high\",\"long\"], target = \"highjumplong\"",
+      "output": "3"
+    },
+    {
+      "input": "stickers = [\"sticker\",\"sticker\",\"sticker\"], target = \"stickers\"",
+      "output": "2"
+    },
+    {
+      "input": "stickers = [\"ab\",\"cd\",\"ef\",\"gh\",\"ij\",\"kl\",\"mn\",\"op\",\"qr\",\"st\",\"uv\",\"wx\",\"yz\"], target = \"abcdefghijklmnopqrstuvwxyz\"",
+      "output": "13"
+    },
+    {
+      "input": "stickers = [\"abcd\",\"efgh\",\"ijkl\",\"mnop\",\"qrst\",\"uvwx\",\"yz\"], target = \"abcdefghijklmnopqrstuvwxyzzzzzzzzzzzzzzzz\"",
+      "output": "Execution timed out"
+    },
+    {
+      "input": "stickers = [\"ab\",\"bc\",\"ca\"], target = \"abcabcabc\"",
+      "output": "5"
+    },
+    {
+      "input": "stickers = [\"repeated\",\"words\",\"here\",\"in\",\"this\",\"example\"], target = \"repeatedwordshereinthisexample\"",
+      "output": "6"
+    },
+    {
+      "input": "stickers = [\"abcd\",\"efgh\",\"ijkl\"], target = \"fedcbahjiglke\"",
+      "output": "4"
+    },
+    {
+      "input": "stickers = [\"hello\",\"world\",\"wide\"], target = \"worldwide\"",
+      "output": "2"
+    },
+    {
+      "input": "stickers = [\"abcdefg\",\"hijklmn\",\"opqrstu\",\"vwxyz\"], target = \"abcdefghijklmnopqrstuvwxyz\"",
+      "output": "4"
+    },
+    {
+      "input": "stickers = [\"jump\",\"over\",\"lazy\"], target = \"lazyjumpover\"",
+      "output": "3"
+    },
+    {
+      "input": "stickers = [\"sun\",\"moon\",\"star\"], target = \"moonstarsun\"",
+      "output": "3"
+    },
+    {
+      "input": "stickers = [\"apple\",\"orange\",\"banana\"], target = \"poeplange\"",
+      "output": "2"
+    },
+    {
+      "input": "stickers = [\"one\",\"two\",\"three\"], target = \"threethreetwoone\"",
+      "output": "4"
+    },
+    {
+      "input": "stickers = [\"xylophone\",\"piano\",\"violin\"], target = \"xylophonepianoviolin\"",
+      "output": "3"
+    },
+    {
+      "input": "stickers = [\"aabbcc\",\"bbccdd\",\"ccddaa\"], target = \"aabbccbbccddccddaa\"",
+      "output": "3"
+    },
+    {
+      "input": "stickers = [\"abcdef\",\"abcde\",\"abcd\"], target = \"abcdef\"",
+      "output": "1"
+    },
+    {
+      "input": "stickers = [\"abcde\",\"fghij\",\"klmno\"], target = \"ejihfckgmldnbaio\"",
+      "output": "4"
+    },
+    {
+      "input": "stickers = [\"abcdef\",\"ghijkl\",\"mnopqr\"], target = \"jklmnopqrfgedbica\"",
+      "output": "3"
+    },
+    {
+      "input": "stickers = [\"abc\",\"def\",\"ghi\",\"jkl\"], target = \"abcdefghijkln\"",
+      "output": "-1"
+    },
+    {
+      "input": "stickers = [\"abcde\",\"fghij\",\"klmno\",\"pqrst\",\"uvwxy\"], target = \"abcdefghijklmnopqrstuvwxyz\"",
+      "output": "-1"
+    },
+    {
+      "input": "stickers = [\"quick\",\"brown\",\"fox\",\"jumps\",\"over\",\"lazy\",\"dog\"], target = \"quickbrownfoxjumpsoverlazydog\"",
+      "output": "7"
+    },
+    {
+      "input": "stickers = [\"race\",\"car\",\"seat\"], target = \"crecarstae\"",
+      "output": "3"
+    },
+    {
+      "input": "stickers = [\"xy\",\"yx\",\"zz\"], target = \"zyxzyxzyx\"",
+      "output": "5"
+    },
+    {
+      "input": "stickers = [\"xy\",\"yz\",\"za\",\"ax\"], target = \"xyzaxyzaxyza\"",
+      "output": "6"
+    },
+    {
+      "input": "stickers = [\"the\",\"quick\",\"brown\",\"fox\",\"jumps\",\"over\",\"lazy\",\"dog\"], target = \"thequickbrownfoxjumpsoveralazydog\"",
+      "output": "Execution timed out"
+    },
+    {
+      "input": "stickers = [\"cat\",\"dog\",\"bird\"], target = \"birdcattwo\"",
+      "output": "-1"
+    }
+  ]
+}

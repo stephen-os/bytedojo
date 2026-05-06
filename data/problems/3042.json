@@ -1,0 +1,540 @@
+{
+  "id": 3042,
+  "title": "Count Prefix and Suffix Pairs I",
+  "slug": "count-prefix-and-suffix-pairs-i",
+  "difficulty": "Easy",
+  "topics": [
+    "Array",
+    "String",
+    "Trie",
+    "Rolling Hash",
+    "String Matching",
+    "Hash Function"
+  ],
+  "description": "You are given a 0-indexed string array words.\nLet's define a boolean function isPrefixAndSuffix that takes two strings, str1 and str2:\nFor example, isPrefixAndSuffix(\"aba\", \"ababa\") is true because \"aba\" is a prefix of \"ababa\" and also a suffix, but isPrefixAndSuffix(\"abc\", \"abcd\") is false.\nReturn an integer denoting the number of index pairs (i, j) such that i < j, and isPrefixAndSuffix(words[i], words[j]) is true.\nExample 1:\nExample 2:\nExample 3:\nConstraints:",
+  "examples": [
+    {
+      "example_num": 1,
+      "example_text": "Input: words = [\"a\",\"aba\",\"ababa\",\"aa\"]\nOutput: 4\nExplanation: In this example, the counted index pairs are:\ni = 0 and j = 1 because isPrefixAndSuffix(\"a\", \"aba\") is true.\ni = 0 and j = 2 because isPrefixAndSuffix(\"a\", \"ababa\") is true.\ni = 0 and j = 3 because isPrefixAndSuffix(\"a\", \"aa\") is true.\ni = 1 and j = 2 because isPrefixAndSuffix(\"aba\", \"ababa\") is true.\nTherefore, the answer is 4.",
+      "images": []
+    },
+    {
+      "example_num": 2,
+      "example_text": "Input: words = [\"pa\",\"papa\",\"ma\",\"mama\"]\nOutput: 2\nExplanation: In this example, the counted index pairs are:\ni = 0 and j = 1 because isPrefixAndSuffix(\"pa\", \"papa\") is true.\ni = 2 and j = 3 because isPrefixAndSuffix(\"ma\", \"mama\") is true.\nTherefore, the answer is 2.",
+      "images": []
+    },
+    {
+      "example_num": 3,
+      "example_text": "Input: words = [\"abab\",\"ab\"]\nOutput: 0\nExplanation: In this example, the only valid index pair is i = 0 and j = 1, and isPrefixAndSuffix(\"abab\", \"ab\") is false.\nTherefore, the answer is 0.",
+      "images": []
+    }
+  ],
+  "constraints": [
+    "1 <= words.length <= 50",
+    "1 <= words[i].length <= 10",
+    "words[i] consists only of lowercase English letters."
+  ],
+  "hints": [
+    "Iterate through all index pairs <code>(i, j)</code>, such that <code>i < j</code>, and check <code>isPrefixAndSuffix(words[i], words[j])</code>.",
+    "The answer is the total number of pairs where <code>isPrefixAndSuffix(words[i], words[j]) == true</code>."
+  ],
+  "code_snippets": {
+    "cpp": "class Solution {\npublic:\n    int countPrefixSuffixPairs(vector<string>& words) {\n        \n    }\n};",
+    "java": "class Solution {\n    public int countPrefixSuffixPairs(String[] words) {\n        \n    }\n}",
+    "python": "class Solution(object):\n    def countPrefixSuffixPairs(self, words):\n        \"\"\"\n        :type words: List[str]\n        :rtype: int\n        \"\"\"\n        ",
+    "python3": "class Solution:\n    def countPrefixSuffixPairs(self, words: List[str]) -> int:\n        ",
+    "c": "int countPrefixSuffixPairs(char** words, int wordsSize) {\n    \n}",
+    "csharp": "public class Solution {\n    public int CountPrefixSuffixPairs(string[] words) {\n        \n    }\n}",
+    "javascript": "/**\n * @param {string[]} words\n * @return {number}\n */\nvar countPrefixSuffixPairs = function(words) {\n    \n};",
+    "typescript": "function countPrefixSuffixPairs(words: string[]): number {\n    \n};",
+    "php": "class Solution {\n\n    /**\n     * @param String[] $words\n     * @return Integer\n     */\n    function countPrefixSuffixPairs($words) {\n        \n    }\n}",
+    "swift": "class Solution {\n    func countPrefixSuffixPairs(_ words: [String]) -> Int {\n        \n    }\n}",
+    "kotlin": "class Solution {\n    fun countPrefixSuffixPairs(words: Array<String>): Int {\n        \n    }\n}",
+    "dart": "class Solution {\n  int countPrefixSuffixPairs(List<String> words) {\n    \n  }\n}",
+    "golang": "func countPrefixSuffixPairs(words []string) int {\n    \n}",
+    "ruby": "# @param {String[]} words\n# @return {Integer}\ndef count_prefix_suffix_pairs(words)\n    \nend",
+    "scala": "object Solution {\n    def countPrefixSuffixPairs(words: Array[String]): Int = {\n        \n    }\n}",
+    "rust": "impl Solution {\n    pub fn count_prefix_suffix_pairs(words: Vec<String>) -> i32 {\n        \n    }\n}",
+    "racket": "(define/contract (count-prefix-suffix-pairs words)\n  (-> (listof string?) exact-integer?)\n  )",
+    "erlang": "-spec count_prefix_suffix_pairs(Words :: [unicode:unicode_binary()]) -> integer().\ncount_prefix_suffix_pairs(Words) ->\n  .",
+    "elixir": "defmodule Solution do\n  @spec count_prefix_suffix_pairs(words :: [String.t]) :: integer\n  def count_prefix_suffix_pairs(words) do\n    \n  end\nend"
+  },
+  "input_output": [
+    {
+      "input": "words = [\"abc\",\"abcabc\",\"bc\",\"abcabcabc\"]",
+      "output": "3"
+    },
+    {
+      "input": "words = [\"xyz\", \"xyzxyz\", \"zyx\", \"z\", \"x\"]",
+      "output": "1"
+    },
+    {
+      "input": "words = [\"hello\",\"hellohello\",\"hellohellohello\"]",
+      "output": "3"
+    },
+    {
+      "input": "words = [\"z\", \"zaz\", \"zzz\", \"zazaz\"]",
+      "output": "4"
+    },
+    {
+      "input": "words = [\"aaa\", \"aaaa\", \"aaaaa\", \"aa\", \"a\"]",
+      "output": "3"
+    },
+    {
+      "input": "words = [\"cat\",\"tac\",\"catcat\",\"tacatc\"]",
+      "output": "1"
+    },
+    {
+      "input": "words = [\"prefix\", \"prefixprefix\", \"fixpre\", \"refixpre\"]",
+      "output": "1"
+    },
+    {
+      "input": "words = [\"repeat\", \"repeattorepeat\", \"eat\", \"eateateat\"]",
+      "output": "2"
+    },
+    {
+      "input": "words = [\"suffix\", \"suffixsuffix\", \"fixsuf\", \"ffixsuf\"]",
+      "output": "1"
+    },
+    {
+      "input": "words = [\"pa\",\"papa\",\"ma\",\"mama\"]",
+      "output": "2"
+    },
+    {
+      "input": "words = [\"m\",\"mnm\",\"nmn\",\"mnmnm\"]",
+      "output": "3"
+    },
+    {
+      "input": "words = [\"test\", \"testing\", \"testtest\", \"sett\"]",
+      "output": "1"
+    },
+    {
+      "input": "words = [\"y\",\"yxy\",\"xyx\",\"yxyxy\"]",
+      "output": "3"
+    },
+    {
+      "input": "words = [\"hello\", \"hellohello\", \"world\", \"worldworld\"]",
+      "output": "2"
+    },
+    {
+      "input": "words = [\"x\",\"xx\",\"xxx\",\"xxxx\"]",
+      "output": "6"
+    },
+    {
+      "input": "words = [\"z\",\"zzz\",\"zzzzz\",\"zzzzzzz\"]",
+      "output": "6"
+    },
+    {
+      "input": "words = [\"dog\",\"dogcat\",\"dogcatdog\"]",
+      "output": "1"
+    },
+    {
+      "input": "words = [\"a\",\"aba\",\"ababa\",\"aa\"]",
+      "output": "4"
+    },
+    {
+      "input": "words = [\"t\",\"tt\",\"ttt\",\"tttt\",\"ttttt\",\"tttttt\"]",
+      "output": "15"
+    },
+    {
+      "input": "words = [\"aabb\",\"aabbcc\",\"aabbccaabb\"]",
+      "output": "1"
+    },
+    {
+      "input": "words = [\"abc\", \"abcabc\", \"ab\", \"a\"]",
+      "output": "1"
+    },
+    {
+      "input": "words = [\"z\",\"zzz\",\"zzzz\",\"zzzzz\"]",
+      "output": "6"
+    },
+    {
+      "input": "words = [\"abab\",\"ab\"]",
+      "output": "0"
+    },
+    {
+      "input": "words = [\"x\", \"xx\", \"xxx\", \"xxxx\"]",
+      "output": "6"
+    },
+    {
+      "input": "words = [\"s\",\"ss\",\"sss\",\"ssss\",\"sssss\"]",
+      "output": "10"
+    },
+    {
+      "input": "words = [\"a\", \"b\", \"c\", \"d\"]",
+      "output": "0"
+    },
+    {
+      "input": "words = [\"hello\", \"hellohello\", \"lohel\", \"ohelloh\"]",
+      "output": "1"
+    },
+    {
+      "input": "words = [\"test\", \"testtest\", \"sttes\", \"ttest\"]",
+      "output": "1"
+    },
+    {
+      "input": "words = [\"abc\",\"abcabc\",\"abcabcabc\"]",
+      "output": "3"
+    },
+    {
+      "input": "words = [\"abc\", \"abcabc\", \"bcb\", \"bcbcbcb\"]",
+      "output": "2"
+    },
+    {
+      "input": "words = [\"xy\",\"xyxy\",\"yxyx\",\"xyxyxy\",\"yxyxyx\",\"xyxyxyxy\",\"yxyxyxyx\",\"xyxyxyxyxy\"]",
+      "output": "13"
+    },
+    {
+      "input": "words = [\"abc\",\"cab\",\"bac\",\"abcabc\",\"abcabcabc\",\"cababcabc\",\"bacbacbac\"]",
+      "output": "4"
+    },
+    {
+      "input": "words = [\"abab\",\"baba\",\"ab\",\"ba\",\"aba\",\"bab\",\"ababab\",\"bababa\",\"abababa\",\"bababab\",\"abababab\",\"babababa\"]",
+      "output": "12"
+    },
+    {
+      "input": "words = [\"ab\",\"baba\",\"abab\",\"bababa\",\"ababab\",\"babababa\",\"abababab\",\"bababababa\"]",
+      "output": "12"
+    },
+    {
+      "input": "words = [\"abab\",\"baba\",\"ababa\",\"babab\",\"ababab\",\"bababa\",\"abababa\",\"bababab\",\"abababab\",\"babababa\"]",
+      "output": "8"
+    },
+    {
+      "input": "words = [\"noon\",\"noonnoon\",\"noonnoonnoon\",\"noonoonoonnoon\",\"noonnoonnoonnoon\"]",
+      "output": "7"
+    },
+    {
+      "input": "words = [\"aabb\",\"bbaa\",\"aabbcc\",\"ccaabb\",\"aabbccaabb\",\"bbaaabbbaa\",\"ccaabbaacc\"]",
+      "output": "2"
+    },
+    {
+      "input": "words = [\"aaaaa\",\"baaaaa\",\"caaaaa\",\"daaaaa\",\"eaaaaa\",\"faaaaa\",\"baaaaaa\",\"caaaaaa\"]",
+      "output": "0"
+    },
+    {
+      "input": "words = [\"z\",\"zz\",\"zzz\",\"zzzz\",\"zzzzz\",\"zzzzzz\",\"zzzzzzz\"]",
+      "output": "21"
+    },
+    {
+      "input": "words = [\"aabb\",\"aabbcc\",\"aabbccaabb\",\"aabbccaabbcc\",\"aabbccaabbccaabb\",\"aabbccaabbccaabbcc\"]",
+      "output": "6"
+    },
+    {
+      "input": "words = [\"abcde\",\"abcdeabcde\",\"bcdeabcde\",\"cdeabcde\",\"deabcde\",\"eabcde\",\"abcdeabcdeabcde\"]",
+      "output": "3"
+    },
+    {
+      "input": "words = [\"ababab\",\"bababa\",\"abab\",\"baba\",\"aba\",\"ba\",\"a\",\"b\",\"ab\",\"ba\",\"aba\",\"bab\",\"abb\",\"bba\"]",
+      "output": "4"
+    },
+    {
+      "input": "words = [\"ab\",\"abc\",\"abcd\",\"abcde\",\"abcdef\",\"abcdefg\"]",
+      "output": "0"
+    },
+    {
+      "input": "words = [\"abc\",\"cab\",\"bac\",\"abcabc\",\"bcabc\",\"abcabcabc\"]",
+      "output": "3"
+    },
+    {
+      "input": "words = [\"aaaa\",\"aaa\",\"aa\",\"a\",\"abcabcabc\",\"abcabc\",\"abc\",\"ab\",\"a\",\"abcabcabcabc\",\"abcabcabcabcabcabcabc\",\"abcabcabcabcabc\",\"abcabcabcabcabcabcabcabcabc\",\"abcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabc\",\"abcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabc\"]",
+      "output": "33"
+    },
+    {
+      "input": "words = [\"pqr\",\"pqrpqr\",\"qrpqrpqr\",\"rpqrpqrpqr\",\"pqrpqrpqr\",\"qrpqrpqr\",\"rpqrpqrpqr\",\"pqrpqrpqr\"]",
+      "output": "8"
+    },
+    {
+      "input": "words = [\"aba\",\"abacaba\",\"cabacabac\",\"abcabcabc\"]",
+      "output": "1"
+    },
+    {
+      "input": "words = [\"abcabc\", \"abc\", \"abcabcabc\", \"abca\", \"abcb\", \"abcab\", \"abcabcab\", \"a\", \"aa\", \"aaa\"]",
+      "output": "6"
+    },
+    {
+      "input": "words = [\"racecar\",\"racecaracecar\",\"car\",\"racecaracecaracecar\"]",
+      "output": "3"
+    },
+    {
+      "input": "words = [\"xyz\",\"xyzxyz\",\"xyzxyzxyz\",\"xyxzyx\",\"xyzzyx\"]",
+      "output": "3"
+    },
+    {
+      "input": "words = [\"zzz\",\"zzzz\",\"zzzzz\",\"zzzzzz\",\"zzzzzzz\",\"zzzzzzzz\"]",
+      "output": "15"
+    },
+    {
+      "input": "words = [\"aaaa\", \"aaa\", \"aa\", \"a\", \"aaaaaa\", \"aaaaaaa\", \"aaaaaaaa\", \"aaaaaaaaa\", \"aaaaaaaaaa\", \"aaaaaab\", \"aaaaaaab\", \"aaaaaaaab\"]",
+      "output": "30"
+    },
+    {
+      "input": "words = [\"mama\", \"mamama\", \"mamamama\", \"ma\", \"m\", \"mam\", \"mamam\", \"mamama\", \"mamamam\", \"mamamama\"]",
+      "output": "17"
+    },
+    {
+      "input": "words = [\"aaa\", \"aaaa\", \"aaaaa\", \"aa\", \"a\", \"aaaaaa\", \"aaaaaaa\"]",
+      "output": "14"
+    },
+    {
+      "input": "words = [\"test\",\"testtest\",\"tset\",\"sett\",\"sttest\",\"testset\"]",
+      "output": "1"
+    },
+    {
+      "input": "words = [\"ababab\",\"bababa\",\"ab\",\"aba\",\"baba\",\"bababab\",\"bababa\",\"abab\",\"bab\"]",
+      "output": "3"
+    },
+    {
+      "input": "words = [\"repeat\",\"peatre\",\"eatrep\",\"atrep\",\"trepeat\",\"peatpeatpeat\"]",
+      "output": "0"
+    },
+    {
+      "input": "words = [\"xyzzyx\",\"zyxzyxzyx\",\"xyzzyxzyxzyx\",\"zyxzyxzyxzyxzyx\",\"xyzzyxzyxzyxzyxzyx\"]",
+      "output": "1"
+    },
+    {
+      "input": "words = [\"abcd\",\"dcba\",\"cdab\",\"abcdabcd\",\"cdabcdcd\",\"dcabcd\",\"abcdabdc\",\"abcdabcdabcd\"]",
+      "output": "3"
+    },
+    {
+      "input": "words = [\"mnop\",\"mnopm\",\"nopmnop\",\"mnopm\",\"mnopm\",\"mnopmnopm\",\"nopmnopm\",\"mnopmnopm\",\"mnopmnopmnop\",\"mnopmnopmnopm\",\"nopmnopmnopm\"]",
+      "output": "17"
+    },
+    {
+      "input": "words = [\"xyz\",\"xyzyx\",\"zyxzyxzyx\",\"zxzyx\",\"xyzxyzxyz\",\"xyzzyxzyxzyx\"]",
+      "output": "1"
+    },
+    {
+      "input": "words = [\"hello\",\"hellohello\",\"hell\",\"hellohellohello\",\"lohel\"]",
+      "output": "3"
+    },
+    {
+      "input": "words = [\"mnop\",\"opmnop\",\"nopmnop\",\"mnopmnop\",\"opmnopmnop\",\"nopmnopnop\",\"mnopmnopmnop\"]",
+      "output": "4"
+    },
+    {
+      "input": "words = [\"abcabc\",\"abc\",\"bcabc\",\"abcabcabc\",\"abcabca\"]",
+      "output": "2"
+    },
+    {
+      "input": "words = [\"pqr\",\"pqrpqr\",\"pqrpqrpqr\",\"pqrpqrpqrpqr\",\"pqrpqrpqrpqrpqr\",\"pqrpqrpqrpqrpqrpqr\",\"pqrpqrpqrpqrpqrpqrpqr\"]",
+      "output": "21"
+    },
+    {
+      "input": "words = [\"abcabcabc\",\"bcabcabcab\",\"cabcabcab\",\"abcabc\",\"bcabc\",\"cabc\",\"abc\",\"bc\",\"c\"]",
+      "output": "0"
+    },
+    {
+      "input": "words = [\"aaa\",\"aaabaaa\",\"baaabaaa\",\"aaabaaba\",\"abaabaaa\",\"aaabaaba\",\"baaabaaa\"]",
+      "output": "3"
+    },
+    {
+      "input": "words = [\"abcdabcd\",\"abcd\",\"abcde\",\"abcdeabcd\",\"abcdeabcde\"]",
+      "output": "2"
+    },
+    {
+      "input": "words = [\"hello\",\"hellohello\",\"hellohellohello\",\"world\",\"worldworld\",\"worldworldworld\"]",
+      "output": "6"
+    },
+    {
+      "input": "words = [\"aaaa\",\"aa\",\"a\",\"aaaaaa\",\"aaa\"]",
+      "output": "5"
+    },
+    {
+      "input": "words = [\"abcd\",\"abcdabcd\",\"abcdabcdabcd\",\"abcdabcdabcdabcd\",\"abcdabcdabcdabcdabcd\"]",
+      "output": "10"
+    },
+    {
+      "input": "words = [\"xyz\",\"xyzxyz\",\"xyzxyzxyz\",\"xy\"]",
+      "output": "3"
+    },
+    {
+      "input": "words = [\"a\",\"aa\",\"aaa\",\"aaaa\",\"aaaaa\"]",
+      "output": "10"
+    },
+    {
+      "input": "words = [\"same\",\"same\",\"same\",\"same\",\"same\",\"same\",\"same\",\"same\",\"same\",\"same\"]",
+      "output": "45"
+    },
+    {
+      "input": "words = [\"aaa\",\"aaaa\",\"aaaaa\",\"aaaaaa\",\"aaaaaaa\",\"aaaaaaaa\",\"aaaaaaaaa\"]",
+      "output": "21"
+    },
+    {
+      "input": "words = [\"aaaa\",\"aa\",\"a\",\"aaaaaa\",\"aaa\",\"aaaaaaa\"]",
+      "output": "10"
+    },
+    {
+      "input": "words = [\"xyz\", \"xyzxyz\", \"xyzxyzxyz\", \"xy\", \"xyxy\", \"xyxyxy\"]",
+      "output": "6"
+    },
+    {
+      "input": "words = [\"abcd\",\"cdabcd\",\"abcdabcd\",\"abcdabcdabcd\",\"dabcdabcd\"]",
+      "output": "3"
+    },
+    {
+      "input": "words = [\"zzz\",\"zzzz\",\"zzzzz\",\"zzzzzz\",\"zzzzzzz\",\"zzzzzzzz\",\"zzzzzzzzz\",\"zzzzzzzzzz\",\"zzzzzzzzzzz\",\"zzzzzzzzzzzz\",\"zzzzzzzzzzzzz\"]",
+      "output": "55"
+    },
+    {
+      "input": "words = [\"aabbcc\",\"aabb\",\"cc\",\"aabbccaabbcc\",\"aabbccaa\",\"bbccaa\"]",
+      "output": "1"
+    },
+    {
+      "input": "words = [\"ab\", \"abcba\", \"abcabcba\", \"a\", \"aba\", \"abababa\"]",
+      "output": "3"
+    },
+    {
+      "input": "words = [\"abacaba\",\"aba\",\"abacababa\",\"a\"]",
+      "output": "1"
+    },
+    {
+      "input": "words = [\"xyz\",\"xyzyx\",\"xyzxyz\",\"xyzxyzyx\",\"xyzxyzyxyz\"]",
+      "output": "2"
+    },
+    {
+      "input": "words = [\"level\",\"levellevel\",\"levellevellevel\",\"llevevllevevllevell\"]",
+      "output": "3"
+    },
+    {
+      "input": "words = [\"xyxy\",\"yxyx\",\"xyxyxy\",\"yxyxyx\",\"xyxyxyxy\",\"yxyxyxyx\",\"xyxyxyxyxy\",\"yxyxyxyxyx\"]",
+      "output": "12"
+    },
+    {
+      "input": "words = [\"ab\",\"aba\",\"abab\",\"ababa\",\"abababa\",\"ababababa\",\"abababababa\",\"ababababababa\",\"abababababababa\",\"ababababababababa\",\"abababababababababa\"]",
+      "output": "37"
+    },
+    {
+      "input": "words = [\"xyz\",\"xyzxyz\",\"zyxzyx\",\"xyzzyxxyz\",\"xyz\"]",
+      "output": "3"
+    },
+    {
+      "input": "words = [\"aaa\",\"aaaa\",\"aaaaa\",\"aaaaaa\"]",
+      "output": "6"
+    },
+    {
+      "input": "words = [\"abc\",\"cab\",\"bac\",\"abcabc\",\"abcabcabc\",\"abcabcabcabc\"]",
+      "output": "6"
+    },
+    {
+      "input": "words = [\"abcabc\",\"abc\",\"abcabcabc\",\"a\",\"aa\",\"aaa\",\"aaaa\"]",
+      "output": "8"
+    },
+    {
+      "input": "words = [\"aaa\",\"aa\",\"a\",\"aaaa\",\"aaaaa\"]",
+      "output": "7"
+    },
+    {
+      "input": "words = [\"ab\",\"abc\",\"ababc\",\"abcababc\"]",
+      "output": "1"
+    },
+    {
+      "input": "words = [\"p\",\"pp\",\"ppp\",\"pppp\",\"ppppp\",\"pppppp\",\"ppppppp\"]",
+      "output": "21"
+    },
+    {
+      "input": "words = [\"xyz\",\"xyzyx\",\"xyzxyz\",\"zyxzyxzyx\"]",
+      "output": "1"
+    },
+    {
+      "input": "words = [\"zzz\", \"zzzz\", \"zz\", \"z\", \"zzzzz\", \"zzzzzz\", \"zzzzzzz\", \"zzzzzzzz\", \"zzzzzzzzz\", \"zzzzzzzzzz\"]",
+      "output": "40"
+    },
+    {
+      "input": "words = [\"ab\",\"aba\",\"abab\",\"ababa\",\"ababab\",\"abababa\"]",
+      "output": "6"
+    },
+    {
+      "input": "words = [\"deified\",\"deifieddeified\",\"deifieddeifieddeified\",\"deifieddeifieddeifieddeified\",\"deifieddeifieddeifieddeifieddeified\"]",
+      "output": "10"
+    },
+    {
+      "input": "words = [\"abcdabcd\", \"abcdeabcde\", \"abcdefabcdef\", \"abcd\", \"abcde\", \"abcdef\", \"abc\", \"ab\", \"a\", \"ababab\", \"abcabcabc\"]",
+      "output": "2"
+    },
+    {
+      "input": "words = [\"xyz\",\"xyzxyz\",\"xyzxyzxyz\",\"xyx\"]",
+      "output": "3"
+    },
+    {
+      "input": "words = [\"pqr\",\"pqrpqr\",\"rpqrpqr\",\"pqrpqrpqr\",\"qpqrpqrpqr\",\"pqrqpqrpqrpqr\",\"pqrpqrpqrpqr\",\"rpqrpqrpqrpqr\",\"pqrpqrpqrpqrpqr\",\"qpqrpqrpqrpqrpqr\"]",
+      "output": "12"
+    },
+    {
+      "input": "words = [\"abcd\", \"abcdabcd\", \"abcde\", \"abcdeabcde\", \"ab\", \"abab\", \"abc\", \"abcabc\", \"a\", \"aaaa\"]",
+      "output": "5"
+    },
+    {
+      "input": "words = [\"xyz\",\"xyzxyz\",\"xyzxyzxyz\",\"xyzxyzxyzxyz\"]",
+      "output": "6"
+    },
+    {
+      "input": "words = [\"abcd\",\"abcdabcd\",\"bcdabcde\",\"cdabcde\",\"dabcde\",\"abcde\"]",
+      "output": "1"
+    },
+    {
+      "input": "words = [\"mnop\",\"nopm\",\"opmn\",\"pqrs\",\"rspq\",\"srpq\",\"qpsr\",\"mnopmnop\",\"nopmnopm\",\"opmnopno\"]",
+      "output": "2"
+    },
+    {
+      "input": "words = [\"x\",\"xx\",\"xxx\",\"xxxx\",\"xxxxx\",\"xxxxxx\",\"xxxxxxx\",\"xxxxxxxx\",\"xxxxxxxxx\",\"xxxxxxxxxx\"]",
+      "output": "45"
+    },
+    {
+      "input": "words = [\"hello\",\"hellohello\",\"hellohellohello\",\"hellohellohellohello\",\"hellohellohellohellohello\"]",
+      "output": "10"
+    },
+    {
+      "input": "words = [\"radar\",\"radarradar\",\"radarradarradar\",\"radarradarradarradar\",\"radarradarradarradarradar\"]",
+      "output": "10"
+    },
+    {
+      "input": "words = [\"pqr\", \"pqrpqr\", \"pq\", \"pqpq\", \"prq\", \"prqprq\", \"pr\", \"prpr\", \"qpr\", \"qprqpr\"]",
+      "output": "5"
+    },
+    {
+      "input": "words = [\"a\",\"aa\",\"aaa\",\"aaaa\",\"aaaaa\",\"aaaaaa\",\"aaaaaaa\",\"aaaaaaaa\"]",
+      "output": "28"
+    },
+    {
+      "input": "words = [\"abc\",\"bac\",\"cab\",\"abcabc\",\"bacbac\",\"cabcab\",\"abcabca\",\"bcabcabc\",\"cababcab\",\"abcabcabca\"]",
+      "output": "5"
+    },
+    {
+      "input": "words = [\"abc\",\"abca\",\"abcabc\",\"cabcabc\"]",
+      "output": "1"
+    },
+    {
+      "input": "words = [\"abcabc\",\"abc\",\"abcabcabcabc\",\"abcabcabc\",\"abcabcabcabcabcabc\"]",
+      "output": "8"
+    },
+    {
+      "input": "words = [\"rotor\",\"rotorrotor\",\"rotorrotorrotor\",\"torotorotor\"]",
+      "output": "3"
+    },
+    {
+      "input": "words = [\"abcd\",\"bcde\",\"cdef\",\"defg\",\"efgh\",\"fghi\",\"ghij\",\"hijk\",\"ijkl\",\"jklm\",\"klmn\",\"lmno\",\"mnop\"]",
+      "output": "0"
+    },
+    {
+      "input": "words = [\"aabb\",\"bbaa\",\"aabbcc\",\"ccbaab\",\"aabbccbaab\"]",
+      "output": "0"
+    },
+    {
+      "input": "words = [\"a\",\"aa\",\"aaa\",\"aaaa\",\"aaaaa\",\"aaaaaa\"]",
+      "output": "15"
+    },
+    {
+      "input": "words = [\"ababab\",\"ab\",\"abab\",\"abababab\",\"baba\",\"abababa\"]",
+      "output": "4"
+    },
+    {
+      "input": "words = [\"xy\",\"xyxy\",\"xyxyxy\",\"xyxyxyxy\",\"xyxyxyxyxy\"]",
+      "output": "10"
+    },
+    {
+      "input": "words = [\"banana\",\"ban\",\"banana\",\"nan\",\"banananan\",\"ananan\"]",
+      "output": "1"
+    }
+  ]
+}

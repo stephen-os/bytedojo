@@ -1,0 +1,445 @@
+{
+  "problem_id": 616,
+  "input_output": [
+    {
+      "input": "s = \"hello\", words = [\"world\"]",
+      "output": "hello"
+    },
+    {
+      "input": "s = \"mississippi\", words = [\"issi\",\"issip\",\"is\",\"i\"]",
+      "output": "m<b>ississip</b>p<b>i</b>"
+    },
+    {
+      "input": "s = \"abcd\", words = [\"e\",\"f\",\"g\"]",
+      "output": "abcd"
+    },
+    {
+      "input": "s = \"hello\", words = [\"ll\",\"o\"]",
+      "output": "he<b>llo</b>"
+    },
+    {
+      "input": "s = \"\", words = [\"a\"]",
+      "output": ""
+    },
+    {
+      "input": "s = \"zzzz\", words = [\"zz\"]",
+      "output": "<b>zzzz</b>"
+    },
+    {
+      "input": "s = \"abcd\", words = [\"a\",\"b\",\"c\",\"d\"]",
+      "output": "<b>abcd</b>"
+    },
+    {
+      "input": "s = \"abcabcabc\", words = [\"abc\",\"cab\"]",
+      "output": "<b>abcabcabc</b>"
+    },
+    {
+      "input": "s = \"hellothere\", words = [\"he\",\"lo\"]",
+      "output": "<b>he</b>l<b>lo</b>t<b>he</b>re"
+    },
+    {
+      "input": "s = \"abcxyz123\", words = [\"abc\",\"123\"]",
+      "output": "<b>abc</b>xyz<b>123</b>"
+    },
+    {
+      "input": "s = \"aaaaa\", words = [\"a\",\"aa\"]",
+      "output": "<b>aaaaa</b>"
+    },
+    {
+      "input": "s = \"aaabbb\", words = [\"aa\",\"b\"]",
+      "output": "<b>aaabbb</b>"
+    },
+    {
+      "input": "s = \"mississippi\", words = [\"issi\",\"issipp\"]",
+      "output": "m<b>ississipp</b>i"
+    },
+    {
+      "input": "s = \"complexity\", words = [\"com\", \"plex\", \"ity\", \"ityt\", \"ex\"]",
+      "output": "<b>complexity</b>"
+    },
+    {
+      "input": "s = \"aaaaabbbbbaaaaa\", words = [\"aaa\", \"bbbb\", \"aaabbbbbaaa\"]",
+      "output": "<b>aaaaabbbbbaaaaa</b>"
+    },
+    {
+      "input": "s = \"mississippiissippi\", words = [\"issi\", \"issipp\", \"ippi\", \"miss\", \"ippii\", \"ssippi\"]",
+      "output": "<b>mississippiissippi</b>"
+    },
+    {
+      "input": "s = \"thisisateststring\", words = [\"this\",\"test\",\"string\",\"is\"]",
+      "output": "<b>thisis</b>a<b>teststring</b>"
+    },
+    {
+      "input": "s = \"aabbccddeeff\", words = [\"aa\", \"bbcc\", \"ccdd\", \"ddeeff\", \"efff\", \"ff\"]",
+      "output": "<b>aabbccddeeff</b>"
+    },
+    {
+      "input": "s = \"xyzxyzxyz\", words = [\"xy\", \"yz\", \"zxy\"]",
+      "output": "<b>xyzxyzxyz</b>"
+    },
+    {
+      "input": "s = \"abcdefgabcdefg\", words = [\"abc\", \"cde\", \"efg\", \"abcd\"]",
+      "output": "<b>abcdefgabcdefg</b>"
+    },
+    {
+      "input": "s = \"abcdeabcdeabcde\", words = [\"abc\",\"deabc\",\"cde\"]",
+      "output": "<b>abcdeabcdeabcde</b>"
+    },
+    {
+      "input": "s = \"aaaaaabbbbbaaaaa\", words = [\"aaa\",\"bbb\"]",
+      "output": "<b>aaaaaabbbbbaaaaa</b>"
+    },
+    {
+      "input": "s = \"thisisateststring\", words = [\"this\", \"is\", \"test\", \"string\", \"a\"]",
+      "output": "<b>thisisateststring</b>"
+    },
+    {
+      "input": "s = \"nestedboldboldnested\", words = [\"nestedbold\", \"boldbold\", \"bold\"]",
+      "output": "<b>nestedboldbold</b>nested"
+    },
+    {
+      "input": "s = \"overlapexample\", words = [\"over\", \"lap\", \"example\", \"exam\"]",
+      "output": "<b>overlapexample</b>"
+    },
+    {
+      "input": "s = \"nestedboldtags\", words = [\"nest\", \"sted\", \"bold\", \"tags\", \"edta\"]",
+      "output": "<b>nestedboldtags</b>"
+    },
+    {
+      "input": "s = \"overlappingboldtags\", words = [\"overlap\",\"ping\",\"bold\",\"tags\",\"pinging\"]",
+      "output": "<b>overlappingboldtags</b>"
+    },
+    {
+      "input": "s = \"xyzabcxyzabcxyz\", words = [\"xyz\", \"abc\", \"ab\", \"bc\", \"yz\", \"xy\"]",
+      "output": "<b>xyzabcxyzabcxyz</b>"
+    },
+    {
+      "input": "s = \"abababababab\", words = [\"aba\", \"bab\", \"ab\", \"ba\"]",
+      "output": "<b>abababababab</b>"
+    },
+    {
+      "input": "s = \"oneonetwoonetwoonetwoonetwoonetwoone\", words = [\"one\", \"onetwo\", \"two\", \"onetwone\", \"oneto\"]",
+      "output": "<b>oneonetwoonetwoonetwoonetwoonetwoone</b>"
+    },
+    {
+      "input": "s = \"aaaaaaa\", words = [\"aa\", \"aaa\"]",
+      "output": "<b>aaaaaaa</b>"
+    },
+    {
+      "input": "s = \"abababababa\", words = [\"aba\",\"bab\"]",
+      "output": "<b>abababababa</b>"
+    },
+    {
+      "input": "s = \"abcdefgabcdefg\", words = [\"abc\", \"defg\", \"bcde\", \"fgh\"]",
+      "output": "<b>abcdefgabcdefg</b>"
+    },
+    {
+      "input": "s = \"abababababa\", words = [\"aba\",\"bab\",\"aba\",\"abb\"]",
+      "output": "<b>abababababa</b>"
+    },
+    {
+      "input": "s = \"abcdabcdabcdabcd\", words = [\"abcd\",\"bcd\",\"cd\",\"d\",\"a\",\"ab\",\"bc\",\"cd\",\"abc\",\"bca\",\"cab\",\"dabcd\",\"abcdabc\",\"bcdbca\"]",
+      "output": "<b>abcdabcdabcdabcd</b>"
+    },
+    {
+      "input": "s = \"xyzxyzxyzxyz\", words = [\"xy\",\"yz\",\"zxy\",\"xyz\"]",
+      "output": "<b>xyzxyzxyzxyz</b>"
+    },
+    {
+      "input": "s = \"overlappingboldtags\", words = [\"lap\", \"bold\", \"tag\", \"pingb\", \"lapin\"]",
+      "output": "over<b>lappingboldtag</b>s"
+    },
+    {
+      "input": "s = \"ababaabababa\", words = [\"aba\",\"bab\",\"abaabababa\"]",
+      "output": "<b>ababaabababa</b>"
+    },
+    {
+      "input": "s = \"xyzzxyzzxyzz\", words = [\"xyz\", \"zzx\", \"xy\", \"yz\"]",
+      "output": "<b>xyzzxyzzxyz</b>z"
+    },
+    {
+      "input": "s = \"mixednumbersandletters123\", words = [\"123\", \"and\", \"num\", \"bers\", \"mixed\"]",
+      "output": "<b>mixednumbersand</b>letters<b>123</b>"
+    },
+    {
+      "input": "s = \"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", words = [\"abc\",\"def\",\"ghi\",\"jkl\",\"mno\",\"pqr\",\"stu\",\"vwx\",\"yz\",\"aabbcc\",\"ddeeff\",\"gghhii\"]",
+      "output": "<b>aabbccddeeffgghhii</b>jjkkllmmnnooppqqrrssttuuvvwwxxy<b>yz</b>z"
+    },
+    {
+      "input": "s = \"consecutiveboldboldbold\", words = [\"consecutive\", \"boldbold\", \"bold\"]",
+      "output": "<b>consecutiveboldboldbold</b>"
+    },
+    {
+      "input": "s = \"xyzabcxyzabc\", words = [\"abc\",\"xyz\",\"xy\"]",
+      "output": "<b>xyzabcxyzabc</b>"
+    },
+    {
+      "input": "s = \"overlaplap\", words = [\"lap\",\"laplap\",\"over\"]",
+      "output": "<b>overlaplap</b>"
+    },
+    {
+      "input": "s = \"thisisateststring\", words = [\"test\",\"this\",\"string\",\"est\",\"ing\"]",
+      "output": "<b>this</b>isa<b>teststring</b>"
+    },
+    {
+      "input": "s = \"aaaaabaaaabaaaa\", words = [\"aa\",\"aaa\",\"aaaa\"]",
+      "output": "<b>aaaaa</b>b<b>aaaa</b>b<b>aaaa</b>"
+    },
+    {
+      "input": "s = \"aaaaaaabbbbbbcccccc\", words = [\"aaa\", \"bbb\", \"ccc\", \"aabb\", \"bbcc\", \"aabbcc\"]",
+      "output": "<b>aaaaaaabbbbbbcccccc</b>"
+    },
+    {
+      "input": "s = \"1234567890\", words = [\"12\",\"23\",\"34\",\"45\",\"56\",\"67\",\"78\",\"89\",\"90\"]",
+      "output": "<b>1234567890</b>"
+    },
+    {
+      "input": "s = \"zzzzzzzzzzzzzzz\", words = [\"zzzz\",\"zzz\",\"zz\",\"z\"]",
+      "output": "<b>zzzzzzzzzzzzzzz</b>"
+    },
+    {
+      "input": "s = \"aaaaaa\", words = [\"a\",\"aa\",\"aaa\",\"aaaa\"]",
+      "output": "<b>aaaaaa</b>"
+    },
+    {
+      "input": "s = \"abracadabra\", words = [\"bra\",\"cad\",\"ra\"]",
+      "output": "a<b>bracad</b>a<b>bra</b>"
+    },
+    {
+      "input": "s = \"nestedboldtags\", words = [\"nest\",\"sted\",\"bold\",\"tags\",\"boldt\",\"tagsn\"]",
+      "output": "<b>nestedboldtags</b>"
+    },
+    {
+      "input": "s = \"repeatedpatterns\", words = [\"re\",\"pe\",\"at\",\"te\",\"ed\",\"pattern\",\"terns\"]",
+      "output": "<b>repeatedpatterns</b>"
+    },
+    {
+      "input": "s = \"1234567890\", words = [\"12\",\"234\",\"456\",\"678\",\"890\"]",
+      "output": "<b>1234567890</b>"
+    },
+    {
+      "input": "s = \"thisisateststring\", words = [\"test\",\"is\",\"this\",\"string\"]",
+      "output": "<b>thisis</b>a<b>teststring</b>"
+    },
+    {
+      "input": "s = \"xyzxyzxyz\", words = [\"xyz\", \"xy\", \"yz\", \"zxy\"]",
+      "output": "<b>xyzxyzxyz</b>"
+    },
+    {
+      "input": "s = \"abcdabcdeabcd\", words = [\"abc\",\"de\",\"bcd\"]",
+      "output": "<b>abcdabcdeabcd</b>"
+    },
+    {
+      "input": "s = \"1234567890\", words = [\"123\", \"456\", \"789\", \"0\"]",
+      "output": "<b>1234567890</b>"
+    },
+    {
+      "input": "s = \"longstringwithmanywords\", words = [\"long\", \"string\", \"with\", \"many\", \"words\", \"longstring\", \"stringwith\", \"withman\"]",
+      "output": "<b>longstringwithmanywords</b>"
+    },
+    {
+      "input": "s = \"12345678901234567890\", words = [\"123\",\"234\",\"4567\",\"890\"]",
+      "output": "<b>12345678901234567890</b>"
+    },
+    {
+      "input": "s = \"a1b2c3d4e5f6g7h8i9j0\", words = [\"a1b2\", \"b2c3\", \"c3d4\", \"d4e5\", \"e5f6\", \"f6g7\", \"g7h8\", \"h8i9\", \"i9j0\"]",
+      "output": "<b>a1b2c3d4e5f6g7h8i9j0</b>"
+    },
+    {
+      "input": "s = \"aaaaaabbbbcccc\", words = [\"aa\", \"bbb\", \"cccc\", \"aabbb\", \"bbccc\"]",
+      "output": "<b>aaaaaabbbbcccc</b>"
+    },
+    {
+      "input": "s = \"multiplewordsinsequence\", words = [\"mul\",\"ple\",\"word\",\"in\",\"seq\",\"uence\"]",
+      "output": "<b>mul</b>ti<b>pleword</b>s<b>insequence</b>"
+    },
+    {
+      "input": "s = \"abcdeabcdeabcdeabcde\", words = [\"abc\", \"de\", \"cde\", \"abcde\", \"bcde\", \"cdea\"]",
+      "output": "<b>abcdeabcdeabcdeabcde</b>"
+    },
+    {
+      "input": "s = \"xyzxyzxyz\", words = [\"xyz\",\"zyx\",\"xy\",\"yx\"]",
+      "output": "<b>xyzxyzxyz</b>"
+    },
+    {
+      "input": "s = \"consecutiveconsecutiveconsecutive\", words = [\"con\", \"consec\", \"consecutive\", \"sec\"]",
+      "output": "<b>consecutiveconsecutiveconsecutive</b>"
+    },
+    {
+      "input": "s = \"consecutivesubstrings\", words = [\"con\",\"sec\",\"cut\",\"utive\",\"sub\",\"strings\"]",
+      "output": "<b>consecutivesubstrings</b>"
+    },
+    {
+      "input": "s = \"aaaaaabbbbbaaaa\", words = [\"aaa\",\"bbb\"]",
+      "output": "<b>aaaaaabbbbbaaaa</b>"
+    },
+    {
+      "input": "s = \"thisisateststringfortestingboldtags\", words = [\"test\",\"this\",\"that\",\"for\",\"bold\",\"tags\",\"string\"]",
+      "output": "<b>this</b>isa<b>teststringfortest</b>ing<b>boldtags</b>"
+    },
+    {
+      "input": "s = \"12345678901234567890\", words = [\"123\",\"456\",\"789\",\"012\",\"345\",\"678\",\"901\"]",
+      "output": "<b>1234567890123456789</b>0"
+    },
+    {
+      "input": "s = \"abcdefgabcdefg\", words = [\"abc\",\"def\",\"gab\",\"efg\"]",
+      "output": "<b>abcdefgabcdefg</b>"
+    },
+    {
+      "input": "s = \"aaaaa\", words = [\"a\", \"aa\", \"aaa\", \"aaaa\", \"aaaaa\"]",
+      "output": "<b>aaaaa</b>"
+    },
+    {
+      "input": "s = \"zzzzzzzzzzzzzzzzz\", words = [\"zzz\",\"zzzz\",\"zzzzz\",\"zzzzzz\"]",
+      "output": "<b>zzzzzzzzzzzzzzzzz</b>"
+    },
+    {
+      "input": "s = \"ababaababa\", words = [\"aba\", \"baa\"]",
+      "output": "<b>ababaababa</b>"
+    },
+    {
+      "input": "s = \"1234567890\", words = [\"123\", \"456\", \"789\", \"012\", \"34567890\"]",
+      "output": "<b>1234567890</b>"
+    },
+    {
+      "input": "s = \"repeatedrepeatedrepeated\", words = [\"re\", \"rep\", \"peat\", \"repeated\"]",
+      "output": "<b>repeatedrepeatedrepeated</b>"
+    },
+    {
+      "input": "s = \"aabbccddeeffgghhiijj\", words = [\"abc\", \"def\", \"gh\", \"ij\", \"bb\", \"cc\"]",
+      "output": "aa<b>bbcc</b>ddeeffg<b>gh</b>hi<b>ij</b>j"
+    },
+    {
+      "input": "s = \"uniquestringsareunique\", words = [\"unique\", \"strings\", \"are\"]",
+      "output": "<b>uniquestringsareunique</b>"
+    },
+    {
+      "input": "s = \"hello123world456\", words = [\"123\", \"world\", \"456\", \"hello\"]",
+      "output": "<b>hello123world456</b>"
+    },
+    {
+      "input": "s = \"thisisateststring\", words = [\"test\",\"string\",\"is\",\"a\",\"this\",\"ing\",\"est\"]",
+      "output": "<b>thisisateststring</b>"
+    },
+    {
+      "input": "s = \"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", words = [\"ab\",\"bc\",\"cd\",\"de\",\"ef\",\"fg\",\"gh\",\"hi\",\"ij\",\"jk\",\"kl\",\"lm\",\"mn\",\"no\",\"op\",\"pq\",\"qr\",\"rs\",\"st\",\"tu\",\"uv\",\"vw\",\"wx\",\"xy\",\"yz\"]",
+      "output": "a<b>abbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyz</b>z"
+    },
+    {
+      "input": "s = \"ababaababa\", words = [\"aba\", \"abaab\"]",
+      "output": "<b>ababaababa</b>"
+    },
+    {
+      "input": "s = \"ababababab\", words = [\"aba\", \"bab\", \"ab\", \"baba\", \"abab\"]",
+      "output": "<b>ababababab</b>"
+    },
+    {
+      "input": "s = \"xyzxyzxyz\", words = [\"xy\",\"yz\",\"zxy\",\"zyx\"]",
+      "output": "<b>xyzxyzxyz</b>"
+    },
+    {
+      "input": "s = \"consecutivetags\", words = [\"con\", \"sec\", \"secu\", \"utive\", \"tags\", \"ag\"]",
+      "output": "<b>consecutivetags</b>"
+    },
+    {
+      "input": "s = \"12345678901234567890\", words = [\"123\", \"456\", \"789\", \"012\", \"345\", \"678\", \"901\"]",
+      "output": "<b>1234567890123456789</b>0"
+    },
+    {
+      "input": "s = \"overlaplaplaplaplaplaplaplaplaplaplaplaplaplaplaplap\", words = [\"lap\", \"overlap\", \"laplap\", \"laplaplaplap\"]",
+      "output": "<b>overlaplaplaplaplaplaplaplaplaplaplaplaplaplaplaplap</b>"
+    },
+    {
+      "input": "s = \"abcabcabcabcabc\", words = [\"abcabc\",\"bcabcabc\",\"cabcab\",\"abc\",\"ab\",\"bc\",\"ca\"]",
+      "output": "<b>abcabcabcabcabc</b>"
+    },
+    {
+      "input": "s = \"overlapoverlap\", words = [\"over\",\"lap\",\"lapo\",\"olap\"]",
+      "output": "<b>overlapoverlap</b>"
+    },
+    {
+      "input": "s = \"ababababab\", words = [\"aba\",\"bab\",\"abab\"]",
+      "output": "<b>ababababab</b>"
+    },
+    {
+      "input": "s = \"uniquecharacters\", words = [\"unique\", \"char\", \"acter\", \"ers\", \"s\"]",
+      "output": "<b>uniquecharacters</b>"
+    },
+    {
+      "input": "s = \"hellohellohello\", words = [\"hello\", \"hell\", \"lohe\", \"ellhe\"]",
+      "output": "<b>hellohellohello</b>"
+    },
+    {
+      "input": "s = \"ababababab\", words = [\"aba\", \"bab\", \"aab\", \"abb\"]",
+      "output": "<b>ababababab</b>"
+    },
+    {
+      "input": "s = \"consecutivewordwordword\", words = [\"word\",\"consecutive\",\"consecutiveword\"]",
+      "output": "<b>consecutivewordwordword</b>"
+    },
+    {
+      "input": "s = \"mississippissippi\", words = [\"miss\", \"issi\", \"issipp\"]",
+      "output": "<b>mississippissipp</b>i"
+    },
+    {
+      "input": "s = \"aaaaabbbbbaaaaa\", words = [\"aaa\",\"bbb\",\"aaaaabbbbbaaaaa\"]",
+      "output": "<b>aaaaabbbbbaaaaa</b>"
+    },
+    {
+      "input": "s = \"abacabadabacaba\", words = [\"aba\",\"bac\",\"dab\"]",
+      "output": "<b>abacabadabacaba</b>"
+    },
+    {
+      "input": "s = \"aabbccddeeff\", words = [\"ab\", \"bc\", \"cd\", \"de\"]",
+      "output": "a<b>abbccdde</b>eff"
+    },
+    {
+      "input": "s = \"consecutiveconsecutive\", words = [\"consec\",\"sec\",\"secutive\",\"con\",\"consecutiveconsecutive\"]",
+      "output": "<b>consecutiveconsecutive</b>"
+    },
+    {
+      "input": "s = \"overlapoverlap\", words = [\"lap\",\"over\",\"lapover\",\"overlaplap\"]",
+      "output": "<b>overlapoverlap</b>"
+    },
+    {
+      "input": "s = \"abcabcabcabcabcabc\", words = [\"abcabc\",\"bcabcabc\",\"cabcab\"]",
+      "output": "<b>abcabcabcabcabcabc</b>"
+    },
+    {
+      "input": "s = \"zzzzzzzzz\", words = [\"zz\", \"zzz\"]",
+      "output": "<b>zzzzzzzzz</b>"
+    },
+    {
+      "input": "s = \"thisisaverylongstringwithmultiplesubstrings\", words = [\"this\", \"is\", \"averylong\", \"substring\", \"stringwithmultiplesubstrings\"]",
+      "output": "<b>thisisaverylongstringwithmultiplesubstrings</b>"
+    },
+    {
+      "input": "s = \"overlappingboldtags\", words = [\"overlapping\", \"lappingb\", \"boldtags\", \"olap\", \"tags\"]",
+      "output": "<b>overlappingboldtags</b>"
+    },
+    {
+      "input": "s = \"overlapoverlapping\", words = [\"over\", \"lap\", \"lapping\"]",
+      "output": "<b>overlapoverlapping</b>"
+    },
+    {
+      "input": "s = \"multiplewordswithmultipleoccurrences\", words = [\"word\",\"with\",\"multiple\",\"occurrences\",\"mu\",\"ple\",\"pleo\"]",
+      "output": "<b>multipleword</b>s<b>withmultipleoccurrences</b>"
+    },
+    {
+      "input": "s = \"nestedboldnested\", words = [\"bold\",\"nest\",\"nested\"]",
+      "output": "<b>nestedboldnested</b>"
+    },
+    {
+      "input": "s = \"abcdabcdabcdabcd\", words = [\"a\",\"b\",\"c\",\"d\",\"ab\",\"bc\",\"cd\",\"abcd\",\"bcda\",\"cdab\",\"dabc\"]",
+      "output": "<b>abcdabcdabcdabcd</b>"
+    },
+    {
+      "input": "s = \"multipleoccurrences\", words = [\"mul\", \"ple\", \"occ\", \"cur\", \"rences\", \"en\"]",
+      "output": "<b>mul</b>ti<b>pleoccurrences</b>"
+    },
+    {
+      "input": "s = \"abcabcabcabc\", words = [\"abcabc\", \"bcab\", \"cabc\"]",
+      "output": "<b>abcabcabcabc</b>"
+    }
+  ]
+}

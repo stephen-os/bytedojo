@@ -1,0 +1,552 @@
+{
+  "id": 5,
+  "title": "Longest Palindromic Substring",
+  "slug": "longest-palindromic-substring",
+  "difficulty": "Medium",
+  "topics": [
+    "Two Pointers",
+    "String",
+    "Dynamic Programming"
+  ],
+  "description": "Given a string s, return the longest palindromic substring in s.\nExample 1:\nExample 2:\nConstraints:",
+  "examples": [
+    {
+      "example_num": 1,
+      "example_text": "Input: s = \"babad\"\nOutput: \"bab\"\nExplanation: \"aba\" is also a valid answer.",
+      "images": []
+    },
+    {
+      "example_num": 2,
+      "example_text": "Input: s = \"cbbd\"\nOutput: \"bb\"",
+      "images": []
+    }
+  ],
+  "constraints": [
+    "1 <= s.length <= 1000",
+    "s consist of only digits and English letters."
+  ],
+  "hints": [
+    "How can we reuse a previously computed palindrome to compute a larger palindrome?",
+    "If \u201caba\u201d is a palindrome, is \u201cxabax\u201d a palindrome? Similarly is \u201cxabay\u201d a palindrome?",
+    "Complexity based hint:</br>\r\nIf we use brute-force and check whether for every start and end position a substring is a palindrome we have O(n^2) start - end pairs and O(n) palindromic checks. Can we reduce the time for palindromic checks to O(1) by reusing some previous computation."
+  ],
+  "code_snippets": {
+    "cpp": "class Solution {\npublic:\n    string longestPalindrome(string s) {\n        \n    }\n};",
+    "java": "class Solution {\n    public String longestPalindrome(String s) {\n        \n    }\n}",
+    "python": "class Solution(object):\n    def longestPalindrome(self, s):\n        \"\"\"\n        :type s: str\n        :rtype: str\n        \"\"\"\n        ",
+    "python3": "class Solution:\n    def longestPalindrome(self, s: str) -> str:\n        ",
+    "c": "char* longestPalindrome(char* s) {\n    \n}",
+    "csharp": "public class Solution {\n    public string LongestPalindrome(string s) {\n        \n    }\n}",
+    "javascript": "/**\n * @param {string} s\n * @return {string}\n */\nvar longestPalindrome = function(s) {\n    \n};",
+    "typescript": "function longestPalindrome(s: string): string {\n    \n};",
+    "php": "class Solution {\n\n    /**\n     * @param String $s\n     * @return String\n     */\n    function longestPalindrome($s) {\n        \n    }\n}",
+    "swift": "class Solution {\n    func longestPalindrome(_ s: String) -> String {\n        \n    }\n}",
+    "kotlin": "class Solution {\n    fun longestPalindrome(s: String): String {\n        \n    }\n}",
+    "dart": "class Solution {\n  String longestPalindrome(String s) {\n    \n  }\n}",
+    "golang": "func longestPalindrome(s string) string {\n    \n}",
+    "ruby": "# @param {String} s\n# @return {String}\ndef longest_palindrome(s)\n    \nend",
+    "scala": "object Solution {\n    def longestPalindrome(s: String): String = {\n        \n    }\n}",
+    "rust": "impl Solution {\n    pub fn longest_palindrome(s: String) -> String {\n        \n    }\n}",
+    "racket": "(define/contract (longest-palindrome s)\n  (-> string? string?)\n  )",
+    "erlang": "-spec longest_palindrome(S :: unicode:unicode_binary()) -> unicode:unicode_binary().\nlongest_palindrome(S) ->\n  .",
+    "elixir": "defmodule Solution do\n  @spec longest_palindrome(s :: String.t) :: String.t\n  def longest_palindrome(s) do\n    \n  end\nend"
+  },
+  "input_output": [
+    {
+      "input": "s = \"abba\"",
+      "output": "abba"
+    },
+    {
+      "input": "s = \"aaaa\"",
+      "output": "aaaa"
+    },
+    {
+      "input": "s = \"abacdfgdcaba\"",
+      "output": "aba"
+    },
+    {
+      "input": "s = \"ac\"",
+      "output": "a"
+    },
+    {
+      "input": "s = \"babad\"",
+      "output": "aba"
+    },
+    {
+      "input": "s = \"noon\"",
+      "output": "noon"
+    },
+    {
+      "input": "s = \"cbbd\"",
+      "output": "bb"
+    },
+    {
+      "input": "s = \"abcba\"",
+      "output": "abcba"
+    },
+    {
+      "input": "s = \"bcbabcbabcba\"",
+      "output": "bcbabcbabcb"
+    },
+    {
+      "input": "s = \"noonhighnoon\"",
+      "output": "noon"
+    },
+    {
+      "input": "s = \"forgeeksskeegfor\"",
+      "output": "geeksskeeg"
+    },
+    {
+      "input": "s = \"aaabaaaa\"",
+      "output": "aaabaaa"
+    },
+    {
+      "input": "s = \"abcdedcba\"",
+      "output": "abcdedcba"
+    },
+    {
+      "input": "s = \"aaa\"",
+      "output": "aaa"
+    },
+    {
+      "input": "s = \"aaaaa\"",
+      "output": "aaaaa"
+    },
+    {
+      "input": "s = \"racecar\"",
+      "output": "racecar"
+    },
+    {
+      "input": "s = \"a\"",
+      "output": "a"
+    },
+    {
+      "input": "s = \"abcdefg\"",
+      "output": "a"
+    },
+    {
+      "input": "s = \"aabbccddeeeffgg\"",
+      "output": "eee"
+    },
+    {
+      "input": "s = \"abcdedcba12321\"",
+      "output": "abcdedcba"
+    },
+    {
+      "input": "s = \"xxyyyxyxyxyxyxyxxyyxyxyxyxyxyx\"",
+      "output": "xyxyxyxyxyx"
+    },
+    {
+      "input": "s = \"thisisanexamplewithlongestpalindromeonyxdxyxdx\"",
+      "output": "xdxyxdx"
+    },
+    {
+      "input": "s = \"12345678987654321\"",
+      "output": "12345678987654321"
+    },
+    {
+      "input": "s = \"xyzaaazyxzyzyxyz\"",
+      "output": "xyzaaazyx"
+    },
+    {
+      "input": "s = \"12321abcdcba45654\"",
+      "output": "abcdcba"
+    },
+    {
+      "input": "s = \"012210\"",
+      "output": "012210"
+    },
+    {
+      "input": "s = \"tattarrattat\"",
+      "output": "tattarrattat"
+    },
+    {
+      "input": "s = \"aabbabbaa\"",
+      "output": "aabbabbaa"
+    },
+    {
+      "input": "s = \"abacdfgdcaba12321\"",
+      "output": "12321"
+    },
+    {
+      "input": "s = \"xyxxyxyxyxyxyxyx\"",
+      "output": "xyxyxyxyxyxyx"
+    },
+    {
+      "input": "s = \"1234321abcdefghgfedcba\"",
+      "output": "abcdefghgfedcba"
+    },
+    {
+      "input": "s = \"abababababababababababababababababababababababababababababababab\"",
+      "output": "bababababababababababababababababababababababababababababababab"
+    },
+    {
+      "input": "s = \"abacdfgdcabaxxxabcdcba\"",
+      "output": "abcdcba"
+    },
+    {
+      "input": "s = \"12321abccba45654\"",
+      "output": "abccba"
+    },
+    {
+      "input": "s = \"12321abcdedcbavcvcv\"",
+      "output": "abcdedcba"
+    },
+    {
+      "input": "s = \"abcbaekayakecivic\"",
+      "output": "ekayake"
+    },
+    {
+      "input": "s = \"noonmoonnoon\"",
+      "output": "oonnoo"
+    },
+    {
+      "input": "s = \"abcbaxxxxxabcdcba\"",
+      "output": "cbaxxxxxabc"
+    },
+    {
+      "input": "s = \"noonhighnoonnoon\"",
+      "output": "noonnoon"
+    },
+    {
+      "input": "s = \"noonmidnightnoon\"",
+      "output": "noon"
+    },
+    {
+      "input": "s = \"abcba12321defedcba\"",
+      "output": "defed"
+    },
+    {
+      "input": "s = \"aabbabaaaabbaaabaaabbbbbaaaaaabbbaaaabbbbaaabbaabbbaaaabbbaaabbbbaaabbaabbaabbab\"",
+      "output": "bbaaabbbbaaabb"
+    },
+    {
+      "input": "s = \"ababababababababa\"",
+      "output": "ababababababababa"
+    },
+    {
+      "input": "s = \"noonnoonnoonnoonnoonnoon\"",
+      "output": "noonnoonnoonnoonnoonnoon"
+    },
+    {
+      "input": "s = \"abccbaabacdfgdcaba\"",
+      "output": "abccba"
+    },
+    {
+      "input": "s = \"racecarxracecar\"",
+      "output": "racecarxracecar"
+    },
+    {
+      "input": "s = \"madamracecarlevel\"",
+      "output": "racecar"
+    },
+    {
+      "input": "s = \"babcbabcbabcba\"",
+      "output": "abcbabcbabcba"
+    },
+    {
+      "input": "s = \"abacdfgdcabaabacdfgdcaba\"",
+      "output": "dcabaabacd"
+    },
+    {
+      "input": "s = \"madamintanimadaminabba\"",
+      "output": "animadamina"
+    },
+    {
+      "input": "s = \"noonracecarracecar\"",
+      "output": "racecarracecar"
+    },
+    {
+      "input": "s = \"zzzzzzzzzzzz\"",
+      "output": "zzzzzzzzzzzz"
+    },
+    {
+      "input": "s = \"racecar2racecar\"",
+      "output": "racecar2racecar"
+    },
+    {
+      "input": "s = \"zxyabcddcbaabczyx\"",
+      "output": "abcddcba"
+    },
+    {
+      "input": "s = \"deeee\"",
+      "output": "eeee"
+    },
+    {
+      "input": "s = \"abacdfgdcabacdfgdcaba\"",
+      "output": "dcabacd"
+    },
+    {
+      "input": "s = \"1234543216789876\"",
+      "output": "123454321"
+    },
+    {
+      "input": "s = \"abcbaaabcba\"",
+      "output": "abcbaaabcba"
+    },
+    {
+      "input": "s = \"abcdedcbaefghihgfexyzzyx\"",
+      "output": "efghihgfe"
+    },
+    {
+      "input": "s = \"abcdefgfebac\"",
+      "output": "efgfe"
+    },
+    {
+      "input": "s = \"levelhannahlevel\"",
+      "output": "levelhannahlevel"
+    },
+    {
+      "input": "s = \"xxyyzzzyyxx\"",
+      "output": "xxyyzzzyyxx"
+    },
+    {
+      "input": "s = \"abcddcbaabcddcbaxyzzyx\"",
+      "output": "abcddcbaabcddcba"
+    },
+    {
+      "input": "s = \"racecar12321racecar\"",
+      "output": "racecar12321racecar"
+    },
+    {
+      "input": "s = \"abcdeffedcba\"",
+      "output": "abcdeffedcba"
+    },
+    {
+      "input": "s = \"civicracecar\"",
+      "output": "racecar"
+    },
+    {
+      "input": "s = \"levelmadammadam\"",
+      "output": "madammadam"
+    },
+    {
+      "input": "s = \"zxyaxzyaz\"",
+      "output": "z"
+    },
+    {
+      "input": "s = \"abcdefedcba\"",
+      "output": "abcdefedcba"
+    },
+    {
+      "input": "s = \"12321321321321321\"",
+      "output": "12321"
+    },
+    {
+      "input": "s = \"xyzzyxcbaapqrqpabczyzyx\"",
+      "output": "apqrqpa"
+    },
+    {
+      "input": "s = \"abacdfgdcaba123321\"",
+      "output": "123321"
+    },
+    {
+      "input": "s = \"abacdfgdcabaxxxxxabcdcba\"",
+      "output": "baxxxxxab"
+    },
+    {
+      "input": "s = \"aabcdcbadefedcbaa\"",
+      "output": "abcdcba"
+    },
+    {
+      "input": "s = \"abcdefghijiklmnopqrstuvwxyzzyxwvutsrqponmlkjihgfedcba\"",
+      "output": "klmnopqrstuvwxyzzyxwvutsrqponmlk"
+    },
+    {
+      "input": "s = \"bananaananab\"",
+      "output": "bananaananab"
+    },
+    {
+      "input": "s = \"aabbccddeedcba\"",
+      "output": "deed"
+    },
+    {
+      "input": "s = \"noonhighnoonnoonhighnoon\"",
+      "output": "hnoonnoonh"
+    },
+    {
+      "input": "s = \"babaddabba\"",
+      "output": "baddab"
+    },
+    {
+      "input": "s = \"abababababababababababababababababababababababababababababababbababa\"",
+      "output": "babababababababababababababababababababababababababababababab"
+    },
+    {
+      "input": "s = \"abcdeedcba1234321xyzzyx\"",
+      "output": "abcdeedcba"
+    },
+    {
+      "input": "s = \"aabb\"",
+      "output": "bb"
+    },
+    {
+      "input": "s = \"mamamamamamamamama\"",
+      "output": "amamamamamamamama"
+    },
+    {
+      "input": "s = \"abcdefgfedcba\"",
+      "output": "abcdefgfedcba"
+    },
+    {
+      "input": "s = \"abcbabcba\"",
+      "output": "abcbabcba"
+    },
+    {
+      "input": "s = \"xyzzzzyxabcdefedcba\"",
+      "output": "abcdefedcba"
+    },
+    {
+      "input": "s = \"banana\"",
+      "output": "anana"
+    },
+    {
+      "input": "s = \"abcbcbcbcbcbcbcbcbcbcbcbcb\"",
+      "output": "bcbcbcbcbcbcbcbcbcbcbcbcb"
+    },
+    {
+      "input": "s = \"anana\"",
+      "output": "anana"
+    },
+    {
+      "input": "s = \"aabbccddeeeeddccbbbaa\"",
+      "output": "bbccddeeeeddccbb"
+    },
+    {
+      "input": "s = \"12321abcdedcba45654\"",
+      "output": "abcdedcba"
+    },
+    {
+      "input": "s = \"aabbccddeeffgg\"",
+      "output": "gg"
+    },
+    {
+      "input": "s = \"levelracecardeifiedracecar\"",
+      "output": "racecardeifiedracecar"
+    },
+    {
+      "input": "s = \"aaaaabbbbbaaaa\"",
+      "output": "aaaabbbbbaaaa"
+    },
+    {
+      "input": "s = \"abccba\"",
+      "output": "abccba"
+    },
+    {
+      "input": "s = \"abcdcba12321xyzzyx\"",
+      "output": "abcdcba"
+    },
+    {
+      "input": "s = \"12321abcba21321\"",
+      "output": "abcba"
+    },
+    {
+      "input": "s = \"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\"",
+      "output": "zz"
+    },
+    {
+      "input": "s = \"abcdcbaxxxabcdcbaabcdcbaxxxabcdcba\"",
+      "output": "abcdcbaxxxabcdcbaabcdcbaxxxabcdcba"
+    },
+    {
+      "input": "s = \"xyzabcbaxyz\"",
+      "output": "abcba"
+    },
+    {
+      "input": "s = \"racecarannakayak\"",
+      "output": "racecar"
+    },
+    {
+      "input": "s = \"abacdfgdcab\"",
+      "output": "aba"
+    },
+    {
+      "input": "s = \"abcdeedcbafedcbe\"",
+      "output": "abcdeedcba"
+    },
+    {
+      "input": "s = \"a1b2c3d4c3b2a\"",
+      "output": "a"
+    },
+    {
+      "input": "s = \"abccccba\"",
+      "output": "abccccba"
+    },
+    {
+      "input": "s = \"noonnoonnoon\"",
+      "output": "noonnoonnoon"
+    },
+    {
+      "input": "s = \"aabbccddeeeedddccbaa\"",
+      "output": "ddeeeedd"
+    },
+    {
+      "input": "s = \"AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz\"",
+      "output": "A"
+    },
+    {
+      "input": "s = \"acbbac\"",
+      "output": "bb"
+    },
+    {
+      "input": "s = \"noonlevelnoon\"",
+      "output": "noonlevelnoon"
+    },
+    {
+      "input": "s = \"abbaabba\"",
+      "output": "abbaabba"
+    },
+    {
+      "input": "s = \"rotor1234321rotor\"",
+      "output": "rotor1234321rotor"
+    },
+    {
+      "input": "s = \"aaaaabaaa\"",
+      "output": "aaabaaa"
+    },
+    {
+      "input": "s = \"abcdefghihgfedcba\"",
+      "output": "abcdefghihgfedcba"
+    },
+    {
+      "input": "s = \"civicdeifiedrotorlevel\"",
+      "output": "deified"
+    },
+    {
+      "input": "s = \"aquickbrownfoxjumpsoverthelazydog\"",
+      "output": "a"
+    },
+    {
+      "input": "s = \"zyxwvutsrqponmlkjihgfedcbaedcba\"",
+      "output": "z"
+    },
+    {
+      "input": "s = \"aabcddeffedcba\"",
+      "output": "deffed"
+    },
+    {
+      "input": "s = \"pppppppppppppppppppppppppppppppp\"",
+      "output": "pppppppppppppppppppppppppppppppp"
+    },
+    {
+      "input": "s = \"aabbccddeeeedddccbbaa\"",
+      "output": "ddeeeedd"
+    },
+    {
+      "input": "s = \"a1b2c3d4e5f6g7h8i9j0j9i8h7g6f5e4d3c2b1a\"",
+      "output": "a1b2c3d4e5f6g7h8i9j0j9i8h7g6f5e4d3c2b1a"
+    },
+    {
+      "input": "s = \"mississippi\"",
+      "output": "ississi"
+    },
+    {
+      "input": "s = \"zxcvbnmlkjhgfdsapoiuytrewqpoiuytrewqpoiuytrewqpoiuytrewq\"",
+      "output": "z"
+    },
+    {
+      "input": "s = \"deifiedrotorlevel\"",
+      "output": "deified"
+    }
+  ]
+}

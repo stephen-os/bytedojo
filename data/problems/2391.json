@@ -1,0 +1,498 @@
+{
+  "id": 2391,
+  "title": "Minimum Amount of Time to Collect Garbage",
+  "slug": "minimum-amount-of-time-to-collect-garbage",
+  "difficulty": "Medium",
+  "topics": [
+    "Array",
+    "String",
+    "Prefix Sum"
+  ],
+  "description": "You are given a 0-indexed array of strings garbage where garbage[i] represents the assortment of garbage at the ith house. garbage[i] consists only of the characters 'M', 'P' and 'G' representing one unit of metal, paper and glass garbage respectively. Picking up one unit of any type of garbage takes 1 minute.\nYou are also given a 0-indexed integer array travel where travel[i] is the number of minutes needed to go from house i to house i + 1.\nThere are three garbage trucks in the city, each responsible for picking up one type of garbage. Each garbage truck starts at house 0 and must visit each house in order; however, they do not need to visit every house.\nOnly one garbage truck may be used at any given moment. While one truck is driving or picking up garbage, the other two trucks cannot do anything.\nReturn the minimum number of minutes needed to pick up all the garbage.\nExample 1:\nExample 2:\nConstraints:",
+  "examples": [
+    {
+      "example_num": 1,
+      "example_text": "Input: garbage = [\"G\",\"P\",\"GP\",\"GG\"], travel = [2,4,3]\nOutput: 21\nExplanation:\nThe paper garbage truck:\n1. Travels from house 0 to house 1\n2. Collects the paper garbage at house 1\n3. Travels from house 1 to house 2\n4. Collects the paper garbage at house 2\nAltogether, it takes 8 minutes to pick up all the paper garbage.\nThe glass garbage truck:\n1. Collects the glass garbage at house 0\n2. Travels from house 0 to house 1\n3. Travels from house 1 to house 2\n4. Collects the glass garbage at house 2\n5. Travels from house 2 to house 3\n6. Collects the glass garbage at house 3\nAltogether, it takes 13 minutes to pick up all the glass garbage.\nSince there is no metal garbage, we do not need to consider the metal garbage truck.\nTherefore, it takes a total of 8 + 13 = 21 minutes to collect all the garbage.",
+      "images": []
+    },
+    {
+      "example_num": 2,
+      "example_text": "Input: garbage = [\"MMM\",\"PGM\",\"GP\"], travel = [3,10]\nOutput: 37\nExplanation:\nThe metal garbage truck takes 7 minutes to pick up all the metal garbage.\nThe paper garbage truck takes 15 minutes to pick up all the paper garbage.\nThe glass garbage truck takes 15 minutes to pick up all the glass garbage.\nIt takes a total of 7 + 15 + 15 = 37 minutes to collect all the garbage.",
+      "images": []
+    }
+  ],
+  "constraints": [
+    "2 <= garbage.length <= 105",
+    "garbage[i] consists of only the letters 'M', 'P', and 'G'.",
+    "1 <= garbage[i].length <= 10",
+    "travel.length == garbage.length - 1",
+    "1 <= travel[i] <= 100"
+  ],
+  "hints": [
+    "Where can we save time? By not visiting all the houses.",
+    "For each type of garbage, find the house with the highest index that has at least 1 unit of this type of garbage."
+  ],
+  "code_snippets": {
+    "cpp": "class Solution {\npublic:\n    int garbageCollection(vector<string>& garbage, vector<int>& travel) {\n        \n    }\n};",
+    "java": "class Solution {\n    public int garbageCollection(String[] garbage, int[] travel) {\n        \n    }\n}",
+    "python": "class Solution(object):\n    def garbageCollection(self, garbage, travel):\n        \"\"\"\n        :type garbage: List[str]\n        :type travel: List[int]\n        :rtype: int\n        \"\"\"\n        ",
+    "python3": "class Solution:\n    def garbageCollection(self, garbage: List[str], travel: List[int]) -> int:\n        ",
+    "c": "int garbageCollection(char** garbage, int garbageSize, int* travel, int travelSize) {\n    \n}",
+    "csharp": "public class Solution {\n    public int GarbageCollection(string[] garbage, int[] travel) {\n        \n    }\n}",
+    "javascript": "/**\n * @param {string[]} garbage\n * @param {number[]} travel\n * @return {number}\n */\nvar garbageCollection = function(garbage, travel) {\n    \n};",
+    "typescript": "function garbageCollection(garbage: string[], travel: number[]): number {\n    \n};",
+    "php": "class Solution {\n\n    /**\n     * @param String[] $garbage\n     * @param Integer[] $travel\n     * @return Integer\n     */\n    function garbageCollection($garbage, $travel) {\n        \n    }\n}",
+    "swift": "class Solution {\n    func garbageCollection(_ garbage: [String], _ travel: [Int]) -> Int {\n        \n    }\n}",
+    "kotlin": "class Solution {\n    fun garbageCollection(garbage: Array<String>, travel: IntArray): Int {\n        \n    }\n}",
+    "dart": "class Solution {\n  int garbageCollection(List<String> garbage, List<int> travel) {\n    \n  }\n}",
+    "golang": "func garbageCollection(garbage []string, travel []int) int {\n    \n}",
+    "ruby": "# @param {String[]} garbage\n# @param {Integer[]} travel\n# @return {Integer}\ndef garbage_collection(garbage, travel)\n    \nend",
+    "scala": "object Solution {\n    def garbageCollection(garbage: Array[String], travel: Array[Int]): Int = {\n        \n    }\n}",
+    "rust": "impl Solution {\n    pub fn garbage_collection(garbage: Vec<String>, travel: Vec<i32>) -> i32 {\n        \n    }\n}",
+    "racket": "(define/contract (garbage-collection garbage travel)\n  (-> (listof string?) (listof exact-integer?) exact-integer?)\n  )",
+    "erlang": "-spec garbage_collection(Garbage :: [unicode:unicode_binary()], Travel :: [integer()]) -> integer().\ngarbage_collection(Garbage, Travel) ->\n  .",
+    "elixir": "defmodule Solution do\n  @spec garbage_collection(garbage :: [String.t], travel :: [integer]) :: integer\n  def garbage_collection(garbage, travel) do\n    \n  end\nend"
+  },
+  "input_output": [
+    {
+      "input": "garbage = [\"M\",\"P\",\"G\",\"M\",\"P\",\"G\"], travel = [1,2,3,4,5]",
+      "output": "37"
+    },
+    {
+      "input": "garbage = [\"P\",\"G\",\"M\",\"P\"], travel = [1,1,1]",
+      "output": "10"
+    },
+    {
+      "input": "garbage = [\"GGG\",\"PPP\",\"MMM\",\"GGG\",\"PPP\",\"MMM\"], travel = [10,10,10,10,10]",
+      "output": "138"
+    },
+    {
+      "input": "garbage = [\"G\"], travel = []",
+      "output": "1"
+    },
+    {
+      "input": "garbage = [\"G\",\"P\",\"M\"], travel = [1,1]",
+      "output": "6"
+    },
+    {
+      "input": "garbage = [\"\",\"G\",\"\",\"M\",\"P\"], travel = [2,3,2,5]",
+      "output": "24"
+    },
+    {
+      "input": "garbage = [\"M\",\"P\",\"G\"], travel = [1,1]",
+      "output": "6"
+    },
+    {
+      "input": "garbage = [\"GGGG\",\"MM\",\"PP\",\"GG\"], travel = [5,5,5]",
+      "output": "40"
+    },
+    {
+      "input": "garbage = [\"GGP\",\"GGP\",\"GGP\",\"GGP\"], travel = [2,2,2]",
+      "output": "24"
+    },
+    {
+      "input": "garbage = [\"\",\"\",\"\",\"\",\"\"], travel = [1,1,1,1]",
+      "output": "0"
+    },
+    {
+      "input": "garbage = [\"P\",\"M\",\"G\"], travel = [1]",
+      "output": "4"
+    },
+    {
+      "input": "garbage = [\"M\",\"M\",\"M\",\"M\",\"M\"], travel = [1,1,1,1]",
+      "output": "9"
+    },
+    {
+      "input": "garbage = [\"\",\"\",\"\",\"\"], travel = [1,1,1]",
+      "output": "0"
+    },
+    {
+      "input": "garbage = [\"G\",\"P\",\"GP\",\"GG\"], travel = [2,4,3]",
+      "output": "21"
+    },
+    {
+      "input": "garbage = [\"MMM\",\"PGM\",\"GP\"], travel = [3,10]",
+      "output": "37"
+    },
+    {
+      "input": "garbage = [\"GMP\",\"GMP\",\"GMP\"], travel = [10,10]",
+      "output": "69"
+    },
+    {
+      "input": "garbage = [\"MG\",\"GP\",\"PM\",\"MG\"], travel = [3,4,2]",
+      "output": "33"
+    },
+    {
+      "input": "garbage = [\"MG\",\"GP\",\"MM\",\"PG\",\"GG\"], travel = [2,3,1,5]",
+      "output": "32"
+    },
+    {
+      "input": "garbage = [\"MGP\",\"MGP\",\"MGP\",\"MGP\"], travel = [5,5,5]",
+      "output": "57"
+    },
+    {
+      "input": "garbage = [\"GGG\",\"MMM\",\"PPP\"], travel = [5,5]",
+      "output": "24"
+    },
+    {
+      "input": "garbage = [\"GP\",\"GP\",\"GP\",\"GP\"], travel = [1,1,1]",
+      "output": "14"
+    },
+    {
+      "input": "garbage = [\"GP\",\"MM\",\"GG\",\"PP\",\"GG\"], travel = [5,2,4,3]",
+      "output": "40"
+    },
+    {
+      "input": "garbage = [\"P\",\"G\",\"M\"], travel = [1,2]",
+      "output": "7"
+    },
+    {
+      "input": "garbage = [\"G\",\"M\",\"P\",\"\",\"\",\"G\",\"P\",\"M\",\"\"], travel = [1,1,1,1,1,1,1,1]",
+      "output": "24"
+    },
+    {
+      "input": "garbage = [\"G\", \"P\", \"M\", \"GP\", \"MG\", \"PG\", \"GMP\", \"MGP\", \"PMG\", \"G\"], travel = [2, 3, 1, 5, 4, 2, 3, 1, 4]",
+      "output": "86"
+    },
+    {
+      "input": "garbage = [\"G\",\"P\",\"M\",\"G\",\"P\",\"M\",\"G\",\"P\",\"M\"], travel = [2,2,2,2,2,2,2,2]",
+      "output": "51"
+    },
+    {
+      "input": "garbage = [\"G\", \"P\", \"M\", \"GP\", \"GM\", \"MP\", \"PGM\", \"MGP\", \"GMP\", \"PGMG\", \"GMPG\", \"MPGM\"], travel = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]",
+      "output": "228"
+    },
+    {
+      "input": "garbage = [\"MPG\",\"G\",\"M\",\"P\",\"G\",\"M\",\"P\",\"G\"], travel = [10,20,30,40,50,60,70]",
+      "output": "650"
+    },
+    {
+      "input": "garbage = [\"GGG\",\"PPP\",\"MMM\",\"GPM\",\"GPM\",\"GPM\",\"GPM\"], travel = [2,2,2,2,2,2]",
+      "output": "57"
+    },
+    {
+      "input": "garbage = [\"GGP\",\"PGM\",\"MG\",\"PG\",\"GM\",\"MP\",\"GG\",\"PP\",\"MM\"], travel = [3,3,3,3,3,3,3,3]",
+      "output": "83"
+    },
+    {
+      "input": "garbage = [\"G\",\"P\",\"M\",\"G\",\"P\",\"M\",\"G\",\"P\",\"M\"], travel = [1,2,1,2,1,2,1,2]",
+      "output": "40"
+    },
+    {
+      "input": "garbage = [\"GGGPPPMMM\",\"GGGPPPMMM\",\"GGGPPPMMM\",\"GGGPPPMMM\"], travel = [10,10,10]",
+      "output": "126"
+    },
+    {
+      "input": "garbage = [\"\",\"G\",\"P\",\"M\",\"\",\"GP\",\"MG\",\"\",\"\",\"MG\"], travel = [2,1,4,2,1,5,2,1,1]",
+      "output": "57"
+    },
+    {
+      "input": "garbage = [\"M\",\"G\",\"P\",\"MG\",\"PG\",\"GM\",\"GMP\",\"P\",\"M\"], travel = [2,3,1,4,2,3,1,2]",
+      "output": "63"
+    },
+    {
+      "input": "garbage = [\"G\",\"M\",\"P\",\"G\",\"M\",\"P\",\"G\",\"M\",\"P\",\"G\",\"M\",\"P\",\"G\",\"M\",\"P\"], travel = [1,2,3,4,5,6,7,8,9,10,11,12,13,14]",
+      "output": "289"
+    },
+    {
+      "input": "garbage = [\"M\",\"P\",\"G\",\"P\",\"M\",\"G\",\"P\",\"M\",\"G\",\"P\",\"M\"], travel = [5,5,5,5,5,5,5,5,5,5]",
+      "output": "146"
+    },
+    {
+      "input": "garbage = [\"GGG\",\"PPP\",\"MMM\",\"GGG\",\"PPP\",\"MMM\",\"GGG\",\"PPP\",\"MMM\"], travel = [10,20,30,10,20,30,10,20]",
+      "output": "427"
+    },
+    {
+      "input": "garbage = [\"MP\",\"GP\",\"MG\",\"PG\",\"GM\",\"PM\",\"MG\",\"PG\",\"GM\",\"PM\"], travel = [5,5,5,5,5,5,5,5,5]",
+      "output": "150"
+    },
+    {
+      "input": "garbage = [\"MGP\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"MGP\"], travel = [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]",
+      "output": "6"
+    },
+    {
+      "input": "garbage = [\"G\",\"P\",\"M\",\"G\",\"P\",\"M\",\"G\",\"P\",\"M\",\"G\",\"P\",\"M\",\"G\",\"P\",\"M\",\"G\",\"P\",\"M\",\"G\",\"P\",\"M\"], travel = [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]",
+      "output": "58"
+    },
+    {
+      "input": "garbage = [\"MGP\",\"MGP\",\"MGP\",\"MGP\",\"MGP\",\"MGP\",\"MGP\",\"MGP\"], travel = [2,2,2,2,2,2,2]",
+      "output": "66"
+    },
+    {
+      "input": "garbage = [\"MMM\",\"MMM\",\"MMM\",\"MMM\",\"MMM\",\"MMM\",\"MMM\",\"MMM\",\"MMM\",\"MMM\"], travel = [1,1,1,1,1,1,1,1,1]",
+      "output": "39"
+    },
+    {
+      "input": "garbage = [\"GMPGMP\",\"PMPMPM\",\"MGMGMG\",\"PGPGPG\",\"GMPGMP\",\"PMPMPM\",\"MGMGMG\",\"PGPGPG\"], travel = [15,15,15,15,15,15,15]",
+      "output": "348"
+    },
+    {
+      "input": "garbage = [\"G\",\"M\",\"P\",\"G\",\"M\",\"P\",\"G\",\"M\",\"P\"], travel = [1,2,3,4,5,6,7,8]",
+      "output": "94"
+    },
+    {
+      "input": "garbage = [\"PG\",\"G\",\"P\",\"G\",\"P\",\"G\",\"P\",\"G\",\"P\",\"G\",\"P\"], travel = [1,2,3,4,5,6,7,8,9,10]",
+      "output": "112"
+    },
+    {
+      "input": "garbage = [\"G\",\"P\",\"M\",\"G\",\"P\",\"M\",\"G\",\"P\",\"M\",\"G\",\"P\",\"M\",\"G\",\"P\",\"M\",\"G\",\"P\",\"M\"], travel = [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]",
+      "output": "66"
+    },
+    {
+      "input": "garbage = [\"GMM\", \"GGP\", \"PPP\", \"MMM\", \"GGG\", \"PPP\", \"MMM\"], travel = [7, 8, 9, 10, 11, 12]",
+      "output": "157"
+    },
+    {
+      "input": "garbage = [\"GMM\", \"GGP\", \"PPP\", \"MMM\", \"GGG\", \"PPP\", \"MMM\", \"GPP\", \"MG\", \"PGM\", \"PG\", \"GM\", \"MP\", \"PGM\", \"GMP\"], travel = [7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]",
+      "output": "608"
+    },
+    {
+      "input": "garbage = [\"\",\"\",\"\",\"\",\"MGP\",\"MGP\",\"MGP\",\"MGP\",\"MGP\",\"MGP\"], travel = [1,1,1,1,1,1,1,1,1]",
+      "output": "45"
+    },
+    {
+      "input": "garbage = [\"GGGG\",\"PPPP\",\"MMMM\",\"PPPP\",\"GGGG\",\"MMMM\"], travel = [3,4,5,6,7]",
+      "output": "79"
+    },
+    {
+      "input": "garbage = [\"G\", \"P\", \"M\", \"GP\", \"MG\", \"PG\", \"GMP\", \"MGP\", \"PMG\", \"G\", \"P\", \"M\", \"GP\", \"MG\", \"PG\", \"GMP\", \"MGP\", \"PMG\", \"G\"], travel = [2, 3, 1, 5, 4, 2, 3, 1, 4, 2, 3, 1, 5, 4, 2, 3, 1, 4]",
+      "output": "179"
+    },
+    {
+      "input": "garbage = [\"GP\",\"MG\",\"PM\",\"MG\",\"PM\",\"MG\",\"PM\",\"MG\",\"PM\",\"MG\"], travel = [5,10,5,10,5,10,5,10,5]",
+      "output": "210"
+    },
+    {
+      "input": "garbage = [\"P\", \"M\", \"G\", \"M\", \"G\", \"P\", \"M\", \"G\", \"P\", \"M\"], travel = [5, 5, 5, 5, 5, 5, 5, 5, 5]",
+      "output": "130"
+    },
+    {
+      "input": "garbage = [\"GMP\", \"P\", \"G\", \"M\", \"P\", \"G\", \"M\", \"P\", \"G\", \"M\"], travel = [1, 2, 3, 4, 5, 6, 7, 8, 9]",
+      "output": "121"
+    },
+    {
+      "input": "garbage = [\"MPG\", \"PGM\", \"GMP\", \"MGP\", \"GPM\", \"PGM\", \"GMP\", \"MGP\", \"GPM\", \"PGM\"], travel = [5, 10, 15, 20, 25, 30, 35, 40, 45]",
+      "output": "705"
+    },
+    {
+      "input": "garbage = [\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"MGP\"], travel = [1,1,1,1,1,1,1,1,1]",
+      "output": "30"
+    },
+    {
+      "input": "garbage = [\"G\",\"M\",\"P\",\"G\",\"M\",\"P\",\"G\",\"M\",\"P\",\"G\"], travel = [5,5,5,5,5,5,5,5,5]",
+      "output": "130"
+    },
+    {
+      "input": "garbage = [\"MGP\",\"G\",\"P\",\"M\",\"GP\",\"MG\",\"PG\",\"GM\",\"PM\"], travel = [10,5,7,6,8,9,2,3]",
+      "output": "163"
+    },
+    {
+      "input": "garbage = [\"MMM\",\"GGG\",\"PPP\",\"MMM\",\"GGG\",\"PPP\",\"MMM\"], travel = [5,5,5,5,5,5]",
+      "output": "96"
+    },
+    {
+      "input": "garbage = [\"G\",\"P\",\"M\",\"G\",\"P\",\"M\",\"G\",\"P\",\"M\",\"G\",\"P\",\"M\"], travel = [1,1,1,1,1,1,1,1,1,1,1]",
+      "output": "42"
+    },
+    {
+      "input": "garbage = [\"GMP\", \"GMP\", \"GMP\", \"GMP\", \"GMP\", \"GMP\", \"GMP\", \"GMP\", \"GMP\", \"GMP\", \"GMP\", \"GMP\", \"GMP\", \"GMP\", \"GMP\", \"GMP\", \"GMP\", \"GMP\"], travel = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17]",
+      "output": "513"
+    },
+    {
+      "input": "garbage = [\"MMG\",\"PG\",\"MM\",\"GGG\",\"PP\",\"G\"], travel = [3,5,2,6,4]",
+      "output": "57"
+    },
+    {
+      "input": "garbage = [\"GGGG\",\"PPPP\",\"MMMM\",\"GGGG\",\"PPPP\",\"MMMM\"], travel = [1,2,3,4,5]",
+      "output": "55"
+    },
+    {
+      "input": "garbage = [\"G\",\"M\",\"P\",\"GM\",\"PG\",\"MG\",\"GPM\",\"PMG\",\"MPG\",\"GMP\"], travel = [2,3,4,5,6,7,8,9,10]",
+      "output": "183"
+    },
+    {
+      "input": "garbage = [\"MGP\" for _ in range(10000)], travel = [1] * 9999",
+      "output": "Error: Solution.garbageCollection() missing 2 required positional arguments: 'garbage' and 'travel'"
+    },
+    {
+      "input": "garbage = [\"MGP\", \"MGP\", \"MGP\", \"MGP\", \"MGP\", \"MGP\", \"MGP\", \"MGP\", \"MGP\", \"MGP\"], travel = [1, 2, 3, 4, 5, 6, 7, 8, 9]",
+      "output": "165"
+    },
+    {
+      "input": "garbage = [\"MGP\",\"\",\"MGP\",\"\",\"MGP\",\"\",\"MGP\"], travel = [2,2,2,2,2,2]",
+      "output": "48"
+    },
+    {
+      "input": "garbage = [\"MGP\",\"GP\",\"MGG\",\"PGG\",\"MMM\",\"GGP\",\"PGM\"], travel = [3,5,2,4,6,7]",
+      "output": "101"
+    },
+    {
+      "input": "garbage = [\"MGP\",\"MGP\",\"MGP\",\"MGP\",\"MGP\",\"MGP\",\"MGP\",\"MGP\",\"MGP\",\"MGP\"], travel = [10,10,10,10,10,10,10,10,10]",
+      "output": "300"
+    },
+    {
+      "input": "garbage = [\"MMMGGGPPP\",\"MMMGGGPPP\",\"MMMGGGPPP\",\"MMMGGGPPP\"], travel = [15,15,15]",
+      "output": "171"
+    },
+    {
+      "input": "garbage = [\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"PGM\"], travel = [1,2,3,4,5,6,7,8,9,10]",
+      "output": "168"
+    },
+    {
+      "input": "garbage = [\"GMP\", \"GMP\", \"GMP\", \"\", \"\", \"\", \"GMP\", \"\", \"\", \"GMP\", \"GMP\", \"GMP\", \"\", \"\", \"\", \"GMP\", \"GMP\", \"GMP\", \"\"], travel = [5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5]",
+      "output": "285"
+    },
+    {
+      "input": "garbage = [\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\"], travel = [1,1,1,1,1,1,1]",
+      "output": "0"
+    },
+    {
+      "input": "garbage = [\"MGPG\",\"GPMP\",\"PGMG\",\"P\",\"M\",\"G\",\"MGP\",\"P\",\"G\",\"MP\"], travel = [1,2,3,4,5,6,7,8,9]",
+      "output": "148"
+    },
+    {
+      "input": "garbage = [\"\", \"\", \"MGP\", \"\", \"\", \"\", \"\", \"\", \"\", \"MGP\"], travel = [1, 2, 3, 4, 5, 6, 7, 8, 9]",
+      "output": "141"
+    },
+    {
+      "input": "garbage = [\"MPG\",\"G\",\"P\",\"M\",\"PG\",\"GM\",\"PGM\"], travel = [7,3,8,2,5,6]",
+      "output": "106"
+    },
+    {
+      "input": "garbage = [\"G\", \"P\", \"M\", \"G\", \"P\", \"M\", \"G\", \"P\", \"M\", \"G\", \"P\", \"M\", \"G\", \"P\", \"M\", \"G\", \"P\", \"M\", \"G\", \"P\", \"M\"], travel = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19]",
+      "output": "382"
+    },
+    {
+      "input": "garbage = [\"MMM\",\"MMM\",\"MMM\",\"MMM\",\"MMM\"], travel = [10,10,10,10]",
+      "output": "55"
+    },
+    {
+      "input": "garbage = [\"G\",\"G\",\"G\",\"G\",\"G\",\"G\",\"G\",\"G\",\"G\",\"G\",\"G\"], travel = [1,1,1,1,1,1,1,1,1,1]",
+      "output": "21"
+    },
+    {
+      "input": "garbage = [\"\", \"MGP\", \"\", \"P\", \"G\", \"MP\", \"\", \"MGP\", \"\", \"P\", \"G\", \"MP\", \"\", \"MGP\", \"\"], travel = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]",
+      "output": "290"
+    },
+    {
+      "input": "garbage = [\"GMP\",\"P\",\"M\",\"G\",\"MPG\",\"MG\",\"PG\",\"GMP\",\"GMP\",\"P\"], travel = [5,5,5,5,5,5,5,5,5]",
+      "output": "145"
+    },
+    {
+      "input": "garbage = [\"GP\",\"GP\",\"GP\",\"GP\",\"GP\",\"GP\",\"GP\"], travel = [1,1,1,1,1,1]",
+      "output": "26"
+    },
+    {
+      "input": "garbage = [\"MMM\",\"PPP\",\"GGG\",\"MMM\",\"PPP\",\"GGG\",\"MMM\",\"PPP\",\"GGG\"], travel = [10,10,10,10,10,10,10,10]",
+      "output": "237"
+    },
+    {
+      "input": "garbage = [\"MG\",\"PGP\",\"GGM\",\"PPG\",\"MMG\"], travel = [3,5,2,7]",
+      "output": "58"
+    },
+    {
+      "input": "garbage = [\"MMM\",\"\",\"GG\",\"\",\"\",\"P\",\"\",\"G\"], travel = [10,2,3,4,5,6,7]",
+      "output": "68"
+    },
+    {
+      "input": "garbage = [\"MMM\",\"MMM\",\"MMM\",\"MMM\",\"MMM\",\"MMM\",\"MMM\",\"MMM\",\"MMM\"], travel = [10,10,10,10,10,10,10,10]",
+      "output": "107"
+    },
+    {
+      "input": "garbage = [\"GMP\",\"GMP\",\"GMP\",\"GMP\",\"GMP\",\"GMP\",\"GMP\",\"GMP\",\"GMP\",\"GMP\"], travel = [5,5,5,5,5,5,5,5,5]",
+      "output": "165"
+    },
+    {
+      "input": "garbage = [\"G\",\"G\",\"G\",\"G\",\"G\",\"G\",\"G\",\"G\",\"G\",\"G\"], travel = [1,1,1,1,1,1,1,1,1]",
+      "output": "19"
+    },
+    {
+      "input": "garbage = [\"G\", \"P\", \"M\", \"G\", \"\", \"P\", \"M\", \"G\", \"\", \"P\", \"M\", \"G\", \"\", \"P\", \"M\", \"G\", \"\", \"P\", \"M\", \"G\"], travel = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]",
+      "output": "51"
+    },
+    {
+      "input": "garbage = [\"G\",\"P\",\"M\",\"G\",\"P\",\"M\",\"G\",\"P\",\"M\"], travel = [1,2,3,4,5,6,7,8]",
+      "output": "94"
+    },
+    {
+      "input": "garbage = [\"G\",\"P\",\"M\",\"\",\"G\",\"P\",\"M\",\"\"], travel = [1,2,3,4,5,6,7]",
+      "output": "52"
+    },
+    {
+      "input": "garbage = [\"MPG\",\"MPG\",\"MPG\",\"MPG\",\"MPG\",\"MPG\",\"MPG\",\"MPG\"], travel = [5,5,5,5,5,5,5]",
+      "output": "129"
+    },
+    {
+      "input": "garbage = [\"MPG\",\"MPG\",\"MPG\",\"MPG\",\"MPG\",\"MPG\",\"MPG\",\"MPG\",\"MPG\",\"MPG\"], travel = [1,1,1,1,1,1,1,1,1]",
+      "output": "57"
+    },
+    {
+      "input": "garbage = [\"MGP\",\"MGP\",\"\",\"\",\"\",\"\",\"\",\"MGP\",\"MGP\",\"MGP\",\"\",\"\",\"\",\"\",\"MGP\"], travel = [2,2,3,3,4,4,5,5,6,6,7,7,8,8]",
+      "output": "228"
+    },
+    {
+      "input": "garbage = [\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"G\"], travel = [1,1,1,1,1,1,1,1,1]",
+      "output": "10"
+    },
+    {
+      "input": "garbage = [\"G\",\"P\",\"M\",\"G\",\"P\",\"M\",\"G\",\"P\",\"M\",\"G\",\"P\",\"M\",\"G\",\"P\",\"M\",\"G\",\"P\",\"M\"], travel = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17]",
+      "output": "427"
+    },
+    {
+      "input": "garbage = [\"MMMM\", \"PPPP\", \"GGGG\", \"MMMM\", \"PPPP\", \"GGGG\"], travel = [10, 10, 10, 10, 10]",
+      "output": "144"
+    },
+    {
+      "input": "garbage = [\"MMM\",\"PPP\",\"GGG\",\"MMM\",\"PPP\",\"GGG\",\"MMM\"], travel = [10,10,10,10,10,10]",
+      "output": "171"
+    },
+    {
+      "input": "garbage = [\"MGP\",\"MGP\",\"MGP\",\"MGP\",\"MGP\",\"MGP\",\"MGP\",\"MGP\",\"MGP\",\"MGP\",\"MGP\",\"MGP\"], travel = [1,1,1,1,1,1,1,1,1,1,1]",
+      "output": "69"
+    },
+    {
+      "input": "garbage = [\"MMM\", \"GGG\", \"PPP\", \"MGP\", \"GMP\", \"PMM\", \"GGP\", \"PPG\", \"MPM\", \"MGP\"], travel = [10, 20, 15, 10, 5, 12, 8, 18, 7]",
+      "output": "345"
+    },
+    {
+      "input": "garbage = [\"M\",\"P\",\"G\",\"MPG\",\"GMP\",\"PGM\"], travel = [1,3,2,4,5]",
+      "output": "57"
+    },
+    {
+      "input": "garbage = [\"MGP\",\"\",\"\",\"MGP\",\"\",\"\",\"MGP\",\"\",\"\",\"MGP\"], travel = [2,1,3,2,1,3,2,1,3]",
+      "output": "66"
+    },
+    {
+      "input": "garbage = [\"M\", \"P\", \"G\", \"MP\", \"PG\", \"GM\", \"MG\", \"PGM\"], travel = [2, 3, 1, 4, 5, 6]",
+      "output": "14"
+    },
+    {
+      "input": "garbage = [\"G\", \"P\", \"M\", \"G\", \"P\", \"M\", \"G\", \"P\", \"M\", \"G\", \"P\", \"M\", \"G\", \"P\", \"M\", \"G\", \"P\", \"M\"], travel = [2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3]",
+      "output": "115"
+    },
+    {
+      "input": "garbage = [\"MGP\", \"MG\", \"P\", \"G\", \"MP\", \"GM\", \"PG\", \"MG\", \"PGM\"], travel = [5, 5, 5, 5, 5, 5, 5, 5]",
+      "output": "138"
+    },
+    {
+      "input": "garbage = [\"G\", \"M\", \"P\", \"G\", \"M\", \"P\", \"G\", \"M\", \"P\", \"G\", \"M\", \"P\", \"G\", \"M\", \"P\", \"G\", \"M\", \"P\"], travel = [1] * 17",
+      "output": "Error: Solution.garbageCollection() missing 1 required positional argument: 'travel'"
+    },
+    {
+      "input": "garbage = [\"G\",\"\",\"P\",\"\",\"M\",\"\",\"G\",\"\",\"P\",\"\",\"M\"], travel = [1,2,1,2,1,2,1,2,1,2]",
+      "output": "42"
+    },
+    {
+      "input": "garbage = [\"G\",\"P\",\"M\",\"G\",\"P\",\"M\",\"G\",\"P\",\"M\",\"G\",\"P\",\"M\",\"G\",\"P\",\"M\"], travel = [1,2,3,4,5,6,7,8,9,10,11,12,13,14]",
+      "output": "289"
+    },
+    {
+      "input": "garbage = [\"MGP\", \"\", \"\", \"\", \"\", \"\", \"\", \"\", \"\", \"\", \"\", \"\", \"\", \"\", \"\", \"\", \"\", \"\", \"\", \"MGP\"], travel = [1] * 19",
+      "output": "Error: Solution.garbageCollection() missing 1 required positional argument: 'travel'"
+    },
+    {
+      "input": "garbage = [\"G\", \"P\", \"M\", \"PG\", \"GM\", \"MP\", \"PGM\"], travel = [1, 2, 3, 4, 5, 6]",
+      "output": "75"
+    }
+  ]
+}

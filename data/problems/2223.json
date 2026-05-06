@@ -1,0 +1,550 @@
+{
+  "id": 2223,
+  "title": "Sum of Scores of Built Strings",
+  "slug": "sum-of-scores-of-built-strings",
+  "difficulty": "Hard",
+  "topics": [
+    "String",
+    "Binary Search",
+    "Rolling Hash",
+    "Suffix Array",
+    "String Matching",
+    "Hash Function"
+  ],
+  "description": "You are building a string s of length n one character at a time, prepending each new character to the front of the string. The strings are labeled from 1 to n, where the string with length i is labeled si.\nThe score of si is the length of the longest common prefix between si and sn (Note that s == sn).\nGiven the final string s, return the sum of the score of every si.\nExample 1:\nExample 2:\nConstraints:",
+  "examples": [
+    {
+      "example_num": 1,
+      "example_text": "Input: s = \"babab\"\nOutput: 9\nExplanation:\nFor s1 == \"b\", the longest common prefix is \"b\" which has a score of 1.\nFor s2 == \"ab\", there is no common prefix so the score is 0.\nFor s3 == \"bab\", the longest common prefix is \"bab\" which has a score of 3.\nFor s4 == \"abab\", there is no common prefix so the score is 0.\nFor s5 == \"babab\", the longest common prefix is \"babab\" which has a score of 5.\nThe sum of the scores is 1 + 0 + 3 + 0 + 5 = 9, so we return 9.",
+      "images": []
+    },
+    {
+      "example_num": 2,
+      "example_text": "Input: s = \"azbazbzaz\"\nOutput: 14\nExplanation: \nFor s2 == \"az\", the longest common prefix is \"az\" which has a score of 2.\nFor s6 == \"azbzaz\", the longest common prefix is \"azb\" which has a score of 3.\nFor s9 == \"azbazbzaz\", the longest common prefix is \"azbazbzaz\" which has a score of 9.\nFor all other si, the score is 0.\nThe sum of the scores is 2 + 3 + 9 = 14, so we return 14.",
+      "images": []
+    }
+  ],
+  "constraints": [
+    "1 <= s.length <= 105",
+    "s consists of lowercase English letters."
+  ],
+  "hints": [
+    "Each s_i is a suffix of the string s, so consider algorithms that can determine the longest prefix that is also a suffix.",
+    "Could you use the Z array from the Z algorithm to find the score of each s_i?"
+  ],
+  "code_snippets": {
+    "cpp": "class Solution {\npublic:\n    long long sumScores(string s) {\n        \n    }\n};",
+    "java": "class Solution {\n    public long sumScores(String s) {\n        \n    }\n}",
+    "python": "class Solution(object):\n    def sumScores(self, s):\n        \"\"\"\n        :type s: str\n        :rtype: int\n        \"\"\"\n        ",
+    "python3": "class Solution:\n    def sumScores(self, s: str) -> int:\n        ",
+    "c": "long long sumScores(char* s) {\n    \n}",
+    "csharp": "public class Solution {\n    public long SumScores(string s) {\n        \n    }\n}",
+    "javascript": "/**\n * @param {string} s\n * @return {number}\n */\nvar sumScores = function(s) {\n    \n};",
+    "typescript": "function sumScores(s: string): number {\n    \n};",
+    "php": "class Solution {\n\n    /**\n     * @param String $s\n     * @return Integer\n     */\n    function sumScores($s) {\n        \n    }\n}",
+    "swift": "class Solution {\n    func sumScores(_ s: String) -> Int {\n        \n    }\n}",
+    "kotlin": "class Solution {\n    fun sumScores(s: String): Long {\n        \n    }\n}",
+    "dart": "class Solution {\n  int sumScores(String s) {\n    \n  }\n}",
+    "golang": "func sumScores(s string) int64 {\n    \n}",
+    "ruby": "# @param {String} s\n# @return {Integer}\ndef sum_scores(s)\n    \nend",
+    "scala": "object Solution {\n    def sumScores(s: String): Long = {\n        \n    }\n}",
+    "rust": "impl Solution {\n    pub fn sum_scores(s: String) -> i64 {\n        \n    }\n}",
+    "racket": "(define/contract (sum-scores s)\n  (-> string? exact-integer?)\n  )",
+    "erlang": "-spec sum_scores(S :: unicode:unicode_binary()) -> integer().\nsum_scores(S) ->\n  .",
+    "elixir": "defmodule Solution do\n  @spec sum_scores(s :: String.t) :: integer\n  def sum_scores(s) do\n    \n  end\nend"
+  },
+  "input_output": [
+    {
+      "input": "s = \"xyzxyzxyz\"",
+      "output": "18"
+    },
+    {
+      "input": "s = \"abcabcabc\"",
+      "output": "18"
+    },
+    {
+      "input": "s = \"aabbcc\"",
+      "output": "7"
+    },
+    {
+      "input": "s = \"abacabadabacaba\"",
+      "output": "32"
+    },
+    {
+      "input": "s = \"zzzzz\"",
+      "output": "15"
+    },
+    {
+      "input": "s = \"abcdefghijklmnopqrstuvwxyz\"",
+      "output": "26"
+    },
+    {
+      "input": "s = \"abacaba\"",
+      "output": "12"
+    },
+    {
+      "input": "s = \"babab\"",
+      "output": "9"
+    },
+    {
+      "input": "s = \"azbazbzaz\"",
+      "output": "14"
+    },
+    {
+      "input": "s = \"abcde\"",
+      "output": "5"
+    },
+    {
+      "input": "s = \"zazazaz\"",
+      "output": "16"
+    },
+    {
+      "input": "s = \"aaaaa\"",
+      "output": "15"
+    },
+    {
+      "input": "s = \"aabbaabb\"",
+      "output": "14"
+    },
+    {
+      "input": "s = \"zyxwvutsrqponmlkjihgfedcba\"",
+      "output": "26"
+    },
+    {
+      "input": "s = \"a\"",
+      "output": "1"
+    },
+    {
+      "input": "s = \"abcdefg\"",
+      "output": "7"
+    },
+    {
+      "input": "s = \"aabbccddeeff\"",
+      "output": "13"
+    },
+    {
+      "input": "s = \"aaaaaaaaaabbbbbbbbbb\"",
+      "output": "65"
+    },
+    {
+      "input": "s = \"abacabadabacabadabacaba\"",
+      "output": "60"
+    },
+    {
+      "input": "s = \"abcdefgfedcbabcdefgfedcbabcdefgfedcbabcdefgfedcbabcdefgfedcb\"",
+      "output": "180"
+    },
+    {
+      "input": "s = \"xyxyxyxyxyxyxyxy\"",
+      "output": "72"
+    },
+    {
+      "input": "s = \"zxyzyxzyxzyxzyxzyxzyxzyx\"",
+      "output": "31"
+    },
+    {
+      "input": "s = \"aaaabbbbccccaaaabbbbcccc\"",
+      "output": "48"
+    },
+    {
+      "input": "s = \"mississippimississippimississippimississippi\"",
+      "output": "110"
+    },
+    {
+      "input": "s = \"aaaaaaaaaabaaaa\"",
+      "output": "70"
+    },
+    {
+      "input": "s = \"rotorrotor\"",
+      "output": "17"
+    },
+    {
+      "input": "s = \"abracadabra\"",
+      "output": "18"
+    },
+    {
+      "input": "s = \"abcabcabcabc\"",
+      "output": "30"
+    },
+    {
+      "input": "s = \"abcabcabcabcabcd\"",
+      "output": "46"
+    },
+    {
+      "input": "s = \"zzzzzzzzzzzzzzz\"",
+      "output": "120"
+    },
+    {
+      "input": "s = \"zzyyxxwwvvuuttssrrqqppoonnmmllkkiijjhhggffeeddccbbbaaa\"",
+      "output": "55"
+    },
+    {
+      "input": "s = \"aaaaaaaaaabaaaaaaaaab\"",
+      "output": "111"
+    },
+    {
+      "input": "s = \"abcabcabcabcabcabca\"",
+      "output": "70"
+    },
+    {
+      "input": "s = \"abcabcabcabca\"",
+      "output": "35"
+    },
+    {
+      "input": "s = \"abcdabcdabcd\"",
+      "output": "24"
+    },
+    {
+      "input": "s = \"abacabadabacabad\"",
+      "output": "34"
+    },
+    {
+      "input": "s = \"abababababababababababababababab\"",
+      "output": "272"
+    },
+    {
+      "input": "s = \"aaaaabbbbccccdddd\"",
+      "output": "27"
+    },
+    {
+      "input": "s = \"aaaaabbbbbccccdddd\"",
+      "output": "28"
+    },
+    {
+      "input": "s = \"aaaaabbbbb\"",
+      "output": "20"
+    },
+    {
+      "input": "s = \"aaaaabbbbccccddddeeeee\"",
+      "output": "32"
+    },
+    {
+      "input": "s = \"abcabcabcabcabcabcabcabcabcabcabcabc\"",
+      "output": "234"
+    },
+    {
+      "input": "s = \"abcdefedcbafedcbafedcba\"",
+      "output": "26"
+    },
+    {
+      "input": "s = \"mississippimississippi\"",
+      "output": "33"
+    },
+    {
+      "input": "s = \"abcabcabcabcabcabcabcabcabcabcabcabcabc\"",
+      "output": "273"
+    },
+    {
+      "input": "s = \"abcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabc\"",
+      "output": "630"
+    },
+    {
+      "input": "s = \"aabbaabbaabbaabb\"",
+      "output": "44"
+    },
+    {
+      "input": "s = \"bananaananabanana\"",
+      "output": "23"
+    },
+    {
+      "input": "s = \"abcabcabcabcabcabcab\"",
+      "output": "77"
+    },
+    {
+      "input": "s = \"abcabcabcabcabcabcabc\"",
+      "output": "84"
+    },
+    {
+      "input": "s = \"abcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcd\"",
+      "output": "612"
+    },
+    {
+      "input": "s = \"qwertyuiopqwertyuiop\"",
+      "output": "30"
+    },
+    {
+      "input": "s = \"aabbccddeeaabbccddeeaabbccddeeaabbccddeeaabbccdd\"",
+      "output": "145"
+    },
+    {
+      "input": "s = \"abcdefghjihgfedcba\"",
+      "output": "19"
+    },
+    {
+      "input": "s = \"acabacabacabacabacabacabacabacabacabacab\"",
+      "output": "230"
+    },
+    {
+      "input": "s = \"abcabcabcabcabcabcabcabcabcabc\"",
+      "output": "165"
+    },
+    {
+      "input": "s = \"abcabcabcabcabcabcabcabcabcabcabcabcabcabcabc\"",
+      "output": "360"
+    },
+    {
+      "input": "s = \"abcabcabcab\"",
+      "output": "26"
+    },
+    {
+      "input": "s = \"abcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabc\"",
+      "output": "408"
+    },
+    {
+      "input": "s = \"qwertyuiopasdfghjklzxcvbnm\"",
+      "output": "26"
+    },
+    {
+      "input": "s = \"abcdefedcbafedcbafedcbafedcbafedcbafedcbafedcbafedcbafedcbafedcba\"",
+      "output": "75"
+    },
+    {
+      "input": "s = \"abcdeedcbaabcdeedcba\"",
+      "output": "32"
+    },
+    {
+      "input": "s = \"ababababababab\"",
+      "output": "56"
+    },
+    {
+      "input": "s = \"abcdeedcba\"",
+      "output": "11"
+    },
+    {
+      "input": "s = \"abababababababab\"",
+      "output": "72"
+    },
+    {
+      "input": "s = \"noon\"",
+      "output": "5"
+    },
+    {
+      "input": "s = \"abababababab\"",
+      "output": "42"
+    },
+    {
+      "input": "s = \"ababababababababab\"",
+      "output": "90"
+    },
+    {
+      "input": "s = \"abcabcabcabcabcabc\"",
+      "output": "63"
+    },
+    {
+      "input": "s = \"aabbccddeeffgghhii\"",
+      "output": "19"
+    },
+    {
+      "input": "s = \"abcdabcdabcdabcd\"",
+      "output": "40"
+    },
+    {
+      "input": "s = \"level\"",
+      "output": "6"
+    },
+    {
+      "input": "s = \"levellevellevel\"",
+      "output": "33"
+    },
+    {
+      "input": "s = \"abcdabcdabcdabcdabcd\"",
+      "output": "60"
+    },
+    {
+      "input": "s = \"abcdefghijk\"",
+      "output": "11"
+    },
+    {
+      "input": "s = \"aaaaaaaaaaa\"",
+      "output": "66"
+    },
+    {
+      "input": "s = \"qwertyuiopqwertyuiopqwertyuiopqwertyuiop\"",
+      "output": "100"
+    },
+    {
+      "input": "s = \"bananaananab\"",
+      "output": "13"
+    },
+    {
+      "input": "s = \"zzzzzzzzzzzzzzzzzzzz\"",
+      "output": "210"
+    },
+    {
+      "input": "s = \"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\"",
+      "output": "666"
+    },
+    {
+      "input": "s = \"abcabcabcabcabcabcabcabcabcabcabcabcabcabc\"",
+      "output": "315"
+    },
+    {
+      "input": "s = \"banana\"",
+      "output": "6"
+    },
+    {
+      "input": "s = \"zzyzxzyzxzyzxzyz\"",
+      "output": "24"
+    },
+    {
+      "input": "s = \"xyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxy\"",
+      "output": "272"
+    },
+    {
+      "input": "s = \"zxyzyxzyxzyxzyxzyx\"",
+      "output": "23"
+    },
+    {
+      "input": "s = \"abracadabraabracadabra\"",
+      "output": "47"
+    },
+    {
+      "input": "s = \"abcdedcbaabcdedcba\"",
+      "output": "29"
+    },
+    {
+      "input": "s = \"abcdefghij\"",
+      "output": "10"
+    },
+    {
+      "input": "s = \"abcdedcbafedcbafedcbafedcbafedcba\"",
+      "output": "38"
+    },
+    {
+      "input": "s = \"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\"",
+      "output": "53"
+    },
+    {
+      "input": "s = \"aabbccddeeffgghhiijj\"",
+      "output": "21"
+    },
+    {
+      "input": "s = \"aabbccddeeffaabbccddeeff\"",
+      "output": "38"
+    },
+    {
+      "input": "s = \"aaaaaabbccddeeffgg\"",
+      "output": "33"
+    },
+    {
+      "input": "s = \"aaaaabbbbbaaaaa\"",
+      "output": "40"
+    },
+    {
+      "input": "s = \"racecarracecar\"",
+      "output": "23"
+    },
+    {
+      "input": "s = \"abacabadabacabadabacabad\"",
+      "output": "63"
+    },
+    {
+      "input": "s = \"deified\"",
+      "output": "8"
+    },
+    {
+      "input": "s = \"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabbbbbbbbbbbbbbbbbbbbbbbbbbbbb\"",
+      "output": "525"
+    },
+    {
+      "input": "s = \"aaaaaabbbbbccccc\"",
+      "output": "31"
+    },
+    {
+      "input": "s = \"aaaaaabbbbccccdddd\"",
+      "output": "33"
+    },
+    {
+      "input": "s = \"abcbaabcbaabcba\"",
+      "output": "33"
+    },
+    {
+      "input": "s = \"ababababcabababa\"",
+      "output": "44"
+    },
+    {
+      "input": "s = \"abcdabcdbabc\"",
+      "output": "19"
+    },
+    {
+      "input": "s = \"abababababababababababab\"",
+      "output": "156"
+    },
+    {
+      "input": "s = \"ababababab\"",
+      "output": "30"
+    },
+    {
+      "input": "s = \"abacabadabacabadabacab\"",
+      "output": "55"
+    },
+    {
+      "input": "s = \"civic\"",
+      "output": "6"
+    },
+    {
+      "input": "s = \"rotor\"",
+      "output": "6"
+    },
+    {
+      "input": "s = \"racecar\"",
+      "output": "8"
+    },
+    {
+      "input": "s = \"abcabcabcabcabcabcabcabcabc\"",
+      "output": "135"
+    },
+    {
+      "input": "s = \"abcdefghijabcdefghij\"",
+      "output": "30"
+    },
+    {
+      "input": "s = \"zazbzcbzazbzcb\"",
+      "output": "25"
+    },
+    {
+      "input": "s = \"abcabcabcabcabcabcabcabc\"",
+      "output": "108"
+    },
+    {
+      "input": "s = \"pneumonoultramicroscopicsilicovolcanoconiosis\"",
+      "output": "46"
+    },
+    {
+      "input": "s = \"abcabcabcabcabcabcabcabcabcabcabc\"",
+      "output": "198"
+    },
+    {
+      "input": "s = \"abcabcabcabcabcab\"",
+      "output": "57"
+    },
+    {
+      "input": "s = \"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\"",
+      "output": "2211"
+    },
+    {
+      "input": "s = \"abcdefabcdeabcdeabc\"",
+      "output": "32"
+    },
+    {
+      "input": "s = \"mississippi\"",
+      "output": "11"
+    },
+    {
+      "input": "s = \"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzzzzzzzzzzzzzzzzzzzz\"",
+      "output": "71"
+    },
+    {
+      "input": "s = \"hellohellohellohello\"",
+      "output": "50"
+    },
+    {
+      "input": "s = \"abcabcabcabcabc\"",
+      "output": "45"
+    },
+    {
+      "input": "s = \"xyzzzyxyzzzyxyzzzyxyzzzy\"",
+      "output": "60"
+    }
+  ]
+}

@@ -1,0 +1,329 @@
+{
+  "problem_id": 2955,
+  "input_output": [
+    {
+      "input": "s = \"abcaab\", queries = [[0,0],[1,4],[2,5],[0,5]]",
+      "output": "[1, 5, 5, 10]"
+    },
+    {
+      "input": "s = \"abcabcabc\", queries = [[0,2],[3,5],[6,8],[0,8]]",
+      "output": "[3, 3, 3, 18]"
+    },
+    {
+      "input": "s = \"xyzxyz\", queries = [[0,2],[3,5],[0,5]]",
+      "output": "[3, 3, 9]"
+    },
+    {
+      "input": "s = \"aabbcc\", queries = [[0,2],[3,5],[0,5]]",
+      "output": "[4, 4, 9]"
+    },
+    {
+      "input": "s = \"xyz\", queries = [[0,0],[0,1],[0,2]]",
+      "output": "[1, 2, 3]"
+    },
+    {
+      "input": "s = \"xyzxyzxyz\", queries = [[0,0],[1,1],[2,2],[0,2],[3,5],[6,8],[0,8]]",
+      "output": "[1, 1, 1, 3, 3, 3, 18]"
+    },
+    {
+      "input": "s = \"abcabc\", queries = [[0,5],[1,4],[2,3]]",
+      "output": "[9, 5, 2]"
+    },
+    {
+      "input": "s = \"aaaa\", queries = [[0,0],[0,1],[0,2],[0,3]]",
+      "output": "[1, 3, 6, 10]"
+    },
+    {
+      "input": "s = \"abcd\", queries = [[0,3]]",
+      "output": "[4]"
+    },
+    {
+      "input": "s = \"abcdefg\", queries = [[0,6],[1,5],[2,4]]",
+      "output": "[7, 5, 3]"
+    },
+    {
+      "input": "s = \"aaaa\", queries = [[0,3],[1,2],[2,2]]",
+      "output": "[10, 3, 1]"
+    },
+    {
+      "input": "s = \"abcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabc\", queries = [[0,5],[5,10],[10,15],[15,20],[20,25],[25,30],[30,35],[35,40],[40,45],[45,50],[0,50]]",
+      "output": "[9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 459]"
+    },
+    {
+      "input": "s = \"abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz\", queries = [[0,25],[26,51],[0,51],[10,20],[15,35],[20,40],[40,51]]",
+      "output": "[26, 26, 78, 11, 21, 21, 12]"
+    },
+    {
+      "input": "s = \"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", queries = [[0,25],[26,51],[52,77],[78,103],[104,129],[130,155]]",
+      "output": "Error: list index out of range"
+    },
+    {
+      "input": "s = \"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", queries = [[0,50],[1,49],[2,48],[3,47],[4,46]]",
+      "output": "[1326, 1225, 1128, 1035, 946]"
+    },
+    {
+      "input": "s = \"abcabcabcabcabcabcabcabcabcabc\", queries = [[0,35],[1,10],[11,20],[21,30],[31,35],[0,9],[10,19]]",
+      "output": "Error: list index out of range"
+    },
+    {
+      "input": "s = \"mississippi\", queries = [[0,4],[1,3],[4,5],[2,10],[0,10]]",
+      "output": "[7, 4, 2, 19, 24]"
+    },
+    {
+      "input": "s = \"zxyxzyzyxzyxzyxzyxzyxzyxzyxzyxzyxzyxzyxzyxzyxzyxzyxzyxzyxzyxzyxzyxzyxz\", queries = [[0,100],[10,90],[20,80],[30,70],[40,60],[50,50],[0,50],[50,100]]",
+      "output": "Error: list index out of range"
+    },
+    {
+      "input": "s = \"aaaaaaa\", queries = [[0,6],[1,5],[2,4],[0,3],[3,6],[0,4],[4,6]]",
+      "output": "[28, 15, 6, 10, 10, 15, 6]"
+    },
+    {
+      "input": "s = \"abcdefghijklmnopqrstuvwxyz\", queries = [[0,0],[1,1],[2,2],[25,25],[0,25],[1,24],[2,23],[3,22],[4,21],[5,20],[6,19],[7,18],[8,17],[9,16],[10,15],[11,14],[12,13]]",
+      "output": "[1, 1, 1, 1, 26, 24, 22, 20, 18, 16, 14, 12, 10, 8, 6, 4, 2]"
+    },
+    {
+      "input": "s = \"zzzzzzzzzzzzzz\", queries = [[0,5],[6,11],[0,11],[5,10],[0,13],[1,12]]",
+      "output": "[21, 21, 78, 21, 105, 78]"
+    },
+    {
+      "input": "s = \"ababababababab\", queries = [[0,1],[2,3],[4,5],[6,7],[8,9],[10,11],[0,11],[1,10],[2,9]]",
+      "output": "[2, 2, 2, 2, 2, 2, 42, 30, 20]"
+    },
+    {
+      "input": "s = \"abcdabcdabcdabcd\", queries = [[0,3],[4,7],[8,11],[12,15],[0,15],[1,14],[2,13],[3,12]]",
+      "output": "[4, 4, 4, 4, 40, 32, 24, 18]"
+    },
+    {
+      "input": "s = \"abababababababababa\", queries = [[0,19],[1,2],[3,4],[5,6],[7,8],[9,10],[11,12],[13,14],[15,16],[17,18],[19,19]]",
+      "output": "Error: list index out of range"
+    },
+    {
+      "input": "s = \"abacabadabacaba\", queries = [[0,5],[1,10],[5,13],[0,14],[3,7],[8,11]]",
+      "output": "[10, 23, 18, 50, 6, 5]"
+    },
+    {
+      "input": "s = \"abcdefgabcdefgabcdefgabcdefgabcdefgabcdefgabcdefgabcdefg\", queries = [[0,47],[1,46],[2,45],[3,44],[4,43],[5,42],[6,41],[7,40],[8,39]]",
+      "output": "[189, 175, 161, 147, 135, 123, 111, 100, 90]"
+    },
+    {
+      "input": "s = \"abracadabra\", queries = [[0,10],[1,8],[2,7],[3,6],[4,5],[0,5],[5,10]]",
+      "output": "[23, 12, 9, 5, 2, 9, 9]"
+    },
+    {
+      "input": "s = \"abcdefghijklmnopqrstuvwxyza\", queries = [[0,25],[1,24],[2,23],[3,22],[4,21],[5,20],[6,19],[7,18],[8,17]]",
+      "output": "[26, 24, 22, 20, 18, 16, 14, 12, 10]"
+    },
+    {
+      "input": "s = \"abacabadabacaba\", queries = [[0,10],[3,12],[5,8],[7,14],[0,14],[1,13],[2,11]]",
+      "output": "[29, 22, 5, 15, 50, 35, 22]"
+    },
+    {
+      "input": "s = \"abcdefghijklmnopqrstuvwxyz\", queries = [[0,25],[5,20],[10,15],[0,10],[15,25],[5,10]]",
+      "output": "[26, 16, 6, 11, 11, 6]"
+    },
+    {
+      "input": "s = \"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", queries = [[0,10],[11,20],[21,30],[31,40],[41,50],[51,60]]",
+      "output": "Error: list index out of range"
+    },
+    {
+      "input": "s = \"aabbaabbaabbaabbaabbaabbaabbaabbaabbaabbaabbaabbaabbaabbaabb\", queries = [[0,5],[5,10],[10,15],[15,20],[20,25],[25,30],[30,35],[35,40],[40,45],[45,50],[0,50]]",
+      "output": "[13, 12, 13, 12, 13, 12, 13, 12, 13, 12, 676]"
+    },
+    {
+      "input": "s = \"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", queries = [[0,30],[5,25],[10,20],[15,30],[0,15],[20,30]]",
+      "output": "[496, 231, 66, 136, 136, 66]"
+    },
+    {
+      "input": "s = \"abcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabc\", queries = [[0,59],[60,119],[120,179],[180,239],[240,299],[300,359],[0,359]]",
+      "output": "Error: list index out of range"
+    },
+    {
+      "input": "s = \"aaaaaaaaaa\", queries = [[0,0],[1,1],[2,2],[0,2],[1,3],[0,3],[0,4],[0,5],[0,6],[0,7],[0,8],[0,9]]",
+      "output": "[1, 1, 1, 6, 6, 10, 15, 21, 28, 36, 45, 55]"
+    },
+    {
+      "input": "s = \"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", queries = [[0,5],[5,10],[10,15],[15,20],[20,25],[0,25]]",
+      "output": "[21, 21, 21, 21, 21, 351]"
+    },
+    {
+      "input": "s = \"abacabadabacaba\", queries = [[0,14],[2,10],[5,7],[8,12],[0,6]]",
+      "output": "[50, 20, 3, 8, 14]"
+    },
+    {
+      "input": "s = \"abcabcabcabcabc\", queries = [[0,14],[1,13],[2,12],[0,7],[7,14],[3,11],[4,10],[0,10],[5,15],[10,20],[0,20]]",
+      "output": "Error: list index out of range"
+    },
+    {
+      "input": "s = \"abcdefghijklmnopqrstuvwxyz\", queries = [[0,25],[0,12],[13,25],[0,5],[20,25],[10,15],[5,10],[15,20]]",
+      "output": "[26, 13, 13, 6, 6, 6, 6, 6]"
+    },
+    {
+      "input": "s = \"aaaaaaaaaabbbbbbbbbbcccccccccc\", queries = [[0,9],[10,19],[20,29],[0,29],[5,24],[15,25]]",
+      "output": "[55, 55, 55, 165, 85, 36]"
+    },
+    {
+      "input": "s = \"zzzzzzzzzzzzzzzzzz\", queries = [[0,0],[1,1],[2,2],[0,5],[5,10],[0,14]]",
+      "output": "[1, 1, 1, 21, 21, 120]"
+    },
+    {
+      "input": "s = \"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", queries = [[0,49],[1,24],[25,49],[0,24],[25,49],[0,49]]",
+      "output": "[75, 35, 37, 37, 37, 75]"
+    },
+    {
+      "input": "s = \"zzzzzzzzzzzzzzzzzzzzzzzz\", queries = [[0,29],[1,28],[2,27],[0,14],[15,29],[5,20],[10,20],[0,20]]",
+      "output": "Error: list index out of range"
+    },
+    {
+      "input": "s = \"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", queries = [[0,1],[2,3],[4,5],[24,25],[0,25],[1,24],[2,23],[3,22],[4,21],[5,20],[6,19],[7,18],[8,17],[9,16],[10,15],[11,14],[12,13],[0,19],[1,18],[2,17],[3,16],[4,15],[5,14],[6,13],[7,12],[8,11],[9,10]]",
+      "output": "[3, 3, 3, 3, 39, 35, 33, 29, 27, 23, 21, 17, 15, 11, 9, 5, 3, 30, 26, 24, 20, 18, 14, 12, 8, 6, 2]"
+    },
+    {
+      "input": "s = \"aaaabbbbcccc\", queries = [[0,3],[4,7],[8,11],[0,11],[1,10],[2,9]]",
+      "output": "[10, 10, 10, 30, 22, 16]"
+    },
+    {
+      "input": "s = \"abcdefghijklmnopqrstuvwxyz\", queries = [[0,0],[1,1],[25,25],[0,25],[5,15],[10,20],[15,25]]",
+      "output": "[1, 1, 1, 26, 11, 11, 11]"
+    },
+    {
+      "input": "s = \"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", queries = [[0,25],[26,51],[52,77],[78,103],[0,103]]",
+      "output": "Error: list index out of range"
+    },
+    {
+      "input": "s = \"ababababab\", queries = [[0,0],[1,1],[2,2],[0,9],[1,8],[2,7],[3,6],[4,5]]",
+      "output": "[1, 1, 1, 30, 20, 12, 6, 2]"
+    },
+    {
+      "input": "s = \"abcdefghijklmnopqrstuvwxyz\", queries = [[0,25],[1,24],[2,23],[3,22],[4,21]]",
+      "output": "[26, 24, 22, 20, 18]"
+    },
+    {
+      "input": "s = \"mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm\", queries = [[0,100],[10,90],[20,80],[30,70],[40,60],[50,50],[0,50],[50,100]]",
+      "output": "Error: list index out of range"
+    },
+    {
+      "input": "s = \"abcdefghijklmnopqrstuvwxyz\", queries = [[0,25],[0,12],[12,25],[5,15],[10,20],[0,20],[20,25]]",
+      "output": "[26, 13, 14, 11, 11, 21, 6]"
+    },
+    {
+      "input": "s = \"aaaaaaaaaaaaaaaaaaaaaaaaaaa\", queries = [[0,29],[5,15],[10,20],[15,25],[20,29]]",
+      "output": "Error: list index out of range"
+    },
+    {
+      "input": "s = \"abacabadabacaba\", queries = [[0,4],[1,5],[2,6],[3,7],[4,8],[5,9],[6,10],[7,11],[8,12],[9,13],[10,14],[11,15],[0,14]]",
+      "output": "Error: list index out of range"
+    },
+    {
+      "input": "s = \"xyzyzyzyzyzyzyz\", queries = [[0,2],[3,5],[6,8],[9,11],[12,14],[15,17],[0,17],[1,16],[2,15]]",
+      "output": "Error: list index out of range"
+    },
+    {
+      "input": "s = \"aaaabbbbccccddddeeeeffffgggghhhhiiii\", queries = [[0,3],[4,7],[8,11],[12,15],[16,19],[20,23],[24,27],[28,31],[0,31]]",
+      "output": "[10, 10, 10, 10, 10, 10, 10, 10, 80]"
+    },
+    {
+      "input": "s = \"aaaaabbbbbaaaa\", queries = [[0,11],[0,4],[5,9],[10,11],[0,5],[5,10],[0,9],[1,8],[2,7],[3,6]]",
+      "output": "[43, 15, 15, 3, 16, 16, 30, 20, 12, 6]"
+    },
+    {
+      "input": "s = \"abcabcabcabc\", queries = [[0,11],[1,10],[2,9],[3,8],[4,7],[5,6]]",
+      "output": "[30, 22, 15, 9, 5, 2]"
+    },
+    {
+      "input": "s = \"abacabadabacaba\", queries = [[0,14],[1,13],[2,12],[0,7],[7,14],[3,11],[4,10],[0,10]]",
+      "output": "[50, 35, 28, 15, 15, 17, 14, 29]"
+    },
+    {
+      "input": "s = \"zzzzzzzzzzzzzzzzzzzzzzzz\", queries = [[0,0],[1,1],[2,2],[0,2],[1,3],[2,4],[0,29]]",
+      "output": "Error: list index out of range"
+    },
+    {
+      "input": "s = \"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\", queries = [[0,25],[26,50],[51,75],[76,100],[101,125],[126,150],[151,175],[176,200],[201,225],[226,250],[0,250]]",
+      "output": "Error: list index out of range"
+    },
+    {
+      "input": "s = \"abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz\", queries = [[0,25],[26,51],[0,51],[13,25],[28,40],[10,30]]",
+      "output": "[26, 26, 78, 13, 13, 21]"
+    },
+    {
+      "input": "s = \"abacabadabacaba\", queries = [[0,14],[1,3],[2,12],[5,10],[0,7],[8,14],[0,1],[1,2],[2,3]]",
+      "output": "[50, 3, 28, 10, 15, 14, 2, 2, 2]"
+    },
+    {
+      "input": "s = \"abcdefghijklmnopqrstuvwxyz\", queries = [[0,25],[0,0],[25,25],[0,10],[10,20],[20,25]]",
+      "output": "[26, 1, 1, 11, 11, 6]"
+    },
+    {
+      "input": "s = \"aaaaaaa\", queries = [[0,6],[1,5],[2,4],[0,3],[3,6],[0,1],[5,6]]",
+      "output": "[28, 15, 6, 10, 10, 3, 3]"
+    },
+    {
+      "input": "s = \"abccbaabccbaabccbaabccba\", queries = [[0,5],[6,11],[12,17],[18,23],[24,29],[0,29],[5,14],[10,19],[15,24]]",
+      "output": "Error: list index out of range"
+    },
+    {
+      "input": "s = \"bbaabbaabb\", queries = [[0,9],[1,8],[2,7],[3,6],[4,5],[0,5],[5,9]]",
+      "output": "[31, 20, 13, 6, 3, 13, 9]"
+    },
+    {
+      "input": "s = \"zzzzzzzzzzzzzzzzzzzzzzzzzz\", queries = [[0,29],[1,28],[2,27],[3,26],[4,25],[0,25],[5,24],[6,23],[7,22],[8,21],[9,20],[10,19],[11,18],[12,17],[13,16],[14,15]]",
+      "output": "Error: list index out of range"
+    },
+    {
+      "input": "s = \"qwertyuiopasdfghjklzxcvbnmqwertyuiop\", queries = [[0,9],[10,19],[20,29],[0,19],[10,29],[0,29],[5,15]]",
+      "output": "[10, 10, 10, 20, 20, 34, 11]"
+    },
+    {
+      "input": "s = \"aaaaabbbbbcccccdddddeeeeeffffffggggg\", queries = [[0,4],[5,9],[10,14],[15,19],[20,24],[25,29],[30,34],[35,39],[40,44],[45,49]]",
+      "output": "Error: list index out of range"
+    },
+    {
+      "input": "s = \"aabbaabbaabb\", queries = [[0,11],[1,5],[6,10],[0,4],[7,11],[3,7]]",
+      "output": "[42, 9, 9, 9, 9, 9]"
+    },
+    {
+      "input": "s = \"abcabcabcabc\", queries = [[0,2],[3,5],[6,8],[9,11],[0,11],[1,10]]",
+      "output": "[3, 3, 3, 3, 30, 22]"
+    },
+    {
+      "input": "s = \"abacabacabacabacabacaba\", queries = [[0,0],[1,1],[2,2],[0,2],[3,5],[6,8],[0,8],[9,11],[12,14],[15,17],[18,20],[0,20]]",
+      "output": "[1, 1, 1, 4, 3, 4, 21, 3, 4, 3, 4, 96]"
+    },
+    {
+      "input": "s = \"abcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghij\", queries = [[0,9],[10,19],[20,29],[30,39],[40,49],[50,59],[60,69],[70,79],[80,89],[90,99],[0,99]]",
+      "output": "Error: list index out of range"
+    },
+    {
+      "input": "s = \"abracadabra\", queries = [[0,10],[1,5],[5,9],[0,4],[6,10],[2,8],[0,8]]",
+      "output": "[23, 6, 6, 6, 6, 10, 16]"
+    },
+    {
+      "input": "s = \"abacabadabacabaabacabadabacaba\", queries = [[0,7],[8,14],[15,21],[22,28],[0,28],[7,21]]",
+      "output": "[15, 14, 14, 11, 169, 50]"
+    },
+    {
+      "input": "s = \"aaaaaaaabbbbbbbbcccccccc\", queries = [[0,7],[8,15],[16,23],[0,15],[8,23],[0,23]]",
+      "output": "[36, 36, 36, 72, 72, 108]"
+    },
+    {
+      "input": "s = \"aaaaabbbbbcccccddddd\", queries = [[0,4],[5,9],[10,14],[15,19],[0,9],[5,14],[10,19],[0,14],[5,19],[0,19]]",
+      "output": "[15, 15, 15, 15, 30, 30, 30, 45, 45, 60]"
+    },
+    {
+      "input": "s = \"abcabcabcabcabcabcabcabcabc\", queries = [[0,26],[1,25],[2,24],[3,23],[4,22],[5,21],[6,20],[7,19],[8,18],[9,17],[10,16],[11,15],[12,14],[13,13]]",
+      "output": "[135, 117, 100, 84, 70, 57, 45, 35, 26, 18, 12, 7, 3, 1]"
+    },
+    {
+      "input": "s = \"abcabcabcabcabcabcabcabcabcabcabcabc\", queries = [[0,5],[5,10],[10,15],[15,20],[20,25],[25,30],[30,35],[0,35]]",
+      "output": "[9, 9, 9, 9, 9, 9, 9, 234]"
+    },
+    {
+      "input": "s = \"ababababab\", queries = [[0,9],[1,8],[2,7],[3,6],[4,5]]",
+      "output": "[30, 20, 12, 6, 2]"
+    },
+    {
+      "input": "s = \"aaaaabbbbbcccccdddddeeeee\", queries = [[0,4],[5,9],[10,14],[15,19],[20,24],[0,24]]",
+      "output": "[15, 15, 15, 15, 15, 75]"
+    }
+  ]
+}

@@ -1,0 +1,249 @@
+{
+  "id": 2306,
+  "title": "Naming a Company",
+  "slug": "naming-a-company",
+  "difficulty": "Hard",
+  "topics": [
+    "Array",
+    "Hash Table",
+    "String",
+    "Bit Manipulation",
+    "Enumeration"
+  ],
+  "description": "You are given an array of strings ideas that represents a list of names to be used in the process of naming a company. The process of naming a company is as follows:\nReturn the number of distinct valid names for the company.\nExample 1:\nExample 2:\nConstraints:",
+  "examples": [
+    {
+      "example_num": 1,
+      "example_text": "Input: ideas = [\"coffee\",\"donuts\",\"time\",\"toffee\"]\nOutput: 6\nExplanation: The following selections are valid:\n- (\"coffee\", \"donuts\"): The company name created is \"doffee conuts\".\n- (\"donuts\", \"coffee\"): The company name created is \"conuts doffee\".\n- (\"donuts\", \"time\"): The company name created is \"tonuts dime\".\n- (\"donuts\", \"toffee\"): The company name created is \"tonuts doffee\".\n- (\"time\", \"donuts\"): The company name created is \"dime tonuts\".\n- (\"toffee\", \"donuts\"): The company name created is \"doffee tonuts\".\nTherefore, there are a total of 6 distinct company names.\n\nThe following are some examples of invalid selections:\n- (\"coffee\", \"time\"): The name \"toffee\" formed after swapping already exists in the original array.\n- (\"time\", \"toffee\"): Both names are still the same after swapping and exist in the original array.\n- (\"coffee\", \"toffee\"): Both names formed after swapping already exist in the original array.",
+      "images": []
+    },
+    {
+      "example_num": 2,
+      "example_text": "Input: ideas = [\"lack\",\"back\"]\nOutput: 0\nExplanation: There are no valid selections. Therefore, 0 is returned.",
+      "images": []
+    }
+  ],
+  "constraints": [
+    "2 <= ideas.length <= 5 * 104",
+    "1 <= ideas[i].length <= 10",
+    "ideas[i] consists of lowercase English letters.",
+    "All the strings in ideas are unique."
+  ],
+  "hints": [
+    "How can we divide the ideas into groups to make it easier to find valid pairs?",
+    "Group ideas that share the same suffix (all characters except the first) together and notice that a pair of ideas from the same group is invalid. What about pairs of ideas from different groups?",
+    "The first letter of the idea in the first group must not be the first letter of an idea in the second group and vice versa.",
+    "We can efficiently count the valid pairings for an idea if we already know how many ideas starting with a letter x are within a group that does not contain any ideas with starting letter y for all letters x and y."
+  ],
+  "code_snippets": {
+    "cpp": "class Solution {\npublic:\n    long long distinctNames(vector<string>& ideas) {\n        \n    }\n};",
+    "java": "class Solution {\n    public long distinctNames(String[] ideas) {\n        \n    }\n}",
+    "python": "class Solution(object):\n    def distinctNames(self, ideas):\n        \"\"\"\n        :type ideas: List[str]\n        :rtype: int\n        \"\"\"\n        ",
+    "python3": "class Solution:\n    def distinctNames(self, ideas: List[str]) -> int:\n        ",
+    "c": "long long distinctNames(char** ideas, int ideasSize) {\n    \n}",
+    "csharp": "public class Solution {\n    public long DistinctNames(string[] ideas) {\n        \n    }\n}",
+    "javascript": "/**\n * @param {string[]} ideas\n * @return {number}\n */\nvar distinctNames = function(ideas) {\n    \n};",
+    "typescript": "function distinctNames(ideas: string[]): number {\n    \n};",
+    "php": "class Solution {\n\n    /**\n     * @param String[] $ideas\n     * @return Integer\n     */\n    function distinctNames($ideas) {\n        \n    }\n}",
+    "swift": "class Solution {\n    func distinctNames(_ ideas: [String]) -> Int {\n        \n    }\n}",
+    "kotlin": "class Solution {\n    fun distinctNames(ideas: Array<String>): Long {\n        \n    }\n}",
+    "dart": "class Solution {\n  int distinctNames(List<String> ideas) {\n    \n  }\n}",
+    "golang": "func distinctNames(ideas []string) int64 {\n    \n}",
+    "ruby": "# @param {String[]} ideas\n# @return {Integer}\ndef distinct_names(ideas)\n    \nend",
+    "scala": "object Solution {\n    def distinctNames(ideas: Array[String]): Long = {\n        \n    }\n}",
+    "rust": "impl Solution {\n    pub fn distinct_names(ideas: Vec<String>) -> i64 {\n        \n    }\n}",
+    "racket": "(define/contract (distinct-names ideas)\n  (-> (listof string?) exact-integer?)\n  )",
+    "erlang": "-spec distinct_names(Ideas :: [unicode:unicode_binary()]) -> integer().\ndistinct_names(Ideas) ->\n  .",
+    "elixir": "defmodule Solution do\n  @spec distinct_names(ideas :: [String.t]) :: integer\n  def distinct_names(ideas) do\n    \n  end\nend"
+  },
+  "input_output": [
+    {
+      "input": "ideas = [\"coffee\",\"donuts\",\"time\",\"toffee\"]",
+      "output": "6"
+    },
+    {
+      "input": "ideas = [\"aaa\",\"bbb\",\"ccc\"]",
+      "output": "6"
+    },
+    {
+      "input": "ideas = [\"aaa\",\"bbb\",\"ccc\",\"aab\",\"abb\",\"acc\",\"baa\",\"bab\",\"bac\",\"bba\",\"bbb\",\"bbc\",\"caa\",\"cab\",\"cac\",\"cba\",\"cbb\",\"cbc\"]",
+      "output": "6"
+    },
+    {
+      "input": "ideas = [\"abc\",\"bcd\",\"cde\",\"dec\"]",
+      "output": "12"
+    },
+    {
+      "input": "ideas = [\"abcd\",\"dcba\",\"ddda\",\"dccd\"]",
+      "output": "6"
+    },
+    {
+      "input": "ideas = [\"aaa\",\"aab\",\"aac\",\"aba\",\"abb\",\"abc\",\"aca\",\"acb\",\"acc\",\"baa\",\"bab\",\"bac\",\"bba\",\"bbb\",\"bbc\",\"bca\",\"bcb\",\"bcc\",\"caa\",\"cab\",\"cac\",\"cba\",\"cbb\",\"cbc\",\"cca\",\"ccb\",\"ccc\"]",
+      "output": "0"
+    },
+    {
+      "input": "ideas = [\"aaa\",\"bbb\",\"ccc\",\"ddd\"]",
+      "output": "12"
+    },
+    {
+      "input": "ideas = [\"lack\",\"back\"]",
+      "output": "0"
+    },
+    {
+      "input": "ideas = [\"aaa\",\"bbb\",\"ccc\",\"aab\",\"abb\",\"abc\"]",
+      "output": "10"
+    },
+    {
+      "input": "ideas = [\"a\",\"b\",\"c\",\"d\",\"e\",\"f\",\"g\",\"h\",\"i\",\"j\",\"k\",\"l\",\"m\",\"n\",\"o\",\"p\",\"q\",\"r\",\"s\",\"t\",\"u\",\"v\",\"w\",\"x\",\"y\",\"z\"]",
+      "output": "0"
+    },
+    {
+      "input": "ideas = [\"ana\",\"anna\",\"nana\",\"ann\",\"nan\"]",
+      "output": "12"
+    },
+    {
+      "input": "ideas = [\"aaa\",\"baa\",\"caa\"]",
+      "output": "0"
+    },
+    {
+      "input": "ideas = [\"a\",\"b\",\"c\",\"d\",\"e\",\"f\",\"g\",\"h\",\"i\",\"j\"]",
+      "output": "0"
+    },
+    {
+      "input": "ideas = [\"aaa\",\"aab\",\"aac\",\"aba\",\"abb\",\"abc\",\"aca\",\"acb\",\"acc\"]",
+      "output": "0"
+    },
+    {
+      "input": "ideas = [\"aa\",\"bb\",\"cc\",\"ac\",\"ba\",\"ab\",\"ad\",\"da\",\"bd\",\"db\"]",
+      "output": "10"
+    },
+    {
+      "input": "ideas = [\"aa\",\"bb\",\"cc\",\"dd\",\"ee\",\"ff\",\"gg\",\"hh\",\"ii\",\"jj\",\"kk\",\"ll\",\"mm\",\"nn\",\"oo\",\"pp\",\"qq\",\"rr\",\"ss\",\"tt\",\"uu\",\"vv\",\"ww\",\"xx\",\"yy\",\"zz\",\"abc\",\"bcd\",\"cde\",\"def\",\"efg\",\"fgh\",\"ghi\",\"hij\",\"ijk\",\"jkl\",\"klm\",\"lmn\",\"mno\",\"nop\",\"opq\",\"pqr\",\"qrs\",\"rst\",\"stu\",\"tuv\",\"uvw\",\"vwx\",\"wxy\",\"xyz\",\"aaa\",\"bbb\",\"ccc\",\"ddd\",\"eee\",\"fff\",\"ggg\",\"hhh\",\"iii\",\"jjj\",\"kkk\",\"lll\",\"mmm\",\"nnn\",\"ooo\",\"ppp\",\"qqq\",\"rrr\",\"sss\",\"ttt\",\"uuu\",\"vvv\",\"www\",\"xxx\",\"yyy\",\"zzz\"]",
+      "output": "5552"
+    },
+    {
+      "input": "ideas = [\"a\",\"b\",\"c\",\"d\",\"e\",\"f\",\"g\",\"h\",\"i\",\"j\",\"k\",\"l\",\"m\",\"n\",\"o\",\"p\",\"q\",\"r\",\"s\",\"t\",\"u\",\"v\",\"w\",\"x\",\"y\",\"z\",\"aa\",\"bb\",\"cc\",\"dd\",\"ee\",\"ff\",\"gg\",\"hh\",\"ii\",\"jj\",\"kk\",\"ll\",\"mm\",\"nn\",\"oo\",\"pp\",\"qq\",\"rr\",\"ss\",\"tt\",\"uu\",\"vv\",\"ww\",\"xx\",\"yy\",\"zz\",\"aaa\",\"bbb\",\"ccc\",\"ddd\",\"eee\",\"fff\",\"ggg\",\"hhh\",\"iii\",\"jjj\",\"kkk\",\"lll\",\"mmm\",\"nnn\",\"ooo\",\"ppp\",\"qqq\",\"rrr\",\"sss\",\"ttt\",\"uuu\",\"vvv\",\"www\",\"xxx\",\"yyy\",\"zzz\",\"aaaa\",\"bbbb\",\"cccc\",\"dddd\",\"eeee\",\"ffff\",\"gggg\",\"hhhh\",\"iiii\",\"jjjj\",\"kkkk\",\"llll\",\"mmmm\",\"nnnn\",\"oooo\",\"pppp\",\"qqqq\",\"rrrr\",\"ssss\",\"tttt\",\"uuuu\",\"vvvv\",\"wwww\",\"xxxx\",\"yyyy\",\"zzzz\",\"abc\",\"bcd\",\"cde\",\"def\",\"efg\",\"fgh\",\"ghi\",\"hij\",\"ijk\",\"jkl\",\"klm\",\"lmn\",\"mno\",\"nop\",\"opq\",\"pqr\",\"qrs\",\"rst\",\"stu\",\"tuv\",\"uvw\",\"vwx\",\"wxy\",\"xyz\"]",
+      "output": "10002"
+    },
+    {
+      "input": "ideas = [\"abcdef\",\"ghijkl\",\"mnopqr\",\"stuvwx\",\"yzabcf\",\"ghijkl\",\"mnopqr\",\"stuvwx\",\"yzabcf\",\"abcdef\",\"ghijkl\",\"mnopqr\",\"stuvwx\",\"yzabcf\",\"abcdef\",\"ghijkl\",\"mnopqr\",\"stuvwx\",\"yzabcf\",\"abcdef\",\"ghijkl\",\"mnopqr\",\"stuvwx\",\"yzabcf\",\"abcdef\",\"ghijkl\",\"mnopqr\",\"stuvwx\",\"yzabcf\",\"abcdef\",\"ghijkl\",\"mnopqr\",\"stuvwx\",\"yzabcf\",\"abcdef\",\"ghijkl\",\"mnopqr\",\"stuvwx\",\"yzabcf\",\"abcdef\",\"ghijkl\",\"mnopqr\",\"stuvwx\",\"yzabcf\"]",
+      "output": "1548"
+    },
+    {
+      "input": "ideas = [\"abc\",\"def\",\"ghi\",\"jkl\",\"mno\",\"pqr\",\"stu\",\"vwx\",\"yz\",\"zxy\",\"yxw\",\"vuts\",\"rqpm\",\"nmlk\",\"jihg\",\"fedc\",\"bac\",\"xyz\",\"wxyz\",\"vwxy\",\"uwxy\",\"twxy\",\"stxy\",\"srxy\",\"sqxy\",\"spxy\",\"soxy\",\"snxy\",\"smxy\",\"slxy\",\"skxy\",\"sjxy\",\"sixy\",\"shxy\",\"sgxy\",\"sfxy\",\"sexy\",\"sdxy\",\"scxy\",\"sbxy\",\"saxy\",\"rzxy\",\"ryxy\",\"rxxy\",\"rwxy\",\"rvxy\",\"ruxy\",\"ruxy\",\"ruxy\",\"rsxy\",\"rqxy\",\"rpxy\",\"roxy\",\"rnx\",\"rmxy\",\"rlxy\",\"rkxy\",\"rjxy\",\"rixy\",\"rhxy\",\"rgxy\",\"rfxy\",\"rex\",\"rdxy\",\"rcxy\",\"rbxy\",\"rax\",\"qzxy\",\"qxy\",\"qxw\",\"qvx\",\"qux\",\"qtx\",\"qsx\",\"qqx\",\"qpx\",\"qox\",\"qnx\",\"qmx\",\"qlx\",\"qkx\",\"qjx\",\"qix\",\"qhx\",\"qgx\",\"qfx\",\"qex\",\"qdx\",\"qcx\",\"qbx\",\"qax\",\"pzxy\",\"pyxy\",\"pxy\",\"pxw\",\"pxv\",\"pxu\",\"pxt\",\"pxs\",\"pxq\",\"pxp\",\"pxo\",\"pxn\",\"pxm\",\"pxl\",\"pxk\",\"pxj\",\"pxi\",\"pxh\",\"pxg\",\"pxf\",\"pxe\",\"pxd\",\"pxc\",\"pxb\",\"pax\",\"ozxy\",\"oyxy\",\"oxy\",\"oxw\",\"oxv\",\"oxu\",\"uxt\",\"uxs\",\"uxq\",\"uxp\",\"uxo\",\"uxn\",\"uxm\",\"uxl\",\"uxk\",\"uxj\",\"uxi\",\"uxh\",\"uxg\",\"uxf\",\"uxe\",\"uxd\",\"uxc\",\"uxb\",\"uxa\",\"nzz\",\"nzy\",\"nxz\",\"nxy\",\"nxw\",\"nxv\",\"nxu\",\"nxt\",\"nxs\",\"nxq\",\"nxp\",\"nxo\",\"nxn\",\"nxm\",\"nxl\",\"nxk\",\"nxj\",\"nxi\",\"nxh\",\"nxg\",\"nxf\",\"nxe\",\"nxd\",\"nxc\",\"nxb\",\"nxa\"]",
+      "output": "17252"
+    },
+    {
+      "input": "ideas = [\"xylophone\",\"yoyo\",\"xylography\",\"xenon\",\"xerox\",\"yacht\",\"yellow\",\"yak\",\"yeti\",\"xenophobe\",\"xerophyte\",\"yodel\",\"yxor\",\"xyrrhuria\",\"yxir\",\"xylem\",\"yxymphyta\",\"xylophone\",\"yxonic\",\"xyranthus\",\"yxist\",\"yxiraphyllum\",\"yxirion\",\"yxirus\",\"yxistophora\",\"yxistophoric\",\"yxistophorous\",\"yxistotonic\",\"yxistos\",\"yxistus\",\"yxistoscopy\",\"yxistoscopy\",\"yxistoscopy\",\"yxistoscopy\",\"yxistoscopy\",\"yxistoscopy\",\"yxistoscopy\",\"yxistoscopy\",\"yxistoscopy\",\"yxistoscopy\"]",
+      "output": "600"
+    },
+    {
+      "input": "ideas = [\"cat\",\"dog\",\"cow\",\"pig\",\"hen\",\"sheep\",\"goat\",\"duck\",\"llama\",\"alpaca\",\"camel\",\"horse\",\"donkey\",\"zebra\",\"elephant\",\"tiger\",\"lion\",\"leopard\",\"cheetah\",\"bear\",\"panda\",\"koala\",\"kangaroo\",\"wombat\",\"raccoon\",\"squirrel\",\"chipmunk\",\"beaver\",\"porcupine\",\"hedgehog\",\"meerkat\",\"baboon\",\"gorilla\",\"chimpanzee\",\"orangutan\",\"chinchilla\",\"armadillo\",\"quokka\",\"tamandua\",\"aardvark\",\"anteater\",\"koala\",\"emu\",\"kiwi\",\"lyrebird\",\"cassowary\",\"kangaroo\",\"numbat\",\"platypus\",\"kangaroo\",\"kangaroo\",\"kangaroo\"]",
+      "output": "2478"
+    },
+    {
+      "input": "ideas = [\"apple\",\"apricot\",\"banana\",\"blackberry\",\"blueberry\",\"cherry\",\"cranberry\",\"cantaloupe\",\"date\",\"dragonfruit\",\"elderberry\",\"fig\",\"grape\",\"grapefruit\",\"honeydew\",\"kiwi\",\"lemon\",\"lime\",\"mango\",\"melon\",\"nectarine\",\"orange\",\"papaya\",\"peach\",\"pear\",\"plum\",\"pomegranate\",\"quince\",\"raspberry\",\"strawberry\",\"tangerine\",\"ugli\",\"vanilla\",\"watermelon\",\"xigua\",\"yellowberry\",\"zucchini\"]",
+      "output": "1290"
+    },
+    {
+      "input": "ideas = [\"apple\",\"apricot\",\"banana\",\"blueberry\",\"blackberry\",\"cherry\",\"citrus\",\"coconut\",\"cranberry\",\"grape\",\"grapefruit\",\"guava\",\"kiwi\",\"lemon\",\"lime\",\"mango\",\"mangosteen\",\"melon\",\"nectarine\",\"orange\",\"papaya\",\"peach\",\"pear\",\"pineapple\",\"plum\",\"pomegranate\",\"raspberry\",\"strawberry\",\"tangerine\",\"watermelon\",\"zucchini\"]",
+      "output": "866"
+    },
+    {
+      "input": "ideas = [\"axx\",\"bxx\",\"cxx\",\"dxx\",\"exx\",\"fxx\",\"gxx\",\"hxx\",\"ixx\",\"jxx\",\"kxx\",\"lxx\",\"mxx\",\"nxx\",\"oxx\",\"pxx\",\"qxx\",\"rxx\",\"sxx\",\"txx\",\"uxx\",\"vxx\",\"wxx\",\"xxx\",\"yxx\",\"zxx\"]",
+      "output": "0"
+    },
+    {
+      "input": "ideas = [\"abcd\",\"abcf\",\"abce\",\"abdg\",\"abcg\",\"abde\",\"abfh\",\"abih\",\"abif\",\"abjg\",\"abjh\",\"abjf\",\"abkh\",\"abkf\",\"abki\",\"abkj\",\"acde\",\"acdf\",\"aceg\",\"acfh\",\"acij\",\"ackj\",\"acdg\",\"acdf\",\"aceg\",\"acfj\",\"acih\",\"acki\",\"ackj\",\"adef\",\"adeg\",\"adfg\",\"adhj\",\"adfi\",\"adfk\",\"adkj\",\"acgh\",\"adgh\",\"adhj\",\"adgk\",\"adfk\",\"adkj\",\"afgh\",\"afgj\",\"afkj\",\"aghi\",\"aghj\",\"agfk\",\"agkj\",\"agih\",\"aghj\",\"agfk\",\"agkj\",\"ahij\",\"ahik\",\"ahjk\",\"aijk\",\"bcdf\",\"bcde\",\"bcfg\",\"bdgh\",\"bdfi\",\"bdfk\",\"bdkj\",\"bcgh\",\"bdgh\",\"bdgj\",\"bdjk\",\"bcfh\",\"bcfg\",\"bcij\",\"bcjk\",\"bdef\",\"bdeg\",\"bdfg\",\"bdjk\",\"bdfi\",\"bdfk\",\"bdkj\",\"bgfh\",\"bgfj\",\"bgkj\",\"bghi\",\"bhij\",\"bhik\",\"bhjk\",\"bijk\",\"cdfg\",\"cdef\",\"cdgh\",\"cdij\",\"cgfh\",\"cgfj\",\"cgkj\",\"cghi\",\"chij\",\"chik\",\"chjk\",\"cijk\",\"defg\",\"dfgh\",\"dfij\",\"dgjk\",\"dfkj\",\"dghj\",\"dijk\",\"egfh\",\"egfj\",\"egkj\",\"eghi\",\"ehij\",\"ehik\",\"ehjk\",\"eijk\",\"fghj\",\"fgik\",\"fgjk\",\"fhij\",\"fhik\",\"fhjk\",\"fijk\",\"ghij\",\"ghik\",\"ghjk\",\"gijk\",\"hijk\"]",
+      "output": "2454"
+    },
+    {
+      "input": "ideas = [\"aardvarkaardvark\",\"albatrossalbatross\",\"alligatoralligator\",\"anacondaanaconda\",\"antant\",\"antelopeantelope\",\"anteateranteater\",\"antlerantler\",\"apricotapricot\",\"armadilloarmadillo\",\"baboonbaboon\",\"badgerbadger\",\"baldbald\",\"bandicootbandicoot\",\"barnaclebarnacle\",\"batbat\",\"bearbear\",\"beaverbeaver\",\"beebee\",\"beetlebeetle\",\"bisonbison\",\"bluebirdbluebird\",\"boaboa\",\"bobcatbobcat\",\"bobolinkbobolink\",\"boobybooby\",\"buffalobuffalo\",\"bullbull\",\"burroburr\",\"buzzardbuzzard\",\"camelcamel\",\"canarycanary\",\"capybaracapybara\",\"cariboucaribou\",\"catcat\",\"caterpillarcaterpillar\",\"cheetahcheetah\",\"chickenchicken\",\"chimpanzeechimpanzee\",\"chinchillachinchilla\",\"chipmunkchipmunk\",\"civetcivet\",\"coaticoati\",\"cockatoocockatoo\",\"codcod\",\"condorcondor\",\"congerconger\",\"conycony\",\"cootcoot\",\"coralcoral\",\"cougarcougar\",\"cowcow\",\"coyotecooyote\",\"crabcrab\",\"cranecrane\",\"cricketcricket\",\"crocodilecrocodile\",\"crowcrow\",\"curlewcurlew\",\"deerdeer\",\"dolphindolphin\",\"donkeydonkey\",\"dovedove\",\"dragonflydragonfly\",\"drakedrake\",\"duckduck\",\"dugongdugong\",\"eagleeagle\",\"earthwormearthworm\",\"eeleeel\",\"egretegret\",\"elandeland\",\"elephantelephant\",\"elkelk\",\"emuumu\",\"falconfalcon\",\"ferretferret\",\"finchfinch\",\"fishfish\",\"flamingoflamingo\",\"flyfly\",\"flycatcherflycatcher\",\"frogfrog\",\"fossafossa\",\"foxfox\",\"frigatebirdfrigatebird\",\"frogfrog\",\"gazelligazelle\",\"gatorgator\",\"gaurgaur\",\"gazelligazelle\",\"geckogecko\",\"gibbongibbon\",\"gilagila\",\"glideglide\",\"gnomegnome\",\"goatgoat\",\"goldfinchgoldfinch\",\"goosegoose\",\"gorillagorilla\",\"goshawkgoshawk\",\"grasshoppergrasshopper\",\"grousegrouse\",\"guanguan\",\"guineafowlguineafowl\",\"gullgull\",\"guppyguppy\",\"haddockhaddock\",\"halibuthalibut\",\"hamsterhamster\",\"harehare\",\"harrierharrier\",\"hawkhawk\",\"hedgehoghedgehog\",\"heronheron\",\"herringherring\",\"hippopotamushippopotamus\",\"hornbillhornbill\",\"horsehorse\",\"houndhound\",\"hyenahyena\",\"ibisibis\",\"iguanaiguana\",\"impalaimpala\",\"jackaljackal\",\"jackrabbitjackrabbit\",\"jaguajar\",\"jayjay\",\"jellyfishjellyfish\",\"jerkbirdjerkbird\",\"junglefowljunglefowl\",\"kangarakangaroo\",\"kangarakangaroo\",\"katydidkatydid\",\"kinkajoukinkajou\",\"kipunjikipunji\",\"koalakoala\",\"komodokomodo\",\"korimakokorimako\",\"kookaburrakookaburra\",\"koupreykouprey\",\"krillkrill\",\"kudukudu\",\"labradorlabrador\",\"lamlam\",\"lampreylamprey\",\"larvalarva\",\"leechleech\",\"lemurlemur\",\"leopardleopard\",\"lorikeetlorikeet\",\"louselouse\",\"louselouse\",\"lynxlynx\",\"macawmacaw\",\"macaquemacaque\",\"mackerelmackerel\",\"maggotmaggot\",\"magpimagpie\",\"mandrillmandrill\",\"manateemanatee\",\"mantismantis\",\"marlinmarlin\",\"marmotmarmot\",\"martenmarten\",\"mastodonmastodon\",\"mayflymayfly\",\"meerkatmeerkat\",\"minkmink\",\"mockingbirdmockingbird\",\"molomole\",\"mongoosemongoose\",\"moorhenmoorhen\",\"moosemoose\",\"mouflonmouflon\",\"mulemule\",\"muskratmuskrat\",\"narwhalnarwhal\",\"nighthawknighthawk\",\"numbatnumbat\",\"nyalanyla\",\"octopusoctopus\",\"okapiokapi\",\"ollieollie\",\"opossumopossum\",\"orangutanorangutan\",\"orioleoriole\",\"oryxoryx\",\"ospreyosprey\",\"otterotter\",\"owlowl\",\"oxox\",\"oysteroyster\",\"oystercatcheroystercatcher\",\"pademelonpademelon\",\"pandapanda\",\"pangolinpangolin\",\"pantherpanther\",\"parakeetparakeet\",\"parrotparrot\",\"partridgepartridge\",\"peafowlpeafowl\",\"pelicanpelican\",\"penguinpenguin\",\"pheasantpheasant\",\"pigpig\",\"pigeonpigeon\",\"pikapika\",\"pikepike\",\"pinkpink\",\"pit viperpit viper\",\"platypusplatypus\",\"polecatpolecat\",\"polliwogpolliwog\",\"ponypony\",\"porcupineporcupine\",\"porpoiseporpoise\",\"prawnprawn\",\"quaggaquagga\",\"quailquail\",\"quokkaquokka\",\"quollquoll\",\"rabbitrabbit\",\"raccoonraccoon\",\"racerracer\",\"racketeerracketeer\",\"raccoonraccoon\",\"ramram\",\"ratrat\",\"ravenraven\",\"rayray\",\"reindeerreindeer\",\"rhinocerosrhinoceros\",\"roachroach\",\"rodentrodent\",\"rookrook\",\"roosterrooster\",\"rotiferrotifer\",\"rouserouse\",\"salmonsalmon\",\"salamandersalamander\",\"sallysally\",\"sangriasangria\",\"sand dollarsand dollar\",\"sandpipersandpiper\",\"sawsharksawshark\",\"sawyersawyer\",\"scallopscallop\",\"scarab beetlescarab beetle\",\"servalserval\",\"seahorseseahorse\",\"sealseal\",\"sealionsealion\",\"servalserval\",\"sheepsheep\",\"shrewhrew\",\"shrikeshrike\",\"shoebillshoebill\",\"skimmerskimmer\",\"skinkskink\",\"skunkskunk\",\"slothsloth\",\"snailsnail\",\"snakesnake\",\"snipesnipe\",\"spiderspider\",\"spider monkeyspider monkey\",\"squidsquid\",\"squishsquish\",\"squishsquish\",\"squirrelsquirrel\",\"starfishstarfish\",\"stagstag\",\"stingraystingray\",\"storkstork\",\"swallowswan\",\"swanswan\",\"swimmerswimmer\",\"swordfishswordfish\",\"tamarintamarin\",\"tangtang\",\"tarantulatarantula\",\"tarsiertarsier\",\"terntern\",\"thripsthrips\",\"thrushthrush\",\"ticktick\",\"tigertiger\",\"timberwolftimberwolf\",\"tinamoutinamou\",\"toadtoad\",\"toucantoucan\",\"trapdoorspidertrapdoor spider\",\"trogdotrogdor\",\"trouttrout\",\"tsetsetsetse\",\"tunatuna\",\"turkeyturkey\",\"turtleturtle\",\"tusktusk\",\"tusktusk\",\"vampire batvampire bat\",\"vulturevulture\",\"wallabywallaby\",\"walruswalrus\",\"warthogwarthog\",\"waspwasp\",\"water buffalowater buffalo\",\"waterbuckwaterbuck\",\"waterhenwaterhen\",\"watershedwatershed\",\"waterstriderwaterstrider\",\"weaselweasel\",\"wedge-tailed eaglewedge-tailed eagle\",\"weevilweevil\",\"wombatwombat\",\"woodchuckwoodchuck\",\"woodpeckerwoodpecker\",\"wolverinewolverine\",\"wombatwombat\",\"wonderbirdwonderbird\",\"wombatwombat\",\"wormworm\",\"wrenwren\",\"xenonxenon\",\"xerophytexerophyte\",\"xylophonexylophone\",\"yakyak\",\"yarrowyarrow\",\"yellowtailyellowtail\",\"yolkyolk\",\"youngsteryoungster\",\"zebrazebra\",\"zebuzebu\",\"zorillazorilla\"]",
+      "output": "105526"
+    },
+    {
+      "input": "ideas = [\"abc\",\"bcd\",\"cde\",\"def\",\"efg\",\"fgh\",\"ghi\",\"hij\",\"ijk\",\"jkl\",\"klm\",\"lmn\",\"mno\",\"nop\",\"opq\",\"pqr\",\"qrs\",\"rst\",\"stu\",\"tuv\",\"uvw\",\"vwx\",\"wxy\",\"xyz\",\"axa\",\"bxb\",\"cxc\",\"dxd\",\"eye\",\"fzf\",\"gag\",\"hah\",\"ibi\",\"jij\",\"kjk\",\"lll\",\"mmm\",\"nnn\",\"ooo\",\"ppp\",\"qqq\",\"rrr\",\"sss\",\"ttt\",\"uuu\",\"vvv\",\"www\",\"xxx\",\"yyy\",\"zzz\"]",
+      "output": "2390"
+    },
+    {
+      "input": "ideas = [\"aaaaa\",\"bbbbb\",\"ccccc\",\"ddddd\",\"eeeee\",\"fffff\",\"ggggg\",\"hhhhh\",\"iiiii\",\"jjjjj\",\"kkkkk\",\"lllll\",\"mmmmm\",\"nnnnn\",\"ooooo\",\"ppppp\",\"qqqqq\",\"rrrrr\",\"sssss\",\"ttttt\",\"uuuuu\",\"vvvvv\",\"wwwww\",\"xxxxx\",\"yyyyy\",\"zzzzz\",\"abcde\",\"fghij\",\"klmno\",\"pqrst\",\"uvwxy\",\"zabcd\",\"efghi\",\"jklmn\",\"opqrs\",\"tuvwx\",\"yzabc\",\"defgh\",\"ijklm\",\"nopqr\",\"stuvw\",\"xyzab\",\"cdefg\",\"ghijk\",\"lmnop\",\"qrstu\",\"vwxyz\",\"yzabc\",\"defgh\",\"ijklm\",\"nopqr\",\"stuvw\",\"xyzab\",\"cdefg\",\"ghijk\",\"lmnop\",\"qrstu\",\"vwxyz\"]",
+      "output": "3220"
+    },
+    {
+      "input": "ideas = [\"apple\",\"apricot\",\"banana\",\"blueberry\",\"blackberry\",\"cherry\",\"cranberry\",\"cantaloupe\",\"grape\",\"grapefruit\",\"kiwi\",\"kiwano\",\"lemon\",\"lime\",\"mango\",\"mangosteen\",\"nectarine\",\"orange\",\"papaya\",\"peach\",\"pear\",\"plum\",\"pluot\",\"pomegranate\",\"quince\",\"raspberry\",\"strawberry\",\"tangerine\",\"ugli\",\"watermelon\",\"xigua\",\"yam\",\"zucchini\"]",
+      "output": "1004"
+    },
+    {
+      "input": "ideas = [\"apple\",\"apricot\",\"banana\",\"blueberry\",\"cherry\",\"cranberry\",\"date\",\"dragonfruit\",\"elderberry\",\"fig\",\"grape\",\"grapefruit\",\"honeydew\",\"kiwi\",\"lemon\",\"lime\",\"mango\",\"melon\",\"nectarine\",\"orange\",\"papaya\",\"peach\",\"pear\",\"pineapple\",\"plum\",\"pomegranate\",\"raspberry\",\"strawberry\",\"tangerine\",\"tangerine\",\"ugli\",\"vanilla\",\"watermelon\",\"xigua\",\"yellowberry\",\"zucchini\"]",
+      "output": "1214"
+    },
+    {
+      "input": "ideas = [\"aabb\",\"abbb\",\"acbb\",\"adbb\",\"aebb\",\"afbb\",\"agbb\",\"ahbb\",\"aibb\",\"ajbb\",\"akbb\",\"albb\",\"ambb\",\"anbb\",\"aobb\",\"apbb\",\"aqbb\",\"arbb\",\"asbb\",\"atbb\",\"aubb\",\"avbb\",\"awbb\",\"axbb\",\"aybb\",\"azbb\",\"baab\",\"bbab\",\"bcab\",\"bdab\",\"beab\",\"bfab\",\"bgab\",\"bhab\",\"biab\",\"bjab\",\"bkab\",\"blab\",\"bmba\",\"bnab\",\"boab\",\"bpab\",\"bqab\",\"brab\",\"bsab\",\"btab\",\"buab\",\"bvab\",\"bwab\",\"bxab\",\"byab\",\"bzab\",\"caab\",\"cbab\",\"ccab\",\"cdba\",\"ceab\",\"cfab\",\"cgab\",\"chab\",\"ciab\",\"cjab\",\"ckab\",\"clab\",\"cmba\",\"cnab\",\"coab\",\"cpab\",\"cqab\",\"crab\",\"csab\",\"ctab\",\"cuab\",\"cvab\",\"cwab\",\"cxab\",\"cyab\",\"czab\",\"daab\",\"dbab\",\"dcab\",\"ddab\",\"deab\",\"dfab\",\"dgab\",\"dhab\",\"diab\",\"djab\",\"dkab\",\"dlab\",\"dmab\",\"dnab\",\"doab\",\"dpab\",\"dqab\",\"drab\",\"dsab\",\"dtab\",\"duab\",\"dvab\",\"dwab\",\"dxab\",\"dyab\",\"dzab\",\"eaab\",\"ebab\",\"ecab\",\"edab\",\"eeab\",\"efab\",\"egab\",\"ehab\",\"eiab\",\"ejab\",\"ekab\",\"elab\",\"emab\",\"enab\",\"eoab\",\"epab\",\"eqab\",\"erab\",\"esab\",\"etab\",\"euab\",\"evab\",\"ewab\",\"exab\",\"eyab\",\"ezab\",\"faab\",\"fbab\",\"fcab\",\"fdab\",\"feab\",\"ffab\",\"fgab\",\"fhab\",\"fiab\",\"fjab\",\"fkab\",\"flab\",\"fmab\",\"fnab\",\"foab\",\"fpab\",\"fqab\",\"frab\",\"fsab\",\"ftab\",\"fuab\",\"fvab\",\"fwab\",\"fxab\",\"fyab\",\"fzab\"]",
+      "output": "6792"
+    },
+    {
+      "input": "ideas = [\"aabb\",\"abba\",\"bbaa\",\"baab\",\"abab\",\"baba\",\"abcd\",\"abdc\",\"acbd\",\"acdb\",\"adbc\",\"adcb\",\"bacd\",\"badc\",\"bcad\",\"bcda\",\"bdac\",\"bdca\",\"cabd\",\"cadb\",\"cbad\",\"cbda\",\"cdab\",\"cdba\",\"dabc\",\"dacb\",\"dbac\",\"dbca\",\"dcab\",\"dcba\",\"aaaa\",\"bbbb\",\"cccc\",\"dddd\",\"aabbcc\",\"bbccaa\",\"ccaabb\",\"aabbaa\",\"bbccbb\",\"ccaaca\"]",
+      "output": "1182"
+    },
+    {
+      "input": "ideas = [\"aardvark\",\"albatross\",\"alligator\",\"anaconda\",\"ant\",\"antelope\",\"anteater\",\"antler\",\"apricot\",\"armadillo\",\"baboon\",\"badger\",\"bald\",\"bandicoot\",\"barnacle\",\"bat\",\"bear\",\"beaver\",\"bee\",\"beetle\",\"bison\",\"bluebird\",\"boa\",\"bobcat\",\"bobolink\",\"booby\",\"buffalo\",\"bull\",\"burro\",\"buzzard\",\"camel\",\"canary\",\"capybara\",\"caribou\",\"cat\",\"caterpillar\",\"cheetah\",\"chicken\",\"chimpanzee\",\"chinchilla\",\"chipmunk\",\"civet\",\"coati\",\"cockatoo\",\"cod\",\"condor\",\"conger\",\"cony\",\"coot\",\"coral\",\"cougar\",\"cow\",\"coyote\",\"crab\",\"crane\",\"cricket\",\"crocodile\",\"crow\",\"curlew\",\"deer\",\"dolphin\",\"donkey\",\"dove\",\"dragonfly\",\"drake\",\"duck\",\"dugong\",\"eagle\",\"earthworm\",\"eel\",\"egret\",\"eland\",\"elephant\",\"elk\",\"emu\",\"falcon\",\"ferret\",\"finch\",\"fish\",\"flamingo\",\"fly\",\"flycatcher\",\"frog\",\"fossa\",\"fox\",\"frigatebird\",\"frog\",\"gazelle\",\"gator\",\"gaur\",\"gazelle\",\"gecko\",\"gibbon\",\"gila\",\"glide\",\"gnome\",\"goat\",\"goldfinch\",\"goose\",\"gorilla\",\"goshawk\",\"grasshopper\",\"grouse\",\"guan\",\"guineafowl\",\"gull\",\"guppy\",\"haddock\",\"halibut\",\"hamster\",\"hare\",\"harrier\",\"hawk\",\"hedgehog\",\"heron\",\"herring\",\"hippopotamus\",\"hornbill\",\"horse\",\"hound\",\"hyena\",\"ibis\",\"iguana\",\"impala\",\"jackal\",\"jackrabbit\",\"jaguar\",\"jay\",\"jellyfish\",\"jerkbird\",\"junglefowl\",\"kangaroo\",\"kangaroo\",\"katydid\",\"kinkajou\",\"kipunji\",\"koala\",\"komodo\",\"korimako\",\"kookaburra\",\"kouprey\",\"krill\",\"kudu\",\"labrador\",\"lamb\",\"lamprey\",\"larva\",\"leech\",\"lemur\",\"leopard\",\"lorikeet\",\"louse\",\"louse\",\"lynx\",\"macaw\",\"macaque\",\"mackerel\",\"maggot\",\"magpie\",\"mandrill\",\"manatee\",\"mantis\",\"marlin\",\"marmot\",\"marten\",\"mastodon\",\"mayfly\",\"meerkat\",\"mink\",\"mockingbird\",\"mole\",\"mongoose\",\"moorhen\",\"moose\",\"mouflon\",\"mule\",\"muskrat\",\"narwhal\",\"nighthawk\",\"numbat\",\"nyala\",\"octopus\",\"okapi\",\"ollie\",\"opossum\",\"orangutan\",\"oriole\",\"oryx\",\"osprey\",\"otter\",\"owl\",\"ox\",\"oyster\",\"oystercatcher\",\"pademelon\",\"panda\",\"pangolin\",\"panther\",\"parakeet\",\"parrot\",\"partridge\",\"peafowl\",\"pelican\",\"penguin\",\"pheasant\",\"pig\",\"pigeon\",\"pika\",\"pike\",\"pika\",\"pink\",\"pit viper\",\"platypus\",\"polecat\",\"polliwog\",\"pony\",\"porcupine\",\"porpoise\",\"prawn\",\"quagga\",\"quail\",\"quokka\",\"quoll\",\"rabbit\",\"raccoon\",\"racer\",\"racketeer\",\"raccoon\",\"ram\",\"rat\",\"raven\",\"ray\",\"reindeer\",\"rhinoceros\",\"roach\",\"rodent\",\"rook\",\"rooster\",\"rotifer\",\"rouse\",\"salmon\",\"salamander\",\"sally\",\"sangria\",\"sand dollar\",\"sandpiper\",\"sawshark\",\"sawyer\",\"scallop\",\"scarab beetle\",\"serval\",\"seahorse\",\"seagull\",\"seal\",\"sealion\",\"serval\",\"sheep\",\"shrew\",\"shrike\",\"shoebill\",\"skimmer\",\"skink\",\"skunk\",\"sloth\",\"snail\",\"snake\",\"snipe\",\"spider\",\"spider monkey\",\"squid\",\"squish\",\"squish\",\"squirrel\",\"starfish\",\"stag\",\"stingray\",\"stork\",\"swallow\",\"swan\",\"swimmer\",\"swordfish\",\"tamarin\",\"tang\",\"tarantula\",\"tarsier\",\"tern\",\"thrips\",\"thrush\",\"tick\",\"tiger\",\"timberwolf\",\"tinamou\",\"toad\",\"toucan\",\"trapdoor spider\",\"trogdor\",\"trout\",\"tsetse\",\"tuna\",\"turkey\",\"turtle\",\"tusk\",\"tusk\",\"vampire bat\",\"vulture\",\"wallaby\",\"walrus\",\"warthog\",\"wasp\",\"water buffalo\",\"waterbuck\",\"waterhen\",\"watershed\",\"waterstrider\",\"weasel\",\"wedge-tailed eagle\",\"weevil\",\"wombat\",\"woodchuck\",\"woodpecker\",\"wolverine\",\"wombat\",\"wonderbird\",\"wombat\",\"worm\",\"wren\",\"xenon\",\"xerophyte\",\"xylophone\",\"yak\",\"yarrow\",\"yellowtail\",\"yolk\",\"youngster\",\"zebra\",\"zebu\",\"zorilla\"]",
+      "output": "105944"
+    },
+    {
+      "input": "ideas = [\"abcde\",\"bcdef\",\"cdefg\",\"defgh\",\"efghi\",\"fghij\",\"ghijk\",\"hijkl\",\"ijklm\",\"jklmn\",\"klmno\",\"lmnop\",\"mnopq\",\"nopqr\",\"opqrs\",\"pqrs\",\"qrst\",\"rstu\",\"stuv\",\"tuvw\",\"uvw\",\"vwxy\",\"wxyz\",\"xyz\",\"yz\",\"z\",\"abcdefghijklmnopqrstuvwxy\",\"abcdefghijklmnopqrstuvwxyz\",\"zyxwvutsrqponmlkjihgfedcba\"]",
+      "output": "804"
+    },
+    {
+      "input": "ideas = [\"a1\",\"a2\",\"a3\",\"b1\",\"b2\",\"b3\",\"c1\",\"c2\",\"c3\",\"d1\",\"d2\",\"d3\",\"e1\",\"e2\",\"e3\",\"f1\",\"f2\",\"f3\",\"g1\",\"g2\",\"g3\",\"h1\",\"h2\",\"h3\",\"i1\",\"i2\",\"i3\",\"j1\",\"j2\",\"j3\",\"k1\",\"k2\",\"k3\",\"l1\",\"l2\",\"l3\",\"m1\",\"m2\",\"m3\",\"n1\",\"n2\",\"n3\",\"o1\",\"o2\",\"o3\",\"p1\",\"p2\",\"p3\",\"q1\",\"q2\",\"q3\",\"r1\",\"r2\",\"r3\",\"s1\",\"s2\",\"s3\",\"t1\",\"t2\",\"t3\",\"u1\",\"u2\",\"u3\",\"v1\",\"v2\",\"v3\",\"w1\",\"w2\",\"w3\",\"x1\",\"x2\",\"x3\",\"y1\",\"y2\",\"y3\",\"z1\",\"z2\",\"z3\"]",
+      "output": "0"
+    },
+    {
+      "input": "ideas = [\"abcde\",\"fghij\",\"klmno\",\"pqrst\",\"uvwxy\",\"zabcd\",\"efghi\",\"jklmn\",\"opqrs\",\"tuvwx\",\"yzabc\",\"defgh\",\"ijklm\",\"nopqr\",\"stuvw\",\"xyzab\",\"cdefg\",\"hijkl\",\"mnopq\",\"rstuv\",\"wxyza\",\"yzabc\",\"ghijk\",\"lmnop\",\"qrstu\",\"vwxyz\",\"zabca\",\"bcdef\",\"ghjkl\",\"mnopr\",\"stuvw\",\"xyza\",\"yzabc\",\"hijkl\",\"lmnop\",\"qrstv\",\"wxyz\",\"yzabc\",\"ijklm\",\"nopqr\",\"rstuw\",\"xyz\",\"yzabc\",\"jklmn\",\"opqrs\",\"tuvwx\",\"yz\",\"abcde\",\"fghij\",\"klmno\",\"pqrst\",\"uvwxy\",\"zabcd\"]",
+      "output": "2678"
+    },
+    {
+      "input": "ideas = [\"abcde\",\"fghij\",\"klmno\",\"pqrst\",\"uvwxy\",\"zyxwv\",\"tsrqp\",\"onmlk\",\"jihgf\",\"edcba\",\"vwxyz\",\"utsrq\",\"ponml\",\"lkjih\",\"gfedc\",\"dcbae\",\"yxwvz\",\"srqpo\",\"nmlkj\",\"ihgfe\",\"badce\",\"fgihj\",\"lkmon\",\"pqors\",\"twuvx\",\"zyxwv\",\"tsrqp\",\"onmlk\",\"jihgf\",\"edcba\",\"vwxyz\",\"utsrq\",\"ponml\",\"lkjih\",\"gfedc\",\"dcbae\",\"yxwvz\",\"srqpo\",\"nmlkj\",\"ihgfe\",\"bacde\",\"fgihj\",\"lkmon\",\"pqors\",\"twuvx\"]",
+      "output": "1900"
+    },
+    {
+      "input": "ideas = [\"abacaxi\",\"banana\",\"cantaloupe\",\"date\",\"elderberry\",\"fig\",\"grape\",\"honeydew\",\"kiwi\",\"lemon\",\"mango\",\"nectarine\",\"orange\",\"papaya\",\"quince\",\"raspberry\",\"strawberry\",\"tangerine\",\"ugli\",\"vanilla\",\"watermelon\",\"xigua\",\"yam\",\"zucchini\",\"ambrosia\",\"boysenberry\",\"carambola\",\"dragonfruit\",\"elderflower\",\"feijoa\",\"goji\",\"haskap\",\"iceplant\",\"jackfruit\",\"kiwano\",\"leccinum\",\"mamey\",\"nectar\",\"orangeade\",\"papaw\",\"quandong\",\"roseapple\",\"satsuma\",\"tamarillo\",\"ugliberry\",\"vanillabean\",\"waterchestnut\",\"xenonmelon\",\"yambean\",\"zest\"",
+      "output": "Error: Solution.distinctNames() missing 1 required positional argument: 'ideas'"
+    },
+    {
+      "input": "ideas = [\"aaaaa\",\"bbbbb\",\"ccccc\",\"ddddd\",\"eeeee\",\"fffff\",\"ggggg\",\"hhhhh\",\"iiiii\",\"jjjjj\",\"kkkkk\",\"lllll\",\"mmmmm\",\"nnnnn\",\"ooooo\",\"ppppp\",\"qqqqq\",\"rrrrr\",\"sssss\",\"ttttt\",\"uuuuu\",\"vvvvv\",\"wwwww\",\"xxxxx\",\"yyyyy\",\"zzzzz\",\"aabcd\",\"abccd\",\"abccf\",\"abcce\",\"abccg\",\"abcch\",\"abcci\",\"abccj\",\"abckk\",\"abcll\",\"abcmn\",\"abcdm\",\"abcdn\",\"abcdo\",\"abcdp\",\"abcdq\",\"abcds\",\"abcdt\",\"abcdv\",\"abcdw\",\"abcdx\",\"abcdy\",\"abcdz\",\"abcea\",\"abceb\",\"abcec\",\"abced\",\"abcee\",\"abcef\",\"abceg\",\"abceh\",\"abcei\",\"abcej\",\"abcek\",\"abcel\",\"abcem\",\"abcen\",\"abceo\",\"abcep\",\"abceq\",\"abces\",\"abceu\",\"abcev\",\"abcew\",\"abcex\",\"abcey\",\"abcez\",\"abcfb\",\"abcfb\",\"abcfb\",\"abcfc\",\"abcfb\",\"abcfb\",\"abcfd\",\"abcfe\",\"abcfh\",\"abcfi\",\"abcfj\",\"abcfk\",\"abclf\",\"abcfm\",\"abcfn\",\"abcfo\",\"abcfp\",\"abcfq\",\"abcfz\",\"abcga\",\"abcgb\",\"abcgc\",\"abcgd\",\"abcge\",\"abcgf\",\"abcgg\",\"abcgh\",\"abcgi\",\"abcgj\",\"abcgk\",\"abcgl\",\"abcgm\",\"abcgn\",\"abcgo\",\"abcgp\",\"abcgq\",\"abcgr\",\"abcgs\",\"abcgt\",\"abcgu\",\"abcgv\",\"abcgw\",\"abcgx\",\"abcgy\",\"abcgz\",\"abcra\",\"abcrb\",\"abcrc\",\"abcrd\",\"abcre\",\"abcrf\",\"abcrg\",\"abcrh\",\"abcri\",\"abcrj\",\"abcrk\",\"abctrl\",\"abcrm\",\"abcrn\",\"abcro\",\"abcrp\",\"abcrq\",\"abcrs\",\"abqrt\",\"abcrv\",\"abcrw\",\"abcrx\",\"abcry\",\"abcraz\",\"abcsea\",\"abcseb\",\"abcsec\",\"abcdse\",\"abcsef\",\"abcseg\",\"abcseh\",\"abcsei\",\"abcsej\",\"abcsek\",\"abcseb\",\"abcsem\",\"abcseb\",\"abcseb\",\"abcseb\",\"abcseb\",\"abcseb\",\"abcseb\",\"abcseb\",\"abcseb\",\"abcseb\",\"abcseb\",\"abcseb\",\"abcseb\",\"abcseb\",\"abcseb\",\"abcseb\",\"abcseb\",\"abcseb\",\"abcseb\",\"abcseb\",\"abcseb\",\"abcseb\",\"abcseb\",\"abcseb\",\"abcseb\",\"abcseb\",\"abcseb\",\"abcseb\",\"abcseb\"]",
+      "output": "8450"
+    },
+    {
+      "input": "ideas = [\"aaa\",\"aab\",\"aac\",\"aba\",\"abb\",\"abc\",\"aca\",\"acb\",\"acc\",\"baa\",\"bab\",\"bac\",\"bba\",\"bbb\",\"bbc\",\"bca\",\"bcb\",\"bcc\",\"caa\",\"cab\",\"cac\",\"cba\",\"cbb\",\"cbc\",\"cca\",\"ccb\",\"ccc\",\"ddd\",\"dee\",\"def\",\"deg\",\"dih\",\"dii\",\"dij\",\"dka\",\"dkb\",\"dkc\",\"dla\",\"dlb\",\"dlc\",\"dma\",\"dmb\",\"dmc\",\"dna\",\"dnb\",\"dnc\",\"doa\",\"dob\",\"doc\",\"doea\",\"doeb\",\"doec\",\"dofa\",\"dobf\",\"docf\"]",
+      "output": "1512"
+    },
+    {
+      "input": "ideas = [\"aabc\",\"abac\",\"abbc\",\"acbc\",\"adbc\",\"aebc\",\"afbc\",\"agbc\",\"ahbc\",\"aibc\",\"ajbc\",\"akbc\",\"albc\",\"ambc\",\"anbc\",\"aobc\",\"apbc\",\"aqbc\",\"arbc\",\"asbc\",\"atbc\",\"aubc\",\"avbc\",\"awbc\",\"axbc\",\"aybc\",\"azbc\",\"baaa\",\"baab\",\"baac\",\"baad\",\"baae\",\"baaf\",\"baag\",\"baah\",\"baai\",\"baaj\",\"baak\",\"baal\",\"baam\",\"baan\",\"baao\",\"baap\",\"baaq\",\"baar\",\"baas\",\"baat\",\"baau\",\"baav\",\"baaw\",\"baax\",\"baay\",\"baaz\"]",
+      "output": "1404"
+    },
+    {
+      "input": "ideas = [\"apple\",\"apricot\",\"banana\",\"blueberry\",\"cherry\",\"cranberry\",\"grape\",\"guava\",\"kiwi\",\"lemon\",\"lime\",\"mango\",\"melon\",\"orange\",\"papaya\",\"peach\",\"pear\",\"plum\",\"raspberry\",\"strawberry\",\"tangerine\",\"watermelon\"]",
+      "output": "438"
+    },
+    {
+      "input": "ideas = [\"apple\",\"apricot\",\"banana\",\"cherry\",\"citrus\",\"date\",\"elderberry\",\"fig\",\"grape\",\"honeydew\",\"kiwi\",\"lemon\",\"lime\",\"mango\",\"nectarine\",\"orange\",\"papaya\",\"peach\",\"pear\",\"persimmon\",\"plum\",\"pomegranate\",\"quince\",\"raspberry\",\"strawberry\",\"tangerine\",\"ugli\",\"vanilla\",\"watermelon\",\"xigua\",\"yam\",\"zucchini\"]",
+      "output": "956"
+    },
+    {
+      "input": "ideas = [\"aardvark\",\"alligator\",\"anteater\",\"antelope\",\"baboon\",\"badger\",\"bat\",\"bear\",\"beaver\",\"bison\",\"boar\",\"buffalo\",\"camel\",\"canary\",\"capybara\",\"caribou\",\"cat\",\"cheetah\",\"chimpanzee\",\"chinchilla\",\"chipmunk\",\"clam\",\"cobra\",\"condor\",\"coyote\",\"crane\",\"crocodile\",\"crow\",\"deer\",\"dingo\",\"dolphin\",\"donkey\",\"dove\",\"dragonfly\",\"duck\",\"eagle\",\"eel\",\"elephant\",\"elk\",\"emu\",\"falcon\",\"ferret\",\"finch\",\"fish\",\"flamingo\",\"fly\",\"fox\",\"frog\",\"gazelle\",\"gecko\",\"giraffe\",\"goat\",\"goose\",\"gorilla\",\"grizzly\",\"groundhog\",\"guinea\",\"gull\",\"hamster\",\"hare\",\"hawk\",\"hedgehog\",\"heron\",\"hippopotamus\",\"hornbill\",\"horse\",\"hyena\",\"ibis\",\"iguana\",\"impala\",\"jackal\",\"jaguar\",\"jay\",\"jellyfish\",\"kangaroo\",\"kangaroo\",\"koala\",\"kookaburra\",\"kouprey\",\"kudu\",\"leopard\",\"lemur\",\"leopard\",\"lion\",\"lizard\",\"llama\",\"lobster\",\"locust\",\"lory\",\"lynx\",\"macaw\",\"meerkat\",\"megalodon\",\"mink\",\"mole\",\"mongoose\",\"monkey\",\"moose\",\"mouse\",\"mule\",\"muskrat\",\"narwhal\",\"newt\",\"orangutan\",\"ostrich\",\"otter\",\"owl\",\"ox\",\"oyster\",\"panda\",\"panther\",\"parrot\",\"peacock\",\"pelican\",\"penguin\",\"pheasant\",\"pig\",\"platypus\",\"polarbear\",\"porcupine\",\"porpoise\",\"prairie\",\"puffin\",\"puma\",\"quagga\",\"quail\",\"quelea\",\"quetzal\",\"quokka\",\"quoll\",\"rabbit\",\"raccoon\",\"ram\",\"raven\",\"reindeer\",\"rhinoceros\",\"roadrunner\",\"robin\",\"rooster\",\"salamander\",\"sardine\",\"scorpion\",\"seagull\",\"seahorse\",\"seal\",\"shark\",\"sheep\",\"shrew\",\"skunk\",\"sloth\",\"snail\",\"snake\",\"sparrow\",\"spider\",\"squid\",\"squirrel\",\"starfish\",\"stingray\",\"stork\",\"swan\",\"swimmer\",\"toucan\",\"turtle\",\"vulture\",\"wallaby\",\"walrus\",\"wasp\",\"weasel\",\"weaver\",\"whale\",\"wolf\",\"wolverine\",\"wombat\",\"woodpecker\",\"wolverine\",\"xerus\",\"xiphias\",\"yak\",\"yeasty\",\"zebra\"]",
+      "output": "30306"
+    },
+    {
+      "input": "ideas = [\"aabbcc\",\"bbccdd\",\"ccddeeff\",\"ddeeffgg\",\"eeffgghh\",\"ffgghhii\",\"gghhiijj\",\"hhiijjkk\",\"iijjkkll\",\"jjkkllmm\",\"kkllmmnn\",\"llmmnnoo\",\"mmnnooppee\",\"nnooppeeff\",\"ooppffgg\",\"ppffgghh\",\"ffgghhii\",\"gghhiijj\",\"hhiijjkk\",\"iijjkkll\",\"jjkkllmm\",\"kkllmmnn\",\"llmmnnoo\",\"mmnnooppee\",\"nnooppeeff\",\"ooppffgg\",\"ppffgghh\",\"abcdefgh\",\"ijklmnop\",\"qrstuvwxyz\",\"zyxwvutsrq\",\"ponmlkjihg\",\"fedcbazyxw\",\"vutsrqponm\",\"lkjihgfedc\",\"bacazyxwvu\",\"tsrqponmlk\",\"jihgfedcba\"]",
+      "output": "1360"
+    },
+    {
+      "input": "ideas = [\"a\",\"b\",\"c\",\"d\",\"e\",\"f\",\"g\",\"h\",\"i\",\"j\",\"k\",\"l\",\"m\",\"n\",\"o\",\"p\",\"q\",\"r\",\"s\",\"t\",\"u\",\"v\",\"w\",\"x\",\"y\",\"z\",\"aa\",\"bb\",\"cc\",\"dd\",\"ee\",\"ff\",\"gg\",\"hh\",\"ii\",\"jj\",\"kk\",\"ll\",\"mm\",\"nn\",\"oo\",\"pp\",\"qq\",\"rr\",\"ss\",\"tt\",\"uu\",\"vv\",\"ww\",\"xx\",\"yy\",\"zz\",\"aaa\",\"bbb\",\"ccc\",\"ddd\",\"eee\",\"fff\",\"ggg\",\"hhh\",\"iii\",\"jjj\",\"kkk\",\"lll\",\"mmm\",\"nnn\",\"ooo\",\"ppp\",\"qqq\",\"rrr\",\"sss\",\"ttt\",\"uuu\",\"vvv\",\"www\",\"xxx\",\"yyy\",\"zzz\",\"aaaa\",\"bbbb\",\"cccc\",\"dddd\",\"eeee\",\"ffff\",\"gggg\",\"hhhh\",\"iiii\",\"jjjj\",\"kkkk\",\"llll\",\"mmmm\",\"nnnn\",\"oooo\",\"pppp\",\"qqqq\",\"rrrr\",\"ssss\",\"tttt\",\"uuuu\",\"vvvv\",\"wwww\",\"xxxx\",\"yyyy\",\"zzzz\",\"aaaaa\",\"bbbbb\",\"ccccc\",\"ddddd\",\"eeeee\",\"fffff\",\"ggggg\",\"hhhhh\",\"iiiii\",\"jjjjj\",\"kkkkk\",\"lllll\",\"mmmmm\",\"nnnnn\",\"ooooo\",\"ppppp\",\"qqqqq\",\"rrrrr\",\"sssss\",\"ttttt\",\"uuuuu\",\"vvvvv\",\"wwwww\",\"xxxxx\",\"yyyyy\",\"zzzzz\"]",
+      "output": "10400"
+    },
+    {
+      "input": "ideas = [\"x\" + str(i) for i in range(26)] + [\"y\" + str(i) for i in range(26)] + [\"z\" + str(i) for i in range(26)]",
+      "output": "Error: Solution.distinctNames() missing 1 required positional argument: 'ideas'"
+    }
+  ]
+}

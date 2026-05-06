@@ -1,0 +1,531 @@
+{
+  "id": 3212,
+  "title": "Count Submatrices With Equal Frequency of X and Y",
+  "slug": "count-submatrices-with-equal-frequency-of-x-and-y",
+  "difficulty": "Medium",
+  "topics": [
+    "Array",
+    "Matrix",
+    "Prefix Sum"
+  ],
+  "description": "Given a 2D character matrix grid, where grid[i][j] is either 'X', 'Y', or '.', return the number of submatrices that contain:\nExample 1:\nExample 2:\nExample 3:\nConstraints:",
+  "examples": [
+    {
+      "example_num": 1,
+      "example_text": "Input: grid = [[\"X\",\"Y\",\".\"],[\"Y\",\".\",\".\"]]\nOutput: 3\nExplanation:\n",
+      "images": [
+        "https://assets.leetcode.com/uploads/2024/06/07/examplems.png"
+      ]
+    },
+    {
+      "example_num": 2,
+      "example_text": "Input: grid = [[\"X\",\"X\"],[\"X\",\"Y\"]]\nOutput: 0\nExplanation:\nNo submatrix has an equal frequency of 'X' and 'Y' .",
+      "images": []
+    },
+    {
+      "example_num": 3,
+      "example_text": "Input: grid = [[\".\",\".\"],[\".\",\".\"]]\nOutput: 0\nExplanation:\nNo submatrix has at least one 'X' .",
+      "images": []
+    }
+  ],
+  "constraints": [
+    "1 <= grid.length, grid[i].length <= 1000",
+    "grid[i][j] is either 'X', 'Y', or '.'."
+  ],
+  "hints": [
+    "Replace <code>\u2019X\u2019</code> with 1, <code>\u2019Y\u2019</code> with -1 and <code>\u2019.\u2019</code> with 0.",
+    "You need to find how many submatrices <code>grid[0..x][0..y]</code> have a sum of 0 and at least one <code>\u2019X\u2019</code>.",
+    "Use prefix sum to calculate submatrices sum."
+  ],
+  "code_snippets": {
+    "cpp": "class Solution {\npublic:\n    int numberOfSubmatrices(vector<vector<char>>& grid) {\n        \n    }\n};",
+    "java": "class Solution {\n    public int numberOfSubmatrices(char[][] grid) {\n        \n    }\n}",
+    "python": "class Solution(object):\n    def numberOfSubmatrices(self, grid):\n        \"\"\"\n        :type grid: List[List[str]]\n        :rtype: int\n        \"\"\"\n        ",
+    "python3": "class Solution:\n    def numberOfSubmatrices(self, grid: List[List[str]]) -> int:\n        ",
+    "c": "int numberOfSubmatrices(char** grid, int gridSize, int* gridColSize) {\n    \n}",
+    "csharp": "public class Solution {\n    public int NumberOfSubmatrices(char[][] grid) {\n        \n    }\n}",
+    "javascript": "/**\n * @param {character[][]} grid\n * @return {number}\n */\nvar numberOfSubmatrices = function(grid) {\n    \n};",
+    "typescript": "function numberOfSubmatrices(grid: string[][]): number {\n    \n};",
+    "php": "class Solution {\n\n    /**\n     * @param String[][] $grid\n     * @return Integer\n     */\n    function numberOfSubmatrices($grid) {\n        \n    }\n}",
+    "swift": "class Solution {\n    func numberOfSubmatrices(_ grid: [[Character]]) -> Int {\n        \n    }\n}",
+    "kotlin": "class Solution {\n    fun numberOfSubmatrices(grid: Array<CharArray>): Int {\n        \n    }\n}",
+    "dart": "class Solution {\n  int numberOfSubmatrices(List<List<String>> grid) {\n    \n  }\n}",
+    "golang": "func numberOfSubmatrices(grid [][]byte) int {\n    \n}",
+    "ruby": "# @param {Character[][]} grid\n# @return {Integer}\ndef number_of_submatrices(grid)\n    \nend",
+    "scala": "object Solution {\n    def numberOfSubmatrices(grid: Array[Array[Char]]): Int = {\n        \n    }\n}",
+    "rust": "impl Solution {\n    pub fn number_of_submatrices(grid: Vec<Vec<char>>) -> i32 {\n        \n    }\n}",
+    "racket": "(define/contract (number-of-submatrices grid)\n  (-> (listof (listof char?)) exact-integer?)\n  )",
+    "erlang": "-spec number_of_submatrices(Grid :: [[char()]]) -> integer().\nnumber_of_submatrices(Grid) ->\n  .",
+    "elixir": "defmodule Solution do\n  @spec number_of_submatrices(grid :: [[char]]) :: integer\n  def number_of_submatrices(grid) do\n    \n  end\nend"
+  },
+  "input_output": [
+    {
+      "input": "grid = [[\"X\",\"X\",\"X\"],[\"X\",\"X\",\"X\"],[\"X\",\"X\",\"X\"]]\"",
+      "output": "Error: Solution.numberOfSubmatrices() missing 1 required positional argument: 'grid'"
+    },
+    {
+      "input": "grid = [[\"X\",\"Y\",\"X\"],[\"Y\",\"X\",\"Y\"],[\"X\",\"Y\",\"X\"]]",
+      "output": "5"
+    },
+    {
+      "input": "grid = [[\".\",\".\"],[\".\",\".\"]]",
+      "output": "0"
+    },
+    {
+      "input": "grid = [[\"X\",\"Y\",\".\"],[\"Y\",\".\",\"]]\"",
+      "output": "Error: Solution.numberOfSubmatrices() missing 1 required positional argument: 'grid'"
+    },
+    {
+      "input": "grid = [[\"X\",\"X\"],[\"X\",\"Y\"]]",
+      "output": "0"
+    },
+    {
+      "input": "grid = [[\"X\",\".\",\"Y\"],[\".\",\"X\",\".\"],[\"Y\",\".\",\"X\"]]\"",
+      "output": "Error: Solution.numberOfSubmatrices() missing 1 required positional argument: 'grid'"
+    },
+    {
+      "input": "grid = [[\"X\",\"X\",\"Y\",\"Y\"],[\"Y\",\"Y\",\"X\",\"X\"]]",
+      "output": "5"
+    },
+    {
+      "input": "grid = [[\"X\",\"X\",\"X\",\"X\"],[\"X\",\"Y\",\"Y\",\"X\"],[\"X\",\"Y\",\"Y\",\"X\"],[\"X\",\"X\",\"X\",\"X\"]]",
+      "output": "0"
+    },
+    {
+      "input": "grid = [[\".\",\".\"],[\".\",\"]]\"",
+      "output": "Error: Solution.numberOfSubmatrices() missing 1 required positional argument: 'grid'"
+    },
+    {
+      "input": "grid = [[\"X\",\"Y\",\"X\",\"Y\"],[\"Y\",\"X\",\"Y\",\"X\"],[\"X\",\"Y\",\"X\",\"Y\"]]",
+      "output": "8"
+    },
+    {
+      "input": "grid = [[\"X\",\".\",\"Y\"],[\".\",\"X\",\"Y\"],[\"Y\",\".\",\"X\"]]",
+      "output": "4"
+    },
+    {
+      "input": "grid = [[\"X\",\"Y\",\"X\"],[\"Y\",\"X\",\"Y\"],[\"X\",\"Y\",\"X\"]]\"",
+      "output": "Error: Solution.numberOfSubmatrices() missing 1 required positional argument: 'grid'"
+    },
+    {
+      "input": "grid = [[\"X\"],[\"Y\"],[\"X\"]]",
+      "output": "1"
+    },
+    {
+      "input": "grid = [[\"X\",\"Y\",\".\"],[\"Y\",\".\",\".\"]]",
+      "output": "3"
+    },
+    {
+      "input": "grid = [[\"X\",\"X\"],[\"X\",\"Y\"]]\"",
+      "output": "Error: Solution.numberOfSubmatrices() missing 1 required positional argument: 'grid'"
+    },
+    {
+      "input": "grid = [[\"X\",\"Y\"],[\"X\",\"Y\"],[\"X\",\"Y\"]]",
+      "output": "3"
+    },
+    {
+      "input": "grid = [[\"X\",\"Y\",\"X\",\"Y\"],[\"Y\",\"X\",\"Y\",\"X\"],[\"X\",\"Y\",\"X\",\"Y\"],[\"Y\",\"X\",\"Y\",\"X\"]]\"",
+      "output": "Error: Solution.numberOfSubmatrices() missing 1 required positional argument: 'grid'"
+    },
+    {
+      "input": "grid = [[\"X\",\"X\",\"Y\"],[\"Y\",\"Y\",\"X\"],[\"X\",\"Y\",\"X\"]]",
+      "output": "4"
+    },
+    {
+      "input": "grid = [[\"Y\",\"Y\",\"Y\"],[\"Y\",\"Y\",\"Y\"],[\"Y\",\"Y\",\"Y\"]]\"",
+      "output": "Error: Solution.numberOfSubmatrices() missing 1 required positional argument: 'grid'"
+    },
+    {
+      "input": "grid = [[\"X\",\"X\",\"Y\",\"Y\"],[\"Y\",\"Y\",\"X\",\"X\"],[\"X\",\"X\",\"Y\",\"Y\"]]",
+      "output": "6"
+    },
+    {
+      "input": "grid = [[\"X\",\"X\",\"X\"],[\"X\",\"X\",\"X\"],[\"X\",\"X\",\"X\"]]",
+      "output": "0"
+    },
+    {
+      "input": "grid = [[\"X\",\"Y\"],[\"Y\",\"X\"]]",
+      "output": "3"
+    },
+    {
+      "input": "grid = [[\"X\",\"X\",\"X\"],[\"Y\",\"Y\",\"Y\"],[\".\",\".\",\".\"]]",
+      "output": "6"
+    },
+    {
+      "input": "grid = [[\"X\",\".\",\"Y\"],[\".\",\"X\",\".\"],[\"Y\",\".\",\"X\"]]",
+      "output": "2"
+    },
+    {
+      "input": "grid = [[\"X\",\"Y\",\".\"],[\".\",\"X\",\"Y\"],[\"Y\",\"X\",\".\"]]",
+      "output": "5"
+    },
+    {
+      "input": "grid = [[\"X\",\"Y\",\"X\"],[\"X\",\"Y\",\"X\"],[\"X\",\"Y\",\"X\"]]",
+      "output": "3"
+    },
+    {
+      "input": "grid = [[\"X\",\"Y\",\"X\",\"X\",\"Y\",\"Y\"],[\"Y\",\"Y\",\"X\",\"Y\",\"X\",\"X\"],[\"X\",\"X\",\"Y\",\"Y\",\"X\",\"Y\"],[\"X\",\"Y\",\"X\",\"Y\",\"X\",\"Y\"],[\"Y\",\"X\",\"Y\",\"X\",\"Y\",\"X\"],[\"X\",\"Y\",\"X\",\"Y\",\"X\",\"Y\"]]",
+      "output": "19"
+    },
+    {
+      "input": "grid = [[\"X\",\"X\",\"Y\",\"Y\"],[\"X\",\"X\",\"Y\",\"Y\"],[\"X\",\"X\",\"Y\",\"Y\"],[\"X\",\"X\",\"Y\",\"Y\"]]\"",
+      "output": "Error: Solution.numberOfSubmatrices() missing 1 required positional argument: 'grid'"
+    },
+    {
+      "input": "grid = [[\"Y\",\"Y\",\"Y\",\"Y\",\"Y\"],[\"Y\",\"Y\",\"Y\",\"Y\",\"Y\"],[\"Y\",\"Y\",\"Y\",\"Y\",\"Y\"],[\"Y\",\"Y\",\"Y\",\"Y\",\"Y\"],[\"Y\",\"Y\",\"Y\",\"Y\",\"Y\"]]",
+      "output": "0"
+    },
+    {
+      "input": "grid = [[\"X\",\"Y\",\"X\"],[\"Y\",\".\",\"X\"],[\"X\",\"Y\",\".\"]]",
+      "output": "2"
+    },
+    {
+      "input": "grid = [[\".\",\".\",\".\",\"X\",\"Y\"],[\".\",\"X\",\"Y\",\".\",\".\"],[\".\",\"Y\",\"X\",\".\",\".\"],[\"X\",\".\",\".\",\"Y\",\".\"],[\"Y\",\".\",\".\",\".\",\"X\"]]",
+      "output": "12"
+    },
+    {
+      "input": "grid = [[\"X\",\"Y\",\"X\",\"Y\",\"X\"],[\"Y\",\"X\",\"Y\",\"X\",\"Y\"],[\"X\",\"Y\",\"X\",\"Y\",\"X\"],[\"Y\",\"X\",\"Y\",\"X\",\"Y\"]]\"",
+      "output": "Error: Solution.numberOfSubmatrices() missing 1 required positional argument: 'grid'"
+    },
+    {
+      "input": "grid = [[\"X\",\"X\",\"X\",\"X\",\"X\"],[\"X\",\"X\",\"X\",\"X\",\"X\"],[\"X\",\"X\",\"X\",\"X\",\"X\"],[\"X\",\"X\",\"X\",\"X\",\"X\"],[\"X\",\"X\",\"X\",\"X\",\"X\"]]\"",
+      "output": "Error: Solution.numberOfSubmatrices() missing 1 required positional argument: 'grid'"
+    },
+    {
+      "input": "grid = [[\"X\",\"Y\",\"X\",\"Y\",\"X\",\"Y\",\"X\",\"Y\"],[\"Y\",\"X\",\"Y\",\"X\",\"Y\",\"X\",\"Y\",\"X\"],[\"X\",\"Y\",\"X\",\"Y\",\"X\",\"Y\",\"X\",\"Y\"],[\"Y\",\"X\",\"Y\",\"X\",\"Y\",\"X\",\"Y\",\"X\"]]\"",
+      "output": "Error: Solution.numberOfSubmatrices() missing 1 required positional argument: 'grid'"
+    },
+    {
+      "input": "grid = [[\"X\",\"Y\",\"X\",\"Y\",\"X\",\"Y\",\"X\",\"Y\",\"X\",\"Y\",\"X\",\"Y\"],[\"Y\",\"X\",\"Y\",\"X\",\"Y\",\"X\",\"Y\",\"X\",\"Y\",\"X\",\"Y\",\"X\"],[\"X\",\"Y\",\"X\",\"Y\",\"X\",\"Y\",\"X\",\"Y\",\"X\",\"Y\",\"X\",\"Y\"]]\"",
+      "output": "Error: Solution.numberOfSubmatrices() missing 1 required positional argument: 'grid'"
+    },
+    {
+      "input": "grid = [[\"X\",\".\",\"Y\",\".\",\"X\",\".\",\"Y\",\".\",\"X\"],[\".\",\"Y\",\"X\",\"Y\",\".\",\"Y\",\"X\",\"Y\",\".\"],[\"Y\",\"X\",\".\",\"X\",\"Y\",\"X\",\".\",\"X\",\"Y\"]]\"",
+      "output": "Error: Solution.numberOfSubmatrices() missing 1 required positional argument: 'grid'"
+    },
+    {
+      "input": "grid = [[\"X\",\"X\",\"X\",\"X\"],[\"X\",\"Y\",\"Y\",\"Y\"],[\"Y\",\"Y\",\"X\",\"X\"],[\"Y\",\"X\",\"X\",\"Y\"]]\"",
+      "output": "Error: Solution.numberOfSubmatrices() missing 1 required positional argument: 'grid'"
+    },
+    {
+      "input": "grid = [[\"X\",\"Y\",\"X\",\"Y\",\"X\",\"Y\",\"X\",\"Y\",\"X\",\"Y\"],[\"Y\",\"X\",\"Y\",\"X\",\"Y\",\"X\",\"Y\",\"X\",\"Y\",\"X\"]]",
+      "output": "15"
+    },
+    {
+      "input": "grid = [[\".\",\".\",\".\",\"X\"],[\".\",\"X\",\"X\",\".\"],[\"Y\",\"Y\",\"Y\",\"Y\"],[\".\",\"Y\",\"Y\",\".\"]]\"",
+      "output": "Error: Solution.numberOfSubmatrices() missing 1 required positional argument: 'grid'"
+    },
+    {
+      "input": "grid = [[\"X\",\".\",\"X\",\".\",\"X\"],[\"Y\",\"Y\",\".\",\"Y\",\"Y\"],[\"X\",\"Y\",\"X\",\"Y\",\"X\"],[\".\",\"X\",\"Y\",\"X\",\".\"],[\"Y\",\".\",\"X\",\"Y\",\".\"]]\"",
+      "output": "Error: Solution.numberOfSubmatrices() missing 1 required positional argument: 'grid'"
+    },
+    {
+      "input": "grid = [[\"X\",\"X\",\"X\",\"X\",\"X\",\"X\",\"X\",\"X\",\"X\",\"X\"],[\"Y\",\"Y\",\"Y\",\"Y\",\"Y\",\"Y\",\"Y\",\"Y\",\"Y\",\"Y\"],[\"X\",\"X\",\"X\",\"X\",\"X\",\"X\",\"X\",\"X\",\"X\",\"X\"],[\"Y\",\"Y\",\"Y\",\"Y\",\"Y\",\"Y\",\"Y\",\"Y\",\"Y\",\"Y\"]]\"",
+      "output": "Error: Solution.numberOfSubmatrices() missing 1 required positional argument: 'grid'"
+    },
+    {
+      "input": "grid = [[\"X\",\"X\",\"Y\",\"Y\"],[\"Y\",\"X\",\"X\",\"Y\"],[\"X\",\"Y\",\"X\",\"Y\"]]\"",
+      "output": "Error: Solution.numberOfSubmatrices() missing 1 required positional argument: 'grid'"
+    },
+    {
+      "input": "grid = [[\".\",\".\",\".\",\"X\",\"Y\"],[\"X\",\"X\",\"Y\",\"Y\",\"Y\"],[\"Y\",\"Y\",\"X\",\"X\",\"X\"],[\"X\",\"Y\",\"X\",\"Y\",\"X\"],[\".\",\".\",\".\",\"Y\",\"X\"]]\"",
+      "output": "Error: Solution.numberOfSubmatrices() missing 1 required positional argument: 'grid'"
+    },
+    {
+      "input": "grid = [[\"X\",\"Y\",\"X\",\"Y\"],[\"Y\",\"X\",\"Y\",\"X\"],[\"X\",\"Y\",\"X\",\"Y\"]]\"",
+      "output": "Error: Solution.numberOfSubmatrices() missing 1 required positional argument: 'grid'"
+    },
+    {
+      "input": "grid = [[\"X\",\"Y\",\".\",\"X\"],[\".\",\"X\",\"Y\",\".\"],[\"Y\",\".\",\"X\",\"Y\"],[\".\",\"Y\",\"X\",\".\"]]\"",
+      "output": "Error: Solution.numberOfSubmatrices() missing 1 required positional argument: 'grid'"
+    },
+    {
+      "input": "grid = [[\"X\",\".\",\"Y\",\".\",\"X\"],[\".\",\"X\",\"Y\",\"X\",\".\"],[\"Y\",\"X\",\".\",\"Y\",\"X\"],[\".\",\"Y\",\"X\",\"Y\",\".\"],[\"X\",\"Y\",\"X\",\"Y\",\"X\"]]\"",
+      "output": "Error: Solution.numberOfSubmatrices() missing 1 required positional argument: 'grid'"
+    },
+    {
+      "input": "grid = [[\"X\",\"Y\",\".\",\"Y\",\"X\"],[\"X\",\".\",\"X\",\".\",\"Y\"],[\".\",\"X\",\"Y\",\"X\",\".\"],[\"Y\",\".\",\"X\",\"Y\",\"X\"]]\"",
+      "output": "Error: Solution.numberOfSubmatrices() missing 1 required positional argument: 'grid'"
+    },
+    {
+      "input": "grid = [[\"X\",\"X\",\"X\"],[\"Y\",\"Y\",\"Y\"],[\"X\",\"Y\",\"X\"],[\"Y\",\"X\",\"Y\"]]",
+      "output": "7"
+    },
+    {
+      "input": "grid = [[\"X\",\"Y\",\"X\",\"X\",\"Y\"],[\"Y\",\"X\",\"Y\",\"X\",\"Y\"],[\"X\",\"Y\",\"X\",\"X\",\"Y\"],[\"X\",\"X\",\"Y\",\"Y\",\"X\"],[\"Y\",\"X\",\"Y\",\"X\",\"Y\"]]",
+      "output": "6"
+    },
+    {
+      "input": "grid = [[\"X\",\"Y\",\"X\",\"Y\",\"X\",\"Y\",\"X\",\"Y\",\"X\"],[\"Y\",\"X\",\"Y\",\"X\",\"Y\",\"X\",\"Y\",\"X\",\"Y\"],[\"X\",\"Y\",\"X\",\"Y\",\"X\",\"Y\",\"X\",\"Y\",\"X\"],[\"Y\",\"X\",\"Y\",\"X\",\"Y\",\"X\",\"Y\",\"X\",\"Y\"],[\"X\",\"Y\",\"X\",\"Y\",\"X\",\"Y\",\"X\",\"Y\",\"X\"]]\"",
+      "output": "Error: Solution.numberOfSubmatrices() missing 1 required positional argument: 'grid'"
+    },
+    {
+      "input": "grid = [[\"X\",\"Y\",\"Y\",\"X\"],[\"Y\",\"X\",\"X\",\"Y\"],[\"X\",\"Y\",\"X\",\"Y\"],[\"Y\",\"X\",\"Y\",\"X\"]]",
+      "output": "12"
+    },
+    {
+      "input": "grid = [[\"X\",\"Y\",\"X\",\"Y\",\"X\",\"Y\",\"X\",\"Y\",\"X\",\"Y\"],[\"Y\",\"X\",\"Y\",\"X\",\"Y\",\"X\",\"Y\",\"X\",\"Y\",\"X\"],[\"X\",\"Y\",\"X\",\"Y\",\"X\",\"Y\",\"X\",\"Y\",\"X\",\"Y\"],[\"Y\",\"X\",\"Y\",\"X\",\"Y\",\"X\",\"Y\",\"X\",\"Y\",\"X\"],[\"X\",\"Y\",\"X\",\"Y\",\"X\",\"Y\",\"X\",\"Y\",\"X\",\"Y\"],[\"Y\",\"X\",\"Y\",\"X\",\"Y\",\"X\",\"Y\",\"X\",\"Y\",\"X\"],[\"X\",\"Y\",\"X\",\"Y\",\"X\",\"Y\",\"X\",\"Y\",\"X\",\"Y\"],[\"Y\",\"X\",\"Y\",\"X\",\"Y\",\"X\",\"Y\",\"X\",\"Y\",\"X\"],[\"X\",\"Y\",\"X\",\"Y\",\"X\",\"Y\",\"X\",\"Y\",\"X\",\"Y\"],[\"Y\",\"X\",\"Y\",\"X\",\"Y\",\"X\",\"Y\",\"X\",\"Y\",\"X\"]]\"",
+      "output": "Error: Solution.numberOfSubmatrices() missing 1 required positional argument: 'grid'"
+    },
+    {
+      "input": "grid = [[\"X\",\"Y\",\".\",\"X\",\"Y\",\".\"],[\"Y\",\"X\",\".\",\"Y\",\"X\",\".\"],[\".\",\".\",\".\",\".\",\".\",\".\"],[\"X\",\"Y\",\"X\",\"Y\",\"X\",\"Y\"]]\"",
+      "output": "Error: Solution.numberOfSubmatrices() missing 1 required positional argument: 'grid'"
+    },
+    {
+      "input": "grid = [[\"X\",\".\",\"X\",\"Y\"],[\"Y\",\"X\",\"Y\",\".\"],[\".\",\"Y\",\"X\",\"X\"],[\"X\",\"Y\",\".\",\"Y\"]]",
+      "output": "6"
+    },
+    {
+      "input": "grid = [[\"X\",\"X\",\"X\",\"X\",\"X\"],[\"X\",\"X\",\"X\",\"X\",\"X\"],[\"X\",\"X\",\"X\",\"X\",\"X\"],[\"X\",\"X\",\"X\",\"X\",\"X\"],[\"X\",\"X\",\"X\",\"X\",\"X\"]]",
+      "output": "0"
+    },
+    {
+      "input": "grid = [[\"X\",\"Y\",\".\",\"X\",\".\",\"Y\"],[\"Y\",\".\",\"X\",\"Y\",\"X\",\".\"],[\".\",\"X\",\"Y\",\".\",\"Y\",\"X\"],[\"X\",\"Y\",\"X\",\"Y\",\"X\",\"Y\"],[\"Y\",\"X\",\"Y\",\"X\",\"Y\",\"X\"],[\"X\",\".\",\"Y\",\"X\",\".\",\"Y\"]]\"",
+      "output": "Error: Solution.numberOfSubmatrices() missing 1 required positional argument: 'grid'"
+    },
+    {
+      "input": "grid = [[\".\",\".\",\".\",\".\"],[\"X\",\"X\",\"Y\",\"Y\"],[\"Y\",\"Y\",\"X\",\"X\"],[\"X\",\"Y\",\"X\",\"Y\"]]\"",
+      "output": "Error: Solution.numberOfSubmatrices() missing 1 required positional argument: 'grid'"
+    },
+    {
+      "input": "grid = [[\"X\",\".\",\".\",\"Y\"],[\".\",\"X\",\"Y\",\".\"],[\".\",\"Y\",\"X\",\".\"],[\"Y\",\".\",\".\",\"X\"]]\"",
+      "output": "Error: Solution.numberOfSubmatrices() missing 1 required positional argument: 'grid'"
+    },
+    {
+      "input": "grid = [[\"X\",\"Y\",\"X\",\"Y\",\"X\",\"Y\",\"X\",\"Y\",\"X\",\"Y\"],[\"Y\",\"X\",\"Y\",\"X\",\"Y\",\"X\",\"Y\",\"X\",\"Y\",\"X\"],[\"X\",\"Y\",\"X\",\"Y\",\"X\",\"Y\",\"X\",\"Y\",\"X\",\"Y\"]]\"",
+      "output": "Error: Solution.numberOfSubmatrices() missing 1 required positional argument: 'grid'"
+    },
+    {
+      "input": "grid = [[\".\",\".\",\"X\",\"Y\",\".\"],[\"X\",\"Y\",\".\",\"X\",\"Y\"],[\"Y\",\"X\",\"X\",\"Y\",\"X\"],[\".\",\"Y\",\"X\",\".\",\"Y\"],[\"X\",\".\",\"Y\",\"X\",\".\"]]",
+      "output": "9"
+    },
+    {
+      "input": "grid = [[\".\",\"X\",\"Y\",\".\",\"X\",\"Y\",\".\",\"X\",\"Y\",\".\"],[\"X\",\"Y\",\".\",\"X\",\"Y\",\".\",\"X\",\"Y\",\".\",\"X\"],[\"Y\",\".\",\"X\",\"Y\",\".\",\"X\",\"Y\",\".\",\"X\",\"Y\"],[\".\",\"X\",\"Y\",\".\",\"X\",\"Y\",\".\",\"X\",\"Y\",\".\"]]\"",
+      "output": "Error: Solution.numberOfSubmatrices() missing 1 required positional argument: 'grid'"
+    },
+    {
+      "input": "grid = [[\"X\",\"X\",\"X\",\"Y\"],[\"Y\",\"Y\",\"X\",\"X\"],[\"X\",\"Y\",\"X\",\"X\"],[\"Y\",\"X\",\"Y\",\"Y\"]]",
+      "output": "5"
+    },
+    {
+      "input": "grid = [[\"X\",\".\",\"Y\",\".\",\"X\",\".\",\"Y\",\".\",\"X\",\".\",\"Y\",\".\"],[\".\",\"X\",\".\",\"Y\",\".\",\"X\",\".\",\"Y\",\".\",\"X\",\".\",\"Y\"],[\"Y\",\".\",\"X\",\".\",\"Y\",\".\",\"X\",\".\",\"Y\",\".\",\"X\",\".\"]]\"",
+      "output": "Error: Solution.numberOfSubmatrices() missing 1 required positional argument: 'grid'"
+    },
+    {
+      "input": "grid = [[\"X\",\"Y\",\"X\",\"Y\",\"X\",\"Y\",\"X\",\"Y\",\"X\",\"Y\",\"X\",\"Y\"],[\"Y\",\"X\",\"Y\",\"X\",\"Y\",\"X\",\"Y\",\"X\",\"Y\",\"X\",\"Y\",\"X\"],[\"X\",\"Y\",\"X\",\"Y\",\"X\",\"Y\",\"X\",\"Y\",\"X\",\"Y\",\"X\",\"Y\"],[\"Y\",\"X\",\"Y\",\"X\",\"Y\",\"X\",\"Y\",\"X\",\"Y\",\"X\",\"Y\",\"X\"]]\"",
+      "output": "Error: Solution.numberOfSubmatrices() missing 1 required positional argument: 'grid'"
+    },
+    {
+      "input": "grid = [[\"X\",\"X\",\"X\",\"X\",\"X\",\"X\",\"X\",\"X\",\"X\",\"X\"],[\"X\",\"Y\",\"X\",\"Y\",\"X\",\"Y\",\"X\",\"Y\",\"X\",\"Y\"],[\"X\",\"Y\",\"X\",\"Y\",\"X\",\"Y\",\"X\",\"Y\",\"X\",\"Y\"]]\"",
+      "output": "Error: Solution.numberOfSubmatrices() missing 1 required positional argument: 'grid'"
+    },
+    {
+      "input": "grid = [[\"X\",\"Y\",\"X\",\"Y\",\"X\",\"Y\",\"X\"],[\"Y\",\"X\",\"Y\",\"X\",\"Y\",\"X\",\"Y\"],[\"X\",\"Y\",\"X\",\"Y\",\"X\",\"Y\",\"X\"]]\"",
+      "output": "Error: Solution.numberOfSubmatrices() missing 1 required positional argument: 'grid'"
+    },
+    {
+      "input": "grid = [[\"X\",\"Y\",\".\",\"X\",\"Y\"],[\"Y\",\"X\",\".\",\"Y\",\"X\"],[\"X\",\".\",\"X\",\".\",\"Y\"],[\"Y\",\"X\",\".\",\"Y\",\"X\"],[\"X\",\"Y\",\".\",\"X\",\"Y\"]]\"",
+      "output": "Error: Solution.numberOfSubmatrices() missing 1 required positional argument: 'grid'"
+    },
+    {
+      "input": "grid = [[\"X\",\"Y\",\"X\",\"Y\",\"X\",\"Y\"],[\"Y\",\"X\",\"Y\",\"X\",\"Y\",\"X\"],[\"X\",\"Y\",\"X\",\"Y\",\"X\",\"Y\"],[\"Y\",\"X\",\"Y\",\"X\",\"Y\",\"X\"]]\"",
+      "output": "Error: Solution.numberOfSubmatrices() missing 1 required positional argument: 'grid'"
+    },
+    {
+      "input": "grid = [[\"X\",\"X\",\"X\",\"Y\",\"Y\",\"Y\"],[\"Y\",\"Y\",\"Y\",\"X\",\"X\",\"X\"],[\"X\",\"Y\",\"X\",\"Y\",\"X\",\"Y\"]]\"",
+      "output": "Error: Solution.numberOfSubmatrices() missing 1 required positional argument: 'grid'"
+    },
+    {
+      "input": "grid = [[\"X\",\"X\",\"Y\",\"X\"],[\"Y\",\"Y\",\"X\",\"Y\"],[\"X\",\"X\",\"Y\",\"X\"],[\"Y\",\"Y\",\"X\",\"Y\"]]",
+      "output": "8"
+    },
+    {
+      "input": "grid = [[\"X\",\"Y\",\".\",\"X\",\"Y\",\".\",\"X\",\"Y\"],[\"Y\",\"X\",\"Y\",\"X\",\"Y\",\"X\",\"Y\",\"X\"],[\".\",\"X\",\"X\",\"X\",\"X\",\"X\",\"X\",\"X\"],[\"X\",\"Y\",\"X\",\"Y\",\"X\",\"Y\",\"X\",\"Y\"],[\"Y\",\"X\",\"Y\",\"X\",\"Y\",\"X\",\"Y\",\"X\"],[\".\",\"X\",\"X\",\"X\",\"X\",\"X\",\"X\",\"X\"]]\"",
+      "output": "Error: Solution.numberOfSubmatrices() missing 1 required positional argument: 'grid'"
+    },
+    {
+      "input": "grid = [[\"X\",\"Y\",\"X\",\".\",\"Y\",\"X\",\"Y\",\".\",\"X\",\"Y\"],[\"X\",\".\",\"X\",\"Y\",\"X\",\".\",\"X\",\"Y\",\"X\",\".\"],[\"X\",\"Y\",\".\",\"X\",\"Y\",\"X\",\".\",\"X\",\"Y\",\"X\"],[\".\",\"X\",\"Y\",\"X\",\".\",\"X\",\"Y\",\"X\",\".\",\"X\"]]\"",
+      "output": "Error: Solution.numberOfSubmatrices() missing 1 required positional argument: 'grid'"
+    },
+    {
+      "input": "grid = [[\"X\",\".\",\"Y\",\"X\"],[\".\",\"X\",\"X\",\"Y\"],[\"Y\",\"X\",\".\",\"X\"],[\"X\",\"Y\",\"X\",\".\"]]\"",
+      "output": "Error: Solution.numberOfSubmatrices() missing 1 required positional argument: 'grid'"
+    },
+    {
+      "input": "grid = [[\"X\",\"X\",\"X\",\"X\"],[\"X\",\"X\",\"X\",\"X\"],[\"X\",\"X\",\"X\",\"X\"],[\"X\",\"X\",\"X\",\"X\"]]\"",
+      "output": "Error: Solution.numberOfSubmatrices() missing 1 required positional argument: 'grid'"
+    },
+    {
+      "input": "grid = [[\"X\",\"Y\",\"X\",\"Y\"],[\"Y\",\"X\",\"Y\",\"X\"],[\"X\",\"Y\",\"X\",\"Y\"],[\"Y\",\"X\",\"Y\",\"X\"]]",
+      "output": "12"
+    },
+    {
+      "input": "grid = [[\"X\",\"Y\",\"X\",\"Y\",\"X\",\"Y\",\"X\",\"Y\",\"X\"],[\"Y\",\"X\",\"Y\",\"X\",\"Y\",\"X\",\"Y\",\"X\",\"Y\"]]",
+      "output": "13"
+    },
+    {
+      "input": "grid = [[\"X\",\"Y\",\".\",\"X\",\"Y\"],[\"Y\",\"X\",\"Y\",\"X\",\"Y\"],[\"X\",\"Y\",\"X\",\"Y\",\"X\"],[\"Y\",\"X\",\"Y\",\"X\",\"Y\"],[\"X\",\"Y\",\"X\",\"Y\",\"X\"]]\"",
+      "output": "Error: Solution.numberOfSubmatrices() missing 1 required positional argument: 'grid'"
+    },
+    {
+      "input": "grid = [[\"X\",\"X\",\"X\"],[\"Y\",\"Y\",\"Y\"],[\"X\",\"X\",\"X\"],[\"Y\",\"Y\",\"Y\"]]\"",
+      "output": "Error: Solution.numberOfSubmatrices() missing 1 required positional argument: 'grid'"
+    },
+    {
+      "input": "grid = [[\"X\",\"Y\",\"X\",\"Y\",\"X\",\"Y\"],[\"Y\",\"X\",\"Y\",\"X\",\"Y\",\"X\"],[\"X\",\"Y\",\"X\",\"Y\",\"X\",\"Y\"],[\"Y\",\"X\",\"Y\",\"X\",\"Y\",\"X\"],[\"X\",\"Y\",\"X\",\"Y\",\"X\",\"Y\"],[\"Y\",\"X\",\"Y\",\"X\",\"Y\",\"X\"]]\"",
+      "output": "Error: Solution.numberOfSubmatrices() missing 1 required positional argument: 'grid'"
+    },
+    {
+      "input": "grid = [[\"X\",\"Y\",\".\",\"X\"],[\"Y\",\".\",\"Y\",\"X\"],[\".\",\"X\",\"Y\",\".\"],[\"X\",\"Y\",\"X\",\"Y\"]]\"",
+      "output": "Error: Solution.numberOfSubmatrices() missing 1 required positional argument: 'grid'"
+    },
+    {
+      "input": "grid = [[\"X\",\"X\",\"X\",\"Y\",\"Y\"],[\"X\",\"X\",\"Y\",\"Y\",\"Y\"],[\"Y\",\"Y\",\"Y\",\"X\",\"X\"],[\"Y\",\"Y\",\"X\",\"X\",\"X\"],[\"X\",\"Y\",\"X\",\"Y\",\"X\"]]\"",
+      "output": "Error: Solution.numberOfSubmatrices() missing 1 required positional argument: 'grid'"
+    },
+    {
+      "input": "grid = [[\"X\",\"X\",\"Y\",\"Y\"],[\"X\",\"Y\",\"X\",\"Y\"],[\"Y\",\"X\",\"Y\",\"X\"]]\"",
+      "output": "Error: Solution.numberOfSubmatrices() missing 1 required positional argument: 'grid'"
+    },
+    {
+      "input": "grid = [[\"X\",\".\",\"X\",\"Y\",\"X\",\".\",\"X\",\"Y\"],[\".\",\"Y\",\"X\",\".\",\"Y\",\"X\",\".\",\"Y\"],[\"X\",\".\",\"X\",\"Y\",\"X\",\".\",\"X\",\"Y\"],[\"Y\",\"X\",\".\",\"Y\",\"X\",\".\",\"Y\",\"X\"]]\"",
+      "output": "Error: Solution.numberOfSubmatrices() missing 1 required positional argument: 'grid'"
+    },
+    {
+      "input": "grid = [[\"X\",\"X\",\"X\",\"X\",\"X\"],[\"Y\",\"Y\",\"Y\",\"Y\",\"Y\"],[\"X\",\"X\",\"X\",\"X\",\"X\"],[\"Y\",\"Y\",\"Y\",\"Y\",\"Y\"],[\"X\",\"X\",\"X\",\"X\",\"X\"]]\"",
+      "output": "Error: Solution.numberOfSubmatrices() missing 1 required positional argument: 'grid'"
+    },
+    {
+      "input": "grid = [[\"X\",\"Y\",\"X\",\"Y\",\"X\",\"Y\",\"X\",\"Y\"],[\"Y\",\"X\",\"Y\",\"X\",\"Y\",\"X\",\"Y\",\"X\"],[\"X\",\"Y\",\"X\",\"Y\",\"X\",\"Y\",\"X\",\"Y\"]]\"",
+      "output": "Error: Solution.numberOfSubmatrices() missing 1 required positional argument: 'grid'"
+    },
+    {
+      "input": "grid = [[\"X\",\"X\",\"X\",\"X\",\"X\",\"X\"],[\"X\",\"X\",\"X\",\"X\",\"X\",\"X\"],[\"Y\",\"Y\",\"Y\",\"Y\",\"Y\",\"Y\"],[\"Y\",\"Y\",\"Y\",\"Y\",\"Y\",\"Y\"],[\"X\",\"X\",\"X\",\"X\",\"X\",\"X\"],[\"X\",\"X\",\"X\",\"X\",\"X\",\"X\"]]",
+      "output": "6"
+    },
+    {
+      "input": "grid = [[\"X\",\".\",\".\",\"Y\",\".\",\".\",\"X\",\".\",\"Y\",\".\"],[\".\",\"X\",\".\",\".\",\"Y\",\".\",\".\",\"X\",\".\",\"Y\"],[\".\",\".\",\"X\",\".\",\".\",\"Y\",\".\",\".\",\"X\",\".\"],[\"Y\",\".\",\".\",\"X\",\".\",\".\",\"Y\",\".\",\".\",\"X\"]]",
+      "output": "12"
+    },
+    {
+      "input": "grid = [[\"X\",\"X\",\"Y\",\"Y\",\"X\",\"X\",\"Y\",\"Y\"],[\"Y\",\"Y\",\"X\",\"X\",\"Y\",\"Y\",\"X\",\"X\"],[\"X\",\"X\",\"Y\",\"Y\",\"X\",\"X\",\"Y\",\"Y\"]]",
+      "output": "12"
+    },
+    {
+      "input": "grid = [[\"X\",\"Y\",\".\",\"X\"],[\"Y\",\"X\",\".\",\"Y\"],[\"X\",\".\",\"X\",\"Y\"],[\"Y\",\"X\",\"Y\",\"X\"]]\"",
+      "output": "Error: Solution.numberOfSubmatrices() missing 1 required positional argument: 'grid'"
+    },
+    {
+      "input": "grid = [[\"X\",\"X\",\"X\",\"X\",\"X\",\"X\",\"X\",\"X\",\"X\",\"X\"],[\"Y\",\"Y\",\"Y\",\"Y\",\"Y\",\"Y\",\"Y\",\"Y\",\"Y\",\"Y\"]]\"",
+      "output": "Error: Solution.numberOfSubmatrices() missing 1 required positional argument: 'grid'"
+    },
+    {
+      "input": "grid = [[\"X\",\"Y\",\"X\",\"Y\",\"X\"],[\"Y\",\"X\",\"Y\",\"X\",\"Y\"],[\"X\",\"Y\",\"X\",\"Y\",\"X\"],[\"Y\",\"X\",\"Y\",\"X\",\"Y\"],[\"X\",\"Y\",\"X\",\"Y\",\"X\"]]",
+      "output": "16"
+    },
+    {
+      "input": "grid = [[\"X\",\"X\",\"X\",\"X\",\"X\",\"X\",\"X\",\"X\",\"X\",\"X\"],[\"X\",\"X\",\"X\",\"X\",\"X\",\"X\",\"X\",\"X\",\"X\",\"X\"],[\"X\",\"X\",\"X\",\"X\",\"X\",\"X\",\"X\",\"X\",\"X\",\"X\"],[\"X\",\"X\",\"X\",\"X\",\"X\",\"X\",\"X\",\"X\",\"X\",\"X\"],[\"X\",\"X\",\"X\",\"X\",\"X\",\"X\",\"X\",\"X\",\"X\",\"X\"],[\"X\",\"X\",\"X\",\"X\",\"X\",\"X\",\"X\",\"X\",\"X\",\"X\"],[\"X\",\"X\",\"X\",\"X\",\"X\",\"X\",\"X\",\"X\",\"X\",\"X\"],[\"X\",\"X\",\"X\",\"X\",\"X\",\"X\",\"X\",\"X\",\"X\",\"X\"],[\"X\",\"X\",\"X\",\"X\",\"X\",\"X\",\"X\",\"X\",\"X\",\"X\"],[\"X\",\"X\",\"X\",\"X\",\"X\",\"X\",\"X\",\"X\",\"X\",\"X\"]]\"",
+      "output": "Error: Solution.numberOfSubmatrices() missing 1 required positional argument: 'grid'"
+    },
+    {
+      "input": "grid = [[\"X\",\"Y\",\".\"],[\"X\",\"Y\",\".\"],[\".\",\".\",\".\"]]\"",
+      "output": "Error: Solution.numberOfSubmatrices() missing 1 required positional argument: 'grid'"
+    },
+    {
+      "input": "grid = [[\"X\",\"Y\",\"X\",\"Y\",\"X\",\"Y\",\"X\",\"Y\"],[\"Y\",\"X\",\"Y\",\"X\",\"Y\",\"X\",\"Y\",\"X\"],[\"X\",\"Y\",\"X\",\"Y\",\"X\",\"Y\",\"X\",\"Y\"]]",
+      "output": "16"
+    },
+    {
+      "input": "grid = [[\"X\",\"Y\",\"X\",\"Y\",\"X\",\"Y\"],[\"Y\",\"X\",\"Y\",\"X\",\"Y\",\"X\"],[\"X\",\"Y\",\"X\",\"Y\",\"X\",\"Y\"],[\"Y\",\"X\",\"Y\",\"X\",\"Y\",\"X\"],[\"X\",\"Y\",\"X\",\"Y\",\"X\",\"Y\"]]\"",
+      "output": "Error: Solution.numberOfSubmatrices() missing 1 required positional argument: 'grid'"
+    },
+    {
+      "input": "grid = [[\"X\",\"Y\",\".\",\"X\"],[\".\",\"X\",\"Y\",\".\"],[\"Y\",\".\",\"X\",\"Y\"],[\"X\",\"Y\",\".\",\"X\"]]\"",
+      "output": "Error: Solution.numberOfSubmatrices() missing 1 required positional argument: 'grid'"
+    },
+    {
+      "input": "grid = [[\"X\",\"Y\",\"X\",\"Y\",\"X\",\"Y\",\"X\",\"Y\",\"X\",\"Y\",\"X\",\"Y\",\"X\",\"Y\",\"X\",\"Y\",\"X\",\"Y\",\"X\",\"Y\"],[\"Y\",\"X\",\"Y\",\"X\",\"Y\",\"X\",\"Y\",\"X\",\"Y\",\"X\",\"Y\",\"X\",\"Y\",\"X\",\"Y\",\"X\",\"Y\",\"X\",\"Y\",\"X\"],[\"X\",\"Y\",\"X\",\"Y\",\"X\",\"Y\",\"X\",\"Y\",\"X\",\"Y\",\"X\",\"Y\",\"X\",\"Y\",\"X\",\"Y\",\"X\",\"Y\",\"X\",\"Y\"]]\"",
+      "output": "Error: Solution.numberOfSubmatrices() missing 1 required positional argument: 'grid'"
+    },
+    {
+      "input": "grid = [[\"X\",\"X\",\"X\"],[\"Y\",\"Y\",\"Y\"],[\"X\",\"X\",\"X\"]]\"",
+      "output": "Error: Solution.numberOfSubmatrices() missing 1 required positional argument: 'grid'"
+    },
+    {
+      "input": "grid = [[\"X\",\"X\",\"X\",\"X\",\"X\",\"X\",\"X\"],[\"Y\",\"Y\",\"Y\",\"Y\",\"Y\",\"Y\",\"Y\"],[\"X\",\"X\",\"X\",\"X\",\"X\",\"X\",\"X\"],[\"Y\",\"Y\",\"Y\",\"Y\",\"Y\",\"Y\",\"Y\"],[\"X\",\"X\",\"X\",\"X\",\"X\",\"X\",\"X\"],[\"Y\",\"Y\",\"Y\",\"Y\",\"Y\",\"Y\",\"Y\"]]\"",
+      "output": "Error: Solution.numberOfSubmatrices() missing 1 required positional argument: 'grid'"
+    },
+    {
+      "input": "grid = [[\"X\",\"Y\",\"X\",\"Y\",\"X\",\"Y\",\"X\",\"Y\",\"X\",\"Y\"],[\"Y\",\"X\",\"Y\",\"X\",\"Y\",\"X\",\"Y\",\"X\",\"Y\",\"X\"],[\"X\",\"Y\",\"X\",\"Y\",\"X\",\"Y\",\"X\",\"Y\",\"X\",\"Y\"],[\"Y\",\"X\",\"Y\",\"X\",\"Y\",\"X\",\"Y\",\"X\",\"Y\",\"X\"]]\"",
+      "output": "Error: Solution.numberOfSubmatrices() missing 1 required positional argument: 'grid'"
+    },
+    {
+      "input": "grid = [[\"X\",\"Y\",\"X\",\"Y\",\"X\"],[\"Y\",\"X\",\"Y\",\"X\",\"Y\"],[\"X\",\"Y\",\"X\",\"Y\",\"X\"]]\"",
+      "output": "Error: Solution.numberOfSubmatrices() missing 1 required positional argument: 'grid'"
+    },
+    {
+      "input": "grid = [[\"X\",\"Y\",\"X\",\"Y\",\"X\",\"Y\",\"X\",\"Y\",\"X\",\"Y\"],[\"Y\",\"X\",\"Y\",\"X\",\"Y\",\"X\",\"Y\",\"X\",\"Y\",\"X\"]]\"",
+      "output": "Error: Solution.numberOfSubmatrices() missing 1 required positional argument: 'grid'"
+    },
+    {
+      "input": "grid = [[\"X\",\"Y\",\"X\",\"Y\"],[\"X\",\"Y\",\"X\",\"Y\"],[\"X\",\"Y\",\"X\",\"Y\"],[\"X\",\"Y\",\"X\",\"Y\"]]\"",
+      "output": "Error: Solution.numberOfSubmatrices() missing 1 required positional argument: 'grid'"
+    },
+    {
+      "input": "grid = [[\"X\",\"Y\",\"X\",\"Y\",\"X\",\"Y\",\"X\",\"Y\",\"X\"],[\"Y\",\"X\",\"Y\",\"X\",\"Y\",\"X\",\"Y\",\"X\",\"Y\"],[\"X\",\"Y\",\"X\",\"Y\",\"X\",\"Y\",\"X\",\"Y\",\"X\"]]\"",
+      "output": "Error: Solution.numberOfSubmatrices() missing 1 required positional argument: 'grid'"
+    },
+    {
+      "input": "grid = [[\"X\",\"Y\",\".\",\"X\"],[\"Y\",\"X\",\".\",\"Y\"],[\".\",\".\",\".\",\".\"],[\"X\",\"Y\",\"X\",\"Y\"]]",
+      "output": "12"
+    },
+    {
+      "input": "grid = [[\"X\",\".\",\"Y\",\".\",\"X\"],[\".\",\"Y\",\"X\",\"Y\",\".\"],[\"Y\",\"X\",\".\",\"X\",\"Y\"],[\".\",\"Y\",\"X\",\"Y\",\".\"],[\"X\",\".\",\"Y\",\".\",\"X\"]]\"",
+      "output": "Error: Solution.numberOfSubmatrices() missing 1 required positional argument: 'grid'"
+    },
+    {
+      "input": "grid = [[\"X\",\"Y\",\"Y\",\"Y\"],[\"X\",\"Y\",\"X\",\"X\"],[\"X\",\"X\",\"Y\",\"Y\"],[\"X\",\"X\",\"X\",\"X\"]]",
+      "output": "5"
+    },
+    {
+      "input": "grid = [[\".\",\".\",\"X\"],[\"Y\",\"X\",\"Y\"],[\"X\",\"Y\",\"X\"],[\"Y\",\".\",\"Y\"]]",
+      "output": "4"
+    },
+    {
+      "input": "grid = [[\"X\",\"X\",\"X\",\"X\",\"X\",\"X\",\"X\",\"X\"],[\"X\",\"X\",\"X\",\"X\",\"X\",\"X\",\"X\",\"X\"],[\"X\",\"X\",\"X\",\"X\",\"X\",\"X\",\"X\",\"X\"],[\"X\",\"X\",\"X\",\"X\",\"X\",\"X\",\"X\",\"X\"],[\"X\",\"X\",\"X\",\"X\",\"X\",\"X\",\"X\",\"X\"]]\"",
+      "output": "Error: Solution.numberOfSubmatrices() missing 1 required positional argument: 'grid'"
+    },
+    {
+      "input": "grid = [[\"X\",\".\",\"Y\",\"X\"],[\"Y\",\"X\",\"Y\",\"X\"],[\"X\",\"Y\",\"X\",\".\"],[\".\",\"X\",\"Y\",\"X\"]]",
+      "output": "4"
+    },
+    {
+      "input": "grid = [[\".\",\".\",\".\",\".\"],[\".\",\"X\",\"Y\",\".\"],[\".\",\"Y\",\"X\",\".\"],[\".\",\".\",\".\",\".\"]]",
+      "output": "8"
+    },
+    {
+      "input": "grid = [[\"X\",\".\",\"Y\",\".\",\"X\",\".\",\"Y\",\".\"],[\".\",\"X\",\".\",\"Y\",\".\",\"X\",\".\",\"Y\"],[\"Y\",\".\",\"X\",\".\",\"Y\",\".\",\"X\",\".\"],[\".\",\"Y\",\".\",\"X\",\".\",\"Y\",\".\",\"X\"]]\"",
+      "output": "Error: Solution.numberOfSubmatrices() missing 1 required positional argument: 'grid'"
+    },
+    {
+      "input": "grid = [[\".\",\".\",\"X\",\"Y\",\".\"],[\"X\",\"Y\",\"X\",\"Y\",\"X\"],[\"Y\",\"X\",\"Y\",\"X\",\"Y\"],[\".\",\"X\",\"Y\",\"X\",\"Y\"]]",
+      "output": "10"
+    },
+    {
+      "input": "grid = [[\"X\",\"Y\",\"X\",\"Y\",\"X\",\"Y\",\"X\",\"Y\",\"X\",\"Y\",\"X\",\"Y\",\"X\",\"Y\",\"X\",\"Y\",\"X\",\"Y\",\"X\",\"Y\"]]",
+      "output": "10"
+    },
+    {
+      "input": "grid = [[\".\",\".\",\".\",\".\",\".\"],[\".\",\".\",\".\",\".\",\".\"],[\".\",\".\",\".\",\".\",\".\"],[\".\",\".\",\".\",\".\",\".\"],[\".\",\".\",\".\",\".\",\".\"]]\"",
+      "output": "Error: Solution.numberOfSubmatrices() missing 1 required positional argument: 'grid'"
+    },
+    {
+      "input": "grid = [[\"X\",\"X\",\"X\",\"X\",\"X\",\"X\",\"X\"],[\"X\",\"Y\",\"X\",\"Y\",\"X\",\"Y\",\"X\"],[\"X\",\"X\",\"X\",\"X\",\"X\",\"X\",\"X\"],[\"X\",\"Y\",\"X\",\"Y\",\"X\",\"Y\",\"X\"],[\"X\",\"X\",\"X\",\"X\",\"X\",\"X\",\"X\"]]\"",
+      "output": "Error: Solution.numberOfSubmatrices() missing 1 required positional argument: 'grid'"
+    },
+    {
+      "input": "grid = [[\"X\",\".\",\"X\",\".\",\"X\",\".\",\"X\",\".\",\"X\"],[\".\",\"Y\",\".\",\"Y\",\".\",\"Y\",\".\",\"Y\",\".\"],[\"X\",\".\",\"X\",\".\",\"X\",\".\",\"X\",\".\",\"X\"],[\".\",\"Y\",\".\",\"Y\",\".\",\"Y\",\".\",\"Y\",\".\"],[\"X\",\".\",\"X\",\".\",\"X\",\".\",\"X\",\".\",\"X\"]]\"",
+      "output": "Error: Solution.numberOfSubmatrices() missing 1 required positional argument: 'grid'"
+    }
+  ]
+}

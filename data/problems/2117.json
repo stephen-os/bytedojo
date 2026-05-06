@@ -1,0 +1,356 @@
+{
+  "id": 2117,
+  "title": "Abbreviating the Product of a Range",
+  "slug": "abbreviating-the-product-of-a-range",
+  "difficulty": "Hard",
+  "topics": [
+    "Math"
+  ],
+  "description": "You are given two positive integers left and right with left <= right. Calculate the product of all integers in the inclusive range [left, right].\nSince the product may be very large, you will abbreviate it following these steps:\nReturn a string denoting the abbreviated product of all integers in the inclusive range [left, right].\nExample 1:\nExample 2:\nExample 3:\nConstraints:",
+  "examples": [
+    {
+      "example_num": 1,
+      "example_text": "Input: left = 1, right = 4\nOutput: \"24e0\"\nExplanation: The product is 1 \u00d7 2 \u00d7 3 \u00d7 4 = 24.\nThere are no trailing zeros, so 24 remains the same. The abbreviation will end with \"e0\".\nSince the number of digits is 2, which is less than 10, we do not have to abbreviate it further.\nThus, the final representation is \"24e0\".",
+      "images": []
+    },
+    {
+      "example_num": 2,
+      "example_text": "Input: left = 2, right = 11\nOutput: \"399168e2\"\nExplanation: The product is 39916800.\nThere are 2 trailing zeros, which we remove to get 399168. The abbreviation will end with \"e2\".\nThe number of digits after removing the trailing zeros is 6, so we do not abbreviate it further.\nHence, the abbreviated product is \"399168e2\".",
+      "images": []
+    },
+    {
+      "example_num": 3,
+      "example_text": "Input: left = 371, right = 375\nOutput: \"7219856259e3\"\nExplanation: The product is 7219856259000.",
+      "images": []
+    }
+  ],
+  "constraints": [
+    "1 <= left <= right <= 104"
+  ],
+  "hints": [
+    "Calculating the number of trailing zeros, the last five digits, and the first five digits can all be done separately.",
+    "Use a prime factorization property to find the number of trailing zeros. Use modulo to find the last 5 digits. Use a logarithm property to find the first 5 digits.",
+    "The number of trailing zeros C is nothing but the number of times the product is completely divisible by 10. Since 2 and 5 are the only prime factors of 10,  C will be equal to the minimum number of times 2 or 5 appear in the prime factorization of the product.",
+    "Iterate through the integers from left to right. For every integer, keep dividing it by 2 as long as it is divisible by 2 and C occurrences of 2 haven't been removed in total. Repeat this process for 5. Finally, multiply the integer under modulo of 10^5 with the product obtained till now to obtain the last five digits.",
+    "The product P can be represented as P=10^(x+y) where x is the integral part and y is the fractional part of x+y. Using the property \"if S = A * B, then log(S) = log(A) + log(B)\", we can write x+y = log_10(P) = sum(log_10(i)) for each integer i in [left, right]. Once we obtain the sum, the first five digits can be represented as floor(10^(y+4))."
+  ],
+  "code_snippets": {
+    "cpp": "class Solution {\npublic:\n    string abbreviateProduct(int left, int right) {\n        \n    }\n};",
+    "java": "class Solution {\n    public String abbreviateProduct(int left, int right) {\n        \n    }\n}",
+    "python": "class Solution(object):\n    def abbreviateProduct(self, left, right):\n        \"\"\"\n        :type left: int\n        :type right: int\n        :rtype: str\n        \"\"\"\n        ",
+    "python3": "class Solution:\n    def abbreviateProduct(self, left: int, right: int) -> str:\n        ",
+    "c": "char* abbreviateProduct(int left, int right) {\n    \n}",
+    "csharp": "public class Solution {\n    public string AbbreviateProduct(int left, int right) {\n        \n    }\n}",
+    "javascript": "/**\n * @param {number} left\n * @param {number} right\n * @return {string}\n */\nvar abbreviateProduct = function(left, right) {\n    \n};",
+    "typescript": "function abbreviateProduct(left: number, right: number): string {\n    \n};",
+    "php": "class Solution {\n\n    /**\n     * @param Integer $left\n     * @param Integer $right\n     * @return String\n     */\n    function abbreviateProduct($left, $right) {\n        \n    }\n}",
+    "swift": "class Solution {\n    func abbreviateProduct(_ left: Int, _ right: Int) -> String {\n        \n    }\n}",
+    "kotlin": "class Solution {\n    fun abbreviateProduct(left: Int, right: Int): String {\n        \n    }\n}",
+    "dart": "class Solution {\n  String abbreviateProduct(int left, int right) {\n    \n  }\n}",
+    "golang": "func abbreviateProduct(left int, right int) string {\n    \n}",
+    "ruby": "# @param {Integer} left\n# @param {Integer} right\n# @return {String}\ndef abbreviate_product(left, right)\n    \nend",
+    "scala": "object Solution {\n    def abbreviateProduct(left: Int, right: Int): String = {\n        \n    }\n}",
+    "rust": "impl Solution {\n    pub fn abbreviate_product(left: i32, right: i32) -> String {\n        \n    }\n}",
+    "racket": "(define/contract (abbreviate-product left right)\n  (-> exact-integer? exact-integer? string?)\n  )",
+    "erlang": "-spec abbreviate_product(Left :: integer(), Right :: integer()) -> unicode:unicode_binary().\nabbreviate_product(Left, Right) ->\n  .",
+    "elixir": "defmodule Solution do\n  @spec abbreviate_product(left :: integer, right :: integer) :: String.t\n  def abbreviate_product(left, right) do\n    \n  end\nend"
+  },
+  "input_output": [
+    {
+      "input": "left = 100, right = 105",
+      "output": "1158727752e3"
+    },
+    {
+      "input": "left = 1, right = 10000",
+      "output": "28462...79008e2499"
+    },
+    {
+      "input": "left = 10, right = 20",
+      "output": "6704425728e3"
+    },
+    {
+      "input": "left = 371, right = 375",
+      "output": "7219856259e3"
+    },
+    {
+      "input": "left = 1000, right = 1010",
+      "output": "10563...82688e5"
+    },
+    {
+      "input": "left = 5000, right = 5010",
+      "output": "49367...34144e6"
+    },
+    {
+      "input": "left = 1234, right = 1238",
+      "output": "28846...40584e1"
+    },
+    {
+      "input": "left = 999, right = 1000",
+      "output": "999e3"
+    },
+    {
+      "input": "left = 1, right = 10",
+      "output": "36288e2"
+    },
+    {
+      "input": "left = 1234, right = 1240",
+      "output": "44318...63424e2"
+    },
+    {
+      "input": "left = 5, right = 5",
+      "output": "5e0"
+    },
+    {
+      "input": "left = 1000, right = 1000",
+      "output": "1e3"
+    },
+    {
+      "input": "left = 10, right = 15",
+      "output": "36036e2"
+    },
+    {
+      "input": "left = 1000, right = 1004",
+      "output": "10100...50024e3"
+    },
+    {
+      "input": "left = 500, right = 510",
+      "output": "54464...59744e5"
+    },
+    {
+      "input": "left = 1, right = 100",
+      "output": "93326...16864e24"
+    },
+    {
+      "input": "left = 995, right = 1000",
+      "output": "98508...27388e4"
+    },
+    {
+      "input": "left = 9995, right = 10000",
+      "output": "99850...73988e5"
+    },
+    {
+      "input": "left = 1, right = 4",
+      "output": "24e0"
+    },
+    {
+      "input": "left = 2, right = 11",
+      "output": "399168e2"
+    },
+    {
+      "input": "left = 500, right = 505",
+      "output": "16099...69356e4"
+    },
+    {
+      "input": "left = 5000, right = 5005",
+      "output": "15671...18506e5"
+    },
+    {
+      "input": "left = 5, right = 10",
+      "output": "1512e2"
+    },
+    {
+      "input": "left = 8000, right = 8003",
+      "output": "40990...04048e3"
+    },
+    {
+      "input": "left = 5555, right = 6666",
+      "output": "28137...34688e279"
+    },
+    {
+      "input": "left = 9000, right = 9005",
+      "output": "53232...19508e4"
+    },
+    {
+      "input": "left = 100, right = 150",
+      "output": "61219...44768e15"
+    },
+    {
+      "input": "left = 5, right = 20",
+      "output": "10137...00736e4"
+    },
+    {
+      "input": "left = 3000, right = 3100",
+      "output": "81710...90592e27"
+    },
+    {
+      "input": "left = 1234, right = 1244",
+      "output": "10562...94176e2"
+    },
+    {
+      "input": "left = 1, right = 5000",
+      "output": "42285...33472e1249"
+    },
+    {
+      "input": "left = 9000, right = 9050",
+      "output": "53429...51328e15"
+    },
+    {
+      "input": "left = 100, right = 1000",
+      "output": "43116...46048e227"
+    },
+    {
+      "input": "left = 6000, right = 6005",
+      "output": "46772...86472e4"
+    },
+    {
+      "input": "left = 7000, right = 7020",
+      "output": "57553...63648e7"
+    },
+    {
+      "input": "left = 100, right = 200",
+      "output": "84505...02048e27"
+    },
+    {
+      "input": "left = 1234, right = 1250",
+      "output": "39811...24736e7"
+    },
+    {
+      "input": "left = 4000, right = 4100",
+      "output": "22481...83456e27"
+    },
+    {
+      "input": "left = 1000, right = 1050",
+      "output": "35045...20832e15"
+    },
+    {
+      "input": "left = 4995, right = 5000",
+      "output": "15578...18494e5"
+    },
+    {
+      "input": "left = 9500, right = 10000",
+      "output": "29333...52864e128"
+    },
+    {
+      "input": "left = 2000, right = 3000",
+      "output": "25024...18624e252"
+    },
+    {
+      "input": "left = 6000, right = 6100",
+      "output": "90528...09184e27"
+    },
+    {
+      "input": "left = 9995, right = 10005",
+      "output": "99999...99856e6"
+    },
+    {
+      "input": "left = 100, right = 2000",
+      "output": "35534...18272e477"
+    },
+    {
+      "input": "left = 7000, right = 7050",
+      "output": "15097...01664e15"
+    },
+    {
+      "input": "left = 5500, right = 5510",
+      "output": "14071...33184e5"
+    },
+    {
+      "input": "left = 9999, right = 10000",
+      "output": "9999e4"
+    },
+    {
+      "input": "left = 8000, right = 8010",
+      "output": "86491...39904e5"
+    },
+    {
+      "input": "left = 5, right = 50",
+      "output": "12672...06688e12"
+    },
+    {
+      "input": "left = 5000, right = 6000",
+      "output": "31736...43584e253"
+    },
+    {
+      "input": "left = 8000, right = 8020",
+      "output": "94684...81312e7"
+    },
+    {
+      "input": "left = 8000, right = 9000",
+      "output": "12498...67872e253"
+    },
+    {
+      "input": "left = 6500, right = 6530",
+      "output": "17034...07232e10"
+    },
+    {
+      "input": "left = 3000, right = 3010",
+      "output": "18042...06464e5"
+    },
+    {
+      "input": "left = 1000, right = 9999",
+      "output": "70734...94464e2249"
+    },
+    {
+      "input": "left = 5000, right = 5015",
+      "output": "15629...41184e7"
+    },
+    {
+      "input": "left = 3000, right = 3025",
+      "output": "28318...52192e9"
+    },
+    {
+      "input": "left = 1234, right = 5678",
+      "output": "11390...64288e1112"
+    },
+    {
+      "input": "left = 1000, right = 2000",
+      "output": "82415...74464e253"
+    },
+    {
+      "input": "left = 9000, right = 9999",
+      "output": "31626...93632e250"
+    },
+    {
+      "input": "left = 4321, right = 4325",
+      "output": "15098...31038e2"
+    },
+    {
+      "input": "left = 8765, right = 8780",
+      "output": "12301...69504e5"
+    },
+    {
+      "input": "left = 10000, right = 10010",
+      "output": "10055...00288e6"
+    },
+    {
+      "input": "left = 9990, right = 10000",
+      "output": "99451...72288e6"
+    },
+    {
+      "input": "left = 2000, right = 2010",
+      "output": "21050...98176e5"
+    },
+    {
+      "input": "left = 9990, right = 9999",
+      "output": "99451...72288e2"
+    },
+    {
+      "input": "left = 5000, right = 5050",
+      "output": "57259...77056e16"
+    },
+    {
+      "input": "left = 2500, right = 2600",
+      "output": "11420...49216e28"
+    },
+    {
+      "input": "left = 2500, right = 2510",
+      "output": "24371...13072e6"
+    },
+    {
+      "input": "left = 3000, right = 4000",
+      "output": "13222...08128e254"
+    },
+    {
+      "input": "left = 1000, right = 10000",
+      "output": "70734...94464e2253"
+    },
+    {
+      "input": "left = 7500, right = 7510",
+      "output": "42545...13216e6"
+    },
+    {
+      "input": "left = 9000, right = 9010",
+      "output": "31573...64992e5"
+    }
+  ]
+}

@@ -1,0 +1,649 @@
+{
+  "id": 2147,
+  "title": "Number of Ways to Divide a Long Corridor",
+  "slug": "number-of-ways-to-divide-a-long-corridor",
+  "difficulty": "Hard",
+  "topics": [
+    "Math",
+    "String",
+    "Dynamic Programming"
+  ],
+  "description": "Along a long library corridor, there is a line of seats and decorative plants. You are given a 0-indexed string corridor of length n consisting of letters 'S' and 'P' where each 'S' represents a seat and each 'P' represents a plant.\nOne room divider has already been installed to the left of index 0, and another to the right of index n - 1. Additional room dividers can be installed. For each position between indices i - 1 and i (1 <= i <= n - 1), at most one divider can be installed.\nDivide the corridor into non-overlapping sections, where each section has exactly two seats with any number of plants. There may be multiple ways to perform the division. Two ways are different if there is a position with a room divider installed in the first way but not in the second way.\nReturn the number of ways to divide the corridor. Since the answer may be very large, return it modulo 109 + 7. If there is no way, return 0.\nExample 1:\nExample 2:\nExample 3:\nConstraints:",
+  "examples": [
+    {
+      "example_num": 1,
+      "example_text": "Input: corridor = \"SSPPSPS\"\nOutput: 3\nExplanation: There are 3 different ways to divide the corridor.\nThe black bars in the above image indicate the two room dividers already installed.\nNote that in each of the ways, each section has exactly two seats.",
+      "images": [
+        "https://assets.leetcode.com/uploads/2021/12/04/1.png"
+      ]
+    },
+    {
+      "example_num": 2,
+      "example_text": "Input: corridor = \"PPSPSP\"\nOutput: 1\nExplanation: There is only 1 way to divide the corridor, by not installing any additional dividers.\nInstalling any would create some section that does not have exactly two seats.",
+      "images": [
+        "https://assets.leetcode.com/uploads/2021/12/04/2.png"
+      ]
+    },
+    {
+      "example_num": 3,
+      "example_text": "Input: corridor = \"S\"\nOutput: 0\nExplanation: There is no way to divide the corridor because there will always be a section that does not have exactly two seats.",
+      "images": [
+        "https://assets.leetcode.com/uploads/2021/12/12/3.png"
+      ]
+    }
+  ],
+  "constraints": [
+    "n == corridor.length",
+    "1 <= n <= 105",
+    "corridor[i] is either 'S' or 'P'."
+  ],
+  "hints": [
+    "Divide the corridor into segments. Each segment has two seats, starts precisely with one seat, and ends precisely with the other seat.",
+    "How many dividers can you install between two adjacent segments? You must install precisely one. Otherwise, you would have created a section with not exactly two seats.",
+    "If there are k plants between two adjacent segments, there are k + 1 positions (ways) you could install the divider you must install.",
+    "The problem now becomes: Find the product of all possible positions between every two adjacent segments."
+  ],
+  "code_snippets": {
+    "cpp": "class Solution {\npublic:\n    int numberOfWays(string corridor) {\n        \n    }\n};",
+    "java": "class Solution {\n    public int numberOfWays(String corridor) {\n        \n    }\n}",
+    "python": "class Solution(object):\n    def numberOfWays(self, corridor):\n        \"\"\"\n        :type corridor: str\n        :rtype: int\n        \"\"\"\n        ",
+    "python3": "class Solution:\n    def numberOfWays(self, corridor: str) -> int:\n        ",
+    "c": "int numberOfWays(char* corridor) {\n    \n}",
+    "csharp": "public class Solution {\n    public int NumberOfWays(string corridor) {\n        \n    }\n}",
+    "javascript": "/**\n * @param {string} corridor\n * @return {number}\n */\nvar numberOfWays = function(corridor) {\n    \n};",
+    "typescript": "function numberOfWays(corridor: string): number {\n    \n};",
+    "php": "class Solution {\n\n    /**\n     * @param String $corridor\n     * @return Integer\n     */\n    function numberOfWays($corridor) {\n        \n    }\n}",
+    "swift": "class Solution {\n    func numberOfWays(_ corridor: String) -> Int {\n        \n    }\n}",
+    "kotlin": "class Solution {\n    fun numberOfWays(corridor: String): Int {\n        \n    }\n}",
+    "dart": "class Solution {\n  int numberOfWays(String corridor) {\n    \n  }\n}",
+    "golang": "func numberOfWays(corridor string) int {\n    \n}",
+    "ruby": "# @param {String} corridor\n# @return {Integer}\ndef number_of_ways(corridor)\n    \nend",
+    "scala": "object Solution {\n    def numberOfWays(corridor: String): Int = {\n        \n    }\n}",
+    "rust": "impl Solution {\n    pub fn number_of_ways(corridor: String) -> i32 {\n        \n    }\n}",
+    "racket": "(define/contract (number-of-ways corridor)\n  (-> string? exact-integer?)\n  )",
+    "erlang": "-spec number_of_ways(Corridor :: unicode:unicode_binary()) -> integer().\nnumber_of_ways(Corridor) ->\n  .",
+    "elixir": "defmodule Solution do\n  @spec number_of_ways(corridor :: String.t) :: integer\n  def number_of_ways(corridor) do\n    \n  end\nend"
+  },
+  "input_output": [
+    {
+      "input": "corridor = \"PPPPSSPPPPSSPPPP\"",
+      "output": "5"
+    },
+    {
+      "input": "corridor = \"SSSSSSSSSS\"",
+      "output": "1"
+    },
+    {
+      "input": "corridor = \"SPSPSPSP\"",
+      "output": "2"
+    },
+    {
+      "input": "corridor = \"SSSPPSS\"",
+      "output": "0"
+    },
+    {
+      "input": "corridor = \"PSSPSPSPPS\"",
+      "output": "0"
+    },
+    {
+      "input": "corridor = \"SS\"",
+      "output": "1"
+    },
+    {
+      "input": "corridor = \"PPPP\"",
+      "output": "0"
+    },
+    {
+      "input": "corridor = \"SSPPSS\"",
+      "output": "3"
+    },
+    {
+      "input": "corridor = \"SSSSPPSSSS\"",
+      "output": "3"
+    },
+    {
+      "input": "corridor = \"SSPSSP\"",
+      "output": "2"
+    },
+    {
+      "input": "corridor = \"SSPSSPSS\"",
+      "output": "4"
+    },
+    {
+      "input": "corridor = \"SSPPPPPSSPPPPSS\"",
+      "output": "30"
+    },
+    {
+      "input": "corridor = \"SSPSPSPSPS\"",
+      "output": "4"
+    },
+    {
+      "input": "corridor = \"SSSS\"",
+      "output": "1"
+    },
+    {
+      "input": "corridor = \"SSSPPPSS\"",
+      "output": "0"
+    },
+    {
+      "input": "corridor = \"SSSPPS\"",
+      "output": "1"
+    },
+    {
+      "input": "corridor = \"PPSSPPSSPP\"",
+      "output": "3"
+    },
+    {
+      "input": "corridor = \"SSPPSSPPSS\"",
+      "output": "9"
+    },
+    {
+      "input": "corridor = \"SSPPSPS\"",
+      "output": "3"
+    },
+    {
+      "input": "corridor = \"SSPPSPPS\"",
+      "output": "3"
+    },
+    {
+      "input": "corridor = \"S\"",
+      "output": "0"
+    },
+    {
+      "input": "corridor = \"PPSPSP\"",
+      "output": "1"
+    },
+    {
+      "input": "corridor = \"SPPSPPSPPS\"",
+      "output": "3"
+    },
+    {
+      "input": "corridor = \"PPSPSPSPSPSPSPSPSP\"",
+      "output": "8"
+    },
+    {
+      "input": "corridor = \"SSSPSSSSPPSSPPSSSSPPSSSSPPSSSSSSSSSS\"",
+      "output": "0"
+    },
+    {
+      "input": "corridor = \"SPPSPSPSPSPSPSPSPS\"",
+      "output": "0"
+    },
+    {
+      "input": "corridor = \"SSPSSPSSPSSPSSPSSPSS\"",
+      "output": "64"
+    },
+    {
+      "input": "corridor = \"PPSSPPSPSSPPSS\"",
+      "output": "0"
+    },
+    {
+      "input": "corridor = \"SSPPSSSSSSSSPPSSSSSSSSPPSSSSSSSSSS\"",
+      "output": "27"
+    },
+    {
+      "input": "corridor = \"SSPPSSPPSSPPSS\"",
+      "output": "27"
+    },
+    {
+      "input": "corridor = \"SPSSPSSPSSPSSPSS\"",
+      "output": "0"
+    },
+    {
+      "input": "corridor = \"PPPPPPSSPPPPSSPPPP\"",
+      "output": "5"
+    },
+    {
+      "input": "corridor = \"SSPPPPPPSSPPPPSSPPPPSSPPSS\"",
+      "output": "525"
+    },
+    {
+      "input": "corridor = \"PPSSPPSSPPSSPPSS\"",
+      "output": "27"
+    },
+    {
+      "input": "corridor = \"PPPPSSPPPPSSPPPPSSPPPPSSPPPPSSPPPP\"",
+      "output": "625"
+    },
+    {
+      "input": "corridor = \"SSSPSPSPSPSPSSSSPSPS\"",
+      "output": "0"
+    },
+    {
+      "input": "corridor = \"SSPPSPSPSSSSPPPPSS\"",
+      "output": "30"
+    },
+    {
+      "input": "corridor = \"SSPPSSSSSSSSSSSSSS\"",
+      "output": "3"
+    },
+    {
+      "input": "corridor = \"PPPPPPPPPPPPPPPPPP\"",
+      "output": "0"
+    },
+    {
+      "input": "corridor = \"SPPSPSPSPSPSPSPSPSPS\"",
+      "output": "16"
+    },
+    {
+      "input": "corridor = \"SPSPPSPSPPSPSPPSPSPP\"",
+      "output": "27"
+    },
+    {
+      "input": "corridor = \"PPSSPPSSPPSSPP\"",
+      "output": "9"
+    },
+    {
+      "input": "corridor = \"SSPSPSPSPSPS\"",
+      "output": "0"
+    },
+    {
+      "input": "corridor = \"SSSPSSSPSSSPSSSPSS\"",
+      "output": "4"
+    },
+    {
+      "input": "corridor = \"PPSSPPSSSSSSSSSSSS\"",
+      "output": "3"
+    },
+    {
+      "input": "corridor = \"SSPPPPPPPPSSPPPPSS\"",
+      "output": "45"
+    },
+    {
+      "input": "corridor = \"SSPPSSSSSSPPSS\"",
+      "output": "9"
+    },
+    {
+      "input": "corridor = \"SSPPPPPPSSPPPPPSS\"",
+      "output": "42"
+    },
+    {
+      "input": "corridor = \"SSSSPPPPSSPPSSPPSSSSPPPPSSSSSS\"",
+      "output": "225"
+    },
+    {
+      "input": "corridor = \"SSPPPPSSPPSS\"",
+      "output": "15"
+    },
+    {
+      "input": "corridor = \"SSSSPPPPSSPPPPSSSSPPPPSS\"",
+      "output": "125"
+    },
+    {
+      "input": "corridor = \"SSPPPPSSPPPPSSPPPPSSPPPPSS\"",
+      "output": "625"
+    },
+    {
+      "input": "corridor = \"SSPPSPSSSSSSSSSSPPSS\"",
+      "output": "0"
+    },
+    {
+      "input": "corridor = \"SPPSPPSPPSPPS\"",
+      "output": "0"
+    },
+    {
+      "input": "corridor = \"SSPSPPSPSPSPSPPPSS\"",
+      "output": "0"
+    },
+    {
+      "input": "corridor = \"SSPPSSPPSSPPSSPPSSPPSSPPSSPPSSPPSSPPSSPPSSPPSS\"",
+      "output": "177147"
+    },
+    {
+      "input": "corridor = \"PPPPPPSPPPPSPPPPSPPPPS\"",
+      "output": "5"
+    },
+    {
+      "input": "corridor = \"SSSSSSSSSSSSSSSS\"",
+      "output": "1"
+    },
+    {
+      "input": "corridor = \"SSPPSPSSPPSPSSPPSPSS\"",
+      "output": "0"
+    },
+    {
+      "input": "corridor = \"PPSSPPSSPPSS\"",
+      "output": "9"
+    },
+    {
+      "input": "corridor = \"SSPPSPSPSPSPSPSPSPSPSPSPSPSPSPSPSPSPSPSPSPS\"",
+      "output": "1536"
+    },
+    {
+      "input": "corridor = \"SSSPSSPPSSPPSSSSPPSSPPSSPPSSSSPPSSSS\"",
+      "output": "0"
+    },
+    {
+      "input": "corridor = \"SSSSSSSSSSSSSSSSSSSSSSSSSS\"",
+      "output": "1"
+    },
+    {
+      "input": "corridor = \"SSPPSSPPSSPPSSPPSSSSPPSSSSPPSSSS\"",
+      "output": "729"
+    },
+    {
+      "input": "corridor = \"SSPPSPPPSPSPPS\"",
+      "output": "6"
+    },
+    {
+      "input": "corridor = \"SSPPPPSSPPPPSSPPSSPPPPSS\"",
+      "output": "375"
+    },
+    {
+      "input": "corridor = \"SSPPPPPPSPPPPPSSSSPP\"",
+      "output": "0"
+    },
+    {
+      "input": "corridor = \"PPSSSSPPPPSS\"",
+      "output": "5"
+    },
+    {
+      "input": "corridor = \"SSPPSPPPSSSSPPSPSS\"",
+      "output": "6"
+    },
+    {
+      "input": "corridor = \"PPPPPPSSPPSS\"",
+      "output": "3"
+    },
+    {
+      "input": "corridor = \"SSPPSPSSPPSPSSPPSPSSPPSPSS\"",
+      "output": "36"
+    },
+    {
+      "input": "corridor = \"SSSPSSSPSSSPSSSPSSSPSSSPSSS\"",
+      "output": "0"
+    },
+    {
+      "input": "corridor = \"SSSPSSSSPPSSPPSSSSPPSSSSPPSSSS\"",
+      "output": "0"
+    },
+    {
+      "input": "corridor = \"SPPPPPPPPPPP\"",
+      "output": "0"
+    },
+    {
+      "input": "corridor = \"PPPPSPSPPPPSPSPPPPSP\"",
+      "output": "0"
+    },
+    {
+      "input": "corridor = \"PPSSPPSSPPSSPPSSPPSSPPSSPPSS\"",
+      "output": "729"
+    },
+    {
+      "input": "corridor = \"PPPPPPPPPPPPPPPPPPPP\"",
+      "output": "0"
+    },
+    {
+      "input": "corridor = \"SSPSSPSSPSSPSSPSSPSSPSS\"",
+      "output": "128"
+    },
+    {
+      "input": "corridor = \"SSPPPPSPSPPPSS\"",
+      "output": "20"
+    },
+    {
+      "input": "corridor = \"PPSSPSSPPSSPSSPPSSPSSPPSS\"",
+      "output": "216"
+    },
+    {
+      "input": "corridor = \"SSPPPSSPPPSSPPPSS\"",
+      "output": "64"
+    },
+    {
+      "input": "corridor = \"SSPSSSPSSPSSPSSPSS\"",
+      "output": "0"
+    },
+    {
+      "input": "corridor = \"SSPPSSPPSSPPSSPPSSPPSSPPSS\"",
+      "output": "729"
+    },
+    {
+      "input": "corridor = \"PPSSPPPPSSPPPPSS\"",
+      "output": "25"
+    },
+    {
+      "input": "corridor = \"SPSSSPSSSPSSSPSSSPSS\"",
+      "output": "0"
+    },
+    {
+      "input": "corridor = \"PSPSPSPSPSPSPSPSPS\"",
+      "output": "0"
+    },
+    {
+      "input": "corridor = \"SSPPSSPSPSPSSP\"",
+      "output": "12"
+    },
+    {
+      "input": "corridor = \"SSSSSSSSSSSSSSSSSS\"",
+      "output": "1"
+    },
+    {
+      "input": "corridor = \"SSPPSSPPSSPPSPSSPPSS\"",
+      "output": "0"
+    },
+    {
+      "input": "corridor = \"SSPPSPSPPPSSSPPSS\"",
+      "output": "0"
+    },
+    {
+      "input": "corridor = \"SSPPSSSSPPSSSSPPS\"",
+      "output": "0"
+    },
+    {
+      "input": "corridor = \"SSPPPPPPSSSSSSSSSS\"",
+      "output": "7"
+    },
+    {
+      "input": "corridor = \"SSPPPPSSPPPPSSSSPPPPSSSSPPPPSSSS\"",
+      "output": "625"
+    },
+    {
+      "input": "corridor = \"SSSSSSSSSSPPPPPPSS\"",
+      "output": "7"
+    },
+    {
+      "input": "corridor = \"SSSSPPSSSSSSPPSSSS\"",
+      "output": "9"
+    },
+    {
+      "input": "corridor = \"SSPSSPSSPSSPSSPSSPSSPSSPSSPS\"",
+      "output": "0"
+    },
+    {
+      "input": "corridor = \"SSPPSPSPSPPSS\"",
+      "output": "0"
+    },
+    {
+      "input": "corridor = \"PPSSPPPPSSPPSSPP\"",
+      "output": "15"
+    },
+    {
+      "input": "corridor = \"SPSSSPSSSPSSSPSS\"",
+      "output": "4"
+    },
+    {
+      "input": "corridor = \"PSPPSPSPSPSPSPSPSPSP\"",
+      "output": "0"
+    },
+    {
+      "input": "corridor = \"SSSSSSPPSSSSSSPPSSSSSSPPSSSSSS\"",
+      "output": "27"
+    },
+    {
+      "input": "corridor = \"SSPPSSPSSPPSSPSSPPSS\"",
+      "output": "108"
+    },
+    {
+      "input": "corridor = \"SSSPSPSPSPSPSPSPSPSPSP\"",
+      "output": "16"
+    },
+    {
+      "input": "corridor = \"PPPPPPSSPPPP\"",
+      "output": "1"
+    },
+    {
+      "input": "corridor = \"PPSSPPSSPPSSPPSSPPSSPPSSPPSSPPSSPPSSPPSS\"",
+      "output": "19683"
+    },
+    {
+      "input": "corridor = \"SSPPSPSSPSPSSPSPSSPSPSS\"",
+      "output": "24"
+    },
+    {
+      "input": "corridor = \"SSSPPSSSPPPSSS\"",
+      "output": "0"
+    },
+    {
+      "input": "corridor = \"SSSSSSSSSSSS\"",
+      "output": "1"
+    },
+    {
+      "input": "corridor = \"SSSSSPPPSSSSSPPPSSSS\"",
+      "output": "4"
+    },
+    {
+      "input": "corridor = \"SSSSSSSSPPPPPPPPSSSSSSSSPPPPPPPPSSSS\"",
+      "output": "81"
+    },
+    {
+      "input": "corridor = \"SSSSSS\"",
+      "output": "1"
+    },
+    {
+      "input": "corridor = \"SSPPPPPPSSSSSSPPSSPP\"",
+      "output": "21"
+    },
+    {
+      "input": "corridor = \"SSPSPSPSPSPSPSPSPSPSPSPSPSPSPS\"",
+      "output": "128"
+    },
+    {
+      "input": "corridor = \"SSPPSSPPSSPPSSPPSS\"",
+      "output": "81"
+    },
+    {
+      "input": "corridor = \"SSSSPPPPSSSSPPPPSSSS\"",
+      "output": "25"
+    },
+    {
+      "input": "corridor = \"SSPSPPSSPSPPSSPSPPSS\"",
+      "output": "0"
+    },
+    {
+      "input": "corridor = \"SPSPSP\"",
+      "output": "0"
+    },
+    {
+      "input": "corridor = \"SSPPPPSPSSPPPSS\"",
+      "output": "0"
+    },
+    {
+      "input": "corridor = \"SSSSPSPSPSPS\"",
+      "output": "4"
+    },
+    {
+      "input": "corridor = \"PPPPPP\"",
+      "output": "0"
+    },
+    {
+      "input": "corridor = \"SSPPPPPPPPPPSSPPPPSSPPSS\"",
+      "output": "165"
+    },
+    {
+      "input": "corridor = \"SSPPSSPPSSPPSSPPSSPPSSPPSSPPSSPPSS\"",
+      "output": "6561"
+    },
+    {
+      "input": "corridor = \"SSPPPPSSPPPPSSPPSS\"",
+      "output": "75"
+    },
+    {
+      "input": "corridor = \"SSSSSSSSSSSSSSSSSSSS\"",
+      "output": "1"
+    },
+    {
+      "input": "corridor = \"SSSSPPPPSSSSPPSSSS\"",
+      "output": "15"
+    },
+    {
+      "input": "corridor = \"PPPPPPPPPPPPPPPP\"",
+      "output": "0"
+    },
+    {
+      "input": "corridor = \"SSSPSPSPSPSPSPSPSPSS\"",
+      "output": "16"
+    },
+    {
+      "input": "corridor = \"SSPPSPSSSSPPSPSSSS\"",
+      "output": "6"
+    },
+    {
+      "input": "corridor = \"SSPSSPSSPSSPSSPSS\"",
+      "output": "32"
+    },
+    {
+      "input": "corridor = \"SSPPSSPPSSPPSSPPSSPP\"",
+      "output": "81"
+    },
+    {
+      "input": "corridor = \"PPPPSSPPPPSSPPPPSSPPPPSSPPPPSS\"",
+      "output": "625"
+    },
+    {
+      "input": "corridor = \"SSPPSSPPSSPPSSPPSSPPSSPPSSPPSS\"",
+      "output": "2187"
+    },
+    {
+      "input": "corridor = \"SSSSPPSSSSPPSSSS\"",
+      "output": "9"
+    },
+    {
+      "input": "corridor = \"SSSSSSPPPPSSSSPPPPSSSSSSPPPP\"",
+      "output": "25"
+    },
+    {
+      "input": "corridor = \"SSPPSSPPSSPPSSPPSSPPSS\"",
+      "output": "243"
+    },
+    {
+      "input": "corridor = \"SSPPSSPPSSPPSSSS\"",
+      "output": "27"
+    },
+    {
+      "input": "corridor = \"SSPSPSPSPSPSPSPS\"",
+      "output": "0"
+    },
+    {
+      "input": "corridor = \"SSPPSPSPSPSPSS\"",
+      "output": "12"
+    },
+    {
+      "input": "corridor = \"SPSPSPSPSPSPSPSPSPSP\"",
+      "output": "16"
+    },
+    {
+      "input": "corridor = \"SSPPSSSSPPPPSSSSSSSS\"",
+      "output": "15"
+    },
+    {
+      "input": "corridor = \"PPPPSSPPSSPPSSPPPP\"",
+      "output": "9"
+    },
+    {
+      "input": "corridor = \"SPSPPSPSPPSPSPPSPSPPSP\"",
+      "output": "0"
+    },
+    {
+      "input": "corridor = \"PPSPSPSPSPSPPSPSPS\"",
+      "output": "8"
+    },
+    {
+      "input": "corridor = \"SPSPSPSPPSPS\"",
+      "output": "6"
+    },
+    {
+      "input": "corridor = \"SSPPSSPPSSPPSSSSPPSSPPSSSSPPSS\"",
+      "output": "729"
+    }
+  ]
+}
