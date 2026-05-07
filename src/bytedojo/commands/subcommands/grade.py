@@ -266,10 +266,6 @@ def _batch_grading_loop(problems: list, per_page: int = 10):
                 click.echo("  Invalid input. Use number/n/p/q.")
 
 
-# ============================================================================
-# CLI COMMANDS
-# ============================================================================
-
 @click.command()
 @click.argument('identifier', required=False)
 @click.option('--name', '-n', 'name_search', help='Search by problem name')
@@ -279,7 +275,7 @@ def _batch_grading_loop(problems: list, per_page: int = 10):
 @click.option('--fail', '-f', 'status_fail', is_flag=True, help='Mark as failed')
 @click.option('--skip', '-s', 'status_skip', is_flag=True, help='Mark as skipped')
 @click.option('--notes', type=str, default=None, help='Add notes')
-@click.option('--python', '-py', 'language', flag_value='python', help='Grade Python version')
+@click.option('--python', '-py', 'language', flag_value='python3', help='Grade Python version')
 @click.option('--java', 'language', flag_value='java', help='Grade Java version')
 @click.option('--cpp', 'language', flag_value='cpp', help='Grade C++ version')
 @click.option('--per-page', type=int, default=10, help='Problems per page in batch mode')

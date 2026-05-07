@@ -1038,7 +1038,7 @@ class TestGradeCommand:
 
         mock_find.assert_called_once()
         call_kwargs = mock_find.call_args[1]
-        assert call_kwargs['language'] == 'python'
+        assert call_kwargs['language'] == 'python3'
 
     @patch('bytedojo.commands.subcommands.grade.select_problem')
     @patch('bytedojo.commands.subcommands.grade.find_problems')
@@ -1290,7 +1290,7 @@ class TestGradeCommandShortOptions:
 
         mock_find.assert_called_once()
         call_kwargs = mock_find.call_args[1]
-        assert call_kwargs['language'] == 'python'
+        assert call_kwargs['language'] == 'python3'
 
 
 class TestGradeResultDataclass:
