@@ -24,6 +24,7 @@ from bytedojo.commands.subcommands import (
     review,
     run,
     enter,
+    test,
 )
 
 # Helper functions for printing the version of bytedojo. 
@@ -100,6 +101,7 @@ bytedojo.add_command(review)
 bytedojo.add_command(run)
 bytedojo.add_command(settings)
 bytedojo.add_command(stats)
+bytedojo.add_command(test)
 
 # Backwards compatibility alias
 dojo = bytedojo

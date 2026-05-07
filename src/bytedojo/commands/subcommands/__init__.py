@@ -12,6 +12,7 @@ from bytedojo.commands.subcommands.run import run
 from bytedojo.commands.subcommands.review import review
 from bytedojo.commands.subcommands.settings import settings
 from bytedojo.commands.subcommands.enter import enter
+from bytedojo.commands.subcommands.test import test
 
 __all__ = [
     'init',
@@ -24,4 +25,5 @@ __all__ = [
     'review',
     'settings',
     'enter',
+    'test',
 ]

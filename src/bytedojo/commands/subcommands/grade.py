@@ -1,5 +1,8 @@
 """
-Grade command - Mark problems as passed, failed, or skipped.
+Grade command - View test results and manually grade problems.
+
+This command is primarily for viewing test results. Manual grading is available
+as a backup when tests haven't been run or when you want to override the result.
 """
 
 import click
@@ -19,41 +22,77 @@ from bytedojo.commands.subcommands.utils import (
 )
 
 
-def _display_problem_header(problem: dict):
-    """Display problem details header."""
+def _display_problem_status(problem: dict, show_test_hint: bool = True):
+    """Display problem details and current test status."""
     problem_id = problem['problem_id']
     source = problem['source']
     title = problem['title']
     difficulty = problem.get('difficulty') or 'Unknown'
     language = problem.get('language', 'python')
     file_path = problem.get('file_path', '')
-    current_status = problem.get('test_status', 'ungraded')
+    current_status = problem.get('test_status', 'untested')
+    last_test_run = problem.get('last_test_run')
+    test_output = problem.get('test_output')
 
     click.echo("")
-    click.echo(click.style("=" * 60, fg='bright_black'))
-    click.echo(click.style("  GRADE PROBLEM", fg='cyan', bold=True))
-    click.echo(click.style("=" * 60, fg='bright_black'))
+    click.echo(click.style("=" * 70, fg='bright_black'))
+    click.echo(click.style("  PROBLEM STATUS", fg='cyan', bold=True))
+    click.echo(click.style("=" * 70, fg='bright_black'))
     click.echo("")
     click.echo(f"  {problem_id}: {click.style(title, bold=True)}")
     click.echo(f"  Source: {click.style(source.capitalize(), fg=SOURCE_COLORS.get(source, 'white'))}")
     click.echo(f"  Language: {click.style(language.upper(), fg=LANGUAGE_COLORS.get(language, 'white'))}")
     click.echo(f"  Difficulty: {click.style(difficulty, fg=DIFFICULTY_COLORS.get(difficulty, 'white'))}")
-    click.echo(f"  Current Status: {click.style(current_status, fg=STATUS_COLORS.get(current_status, 'white'))}")
 
     if file_path:
         click.echo(f"  File: {file_path}")
 
     click.echo("")
+    click.echo(click.style("-" * 70, fg='bright_black'))
+    click.echo(click.style("  TEST RESULTS", fg='cyan'))
+    click.echo(click.style("-" * 70, fg='bright_black'))
+    click.echo("")
+
+    # Display status with appropriate color
+    status_color = STATUS_COLORS.get(current_status, 'white')
+    status_display = current_status.upper()
+
+    if current_status == 'passed':
+        click.echo(f"  Status: {click.style(status_display, fg='green', bold=True)}")
+    elif current_status == 'failed':
+        click.echo(f"  Status: {click.style(status_display, fg='red', bold=True)}")
+    elif current_status == 'error':
+        click.echo(f"  Status: {click.style(status_display, fg='yellow', bold=True)}")
+    elif current_status in ('untested', 'ungraded'):
+        click.echo(f"  Status: {click.style('NOT TESTED', fg='bright_black')}")
+        if show_test_hint:
+            click.echo(f"  {click.style('Tip:', fg='cyan')} Run 'dojo test {problem_id}' to test your solution")
+    else:
+        click.echo(f"  Status: {click.style(status_display, fg=status_color)}")
+
+    if last_test_run:
+        click.echo(f"  Last Run: {last_test_run}")
+
+    if test_output:
+        click.echo(f"  Results: {test_output}")
+
+    click.echo("")
 
 
-def _prompt_for_grade() -> tuple[Optional[str], Optional[str]]:
+def _prompt_for_manual_grade() -> tuple[Optional[str], Optional[str]]:
     """
-    Prompt user to select a grade interactively.
+    Prompt user to select a manual grade.
 
     Returns:
         Tuple of (status, notes) where status is 'passed', 'failed', 'skipped', or None to cancel
     """
-    click.echo("  Grade: ", nl=False)
+    click.echo(click.style("-" * 70, fg='bright_black'))
+    click.echo(click.style("  MANUAL GRADE", fg='cyan'))
+    click.echo(click.style("-" * 70, fg='bright_black'))
+    click.echo("")
+    click.echo("  Override test results with a manual grade:")
+    click.echo("")
+    click.echo("  ", nl=False)
     click.echo(
         f"{click.style('[P]', fg='green')}ass  "
         f"{click.style('[F]', fg='red')}ail  "
@@ -110,52 +149,68 @@ def _display_grade_result(result: GradeResult):
     click.echo("")
 
     if result.status == 'passed':
-        click.echo(f"  {click.style('PASSED', fg='green', bold=True)}")
+        click.echo(f"  {click.style('MARKED AS PASSED', fg='green', bold=True)}")
         if result.scheduled_review:
             click.echo(f"  {Theme.AQUA}Scheduled for review in {result.review_frequency_days} days{Theme.RESET}")
     elif result.status == 'failed':
-        click.echo(f"  {click.style('FAILED', fg='red', bold=True)}")
+        click.echo(f"  {click.style('MARKED AS FAILED', fg='red', bold=True)}")
         if result.notes:
             click.echo(f"  Notes: {result.notes}")
     elif result.status == 'skipped':
-        click.echo(f"  {click.style('SKIPPED', fg='yellow', bold=True)}")
+        click.echo(f"  {click.style('MARKED AS SKIPPED', fg='yellow', bold=True)}")
         if result.notes:
             click.echo(f"  Notes: {result.notes}")
 
     click.echo("")
 
 
-def _grade_single_problem(problem: dict, status: str = None, notes: str = None):
+def _view_and_grade_problem(problem: dict, status: str = None, notes: str = None, manual: bool = False):
     """
-    Grade a single problem, either with provided status or interactively.
+    View problem status and optionally apply a manual grade.
 
     Args:
         problem: Problem dict from database
         status: Optional status ('passed', 'failed', 'skipped')
         notes: Optional notes
+        manual: If True, prompt for manual grade
 
     Returns:
-        True if graded, False if cancelled
+        True if action completed, False if cancelled
     """
     repo = get_initialized_repo()
 
     with DatabaseManager(repo.db_path) as db:
-        _display_problem_header(problem)
+        # Refresh problem data
+        refreshed = db.get_problem(
+            problem['source'],
+            int(problem['problem_id']),
+            problem['language']
+        )
+        if refreshed:
+            problem = refreshed
 
-        # If no status provided, prompt interactively
-        if status is None:
-            status, notes = _prompt_for_grade()
+        _display_problem_status(problem, show_test_hint=(status is None and not manual))
+
+        # If status provided via flags, apply it directly
+        if status is not None:
+            _apply_grade(db, problem, status, notes)
+            return True
+
+        # If manual flag, prompt for grade
+        if manual:
+            status, notes = _prompt_for_manual_grade()
             if status is None:
                 click.echo("  Cancelled.")
                 return False
+            _apply_grade(db, problem, status, notes)
+            return True
 
-        _apply_grade(db, problem, status, notes)
         return True
 
 
-def _display_ungraded_page(problems: list, page: int, per_page: int) -> tuple[int, int, List[dict]]:
+def _display_problems_page(problems: list, page: int, per_page: int, title: str) -> tuple[int, int, List[dict]]:
     """
-    Display a page of ungraded problems.
+    Display a page of problems.
 
     Returns:
         Tuple of (current_page, total_pages, page_problems)
@@ -170,22 +225,24 @@ def _display_ungraded_page(problems: list, page: int, per_page: int) -> tuple[in
 
     click.echo("")
     click.echo(click.style("=" * 70, fg='bright_black'))
-    click.echo(click.style(f"  UNGRADED PROBLEMS (Page {page}/{total_pages})", fg='cyan', bold=True))
+    click.echo(click.style(f"  {title} (Page {page}/{total_pages})", fg='cyan', bold=True))
     click.echo(click.style("=" * 70, fg='bright_black'))
     click.echo("")
-    click.echo(f"  {'#':>3}  {'ID':>8}  {'Lang':6}  {'Diff':6}  Title")
-    click.echo(f"  {'-' * 3}  {'-' * 8}  {'-' * 6}  {'-' * 6}  {'-' * 30}")
+    click.echo(f"  {'#':>3}  {'ID':>8}  {'Status':8}  {'Lang':6}  {'Diff':6}  Title")
+    click.echo(f"  {'-' * 3}  {'-' * 8}  {'-' * 8}  {'-' * 6}  {'-' * 6}  {'-' * 25}")
 
     for i, problem in enumerate(page_problems, start=1):
         problem_id = problem['problem_id']
+        status = (problem.get('test_status') or 'untested')[:8]
         language = (problem.get('language') or 'py')[:6]
         difficulty = (problem.get('difficulty') or '?')[:6]
-        title = problem['title'][:30] + ('...' if len(problem['title']) > 30 else '')
+        title_text = problem['title'][:25] + ('...' if len(problem['title']) > 25 else '')
 
+        status_styled = click.style(f"{status:8}", fg=STATUS_COLORS.get(status, 'white'))
         lang_styled = click.style(f"{language:6}", fg=LANGUAGE_COLORS.get(problem.get('language'), 'white'))
         diff_styled = click.style(f"{difficulty:6}", fg=DIFFICULTY_COLORS.get(problem.get('difficulty'), 'white'))
 
-        click.echo(f"  {i:>3}  {problem_id:>8}  {lang_styled}  {diff_styled}  {title}")
+        click.echo(f"  {i:>3}  {problem_id:>8}  {status_styled}  {lang_styled}  {diff_styled}  {title_text}")
 
     click.echo("")
     click.echo(click.style("-" * 70, fg='bright_black'))
@@ -195,35 +252,25 @@ def _display_ungraded_page(problems: list, page: int, per_page: int) -> tuple[in
     return page, total_pages, page_problems
 
 
-def _batch_grading_loop(problems: list, per_page: int = 10):
-    """Run interactive batch grading loop."""
+def _batch_view_loop(problems: list, per_page: int = 10):
+    """Run interactive problem status viewing loop."""
     if not problems:
         click.echo("")
-        click.echo(click.style("  No ungraded problems found!", fg='green'))
-        click.echo("  All your problems have been graded.")
+        click.echo(click.style("  No problems found!", fg='yellow'))
+        click.echo("  Use 'dojo fetch <id>' to add problems.")
         click.echo("")
         return
 
     current_page = 1
 
-    while problems:  # Re-fetch to account for graded problems
-        repo = get_initialized_repo()
-        with DatabaseManager(repo.db_path) as db:
-            # Refresh ungraded list using grading service
-            service = GradingService(db)
-            problems = service.get_ungraded_problems()
-
-        if not problems:
-            click.echo("")
-            click.echo(click.style("  All problems graded!", fg='green'))
-            click.echo("")
-            break
-
-        current_page, total_pages, page_problems = _display_ungraded_page(problems, current_page, per_page)
+    while True:
+        current_page, total_pages, page_problems = _display_problems_page(
+            problems, current_page, per_page, "PROBLEM STATUS"
+        )
 
         # Navigation prompt
         nav_hints = []
-        nav_hints.append("1-{} select".format(len(page_problems)))
+        nav_hints.append("1-{} view".format(len(page_problems)))
         if current_page > 1:
             nav_hints.append("p=prev")
         if current_page < total_pages:
@@ -256,7 +303,12 @@ def _batch_grading_loop(problems: list, per_page: int = 10):
                 selection = int(user_input)
                 if 1 <= selection <= len(page_problems):
                     selected_problem = page_problems[selection - 1]
-                    _grade_single_problem(selected_problem)
+                    _view_and_grade_problem(selected_problem, manual=True)
+
+                    # Refresh problems list
+                    repo = get_initialized_repo()
+                    with DatabaseManager(repo.db_path) as db:
+                        problems = db.list_problems()
 
                     # Pause before returning to list
                     click.prompt("  Press Enter to continue", default="", show_default=False)
@@ -270,20 +322,22 @@ def _batch_grading_loop(problems: list, per_page: int = 10):
 @click.argument('identifier', required=False)
 @click.option('--name', '-n', 'name_search', help='Search by problem name')
 @click.option('--desc', '-d', 'desc_search', help='Search by description keywords')
-@click.option('--last', is_flag=True, help='Grade most recently fetched problem')
+@click.option('--last', is_flag=True, help='View/grade most recently fetched problem')
+@click.option('--manual', '-m', is_flag=True, help='Manually override grade (without running tests)')
 @click.option('--pass', '-p', 'status_pass', is_flag=True, help='Mark as passed')
 @click.option('--fail', '-f', 'status_fail', is_flag=True, help='Mark as failed')
 @click.option('--skip', '-s', 'status_skip', is_flag=True, help='Mark as skipped')
 @click.option('--notes', type=str, default=None, help='Add notes')
-@click.option('--python', '-py', 'language', flag_value='python3', help='Grade Python version')
-@click.option('--java', 'language', flag_value='java', help='Grade Java version')
-@click.option('--cpp', 'language', flag_value='cpp', help='Grade C++ version')
-@click.option('--per-page', type=int, default=10, help='Problems per page in batch mode')
+@click.option('--python', '-py', 'language', flag_value='python3', help='Select Python version')
+@click.option('--java', 'language', flag_value='java', help='Select Java version')
+@click.option('--cpp', 'language', flag_value='cpp', help='Select C++ version')
+@click.option('--per-page', type=int, default=10, help='Problems per page in list mode')
 def grade(
     identifier: Optional[str],
     name_search: Optional[str],
     desc_search: Optional[str],
     last: bool,
+    manual: bool,
     status_pass: bool,
     status_fail: bool,
     status_skip: bool,
@@ -292,18 +346,21 @@ def grade(
     per_page: int
 ):
     """
-    Grade problems as passed, failed, or skipped.
+    View test results and optionally manually grade problems.
+
+    This command shows the current test status of problems. Use 'dojo test' to run
+    tests first. Manual grading is available as a backup via --manual or status flags.
 
     When a problem is marked as passed, it gets scheduled for spaced repetition review.
     Uses configured default language (see: dojo settings default-language).
 
     Examples:
-      dojo grade                       # Interactive batch grading
-      dojo grade 1                     # Grade problem #1 (uses default language)
-      dojo grade 1 --java              # Grade Java version
-      dojo grade --name "Two Sum"      # Search by name
-      dojo grade --last                # Grade last fetched problem
+      dojo grade                       # Browse all problems and their status
+      dojo grade 1                     # View status of problem #1
+      dojo grade 1 --manual            # Manually grade problem #1
       dojo grade 1 --pass              # Quick pass problem #1
+      dojo grade --name "Two Sum"      # Search by name
+      dojo grade --last                # View/grade last fetched problem
       dojo grade 1 -f --notes "TLE"    # Fail with notes
     """
     repo = get_initialized_repo()
@@ -329,9 +386,8 @@ def grade(
     with DatabaseManager(repo.db_path) as db:
         # Batch mode: no identifier, name, desc, or last
         if not identifier and not name_search and not desc_search and not last:
-            service = GradingService(db)
-            ungraded = service.get_ungraded_problems()
-            _batch_grading_loop(ungraded, per_page)
+            problems = db.list_problems()
+            _batch_view_loop(problems, per_page)
             return
 
         # Handle --last flag
@@ -340,7 +396,7 @@ def grade(
             if not problems:
                 raise click.ClickException(
                     f"No {language} problems found. "
-                    f"Fetch one first with: dojo fetch <id> --{language}"
+                    f"Fetch one first with: dojo fetch <id> --{language if language != 'python3' else 'python'}"
                 )
             # Get most recent by fetched_at
             problem_data = max(problems, key=lambda p: p.get('fetched_at', ''))
@@ -366,7 +422,7 @@ def grade(
                 criteria_str = ", ".join(criteria) if criteria else "given criteria"
                 raise click.ClickException(
                     f"No {language} problems found matching {criteria_str}. "
-                    f"Fetch one first with: dojo fetch <id> --{language}"
+                    f"Fetch one first with: dojo fetch <id>"
                 )
 
             # Select problem (interactive if multiple)
@@ -374,4 +430,4 @@ def grade(
             if not problem_data:
                 raise click.Abort()
 
-    _grade_single_problem(problem_data, status, notes)
+    _view_and_grade_problem(problem_data, status, notes, manual=manual or status is not None)
