@@ -49,8 +49,7 @@ class ProblemPicker:
     def pick(
         self,
         difficulty: Optional[str] = None,
-        tags: Optional[List[str]] = None,
-        include_premium: bool = False
+        tags: Optional[List[str]] = None
     ) -> PickResult:
         """
         Pick a random unsolved problem.
@@ -58,7 +57,6 @@ class ProblemPicker:
         Args:
             difficulty: Filter by difficulty (easy/medium/hard or 1/2/3)
             tags: Filter by algorithm tags
-            include_premium: Whether to include premium (paid) problems
 
         Returns:
             PickResult with the picked problem and stats
@@ -79,18 +77,6 @@ class ProblemPicker:
             difficulty=difficulty_enum,
             tags=tags
         )
-
-        if not all_problems:
-            return PickResult(
-                problem=None,
-                unsolved_count=0,
-                solved_count=0,
-                total_count=0
-            )
-
-        # Filter out premium problems unless requested
-        if not include_premium:
-            all_problems = [p for p in all_problems if not p.paid_only]
 
         if not all_problems:
             return PickResult(
@@ -138,8 +124,7 @@ class ProblemPicker:
     def get_unsolved_problems(
         self,
         difficulty: Optional[str] = None,
-        tags: Optional[List[str]] = None,
-        include_premium: bool = False
+        tags: Optional[List[str]] = None
     ) -> List[ProblemSummary]:
         """
         Get all unsolved problems matching criteria.
@@ -147,7 +132,6 @@ class ProblemPicker:
         Args:
             difficulty: Filter by difficulty
             tags: Filter by algorithm tags
-            include_premium: Whether to include premium problems
 
         Returns:
             List of unsolved ProblemSummary objects
@@ -171,10 +155,6 @@ class ProblemPicker:
 
         if not all_problems:
             return []
-
-        # Filter out premium
-        if not include_premium:
-            all_problems = [p for p in all_problems if not p.paid_only]
 
         # Filter to unsolved
         fetched_ids = self._get_fetched_problem_ids()

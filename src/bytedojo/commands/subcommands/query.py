@@ -1,5 +1,5 @@
 """
-Query command - Search LeetCode problems.
+Query command - Search problems from local data.
 """
 
 import click
@@ -8,16 +8,16 @@ from pathlib import Path
 from bytedojo.core.logger import get_logger
 from bytedojo.core.query import QueryService
 from bytedojo.core.repository import Repository
+from bytedojo.core.models import Difficulty, Status
 
 
 # Status indicators for CLI display
 STATUS_ICONS = {
-    'passed': click.style('[P]', fg='green'),
-    'failed': click.style('[F]', fg='red'),
-    'skipped': click.style('[S]', fg='yellow'),
-    'untested': click.style('[ ]', fg='bright_black'),
-    'ungraded': click.style('[ ]', fg='bright_black'),
-    None: click.style('[ ]', fg='bright_black'),
+    Status.PASSED: click.style('[P]', fg='green'),
+    Status.FAILED: click.style('[F]', fg='red'),
+    Status.SKIPPED: click.style('[S]', fg='yellow'),
+    Status.UNGRADED: click.style('[ ]', fg='bright_black'),
+    Status.NONE: click.style('[ ]', fg='bright_black'),
 }
 
 DIFFICULTY_SHORT = {
@@ -25,6 +25,26 @@ DIFFICULTY_SHORT = {
     'Medium': click.style('M', fg='yellow'),
     'Hard': click.style('H', fg='red'),
 }
+
+
+def _get_best_status(status_map, problem_id):
+    """Get best status for a problem from status_map."""
+    lang_stats = status_map.get(problem_id, {})
+    if not lang_stats:
+        return Status.NONE
+
+    # Collect latest statuses from all languages
+    statuses = [stats.latest_status for stats in lang_stats.values()]
+
+    if Status.PASSED in statuses:
+        return Status.PASSED
+    elif Status.FAILED in statuses:
+        return Status.FAILED
+    elif Status.SKIPPED in statuses:
+        return Status.SKIPPED
+    elif Status.UNGRADED in statuses:
+        return Status.UNGRADED
+    return Status.NONE
 
 
 def _display_page(all_problems, page, per_page, status_map):
@@ -38,22 +58,17 @@ def _display_page(all_problems, page, per_page, status_map):
     page_problems = all_problems[start_idx:end_idx]
 
     # Display header
-    click.echo(f"\nLeetCode Problems (Page {page}/{total_pages}, {total} total)\n")
+    click.echo(f"\nProblems (Page {page}/{total_pages}, {total} total)\n")
     click.echo(f"{'ID':>5}  {'St':3}  {'D'}  Title")
     click.echo("-" * 60)
 
     # Display results
     for problem in page_problems:
-        status = status_map.get(problem.id)
-        status_icon = STATUS_ICONS.get(status, STATUS_ICONS[None])
+        status = _get_best_status(status_map, problem.id)
+        status_icon = STATUS_ICONS.get(status, STATUS_ICONS[Status.NONE])
         diff_icon = DIFFICULTY_SHORT.get(problem.difficulty, '?')
 
-        # Premium marker
-        title = problem.title
-        if problem.paid_only:
-            title += click.style(' $', fg='cyan')
-
-        click.echo(f"{problem.id:>5}  {status_icon}  {diff_icon}  {title}")
+        click.echo(f"{problem.id:>5}  {status_icon}  {diff_icon}  {problem.title}")
 
     # Footer with pagination info
     click.echo("-" * 60)
@@ -162,7 +177,7 @@ def query(ctx, difficulty: str, tag: tuple, page: int, per_page: int, list_tags:
 
     # Handle --list-tags
     if list_tags:
-        logger.info("Fetching available tags...")
+        logger.info("Loading available tags...")
         tags = query_service.get_available_tags()
         if tags:
             click.echo(f"Available tags ({len(tags)}):")
@@ -175,10 +190,21 @@ def query(ctx, difficulty: str, tag: tuple, page: int, per_page: int, list_tags:
     # Convert tag tuple to list
     tags_list = list(tag) if tag else None
 
+    # Convert difficulty string to enum
+    difficulty_enum = Difficulty.NONE
+    if difficulty:
+        difficulty_lower = difficulty.lower()
+        if difficulty_lower in ('easy', '1'):
+            difficulty_enum = Difficulty.EASY
+        elif difficulty_lower in ('medium', '2'):
+            difficulty_enum = Difficulty.MEDIUM
+        elif difficulty_lower in ('hard', '3'):
+            difficulty_enum = Difficulty.HARD
+
     # Query problems using service
-    logger.info("Fetching problems from LeetCode...")
+    logger.info("Searching problems...")
     result = query_service.query(
-        difficulty=difficulty,
+        difficulty=difficulty_enum,
         tags=tags_list,
         include_status=True
     )

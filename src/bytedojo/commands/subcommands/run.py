@@ -73,7 +73,7 @@ def _display_execution_result(result: ExecutionResult):
 @click.argument('identifier', required=False)
 @click.option('--name', '-n', 'name_search', help='Search by problem name')
 @click.option('--desc', '-d', 'desc_search', help='Search by description keywords')
-@click.option('--python', '-py', 'language', flag_value='python', help='Run Python version')
+@click.option('--python', '-py', 'language', flag_value='python3', help='Run Python version')
 @click.option('--java', 'language', flag_value='java', help='Run Java version')
 @click.option('--cpp', 'language', flag_value='cpp', help='Run C++ version')
 @click.option('--last', is_flag=True, help='Run most recently fetched problem')

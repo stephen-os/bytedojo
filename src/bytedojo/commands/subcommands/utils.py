@@ -5,9 +5,7 @@ Common functionality used across multiple command modules.
 """
 
 import click
-from functools import wraps
 from pathlib import Path
-from typing import Callable, TypeVar, Any
 
 from bytedojo.core.logger import get_logger
 from bytedojo.core.repository import Repository
@@ -18,7 +16,15 @@ from bytedojo.core.database import DatabaseManager
 # CONSTANTS
 # ============================================================================
 
+# Languages supported by CLI (user-facing names)
 SUPPORTED_LANGUAGES = ['python', 'java', 'cpp']
+
+# Map user-facing language names to internal Language enum values
+LANGUAGE_TO_INTERNAL = {
+    'python': 'python3',  # Modern Python 3
+    'java': 'java',
+    'cpp': 'cpp',
+}
 
 DEFAULT_REVIEW_FREQUENCY_DAYS = 7
 
@@ -80,38 +86,18 @@ def get_default_language() -> str:
     Get the configured default language from database.
 
     Returns:
-        Default language ('python', 'java', or 'cpp'). Falls back to 'python'
-        if repository is not initialized or config is missing.
+        Internal language value ('python3', 'java', or 'cpp') for use with
+        Language enum. Falls back to 'python3' if repository is not initialized
+        or config is missing.
     """
     repo = Repository(Path.cwd())
     if not repo.is_initialized:
-        return 'python'  # Fallback before repo init
+        return 'python3'  # Fallback before repo init
 
     with DatabaseManager(repo.db_path) as db:
-        return db.get_config('default_language', 'python')
-
-
-F = TypeVar('F', bound=Callable[..., Any])
-
-
-def require_initialized_repo(f: F) -> F:
-    """
-    Decorator that ensures repository is initialized before running command.
-
-    Injects 'repo' as the first argument to the decorated function.
-
-    Usage:
-        @click.command()
-        @require_initialized_repo
-        def my_command(repo, ...):
-            # repo is guaranteed to be initialized
-            pass
-    """
-    @wraps(f)
-    def wrapper(*args, **kwargs):
-        repo = get_initialized_repo()
-        return f(repo, *args, **kwargs)
-    return wrapper
+        user_lang = db.get_config('default_language', 'python')
+        # Map user-facing name to internal value
+        return LANGUAGE_TO_INTERNAL.get(user_lang, 'python3')
 
 
 # ============================================================================
@@ -140,21 +126,3 @@ def style_source(source: str) -> str:
     """Return styled source string."""
     color = SOURCE_COLORS.get(source, 'white')
     return click.style(source.capitalize(), fg=color)
-
-
-# ============================================================================
-# ERROR MESSAGE HELPERS
-# ============================================================================
-
-def fetch_hint(problem_id: str = "<id>", language: str = "python") -> str:
-    """Generate a hint message for fetching a problem."""
-    if language == "python":
-        return f"Fetch it first with: dojo fetch {problem_id}"
-    return f"Fetch it first with: dojo fetch {problem_id} --{language}"
-
-
-def no_problems_found_message(language: str, criteria: str = "") -> str:
-    """Generate a 'no problems found' error message."""
-    if criteria:
-        return f"No {language} problems found matching {criteria}. {fetch_hint(language=language)}"
-    return f"No {language} problems found. {fetch_hint(language=language)}"

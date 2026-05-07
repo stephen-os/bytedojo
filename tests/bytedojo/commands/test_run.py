@@ -51,7 +51,7 @@ print("Test output")
     conn = sqlite3.connect(db_path)
     conn.execute("""
         INSERT INTO problems (source, problem_id, language, title, difficulty, file_path, fetched_at)
-        VALUES ('leetcode', '1', 'python', 'Two Sum', 'Easy', 'problems/0001-two-sum/solution.py', '2024-01-01 10:00:00')
+        VALUES ('leetcode', '1', 'python3', 'Two Sum', 'Easy', 'problems/0001-two-sum/solution.py', '2024-01-01 10:00:00')
     """)
     conn.commit()
     conn.close()
@@ -182,7 +182,7 @@ int main() { std::cout << "C++" << std::endl; return 0; }
     conn = sqlite3.connect(db_path)
     conn.execute("""
         INSERT INTO problems (source, problem_id, language, title, difficulty, file_path, fetched_at)
-        VALUES ('leetcode', '1', 'python', 'Two Sum', 'Easy', 'problems/0001-two-sum/solution.py', '2024-01-01 10:00:00')
+        VALUES ('leetcode', '1', 'python3', 'Two Sum', 'Easy', 'problems/0001-two-sum/solution.py', '2024-01-01 10:00:00')
     """)
     conn.execute("""
         INSERT INTO problems (source, problem_id, language, title, difficulty, file_path, fetched_at)
@@ -284,7 +284,7 @@ class TestRunCommandProblemNotFound:
         result = runner.invoke(dojo, ['run', '999'])
 
         assert result.exit_code != 0
-        assert "No python problems found" in result.output
+        assert "No python3 problems found" in result.output
 
     def test_run_last_no_problems(self, initialized_repo):
         """Test run --last with no problems in database."""
@@ -292,7 +292,7 @@ class TestRunCommandProblemNotFound:
         result = runner.invoke(dojo, ['run', '--last'])
 
         assert result.exit_code != 0
-        assert "No python problems found" in result.output
+        assert "No python3 problems found" in result.output
 
 
 # ============================================================================
@@ -309,7 +309,7 @@ class TestRunPython:
 
         assert result.exit_code == 0
         assert "RUN PROBLEM" in result.output
-        assert "Language: PYTHON" in result.output
+        assert "Language: PYTHON3" in result.output
         assert "Execution completed successfully" in result.output
 
     def test_run_python_with_explicit_flag(self, repo_with_python_problem):
@@ -425,7 +425,7 @@ class TestRunLanguageSelection:
         result = runner.invoke(dojo, ['run', '1'])
 
         assert result.exit_code == 0
-        assert "Language: PYTHON" in result.output
+        assert "Language: PYTHON3" in result.output
         assert "Execution completed successfully" in result.output
 
     def test_run_wrong_language_not_found(self, repo_with_python_problem):

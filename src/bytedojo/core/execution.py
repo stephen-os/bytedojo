@@ -77,7 +77,7 @@ class ProblemExecutor:
         build_dir = self.repo.build_dir / problem_id
 
         # Execute based on language
-        if language == 'python':
+        if language in ('python', 'python3'):
             return self._run_python(file_path, timeout)
         elif language == 'java':
             return self._run_java(file_path, build_dir, timeout)

@@ -24,7 +24,6 @@ class TestPickCommand:
         assert 'Pick a random problem' in result.output
         assert '--difficulty' in result.output
         assert '--tag' in result.output
-        assert '--include-premium' in result.output
 
     @patch('bytedojo.commands.subcommands.pick.ProblemPicker')
     def test_pick_selects_random_problem(self, mock_picker_class):
@@ -34,7 +33,7 @@ class TestPickCommand:
 
         mock_picker.pick.return_value = PickResult(
             problem=ProblemSummary(id=1, title='Two Sum', title_slug='two-sum',
-                                   difficulty='Easy', paid_only=False, tags=['Array']),
+                                   difficulty='Easy', tags=['Array']),
             unsolved_count=1,
             solved_count=0,
             total_count=1
@@ -61,8 +60,7 @@ class TestPickCommand:
 
         mock_picker.pick.assert_called_once_with(
             difficulty='easy',
-            tags=None,
-            include_premium=False
+            tags=None
         )
 
     @patch('bytedojo.commands.subcommands.pick.ProblemPicker')
@@ -79,8 +77,7 @@ class TestPickCommand:
 
         mock_picker.pick.assert_called_once_with(
             difficulty=None,
-            tags=['array', 'tree'],
-            include_premium=False
+            tags=['array', 'tree']
         )
 
     @patch('bytedojo.commands.subcommands.pick.ProblemPicker')
@@ -119,7 +116,7 @@ class TestPickCommand:
         mock_picker_class.return_value = mock_picker
         mock_picker.pick.return_value = PickResult(
             problem=ProblemSummary(id=1, title='Two Sum', title_slug='two-sum',
-                                   difficulty='Easy', paid_only=False, tags=[]),
+                                   difficulty='Easy', tags=[]),
             unsolved_count=1, solved_count=0, total_count=1
         )
 
@@ -135,7 +132,7 @@ class TestPickCommand:
         mock_picker_class.return_value = mock_picker
         mock_picker.pick.return_value = PickResult(
             problem=ProblemSummary(id=42, title='Test', title_slug='test',
-                                   difficulty='Easy', paid_only=False, tags=[]),
+                                   difficulty='Easy', tags=[]),
             unsolved_count=1, solved_count=0, total_count=1
         )
 
@@ -151,7 +148,7 @@ class TestPickCommand:
         mock_picker_class.return_value = mock_picker
         mock_picker.pick.return_value = PickResult(
             problem=ProblemSummary(id=2, title='Unsolved', title_slug='unsolved',
-                                   difficulty='Easy', paid_only=False, tags=[]),
+                                   difficulty='Easy', tags=[]),
             unsolved_count=1, solved_count=1, total_count=2
         )
 

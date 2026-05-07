@@ -8,7 +8,7 @@ from unittest.mock import patch, Mock
 from pathlib import Path
 
 from bytedojo.commands.bytedojo import dojo
-from bytedojo.core.models import ProblemSummary
+from bytedojo.core.models import ProblemSummary, Difficulty
 from bytedojo.core.query import QueryResult
 
 
@@ -37,7 +37,7 @@ class TestQueryCommand:
         mock_service.query.return_value = QueryResult(
             problems=[
                 ProblemSummary(id=1, title='Two Sum', title_slug='two-sum',
-                              difficulty='Easy', paid_only=False, tags=['Array'])
+                              difficulty=Difficulty.EASY, tags=['Array'])
             ],
             total=1,
             status_map={}
@@ -61,7 +61,7 @@ class TestQueryCommand:
         runner.invoke(dojo, ['query', '-d', 'easy'], input='q\n')
 
         mock_service.query.assert_called_once_with(
-            difficulty='easy',
+            difficulty=Difficulty.EASY,
             tags=None,
             include_status=True
         )
@@ -77,7 +77,7 @@ class TestQueryCommand:
         runner.invoke(dojo, ['query', '-t', 'array', '-t', 'tree'], input='q\n')
 
         mock_service.query.assert_called_once_with(
-            difficulty=None,
+            difficulty=Difficulty.NONE,
             tags=['array', 'tree'],
             include_status=True
         )
@@ -90,7 +90,7 @@ class TestQueryCommand:
 
         problems = [
             ProblemSummary(id=i, title=f'Problem {i}', title_slug=f'problem-{i}',
-                          difficulty='Easy', paid_only=False, tags=[])
+                          difficulty=Difficulty.EASY, tags=[])
             for i in range(1, 31)
         ]
         mock_service.query.return_value = QueryResult(
@@ -112,7 +112,7 @@ class TestQueryCommand:
         mock_service.query.return_value = QueryResult(
             problems=[
                 ProblemSummary(id=1, title='Only Problem', title_slug='only',
-                              difficulty='Easy', paid_only=False, tags=[])
+                              difficulty=Difficulty.EASY, tags=[])
             ],
             total=1,
             status_map={}
@@ -122,26 +122,6 @@ class TestQueryCommand:
         result = runner.invoke(dojo, ['query'], input='n\nq\n')
 
         assert 'Already on last page' in result.output
-
-    @patch('bytedojo.commands.subcommands.query.QueryService')
-    def test_query_shows_premium_marker(self, mock_service_class):
-        """Test that premium problems show $ marker."""
-        mock_service = Mock()
-        mock_service_class.return_value = mock_service
-
-        mock_service.query.return_value = QueryResult(
-            problems=[
-                ProblemSummary(id=1, title='Premium Problem', title_slug='premium',
-                              difficulty='Medium', paid_only=True, tags=[])
-            ],
-            total=1,
-            status_map={}
-        )
-
-        runner = CliRunner()
-        result = runner.invoke(dojo, ['query'], input='q\n')
-
-        assert '$' in result.output
 
     @patch('bytedojo.commands.subcommands.query.QueryService')
     def test_list_tags(self, mock_service_class):
@@ -204,7 +184,7 @@ class TestQueryCommandOutput:
         mock_service.query.return_value = QueryResult(
             problems=[
                 ProblemSummary(id=1, title='Test', title_slug='test',
-                              difficulty='Easy', paid_only=False, tags=[])
+                              difficulty=Difficulty.EASY, tags=[])
             ],
             total=1,
             status_map={}
@@ -224,7 +204,7 @@ class TestQueryCommandOutput:
 
         problems = [
             ProblemSummary(id=i, title=f'Problem {i}', title_slug=f'p{i}',
-                          difficulty='Easy', paid_only=False, tags=[])
+                          difficulty=Difficulty.EASY, tags=[])
             for i in range(1, 31)
         ]
         mock_service.query.return_value = QueryResult(

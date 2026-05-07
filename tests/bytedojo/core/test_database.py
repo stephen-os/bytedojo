@@ -193,7 +193,8 @@ class TestDatabaseManagerRegisterProblem:
             title_slug="two-sum",
             difficulty="Easy",
             description="Test description",
-            code_snippets=[]
+            code_snippets=[],
+            test_cases=[]
         )
         
         with DatabaseManager(db_path) as db:
@@ -221,7 +222,8 @@ class TestDatabaseManagerRegisterProblem:
             title_slug="two-sum",
             difficulty="Easy",
             description="Test",
-            code_snippets=[]
+            code_snippets=[],
+            test_cases=[]
         )
         
         with DatabaseManager(db_path) as db:
@@ -241,7 +243,8 @@ class TestDatabaseManagerRegisterProblem:
             title_slug="two-sum",
             difficulty="Easy",
             description="Original",
-            code_snippets=[]
+            code_snippets=[],
+            test_cases=[]
         )
         
         with DatabaseManager(db_path) as db:
@@ -287,7 +290,8 @@ class TestDatabaseManagerGetProblem:
             title_slug="two-sum",
             difficulty="Easy",
             description="Test",
-            code_snippets=[]
+            code_snippets=[],
+            test_cases=[]
         )
         
         with DatabaseManager(db_path) as db:

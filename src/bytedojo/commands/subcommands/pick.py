@@ -22,13 +22,8 @@ from bytedojo.commands.subcommands.utils import DIFFICULTY_COLORS
     multiple=True,
     help='Filter by algorithm tag (can be used multiple times)'
 )
-@click.option(
-    '--include-premium',
-    is_flag=True,
-    help='Include premium (paid) problems'
-)
 @click.pass_obj
-def pick(ctx, difficulty: str, tag: tuple, include_premium: bool):
+def pick(ctx, difficulty: str, tag: tuple):
     """
     Pick a random problem you haven't solved yet.
 
@@ -48,11 +43,10 @@ def pick(ctx, difficulty: str, tag: tuple, include_premium: bool):
     tags_list = list(tag) if tag else None
 
     # Pick a problem using service
-    logger.info("Fetching problems from LeetCode...")
+    logger.info("Searching for problems...")
     result = picker.pick(
         difficulty=difficulty,
-        tags=tags_list,
-        include_premium=include_premium
+        tags=tags_list
     )
 
     if result.total_count == 0:

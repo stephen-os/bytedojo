@@ -79,7 +79,7 @@ def _list_problems(db: DatabaseManager, verbose: bool, source: str, difficulty: 
 def _print_problem(db: DatabaseManager, problem: dict, verbose: bool, logger):
     """Print a single problem."""
     # Basic info
-    logger.info(f"#{problem['problem_id']:4s} - {problem['title']}")
+    logger.info(f"#{problem['problem_id']} - {problem['title']}")
     logger.info(f"  Source: {problem['source']}")
     logger.info(f"  Difficulty: {problem['difficulty']}")
     logger.info(f"  Fetched: {problem['fetched_at']}")
