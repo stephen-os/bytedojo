@@ -4,7 +4,7 @@ Test suite for JavaFormatter.
 
 import pytest
 from unittest.mock import Mock
-from bytedojo.core.models import Problem
+from bytedojo.core.models import Problem, Case
 from bytedojo.core.formatters.java import JavaFormatContext, JavaFormatter
 
 
@@ -26,7 +26,9 @@ def basic_problem():
     problem.title = "Two Sum"
     problem.difficulty = "Easy"
     problem.description = "<p>Given an array of integers.</p>"
-    problem.test_cases = ""
+    problem.test_cases = [
+        Case(input="nums = [2,7,11,15], target = 9", output="[0,1]")
+    ]
     problem.get_snippet.return_value = """class Solution {
     public int[] twoSum(int[] nums, int target) {
 
@@ -90,7 +92,7 @@ class TestJavaFormatContext:
         return new int[]{};
     }
 }"""
-        ctx = JavaFormatContext(code=code, description="", test_cases="")
+        ctx = JavaFormatContext(code=code, description="", test_cases=[])
         assert ctx.class_name == "Solution"
 
     def test_extract_method_name(self):
@@ -100,7 +102,7 @@ class TestJavaFormatContext:
         return new int[]{};
     }
 }"""
-        ctx = JavaFormatContext(code=code, description="", test_cases="")
+        ctx = JavaFormatContext(code=code, description="", test_cases=[])
         assert ctx.method_name == "twoSum"
 
     def test_extract_parameters(self):
@@ -110,7 +112,7 @@ class TestJavaFormatContext:
         return new int[]{};
     }
 }"""
-        ctx = JavaFormatContext(code=code, description="", test_cases="")
+        ctx = JavaFormatContext(code=code, description="", test_cases=[])
         assert len(ctx.param_info) == 2
         assert ctx.param_info[0] == ("nums", "int[]")
         assert ctx.param_info[1] == ("target", "int")
@@ -122,7 +124,7 @@ class TestJavaFormatContext:
         return new int[]{};
     }
 }"""
-        ctx = JavaFormatContext(code=code, description="", test_cases="")
+        ctx = JavaFormatContext(code=code, description="", test_cases=[])
         assert ctx.return_type == "int[]"
 
     def test_extract_list_return_type(self):
@@ -132,7 +134,7 @@ class TestJavaFormatContext:
         return new ArrayList<>();
     }
 }"""
-        ctx = JavaFormatContext(code=code, description="", test_cases="")
+        ctx = JavaFormatContext(code=code, description="", test_cases=[])
         assert ctx.return_type == "List<Integer>"
 
     def test_instance_name_property(self):
@@ -140,7 +142,7 @@ class TestJavaFormatContext:
         code = """class Solution {
     public int solve() { return 0; }
 }"""
-        ctx = JavaFormatContext(code=code, description="", test_cases="")
+        ctx = JavaFormatContext(code=code, description="", test_cases=[])
         assert ctx.instance_name == "solution"
 
 

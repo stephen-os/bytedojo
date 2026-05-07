@@ -5,17 +5,8 @@ Common functionality for parsing and formatting LeetCode problems.
 """
 
 import re
-from dataclasses import dataclass
-from typing import List, Dict, Optional
+from typing import Dict
 from html import unescape
-
-
-@dataclass
-class TestExample:
-    """Represents a single test example from problem description."""
-    input_text: str
-    output_text: str
-    explanation: str = ""
 
 
 def html_to_text(html_content: str) -> str:
@@ -38,59 +29,6 @@ def html_to_text(html_content: str) -> str:
     # Normalize whitespace
     text = re.sub(r'\n\s*\n', '\n\n', text)
     return text.strip()
-
-
-def extract_test_examples(description: str) -> List[TestExample]:
-    """
-    Extract test examples from problem description HTML.
-
-    Args:
-        description: HTML description containing examples
-
-    Returns:
-        List of TestExample with input, output, explanation
-    """
-    if not description:
-        return []
-
-    try:
-        text = html_to_text(description)
-        examples = []
-
-        # Pattern to match "Example N:" sections
-        example_pattern = r'Example\s+\d+:\s*(.*?)(?=Example\s+\d+:|Constraints:|$)'
-
-        for match in re.finditer(example_pattern, text, re.DOTALL | re.IGNORECASE):
-            example_text = match.group(1).strip()
-
-            # Extract input
-            input_match = re.search(
-                r'Input:\s*([^\n]+(?:\n(?!Output:)[^\n]+)*)',
-                example_text
-            )
-            input_text = input_match.group(1).strip() if input_match else ""
-
-            # Extract output
-            output_match = re.search(
-                r'Output:\s*([^\n]+(?:\n(?!Explanation:)[^\n]+)*)',
-                example_text
-            )
-            output_text = output_match.group(1).strip() if output_match else ""
-
-            # Extract explanation (optional)
-            explanation_match = re.search(
-                r'Explanation:\s*([^\n]+.*?)$',
-                example_text,
-                re.DOTALL
-            )
-            explanation = explanation_match.group(1).strip() if explanation_match else ""
-
-            if input_text:
-                examples.append(TestExample(input_text, output_text, explanation))
-
-        return examples
-    except Exception:
-        return []
 
 
 def parse_input_variables(input_text: str) -> Dict[str, str]:

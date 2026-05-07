@@ -6,7 +6,7 @@ Tests cover edge cases, malformed inputs, stress scenarios, and error handling.
 import pytest
 from unittest.mock import Mock, MagicMock, patch
 import re
-from bytedojo.core.models import Problem
+from bytedojo.core.models import Problem, Case
 from bytedojo.core.formatters.python import FormatContext, PythonFormatter
 
 
@@ -28,7 +28,9 @@ def basic_problem():
     problem.title = "Two Sum"
     problem.difficulty = "Easy"
     problem.description = "<p>Given an array of integers <code>nums</code> and an integer <code>target</code>.</p>"
-    problem.test_cases = "[2,7,11,15]\n9\n[0,1]"
+    problem.test_cases = [
+        Case(input="nums = [2,7,11,15], target = 9", output="[0,1]")
+    ]
     problem.get_snippet.return_value = """class Solution:
     def twoSum(self, nums: List[int], target: int) -> List[int]:
         pass"""
@@ -43,7 +45,9 @@ def complex_problem():
     problem.title = "Reverse Linked List"
     problem.difficulty = "Easy"
     problem.description = "<p>Reverse a linked list.</p>"
-    problem.test_cases = "[1,2,3,4,5]\n[5,4,3,2,1]"
+    problem.test_cases = [
+        Case(input="head = [1,2,3,4,5]", output="[5,4,3,2,1]")
+    ]
     problem.get_snippet.return_value = """# Definition for singly-linked list.
 # class ListNode:
 #     def __init__(self, val=0, next=None):
@@ -117,18 +121,13 @@ class TestNullAndEmptyInputs:
             pass
     
     def test_empty_test_cases(self, formatter, basic_problem):
-        """Handle empty test cases."""
-        basic_problem.test_cases = ""
+        """Handle empty test examples."""
+        basic_problem.test_cases = []
         result = formatter.format(basic_problem)
-        # Tests are stored separately now, file should still be valid
+        # File should still be valid with no test examples
         assert isinstance(result, str)
         assert "class Solution:" in result
-    
-    def test_none_test_cases(self, formatter, basic_problem):
-        """Handle None test cases."""
-        basic_problem.test_cases = None
-        result = formatter.format(basic_problem)
-        assert isinstance(result, str)
+        assert "TODO: Add test cases" in result
     
     def test_no_python_snippet(self, formatter, basic_problem):
         """Handle missing Python code snippet."""
@@ -241,7 +240,7 @@ class TestCodeProcessing:
         problem.title = "Same Tree"
         problem.difficulty = "Easy"
         problem.description = "<p>Test</p>"
-        problem.test_cases = ""
+        problem.test_cases = []
         problem.get_snippet.return_value = """# Definition for a binary tree node.
 # class TreeNode:
 #     def __init__(self, val=0, left=None, right=None):
@@ -276,7 +275,7 @@ class Solution:
         problem.title = "Test"
         problem.difficulty = "Easy"
         problem.description = "<p>Test</p>"
-        problem.test_cases = ""
+        problem.test_cases = []
         problem.get_snippet.return_value = """class Solution:
     def method(self, x: List[int], y: Optional[Dict[str, Set[int]]]) -> Tuple[int, int]:
         pass"""
@@ -323,7 +322,7 @@ class TestMethodExtraction:
     def twoSum(self, nums: List[int], target: int) -> List[int]:
         pass"""
         
-        ctx = FormatContext(code=code, description="", test_cases="")
+        ctx = FormatContext(code=code, description="", test_cases=[])
         assert ctx.method_name == "twoSum"
     
     def test_extract_method_with_no_params(self, formatter):
@@ -332,7 +331,7 @@ class TestMethodExtraction:
     def solve(self) -> int:
         pass"""
         
-        ctx = FormatContext(code=code, description="", test_cases="")
+        ctx = FormatContext(code=code, description="", test_cases=[])
         assert ctx.method_name == "solve"
     
     def test_extract_method_multiline(self, formatter):
@@ -345,7 +344,7 @@ class TestMethodExtraction:
     ) -> bool:
         pass"""
         
-        ctx = FormatContext(code=code, description="", test_cases="")
+        ctx = FormatContext(code=code, description="", test_cases=[])
         assert ctx.method_name == "complexMethod"
     
     def test_ignore_dunder_methods(self, formatter):
@@ -357,7 +356,7 @@ class TestMethodExtraction:
     def solve(self, x: int) -> int:
         pass"""
         
-        ctx = FormatContext(code=code, description="", test_cases="")
+        ctx = FormatContext(code=code, description="", test_cases=[])
         assert ctx.method_name == "solve"
     
     def test_multiple_classes(self, formatter):
@@ -370,7 +369,7 @@ class Solution:
     def process(self, head: ListNode) -> ListNode:
         pass"""
         
-        ctx = FormatContext(code=code, description="", test_cases="")
+        ctx = FormatContext(code=code, description="", test_cases=[])
         assert ctx.method_name == "process"
     
     def test_no_solution_class(self, formatter):
@@ -379,7 +378,7 @@ class Solution:
     def myMethod(self, x: int) -> int:
         pass"""
         
-        ctx = FormatContext(code=code, description="", test_cases="")
+        ctx = FormatContext(code=code, description="", test_cases=[])
         assert ctx.method_name == "myMethod"
     
     def test_count_params_simple(self, formatter):
@@ -387,7 +386,7 @@ class Solution:
         code = """def method(self, x: int, y: int) -> int:
     pass"""
         
-        ctx = FormatContext(code=code, description="", test_cases="")
+        ctx = FormatContext(code=code, description="", test_cases=[])
         assert ctx.param_count == 2
     
     def test_count_params_complex_types(self, formatter):
@@ -395,7 +394,7 @@ class Solution:
         code = """def method(self, nums: List[List[int]], target: Dict[str, int]) -> bool:
     pass"""
         
-        ctx = FormatContext(code=code, description="", test_cases="")
+        ctx = FormatContext(code=code, description="", test_cases=[])
         assert ctx.param_count == 2
     
     def test_count_params_none(self, formatter):
@@ -403,7 +402,7 @@ class Solution:
         code = """def method(self) -> int:
     pass"""
         
-        ctx = FormatContext(code=code, description="", test_cases="")
+        ctx = FormatContext(code=code, description="", test_cases=[])
         assert ctx.param_count == 0
     
     def test_extract_class_name_solution(self, formatter):
@@ -412,7 +411,7 @@ class Solution:
     def solve(self) -> int:
         pass"""
         
-        ctx = FormatContext(code=code, description="", test_cases="")
+        ctx = FormatContext(code=code, description="", test_cases=[])
         assert ctx.class_name == "Solution"
     
     def test_extract_class_name_codec(self, formatter):
@@ -421,7 +420,7 @@ class Solution:
     def serialize(self, root):
         pass"""
         
-        ctx = FormatContext(code=code, description="", test_cases="")
+        ctx = FormatContext(code=code, description="", test_cases=[])
         assert ctx.class_name == "Codec"
     
     def test_extract_class_name_skip_nodes(self, formatter):
@@ -434,7 +433,7 @@ class Codec:
     def serialize(self, root):
         pass"""
         
-        ctx = FormatContext(code=code, description="", test_cases="")
+        ctx = FormatContext(code=code, description="", test_cases=[])
         assert ctx.class_name == "Codec"
     
     def test_extract_parameter_info(self, formatter):
@@ -443,7 +442,7 @@ class Codec:
     def method(self, nums: List[int], target: int) -> int:
         pass"""
         
-        ctx = FormatContext(code=code, description="", test_cases="")
+        ctx = FormatContext(code=code, description="", test_cases=[])
         assert len(ctx.param_info) == 2
         assert ctx.param_info[0] == ("nums", "List[int]")
         assert ctx.param_info[1] == ("target", "int")
@@ -454,7 +453,7 @@ class Codec:
     def method(self, x: int) -> List[int]:
         pass"""
         
-        ctx = FormatContext(code=code, description="", test_cases="")
+        ctx = FormatContext(code=code, description="", test_cases=[])
         assert ctx.return_type == "List[int]"
     
     def test_instance_name_property(self, formatter):
@@ -463,7 +462,7 @@ class Codec:
     def serialize(self, root):
         pass"""
         
-        ctx = FormatContext(code=code, description="", test_cases="")
+        ctx = FormatContext(code=code, description="", test_cases=[])
         assert ctx.instance_name == "codec"
 
 
@@ -484,7 +483,7 @@ class TestTestCaseParsing:
         problem.title = "Test"
         problem.difficulty = "Easy"
         problem.description = "<p>Test</p>"
-        problem.test_cases = "[1,2,3]\n6\n[4,5]\n9"
+        problem.test_cases = []
         problem.get_snippet.return_value = """class Solution:
     def method(self, x: int) -> int:
         pass"""
@@ -502,7 +501,7 @@ class TestTestCaseParsing:
         problem.title = "Test"
         problem.difficulty = "Easy"
         problem.description = "<p>Test</p>"
-        problem.test_cases = "[1,2]\n3\n5\n[4,5]\n6\n10"
+        problem.test_cases = []
         problem.get_snippet.return_value = """class Solution:
     def method(self, nums: List[int], target: int) -> int:
         pass"""
@@ -519,7 +518,7 @@ class TestTestCaseParsing:
         problem.title = "Test"
         problem.difficulty = "Easy"
         problem.description = "<p>Test</p>"
-        problem.test_cases = "[1,2,3]\n[4,5,6]"
+        problem.test_cases = []
         problem.get_snippet.return_value = """class Solution:
     def method(self, nums: List[int]) -> int:
         pass"""
@@ -535,7 +534,7 @@ class TestTestCaseParsing:
         problem.title = "Test"
         problem.difficulty = "Easy"
         problem.description = "<p>Test</p>"
-        problem.test_cases = "[1,2]\n3\n5"
+        problem.test_cases = []
         problem.get_snippet.return_value = """class Solution:
     def method(self, nums: List[int], target: int) -> int:
         pass"""
@@ -552,7 +551,7 @@ class TestTestCaseParsing:
         problem.title = "Test"
         problem.difficulty = "Easy"
         problem.description = "<p>Test</p>"
-        problem.test_cases = "result1\nresult2"
+        problem.test_cases = []
         problem.get_snippet.return_value = """class Solution:
     def method(self) -> int:
         pass"""
@@ -578,9 +577,11 @@ class TestStressScenarios:
         assert len(result) > 0
     
     def test_many_test_cases(self, formatter, basic_problem):
-        """Handle many test cases."""
-        test_cases = "\n".join([f"[{i}]" for i in range(1000)])
-        basic_problem.test_cases = test_cases
+        """Handle many test examples."""
+        basic_problem.test_cases = [
+            Case(input=f"x = {i}", output=f"{i}")
+            for i in range(100)
+        ]
         result = formatter.format(basic_problem)
         assert isinstance(result, str)
     
@@ -591,7 +592,7 @@ class TestStressScenarios:
         problem.title = "Test"
         problem.difficulty = "Hard"
         problem.description = "<p>Test</p>"
-        problem.test_cases = ""
+        problem.test_cases = []
         problem.get_snippet.return_value = """class Solution:
     def method(self, x: List[List[List[Dict[str, Set[Tuple[int, int]]]]]]) -> Optional[Union[int, str]]:
         pass"""
@@ -633,7 +634,7 @@ class TestStressScenarios:
         problem.title = "Test"
         problem.difficulty = "Easy"
         problem.description = "<p>Test</p>"
-        problem.test_cases = ""
+        problem.test_cases = []
         problem.get_snippet.return_value = f"""{commented_classes}
 
 class Solution:
@@ -743,7 +744,7 @@ class TestErrorHandling:
         del problem.description
         del problem.test_cases
         del problem.get_snippet
-        
+
         with pytest.raises(AttributeError):
             formatter.format(problem)
     
@@ -771,7 +772,7 @@ class TestRegressions:
         problem.title = "Test"
         problem.difficulty = "Easy"
         problem.description = "<p>Test</p>"
-        problem.test_cases = ""
+        problem.test_cases = []
         problem.get_snippet.return_value = """class Solution:
     def method(self, x: int) -> int:
         pass"""

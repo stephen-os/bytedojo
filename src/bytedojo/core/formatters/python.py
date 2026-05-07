@@ -7,7 +7,7 @@ from dataclasses import dataclass, field
 from typing import List, Tuple, Optional, Dict
 from html import unescape
 
-from bytedojo.core.models import Problem
+from bytedojo.core.models import Problem, Case
 from bytedojo.core.formatters.base import BaseFormatter
 from bytedojo.core.logger import get_logger
 
@@ -23,8 +23,8 @@ class FormatContext:
     """
     code: str
     description: str
-    test_cases: str
-    
+    test_cases: List[Case]  # Pre-parsed test cases
+
     # Extracted metadata (populated lazily)
     class_name: Optional[str] = None
     method_name: Optional[str] = None
@@ -32,35 +32,31 @@ class FormatContext:
     return_type: Optional[str] = None
     param_count: Optional[int] = None
     helpers_needed: Dict[str, bool] = field(default_factory=dict)
-    test_examples: List[Tuple[str, str, str]] = field(default_factory=list)
-    
+
     _logger: Optional[object] = field(default=None, repr=False)
-    
+
     def __post_init__(self):
         """Initialize logger and extract metadata."""
         if self._logger is None:
             self._logger = get_logger()
-        
+
         # Extract all metadata once during initialization
         self._extract_metadata()
-    
+
     def _extract_metadata(self):
         """Extract all metadata from code in one pass."""
         self._logger.debug("Extracting metadata from code")
-        
+
         # Extract class and method information
         self.class_name = self._extract_class_name()
         self.method_name = self._extract_method_name()
         self.param_info = self._extract_parameter_info()
         self.return_type = self._extract_return_type()
         self.param_count = self._count_method_params()
-        
+
         # Detect helper functions needed
         self.helpers_needed = self._detect_helpers_needed()
-        
-        # Extract test examples from description
-        self.test_examples = self._extract_test_examples()
-        
+
         self._logger.debug(f"Metadata extracted: class={self.class_name}, method={self.method_name}, "
                           f"params={len(self.param_info)}, helpers={list(self.helpers_needed.keys())}")
     
@@ -241,53 +237,12 @@ class FormatContext:
             'listnode': 'ListNode' in self.code and 'class ListNode' in self.code,
             'treenode': 'TreeNode' in self.code and 'class TreeNode' in self.code,
         }
-        
+
         needed = [k for k, v in helpers.items() if v]
         if needed:
             self._logger.debug(f"Helpers needed: {needed}")
-        
+
         return helpers
-    
-    def _extract_test_examples(self) -> List[Tuple[str, str, str]]:
-        """Extract test examples from problem description."""
-        from html import unescape
-        
-        try:
-            description = unescape(self.description)
-            text = re.sub(r'<[^>]+>', '\n', description)
-            
-            examples = []
-            example_pattern = r'Example\s+\d+:(.*?)(?=Example\s+\d+:|Constraints:|$)'
-            
-            for match in re.finditer(example_pattern, text, re.DOTALL | re.IGNORECASE):
-                example_text = match.group(1).strip()
-                example_data = self._parse_example_text(example_text)
-                
-                if example_data:
-                    examples.append(example_data)
-            
-            self._logger.debug(f"Extracted {len(examples)} test examples")
-            return examples
-            
-        except Exception as e:
-            self._logger.error(f"Error extracting test examples: {e}")
-            return []
-    
-    def _parse_example_text(self, example_text: str) -> Optional[Tuple[str, str, str]]:
-        """Parse a single example text into (input, output, explanation)."""
-        input_match = re.search(r'Input:\s*([^\n]+(?:\n(?!Output:)[^\n]+)*)', example_text)
-        input_text = input_match.group(1).strip() if input_match else ""
-        
-        output_match = re.search(r'Output:\s*([^\n]+(?:\n(?!Explanation:)[^\n]+)*)', example_text)
-        output_text = output_match.group(1).strip() if output_match else ""
-        
-        explanation_match = re.search(r'Explanation:\s*([^\n]+.*?)$', example_text, re.DOTALL)
-        explanation = explanation_match.group(1).strip() if explanation_match else ""
-        
-        if input_text:
-            return (input_text, output_text, explanation)
-        
-        return None
     
     # ========================================================================
     # Helper Methods
@@ -334,7 +289,7 @@ class PythonFormatter(BaseFormatter):
             code_template = self._get_python_code(problem)
             description = self._format_description(problem.description)
 
-            # Create context with all metadata
+            # Create context with all metadata and pre-parsed test examples
             ctx = FormatContext(
                 code=code_template,
                 description=problem.description,
@@ -342,7 +297,7 @@ class PythonFormatter(BaseFormatter):
                 _logger=self.logger
             )
 
-            # Build final content (no test generation - tests are stored separately)
+            # Build final content
             content = self._build_file_content(problem, description, code_template, ctx)
 
             self.logger.debug(f"Successfully formatted problem #{problem.id}")
@@ -389,10 +344,10 @@ Difficulty: {problem.difficulty}
         lines.append(f'    {ctx.instance_name} = {ctx.class_name}()')
         lines.append('')
 
-        if ctx.test_examples:
-            for i, (input_text, output_text, _) in enumerate(ctx.test_examples, 1):
+        if ctx.test_cases:
+            for i, example in enumerate(ctx.test_cases, 1):
                 lines.append(f'    # Example {i}')
-                test_call = self._generate_test_call(ctx, input_text, output_text, i)
+                test_call = self._generate_test_call(ctx, example.input, example.output, i)
                 lines.extend(test_call)
                 lines.append('')
         else:

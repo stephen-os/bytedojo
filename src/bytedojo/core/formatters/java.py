@@ -6,15 +6,13 @@ import re
 from dataclasses import dataclass, field
 from typing import List, Tuple, Optional, Dict
 
-from bytedojo.core.models import Problem
+from bytedojo.core.models import Problem, Case
 from bytedojo.core.formatters.base import BaseFormatter
 from bytedojo.core.formatters.utils import (
     html_to_text,
-    extract_test_examples,
     parse_input_variables,
     convert_to_java_literal,
     get_java_default,
-    TestExample,
 )
 from bytedojo.core.logger import get_logger
 
@@ -31,7 +29,7 @@ class JavaFormatContext:
     """
     code: str
     description: str
-    test_cases: str
+    test_cases: List[Case]  # Pre-parsed test cases
 
     # Extracted metadata (populated lazily)
     class_name: Optional[str] = None
@@ -40,7 +38,6 @@ class JavaFormatContext:
     return_type: Optional[str] = None
     needs_arrays_import: bool = False
     needs_list_import: bool = False
-    test_examples: List[TestExample] = field(default_factory=list)
 
     _logger: Optional[object] = field(default=None, repr=False)
 
@@ -60,7 +57,6 @@ class JavaFormatContext:
         self.param_info = self._extract_parameter_info()
         self.return_type = self._extract_return_type()
         self._detect_imports_needed()
-        self.test_examples = extract_test_examples(self.description)
 
         self._logger.debug(
             f"Metadata extracted: class={self.class_name}, method={self.method_name}, "
@@ -288,8 +284,8 @@ class JavaFormatter(BaseFormatter):
         lines.append(f'        {ctx.class_name} {ctx.instance_name} = new {ctx.class_name}();')
         lines.append('')
 
-        if ctx.test_examples:
-            for i, example in enumerate(ctx.test_examples, 1):
+        if ctx.test_cases:
+            for i, example in enumerate(ctx.test_cases, 1):
                 lines.append(f'        // Example {i}')
                 test_lines = self._generate_test_call(ctx, example, i)
                 lines.extend(test_lines)
@@ -308,10 +304,10 @@ class JavaFormatter(BaseFormatter):
 
         return '\n'.join(lines)
 
-    def _generate_test_call(self, ctx: JavaFormatContext, example: TestExample, index: int) -> List[str]:
+    def _generate_test_call(self, ctx: JavaFormatContext, example: Case, index: int) -> List[str]:
         """Generate Java code for a single test case."""
         lines = []
-        input_vars = parse_input_variables(example.input_text)
+        input_vars = parse_input_variables(example.input)
 
         # Generate variable declarations
         for param_name, param_type in ctx.param_info:
@@ -333,8 +329,8 @@ class JavaFormatter(BaseFormatter):
             lines.append(f'        {ctx.instance_name}.{ctx.method_name}({args});')
             lines.append(f'        System.out.println("Example {index} executed");')
 
-        if example.output_text:
-            lines.append(f'        // Expected: {example.output_text}')
+        if example.output:
+            lines.append(f'        // Expected: {example.output}')
 
         return lines
 

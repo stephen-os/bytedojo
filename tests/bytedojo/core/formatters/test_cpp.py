@@ -4,7 +4,7 @@ Test suite for CppFormatter.
 
 import pytest
 from unittest.mock import Mock
-from bytedojo.core.models import Problem
+from bytedojo.core.models import Problem, Case
 from bytedojo.core.formatters.cpp import CppFormatContext, CppFormatter
 
 
@@ -26,7 +26,9 @@ def basic_problem():
     problem.title = "Two Sum"
     problem.difficulty = "Easy"
     problem.description = "<p>Given an array of integers.</p>"
-    problem.test_cases = ""
+    problem.test_cases = [
+        Case(input="nums = [2,7,11,15], target = 9", output="[0,1]")
+    ]
     problem.get_snippet.return_value = """class Solution {
 public:
     vector<int> twoSum(vector<int>& nums, int target) {
@@ -92,7 +94,7 @@ public:
         return {};
     }
 };"""
-        ctx = CppFormatContext(code=code, description="", test_cases="")
+        ctx = CppFormatContext(code=code, description="", test_cases=[])
         assert ctx.class_name == "Solution"
 
     def test_extract_method_name(self):
@@ -103,7 +105,7 @@ public:
         return {};
     }
 };"""
-        ctx = CppFormatContext(code=code, description="", test_cases="")
+        ctx = CppFormatContext(code=code, description="", test_cases=[])
         assert ctx.method_name == "twoSum"
 
     def test_extract_parameters(self):
@@ -114,7 +116,7 @@ public:
         return {};
     }
 };"""
-        ctx = CppFormatContext(code=code, description="", test_cases="")
+        ctx = CppFormatContext(code=code, description="", test_cases=[])
         assert len(ctx.param_info) == 2
         assert ctx.param_info[0] == ("nums", "vector<int>&")
         assert ctx.param_info[1] == ("target", "int")
@@ -127,7 +129,7 @@ public:
         return {};
     }
 };"""
-        ctx = CppFormatContext(code=code, description="", test_cases="")
+        ctx = CppFormatContext(code=code, description="", test_cases=[])
         assert ctx.return_type == "vector<int>"
 
     def test_extract_nested_vector_type(self):
@@ -138,7 +140,7 @@ public:
         return {};
     }
 };"""
-        ctx = CppFormatContext(code=code, description="", test_cases="")
+        ctx = CppFormatContext(code=code, description="", test_cases=[])
         assert ctx.return_type == "vector<vector<int>>"
 
     def test_instance_name_property(self):
@@ -147,7 +149,7 @@ public:
 public:
     int solve() { return 0; }
 };"""
-        ctx = CppFormatContext(code=code, description="", test_cases="")
+        ctx = CppFormatContext(code=code, description="", test_cases=[])
         assert ctx.instance_name == "solution"
 
 
