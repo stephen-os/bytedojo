@@ -193,7 +193,6 @@ class TestDatabaseManagerRegisterProblem:
             title_slug="two-sum",
             difficulty="Easy",
             description="Test description",
-            test_cases="test",
             code_snippets=[]
         )
         
@@ -222,7 +221,6 @@ class TestDatabaseManagerRegisterProblem:
             title_slug="two-sum",
             difficulty="Easy",
             description="Test",
-            test_cases="",
             code_snippets=[]
         )
         
@@ -243,7 +241,6 @@ class TestDatabaseManagerRegisterProblem:
             title_slug="two-sum",
             difficulty="Easy",
             description="Original",
-            test_cases="",
             code_snippets=[]
         )
         
@@ -290,7 +287,6 @@ class TestDatabaseManagerGetProblem:
             title_slug="two-sum",
             difficulty="Easy",
             description="Test",
-            test_cases="",
             code_snippets=[]
         )
         

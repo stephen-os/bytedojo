@@ -80,6 +80,22 @@ def create_database_schema(db_path: Path):
             total_time_minutes INTEGER DEFAULT 0
         )
     """)
+
+    # Versioned attempts table - tracks solution versions per problem/language
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS versioned_attempts (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            source TEXT NOT NULL DEFAULT 'leetcode',
+            problem_id INTEGER NOT NULL,
+            language TEXT NOT NULL,
+            version INTEGER NOT NULL,
+            status TEXT NOT NULL DEFAULT 'ungraded',
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            run_count INTEGER DEFAULT 0,
+            notes TEXT,
+            UNIQUE(source, problem_id, language, version)
+        )
+    """)
     
     # User preferences
     cursor.execute("""
@@ -616,3 +632,293 @@ class DatabaseManager:
         cursor.execute("DELETE FROM reviews WHERE problem_id = ?", (problem_db_id,))
         self.conn.commit()
         return True
+
+    # ========================================================================
+    # Versioned Attempts Methods
+    # ========================================================================
+
+    def create_attempt(
+        self,
+        problem_id: int,
+        language: str,
+        source: str = "leetcode"
+    ) -> Dict[str, Any]:
+        """
+        Create a new versioned attempt for a problem/language.
+
+        Args:
+            problem_id: Problem ID number
+            language: Programming language
+            source: Problem source (default: 'leetcode')
+
+        Returns:
+            The created attempt as a dictionary
+        """
+        cursor = self.conn.cursor()
+
+        # Get next version number
+        cursor.execute("""
+            SELECT COALESCE(MAX(version), 0) + 1
+            FROM versioned_attempts
+            WHERE source = ? AND problem_id = ? AND language = ?
+        """, (source, problem_id, language))
+        next_version = cursor.fetchone()[0]
+
+        # Insert new attempt
+        cursor.execute("""
+            INSERT INTO versioned_attempts (source, problem_id, language, version, status, created_at)
+            VALUES (?, ?, ?, ?, 'ungraded', ?)
+        """, (source, problem_id, language, next_version, datetime.now().isoformat()))
+
+        self.conn.commit()
+
+        return {
+            'problem_id': problem_id,
+            'language': language,
+            'version': next_version,
+            'status': 'ungraded',
+            'created_at': datetime.now().isoformat(),
+            'run_count': 0,
+            'notes': None
+        }
+
+    def get_attempt(
+        self,
+        problem_id: int,
+        language: str,
+        version: Optional[int] = None,
+        source: str = "leetcode"
+    ) -> Optional[Dict[str, Any]]:
+        """
+        Get a specific attempt or the latest attempt.
+
+        Args:
+            problem_id: Problem ID number
+            language: Programming language
+            version: Specific version (None for latest)
+            source: Problem source (default: 'leetcode')
+
+        Returns:
+            Attempt data as dict or None
+        """
+        cursor = self.conn.cursor()
+
+        if version is not None:
+            cursor.execute("""
+                SELECT * FROM versioned_attempts
+                WHERE source = ? AND problem_id = ? AND language = ? AND version = ?
+            """, (source, problem_id, language, version))
+        else:
+            cursor.execute("""
+                SELECT * FROM versioned_attempts
+                WHERE source = ? AND problem_id = ? AND language = ?
+                ORDER BY version DESC LIMIT 1
+            """, (source, problem_id, language))
+
+        row = cursor.fetchone()
+        return dict(row) if row else None
+
+    def list_attempts(
+        self,
+        problem_id: int,
+        language: Optional[str] = None,
+        source: str = "leetcode"
+    ) -> List[Dict[str, Any]]:
+        """
+        List all attempts for a problem, optionally filtered by language.
+
+        Args:
+            problem_id: Problem ID number
+            language: Filter by language (None for all)
+            source: Problem source (default: 'leetcode')
+
+        Returns:
+            List of attempt dictionaries
+        """
+        cursor = self.conn.cursor()
+
+        if language:
+            cursor.execute("""
+                SELECT * FROM versioned_attempts
+                WHERE source = ? AND problem_id = ? AND language = ?
+                ORDER BY version ASC
+            """, (source, problem_id, language))
+        else:
+            cursor.execute("""
+                SELECT * FROM versioned_attempts
+                WHERE source = ? AND problem_id = ?
+                ORDER BY language, version ASC
+            """, (source, problem_id))
+
+        return [dict(row) for row in cursor.fetchall()]
+
+    def update_attempt_status(
+        self,
+        problem_id: int,
+        language: str,
+        version: int,
+        status: str,
+        source: str = "leetcode"
+    ) -> bool:
+        """
+        Update the status of a specific attempt.
+
+        Args:
+            problem_id: Problem ID number
+            language: Programming language
+            version: Attempt version
+            status: New status ('passed', 'failed', 'skipped', 'ungraded')
+            source: Problem source (default: 'leetcode')
+
+        Returns:
+            True if updated successfully
+        """
+        cursor = self.conn.cursor()
+        cursor.execute("""
+            UPDATE versioned_attempts
+            SET status = ?
+            WHERE source = ? AND problem_id = ? AND language = ? AND version = ?
+        """, (status, source, problem_id, language, version))
+        self.conn.commit()
+        return cursor.rowcount > 0
+
+    def increment_run_count(
+        self,
+        problem_id: int,
+        language: str,
+        version: int,
+        source: str = "leetcode"
+    ) -> bool:
+        """
+        Increment the run count for an attempt.
+
+        Args:
+            problem_id: Problem ID number
+            language: Programming language
+            version: Attempt version
+            source: Problem source (default: 'leetcode')
+
+        Returns:
+            True if updated successfully
+        """
+        cursor = self.conn.cursor()
+        cursor.execute("""
+            UPDATE versioned_attempts
+            SET run_count = run_count + 1
+            WHERE source = ? AND problem_id = ? AND language = ? AND version = ?
+        """, (source, problem_id, language, version))
+        self.conn.commit()
+        return cursor.rowcount > 0
+
+    def get_attempt_stats(
+        self,
+        problem_id: int,
+        language: Optional[str] = None,
+        source: str = "leetcode"
+    ) -> Dict[str, Any]:
+        """
+        Get aggregated stats for attempts on a problem.
+
+        Args:
+            problem_id: Problem ID number
+            language: Filter by language (None for all languages)
+            source: Problem source (default: 'leetcode')
+
+        Returns:
+            Dictionary with attempt statistics per language
+        """
+        cursor = self.conn.cursor()
+
+        if language:
+            cursor.execute("""
+                SELECT
+                    language,
+                    COUNT(*) as total_attempts,
+                    MAX(version) as latest_version,
+                    SUM(run_count) as total_runs,
+                    SUM(CASE WHEN status = 'passed' THEN 1 ELSE 0 END) as pass_count,
+                    SUM(CASE WHEN status = 'failed' THEN 1 ELSE 0 END) as fail_count,
+                    SUM(CASE WHEN status = 'skipped' THEN 1 ELSE 0 END) as skip_count
+                FROM versioned_attempts
+                WHERE source = ? AND problem_id = ? AND language = ?
+                GROUP BY language
+            """, (source, problem_id, language))
+        else:
+            cursor.execute("""
+                SELECT
+                    language,
+                    COUNT(*) as total_attempts,
+                    MAX(version) as latest_version,
+                    SUM(run_count) as total_runs,
+                    SUM(CASE WHEN status = 'passed' THEN 1 ELSE 0 END) as pass_count,
+                    SUM(CASE WHEN status = 'failed' THEN 1 ELSE 0 END) as fail_count,
+                    SUM(CASE WHEN status = 'skipped' THEN 1 ELSE 0 END) as skip_count
+                FROM versioned_attempts
+                WHERE source = ? AND problem_id = ?
+                GROUP BY language
+            """, (source, problem_id))
+
+        results = {}
+        for row in cursor.fetchall():
+            row_dict = dict(row)
+            lang = row_dict.pop('language')
+
+            # Get latest status
+            cursor.execute("""
+                SELECT status FROM versioned_attempts
+                WHERE source = ? AND problem_id = ? AND language = ? AND version = ?
+            """, (source, problem_id, lang, row_dict['latest_version']))
+            latest_row = cursor.fetchone()
+            row_dict['latest_status'] = latest_row[0] if latest_row else 'ungraded'
+
+            results[lang] = row_dict
+
+        return results
+
+    def get_all_attempt_stats(self, source: str = "leetcode") -> Dict[int, Dict[str, Any]]:
+        """
+        Get attempt stats for all problems.
+
+        Args:
+            source: Problem source (default: 'leetcode')
+
+        Returns:
+            Dictionary mapping problem_id to language stats
+        """
+        cursor = self.conn.cursor()
+
+        cursor.execute("""
+            SELECT
+                problem_id,
+                language,
+                COUNT(*) as total_attempts,
+                MAX(version) as latest_version,
+                SUM(run_count) as total_runs,
+                SUM(CASE WHEN status = 'passed' THEN 1 ELSE 0 END) as pass_count,
+                SUM(CASE WHEN status = 'failed' THEN 1 ELSE 0 END) as fail_count,
+                SUM(CASE WHEN status = 'skipped' THEN 1 ELSE 0 END) as skip_count
+            FROM versioned_attempts
+            WHERE source = ?
+            GROUP BY problem_id, language
+        """, (source,))
+
+        results = {}
+        for row in cursor.fetchall():
+            row_dict = dict(row)
+            pid = row_dict.pop('problem_id')
+            lang = row_dict.pop('language')
+
+            if pid not in results:
+                results[pid] = {}
+
+            # Get latest status for this problem/language
+            cursor.execute("""
+                SELECT status FROM versioned_attempts
+                WHERE source = ? AND problem_id = ? AND language = ? AND version = ?
+            """, (source, pid, lang, row_dict['latest_version']))
+            latest_row = cursor.fetchone()
+            row_dict['latest_status'] = latest_row[0] if latest_row else 'ungraded'
+
+            results[pid][lang] = row_dict
+
+        return results

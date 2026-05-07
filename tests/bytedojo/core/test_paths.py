@@ -8,10 +8,15 @@ from bytedojo.core.paths import (
     PACKAGE_ROOT,
     PROJECT_ROOT,
     DATA_DIR,
+    PROBLEMS_DIR,
+    TESTS_DIR,
+    PROBLEMS_INDEX,
     TEST_CASES_DIR,
     PROBLEMS_FILE,
     TESTS_FILE,
     UNSUPPORTED_FILE,
+    get_problem_file,
+    get_test_file,
 )
 
 
@@ -46,3 +51,27 @@ class TestPaths:
         assert PROBLEMS_FILE.suffix == ".json"
         assert TESTS_FILE.suffix == ".json"
         assert UNSUPPORTED_FILE.suffix == ".json"
+
+    def test_individual_data_dirs_exist(self):
+        """Individual data directories should exist."""
+        assert PROBLEMS_DIR.exists()
+        assert TESTS_DIR.exists()
+
+    def test_problems_index_exists(self):
+        """Problems index should exist."""
+        assert PROBLEMS_INDEX.exists()
+        assert PROBLEMS_INDEX.suffix == ".json"
+
+    def test_get_problem_file(self):
+        """get_problem_file should return correct path."""
+        path = get_problem_file(1)
+        assert path.suffix == ".json"
+        assert path.name == "1.json"
+        assert path.parent == PROBLEMS_DIR
+
+    def test_get_test_file(self):
+        """get_test_file should return correct path."""
+        path = get_test_file(1)
+        assert path.suffix == ".json"
+        assert path.name == "1.json"
+        assert path.parent == TESTS_DIR
