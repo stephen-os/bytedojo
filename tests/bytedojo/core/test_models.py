@@ -33,10 +33,14 @@ class TestLanguageEnum:
         assert Language.from_string("JAVA") == Language.JAVA
 
     def test_from_string_unknown(self):
-        """Test that unknown languages return None."""
-        assert Language.from_string("unknown") is None
-        assert Language.from_string("") is None
-        assert Language.from_string("fortran") is None
+        """Test that unknown languages return UNKNOWN."""
+        assert Language.from_string("unknown") == Language.UNKNOWN
+        assert Language.from_string("") == Language.UNKNOWN
+        assert Language.from_string("fortran") == Language.UNKNOWN
+
+    def test_direct_construction_unknown(self):
+        """Test that direct construction with unknown value returns UNKNOWN."""
+        assert Language("notareallang") == Language.UNKNOWN
 
     def test_extension_python(self):
         """Test Python file extensions."""

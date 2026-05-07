@@ -6,6 +6,7 @@ from typing import Optional, List
 
 class Language(str, Enum):
     """Programming languages available for problems."""
+    UNKNOWN = "unknown"
     BASH = "bash"
     C = "c"
     CPP = "cpp"
@@ -33,12 +34,16 @@ class Language(str, Enum):
     TYPESCRIPT = "typescript"
 
     @classmethod
-    def from_string(cls, value: str) -> Optional["Language"]:
-        """Parse language from string, returns None if unknown."""
-        try:
-            return cls(value.lower())
-        except ValueError:
-            return None
+    def _missing_(cls, value):
+        """Return UNKNOWN for unrecognized language values."""
+        return cls.UNKNOWN
+
+    @classmethod
+    def from_string(cls, value: str) -> "Language":
+        """Parse language from string, returns UNKNOWN if unknown."""
+        if not value:
+            return cls.UNKNOWN
+        return cls(value.lower())
 
     @property
     def extension(self) -> str:
@@ -72,14 +77,16 @@ class Difficulty(str, Enum):
     HARD = "Hard"
 
     @classmethod
+    def _missing_(cls, value):
+        """Return NONE for unrecognized difficulty values."""
+        return cls.NONE
+
+    @classmethod
     def from_string(cls, value: str) -> "Difficulty":
         """Parse difficulty from string (case-insensitive)."""
         if not value:
             return cls.NONE
-        try:
-            return cls(value.capitalize())
-        except ValueError:
-            return cls.NONE
+        return cls(value.capitalize())
 
 
 class Status(str, Enum):
@@ -91,14 +98,16 @@ class Status(str, Enum):
     UNGRADED = "ungraded"
 
     @classmethod
+    def _missing_(cls, value):
+        """Return NONE for unrecognized status values."""
+        return cls.NONE
+
+    @classmethod
     def from_string(cls, value: str) -> "Status":
         """Parse status from string (case-insensitive)."""
         if not value:
             return cls.NONE
-        try:
-            return cls(value.lower())
-        except ValueError:
-            return cls.NONE
+        return cls(value.lower())
 
 
 @dataclass
