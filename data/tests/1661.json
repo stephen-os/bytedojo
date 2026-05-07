@@ -1,4 +1,85 @@
 {
   "problem_id": 1661,
-  "input_output": []
+  "input_output": [
+    {
+      "input": "n = 3, operations = [[\"SQL\", [\"one\", \"two\", \"three\"]], [\"insertRow\", 2, [\"first\", \"second\", \"third\"]], [\"selectCell\", 2, 3], [\"insertRow\", 1, [\"a\", \"b\", \"c\"]], [\"deleteRow\", 2], [\"selectCell\", 2, 2]]",
+      "output": "[null, null, \"third\", null, null, \"second\"]"
+    },
+    {
+      "input": "n = 1, operations = [[\"SQL\", [\"only\"]], [\"insertRow\", 1, [\"one\"]], [\"selectCell\", 1, 1]]",
+      "output": "[null, null, \"one\"]"
+    },
+    {
+      "input": "n = 2, operations = [[\"SQL\", [\"a\", \"b\"]], [\"insertRow\", 1, [\"x\", \"y\"]], [\"insertRow\", 2, [\"p\", \"q\"]], [\"selectCell\", 1, 1], [\"selectCell\", 1, 2], [\"selectCell\", 2, 1], [\"selectCell\", 2, 2]]",
+      "output": "[null, null, null, \"x\", \"y\", \"p\", \"q\"]"
+    },
+    {
+      "input": "n = 3, operations = [[\"SQL\", [\"id\", \"name\", \"age\"]], [\"insertRow\", 1, [\"1\", \"Alice\", \"25\"]], [\"insertRow\", 1, [\"2\", \"Bob\", \"30\"]], [\"insertRow\", 1, [\"3\", \"Charlie\", \"35\"]], [\"selectCell\", 1, 2], [\"selectCell\", 2, 2], [\"selectCell\", 3, 2]]",
+      "output": "[null, null, null, null, \"Alice\", \"Bob\", \"Charlie\"]"
+    },
+    {
+      "input": "n = 2, operations = [[\"SQL\", [\"col1\", \"col2\"]], [\"insertRow\", 1, [\"a\", \"b\"]], [\"deleteRow\", 1, 1], [\"insertRow\", 1, [\"c\", \"d\"]], [\"selectCell\", 1, 1], [\"selectCell\", 1, 2]]",
+      "output": "[null, null, null, null, \"c\", \"d\"]"
+    },
+    {
+      "input": "n = 4, operations = [[\"SQL\", [\"c1\", \"c2\", \"c3\", \"c4\"]], [\"insertRow\", 1, [\"a\", \"b\", \"c\", \"d\"]], [\"insertRow\", 1, [\"e\", \"f\", \"g\", \"h\"]], [\"selectCell\", 1, 4], [\"selectCell\", 2, 4]]",
+      "output": "[null, null, null, \"d\", \"h\"]"
+    },
+    {
+      "input": "n = 5, operations = [[\"SQL\", [\"a\", \"b\", \"c\", \"d\", \"e\"]], [\"insertRow\", 1, [\"1\", \"2\", \"3\", \"4\", \"5\"]], [\"selectCell\", 1, 1], [\"selectCell\", 1, 5]]",
+      "output": "[null, null, \"1\", \"5\"]"
+    },
+    {
+      "input": "n = 2, operations = [[\"SQL\", [\"x\", \"y\"]], [\"insertRow\", 1, [\"row1\", \"row1\"]], [\"insertRow\", 1, [\"row2\", \"row2\"]], [\"insertRow\", 1, [\"row3\", \"row3\"]], [\"deleteRow\", 1, 2], [\"selectCell\", 1, 1], [\"selectCell\", 2, 1]]",
+      "output": "[null, null, null, null, null, \"row1\", \"row3\"]"
+    },
+    {
+      "input": "n = 3, operations = [[\"SQL\", [\"one\", \"two\", \"three\"]], [\"insertRow\", 1, [\"a\", \"b\", \"c\"]], [\"insertRow\", 1, [\"d\", \"e\", \"f\"]], [\"insertRow\", 1, [\"g\", \"h\", \"i\"]], [\"selectCell\", 3, 3]]",
+      "output": "[null, null, null, null, \"i\"]"
+    },
+    {
+      "input": "n = 2, operations = [[\"SQL\", [\"name\", \"value\"]], [\"insertRow\", 1, [\"key1\", \"100\"]], [\"insertRow\", 1, [\"key2\", \"200\"]], [\"insertRow\", 1, [\"key3\", \"300\"]], [\"deleteRow\", 1, 1], [\"deleteRow\", 1, 2], [\"selectCell\", 1, 2]]",
+      "output": "[null, null, null, null, null, null, \"300\"]"
+    },
+    {
+      "input": "n = 1, operations = [[\"SQL\", [\"single\"]], [\"insertRow\", 1, [\"first\"]], [\"insertRow\", 1, [\"second\"]], [\"deleteRow\", 1, 1], [\"selectCell\", 1, 1]]",
+      "output": "[null, null, null, null, \"second\"]"
+    },
+    {
+      "input": "n = 4, operations = [[\"SQL\", [\"a\", \"b\", \"c\", \"d\"]], [\"insertRow\", 1, [\"1\", \"2\", \"3\", \"4\"]], [\"insertRow\", 2, [\"5\", \"6\", \"7\", \"8\"]], [\"selectCell\", 1, 2], [\"selectCell\", 2, 3]]",
+      "output": "[null, null, null, \"2\", \"7\"]"
+    },
+    {
+      "input": "n = 3, operations = [[\"SQL\", [\"col1\", \"col2\", \"col3\"]], [\"insertRow\", 1, [\"r1c1\", \"r1c2\", \"r1c3\"]], [\"insertRow\", 2, [\"r2c1\", \"r2c2\", \"r2c3\"]], [\"insertRow\", 3, [\"r3c1\", \"r3c2\", \"r3c3\"]], [\"selectCell\", 1, 1], [\"selectCell\", 2, 2], [\"selectCell\", 3, 3]]",
+      "output": "[null, null, null, null, \"r1c1\", \"r2c2\", \"r3c3\"]"
+    },
+    {
+      "input": "n = 2, operations = [[\"SQL\", [\"first\", \"last\"]], [\"insertRow\", 1, [\"John\", \"Doe\"]], [\"insertRow\", 2, [\"Jane\", \"Smith\"]], [\"deleteRow\", 1, 1], [\"insertRow\", 1, [\"Bob\", \"Johnson\"]], [\"selectCell\", 1, 1], [\"selectCell\", 2, 2]]",
+      "output": "[null, null, null, null, null, \"Bob\", \"Smith\"]"
+    },
+    {
+      "input": "n = 5, operations = [[\"SQL\", [\"a\", \"b\", \"c\", \"d\", \"e\"]], [\"insertRow\", 1, [\"v1\", \"v2\", \"v3\", \"v4\", \"v5\"]], [\"insertRow\", 2, [\"w1\", \"w2\", \"w3\", \"w4\", \"w5\"]], [\"selectCell\", 1, 3], [\"selectCell\", 2, 5]]",
+      "output": "[null, null, null, \"v3\", \"w5\"]"
+    },
+    {
+      "input": "n = 3, operations = [[\"SQL\", [\"x\", \"y\", \"z\"]], [\"insertRow\", 1, [\"a1\", \"b1\", \"c1\"]], [\"insertRow\", 1, [\"a2\", \"b2\", \"c2\"]], [\"insertRow\", 1, [\"a3\", \"b3\", \"c3\"]], [\"deleteRow\", 1, 2], [\"selectCell\", 1, 1], [\"selectCell\", 2, 2]]",
+      "output": "[null, null, null, null, null, \"a1\", \"b3\"]"
+    },
+    {
+      "input": "n = 2, operations = [[\"SQL\", [\"col1\", \"col2\"]], [\"insertRow\", 1, [\"a\", \"b\"]], [\"insertRow\", 1, [\"c\", \"d\"]], [\"insertRow\", 1, [\"e\", \"f\"]], [\"insertRow\", 1, [\"g\", \"h\"]], [\"deleteRow\", 1, 2], [\"deleteRow\", 1, 3], [\"selectCell\", 1, 1], [\"selectCell\", 2, 2]]",
+      "output": "[null, null, null, null, null, null, null, \"a\", \"f\"]"
+    },
+    {
+      "input": "n = 4, operations = [[\"SQL\", [\"id\", \"name\", \"city\", \"country\"]], [\"insertRow\", 1, [\"1\", \"Alice\", \"NYC\", \"USA\"]], [\"insertRow\", 1, [\"2\", \"Bob\", \"LA\", \"USA\"]], [\"selectCell\", 1, 3], [\"selectCell\", 2, 4]]",
+      "output": "[null, null, null, \"NYC\", \"USA\"]"
+    },
+    {
+      "input": "n = 3, operations = [[\"SQL\", [\"a\", \"b\", \"c\"]], [\"insertRow\", 1, [\"x\", \"y\", \"z\"]], [\"deleteRow\", 1, 1], [\"insertRow\", 1, [\"p\", \"q\", \"r\"]], [\"selectCell\", 1, 2]]",
+      "output": "[null, null, null, null, \"q\"]"
+    },
+    {
+      "input": "n = 2, operations = [[\"SQL\", [\"k\", \"v\"]], [\"insertRow\", 1, [\"key\", \"value\"]], [\"selectCell\", 1, 1], [\"selectCell\", 1, 2]]",
+      "output": "[null, null, \"key\", \"value\"]"
+    }
+  ]
 }
