@@ -1,38 +1,23 @@
 """
-Fetch command - Fetch problems from LeetCode.
+Fetch command - Fetch problems from local data and create workspace files.
 """
 
 import click
 
-from pathlib import Path
-
 from bytedojo.core.logger import get_logger
-from bytedojo.core.problem_fetcher import ProblemFetcher, FetchedProblem
+from bytedojo.core import problem_service
+from bytedojo.core.models import Language
 from bytedojo.commands.subcommands.utils import get_initialized_repo, get_default_language
-
-
-def _on_progress(problem: FetchedProblem):
-    """Display progress for a fetched problem."""
-    logger = get_logger()
-
-    if problem.error:
-        logger.error(problem.error)
-    elif problem.skipped:
-        logger.info(f"Problem #{problem.problem_id} ({problem.language}) already registered (use --force to overwrite)")
-    else:
-        logger.info(f"Problem #{problem.problem_id}: {problem.title} ({problem.language})")
-        logger.info(f"  Saved to: {problem.file_path}")
 
 
 @click.command()
 @click.argument('arguments', nargs=-1, required=True)
-@click.option('--output-dir', type=click.Path(path_type=Path), default='problems', help='Output directory for problem files')
 @click.option('--force', is_flag=True, help='Overwrite existing problems')
-@click.option('--python', '-py', 'language', flag_value='python', help='Fetch as Python')
+@click.option('--python', '-py', 'language', flag_value='python3', help='Fetch as Python')
 @click.option('--java', 'language', flag_value='java', help='Fetch as Java')
 @click.option('--cpp', 'language', flag_value='cpp', help='Fetch as C++')
 @click.pass_obj
-def fetch(ctx, arguments: tuple, output_dir: Path, force: bool, language: str | None):
+def fetch(ctx, arguments: tuple, force: bool, language: str | None):
     """
     Fetch LeetCode problems.
 
@@ -54,24 +39,43 @@ def fetch(ctx, arguments: tuple, output_dir: Path, force: bool, language: str | 
     if language is None:
         language = get_default_language()
 
+    # Parse language enum
+    lang = Language.from_string(language)
+    if lang == Language.UNKNOWN:
+        raise click.ClickException(f"Unknown language: {language}")
+
     # Parse problem IDs
-    try:
-        problem_ids = ProblemFetcher.parse_problem_ids(arguments)
-    except ValueError as e:
-        raise click.ClickException(str(e))
+    problem_ids = problem_service.parse_problem_ids(arguments)
+    if not problem_ids:
+        raise click.ClickException("No problem IDs provided")
 
-    logger.info(f"Fetching problems as {language.upper()}")
+    logger.info(f"Fetching {len(problem_ids)} problem(s) as {language.upper()}")
 
-    # Use fetching service
-    fetcher = ProblemFetcher(repo)
-    result = fetcher.fetch(
-        problem_ids=problem_ids,
-        language=language,
-        output_dir=output_dir,
-        force=force,
-        on_progress=_on_progress
-    )
+    # Track results
+    success_count = 0
+    skip_count = 0
+    error_count = 0
+
+    # Fetch each problem
+    for pid in problem_ids:
+        result = problem_service.place_problem(
+            problem_id=pid,
+            language=lang,
+            repo=repo,
+            force=force
+        )
+
+        if result.error:
+            logger.error(f"Problem #{pid}: {result.error}")
+            error_count += 1
+        elif result.skipped:
+            logger.info(f"Problem #{pid} ({language}) already registered (use --force to overwrite)")
+            skip_count += 1
+        else:
+            logger.info(f"Problem #{pid}: {result.title} ({language})")
+            logger.info(f"  Saved to: {result.file_path}")
+            success_count += 1
 
     # Summary
     logger.info("")
-    logger.info(f"Fetch complete: {result.success_count} fetched, {result.skip_count} skipped ({language})")
+    logger.info(f"Fetch complete: {success_count} fetched, {skip_count} skipped, {error_count} errors")

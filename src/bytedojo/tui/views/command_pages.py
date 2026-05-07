@@ -13,7 +13,8 @@ from textual import work
 
 from bytedojo.core.repository import Repository
 from bytedojo.core.database import DatabaseManager
-from bytedojo.core.problem_fetcher import ProblemFetcher
+from bytedojo.core import problem_service
+from bytedojo.core.models import Language
 from bytedojo.core.execution import ProblemExecutor
 from bytedojo.core.grading import GradingService
 from bytedojo.core.review_service import ReviewService
@@ -134,7 +135,7 @@ class FetchPage(BasePage):
             return
 
         try:
-            problem_ids = ProblemFetcher.parse_problem_ids((problem_str,))
+            problem_ids = problem_service.parse_problem_ids((problem_str,))
         except ValueError as e:
             self._show_output(f"Error: {e}")
             return
@@ -150,19 +151,30 @@ class FetchPage(BasePage):
                 self.call_from_thread(self._show_output, "Error: Dojo not initialized")
                 return
 
-            fetcher = ProblemFetcher(repo)
-            with DatabaseManager(repo.db_path) as db:
-                source = db.get_config('default_source', 'leetcode')
-            output_dir = repo.root_dir / source
+            lang = Language.from_string(self._language)
+            if lang == Language.UNKNOWN:
+                self.call_from_thread(self._show_output, f"Error: Unknown language {self._language}")
+                return
 
-            result = fetcher.fetch(
-                problem_ids=problem_ids,
-                language=self._language,
-                output_dir=output_dir,
-                force=False
-            )
+            success_count = 0
+            skip_count = 0
+            error_count = 0
 
-            msg = f"Done: {result.success_count} fetched, {result.skip_count} skipped, {result.error_count} failed"
+            for pid in problem_ids:
+                result = problem_service.place_problem(
+                    problem_id=pid,
+                    language=lang,
+                    repo=repo,
+                    force=False
+                )
+                if result.error:
+                    error_count += 1
+                elif result.skipped:
+                    skip_count += 1
+                else:
+                    success_count += 1
+
+            msg = f"Done: {success_count} fetched, {skip_count} skipped, {error_count} failed"
             self.call_from_thread(self._show_output, msg)
 
         except Exception as e:

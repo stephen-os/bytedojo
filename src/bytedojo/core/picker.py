@@ -11,8 +11,8 @@ from typing import List, Optional, Set
 
 from bytedojo.core.repository import Repository
 from bytedojo.core.database import DatabaseManager
-from bytedojo.core.leetcode_api import LeetCodeAPI
-from bytedojo.core.models import ProblemSummary
+from bytedojo.core import problem_service
+from bytedojo.core.models import ProblemSummary, Difficulty
 
 
 DIFFICULTY_MAP = {
@@ -45,7 +45,6 @@ class ProblemPicker:
             repo: Optional Repository. If None, creates one.
         """
         self.repo = repo or Repository(Path.cwd())
-        self.api = LeetCodeAPI()
 
     def pick(
         self,
@@ -64,14 +63,20 @@ class ProblemPicker:
         Returns:
             PickResult with the picked problem and stats
         """
-        # Convert difficulty to int
-        difficulty_int = None
+        # Map difficulty to enum
+        difficulty_enum = Difficulty.NONE
         if difficulty:
-            difficulty_int = DIFFICULTY_MAP.get(difficulty.lower())
+            difficulty_lower = difficulty.lower()
+            if difficulty_lower in ('easy', '1'):
+                difficulty_enum = Difficulty.EASY
+            elif difficulty_lower in ('medium', '2'):
+                difficulty_enum = Difficulty.MEDIUM
+            elif difficulty_lower in ('hard', '3'):
+                difficulty_enum = Difficulty.HARD
 
-        # Query all matching problems from LeetCode
-        all_problems = self.api.query_problems(
-            difficulty=difficulty_int,
+        # Query all matching problems from local data
+        all_problems = problem_service.query_problems(
+            difficulty=difficulty_enum,
             tags=tags
         )
 
@@ -147,14 +152,20 @@ class ProblemPicker:
         Returns:
             List of unsolved ProblemSummary objects
         """
-        # Convert difficulty to int
-        difficulty_int = None
+        # Map difficulty to enum
+        difficulty_enum = Difficulty.NONE
         if difficulty:
-            difficulty_int = DIFFICULTY_MAP.get(difficulty.lower())
+            difficulty_lower = difficulty.lower()
+            if difficulty_lower in ('easy', '1'):
+                difficulty_enum = Difficulty.EASY
+            elif difficulty_lower in ('medium', '2'):
+                difficulty_enum = Difficulty.MEDIUM
+            elif difficulty_lower in ('hard', '3'):
+                difficulty_enum = Difficulty.HARD
 
-        # Query all matching problems
-        all_problems = self.api.query_problems(
-            difficulty=difficulty_int,
+        # Query all matching problems from local data
+        all_problems = problem_service.query_problems(
+            difficulty=difficulty_enum,
             tags=tags
         )
 

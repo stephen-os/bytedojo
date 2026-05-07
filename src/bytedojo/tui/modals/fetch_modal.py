@@ -11,7 +11,9 @@ from textual import work
 
 from bytedojo.core.repository import Repository
 from bytedojo.core.database import DatabaseManager
-from bytedojo.core.problem_fetcher import ProblemFetcher, FetchedProblem
+from bytedojo.core import problem_service
+from bytedojo.core.problem_service import PlaceResult
+from bytedojo.core.models import Language
 
 
 class FetchModal(ModalScreen):
@@ -330,7 +332,7 @@ class FetchModal(ModalScreen):
 
         # Parse problem IDs
         try:
-            problem_ids = ProblemFetcher.parse_problem_ids((problem_str,))
+            problem_ids = problem_service.parse_problem_ids((problem_str,))
         except ValueError as e:
             self.notify(str(e), title="Error", severity="error")
             return
@@ -368,36 +370,43 @@ class FetchModal(ModalScreen):
                 self.call_from_thread(self._show_error, "Dojo not initialized")
                 return
 
-            fetcher = ProblemFetcher(repo)
+            lang = Language.from_string(language)
+            if lang == Language.UNKNOWN:
+                self.call_from_thread(self._show_error, f"Unknown language: {language}")
+                return
 
-            # Get output directory
-            with DatabaseManager(repo.db_path) as db:
-                default_source = db.get_config('default_source', 'leetcode')
+            success_count = 0
+            skip_count = 0
+            error_count = 0
 
-            output_dir = repo.root_path / default_source
+            for pid in problem_ids:
+                result = problem_service.place_problem(
+                    problem_id=pid,
+                    language=lang,
+                    repo=repo,
+                    force=force
+                )
 
-            def on_progress(result: FetchedProblem):
                 self.call_from_thread(self._update_progress, result)
 
-            result = fetcher.fetch(
-                problem_ids=problem_ids,
-                language=language,
-                output_dir=output_dir,
-                force=force,
-                on_progress=on_progress
-            )
+                if result.error:
+                    error_count += 1
+                elif result.skipped:
+                    skip_count += 1
+                else:
+                    success_count += 1
 
             self.call_from_thread(
                 self._show_result,
-                result.success_count,
-                result.skip_count,
-                result.error_count
+                success_count,
+                skip_count,
+                error_count
             )
 
         except Exception as e:
             self.call_from_thread(self._show_error, str(e))
 
-    def _update_progress(self, result: FetchedProblem) -> None:
+    def _update_progress(self, result: PlaceResult) -> None:
         """Update progress display."""
         self._fetched_count += 1
 
@@ -407,7 +416,12 @@ class FetchModal(ModalScreen):
         progress_bar.update(progress=progress)
 
         # Update text
-        status = "fetched" if result.success and not result.skipped else "skipped" if result.skipped else "failed"
+        if result.error:
+            status = "failed"
+        elif result.skipped:
+            status = "skipped"
+        else:
+            status = "fetched"
         progress_text = self.query_one("#progress-text", Static)
         progress_text.update(f"[{self._fetched_count}/{self._total_problems}] #{result.problem_id} {status}")
 

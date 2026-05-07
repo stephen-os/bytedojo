@@ -1,34 +1,17 @@
 """
-Query service - Search and filter LeetCode problems.
+Query service - Search and filter problems from local data.
 
 This module provides problem querying functionality for both CLI and TUI.
 """
 
 from dataclasses import dataclass
 from pathlib import Path
-from typing import List, Optional
+from typing import List, Optional, Dict
 
 from bytedojo.core.repository import Repository
-from bytedojo.core.database import DatabaseManager
-from bytedojo.core.leetcode_api import LeetCodeAPI
-from bytedojo.core.models import ProblemSummary
-
-
-DIFFICULTY_MAP = {
-    'easy': 1,
-    'medium': 2,
-    'hard': 3,
-    '1': 1,
-    '2': 2,
-    '3': 3,
-}
-
-
-@dataclass
-class ProblemStatus:
-    """Status information for a problem."""
-    problem_id: int
-    status: Optional[str]  # passed, failed, skipped, ungraded, None
+from bytedojo.core.attempt_service import AttemptService
+from bytedojo.core import problem_service
+from bytedojo.core.models import ProblemSummary, Difficulty, Status, Language, AttemptStats
 
 
 @dataclass
@@ -36,11 +19,11 @@ class QueryResult:
     """Result of a problem query."""
     problems: List[ProblemSummary]
     total: int
-    status_map: dict  # problem_id -> status string
+    status_map: Dict[int, Dict[Language, AttemptStats]]  # problem_id -> language -> stats
 
 
 class QueryService:
-    """Service for querying LeetCode problems with local status."""
+    """Service for querying problems from local data with status."""
 
     def __init__(self, repo: Optional[Repository] = None):
         """
@@ -50,33 +33,27 @@ class QueryService:
             repo: Optional Repository. If None, creates one.
         """
         self.repo = repo or Repository(Path.cwd())
-        self.api = LeetCodeAPI()
+        self.attempts = AttemptService(self.repo)
 
     def query(
         self,
-        difficulty: Optional[str] = None,
+        difficulty: Difficulty = Difficulty.NONE,
         tags: Optional[List[str]] = None,
         include_status: bool = True
     ) -> QueryResult:
         """
-        Query problems from LeetCode with optional local status.
+        Query problems from local data with optional status.
 
         Args:
-            difficulty: Filter by difficulty (easy/medium/hard or 1/2/3)
+            difficulty: Filter by difficulty
             tags: Filter by algorithm tags
             include_status: Whether to include local status from database
 
         Returns:
             QueryResult with problems and status map
         """
-        # Convert difficulty to int
-        difficulty_int = None
-        if difficulty:
-            difficulty_int = DIFFICULTY_MAP.get(difficulty.lower())
-
-        # Query from LeetCode
-        problems = self.api.query_problems(
-            difficulty=difficulty_int,
+        problems = problem_service.query_problems(
+            difficulty=difficulty,
             tags=tags
         )
 
@@ -93,76 +70,74 @@ class QueryService:
 
     def get_available_tags(self) -> List[str]:
         """Get list of available algorithm tags."""
-        return self.api.get_available_tags()
+        return problem_service.get_all_tags()
 
-    def _get_status_map(self, problems: List[ProblemSummary]) -> dict:
+    def _get_status_map(
+        self,
+        problems: List[ProblemSummary]
+    ) -> Dict[int, Dict[Language, AttemptStats]]:
         """
-        Get status map for a list of problems from the database.
-
-        Returns the best status across all languages for each problem.
-        Priority: passed > failed > skipped > ungraded
+        Get status map for a list of problems from versioned attempts.
 
         Args:
             problems: List of ProblemSummary objects
 
         Returns:
-            Dict mapping problem_id to status string
+            Dict mapping problem_id to language -> AttemptStats
         """
-        status_map = {}
-
         if not self.repo.is_initialized:
-            return status_map
+            return {}
 
-        with DatabaseManager(self.repo.db_path) as db:
-            for problem in problems:
-                # Check all languages for this problem
-                statuses = []
-                for lang in ['python', 'java', 'cpp']:
-                    db_problem = db.get_problem('leetcode', problem.id, lang)
-                    if db_problem:
-                        statuses.append(db_problem.get('test_status'))
+        # Get all stats at once for efficiency
+        all_stats = self.attempts.get_all_stats()
 
-                if statuses:
-                    # Return best status (passed > failed > skipped > ungraded)
-                    if 'passed' in statuses:
-                        status_map[problem.id] = 'passed'
-                    elif 'failed' in statuses:
-                        status_map[problem.id] = 'failed'
-                    elif 'skipped' in statuses:
-                        status_map[problem.id] = 'skipped'
-                    else:
-                        status_map[problem.id] = statuses[0]  # ungraded/untested
+        # Filter to only requested problems
+        problem_ids = {p.id for p in problems}
+        return {pid: stats for pid, stats in all_stats.items() if pid in problem_ids}
 
-        return status_map
-
-    def get_problem_status(self, problem_id: int) -> Optional[str]:
+    def get_problem_status(self, problem_id: int) -> Status:
         """
-        Get status for a single problem.
+        Get best status for a single problem across all languages.
+
+        Priority: passed > failed > skipped > ungraded > none
 
         Args:
             problem_id: The problem ID
 
         Returns:
-            Status string or None if not in database
+            Status enum value (best status across languages)
         """
-        if not self.repo.is_initialized:
-            return None
+        stats = self.get_problem_stats(problem_id)
+        if not stats:
+            return Status.NONE
 
-        with DatabaseManager(self.repo.db_path) as db:
-            statuses = []
-            for lang in ['python', 'java', 'cpp']:
-                db_problem = db.get_problem('leetcode', problem_id, lang)
-                if db_problem:
-                    statuses.append(db_problem.get('test_status'))
+        # Collect latest statuses from all languages
+        statuses = [s.latest_status for s in stats.values()]
 
-            if not statuses:
-                return None
+        if Status.PASSED in statuses:
+            return Status.PASSED
+        elif Status.FAILED in statuses:
+            return Status.FAILED
+        elif Status.SKIPPED in statuses:
+            return Status.SKIPPED
+        elif Status.UNGRADED in statuses:
+            return Status.UNGRADED
+        else:
+            return Status.NONE
 
-            if 'passed' in statuses:
-                return 'passed'
-            elif 'failed' in statuses:
-                return 'failed'
-            elif 'skipped' in statuses:
-                return 'skipped'
-            else:
-                return statuses[0]
+    def get_problem_stats(
+        self,
+        problem_id: int,
+        language: Optional[Language] = None
+    ) -> Dict[Language, AttemptStats]:
+        """
+        Get detailed attempt stats for a problem.
+
+        Args:
+            problem_id: The problem ID
+            language: Filter by language (None for all)
+
+        Returns:
+            Dict mapping Language to AttemptStats
+        """
+        return self.attempts.get_stats(problem_id, language)
