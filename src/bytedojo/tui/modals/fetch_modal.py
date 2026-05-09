@@ -13,7 +13,7 @@ from bytedojo.core.repository import Repository
 from bytedojo.core.database import DatabaseManager
 from bytedojo.core import problem_service
 from bytedojo.core.problem_service import PlaceResult
-from bytedojo.core.models import Language
+from bytedojo.core.models.code_language import CodeLanguage
 
 
 class FetchModal(ModalScreen):
@@ -370,8 +370,8 @@ class FetchModal(ModalScreen):
                 self.call_from_thread(self._show_error, "Dojo not initialized")
                 return
 
-            lang = Language.from_string(language)
-            if lang == Language.UNKNOWN:
+            lang = CodeLanguage.from_string(language)
+            if lang == CodeLanguage.UNKNOWN:
                 self.call_from_thread(self._show_error, f"Unknown language: {language}")
                 return
 

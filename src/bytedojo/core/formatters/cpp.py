@@ -6,7 +6,9 @@ import re
 from dataclasses import dataclass, field
 from typing import List, Tuple, Optional, Set
 
-from bytedojo.core.models import Problem, Case
+from bytedojo.core.models.code_language import CodeLanguage
+from bytedojo.core.models.problem import Problem
+from bytedojo.core.models.test_case import TestCase
 from bytedojo.core.formatters.base import BaseFormatter
 from bytedojo.core.formatters.utils import (
     html_to_text,
@@ -29,7 +31,7 @@ class CppFormatContext:
     """
     code: str
     description: str
-    test_cases: List[Case]  # Pre-parsed test cases
+    test_cases: List[TestCase]  # Pre-parsed test cases
 
     # Extracted metadata (populated lazily)
     class_name: Optional[str] = None
@@ -232,14 +234,15 @@ class CppFormatter(BaseFormatter):
 
     def format(self, problem: Problem) -> str:
         """Generate complete C++ file content."""
-        self.logger.debug(f"Starting C++ format for problem #{problem.id}: {problem.title}")
+        detail = problem.problem_detail
+        self.logger.debug(f"Starting C++ format for problem #{detail.id}: {detail.title}")
 
         try:
             code_template = self._get_cpp_code(problem)
 
             ctx = CppFormatContext(
                 code=code_template,
-                description=problem.description,
+                description=detail.description,
                 test_cases=problem.test_cases,
                 _logger=self.logger
             )
@@ -249,11 +252,11 @@ class CppFormatter(BaseFormatter):
 
             content = self._build_file_content(problem, code_template, ctx)
 
-            self.logger.debug(f"Successfully formatted problem #{problem.id} as C++")
+            self.logger.debug(f"Successfully formatted problem #{detail.id} as C++")
             return content
 
         except Exception as e:
-            self.logger.error(f"Error formatting problem #{problem.id}: {e}", exc_info=True)
+            self.logger.error(f"Error formatting problem #{detail.id}: {e}", exc_info=True)
             raise
 
     # ========================================================================
@@ -262,13 +265,14 @@ class CppFormatter(BaseFormatter):
 
     def _build_file_content(self, problem: Problem, code_template: str, ctx: CppFormatContext) -> str:
         """Build the complete C++ file content."""
+        detail = problem.problem_detail
         includes = self._generate_includes(ctx)
-        description = self._format_description(problem.description)
+        description = self._format_description(detail.description)
         main_function = self._generate_main_function(ctx)
 
         return f'''/**
- * LeetCode Problem #{problem.id}: {problem.title}
- * Difficulty: {problem.difficulty}
+ * LeetCode Problem #{detail.id}: {detail.title}
+ * Difficulty: {detail.difficulty}
  */
 
 {includes}
@@ -329,7 +333,7 @@ using namespace std;
         else:
             lines.append(f'    {ctx.instance_name}.{ctx.method_name}({args});')
 
-    def _generate_test_call(self, ctx: CppFormatContext, example: Case, index: int) -> List[str]:
+    def _generate_test_call(self, ctx: CppFormatContext, example: TestCase, index: int) -> List[str]:
         """Generate C++ code for a single test case."""
         lines = []
         input_vars = parse_input_variables(example.input)
@@ -398,11 +402,12 @@ using namespace std;
 
     def _get_cpp_code(self, problem: Problem) -> str:
         """Extract and process C++ code."""
-        self.logger.debug(f"Extracting C++ code for problem #{problem.id}")
+        detail = problem.problem_detail
+        self.logger.debug(f"Extracting C++ code for problem #{detail.id}")
 
-        code = problem.get_snippet('C++')
+        code = problem.get_snippet(CodeLanguage.CPP)
         if not code:
-            self.logger.warning(f"No C++ snippet found for problem #{problem.id}")
+            self.logger.warning(f"No C++ snippet found for problem #{detail.id}")
             return "// No C++ template available"
 
         return code

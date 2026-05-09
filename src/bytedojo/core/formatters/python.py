@@ -7,7 +7,9 @@ from dataclasses import dataclass, field
 from typing import List, Tuple, Optional, Dict
 from html import unescape
 
-from bytedojo.core.models import Problem, Case
+from bytedojo.core.models.code_language import CodeLanguage
+from bytedojo.core.models.problem import Problem
+from bytedojo.core.models.test_case import TestCase
 from bytedojo.core.formatters.base import BaseFormatter
 from bytedojo.core.logger import get_logger
 
@@ -23,7 +25,7 @@ class FormatContext:
     """
     code: str
     description: str
-    test_cases: List[Case]  # Pre-parsed test cases
+    test_cases: List[TestCase]  # Pre-parsed test cases
 
     # Extracted metadata (populated lazily)
     class_name: Optional[str] = None
@@ -282,17 +284,18 @@ class PythonFormatter(BaseFormatter):
 
     def format(self, problem: Problem) -> str:
         """Generate complete Python file content."""
-        self.logger.debug(f"Starting format for problem #{problem.id}: {problem.title}")
+        detail = problem.problem_detail
+        self.logger.debug(f"Starting format for problem #{detail.id}: {detail.title}")
 
         try:
             # Extract and process code
             code_template = self._get_python_code(problem)
-            description = self._format_description(problem.description)
+            description = self._format_description(detail.description)
 
             # Create context with all metadata and pre-parsed test examples
             ctx = FormatContext(
                 code=code_template,
-                description=problem.description,
+                description=detail.description,
                 test_cases=problem.test_cases,
                 _logger=self.logger
             )
@@ -300,11 +303,11 @@ class PythonFormatter(BaseFormatter):
             # Build final content
             content = self._build_file_content(problem, description, code_template, ctx)
 
-            self.logger.debug(f"Successfully formatted problem #{problem.id}")
+            self.logger.debug(f"Successfully formatted problem #{detail.id}")
             return content
 
         except Exception as e:
-            self.logger.error(f"Error formatting problem #{problem.id}: {e}", exc_info=True)
+            self.logger.error(f"Error formatting problem #{detail.id}: {e}", exc_info=True)
             raise
     
     # ========================================================================
@@ -314,10 +317,11 @@ class PythonFormatter(BaseFormatter):
     def _build_file_content(self, problem: Problem, description: str, code_template: str, ctx: FormatContext) -> str:
         """Build the complete file content from components."""
         main_block = self._generate_main_block(ctx)
+        detail = problem.problem_detail
 
         return f'''"""
-LeetCode Problem #{problem.id}: {problem.title}
-Difficulty: {problem.difficulty}
+LeetCode Problem #{detail.id}: {detail.title}
+Difficulty: {detail.difficulty}
 """
 
 # ============================================================================
@@ -448,11 +452,12 @@ Difficulty: {problem.difficulty}
     
     def _get_python_code(self, problem: Problem) -> str:
         """Extract and process Python code."""
-        self.logger.debug(f"Extracting Python code for problem #{problem.id}")
-        
-        code = problem.get_snippet('Python3')
+        detail = problem.problem_detail
+        self.logger.debug(f"Extracting Python code for problem #{detail.id}")
+
+        code = problem.get_snippet(CodeLanguage.PYTHON)
         if not code:
-            self.logger.warning(f"No Python3 snippet found for problem #{problem.id}")
+            self.logger.warning(f"No Python3 snippet found for problem #{detail.id}")
             return "# No Python template available"
         
         self.logger.debug("Processing code: uncommenting classes, extracting imports")

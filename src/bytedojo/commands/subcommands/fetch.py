@@ -6,7 +6,7 @@ import click
 
 from bytedojo.core.logger import get_logger
 from bytedojo.core import problem_service
-from bytedojo.core.models import Language
+from bytedojo.core.models.code_language import CodeLanguage
 from bytedojo.commands.subcommands.utils import get_initialized_repo, get_default_language
 
 
@@ -40,8 +40,8 @@ def fetch(ctx, arguments: tuple, force: bool, language: str | None):
         language = get_default_language()
 
     # Parse language enum
-    lang = Language.from_string(language)
-    if lang == Language.UNKNOWN:
+    lang = CodeLanguage.from_string(language)
+    if lang == CodeLanguage.UNKNOWN:
         raise click.ClickException(f"Unknown language: {language}")
 
     # Parse problem IDs

@@ -8,17 +8,19 @@ from pathlib import Path
 from bytedojo.core.logger import get_logger
 from bytedojo.core.repository import Repository
 from bytedojo.core.attempt_service import AttemptService
-from bytedojo.core.models import Difficulty, Status, Tag
+from bytedojo.core.models.problem_difficulty import ProblemDifficulty
+from bytedojo.core.models.problem_status import ProblemStatus
+from bytedojo.core.models.problem_tag import ProblemTag
 from bytedojo.core import problem_service
 
 
 # Status indicators for CLI display
 STATUS_ICONS = {
-    Status.PASSED: click.style('[P]', fg='green'),
-    Status.FAILED: click.style('[F]', fg='red'),
-    Status.SKIPPED: click.style('[S]', fg='yellow'),
-    Status.UNGRADED: click.style('[ ]', fg='bright_black'),
-    Status.NONE: click.style('[ ]', fg='bright_black'),
+    ProblemStatus.PASSED: click.style('[P]', fg='green'),
+    ProblemStatus.FAILED: click.style('[F]', fg='red'),
+    ProblemStatus.SKIPPED: click.style('[S]', fg='yellow'),
+    ProblemStatus.UNGRADED: click.style('[ ]', fg='bright_black'),
+    ProblemStatus.UNKNOWN: click.style('[ ]', fg='bright_black'),
 }
 
 DIFFICULTY_SHORT = {
@@ -32,20 +34,20 @@ def _get_best_status(status_map, problem_id):
     """Get best status for a problem from status_map."""
     lang_stats = status_map.get(problem_id, {})
     if not lang_stats:
-        return Status.NONE
+        return ProblemStatus.UNKNOWN
 
     # Collect latest statuses from all languages
     statuses = [stats.latest_status for stats in lang_stats.values()]
 
-    if Status.PASSED in statuses:
-        return Status.PASSED
-    elif Status.FAILED in statuses:
-        return Status.FAILED
-    elif Status.SKIPPED in statuses:
-        return Status.SKIPPED
-    elif Status.UNGRADED in statuses:
-        return Status.UNGRADED
-    return Status.NONE
+    if ProblemStatus.PASSED in statuses:
+        return ProblemStatus.PASSED
+    elif ProblemStatus.FAILED in statuses:
+        return ProblemStatus.FAILED
+    elif ProblemStatus.SKIPPED in statuses:
+        return ProblemStatus.SKIPPED
+    elif ProblemStatus.UNGRADED in statuses:
+        return ProblemStatus.UNGRADED
+    return ProblemStatus.UNKNOWN
 
 
 def _display_page(all_problems, page, per_page, status_map):
@@ -66,7 +68,7 @@ def _display_page(all_problems, page, per_page, status_map):
     # Display results
     for problem in page_problems:
         status = _get_best_status(status_map, problem.id)
-        status_icon = STATUS_ICONS.get(status, STATUS_ICONS[Status.NONE])
+        status_icon = STATUS_ICONS.get(status, STATUS_ICONS[ProblemStatus.UNKNOWN])
         diff_icon = DIFFICULTY_SHORT.get(problem.difficulty.value, '?')
 
         click.echo(f"{problem.id:>5}  {status_icon}  {diff_icon}  {problem.title}")
@@ -219,23 +221,23 @@ def query(ctx, problem_ids: tuple, difficulty: str, tag: tuple, search: str, pag
             for part in t.split(','):
                 part = part.strip()
                 if part:
-                    all_tags.append(Tag.from_string(part))
+                    all_tags.append(ProblemTag.from_string(part))
         # Filter out UNKNOWN tags
-        tags_list = [t for t in all_tags if t != Tag.UNKNOWN]
+        tags_list = [t for t in all_tags if t != ProblemTag.UNKNOWN]
         if not tags_list:
             logger.warning("No valid tags specified")
             tags_list = None
 
     # Convert difficulty string to enum
-    difficulty_enum = Difficulty.NONE
+    difficulty_enum = ProblemDifficulty.NONE
     if difficulty:
         difficulty_lower = difficulty.lower()
         if difficulty_lower in ('easy', '1'):
-            difficulty_enum = Difficulty.EASY
+            difficulty_enum = ProblemDifficulty.EASY
         elif difficulty_lower in ('medium', '2'):
-            difficulty_enum = Difficulty.MEDIUM
+            difficulty_enum = ProblemDifficulty.MEDIUM
         elif difficulty_lower in ('hard', '3'):
-            difficulty_enum = Difficulty.HARD
+            difficulty_enum = ProblemDifficulty.HARD
 
     # Query problems
     logger.info("Searching problems...")

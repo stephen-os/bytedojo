@@ -7,7 +7,7 @@ This module provides functions to fetch test cases from local JSON files.
 import json
 from typing import Optional, List
 
-from bytedojo.core.models import Case
+from bytedojo.core.models.test_case import TestCase
 from bytedojo.core.paths import get_test_file
 
 
@@ -20,7 +20,7 @@ def _load_test_file(problem_id: int) -> Optional[dict]:
         return json.load(f)
 
 
-def fetch_test_cases(problem_id: int) -> List[Case]:
+def fetch_test_cases(problem_id: int) -> List[TestCase]:
     """
     Fetch test cases for a problem.
 
@@ -28,7 +28,7 @@ def fetch_test_cases(problem_id: int) -> List[Case]:
         problem_id: The problem number
 
     Returns:
-        List of Case objects
+        List of TestCase objects
     """
     data = _load_test_file(problem_id)
     if not data:
@@ -36,7 +36,7 @@ def fetch_test_cases(problem_id: int) -> List[Case]:
 
     input_output = data.get("input_output", [])
     return [
-        Case(input=tc.get("input", ""), output=tc.get("output", ""))
+        TestCase(input=tc.get("input", ""), output=tc.get("output", ""))
         for tc in input_output
     ]
 

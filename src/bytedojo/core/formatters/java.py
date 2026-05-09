@@ -6,7 +6,9 @@ import re
 from dataclasses import dataclass, field
 from typing import List, Tuple, Optional, Dict
 
-from bytedojo.core.models import Problem, Case
+from bytedojo.core.models.code_language import CodeLanguage
+from bytedojo.core.models.problem import Problem
+from bytedojo.core.models.test_case import TestCase
 from bytedojo.core.formatters.base import BaseFormatter
 from bytedojo.core.formatters.utils import (
     html_to_text,
@@ -29,7 +31,7 @@ class JavaFormatContext:
     """
     code: str
     description: str
-    test_cases: List[Case]  # Pre-parsed test cases
+    test_cases: List[TestCase]  # Pre-parsed test cases
 
     # Extracted metadata (populated lazily)
     class_name: Optional[str] = None
@@ -186,14 +188,15 @@ class JavaFormatter(BaseFormatter):
 
     def format(self, problem: Problem) -> str:
         """Generate complete Java file content."""
-        self.logger.debug(f"Starting Java format for problem #{problem.id}: {problem.title}")
+        detail = problem.problem_detail
+        self.logger.debug(f"Starting Java format for problem #{detail.id}: {detail.title}")
 
         try:
             code_template = self._get_java_code(problem)
 
             ctx = JavaFormatContext(
                 code=code_template,
-                description=problem.description,
+                description=detail.description,
                 test_cases=problem.test_cases,
                 _logger=self.logger
             )
@@ -203,11 +206,11 @@ class JavaFormatter(BaseFormatter):
 
             content = self._build_file_content(problem, code_template, ctx)
 
-            self.logger.debug(f"Successfully formatted problem #{problem.id} as Java")
+            self.logger.debug(f"Successfully formatted problem #{detail.id} as Java")
             return content
 
         except Exception as e:
-            self.logger.error(f"Error formatting problem #{problem.id}: {e}", exc_info=True)
+            self.logger.error(f"Error formatting problem #{detail.id}: {e}", exc_info=True)
             raise
 
     # ========================================================================
@@ -216,15 +219,16 @@ class JavaFormatter(BaseFormatter):
 
     def _build_file_content(self, problem: Problem, code_template: str, ctx: JavaFormatContext) -> str:
         """Build the complete Java file content."""
+        detail = problem.problem_detail
         imports = self._generate_imports(ctx)
-        description = self._format_description(problem.description)
+        description = self._format_description(detail.description)
         main_class = self._generate_main_class(ctx)
 
         imports_section = '\n'.join(imports) + '\n\n' if imports else ''
 
         return f'''/**
- * LeetCode Problem #{problem.id}: {problem.title}
- * Difficulty: {problem.difficulty}
+ * LeetCode Problem #{detail.id}: {detail.title}
+ * Difficulty: {detail.difficulty}
  */
 
 {imports_section}// ============================================================================
@@ -304,7 +308,7 @@ class JavaFormatter(BaseFormatter):
 
         return '\n'.join(lines)
 
-    def _generate_test_call(self, ctx: JavaFormatContext, example: Case, index: int) -> List[str]:
+    def _generate_test_call(self, ctx: JavaFormatContext, example: TestCase, index: int) -> List[str]:
         """Generate Java code for a single test case."""
         lines = []
         input_vars = parse_input_variables(example.input)
@@ -349,11 +353,12 @@ class JavaFormatter(BaseFormatter):
 
     def _get_java_code(self, problem: Problem) -> str:
         """Extract and process Java code."""
-        self.logger.debug(f"Extracting Java code for problem #{problem.id}")
+        detail = problem.problem_detail
+        self.logger.debug(f"Extracting Java code for problem #{detail.id}")
 
-        code = problem.get_snippet('Java')
+        code = problem.get_snippet(CodeLanguage.JAVA)
         if not code:
-            self.logger.warning(f"No Java snippet found for problem #{problem.id}")
+            self.logger.warning(f"No Java snippet found for problem #{detail.id}")
             return "// No Java template available"
 
         return code

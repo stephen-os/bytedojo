@@ -14,7 +14,8 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import List, Optional
 
-from bytedojo.core.models import Case, Language
+from bytedojo.core.models.code_language import CodeLanguage
+from bytedojo.core.models.test_case import TestCase
 from bytedojo.core.test_fetcher import fetch_test_cases
 from bytedojo.core.problem_service import get_problem
 from bytedojo.core.container import PodmanManager, PodmanNotFoundError, ContainerError
@@ -115,7 +116,7 @@ def run_tests(
         )
 
     # Get code snippet and extract method name
-    lang_enum = Language.from_string(language)
+    lang_enum = CodeLanguage.from_string(language)
     code_snippet = problem.get_snippet(lang_enum)
 
     if not code_snippet:
@@ -249,7 +250,7 @@ def run_tests(
 
 def _parse_harness_output(
     stdout: str,
-    test_cases: List[Case],
+    test_cases: List[TestCase],
     problem_id: int,
     language: str
 ) -> TestRunResult:

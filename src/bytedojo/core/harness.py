@@ -16,7 +16,7 @@ from typing import List, Dict, Any, Optional
 
 import yaml
 
-from bytedojo.core.models import Case
+from bytedojo.core.models.test_case import TestCase
 
 
 # Package data directory (relative to this file)
@@ -196,7 +196,7 @@ def generate_test_code(
 
 def prepare_test_input(
     method_name: str,
-    test_cases: List[Case],
+    test_cases: List[TestCase],
     language: str = "python3"
 ) -> dict:
     """

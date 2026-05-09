@@ -14,7 +14,7 @@ from textual import work
 from bytedojo.core.repository import Repository
 from bytedojo.core.database import DatabaseManager
 from bytedojo.core import problem_service
-from bytedojo.core.models import Language
+from bytedojo.core.models.code_language import CodeLanguage
 from bytedojo.core.execution import ProblemExecutor
 from bytedojo.core.grading import GradingService
 from bytedojo.core.review_service import ReviewService
@@ -151,8 +151,8 @@ class FetchPage(BasePage):
                 self.call_from_thread(self._show_output, "Error: Dojo not initialized")
                 return
 
-            lang = Language.from_string(self._language)
-            if lang == Language.UNKNOWN:
+            lang = CodeLanguage.from_string(self._language)
+            if lang == CodeLanguage.UNKNOWN:
                 self.call_from_thread(self._show_output, f"Error: Unknown language {self._language}")
                 return
 

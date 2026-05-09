@@ -13,7 +13,10 @@ from typing import List, Optional, Dict
 from bytedojo.core.repository import Repository
 from bytedojo.core.database import DatabaseManager
 from bytedojo.core import problem_service
-from bytedojo.core.models import Attempt, AttemptStats, Language, Status
+from bytedojo.core.models.attempt import Attempt
+from bytedojo.core.models.attempt_stats import AttemptStats
+from bytedojo.core.models.code_language import CodeLanguage
+from bytedojo.core.models.problem_status import ProblemStatus
 
 
 class AttemptService:
@@ -31,7 +34,7 @@ class AttemptService:
     def create_attempt(
         self,
         problem_id: int,
-        language: Language,
+        language: CodeLanguage,
         source: str = "leetcode"
     ) -> Optional[Attempt]:
         """
@@ -75,7 +78,7 @@ class AttemptService:
                 problem_id=problem_id,
                 language=language,
                 version=version,
-                status=Status.UNGRADED,
+                status=ProblemStatus.UNGRADED,
                 created_at=datetime.now(),
                 run_count=0,
                 notes=""
@@ -84,7 +87,7 @@ class AttemptService:
     def get_attempt(
         self,
         problem_id: int,
-        language: Language,
+        language: CodeLanguage,
         version: Optional[int] = None,
         source: str = "leetcode"
     ) -> Optional[Attempt]:
@@ -113,7 +116,7 @@ class AttemptService:
     def list_attempts(
         self,
         problem_id: int,
-        language: Optional[Language] = None,
+        language: Optional[CodeLanguage] = None,
         source: str = "leetcode"
     ) -> List[Attempt]:
         """
@@ -138,9 +141,9 @@ class AttemptService:
     def update_status(
         self,
         problem_id: int,
-        language: Language,
+        language: CodeLanguage,
         version: int,
-        status: Status,
+        status: ProblemStatus,
         source: str = "leetcode"
     ) -> bool:
         """
@@ -167,7 +170,7 @@ class AttemptService:
     def increment_run_count(
         self,
         problem_id: int,
-        language: Language,
+        language: CodeLanguage,
         version: int,
         source: str = "leetcode"
     ) -> bool:
@@ -192,9 +195,9 @@ class AttemptService:
     def get_stats(
         self,
         problem_id: int,
-        language: Optional[Language] = None,
+        language: Optional[CodeLanguage] = None,
         source: str = "leetcode"
-    ) -> Dict[Language, AttemptStats]:
+    ) -> Dict[CodeLanguage, AttemptStats]:
         """
         Get aggregated stats for a problem.
 
@@ -215,14 +218,14 @@ class AttemptService:
 
             result = {}
             for lang_key, stats in raw_stats.items():
-                lang = Language.from_string(lang_key)
-                if lang != Language.UNKNOWN:
+                lang = CodeLanguage.from_string(lang_key)
+                if lang != CodeLanguage.UNKNOWN:
                     result[lang] = AttemptStats(
                         problem_id=problem_id,
                         language=lang,
                         total_attempts=stats['total_attempts'],
                         latest_version=stats['latest_version'],
-                        latest_status=Status.from_string(stats['latest_status']),
+                        latest_status=ProblemStatus.from_string(stats['latest_status']),
                         pass_count=stats['pass_count'],
                         fail_count=stats['fail_count'],
                         skip_count=stats['skip_count'],
@@ -234,7 +237,7 @@ class AttemptService:
     def get_all_stats(
         self,
         source: str = "leetcode"
-    ) -> Dict[int, Dict[Language, AttemptStats]]:
+    ) -> Dict[int, Dict[CodeLanguage, AttemptStats]]:
         """
         Get stats for all problems with attempts.
 
@@ -254,14 +257,14 @@ class AttemptService:
             for pid, lang_stats in raw_stats.items():
                 result[pid] = {}
                 for lang_key, stats in lang_stats.items():
-                    lang = Language.from_string(lang_key)
-                    if lang != Language.UNKNOWN:
+                    lang = CodeLanguage.from_string(lang_key)
+                    if lang != CodeLanguage.UNKNOWN:
                         result[pid][lang] = AttemptStats(
                             problem_id=pid,
                             language=lang,
                             total_attempts=stats['total_attempts'],
                             latest_version=stats['latest_version'],
-                            latest_status=Status.from_string(stats['latest_status']),
+                            latest_status=ProblemStatus.from_string(stats['latest_status']),
                             pass_count=stats['pass_count'],
                             fail_count=stats['fail_count'],
                             skip_count=stats['skip_count'],
@@ -273,7 +276,7 @@ class AttemptService:
     def get_attempt_path(
         self,
         problem_id: int,
-        language: Language,
+        language: CodeLanguage,
         version: Optional[int] = None
     ) -> Optional[Path]:
         """
@@ -298,7 +301,7 @@ class AttemptService:
     def _get_attempt_path(
         self,
         problem_id: int,
-        language: Language,
+        language: CodeLanguage,
         version: int
     ) -> Path:
         """
@@ -327,15 +330,15 @@ class AttemptService:
         if isinstance(created_at, str):
             created_at = datetime.fromisoformat(created_at)
 
-        lang = Language.from_string(data['language'])
-        if lang == Language.UNKNOWN:
-            lang = Language.PYTHON3  # fallback
+        lang = CodeLanguage.from_string(data['language'])
+        if lang == CodeLanguage.UNKNOWN:
+            lang = CodeLanguage.PYTHON  # fallback
 
         return Attempt(
             problem_id=data['problem_id'],
             language=lang,
             version=data['version'],
-            status=Status.from_string(data.get('status')),
+            status=ProblemStatus.from_string(data.get('status')),
             created_at=created_at or datetime.now(),
             run_count=data.get('run_count', 0),
             notes=data.get('notes', '')

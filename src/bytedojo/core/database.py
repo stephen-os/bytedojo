@@ -9,7 +9,7 @@ from pathlib import Path
 from typing import Optional, List, Dict, Any
 from datetime import datetime
 
-from bytedojo.core.models import Problem
+from bytedojo.core.models.problem import Problem
 from bytedojo.core.logger import get_logger
 
 
@@ -198,8 +198,10 @@ class DatabaseManager:
         """
         cursor = self.conn.cursor()
 
+        detail = problem.problem_detail
+
         # Check if already exists
-        if self.is_problem_registered(source, problem.id, language) and not force:
+        if self.is_problem_registered(source, detail.id, language) and not force:
             return False
 
         # Insert or replace
@@ -210,13 +212,13 @@ class DatabaseManager:
             ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         """, (
             source,
-            str(problem.id),
+            str(detail.id),
             language,
-            problem.title,
-            problem.difficulty,
+            detail.title,
+            detail.difficulty,
             None,  # category - TODO: extract from tags
             None,  # tags - TODO: extract from problem data
-            problem.description,
+            detail.description,
             str(file_path) if file_path else None,
             datetime.now().isoformat()
         ))

@@ -76,7 +76,7 @@ def pick(ctx, difficulty: str, tag: tuple):
             tags_display += f" (+{len(problem.tags) - 5} more)"
         click.echo(f"  Tags: {tags_display}")
 
-    click.echo(f"  URL: https://leetcode.com/problems/{problem.title_slug}/")
+    click.echo(f"  URL: https://leetcode.com/problems/{problem.slug}/")
     click.echo("")
     click.echo(click.style("-" * 60, fg='bright_black'))
     click.echo(f"  Unsolved: {result.unsolved_count} | Solved: {result.solved_count} | Total: {result.total_count}")

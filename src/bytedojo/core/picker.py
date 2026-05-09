@@ -12,7 +12,8 @@ from typing import List, Optional, Set
 from bytedojo.core.repository import Repository
 from bytedojo.core.database import DatabaseManager
 from bytedojo.core import problem_service
-from bytedojo.core.models import ProblemDetail, Difficulty
+from bytedojo.core.models.problem_detail import ProblemDetail
+from bytedojo.core.models.problem_difficulty import ProblemDifficulty
 
 
 DIFFICULTY_MAP = {
@@ -62,15 +63,15 @@ class ProblemPicker:
             PickResult with the picked problem and stats
         """
         # Map difficulty to enum
-        difficulty_enum = Difficulty.NONE
+        difficulty_enum = ProblemDifficulty.NONE
         if difficulty:
             difficulty_lower = difficulty.lower()
             if difficulty_lower in ('easy', '1'):
-                difficulty_enum = Difficulty.EASY
+                difficulty_enum = ProblemDifficulty.EASY
             elif difficulty_lower in ('medium', '2'):
-                difficulty_enum = Difficulty.MEDIUM
+                difficulty_enum = ProblemDifficulty.MEDIUM
             elif difficulty_lower in ('hard', '3'):
-                difficulty_enum = Difficulty.HARD
+                difficulty_enum = ProblemDifficulty.HARD
 
         # Query all matching problems from local data
         all_problems = problem_service.query_problems(
@@ -137,15 +138,15 @@ class ProblemPicker:
             List of unsolved ProblemDetail objects
         """
         # Map difficulty to enum
-        difficulty_enum = Difficulty.NONE
+        difficulty_enum = ProblemDifficulty.NONE
         if difficulty:
             difficulty_lower = difficulty.lower()
             if difficulty_lower in ('easy', '1'):
-                difficulty_enum = Difficulty.EASY
+                difficulty_enum = ProblemDifficulty.EASY
             elif difficulty_lower in ('medium', '2'):
-                difficulty_enum = Difficulty.MEDIUM
+                difficulty_enum = ProblemDifficulty.MEDIUM
             elif difficulty_lower in ('hard', '3'):
-                difficulty_enum = Difficulty.HARD
+                difficulty_enum = ProblemDifficulty.HARD
 
         # Query all matching problems from local data
         all_problems = problem_service.query_problems(
