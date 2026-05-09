@@ -1,0 +1,682 @@
+{
+  "id": 3382,
+  "title": "Maximum Area Rectangle With Point Constraints II",
+  "slug": "maximum-area-rectangle-with-point-constraints-ii",
+  "difficulty": "Hard",
+  "description": "There are n points on an infinite plane. You are given two integer arrays xCoord and yCoord where (xCoord[i], yCoord[i]) represents the coordinates of the ith point.\nYour task is to find the maximum area of a rectangle that:\nReturn the maximum area that you can obtain or -1 if no such rectangle is possible.\nExample 1:\nExample 2:\nExample 3:\nConstraints:",
+  "examples": [
+    {
+      "example_num": 1,
+      "example_text": "Input: xCoord = [1,1,3,3], yCoord = [1,3,1,3]\nOutput: 4\nExplanation:\n\nWe can make a rectangle with these 4 points as corners and there is no other point that lies inside or on the border. Hence, the maximum possible area would be 4.",
+      "images": [
+        "https://assets.leetcode.com/uploads/2024/11/02/example1.png"
+      ]
+    },
+    {
+      "example_num": 2,
+      "example_text": "Input: xCoord = [1,1,3,3,2], yCoord = [1,3,1,3,2]\nOutput: -1\nExplanation:\n\nThere is only one rectangle possible is with points [1,1], [1,3], [3,1] and [3,3] but [2,2] will always lie inside it. Hence, returning -1.",
+      "images": [
+        "https://assets.leetcode.com/uploads/2024/11/02/example2.png"
+      ]
+    },
+    {
+      "example_num": 3,
+      "example_text": "Input: xCoord = [1,1,3,3,1,3], yCoord = [1,3,1,3,2,2]\nOutput: 2\nExplanation:\n\nThe maximum area rectangle is formed by the points [1,3], [1,2], [3,2], [3,3] , which has an area of 2. Additionally, the points [1,1], [1,2], [3,1], [3,2] also form a valid rectangle with the same area.",
+      "images": [
+        "https://assets.leetcode.com/uploads/2024/11/02/example3.png"
+      ]
+    }
+  ],
+  "constraints": [
+    "1 <= xCoord.length == yCoord.length <= 2 * 105",
+    "0 <= xCoord[i], yCoord[i] <= 8 * 107",
+    "All the given points are unique."
+  ],
+  "hints": [
+    "Process the points by sorting them based on their x-coordinates.",
+    "For each x-coordinate, sort the corresponding points by y and select two consecutive points y1 and y2 (y1 < y2).",
+    "Identify the closest x-coordinate (greater than the current x) where some y-coordinates lie in [y1, y2].",
+    "Use a segment tree to efficiently locate the nearest x-coordinate.",
+    "Check if the points form a valid rectangle. How?"
+  ],
+  "code_snippets": {
+    "cpp": "class Solution {\npublic:\n    long long maxRectangleArea(vector<int>& xCoord, vector<int>& yCoord) {\n        \n    }\n};",
+    "java": "class Solution {\n    public long maxRectangleArea(int[] xCoord, int[] yCoord) {\n        \n    }\n}",
+    "python3": "class Solution:\n    def maxRectangleArea(self, xCoord: List[int], yCoord: List[int]) -> int:\n        ",
+    "javascript": "/**\n * @param {number[]} xCoord\n * @param {number[]} yCoord\n * @return {number}\n */\nvar maxRectangleArea = function(xCoord, yCoord) {\n    \n};",
+    "typescript": "function maxRectangleArea(xCoord: number[], yCoord: number[]): number {\n    \n};",
+    "golang": "func maxRectangleArea(xCoord []int, yCoord []int) int64 {\n    \n}",
+    "rust": "impl Solution {\n    pub fn max_rectangle_area(x_coord: Vec<i32>, y_coord: Vec<i32>) -> i64 {\n        \n    }\n}"
+  },
+  "entry_points": {
+    "python3": "Solution().maxRectangleArea",
+    "cpp": "Solution().maxRectangleArea",
+    "java": "new Solution().maxRectangleArea",
+    "javascript": "maxRectangleArea",
+    "typescript": "maxRectangleArea",
+    "golang": "maxRectangleArea",
+    "rust": "Solution::max_rectangle_area"
+  },
+  "test_snippets": {
+    "python3": "def check(candidate):\n    assert candidate(xCoord = [5,5,7,7], yCoord = [5,7,5,7]) == 4\n    assert candidate(xCoord = [1,1,10,10], yCoord = [1,10,1,10]) == 81\n    assert candidate(xCoord = [1,1,3,3,1,3], yCoord = [1,3,1,3,2,2]) == 2\n    assert candidate(xCoord = [0,0,80000000,80000000], yCoord = [0,80000000,0,80000000]) == 6400000000000000\n    assert candidate(xCoord = [1,1,3,3,5,5], yCoord = [1,3,1,3,1,3]) == 4\n    assert candidate(xCoord = [1,2,3,4,5], yCoord = [1,2,3,4,5]) == -1\n    assert candidate(xCoord = [1,1,1,1], yCoord = [1,1,1,1]) == -1\n    assert candidate(xCoord = [5,5,10,10], yCoord = [5,10,5,10]) == 25\n    assert candidate(xCoord = [0,0,2,2], yCoord = [0,2,0,2]) == 4\n    assert candidate(xCoord = [1,1,3,3,4,4], yCoord = [1,3,1,3,2,3]) == 4\n    assert candidate(xCoord = [1,1,3,3,2], yCoord = [1,3,1,3,2]) == -1\n    assert candidate(xCoord = [0,0,2,2,4,4], yCoord = [0,2,0,2,0,2]) == 4\n    assert candidate(xCoord = [10,10,20,20], yCoord = [10,20,10,20]) == 100\n    assert candidate(xCoord = [0,0,8,8,4,4], yCoord = [0,8,0,8,4,4]) == -1\n    assert candidate(xCoord = [5,5,7,7,6], yCoord = [5,7,5,7,6]) == -1\n    assert candidate(xCoord = [5,5,15,15], yCoord = [5,15,5,15]) == 100\n    assert candidate(xCoord = [1,1,3,3], yCoord = [1,3,1,3]) == 4\n    assert candidate(xCoord = [1,2,3,4], yCoord = [1,1,1,1]) == -1\n    assert candidate(xCoord = [1,2,3,4,5,6,7,8], yCoord = [1,2,3,4,5,6,7,8]) == -1\n    assert candidate(xCoord = [1,1,1,1], yCoord = [1,2,3,4]) == -1\n    assert candidate(xCoord = [10,20,30,40], yCoord = [10,20,30,40]) == -1\n    assert candidate(xCoord = [1,1,3,3,5,5,7,7,9,9], yCoord = [1,3,1,3,5,7,5,7,9,9]) == 4\n    assert candidate(xCoord = [0, 0, 100000000, 100000000], yCoord = [0, 100000000, 0, 100000000]) == 10000000000000000\n    assert candidate(xCoord = [10,20,30,40,50,60,70,80,90,100], yCoord = [10,20,30,40,50,60,70,80,90,100]) == -1\n    assert candidate(xCoord = [1, 1, 5, 5, 10, 10, 15, 15], yCoord = [1, 10, 1, 10, 1, 10, 1, 10]) == 45\n    assert candidate(xCoord = [1,1,3,3,5,5,7,7,9,9,11,11,13,13], yCoord = [1,9,1,9,5,5,7,7,3,3,11,11,13,13]) == 16\n    assert candidate(xCoord = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20], yCoord = [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]) == -1\n    assert candidate(xCoord = [1, 1, 2, 2, 4, 4, 6, 6], yCoord = [1, 3, 1, 3, 1, 3, 1, 3]) == 4\n    assert candidate(xCoord = [10,10,20,20,30,30,40,40], yCoord = [10,20,10,20,10,20,10,20]) == 100\n    assert candidate(xCoord = [0,0,100000000,100000000], yCoord = [0,100000000,0,100000000]) == 10000000000000000\n    assert candidate(xCoord = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20], yCoord = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]) == -1\n    assert candidate(xCoord = [1,1,2,2,4,4,5,5,6,6,8,8,9,9], yCoord = [1,9,1,9,5,5,7,7,3,3,11,11,13,13]) == 8\n    assert candidate(xCoord = [1,1,3,3,5,5,7,7,9,9,11,11,13,13,15,15,17,17,19,19], yCoord = [1,3,1,3,1,3,1,3,1,3,1,3,1,3,1,3,1,3,1,3]) == 4\n    assert candidate(xCoord = [1,1,10,10,5,5], yCoord = [1,10,1,10,5,5]) == -1\n    assert candidate(xCoord = [5,5,15,15,25,25,35,35,45,45], yCoord = [5,45,5,45,5,45,5,45,5,45]) == 400\n    assert candidate(xCoord = [10000000, 10000000, 20000000, 20000000, 30000000, 30000000, 40000000, 40000000], yCoord = [10000000, 20000000, 10000000, 20000000, 10000000, 20000000, 10000000, 20000000]) == 100000000000000\n    assert candidate(xCoord = [1, 4, 4, 1, 7, 7, 10, 10], yCoord = [1, 1, 5, 5, 3, 8, 3, 8]) == 15\n    assert candidate(xCoord = [5,5,6,6,7,7,8,8], yCoord = [5,6,5,6,7,8,7,8]) == 1\n    assert candidate(xCoord = [1,1,2,2,3,3,4,4,5,5,6,6,7,7,8,8,9,9,10,10], yCoord = [1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2]) == 1\n    assert candidate(xCoord = [1,1,1,1,1,1,1,1,1,1,3,3,3,3,3,3,3,3,3,3], yCoord = [1,2,3,4,5,6,7,8,9,10,1,2,3,4,5,6,7,8,9,10]) == 2\n    assert candidate(xCoord = [2,2,4,4,6,6,8,8,10,10], yCoord = [2,4,2,4,6,8,6,8,10,10]) == 4\n    assert candidate(xCoord = [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1], yCoord = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]) == -1\n    assert candidate(xCoord = [0,0,8,8,4,4,6,6,2,2,7,7,3,3,5,5], yCoord = [0,8,0,8,4,6,4,6,2,7,2,7,3,5,3,5]) == -1\n    assert candidate(xCoord = [2, 2, 5, 5, 3, 3, 4, 4], yCoord = [2, 5, 2, 5, 3, 3, 4, 4]) == -1\n    assert candidate(xCoord = [10, 10, 30, 30, 20, 20, 25, 25], yCoord = [10, 30, 10, 30, 15, 15, 25, 25]) == -1\n    assert candidate(xCoord = [1, 4, 4, 1, 6, 6, 9, 9, 3, 3, 12, 12], yCoord = [1, 1, 5, 5, 3, 7, 3, 7, 2, 4, 2, 4]) == 12\n    assert candidate(xCoord = [5,5,15,15,25,25,35,35,45,45], yCoord = [5,15,5,15,25,25,35,35,45,45]) == 100\n    assert candidate(xCoord = [1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8, 9, 9, 10, 10], yCoord = [1, 5, 1, 5, 1, 5, 1, 5, 1, 5, 1, 5, 1, 5, 1, 5, 1, 5, 1, 5]) == 4\n    assert candidate(xCoord = [1, 3, 5, 7, 9, 11, 13, 15, 17, 19], yCoord = [1, 3, 5, 7, 9, 11, 13, 15, 17, 19]) == -1\n    assert candidate(xCoord = [5,5,10,10,15,15,20,20,25,25], yCoord = [5,10,5,10,5,10,5,10,5,10]) == 25\n    assert candidate(xCoord = [1,2,3,4,5,6,7,8,9,10], yCoord = [1,2,3,4,5,6,7,8,9,10]) == -1\n    assert candidate(xCoord = [1,1,1,1,3,3,3,3,5,5,5,5], yCoord = [1,3,5,7,1,3,5,7,1,3,5,7]) == 4\n    assert candidate(xCoord = [2, 2, 4, 4, 6, 6, 8, 8], yCoord = [2, 6, 2, 6, 2, 6, 2, 6]) == 8\n    assert candidate(xCoord = [1,1,3,3,5,5,7,7,9,9,11,11,13,13], yCoord = [1,3,1,3,5,7,5,7,9,11,9,11,13,13]) == 4\n    assert candidate(xCoord = [0,0,0,0,10,10,10,10,20,20,20,20], yCoord = [0,10,20,30,0,10,20,30,0,10,20,30]) == 100\n    assert candidate(xCoord = [2,2,4,4,6,6,8,8], yCoord = [2,8,2,8,2,8,2,8]) == 12\n    assert candidate(xCoord = [10,10,30,30,20,20,40,40], yCoord = [10,30,10,30,20,40,20,40]) == -1\n    assert candidate(xCoord = [1, 1, 2, 2, 3, 3, 4, 4, 5, 5], yCoord = [1, 2, 1, 2, 1, 2, 1, 2, 1, 2]) == 1\n    assert candidate(xCoord = [1,1,3,3,1,1,3,3,2,2,4,4], yCoord = [1,3,1,3,2,4,2,4,1,3,1,3]) == -1\n    assert candidate(xCoord = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10], yCoord = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]) == -1\n    assert candidate(xCoord = [100, 100, 150, 150, 120, 120, 130, 130], yCoord = [100, 150, 100, 150, 120, 130, 120, 130]) == 100\n    assert candidate(xCoord = [10, 10, 20, 20, 30, 30, 40, 40], yCoord = [10, 20, 10, 20, 10, 20, 10, 20]) == 100\n    assert candidate(xCoord = [10,10,20,20,30,30,40,40,50,50], yCoord = [10,50,10,50,30,30,40,40,20,20]) == 400\n    assert candidate(xCoord = [0, 0, 80000000, 80000000], yCoord = [0, 80000000, 0, 80000000]) == 6400000000000000\n    assert candidate(xCoord = [1,1,3,3,5,5,7,7,9,9,11,11,13,13], yCoord = [1,13,1,13,1,13,1,13,1,13,1,13,1,13]) == 24\n    assert candidate(xCoord = [1, 1, 3, 3, 5, 5, 7, 7], yCoord = [1, 3, 1, 3, 1, 3, 1, 3]) == 4\n    assert candidate(xCoord = [1, 1, 5, 5, 10, 10, 15, 15, 20, 20, 25, 25], yCoord = [1, 5, 1, 5, 1, 5, 1, 5, 1, 5, 1, 5]) == 20\n    assert candidate(xCoord = [1, 1, 10, 10, 5, 5, 7, 7, 3, 3], yCoord = [1, 10, 1, 10, 5, 5, 7, 7, 3, 3]) == -1\n    assert candidate(xCoord = [1,2,3,4,5,6,7,8,9,10], yCoord = [1,1,1,1,1,1,1,1,1,1]) == -1\n    assert candidate(xCoord = [1,5,5,9,9,13], yCoord = [1,5,1,5,1,5]) == 16\n    assert candidate(xCoord = [1, 1, 9, 9, 5, 5, 3, 3, 7, 7, 6, 6, 4, 4, 8, 8], yCoord = [1, 9, 1, 9, 5, 5, 3, 3, 7, 7, 6, 6, 4, 4, 8, 8]) == -1\n    assert candidate(xCoord = [0, 0, 2, 2, 4, 4, 6, 6], yCoord = [0, 2, 0, 2, 0, 2, 0, 2]) == 4\n    assert candidate(xCoord = [0,0,1,1,2,2,3,3], yCoord = [0,1,0,1,0,1,0,1]) == 1\n    assert candidate(xCoord = [1,3,5,7,9,11,13,15], yCoord = [1,3,5,7,9,11,13,15]) == -1\n    assert candidate(xCoord = [1,1,2,2,3,3,4,4,5,5], yCoord = [1,5,1,5,1,5,1,5,1,5]) == 4\n    assert candidate(xCoord = [2,2,8,8,4,4,6,6], yCoord = [2,8,2,8,4,6,4,6]) == 4\n    assert candidate(xCoord = [8,8,16,16,12,12], yCoord = [8,16,8,16,10,14]) == -1\n    assert candidate(xCoord = [0,0,4,4,8,8,12,12], yCoord = [0,4,0,4,0,4,0,4]) == 16\n    assert candidate(xCoord = [1,1,3,3,5,5,7,7,9,9], yCoord = [1,9,1,9,1,9,1,9,1,9]) == 16\n    assert candidate(xCoord = [2, 2, 4, 4, 6, 6, 8, 8, 10, 10], yCoord = [2, 6, 2, 6, 2, 6, 2, 6, 2, 6]) == 8\n    assert candidate(xCoord = [0,0,10,10,5,5,6,6], yCoord = [0,10,0,10,5,6,5,6]) == 1\n    assert candidate(xCoord = [1, 1, 2, 2, 4, 4, 8, 8], yCoord = [1, 2, 1, 2, 1, 2, 1, 2]) == 4\n    assert candidate(xCoord = [2,2,6,6,10,10,14,14,18,18,22,22], yCoord = [2,22,2,22,10,10,14,14,6,6,18,18]) == 80\n    assert candidate(xCoord = [1,2,2,3,3,4], yCoord = [1,2,3,1,3,2]) == -1\n    assert candidate(xCoord = [10,10,20,20,15,15], yCoord = [10,20,10,20,12,18]) == -1\n    assert candidate(xCoord = [2,2,8,8,12,12,18,18], yCoord = [3,9,3,9,3,9,3,9]) == 36\n    assert candidate(xCoord = [1, 1, 3, 3, 5, 5, 7, 7, 9, 9, 11, 11, 13, 13], yCoord = [1, 3, 1, 3, 1, 3, 1, 3, 1, 3, 1, 3, 1, 3]) == 4\n    assert candidate(xCoord = [1,1,5,5,3,3,7,7], yCoord = [1,5,1,5,3,7,3,7]) == -1\n    assert candidate(xCoord = [1, 1, 4, 4, 2, 2], yCoord = [1, 4, 1, 4, 2, 2]) == -1\n    assert candidate(xCoord = [100, 100, 200, 200, 300, 300, 400, 400], yCoord = [100, 200, 100, 200, 100, 200, 100, 200]) == 10000\n    assert candidate(xCoord = [2,2,5,5,7,7,9,9], yCoord = [2,5,2,5,7,7,9,9]) == 9\n    assert candidate(xCoord = [1, 1, 3, 3, 5, 5, 7, 7, 9, 9, 11, 11], yCoord = [1, 3, 1, 3, 1, 3, 1, 3, 1, 3, 1, 3]) == 4\n    assert candidate(xCoord = [1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8], yCoord = [1, 2, 1, 2, 3, 4, 3, 4, 5, 6, 5, 6, 7, 8, 7, 8]) == 1\n    assert candidate(xCoord = [3, 3, 15, 15, 8, 8, 10, 10], yCoord = [3, 15, 3, 15, 8, 10, 8, 10]) == 4\n    assert candidate(xCoord = [1, 1, 3, 3, 5, 5, 7, 7, 9, 9], yCoord = [1, 3, 1, 3, 1, 3, 1, 3, 1, 3]) == 4\n    assert candidate(xCoord = [1, 1, 10000000, 10000000, 5000000, 5000000, 6000000, 6000000], yCoord = [1, 10000000, 1, 10000000, 5000000, 6000000, 5000000, 6000000]) == 1000000000000\n    assert candidate(xCoord = [1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3], yCoord = [1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4]) == 1\n    assert candidate(xCoord = [1,2,3,4,5,6,7,8,9,10], yCoord = [1,1,1,1,2,2,2,2,3,3]) == -1\n    assert candidate(xCoord = [0, 0, 100000000, 100000000, 50000000, 50000000], yCoord = [0, 100000000, 0, 100000000, 50000000, 50000000]) == -1\n    assert candidate(xCoord = [1,1,3,3,5,5,7,7], yCoord = [1,3,1,3,5,7,5,7]) == 4\n    assert candidate(xCoord = [1, 1, 5, 5, 3, 3, 2, 2, 4, 4, 6, 6], yCoord = [1, 5, 1, 5, 3, 3, 2, 2, 4, 4, 6, 6]) == -1\n    assert candidate(xCoord = [1,1,3,3,5,5,7,7,9,9,11,11], yCoord = [1,3,1,3,1,3,1,3,1,3,1,3]) == 4\n    assert candidate(xCoord = [1,1,3,3,5,5,7,7,9,9,11,11,13,13], yCoord = [1,3,1,3,1,3,1,3,1,3,1,3,1,3]) == 4\n    assert candidate(xCoord = [1, 1, 3, 3, 5, 5, 7, 7], yCoord = [1, 3, 1, 3, 5, 5, 7, 7]) == 4\n    assert candidate(xCoord = [0,0,20000000,20000000,10000000,10000000], yCoord = [0,20000000,0,20000000,10000000,10000000]) == -1\n    assert candidate(xCoord = [1,2,2,1,4,5,5,4,6,7,7,6,8,9,9,8], yCoord = [1,1,2,2,1,1,2,2,1,1,2,2,1,1,2,2]) == 2\n    assert candidate(xCoord = [2, 2, 8, 8, 5, 5, 7, 7], yCoord = [2, 6, 2, 6, 4, 4, 8, 8]) == -1\n    assert candidate(xCoord = [3,3,5,5,7,7,9,9], yCoord = [3,7,3,7,3,7,3,7]) == 8\n    assert candidate(xCoord = [1,1,1,1,1,1,1,1,3,3,3,3,3,3,3,3], yCoord = [1,2,3,4,5,6,7,8,1,2,3,4,5,6,7,8]) == 2\n    assert candidate(xCoord = [1, 1, 5, 5, 10, 10, 15, 15, 20, 20], yCoord = [1, 5, 1, 5, 1, 5, 1, 5, 1, 5]) == 20\n    assert candidate(xCoord = [1,1,3,3,5,5,7,7,9,9], yCoord = [1,9,1,9,5,5,3,3,7,7]) == 16\n    assert candidate(xCoord = [1,1,3,3,5,5,7,7,9,9,11,11], yCoord = [1,11,1,11,1,11,1,11,1,11,1,11]) == 20\n    assert candidate(xCoord = [0, 0, 5, 5, 3, 3, 2, 2], yCoord = [0, 5, 0, 5, 1, 3, 1, 3]) == 2\n    assert candidate(xCoord = [1,2,2,3,3,4,4,5,5,6], yCoord = [1,1,2,1,2,2,3,2,3,3]) == 1\n    assert candidate(xCoord = [1,1,5,5,9,9], yCoord = [1,9,1,9,1,9]) == 32\n    assert candidate(xCoord = [1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5], yCoord = [1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4]) == 1\n    assert candidate(xCoord = [1, 1, 10000000, 10000000, 5000000, 5000000], yCoord = [1, 10000000, 1, 10000000, 5000000, 5000000]) == -1\n    assert candidate(xCoord = [1,1,4,4,2,2,5,5], yCoord = [1,4,1,4,2,5,2,5]) == -1\n    assert candidate(xCoord = [1, 4, 4, 1, 6, 6, 9, 9], yCoord = [1, 1, 5, 5, 3, 7, 3, 7]) == 12\n    assert candidate(xCoord = [1,1,3,3,5,5,7,7], yCoord = [1,3,1,3,1,3,1,3]) == 4\n    assert candidate(xCoord = [10, 10, 20, 20, 15, 15, 18, 18], yCoord = [10, 20, 10, 20, 12, 18, 12, 18]) == 18\n    assert candidate(xCoord = [100,100,150,150,200,200,250,250], yCoord = [100,150,100,150,100,150,100,150]) == 2500\n    assert candidate(xCoord = [2,2,6,6,4,4,8,8], yCoord = [2,6,2,6,2,6,2,6]) == 8\n    assert candidate(xCoord = [1,1,1,1,1,1,1,1,1,1], yCoord = [1,2,3,4,5,6,7,8,9,10]) == -1\n    assert candidate(xCoord = [1,1,3,3,5,5,7,7,9,9,11,11,13,13,15,15,17,17], yCoord = [1,9,1,9,5,5,7,7,3,3,11,11,13,13,15,15,17,17]) == 16\n    assert candidate(xCoord = [50000000,50000000,60000000,60000000,70000000,70000000,80000000,80000000], yCoord = [50000000,60000000,50000000,60000000,50000000,60000000,50000000,60000000]) == 100000000000000\n    assert candidate(xCoord = [1, 1, 3, 3, 5, 5, 7, 7], yCoord = [1, 3, 1, 3, 5, 7, 5, 7]) == 4\n    assert candidate(xCoord = [1,1,2,2,4,4,6,6,8,8,10,10,12,12,14,14,16,16,18,18,20,20], yCoord = [1,20,1,20,5,5,7,7,3,3,11,11,13,13,9,9,15,15,17,17,19,19]) == 19\n    assert candidate(xCoord = [1,1,4,4,6,6,10,10], yCoord = [1,5,1,5,1,5,1,5]) == 16\n    assert candidate(xCoord = [1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6], yCoord = [1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2]) == 1\n    assert candidate(xCoord = [1,1,3,3,5,5,7,7,9,9,11,11,13,13,15,15], yCoord = [1,15,1,15,5,5,7,7,3,3,11,11,13,13,9,9]) == 28",
+    "cpp": "void check(Solution& solution) {\n    assert(solution.maxRectangleArea({5,5,7,7}, {5,7,5,7}) == vector<int>4);\n    assert(solution.maxRectangleArea({1,1,10,10}, {1,10,1,10}) == vector<int>81);\n    assert(solution.maxRectangleArea({1,1,3,3,1,3}, {1,3,1,3,2,2}) == vector<int>2);\n    assert(solution.maxRectangleArea({0,0,80000000,80000000}, {0,80000000,0,80000000}) == vector<int>6400000000000000);\n    assert(solution.maxRectangleArea({1,1,3,3,5,5}, {1,3,1,3,1,3}) == vector<int>4);\n    assert(solution.maxRectangleArea({1,2,3,4,5}, {1,2,3,4,5}) == vector<int>-1);\n    assert(solution.maxRectangleArea({1,1,1,1}, {1,1,1,1}) == vector<int>-1);\n    assert(solution.maxRectangleArea({5,5,10,10}, {5,10,5,10}) == vector<int>25);\n    assert(solution.maxRectangleArea({0,0,2,2}, {0,2,0,2}) == vector<int>4);\n    assert(solution.maxRectangleArea({1,1,3,3,4,4}, {1,3,1,3,2,3}) == vector<int>4);\n    assert(solution.maxRectangleArea({1,1,3,3,2}, {1,3,1,3,2}) == vector<int>-1);\n    assert(solution.maxRectangleArea({0,0,2,2,4,4}, {0,2,0,2,0,2}) == vector<int>4);\n    assert(solution.maxRectangleArea({10,10,20,20}, {10,20,10,20}) == vector<int>100);\n    assert(solution.maxRectangleArea({0,0,8,8,4,4}, {0,8,0,8,4,4}) == vector<int>-1);\n    assert(solution.maxRectangleArea({5,5,7,7,6}, {5,7,5,7,6}) == vector<int>-1);\n    assert(solution.maxRectangleArea({5,5,15,15}, {5,15,5,15}) == vector<int>100);\n    assert(solution.maxRectangleArea({1,1,3,3}, {1,3,1,3}) == vector<int>4);\n    assert(solution.maxRectangleArea({1,2,3,4}, {1,1,1,1}) == vector<int>-1);\n    assert(solution.maxRectangleArea({1,2,3,4,5,6,7,8}, {1,2,3,4,5,6,7,8}) == vector<int>-1);\n    assert(solution.maxRectangleArea({1,1,1,1}, {1,2,3,4}) == vector<int>-1);\n    assert(solution.maxRectangleArea({10,20,30,40}, {10,20,30,40}) == vector<int>-1);\n    assert(solution.maxRectangleArea({1,1,3,3,5,5,7,7,9,9}, {1,3,1,3,5,7,5,7,9,9}) == vector<int>4);\n    assert(solution.maxRectangleArea({0, 0, 100000000, 100000000}, {0, 100000000, 0, 100000000}) == vector<int>10000000000000000);\n    assert(solution.maxRectangleArea({10,20,30,40,50,60,70,80,90,100}, {10,20,30,40,50,60,70,80,90,100}) == vector<int>-1);\n    assert(solution.maxRectangleArea({1, 1, 5, 5, 10, 10, 15, 15}, {1, 10, 1, 10, 1, 10, 1, 10}) == vector<int>45);\n    assert(solution.maxRectangleArea({1,1,3,3,5,5,7,7,9,9,11,11,13,13}, {1,9,1,9,5,5,7,7,3,3,11,11,13,13}) == vector<int>16);\n    assert(solution.maxRectangleArea({1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20}, {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}) == vector<int>-1);\n    assert(solution.maxRectangleArea({1, 1, 2, 2, 4, 4, 6, 6}, {1, 3, 1, 3, 1, 3, 1, 3}) == vector<int>4);\n    assert(solution.maxRectangleArea({10,10,20,20,30,30,40,40}, {10,20,10,20,10,20,10,20}) == vector<int>100);\n    assert(solution.maxRectangleArea({0,0,100000000,100000000}, {0,100000000,0,100000000}) == vector<int>10000000000000000);\n    assert(solution.maxRectangleArea({1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20}, {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20}) == vector<int>-1);\n    assert(solution.maxRectangleArea({1,1,2,2,4,4,5,5,6,6,8,8,9,9}, {1,9,1,9,5,5,7,7,3,3,11,11,13,13}) == vector<int>8);\n    assert(solution.maxRectangleArea({1,1,3,3,5,5,7,7,9,9,11,11,13,13,15,15,17,17,19,19}, {1,3,1,3,1,3,1,3,1,3,1,3,1,3,1,3,1,3,1,3}) == vector<int>4);\n    assert(solution.maxRectangleArea({1,1,10,10,5,5}, {1,10,1,10,5,5}) == vector<int>-1);\n    assert(solution.maxRectangleArea({5,5,15,15,25,25,35,35,45,45}, {5,45,5,45,5,45,5,45,5,45}) == vector<int>400);\n    assert(solution.maxRectangleArea({10000000, 10000000, 20000000, 20000000, 30000000, 30000000, 40000000, 40000000}, {10000000, 20000000, 10000000, 20000000, 10000000, 20000000, 10000000, 20000000}) == vector<int>100000000000000);\n    assert(solution.maxRectangleArea({1, 4, 4, 1, 7, 7, 10, 10}, {1, 1, 5, 5, 3, 8, 3, 8}) == vector<int>15);\n    assert(solution.maxRectangleArea({5,5,6,6,7,7,8,8}, {5,6,5,6,7,8,7,8}) == vector<int>1);\n    assert(solution.maxRectangleArea({1,1,2,2,3,3,4,4,5,5,6,6,7,7,8,8,9,9,10,10}, {1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2}) == vector<int>1);\n    assert(solution.maxRectangleArea({1,1,1,1,1,1,1,1,1,1,3,3,3,3,3,3,3,3,3,3}, {1,2,3,4,5,6,7,8,9,10,1,2,3,4,5,6,7,8,9,10}) == vector<int>2);\n    assert(solution.maxRectangleArea({2,2,4,4,6,6,8,8,10,10}, {2,4,2,4,6,8,6,8,10,10}) == vector<int>4);\n    assert(solution.maxRectangleArea({1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}, {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20}) == vector<int>-1);\n    assert(solution.maxRectangleArea({0,0,8,8,4,4,6,6,2,2,7,7,3,3,5,5}, {0,8,0,8,4,6,4,6,2,7,2,7,3,5,3,5}) == vector<int>-1);\n    assert(solution.maxRectangleArea({2, 2, 5, 5, 3, 3, 4, 4}, {2, 5, 2, 5, 3, 3, 4, 4}) == vector<int>-1);\n    assert(solution.maxRectangleArea({10, 10, 30, 30, 20, 20, 25, 25}, {10, 30, 10, 30, 15, 15, 25, 25}) == vector<int>-1);\n    assert(solution.maxRectangleArea({1, 4, 4, 1, 6, 6, 9, 9, 3, 3, 12, 12}, {1, 1, 5, 5, 3, 7, 3, 7, 2, 4, 2, 4}) == vector<int>12);\n    assert(solution.maxRectangleArea({5,5,15,15,25,25,35,35,45,45}, {5,15,5,15,25,25,35,35,45,45}) == vector<int>100);\n    assert(solution.maxRectangleArea({1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8, 9, 9, 10, 10}, {1, 5, 1, 5, 1, 5, 1, 5, 1, 5, 1, 5, 1, 5, 1, 5, 1, 5, 1, 5}) == vector<int>4);\n    assert(solution.maxRectangleArea({1, 3, 5, 7, 9, 11, 13, 15, 17, 19}, {1, 3, 5, 7, 9, 11, 13, 15, 17, 19}) == vector<int>-1);\n    assert(solution.maxRectangleArea({5,5,10,10,15,15,20,20,25,25}, {5,10,5,10,5,10,5,10,5,10}) == vector<int>25);\n    assert(solution.maxRectangleArea({1,2,3,4,5,6,7,8,9,10}, {1,2,3,4,5,6,7,8,9,10}) == vector<int>-1);\n    assert(solution.maxRectangleArea({1,1,1,1,3,3,3,3,5,5,5,5}, {1,3,5,7,1,3,5,7,1,3,5,7}) == vector<int>4);\n    assert(solution.maxRectangleArea({2, 2, 4, 4, 6, 6, 8, 8}, {2, 6, 2, 6, 2, 6, 2, 6}) == vector<int>8);\n    assert(solution.maxRectangleArea({1,1,3,3,5,5,7,7,9,9,11,11,13,13}, {1,3,1,3,5,7,5,7,9,11,9,11,13,13}) == vector<int>4);\n    assert(solution.maxRectangleArea({0,0,0,0,10,10,10,10,20,20,20,20}, {0,10,20,30,0,10,20,30,0,10,20,30}) == vector<int>100);\n    assert(solution.maxRectangleArea({2,2,4,4,6,6,8,8}, {2,8,2,8,2,8,2,8}) == vector<int>12);\n    assert(solution.maxRectangleArea({10,10,30,30,20,20,40,40}, {10,30,10,30,20,40,20,40}) == vector<int>-1);\n    assert(solution.maxRectangleArea({1, 1, 2, 2, 3, 3, 4, 4, 5, 5}, {1, 2, 1, 2, 1, 2, 1, 2, 1, 2}) == vector<int>1);\n    assert(solution.maxRectangleArea({1,1,3,3,1,1,3,3,2,2,4,4}, {1,3,1,3,2,4,2,4,1,3,1,3}) == vector<int>-1);\n    assert(solution.maxRectangleArea({1, 2, 3, 4, 5, 6, 7, 8, 9, 10}, {1, 2, 3, 4, 5, 6, 7, 8, 9, 10}) == vector<int>-1);\n    assert(solution.maxRectangleArea({100, 100, 150, 150, 120, 120, 130, 130}, {100, 150, 100, 150, 120, 130, 120, 130}) == vector<int>100);\n    assert(solution.maxRectangleArea({10, 10, 20, 20, 30, 30, 40, 40}, {10, 20, 10, 20, 10, 20, 10, 20}) == vector<int>100);\n    assert(solution.maxRectangleArea({10,10,20,20,30,30,40,40,50,50}, {10,50,10,50,30,30,40,40,20,20}) == vector<int>400);\n    assert(solution.maxRectangleArea({0, 0, 80000000, 80000000}, {0, 80000000, 0, 80000000}) == vector<int>6400000000000000);\n    assert(solution.maxRectangleArea({1,1,3,3,5,5,7,7,9,9,11,11,13,13}, {1,13,1,13,1,13,1,13,1,13,1,13,1,13}) == vector<int>24);\n    assert(solution.maxRectangleArea({1, 1, 3, 3, 5, 5, 7, 7}, {1, 3, 1, 3, 1, 3, 1, 3}) == vector<int>4);\n    assert(solution.maxRectangleArea({1, 1, 5, 5, 10, 10, 15, 15, 20, 20, 25, 25}, {1, 5, 1, 5, 1, 5, 1, 5, 1, 5, 1, 5}) == vector<int>20);\n    assert(solution.maxRectangleArea({1, 1, 10, 10, 5, 5, 7, 7, 3, 3}, {1, 10, 1, 10, 5, 5, 7, 7, 3, 3}) == vector<int>-1);\n    assert(solution.maxRectangleArea({1,2,3,4,5,6,7,8,9,10}, {1,1,1,1,1,1,1,1,1,1}) == vector<int>-1);\n    assert(solution.maxRectangleArea({1,5,5,9,9,13}, {1,5,1,5,1,5}) == vector<int>16);\n    assert(solution.maxRectangleArea({1, 1, 9, 9, 5, 5, 3, 3, 7, 7, 6, 6, 4, 4, 8, 8}, {1, 9, 1, 9, 5, 5, 3, 3, 7, 7, 6, 6, 4, 4, 8, 8}) == vector<int>-1);\n    assert(solution.maxRectangleArea({0, 0, 2, 2, 4, 4, 6, 6}, {0, 2, 0, 2, 0, 2, 0, 2}) == vector<int>4);\n    assert(solution.maxRectangleArea({0,0,1,1,2,2,3,3}, {0,1,0,1,0,1,0,1}) == vector<int>1);\n    assert(solution.maxRectangleArea({1,3,5,7,9,11,13,15}, {1,3,5,7,9,11,13,15}) == vector<int>-1);\n    assert(solution.maxRectangleArea({1,1,2,2,3,3,4,4,5,5}, {1,5,1,5,1,5,1,5,1,5}) == vector<int>4);\n    assert(solution.maxRectangleArea({2,2,8,8,4,4,6,6}, {2,8,2,8,4,6,4,6}) == vector<int>4);\n    assert(solution.maxRectangleArea({8,8,16,16,12,12}, {8,16,8,16,10,14}) == vector<int>-1);\n    assert(solution.maxRectangleArea({0,0,4,4,8,8,12,12}, {0,4,0,4,0,4,0,4}) == vector<int>16);\n    assert(solution.maxRectangleArea({1,1,3,3,5,5,7,7,9,9}, {1,9,1,9,1,9,1,9,1,9}) == vector<int>16);\n    assert(solution.maxRectangleArea({2, 2, 4, 4, 6, 6, 8, 8, 10, 10}, {2, 6, 2, 6, 2, 6, 2, 6, 2, 6}) == vector<int>8);\n    assert(solution.maxRectangleArea({0,0,10,10,5,5,6,6}, {0,10,0,10,5,6,5,6}) == vector<int>1);\n    assert(solution.maxRectangleArea({1, 1, 2, 2, 4, 4, 8, 8}, {1, 2, 1, 2, 1, 2, 1, 2}) == vector<int>4);\n    assert(solution.maxRectangleArea({2,2,6,6,10,10,14,14,18,18,22,22}, {2,22,2,22,10,10,14,14,6,6,18,18}) == vector<int>80);\n    assert(solution.maxRectangleArea({1,2,2,3,3,4}, {1,2,3,1,3,2}) == vector<int>-1);\n    assert(solution.maxRectangleArea({10,10,20,20,15,15}, {10,20,10,20,12,18}) == vector<int>-1);\n    assert(solution.maxRectangleArea({2,2,8,8,12,12,18,18}, {3,9,3,9,3,9,3,9}) == vector<int>36);\n    assert(solution.maxRectangleArea({1, 1, 3, 3, 5, 5, 7, 7, 9, 9, 11, 11, 13, 13}, {1, 3, 1, 3, 1, 3, 1, 3, 1, 3, 1, 3, 1, 3}) == vector<int>4);\n    assert(solution.maxRectangleArea({1,1,5,5,3,3,7,7}, {1,5,1,5,3,7,3,7}) == vector<int>-1);\n    assert(solution.maxRectangleArea({1, 1, 4, 4, 2, 2}, {1, 4, 1, 4, 2, 2}) == vector<int>-1);\n    assert(solution.maxRectangleArea({100, 100, 200, 200, 300, 300, 400, 400}, {100, 200, 100, 200, 100, 200, 100, 200}) == vector<int>10000);\n    assert(solution.maxRectangleArea({2,2,5,5,7,7,9,9}, {2,5,2,5,7,7,9,9}) == vector<int>9);\n    assert(solution.maxRectangleArea({1, 1, 3, 3, 5, 5, 7, 7, 9, 9, 11, 11}, {1, 3, 1, 3, 1, 3, 1, 3, 1, 3, 1, 3}) == vector<int>4);\n    assert(solution.maxRectangleArea({1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8}, {1, 2, 1, 2, 3, 4, 3, 4, 5, 6, 5, 6, 7, 8, 7, 8}) == vector<int>1);\n    assert(solution.maxRectangleArea({3, 3, 15, 15, 8, 8, 10, 10}, {3, 15, 3, 15, 8, 10, 8, 10}) == vector<int>4);\n    assert(solution.maxRectangleArea({1, 1, 3, 3, 5, 5, 7, 7, 9, 9}, {1, 3, 1, 3, 1, 3, 1, 3, 1, 3}) == vector<int>4);\n    assert(solution.maxRectangleArea({1, 1, 10000000, 10000000, 5000000, 5000000, 6000000, 6000000}, {1, 10000000, 1, 10000000, 5000000, 6000000, 5000000, 6000000}) == vector<int>1000000000000);\n    assert(solution.maxRectangleArea({1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3}, {1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4}) == vector<int>1);\n    assert(solution.maxRectangleArea({1,2,3,4,5,6,7,8,9,10}, {1,1,1,1,2,2,2,2,3,3}) == vector<int>-1);\n    assert(solution.maxRectangleArea({0, 0, 100000000, 100000000, 50000000, 50000000}, {0, 100000000, 0, 100000000, 50000000, 50000000}) == vector<int>-1);\n    assert(solution.maxRectangleArea({1,1,3,3,5,5,7,7}, {1,3,1,3,5,7,5,7}) == vector<int>4);\n    assert(solution.maxRectangleArea({1, 1, 5, 5, 3, 3, 2, 2, 4, 4, 6, 6}, {1, 5, 1, 5, 3, 3, 2, 2, 4, 4, 6, 6}) == vector<int>-1);\n    assert(solution.maxRectangleArea({1,1,3,3,5,5,7,7,9,9,11,11}, {1,3,1,3,1,3,1,3,1,3,1,3}) == vector<int>4);\n    assert(solution.maxRectangleArea({1,1,3,3,5,5,7,7,9,9,11,11,13,13}, {1,3,1,3,1,3,1,3,1,3,1,3,1,3}) == vector<int>4);\n    assert(solution.maxRectangleArea({1, 1, 3, 3, 5, 5, 7, 7}, {1, 3, 1, 3, 5, 5, 7, 7}) == vector<int>4);\n    assert(solution.maxRectangleArea({0,0,20000000,20000000,10000000,10000000}, {0,20000000,0,20000000,10000000,10000000}) == vector<int>-1);\n    assert(solution.maxRectangleArea({1,2,2,1,4,5,5,4,6,7,7,6,8,9,9,8}, {1,1,2,2,1,1,2,2,1,1,2,2,1,1,2,2}) == vector<int>2);\n    assert(solution.maxRectangleArea({2, 2, 8, 8, 5, 5, 7, 7}, {2, 6, 2, 6, 4, 4, 8, 8}) == vector<int>-1);\n    assert(solution.maxRectangleArea({3,3,5,5,7,7,9,9}, {3,7,3,7,3,7,3,7}) == vector<int>8);\n    assert(solution.maxRectangleArea({1,1,1,1,1,1,1,1,3,3,3,3,3,3,3,3}, {1,2,3,4,5,6,7,8,1,2,3,4,5,6,7,8}) == vector<int>2);\n    assert(solution.maxRectangleArea({1, 1, 5, 5, 10, 10, 15, 15, 20, 20}, {1, 5, 1, 5, 1, 5, 1, 5, 1, 5}) == vector<int>20);\n    assert(solution.maxRectangleArea({1,1,3,3,5,5,7,7,9,9}, {1,9,1,9,5,5,3,3,7,7}) == vector<int>16);\n    assert(solution.maxRectangleArea({1,1,3,3,5,5,7,7,9,9,11,11}, {1,11,1,11,1,11,1,11,1,11,1,11}) == vector<int>20);\n    assert(solution.maxRectangleArea({0, 0, 5, 5, 3, 3, 2, 2}, {0, 5, 0, 5, 1, 3, 1, 3}) == vector<int>2);\n    assert(solution.maxRectangleArea({1,2,2,3,3,4,4,5,5,6}, {1,1,2,1,2,2,3,2,3,3}) == vector<int>1);\n    assert(solution.maxRectangleArea({1,1,5,5,9,9}, {1,9,1,9,1,9}) == vector<int>32);\n    assert(solution.maxRectangleArea({1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5}, {1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4}) == vector<int>1);\n    assert(solution.maxRectangleArea({1, 1, 10000000, 10000000, 5000000, 5000000}, {1, 10000000, 1, 10000000, 5000000, 5000000}) == vector<int>-1);\n    assert(solution.maxRectangleArea({1,1,4,4,2,2,5,5}, {1,4,1,4,2,5,2,5}) == vector<int>-1);\n    assert(solution.maxRectangleArea({1, 4, 4, 1, 6, 6, 9, 9}, {1, 1, 5, 5, 3, 7, 3, 7}) == vector<int>12);\n    assert(solution.maxRectangleArea({1,1,3,3,5,5,7,7}, {1,3,1,3,1,3,1,3}) == vector<int>4);\n    assert(solution.maxRectangleArea({10, 10, 20, 20, 15, 15, 18, 18}, {10, 20, 10, 20, 12, 18, 12, 18}) == vector<int>18);\n    assert(solution.maxRectangleArea({100,100,150,150,200,200,250,250}, {100,150,100,150,100,150,100,150}) == vector<int>2500);\n    assert(solution.maxRectangleArea({2,2,6,6,4,4,8,8}, {2,6,2,6,2,6,2,6}) == vector<int>8);\n    assert(solution.maxRectangleArea({1,1,1,1,1,1,1,1,1,1}, {1,2,3,4,5,6,7,8,9,10}) == vector<int>-1);\n    assert(solution.maxRectangleArea({1,1,3,3,5,5,7,7,9,9,11,11,13,13,15,15,17,17}, {1,9,1,9,5,5,7,7,3,3,11,11,13,13,15,15,17,17}) == vector<int>16);\n    assert(solution.maxRectangleArea({50000000,50000000,60000000,60000000,70000000,70000000,80000000,80000000}, {50000000,60000000,50000000,60000000,50000000,60000000,50000000,60000000}) == vector<int>100000000000000);\n    assert(solution.maxRectangleArea({1, 1, 3, 3, 5, 5, 7, 7}, {1, 3, 1, 3, 5, 7, 5, 7}) == vector<int>4);\n    assert(solution.maxRectangleArea({1,1,2,2,4,4,6,6,8,8,10,10,12,12,14,14,16,16,18,18,20,20}, {1,20,1,20,5,5,7,7,3,3,11,11,13,13,9,9,15,15,17,17,19,19}) == vector<int>19);\n    assert(solution.maxRectangleArea({1,1,4,4,6,6,10,10}, {1,5,1,5,1,5,1,5}) == vector<int>16);\n    assert(solution.maxRectangleArea({1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6}, {1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2}) == vector<int>1);\n    assert(solution.maxRectangleArea({1,1,3,3,5,5,7,7,9,9,11,11,13,13,15,15}, {1,15,1,15,5,5,7,7,3,3,11,11,13,13,9,9}) == vector<int>28);\n}",
+    "java": "public static void check(Solution solution) {\n    assert Arrays.equals(solution.maxRectangleArea(new int[]{5,5,7,7}, new int[]{5,7,5,7}), 4);\n    assert Arrays.equals(solution.maxRectangleArea(new int[]{1,1,10,10}, new int[]{1,10,1,10}), 81);\n    assert Arrays.equals(solution.maxRectangleArea(new int[]{1,1,3,3,1,3}, new int[]{1,3,1,3,2,2}), 2);\n    assert Arrays.equals(solution.maxRectangleArea(new int[]{0,0,80000000,80000000}, new int[]{0,80000000,0,80000000}), 6400000000000000);\n    assert Arrays.equals(solution.maxRectangleArea(new int[]{1,1,3,3,5,5}, new int[]{1,3,1,3,1,3}), 4);\n    assert Arrays.equals(solution.maxRectangleArea(new int[]{1,2,3,4,5}, new int[]{1,2,3,4,5}), -1);\n    assert Arrays.equals(solution.maxRectangleArea(new int[]{1,1,1,1}, new int[]{1,1,1,1}), -1);\n    assert Arrays.equals(solution.maxRectangleArea(new int[]{5,5,10,10}, new int[]{5,10,5,10}), 25);\n    assert Arrays.equals(solution.maxRectangleArea(new int[]{0,0,2,2}, new int[]{0,2,0,2}), 4);\n    assert Arrays.equals(solution.maxRectangleArea(new int[]{1,1,3,3,4,4}, new int[]{1,3,1,3,2,3}), 4);\n    assert Arrays.equals(solution.maxRectangleArea(new int[]{1,1,3,3,2}, new int[]{1,3,1,3,2}), -1);\n    assert Arrays.equals(solution.maxRectangleArea(new int[]{0,0,2,2,4,4}, new int[]{0,2,0,2,0,2}), 4);\n    assert Arrays.equals(solution.maxRectangleArea(new int[]{10,10,20,20}, new int[]{10,20,10,20}), 100);\n    assert Arrays.equals(solution.maxRectangleArea(new int[]{0,0,8,8,4,4}, new int[]{0,8,0,8,4,4}), -1);\n    assert Arrays.equals(solution.maxRectangleArea(new int[]{5,5,7,7,6}, new int[]{5,7,5,7,6}), -1);\n    assert Arrays.equals(solution.maxRectangleArea(new int[]{5,5,15,15}, new int[]{5,15,5,15}), 100);\n    assert Arrays.equals(solution.maxRectangleArea(new int[]{1,1,3,3}, new int[]{1,3,1,3}), 4);\n    assert Arrays.equals(solution.maxRectangleArea(new int[]{1,2,3,4}, new int[]{1,1,1,1}), -1);\n    assert Arrays.equals(solution.maxRectangleArea(new int[]{1,2,3,4,5,6,7,8}, new int[]{1,2,3,4,5,6,7,8}), -1);\n    assert Arrays.equals(solution.maxRectangleArea(new int[]{1,1,1,1}, new int[]{1,2,3,4}), -1);\n    assert Arrays.equals(solution.maxRectangleArea(new int[]{10,20,30,40}, new int[]{10,20,30,40}), -1);\n    assert Arrays.equals(solution.maxRectangleArea(new int[]{1,1,3,3,5,5,7,7,9,9}, new int[]{1,3,1,3,5,7,5,7,9,9}), 4);\n    assert Arrays.equals(solution.maxRectangleArea(new int[]{0, 0, 100000000, 100000000}, new int[]{0, 100000000, 0, 100000000}), 10000000000000000);\n    assert Arrays.equals(solution.maxRectangleArea(new int[]{10,20,30,40,50,60,70,80,90,100}, new int[]{10,20,30,40,50,60,70,80,90,100}), -1);\n    assert Arrays.equals(solution.maxRectangleArea(new int[]{1, 1, 5, 5, 10, 10, 15, 15}, new int[]{1, 10, 1, 10, 1, 10, 1, 10}), 45);\n    assert Arrays.equals(solution.maxRectangleArea(new int[]{1,1,3,3,5,5,7,7,9,9,11,11,13,13}, new int[]{1,9,1,9,5,5,7,7,3,3,11,11,13,13}), 16);\n    assert Arrays.equals(solution.maxRectangleArea(new int[]{1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20}, new int[]{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}), -1);\n    assert Arrays.equals(solution.maxRectangleArea(new int[]{1, 1, 2, 2, 4, 4, 6, 6}, new int[]{1, 3, 1, 3, 1, 3, 1, 3}), 4);\n    assert Arrays.equals(solution.maxRectangleArea(new int[]{10,10,20,20,30,30,40,40}, new int[]{10,20,10,20,10,20,10,20}), 100);\n    assert Arrays.equals(solution.maxRectangleArea(new int[]{0,0,100000000,100000000}, new int[]{0,100000000,0,100000000}), 10000000000000000);\n    assert Arrays.equals(solution.maxRectangleArea(new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20}, new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20}), -1);\n    assert Arrays.equals(solution.maxRectangleArea(new int[]{1,1,2,2,4,4,5,5,6,6,8,8,9,9}, new int[]{1,9,1,9,5,5,7,7,3,3,11,11,13,13}), 8);\n    assert Arrays.equals(solution.maxRectangleArea(new int[]{1,1,3,3,5,5,7,7,9,9,11,11,13,13,15,15,17,17,19,19}, new int[]{1,3,1,3,1,3,1,3,1,3,1,3,1,3,1,3,1,3,1,3}), 4);\n    assert Arrays.equals(solution.maxRectangleArea(new int[]{1,1,10,10,5,5}, new int[]{1,10,1,10,5,5}), -1);\n    assert Arrays.equals(solution.maxRectangleArea(new int[]{5,5,15,15,25,25,35,35,45,45}, new int[]{5,45,5,45,5,45,5,45,5,45}), 400);\n    assert Arrays.equals(solution.maxRectangleArea(new int[]{10000000, 10000000, 20000000, 20000000, 30000000, 30000000, 40000000, 40000000}, new int[]{10000000, 20000000, 10000000, 20000000, 10000000, 20000000, 10000000, 20000000}), 100000000000000);\n    assert Arrays.equals(solution.maxRectangleArea(new int[]{1, 4, 4, 1, 7, 7, 10, 10}, new int[]{1, 1, 5, 5, 3, 8, 3, 8}), 15);\n    assert Arrays.equals(solution.maxRectangleArea(new int[]{5,5,6,6,7,7,8,8}, new int[]{5,6,5,6,7,8,7,8}), 1);\n    assert Arrays.equals(solution.maxRectangleArea(new int[]{1,1,2,2,3,3,4,4,5,5,6,6,7,7,8,8,9,9,10,10}, new int[]{1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2}), 1);\n    assert Arrays.equals(solution.maxRectangleArea(new int[]{1,1,1,1,1,1,1,1,1,1,3,3,3,3,3,3,3,3,3,3}, new int[]{1,2,3,4,5,6,7,8,9,10,1,2,3,4,5,6,7,8,9,10}), 2);\n    assert Arrays.equals(solution.maxRectangleArea(new int[]{2,2,4,4,6,6,8,8,10,10}, new int[]{2,4,2,4,6,8,6,8,10,10}), 4);\n    assert Arrays.equals(solution.maxRectangleArea(new int[]{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}, new int[]{1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20}), -1);\n    assert Arrays.equals(solution.maxRectangleArea(new int[]{0,0,8,8,4,4,6,6,2,2,7,7,3,3,5,5}, new int[]{0,8,0,8,4,6,4,6,2,7,2,7,3,5,3,5}), -1);\n    assert Arrays.equals(solution.maxRectangleArea(new int[]{2, 2, 5, 5, 3, 3, 4, 4}, new int[]{2, 5, 2, 5, 3, 3, 4, 4}), -1);\n    assert Arrays.equals(solution.maxRectangleArea(new int[]{10, 10, 30, 30, 20, 20, 25, 25}, new int[]{10, 30, 10, 30, 15, 15, 25, 25}), -1);\n    assert Arrays.equals(solution.maxRectangleArea(new int[]{1, 4, 4, 1, 6, 6, 9, 9, 3, 3, 12, 12}, new int[]{1, 1, 5, 5, 3, 7, 3, 7, 2, 4, 2, 4}), 12);\n    assert Arrays.equals(solution.maxRectangleArea(new int[]{5,5,15,15,25,25,35,35,45,45}, new int[]{5,15,5,15,25,25,35,35,45,45}), 100);\n    assert Arrays.equals(solution.maxRectangleArea(new int[]{1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8, 9, 9, 10, 10}, new int[]{1, 5, 1, 5, 1, 5, 1, 5, 1, 5, 1, 5, 1, 5, 1, 5, 1, 5, 1, 5}), 4);\n    assert Arrays.equals(solution.maxRectangleArea(new int[]{1, 3, 5, 7, 9, 11, 13, 15, 17, 19}, new int[]{1, 3, 5, 7, 9, 11, 13, 15, 17, 19}), -1);\n    assert Arrays.equals(solution.maxRectangleArea(new int[]{5,5,10,10,15,15,20,20,25,25}, new int[]{5,10,5,10,5,10,5,10,5,10}), 25);\n    assert Arrays.equals(solution.maxRectangleArea(new int[]{1,2,3,4,5,6,7,8,9,10}, new int[]{1,2,3,4,5,6,7,8,9,10}), -1);\n    assert Arrays.equals(solution.maxRectangleArea(new int[]{1,1,1,1,3,3,3,3,5,5,5,5}, new int[]{1,3,5,7,1,3,5,7,1,3,5,7}), 4);\n    assert Arrays.equals(solution.maxRectangleArea(new int[]{2, 2, 4, 4, 6, 6, 8, 8}, new int[]{2, 6, 2, 6, 2, 6, 2, 6}), 8);\n    assert Arrays.equals(solution.maxRectangleArea(new int[]{1,1,3,3,5,5,7,7,9,9,11,11,13,13}, new int[]{1,3,1,3,5,7,5,7,9,11,9,11,13,13}), 4);\n    assert Arrays.equals(solution.maxRectangleArea(new int[]{0,0,0,0,10,10,10,10,20,20,20,20}, new int[]{0,10,20,30,0,10,20,30,0,10,20,30}), 100);\n    assert Arrays.equals(solution.maxRectangleArea(new int[]{2,2,4,4,6,6,8,8}, new int[]{2,8,2,8,2,8,2,8}), 12);\n    assert Arrays.equals(solution.maxRectangleArea(new int[]{10,10,30,30,20,20,40,40}, new int[]{10,30,10,30,20,40,20,40}), -1);\n    assert Arrays.equals(solution.maxRectangleArea(new int[]{1, 1, 2, 2, 3, 3, 4, 4, 5, 5}, new int[]{1, 2, 1, 2, 1, 2, 1, 2, 1, 2}), 1);\n    assert Arrays.equals(solution.maxRectangleArea(new int[]{1,1,3,3,1,1,3,3,2,2,4,4}, new int[]{1,3,1,3,2,4,2,4,1,3,1,3}), -1);\n    assert Arrays.equals(solution.maxRectangleArea(new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}, new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}), -1);\n    assert Arrays.equals(solution.maxRectangleArea(new int[]{100, 100, 150, 150, 120, 120, 130, 130}, new int[]{100, 150, 100, 150, 120, 130, 120, 130}), 100);\n    assert Arrays.equals(solution.maxRectangleArea(new int[]{10, 10, 20, 20, 30, 30, 40, 40}, new int[]{10, 20, 10, 20, 10, 20, 10, 20}), 100);\n    assert Arrays.equals(solution.maxRectangleArea(new int[]{10,10,20,20,30,30,40,40,50,50}, new int[]{10,50,10,50,30,30,40,40,20,20}), 400);\n    assert Arrays.equals(solution.maxRectangleArea(new int[]{0, 0, 80000000, 80000000}, new int[]{0, 80000000, 0, 80000000}), 6400000000000000);\n    assert Arrays.equals(solution.maxRectangleArea(new int[]{1,1,3,3,5,5,7,7,9,9,11,11,13,13}, new int[]{1,13,1,13,1,13,1,13,1,13,1,13,1,13}), 24);\n    assert Arrays.equals(solution.maxRectangleArea(new int[]{1, 1, 3, 3, 5, 5, 7, 7}, new int[]{1, 3, 1, 3, 1, 3, 1, 3}), 4);\n    assert Arrays.equals(solution.maxRectangleArea(new int[]{1, 1, 5, 5, 10, 10, 15, 15, 20, 20, 25, 25}, new int[]{1, 5, 1, 5, 1, 5, 1, 5, 1, 5, 1, 5}), 20);\n    assert Arrays.equals(solution.maxRectangleArea(new int[]{1, 1, 10, 10, 5, 5, 7, 7, 3, 3}, new int[]{1, 10, 1, 10, 5, 5, 7, 7, 3, 3}), -1);\n    assert Arrays.equals(solution.maxRectangleArea(new int[]{1,2,3,4,5,6,7,8,9,10}, new int[]{1,1,1,1,1,1,1,1,1,1}), -1);\n    assert Arrays.equals(solution.maxRectangleArea(new int[]{1,5,5,9,9,13}, new int[]{1,5,1,5,1,5}), 16);\n    assert Arrays.equals(solution.maxRectangleArea(new int[]{1, 1, 9, 9, 5, 5, 3, 3, 7, 7, 6, 6, 4, 4, 8, 8}, new int[]{1, 9, 1, 9, 5, 5, 3, 3, 7, 7, 6, 6, 4, 4, 8, 8}), -1);\n    assert Arrays.equals(solution.maxRectangleArea(new int[]{0, 0, 2, 2, 4, 4, 6, 6}, new int[]{0, 2, 0, 2, 0, 2, 0, 2}), 4);\n    assert Arrays.equals(solution.maxRectangleArea(new int[]{0,0,1,1,2,2,3,3}, new int[]{0,1,0,1,0,1,0,1}), 1);\n    assert Arrays.equals(solution.maxRectangleArea(new int[]{1,3,5,7,9,11,13,15}, new int[]{1,3,5,7,9,11,13,15}), -1);\n    assert Arrays.equals(solution.maxRectangleArea(new int[]{1,1,2,2,3,3,4,4,5,5}, new int[]{1,5,1,5,1,5,1,5,1,5}), 4);\n    assert Arrays.equals(solution.maxRectangleArea(new int[]{2,2,8,8,4,4,6,6}, new int[]{2,8,2,8,4,6,4,6}), 4);\n    assert Arrays.equals(solution.maxRectangleArea(new int[]{8,8,16,16,12,12}, new int[]{8,16,8,16,10,14}), -1);\n    assert Arrays.equals(solution.maxRectangleArea(new int[]{0,0,4,4,8,8,12,12}, new int[]{0,4,0,4,0,4,0,4}), 16);\n    assert Arrays.equals(solution.maxRectangleArea(new int[]{1,1,3,3,5,5,7,7,9,9}, new int[]{1,9,1,9,1,9,1,9,1,9}), 16);\n    assert Arrays.equals(solution.maxRectangleArea(new int[]{2, 2, 4, 4, 6, 6, 8, 8, 10, 10}, new int[]{2, 6, 2, 6, 2, 6, 2, 6, 2, 6}), 8);\n    assert Arrays.equals(solution.maxRectangleArea(new int[]{0,0,10,10,5,5,6,6}, new int[]{0,10,0,10,5,6,5,6}), 1);\n    assert Arrays.equals(solution.maxRectangleArea(new int[]{1, 1, 2, 2, 4, 4, 8, 8}, new int[]{1, 2, 1, 2, 1, 2, 1, 2}), 4);\n    assert Arrays.equals(solution.maxRectangleArea(new int[]{2,2,6,6,10,10,14,14,18,18,22,22}, new int[]{2,22,2,22,10,10,14,14,6,6,18,18}), 80);\n    assert Arrays.equals(solution.maxRectangleArea(new int[]{1,2,2,3,3,4}, new int[]{1,2,3,1,3,2}), -1);\n    assert Arrays.equals(solution.maxRectangleArea(new int[]{10,10,20,20,15,15}, new int[]{10,20,10,20,12,18}), -1);\n    assert Arrays.equals(solution.maxRectangleArea(new int[]{2,2,8,8,12,12,18,18}, new int[]{3,9,3,9,3,9,3,9}), 36);\n    assert Arrays.equals(solution.maxRectangleArea(new int[]{1, 1, 3, 3, 5, 5, 7, 7, 9, 9, 11, 11, 13, 13}, new int[]{1, 3, 1, 3, 1, 3, 1, 3, 1, 3, 1, 3, 1, 3}), 4);\n    assert Arrays.equals(solution.maxRectangleArea(new int[]{1,1,5,5,3,3,7,7}, new int[]{1,5,1,5,3,7,3,7}), -1);\n    assert Arrays.equals(solution.maxRectangleArea(new int[]{1, 1, 4, 4, 2, 2}, new int[]{1, 4, 1, 4, 2, 2}), -1);\n    assert Arrays.equals(solution.maxRectangleArea(new int[]{100, 100, 200, 200, 300, 300, 400, 400}, new int[]{100, 200, 100, 200, 100, 200, 100, 200}), 10000);\n    assert Arrays.equals(solution.maxRectangleArea(new int[]{2,2,5,5,7,7,9,9}, new int[]{2,5,2,5,7,7,9,9}), 9);\n    assert Arrays.equals(solution.maxRectangleArea(new int[]{1, 1, 3, 3, 5, 5, 7, 7, 9, 9, 11, 11}, new int[]{1, 3, 1, 3, 1, 3, 1, 3, 1, 3, 1, 3}), 4);\n    assert Arrays.equals(solution.maxRectangleArea(new int[]{1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8}, new int[]{1, 2, 1, 2, 3, 4, 3, 4, 5, 6, 5, 6, 7, 8, 7, 8}), 1);\n    assert Arrays.equals(solution.maxRectangleArea(new int[]{3, 3, 15, 15, 8, 8, 10, 10}, new int[]{3, 15, 3, 15, 8, 10, 8, 10}), 4);\n    assert Arrays.equals(solution.maxRectangleArea(new int[]{1, 1, 3, 3, 5, 5, 7, 7, 9, 9}, new int[]{1, 3, 1, 3, 1, 3, 1, 3, 1, 3}), 4);\n    assert Arrays.equals(solution.maxRectangleArea(new int[]{1, 1, 10000000, 10000000, 5000000, 5000000, 6000000, 6000000}, new int[]{1, 10000000, 1, 10000000, 5000000, 6000000, 5000000, 6000000}), 1000000000000);\n    assert Arrays.equals(solution.maxRectangleArea(new int[]{1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3}, new int[]{1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4}), 1);\n    assert Arrays.equals(solution.maxRectangleArea(new int[]{1,2,3,4,5,6,7,8,9,10}, new int[]{1,1,1,1,2,2,2,2,3,3}), -1);\n    assert Arrays.equals(solution.maxRectangleArea(new int[]{0, 0, 100000000, 100000000, 50000000, 50000000}, new int[]{0, 100000000, 0, 100000000, 50000000, 50000000}), -1);\n    assert Arrays.equals(solution.maxRectangleArea(new int[]{1,1,3,3,5,5,7,7}, new int[]{1,3,1,3,5,7,5,7}), 4);\n    assert Arrays.equals(solution.maxRectangleArea(new int[]{1, 1, 5, 5, 3, 3, 2, 2, 4, 4, 6, 6}, new int[]{1, 5, 1, 5, 3, 3, 2, 2, 4, 4, 6, 6}), -1);\n    assert Arrays.equals(solution.maxRectangleArea(new int[]{1,1,3,3,5,5,7,7,9,9,11,11}, new int[]{1,3,1,3,1,3,1,3,1,3,1,3}), 4);\n    assert Arrays.equals(solution.maxRectangleArea(new int[]{1,1,3,3,5,5,7,7,9,9,11,11,13,13}, new int[]{1,3,1,3,1,3,1,3,1,3,1,3,1,3}), 4);\n    assert Arrays.equals(solution.maxRectangleArea(new int[]{1, 1, 3, 3, 5, 5, 7, 7}, new int[]{1, 3, 1, 3, 5, 5, 7, 7}), 4);\n    assert Arrays.equals(solution.maxRectangleArea(new int[]{0,0,20000000,20000000,10000000,10000000}, new int[]{0,20000000,0,20000000,10000000,10000000}), -1);\n    assert Arrays.equals(solution.maxRectangleArea(new int[]{1,2,2,1,4,5,5,4,6,7,7,6,8,9,9,8}, new int[]{1,1,2,2,1,1,2,2,1,1,2,2,1,1,2,2}), 2);\n    assert Arrays.equals(solution.maxRectangleArea(new int[]{2, 2, 8, 8, 5, 5, 7, 7}, new int[]{2, 6, 2, 6, 4, 4, 8, 8}), -1);\n    assert Arrays.equals(solution.maxRectangleArea(new int[]{3,3,5,5,7,7,9,9}, new int[]{3,7,3,7,3,7,3,7}), 8);\n    assert Arrays.equals(solution.maxRectangleArea(new int[]{1,1,1,1,1,1,1,1,3,3,3,3,3,3,3,3}, new int[]{1,2,3,4,5,6,7,8,1,2,3,4,5,6,7,8}), 2);\n    assert Arrays.equals(solution.maxRectangleArea(new int[]{1, 1, 5, 5, 10, 10, 15, 15, 20, 20}, new int[]{1, 5, 1, 5, 1, 5, 1, 5, 1, 5}), 20);\n    assert Arrays.equals(solution.maxRectangleArea(new int[]{1,1,3,3,5,5,7,7,9,9}, new int[]{1,9,1,9,5,5,3,3,7,7}), 16);\n    assert Arrays.equals(solution.maxRectangleArea(new int[]{1,1,3,3,5,5,7,7,9,9,11,11}, new int[]{1,11,1,11,1,11,1,11,1,11,1,11}), 20);\n    assert Arrays.equals(solution.maxRectangleArea(new int[]{0, 0, 5, 5, 3, 3, 2, 2}, new int[]{0, 5, 0, 5, 1, 3, 1, 3}), 2);\n    assert Arrays.equals(solution.maxRectangleArea(new int[]{1,2,2,3,3,4,4,5,5,6}, new int[]{1,1,2,1,2,2,3,2,3,3}), 1);\n    assert Arrays.equals(solution.maxRectangleArea(new int[]{1,1,5,5,9,9}, new int[]{1,9,1,9,1,9}), 32);\n    assert Arrays.equals(solution.maxRectangleArea(new int[]{1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5}, new int[]{1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4}), 1);\n    assert Arrays.equals(solution.maxRectangleArea(new int[]{1, 1, 10000000, 10000000, 5000000, 5000000}, new int[]{1, 10000000, 1, 10000000, 5000000, 5000000}), -1);\n    assert Arrays.equals(solution.maxRectangleArea(new int[]{1,1,4,4,2,2,5,5}, new int[]{1,4,1,4,2,5,2,5}), -1);\n    assert Arrays.equals(solution.maxRectangleArea(new int[]{1, 4, 4, 1, 6, 6, 9, 9}, new int[]{1, 1, 5, 5, 3, 7, 3, 7}), 12);\n    assert Arrays.equals(solution.maxRectangleArea(new int[]{1,1,3,3,5,5,7,7}, new int[]{1,3,1,3,1,3,1,3}), 4);\n    assert Arrays.equals(solution.maxRectangleArea(new int[]{10, 10, 20, 20, 15, 15, 18, 18}, new int[]{10, 20, 10, 20, 12, 18, 12, 18}), 18);\n    assert Arrays.equals(solution.maxRectangleArea(new int[]{100,100,150,150,200,200,250,250}, new int[]{100,150,100,150,100,150,100,150}), 2500);\n    assert Arrays.equals(solution.maxRectangleArea(new int[]{2,2,6,6,4,4,8,8}, new int[]{2,6,2,6,2,6,2,6}), 8);\n    assert Arrays.equals(solution.maxRectangleArea(new int[]{1,1,1,1,1,1,1,1,1,1}, new int[]{1,2,3,4,5,6,7,8,9,10}), -1);\n    assert Arrays.equals(solution.maxRectangleArea(new int[]{1,1,3,3,5,5,7,7,9,9,11,11,13,13,15,15,17,17}, new int[]{1,9,1,9,5,5,7,7,3,3,11,11,13,13,15,15,17,17}), 16);\n    assert Arrays.equals(solution.maxRectangleArea(new int[]{50000000,50000000,60000000,60000000,70000000,70000000,80000000,80000000}, new int[]{50000000,60000000,50000000,60000000,50000000,60000000,50000000,60000000}), 100000000000000);\n    assert Arrays.equals(solution.maxRectangleArea(new int[]{1, 1, 3, 3, 5, 5, 7, 7}, new int[]{1, 3, 1, 3, 5, 7, 5, 7}), 4);\n    assert Arrays.equals(solution.maxRectangleArea(new int[]{1,1,2,2,4,4,6,6,8,8,10,10,12,12,14,14,16,16,18,18,20,20}, new int[]{1,20,1,20,5,5,7,7,3,3,11,11,13,13,9,9,15,15,17,17,19,19}), 19);\n    assert Arrays.equals(solution.maxRectangleArea(new int[]{1,1,4,4,6,6,10,10}, new int[]{1,5,1,5,1,5,1,5}), 16);\n    assert Arrays.equals(solution.maxRectangleArea(new int[]{1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6}, new int[]{1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2}), 1);\n    assert Arrays.equals(solution.maxRectangleArea(new int[]{1,1,3,3,5,5,7,7,9,9,11,11,13,13,15,15}, new int[]{1,15,1,15,5,5,7,7,3,3,11,11,13,13,9,9}), 28);\n}",
+    "javascript": "function check(candidate) {\n    console.assert(JSON.stringify(candidate([5,5,7,7], [5,7,5,7])) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate([1,1,10,10], [1,10,1,10])) === JSON.stringify(81));\n    console.assert(JSON.stringify(candidate([1,1,3,3,1,3], [1,3,1,3,2,2])) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate([0,0,80000000,80000000], [0,80000000,0,80000000])) === JSON.stringify(6400000000000000));\n    console.assert(JSON.stringify(candidate([1,1,3,3,5,5], [1,3,1,3,1,3])) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate([1,2,3,4,5], [1,2,3,4,5])) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate([1,1,1,1], [1,1,1,1])) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate([5,5,10,10], [5,10,5,10])) === JSON.stringify(25));\n    console.assert(JSON.stringify(candidate([0,0,2,2], [0,2,0,2])) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate([1,1,3,3,4,4], [1,3,1,3,2,3])) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate([1,1,3,3,2], [1,3,1,3,2])) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate([0,0,2,2,4,4], [0,2,0,2,0,2])) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate([10,10,20,20], [10,20,10,20])) === JSON.stringify(100));\n    console.assert(JSON.stringify(candidate([0,0,8,8,4,4], [0,8,0,8,4,4])) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate([5,5,7,7,6], [5,7,5,7,6])) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate([5,5,15,15], [5,15,5,15])) === JSON.stringify(100));\n    console.assert(JSON.stringify(candidate([1,1,3,3], [1,3,1,3])) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate([1,2,3,4], [1,1,1,1])) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate([1,2,3,4,5,6,7,8], [1,2,3,4,5,6,7,8])) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate([1,1,1,1], [1,2,3,4])) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate([10,20,30,40], [10,20,30,40])) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate([1,1,3,3,5,5,7,7,9,9], [1,3,1,3,5,7,5,7,9,9])) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate([0, 0, 100000000, 100000000], [0, 100000000, 0, 100000000])) === JSON.stringify(10000000000000000));\n    console.assert(JSON.stringify(candidate([10,20,30,40,50,60,70,80,90,100], [10,20,30,40,50,60,70,80,90,100])) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate([1, 1, 5, 5, 10, 10, 15, 15], [1, 10, 1, 10, 1, 10, 1, 10])) === JSON.stringify(45));\n    console.assert(JSON.stringify(candidate([1,1,3,3,5,5,7,7,9,9,11,11,13,13], [1,9,1,9,5,5,7,7,3,3,11,11,13,13])) === JSON.stringify(16));\n    console.assert(JSON.stringify(candidate([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20], [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1])) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate([1, 1, 2, 2, 4, 4, 6, 6], [1, 3, 1, 3, 1, 3, 1, 3])) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate([10,10,20,20,30,30,40,40], [10,20,10,20,10,20,10,20])) === JSON.stringify(100));\n    console.assert(JSON.stringify(candidate([0,0,100000000,100000000], [0,100000000,0,100000000])) === JSON.stringify(10000000000000000));\n    console.assert(JSON.stringify(candidate([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20], [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20])) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate([1,1,2,2,4,4,5,5,6,6,8,8,9,9], [1,9,1,9,5,5,7,7,3,3,11,11,13,13])) === JSON.stringify(8));\n    console.assert(JSON.stringify(candidate([1,1,3,3,5,5,7,7,9,9,11,11,13,13,15,15,17,17,19,19], [1,3,1,3,1,3,1,3,1,3,1,3,1,3,1,3,1,3,1,3])) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate([1,1,10,10,5,5], [1,10,1,10,5,5])) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate([5,5,15,15,25,25,35,35,45,45], [5,45,5,45,5,45,5,45,5,45])) === JSON.stringify(400));\n    console.assert(JSON.stringify(candidate([10000000, 10000000, 20000000, 20000000, 30000000, 30000000, 40000000, 40000000], [10000000, 20000000, 10000000, 20000000, 10000000, 20000000, 10000000, 20000000])) === JSON.stringify(100000000000000));\n    console.assert(JSON.stringify(candidate([1, 4, 4, 1, 7, 7, 10, 10], [1, 1, 5, 5, 3, 8, 3, 8])) === JSON.stringify(15));\n    console.assert(JSON.stringify(candidate([5,5,6,6,7,7,8,8], [5,6,5,6,7,8,7,8])) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate([1,1,2,2,3,3,4,4,5,5,6,6,7,7,8,8,9,9,10,10], [1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2])) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate([1,1,1,1,1,1,1,1,1,1,3,3,3,3,3,3,3,3,3,3], [1,2,3,4,5,6,7,8,9,10,1,2,3,4,5,6,7,8,9,10])) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate([2,2,4,4,6,6,8,8,10,10], [2,4,2,4,6,8,6,8,10,10])) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate([1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1], [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20])) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate([0,0,8,8,4,4,6,6,2,2,7,7,3,3,5,5], [0,8,0,8,4,6,4,6,2,7,2,7,3,5,3,5])) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate([2, 2, 5, 5, 3, 3, 4, 4], [2, 5, 2, 5, 3, 3, 4, 4])) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate([10, 10, 30, 30, 20, 20, 25, 25], [10, 30, 10, 30, 15, 15, 25, 25])) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate([1, 4, 4, 1, 6, 6, 9, 9, 3, 3, 12, 12], [1, 1, 5, 5, 3, 7, 3, 7, 2, 4, 2, 4])) === JSON.stringify(12));\n    console.assert(JSON.stringify(candidate([5,5,15,15,25,25,35,35,45,45], [5,15,5,15,25,25,35,35,45,45])) === JSON.stringify(100));\n    console.assert(JSON.stringify(candidate([1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8, 9, 9, 10, 10], [1, 5, 1, 5, 1, 5, 1, 5, 1, 5, 1, 5, 1, 5, 1, 5, 1, 5, 1, 5])) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate([1, 3, 5, 7, 9, 11, 13, 15, 17, 19], [1, 3, 5, 7, 9, 11, 13, 15, 17, 19])) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate([5,5,10,10,15,15,20,20,25,25], [5,10,5,10,5,10,5,10,5,10])) === JSON.stringify(25));\n    console.assert(JSON.stringify(candidate([1,2,3,4,5,6,7,8,9,10], [1,2,3,4,5,6,7,8,9,10])) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate([1,1,1,1,3,3,3,3,5,5,5,5], [1,3,5,7,1,3,5,7,1,3,5,7])) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate([2, 2, 4, 4, 6, 6, 8, 8], [2, 6, 2, 6, 2, 6, 2, 6])) === JSON.stringify(8));\n    console.assert(JSON.stringify(candidate([1,1,3,3,5,5,7,7,9,9,11,11,13,13], [1,3,1,3,5,7,5,7,9,11,9,11,13,13])) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate([0,0,0,0,10,10,10,10,20,20,20,20], [0,10,20,30,0,10,20,30,0,10,20,30])) === JSON.stringify(100));\n    console.assert(JSON.stringify(candidate([2,2,4,4,6,6,8,8], [2,8,2,8,2,8,2,8])) === JSON.stringify(12));\n    console.assert(JSON.stringify(candidate([10,10,30,30,20,20,40,40], [10,30,10,30,20,40,20,40])) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate([1, 1, 2, 2, 3, 3, 4, 4, 5, 5], [1, 2, 1, 2, 1, 2, 1, 2, 1, 2])) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate([1,1,3,3,1,1,3,3,2,2,4,4], [1,3,1,3,2,4,2,4,1,3,1,3])) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], [1, 2, 3, 4, 5, 6, 7, 8, 9, 10])) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate([100, 100, 150, 150, 120, 120, 130, 130], [100, 150, 100, 150, 120, 130, 120, 130])) === JSON.stringify(100));\n    console.assert(JSON.stringify(candidate([10, 10, 20, 20, 30, 30, 40, 40], [10, 20, 10, 20, 10, 20, 10, 20])) === JSON.stringify(100));\n    console.assert(JSON.stringify(candidate([10,10,20,20,30,30,40,40,50,50], [10,50,10,50,30,30,40,40,20,20])) === JSON.stringify(400));\n    console.assert(JSON.stringify(candidate([0, 0, 80000000, 80000000], [0, 80000000, 0, 80000000])) === JSON.stringify(6400000000000000));\n    console.assert(JSON.stringify(candidate([1,1,3,3,5,5,7,7,9,9,11,11,13,13], [1,13,1,13,1,13,1,13,1,13,1,13,1,13])) === JSON.stringify(24));\n    console.assert(JSON.stringify(candidate([1, 1, 3, 3, 5, 5, 7, 7], [1, 3, 1, 3, 1, 3, 1, 3])) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate([1, 1, 5, 5, 10, 10, 15, 15, 20, 20, 25, 25], [1, 5, 1, 5, 1, 5, 1, 5, 1, 5, 1, 5])) === JSON.stringify(20));\n    console.assert(JSON.stringify(candidate([1, 1, 10, 10, 5, 5, 7, 7, 3, 3], [1, 10, 1, 10, 5, 5, 7, 7, 3, 3])) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate([1,2,3,4,5,6,7,8,9,10], [1,1,1,1,1,1,1,1,1,1])) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate([1,5,5,9,9,13], [1,5,1,5,1,5])) === JSON.stringify(16));\n    console.assert(JSON.stringify(candidate([1, 1, 9, 9, 5, 5, 3, 3, 7, 7, 6, 6, 4, 4, 8, 8], [1, 9, 1, 9, 5, 5, 3, 3, 7, 7, 6, 6, 4, 4, 8, 8])) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate([0, 0, 2, 2, 4, 4, 6, 6], [0, 2, 0, 2, 0, 2, 0, 2])) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate([0,0,1,1,2,2,3,3], [0,1,0,1,0,1,0,1])) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate([1,3,5,7,9,11,13,15], [1,3,5,7,9,11,13,15])) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate([1,1,2,2,3,3,4,4,5,5], [1,5,1,5,1,5,1,5,1,5])) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate([2,2,8,8,4,4,6,6], [2,8,2,8,4,6,4,6])) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate([8,8,16,16,12,12], [8,16,8,16,10,14])) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate([0,0,4,4,8,8,12,12], [0,4,0,4,0,4,0,4])) === JSON.stringify(16));\n    console.assert(JSON.stringify(candidate([1,1,3,3,5,5,7,7,9,9], [1,9,1,9,1,9,1,9,1,9])) === JSON.stringify(16));\n    console.assert(JSON.stringify(candidate([2, 2, 4, 4, 6, 6, 8, 8, 10, 10], [2, 6, 2, 6, 2, 6, 2, 6, 2, 6])) === JSON.stringify(8));\n    console.assert(JSON.stringify(candidate([0,0,10,10,5,5,6,6], [0,10,0,10,5,6,5,6])) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate([1, 1, 2, 2, 4, 4, 8, 8], [1, 2, 1, 2, 1, 2, 1, 2])) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate([2,2,6,6,10,10,14,14,18,18,22,22], [2,22,2,22,10,10,14,14,6,6,18,18])) === JSON.stringify(80));\n    console.assert(JSON.stringify(candidate([1,2,2,3,3,4], [1,2,3,1,3,2])) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate([10,10,20,20,15,15], [10,20,10,20,12,18])) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate([2,2,8,8,12,12,18,18], [3,9,3,9,3,9,3,9])) === JSON.stringify(36));\n    console.assert(JSON.stringify(candidate([1, 1, 3, 3, 5, 5, 7, 7, 9, 9, 11, 11, 13, 13], [1, 3, 1, 3, 1, 3, 1, 3, 1, 3, 1, 3, 1, 3])) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate([1,1,5,5,3,3,7,7], [1,5,1,5,3,7,3,7])) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate([1, 1, 4, 4, 2, 2], [1, 4, 1, 4, 2, 2])) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate([100, 100, 200, 200, 300, 300, 400, 400], [100, 200, 100, 200, 100, 200, 100, 200])) === JSON.stringify(10000));\n    console.assert(JSON.stringify(candidate([2,2,5,5,7,7,9,9], [2,5,2,5,7,7,9,9])) === JSON.stringify(9));\n    console.assert(JSON.stringify(candidate([1, 1, 3, 3, 5, 5, 7, 7, 9, 9, 11, 11], [1, 3, 1, 3, 1, 3, 1, 3, 1, 3, 1, 3])) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate([1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8], [1, 2, 1, 2, 3, 4, 3, 4, 5, 6, 5, 6, 7, 8, 7, 8])) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate([3, 3, 15, 15, 8, 8, 10, 10], [3, 15, 3, 15, 8, 10, 8, 10])) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate([1, 1, 3, 3, 5, 5, 7, 7, 9, 9], [1, 3, 1, 3, 1, 3, 1, 3, 1, 3])) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate([1, 1, 10000000, 10000000, 5000000, 5000000, 6000000, 6000000], [1, 10000000, 1, 10000000, 5000000, 6000000, 5000000, 6000000])) === JSON.stringify(1000000000000));\n    console.assert(JSON.stringify(candidate([1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3], [1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4])) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate([1,2,3,4,5,6,7,8,9,10], [1,1,1,1,2,2,2,2,3,3])) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate([0, 0, 100000000, 100000000, 50000000, 50000000], [0, 100000000, 0, 100000000, 50000000, 50000000])) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate([1,1,3,3,5,5,7,7], [1,3,1,3,5,7,5,7])) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate([1, 1, 5, 5, 3, 3, 2, 2, 4, 4, 6, 6], [1, 5, 1, 5, 3, 3, 2, 2, 4, 4, 6, 6])) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate([1,1,3,3,5,5,7,7,9,9,11,11], [1,3,1,3,1,3,1,3,1,3,1,3])) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate([1,1,3,3,5,5,7,7,9,9,11,11,13,13], [1,3,1,3,1,3,1,3,1,3,1,3,1,3])) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate([1, 1, 3, 3, 5, 5, 7, 7], [1, 3, 1, 3, 5, 5, 7, 7])) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate([0,0,20000000,20000000,10000000,10000000], [0,20000000,0,20000000,10000000,10000000])) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate([1,2,2,1,4,5,5,4,6,7,7,6,8,9,9,8], [1,1,2,2,1,1,2,2,1,1,2,2,1,1,2,2])) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate([2, 2, 8, 8, 5, 5, 7, 7], [2, 6, 2, 6, 4, 4, 8, 8])) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate([3,3,5,5,7,7,9,9], [3,7,3,7,3,7,3,7])) === JSON.stringify(8));\n    console.assert(JSON.stringify(candidate([1,1,1,1,1,1,1,1,3,3,3,3,3,3,3,3], [1,2,3,4,5,6,7,8,1,2,3,4,5,6,7,8])) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate([1, 1, 5, 5, 10, 10, 15, 15, 20, 20], [1, 5, 1, 5, 1, 5, 1, 5, 1, 5])) === JSON.stringify(20));\n    console.assert(JSON.stringify(candidate([1,1,3,3,5,5,7,7,9,9], [1,9,1,9,5,5,3,3,7,7])) === JSON.stringify(16));\n    console.assert(JSON.stringify(candidate([1,1,3,3,5,5,7,7,9,9,11,11], [1,11,1,11,1,11,1,11,1,11,1,11])) === JSON.stringify(20));\n    console.assert(JSON.stringify(candidate([0, 0, 5, 5, 3, 3, 2, 2], [0, 5, 0, 5, 1, 3, 1, 3])) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate([1,2,2,3,3,4,4,5,5,6], [1,1,2,1,2,2,3,2,3,3])) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate([1,1,5,5,9,9], [1,9,1,9,1,9])) === JSON.stringify(32));\n    console.assert(JSON.stringify(candidate([1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5], [1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4])) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate([1, 1, 10000000, 10000000, 5000000, 5000000], [1, 10000000, 1, 10000000, 5000000, 5000000])) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate([1,1,4,4,2,2,5,5], [1,4,1,4,2,5,2,5])) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate([1, 4, 4, 1, 6, 6, 9, 9], [1, 1, 5, 5, 3, 7, 3, 7])) === JSON.stringify(12));\n    console.assert(JSON.stringify(candidate([1,1,3,3,5,5,7,7], [1,3,1,3,1,3,1,3])) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate([10, 10, 20, 20, 15, 15, 18, 18], [10, 20, 10, 20, 12, 18, 12, 18])) === JSON.stringify(18));\n    console.assert(JSON.stringify(candidate([100,100,150,150,200,200,250,250], [100,150,100,150,100,150,100,150])) === JSON.stringify(2500));\n    console.assert(JSON.stringify(candidate([2,2,6,6,4,4,8,8], [2,6,2,6,2,6,2,6])) === JSON.stringify(8));\n    console.assert(JSON.stringify(candidate([1,1,1,1,1,1,1,1,1,1], [1,2,3,4,5,6,7,8,9,10])) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate([1,1,3,3,5,5,7,7,9,9,11,11,13,13,15,15,17,17], [1,9,1,9,5,5,7,7,3,3,11,11,13,13,15,15,17,17])) === JSON.stringify(16));\n    console.assert(JSON.stringify(candidate([50000000,50000000,60000000,60000000,70000000,70000000,80000000,80000000], [50000000,60000000,50000000,60000000,50000000,60000000,50000000,60000000])) === JSON.stringify(100000000000000));\n    console.assert(JSON.stringify(candidate([1, 1, 3, 3, 5, 5, 7, 7], [1, 3, 1, 3, 5, 7, 5, 7])) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate([1,1,2,2,4,4,6,6,8,8,10,10,12,12,14,14,16,16,18,18,20,20], [1,20,1,20,5,5,7,7,3,3,11,11,13,13,9,9,15,15,17,17,19,19])) === JSON.stringify(19));\n    console.assert(JSON.stringify(candidate([1,1,4,4,6,6,10,10], [1,5,1,5,1,5,1,5])) === JSON.stringify(16));\n    console.assert(JSON.stringify(candidate([1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6], [1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2])) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate([1,1,3,3,5,5,7,7,9,9,11,11,13,13,15,15], [1,15,1,15,5,5,7,7,3,3,11,11,13,13,9,9])) === JSON.stringify(28));\n}",
+    "typescript": "function check(candidate: Function): void {\n    console.assert(JSON.stringify(candidate([5,5,7,7], [5,7,5,7])) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate([1,1,10,10], [1,10,1,10])) === JSON.stringify(81));\n    console.assert(JSON.stringify(candidate([1,1,3,3,1,3], [1,3,1,3,2,2])) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate([0,0,80000000,80000000], [0,80000000,0,80000000])) === JSON.stringify(6400000000000000));\n    console.assert(JSON.stringify(candidate([1,1,3,3,5,5], [1,3,1,3,1,3])) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate([1,2,3,4,5], [1,2,3,4,5])) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate([1,1,1,1], [1,1,1,1])) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate([5,5,10,10], [5,10,5,10])) === JSON.stringify(25));\n    console.assert(JSON.stringify(candidate([0,0,2,2], [0,2,0,2])) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate([1,1,3,3,4,4], [1,3,1,3,2,3])) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate([1,1,3,3,2], [1,3,1,3,2])) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate([0,0,2,2,4,4], [0,2,0,2,0,2])) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate([10,10,20,20], [10,20,10,20])) === JSON.stringify(100));\n    console.assert(JSON.stringify(candidate([0,0,8,8,4,4], [0,8,0,8,4,4])) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate([5,5,7,7,6], [5,7,5,7,6])) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate([5,5,15,15], [5,15,5,15])) === JSON.stringify(100));\n    console.assert(JSON.stringify(candidate([1,1,3,3], [1,3,1,3])) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate([1,2,3,4], [1,1,1,1])) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate([1,2,3,4,5,6,7,8], [1,2,3,4,5,6,7,8])) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate([1,1,1,1], [1,2,3,4])) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate([10,20,30,40], [10,20,30,40])) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate([1,1,3,3,5,5,7,7,9,9], [1,3,1,3,5,7,5,7,9,9])) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate([0, 0, 100000000, 100000000], [0, 100000000, 0, 100000000])) === JSON.stringify(10000000000000000));\n    console.assert(JSON.stringify(candidate([10,20,30,40,50,60,70,80,90,100], [10,20,30,40,50,60,70,80,90,100])) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate([1, 1, 5, 5, 10, 10, 15, 15], [1, 10, 1, 10, 1, 10, 1, 10])) === JSON.stringify(45));\n    console.assert(JSON.stringify(candidate([1,1,3,3,5,5,7,7,9,9,11,11,13,13], [1,9,1,9,5,5,7,7,3,3,11,11,13,13])) === JSON.stringify(16));\n    console.assert(JSON.stringify(candidate([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20], [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1])) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate([1, 1, 2, 2, 4, 4, 6, 6], [1, 3, 1, 3, 1, 3, 1, 3])) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate([10,10,20,20,30,30,40,40], [10,20,10,20,10,20,10,20])) === JSON.stringify(100));\n    console.assert(JSON.stringify(candidate([0,0,100000000,100000000], [0,100000000,0,100000000])) === JSON.stringify(10000000000000000));\n    console.assert(JSON.stringify(candidate([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20], [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20])) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate([1,1,2,2,4,4,5,5,6,6,8,8,9,9], [1,9,1,9,5,5,7,7,3,3,11,11,13,13])) === JSON.stringify(8));\n    console.assert(JSON.stringify(candidate([1,1,3,3,5,5,7,7,9,9,11,11,13,13,15,15,17,17,19,19], [1,3,1,3,1,3,1,3,1,3,1,3,1,3,1,3,1,3,1,3])) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate([1,1,10,10,5,5], [1,10,1,10,5,5])) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate([5,5,15,15,25,25,35,35,45,45], [5,45,5,45,5,45,5,45,5,45])) === JSON.stringify(400));\n    console.assert(JSON.stringify(candidate([10000000, 10000000, 20000000, 20000000, 30000000, 30000000, 40000000, 40000000], [10000000, 20000000, 10000000, 20000000, 10000000, 20000000, 10000000, 20000000])) === JSON.stringify(100000000000000));\n    console.assert(JSON.stringify(candidate([1, 4, 4, 1, 7, 7, 10, 10], [1, 1, 5, 5, 3, 8, 3, 8])) === JSON.stringify(15));\n    console.assert(JSON.stringify(candidate([5,5,6,6,7,7,8,8], [5,6,5,6,7,8,7,8])) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate([1,1,2,2,3,3,4,4,5,5,6,6,7,7,8,8,9,9,10,10], [1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2])) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate([1,1,1,1,1,1,1,1,1,1,3,3,3,3,3,3,3,3,3,3], [1,2,3,4,5,6,7,8,9,10,1,2,3,4,5,6,7,8,9,10])) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate([2,2,4,4,6,6,8,8,10,10], [2,4,2,4,6,8,6,8,10,10])) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate([1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1], [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20])) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate([0,0,8,8,4,4,6,6,2,2,7,7,3,3,5,5], [0,8,0,8,4,6,4,6,2,7,2,7,3,5,3,5])) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate([2, 2, 5, 5, 3, 3, 4, 4], [2, 5, 2, 5, 3, 3, 4, 4])) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate([10, 10, 30, 30, 20, 20, 25, 25], [10, 30, 10, 30, 15, 15, 25, 25])) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate([1, 4, 4, 1, 6, 6, 9, 9, 3, 3, 12, 12], [1, 1, 5, 5, 3, 7, 3, 7, 2, 4, 2, 4])) === JSON.stringify(12));\n    console.assert(JSON.stringify(candidate([5,5,15,15,25,25,35,35,45,45], [5,15,5,15,25,25,35,35,45,45])) === JSON.stringify(100));\n    console.assert(JSON.stringify(candidate([1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8, 9, 9, 10, 10], [1, 5, 1, 5, 1, 5, 1, 5, 1, 5, 1, 5, 1, 5, 1, 5, 1, 5, 1, 5])) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate([1, 3, 5, 7, 9, 11, 13, 15, 17, 19], [1, 3, 5, 7, 9, 11, 13, 15, 17, 19])) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate([5,5,10,10,15,15,20,20,25,25], [5,10,5,10,5,10,5,10,5,10])) === JSON.stringify(25));\n    console.assert(JSON.stringify(candidate([1,2,3,4,5,6,7,8,9,10], [1,2,3,4,5,6,7,8,9,10])) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate([1,1,1,1,3,3,3,3,5,5,5,5], [1,3,5,7,1,3,5,7,1,3,5,7])) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate([2, 2, 4, 4, 6, 6, 8, 8], [2, 6, 2, 6, 2, 6, 2, 6])) === JSON.stringify(8));\n    console.assert(JSON.stringify(candidate([1,1,3,3,5,5,7,7,9,9,11,11,13,13], [1,3,1,3,5,7,5,7,9,11,9,11,13,13])) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate([0,0,0,0,10,10,10,10,20,20,20,20], [0,10,20,30,0,10,20,30,0,10,20,30])) === JSON.stringify(100));\n    console.assert(JSON.stringify(candidate([2,2,4,4,6,6,8,8], [2,8,2,8,2,8,2,8])) === JSON.stringify(12));\n    console.assert(JSON.stringify(candidate([10,10,30,30,20,20,40,40], [10,30,10,30,20,40,20,40])) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate([1, 1, 2, 2, 3, 3, 4, 4, 5, 5], [1, 2, 1, 2, 1, 2, 1, 2, 1, 2])) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate([1,1,3,3,1,1,3,3,2,2,4,4], [1,3,1,3,2,4,2,4,1,3,1,3])) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], [1, 2, 3, 4, 5, 6, 7, 8, 9, 10])) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate([100, 100, 150, 150, 120, 120, 130, 130], [100, 150, 100, 150, 120, 130, 120, 130])) === JSON.stringify(100));\n    console.assert(JSON.stringify(candidate([10, 10, 20, 20, 30, 30, 40, 40], [10, 20, 10, 20, 10, 20, 10, 20])) === JSON.stringify(100));\n    console.assert(JSON.stringify(candidate([10,10,20,20,30,30,40,40,50,50], [10,50,10,50,30,30,40,40,20,20])) === JSON.stringify(400));\n    console.assert(JSON.stringify(candidate([0, 0, 80000000, 80000000], [0, 80000000, 0, 80000000])) === JSON.stringify(6400000000000000));\n    console.assert(JSON.stringify(candidate([1,1,3,3,5,5,7,7,9,9,11,11,13,13], [1,13,1,13,1,13,1,13,1,13,1,13,1,13])) === JSON.stringify(24));\n    console.assert(JSON.stringify(candidate([1, 1, 3, 3, 5, 5, 7, 7], [1, 3, 1, 3, 1, 3, 1, 3])) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate([1, 1, 5, 5, 10, 10, 15, 15, 20, 20, 25, 25], [1, 5, 1, 5, 1, 5, 1, 5, 1, 5, 1, 5])) === JSON.stringify(20));\n    console.assert(JSON.stringify(candidate([1, 1, 10, 10, 5, 5, 7, 7, 3, 3], [1, 10, 1, 10, 5, 5, 7, 7, 3, 3])) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate([1,2,3,4,5,6,7,8,9,10], [1,1,1,1,1,1,1,1,1,1])) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate([1,5,5,9,9,13], [1,5,1,5,1,5])) === JSON.stringify(16));\n    console.assert(JSON.stringify(candidate([1, 1, 9, 9, 5, 5, 3, 3, 7, 7, 6, 6, 4, 4, 8, 8], [1, 9, 1, 9, 5, 5, 3, 3, 7, 7, 6, 6, 4, 4, 8, 8])) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate([0, 0, 2, 2, 4, 4, 6, 6], [0, 2, 0, 2, 0, 2, 0, 2])) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate([0,0,1,1,2,2,3,3], [0,1,0,1,0,1,0,1])) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate([1,3,5,7,9,11,13,15], [1,3,5,7,9,11,13,15])) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate([1,1,2,2,3,3,4,4,5,5], [1,5,1,5,1,5,1,5,1,5])) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate([2,2,8,8,4,4,6,6], [2,8,2,8,4,6,4,6])) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate([8,8,16,16,12,12], [8,16,8,16,10,14])) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate([0,0,4,4,8,8,12,12], [0,4,0,4,0,4,0,4])) === JSON.stringify(16));\n    console.assert(JSON.stringify(candidate([1,1,3,3,5,5,7,7,9,9], [1,9,1,9,1,9,1,9,1,9])) === JSON.stringify(16));\n    console.assert(JSON.stringify(candidate([2, 2, 4, 4, 6, 6, 8, 8, 10, 10], [2, 6, 2, 6, 2, 6, 2, 6, 2, 6])) === JSON.stringify(8));\n    console.assert(JSON.stringify(candidate([0,0,10,10,5,5,6,6], [0,10,0,10,5,6,5,6])) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate([1, 1, 2, 2, 4, 4, 8, 8], [1, 2, 1, 2, 1, 2, 1, 2])) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate([2,2,6,6,10,10,14,14,18,18,22,22], [2,22,2,22,10,10,14,14,6,6,18,18])) === JSON.stringify(80));\n    console.assert(JSON.stringify(candidate([1,2,2,3,3,4], [1,2,3,1,3,2])) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate([10,10,20,20,15,15], [10,20,10,20,12,18])) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate([2,2,8,8,12,12,18,18], [3,9,3,9,3,9,3,9])) === JSON.stringify(36));\n    console.assert(JSON.stringify(candidate([1, 1, 3, 3, 5, 5, 7, 7, 9, 9, 11, 11, 13, 13], [1, 3, 1, 3, 1, 3, 1, 3, 1, 3, 1, 3, 1, 3])) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate([1,1,5,5,3,3,7,7], [1,5,1,5,3,7,3,7])) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate([1, 1, 4, 4, 2, 2], [1, 4, 1, 4, 2, 2])) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate([100, 100, 200, 200, 300, 300, 400, 400], [100, 200, 100, 200, 100, 200, 100, 200])) === JSON.stringify(10000));\n    console.assert(JSON.stringify(candidate([2,2,5,5,7,7,9,9], [2,5,2,5,7,7,9,9])) === JSON.stringify(9));\n    console.assert(JSON.stringify(candidate([1, 1, 3, 3, 5, 5, 7, 7, 9, 9, 11, 11], [1, 3, 1, 3, 1, 3, 1, 3, 1, 3, 1, 3])) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate([1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8], [1, 2, 1, 2, 3, 4, 3, 4, 5, 6, 5, 6, 7, 8, 7, 8])) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate([3, 3, 15, 15, 8, 8, 10, 10], [3, 15, 3, 15, 8, 10, 8, 10])) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate([1, 1, 3, 3, 5, 5, 7, 7, 9, 9], [1, 3, 1, 3, 1, 3, 1, 3, 1, 3])) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate([1, 1, 10000000, 10000000, 5000000, 5000000, 6000000, 6000000], [1, 10000000, 1, 10000000, 5000000, 6000000, 5000000, 6000000])) === JSON.stringify(1000000000000));\n    console.assert(JSON.stringify(candidate([1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3], [1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4])) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate([1,2,3,4,5,6,7,8,9,10], [1,1,1,1,2,2,2,2,3,3])) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate([0, 0, 100000000, 100000000, 50000000, 50000000], [0, 100000000, 0, 100000000, 50000000, 50000000])) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate([1,1,3,3,5,5,7,7], [1,3,1,3,5,7,5,7])) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate([1, 1, 5, 5, 3, 3, 2, 2, 4, 4, 6, 6], [1, 5, 1, 5, 3, 3, 2, 2, 4, 4, 6, 6])) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate([1,1,3,3,5,5,7,7,9,9,11,11], [1,3,1,3,1,3,1,3,1,3,1,3])) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate([1,1,3,3,5,5,7,7,9,9,11,11,13,13], [1,3,1,3,1,3,1,3,1,3,1,3,1,3])) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate([1, 1, 3, 3, 5, 5, 7, 7], [1, 3, 1, 3, 5, 5, 7, 7])) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate([0,0,20000000,20000000,10000000,10000000], [0,20000000,0,20000000,10000000,10000000])) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate([1,2,2,1,4,5,5,4,6,7,7,6,8,9,9,8], [1,1,2,2,1,1,2,2,1,1,2,2,1,1,2,2])) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate([2, 2, 8, 8, 5, 5, 7, 7], [2, 6, 2, 6, 4, 4, 8, 8])) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate([3,3,5,5,7,7,9,9], [3,7,3,7,3,7,3,7])) === JSON.stringify(8));\n    console.assert(JSON.stringify(candidate([1,1,1,1,1,1,1,1,3,3,3,3,3,3,3,3], [1,2,3,4,5,6,7,8,1,2,3,4,5,6,7,8])) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate([1, 1, 5, 5, 10, 10, 15, 15, 20, 20], [1, 5, 1, 5, 1, 5, 1, 5, 1, 5])) === JSON.stringify(20));\n    console.assert(JSON.stringify(candidate([1,1,3,3,5,5,7,7,9,9], [1,9,1,9,5,5,3,3,7,7])) === JSON.stringify(16));\n    console.assert(JSON.stringify(candidate([1,1,3,3,5,5,7,7,9,9,11,11], [1,11,1,11,1,11,1,11,1,11,1,11])) === JSON.stringify(20));\n    console.assert(JSON.stringify(candidate([0, 0, 5, 5, 3, 3, 2, 2], [0, 5, 0, 5, 1, 3, 1, 3])) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate([1,2,2,3,3,4,4,5,5,6], [1,1,2,1,2,2,3,2,3,3])) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate([1,1,5,5,9,9], [1,9,1,9,1,9])) === JSON.stringify(32));\n    console.assert(JSON.stringify(candidate([1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5], [1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4])) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate([1, 1, 10000000, 10000000, 5000000, 5000000], [1, 10000000, 1, 10000000, 5000000, 5000000])) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate([1,1,4,4,2,2,5,5], [1,4,1,4,2,5,2,5])) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate([1, 4, 4, 1, 6, 6, 9, 9], [1, 1, 5, 5, 3, 7, 3, 7])) === JSON.stringify(12));\n    console.assert(JSON.stringify(candidate([1,1,3,3,5,5,7,7], [1,3,1,3,1,3,1,3])) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate([10, 10, 20, 20, 15, 15, 18, 18], [10, 20, 10, 20, 12, 18, 12, 18])) === JSON.stringify(18));\n    console.assert(JSON.stringify(candidate([100,100,150,150,200,200,250,250], [100,150,100,150,100,150,100,150])) === JSON.stringify(2500));\n    console.assert(JSON.stringify(candidate([2,2,6,6,4,4,8,8], [2,6,2,6,2,6,2,6])) === JSON.stringify(8));\n    console.assert(JSON.stringify(candidate([1,1,1,1,1,1,1,1,1,1], [1,2,3,4,5,6,7,8,9,10])) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate([1,1,3,3,5,5,7,7,9,9,11,11,13,13,15,15,17,17], [1,9,1,9,5,5,7,7,3,3,11,11,13,13,15,15,17,17])) === JSON.stringify(16));\n    console.assert(JSON.stringify(candidate([50000000,50000000,60000000,60000000,70000000,70000000,80000000,80000000], [50000000,60000000,50000000,60000000,50000000,60000000,50000000,60000000])) === JSON.stringify(100000000000000));\n    console.assert(JSON.stringify(candidate([1, 1, 3, 3, 5, 5, 7, 7], [1, 3, 1, 3, 5, 7, 5, 7])) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate([1,1,2,2,4,4,6,6,8,8,10,10,12,12,14,14,16,16,18,18,20,20], [1,20,1,20,5,5,7,7,3,3,11,11,13,13,9,9,15,15,17,17,19,19])) === JSON.stringify(19));\n    console.assert(JSON.stringify(candidate([1,1,4,4,6,6,10,10], [1,5,1,5,1,5,1,5])) === JSON.stringify(16));\n    console.assert(JSON.stringify(candidate([1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6], [1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2])) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate([1,1,3,3,5,5,7,7,9,9,11,11,13,13,15,15], [1,15,1,15,5,5,7,7,3,3,11,11,13,13,9,9])) === JSON.stringify(28));\n}",
+    "golang": "func check(candidate func([]int, int) []int) {\n    assert reflect.DeepEqual(candidate([]int{5,5,7,7}, []int{5,7,5,7}), 4)\n    assert reflect.DeepEqual(candidate([]int{1,1,10,10}, []int{1,10,1,10}), 81)\n    assert reflect.DeepEqual(candidate([]int{1,1,3,3,1,3}, []int{1,3,1,3,2,2}), 2)\n    assert reflect.DeepEqual(candidate([]int{0,0,80000000,80000000}, []int{0,80000000,0,80000000}), 6400000000000000)\n    assert reflect.DeepEqual(candidate([]int{1,1,3,3,5,5}, []int{1,3,1,3,1,3}), 4)\n    assert reflect.DeepEqual(candidate([]int{1,2,3,4,5}, []int{1,2,3,4,5}), -1)\n    assert reflect.DeepEqual(candidate([]int{1,1,1,1}, []int{1,1,1,1}), -1)\n    assert reflect.DeepEqual(candidate([]int{5,5,10,10}, []int{5,10,5,10}), 25)\n    assert reflect.DeepEqual(candidate([]int{0,0,2,2}, []int{0,2,0,2}), 4)\n    assert reflect.DeepEqual(candidate([]int{1,1,3,3,4,4}, []int{1,3,1,3,2,3}), 4)\n    assert reflect.DeepEqual(candidate([]int{1,1,3,3,2}, []int{1,3,1,3,2}), -1)\n    assert reflect.DeepEqual(candidate([]int{0,0,2,2,4,4}, []int{0,2,0,2,0,2}), 4)\n    assert reflect.DeepEqual(candidate([]int{10,10,20,20}, []int{10,20,10,20}), 100)\n    assert reflect.DeepEqual(candidate([]int{0,0,8,8,4,4}, []int{0,8,0,8,4,4}), -1)\n    assert reflect.DeepEqual(candidate([]int{5,5,7,7,6}, []int{5,7,5,7,6}), -1)\n    assert reflect.DeepEqual(candidate([]int{5,5,15,15}, []int{5,15,5,15}), 100)\n    assert reflect.DeepEqual(candidate([]int{1,1,3,3}, []int{1,3,1,3}), 4)\n    assert reflect.DeepEqual(candidate([]int{1,2,3,4}, []int{1,1,1,1}), -1)\n    assert reflect.DeepEqual(candidate([]int{1,2,3,4,5,6,7,8}, []int{1,2,3,4,5,6,7,8}), -1)\n    assert reflect.DeepEqual(candidate([]int{1,1,1,1}, []int{1,2,3,4}), -1)\n    assert reflect.DeepEqual(candidate([]int{10,20,30,40}, []int{10,20,30,40}), -1)\n    assert reflect.DeepEqual(candidate([]int{1,1,3,3,5,5,7,7,9,9}, []int{1,3,1,3,5,7,5,7,9,9}), 4)\n    assert reflect.DeepEqual(candidate([]int{0, 0, 100000000, 100000000}, []int{0, 100000000, 0, 100000000}), 10000000000000000)\n    assert reflect.DeepEqual(candidate([]int{10,20,30,40,50,60,70,80,90,100}, []int{10,20,30,40,50,60,70,80,90,100}), -1)\n    assert reflect.DeepEqual(candidate([]int{1, 1, 5, 5, 10, 10, 15, 15}, []int{1, 10, 1, 10, 1, 10, 1, 10}), 45)\n    assert reflect.DeepEqual(candidate([]int{1,1,3,3,5,5,7,7,9,9,11,11,13,13}, []int{1,9,1,9,5,5,7,7,3,3,11,11,13,13}), 16)\n    assert reflect.DeepEqual(candidate([]int{1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20}, []int{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}), -1)\n    assert reflect.DeepEqual(candidate([]int{1, 1, 2, 2, 4, 4, 6, 6}, []int{1, 3, 1, 3, 1, 3, 1, 3}), 4)\n    assert reflect.DeepEqual(candidate([]int{10,10,20,20,30,30,40,40}, []int{10,20,10,20,10,20,10,20}), 100)\n    assert reflect.DeepEqual(candidate([]int{0,0,100000000,100000000}, []int{0,100000000,0,100000000}), 10000000000000000)\n    assert reflect.DeepEqual(candidate([]int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20}, []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20}), -1)\n    assert reflect.DeepEqual(candidate([]int{1,1,2,2,4,4,5,5,6,6,8,8,9,9}, []int{1,9,1,9,5,5,7,7,3,3,11,11,13,13}), 8)\n    assert reflect.DeepEqual(candidate([]int{1,1,3,3,5,5,7,7,9,9,11,11,13,13,15,15,17,17,19,19}, []int{1,3,1,3,1,3,1,3,1,3,1,3,1,3,1,3,1,3,1,3}), 4)\n    assert reflect.DeepEqual(candidate([]int{1,1,10,10,5,5}, []int{1,10,1,10,5,5}), -1)\n    assert reflect.DeepEqual(candidate([]int{5,5,15,15,25,25,35,35,45,45}, []int{5,45,5,45,5,45,5,45,5,45}), 400)\n    assert reflect.DeepEqual(candidate([]int{10000000, 10000000, 20000000, 20000000, 30000000, 30000000, 40000000, 40000000}, []int{10000000, 20000000, 10000000, 20000000, 10000000, 20000000, 10000000, 20000000}), 100000000000000)\n    assert reflect.DeepEqual(candidate([]int{1, 4, 4, 1, 7, 7, 10, 10}, []int{1, 1, 5, 5, 3, 8, 3, 8}), 15)\n    assert reflect.DeepEqual(candidate([]int{5,5,6,6,7,7,8,8}, []int{5,6,5,6,7,8,7,8}), 1)\n    assert reflect.DeepEqual(candidate([]int{1,1,2,2,3,3,4,4,5,5,6,6,7,7,8,8,9,9,10,10}, []int{1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2}), 1)\n    assert reflect.DeepEqual(candidate([]int{1,1,1,1,1,1,1,1,1,1,3,3,3,3,3,3,3,3,3,3}, []int{1,2,3,4,5,6,7,8,9,10,1,2,3,4,5,6,7,8,9,10}), 2)\n    assert reflect.DeepEqual(candidate([]int{2,2,4,4,6,6,8,8,10,10}, []int{2,4,2,4,6,8,6,8,10,10}), 4)\n    assert reflect.DeepEqual(candidate([]int{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}, []int{1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20}), -1)\n    assert reflect.DeepEqual(candidate([]int{0,0,8,8,4,4,6,6,2,2,7,7,3,3,5,5}, []int{0,8,0,8,4,6,4,6,2,7,2,7,3,5,3,5}), -1)\n    assert reflect.DeepEqual(candidate([]int{2, 2, 5, 5, 3, 3, 4, 4}, []int{2, 5, 2, 5, 3, 3, 4, 4}), -1)\n    assert reflect.DeepEqual(candidate([]int{10, 10, 30, 30, 20, 20, 25, 25}, []int{10, 30, 10, 30, 15, 15, 25, 25}), -1)\n    assert reflect.DeepEqual(candidate([]int{1, 4, 4, 1, 6, 6, 9, 9, 3, 3, 12, 12}, []int{1, 1, 5, 5, 3, 7, 3, 7, 2, 4, 2, 4}), 12)\n    assert reflect.DeepEqual(candidate([]int{5,5,15,15,25,25,35,35,45,45}, []int{5,15,5,15,25,25,35,35,45,45}), 100)\n    assert reflect.DeepEqual(candidate([]int{1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8, 9, 9, 10, 10}, []int{1, 5, 1, 5, 1, 5, 1, 5, 1, 5, 1, 5, 1, 5, 1, 5, 1, 5, 1, 5}), 4)\n    assert reflect.DeepEqual(candidate([]int{1, 3, 5, 7, 9, 11, 13, 15, 17, 19}, []int{1, 3, 5, 7, 9, 11, 13, 15, 17, 19}), -1)\n    assert reflect.DeepEqual(candidate([]int{5,5,10,10,15,15,20,20,25,25}, []int{5,10,5,10,5,10,5,10,5,10}), 25)\n    assert reflect.DeepEqual(candidate([]int{1,2,3,4,5,6,7,8,9,10}, []int{1,2,3,4,5,6,7,8,9,10}), -1)\n    assert reflect.DeepEqual(candidate([]int{1,1,1,1,3,3,3,3,5,5,5,5}, []int{1,3,5,7,1,3,5,7,1,3,5,7}), 4)\n    assert reflect.DeepEqual(candidate([]int{2, 2, 4, 4, 6, 6, 8, 8}, []int{2, 6, 2, 6, 2, 6, 2, 6}), 8)\n    assert reflect.DeepEqual(candidate([]int{1,1,3,3,5,5,7,7,9,9,11,11,13,13}, []int{1,3,1,3,5,7,5,7,9,11,9,11,13,13}), 4)\n    assert reflect.DeepEqual(candidate([]int{0,0,0,0,10,10,10,10,20,20,20,20}, []int{0,10,20,30,0,10,20,30,0,10,20,30}), 100)\n    assert reflect.DeepEqual(candidate([]int{2,2,4,4,6,6,8,8}, []int{2,8,2,8,2,8,2,8}), 12)\n    assert reflect.DeepEqual(candidate([]int{10,10,30,30,20,20,40,40}, []int{10,30,10,30,20,40,20,40}), -1)\n    assert reflect.DeepEqual(candidate([]int{1, 1, 2, 2, 3, 3, 4, 4, 5, 5}, []int{1, 2, 1, 2, 1, 2, 1, 2, 1, 2}), 1)\n    assert reflect.DeepEqual(candidate([]int{1,1,3,3,1,1,3,3,2,2,4,4}, []int{1,3,1,3,2,4,2,4,1,3,1,3}), -1)\n    assert reflect.DeepEqual(candidate([]int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}, []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}), -1)\n    assert reflect.DeepEqual(candidate([]int{100, 100, 150, 150, 120, 120, 130, 130}, []int{100, 150, 100, 150, 120, 130, 120, 130}), 100)\n    assert reflect.DeepEqual(candidate([]int{10, 10, 20, 20, 30, 30, 40, 40}, []int{10, 20, 10, 20, 10, 20, 10, 20}), 100)\n    assert reflect.DeepEqual(candidate([]int{10,10,20,20,30,30,40,40,50,50}, []int{10,50,10,50,30,30,40,40,20,20}), 400)\n    assert reflect.DeepEqual(candidate([]int{0, 0, 80000000, 80000000}, []int{0, 80000000, 0, 80000000}), 6400000000000000)\n    assert reflect.DeepEqual(candidate([]int{1,1,3,3,5,5,7,7,9,9,11,11,13,13}, []int{1,13,1,13,1,13,1,13,1,13,1,13,1,13}), 24)\n    assert reflect.DeepEqual(candidate([]int{1, 1, 3, 3, 5, 5, 7, 7}, []int{1, 3, 1, 3, 1, 3, 1, 3}), 4)\n    assert reflect.DeepEqual(candidate([]int{1, 1, 5, 5, 10, 10, 15, 15, 20, 20, 25, 25}, []int{1, 5, 1, 5, 1, 5, 1, 5, 1, 5, 1, 5}), 20)\n    assert reflect.DeepEqual(candidate([]int{1, 1, 10, 10, 5, 5, 7, 7, 3, 3}, []int{1, 10, 1, 10, 5, 5, 7, 7, 3, 3}), -1)\n    assert reflect.DeepEqual(candidate([]int{1,2,3,4,5,6,7,8,9,10}, []int{1,1,1,1,1,1,1,1,1,1}), -1)\n    assert reflect.DeepEqual(candidate([]int{1,5,5,9,9,13}, []int{1,5,1,5,1,5}), 16)\n    assert reflect.DeepEqual(candidate([]int{1, 1, 9, 9, 5, 5, 3, 3, 7, 7, 6, 6, 4, 4, 8, 8}, []int{1, 9, 1, 9, 5, 5, 3, 3, 7, 7, 6, 6, 4, 4, 8, 8}), -1)\n    assert reflect.DeepEqual(candidate([]int{0, 0, 2, 2, 4, 4, 6, 6}, []int{0, 2, 0, 2, 0, 2, 0, 2}), 4)\n    assert reflect.DeepEqual(candidate([]int{0,0,1,1,2,2,3,3}, []int{0,1,0,1,0,1,0,1}), 1)\n    assert reflect.DeepEqual(candidate([]int{1,3,5,7,9,11,13,15}, []int{1,3,5,7,9,11,13,15}), -1)\n    assert reflect.DeepEqual(candidate([]int{1,1,2,2,3,3,4,4,5,5}, []int{1,5,1,5,1,5,1,5,1,5}), 4)\n    assert reflect.DeepEqual(candidate([]int{2,2,8,8,4,4,6,6}, []int{2,8,2,8,4,6,4,6}), 4)\n    assert reflect.DeepEqual(candidate([]int{8,8,16,16,12,12}, []int{8,16,8,16,10,14}), -1)\n    assert reflect.DeepEqual(candidate([]int{0,0,4,4,8,8,12,12}, []int{0,4,0,4,0,4,0,4}), 16)\n    assert reflect.DeepEqual(candidate([]int{1,1,3,3,5,5,7,7,9,9}, []int{1,9,1,9,1,9,1,9,1,9}), 16)\n    assert reflect.DeepEqual(candidate([]int{2, 2, 4, 4, 6, 6, 8, 8, 10, 10}, []int{2, 6, 2, 6, 2, 6, 2, 6, 2, 6}), 8)\n    assert reflect.DeepEqual(candidate([]int{0,0,10,10,5,5,6,6}, []int{0,10,0,10,5,6,5,6}), 1)\n    assert reflect.DeepEqual(candidate([]int{1, 1, 2, 2, 4, 4, 8, 8}, []int{1, 2, 1, 2, 1, 2, 1, 2}), 4)\n    assert reflect.DeepEqual(candidate([]int{2,2,6,6,10,10,14,14,18,18,22,22}, []int{2,22,2,22,10,10,14,14,6,6,18,18}), 80)\n    assert reflect.DeepEqual(candidate([]int{1,2,2,3,3,4}, []int{1,2,3,1,3,2}), -1)\n    assert reflect.DeepEqual(candidate([]int{10,10,20,20,15,15}, []int{10,20,10,20,12,18}), -1)\n    assert reflect.DeepEqual(candidate([]int{2,2,8,8,12,12,18,18}, []int{3,9,3,9,3,9,3,9}), 36)\n    assert reflect.DeepEqual(candidate([]int{1, 1, 3, 3, 5, 5, 7, 7, 9, 9, 11, 11, 13, 13}, []int{1, 3, 1, 3, 1, 3, 1, 3, 1, 3, 1, 3, 1, 3}), 4)\n    assert reflect.DeepEqual(candidate([]int{1,1,5,5,3,3,7,7}, []int{1,5,1,5,3,7,3,7}), -1)\n    assert reflect.DeepEqual(candidate([]int{1, 1, 4, 4, 2, 2}, []int{1, 4, 1, 4, 2, 2}), -1)\n    assert reflect.DeepEqual(candidate([]int{100, 100, 200, 200, 300, 300, 400, 400}, []int{100, 200, 100, 200, 100, 200, 100, 200}), 10000)\n    assert reflect.DeepEqual(candidate([]int{2,2,5,5,7,7,9,9}, []int{2,5,2,5,7,7,9,9}), 9)\n    assert reflect.DeepEqual(candidate([]int{1, 1, 3, 3, 5, 5, 7, 7, 9, 9, 11, 11}, []int{1, 3, 1, 3, 1, 3, 1, 3, 1, 3, 1, 3}), 4)\n    assert reflect.DeepEqual(candidate([]int{1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8}, []int{1, 2, 1, 2, 3, 4, 3, 4, 5, 6, 5, 6, 7, 8, 7, 8}), 1)\n    assert reflect.DeepEqual(candidate([]int{3, 3, 15, 15, 8, 8, 10, 10}, []int{3, 15, 3, 15, 8, 10, 8, 10}), 4)\n    assert reflect.DeepEqual(candidate([]int{1, 1, 3, 3, 5, 5, 7, 7, 9, 9}, []int{1, 3, 1, 3, 1, 3, 1, 3, 1, 3}), 4)\n    assert reflect.DeepEqual(candidate([]int{1, 1, 10000000, 10000000, 5000000, 5000000, 6000000, 6000000}, []int{1, 10000000, 1, 10000000, 5000000, 6000000, 5000000, 6000000}), 1000000000000)\n    assert reflect.DeepEqual(candidate([]int{1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3}, []int{1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4}), 1)\n    assert reflect.DeepEqual(candidate([]int{1,2,3,4,5,6,7,8,9,10}, []int{1,1,1,1,2,2,2,2,3,3}), -1)\n    assert reflect.DeepEqual(candidate([]int{0, 0, 100000000, 100000000, 50000000, 50000000}, []int{0, 100000000, 0, 100000000, 50000000, 50000000}), -1)\n    assert reflect.DeepEqual(candidate([]int{1,1,3,3,5,5,7,7}, []int{1,3,1,3,5,7,5,7}), 4)\n    assert reflect.DeepEqual(candidate([]int{1, 1, 5, 5, 3, 3, 2, 2, 4, 4, 6, 6}, []int{1, 5, 1, 5, 3, 3, 2, 2, 4, 4, 6, 6}), -1)\n    assert reflect.DeepEqual(candidate([]int{1,1,3,3,5,5,7,7,9,9,11,11}, []int{1,3,1,3,1,3,1,3,1,3,1,3}), 4)\n    assert reflect.DeepEqual(candidate([]int{1,1,3,3,5,5,7,7,9,9,11,11,13,13}, []int{1,3,1,3,1,3,1,3,1,3,1,3,1,3}), 4)\n    assert reflect.DeepEqual(candidate([]int{1, 1, 3, 3, 5, 5, 7, 7}, []int{1, 3, 1, 3, 5, 5, 7, 7}), 4)\n    assert reflect.DeepEqual(candidate([]int{0,0,20000000,20000000,10000000,10000000}, []int{0,20000000,0,20000000,10000000,10000000}), -1)\n    assert reflect.DeepEqual(candidate([]int{1,2,2,1,4,5,5,4,6,7,7,6,8,9,9,8}, []int{1,1,2,2,1,1,2,2,1,1,2,2,1,1,2,2}), 2)\n    assert reflect.DeepEqual(candidate([]int{2, 2, 8, 8, 5, 5, 7, 7}, []int{2, 6, 2, 6, 4, 4, 8, 8}), -1)\n    assert reflect.DeepEqual(candidate([]int{3,3,5,5,7,7,9,9}, []int{3,7,3,7,3,7,3,7}), 8)\n    assert reflect.DeepEqual(candidate([]int{1,1,1,1,1,1,1,1,3,3,3,3,3,3,3,3}, []int{1,2,3,4,5,6,7,8,1,2,3,4,5,6,7,8}), 2)\n    assert reflect.DeepEqual(candidate([]int{1, 1, 5, 5, 10, 10, 15, 15, 20, 20}, []int{1, 5, 1, 5, 1, 5, 1, 5, 1, 5}), 20)\n    assert reflect.DeepEqual(candidate([]int{1,1,3,3,5,5,7,7,9,9}, []int{1,9,1,9,5,5,3,3,7,7}), 16)\n    assert reflect.DeepEqual(candidate([]int{1,1,3,3,5,5,7,7,9,9,11,11}, []int{1,11,1,11,1,11,1,11,1,11,1,11}), 20)\n    assert reflect.DeepEqual(candidate([]int{0, 0, 5, 5, 3, 3, 2, 2}, []int{0, 5, 0, 5, 1, 3, 1, 3}), 2)\n    assert reflect.DeepEqual(candidate([]int{1,2,2,3,3,4,4,5,5,6}, []int{1,1,2,1,2,2,3,2,3,3}), 1)\n    assert reflect.DeepEqual(candidate([]int{1,1,5,5,9,9}, []int{1,9,1,9,1,9}), 32)\n    assert reflect.DeepEqual(candidate([]int{1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5}, []int{1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4}), 1)\n    assert reflect.DeepEqual(candidate([]int{1, 1, 10000000, 10000000, 5000000, 5000000}, []int{1, 10000000, 1, 10000000, 5000000, 5000000}), -1)\n    assert reflect.DeepEqual(candidate([]int{1,1,4,4,2,2,5,5}, []int{1,4,1,4,2,5,2,5}), -1)\n    assert reflect.DeepEqual(candidate([]int{1, 4, 4, 1, 6, 6, 9, 9}, []int{1, 1, 5, 5, 3, 7, 3, 7}), 12)\n    assert reflect.DeepEqual(candidate([]int{1,1,3,3,5,5,7,7}, []int{1,3,1,3,1,3,1,3}), 4)\n    assert reflect.DeepEqual(candidate([]int{10, 10, 20, 20, 15, 15, 18, 18}, []int{10, 20, 10, 20, 12, 18, 12, 18}), 18)\n    assert reflect.DeepEqual(candidate([]int{100,100,150,150,200,200,250,250}, []int{100,150,100,150,100,150,100,150}), 2500)\n    assert reflect.DeepEqual(candidate([]int{2,2,6,6,4,4,8,8}, []int{2,6,2,6,2,6,2,6}), 8)\n    assert reflect.DeepEqual(candidate([]int{1,1,1,1,1,1,1,1,1,1}, []int{1,2,3,4,5,6,7,8,9,10}), -1)\n    assert reflect.DeepEqual(candidate([]int{1,1,3,3,5,5,7,7,9,9,11,11,13,13,15,15,17,17}, []int{1,9,1,9,5,5,7,7,3,3,11,11,13,13,15,15,17,17}), 16)\n    assert reflect.DeepEqual(candidate([]int{50000000,50000000,60000000,60000000,70000000,70000000,80000000,80000000}, []int{50000000,60000000,50000000,60000000,50000000,60000000,50000000,60000000}), 100000000000000)\n    assert reflect.DeepEqual(candidate([]int{1, 1, 3, 3, 5, 5, 7, 7}, []int{1, 3, 1, 3, 5, 7, 5, 7}), 4)\n    assert reflect.DeepEqual(candidate([]int{1,1,2,2,4,4,6,6,8,8,10,10,12,12,14,14,16,16,18,18,20,20}, []int{1,20,1,20,5,5,7,7,3,3,11,11,13,13,9,9,15,15,17,17,19,19}), 19)\n    assert reflect.DeepEqual(candidate([]int{1,1,4,4,6,6,10,10}, []int{1,5,1,5,1,5,1,5}), 16)\n    assert reflect.DeepEqual(candidate([]int{1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6}, []int{1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2}), 1)\n    assert reflect.DeepEqual(candidate([]int{1,1,3,3,5,5,7,7,9,9,11,11,13,13,15,15}, []int{1,15,1,15,5,5,7,7,3,3,11,11,13,13,9,9}), 28)\n}",
+    "rust": "fn check(candidate: fn(Vec<i32>, i32) -> Vec<i32>) {\n    assert_eq!(candidate(vec![5,5,7,7], vec![5,7,5,7]), 4);\n    assert_eq!(candidate(vec![1,1,10,10], vec![1,10,1,10]), 81);\n    assert_eq!(candidate(vec![1,1,3,3,1,3], vec![1,3,1,3,2,2]), 2);\n    assert_eq!(candidate(vec![0,0,80000000,80000000], vec![0,80000000,0,80000000]), 6400000000000000);\n    assert_eq!(candidate(vec![1,1,3,3,5,5], vec![1,3,1,3,1,3]), 4);\n    assert_eq!(candidate(vec![1,2,3,4,5], vec![1,2,3,4,5]), -1);\n    assert_eq!(candidate(vec![1,1,1,1], vec![1,1,1,1]), -1);\n    assert_eq!(candidate(vec![5,5,10,10], vec![5,10,5,10]), 25);\n    assert_eq!(candidate(vec![0,0,2,2], vec![0,2,0,2]), 4);\n    assert_eq!(candidate(vec![1,1,3,3,4,4], vec![1,3,1,3,2,3]), 4);\n    assert_eq!(candidate(vec![1,1,3,3,2], vec![1,3,1,3,2]), -1);\n    assert_eq!(candidate(vec![0,0,2,2,4,4], vec![0,2,0,2,0,2]), 4);\n    assert_eq!(candidate(vec![10,10,20,20], vec![10,20,10,20]), 100);\n    assert_eq!(candidate(vec![0,0,8,8,4,4], vec![0,8,0,8,4,4]), -1);\n    assert_eq!(candidate(vec![5,5,7,7,6], vec![5,7,5,7,6]), -1);\n    assert_eq!(candidate(vec![5,5,15,15], vec![5,15,5,15]), 100);\n    assert_eq!(candidate(vec![1,1,3,3], vec![1,3,1,3]), 4);\n    assert_eq!(candidate(vec![1,2,3,4], vec![1,1,1,1]), -1);\n    assert_eq!(candidate(vec![1,2,3,4,5,6,7,8], vec![1,2,3,4,5,6,7,8]), -1);\n    assert_eq!(candidate(vec![1,1,1,1], vec![1,2,3,4]), -1);\n    assert_eq!(candidate(vec![10,20,30,40], vec![10,20,30,40]), -1);\n    assert_eq!(candidate(vec![1,1,3,3,5,5,7,7,9,9], vec![1,3,1,3,5,7,5,7,9,9]), 4);\n    assert_eq!(candidate(vec![0, 0, 100000000, 100000000], vec![0, 100000000, 0, 100000000]), 10000000000000000);\n    assert_eq!(candidate(vec![10,20,30,40,50,60,70,80,90,100], vec![10,20,30,40,50,60,70,80,90,100]), -1);\n    assert_eq!(candidate(vec![1, 1, 5, 5, 10, 10, 15, 15], vec![1, 10, 1, 10, 1, 10, 1, 10]), 45);\n    assert_eq!(candidate(vec![1,1,3,3,5,5,7,7,9,9,11,11,13,13], vec![1,9,1,9,5,5,7,7,3,3,11,11,13,13]), 16);\n    assert_eq!(candidate(vec![1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20], vec![1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]), -1);\n    assert_eq!(candidate(vec![1, 1, 2, 2, 4, 4, 6, 6], vec![1, 3, 1, 3, 1, 3, 1, 3]), 4);\n    assert_eq!(candidate(vec![10,10,20,20,30,30,40,40], vec![10,20,10,20,10,20,10,20]), 100);\n    assert_eq!(candidate(vec![0,0,100000000,100000000], vec![0,100000000,0,100000000]), 10000000000000000);\n    assert_eq!(candidate(vec![1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20], vec![1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]), -1);\n    assert_eq!(candidate(vec![1,1,2,2,4,4,5,5,6,6,8,8,9,9], vec![1,9,1,9,5,5,7,7,3,3,11,11,13,13]), 8);\n    assert_eq!(candidate(vec![1,1,3,3,5,5,7,7,9,9,11,11,13,13,15,15,17,17,19,19], vec![1,3,1,3,1,3,1,3,1,3,1,3,1,3,1,3,1,3,1,3]), 4);\n    assert_eq!(candidate(vec![1,1,10,10,5,5], vec![1,10,1,10,5,5]), -1);\n    assert_eq!(candidate(vec![5,5,15,15,25,25,35,35,45,45], vec![5,45,5,45,5,45,5,45,5,45]), 400);\n    assert_eq!(candidate(vec![10000000, 10000000, 20000000, 20000000, 30000000, 30000000, 40000000, 40000000], vec![10000000, 20000000, 10000000, 20000000, 10000000, 20000000, 10000000, 20000000]), 100000000000000);\n    assert_eq!(candidate(vec![1, 4, 4, 1, 7, 7, 10, 10], vec![1, 1, 5, 5, 3, 8, 3, 8]), 15);\n    assert_eq!(candidate(vec![5,5,6,6,7,7,8,8], vec![5,6,5,6,7,8,7,8]), 1);\n    assert_eq!(candidate(vec![1,1,2,2,3,3,4,4,5,5,6,6,7,7,8,8,9,9,10,10], vec![1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2]), 1);\n    assert_eq!(candidate(vec![1,1,1,1,1,1,1,1,1,1,3,3,3,3,3,3,3,3,3,3], vec![1,2,3,4,5,6,7,8,9,10,1,2,3,4,5,6,7,8,9,10]), 2);\n    assert_eq!(candidate(vec![2,2,4,4,6,6,8,8,10,10], vec![2,4,2,4,6,8,6,8,10,10]), 4);\n    assert_eq!(candidate(vec![1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1], vec![1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]), -1);\n    assert_eq!(candidate(vec![0,0,8,8,4,4,6,6,2,2,7,7,3,3,5,5], vec![0,8,0,8,4,6,4,6,2,7,2,7,3,5,3,5]), -1);\n    assert_eq!(candidate(vec![2, 2, 5, 5, 3, 3, 4, 4], vec![2, 5, 2, 5, 3, 3, 4, 4]), -1);\n    assert_eq!(candidate(vec![10, 10, 30, 30, 20, 20, 25, 25], vec![10, 30, 10, 30, 15, 15, 25, 25]), -1);\n    assert_eq!(candidate(vec![1, 4, 4, 1, 6, 6, 9, 9, 3, 3, 12, 12], vec![1, 1, 5, 5, 3, 7, 3, 7, 2, 4, 2, 4]), 12);\n    assert_eq!(candidate(vec![5,5,15,15,25,25,35,35,45,45], vec![5,15,5,15,25,25,35,35,45,45]), 100);\n    assert_eq!(candidate(vec![1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8, 9, 9, 10, 10], vec![1, 5, 1, 5, 1, 5, 1, 5, 1, 5, 1, 5, 1, 5, 1, 5, 1, 5, 1, 5]), 4);\n    assert_eq!(candidate(vec![1, 3, 5, 7, 9, 11, 13, 15, 17, 19], vec![1, 3, 5, 7, 9, 11, 13, 15, 17, 19]), -1);\n    assert_eq!(candidate(vec![5,5,10,10,15,15,20,20,25,25], vec![5,10,5,10,5,10,5,10,5,10]), 25);\n    assert_eq!(candidate(vec![1,2,3,4,5,6,7,8,9,10], vec![1,2,3,4,5,6,7,8,9,10]), -1);\n    assert_eq!(candidate(vec![1,1,1,1,3,3,3,3,5,5,5,5], vec![1,3,5,7,1,3,5,7,1,3,5,7]), 4);\n    assert_eq!(candidate(vec![2, 2, 4, 4, 6, 6, 8, 8], vec![2, 6, 2, 6, 2, 6, 2, 6]), 8);\n    assert_eq!(candidate(vec![1,1,3,3,5,5,7,7,9,9,11,11,13,13], vec![1,3,1,3,5,7,5,7,9,11,9,11,13,13]), 4);\n    assert_eq!(candidate(vec![0,0,0,0,10,10,10,10,20,20,20,20], vec![0,10,20,30,0,10,20,30,0,10,20,30]), 100);\n    assert_eq!(candidate(vec![2,2,4,4,6,6,8,8], vec![2,8,2,8,2,8,2,8]), 12);\n    assert_eq!(candidate(vec![10,10,30,30,20,20,40,40], vec![10,30,10,30,20,40,20,40]), -1);\n    assert_eq!(candidate(vec![1, 1, 2, 2, 3, 3, 4, 4, 5, 5], vec![1, 2, 1, 2, 1, 2, 1, 2, 1, 2]), 1);\n    assert_eq!(candidate(vec![1,1,3,3,1,1,3,3,2,2,4,4], vec![1,3,1,3,2,4,2,4,1,3,1,3]), -1);\n    assert_eq!(candidate(vec![1, 2, 3, 4, 5, 6, 7, 8, 9, 10], vec![1, 2, 3, 4, 5, 6, 7, 8, 9, 10]), -1);\n    assert_eq!(candidate(vec![100, 100, 150, 150, 120, 120, 130, 130], vec![100, 150, 100, 150, 120, 130, 120, 130]), 100);\n    assert_eq!(candidate(vec![10, 10, 20, 20, 30, 30, 40, 40], vec![10, 20, 10, 20, 10, 20, 10, 20]), 100);\n    assert_eq!(candidate(vec![10,10,20,20,30,30,40,40,50,50], vec![10,50,10,50,30,30,40,40,20,20]), 400);\n    assert_eq!(candidate(vec![0, 0, 80000000, 80000000], vec![0, 80000000, 0, 80000000]), 6400000000000000);\n    assert_eq!(candidate(vec![1,1,3,3,5,5,7,7,9,9,11,11,13,13], vec![1,13,1,13,1,13,1,13,1,13,1,13,1,13]), 24);\n    assert_eq!(candidate(vec![1, 1, 3, 3, 5, 5, 7, 7], vec![1, 3, 1, 3, 1, 3, 1, 3]), 4);\n    assert_eq!(candidate(vec![1, 1, 5, 5, 10, 10, 15, 15, 20, 20, 25, 25], vec![1, 5, 1, 5, 1, 5, 1, 5, 1, 5, 1, 5]), 20);\n    assert_eq!(candidate(vec![1, 1, 10, 10, 5, 5, 7, 7, 3, 3], vec![1, 10, 1, 10, 5, 5, 7, 7, 3, 3]), -1);\n    assert_eq!(candidate(vec![1,2,3,4,5,6,7,8,9,10], vec![1,1,1,1,1,1,1,1,1,1]), -1);\n    assert_eq!(candidate(vec![1,5,5,9,9,13], vec![1,5,1,5,1,5]), 16);\n    assert_eq!(candidate(vec![1, 1, 9, 9, 5, 5, 3, 3, 7, 7, 6, 6, 4, 4, 8, 8], vec![1, 9, 1, 9, 5, 5, 3, 3, 7, 7, 6, 6, 4, 4, 8, 8]), -1);\n    assert_eq!(candidate(vec![0, 0, 2, 2, 4, 4, 6, 6], vec![0, 2, 0, 2, 0, 2, 0, 2]), 4);\n    assert_eq!(candidate(vec![0,0,1,1,2,2,3,3], vec![0,1,0,1,0,1,0,1]), 1);\n    assert_eq!(candidate(vec![1,3,5,7,9,11,13,15], vec![1,3,5,7,9,11,13,15]), -1);\n    assert_eq!(candidate(vec![1,1,2,2,3,3,4,4,5,5], vec![1,5,1,5,1,5,1,5,1,5]), 4);\n    assert_eq!(candidate(vec![2,2,8,8,4,4,6,6], vec![2,8,2,8,4,6,4,6]), 4);\n    assert_eq!(candidate(vec![8,8,16,16,12,12], vec![8,16,8,16,10,14]), -1);\n    assert_eq!(candidate(vec![0,0,4,4,8,8,12,12], vec![0,4,0,4,0,4,0,4]), 16);\n    assert_eq!(candidate(vec![1,1,3,3,5,5,7,7,9,9], vec![1,9,1,9,1,9,1,9,1,9]), 16);\n    assert_eq!(candidate(vec![2, 2, 4, 4, 6, 6, 8, 8, 10, 10], vec![2, 6, 2, 6, 2, 6, 2, 6, 2, 6]), 8);\n    assert_eq!(candidate(vec![0,0,10,10,5,5,6,6], vec![0,10,0,10,5,6,5,6]), 1);\n    assert_eq!(candidate(vec![1, 1, 2, 2, 4, 4, 8, 8], vec![1, 2, 1, 2, 1, 2, 1, 2]), 4);\n    assert_eq!(candidate(vec![2,2,6,6,10,10,14,14,18,18,22,22], vec![2,22,2,22,10,10,14,14,6,6,18,18]), 80);\n    assert_eq!(candidate(vec![1,2,2,3,3,4], vec![1,2,3,1,3,2]), -1);\n    assert_eq!(candidate(vec![10,10,20,20,15,15], vec![10,20,10,20,12,18]), -1);\n    assert_eq!(candidate(vec![2,2,8,8,12,12,18,18], vec![3,9,3,9,3,9,3,9]), 36);\n    assert_eq!(candidate(vec![1, 1, 3, 3, 5, 5, 7, 7, 9, 9, 11, 11, 13, 13], vec![1, 3, 1, 3, 1, 3, 1, 3, 1, 3, 1, 3, 1, 3]), 4);\n    assert_eq!(candidate(vec![1,1,5,5,3,3,7,7], vec![1,5,1,5,3,7,3,7]), -1);\n    assert_eq!(candidate(vec![1, 1, 4, 4, 2, 2], vec![1, 4, 1, 4, 2, 2]), -1);\n    assert_eq!(candidate(vec![100, 100, 200, 200, 300, 300, 400, 400], vec![100, 200, 100, 200, 100, 200, 100, 200]), 10000);\n    assert_eq!(candidate(vec![2,2,5,5,7,7,9,9], vec![2,5,2,5,7,7,9,9]), 9);\n    assert_eq!(candidate(vec![1, 1, 3, 3, 5, 5, 7, 7, 9, 9, 11, 11], vec![1, 3, 1, 3, 1, 3, 1, 3, 1, 3, 1, 3]), 4);\n    assert_eq!(candidate(vec![1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8], vec![1, 2, 1, 2, 3, 4, 3, 4, 5, 6, 5, 6, 7, 8, 7, 8]), 1);\n    assert_eq!(candidate(vec![3, 3, 15, 15, 8, 8, 10, 10], vec![3, 15, 3, 15, 8, 10, 8, 10]), 4);\n    assert_eq!(candidate(vec![1, 1, 3, 3, 5, 5, 7, 7, 9, 9], vec![1, 3, 1, 3, 1, 3, 1, 3, 1, 3]), 4);\n    assert_eq!(candidate(vec![1, 1, 10000000, 10000000, 5000000, 5000000, 6000000, 6000000], vec![1, 10000000, 1, 10000000, 5000000, 6000000, 5000000, 6000000]), 1000000000000);\n    assert_eq!(candidate(vec![1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3], vec![1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4]), 1);\n    assert_eq!(candidate(vec![1,2,3,4,5,6,7,8,9,10], vec![1,1,1,1,2,2,2,2,3,3]), -1);\n    assert_eq!(candidate(vec![0, 0, 100000000, 100000000, 50000000, 50000000], vec![0, 100000000, 0, 100000000, 50000000, 50000000]), -1);\n    assert_eq!(candidate(vec![1,1,3,3,5,5,7,7], vec![1,3,1,3,5,7,5,7]), 4);\n    assert_eq!(candidate(vec![1, 1, 5, 5, 3, 3, 2, 2, 4, 4, 6, 6], vec![1, 5, 1, 5, 3, 3, 2, 2, 4, 4, 6, 6]), -1);\n    assert_eq!(candidate(vec![1,1,3,3,5,5,7,7,9,9,11,11], vec![1,3,1,3,1,3,1,3,1,3,1,3]), 4);\n    assert_eq!(candidate(vec![1,1,3,3,5,5,7,7,9,9,11,11,13,13], vec![1,3,1,3,1,3,1,3,1,3,1,3,1,3]), 4);\n    assert_eq!(candidate(vec![1, 1, 3, 3, 5, 5, 7, 7], vec![1, 3, 1, 3, 5, 5, 7, 7]), 4);\n    assert_eq!(candidate(vec![0,0,20000000,20000000,10000000,10000000], vec![0,20000000,0,20000000,10000000,10000000]), -1);\n    assert_eq!(candidate(vec![1,2,2,1,4,5,5,4,6,7,7,6,8,9,9,8], vec![1,1,2,2,1,1,2,2,1,1,2,2,1,1,2,2]), 2);\n    assert_eq!(candidate(vec![2, 2, 8, 8, 5, 5, 7, 7], vec![2, 6, 2, 6, 4, 4, 8, 8]), -1);\n    assert_eq!(candidate(vec![3,3,5,5,7,7,9,9], vec![3,7,3,7,3,7,3,7]), 8);\n    assert_eq!(candidate(vec![1,1,1,1,1,1,1,1,3,3,3,3,3,3,3,3], vec![1,2,3,4,5,6,7,8,1,2,3,4,5,6,7,8]), 2);\n    assert_eq!(candidate(vec![1, 1, 5, 5, 10, 10, 15, 15, 20, 20], vec![1, 5, 1, 5, 1, 5, 1, 5, 1, 5]), 20);\n    assert_eq!(candidate(vec![1,1,3,3,5,5,7,7,9,9], vec![1,9,1,9,5,5,3,3,7,7]), 16);\n    assert_eq!(candidate(vec![1,1,3,3,5,5,7,7,9,9,11,11], vec![1,11,1,11,1,11,1,11,1,11,1,11]), 20);\n    assert_eq!(candidate(vec![0, 0, 5, 5, 3, 3, 2, 2], vec![0, 5, 0, 5, 1, 3, 1, 3]), 2);\n    assert_eq!(candidate(vec![1,2,2,3,3,4,4,5,5,6], vec![1,1,2,1,2,2,3,2,3,3]), 1);\n    assert_eq!(candidate(vec![1,1,5,5,9,9], vec![1,9,1,9,1,9]), 32);\n    assert_eq!(candidate(vec![1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5], vec![1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4]), 1);\n    assert_eq!(candidate(vec![1, 1, 10000000, 10000000, 5000000, 5000000], vec![1, 10000000, 1, 10000000, 5000000, 5000000]), -1);\n    assert_eq!(candidate(vec![1,1,4,4,2,2,5,5], vec![1,4,1,4,2,5,2,5]), -1);\n    assert_eq!(candidate(vec![1, 4, 4, 1, 6, 6, 9, 9], vec![1, 1, 5, 5, 3, 7, 3, 7]), 12);\n    assert_eq!(candidate(vec![1,1,3,3,5,5,7,7], vec![1,3,1,3,1,3,1,3]), 4);\n    assert_eq!(candidate(vec![10, 10, 20, 20, 15, 15, 18, 18], vec![10, 20, 10, 20, 12, 18, 12, 18]), 18);\n    assert_eq!(candidate(vec![100,100,150,150,200,200,250,250], vec![100,150,100,150,100,150,100,150]), 2500);\n    assert_eq!(candidate(vec![2,2,6,6,4,4,8,8], vec![2,6,2,6,2,6,2,6]), 8);\n    assert_eq!(candidate(vec![1,1,1,1,1,1,1,1,1,1], vec![1,2,3,4,5,6,7,8,9,10]), -1);\n    assert_eq!(candidate(vec![1,1,3,3,5,5,7,7,9,9,11,11,13,13,15,15,17,17], vec![1,9,1,9,5,5,7,7,3,3,11,11,13,13,15,15,17,17]), 16);\n    assert_eq!(candidate(vec![50000000,50000000,60000000,60000000,70000000,70000000,80000000,80000000], vec![50000000,60000000,50000000,60000000,50000000,60000000,50000000,60000000]), 100000000000000);\n    assert_eq!(candidate(vec![1, 1, 3, 3, 5, 5, 7, 7], vec![1, 3, 1, 3, 5, 7, 5, 7]), 4);\n    assert_eq!(candidate(vec![1,1,2,2,4,4,6,6,8,8,10,10,12,12,14,14,16,16,18,18,20,20], vec![1,20,1,20,5,5,7,7,3,3,11,11,13,13,9,9,15,15,17,17,19,19]), 19);\n    assert_eq!(candidate(vec![1,1,4,4,6,6,10,10], vec![1,5,1,5,1,5,1,5]), 16);\n    assert_eq!(candidate(vec![1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6], vec![1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2]), 1);\n    assert_eq!(candidate(vec![1,1,3,3,5,5,7,7,9,9,11,11,13,13,15,15], vec![1,15,1,15,5,5,7,7,3,3,11,11,13,13,9,9]), 28);\n}"
+  },
+  "test_cases": [
+    {
+      "input": "xCoord = [5,5,7,7], yCoord = [5,7,5,7]",
+      "output": "4"
+    },
+    {
+      "input": "xCoord = [1,1,10,10], yCoord = [1,10,1,10]",
+      "output": "81"
+    },
+    {
+      "input": "xCoord = [1,1,3,3,1,3], yCoord = [1,3,1,3,2,2]",
+      "output": "2"
+    },
+    {
+      "input": "xCoord = [0,0,80000000,80000000], yCoord = [0,80000000,0,80000000]",
+      "output": "6400000000000000"
+    },
+    {
+      "input": "xCoord = [1,1,3,3,5,5], yCoord = [1,3,1,3,1,3]",
+      "output": "4"
+    },
+    {
+      "input": "xCoord = [1,2,3,4,5], yCoord = [1,2,3,4,5]",
+      "output": "-1"
+    },
+    {
+      "input": "xCoord = [1,1,1,1], yCoord = [1,1,1,1]",
+      "output": "-1"
+    },
+    {
+      "input": "xCoord = [5,5,10,10], yCoord = [5,10,5,10]",
+      "output": "25"
+    },
+    {
+      "input": "xCoord = [0,0,2,2], yCoord = [0,2,0,2]",
+      "output": "4"
+    },
+    {
+      "input": "xCoord = [1,1,3,3,4,4], yCoord = [1,3,1,3,2,3]",
+      "output": "4"
+    },
+    {
+      "input": "xCoord = [1,1,3,3,2], yCoord = [1,3,1,3,2]",
+      "output": "-1"
+    },
+    {
+      "input": "xCoord = [0,0,2,2,4,4], yCoord = [0,2,0,2,0,2]",
+      "output": "4"
+    },
+    {
+      "input": "xCoord = [10,10,20,20], yCoord = [10,20,10,20]",
+      "output": "100"
+    },
+    {
+      "input": "xCoord = [0,0,8,8,4,4], yCoord = [0,8,0,8,4,4]",
+      "output": "-1"
+    },
+    {
+      "input": "xCoord = [5,5,7,7,6], yCoord = [5,7,5,7,6]",
+      "output": "-1"
+    },
+    {
+      "input": "xCoord = [5,5,15,15], yCoord = [5,15,5,15]",
+      "output": "100"
+    },
+    {
+      "input": "xCoord = [1,1,3,3], yCoord = [1,3,1,3]",
+      "output": "4"
+    },
+    {
+      "input": "xCoord = [1,2,3,4], yCoord = [1,1,1,1]",
+      "output": "-1"
+    },
+    {
+      "input": "xCoord = [1,2,3,4,5,6,7,8], yCoord = [1,2,3,4,5,6,7,8]",
+      "output": "-1"
+    },
+    {
+      "input": "xCoord = [1,1,1,1], yCoord = [1,2,3,4]",
+      "output": "-1"
+    },
+    {
+      "input": "xCoord = [10,20,30,40], yCoord = [10,20,30,40]",
+      "output": "-1"
+    },
+    {
+      "input": "xCoord = [1,1,3,3,5,5,7,7,9,9], yCoord = [1,3,1,3,5,7,5,7,9,9]",
+      "output": "4"
+    },
+    {
+      "input": "xCoord = [0, 0, 100000000, 100000000], yCoord = [0, 100000000, 0, 100000000]",
+      "output": "10000000000000000"
+    },
+    {
+      "input": "xCoord = [10,20,30,40,50,60,70,80,90,100], yCoord = [10,20,30,40,50,60,70,80,90,100]",
+      "output": "-1"
+    },
+    {
+      "input": "xCoord = [1, 1, 5, 5, 10, 10, 15, 15], yCoord = [1, 10, 1, 10, 1, 10, 1, 10]",
+      "output": "45"
+    },
+    {
+      "input": "xCoord = [1,1,3,3,5,5,7,7,9,9,11,11,13,13], yCoord = [1,9,1,9,5,5,7,7,3,3,11,11,13,13]",
+      "output": "16"
+    },
+    {
+      "input": "xCoord = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20], yCoord = [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]",
+      "output": "-1"
+    },
+    {
+      "input": "xCoord = [1, 1, 2, 2, 4, 4, 6, 6], yCoord = [1, 3, 1, 3, 1, 3, 1, 3]",
+      "output": "4"
+    },
+    {
+      "input": "xCoord = [10,10,20,20,30,30,40,40], yCoord = [10,20,10,20,10,20,10,20]",
+      "output": "100"
+    },
+    {
+      "input": "xCoord = [0,0,100000000,100000000], yCoord = [0,100000000,0,100000000]",
+      "output": "10000000000000000"
+    },
+    {
+      "input": "xCoord = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20], yCoord = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]",
+      "output": "-1"
+    },
+    {
+      "input": "xCoord = [1,1,2,2,4,4,5,5,6,6,8,8,9,9], yCoord = [1,9,1,9,5,5,7,7,3,3,11,11,13,13]",
+      "output": "8"
+    },
+    {
+      "input": "xCoord = [1,1,3,3,5,5,7,7,9,9,11,11,13,13,15,15,17,17,19,19], yCoord = [1,3,1,3,1,3,1,3,1,3,1,3,1,3,1,3,1,3,1,3]",
+      "output": "4"
+    },
+    {
+      "input": "xCoord = [1,1,10,10,5,5], yCoord = [1,10,1,10,5,5]",
+      "output": "-1"
+    },
+    {
+      "input": "xCoord = [5,5,15,15,25,25,35,35,45,45], yCoord = [5,45,5,45,5,45,5,45,5,45]",
+      "output": "400"
+    },
+    {
+      "input": "xCoord = [10000000, 10000000, 20000000, 20000000, 30000000, 30000000, 40000000, 40000000], yCoord = [10000000, 20000000, 10000000, 20000000, 10000000, 20000000, 10000000, 20000000]",
+      "output": "100000000000000"
+    },
+    {
+      "input": "xCoord = [1, 4, 4, 1, 7, 7, 10, 10], yCoord = [1, 1, 5, 5, 3, 8, 3, 8]",
+      "output": "15"
+    },
+    {
+      "input": "xCoord = [5,5,6,6,7,7,8,8], yCoord = [5,6,5,6,7,8,7,8]",
+      "output": "1"
+    },
+    {
+      "input": "xCoord = [1,1,2,2,3,3,4,4,5,5,6,6,7,7,8,8,9,9,10,10], yCoord = [1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2]",
+      "output": "1"
+    },
+    {
+      "input": "xCoord = [1,1,1,1,1,1,1,1,1,1,3,3,3,3,3,3,3,3,3,3], yCoord = [1,2,3,4,5,6,7,8,9,10,1,2,3,4,5,6,7,8,9,10]",
+      "output": "2"
+    },
+    {
+      "input": "xCoord = [2,2,4,4,6,6,8,8,10,10], yCoord = [2,4,2,4,6,8,6,8,10,10]",
+      "output": "4"
+    },
+    {
+      "input": "xCoord = [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1], yCoord = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]",
+      "output": "-1"
+    },
+    {
+      "input": "xCoord = [0,0,8,8,4,4,6,6,2,2,7,7,3,3,5,5], yCoord = [0,8,0,8,4,6,4,6,2,7,2,7,3,5,3,5]",
+      "output": "-1"
+    },
+    {
+      "input": "xCoord = [2, 2, 5, 5, 3, 3, 4, 4], yCoord = [2, 5, 2, 5, 3, 3, 4, 4]",
+      "output": "-1"
+    },
+    {
+      "input": "xCoord = [10, 10, 30, 30, 20, 20, 25, 25], yCoord = [10, 30, 10, 30, 15, 15, 25, 25]",
+      "output": "-1"
+    },
+    {
+      "input": "xCoord = [1, 4, 4, 1, 6, 6, 9, 9, 3, 3, 12, 12], yCoord = [1, 1, 5, 5, 3, 7, 3, 7, 2, 4, 2, 4]",
+      "output": "12"
+    },
+    {
+      "input": "xCoord = [5,5,15,15,25,25,35,35,45,45], yCoord = [5,15,5,15,25,25,35,35,45,45]",
+      "output": "100"
+    },
+    {
+      "input": "xCoord = [1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8, 9, 9, 10, 10], yCoord = [1, 5, 1, 5, 1, 5, 1, 5, 1, 5, 1, 5, 1, 5, 1, 5, 1, 5, 1, 5]",
+      "output": "4"
+    },
+    {
+      "input": "xCoord = [1, 3, 5, 7, 9, 11, 13, 15, 17, 19], yCoord = [1, 3, 5, 7, 9, 11, 13, 15, 17, 19]",
+      "output": "-1"
+    },
+    {
+      "input": "xCoord = [5,5,10,10,15,15,20,20,25,25], yCoord = [5,10,5,10,5,10,5,10,5,10]",
+      "output": "25"
+    },
+    {
+      "input": "xCoord = [1,2,3,4,5,6,7,8,9,10], yCoord = [1,2,3,4,5,6,7,8,9,10]",
+      "output": "-1"
+    },
+    {
+      "input": "xCoord = [1,1,1,1,3,3,3,3,5,5,5,5], yCoord = [1,3,5,7,1,3,5,7,1,3,5,7]",
+      "output": "4"
+    },
+    {
+      "input": "xCoord = [2, 2, 4, 4, 6, 6, 8, 8], yCoord = [2, 6, 2, 6, 2, 6, 2, 6]",
+      "output": "8"
+    },
+    {
+      "input": "xCoord = [1,1,3,3,5,5,7,7,9,9,11,11,13,13], yCoord = [1,3,1,3,5,7,5,7,9,11,9,11,13,13]",
+      "output": "4"
+    },
+    {
+      "input": "xCoord = [0,0,0,0,10,10,10,10,20,20,20,20], yCoord = [0,10,20,30,0,10,20,30,0,10,20,30]",
+      "output": "100"
+    },
+    {
+      "input": "xCoord = [2,2,4,4,6,6,8,8], yCoord = [2,8,2,8,2,8,2,8]",
+      "output": "12"
+    },
+    {
+      "input": "xCoord = [10,10,30,30,20,20,40,40], yCoord = [10,30,10,30,20,40,20,40]",
+      "output": "-1"
+    },
+    {
+      "input": "xCoord = [1, 1, 2, 2, 3, 3, 4, 4, 5, 5], yCoord = [1, 2, 1, 2, 1, 2, 1, 2, 1, 2]",
+      "output": "1"
+    },
+    {
+      "input": "xCoord = [1,1,3,3,1,1,3,3,2,2,4,4], yCoord = [1,3,1,3,2,4,2,4,1,3,1,3]",
+      "output": "-1"
+    },
+    {
+      "input": "xCoord = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10], yCoord = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]",
+      "output": "-1"
+    },
+    {
+      "input": "xCoord = [100, 100, 150, 150, 120, 120, 130, 130], yCoord = [100, 150, 100, 150, 120, 130, 120, 130]",
+      "output": "100"
+    },
+    {
+      "input": "xCoord = [10, 10, 20, 20, 30, 30, 40, 40], yCoord = [10, 20, 10, 20, 10, 20, 10, 20]",
+      "output": "100"
+    },
+    {
+      "input": "xCoord = [10,10,20,20,30,30,40,40,50,50], yCoord = [10,50,10,50,30,30,40,40,20,20]",
+      "output": "400"
+    },
+    {
+      "input": "xCoord = [0, 0, 80000000, 80000000], yCoord = [0, 80000000, 0, 80000000]",
+      "output": "6400000000000000"
+    },
+    {
+      "input": "xCoord = [1,1,3,3,5,5,7,7,9,9,11,11,13,13], yCoord = [1,13,1,13,1,13,1,13,1,13,1,13,1,13]",
+      "output": "24"
+    },
+    {
+      "input": "xCoord = [1, 1, 3, 3, 5, 5, 7, 7], yCoord = [1, 3, 1, 3, 1, 3, 1, 3]",
+      "output": "4"
+    },
+    {
+      "input": "xCoord = [1, 1, 5, 5, 10, 10, 15, 15, 20, 20, 25, 25], yCoord = [1, 5, 1, 5, 1, 5, 1, 5, 1, 5, 1, 5]",
+      "output": "20"
+    },
+    {
+      "input": "xCoord = [1, 1, 10, 10, 5, 5, 7, 7, 3, 3], yCoord = [1, 10, 1, 10, 5, 5, 7, 7, 3, 3]",
+      "output": "-1"
+    },
+    {
+      "input": "xCoord = [1,2,3,4,5,6,7,8,9,10], yCoord = [1,1,1,1,1,1,1,1,1,1]",
+      "output": "-1"
+    },
+    {
+      "input": "xCoord = [1,5,5,9,9,13], yCoord = [1,5,1,5,1,5]",
+      "output": "16"
+    },
+    {
+      "input": "xCoord = [1, 1, 9, 9, 5, 5, 3, 3, 7, 7, 6, 6, 4, 4, 8, 8], yCoord = [1, 9, 1, 9, 5, 5, 3, 3, 7, 7, 6, 6, 4, 4, 8, 8]",
+      "output": "-1"
+    },
+    {
+      "input": "xCoord = [0, 0, 2, 2, 4, 4, 6, 6], yCoord = [0, 2, 0, 2, 0, 2, 0, 2]",
+      "output": "4"
+    },
+    {
+      "input": "xCoord = [0,0,1,1,2,2,3,3], yCoord = [0,1,0,1,0,1,0,1]",
+      "output": "1"
+    },
+    {
+      "input": "xCoord = [1,3,5,7,9,11,13,15], yCoord = [1,3,5,7,9,11,13,15]",
+      "output": "-1"
+    },
+    {
+      "input": "xCoord = [1,1,2,2,3,3,4,4,5,5], yCoord = [1,5,1,5,1,5,1,5,1,5]",
+      "output": "4"
+    },
+    {
+      "input": "xCoord = [2,2,8,8,4,4,6,6], yCoord = [2,8,2,8,4,6,4,6]",
+      "output": "4"
+    },
+    {
+      "input": "xCoord = [8,8,16,16,12,12], yCoord = [8,16,8,16,10,14]",
+      "output": "-1"
+    },
+    {
+      "input": "xCoord = [0,0,4,4,8,8,12,12], yCoord = [0,4,0,4,0,4,0,4]",
+      "output": "16"
+    },
+    {
+      "input": "xCoord = [1,1,3,3,5,5,7,7,9,9], yCoord = [1,9,1,9,1,9,1,9,1,9]",
+      "output": "16"
+    },
+    {
+      "input": "xCoord = [2, 2, 4, 4, 6, 6, 8, 8, 10, 10], yCoord = [2, 6, 2, 6, 2, 6, 2, 6, 2, 6]",
+      "output": "8"
+    },
+    {
+      "input": "xCoord = [0,0,10,10,5,5,6,6], yCoord = [0,10,0,10,5,6,5,6]",
+      "output": "1"
+    },
+    {
+      "input": "xCoord = [1, 1, 2, 2, 4, 4, 8, 8], yCoord = [1, 2, 1, 2, 1, 2, 1, 2]",
+      "output": "4"
+    },
+    {
+      "input": "xCoord = [2,2,6,6,10,10,14,14,18,18,22,22], yCoord = [2,22,2,22,10,10,14,14,6,6,18,18]",
+      "output": "80"
+    },
+    {
+      "input": "xCoord = [1,2,2,3,3,4], yCoord = [1,2,3,1,3,2]",
+      "output": "-1"
+    },
+    {
+      "input": "xCoord = [10,10,20,20,15,15], yCoord = [10,20,10,20,12,18]",
+      "output": "-1"
+    },
+    {
+      "input": "xCoord = [2,2,8,8,12,12,18,18], yCoord = [3,9,3,9,3,9,3,9]",
+      "output": "36"
+    },
+    {
+      "input": "xCoord = [1, 1, 3, 3, 5, 5, 7, 7, 9, 9, 11, 11, 13, 13], yCoord = [1, 3, 1, 3, 1, 3, 1, 3, 1, 3, 1, 3, 1, 3]",
+      "output": "4"
+    },
+    {
+      "input": "xCoord = [1,1,5,5,3,3,7,7], yCoord = [1,5,1,5,3,7,3,7]",
+      "output": "-1"
+    },
+    {
+      "input": "xCoord = [1, 1, 4, 4, 2, 2], yCoord = [1, 4, 1, 4, 2, 2]",
+      "output": "-1"
+    },
+    {
+      "input": "xCoord = [100, 100, 200, 200, 300, 300, 400, 400], yCoord = [100, 200, 100, 200, 100, 200, 100, 200]",
+      "output": "10000"
+    },
+    {
+      "input": "xCoord = [2,2,5,5,7,7,9,9], yCoord = [2,5,2,5,7,7,9,9]",
+      "output": "9"
+    },
+    {
+      "input": "xCoord = [1, 1, 3, 3, 5, 5, 7, 7, 9, 9, 11, 11], yCoord = [1, 3, 1, 3, 1, 3, 1, 3, 1, 3, 1, 3]",
+      "output": "4"
+    },
+    {
+      "input": "xCoord = [1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8], yCoord = [1, 2, 1, 2, 3, 4, 3, 4, 5, 6, 5, 6, 7, 8, 7, 8]",
+      "output": "1"
+    },
+    {
+      "input": "xCoord = [3, 3, 15, 15, 8, 8, 10, 10], yCoord = [3, 15, 3, 15, 8, 10, 8, 10]",
+      "output": "4"
+    },
+    {
+      "input": "xCoord = [1, 1, 3, 3, 5, 5, 7, 7, 9, 9], yCoord = [1, 3, 1, 3, 1, 3, 1, 3, 1, 3]",
+      "output": "4"
+    },
+    {
+      "input": "xCoord = [1, 1, 10000000, 10000000, 5000000, 5000000, 6000000, 6000000], yCoord = [1, 10000000, 1, 10000000, 5000000, 6000000, 5000000, 6000000]",
+      "output": "1000000000000"
+    },
+    {
+      "input": "xCoord = [1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3], yCoord = [1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4]",
+      "output": "1"
+    },
+    {
+      "input": "xCoord = [1,2,3,4,5,6,7,8,9,10], yCoord = [1,1,1,1,2,2,2,2,3,3]",
+      "output": "-1"
+    },
+    {
+      "input": "xCoord = [0, 0, 100000000, 100000000, 50000000, 50000000], yCoord = [0, 100000000, 0, 100000000, 50000000, 50000000]",
+      "output": "-1"
+    },
+    {
+      "input": "xCoord = [1,1,3,3,5,5,7,7], yCoord = [1,3,1,3,5,7,5,7]",
+      "output": "4"
+    },
+    {
+      "input": "xCoord = [1, 1, 5, 5, 3, 3, 2, 2, 4, 4, 6, 6], yCoord = [1, 5, 1, 5, 3, 3, 2, 2, 4, 4, 6, 6]",
+      "output": "-1"
+    },
+    {
+      "input": "xCoord = [1,1,3,3,5,5,7,7,9,9,11,11], yCoord = [1,3,1,3,1,3,1,3,1,3,1,3]",
+      "output": "4"
+    },
+    {
+      "input": "xCoord = [1,1,3,3,5,5,7,7,9,9,11,11,13,13], yCoord = [1,3,1,3,1,3,1,3,1,3,1,3,1,3]",
+      "output": "4"
+    },
+    {
+      "input": "xCoord = [1, 1, 3, 3, 5, 5, 7, 7], yCoord = [1, 3, 1, 3, 5, 5, 7, 7]",
+      "output": "4"
+    },
+    {
+      "input": "xCoord = [0,0,20000000,20000000,10000000,10000000], yCoord = [0,20000000,0,20000000,10000000,10000000]",
+      "output": "-1"
+    },
+    {
+      "input": "xCoord = [1,2,2,1,4,5,5,4,6,7,7,6,8,9,9,8], yCoord = [1,1,2,2,1,1,2,2,1,1,2,2,1,1,2,2]",
+      "output": "2"
+    },
+    {
+      "input": "xCoord = [2, 2, 8, 8, 5, 5, 7, 7], yCoord = [2, 6, 2, 6, 4, 4, 8, 8]",
+      "output": "-1"
+    },
+    {
+      "input": "xCoord = [3,3,5,5,7,7,9,9], yCoord = [3,7,3,7,3,7,3,7]",
+      "output": "8"
+    },
+    {
+      "input": "xCoord = [1,1,1,1,1,1,1,1,3,3,3,3,3,3,3,3], yCoord = [1,2,3,4,5,6,7,8,1,2,3,4,5,6,7,8]",
+      "output": "2"
+    },
+    {
+      "input": "xCoord = [1, 1, 5, 5, 10, 10, 15, 15, 20, 20], yCoord = [1, 5, 1, 5, 1, 5, 1, 5, 1, 5]",
+      "output": "20"
+    },
+    {
+      "input": "xCoord = [1,1,3,3,5,5,7,7,9,9], yCoord = [1,9,1,9,5,5,3,3,7,7]",
+      "output": "16"
+    },
+    {
+      "input": "xCoord = [1,1,3,3,5,5,7,7,9,9,11,11], yCoord = [1,11,1,11,1,11,1,11,1,11,1,11]",
+      "output": "20"
+    },
+    {
+      "input": "xCoord = [0, 0, 5, 5, 3, 3, 2, 2], yCoord = [0, 5, 0, 5, 1, 3, 1, 3]",
+      "output": "2"
+    },
+    {
+      "input": "xCoord = [1,2,2,3,3,4,4,5,5,6], yCoord = [1,1,2,1,2,2,3,2,3,3]",
+      "output": "1"
+    },
+    {
+      "input": "xCoord = [1,1,5,5,9,9], yCoord = [1,9,1,9,1,9]",
+      "output": "32"
+    },
+    {
+      "input": "xCoord = [1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5], yCoord = [1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4]",
+      "output": "1"
+    },
+    {
+      "input": "xCoord = [1, 1, 10000000, 10000000, 5000000, 5000000], yCoord = [1, 10000000, 1, 10000000, 5000000, 5000000]",
+      "output": "-1"
+    },
+    {
+      "input": "xCoord = [1,1,4,4,2,2,5,5], yCoord = [1,4,1,4,2,5,2,5]",
+      "output": "-1"
+    },
+    {
+      "input": "xCoord = [1, 4, 4, 1, 6, 6, 9, 9], yCoord = [1, 1, 5, 5, 3, 7, 3, 7]",
+      "output": "12"
+    },
+    {
+      "input": "xCoord = [1,1,3,3,5,5,7,7], yCoord = [1,3,1,3,1,3,1,3]",
+      "output": "4"
+    },
+    {
+      "input": "xCoord = [10, 10, 20, 20, 15, 15, 18, 18], yCoord = [10, 20, 10, 20, 12, 18, 12, 18]",
+      "output": "18"
+    },
+    {
+      "input": "xCoord = [100,100,150,150,200,200,250,250], yCoord = [100,150,100,150,100,150,100,150]",
+      "output": "2500"
+    },
+    {
+      "input": "xCoord = [2,2,6,6,4,4,8,8], yCoord = [2,6,2,6,2,6,2,6]",
+      "output": "8"
+    },
+    {
+      "input": "xCoord = [1,1,1,1,1,1,1,1,1,1], yCoord = [1,2,3,4,5,6,7,8,9,10]",
+      "output": "-1"
+    },
+    {
+      "input": "xCoord = [1,1,3,3,5,5,7,7,9,9,11,11,13,13,15,15,17,17], yCoord = [1,9,1,9,5,5,7,7,3,3,11,11,13,13,15,15,17,17]",
+      "output": "16"
+    },
+    {
+      "input": "xCoord = [50000000,50000000,60000000,60000000,70000000,70000000,80000000,80000000], yCoord = [50000000,60000000,50000000,60000000,50000000,60000000,50000000,60000000]",
+      "output": "100000000000000"
+    },
+    {
+      "input": "xCoord = [1, 1, 3, 3, 5, 5, 7, 7], yCoord = [1, 3, 1, 3, 5, 7, 5, 7]",
+      "output": "4"
+    },
+    {
+      "input": "xCoord = [1,1,2,2,4,4,6,6,8,8,10,10,12,12,14,14,16,16,18,18,20,20], yCoord = [1,20,1,20,5,5,7,7,3,3,11,11,13,13,9,9,15,15,17,17,19,19]",
+      "output": "19"
+    },
+    {
+      "input": "xCoord = [1,1,4,4,6,6,10,10], yCoord = [1,5,1,5,1,5,1,5]",
+      "output": "16"
+    },
+    {
+      "input": "xCoord = [1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6], yCoord = [1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2]",
+      "output": "1"
+    },
+    {
+      "input": "xCoord = [1,1,3,3,5,5,7,7,9,9,11,11,13,13,15,15], yCoord = [1,15,1,15,5,5,7,7,3,3,11,11,13,13,9,9]",
+      "output": "28"
+    }
+  ],
+  "types": {
+    "python3": {
+      "input": [
+        {
+          "xCoord": "List[int]"
+        },
+        {
+          "yCoord": "List[int]"
+        }
+      ],
+      "output": "int"
+    },
+    "cpp": {
+      "input": [
+        {
+          "xCoord": "vector<int>&"
+        },
+        {
+          "yCoord": "vector<int>&"
+        }
+      ],
+      "output": "long long"
+    },
+    "java": {
+      "input": [
+        {
+          "xCoord": "int[]"
+        },
+        {
+          "yCoord": "int[]"
+        }
+      ],
+      "output": "long"
+    },
+    "javascript": {
+      "input": [
+        {
+          "xCoord": "number[]"
+        },
+        {
+          "yCoord": "number[]"
+        }
+      ],
+      "output": "number"
+    },
+    "typescript": {
+      "input": [
+        {
+          "xCoord": "number[]"
+        },
+        {
+          "yCoord": "number[]"
+        }
+      ],
+      "output": "number"
+    },
+    "golang": {
+      "input": [
+        {
+          "xCoord": "[]int"
+        },
+        {
+          "yCoord": "[]int"
+        }
+      ],
+      "output": "int64"
+    },
+    "rust": {
+      "input": [
+        {
+          "x_coord": "Vec<i32>"
+        },
+        {
+          "y_coord": "Vec<i32>"
+        }
+      ],
+      "output": "i64"
+    }
+  },
+  "tags": [
+    "array",
+    "math",
+    "binary-indexed-tree",
+    "segment-tree",
+    "geometry",
+    "sorting"
+  ]
+}

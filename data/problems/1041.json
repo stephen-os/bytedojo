@@ -1,0 +1,684 @@
+{
+  "id": 1041,
+  "title": "Robot Bounded In Circle",
+  "slug": "robot-bounded-in-circle",
+  "difficulty": "Medium",
+  "description": "On an infinite plane, a robot initially stands at (0, 0) and faces north. Note that:\nThe robot can receive one of three instructions:\nThe robot performs the instructions given in order, and repeats them forever.\nReturn true if and only if there exists a circle in the plane such that the robot never leaves the circle.\nExample 1:\nExample 2:\nExample 3:\nConstraints:",
+  "examples": [
+    {
+      "example_num": 1,
+      "example_text": "Input: instructions = \"GGLLGG\"\nOutput: true\nExplanation: The robot is initially at (0, 0) facing the north direction.\n\"G\": move one step. Position: (0, 1). Direction: North.\n\"G\": move one step. Position: (0, 2). Direction: North.\n\"L\": turn 90 degrees anti-clockwise. Position: (0, 2). Direction: West.\n\"L\": turn 90 degrees anti-clockwise. Position: (0, 2). Direction: South.\n\"G\": move one step. Position: (0, 1). Direction: South.\n\"G\": move one step. Position: (0, 0). Direction: South.\nRepeating the instructions, the robot goes into the cycle: (0, 0) --> (0, 1) --> (0, 2) --> (0, 1) --> (0, 0).\nBased on that, we return true.",
+      "images": []
+    },
+    {
+      "example_num": 2,
+      "example_text": "Input: instructions = \"GG\"\nOutput: false\nExplanation: The robot is initially at (0, 0) facing the north direction.\n\"G\": move one step. Position: (0, 1). Direction: North.\n\"G\": move one step. Position: (0, 2). Direction: North.\nRepeating the instructions, keeps advancing in the north direction and does not go into cycles.\nBased on that, we return false.",
+      "images": []
+    },
+    {
+      "example_num": 3,
+      "example_text": "Input: instructions = \"GL\"\nOutput: true\nExplanation: The robot is initially at (0, 0) facing the north direction.\n\"G\": move one step. Position: (0, 1). Direction: North.\n\"L\": turn 90 degrees anti-clockwise. Position: (0, 1). Direction: West.\n\"G\": move one step. Position: (-1, 1). Direction: West.\n\"L\": turn 90 degrees anti-clockwise. Position: (-1, 1). Direction: South.\n\"G\": move one step. Position: (-1, 0). Direction: South.\n\"L\": turn 90 degrees anti-clockwise. Position: (-1, 0). Direction: East.\n\"G\": move one step. Position: (0, 0). Direction: East.\n\"L\": turn 90 degrees anti-clockwise. Position: (0, 0). Direction: North.\nRepeating the instructions, the robot goes into the cycle: (0, 0) --> (0, 1) --> (-1, 1) --> (-1, 0) --> (0, 0).\nBased on that, we return true.",
+      "images": []
+    }
+  ],
+  "constraints": [
+    "1 <= instructions.length <= 100",
+    "instructions[i] is 'G', 'L' or, 'R'."
+  ],
+  "hints": [
+    "Calculate the final vector of how the robot travels after executing all instructions once - it consists of a change in position plus a change in direction.",
+    "The robot stays in the circle if and only if (looking at the final vector) it changes direction (ie. doesn't stay pointing north), or it moves 0."
+  ],
+  "code_snippets": {
+    "cpp": "class Solution {\npublic:\n    bool isRobotBounded(string instructions) {\n        \n    }\n};",
+    "java": "class Solution {\n    public boolean isRobotBounded(String instructions) {\n        \n    }\n}",
+    "python3": "class Solution:\n    def isRobotBounded(self, instructions: str) -> bool:\n        ",
+    "javascript": "/**\n * @param {string} instructions\n * @return {boolean}\n */\nvar isRobotBounded = function(instructions) {\n    \n};",
+    "typescript": "function isRobotBounded(instructions: string): boolean {\n    \n};",
+    "golang": "func isRobotBounded(instructions string) bool {\n    \n}",
+    "rust": "impl Solution {\n    pub fn is_robot_bounded(instructions: String) -> bool {\n        \n    }\n}"
+  },
+  "entry_points": {
+    "python3": "Solution().isRobotBounded",
+    "cpp": "Solution().isRobotBounded",
+    "java": "new Solution().isRobotBounded",
+    "javascript": "isRobotBounded",
+    "typescript": "isRobotBounded",
+    "golang": "isRobotBounded",
+    "rust": "Solution::is_robot_bounded"
+  },
+  "test_snippets": {
+    "python3": "def check(candidate):\n    assert candidate(instructions = \"GGLGRGLL\") == True\n    assert candidate(instructions = \"LLLL\") == True\n    assert candidate(instructions = \"GLLRLLRL\") == True\n    assert candidate(instructions = \"GRGL\") == False\n    assert candidate(instructions = \"LLGRL\") == True\n    assert candidate(instructions = \"LRRL\") == True\n    assert candidate(instructions = \"LLGRR\") == False\n    assert candidate(instructions = \"LRRRRLL\") == True\n    assert candidate(instructions = \"LL\") == True\n    assert candidate(instructions = \"RRGRRG\") == True\n    assert candidate(instructions = \"GGGG\") == False\n    assert candidate(instructions = \"GGRRGG\") == True\n    assert candidate(instructions = \"GLGLG\") == True\n    assert candidate(instructions = \"GGLLGG\") == True\n    assert candidate(instructions = \"L\") == True\n    assert candidate(instructions = \"GL\") == True\n    assert candidate(instructions = \"R\") == True\n    assert candidate(instructions = \"GG\") == False\n    assert candidate(instructions = \"GLGLGLGL\") == True\n    assert candidate(instructions = \"RRRR\") == True\n    assert candidate(instructions = \"G\") == False\n    assert candidate(instructions = \"GLGLGRRG\") == False\n    assert candidate(instructions = \"GLLRLLRR\") == True\n    assert candidate(instructions = \"RR\") == True\n    assert candidate(instructions = \"LGLLGLLGRRRRGG\") == True\n    assert candidate(instructions = \"LGR\") == False\n    assert candidate(instructions = \"GLGLGRRR\") == True\n    assert candidate(instructions = \"GRRG\") == True\n    assert candidate(instructions = \"GRRGRRGRRGRRGRRGLG\") == True\n    assert candidate(instructions = \"GLRGLRGLRGLRGLRGLR\") == False\n    assert candidate(instructions = \"GGGGGRRRRRLLLLL\") == False\n    assert candidate(instructions = \"GGRRLLGGRRLLGGRRLL\") == False\n    assert candidate(instructions = \"LGGRRGGRRGGRRG\") == True\n    assert candidate(instructions = \"RRRLLLLGGGGRRRLLL\") == True\n    assert candidate(instructions = \"RRLLRRLLRRLLRR\") == True\n    assert candidate(instructions = \"GLRGLRGLRGLRGLR\") == False\n    assert candidate(instructions = \"RRRRGGGGLLGGGG\") == True\n    assert candidate(instructions = \"GLGLGLGLGLGLGLGLGL\") == True\n    assert candidate(instructions = \"RRRRRRRRRRRRRR\") == True\n    assert candidate(instructions = \"RRLLGGGLLLRRRR\") == True\n    assert candidate(instructions = \"LGLLGLGLLGLGRR\") == True\n    assert candidate(instructions = \"GGRRLLGGLLRR\") == False\n    assert candidate(instructions = \"GGGGGLLLRRRGGGGGLLLRRR\") == False\n    assert candidate(instructions = \"LRRLRLRLRLRLRLRL\") == True\n    assert candidate(instructions = \"LLLLRRRRLLLLRRRR\") == True\n    assert candidate(instructions = \"GLGRGLGRGLGRGL\") == True\n    assert candidate(instructions = \"GLRRLGLRRL\") == False\n    assert candidate(instructions = \"GRRGRRGRRGRRGRRGRR\") == True\n    assert candidate(instructions = \"LLLLRRRRLLLLRRRRGG\") == False\n    assert candidate(instructions = \"GGGGRRRLLLLGGGRR\") == True\n    assert candidate(instructions = \"GRRGRLGLGG\") == True\n    assert candidate(instructions = \"RRLLGGGGLLRRLG\") == True\n    assert candidate(instructions = \"GGLLGGRRLLRRGG\") == False\n    assert candidate(instructions = \"GLGRRGLLGLLRRGGG\") == True\n    assert candidate(instructions = \"LRRLGRLGRLGRLRLR\") == True\n    assert candidate(instructions = \"GLLRRGGLLRRGGLLRR\") == False\n    assert candidate(instructions = \"GGGRRRGRRRRGGGRRR\") == True\n    assert candidate(instructions = \"RRLLGGGGLLRRG\") == False\n    assert candidate(instructions = \"LRRRRLLRRRRLLRRR\") == True\n    assert candidate(instructions = \"GRRGRRGRRGRRGG\") == False\n    assert candidate(instructions = \"GGGLGGGLGGGLGGGL\") == True\n    assert candidate(instructions = \"GGRRGGRRGGRRGGRR\") == True\n    assert candidate(instructions = \"LLRRGGGGLLRRGG\") == False\n    assert candidate(instructions = \"GGLRLRGGRRLL\") == False\n    assert candidate(instructions = \"LRRGGLLLGGRRGG\") == False\n    assert candidate(instructions = \"GLRRGLRRGLRR\") == True\n    assert candidate(instructions = \"LLLLGRRGGGLLRLLRRR\") == True\n    assert candidate(instructions = \"GLRLRLRLRLRRGGGG\") == True\n    assert candidate(instructions = \"RRGLLRRGLLRRGLLRRG\") == True\n    assert candidate(instructions = \"GLLGRRGRRGLLGRR\") == True\n    assert candidate(instructions = \"LGGGGRLRRRRGLLGG\") == True\n    assert candidate(instructions = \"GRRGGLLLGGRRGG\") == True\n    assert candidate(instructions = \"LLLLRRRLLLLRRR\") == True\n    assert candidate(instructions = \"LRLLRRLLRRLLRRLL\") == True\n    assert candidate(instructions = \"RRLLGGGLLLRRGG\") == True\n    assert candidate(instructions = \"RRGRLGGRLGRLG\") == True\n    assert candidate(instructions = \"GGGLLLGGRRRRGGGL\") == False\n    assert candidate(instructions = \"GLGGRLGRLGLGRLGLGG\") == True\n    assert candidate(instructions = \"GGLGGLGGRRRR\") == True\n    assert candidate(instructions = \"LGLRLGLRLGLRLGLRL\") == True\n    assert candidate(instructions = \"GLGLGLGLGRRGRRGL\") == True\n    assert candidate(instructions = \"LGGRLGRRGLLGRRGLGRR\") == True\n    assert candidate(instructions = \"RRRLLLLRRRLLLL\") == True\n    assert candidate(instructions = \"GLRGLRLRLGRRGGGG\") == True\n    assert candidate(instructions = \"LGGRRGLGGLLRRGL\") == True\n    assert candidate(instructions = \"GGGGLLLRRRGGRRRL\") == True\n    assert candidate(instructions = \"GLRLRLRLRLRLRLRL\") == True\n    assert candidate(instructions = \"GLGRRGGLLRRGGLLRR\") == True\n    assert candidate(instructions = \"GGGGRRRLLLLLGGGG\") == True\n    assert candidate(instructions = \"RRRGLLGGLLLGGG\") == True\n    assert candidate(instructions = \"GGRRLLGGRRLL\") == False\n    assert candidate(instructions = \"LGRGLRLRLGRR\") == True\n    assert candidate(instructions = \"LGGRRGRRLLGGRL\") == True\n    assert candidate(instructions = \"GLLLRRRRGLLLRRRR\") == True\n    assert candidate(instructions = \"GGGLLLGGGLLLGGGL\") == True\n    assert candidate(instructions = \"GLRLGLRLGLRLGLRL\") == True\n    assert candidate(instructions = \"LGLLGLGLLGLGRRGLGRR\") == False\n    assert candidate(instructions = \"GLGRLLRLRRRL\") == False\n    assert candidate(instructions = \"LGLGLLRLRLRLRL\") == False\n    assert candidate(instructions = \"GLGLGLGLGLGL\") == True\n    assert candidate(instructions = \"LLGGRRLLGGRRLLGG\") == True\n    assert candidate(instructions = \"GLGGRLGRLGLGRL\") == True\n    assert candidate(instructions = \"LGLLGLGLGLGLLGLL\") == True\n    assert candidate(instructions = \"LRLRLRLRLRLRLRLRLR\") == True\n    assert candidate(instructions = \"GGLRLRRLLGLGGGG\") == True\n    assert candidate(instructions = \"GGGGGGGGGGGGGG\") == False\n    assert candidate(instructions = \"GRRRLRLLGLGLGRLR\") == False\n    assert candidate(instructions = \"GGGLGGGLGGGLGGGLGG\") == False\n    assert candidate(instructions = \"LGLRLGLRLGLRLGLRLR\") == True\n    assert candidate(instructions = \"GLGLGLGLGLGLGLGL\") == True\n    assert candidate(instructions = \"LGLGLGLGLGLGLGLG\") == True\n    assert candidate(instructions = \"LLLLLLLLLLLLLL\") == True\n    assert candidate(instructions = \"LGLGLGLGLGLGLG\") == True\n    assert candidate(instructions = \"GGRRGLGRRGRRGRR\") == True\n    assert candidate(instructions = \"LRLRLRLRLRLRLRLR\") == True\n    assert candidate(instructions = \"GLGLGLGLGL\") == True\n    assert candidate(instructions = \"GRRGRRGRRGRRGRRG\") == True\n    assert candidate(instructions = \"GRRGLLRLLGRGLL\") == True\n    assert candidate(instructions = \"LGLRLGLRLG\") == True\n    assert candidate(instructions = \"GGLRLGLLGGRR\") == True\n    assert candidate(instructions = \"GLRRLLRRLLRRLLRR\") == True\n    assert candidate(instructions = \"RRLLRRLLRRLLRRLLRR\") == True\n    assert candidate(instructions = \"GLRLRLRLRLRLRLRLGG\") == True\n    assert candidate(instructions = \"RRGGLLRGGLLRRGLL\") == True\n    assert candidate(instructions = \"GGGGGGGGGGGGGGGG\") == False\n    assert candidate(instructions = \"GRRGLRGGGLLRLLGRR\") == True\n    assert candidate(instructions = \"GLRRGLLLGGGGRRRR\") == True\n    assert candidate(instructions = \"RRRRLLLLGGGG\") == False\n    assert candidate(instructions = \"GLRRGLGLRLRR\") == True\n    assert candidate(instructions = \"LGGRLGRRGLG\") == False\n    assert candidate(instructions = \"GGGGRRRRLLLL\") == False\n    assert candidate(instructions = \"RGLLRLGLGRRG\") == True\n    assert candidate(instructions = \"RRLLRRLLRRLLRRLL\") == True\n    assert candidate(instructions = \"GLRLGLRLGLRL\") == True\n    assert candidate(instructions = \"GLGRRRRRGGGLLGLGRR\") == True\n    assert candidate(instructions = \"GGGLRRLLGLRRLL\") == True\n    assert candidate(instructions = \"GGLLGGGGLLGGGG\") == False\n    assert candidate(instructions = \"LRRLRLRLRL\") == True\n    assert candidate(instructions = \"GRRGGGGLLLRRGGLG\") == False\n    assert candidate(instructions = \"LRRGLLRRGLLRRGLLRR\") == True",
+    "cpp": "void check(Solution& solution) {\n    assert(solution.isRobotBounded(\"GGLGRGLL\") == vector<int>True);\n    assert(solution.isRobotBounded(\"LLLL\") == vector<int>True);\n    assert(solution.isRobotBounded(\"GLLRLLRL\") == vector<int>True);\n    assert(solution.isRobotBounded(\"GRGL\") == vector<int>False);\n    assert(solution.isRobotBounded(\"LLGRL\") == vector<int>True);\n    assert(solution.isRobotBounded(\"LRRL\") == vector<int>True);\n    assert(solution.isRobotBounded(\"LLGRR\") == vector<int>False);\n    assert(solution.isRobotBounded(\"LRRRRLL\") == vector<int>True);\n    assert(solution.isRobotBounded(\"LL\") == vector<int>True);\n    assert(solution.isRobotBounded(\"RRGRRG\") == vector<int>True);\n    assert(solution.isRobotBounded(\"GGGG\") == vector<int>False);\n    assert(solution.isRobotBounded(\"GGRRGG\") == vector<int>True);\n    assert(solution.isRobotBounded(\"GLGLG\") == vector<int>True);\n    assert(solution.isRobotBounded(\"GGLLGG\") == vector<int>True);\n    assert(solution.isRobotBounded(\"L\") == vector<int>True);\n    assert(solution.isRobotBounded(\"GL\") == vector<int>True);\n    assert(solution.isRobotBounded(\"R\") == vector<int>True);\n    assert(solution.isRobotBounded(\"GG\") == vector<int>False);\n    assert(solution.isRobotBounded(\"GLGLGLGL\") == vector<int>True);\n    assert(solution.isRobotBounded(\"RRRR\") == vector<int>True);\n    assert(solution.isRobotBounded(\"G\") == vector<int>False);\n    assert(solution.isRobotBounded(\"GLGLGRRG\") == vector<int>False);\n    assert(solution.isRobotBounded(\"GLLRLLRR\") == vector<int>True);\n    assert(solution.isRobotBounded(\"RR\") == vector<int>True);\n    assert(solution.isRobotBounded(\"LGLLGLLGRRRRGG\") == vector<int>True);\n    assert(solution.isRobotBounded(\"LGR\") == vector<int>False);\n    assert(solution.isRobotBounded(\"GLGLGRRR\") == vector<int>True);\n    assert(solution.isRobotBounded(\"GRRG\") == vector<int>True);\n    assert(solution.isRobotBounded(\"GRRGRRGRRGRRGRRGLG\") == vector<int>True);\n    assert(solution.isRobotBounded(\"GLRGLRGLRGLRGLRGLR\") == vector<int>False);\n    assert(solution.isRobotBounded(\"GGGGGRRRRRLLLLL\") == vector<int>False);\n    assert(solution.isRobotBounded(\"GGRRLLGGRRLLGGRRLL\") == vector<int>False);\n    assert(solution.isRobotBounded(\"LGGRRGGRRGGRRG\") == vector<int>True);\n    assert(solution.isRobotBounded(\"RRRLLLLGGGGRRRLLL\") == vector<int>True);\n    assert(solution.isRobotBounded(\"RRLLRRLLRRLLRR\") == vector<int>True);\n    assert(solution.isRobotBounded(\"GLRGLRGLRGLRGLR\") == vector<int>False);\n    assert(solution.isRobotBounded(\"RRRRGGGGLLGGGG\") == vector<int>True);\n    assert(solution.isRobotBounded(\"GLGLGLGLGLGLGLGLGL\") == vector<int>True);\n    assert(solution.isRobotBounded(\"RRRRRRRRRRRRRR\") == vector<int>True);\n    assert(solution.isRobotBounded(\"RRLLGGGLLLRRRR\") == vector<int>True);\n    assert(solution.isRobotBounded(\"LGLLGLGLLGLGRR\") == vector<int>True);\n    assert(solution.isRobotBounded(\"GGRRLLGGLLRR\") == vector<int>False);\n    assert(solution.isRobotBounded(\"GGGGGLLLRRRGGGGGLLLRRR\") == vector<int>False);\n    assert(solution.isRobotBounded(\"LRRLRLRLRLRLRLRL\") == vector<int>True);\n    assert(solution.isRobotBounded(\"LLLLRRRRLLLLRRRR\") == vector<int>True);\n    assert(solution.isRobotBounded(\"GLGRGLGRGLGRGL\") == vector<int>True);\n    assert(solution.isRobotBounded(\"GLRRLGLRRL\") == vector<int>False);\n    assert(solution.isRobotBounded(\"GRRGRRGRRGRRGRRGRR\") == vector<int>True);\n    assert(solution.isRobotBounded(\"LLLLRRRRLLLLRRRRGG\") == vector<int>False);\n    assert(solution.isRobotBounded(\"GGGGRRRLLLLGGGRR\") == vector<int>True);\n    assert(solution.isRobotBounded(\"GRRGRLGLGG\") == vector<int>True);\n    assert(solution.isRobotBounded(\"RRLLGGGGLLRRLG\") == vector<int>True);\n    assert(solution.isRobotBounded(\"GGLLGGRRLLRRGG\") == vector<int>False);\n    assert(solution.isRobotBounded(\"GLGRRGLLGLLRRGGG\") == vector<int>True);\n    assert(solution.isRobotBounded(\"LRRLGRLGRLGRLRLR\") == vector<int>True);\n    assert(solution.isRobotBounded(\"GLLRRGGLLRRGGLLRR\") == vector<int>False);\n    assert(solution.isRobotBounded(\"GGGRRRGRRRRGGGRRR\") == vector<int>True);\n    assert(solution.isRobotBounded(\"RRLLGGGGLLRRG\") == vector<int>False);\n    assert(solution.isRobotBounded(\"LRRRRLLRRRRLLRRR\") == vector<int>True);\n    assert(solution.isRobotBounded(\"GRRGRRGRRGRRGG\") == vector<int>False);\n    assert(solution.isRobotBounded(\"GGGLGGGLGGGLGGGL\") == vector<int>True);\n    assert(solution.isRobotBounded(\"GGRRGGRRGGRRGGRR\") == vector<int>True);\n    assert(solution.isRobotBounded(\"LLRRGGGGLLRRGG\") == vector<int>False);\n    assert(solution.isRobotBounded(\"GGLRLRGGRRLL\") == vector<int>False);\n    assert(solution.isRobotBounded(\"LRRGGLLLGGRRGG\") == vector<int>False);\n    assert(solution.isRobotBounded(\"GLRRGLRRGLRR\") == vector<int>True);\n    assert(solution.isRobotBounded(\"LLLLGRRGGGLLRLLRRR\") == vector<int>True);\n    assert(solution.isRobotBounded(\"GLRLRLRLRLRRGGGG\") == vector<int>True);\n    assert(solution.isRobotBounded(\"RRGLLRRGLLRRGLLRRG\") == vector<int>True);\n    assert(solution.isRobotBounded(\"GLLGRRGRRGLLGRR\") == vector<int>True);\n    assert(solution.isRobotBounded(\"LGGGGRLRRRRGLLGG\") == vector<int>True);\n    assert(solution.isRobotBounded(\"GRRGGLLLGGRRGG\") == vector<int>True);\n    assert(solution.isRobotBounded(\"LLLLRRRLLLLRRR\") == vector<int>True);\n    assert(solution.isRobotBounded(\"LRLLRRLLRRLLRRLL\") == vector<int>True);\n    assert(solution.isRobotBounded(\"RRLLGGGLLLRRGG\") == vector<int>True);\n    assert(solution.isRobotBounded(\"RRGRLGGRLGRLG\") == vector<int>True);\n    assert(solution.isRobotBounded(\"GGGLLLGGRRRRGGGL\") == vector<int>False);\n    assert(solution.isRobotBounded(\"GLGGRLGRLGLGRLGLGG\") == vector<int>True);\n    assert(solution.isRobotBounded(\"GGLGGLGGRRRR\") == vector<int>True);\n    assert(solution.isRobotBounded(\"LGLRLGLRLGLRLGLRL\") == vector<int>True);\n    assert(solution.isRobotBounded(\"GLGLGLGLGRRGRRGL\") == vector<int>True);\n    assert(solution.isRobotBounded(\"LGGRLGRRGLLGRRGLGRR\") == vector<int>True);\n    assert(solution.isRobotBounded(\"RRRLLLLRRRLLLL\") == vector<int>True);\n    assert(solution.isRobotBounded(\"GLRGLRLRLGRRGGGG\") == vector<int>True);\n    assert(solution.isRobotBounded(\"LGGRRGLGGLLRRGL\") == vector<int>True);\n    assert(solution.isRobotBounded(\"GGGGLLLRRRGGRRRL\") == vector<int>True);\n    assert(solution.isRobotBounded(\"GLRLRLRLRLRLRLRL\") == vector<int>True);\n    assert(solution.isRobotBounded(\"GLGRRGGLLRRGGLLRR\") == vector<int>True);\n    assert(solution.isRobotBounded(\"GGGGRRRLLLLLGGGG\") == vector<int>True);\n    assert(solution.isRobotBounded(\"RRRGLLGGLLLGGG\") == vector<int>True);\n    assert(solution.isRobotBounded(\"GGRRLLGGRRLL\") == vector<int>False);\n    assert(solution.isRobotBounded(\"LGRGLRLRLGRR\") == vector<int>True);\n    assert(solution.isRobotBounded(\"LGGRRGRRLLGGRL\") == vector<int>True);\n    assert(solution.isRobotBounded(\"GLLLRRRRGLLLRRRR\") == vector<int>True);\n    assert(solution.isRobotBounded(\"GGGLLLGGGLLLGGGL\") == vector<int>True);\n    assert(solution.isRobotBounded(\"GLRLGLRLGLRLGLRL\") == vector<int>True);\n    assert(solution.isRobotBounded(\"LGLLGLGLLGLGRRGLGRR\") == vector<int>False);\n    assert(solution.isRobotBounded(\"GLGRLLRLRRRL\") == vector<int>False);\n    assert(solution.isRobotBounded(\"LGLGLLRLRLRLRL\") == vector<int>False);\n    assert(solution.isRobotBounded(\"GLGLGLGLGLGL\") == vector<int>True);\n    assert(solution.isRobotBounded(\"LLGGRRLLGGRRLLGG\") == vector<int>True);\n    assert(solution.isRobotBounded(\"GLGGRLGRLGLGRL\") == vector<int>True);\n    assert(solution.isRobotBounded(\"LGLLGLGLGLGLLGLL\") == vector<int>True);\n    assert(solution.isRobotBounded(\"LRLRLRLRLRLRLRLRLR\") == vector<int>True);\n    assert(solution.isRobotBounded(\"GGLRLRRLLGLGGGG\") == vector<int>True);\n    assert(solution.isRobotBounded(\"GGGGGGGGGGGGGG\") == vector<int>False);\n    assert(solution.isRobotBounded(\"GRRRLRLLGLGLGRLR\") == vector<int>False);\n    assert(solution.isRobotBounded(\"GGGLGGGLGGGLGGGLGG\") == vector<int>False);\n    assert(solution.isRobotBounded(\"LGLRLGLRLGLRLGLRLR\") == vector<int>True);\n    assert(solution.isRobotBounded(\"GLGLGLGLGLGLGLGL\") == vector<int>True);\n    assert(solution.isRobotBounded(\"LGLGLGLGLGLGLGLG\") == vector<int>True);\n    assert(solution.isRobotBounded(\"LLLLLLLLLLLLLL\") == vector<int>True);\n    assert(solution.isRobotBounded(\"LGLGLGLGLGLGLG\") == vector<int>True);\n    assert(solution.isRobotBounded(\"GGRRGLGRRGRRGRR\") == vector<int>True);\n    assert(solution.isRobotBounded(\"LRLRLRLRLRLRLRLR\") == vector<int>True);\n    assert(solution.isRobotBounded(\"GLGLGLGLGL\") == vector<int>True);\n    assert(solution.isRobotBounded(\"GRRGRRGRRGRRGRRG\") == vector<int>True);\n    assert(solution.isRobotBounded(\"GRRGLLRLLGRGLL\") == vector<int>True);\n    assert(solution.isRobotBounded(\"LGLRLGLRLG\") == vector<int>True);\n    assert(solution.isRobotBounded(\"GGLRLGLLGGRR\") == vector<int>True);\n    assert(solution.isRobotBounded(\"GLRRLLRRLLRRLLRR\") == vector<int>True);\n    assert(solution.isRobotBounded(\"RRLLRRLLRRLLRRLLRR\") == vector<int>True);\n    assert(solution.isRobotBounded(\"GLRLRLRLRLRLRLRLGG\") == vector<int>True);\n    assert(solution.isRobotBounded(\"RRGGLLRGGLLRRGLL\") == vector<int>True);\n    assert(solution.isRobotBounded(\"GGGGGGGGGGGGGGGG\") == vector<int>False);\n    assert(solution.isRobotBounded(\"GRRGLRGGGLLRLLGRR\") == vector<int>True);\n    assert(solution.isRobotBounded(\"GLRRGLLLGGGGRRRR\") == vector<int>True);\n    assert(solution.isRobotBounded(\"RRRRLLLLGGGG\") == vector<int>False);\n    assert(solution.isRobotBounded(\"GLRRGLGLRLRR\") == vector<int>True);\n    assert(solution.isRobotBounded(\"LGGRLGRRGLG\") == vector<int>False);\n    assert(solution.isRobotBounded(\"GGGGRRRRLLLL\") == vector<int>False);\n    assert(solution.isRobotBounded(\"RGLLRLGLGRRG\") == vector<int>True);\n    assert(solution.isRobotBounded(\"RRLLRRLLRRLLRRLL\") == vector<int>True);\n    assert(solution.isRobotBounded(\"GLRLGLRLGLRL\") == vector<int>True);\n    assert(solution.isRobotBounded(\"GLGRRRRRGGGLLGLGRR\") == vector<int>True);\n    assert(solution.isRobotBounded(\"GGGLRRLLGLRRLL\") == vector<int>True);\n    assert(solution.isRobotBounded(\"GGLLGGGGLLGGGG\") == vector<int>False);\n    assert(solution.isRobotBounded(\"LRRLRLRLRL\") == vector<int>True);\n    assert(solution.isRobotBounded(\"GRRGGGGLLLRRGGLG\") == vector<int>False);\n    assert(solution.isRobotBounded(\"LRRGLLRRGLLRRGLLRR\") == vector<int>True);\n}",
+    "java": "public static void check(Solution solution) {\n    assert Arrays.equals(solution.isRobotBounded(\"GGLGRGLL\"), True);\n    assert Arrays.equals(solution.isRobotBounded(\"LLLL\"), True);\n    assert Arrays.equals(solution.isRobotBounded(\"GLLRLLRL\"), True);\n    assert Arrays.equals(solution.isRobotBounded(\"GRGL\"), False);\n    assert Arrays.equals(solution.isRobotBounded(\"LLGRL\"), True);\n    assert Arrays.equals(solution.isRobotBounded(\"LRRL\"), True);\n    assert Arrays.equals(solution.isRobotBounded(\"LLGRR\"), False);\n    assert Arrays.equals(solution.isRobotBounded(\"LRRRRLL\"), True);\n    assert Arrays.equals(solution.isRobotBounded(\"LL\"), True);\n    assert Arrays.equals(solution.isRobotBounded(\"RRGRRG\"), True);\n    assert Arrays.equals(solution.isRobotBounded(\"GGGG\"), False);\n    assert Arrays.equals(solution.isRobotBounded(\"GGRRGG\"), True);\n    assert Arrays.equals(solution.isRobotBounded(\"GLGLG\"), True);\n    assert Arrays.equals(solution.isRobotBounded(\"GGLLGG\"), True);\n    assert Arrays.equals(solution.isRobotBounded(\"L\"), True);\n    assert Arrays.equals(solution.isRobotBounded(\"GL\"), True);\n    assert Arrays.equals(solution.isRobotBounded(\"R\"), True);\n    assert Arrays.equals(solution.isRobotBounded(\"GG\"), False);\n    assert Arrays.equals(solution.isRobotBounded(\"GLGLGLGL\"), True);\n    assert Arrays.equals(solution.isRobotBounded(\"RRRR\"), True);\n    assert Arrays.equals(solution.isRobotBounded(\"G\"), False);\n    assert Arrays.equals(solution.isRobotBounded(\"GLGLGRRG\"), False);\n    assert Arrays.equals(solution.isRobotBounded(\"GLLRLLRR\"), True);\n    assert Arrays.equals(solution.isRobotBounded(\"RR\"), True);\n    assert Arrays.equals(solution.isRobotBounded(\"LGLLGLLGRRRRGG\"), True);\n    assert Arrays.equals(solution.isRobotBounded(\"LGR\"), False);\n    assert Arrays.equals(solution.isRobotBounded(\"GLGLGRRR\"), True);\n    assert Arrays.equals(solution.isRobotBounded(\"GRRG\"), True);\n    assert Arrays.equals(solution.isRobotBounded(\"GRRGRRGRRGRRGRRGLG\"), True);\n    assert Arrays.equals(solution.isRobotBounded(\"GLRGLRGLRGLRGLRGLR\"), False);\n    assert Arrays.equals(solution.isRobotBounded(\"GGGGGRRRRRLLLLL\"), False);\n    assert Arrays.equals(solution.isRobotBounded(\"GGRRLLGGRRLLGGRRLL\"), False);\n    assert Arrays.equals(solution.isRobotBounded(\"LGGRRGGRRGGRRG\"), True);\n    assert Arrays.equals(solution.isRobotBounded(\"RRRLLLLGGGGRRRLLL\"), True);\n    assert Arrays.equals(solution.isRobotBounded(\"RRLLRRLLRRLLRR\"), True);\n    assert Arrays.equals(solution.isRobotBounded(\"GLRGLRGLRGLRGLR\"), False);\n    assert Arrays.equals(solution.isRobotBounded(\"RRRRGGGGLLGGGG\"), True);\n    assert Arrays.equals(solution.isRobotBounded(\"GLGLGLGLGLGLGLGLGL\"), True);\n    assert Arrays.equals(solution.isRobotBounded(\"RRRRRRRRRRRRRR\"), True);\n    assert Arrays.equals(solution.isRobotBounded(\"RRLLGGGLLLRRRR\"), True);\n    assert Arrays.equals(solution.isRobotBounded(\"LGLLGLGLLGLGRR\"), True);\n    assert Arrays.equals(solution.isRobotBounded(\"GGRRLLGGLLRR\"), False);\n    assert Arrays.equals(solution.isRobotBounded(\"GGGGGLLLRRRGGGGGLLLRRR\"), False);\n    assert Arrays.equals(solution.isRobotBounded(\"LRRLRLRLRLRLRLRL\"), True);\n    assert Arrays.equals(solution.isRobotBounded(\"LLLLRRRRLLLLRRRR\"), True);\n    assert Arrays.equals(solution.isRobotBounded(\"GLGRGLGRGLGRGL\"), True);\n    assert Arrays.equals(solution.isRobotBounded(\"GLRRLGLRRL\"), False);\n    assert Arrays.equals(solution.isRobotBounded(\"GRRGRRGRRGRRGRRGRR\"), True);\n    assert Arrays.equals(solution.isRobotBounded(\"LLLLRRRRLLLLRRRRGG\"), False);\n    assert Arrays.equals(solution.isRobotBounded(\"GGGGRRRLLLLGGGRR\"), True);\n    assert Arrays.equals(solution.isRobotBounded(\"GRRGRLGLGG\"), True);\n    assert Arrays.equals(solution.isRobotBounded(\"RRLLGGGGLLRRLG\"), True);\n    assert Arrays.equals(solution.isRobotBounded(\"GGLLGGRRLLRRGG\"), False);\n    assert Arrays.equals(solution.isRobotBounded(\"GLGRRGLLGLLRRGGG\"), True);\n    assert Arrays.equals(solution.isRobotBounded(\"LRRLGRLGRLGRLRLR\"), True);\n    assert Arrays.equals(solution.isRobotBounded(\"GLLRRGGLLRRGGLLRR\"), False);\n    assert Arrays.equals(solution.isRobotBounded(\"GGGRRRGRRRRGGGRRR\"), True);\n    assert Arrays.equals(solution.isRobotBounded(\"RRLLGGGGLLRRG\"), False);\n    assert Arrays.equals(solution.isRobotBounded(\"LRRRRLLRRRRLLRRR\"), True);\n    assert Arrays.equals(solution.isRobotBounded(\"GRRGRRGRRGRRGG\"), False);\n    assert Arrays.equals(solution.isRobotBounded(\"GGGLGGGLGGGLGGGL\"), True);\n    assert Arrays.equals(solution.isRobotBounded(\"GGRRGGRRGGRRGGRR\"), True);\n    assert Arrays.equals(solution.isRobotBounded(\"LLRRGGGGLLRRGG\"), False);\n    assert Arrays.equals(solution.isRobotBounded(\"GGLRLRGGRRLL\"), False);\n    assert Arrays.equals(solution.isRobotBounded(\"LRRGGLLLGGRRGG\"), False);\n    assert Arrays.equals(solution.isRobotBounded(\"GLRRGLRRGLRR\"), True);\n    assert Arrays.equals(solution.isRobotBounded(\"LLLLGRRGGGLLRLLRRR\"), True);\n    assert Arrays.equals(solution.isRobotBounded(\"GLRLRLRLRLRRGGGG\"), True);\n    assert Arrays.equals(solution.isRobotBounded(\"RRGLLRRGLLRRGLLRRG\"), True);\n    assert Arrays.equals(solution.isRobotBounded(\"GLLGRRGRRGLLGRR\"), True);\n    assert Arrays.equals(solution.isRobotBounded(\"LGGGGRLRRRRGLLGG\"), True);\n    assert Arrays.equals(solution.isRobotBounded(\"GRRGGLLLGGRRGG\"), True);\n    assert Arrays.equals(solution.isRobotBounded(\"LLLLRRRLLLLRRR\"), True);\n    assert Arrays.equals(solution.isRobotBounded(\"LRLLRRLLRRLLRRLL\"), True);\n    assert Arrays.equals(solution.isRobotBounded(\"RRLLGGGLLLRRGG\"), True);\n    assert Arrays.equals(solution.isRobotBounded(\"RRGRLGGRLGRLG\"), True);\n    assert Arrays.equals(solution.isRobotBounded(\"GGGLLLGGRRRRGGGL\"), False);\n    assert Arrays.equals(solution.isRobotBounded(\"GLGGRLGRLGLGRLGLGG\"), True);\n    assert Arrays.equals(solution.isRobotBounded(\"GGLGGLGGRRRR\"), True);\n    assert Arrays.equals(solution.isRobotBounded(\"LGLRLGLRLGLRLGLRL\"), True);\n    assert Arrays.equals(solution.isRobotBounded(\"GLGLGLGLGRRGRRGL\"), True);\n    assert Arrays.equals(solution.isRobotBounded(\"LGGRLGRRGLLGRRGLGRR\"), True);\n    assert Arrays.equals(solution.isRobotBounded(\"RRRLLLLRRRLLLL\"), True);\n    assert Arrays.equals(solution.isRobotBounded(\"GLRGLRLRLGRRGGGG\"), True);\n    assert Arrays.equals(solution.isRobotBounded(\"LGGRRGLGGLLRRGL\"), True);\n    assert Arrays.equals(solution.isRobotBounded(\"GGGGLLLRRRGGRRRL\"), True);\n    assert Arrays.equals(solution.isRobotBounded(\"GLRLRLRLRLRLRLRL\"), True);\n    assert Arrays.equals(solution.isRobotBounded(\"GLGRRGGLLRRGGLLRR\"), True);\n    assert Arrays.equals(solution.isRobotBounded(\"GGGGRRRLLLLLGGGG\"), True);\n    assert Arrays.equals(solution.isRobotBounded(\"RRRGLLGGLLLGGG\"), True);\n    assert Arrays.equals(solution.isRobotBounded(\"GGRRLLGGRRLL\"), False);\n    assert Arrays.equals(solution.isRobotBounded(\"LGRGLRLRLGRR\"), True);\n    assert Arrays.equals(solution.isRobotBounded(\"LGGRRGRRLLGGRL\"), True);\n    assert Arrays.equals(solution.isRobotBounded(\"GLLLRRRRGLLLRRRR\"), True);\n    assert Arrays.equals(solution.isRobotBounded(\"GGGLLLGGGLLLGGGL\"), True);\n    assert Arrays.equals(solution.isRobotBounded(\"GLRLGLRLGLRLGLRL\"), True);\n    assert Arrays.equals(solution.isRobotBounded(\"LGLLGLGLLGLGRRGLGRR\"), False);\n    assert Arrays.equals(solution.isRobotBounded(\"GLGRLLRLRRRL\"), False);\n    assert Arrays.equals(solution.isRobotBounded(\"LGLGLLRLRLRLRL\"), False);\n    assert Arrays.equals(solution.isRobotBounded(\"GLGLGLGLGLGL\"), True);\n    assert Arrays.equals(solution.isRobotBounded(\"LLGGRRLLGGRRLLGG\"), True);\n    assert Arrays.equals(solution.isRobotBounded(\"GLGGRLGRLGLGRL\"), True);\n    assert Arrays.equals(solution.isRobotBounded(\"LGLLGLGLGLGLLGLL\"), True);\n    assert Arrays.equals(solution.isRobotBounded(\"LRLRLRLRLRLRLRLRLR\"), True);\n    assert Arrays.equals(solution.isRobotBounded(\"GGLRLRRLLGLGGGG\"), True);\n    assert Arrays.equals(solution.isRobotBounded(\"GGGGGGGGGGGGGG\"), False);\n    assert Arrays.equals(solution.isRobotBounded(\"GRRRLRLLGLGLGRLR\"), False);\n    assert Arrays.equals(solution.isRobotBounded(\"GGGLGGGLGGGLGGGLGG\"), False);\n    assert Arrays.equals(solution.isRobotBounded(\"LGLRLGLRLGLRLGLRLR\"), True);\n    assert Arrays.equals(solution.isRobotBounded(\"GLGLGLGLGLGLGLGL\"), True);\n    assert Arrays.equals(solution.isRobotBounded(\"LGLGLGLGLGLGLGLG\"), True);\n    assert Arrays.equals(solution.isRobotBounded(\"LLLLLLLLLLLLLL\"), True);\n    assert Arrays.equals(solution.isRobotBounded(\"LGLGLGLGLGLGLG\"), True);\n    assert Arrays.equals(solution.isRobotBounded(\"GGRRGLGRRGRRGRR\"), True);\n    assert Arrays.equals(solution.isRobotBounded(\"LRLRLRLRLRLRLRLR\"), True);\n    assert Arrays.equals(solution.isRobotBounded(\"GLGLGLGLGL\"), True);\n    assert Arrays.equals(solution.isRobotBounded(\"GRRGRRGRRGRRGRRG\"), True);\n    assert Arrays.equals(solution.isRobotBounded(\"GRRGLLRLLGRGLL\"), True);\n    assert Arrays.equals(solution.isRobotBounded(\"LGLRLGLRLG\"), True);\n    assert Arrays.equals(solution.isRobotBounded(\"GGLRLGLLGGRR\"), True);\n    assert Arrays.equals(solution.isRobotBounded(\"GLRRLLRRLLRRLLRR\"), True);\n    assert Arrays.equals(solution.isRobotBounded(\"RRLLRRLLRRLLRRLLRR\"), True);\n    assert Arrays.equals(solution.isRobotBounded(\"GLRLRLRLRLRLRLRLGG\"), True);\n    assert Arrays.equals(solution.isRobotBounded(\"RRGGLLRGGLLRRGLL\"), True);\n    assert Arrays.equals(solution.isRobotBounded(\"GGGGGGGGGGGGGGGG\"), False);\n    assert Arrays.equals(solution.isRobotBounded(\"GRRGLRGGGLLRLLGRR\"), True);\n    assert Arrays.equals(solution.isRobotBounded(\"GLRRGLLLGGGGRRRR\"), True);\n    assert Arrays.equals(solution.isRobotBounded(\"RRRRLLLLGGGG\"), False);\n    assert Arrays.equals(solution.isRobotBounded(\"GLRRGLGLRLRR\"), True);\n    assert Arrays.equals(solution.isRobotBounded(\"LGGRLGRRGLG\"), False);\n    assert Arrays.equals(solution.isRobotBounded(\"GGGGRRRRLLLL\"), False);\n    assert Arrays.equals(solution.isRobotBounded(\"RGLLRLGLGRRG\"), True);\n    assert Arrays.equals(solution.isRobotBounded(\"RRLLRRLLRRLLRRLL\"), True);\n    assert Arrays.equals(solution.isRobotBounded(\"GLRLGLRLGLRL\"), True);\n    assert Arrays.equals(solution.isRobotBounded(\"GLGRRRRRGGGLLGLGRR\"), True);\n    assert Arrays.equals(solution.isRobotBounded(\"GGGLRRLLGLRRLL\"), True);\n    assert Arrays.equals(solution.isRobotBounded(\"GGLLGGGGLLGGGG\"), False);\n    assert Arrays.equals(solution.isRobotBounded(\"LRRLRLRLRL\"), True);\n    assert Arrays.equals(solution.isRobotBounded(\"GRRGGGGLLLRRGGLG\"), False);\n    assert Arrays.equals(solution.isRobotBounded(\"LRRGLLRRGLLRRGLLRR\"), True);\n}",
+    "javascript": "function check(candidate) {\n    console.assert(JSON.stringify(candidate(\"GGLGRGLL\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"LLLL\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"GLLRLLRL\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"GRGL\")) === JSON.stringify(False));\n    console.assert(JSON.stringify(candidate(\"LLGRL\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"LRRL\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"LLGRR\")) === JSON.stringify(False));\n    console.assert(JSON.stringify(candidate(\"LRRRRLL\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"LL\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"RRGRRG\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"GGGG\")) === JSON.stringify(False));\n    console.assert(JSON.stringify(candidate(\"GGRRGG\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"GLGLG\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"GGLLGG\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"L\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"GL\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"R\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"GG\")) === JSON.stringify(False));\n    console.assert(JSON.stringify(candidate(\"GLGLGLGL\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"RRRR\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"G\")) === JSON.stringify(False));\n    console.assert(JSON.stringify(candidate(\"GLGLGRRG\")) === JSON.stringify(False));\n    console.assert(JSON.stringify(candidate(\"GLLRLLRR\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"RR\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"LGLLGLLGRRRRGG\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"LGR\")) === JSON.stringify(False));\n    console.assert(JSON.stringify(candidate(\"GLGLGRRR\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"GRRG\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"GRRGRRGRRGRRGRRGLG\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"GLRGLRGLRGLRGLRGLR\")) === JSON.stringify(False));\n    console.assert(JSON.stringify(candidate(\"GGGGGRRRRRLLLLL\")) === JSON.stringify(False));\n    console.assert(JSON.stringify(candidate(\"GGRRLLGGRRLLGGRRLL\")) === JSON.stringify(False));\n    console.assert(JSON.stringify(candidate(\"LGGRRGGRRGGRRG\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"RRRLLLLGGGGRRRLLL\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"RRLLRRLLRRLLRR\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"GLRGLRGLRGLRGLR\")) === JSON.stringify(False));\n    console.assert(JSON.stringify(candidate(\"RRRRGGGGLLGGGG\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"GLGLGLGLGLGLGLGLGL\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"RRRRRRRRRRRRRR\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"RRLLGGGLLLRRRR\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"LGLLGLGLLGLGRR\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"GGRRLLGGLLRR\")) === JSON.stringify(False));\n    console.assert(JSON.stringify(candidate(\"GGGGGLLLRRRGGGGGLLLRRR\")) === JSON.stringify(False));\n    console.assert(JSON.stringify(candidate(\"LRRLRLRLRLRLRLRL\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"LLLLRRRRLLLLRRRR\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"GLGRGLGRGLGRGL\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"GLRRLGLRRL\")) === JSON.stringify(False));\n    console.assert(JSON.stringify(candidate(\"GRRGRRGRRGRRGRRGRR\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"LLLLRRRRLLLLRRRRGG\")) === JSON.stringify(False));\n    console.assert(JSON.stringify(candidate(\"GGGGRRRLLLLGGGRR\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"GRRGRLGLGG\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"RRLLGGGGLLRRLG\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"GGLLGGRRLLRRGG\")) === JSON.stringify(False));\n    console.assert(JSON.stringify(candidate(\"GLGRRGLLGLLRRGGG\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"LRRLGRLGRLGRLRLR\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"GLLRRGGLLRRGGLLRR\")) === JSON.stringify(False));\n    console.assert(JSON.stringify(candidate(\"GGGRRRGRRRRGGGRRR\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"RRLLGGGGLLRRG\")) === JSON.stringify(False));\n    console.assert(JSON.stringify(candidate(\"LRRRRLLRRRRLLRRR\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"GRRGRRGRRGRRGG\")) === JSON.stringify(False));\n    console.assert(JSON.stringify(candidate(\"GGGLGGGLGGGLGGGL\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"GGRRGGRRGGRRGGRR\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"LLRRGGGGLLRRGG\")) === JSON.stringify(False));\n    console.assert(JSON.stringify(candidate(\"GGLRLRGGRRLL\")) === JSON.stringify(False));\n    console.assert(JSON.stringify(candidate(\"LRRGGLLLGGRRGG\")) === JSON.stringify(False));\n    console.assert(JSON.stringify(candidate(\"GLRRGLRRGLRR\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"LLLLGRRGGGLLRLLRRR\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"GLRLRLRLRLRRGGGG\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"RRGLLRRGLLRRGLLRRG\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"GLLGRRGRRGLLGRR\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"LGGGGRLRRRRGLLGG\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"GRRGGLLLGGRRGG\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"LLLLRRRLLLLRRR\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"LRLLRRLLRRLLRRLL\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"RRLLGGGLLLRRGG\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"RRGRLGGRLGRLG\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"GGGLLLGGRRRRGGGL\")) === JSON.stringify(False));\n    console.assert(JSON.stringify(candidate(\"GLGGRLGRLGLGRLGLGG\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"GGLGGLGGRRRR\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"LGLRLGLRLGLRLGLRL\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"GLGLGLGLGRRGRRGL\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"LGGRLGRRGLLGRRGLGRR\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"RRRLLLLRRRLLLL\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"GLRGLRLRLGRRGGGG\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"LGGRRGLGGLLRRGL\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"GGGGLLLRRRGGRRRL\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"GLRLRLRLRLRLRLRL\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"GLGRRGGLLRRGGLLRR\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"GGGGRRRLLLLLGGGG\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"RRRGLLGGLLLGGG\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"GGRRLLGGRRLL\")) === JSON.stringify(False));\n    console.assert(JSON.stringify(candidate(\"LGRGLRLRLGRR\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"LGGRRGRRLLGGRL\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"GLLLRRRRGLLLRRRR\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"GGGLLLGGGLLLGGGL\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"GLRLGLRLGLRLGLRL\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"LGLLGLGLLGLGRRGLGRR\")) === JSON.stringify(False));\n    console.assert(JSON.stringify(candidate(\"GLGRLLRLRRRL\")) === JSON.stringify(False));\n    console.assert(JSON.stringify(candidate(\"LGLGLLRLRLRLRL\")) === JSON.stringify(False));\n    console.assert(JSON.stringify(candidate(\"GLGLGLGLGLGL\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"LLGGRRLLGGRRLLGG\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"GLGGRLGRLGLGRL\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"LGLLGLGLGLGLLGLL\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"LRLRLRLRLRLRLRLRLR\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"GGLRLRRLLGLGGGG\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"GGGGGGGGGGGGGG\")) === JSON.stringify(False));\n    console.assert(JSON.stringify(candidate(\"GRRRLRLLGLGLGRLR\")) === JSON.stringify(False));\n    console.assert(JSON.stringify(candidate(\"GGGLGGGLGGGLGGGLGG\")) === JSON.stringify(False));\n    console.assert(JSON.stringify(candidate(\"LGLRLGLRLGLRLGLRLR\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"GLGLGLGLGLGLGLGL\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"LGLGLGLGLGLGLGLG\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"LLLLLLLLLLLLLL\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"LGLGLGLGLGLGLG\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"GGRRGLGRRGRRGRR\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"LRLRLRLRLRLRLRLR\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"GLGLGLGLGL\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"GRRGRRGRRGRRGRRG\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"GRRGLLRLLGRGLL\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"LGLRLGLRLG\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"GGLRLGLLGGRR\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"GLRRLLRRLLRRLLRR\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"RRLLRRLLRRLLRRLLRR\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"GLRLRLRLRLRLRLRLGG\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"RRGGLLRGGLLRRGLL\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"GGGGGGGGGGGGGGGG\")) === JSON.stringify(False));\n    console.assert(JSON.stringify(candidate(\"GRRGLRGGGLLRLLGRR\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"GLRRGLLLGGGGRRRR\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"RRRRLLLLGGGG\")) === JSON.stringify(False));\n    console.assert(JSON.stringify(candidate(\"GLRRGLGLRLRR\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"LGGRLGRRGLG\")) === JSON.stringify(False));\n    console.assert(JSON.stringify(candidate(\"GGGGRRRRLLLL\")) === JSON.stringify(False));\n    console.assert(JSON.stringify(candidate(\"RGLLRLGLGRRG\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"RRLLRRLLRRLLRRLL\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"GLRLGLRLGLRL\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"GLGRRRRRGGGLLGLGRR\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"GGGLRRLLGLRRLL\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"GGLLGGGGLLGGGG\")) === JSON.stringify(False));\n    console.assert(JSON.stringify(candidate(\"LRRLRLRLRL\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"GRRGGGGLLLRRGGLG\")) === JSON.stringify(False));\n    console.assert(JSON.stringify(candidate(\"LRRGLLRRGLLRRGLLRR\")) === JSON.stringify(True));\n}",
+    "typescript": "function check(candidate: Function): void {\n    console.assert(JSON.stringify(candidate(\"GGLGRGLL\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"LLLL\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"GLLRLLRL\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"GRGL\")) === JSON.stringify(False));\n    console.assert(JSON.stringify(candidate(\"LLGRL\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"LRRL\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"LLGRR\")) === JSON.stringify(False));\n    console.assert(JSON.stringify(candidate(\"LRRRRLL\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"LL\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"RRGRRG\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"GGGG\")) === JSON.stringify(False));\n    console.assert(JSON.stringify(candidate(\"GGRRGG\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"GLGLG\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"GGLLGG\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"L\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"GL\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"R\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"GG\")) === JSON.stringify(False));\n    console.assert(JSON.stringify(candidate(\"GLGLGLGL\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"RRRR\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"G\")) === JSON.stringify(False));\n    console.assert(JSON.stringify(candidate(\"GLGLGRRG\")) === JSON.stringify(False));\n    console.assert(JSON.stringify(candidate(\"GLLRLLRR\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"RR\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"LGLLGLLGRRRRGG\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"LGR\")) === JSON.stringify(False));\n    console.assert(JSON.stringify(candidate(\"GLGLGRRR\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"GRRG\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"GRRGRRGRRGRRGRRGLG\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"GLRGLRGLRGLRGLRGLR\")) === JSON.stringify(False));\n    console.assert(JSON.stringify(candidate(\"GGGGGRRRRRLLLLL\")) === JSON.stringify(False));\n    console.assert(JSON.stringify(candidate(\"GGRRLLGGRRLLGGRRLL\")) === JSON.stringify(False));\n    console.assert(JSON.stringify(candidate(\"LGGRRGGRRGGRRG\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"RRRLLLLGGGGRRRLLL\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"RRLLRRLLRRLLRR\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"GLRGLRGLRGLRGLR\")) === JSON.stringify(False));\n    console.assert(JSON.stringify(candidate(\"RRRRGGGGLLGGGG\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"GLGLGLGLGLGLGLGLGL\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"RRRRRRRRRRRRRR\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"RRLLGGGLLLRRRR\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"LGLLGLGLLGLGRR\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"GGRRLLGGLLRR\")) === JSON.stringify(False));\n    console.assert(JSON.stringify(candidate(\"GGGGGLLLRRRGGGGGLLLRRR\")) === JSON.stringify(False));\n    console.assert(JSON.stringify(candidate(\"LRRLRLRLRLRLRLRL\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"LLLLRRRRLLLLRRRR\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"GLGRGLGRGLGRGL\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"GLRRLGLRRL\")) === JSON.stringify(False));\n    console.assert(JSON.stringify(candidate(\"GRRGRRGRRGRRGRRGRR\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"LLLLRRRRLLLLRRRRGG\")) === JSON.stringify(False));\n    console.assert(JSON.stringify(candidate(\"GGGGRRRLLLLGGGRR\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"GRRGRLGLGG\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"RRLLGGGGLLRRLG\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"GGLLGGRRLLRRGG\")) === JSON.stringify(False));\n    console.assert(JSON.stringify(candidate(\"GLGRRGLLGLLRRGGG\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"LRRLGRLGRLGRLRLR\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"GLLRRGGLLRRGGLLRR\")) === JSON.stringify(False));\n    console.assert(JSON.stringify(candidate(\"GGGRRRGRRRRGGGRRR\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"RRLLGGGGLLRRG\")) === JSON.stringify(False));\n    console.assert(JSON.stringify(candidate(\"LRRRRLLRRRRLLRRR\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"GRRGRRGRRGRRGG\")) === JSON.stringify(False));\n    console.assert(JSON.stringify(candidate(\"GGGLGGGLGGGLGGGL\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"GGRRGGRRGGRRGGRR\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"LLRRGGGGLLRRGG\")) === JSON.stringify(False));\n    console.assert(JSON.stringify(candidate(\"GGLRLRGGRRLL\")) === JSON.stringify(False));\n    console.assert(JSON.stringify(candidate(\"LRRGGLLLGGRRGG\")) === JSON.stringify(False));\n    console.assert(JSON.stringify(candidate(\"GLRRGLRRGLRR\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"LLLLGRRGGGLLRLLRRR\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"GLRLRLRLRLRRGGGG\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"RRGLLRRGLLRRGLLRRG\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"GLLGRRGRRGLLGRR\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"LGGGGRLRRRRGLLGG\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"GRRGGLLLGGRRGG\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"LLLLRRRLLLLRRR\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"LRLLRRLLRRLLRRLL\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"RRLLGGGLLLRRGG\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"RRGRLGGRLGRLG\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"GGGLLLGGRRRRGGGL\")) === JSON.stringify(False));\n    console.assert(JSON.stringify(candidate(\"GLGGRLGRLGLGRLGLGG\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"GGLGGLGGRRRR\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"LGLRLGLRLGLRLGLRL\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"GLGLGLGLGRRGRRGL\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"LGGRLGRRGLLGRRGLGRR\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"RRRLLLLRRRLLLL\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"GLRGLRLRLGRRGGGG\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"LGGRRGLGGLLRRGL\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"GGGGLLLRRRGGRRRL\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"GLRLRLRLRLRLRLRL\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"GLGRRGGLLRRGGLLRR\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"GGGGRRRLLLLLGGGG\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"RRRGLLGGLLLGGG\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"GGRRLLGGRRLL\")) === JSON.stringify(False));\n    console.assert(JSON.stringify(candidate(\"LGRGLRLRLGRR\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"LGGRRGRRLLGGRL\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"GLLLRRRRGLLLRRRR\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"GGGLLLGGGLLLGGGL\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"GLRLGLRLGLRLGLRL\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"LGLLGLGLLGLGRRGLGRR\")) === JSON.stringify(False));\n    console.assert(JSON.stringify(candidate(\"GLGRLLRLRRRL\")) === JSON.stringify(False));\n    console.assert(JSON.stringify(candidate(\"LGLGLLRLRLRLRL\")) === JSON.stringify(False));\n    console.assert(JSON.stringify(candidate(\"GLGLGLGLGLGL\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"LLGGRRLLGGRRLLGG\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"GLGGRLGRLGLGRL\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"LGLLGLGLGLGLLGLL\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"LRLRLRLRLRLRLRLRLR\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"GGLRLRRLLGLGGGG\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"GGGGGGGGGGGGGG\")) === JSON.stringify(False));\n    console.assert(JSON.stringify(candidate(\"GRRRLRLLGLGLGRLR\")) === JSON.stringify(False));\n    console.assert(JSON.stringify(candidate(\"GGGLGGGLGGGLGGGLGG\")) === JSON.stringify(False));\n    console.assert(JSON.stringify(candidate(\"LGLRLGLRLGLRLGLRLR\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"GLGLGLGLGLGLGLGL\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"LGLGLGLGLGLGLGLG\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"LLLLLLLLLLLLLL\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"LGLGLGLGLGLGLG\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"GGRRGLGRRGRRGRR\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"LRLRLRLRLRLRLRLR\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"GLGLGLGLGL\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"GRRGRRGRRGRRGRRG\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"GRRGLLRLLGRGLL\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"LGLRLGLRLG\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"GGLRLGLLGGRR\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"GLRRLLRRLLRRLLRR\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"RRLLRRLLRRLLRRLLRR\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"GLRLRLRLRLRLRLRLGG\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"RRGGLLRGGLLRRGLL\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"GGGGGGGGGGGGGGGG\")) === JSON.stringify(False));\n    console.assert(JSON.stringify(candidate(\"GRRGLRGGGLLRLLGRR\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"GLRRGLLLGGGGRRRR\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"RRRRLLLLGGGG\")) === JSON.stringify(False));\n    console.assert(JSON.stringify(candidate(\"GLRRGLGLRLRR\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"LGGRLGRRGLG\")) === JSON.stringify(False));\n    console.assert(JSON.stringify(candidate(\"GGGGRRRRLLLL\")) === JSON.stringify(False));\n    console.assert(JSON.stringify(candidate(\"RGLLRLGLGRRG\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"RRLLRRLLRRLLRRLL\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"GLRLGLRLGLRL\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"GLGRRRRRGGGLLGLGRR\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"GGGLRRLLGLRRLL\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"GGLLGGGGLLGGGG\")) === JSON.stringify(False));\n    console.assert(JSON.stringify(candidate(\"LRRLRLRLRL\")) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate(\"GRRGGGGLLLRRGGLG\")) === JSON.stringify(False));\n    console.assert(JSON.stringify(candidate(\"LRRGLLRRGLLRRGLLRR\")) === JSON.stringify(True));\n}",
+    "golang": "func check(candidate func([]int, int) []int) {\n    assert reflect.DeepEqual(candidate(\"GGLGRGLL\"), True)\n    assert reflect.DeepEqual(candidate(\"LLLL\"), True)\n    assert reflect.DeepEqual(candidate(\"GLLRLLRL\"), True)\n    assert reflect.DeepEqual(candidate(\"GRGL\"), False)\n    assert reflect.DeepEqual(candidate(\"LLGRL\"), True)\n    assert reflect.DeepEqual(candidate(\"LRRL\"), True)\n    assert reflect.DeepEqual(candidate(\"LLGRR\"), False)\n    assert reflect.DeepEqual(candidate(\"LRRRRLL\"), True)\n    assert reflect.DeepEqual(candidate(\"LL\"), True)\n    assert reflect.DeepEqual(candidate(\"RRGRRG\"), True)\n    assert reflect.DeepEqual(candidate(\"GGGG\"), False)\n    assert reflect.DeepEqual(candidate(\"GGRRGG\"), True)\n    assert reflect.DeepEqual(candidate(\"GLGLG\"), True)\n    assert reflect.DeepEqual(candidate(\"GGLLGG\"), True)\n    assert reflect.DeepEqual(candidate(\"L\"), True)\n    assert reflect.DeepEqual(candidate(\"GL\"), True)\n    assert reflect.DeepEqual(candidate(\"R\"), True)\n    assert reflect.DeepEqual(candidate(\"GG\"), False)\n    assert reflect.DeepEqual(candidate(\"GLGLGLGL\"), True)\n    assert reflect.DeepEqual(candidate(\"RRRR\"), True)\n    assert reflect.DeepEqual(candidate(\"G\"), False)\n    assert reflect.DeepEqual(candidate(\"GLGLGRRG\"), False)\n    assert reflect.DeepEqual(candidate(\"GLLRLLRR\"), True)\n    assert reflect.DeepEqual(candidate(\"RR\"), True)\n    assert reflect.DeepEqual(candidate(\"LGLLGLLGRRRRGG\"), True)\n    assert reflect.DeepEqual(candidate(\"LGR\"), False)\n    assert reflect.DeepEqual(candidate(\"GLGLGRRR\"), True)\n    assert reflect.DeepEqual(candidate(\"GRRG\"), True)\n    assert reflect.DeepEqual(candidate(\"GRRGRRGRRGRRGRRGLG\"), True)\n    assert reflect.DeepEqual(candidate(\"GLRGLRGLRGLRGLRGLR\"), False)\n    assert reflect.DeepEqual(candidate(\"GGGGGRRRRRLLLLL\"), False)\n    assert reflect.DeepEqual(candidate(\"GGRRLLGGRRLLGGRRLL\"), False)\n    assert reflect.DeepEqual(candidate(\"LGGRRGGRRGGRRG\"), True)\n    assert reflect.DeepEqual(candidate(\"RRRLLLLGGGGRRRLLL\"), True)\n    assert reflect.DeepEqual(candidate(\"RRLLRRLLRRLLRR\"), True)\n    assert reflect.DeepEqual(candidate(\"GLRGLRGLRGLRGLR\"), False)\n    assert reflect.DeepEqual(candidate(\"RRRRGGGGLLGGGG\"), True)\n    assert reflect.DeepEqual(candidate(\"GLGLGLGLGLGLGLGLGL\"), True)\n    assert reflect.DeepEqual(candidate(\"RRRRRRRRRRRRRR\"), True)\n    assert reflect.DeepEqual(candidate(\"RRLLGGGLLLRRRR\"), True)\n    assert reflect.DeepEqual(candidate(\"LGLLGLGLLGLGRR\"), True)\n    assert reflect.DeepEqual(candidate(\"GGRRLLGGLLRR\"), False)\n    assert reflect.DeepEqual(candidate(\"GGGGGLLLRRRGGGGGLLLRRR\"), False)\n    assert reflect.DeepEqual(candidate(\"LRRLRLRLRLRLRLRL\"), True)\n    assert reflect.DeepEqual(candidate(\"LLLLRRRRLLLLRRRR\"), True)\n    assert reflect.DeepEqual(candidate(\"GLGRGLGRGLGRGL\"), True)\n    assert reflect.DeepEqual(candidate(\"GLRRLGLRRL\"), False)\n    assert reflect.DeepEqual(candidate(\"GRRGRRGRRGRRGRRGRR\"), True)\n    assert reflect.DeepEqual(candidate(\"LLLLRRRRLLLLRRRRGG\"), False)\n    assert reflect.DeepEqual(candidate(\"GGGGRRRLLLLGGGRR\"), True)\n    assert reflect.DeepEqual(candidate(\"GRRGRLGLGG\"), True)\n    assert reflect.DeepEqual(candidate(\"RRLLGGGGLLRRLG\"), True)\n    assert reflect.DeepEqual(candidate(\"GGLLGGRRLLRRGG\"), False)\n    assert reflect.DeepEqual(candidate(\"GLGRRGLLGLLRRGGG\"), True)\n    assert reflect.DeepEqual(candidate(\"LRRLGRLGRLGRLRLR\"), True)\n    assert reflect.DeepEqual(candidate(\"GLLRRGGLLRRGGLLRR\"), False)\n    assert reflect.DeepEqual(candidate(\"GGGRRRGRRRRGGGRRR\"), True)\n    assert reflect.DeepEqual(candidate(\"RRLLGGGGLLRRG\"), False)\n    assert reflect.DeepEqual(candidate(\"LRRRRLLRRRRLLRRR\"), True)\n    assert reflect.DeepEqual(candidate(\"GRRGRRGRRGRRGG\"), False)\n    assert reflect.DeepEqual(candidate(\"GGGLGGGLGGGLGGGL\"), True)\n    assert reflect.DeepEqual(candidate(\"GGRRGGRRGGRRGGRR\"), True)\n    assert reflect.DeepEqual(candidate(\"LLRRGGGGLLRRGG\"), False)\n    assert reflect.DeepEqual(candidate(\"GGLRLRGGRRLL\"), False)\n    assert reflect.DeepEqual(candidate(\"LRRGGLLLGGRRGG\"), False)\n    assert reflect.DeepEqual(candidate(\"GLRRGLRRGLRR\"), True)\n    assert reflect.DeepEqual(candidate(\"LLLLGRRGGGLLRLLRRR\"), True)\n    assert reflect.DeepEqual(candidate(\"GLRLRLRLRLRRGGGG\"), True)\n    assert reflect.DeepEqual(candidate(\"RRGLLRRGLLRRGLLRRG\"), True)\n    assert reflect.DeepEqual(candidate(\"GLLGRRGRRGLLGRR\"), True)\n    assert reflect.DeepEqual(candidate(\"LGGGGRLRRRRGLLGG\"), True)\n    assert reflect.DeepEqual(candidate(\"GRRGGLLLGGRRGG\"), True)\n    assert reflect.DeepEqual(candidate(\"LLLLRRRLLLLRRR\"), True)\n    assert reflect.DeepEqual(candidate(\"LRLLRRLLRRLLRRLL\"), True)\n    assert reflect.DeepEqual(candidate(\"RRLLGGGLLLRRGG\"), True)\n    assert reflect.DeepEqual(candidate(\"RRGRLGGRLGRLG\"), True)\n    assert reflect.DeepEqual(candidate(\"GGGLLLGGRRRRGGGL\"), False)\n    assert reflect.DeepEqual(candidate(\"GLGGRLGRLGLGRLGLGG\"), True)\n    assert reflect.DeepEqual(candidate(\"GGLGGLGGRRRR\"), True)\n    assert reflect.DeepEqual(candidate(\"LGLRLGLRLGLRLGLRL\"), True)\n    assert reflect.DeepEqual(candidate(\"GLGLGLGLGRRGRRGL\"), True)\n    assert reflect.DeepEqual(candidate(\"LGGRLGRRGLLGRRGLGRR\"), True)\n    assert reflect.DeepEqual(candidate(\"RRRLLLLRRRLLLL\"), True)\n    assert reflect.DeepEqual(candidate(\"GLRGLRLRLGRRGGGG\"), True)\n    assert reflect.DeepEqual(candidate(\"LGGRRGLGGLLRRGL\"), True)\n    assert reflect.DeepEqual(candidate(\"GGGGLLLRRRGGRRRL\"), True)\n    assert reflect.DeepEqual(candidate(\"GLRLRLRLRLRLRLRL\"), True)\n    assert reflect.DeepEqual(candidate(\"GLGRRGGLLRRGGLLRR\"), True)\n    assert reflect.DeepEqual(candidate(\"GGGGRRRLLLLLGGGG\"), True)\n    assert reflect.DeepEqual(candidate(\"RRRGLLGGLLLGGG\"), True)\n    assert reflect.DeepEqual(candidate(\"GGRRLLGGRRLL\"), False)\n    assert reflect.DeepEqual(candidate(\"LGRGLRLRLGRR\"), True)\n    assert reflect.DeepEqual(candidate(\"LGGRRGRRLLGGRL\"), True)\n    assert reflect.DeepEqual(candidate(\"GLLLRRRRGLLLRRRR\"), True)\n    assert reflect.DeepEqual(candidate(\"GGGLLLGGGLLLGGGL\"), True)\n    assert reflect.DeepEqual(candidate(\"GLRLGLRLGLRLGLRL\"), True)\n    assert reflect.DeepEqual(candidate(\"LGLLGLGLLGLGRRGLGRR\"), False)\n    assert reflect.DeepEqual(candidate(\"GLGRLLRLRRRL\"), False)\n    assert reflect.DeepEqual(candidate(\"LGLGLLRLRLRLRL\"), False)\n    assert reflect.DeepEqual(candidate(\"GLGLGLGLGLGL\"), True)\n    assert reflect.DeepEqual(candidate(\"LLGGRRLLGGRRLLGG\"), True)\n    assert reflect.DeepEqual(candidate(\"GLGGRLGRLGLGRL\"), True)\n    assert reflect.DeepEqual(candidate(\"LGLLGLGLGLGLLGLL\"), True)\n    assert reflect.DeepEqual(candidate(\"LRLRLRLRLRLRLRLRLR\"), True)\n    assert reflect.DeepEqual(candidate(\"GGLRLRRLLGLGGGG\"), True)\n    assert reflect.DeepEqual(candidate(\"GGGGGGGGGGGGGG\"), False)\n    assert reflect.DeepEqual(candidate(\"GRRRLRLLGLGLGRLR\"), False)\n    assert reflect.DeepEqual(candidate(\"GGGLGGGLGGGLGGGLGG\"), False)\n    assert reflect.DeepEqual(candidate(\"LGLRLGLRLGLRLGLRLR\"), True)\n    assert reflect.DeepEqual(candidate(\"GLGLGLGLGLGLGLGL\"), True)\n    assert reflect.DeepEqual(candidate(\"LGLGLGLGLGLGLGLG\"), True)\n    assert reflect.DeepEqual(candidate(\"LLLLLLLLLLLLLL\"), True)\n    assert reflect.DeepEqual(candidate(\"LGLGLGLGLGLGLG\"), True)\n    assert reflect.DeepEqual(candidate(\"GGRRGLGRRGRRGRR\"), True)\n    assert reflect.DeepEqual(candidate(\"LRLRLRLRLRLRLRLR\"), True)\n    assert reflect.DeepEqual(candidate(\"GLGLGLGLGL\"), True)\n    assert reflect.DeepEqual(candidate(\"GRRGRRGRRGRRGRRG\"), True)\n    assert reflect.DeepEqual(candidate(\"GRRGLLRLLGRGLL\"), True)\n    assert reflect.DeepEqual(candidate(\"LGLRLGLRLG\"), True)\n    assert reflect.DeepEqual(candidate(\"GGLRLGLLGGRR\"), True)\n    assert reflect.DeepEqual(candidate(\"GLRRLLRRLLRRLLRR\"), True)\n    assert reflect.DeepEqual(candidate(\"RRLLRRLLRRLLRRLLRR\"), True)\n    assert reflect.DeepEqual(candidate(\"GLRLRLRLRLRLRLRLGG\"), True)\n    assert reflect.DeepEqual(candidate(\"RRGGLLRGGLLRRGLL\"), True)\n    assert reflect.DeepEqual(candidate(\"GGGGGGGGGGGGGGGG\"), False)\n    assert reflect.DeepEqual(candidate(\"GRRGLRGGGLLRLLGRR\"), True)\n    assert reflect.DeepEqual(candidate(\"GLRRGLLLGGGGRRRR\"), True)\n    assert reflect.DeepEqual(candidate(\"RRRRLLLLGGGG\"), False)\n    assert reflect.DeepEqual(candidate(\"GLRRGLGLRLRR\"), True)\n    assert reflect.DeepEqual(candidate(\"LGGRLGRRGLG\"), False)\n    assert reflect.DeepEqual(candidate(\"GGGGRRRRLLLL\"), False)\n    assert reflect.DeepEqual(candidate(\"RGLLRLGLGRRG\"), True)\n    assert reflect.DeepEqual(candidate(\"RRLLRRLLRRLLRRLL\"), True)\n    assert reflect.DeepEqual(candidate(\"GLRLGLRLGLRL\"), True)\n    assert reflect.DeepEqual(candidate(\"GLGRRRRRGGGLLGLGRR\"), True)\n    assert reflect.DeepEqual(candidate(\"GGGLRRLLGLRRLL\"), True)\n    assert reflect.DeepEqual(candidate(\"GGLLGGGGLLGGGG\"), False)\n    assert reflect.DeepEqual(candidate(\"LRRLRLRLRL\"), True)\n    assert reflect.DeepEqual(candidate(\"GRRGGGGLLLRRGGLG\"), False)\n    assert reflect.DeepEqual(candidate(\"LRRGLLRRGLLRRGLLRR\"), True)\n}",
+    "rust": "fn check(candidate: fn(Vec<i32>, i32) -> Vec<i32>) {\n    assert_eq!(candidate(\"GGLGRGLL\"), True);\n    assert_eq!(candidate(\"LLLL\"), True);\n    assert_eq!(candidate(\"GLLRLLRL\"), True);\n    assert_eq!(candidate(\"GRGL\"), False);\n    assert_eq!(candidate(\"LLGRL\"), True);\n    assert_eq!(candidate(\"LRRL\"), True);\n    assert_eq!(candidate(\"LLGRR\"), False);\n    assert_eq!(candidate(\"LRRRRLL\"), True);\n    assert_eq!(candidate(\"LL\"), True);\n    assert_eq!(candidate(\"RRGRRG\"), True);\n    assert_eq!(candidate(\"GGGG\"), False);\n    assert_eq!(candidate(\"GGRRGG\"), True);\n    assert_eq!(candidate(\"GLGLG\"), True);\n    assert_eq!(candidate(\"GGLLGG\"), True);\n    assert_eq!(candidate(\"L\"), True);\n    assert_eq!(candidate(\"GL\"), True);\n    assert_eq!(candidate(\"R\"), True);\n    assert_eq!(candidate(\"GG\"), False);\n    assert_eq!(candidate(\"GLGLGLGL\"), True);\n    assert_eq!(candidate(\"RRRR\"), True);\n    assert_eq!(candidate(\"G\"), False);\n    assert_eq!(candidate(\"GLGLGRRG\"), False);\n    assert_eq!(candidate(\"GLLRLLRR\"), True);\n    assert_eq!(candidate(\"RR\"), True);\n    assert_eq!(candidate(\"LGLLGLLGRRRRGG\"), True);\n    assert_eq!(candidate(\"LGR\"), False);\n    assert_eq!(candidate(\"GLGLGRRR\"), True);\n    assert_eq!(candidate(\"GRRG\"), True);\n    assert_eq!(candidate(\"GRRGRRGRRGRRGRRGLG\"), True);\n    assert_eq!(candidate(\"GLRGLRGLRGLRGLRGLR\"), False);\n    assert_eq!(candidate(\"GGGGGRRRRRLLLLL\"), False);\n    assert_eq!(candidate(\"GGRRLLGGRRLLGGRRLL\"), False);\n    assert_eq!(candidate(\"LGGRRGGRRGGRRG\"), True);\n    assert_eq!(candidate(\"RRRLLLLGGGGRRRLLL\"), True);\n    assert_eq!(candidate(\"RRLLRRLLRRLLRR\"), True);\n    assert_eq!(candidate(\"GLRGLRGLRGLRGLR\"), False);\n    assert_eq!(candidate(\"RRRRGGGGLLGGGG\"), True);\n    assert_eq!(candidate(\"GLGLGLGLGLGLGLGLGL\"), True);\n    assert_eq!(candidate(\"RRRRRRRRRRRRRR\"), True);\n    assert_eq!(candidate(\"RRLLGGGLLLRRRR\"), True);\n    assert_eq!(candidate(\"LGLLGLGLLGLGRR\"), True);\n    assert_eq!(candidate(\"GGRRLLGGLLRR\"), False);\n    assert_eq!(candidate(\"GGGGGLLLRRRGGGGGLLLRRR\"), False);\n    assert_eq!(candidate(\"LRRLRLRLRLRLRLRL\"), True);\n    assert_eq!(candidate(\"LLLLRRRRLLLLRRRR\"), True);\n    assert_eq!(candidate(\"GLGRGLGRGLGRGL\"), True);\n    assert_eq!(candidate(\"GLRRLGLRRL\"), False);\n    assert_eq!(candidate(\"GRRGRRGRRGRRGRRGRR\"), True);\n    assert_eq!(candidate(\"LLLLRRRRLLLLRRRRGG\"), False);\n    assert_eq!(candidate(\"GGGGRRRLLLLGGGRR\"), True);\n    assert_eq!(candidate(\"GRRGRLGLGG\"), True);\n    assert_eq!(candidate(\"RRLLGGGGLLRRLG\"), True);\n    assert_eq!(candidate(\"GGLLGGRRLLRRGG\"), False);\n    assert_eq!(candidate(\"GLGRRGLLGLLRRGGG\"), True);\n    assert_eq!(candidate(\"LRRLGRLGRLGRLRLR\"), True);\n    assert_eq!(candidate(\"GLLRRGGLLRRGGLLRR\"), False);\n    assert_eq!(candidate(\"GGGRRRGRRRRGGGRRR\"), True);\n    assert_eq!(candidate(\"RRLLGGGGLLRRG\"), False);\n    assert_eq!(candidate(\"LRRRRLLRRRRLLRRR\"), True);\n    assert_eq!(candidate(\"GRRGRRGRRGRRGG\"), False);\n    assert_eq!(candidate(\"GGGLGGGLGGGLGGGL\"), True);\n    assert_eq!(candidate(\"GGRRGGRRGGRRGGRR\"), True);\n    assert_eq!(candidate(\"LLRRGGGGLLRRGG\"), False);\n    assert_eq!(candidate(\"GGLRLRGGRRLL\"), False);\n    assert_eq!(candidate(\"LRRGGLLLGGRRGG\"), False);\n    assert_eq!(candidate(\"GLRRGLRRGLRR\"), True);\n    assert_eq!(candidate(\"LLLLGRRGGGLLRLLRRR\"), True);\n    assert_eq!(candidate(\"GLRLRLRLRLRRGGGG\"), True);\n    assert_eq!(candidate(\"RRGLLRRGLLRRGLLRRG\"), True);\n    assert_eq!(candidate(\"GLLGRRGRRGLLGRR\"), True);\n    assert_eq!(candidate(\"LGGGGRLRRRRGLLGG\"), True);\n    assert_eq!(candidate(\"GRRGGLLLGGRRGG\"), True);\n    assert_eq!(candidate(\"LLLLRRRLLLLRRR\"), True);\n    assert_eq!(candidate(\"LRLLRRLLRRLLRRLL\"), True);\n    assert_eq!(candidate(\"RRLLGGGLLLRRGG\"), True);\n    assert_eq!(candidate(\"RRGRLGGRLGRLG\"), True);\n    assert_eq!(candidate(\"GGGLLLGGRRRRGGGL\"), False);\n    assert_eq!(candidate(\"GLGGRLGRLGLGRLGLGG\"), True);\n    assert_eq!(candidate(\"GGLGGLGGRRRR\"), True);\n    assert_eq!(candidate(\"LGLRLGLRLGLRLGLRL\"), True);\n    assert_eq!(candidate(\"GLGLGLGLGRRGRRGL\"), True);\n    assert_eq!(candidate(\"LGGRLGRRGLLGRRGLGRR\"), True);\n    assert_eq!(candidate(\"RRRLLLLRRRLLLL\"), True);\n    assert_eq!(candidate(\"GLRGLRLRLGRRGGGG\"), True);\n    assert_eq!(candidate(\"LGGRRGLGGLLRRGL\"), True);\n    assert_eq!(candidate(\"GGGGLLLRRRGGRRRL\"), True);\n    assert_eq!(candidate(\"GLRLRLRLRLRLRLRL\"), True);\n    assert_eq!(candidate(\"GLGRRGGLLRRGGLLRR\"), True);\n    assert_eq!(candidate(\"GGGGRRRLLLLLGGGG\"), True);\n    assert_eq!(candidate(\"RRRGLLGGLLLGGG\"), True);\n    assert_eq!(candidate(\"GGRRLLGGRRLL\"), False);\n    assert_eq!(candidate(\"LGRGLRLRLGRR\"), True);\n    assert_eq!(candidate(\"LGGRRGRRLLGGRL\"), True);\n    assert_eq!(candidate(\"GLLLRRRRGLLLRRRR\"), True);\n    assert_eq!(candidate(\"GGGLLLGGGLLLGGGL\"), True);\n    assert_eq!(candidate(\"GLRLGLRLGLRLGLRL\"), True);\n    assert_eq!(candidate(\"LGLLGLGLLGLGRRGLGRR\"), False);\n    assert_eq!(candidate(\"GLGRLLRLRRRL\"), False);\n    assert_eq!(candidate(\"LGLGLLRLRLRLRL\"), False);\n    assert_eq!(candidate(\"GLGLGLGLGLGL\"), True);\n    assert_eq!(candidate(\"LLGGRRLLGGRRLLGG\"), True);\n    assert_eq!(candidate(\"GLGGRLGRLGLGRL\"), True);\n    assert_eq!(candidate(\"LGLLGLGLGLGLLGLL\"), True);\n    assert_eq!(candidate(\"LRLRLRLRLRLRLRLRLR\"), True);\n    assert_eq!(candidate(\"GGLRLRRLLGLGGGG\"), True);\n    assert_eq!(candidate(\"GGGGGGGGGGGGGG\"), False);\n    assert_eq!(candidate(\"GRRRLRLLGLGLGRLR\"), False);\n    assert_eq!(candidate(\"GGGLGGGLGGGLGGGLGG\"), False);\n    assert_eq!(candidate(\"LGLRLGLRLGLRLGLRLR\"), True);\n    assert_eq!(candidate(\"GLGLGLGLGLGLGLGL\"), True);\n    assert_eq!(candidate(\"LGLGLGLGLGLGLGLG\"), True);\n    assert_eq!(candidate(\"LLLLLLLLLLLLLL\"), True);\n    assert_eq!(candidate(\"LGLGLGLGLGLGLG\"), True);\n    assert_eq!(candidate(\"GGRRGLGRRGRRGRR\"), True);\n    assert_eq!(candidate(\"LRLRLRLRLRLRLRLR\"), True);\n    assert_eq!(candidate(\"GLGLGLGLGL\"), True);\n    assert_eq!(candidate(\"GRRGRRGRRGRRGRRG\"), True);\n    assert_eq!(candidate(\"GRRGLLRLLGRGLL\"), True);\n    assert_eq!(candidate(\"LGLRLGLRLG\"), True);\n    assert_eq!(candidate(\"GGLRLGLLGGRR\"), True);\n    assert_eq!(candidate(\"GLRRLLRRLLRRLLRR\"), True);\n    assert_eq!(candidate(\"RRLLRRLLRRLLRRLLRR\"), True);\n    assert_eq!(candidate(\"GLRLRLRLRLRLRLRLGG\"), True);\n    assert_eq!(candidate(\"RRGGLLRGGLLRRGLL\"), True);\n    assert_eq!(candidate(\"GGGGGGGGGGGGGGGG\"), False);\n    assert_eq!(candidate(\"GRRGLRGGGLLRLLGRR\"), True);\n    assert_eq!(candidate(\"GLRRGLLLGGGGRRRR\"), True);\n    assert_eq!(candidate(\"RRRRLLLLGGGG\"), False);\n    assert_eq!(candidate(\"GLRRGLGLRLRR\"), True);\n    assert_eq!(candidate(\"LGGRLGRRGLG\"), False);\n    assert_eq!(candidate(\"GGGGRRRRLLLL\"), False);\n    assert_eq!(candidate(\"RGLLRLGLGRRG\"), True);\n    assert_eq!(candidate(\"RRLLRRLLRRLLRRLL\"), True);\n    assert_eq!(candidate(\"GLRLGLRLGLRL\"), True);\n    assert_eq!(candidate(\"GLGRRRRRGGGLLGLGRR\"), True);\n    assert_eq!(candidate(\"GGGLRRLLGLRRLL\"), True);\n    assert_eq!(candidate(\"GGLLGGGGLLGGGG\"), False);\n    assert_eq!(candidate(\"LRRLRLRLRL\"), True);\n    assert_eq!(candidate(\"GRRGGGGLLLRRGGLG\"), False);\n    assert_eq!(candidate(\"LRRGLLRRGLLRRGLLRR\"), True);\n}"
+  },
+  "test_cases": [
+    {
+      "input": "instructions = \"GGLGRGLL\"",
+      "output": "True"
+    },
+    {
+      "input": "instructions = \"LLLL\"",
+      "output": "True"
+    },
+    {
+      "input": "instructions = \"GLLRLLRL\"",
+      "output": "True"
+    },
+    {
+      "input": "instructions = \"GRGL\"",
+      "output": "False"
+    },
+    {
+      "input": "instructions = \"LLGRL\"",
+      "output": "True"
+    },
+    {
+      "input": "instructions = \"LRRL\"",
+      "output": "True"
+    },
+    {
+      "input": "instructions = \"LLGRR\"",
+      "output": "False"
+    },
+    {
+      "input": "instructions = \"LRRRRLL\"",
+      "output": "True"
+    },
+    {
+      "input": "instructions = \"LL\"",
+      "output": "True"
+    },
+    {
+      "input": "instructions = \"RRGRRG\"",
+      "output": "True"
+    },
+    {
+      "input": "instructions = \"GGGG\"",
+      "output": "False"
+    },
+    {
+      "input": "instructions = \"GGRRGG\"",
+      "output": "True"
+    },
+    {
+      "input": "instructions = \"GLGLG\"",
+      "output": "True"
+    },
+    {
+      "input": "instructions = \"GGLLGG\"",
+      "output": "True"
+    },
+    {
+      "input": "instructions = \"L\"",
+      "output": "True"
+    },
+    {
+      "input": "instructions = \"GL\"",
+      "output": "True"
+    },
+    {
+      "input": "instructions = \"R\"",
+      "output": "True"
+    },
+    {
+      "input": "instructions = \"GG\"",
+      "output": "False"
+    },
+    {
+      "input": "instructions = \"GLGLGLGL\"",
+      "output": "True"
+    },
+    {
+      "input": "instructions = \"RRRR\"",
+      "output": "True"
+    },
+    {
+      "input": "instructions = \"G\"",
+      "output": "False"
+    },
+    {
+      "input": "instructions = \"GLGLGRRG\"",
+      "output": "False"
+    },
+    {
+      "input": "instructions = \"GLLRLLRR\"",
+      "output": "True"
+    },
+    {
+      "input": "instructions = \"RR\"",
+      "output": "True"
+    },
+    {
+      "input": "instructions = \"LGLLGLLGRRRRGG\"",
+      "output": "True"
+    },
+    {
+      "input": "instructions = \"LGR\"",
+      "output": "False"
+    },
+    {
+      "input": "instructions = \"GLGLGRRR\"",
+      "output": "True"
+    },
+    {
+      "input": "instructions = \"GRRG\"",
+      "output": "True"
+    },
+    {
+      "input": "instructions = \"GRRGRRGRRGRRGRRGLG\"",
+      "output": "True"
+    },
+    {
+      "input": "instructions = \"GLRGLRGLRGLRGLRGLR\"",
+      "output": "False"
+    },
+    {
+      "input": "instructions = \"GGGGGRRRRRLLLLL\"",
+      "output": "False"
+    },
+    {
+      "input": "instructions = \"GGRRLLGGRRLLGGRRLL\"",
+      "output": "False"
+    },
+    {
+      "input": "instructions = \"LGGRRGGRRGGRRG\"",
+      "output": "True"
+    },
+    {
+      "input": "instructions = \"RRRLLLLGGGGRRRLLL\"",
+      "output": "True"
+    },
+    {
+      "input": "instructions = \"RRLLRRLLRRLLRR\"",
+      "output": "True"
+    },
+    {
+      "input": "instructions = \"GLRGLRGLRGLRGLR\"",
+      "output": "False"
+    },
+    {
+      "input": "instructions = \"RRRRGGGGLLGGGG\"",
+      "output": "True"
+    },
+    {
+      "input": "instructions = \"GLGLGLGLGLGLGLGLGL\"",
+      "output": "True"
+    },
+    {
+      "input": "instructions = \"RRRRRRRRRRRRRR\"",
+      "output": "True"
+    },
+    {
+      "input": "instructions = \"RRLLGGGLLLRRRR\"",
+      "output": "True"
+    },
+    {
+      "input": "instructions = \"LGLLGLGLLGLGRR\"",
+      "output": "True"
+    },
+    {
+      "input": "instructions = \"GGRRLLGGLLRR\"",
+      "output": "False"
+    },
+    {
+      "input": "instructions = \"GGGGGLLLRRRGGGGGLLLRRR\"",
+      "output": "False"
+    },
+    {
+      "input": "instructions = \"LRRLRLRLRLRLRLRL\"",
+      "output": "True"
+    },
+    {
+      "input": "instructions = \"LLLLRRRRLLLLRRRR\"",
+      "output": "True"
+    },
+    {
+      "input": "instructions = \"GLGRGLGRGLGRGL\"",
+      "output": "True"
+    },
+    {
+      "input": "instructions = \"GLRRLGLRRL\"",
+      "output": "False"
+    },
+    {
+      "input": "instructions = \"GRRGRRGRRGRRGRRGRR\"",
+      "output": "True"
+    },
+    {
+      "input": "instructions = \"LLLLRRRRLLLLRRRRGG\"",
+      "output": "False"
+    },
+    {
+      "input": "instructions = \"GGGGRRRLLLLGGGRR\"",
+      "output": "True"
+    },
+    {
+      "input": "instructions = \"GRRGRLGLGG\"",
+      "output": "True"
+    },
+    {
+      "input": "instructions = \"RRLLGGGGLLRRLG\"",
+      "output": "True"
+    },
+    {
+      "input": "instructions = \"GGLLGGRRLLRRGG\"",
+      "output": "False"
+    },
+    {
+      "input": "instructions = \"GLGRRGLLGLLRRGGG\"",
+      "output": "True"
+    },
+    {
+      "input": "instructions = \"LRRLGRLGRLGRLRLR\"",
+      "output": "True"
+    },
+    {
+      "input": "instructions = \"GLLRRGGLLRRGGLLRR\"",
+      "output": "False"
+    },
+    {
+      "input": "instructions = \"GGGRRRGRRRRGGGRRR\"",
+      "output": "True"
+    },
+    {
+      "input": "instructions = \"RRLLGGGGLLRRG\"",
+      "output": "False"
+    },
+    {
+      "input": "instructions = \"LRRRRLLRRRRLLRRR\"",
+      "output": "True"
+    },
+    {
+      "input": "instructions = \"GRRGRRGRRGRRGG\"",
+      "output": "False"
+    },
+    {
+      "input": "instructions = \"GGGLGGGLGGGLGGGL\"",
+      "output": "True"
+    },
+    {
+      "input": "instructions = \"GGRRGGRRGGRRGGRR\"",
+      "output": "True"
+    },
+    {
+      "input": "instructions = \"LLRRGGGGLLRRGG\"",
+      "output": "False"
+    },
+    {
+      "input": "instructions = \"GGLRLRGGRRLL\"",
+      "output": "False"
+    },
+    {
+      "input": "instructions = \"LRRGGLLLGGRRGG\"",
+      "output": "False"
+    },
+    {
+      "input": "instructions = \"GLRRGLRRGLRR\"",
+      "output": "True"
+    },
+    {
+      "input": "instructions = \"LLLLGRRGGGLLRLLRRR\"",
+      "output": "True"
+    },
+    {
+      "input": "instructions = \"GLRLRLRLRLRRGGGG\"",
+      "output": "True"
+    },
+    {
+      "input": "instructions = \"RRGLLRRGLLRRGLLRRG\"",
+      "output": "True"
+    },
+    {
+      "input": "instructions = \"GLLGRRGRRGLLGRR\"",
+      "output": "True"
+    },
+    {
+      "input": "instructions = \"LGGGGRLRRRRGLLGG\"",
+      "output": "True"
+    },
+    {
+      "input": "instructions = \"GRRGGLLLGGRRGG\"",
+      "output": "True"
+    },
+    {
+      "input": "instructions = \"LLLLRRRLLLLRRR\"",
+      "output": "True"
+    },
+    {
+      "input": "instructions = \"LRLLRRLLRRLLRRLL\"",
+      "output": "True"
+    },
+    {
+      "input": "instructions = \"RRLLGGGLLLRRGG\"",
+      "output": "True"
+    },
+    {
+      "input": "instructions = \"RRGRLGGRLGRLG\"",
+      "output": "True"
+    },
+    {
+      "input": "instructions = \"GGGLLLGGRRRRGGGL\"",
+      "output": "False"
+    },
+    {
+      "input": "instructions = \"GLGGRLGRLGLGRLGLGG\"",
+      "output": "True"
+    },
+    {
+      "input": "instructions = \"GGLGGLGGRRRR\"",
+      "output": "True"
+    },
+    {
+      "input": "instructions = \"LGLRLGLRLGLRLGLRL\"",
+      "output": "True"
+    },
+    {
+      "input": "instructions = \"GLGLGLGLGRRGRRGL\"",
+      "output": "True"
+    },
+    {
+      "input": "instructions = \"LGGRLGRRGLLGRRGLGRR\"",
+      "output": "True"
+    },
+    {
+      "input": "instructions = \"RRRLLLLRRRLLLL\"",
+      "output": "True"
+    },
+    {
+      "input": "instructions = \"GLRGLRLRLGRRGGGG\"",
+      "output": "True"
+    },
+    {
+      "input": "instructions = \"LGGRRGLGGLLRRGL\"",
+      "output": "True"
+    },
+    {
+      "input": "instructions = \"GGGGLLLRRRGGRRRL\"",
+      "output": "True"
+    },
+    {
+      "input": "instructions = \"GLRLRLRLRLRLRLRL\"",
+      "output": "True"
+    },
+    {
+      "input": "instructions = \"GLGRRGGLLRRGGLLRR\"",
+      "output": "True"
+    },
+    {
+      "input": "instructions = \"GGGGRRRLLLLLGGGG\"",
+      "output": "True"
+    },
+    {
+      "input": "instructions = \"RRRGLLGGLLLGGG\"",
+      "output": "True"
+    },
+    {
+      "input": "instructions = \"GGRRLLGGRRLL\"",
+      "output": "False"
+    },
+    {
+      "input": "instructions = \"LGRGLRLRLGRR\"",
+      "output": "True"
+    },
+    {
+      "input": "instructions = \"LGGRRGRRLLGGRL\"",
+      "output": "True"
+    },
+    {
+      "input": "instructions = \"GLLLRRRRGLLLRRRR\"",
+      "output": "True"
+    },
+    {
+      "input": "instructions = \"GGGLLLGGGLLLGGGL\"",
+      "output": "True"
+    },
+    {
+      "input": "instructions = \"GLRLGLRLGLRLGLRL\"",
+      "output": "True"
+    },
+    {
+      "input": "instructions = \"LGLLGLGLLGLGRRGLGRR\"",
+      "output": "False"
+    },
+    {
+      "input": "instructions = \"GLGRLLRLRRRL\"",
+      "output": "False"
+    },
+    {
+      "input": "instructions = \"LGLGLLRLRLRLRL\"",
+      "output": "False"
+    },
+    {
+      "input": "instructions = \"GLGLGLGLGLGL\"",
+      "output": "True"
+    },
+    {
+      "input": "instructions = \"LLGGRRLLGGRRLLGG\"",
+      "output": "True"
+    },
+    {
+      "input": "instructions = \"GLGGRLGRLGLGRL\"",
+      "output": "True"
+    },
+    {
+      "input": "instructions = \"LGLLGLGLGLGLLGLL\"",
+      "output": "True"
+    },
+    {
+      "input": "instructions = \"LRLRLRLRLRLRLRLRLR\"",
+      "output": "True"
+    },
+    {
+      "input": "instructions = \"GGLRLRRLLGLGGGG\"",
+      "output": "True"
+    },
+    {
+      "input": "instructions = \"GGGGGGGGGGGGGG\"",
+      "output": "False"
+    },
+    {
+      "input": "instructions = \"GRRRLRLLGLGLGRLR\"",
+      "output": "False"
+    },
+    {
+      "input": "instructions = \"GGGLGGGLGGGLGGGLGG\"",
+      "output": "False"
+    },
+    {
+      "input": "instructions = \"LGLRLGLRLGLRLGLRLR\"",
+      "output": "True"
+    },
+    {
+      "input": "instructions = \"GLGLGLGLGLGLGLGL\"",
+      "output": "True"
+    },
+    {
+      "input": "instructions = \"LGLGLGLGLGLGLGLG\"",
+      "output": "True"
+    },
+    {
+      "input": "instructions = \"LLLLLLLLLLLLLL\"",
+      "output": "True"
+    },
+    {
+      "input": "instructions = \"LGLGLGLGLGLGLG\"",
+      "output": "True"
+    },
+    {
+      "input": "instructions = \"GGRRGLGRRGRRGRR\"",
+      "output": "True"
+    },
+    {
+      "input": "instructions = \"LRLRLRLRLRLRLRLR\"",
+      "output": "True"
+    },
+    {
+      "input": "instructions = \"GLGLGLGLGL\"",
+      "output": "True"
+    },
+    {
+      "input": "instructions = \"GRRGRRGRRGRRGRRG\"",
+      "output": "True"
+    },
+    {
+      "input": "instructions = \"GRRGLLRLLGRGLL\"",
+      "output": "True"
+    },
+    {
+      "input": "instructions = \"LGLRLGLRLG\"",
+      "output": "True"
+    },
+    {
+      "input": "instructions = \"GGLRLGLLGGRR\"",
+      "output": "True"
+    },
+    {
+      "input": "instructions = \"GLRRLLRRLLRRLLRR\"",
+      "output": "True"
+    },
+    {
+      "input": "instructions = \"RRLLRRLLRRLLRRLLRR\"",
+      "output": "True"
+    },
+    {
+      "input": "instructions = \"GLRLRLRLRLRLRLRLGG\"",
+      "output": "True"
+    },
+    {
+      "input": "instructions = \"RRGGLLRGGLLRRGLL\"",
+      "output": "True"
+    },
+    {
+      "input": "instructions = \"GGGGGGGGGGGGGGGG\"",
+      "output": "False"
+    },
+    {
+      "input": "instructions = \"GRRGLRGGGLLRLLGRR\"",
+      "output": "True"
+    },
+    {
+      "input": "instructions = \"GLRRGLLLGGGGRRRR\"",
+      "output": "True"
+    },
+    {
+      "input": "instructions = \"RRRRLLLLGGGG\"",
+      "output": "False"
+    },
+    {
+      "input": "instructions = \"GLRRGLGLRLRR\"",
+      "output": "True"
+    },
+    {
+      "input": "instructions = \"LGGRLGRRGLG\"",
+      "output": "False"
+    },
+    {
+      "input": "instructions = \"GGGGRRRRLLLL\"",
+      "output": "False"
+    },
+    {
+      "input": "instructions = \"RGLLRLGLGRRG\"",
+      "output": "True"
+    },
+    {
+      "input": "instructions = \"RRLLRRLLRRLLRRLL\"",
+      "output": "True"
+    },
+    {
+      "input": "instructions = \"GLRLGLRLGLRL\"",
+      "output": "True"
+    },
+    {
+      "input": "instructions = \"GLGRRRRRGGGLLGLGRR\"",
+      "output": "True"
+    },
+    {
+      "input": "instructions = \"GGGLRRLLGLRRLL\"",
+      "output": "True"
+    },
+    {
+      "input": "instructions = \"GGLLGGGGLLGGGG\"",
+      "output": "False"
+    },
+    {
+      "input": "instructions = \"LRRLRLRLRL\"",
+      "output": "True"
+    },
+    {
+      "input": "instructions = \"GRRGGGGLLLRRGGLG\"",
+      "output": "False"
+    },
+    {
+      "input": "instructions = \"LRRGLLRRGLLRRGLLRR\"",
+      "output": "True"
+    }
+  ],
+  "types": {
+    "python3": {
+      "input": [
+        {
+          "instructions": "str"
+        }
+      ],
+      "output": "bool"
+    },
+    "cpp": {
+      "input": [
+        {
+          "instructions": "string"
+        }
+      ],
+      "output": "bool"
+    },
+    "java": {
+      "input": [
+        {
+          "instructions": "String"
+        }
+      ],
+      "output": "boolean"
+    },
+    "javascript": {
+      "input": [
+        {
+          "instructions": "string"
+        }
+      ],
+      "output": "boolean"
+    },
+    "typescript": {
+      "input": [
+        {
+          "instructions": "string"
+        }
+      ],
+      "output": "boolean"
+    },
+    "golang": {
+      "input": [
+        {
+          "instructions": "string"
+        }
+      ],
+      "output": "bool"
+    },
+    "rust": {
+      "input": [
+        {
+          "instructions": "String"
+        }
+      ],
+      "output": "bool"
+    }
+  },
+  "tags": [
+    "math",
+    "string",
+    "simulation"
+  ]
+}

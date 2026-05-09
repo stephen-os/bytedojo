@@ -1,0 +1,458 @@
+{
+  "id": 1444,
+  "title": "Number of Ways of Cutting a Pizza",
+  "slug": "number-of-ways-of-cutting-a-pizza",
+  "difficulty": "Hard",
+  "description": "Given a rectangular pizza represented as a rows x cols matrix containing the following characters: 'A' (an apple) and '.' (empty cell) and given the integer k. You have to cut the pizza into k pieces using k-1 cuts.\nFor each cut you choose the direction: vertical or horizontal, then you choose a cut position at the cell boundary and cut the pizza into two pieces. If you cut the pizza vertically, give the left part of the pizza to a person. If you cut the pizza horizontally, give the upper part of the pizza to a person. Give the last piece of pizza to the last person.\nReturn the number of ways of cutting the pizza such that each piece contains at least one apple. Since the answer can be a huge number, return this modulo 10^9 + 7.\nExample 1:\nExample 2:\nExample 3:\nConstraints:",
+  "examples": [
+    {
+      "example_num": 1,
+      "example_text": "Input: pizza = [\"A..\",\"AAA\",\"...\"], k = 3\nOutput: 3 \nExplanation: The figure above shows the three ways to cut the pizza. Note that pieces must contain at least one apple.",
+      "images": [
+        "https://assets.leetcode.com/uploads/2020/04/23/ways_to_cut_apple_1.png"
+      ]
+    },
+    {
+      "example_num": 2,
+      "example_text": "Input: pizza = [\"A..\",\"AA.\",\"...\"], k = 3\nOutput: 1",
+      "images": [
+        "https://assets.leetcode.com/uploads/2020/04/23/ways_to_cut_apple_1.png"
+      ]
+    },
+    {
+      "example_num": 3,
+      "example_text": "Input: pizza = [\"A..\",\"A..\",\"...\"], k = 1\nOutput: 1",
+      "images": [
+        "https://assets.leetcode.com/uploads/2020/04/23/ways_to_cut_apple_1.png"
+      ]
+    }
+  ],
+  "constraints": [
+    "1 <= rows, cols <= 50",
+    "rows == pizza.length",
+    "cols == pizza[i].length",
+    "1 <= k <= 10",
+    "pizza consists of characters 'A' and '.' only."
+  ],
+  "hints": [
+    "Note that after each cut the remaining piece of pizza always has the lower right coordinate at (rows-1,cols-1).",
+    "Use dynamic programming approach with states (row1, col1, c) which computes the number of ways of cutting the pizza using \"c\" cuts where the current piece of pizza has upper left coordinate at (row1,col1) and lower right coordinate at (rows-1,cols-1).",
+    "For the transitions try all vertical and horizontal cuts such that the piece of pizza you have to give a person must contain at least one apple. The base case is when c=k-1.",
+    "Additionally use a 2D dynamic programming to respond in O(1) if a piece of pizza contains at least one apple."
+  ],
+  "code_snippets": {
+    "cpp": "class Solution {\npublic:\n    int ways(vector<string>& pizza, int k) {\n        \n    }\n};",
+    "java": "class Solution {\n    public int ways(String[] pizza, int k) {\n        \n    }\n}",
+    "python3": "class Solution:\n    def ways(self, pizza: List[str], k: int) -> int:\n        ",
+    "javascript": "/**\n * @param {string[]} pizza\n * @param {number} k\n * @return {number}\n */\nvar ways = function(pizza, k) {\n    \n};",
+    "typescript": "function ways(pizza: string[], k: number): number {\n    \n};",
+    "golang": "func ways(pizza []string, k int) int {\n    \n}",
+    "rust": "impl Solution {\n    pub fn ways(pizza: Vec<String>, k: i32) -> i32 {\n        \n    }\n}"
+  },
+  "entry_points": {
+    "python3": "Solution().ways",
+    "cpp": "Solution().ways",
+    "java": "new Solution().ways",
+    "javascript": "ways",
+    "typescript": "ways",
+    "golang": "ways",
+    "rust": "Solution::ways"
+  },
+  "test_snippets": {
+    "python3": "def check(candidate):\n    assert candidate(pizza = [\"A\",\"A\",\"A\"], k = 3) == 1\n    assert candidate(pizza = [\"AA\",\"AA\"], k = 2) == 2\n    assert candidate(pizza = [\"A.A\",\"A.A\",\"A.A\"], k = 4) == 6\n    assert candidate(pizza = [\"A..\"] * 50, k = 10) == Error: Solution.ways() missing 1 required positional argument: 'pizza'\n    assert candidate(pizza = [\"A.A\",\"A.A\",\"A.A\"], k = 5) == 0\n    assert candidate(pizza = [\"...\",\"...\",\"...\",\"...\",\"...\",\"...\",\"AAA\"], k = 4) == 0\n    assert candidate(pizza = [\"AAA\",\"...\",\"AAA\"], k = 2) == 4\n    assert candidate(pizza = [\"A..\",\"A..\",\"...\"], k = 1) == 1\n    assert candidate(pizza = [\"AAA\",\"AAA\",\"AAA\"], k = 4) == 12\n    assert candidate(pizza = [\"AA.\",\"AA.\",\"..A\"], k = 2) == 4\n    assert candidate(pizza = [\"AAA\",\"AAA\",\"AAA\"], k = 2) == 4\n    assert candidate(pizza = [\"A..\",\"AA.\",\"...\"], k = 3) == 1\n    assert candidate(pizza = [\"A.A\",\".A.\",\"A.A\"], k = 2) == 4\n    assert candidate(pizza = [\"A..\",\"A..\"], k = 2) == 1\n    assert candidate(pizza = [\"A.A\",\"A.A\"], k = 2) == 3\n    assert candidate(pizza = [\"...\",\"...\",\"...\"], k = 1) == 0\n    assert candidate(pizza = [\"A..\",\"AAA\",\"...\"], k = 3) == 3\n    assert candidate(pizza = [\"AAAAA\",\"AA.AA\",\"AA.AA\",\"AA.AA\",\"AAAAA\"], k = 5) == 346\n    assert candidate(pizza = [\"AAAA\",\"A.AA\",\"AA.A\",\"AAAA\"], k = 4) == 56\n    assert candidate(pizza = [\"A.A.A\",\"A....\",\"A.A.A\"], k = 3) == 21\n    assert candidate(pizza = [\"A.A\",\"A.A\",\"A.A\"], k = 3) == 9\n    assert candidate(pizza = [\"A...A\",\".....\",\"A...A\",\".....\",\"A...A\"], k = 3) == 36\n    assert candidate(pizza = [\"...A\",\"...A\",\"...A\"], k = 2) == 2\n    assert candidate(pizza = [\"A...\",\"....\",\"....\",\"A...\"], k = 2) == 3\n    assert candidate(pizza = [\"A...A\",\".A.A.\",\"A...A\",\".A.A.\",\"A...A\"], k = 5) == 198\n    assert candidate(pizza = [\"A.A\",\".A.\",\"A.A\"], k = 3) == 10\n    assert candidate(pizza = [\"A.A\",\".A.\",\"A.A\",\".A.\",\"A.A\"], k = 3) == 23\n    assert candidate(pizza = [\"A..A.\",\"A..A.\",\"A..A.\",\"A..A.\",\"A..A.\"], k = 3) == 30\n    assert candidate(pizza = [\"AAAAAA\",\"A...A.\",\"A...A.\",\"A...A.\",\"AAAAAA\"], k = 4) == 212\n    assert candidate(pizza = [\"AAAAA\",\".....\",\"AAAAA\",\".....\",\"AAAAA\"], k = 3) == 42\n    assert candidate(pizza = [\"A...A\",\".....\",\".....\",\"A...A\"], k = 3) == 24\n    assert candidate(pizza = [\"A.A.A.A.A\",\".A.A.A.A.\",\"A.A.A.A.A\",\".A.A.A.A.\",\"A.A.A.A.A\"], k = 5) == 1955\n    assert candidate(pizza = [\"AAAA\",\"AAAA\",\"AAAA\",\"AAAA\"], k = 5) == 78\n    assert candidate(pizza = [\"A.A.A\",\"A.A.A\",\"A.A.A\"], k = 2) == 6\n    assert candidate(pizza = [\"A.A.A\",\"A.A.A\",\"A.A.A\"], k = 3) == 21\n    assert candidate(pizza = [\"A.A.A.A\",\"A.A.A.A\",\"A.A.A.A\"], k = 4) == 98\n    assert candidate(pizza = [\"AAAA\",\"AAAA\",\"AAAA\"], k = 3) == 16\n    assert candidate(pizza = [\"A\",\"A\",\"A\",\"A\",\"A\"], k = 3) == 6\n    assert candidate(pizza = [\"A..\",\"...\",\"A..\",\"...\",\"A..\"], k = 3) == 4\n    assert candidate(pizza = [\"AA.AA\",\"A...A\",\"A...A\",\"AA.AA\"], k = 3) == 32\n    assert candidate(pizza = [\"A.....A\",\"A.....A\",\"A.....A\",\"A.....A\",\"A.....A\"], k = 2) == 10\n    assert candidate(pizza = [\"AA.\",\"A..\",\".AA\"], k = 2) == 4\n    assert candidate(pizza = [\"A.A.A\",\"A...A\",\"A.A.A\"], k = 3) == 21\n    assert candidate(pizza = [\"A....A\",\"......\",\"......\",\"A....A\"], k = 4) == 0\n    assert candidate(pizza = [\"AAA..\",\"AAA..\",\"AAA..\"], k = 3) == 10\n    assert candidate(pizza = [\"...A\",\"...A\",\"A...\",\"A...\"], k = 2) == 6\n    assert candidate(pizza = [\"A.A.A\",\"A.A.A\",\"A.A.A\",\"A.A.A\",\"A.A.A\"], k = 4) == 124\n    assert candidate(pizza = [\"A....\",\".....\",\".....\",\".....\",\"A....\"], k = 2) == 4\n    assert candidate(pizza = [\"A...\",\".A..\",\"..A.\",\"...A\"], k = 4) == 8\n    assert candidate(pizza = [\".A.A.\",\"A.A.A\",\".A.A.\",\"A.A.A\",\".A.A.\"], k = 6) == 256\n    assert candidate(pizza = [\"AAAAA\",\"A...A\",\"A...A\",\"A...A\",\"AAAAA\"], k = 5) == 346\n    assert candidate(pizza = [\"A....\",\".....\",\".....\",\".....\",\".....\"], k = 4) == 0\n    assert candidate(pizza = [\"A.A.A.A\",\".A.A.A.\",\"A.A.A.A\"], k = 3) == 40\n    assert candidate(pizza = [\"A.A.A.A\",\"A.A.A.A\",\"A.A.A.A\",\"A.A.A.A\",\"A.A.A.A\",\"A.A.A.A\",\"A.A.A.A\",\"A.A.A.A\"], k = 8) == 15387\n    assert candidate(pizza = [\"A...\",\".A.A\",\"....\",\"A...\"], k = 2) == 6\n    assert candidate(pizza = [\"A.A.A.A\",\".A.A.\",\"A.A.A.A\",\".A.A.\",\"A.A.A.A\"], k = 6) == 0\n    assert candidate(pizza = [\"........\",\"...A....\",\"........\",\"........\",\"........\",\"........\",\"........\",\"........\"], k = 2) == 0\n    assert candidate(pizza = [\".A..A.\",\"A..A..\",\".A..A.\",\"A..A..\",\".A..A.\"], k = 3) == 42\n    assert candidate(pizza = [\"A..A\",\"....\",\"A..A\",\"....\"], k = 3) == 12\n    assert candidate(pizza = [\"A.A.A\",\".A.A.\",\"A.A.A\"], k = 3) == 23\n    assert candidate(pizza = [\"A.AAA.A\",\"AAAAAAA\",\"AA.AAA.A\",\"AAAAAAA\",\"A.AAA.A\"], k = 5) == Error: list index out of range\n    assert candidate(pizza = [\"A.A.A.A\",\".A.A.A.\",\"A.A.A.A\",\".A.A.A.\"], k = 3) == 51\n    assert candidate(pizza = [\"AAAAA\",\"A...A\",\"A...A\",\"A...A\",\"AAAAA\"], k = 4) == 152\n    assert candidate(pizza = [\"A......\",\"A......\",\"A......\",\".......\",\".......\",\".......\"], k = 2) == 2\n    assert candidate(pizza = [\"A.A\",\"A.A\",\"A.A\",\"A.A\",\"A.A\"], k = 4) == 40\n    assert candidate(pizza = [\"A.A.A\",\"A...A\",\"A...A\",\"A...A\",\"A.A.A\"], k = 5) == 209\n    assert candidate(pizza = [\"AAAAA\",\"AAAAA\",\".....\",\".....\",\".....\"], k = 3) == 14\n    assert candidate(pizza = [\"A.A.A\",\".A.A.\",\"A.A.A\"], k = 4) == 46\n    assert candidate(pizza = [\"A.A.A\",\".....\",\"A.A.A\",\".....\",\"A.A.A\"], k = 5) == 96\n    assert candidate(pizza = [\"A.A.A.A\",\".A.A.A.\",\"A.A.A.A\",\".A.A.A.\",\"A.A.A.A\",\".A.A.A.\",\"A.A.A.A\",\".A.A.A.\"], k = 6) == 8692\n    assert candidate(pizza = [\"A.A..\",\".A.A.\",\"..A.A\"], k = 3) == 17\n    assert candidate(pizza = [\"A....\",\".A...\",\"..A..\"], k = 3) == 4\n    assert candidate(pizza = [\"A....\",\"..A..\",\"....A\",\".....\",\".....\"], k = 4) == 0\n    assert candidate(pizza = [\"A.A.A.A\",\".....\",\"A.A.A.A\",\".....\",\"A.A.A.A\"], k = 5) == 0\n    assert candidate(pizza = [\"A......A\",\".......A\",\"....A...\",\"A........A\",\".......A\",\".......A\",\".......A\"], k = 5) == Error: list index out of range",
+    "cpp": "void check(Solution& solution) {\n    assert(solution.ways({\"A\",\"A\",\"A\"}, 3) == vector<int>1);\n    assert(solution.ways({\"AA\",\"AA\"}, 2) == vector<int>2);\n    assert(solution.ways({\"A.A\",\"A.A\",\"A.A\"}, 4) == vector<int>6);\n    assert(solution.ways({\"A..\"} * 50, 10) == vector<int>Error: Solution.ways() missing 1 required positional argument: 'pizza');\n    assert(solution.ways({\"A.A\",\"A.A\",\"A.A\"}, 5) == vector<int>0);\n    assert(solution.ways({\"...\",\"...\",\"...\",\"...\",\"...\",\"...\",\"AAA\"}, 4) == vector<int>0);\n    assert(solution.ways({\"AAA\",\"...\",\"AAA\"}, 2) == vector<int>4);\n    assert(solution.ways({\"A..\",\"A..\",\"...\"}, 1) == vector<int>1);\n    assert(solution.ways({\"AAA\",\"AAA\",\"AAA\"}, 4) == vector<int>12);\n    assert(solution.ways({\"AA.\",\"AA.\",\"..A\"}, 2) == vector<int>4);\n    assert(solution.ways({\"AAA\",\"AAA\",\"AAA\"}, 2) == vector<int>4);\n    assert(solution.ways({\"A..\",\"AA.\",\"...\"}, 3) == vector<int>1);\n    assert(solution.ways({\"A.A\",\".A.\",\"A.A\"}, 2) == vector<int>4);\n    assert(solution.ways({\"A..\",\"A..\"}, 2) == vector<int>1);\n    assert(solution.ways({\"A.A\",\"A.A\"}, 2) == vector<int>3);\n    assert(solution.ways({\"...\",\"...\",\"...\"}, 1) == vector<int>0);\n    assert(solution.ways({\"A..\",\"AAA\",\"...\"}, 3) == vector<int>3);\n    assert(solution.ways({\"AAAAA\",\"AA.AA\",\"AA.AA\",\"AA.AA\",\"AAAAA\"}, 5) == vector<int>346);\n    assert(solution.ways({\"AAAA\",\"A.AA\",\"AA.A\",\"AAAA\"}, 4) == vector<int>56);\n    assert(solution.ways({\"A.A.A\",\"A....\",\"A.A.A\"}, 3) == vector<int>21);\n    assert(solution.ways({\"A.A\",\"A.A\",\"A.A\"}, 3) == vector<int>9);\n    assert(solution.ways({\"A...A\",\".....\",\"A...A\",\".....\",\"A...A\"}, 3) == vector<int>36);\n    assert(solution.ways({\"...A\",\"...A\",\"...A\"}, 2) == vector<int>2);\n    assert(solution.ways({\"A...\",\"....\",\"....\",\"A...\"}, 2) == vector<int>3);\n    assert(solution.ways({\"A...A\",\".A.A.\",\"A...A\",\".A.A.\",\"A...A\"}, 5) == vector<int>198);\n    assert(solution.ways({\"A.A\",\".A.\",\"A.A\"}, 3) == vector<int>10);\n    assert(solution.ways({\"A.A\",\".A.\",\"A.A\",\".A.\",\"A.A\"}, 3) == vector<int>23);\n    assert(solution.ways({\"A..A.\",\"A..A.\",\"A..A.\",\"A..A.\",\"A..A.\"}, 3) == vector<int>30);\n    assert(solution.ways({\"AAAAAA\",\"A...A.\",\"A...A.\",\"A...A.\",\"AAAAAA\"}, 4) == vector<int>212);\n    assert(solution.ways({\"AAAAA\",\".....\",\"AAAAA\",\".....\",\"AAAAA\"}, 3) == vector<int>42);\n    assert(solution.ways({\"A...A\",\".....\",\".....\",\"A...A\"}, 3) == vector<int>24);\n    assert(solution.ways({\"A.A.A.A.A\",\".A.A.A.A.\",\"A.A.A.A.A\",\".A.A.A.A.\",\"A.A.A.A.A\"}, 5) == vector<int>1955);\n    assert(solution.ways({\"AAAA\",\"AAAA\",\"AAAA\",\"AAAA\"}, 5) == vector<int>78);\n    assert(solution.ways({\"A.A.A\",\"A.A.A\",\"A.A.A\"}, 2) == vector<int>6);\n    assert(solution.ways({\"A.A.A\",\"A.A.A\",\"A.A.A\"}, 3) == vector<int>21);\n    assert(solution.ways({\"A.A.A.A\",\"A.A.A.A\",\"A.A.A.A\"}, 4) == vector<int>98);\n    assert(solution.ways({\"AAAA\",\"AAAA\",\"AAAA\"}, 3) == vector<int>16);\n    assert(solution.ways({\"A\",\"A\",\"A\",\"A\",\"A\"}, 3) == vector<int>6);\n    assert(solution.ways({\"A..\",\"...\",\"A..\",\"...\",\"A..\"}, 3) == vector<int>4);\n    assert(solution.ways({\"AA.AA\",\"A...A\",\"A...A\",\"AA.AA\"}, 3) == vector<int>32);\n    assert(solution.ways({\"A.....A\",\"A.....A\",\"A.....A\",\"A.....A\",\"A.....A\"}, 2) == vector<int>10);\n    assert(solution.ways({\"AA.\",\"A..\",\".AA\"}, 2) == vector<int>4);\n    assert(solution.ways({\"A.A.A\",\"A...A\",\"A.A.A\"}, 3) == vector<int>21);\n    assert(solution.ways({\"A....A\",\"......\",\"......\",\"A....A\"}, 4) == vector<int>0);\n    assert(solution.ways({\"AAA..\",\"AAA..\",\"AAA..\"}, 3) == vector<int>10);\n    assert(solution.ways({\"...A\",\"...A\",\"A...\",\"A...\"}, 2) == vector<int>6);\n    assert(solution.ways({\"A.A.A\",\"A.A.A\",\"A.A.A\",\"A.A.A\",\"A.A.A\"}, 4) == vector<int>124);\n    assert(solution.ways({\"A....\",\".....\",\".....\",\".....\",\"A....\"}, 2) == vector<int>4);\n    assert(solution.ways({\"A...\",\".A..\",\"..A.\",\"...A\"}, 4) == vector<int>8);\n    assert(solution.ways({\".A.A.\",\"A.A.A\",\".A.A.\",\"A.A.A\",\".A.A.\"}, 6) == vector<int>256);\n    assert(solution.ways({\"AAAAA\",\"A...A\",\"A...A\",\"A...A\",\"AAAAA\"}, 5) == vector<int>346);\n    assert(solution.ways({\"A....\",\".....\",\".....\",\".....\",\".....\"}, 4) == vector<int>0);\n    assert(solution.ways({\"A.A.A.A\",\".A.A.A.\",\"A.A.A.A\"}, 3) == vector<int>40);\n    assert(solution.ways({\"A.A.A.A\",\"A.A.A.A\",\"A.A.A.A\",\"A.A.A.A\",\"A.A.A.A\",\"A.A.A.A\",\"A.A.A.A\",\"A.A.A.A\"}, 8) == vector<int>15387);\n    assert(solution.ways({\"A...\",\".A.A\",\"....\",\"A...\"}, 2) == vector<int>6);\n    assert(solution.ways({\"A.A.A.A\",\".A.A.\",\"A.A.A.A\",\".A.A.\",\"A.A.A.A\"}, 6) == vector<int>0);\n    assert(solution.ways({\"........\",\"...A....\",\"........\",\"........\",\"........\",\"........\",\"........\",\"........\"}, 2) == vector<int>0);\n    assert(solution.ways({\".A..A.\",\"A..A..\",\".A..A.\",\"A..A..\",\".A..A.\"}, 3) == vector<int>42);\n    assert(solution.ways({\"A..A\",\"....\",\"A..A\",\"....\"}, 3) == vector<int>12);\n    assert(solution.ways({\"A.A.A\",\".A.A.\",\"A.A.A\"}, 3) == vector<int>23);\n    assert(solution.ways({\"A.AAA.A\",\"AAAAAAA\",\"AA.AAA.A\",\"AAAAAAA\",\"A.AAA.A\"}, 5) == vector<int>Error: list index out of range);\n    assert(solution.ways({\"A.A.A.A\",\".A.A.A.\",\"A.A.A.A\",\".A.A.A.\"}, 3) == vector<int>51);\n    assert(solution.ways({\"AAAAA\",\"A...A\",\"A...A\",\"A...A\",\"AAAAA\"}, 4) == vector<int>152);\n    assert(solution.ways({\"A......\",\"A......\",\"A......\",\".......\",\".......\",\".......\"}, 2) == vector<int>2);\n    assert(solution.ways({\"A.A\",\"A.A\",\"A.A\",\"A.A\",\"A.A\"}, 4) == vector<int>40);\n    assert(solution.ways({\"A.A.A\",\"A...A\",\"A...A\",\"A...A\",\"A.A.A\"}, 5) == vector<int>209);\n    assert(solution.ways({\"AAAAA\",\"AAAAA\",\".....\",\".....\",\".....\"}, 3) == vector<int>14);\n    assert(solution.ways({\"A.A.A\",\".A.A.\",\"A.A.A\"}, 4) == vector<int>46);\n    assert(solution.ways({\"A.A.A\",\".....\",\"A.A.A\",\".....\",\"A.A.A\"}, 5) == vector<int>96);\n    assert(solution.ways({\"A.A.A.A\",\".A.A.A.\",\"A.A.A.A\",\".A.A.A.\",\"A.A.A.A\",\".A.A.A.\",\"A.A.A.A\",\".A.A.A.\"}, 6) == vector<int>8692);\n    assert(solution.ways({\"A.A..\",\".A.A.\",\"..A.A\"}, 3) == vector<int>17);\n    assert(solution.ways({\"A....\",\".A...\",\"..A..\"}, 3) == vector<int>4);\n    assert(solution.ways({\"A....\",\"..A..\",\"....A\",\".....\",\".....\"}, 4) == vector<int>0);\n    assert(solution.ways({\"A.A.A.A\",\".....\",\"A.A.A.A\",\".....\",\"A.A.A.A\"}, 5) == vector<int>0);\n    assert(solution.ways({\"A......A\",\".......A\",\"....A...\",\"A........A\",\".......A\",\".......A\",\".......A\"}, 5) == vector<int>Error: list index out of range);\n}",
+    "java": "public static void check(Solution solution) {\n    assert Arrays.equals(solution.ways(new int[]{\"A\",\"A\",\"A\"}, 3), 1);\n    assert Arrays.equals(solution.ways(new int[]{\"AA\",\"AA\"}, 2), 2);\n    assert Arrays.equals(solution.ways(new int[]{\"A.A\",\"A.A\",\"A.A\"}, 4), 6);\n    assert Arrays.equals(solution.ways(new int[]{\"A..\"} * 50, 10), Error: Solution.ways() missing 1 required positional argument: 'pizza');\n    assert Arrays.equals(solution.ways(new int[]{\"A.A\",\"A.A\",\"A.A\"}, 5), 0);\n    assert Arrays.equals(solution.ways(new int[]{\"...\",\"...\",\"...\",\"...\",\"...\",\"...\",\"AAA\"}, 4), 0);\n    assert Arrays.equals(solution.ways(new int[]{\"AAA\",\"...\",\"AAA\"}, 2), 4);\n    assert Arrays.equals(solution.ways(new int[]{\"A..\",\"A..\",\"...\"}, 1), 1);\n    assert Arrays.equals(solution.ways(new int[]{\"AAA\",\"AAA\",\"AAA\"}, 4), 12);\n    assert Arrays.equals(solution.ways(new int[]{\"AA.\",\"AA.\",\"..A\"}, 2), 4);\n    assert Arrays.equals(solution.ways(new int[]{\"AAA\",\"AAA\",\"AAA\"}, 2), 4);\n    assert Arrays.equals(solution.ways(new int[]{\"A..\",\"AA.\",\"...\"}, 3), 1);\n    assert Arrays.equals(solution.ways(new int[]{\"A.A\",\".A.\",\"A.A\"}, 2), 4);\n    assert Arrays.equals(solution.ways(new int[]{\"A..\",\"A..\"}, 2), 1);\n    assert Arrays.equals(solution.ways(new int[]{\"A.A\",\"A.A\"}, 2), 3);\n    assert Arrays.equals(solution.ways(new int[]{\"...\",\"...\",\"...\"}, 1), 0);\n    assert Arrays.equals(solution.ways(new int[]{\"A..\",\"AAA\",\"...\"}, 3), 3);\n    assert Arrays.equals(solution.ways(new int[]{\"AAAAA\",\"AA.AA\",\"AA.AA\",\"AA.AA\",\"AAAAA\"}, 5), 346);\n    assert Arrays.equals(solution.ways(new int[]{\"AAAA\",\"A.AA\",\"AA.A\",\"AAAA\"}, 4), 56);\n    assert Arrays.equals(solution.ways(new int[]{\"A.A.A\",\"A....\",\"A.A.A\"}, 3), 21);\n    assert Arrays.equals(solution.ways(new int[]{\"A.A\",\"A.A\",\"A.A\"}, 3), 9);\n    assert Arrays.equals(solution.ways(new int[]{\"A...A\",\".....\",\"A...A\",\".....\",\"A...A\"}, 3), 36);\n    assert Arrays.equals(solution.ways(new int[]{\"...A\",\"...A\",\"...A\"}, 2), 2);\n    assert Arrays.equals(solution.ways(new int[]{\"A...\",\"....\",\"....\",\"A...\"}, 2), 3);\n    assert Arrays.equals(solution.ways(new int[]{\"A...A\",\".A.A.\",\"A...A\",\".A.A.\",\"A...A\"}, 5), 198);\n    assert Arrays.equals(solution.ways(new int[]{\"A.A\",\".A.\",\"A.A\"}, 3), 10);\n    assert Arrays.equals(solution.ways(new int[]{\"A.A\",\".A.\",\"A.A\",\".A.\",\"A.A\"}, 3), 23);\n    assert Arrays.equals(solution.ways(new int[]{\"A..A.\",\"A..A.\",\"A..A.\",\"A..A.\",\"A..A.\"}, 3), 30);\n    assert Arrays.equals(solution.ways(new int[]{\"AAAAAA\",\"A...A.\",\"A...A.\",\"A...A.\",\"AAAAAA\"}, 4), 212);\n    assert Arrays.equals(solution.ways(new int[]{\"AAAAA\",\".....\",\"AAAAA\",\".....\",\"AAAAA\"}, 3), 42);\n    assert Arrays.equals(solution.ways(new int[]{\"A...A\",\".....\",\".....\",\"A...A\"}, 3), 24);\n    assert Arrays.equals(solution.ways(new int[]{\"A.A.A.A.A\",\".A.A.A.A.\",\"A.A.A.A.A\",\".A.A.A.A.\",\"A.A.A.A.A\"}, 5), 1955);\n    assert Arrays.equals(solution.ways(new int[]{\"AAAA\",\"AAAA\",\"AAAA\",\"AAAA\"}, 5), 78);\n    assert Arrays.equals(solution.ways(new int[]{\"A.A.A\",\"A.A.A\",\"A.A.A\"}, 2), 6);\n    assert Arrays.equals(solution.ways(new int[]{\"A.A.A\",\"A.A.A\",\"A.A.A\"}, 3), 21);\n    assert Arrays.equals(solution.ways(new int[]{\"A.A.A.A\",\"A.A.A.A\",\"A.A.A.A\"}, 4), 98);\n    assert Arrays.equals(solution.ways(new int[]{\"AAAA\",\"AAAA\",\"AAAA\"}, 3), 16);\n    assert Arrays.equals(solution.ways(new int[]{\"A\",\"A\",\"A\",\"A\",\"A\"}, 3), 6);\n    assert Arrays.equals(solution.ways(new int[]{\"A..\",\"...\",\"A..\",\"...\",\"A..\"}, 3), 4);\n    assert Arrays.equals(solution.ways(new int[]{\"AA.AA\",\"A...A\",\"A...A\",\"AA.AA\"}, 3), 32);\n    assert Arrays.equals(solution.ways(new int[]{\"A.....A\",\"A.....A\",\"A.....A\",\"A.....A\",\"A.....A\"}, 2), 10);\n    assert Arrays.equals(solution.ways(new int[]{\"AA.\",\"A..\",\".AA\"}, 2), 4);\n    assert Arrays.equals(solution.ways(new int[]{\"A.A.A\",\"A...A\",\"A.A.A\"}, 3), 21);\n    assert Arrays.equals(solution.ways(new int[]{\"A....A\",\"......\",\"......\",\"A....A\"}, 4), 0);\n    assert Arrays.equals(solution.ways(new int[]{\"AAA..\",\"AAA..\",\"AAA..\"}, 3), 10);\n    assert Arrays.equals(solution.ways(new int[]{\"...A\",\"...A\",\"A...\",\"A...\"}, 2), 6);\n    assert Arrays.equals(solution.ways(new int[]{\"A.A.A\",\"A.A.A\",\"A.A.A\",\"A.A.A\",\"A.A.A\"}, 4), 124);\n    assert Arrays.equals(solution.ways(new int[]{\"A....\",\".....\",\".....\",\".....\",\"A....\"}, 2), 4);\n    assert Arrays.equals(solution.ways(new int[]{\"A...\",\".A..\",\"..A.\",\"...A\"}, 4), 8);\n    assert Arrays.equals(solution.ways(new int[]{\".A.A.\",\"A.A.A\",\".A.A.\",\"A.A.A\",\".A.A.\"}, 6), 256);\n    assert Arrays.equals(solution.ways(new int[]{\"AAAAA\",\"A...A\",\"A...A\",\"A...A\",\"AAAAA\"}, 5), 346);\n    assert Arrays.equals(solution.ways(new int[]{\"A....\",\".....\",\".....\",\".....\",\".....\"}, 4), 0);\n    assert Arrays.equals(solution.ways(new int[]{\"A.A.A.A\",\".A.A.A.\",\"A.A.A.A\"}, 3), 40);\n    assert Arrays.equals(solution.ways(new int[]{\"A.A.A.A\",\"A.A.A.A\",\"A.A.A.A\",\"A.A.A.A\",\"A.A.A.A\",\"A.A.A.A\",\"A.A.A.A\",\"A.A.A.A\"}, 8), 15387);\n    assert Arrays.equals(solution.ways(new int[]{\"A...\",\".A.A\",\"....\",\"A...\"}, 2), 6);\n    assert Arrays.equals(solution.ways(new int[]{\"A.A.A.A\",\".A.A.\",\"A.A.A.A\",\".A.A.\",\"A.A.A.A\"}, 6), 0);\n    assert Arrays.equals(solution.ways(new int[]{\"........\",\"...A....\",\"........\",\"........\",\"........\",\"........\",\"........\",\"........\"}, 2), 0);\n    assert Arrays.equals(solution.ways(new int[]{\".A..A.\",\"A..A..\",\".A..A.\",\"A..A..\",\".A..A.\"}, 3), 42);\n    assert Arrays.equals(solution.ways(new int[]{\"A..A\",\"....\",\"A..A\",\"....\"}, 3), 12);\n    assert Arrays.equals(solution.ways(new int[]{\"A.A.A\",\".A.A.\",\"A.A.A\"}, 3), 23);\n    assert Arrays.equals(solution.ways(new int[]{\"A.AAA.A\",\"AAAAAAA\",\"AA.AAA.A\",\"AAAAAAA\",\"A.AAA.A\"}, 5), Error: list index out of range);\n    assert Arrays.equals(solution.ways(new int[]{\"A.A.A.A\",\".A.A.A.\",\"A.A.A.A\",\".A.A.A.\"}, 3), 51);\n    assert Arrays.equals(solution.ways(new int[]{\"AAAAA\",\"A...A\",\"A...A\",\"A...A\",\"AAAAA\"}, 4), 152);\n    assert Arrays.equals(solution.ways(new int[]{\"A......\",\"A......\",\"A......\",\".......\",\".......\",\".......\"}, 2), 2);\n    assert Arrays.equals(solution.ways(new int[]{\"A.A\",\"A.A\",\"A.A\",\"A.A\",\"A.A\"}, 4), 40);\n    assert Arrays.equals(solution.ways(new int[]{\"A.A.A\",\"A...A\",\"A...A\",\"A...A\",\"A.A.A\"}, 5), 209);\n    assert Arrays.equals(solution.ways(new int[]{\"AAAAA\",\"AAAAA\",\".....\",\".....\",\".....\"}, 3), 14);\n    assert Arrays.equals(solution.ways(new int[]{\"A.A.A\",\".A.A.\",\"A.A.A\"}, 4), 46);\n    assert Arrays.equals(solution.ways(new int[]{\"A.A.A\",\".....\",\"A.A.A\",\".....\",\"A.A.A\"}, 5), 96);\n    assert Arrays.equals(solution.ways(new int[]{\"A.A.A.A\",\".A.A.A.\",\"A.A.A.A\",\".A.A.A.\",\"A.A.A.A\",\".A.A.A.\",\"A.A.A.A\",\".A.A.A.\"}, 6), 8692);\n    assert Arrays.equals(solution.ways(new int[]{\"A.A..\",\".A.A.\",\"..A.A\"}, 3), 17);\n    assert Arrays.equals(solution.ways(new int[]{\"A....\",\".A...\",\"..A..\"}, 3), 4);\n    assert Arrays.equals(solution.ways(new int[]{\"A....\",\"..A..\",\"....A\",\".....\",\".....\"}, 4), 0);\n    assert Arrays.equals(solution.ways(new int[]{\"A.A.A.A\",\".....\",\"A.A.A.A\",\".....\",\"A.A.A.A\"}, 5), 0);\n    assert Arrays.equals(solution.ways(new int[]{\"A......A\",\".......A\",\"....A...\",\"A........A\",\".......A\",\".......A\",\".......A\"}, 5), Error: list index out of range);\n}",
+    "javascript": "function check(candidate) {\n    console.assert(JSON.stringify(candidate([\"A\",\"A\",\"A\"], 3)) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate([\"AA\",\"AA\"], 2)) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate([\"A.A\",\"A.A\",\"A.A\"], 4)) === JSON.stringify(6));\n    console.assert(JSON.stringify(candidate([\"A..\"] * 50, 10)) === JSON.stringify(Error: Solution.ways() missing 1 required positional argument: 'pizza'));\n    console.assert(JSON.stringify(candidate([\"A.A\",\"A.A\",\"A.A\"], 5)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate([\"...\",\"...\",\"...\",\"...\",\"...\",\"...\",\"AAA\"], 4)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate([\"AAA\",\"...\",\"AAA\"], 2)) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate([\"A..\",\"A..\",\"...\"], 1)) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate([\"AAA\",\"AAA\",\"AAA\"], 4)) === JSON.stringify(12));\n    console.assert(JSON.stringify(candidate([\"AA.\",\"AA.\",\"..A\"], 2)) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate([\"AAA\",\"AAA\",\"AAA\"], 2)) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate([\"A..\",\"AA.\",\"...\"], 3)) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate([\"A.A\",\".A.\",\"A.A\"], 2)) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate([\"A..\",\"A..\"], 2)) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate([\"A.A\",\"A.A\"], 2)) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate([\"...\",\"...\",\"...\"], 1)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate([\"A..\",\"AAA\",\"...\"], 3)) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate([\"AAAAA\",\"AA.AA\",\"AA.AA\",\"AA.AA\",\"AAAAA\"], 5)) === JSON.stringify(346));\n    console.assert(JSON.stringify(candidate([\"AAAA\",\"A.AA\",\"AA.A\",\"AAAA\"], 4)) === JSON.stringify(56));\n    console.assert(JSON.stringify(candidate([\"A.A.A\",\"A....\",\"A.A.A\"], 3)) === JSON.stringify(21));\n    console.assert(JSON.stringify(candidate([\"A.A\",\"A.A\",\"A.A\"], 3)) === JSON.stringify(9));\n    console.assert(JSON.stringify(candidate([\"A...A\",\".....\",\"A...A\",\".....\",\"A...A\"], 3)) === JSON.stringify(36));\n    console.assert(JSON.stringify(candidate([\"...A\",\"...A\",\"...A\"], 2)) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate([\"A...\",\"....\",\"....\",\"A...\"], 2)) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate([\"A...A\",\".A.A.\",\"A...A\",\".A.A.\",\"A...A\"], 5)) === JSON.stringify(198));\n    console.assert(JSON.stringify(candidate([\"A.A\",\".A.\",\"A.A\"], 3)) === JSON.stringify(10));\n    console.assert(JSON.stringify(candidate([\"A.A\",\".A.\",\"A.A\",\".A.\",\"A.A\"], 3)) === JSON.stringify(23));\n    console.assert(JSON.stringify(candidate([\"A..A.\",\"A..A.\",\"A..A.\",\"A..A.\",\"A..A.\"], 3)) === JSON.stringify(30));\n    console.assert(JSON.stringify(candidate([\"AAAAAA\",\"A...A.\",\"A...A.\",\"A...A.\",\"AAAAAA\"], 4)) === JSON.stringify(212));\n    console.assert(JSON.stringify(candidate([\"AAAAA\",\".....\",\"AAAAA\",\".....\",\"AAAAA\"], 3)) === JSON.stringify(42));\n    console.assert(JSON.stringify(candidate([\"A...A\",\".....\",\".....\",\"A...A\"], 3)) === JSON.stringify(24));\n    console.assert(JSON.stringify(candidate([\"A.A.A.A.A\",\".A.A.A.A.\",\"A.A.A.A.A\",\".A.A.A.A.\",\"A.A.A.A.A\"], 5)) === JSON.stringify(1955));\n    console.assert(JSON.stringify(candidate([\"AAAA\",\"AAAA\",\"AAAA\",\"AAAA\"], 5)) === JSON.stringify(78));\n    console.assert(JSON.stringify(candidate([\"A.A.A\",\"A.A.A\",\"A.A.A\"], 2)) === JSON.stringify(6));\n    console.assert(JSON.stringify(candidate([\"A.A.A\",\"A.A.A\",\"A.A.A\"], 3)) === JSON.stringify(21));\n    console.assert(JSON.stringify(candidate([\"A.A.A.A\",\"A.A.A.A\",\"A.A.A.A\"], 4)) === JSON.stringify(98));\n    console.assert(JSON.stringify(candidate([\"AAAA\",\"AAAA\",\"AAAA\"], 3)) === JSON.stringify(16));\n    console.assert(JSON.stringify(candidate([\"A\",\"A\",\"A\",\"A\",\"A\"], 3)) === JSON.stringify(6));\n    console.assert(JSON.stringify(candidate([\"A..\",\"...\",\"A..\",\"...\",\"A..\"], 3)) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate([\"AA.AA\",\"A...A\",\"A...A\",\"AA.AA\"], 3)) === JSON.stringify(32));\n    console.assert(JSON.stringify(candidate([\"A.....A\",\"A.....A\",\"A.....A\",\"A.....A\",\"A.....A\"], 2)) === JSON.stringify(10));\n    console.assert(JSON.stringify(candidate([\"AA.\",\"A..\",\".AA\"], 2)) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate([\"A.A.A\",\"A...A\",\"A.A.A\"], 3)) === JSON.stringify(21));\n    console.assert(JSON.stringify(candidate([\"A....A\",\"......\",\"......\",\"A....A\"], 4)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate([\"AAA..\",\"AAA..\",\"AAA..\"], 3)) === JSON.stringify(10));\n    console.assert(JSON.stringify(candidate([\"...A\",\"...A\",\"A...\",\"A...\"], 2)) === JSON.stringify(6));\n    console.assert(JSON.stringify(candidate([\"A.A.A\",\"A.A.A\",\"A.A.A\",\"A.A.A\",\"A.A.A\"], 4)) === JSON.stringify(124));\n    console.assert(JSON.stringify(candidate([\"A....\",\".....\",\".....\",\".....\",\"A....\"], 2)) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate([\"A...\",\".A..\",\"..A.\",\"...A\"], 4)) === JSON.stringify(8));\n    console.assert(JSON.stringify(candidate([\".A.A.\",\"A.A.A\",\".A.A.\",\"A.A.A\",\".A.A.\"], 6)) === JSON.stringify(256));\n    console.assert(JSON.stringify(candidate([\"AAAAA\",\"A...A\",\"A...A\",\"A...A\",\"AAAAA\"], 5)) === JSON.stringify(346));\n    console.assert(JSON.stringify(candidate([\"A....\",\".....\",\".....\",\".....\",\".....\"], 4)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate([\"A.A.A.A\",\".A.A.A.\",\"A.A.A.A\"], 3)) === JSON.stringify(40));\n    console.assert(JSON.stringify(candidate([\"A.A.A.A\",\"A.A.A.A\",\"A.A.A.A\",\"A.A.A.A\",\"A.A.A.A\",\"A.A.A.A\",\"A.A.A.A\",\"A.A.A.A\"], 8)) === JSON.stringify(15387));\n    console.assert(JSON.stringify(candidate([\"A...\",\".A.A\",\"....\",\"A...\"], 2)) === JSON.stringify(6));\n    console.assert(JSON.stringify(candidate([\"A.A.A.A\",\".A.A.\",\"A.A.A.A\",\".A.A.\",\"A.A.A.A\"], 6)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate([\"........\",\"...A....\",\"........\",\"........\",\"........\",\"........\",\"........\",\"........\"], 2)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate([\".A..A.\",\"A..A..\",\".A..A.\",\"A..A..\",\".A..A.\"], 3)) === JSON.stringify(42));\n    console.assert(JSON.stringify(candidate([\"A..A\",\"....\",\"A..A\",\"....\"], 3)) === JSON.stringify(12));\n    console.assert(JSON.stringify(candidate([\"A.A.A\",\".A.A.\",\"A.A.A\"], 3)) === JSON.stringify(23));\n    console.assert(JSON.stringify(candidate([\"A.AAA.A\",\"AAAAAAA\",\"AA.AAA.A\",\"AAAAAAA\",\"A.AAA.A\"], 5)) === JSON.stringify(Error: list index out of range));\n    console.assert(JSON.stringify(candidate([\"A.A.A.A\",\".A.A.A.\",\"A.A.A.A\",\".A.A.A.\"], 3)) === JSON.stringify(51));\n    console.assert(JSON.stringify(candidate([\"AAAAA\",\"A...A\",\"A...A\",\"A...A\",\"AAAAA\"], 4)) === JSON.stringify(152));\n    console.assert(JSON.stringify(candidate([\"A......\",\"A......\",\"A......\",\".......\",\".......\",\".......\"], 2)) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate([\"A.A\",\"A.A\",\"A.A\",\"A.A\",\"A.A\"], 4)) === JSON.stringify(40));\n    console.assert(JSON.stringify(candidate([\"A.A.A\",\"A...A\",\"A...A\",\"A...A\",\"A.A.A\"], 5)) === JSON.stringify(209));\n    console.assert(JSON.stringify(candidate([\"AAAAA\",\"AAAAA\",\".....\",\".....\",\".....\"], 3)) === JSON.stringify(14));\n    console.assert(JSON.stringify(candidate([\"A.A.A\",\".A.A.\",\"A.A.A\"], 4)) === JSON.stringify(46));\n    console.assert(JSON.stringify(candidate([\"A.A.A\",\".....\",\"A.A.A\",\".....\",\"A.A.A\"], 5)) === JSON.stringify(96));\n    console.assert(JSON.stringify(candidate([\"A.A.A.A\",\".A.A.A.\",\"A.A.A.A\",\".A.A.A.\",\"A.A.A.A\",\".A.A.A.\",\"A.A.A.A\",\".A.A.A.\"], 6)) === JSON.stringify(8692));\n    console.assert(JSON.stringify(candidate([\"A.A..\",\".A.A.\",\"..A.A\"], 3)) === JSON.stringify(17));\n    console.assert(JSON.stringify(candidate([\"A....\",\".A...\",\"..A..\"], 3)) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate([\"A....\",\"..A..\",\"....A\",\".....\",\".....\"], 4)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate([\"A.A.A.A\",\".....\",\"A.A.A.A\",\".....\",\"A.A.A.A\"], 5)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate([\"A......A\",\".......A\",\"....A...\",\"A........A\",\".......A\",\".......A\",\".......A\"], 5)) === JSON.stringify(Error: list index out of range));\n}",
+    "typescript": "function check(candidate: Function): void {\n    console.assert(JSON.stringify(candidate([\"A\",\"A\",\"A\"], 3)) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate([\"AA\",\"AA\"], 2)) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate([\"A.A\",\"A.A\",\"A.A\"], 4)) === JSON.stringify(6));\n    console.assert(JSON.stringify(candidate([\"A..\"] * 50, 10)) === JSON.stringify(Error: Solution.ways() missing 1 required positional argument: 'pizza'));\n    console.assert(JSON.stringify(candidate([\"A.A\",\"A.A\",\"A.A\"], 5)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate([\"...\",\"...\",\"...\",\"...\",\"...\",\"...\",\"AAA\"], 4)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate([\"AAA\",\"...\",\"AAA\"], 2)) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate([\"A..\",\"A..\",\"...\"], 1)) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate([\"AAA\",\"AAA\",\"AAA\"], 4)) === JSON.stringify(12));\n    console.assert(JSON.stringify(candidate([\"AA.\",\"AA.\",\"..A\"], 2)) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate([\"AAA\",\"AAA\",\"AAA\"], 2)) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate([\"A..\",\"AA.\",\"...\"], 3)) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate([\"A.A\",\".A.\",\"A.A\"], 2)) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate([\"A..\",\"A..\"], 2)) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate([\"A.A\",\"A.A\"], 2)) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate([\"...\",\"...\",\"...\"], 1)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate([\"A..\",\"AAA\",\"...\"], 3)) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate([\"AAAAA\",\"AA.AA\",\"AA.AA\",\"AA.AA\",\"AAAAA\"], 5)) === JSON.stringify(346));\n    console.assert(JSON.stringify(candidate([\"AAAA\",\"A.AA\",\"AA.A\",\"AAAA\"], 4)) === JSON.stringify(56));\n    console.assert(JSON.stringify(candidate([\"A.A.A\",\"A....\",\"A.A.A\"], 3)) === JSON.stringify(21));\n    console.assert(JSON.stringify(candidate([\"A.A\",\"A.A\",\"A.A\"], 3)) === JSON.stringify(9));\n    console.assert(JSON.stringify(candidate([\"A...A\",\".....\",\"A...A\",\".....\",\"A...A\"], 3)) === JSON.stringify(36));\n    console.assert(JSON.stringify(candidate([\"...A\",\"...A\",\"...A\"], 2)) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate([\"A...\",\"....\",\"....\",\"A...\"], 2)) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate([\"A...A\",\".A.A.\",\"A...A\",\".A.A.\",\"A...A\"], 5)) === JSON.stringify(198));\n    console.assert(JSON.stringify(candidate([\"A.A\",\".A.\",\"A.A\"], 3)) === JSON.stringify(10));\n    console.assert(JSON.stringify(candidate([\"A.A\",\".A.\",\"A.A\",\".A.\",\"A.A\"], 3)) === JSON.stringify(23));\n    console.assert(JSON.stringify(candidate([\"A..A.\",\"A..A.\",\"A..A.\",\"A..A.\",\"A..A.\"], 3)) === JSON.stringify(30));\n    console.assert(JSON.stringify(candidate([\"AAAAAA\",\"A...A.\",\"A...A.\",\"A...A.\",\"AAAAAA\"], 4)) === JSON.stringify(212));\n    console.assert(JSON.stringify(candidate([\"AAAAA\",\".....\",\"AAAAA\",\".....\",\"AAAAA\"], 3)) === JSON.stringify(42));\n    console.assert(JSON.stringify(candidate([\"A...A\",\".....\",\".....\",\"A...A\"], 3)) === JSON.stringify(24));\n    console.assert(JSON.stringify(candidate([\"A.A.A.A.A\",\".A.A.A.A.\",\"A.A.A.A.A\",\".A.A.A.A.\",\"A.A.A.A.A\"], 5)) === JSON.stringify(1955));\n    console.assert(JSON.stringify(candidate([\"AAAA\",\"AAAA\",\"AAAA\",\"AAAA\"], 5)) === JSON.stringify(78));\n    console.assert(JSON.stringify(candidate([\"A.A.A\",\"A.A.A\",\"A.A.A\"], 2)) === JSON.stringify(6));\n    console.assert(JSON.stringify(candidate([\"A.A.A\",\"A.A.A\",\"A.A.A\"], 3)) === JSON.stringify(21));\n    console.assert(JSON.stringify(candidate([\"A.A.A.A\",\"A.A.A.A\",\"A.A.A.A\"], 4)) === JSON.stringify(98));\n    console.assert(JSON.stringify(candidate([\"AAAA\",\"AAAA\",\"AAAA\"], 3)) === JSON.stringify(16));\n    console.assert(JSON.stringify(candidate([\"A\",\"A\",\"A\",\"A\",\"A\"], 3)) === JSON.stringify(6));\n    console.assert(JSON.stringify(candidate([\"A..\",\"...\",\"A..\",\"...\",\"A..\"], 3)) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate([\"AA.AA\",\"A...A\",\"A...A\",\"AA.AA\"], 3)) === JSON.stringify(32));\n    console.assert(JSON.stringify(candidate([\"A.....A\",\"A.....A\",\"A.....A\",\"A.....A\",\"A.....A\"], 2)) === JSON.stringify(10));\n    console.assert(JSON.stringify(candidate([\"AA.\",\"A..\",\".AA\"], 2)) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate([\"A.A.A\",\"A...A\",\"A.A.A\"], 3)) === JSON.stringify(21));\n    console.assert(JSON.stringify(candidate([\"A....A\",\"......\",\"......\",\"A....A\"], 4)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate([\"AAA..\",\"AAA..\",\"AAA..\"], 3)) === JSON.stringify(10));\n    console.assert(JSON.stringify(candidate([\"...A\",\"...A\",\"A...\",\"A...\"], 2)) === JSON.stringify(6));\n    console.assert(JSON.stringify(candidate([\"A.A.A\",\"A.A.A\",\"A.A.A\",\"A.A.A\",\"A.A.A\"], 4)) === JSON.stringify(124));\n    console.assert(JSON.stringify(candidate([\"A....\",\".....\",\".....\",\".....\",\"A....\"], 2)) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate([\"A...\",\".A..\",\"..A.\",\"...A\"], 4)) === JSON.stringify(8));\n    console.assert(JSON.stringify(candidate([\".A.A.\",\"A.A.A\",\".A.A.\",\"A.A.A\",\".A.A.\"], 6)) === JSON.stringify(256));\n    console.assert(JSON.stringify(candidate([\"AAAAA\",\"A...A\",\"A...A\",\"A...A\",\"AAAAA\"], 5)) === JSON.stringify(346));\n    console.assert(JSON.stringify(candidate([\"A....\",\".....\",\".....\",\".....\",\".....\"], 4)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate([\"A.A.A.A\",\".A.A.A.\",\"A.A.A.A\"], 3)) === JSON.stringify(40));\n    console.assert(JSON.stringify(candidate([\"A.A.A.A\",\"A.A.A.A\",\"A.A.A.A\",\"A.A.A.A\",\"A.A.A.A\",\"A.A.A.A\",\"A.A.A.A\",\"A.A.A.A\"], 8)) === JSON.stringify(15387));\n    console.assert(JSON.stringify(candidate([\"A...\",\".A.A\",\"....\",\"A...\"], 2)) === JSON.stringify(6));\n    console.assert(JSON.stringify(candidate([\"A.A.A.A\",\".A.A.\",\"A.A.A.A\",\".A.A.\",\"A.A.A.A\"], 6)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate([\"........\",\"...A....\",\"........\",\"........\",\"........\",\"........\",\"........\",\"........\"], 2)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate([\".A..A.\",\"A..A..\",\".A..A.\",\"A..A..\",\".A..A.\"], 3)) === JSON.stringify(42));\n    console.assert(JSON.stringify(candidate([\"A..A\",\"....\",\"A..A\",\"....\"], 3)) === JSON.stringify(12));\n    console.assert(JSON.stringify(candidate([\"A.A.A\",\".A.A.\",\"A.A.A\"], 3)) === JSON.stringify(23));\n    console.assert(JSON.stringify(candidate([\"A.AAA.A\",\"AAAAAAA\",\"AA.AAA.A\",\"AAAAAAA\",\"A.AAA.A\"], 5)) === JSON.stringify(Error: list index out of range));\n    console.assert(JSON.stringify(candidate([\"A.A.A.A\",\".A.A.A.\",\"A.A.A.A\",\".A.A.A.\"], 3)) === JSON.stringify(51));\n    console.assert(JSON.stringify(candidate([\"AAAAA\",\"A...A\",\"A...A\",\"A...A\",\"AAAAA\"], 4)) === JSON.stringify(152));\n    console.assert(JSON.stringify(candidate([\"A......\",\"A......\",\"A......\",\".......\",\".......\",\".......\"], 2)) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate([\"A.A\",\"A.A\",\"A.A\",\"A.A\",\"A.A\"], 4)) === JSON.stringify(40));\n    console.assert(JSON.stringify(candidate([\"A.A.A\",\"A...A\",\"A...A\",\"A...A\",\"A.A.A\"], 5)) === JSON.stringify(209));\n    console.assert(JSON.stringify(candidate([\"AAAAA\",\"AAAAA\",\".....\",\".....\",\".....\"], 3)) === JSON.stringify(14));\n    console.assert(JSON.stringify(candidate([\"A.A.A\",\".A.A.\",\"A.A.A\"], 4)) === JSON.stringify(46));\n    console.assert(JSON.stringify(candidate([\"A.A.A\",\".....\",\"A.A.A\",\".....\",\"A.A.A\"], 5)) === JSON.stringify(96));\n    console.assert(JSON.stringify(candidate([\"A.A.A.A\",\".A.A.A.\",\"A.A.A.A\",\".A.A.A.\",\"A.A.A.A\",\".A.A.A.\",\"A.A.A.A\",\".A.A.A.\"], 6)) === JSON.stringify(8692));\n    console.assert(JSON.stringify(candidate([\"A.A..\",\".A.A.\",\"..A.A\"], 3)) === JSON.stringify(17));\n    console.assert(JSON.stringify(candidate([\"A....\",\".A...\",\"..A..\"], 3)) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate([\"A....\",\"..A..\",\"....A\",\".....\",\".....\"], 4)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate([\"A.A.A.A\",\".....\",\"A.A.A.A\",\".....\",\"A.A.A.A\"], 5)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate([\"A......A\",\".......A\",\"....A...\",\"A........A\",\".......A\",\".......A\",\".......A\"], 5)) === JSON.stringify(Error: list index out of range));\n}",
+    "golang": "func check(candidate func([]int, int) []int) {\n    assert reflect.DeepEqual(candidate([]int{\"A\",\"A\",\"A\"}, 3), 1)\n    assert reflect.DeepEqual(candidate([]int{\"AA\",\"AA\"}, 2), 2)\n    assert reflect.DeepEqual(candidate([]int{\"A.A\",\"A.A\",\"A.A\"}, 4), 6)\n    assert reflect.DeepEqual(candidate([]int{\"A..\"} * 50, 10), Error: Solution.ways() missing 1 required positional argument: 'pizza')\n    assert reflect.DeepEqual(candidate([]int{\"A.A\",\"A.A\",\"A.A\"}, 5), 0)\n    assert reflect.DeepEqual(candidate([]int{\"...\",\"...\",\"...\",\"...\",\"...\",\"...\",\"AAA\"}, 4), 0)\n    assert reflect.DeepEqual(candidate([]int{\"AAA\",\"...\",\"AAA\"}, 2), 4)\n    assert reflect.DeepEqual(candidate([]int{\"A..\",\"A..\",\"...\"}, 1), 1)\n    assert reflect.DeepEqual(candidate([]int{\"AAA\",\"AAA\",\"AAA\"}, 4), 12)\n    assert reflect.DeepEqual(candidate([]int{\"AA.\",\"AA.\",\"..A\"}, 2), 4)\n    assert reflect.DeepEqual(candidate([]int{\"AAA\",\"AAA\",\"AAA\"}, 2), 4)\n    assert reflect.DeepEqual(candidate([]int{\"A..\",\"AA.\",\"...\"}, 3), 1)\n    assert reflect.DeepEqual(candidate([]int{\"A.A\",\".A.\",\"A.A\"}, 2), 4)\n    assert reflect.DeepEqual(candidate([]int{\"A..\",\"A..\"}, 2), 1)\n    assert reflect.DeepEqual(candidate([]int{\"A.A\",\"A.A\"}, 2), 3)\n    assert reflect.DeepEqual(candidate([]int{\"...\",\"...\",\"...\"}, 1), 0)\n    assert reflect.DeepEqual(candidate([]int{\"A..\",\"AAA\",\"...\"}, 3), 3)\n    assert reflect.DeepEqual(candidate([]int{\"AAAAA\",\"AA.AA\",\"AA.AA\",\"AA.AA\",\"AAAAA\"}, 5), 346)\n    assert reflect.DeepEqual(candidate([]int{\"AAAA\",\"A.AA\",\"AA.A\",\"AAAA\"}, 4), 56)\n    assert reflect.DeepEqual(candidate([]int{\"A.A.A\",\"A....\",\"A.A.A\"}, 3), 21)\n    assert reflect.DeepEqual(candidate([]int{\"A.A\",\"A.A\",\"A.A\"}, 3), 9)\n    assert reflect.DeepEqual(candidate([]int{\"A...A\",\".....\",\"A...A\",\".....\",\"A...A\"}, 3), 36)\n    assert reflect.DeepEqual(candidate([]int{\"...A\",\"...A\",\"...A\"}, 2), 2)\n    assert reflect.DeepEqual(candidate([]int{\"A...\",\"....\",\"....\",\"A...\"}, 2), 3)\n    assert reflect.DeepEqual(candidate([]int{\"A...A\",\".A.A.\",\"A...A\",\".A.A.\",\"A...A\"}, 5), 198)\n    assert reflect.DeepEqual(candidate([]int{\"A.A\",\".A.\",\"A.A\"}, 3), 10)\n    assert reflect.DeepEqual(candidate([]int{\"A.A\",\".A.\",\"A.A\",\".A.\",\"A.A\"}, 3), 23)\n    assert reflect.DeepEqual(candidate([]int{\"A..A.\",\"A..A.\",\"A..A.\",\"A..A.\",\"A..A.\"}, 3), 30)\n    assert reflect.DeepEqual(candidate([]int{\"AAAAAA\",\"A...A.\",\"A...A.\",\"A...A.\",\"AAAAAA\"}, 4), 212)\n    assert reflect.DeepEqual(candidate([]int{\"AAAAA\",\".....\",\"AAAAA\",\".....\",\"AAAAA\"}, 3), 42)\n    assert reflect.DeepEqual(candidate([]int{\"A...A\",\".....\",\".....\",\"A...A\"}, 3), 24)\n    assert reflect.DeepEqual(candidate([]int{\"A.A.A.A.A\",\".A.A.A.A.\",\"A.A.A.A.A\",\".A.A.A.A.\",\"A.A.A.A.A\"}, 5), 1955)\n    assert reflect.DeepEqual(candidate([]int{\"AAAA\",\"AAAA\",\"AAAA\",\"AAAA\"}, 5), 78)\n    assert reflect.DeepEqual(candidate([]int{\"A.A.A\",\"A.A.A\",\"A.A.A\"}, 2), 6)\n    assert reflect.DeepEqual(candidate([]int{\"A.A.A\",\"A.A.A\",\"A.A.A\"}, 3), 21)\n    assert reflect.DeepEqual(candidate([]int{\"A.A.A.A\",\"A.A.A.A\",\"A.A.A.A\"}, 4), 98)\n    assert reflect.DeepEqual(candidate([]int{\"AAAA\",\"AAAA\",\"AAAA\"}, 3), 16)\n    assert reflect.DeepEqual(candidate([]int{\"A\",\"A\",\"A\",\"A\",\"A\"}, 3), 6)\n    assert reflect.DeepEqual(candidate([]int{\"A..\",\"...\",\"A..\",\"...\",\"A..\"}, 3), 4)\n    assert reflect.DeepEqual(candidate([]int{\"AA.AA\",\"A...A\",\"A...A\",\"AA.AA\"}, 3), 32)\n    assert reflect.DeepEqual(candidate([]int{\"A.....A\",\"A.....A\",\"A.....A\",\"A.....A\",\"A.....A\"}, 2), 10)\n    assert reflect.DeepEqual(candidate([]int{\"AA.\",\"A..\",\".AA\"}, 2), 4)\n    assert reflect.DeepEqual(candidate([]int{\"A.A.A\",\"A...A\",\"A.A.A\"}, 3), 21)\n    assert reflect.DeepEqual(candidate([]int{\"A....A\",\"......\",\"......\",\"A....A\"}, 4), 0)\n    assert reflect.DeepEqual(candidate([]int{\"AAA..\",\"AAA..\",\"AAA..\"}, 3), 10)\n    assert reflect.DeepEqual(candidate([]int{\"...A\",\"...A\",\"A...\",\"A...\"}, 2), 6)\n    assert reflect.DeepEqual(candidate([]int{\"A.A.A\",\"A.A.A\",\"A.A.A\",\"A.A.A\",\"A.A.A\"}, 4), 124)\n    assert reflect.DeepEqual(candidate([]int{\"A....\",\".....\",\".....\",\".....\",\"A....\"}, 2), 4)\n    assert reflect.DeepEqual(candidate([]int{\"A...\",\".A..\",\"..A.\",\"...A\"}, 4), 8)\n    assert reflect.DeepEqual(candidate([]int{\".A.A.\",\"A.A.A\",\".A.A.\",\"A.A.A\",\".A.A.\"}, 6), 256)\n    assert reflect.DeepEqual(candidate([]int{\"AAAAA\",\"A...A\",\"A...A\",\"A...A\",\"AAAAA\"}, 5), 346)\n    assert reflect.DeepEqual(candidate([]int{\"A....\",\".....\",\".....\",\".....\",\".....\"}, 4), 0)\n    assert reflect.DeepEqual(candidate([]int{\"A.A.A.A\",\".A.A.A.\",\"A.A.A.A\"}, 3), 40)\n    assert reflect.DeepEqual(candidate([]int{\"A.A.A.A\",\"A.A.A.A\",\"A.A.A.A\",\"A.A.A.A\",\"A.A.A.A\",\"A.A.A.A\",\"A.A.A.A\",\"A.A.A.A\"}, 8), 15387)\n    assert reflect.DeepEqual(candidate([]int{\"A...\",\".A.A\",\"....\",\"A...\"}, 2), 6)\n    assert reflect.DeepEqual(candidate([]int{\"A.A.A.A\",\".A.A.\",\"A.A.A.A\",\".A.A.\",\"A.A.A.A\"}, 6), 0)\n    assert reflect.DeepEqual(candidate([]int{\"........\",\"...A....\",\"........\",\"........\",\"........\",\"........\",\"........\",\"........\"}, 2), 0)\n    assert reflect.DeepEqual(candidate([]int{\".A..A.\",\"A..A..\",\".A..A.\",\"A..A..\",\".A..A.\"}, 3), 42)\n    assert reflect.DeepEqual(candidate([]int{\"A..A\",\"....\",\"A..A\",\"....\"}, 3), 12)\n    assert reflect.DeepEqual(candidate([]int{\"A.A.A\",\".A.A.\",\"A.A.A\"}, 3), 23)\n    assert reflect.DeepEqual(candidate([]int{\"A.AAA.A\",\"AAAAAAA\",\"AA.AAA.A\",\"AAAAAAA\",\"A.AAA.A\"}, 5), Error: list index out of range)\n    assert reflect.DeepEqual(candidate([]int{\"A.A.A.A\",\".A.A.A.\",\"A.A.A.A\",\".A.A.A.\"}, 3), 51)\n    assert reflect.DeepEqual(candidate([]int{\"AAAAA\",\"A...A\",\"A...A\",\"A...A\",\"AAAAA\"}, 4), 152)\n    assert reflect.DeepEqual(candidate([]int{\"A......\",\"A......\",\"A......\",\".......\",\".......\",\".......\"}, 2), 2)\n    assert reflect.DeepEqual(candidate([]int{\"A.A\",\"A.A\",\"A.A\",\"A.A\",\"A.A\"}, 4), 40)\n    assert reflect.DeepEqual(candidate([]int{\"A.A.A\",\"A...A\",\"A...A\",\"A...A\",\"A.A.A\"}, 5), 209)\n    assert reflect.DeepEqual(candidate([]int{\"AAAAA\",\"AAAAA\",\".....\",\".....\",\".....\"}, 3), 14)\n    assert reflect.DeepEqual(candidate([]int{\"A.A.A\",\".A.A.\",\"A.A.A\"}, 4), 46)\n    assert reflect.DeepEqual(candidate([]int{\"A.A.A\",\".....\",\"A.A.A\",\".....\",\"A.A.A\"}, 5), 96)\n    assert reflect.DeepEqual(candidate([]int{\"A.A.A.A\",\".A.A.A.\",\"A.A.A.A\",\".A.A.A.\",\"A.A.A.A\",\".A.A.A.\",\"A.A.A.A\",\".A.A.A.\"}, 6), 8692)\n    assert reflect.DeepEqual(candidate([]int{\"A.A..\",\".A.A.\",\"..A.A\"}, 3), 17)\n    assert reflect.DeepEqual(candidate([]int{\"A....\",\".A...\",\"..A..\"}, 3), 4)\n    assert reflect.DeepEqual(candidate([]int{\"A....\",\"..A..\",\"....A\",\".....\",\".....\"}, 4), 0)\n    assert reflect.DeepEqual(candidate([]int{\"A.A.A.A\",\".....\",\"A.A.A.A\",\".....\",\"A.A.A.A\"}, 5), 0)\n    assert reflect.DeepEqual(candidate([]int{\"A......A\",\".......A\",\"....A...\",\"A........A\",\".......A\",\".......A\",\".......A\"}, 5), Error: list index out of range)\n}",
+    "rust": "fn check(candidate: fn(Vec<i32>, i32) -> Vec<i32>) {\n    assert_eq!(candidate(vec![\"A\",\"A\",\"A\"], 3), 1);\n    assert_eq!(candidate(vec![\"AA\",\"AA\"], 2), 2);\n    assert_eq!(candidate(vec![\"A.A\",\"A.A\",\"A.A\"], 4), 6);\n    assert_eq!(candidate(vec![\"A..\"] * 50, 10), Error: Solution.ways() missing 1 required positional argument: 'pizza');\n    assert_eq!(candidate(vec![\"A.A\",\"A.A\",\"A.A\"], 5), 0);\n    assert_eq!(candidate(vec![\"...\",\"...\",\"...\",\"...\",\"...\",\"...\",\"AAA\"], 4), 0);\n    assert_eq!(candidate(vec![\"AAA\",\"...\",\"AAA\"], 2), 4);\n    assert_eq!(candidate(vec![\"A..\",\"A..\",\"...\"], 1), 1);\n    assert_eq!(candidate(vec![\"AAA\",\"AAA\",\"AAA\"], 4), 12);\n    assert_eq!(candidate(vec![\"AA.\",\"AA.\",\"..A\"], 2), 4);\n    assert_eq!(candidate(vec![\"AAA\",\"AAA\",\"AAA\"], 2), 4);\n    assert_eq!(candidate(vec![\"A..\",\"AA.\",\"...\"], 3), 1);\n    assert_eq!(candidate(vec![\"A.A\",\".A.\",\"A.A\"], 2), 4);\n    assert_eq!(candidate(vec![\"A..\",\"A..\"], 2), 1);\n    assert_eq!(candidate(vec![\"A.A\",\"A.A\"], 2), 3);\n    assert_eq!(candidate(vec![\"...\",\"...\",\"...\"], 1), 0);\n    assert_eq!(candidate(vec![\"A..\",\"AAA\",\"...\"], 3), 3);\n    assert_eq!(candidate(vec![\"AAAAA\",\"AA.AA\",\"AA.AA\",\"AA.AA\",\"AAAAA\"], 5), 346);\n    assert_eq!(candidate(vec![\"AAAA\",\"A.AA\",\"AA.A\",\"AAAA\"], 4), 56);\n    assert_eq!(candidate(vec![\"A.A.A\",\"A....\",\"A.A.A\"], 3), 21);\n    assert_eq!(candidate(vec![\"A.A\",\"A.A\",\"A.A\"], 3), 9);\n    assert_eq!(candidate(vec![\"A...A\",\".....\",\"A...A\",\".....\",\"A...A\"], 3), 36);\n    assert_eq!(candidate(vec![\"...A\",\"...A\",\"...A\"], 2), 2);\n    assert_eq!(candidate(vec![\"A...\",\"....\",\"....\",\"A...\"], 2), 3);\n    assert_eq!(candidate(vec![\"A...A\",\".A.A.\",\"A...A\",\".A.A.\",\"A...A\"], 5), 198);\n    assert_eq!(candidate(vec![\"A.A\",\".A.\",\"A.A\"], 3), 10);\n    assert_eq!(candidate(vec![\"A.A\",\".A.\",\"A.A\",\".A.\",\"A.A\"], 3), 23);\n    assert_eq!(candidate(vec![\"A..A.\",\"A..A.\",\"A..A.\",\"A..A.\",\"A..A.\"], 3), 30);\n    assert_eq!(candidate(vec![\"AAAAAA\",\"A...A.\",\"A...A.\",\"A...A.\",\"AAAAAA\"], 4), 212);\n    assert_eq!(candidate(vec![\"AAAAA\",\".....\",\"AAAAA\",\".....\",\"AAAAA\"], 3), 42);\n    assert_eq!(candidate(vec![\"A...A\",\".....\",\".....\",\"A...A\"], 3), 24);\n    assert_eq!(candidate(vec![\"A.A.A.A.A\",\".A.A.A.A.\",\"A.A.A.A.A\",\".A.A.A.A.\",\"A.A.A.A.A\"], 5), 1955);\n    assert_eq!(candidate(vec![\"AAAA\",\"AAAA\",\"AAAA\",\"AAAA\"], 5), 78);\n    assert_eq!(candidate(vec![\"A.A.A\",\"A.A.A\",\"A.A.A\"], 2), 6);\n    assert_eq!(candidate(vec![\"A.A.A\",\"A.A.A\",\"A.A.A\"], 3), 21);\n    assert_eq!(candidate(vec![\"A.A.A.A\",\"A.A.A.A\",\"A.A.A.A\"], 4), 98);\n    assert_eq!(candidate(vec![\"AAAA\",\"AAAA\",\"AAAA\"], 3), 16);\n    assert_eq!(candidate(vec![\"A\",\"A\",\"A\",\"A\",\"A\"], 3), 6);\n    assert_eq!(candidate(vec![\"A..\",\"...\",\"A..\",\"...\",\"A..\"], 3), 4);\n    assert_eq!(candidate(vec![\"AA.AA\",\"A...A\",\"A...A\",\"AA.AA\"], 3), 32);\n    assert_eq!(candidate(vec![\"A.....A\",\"A.....A\",\"A.....A\",\"A.....A\",\"A.....A\"], 2), 10);\n    assert_eq!(candidate(vec![\"AA.\",\"A..\",\".AA\"], 2), 4);\n    assert_eq!(candidate(vec![\"A.A.A\",\"A...A\",\"A.A.A\"], 3), 21);\n    assert_eq!(candidate(vec![\"A....A\",\"......\",\"......\",\"A....A\"], 4), 0);\n    assert_eq!(candidate(vec![\"AAA..\",\"AAA..\",\"AAA..\"], 3), 10);\n    assert_eq!(candidate(vec![\"...A\",\"...A\",\"A...\",\"A...\"], 2), 6);\n    assert_eq!(candidate(vec![\"A.A.A\",\"A.A.A\",\"A.A.A\",\"A.A.A\",\"A.A.A\"], 4), 124);\n    assert_eq!(candidate(vec![\"A....\",\".....\",\".....\",\".....\",\"A....\"], 2), 4);\n    assert_eq!(candidate(vec![\"A...\",\".A..\",\"..A.\",\"...A\"], 4), 8);\n    assert_eq!(candidate(vec![\".A.A.\",\"A.A.A\",\".A.A.\",\"A.A.A\",\".A.A.\"], 6), 256);\n    assert_eq!(candidate(vec![\"AAAAA\",\"A...A\",\"A...A\",\"A...A\",\"AAAAA\"], 5), 346);\n    assert_eq!(candidate(vec![\"A....\",\".....\",\".....\",\".....\",\".....\"], 4), 0);\n    assert_eq!(candidate(vec![\"A.A.A.A\",\".A.A.A.\",\"A.A.A.A\"], 3), 40);\n    assert_eq!(candidate(vec![\"A.A.A.A\",\"A.A.A.A\",\"A.A.A.A\",\"A.A.A.A\",\"A.A.A.A\",\"A.A.A.A\",\"A.A.A.A\",\"A.A.A.A\"], 8), 15387);\n    assert_eq!(candidate(vec![\"A...\",\".A.A\",\"....\",\"A...\"], 2), 6);\n    assert_eq!(candidate(vec![\"A.A.A.A\",\".A.A.\",\"A.A.A.A\",\".A.A.\",\"A.A.A.A\"], 6), 0);\n    assert_eq!(candidate(vec![\"........\",\"...A....\",\"........\",\"........\",\"........\",\"........\",\"........\",\"........\"], 2), 0);\n    assert_eq!(candidate(vec![\".A..A.\",\"A..A..\",\".A..A.\",\"A..A..\",\".A..A.\"], 3), 42);\n    assert_eq!(candidate(vec![\"A..A\",\"....\",\"A..A\",\"....\"], 3), 12);\n    assert_eq!(candidate(vec![\"A.A.A\",\".A.A.\",\"A.A.A\"], 3), 23);\n    assert_eq!(candidate(vec![\"A.AAA.A\",\"AAAAAAA\",\"AA.AAA.A\",\"AAAAAAA\",\"A.AAA.A\"], 5), Error: list index out of range);\n    assert_eq!(candidate(vec![\"A.A.A.A\",\".A.A.A.\",\"A.A.A.A\",\".A.A.A.\"], 3), 51);\n    assert_eq!(candidate(vec![\"AAAAA\",\"A...A\",\"A...A\",\"A...A\",\"AAAAA\"], 4), 152);\n    assert_eq!(candidate(vec![\"A......\",\"A......\",\"A......\",\".......\",\".......\",\".......\"], 2), 2);\n    assert_eq!(candidate(vec![\"A.A\",\"A.A\",\"A.A\",\"A.A\",\"A.A\"], 4), 40);\n    assert_eq!(candidate(vec![\"A.A.A\",\"A...A\",\"A...A\",\"A...A\",\"A.A.A\"], 5), 209);\n    assert_eq!(candidate(vec![\"AAAAA\",\"AAAAA\",\".....\",\".....\",\".....\"], 3), 14);\n    assert_eq!(candidate(vec![\"A.A.A\",\".A.A.\",\"A.A.A\"], 4), 46);\n    assert_eq!(candidate(vec![\"A.A.A\",\".....\",\"A.A.A\",\".....\",\"A.A.A\"], 5), 96);\n    assert_eq!(candidate(vec![\"A.A.A.A\",\".A.A.A.\",\"A.A.A.A\",\".A.A.A.\",\"A.A.A.A\",\".A.A.A.\",\"A.A.A.A\",\".A.A.A.\"], 6), 8692);\n    assert_eq!(candidate(vec![\"A.A..\",\".A.A.\",\"..A.A\"], 3), 17);\n    assert_eq!(candidate(vec![\"A....\",\".A...\",\"..A..\"], 3), 4);\n    assert_eq!(candidate(vec![\"A....\",\"..A..\",\"....A\",\".....\",\".....\"], 4), 0);\n    assert_eq!(candidate(vec![\"A.A.A.A\",\".....\",\"A.A.A.A\",\".....\",\"A.A.A.A\"], 5), 0);\n    assert_eq!(candidate(vec![\"A......A\",\".......A\",\"....A...\",\"A........A\",\".......A\",\".......A\",\".......A\"], 5), Error: list index out of range);\n}"
+  },
+  "test_cases": [
+    {
+      "input": "pizza = [\"A\",\"A\",\"A\"], k = 3",
+      "output": "1"
+    },
+    {
+      "input": "pizza = [\"AA\",\"AA\"], k = 2",
+      "output": "2"
+    },
+    {
+      "input": "pizza = [\"A.A\",\"A.A\",\"A.A\"], k = 4",
+      "output": "6"
+    },
+    {
+      "input": "pizza = [\"A..\"] * 50, k = 10",
+      "output": "Error: Solution.ways() missing 1 required positional argument: 'pizza'"
+    },
+    {
+      "input": "pizza = [\"A.A\",\"A.A\",\"A.A\"], k = 5",
+      "output": "0"
+    },
+    {
+      "input": "pizza = [\"...\",\"...\",\"...\",\"...\",\"...\",\"...\",\"AAA\"], k = 4",
+      "output": "0"
+    },
+    {
+      "input": "pizza = [\"AAA\",\"...\",\"AAA\"], k = 2",
+      "output": "4"
+    },
+    {
+      "input": "pizza = [\"A..\",\"A..\",\"...\"], k = 1",
+      "output": "1"
+    },
+    {
+      "input": "pizza = [\"AAA\",\"AAA\",\"AAA\"], k = 4",
+      "output": "12"
+    },
+    {
+      "input": "pizza = [\"AA.\",\"AA.\",\"..A\"], k = 2",
+      "output": "4"
+    },
+    {
+      "input": "pizza = [\"AAA\",\"AAA\",\"AAA\"], k = 2",
+      "output": "4"
+    },
+    {
+      "input": "pizza = [\"A..\",\"AA.\",\"...\"], k = 3",
+      "output": "1"
+    },
+    {
+      "input": "pizza = [\"A.A\",\".A.\",\"A.A\"], k = 2",
+      "output": "4"
+    },
+    {
+      "input": "pizza = [\"A..\",\"A..\"] , k = 2",
+      "output": "1"
+    },
+    {
+      "input": "pizza = [\"A.A\",\"A.A\"] , k = 2",
+      "output": "3"
+    },
+    {
+      "input": "pizza = [\"...\",\"...\",\"...\"], k = 1",
+      "output": "0"
+    },
+    {
+      "input": "pizza = [\"A..\",\"AAA\",\"...\"], k = 3",
+      "output": "3"
+    },
+    {
+      "input": "pizza = [\"AAAAA\",\"AA.AA\",\"AA.AA\",\"AA.AA\",\"AAAAA\"], k = 5",
+      "output": "346"
+    },
+    {
+      "input": "pizza = [\"AAAA\",\"A.AA\",\"AA.A\",\"AAAA\"], k = 4",
+      "output": "56"
+    },
+    {
+      "input": "pizza = [\"A.A.A\",\"A....\",\"A.A.A\"], k = 3",
+      "output": "21"
+    },
+    {
+      "input": "pizza = [\"A.A\",\"A.A\",\"A.A\"], k = 3",
+      "output": "9"
+    },
+    {
+      "input": "pizza = [\"A...A\",\".....\",\"A...A\",\".....\",\"A...A\"], k = 3",
+      "output": "36"
+    },
+    {
+      "input": "pizza = [\"...A\",\"...A\",\"...A\"], k = 2",
+      "output": "2"
+    },
+    {
+      "input": "pizza = [\"A...\",\"....\",\"....\",\"A...\"], k = 2",
+      "output": "3"
+    },
+    {
+      "input": "pizza = [\"A...A\",\".A.A.\",\"A...A\",\".A.A.\",\"A...A\"], k = 5",
+      "output": "198"
+    },
+    {
+      "input": "pizza = [\"A.A\",\".A.\",\"A.A\"], k = 3",
+      "output": "10"
+    },
+    {
+      "input": "pizza = [\"A.A\",\".A.\",\"A.A\",\".A.\",\"A.A\"], k = 3",
+      "output": "23"
+    },
+    {
+      "input": "pizza = [\"A..A.\",\"A..A.\",\"A..A.\",\"A..A.\",\"A..A.\"], k = 3",
+      "output": "30"
+    },
+    {
+      "input": "pizza = [\"AAAAAA\",\"A...A.\",\"A...A.\",\"A...A.\",\"AAAAAA\"], k = 4",
+      "output": "212"
+    },
+    {
+      "input": "pizza = [\"AAAAA\",\".....\",\"AAAAA\",\".....\",\"AAAAA\"], k = 3",
+      "output": "42"
+    },
+    {
+      "input": "pizza = [\"A...A\",\".....\",\".....\",\"A...A\"], k = 3",
+      "output": "24"
+    },
+    {
+      "input": "pizza = [\"A.A.A.A.A\",\".A.A.A.A.\",\"A.A.A.A.A\",\".A.A.A.A.\",\"A.A.A.A.A\"], k = 5",
+      "output": "1955"
+    },
+    {
+      "input": "pizza = [\"AAAA\",\"AAAA\",\"AAAA\",\"AAAA\"], k = 5",
+      "output": "78"
+    },
+    {
+      "input": "pizza = [\"A.A.A\",\"A.A.A\",\"A.A.A\"], k = 2",
+      "output": "6"
+    },
+    {
+      "input": "pizza = [\"A.A.A\",\"A.A.A\",\"A.A.A\"], k = 3",
+      "output": "21"
+    },
+    {
+      "input": "pizza = [\"A.A.A.A\",\"A.A.A.A\",\"A.A.A.A\"], k = 4",
+      "output": "98"
+    },
+    {
+      "input": "pizza = [\"AAAA\",\"AAAA\",\"AAAA\"], k = 3",
+      "output": "16"
+    },
+    {
+      "input": "pizza = [\"A\",\"A\",\"A\",\"A\",\"A\"], k = 3",
+      "output": "6"
+    },
+    {
+      "input": "pizza = [\"A..\",\"...\",\"A..\",\"...\",\"A..\"], k = 3",
+      "output": "4"
+    },
+    {
+      "input": "pizza = [\"AA.AA\",\"A...A\",\"A...A\",\"AA.AA\"], k = 3",
+      "output": "32"
+    },
+    {
+      "input": "pizza = [\"A.....A\",\"A.....A\",\"A.....A\",\"A.....A\",\"A.....A\"], k = 2",
+      "output": "10"
+    },
+    {
+      "input": "pizza = [\"AA.\",\"A..\",\".AA\"], k = 2",
+      "output": "4"
+    },
+    {
+      "input": "pizza = [\"A.A.A\",\"A...A\",\"A.A.A\"], k = 3",
+      "output": "21"
+    },
+    {
+      "input": "pizza = [\"A....A\",\"......\",\"......\",\"A....A\"], k = 4",
+      "output": "0"
+    },
+    {
+      "input": "pizza = [\"AAA..\",\"AAA..\",\"AAA..\"], k = 3",
+      "output": "10"
+    },
+    {
+      "input": "pizza = [\"...A\",\"...A\",\"A...\",\"A...\"], k = 2",
+      "output": "6"
+    },
+    {
+      "input": "pizza = [\"A.A.A\",\"A.A.A\",\"A.A.A\",\"A.A.A\",\"A.A.A\"], k = 4",
+      "output": "124"
+    },
+    {
+      "input": "pizza = [\"A....\",\".....\",\".....\",\".....\",\"A....\"], k = 2",
+      "output": "4"
+    },
+    {
+      "input": "pizza = [\"A...\",\".A..\",\"..A.\",\"...A\"], k = 4",
+      "output": "8"
+    },
+    {
+      "input": "pizza = [\".A.A.\",\"A.A.A\",\".A.A.\",\"A.A.A\",\".A.A.\"], k = 6",
+      "output": "256"
+    },
+    {
+      "input": "pizza = [\"AAAAA\",\"A...A\",\"A...A\",\"A...A\",\"AAAAA\"], k = 5",
+      "output": "346"
+    },
+    {
+      "input": "pizza = [\"A....\",\".....\",\".....\",\".....\",\".....\"], k = 4",
+      "output": "0"
+    },
+    {
+      "input": "pizza = [\"A.A.A.A\",\".A.A.A.\",\"A.A.A.A\"], k = 3",
+      "output": "40"
+    },
+    {
+      "input": "pizza = [\"A.A.A.A\",\"A.A.A.A\",\"A.A.A.A\",\"A.A.A.A\",\"A.A.A.A\",\"A.A.A.A\",\"A.A.A.A\",\"A.A.A.A\"], k = 8",
+      "output": "15387"
+    },
+    {
+      "input": "pizza = [\"A...\",\".A.A\",\"....\",\"A...\"], k = 2",
+      "output": "6"
+    },
+    {
+      "input": "pizza = [\"A.A.A.A\",\".A.A.\",\"A.A.A.A\",\".A.A.\",\"A.A.A.A\"], k = 6",
+      "output": "0"
+    },
+    {
+      "input": "pizza = [\"........\",\"...A....\",\"........\",\"........\",\"........\",\"........\",\"........\",\"........\"], k = 2",
+      "output": "0"
+    },
+    {
+      "input": "pizza = [\".A..A.\",\"A..A..\",\".A..A.\",\"A..A..\",\".A..A.\"], k = 3",
+      "output": "42"
+    },
+    {
+      "input": "pizza = [\"A..A\",\"....\",\"A..A\",\"....\"], k = 3",
+      "output": "12"
+    },
+    {
+      "input": "pizza = [\"A.A.A\",\".A.A.\",\"A.A.A\"], k = 3",
+      "output": "23"
+    },
+    {
+      "input": "pizza = [\"A.AAA.A\",\"AAAAAAA\",\"AA.AAA.A\",\"AAAAAAA\",\"A.AAA.A\"], k = 5",
+      "output": "Error: list index out of range"
+    },
+    {
+      "input": "pizza = [\"A.A.A.A\",\".A.A.A.\",\"A.A.A.A\",\".A.A.A.\"], k = 3",
+      "output": "51"
+    },
+    {
+      "input": "pizza = [\"AAAAA\",\"A...A\",\"A...A\",\"A...A\",\"AAAAA\"], k = 4",
+      "output": "152"
+    },
+    {
+      "input": "pizza = [\"A......\",\"A......\",\"A......\",\".......\",\".......\",\".......\"], k = 2",
+      "output": "2"
+    },
+    {
+      "input": "pizza = [\"A.A\",\"A.A\",\"A.A\",\"A.A\",\"A.A\"], k = 4",
+      "output": "40"
+    },
+    {
+      "input": "pizza = [\"A.A.A\",\"A...A\",\"A...A\",\"A...A\",\"A.A.A\"], k = 5",
+      "output": "209"
+    },
+    {
+      "input": "pizza = [\"AAAAA\",\"AAAAA\",\".....\",\".....\",\".....\"], k = 3",
+      "output": "14"
+    },
+    {
+      "input": "pizza = [\"A.A.A\",\".A.A.\",\"A.A.A\"], k = 4",
+      "output": "46"
+    },
+    {
+      "input": "pizza = [\"A.A.A\",\".....\",\"A.A.A\",\".....\",\"A.A.A\"], k = 5",
+      "output": "96"
+    },
+    {
+      "input": "pizza = [\"A.A.A.A\",\".A.A.A.\",\"A.A.A.A\",\".A.A.A.\",\"A.A.A.A\",\".A.A.A.\",\"A.A.A.A\",\".A.A.A.\"], k = 6",
+      "output": "8692"
+    },
+    {
+      "input": "pizza = [\"A.A..\",\".A.A.\",\"..A.A\"], k = 3",
+      "output": "17"
+    },
+    {
+      "input": "pizza = [\"A....\",\".A...\",\"..A..\"] , k = 3",
+      "output": "4"
+    },
+    {
+      "input": "pizza = [\"A....\",\"..A..\",\"....A\",\".....\",\".....\"], k = 4",
+      "output": "0"
+    },
+    {
+      "input": "pizza = [\"A.A.A.A\",\".....\",\"A.A.A.A\",\".....\",\"A.A.A.A\"], k = 5",
+      "output": "0"
+    },
+    {
+      "input": "pizza = [\"A......A\",\".......A\",\"....A...\",\"A........A\",\".......A\",\".......A\",\".......A\"], k = 5",
+      "output": "Error: list index out of range"
+    }
+  ],
+  "types": {
+    "python3": {
+      "input": [
+        {
+          "pizza": "List[str]"
+        },
+        {
+          "k": "int"
+        }
+      ],
+      "output": "int"
+    },
+    "cpp": {
+      "input": [
+        {
+          "pizza": "vector<string>&"
+        },
+        {
+          "k": "int"
+        }
+      ],
+      "output": "int"
+    },
+    "java": {
+      "input": [
+        {
+          "pizza": "String[]"
+        },
+        {
+          "k": "int"
+        }
+      ],
+      "output": "int"
+    },
+    "javascript": {
+      "input": [
+        {
+          "pizza": "string[]"
+        },
+        {
+          "k": "number"
+        }
+      ],
+      "output": "number"
+    },
+    "typescript": {
+      "input": [
+        {
+          "pizza": "string[]"
+        },
+        {
+          "k": "number"
+        }
+      ],
+      "output": "number"
+    },
+    "golang": {
+      "input": [
+        {
+          "pizza": "[]string"
+        },
+        {
+          "k": "int"
+        }
+      ],
+      "output": "int"
+    },
+    "rust": {
+      "input": [
+        {
+          "pizza": "Vec<String>"
+        },
+        {
+          "k": "i32"
+        }
+      ],
+      "output": "i32"
+    }
+  },
+  "tags": [
+    "array",
+    "dynamic-programming",
+    "memoization",
+    "matrix",
+    "prefix-sum"
+  ]
+}

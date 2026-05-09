@@ -1,0 +1,441 @@
+{
+  "id": 2117,
+  "title": "Abbreviating the Product of a Range",
+  "slug": "abbreviating-the-product-of-a-range",
+  "difficulty": "Hard",
+  "description": "You are given two positive integers left and right with left <= right. Calculate the product of all integers in the inclusive range [left, right].\nSince the product may be very large, you will abbreviate it following these steps:\nReturn a string denoting the abbreviated product of all integers in the inclusive range [left, right].\nExample 1:\nExample 2:\nExample 3:\nConstraints:",
+  "examples": [
+    {
+      "example_num": 1,
+      "example_text": "Input: left = 1, right = 4\nOutput: \"24e0\"\nExplanation: The product is 1 × 2 × 3 × 4 = 24.\nThere are no trailing zeros, so 24 remains the same. The abbreviation will end with \"e0\".\nSince the number of digits is 2, which is less than 10, we do not have to abbreviate it further.\nThus, the final representation is \"24e0\".",
+      "images": []
+    },
+    {
+      "example_num": 2,
+      "example_text": "Input: left = 2, right = 11\nOutput: \"399168e2\"\nExplanation: The product is 39916800.\nThere are 2 trailing zeros, which we remove to get 399168. The abbreviation will end with \"e2\".\nThe number of digits after removing the trailing zeros is 6, so we do not abbreviate it further.\nHence, the abbreviated product is \"399168e2\".",
+      "images": []
+    },
+    {
+      "example_num": 3,
+      "example_text": "Input: left = 371, right = 375\nOutput: \"7219856259e3\"\nExplanation: The product is 7219856259000.",
+      "images": []
+    }
+  ],
+  "constraints": [
+    "1 <= left <= right <= 104"
+  ],
+  "hints": [
+    "Calculating the number of trailing zeros, the last five digits, and the first five digits can all be done separately.",
+    "Use a prime factorization property to find the number of trailing zeros. Use modulo to find the last 5 digits. Use a logarithm property to find the first 5 digits.",
+    "The number of trailing zeros C is nothing but the number of times the product is completely divisible by 10. Since 2 and 5 are the only prime factors of 10,  C will be equal to the minimum number of times 2 or 5 appear in the prime factorization of the product.",
+    "Iterate through the integers from left to right. For every integer, keep dividing it by 2 as long as it is divisible by 2 and C occurrences of 2 haven't been removed in total. Repeat this process for 5. Finally, multiply the integer under modulo of 10^5 with the product obtained till now to obtain the last five digits.",
+    "The product P can be represented as P=10^(x+y) where x is the integral part and y is the fractional part of x+y. Using the property \"if S = A * B, then log(S) = log(A) + log(B)\", we can write x+y = log_10(P) = sum(log_10(i)) for each integer i in [left, right]. Once we obtain the sum, the first five digits can be represented as floor(10^(y+4))."
+  ],
+  "code_snippets": {
+    "cpp": "class Solution {\npublic:\n    string abbreviateProduct(int left, int right) {\n        \n    }\n};",
+    "java": "class Solution {\n    public String abbreviateProduct(int left, int right) {\n        \n    }\n}",
+    "python3": "class Solution:\n    def abbreviateProduct(self, left: int, right: int) -> str:\n        ",
+    "javascript": "/**\n * @param {number} left\n * @param {number} right\n * @return {string}\n */\nvar abbreviateProduct = function(left, right) {\n    \n};",
+    "typescript": "function abbreviateProduct(left: number, right: number): string {\n    \n};",
+    "golang": "func abbreviateProduct(left int, right int) string {\n    \n}",
+    "rust": "impl Solution {\n    pub fn abbreviate_product(left: i32, right: i32) -> String {\n        \n    }\n}"
+  },
+  "entry_points": {
+    "python3": "Solution().abbreviateProduct",
+    "cpp": "Solution().abbreviateProduct",
+    "java": "new Solution().abbreviateProduct",
+    "javascript": "abbreviateProduct",
+    "typescript": "abbreviateProduct",
+    "golang": "abbreviateProduct",
+    "rust": "Solution::abbreviate_product"
+  },
+  "test_snippets": {
+    "python3": "def check(candidate):\n    assert candidate(left = 100, right = 105) == 1158727752e3\n    assert candidate(left = 1, right = 10000) == 28462...79008e2499\n    assert candidate(left = 10, right = 20) == 6704425728e3\n    assert candidate(left = 371, right = 375) == 7219856259e3\n    assert candidate(left = 1000, right = 1010) == 10563...82688e5\n    assert candidate(left = 5000, right = 5010) == 49367...34144e6\n    assert candidate(left = 1234, right = 1238) == 28846...40584e1\n    assert candidate(left = 999, right = 1000) == 999e3\n    assert candidate(left = 1, right = 10) == 36288e2\n    assert candidate(left = 1234, right = 1240) == 44318...63424e2\n    assert candidate(left = 5, right = 5) == 5e0\n    assert candidate(left = 1000, right = 1000) == 1e3\n    assert candidate(left = 10, right = 15) == 36036e2\n    assert candidate(left = 1000, right = 1004) == 10100...50024e3\n    assert candidate(left = 500, right = 510) == 54464...59744e5\n    assert candidate(left = 1, right = 100) == 93326...16864e24\n    assert candidate(left = 995, right = 1000) == 98508...27388e4\n    assert candidate(left = 9995, right = 10000) == 99850...73988e5\n    assert candidate(left = 1, right = 4) == 24e0\n    assert candidate(left = 2, right = 11) == 399168e2\n    assert candidate(left = 500, right = 505) == 16099...69356e4\n    assert candidate(left = 5000, right = 5005) == 15671...18506e5\n    assert candidate(left = 5, right = 10) == 1512e2\n    assert candidate(left = 8000, right = 8003) == 40990...04048e3\n    assert candidate(left = 5555, right = 6666) == 28137...34688e279\n    assert candidate(left = 9000, right = 9005) == 53232...19508e4\n    assert candidate(left = 100, right = 150) == 61219...44768e15\n    assert candidate(left = 5, right = 20) == 10137...00736e4\n    assert candidate(left = 3000, right = 3100) == 81710...90592e27\n    assert candidate(left = 1234, right = 1244) == 10562...94176e2\n    assert candidate(left = 1, right = 5000) == 42285...33472e1249\n    assert candidate(left = 9000, right = 9050) == 53429...51328e15\n    assert candidate(left = 100, right = 1000) == 43116...46048e227\n    assert candidate(left = 6000, right = 6005) == 46772...86472e4\n    assert candidate(left = 7000, right = 7020) == 57553...63648e7\n    assert candidate(left = 100, right = 200) == 84505...02048e27\n    assert candidate(left = 1234, right = 1250) == 39811...24736e7\n    assert candidate(left = 4000, right = 4100) == 22481...83456e27\n    assert candidate(left = 1000, right = 1050) == 35045...20832e15\n    assert candidate(left = 4995, right = 5000) == 15578...18494e5\n    assert candidate(left = 9500, right = 10000) == 29333...52864e128\n    assert candidate(left = 2000, right = 3000) == 25024...18624e252\n    assert candidate(left = 6000, right = 6100) == 90528...09184e27\n    assert candidate(left = 9995, right = 10005) == 99999...99856e6\n    assert candidate(left = 100, right = 2000) == 35534...18272e477\n    assert candidate(left = 7000, right = 7050) == 15097...01664e15\n    assert candidate(left = 5500, right = 5510) == 14071...33184e5\n    assert candidate(left = 9999, right = 10000) == 9999e4\n    assert candidate(left = 8000, right = 8010) == 86491...39904e5\n    assert candidate(left = 5, right = 50) == 12672...06688e12\n    assert candidate(left = 5000, right = 6000) == 31736...43584e253\n    assert candidate(left = 8000, right = 8020) == 94684...81312e7\n    assert candidate(left = 8000, right = 9000) == 12498...67872e253\n    assert candidate(left = 6500, right = 6530) == 17034...07232e10\n    assert candidate(left = 3000, right = 3010) == 18042...06464e5\n    assert candidate(left = 1000, right = 9999) == 70734...94464e2249\n    assert candidate(left = 5000, right = 5015) == 15629...41184e7\n    assert candidate(left = 3000, right = 3025) == 28318...52192e9\n    assert candidate(left = 1234, right = 5678) == 11390...64288e1112\n    assert candidate(left = 1000, right = 2000) == 82415...74464e253\n    assert candidate(left = 9000, right = 9999) == 31626...93632e250\n    assert candidate(left = 4321, right = 4325) == 15098...31038e2\n    assert candidate(left = 8765, right = 8780) == 12301...69504e5\n    assert candidate(left = 10000, right = 10010) == 10055...00288e6\n    assert candidate(left = 9990, right = 10000) == 99451...72288e6\n    assert candidate(left = 2000, right = 2010) == 21050...98176e5\n    assert candidate(left = 9990, right = 9999) == 99451...72288e2\n    assert candidate(left = 5000, right = 5050) == 57259...77056e16\n    assert candidate(left = 2500, right = 2600) == 11420...49216e28\n    assert candidate(left = 2500, right = 2510) == 24371...13072e6\n    assert candidate(left = 3000, right = 4000) == 13222...08128e254\n    assert candidate(left = 1000, right = 10000) == 70734...94464e2253\n    assert candidate(left = 7500, right = 7510) == 42545...13216e6\n    assert candidate(left = 9000, right = 9010) == 31573...64992e5",
+    "cpp": "void check(Solution& solution) {\n    assert(solution.abbreviateProduct(100, 105) == vector<int>1158727752e3);\n    assert(solution.abbreviateProduct(1, 10000) == vector<int>28462...79008e2499);\n    assert(solution.abbreviateProduct(10, 20) == vector<int>6704425728e3);\n    assert(solution.abbreviateProduct(371, 375) == vector<int>7219856259e3);\n    assert(solution.abbreviateProduct(1000, 1010) == vector<int>10563...82688e5);\n    assert(solution.abbreviateProduct(5000, 5010) == vector<int>49367...34144e6);\n    assert(solution.abbreviateProduct(1234, 1238) == vector<int>28846...40584e1);\n    assert(solution.abbreviateProduct(999, 1000) == vector<int>999e3);\n    assert(solution.abbreviateProduct(1, 10) == vector<int>36288e2);\n    assert(solution.abbreviateProduct(1234, 1240) == vector<int>44318...63424e2);\n    assert(solution.abbreviateProduct(5, 5) == vector<int>5e0);\n    assert(solution.abbreviateProduct(1000, 1000) == vector<int>1e3);\n    assert(solution.abbreviateProduct(10, 15) == vector<int>36036e2);\n    assert(solution.abbreviateProduct(1000, 1004) == vector<int>10100...50024e3);\n    assert(solution.abbreviateProduct(500, 510) == vector<int>54464...59744e5);\n    assert(solution.abbreviateProduct(1, 100) == vector<int>93326...16864e24);\n    assert(solution.abbreviateProduct(995, 1000) == vector<int>98508...27388e4);\n    assert(solution.abbreviateProduct(9995, 10000) == vector<int>99850...73988e5);\n    assert(solution.abbreviateProduct(1, 4) == vector<int>24e0);\n    assert(solution.abbreviateProduct(2, 11) == vector<int>399168e2);\n    assert(solution.abbreviateProduct(500, 505) == vector<int>16099...69356e4);\n    assert(solution.abbreviateProduct(5000, 5005) == vector<int>15671...18506e5);\n    assert(solution.abbreviateProduct(5, 10) == vector<int>1512e2);\n    assert(solution.abbreviateProduct(8000, 8003) == vector<int>40990...04048e3);\n    assert(solution.abbreviateProduct(5555, 6666) == vector<int>28137...34688e279);\n    assert(solution.abbreviateProduct(9000, 9005) == vector<int>53232...19508e4);\n    assert(solution.abbreviateProduct(100, 150) == vector<int>61219...44768e15);\n    assert(solution.abbreviateProduct(5, 20) == vector<int>10137...00736e4);\n    assert(solution.abbreviateProduct(3000, 3100) == vector<int>81710...90592e27);\n    assert(solution.abbreviateProduct(1234, 1244) == vector<int>10562...94176e2);\n    assert(solution.abbreviateProduct(1, 5000) == vector<int>42285...33472e1249);\n    assert(solution.abbreviateProduct(9000, 9050) == vector<int>53429...51328e15);\n    assert(solution.abbreviateProduct(100, 1000) == vector<int>43116...46048e227);\n    assert(solution.abbreviateProduct(6000, 6005) == vector<int>46772...86472e4);\n    assert(solution.abbreviateProduct(7000, 7020) == vector<int>57553...63648e7);\n    assert(solution.abbreviateProduct(100, 200) == vector<int>84505...02048e27);\n    assert(solution.abbreviateProduct(1234, 1250) == vector<int>39811...24736e7);\n    assert(solution.abbreviateProduct(4000, 4100) == vector<int>22481...83456e27);\n    assert(solution.abbreviateProduct(1000, 1050) == vector<int>35045...20832e15);\n    assert(solution.abbreviateProduct(4995, 5000) == vector<int>15578...18494e5);\n    assert(solution.abbreviateProduct(9500, 10000) == vector<int>29333...52864e128);\n    assert(solution.abbreviateProduct(2000, 3000) == vector<int>25024...18624e252);\n    assert(solution.abbreviateProduct(6000, 6100) == vector<int>90528...09184e27);\n    assert(solution.abbreviateProduct(9995, 10005) == vector<int>99999...99856e6);\n    assert(solution.abbreviateProduct(100, 2000) == vector<int>35534...18272e477);\n    assert(solution.abbreviateProduct(7000, 7050) == vector<int>15097...01664e15);\n    assert(solution.abbreviateProduct(5500, 5510) == vector<int>14071...33184e5);\n    assert(solution.abbreviateProduct(9999, 10000) == vector<int>9999e4);\n    assert(solution.abbreviateProduct(8000, 8010) == vector<int>86491...39904e5);\n    assert(solution.abbreviateProduct(5, 50) == vector<int>12672...06688e12);\n    assert(solution.abbreviateProduct(5000, 6000) == vector<int>31736...43584e253);\n    assert(solution.abbreviateProduct(8000, 8020) == vector<int>94684...81312e7);\n    assert(solution.abbreviateProduct(8000, 9000) == vector<int>12498...67872e253);\n    assert(solution.abbreviateProduct(6500, 6530) == vector<int>17034...07232e10);\n    assert(solution.abbreviateProduct(3000, 3010) == vector<int>18042...06464e5);\n    assert(solution.abbreviateProduct(1000, 9999) == vector<int>70734...94464e2249);\n    assert(solution.abbreviateProduct(5000, 5015) == vector<int>15629...41184e7);\n    assert(solution.abbreviateProduct(3000, 3025) == vector<int>28318...52192e9);\n    assert(solution.abbreviateProduct(1234, 5678) == vector<int>11390...64288e1112);\n    assert(solution.abbreviateProduct(1000, 2000) == vector<int>82415...74464e253);\n    assert(solution.abbreviateProduct(9000, 9999) == vector<int>31626...93632e250);\n    assert(solution.abbreviateProduct(4321, 4325) == vector<int>15098...31038e2);\n    assert(solution.abbreviateProduct(8765, 8780) == vector<int>12301...69504e5);\n    assert(solution.abbreviateProduct(10000, 10010) == vector<int>10055...00288e6);\n    assert(solution.abbreviateProduct(9990, 10000) == vector<int>99451...72288e6);\n    assert(solution.abbreviateProduct(2000, 2010) == vector<int>21050...98176e5);\n    assert(solution.abbreviateProduct(9990, 9999) == vector<int>99451...72288e2);\n    assert(solution.abbreviateProduct(5000, 5050) == vector<int>57259...77056e16);\n    assert(solution.abbreviateProduct(2500, 2600) == vector<int>11420...49216e28);\n    assert(solution.abbreviateProduct(2500, 2510) == vector<int>24371...13072e6);\n    assert(solution.abbreviateProduct(3000, 4000) == vector<int>13222...08128e254);\n    assert(solution.abbreviateProduct(1000, 10000) == vector<int>70734...94464e2253);\n    assert(solution.abbreviateProduct(7500, 7510) == vector<int>42545...13216e6);\n    assert(solution.abbreviateProduct(9000, 9010) == vector<int>31573...64992e5);\n}",
+    "java": "public static void check(Solution solution) {\n    assert Arrays.equals(solution.abbreviateProduct(100, 105), 1158727752e3);\n    assert Arrays.equals(solution.abbreviateProduct(1, 10000), 28462...79008e2499);\n    assert Arrays.equals(solution.abbreviateProduct(10, 20), 6704425728e3);\n    assert Arrays.equals(solution.abbreviateProduct(371, 375), 7219856259e3);\n    assert Arrays.equals(solution.abbreviateProduct(1000, 1010), 10563...82688e5);\n    assert Arrays.equals(solution.abbreviateProduct(5000, 5010), 49367...34144e6);\n    assert Arrays.equals(solution.abbreviateProduct(1234, 1238), 28846...40584e1);\n    assert Arrays.equals(solution.abbreviateProduct(999, 1000), 999e3);\n    assert Arrays.equals(solution.abbreviateProduct(1, 10), 36288e2);\n    assert Arrays.equals(solution.abbreviateProduct(1234, 1240), 44318...63424e2);\n    assert Arrays.equals(solution.abbreviateProduct(5, 5), 5e0);\n    assert Arrays.equals(solution.abbreviateProduct(1000, 1000), 1e3);\n    assert Arrays.equals(solution.abbreviateProduct(10, 15), 36036e2);\n    assert Arrays.equals(solution.abbreviateProduct(1000, 1004), 10100...50024e3);\n    assert Arrays.equals(solution.abbreviateProduct(500, 510), 54464...59744e5);\n    assert Arrays.equals(solution.abbreviateProduct(1, 100), 93326...16864e24);\n    assert Arrays.equals(solution.abbreviateProduct(995, 1000), 98508...27388e4);\n    assert Arrays.equals(solution.abbreviateProduct(9995, 10000), 99850...73988e5);\n    assert Arrays.equals(solution.abbreviateProduct(1, 4), 24e0);\n    assert Arrays.equals(solution.abbreviateProduct(2, 11), 399168e2);\n    assert Arrays.equals(solution.abbreviateProduct(500, 505), 16099...69356e4);\n    assert Arrays.equals(solution.abbreviateProduct(5000, 5005), 15671...18506e5);\n    assert Arrays.equals(solution.abbreviateProduct(5, 10), 1512e2);\n    assert Arrays.equals(solution.abbreviateProduct(8000, 8003), 40990...04048e3);\n    assert Arrays.equals(solution.abbreviateProduct(5555, 6666), 28137...34688e279);\n    assert Arrays.equals(solution.abbreviateProduct(9000, 9005), 53232...19508e4);\n    assert Arrays.equals(solution.abbreviateProduct(100, 150), 61219...44768e15);\n    assert Arrays.equals(solution.abbreviateProduct(5, 20), 10137...00736e4);\n    assert Arrays.equals(solution.abbreviateProduct(3000, 3100), 81710...90592e27);\n    assert Arrays.equals(solution.abbreviateProduct(1234, 1244), 10562...94176e2);\n    assert Arrays.equals(solution.abbreviateProduct(1, 5000), 42285...33472e1249);\n    assert Arrays.equals(solution.abbreviateProduct(9000, 9050), 53429...51328e15);\n    assert Arrays.equals(solution.abbreviateProduct(100, 1000), 43116...46048e227);\n    assert Arrays.equals(solution.abbreviateProduct(6000, 6005), 46772...86472e4);\n    assert Arrays.equals(solution.abbreviateProduct(7000, 7020), 57553...63648e7);\n    assert Arrays.equals(solution.abbreviateProduct(100, 200), 84505...02048e27);\n    assert Arrays.equals(solution.abbreviateProduct(1234, 1250), 39811...24736e7);\n    assert Arrays.equals(solution.abbreviateProduct(4000, 4100), 22481...83456e27);\n    assert Arrays.equals(solution.abbreviateProduct(1000, 1050), 35045...20832e15);\n    assert Arrays.equals(solution.abbreviateProduct(4995, 5000), 15578...18494e5);\n    assert Arrays.equals(solution.abbreviateProduct(9500, 10000), 29333...52864e128);\n    assert Arrays.equals(solution.abbreviateProduct(2000, 3000), 25024...18624e252);\n    assert Arrays.equals(solution.abbreviateProduct(6000, 6100), 90528...09184e27);\n    assert Arrays.equals(solution.abbreviateProduct(9995, 10005), 99999...99856e6);\n    assert Arrays.equals(solution.abbreviateProduct(100, 2000), 35534...18272e477);\n    assert Arrays.equals(solution.abbreviateProduct(7000, 7050), 15097...01664e15);\n    assert Arrays.equals(solution.abbreviateProduct(5500, 5510), 14071...33184e5);\n    assert Arrays.equals(solution.abbreviateProduct(9999, 10000), 9999e4);\n    assert Arrays.equals(solution.abbreviateProduct(8000, 8010), 86491...39904e5);\n    assert Arrays.equals(solution.abbreviateProduct(5, 50), 12672...06688e12);\n    assert Arrays.equals(solution.abbreviateProduct(5000, 6000), 31736...43584e253);\n    assert Arrays.equals(solution.abbreviateProduct(8000, 8020), 94684...81312e7);\n    assert Arrays.equals(solution.abbreviateProduct(8000, 9000), 12498...67872e253);\n    assert Arrays.equals(solution.abbreviateProduct(6500, 6530), 17034...07232e10);\n    assert Arrays.equals(solution.abbreviateProduct(3000, 3010), 18042...06464e5);\n    assert Arrays.equals(solution.abbreviateProduct(1000, 9999), 70734...94464e2249);\n    assert Arrays.equals(solution.abbreviateProduct(5000, 5015), 15629...41184e7);\n    assert Arrays.equals(solution.abbreviateProduct(3000, 3025), 28318...52192e9);\n    assert Arrays.equals(solution.abbreviateProduct(1234, 5678), 11390...64288e1112);\n    assert Arrays.equals(solution.abbreviateProduct(1000, 2000), 82415...74464e253);\n    assert Arrays.equals(solution.abbreviateProduct(9000, 9999), 31626...93632e250);\n    assert Arrays.equals(solution.abbreviateProduct(4321, 4325), 15098...31038e2);\n    assert Arrays.equals(solution.abbreviateProduct(8765, 8780), 12301...69504e5);\n    assert Arrays.equals(solution.abbreviateProduct(10000, 10010), 10055...00288e6);\n    assert Arrays.equals(solution.abbreviateProduct(9990, 10000), 99451...72288e6);\n    assert Arrays.equals(solution.abbreviateProduct(2000, 2010), 21050...98176e5);\n    assert Arrays.equals(solution.abbreviateProduct(9990, 9999), 99451...72288e2);\n    assert Arrays.equals(solution.abbreviateProduct(5000, 5050), 57259...77056e16);\n    assert Arrays.equals(solution.abbreviateProduct(2500, 2600), 11420...49216e28);\n    assert Arrays.equals(solution.abbreviateProduct(2500, 2510), 24371...13072e6);\n    assert Arrays.equals(solution.abbreviateProduct(3000, 4000), 13222...08128e254);\n    assert Arrays.equals(solution.abbreviateProduct(1000, 10000), 70734...94464e2253);\n    assert Arrays.equals(solution.abbreviateProduct(7500, 7510), 42545...13216e6);\n    assert Arrays.equals(solution.abbreviateProduct(9000, 9010), 31573...64992e5);\n}",
+    "javascript": "function check(candidate) {\n    console.assert(JSON.stringify(candidate(100, 105)) === JSON.stringify(1158727752e3));\n    console.assert(JSON.stringify(candidate(1, 10000)) === JSON.stringify(28462...79008e2499));\n    console.assert(JSON.stringify(candidate(10, 20)) === JSON.stringify(6704425728e3));\n    console.assert(JSON.stringify(candidate(371, 375)) === JSON.stringify(7219856259e3));\n    console.assert(JSON.stringify(candidate(1000, 1010)) === JSON.stringify(10563...82688e5));\n    console.assert(JSON.stringify(candidate(5000, 5010)) === JSON.stringify(49367...34144e6));\n    console.assert(JSON.stringify(candidate(1234, 1238)) === JSON.stringify(28846...40584e1));\n    console.assert(JSON.stringify(candidate(999, 1000)) === JSON.stringify(999e3));\n    console.assert(JSON.stringify(candidate(1, 10)) === JSON.stringify(36288e2));\n    console.assert(JSON.stringify(candidate(1234, 1240)) === JSON.stringify(44318...63424e2));\n    console.assert(JSON.stringify(candidate(5, 5)) === JSON.stringify(5e0));\n    console.assert(JSON.stringify(candidate(1000, 1000)) === JSON.stringify(1e3));\n    console.assert(JSON.stringify(candidate(10, 15)) === JSON.stringify(36036e2));\n    console.assert(JSON.stringify(candidate(1000, 1004)) === JSON.stringify(10100...50024e3));\n    console.assert(JSON.stringify(candidate(500, 510)) === JSON.stringify(54464...59744e5));\n    console.assert(JSON.stringify(candidate(1, 100)) === JSON.stringify(93326...16864e24));\n    console.assert(JSON.stringify(candidate(995, 1000)) === JSON.stringify(98508...27388e4));\n    console.assert(JSON.stringify(candidate(9995, 10000)) === JSON.stringify(99850...73988e5));\n    console.assert(JSON.stringify(candidate(1, 4)) === JSON.stringify(24e0));\n    console.assert(JSON.stringify(candidate(2, 11)) === JSON.stringify(399168e2));\n    console.assert(JSON.stringify(candidate(500, 505)) === JSON.stringify(16099...69356e4));\n    console.assert(JSON.stringify(candidate(5000, 5005)) === JSON.stringify(15671...18506e5));\n    console.assert(JSON.stringify(candidate(5, 10)) === JSON.stringify(1512e2));\n    console.assert(JSON.stringify(candidate(8000, 8003)) === JSON.stringify(40990...04048e3));\n    console.assert(JSON.stringify(candidate(5555, 6666)) === JSON.stringify(28137...34688e279));\n    console.assert(JSON.stringify(candidate(9000, 9005)) === JSON.stringify(53232...19508e4));\n    console.assert(JSON.stringify(candidate(100, 150)) === JSON.stringify(61219...44768e15));\n    console.assert(JSON.stringify(candidate(5, 20)) === JSON.stringify(10137...00736e4));\n    console.assert(JSON.stringify(candidate(3000, 3100)) === JSON.stringify(81710...90592e27));\n    console.assert(JSON.stringify(candidate(1234, 1244)) === JSON.stringify(10562...94176e2));\n    console.assert(JSON.stringify(candidate(1, 5000)) === JSON.stringify(42285...33472e1249));\n    console.assert(JSON.stringify(candidate(9000, 9050)) === JSON.stringify(53429...51328e15));\n    console.assert(JSON.stringify(candidate(100, 1000)) === JSON.stringify(43116...46048e227));\n    console.assert(JSON.stringify(candidate(6000, 6005)) === JSON.stringify(46772...86472e4));\n    console.assert(JSON.stringify(candidate(7000, 7020)) === JSON.stringify(57553...63648e7));\n    console.assert(JSON.stringify(candidate(100, 200)) === JSON.stringify(84505...02048e27));\n    console.assert(JSON.stringify(candidate(1234, 1250)) === JSON.stringify(39811...24736e7));\n    console.assert(JSON.stringify(candidate(4000, 4100)) === JSON.stringify(22481...83456e27));\n    console.assert(JSON.stringify(candidate(1000, 1050)) === JSON.stringify(35045...20832e15));\n    console.assert(JSON.stringify(candidate(4995, 5000)) === JSON.stringify(15578...18494e5));\n    console.assert(JSON.stringify(candidate(9500, 10000)) === JSON.stringify(29333...52864e128));\n    console.assert(JSON.stringify(candidate(2000, 3000)) === JSON.stringify(25024...18624e252));\n    console.assert(JSON.stringify(candidate(6000, 6100)) === JSON.stringify(90528...09184e27));\n    console.assert(JSON.stringify(candidate(9995, 10005)) === JSON.stringify(99999...99856e6));\n    console.assert(JSON.stringify(candidate(100, 2000)) === JSON.stringify(35534...18272e477));\n    console.assert(JSON.stringify(candidate(7000, 7050)) === JSON.stringify(15097...01664e15));\n    console.assert(JSON.stringify(candidate(5500, 5510)) === JSON.stringify(14071...33184e5));\n    console.assert(JSON.stringify(candidate(9999, 10000)) === JSON.stringify(9999e4));\n    console.assert(JSON.stringify(candidate(8000, 8010)) === JSON.stringify(86491...39904e5));\n    console.assert(JSON.stringify(candidate(5, 50)) === JSON.stringify(12672...06688e12));\n    console.assert(JSON.stringify(candidate(5000, 6000)) === JSON.stringify(31736...43584e253));\n    console.assert(JSON.stringify(candidate(8000, 8020)) === JSON.stringify(94684...81312e7));\n    console.assert(JSON.stringify(candidate(8000, 9000)) === JSON.stringify(12498...67872e253));\n    console.assert(JSON.stringify(candidate(6500, 6530)) === JSON.stringify(17034...07232e10));\n    console.assert(JSON.stringify(candidate(3000, 3010)) === JSON.stringify(18042...06464e5));\n    console.assert(JSON.stringify(candidate(1000, 9999)) === JSON.stringify(70734...94464e2249));\n    console.assert(JSON.stringify(candidate(5000, 5015)) === JSON.stringify(15629...41184e7));\n    console.assert(JSON.stringify(candidate(3000, 3025)) === JSON.stringify(28318...52192e9));\n    console.assert(JSON.stringify(candidate(1234, 5678)) === JSON.stringify(11390...64288e1112));\n    console.assert(JSON.stringify(candidate(1000, 2000)) === JSON.stringify(82415...74464e253));\n    console.assert(JSON.stringify(candidate(9000, 9999)) === JSON.stringify(31626...93632e250));\n    console.assert(JSON.stringify(candidate(4321, 4325)) === JSON.stringify(15098...31038e2));\n    console.assert(JSON.stringify(candidate(8765, 8780)) === JSON.stringify(12301...69504e5));\n    console.assert(JSON.stringify(candidate(10000, 10010)) === JSON.stringify(10055...00288e6));\n    console.assert(JSON.stringify(candidate(9990, 10000)) === JSON.stringify(99451...72288e6));\n    console.assert(JSON.stringify(candidate(2000, 2010)) === JSON.stringify(21050...98176e5));\n    console.assert(JSON.stringify(candidate(9990, 9999)) === JSON.stringify(99451...72288e2));\n    console.assert(JSON.stringify(candidate(5000, 5050)) === JSON.stringify(57259...77056e16));\n    console.assert(JSON.stringify(candidate(2500, 2600)) === JSON.stringify(11420...49216e28));\n    console.assert(JSON.stringify(candidate(2500, 2510)) === JSON.stringify(24371...13072e6));\n    console.assert(JSON.stringify(candidate(3000, 4000)) === JSON.stringify(13222...08128e254));\n    console.assert(JSON.stringify(candidate(1000, 10000)) === JSON.stringify(70734...94464e2253));\n    console.assert(JSON.stringify(candidate(7500, 7510)) === JSON.stringify(42545...13216e6));\n    console.assert(JSON.stringify(candidate(9000, 9010)) === JSON.stringify(31573...64992e5));\n}",
+    "typescript": "function check(candidate: Function): void {\n    console.assert(JSON.stringify(candidate(100, 105)) === JSON.stringify(1158727752e3));\n    console.assert(JSON.stringify(candidate(1, 10000)) === JSON.stringify(28462...79008e2499));\n    console.assert(JSON.stringify(candidate(10, 20)) === JSON.stringify(6704425728e3));\n    console.assert(JSON.stringify(candidate(371, 375)) === JSON.stringify(7219856259e3));\n    console.assert(JSON.stringify(candidate(1000, 1010)) === JSON.stringify(10563...82688e5));\n    console.assert(JSON.stringify(candidate(5000, 5010)) === JSON.stringify(49367...34144e6));\n    console.assert(JSON.stringify(candidate(1234, 1238)) === JSON.stringify(28846...40584e1));\n    console.assert(JSON.stringify(candidate(999, 1000)) === JSON.stringify(999e3));\n    console.assert(JSON.stringify(candidate(1, 10)) === JSON.stringify(36288e2));\n    console.assert(JSON.stringify(candidate(1234, 1240)) === JSON.stringify(44318...63424e2));\n    console.assert(JSON.stringify(candidate(5, 5)) === JSON.stringify(5e0));\n    console.assert(JSON.stringify(candidate(1000, 1000)) === JSON.stringify(1e3));\n    console.assert(JSON.stringify(candidate(10, 15)) === JSON.stringify(36036e2));\n    console.assert(JSON.stringify(candidate(1000, 1004)) === JSON.stringify(10100...50024e3));\n    console.assert(JSON.stringify(candidate(500, 510)) === JSON.stringify(54464...59744e5));\n    console.assert(JSON.stringify(candidate(1, 100)) === JSON.stringify(93326...16864e24));\n    console.assert(JSON.stringify(candidate(995, 1000)) === JSON.stringify(98508...27388e4));\n    console.assert(JSON.stringify(candidate(9995, 10000)) === JSON.stringify(99850...73988e5));\n    console.assert(JSON.stringify(candidate(1, 4)) === JSON.stringify(24e0));\n    console.assert(JSON.stringify(candidate(2, 11)) === JSON.stringify(399168e2));\n    console.assert(JSON.stringify(candidate(500, 505)) === JSON.stringify(16099...69356e4));\n    console.assert(JSON.stringify(candidate(5000, 5005)) === JSON.stringify(15671...18506e5));\n    console.assert(JSON.stringify(candidate(5, 10)) === JSON.stringify(1512e2));\n    console.assert(JSON.stringify(candidate(8000, 8003)) === JSON.stringify(40990...04048e3));\n    console.assert(JSON.stringify(candidate(5555, 6666)) === JSON.stringify(28137...34688e279));\n    console.assert(JSON.stringify(candidate(9000, 9005)) === JSON.stringify(53232...19508e4));\n    console.assert(JSON.stringify(candidate(100, 150)) === JSON.stringify(61219...44768e15));\n    console.assert(JSON.stringify(candidate(5, 20)) === JSON.stringify(10137...00736e4));\n    console.assert(JSON.stringify(candidate(3000, 3100)) === JSON.stringify(81710...90592e27));\n    console.assert(JSON.stringify(candidate(1234, 1244)) === JSON.stringify(10562...94176e2));\n    console.assert(JSON.stringify(candidate(1, 5000)) === JSON.stringify(42285...33472e1249));\n    console.assert(JSON.stringify(candidate(9000, 9050)) === JSON.stringify(53429...51328e15));\n    console.assert(JSON.stringify(candidate(100, 1000)) === JSON.stringify(43116...46048e227));\n    console.assert(JSON.stringify(candidate(6000, 6005)) === JSON.stringify(46772...86472e4));\n    console.assert(JSON.stringify(candidate(7000, 7020)) === JSON.stringify(57553...63648e7));\n    console.assert(JSON.stringify(candidate(100, 200)) === JSON.stringify(84505...02048e27));\n    console.assert(JSON.stringify(candidate(1234, 1250)) === JSON.stringify(39811...24736e7));\n    console.assert(JSON.stringify(candidate(4000, 4100)) === JSON.stringify(22481...83456e27));\n    console.assert(JSON.stringify(candidate(1000, 1050)) === JSON.stringify(35045...20832e15));\n    console.assert(JSON.stringify(candidate(4995, 5000)) === JSON.stringify(15578...18494e5));\n    console.assert(JSON.stringify(candidate(9500, 10000)) === JSON.stringify(29333...52864e128));\n    console.assert(JSON.stringify(candidate(2000, 3000)) === JSON.stringify(25024...18624e252));\n    console.assert(JSON.stringify(candidate(6000, 6100)) === JSON.stringify(90528...09184e27));\n    console.assert(JSON.stringify(candidate(9995, 10005)) === JSON.stringify(99999...99856e6));\n    console.assert(JSON.stringify(candidate(100, 2000)) === JSON.stringify(35534...18272e477));\n    console.assert(JSON.stringify(candidate(7000, 7050)) === JSON.stringify(15097...01664e15));\n    console.assert(JSON.stringify(candidate(5500, 5510)) === JSON.stringify(14071...33184e5));\n    console.assert(JSON.stringify(candidate(9999, 10000)) === JSON.stringify(9999e4));\n    console.assert(JSON.stringify(candidate(8000, 8010)) === JSON.stringify(86491...39904e5));\n    console.assert(JSON.stringify(candidate(5, 50)) === JSON.stringify(12672...06688e12));\n    console.assert(JSON.stringify(candidate(5000, 6000)) === JSON.stringify(31736...43584e253));\n    console.assert(JSON.stringify(candidate(8000, 8020)) === JSON.stringify(94684...81312e7));\n    console.assert(JSON.stringify(candidate(8000, 9000)) === JSON.stringify(12498...67872e253));\n    console.assert(JSON.stringify(candidate(6500, 6530)) === JSON.stringify(17034...07232e10));\n    console.assert(JSON.stringify(candidate(3000, 3010)) === JSON.stringify(18042...06464e5));\n    console.assert(JSON.stringify(candidate(1000, 9999)) === JSON.stringify(70734...94464e2249));\n    console.assert(JSON.stringify(candidate(5000, 5015)) === JSON.stringify(15629...41184e7));\n    console.assert(JSON.stringify(candidate(3000, 3025)) === JSON.stringify(28318...52192e9));\n    console.assert(JSON.stringify(candidate(1234, 5678)) === JSON.stringify(11390...64288e1112));\n    console.assert(JSON.stringify(candidate(1000, 2000)) === JSON.stringify(82415...74464e253));\n    console.assert(JSON.stringify(candidate(9000, 9999)) === JSON.stringify(31626...93632e250));\n    console.assert(JSON.stringify(candidate(4321, 4325)) === JSON.stringify(15098...31038e2));\n    console.assert(JSON.stringify(candidate(8765, 8780)) === JSON.stringify(12301...69504e5));\n    console.assert(JSON.stringify(candidate(10000, 10010)) === JSON.stringify(10055...00288e6));\n    console.assert(JSON.stringify(candidate(9990, 10000)) === JSON.stringify(99451...72288e6));\n    console.assert(JSON.stringify(candidate(2000, 2010)) === JSON.stringify(21050...98176e5));\n    console.assert(JSON.stringify(candidate(9990, 9999)) === JSON.stringify(99451...72288e2));\n    console.assert(JSON.stringify(candidate(5000, 5050)) === JSON.stringify(57259...77056e16));\n    console.assert(JSON.stringify(candidate(2500, 2600)) === JSON.stringify(11420...49216e28));\n    console.assert(JSON.stringify(candidate(2500, 2510)) === JSON.stringify(24371...13072e6));\n    console.assert(JSON.stringify(candidate(3000, 4000)) === JSON.stringify(13222...08128e254));\n    console.assert(JSON.stringify(candidate(1000, 10000)) === JSON.stringify(70734...94464e2253));\n    console.assert(JSON.stringify(candidate(7500, 7510)) === JSON.stringify(42545...13216e6));\n    console.assert(JSON.stringify(candidate(9000, 9010)) === JSON.stringify(31573...64992e5));\n}",
+    "golang": "func check(candidate func([]int, int) []int) {\n    assert reflect.DeepEqual(candidate(100, 105), 1158727752e3)\n    assert reflect.DeepEqual(candidate(1, 10000), 28462...79008e2499)\n    assert reflect.DeepEqual(candidate(10, 20), 6704425728e3)\n    assert reflect.DeepEqual(candidate(371, 375), 7219856259e3)\n    assert reflect.DeepEqual(candidate(1000, 1010), 10563...82688e5)\n    assert reflect.DeepEqual(candidate(5000, 5010), 49367...34144e6)\n    assert reflect.DeepEqual(candidate(1234, 1238), 28846...40584e1)\n    assert reflect.DeepEqual(candidate(999, 1000), 999e3)\n    assert reflect.DeepEqual(candidate(1, 10), 36288e2)\n    assert reflect.DeepEqual(candidate(1234, 1240), 44318...63424e2)\n    assert reflect.DeepEqual(candidate(5, 5), 5e0)\n    assert reflect.DeepEqual(candidate(1000, 1000), 1e3)\n    assert reflect.DeepEqual(candidate(10, 15), 36036e2)\n    assert reflect.DeepEqual(candidate(1000, 1004), 10100...50024e3)\n    assert reflect.DeepEqual(candidate(500, 510), 54464...59744e5)\n    assert reflect.DeepEqual(candidate(1, 100), 93326...16864e24)\n    assert reflect.DeepEqual(candidate(995, 1000), 98508...27388e4)\n    assert reflect.DeepEqual(candidate(9995, 10000), 99850...73988e5)\n    assert reflect.DeepEqual(candidate(1, 4), 24e0)\n    assert reflect.DeepEqual(candidate(2, 11), 399168e2)\n    assert reflect.DeepEqual(candidate(500, 505), 16099...69356e4)\n    assert reflect.DeepEqual(candidate(5000, 5005), 15671...18506e5)\n    assert reflect.DeepEqual(candidate(5, 10), 1512e2)\n    assert reflect.DeepEqual(candidate(8000, 8003), 40990...04048e3)\n    assert reflect.DeepEqual(candidate(5555, 6666), 28137...34688e279)\n    assert reflect.DeepEqual(candidate(9000, 9005), 53232...19508e4)\n    assert reflect.DeepEqual(candidate(100, 150), 61219...44768e15)\n    assert reflect.DeepEqual(candidate(5, 20), 10137...00736e4)\n    assert reflect.DeepEqual(candidate(3000, 3100), 81710...90592e27)\n    assert reflect.DeepEqual(candidate(1234, 1244), 10562...94176e2)\n    assert reflect.DeepEqual(candidate(1, 5000), 42285...33472e1249)\n    assert reflect.DeepEqual(candidate(9000, 9050), 53429...51328e15)\n    assert reflect.DeepEqual(candidate(100, 1000), 43116...46048e227)\n    assert reflect.DeepEqual(candidate(6000, 6005), 46772...86472e4)\n    assert reflect.DeepEqual(candidate(7000, 7020), 57553...63648e7)\n    assert reflect.DeepEqual(candidate(100, 200), 84505...02048e27)\n    assert reflect.DeepEqual(candidate(1234, 1250), 39811...24736e7)\n    assert reflect.DeepEqual(candidate(4000, 4100), 22481...83456e27)\n    assert reflect.DeepEqual(candidate(1000, 1050), 35045...20832e15)\n    assert reflect.DeepEqual(candidate(4995, 5000), 15578...18494e5)\n    assert reflect.DeepEqual(candidate(9500, 10000), 29333...52864e128)\n    assert reflect.DeepEqual(candidate(2000, 3000), 25024...18624e252)\n    assert reflect.DeepEqual(candidate(6000, 6100), 90528...09184e27)\n    assert reflect.DeepEqual(candidate(9995, 10005), 99999...99856e6)\n    assert reflect.DeepEqual(candidate(100, 2000), 35534...18272e477)\n    assert reflect.DeepEqual(candidate(7000, 7050), 15097...01664e15)\n    assert reflect.DeepEqual(candidate(5500, 5510), 14071...33184e5)\n    assert reflect.DeepEqual(candidate(9999, 10000), 9999e4)\n    assert reflect.DeepEqual(candidate(8000, 8010), 86491...39904e5)\n    assert reflect.DeepEqual(candidate(5, 50), 12672...06688e12)\n    assert reflect.DeepEqual(candidate(5000, 6000), 31736...43584e253)\n    assert reflect.DeepEqual(candidate(8000, 8020), 94684...81312e7)\n    assert reflect.DeepEqual(candidate(8000, 9000), 12498...67872e253)\n    assert reflect.DeepEqual(candidate(6500, 6530), 17034...07232e10)\n    assert reflect.DeepEqual(candidate(3000, 3010), 18042...06464e5)\n    assert reflect.DeepEqual(candidate(1000, 9999), 70734...94464e2249)\n    assert reflect.DeepEqual(candidate(5000, 5015), 15629...41184e7)\n    assert reflect.DeepEqual(candidate(3000, 3025), 28318...52192e9)\n    assert reflect.DeepEqual(candidate(1234, 5678), 11390...64288e1112)\n    assert reflect.DeepEqual(candidate(1000, 2000), 82415...74464e253)\n    assert reflect.DeepEqual(candidate(9000, 9999), 31626...93632e250)\n    assert reflect.DeepEqual(candidate(4321, 4325), 15098...31038e2)\n    assert reflect.DeepEqual(candidate(8765, 8780), 12301...69504e5)\n    assert reflect.DeepEqual(candidate(10000, 10010), 10055...00288e6)\n    assert reflect.DeepEqual(candidate(9990, 10000), 99451...72288e6)\n    assert reflect.DeepEqual(candidate(2000, 2010), 21050...98176e5)\n    assert reflect.DeepEqual(candidate(9990, 9999), 99451...72288e2)\n    assert reflect.DeepEqual(candidate(5000, 5050), 57259...77056e16)\n    assert reflect.DeepEqual(candidate(2500, 2600), 11420...49216e28)\n    assert reflect.DeepEqual(candidate(2500, 2510), 24371...13072e6)\n    assert reflect.DeepEqual(candidate(3000, 4000), 13222...08128e254)\n    assert reflect.DeepEqual(candidate(1000, 10000), 70734...94464e2253)\n    assert reflect.DeepEqual(candidate(7500, 7510), 42545...13216e6)\n    assert reflect.DeepEqual(candidate(9000, 9010), 31573...64992e5)\n}",
+    "rust": "fn check(candidate: fn(Vec<i32>, i32) -> Vec<i32>) {\n    assert_eq!(candidate(100, 105), 1158727752e3);\n    assert_eq!(candidate(1, 10000), 28462...79008e2499);\n    assert_eq!(candidate(10, 20), 6704425728e3);\n    assert_eq!(candidate(371, 375), 7219856259e3);\n    assert_eq!(candidate(1000, 1010), 10563...82688e5);\n    assert_eq!(candidate(5000, 5010), 49367...34144e6);\n    assert_eq!(candidate(1234, 1238), 28846...40584e1);\n    assert_eq!(candidate(999, 1000), 999e3);\n    assert_eq!(candidate(1, 10), 36288e2);\n    assert_eq!(candidate(1234, 1240), 44318...63424e2);\n    assert_eq!(candidate(5, 5), 5e0);\n    assert_eq!(candidate(1000, 1000), 1e3);\n    assert_eq!(candidate(10, 15), 36036e2);\n    assert_eq!(candidate(1000, 1004), 10100...50024e3);\n    assert_eq!(candidate(500, 510), 54464...59744e5);\n    assert_eq!(candidate(1, 100), 93326...16864e24);\n    assert_eq!(candidate(995, 1000), 98508...27388e4);\n    assert_eq!(candidate(9995, 10000), 99850...73988e5);\n    assert_eq!(candidate(1, 4), 24e0);\n    assert_eq!(candidate(2, 11), 399168e2);\n    assert_eq!(candidate(500, 505), 16099...69356e4);\n    assert_eq!(candidate(5000, 5005), 15671...18506e5);\n    assert_eq!(candidate(5, 10), 1512e2);\n    assert_eq!(candidate(8000, 8003), 40990...04048e3);\n    assert_eq!(candidate(5555, 6666), 28137...34688e279);\n    assert_eq!(candidate(9000, 9005), 53232...19508e4);\n    assert_eq!(candidate(100, 150), 61219...44768e15);\n    assert_eq!(candidate(5, 20), 10137...00736e4);\n    assert_eq!(candidate(3000, 3100), 81710...90592e27);\n    assert_eq!(candidate(1234, 1244), 10562...94176e2);\n    assert_eq!(candidate(1, 5000), 42285...33472e1249);\n    assert_eq!(candidate(9000, 9050), 53429...51328e15);\n    assert_eq!(candidate(100, 1000), 43116...46048e227);\n    assert_eq!(candidate(6000, 6005), 46772...86472e4);\n    assert_eq!(candidate(7000, 7020), 57553...63648e7);\n    assert_eq!(candidate(100, 200), 84505...02048e27);\n    assert_eq!(candidate(1234, 1250), 39811...24736e7);\n    assert_eq!(candidate(4000, 4100), 22481...83456e27);\n    assert_eq!(candidate(1000, 1050), 35045...20832e15);\n    assert_eq!(candidate(4995, 5000), 15578...18494e5);\n    assert_eq!(candidate(9500, 10000), 29333...52864e128);\n    assert_eq!(candidate(2000, 3000), 25024...18624e252);\n    assert_eq!(candidate(6000, 6100), 90528...09184e27);\n    assert_eq!(candidate(9995, 10005), 99999...99856e6);\n    assert_eq!(candidate(100, 2000), 35534...18272e477);\n    assert_eq!(candidate(7000, 7050), 15097...01664e15);\n    assert_eq!(candidate(5500, 5510), 14071...33184e5);\n    assert_eq!(candidate(9999, 10000), 9999e4);\n    assert_eq!(candidate(8000, 8010), 86491...39904e5);\n    assert_eq!(candidate(5, 50), 12672...06688e12);\n    assert_eq!(candidate(5000, 6000), 31736...43584e253);\n    assert_eq!(candidate(8000, 8020), 94684...81312e7);\n    assert_eq!(candidate(8000, 9000), 12498...67872e253);\n    assert_eq!(candidate(6500, 6530), 17034...07232e10);\n    assert_eq!(candidate(3000, 3010), 18042...06464e5);\n    assert_eq!(candidate(1000, 9999), 70734...94464e2249);\n    assert_eq!(candidate(5000, 5015), 15629...41184e7);\n    assert_eq!(candidate(3000, 3025), 28318...52192e9);\n    assert_eq!(candidate(1234, 5678), 11390...64288e1112);\n    assert_eq!(candidate(1000, 2000), 82415...74464e253);\n    assert_eq!(candidate(9000, 9999), 31626...93632e250);\n    assert_eq!(candidate(4321, 4325), 15098...31038e2);\n    assert_eq!(candidate(8765, 8780), 12301...69504e5);\n    assert_eq!(candidate(10000, 10010), 10055...00288e6);\n    assert_eq!(candidate(9990, 10000), 99451...72288e6);\n    assert_eq!(candidate(2000, 2010), 21050...98176e5);\n    assert_eq!(candidate(9990, 9999), 99451...72288e2);\n    assert_eq!(candidate(5000, 5050), 57259...77056e16);\n    assert_eq!(candidate(2500, 2600), 11420...49216e28);\n    assert_eq!(candidate(2500, 2510), 24371...13072e6);\n    assert_eq!(candidate(3000, 4000), 13222...08128e254);\n    assert_eq!(candidate(1000, 10000), 70734...94464e2253);\n    assert_eq!(candidate(7500, 7510), 42545...13216e6);\n    assert_eq!(candidate(9000, 9010), 31573...64992e5);\n}"
+  },
+  "test_cases": [
+    {
+      "input": "left = 100, right = 105",
+      "output": "1158727752e3"
+    },
+    {
+      "input": "left = 1, right = 10000",
+      "output": "28462...79008e2499"
+    },
+    {
+      "input": "left = 10, right = 20",
+      "output": "6704425728e3"
+    },
+    {
+      "input": "left = 371, right = 375",
+      "output": "7219856259e3"
+    },
+    {
+      "input": "left = 1000, right = 1010",
+      "output": "10563...82688e5"
+    },
+    {
+      "input": "left = 5000, right = 5010",
+      "output": "49367...34144e6"
+    },
+    {
+      "input": "left = 1234, right = 1238",
+      "output": "28846...40584e1"
+    },
+    {
+      "input": "left = 999, right = 1000",
+      "output": "999e3"
+    },
+    {
+      "input": "left = 1, right = 10",
+      "output": "36288e2"
+    },
+    {
+      "input": "left = 1234, right = 1240",
+      "output": "44318...63424e2"
+    },
+    {
+      "input": "left = 5, right = 5",
+      "output": "5e0"
+    },
+    {
+      "input": "left = 1000, right = 1000",
+      "output": "1e3"
+    },
+    {
+      "input": "left = 10, right = 15",
+      "output": "36036e2"
+    },
+    {
+      "input": "left = 1000, right = 1004",
+      "output": "10100...50024e3"
+    },
+    {
+      "input": "left = 500, right = 510",
+      "output": "54464...59744e5"
+    },
+    {
+      "input": "left = 1, right = 100",
+      "output": "93326...16864e24"
+    },
+    {
+      "input": "left = 995, right = 1000",
+      "output": "98508...27388e4"
+    },
+    {
+      "input": "left = 9995, right = 10000",
+      "output": "99850...73988e5"
+    },
+    {
+      "input": "left = 1, right = 4",
+      "output": "24e0"
+    },
+    {
+      "input": "left = 2, right = 11",
+      "output": "399168e2"
+    },
+    {
+      "input": "left = 500, right = 505",
+      "output": "16099...69356e4"
+    },
+    {
+      "input": "left = 5000, right = 5005",
+      "output": "15671...18506e5"
+    },
+    {
+      "input": "left = 5, right = 10",
+      "output": "1512e2"
+    },
+    {
+      "input": "left = 8000, right = 8003",
+      "output": "40990...04048e3"
+    },
+    {
+      "input": "left = 5555, right = 6666",
+      "output": "28137...34688e279"
+    },
+    {
+      "input": "left = 9000, right = 9005",
+      "output": "53232...19508e4"
+    },
+    {
+      "input": "left = 100, right = 150",
+      "output": "61219...44768e15"
+    },
+    {
+      "input": "left = 5, right = 20",
+      "output": "10137...00736e4"
+    },
+    {
+      "input": "left = 3000, right = 3100",
+      "output": "81710...90592e27"
+    },
+    {
+      "input": "left = 1234, right = 1244",
+      "output": "10562...94176e2"
+    },
+    {
+      "input": "left = 1, right = 5000",
+      "output": "42285...33472e1249"
+    },
+    {
+      "input": "left = 9000, right = 9050",
+      "output": "53429...51328e15"
+    },
+    {
+      "input": "left = 100, right = 1000",
+      "output": "43116...46048e227"
+    },
+    {
+      "input": "left = 6000, right = 6005",
+      "output": "46772...86472e4"
+    },
+    {
+      "input": "left = 7000, right = 7020",
+      "output": "57553...63648e7"
+    },
+    {
+      "input": "left = 100, right = 200",
+      "output": "84505...02048e27"
+    },
+    {
+      "input": "left = 1234, right = 1250",
+      "output": "39811...24736e7"
+    },
+    {
+      "input": "left = 4000, right = 4100",
+      "output": "22481...83456e27"
+    },
+    {
+      "input": "left = 1000, right = 1050",
+      "output": "35045...20832e15"
+    },
+    {
+      "input": "left = 4995, right = 5000",
+      "output": "15578...18494e5"
+    },
+    {
+      "input": "left = 9500, right = 10000",
+      "output": "29333...52864e128"
+    },
+    {
+      "input": "left = 2000, right = 3000",
+      "output": "25024...18624e252"
+    },
+    {
+      "input": "left = 6000, right = 6100",
+      "output": "90528...09184e27"
+    },
+    {
+      "input": "left = 9995, right = 10005",
+      "output": "99999...99856e6"
+    },
+    {
+      "input": "left = 100, right = 2000",
+      "output": "35534...18272e477"
+    },
+    {
+      "input": "left = 7000, right = 7050",
+      "output": "15097...01664e15"
+    },
+    {
+      "input": "left = 5500, right = 5510",
+      "output": "14071...33184e5"
+    },
+    {
+      "input": "left = 9999, right = 10000",
+      "output": "9999e4"
+    },
+    {
+      "input": "left = 8000, right = 8010",
+      "output": "86491...39904e5"
+    },
+    {
+      "input": "left = 5, right = 50",
+      "output": "12672...06688e12"
+    },
+    {
+      "input": "left = 5000, right = 6000",
+      "output": "31736...43584e253"
+    },
+    {
+      "input": "left = 8000, right = 8020",
+      "output": "94684...81312e7"
+    },
+    {
+      "input": "left = 8000, right = 9000",
+      "output": "12498...67872e253"
+    },
+    {
+      "input": "left = 6500, right = 6530",
+      "output": "17034...07232e10"
+    },
+    {
+      "input": "left = 3000, right = 3010",
+      "output": "18042...06464e5"
+    },
+    {
+      "input": "left = 1000, right = 9999",
+      "output": "70734...94464e2249"
+    },
+    {
+      "input": "left = 5000, right = 5015",
+      "output": "15629...41184e7"
+    },
+    {
+      "input": "left = 3000, right = 3025",
+      "output": "28318...52192e9"
+    },
+    {
+      "input": "left = 1234, right = 5678",
+      "output": "11390...64288e1112"
+    },
+    {
+      "input": "left = 1000, right = 2000",
+      "output": "82415...74464e253"
+    },
+    {
+      "input": "left = 9000, right = 9999",
+      "output": "31626...93632e250"
+    },
+    {
+      "input": "left = 4321, right = 4325",
+      "output": "15098...31038e2"
+    },
+    {
+      "input": "left = 8765, right = 8780",
+      "output": "12301...69504e5"
+    },
+    {
+      "input": "left = 10000, right = 10010",
+      "output": "10055...00288e6"
+    },
+    {
+      "input": "left = 9990, right = 10000",
+      "output": "99451...72288e6"
+    },
+    {
+      "input": "left = 2000, right = 2010",
+      "output": "21050...98176e5"
+    },
+    {
+      "input": "left = 9990, right = 9999",
+      "output": "99451...72288e2"
+    },
+    {
+      "input": "left = 5000, right = 5050",
+      "output": "57259...77056e16"
+    },
+    {
+      "input": "left = 2500, right = 2600",
+      "output": "11420...49216e28"
+    },
+    {
+      "input": "left = 2500, right = 2510",
+      "output": "24371...13072e6"
+    },
+    {
+      "input": "left = 3000, right = 4000",
+      "output": "13222...08128e254"
+    },
+    {
+      "input": "left = 1000, right = 10000",
+      "output": "70734...94464e2253"
+    },
+    {
+      "input": "left = 7500, right = 7510",
+      "output": "42545...13216e6"
+    },
+    {
+      "input": "left = 9000, right = 9010",
+      "output": "31573...64992e5"
+    }
+  ],
+  "types": {
+    "python3": {
+      "input": [
+        {
+          "left": "int"
+        },
+        {
+          "right": "int"
+        }
+      ],
+      "output": "str"
+    },
+    "cpp": {
+      "input": [
+        {
+          "left": "int"
+        },
+        {
+          "right": "int"
+        }
+      ],
+      "output": "string"
+    },
+    "java": {
+      "input": [
+        {
+          "left": "int"
+        },
+        {
+          "right": "int"
+        }
+      ],
+      "output": "String"
+    },
+    "javascript": {
+      "input": [
+        {
+          "left": "number"
+        },
+        {
+          "right": "number"
+        }
+      ],
+      "output": "string"
+    },
+    "typescript": {
+      "input": [
+        {
+          "left": "number"
+        },
+        {
+          "right": "number"
+        }
+      ],
+      "output": "string"
+    },
+    "golang": {
+      "input": [
+        {
+          "left": "int"
+        },
+        {
+          "right": "int"
+        }
+      ],
+      "output": "string"
+    },
+    "rust": {
+      "input": [
+        {
+          "left": "i32"
+        },
+        {
+          "right": "i32"
+        }
+      ],
+      "output": "String"
+    }
+  },
+  "tags": [
+    "math"
+  ]
+}

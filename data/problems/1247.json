@@ -1,0 +1,559 @@
+{
+  "id": 1247,
+  "title": "Minimum Swaps to Make Strings Equal",
+  "slug": "minimum-swaps-to-make-strings-equal",
+  "difficulty": "Medium",
+  "description": "You are given two strings s1 and s2 of equal length consisting of letters \"x\" and \"y\" only. Your task is to make these two strings equal to each other. You can swap any two characters that belong to different strings, which means: swap s1[i] and s2[j].\nReturn the minimum number of swaps required to make s1 and s2 equal, or return -1 if it is impossible to do so.\nExample 1:\nExample 2:\nExample 3:\nConstraints:",
+  "examples": [
+    {
+      "example_num": 1,
+      "example_text": "Input: s1 = \"xx\", s2 = \"yy\"\nOutput: 1\nExplanation: Swap s1[0] and s2[1], s1 = \"yx\", s2 = \"yx\".",
+      "images": []
+    },
+    {
+      "example_num": 2,
+      "example_text": "Input: s1 = \"xy\", s2 = \"yx\"\nOutput: 2\nExplanation: Swap s1[0] and s2[0], s1 = \"yy\", s2 = \"xx\".\nSwap s1[0] and s2[1], s1 = \"xy\", s2 = \"xy\".\nNote that you cannot swap s1[0] and s1[1] to make s1 equal to \"yx\", cause we can only swap chars in different strings.",
+      "images": []
+    },
+    {
+      "example_num": 3,
+      "example_text": "Input: s1 = \"xx\", s2 = \"xy\"\nOutput: -1",
+      "images": []
+    }
+  ],
+  "constraints": [
+    "1 <= s1.length, s2.length <= 1000",
+    "s1.length == s2.length",
+    "s1, s2 only contain 'x' or 'y'."
+  ],
+  "hints": [
+    "First, ignore all the already matched positions, they don't affect the answer at all. For the unmatched positions, there are three basic cases (already given in the examples):",
+    "(\"xx\", \"yy\") => 1 swap, (\"xy\", \"yx\") => 2 swaps",
+    "So the strategy is, apply case 1 as much as possible, then apply case 2 if the last two unmatched are in this case, or fall into impossible if only one pair of unmatched left. This can be done via a simple math."
+  ],
+  "code_snippets": {
+    "cpp": "class Solution {\npublic:\n    int minimumSwap(string s1, string s2) {\n        \n    }\n};",
+    "java": "class Solution {\n    public int minimumSwap(String s1, String s2) {\n        \n    }\n}",
+    "python3": "class Solution:\n    def minimumSwap(self, s1: str, s2: str) -> int:\n        ",
+    "javascript": "/**\n * @param {string} s1\n * @param {string} s2\n * @return {number}\n */\nvar minimumSwap = function(s1, s2) {\n    \n};",
+    "typescript": "function minimumSwap(s1: string, s2: string): number {\n    \n};",
+    "golang": "func minimumSwap(s1 string, s2 string) int {\n    \n}",
+    "rust": "impl Solution {\n    pub fn minimum_swap(s1: String, s2: String) -> i32 {\n        \n    }\n}"
+  },
+  "entry_points": {
+    "python3": "Solution().minimumSwap",
+    "cpp": "Solution().minimumSwap",
+    "java": "new Solution().minimumSwap",
+    "javascript": "minimumSwap",
+    "typescript": "minimumSwap",
+    "golang": "minimumSwap",
+    "rust": "Solution::minimum_swap"
+  },
+  "test_snippets": {
+    "python3": "def check(candidate):\n    assert candidate(s1 = \"xyyy\", s2 = \"yxxx\") == 3\n    assert candidate(s1 = \"xx\", s2 = \"yy\") == 1\n    assert candidate(s1 = \"xxyy\", s2 = \"xyxy\") == 2\n    assert candidate(s1 = \"xxyyxyxyxx\", s2 = \"xyyxyxxxyx\") == 4\n    assert candidate(s1 = \"xxxyyy\", s2 = \"yyyxxx\") == 4\n    assert candidate(s1 = \"xyyx\", s2 = \"xxyy\") == 2\n    assert candidate(s1 = \"yx\", s2 = \"xy\") == 2\n    assert candidate(s1 = \"xxxx\", s2 = \"yyyy\") == 2\n    assert candidate(s1 = \"yxyy\", s2 = \"xyyx\") == -1\n    assert candidate(s1 = \"xx\", s2 = \"xy\") == -1\n    assert candidate(s1 = \"yy\", s2 = \"xx\") == 1\n    assert candidate(s1 = \"xyyx\", s2 = \"xyyx\") == 0\n    assert candidate(s1 = \"yyyy\", s2 = \"xxxx\") == 2\n    assert candidate(s1 = \"xyxy\", s2 = \"yxyx\") == 2\n    assert candidate(s1 = \"xyxx\", s2 = \"xyyx\") == -1\n    assert candidate(s1 = \"xxyx\", s2 = \"xyxy\") == -1\n    assert candidate(s1 = \"xy\", s2 = \"yx\") == 2\n    assert candidate(s1 = \"xyxyxy\", s2 = \"yxyxyx\") == 4\n    assert candidate(s1 = \"xyxyxyxyxyxyxyxyxyxyxyxyxy\", s2 = \"yxyxyxyxyxyxyxyxyxyxyxyxyx\") == 14\n    assert candidate(s1 = \"xyxxxyxxyy\", s2 = \"yxyyxyyxxy\") == 3\n    assert candidate(s1 = \"xyyyxy\", s2 = \"yxyxyx\") == -1\n    assert candidate(s1 = \"xxyyxx\", s2 = \"yyxxxy\") == -1\n    assert candidate(s1 = \"xyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxy\", s2 = \"yxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyx\") == 16\n    assert candidate(s1 = \"xyxyyx\", s2 = \"yxyxyx\") == 2\n    assert candidate(s1 = \"xyxyxyxyxyxyxyxyxyxyxyxyxyxy\", s2 = \"yxyxyxyxyxyxyxyxyxyxyxyxyxyx\") == 14\n    assert candidate(s1 = \"xyxyxyxyxyxy\", s2 = \"yxyxyxyxyxyx\") == 6\n    assert candidate(s1 = \"xxxyyyxx\", s2 = \"yyxxxyyy\") == 3\n    assert candidate(s1 = \"xyyxxyyyxy\", s2 = \"yxyyxxyxyx\") == -1\n    assert candidate(s1 = \"xyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxy\", s2 = \"yxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyx\") == 20\n    assert candidate(s1 = \"yxyxyxyxyx\", s2 = \"xyxyxyxyxy\") == 6\n    assert candidate(s1 = \"xyyxxyyxxy\", s2 = \"yxyxyxyxyx\") == 4\n    assert candidate(s1 = \"xxxyyyy\", s2 = \"yyyxxxx\") == -1\n    assert candidate(s1 = \"xyyxxyyx\", s2 = \"yxyxyxyx\") == 2\n    assert candidate(s1 = \"xxyyyy\", s2 = \"yyxxyx\") == -1\n    assert candidate(s1 = \"xxxxxyyyyy\", s2 = \"yyyyyyxxxx\") == -1\n    assert candidate(s1 = \"xxyxyxyy\", s2 = \"yyxyxyyx\") == -1\n    assert candidate(s1 = \"xyxyxxxy\", s2 = \"yyxxyxyx\") == -1\n    assert candidate(s1 = \"xxyxxyxyxy\", s2 = \"yxyxyxyxyy\") == 3\n    assert candidate(s1 = \"xxxyyyxy\", s2 = \"yyxxyxxy\") == 2\n    assert candidate(s1 = \"xyyx\", s2 = \"yxyx\") == 2\n    assert candidate(s1 = \"xxyyxyyx\", s2 = \"yyxyxxxy\") == 4\n    assert candidate(s1 = \"xxyxxy\", s2 = \"yyxyyx\") == 3\n    assert candidate(s1 = \"xyyxxyxyxy\", s2 = \"yxyxyxyxyy\") == -1\n    assert candidate(s1 = \"xyxyxyxyxyxyxy\", s2 = \"yxyxyxyxyxyxyx\") == 8\n    assert candidate(s1 = \"xxyyxy\", s2 = \"yyxyxx\") == 2\n    assert candidate(s1 = \"xyxyxy\", s2 = \"yxyxyy\") == -1\n    assert candidate(s1 = \"xyxxyyxy\", s2 = \"yxyyyxyx\") == -1\n    assert candidate(s1 = \"xxyxyxyxyx\", s2 = \"yxyxyxyxyx\") == -1\n    assert candidate(s1 = \"xxyyxyxyx\", s2 = \"yyxyxyxyx\") == -1\n    assert candidate(s1 = \"yxyxyxyxyx\", s2 = \"xyxyxyxyyx\") == 4\n    assert candidate(s1 = \"xyxxyxxyxy\", s2 = \"yxyxyxyxyx\") == -1\n    assert candidate(s1 = \"xyxyxyyxyx\", s2 = \"xyxyxyxyxy\") == 2\n    assert candidate(s1 = \"xxxxxy\", s2 = \"yyyxxx\") == 3\n    assert candidate(s1 = \"xxyyxxxyyy\", s2 = \"yyxxyyxyxx\") == 4\n    assert candidate(s1 = \"xxxxxx\", s2 = \"yyyyyy\") == 3\n    assert candidate(s1 = \"xyxyxyxyxy\", s2 = \"yxyxyxyxyx\") == 6\n    assert candidate(s1 = \"xxxxxyyyy\", s2 = \"yyyyxxxyx\") == -1\n    assert candidate(s1 = \"xxyx\", s2 = \"xyyx\") == -1\n    assert candidate(s1 = \"xxxxxxxx\", s2 = \"yyyyyyyy\") == 4\n    assert candidate(s1 = \"xxxxxxxxxx\", s2 = \"yyyyyyyyyy\") == 5\n    assert candidate(s1 = \"xyxxyxxyx\", s2 = \"yxyxyxyyx\") == 3\n    assert candidate(s1 = \"xyxxyy\", s2 = \"yxyxyx\") == 2\n    assert candidate(s1 = \"xxyxyxyx\", s2 = \"yxyxyxyy\") == 1\n    assert candidate(s1 = \"xyxyxxxyyx\", s2 = \"yxyxyxxyxy\") == -1\n    assert candidate(s1 = \"xxyyxxyyxx\", s2 = \"yyxyxxyyxy\") == 3\n    assert candidate(s1 = \"xyxyxyxyxyxyxyxyxyxy\", s2 = \"yxyxyxyxyxyxyxyxyxyx\") == 10\n    assert candidate(s1 = \"xyxyxyxy\", s2 = \"yxyxyxyx\") == 4\n    assert candidate(s1 = \"xxyy\", s2 = \"yyxx\") == 2\n    assert candidate(s1 = \"xxyxyxyxyxyxyxyxyx\", s2 = \"xyxyxyxyxyxyxyxyyx\") == -1\n    assert candidate(s1 = \"xxyyxyxyxyxyxy\", s2 = \"yyxyxyxyxyxyyx\") == -1\n    assert candidate(s1 = \"xyxyy\", s2 = \"yxyyx\") == 2\n    assert candidate(s1 = \"xyyxxyyxxyyx\", s2 = \"yxyxyxyxyxyy\") == -1\n    assert candidate(s1 = \"xxyxyxyx\", s2 = \"xyxyxyyx\") == -1\n    assert candidate(s1 = \"xxxxxyyy\", s2 = \"yyyyxxxx\") == -1\n    assert candidate(s1 = \"xyxyxyxyyy\", s2 = \"yxyxyxyxxx\") == 5\n    assert candidate(s1 = \"yyxyyyxxxyyy\", s2 = \"xyxxyyxyxxyx\") == -1\n    assert candidate(s1 = \"yxyxyxyx\", s2 = \"xyxyxyxy\") == 4\n    assert candidate(s1 = \"xyxxyxyxyx\", s2 = \"xyxyxyxyyx\") == -1\n    assert candidate(s1 = \"xyxxyxyx\", s2 = \"yxxyxyyx\") == -1\n    assert candidate(s1 = \"xxxxxxyy\", s2 = \"yyxxxxyx\") == -1\n    assert candidate(s1 = \"xyxyxyxyxyxyxyxyxyxyxy\", s2 = \"yxyxyxyxyxyxyxyxyxyxyx\") == 12\n    assert candidate(s1 = \"xxyyxyyx\", s2 = \"yyxyxyyx\") == -1\n    assert candidate(s1 = \"xxxyyyxyyx\", s2 = \"yyxyyxyxxy\") == -1\n    assert candidate(s1 = \"xxyxxyxyxy\", s2 = \"yxyxyxyxyx\") == -1\n    assert candidate(s1 = \"xyxxyxxyxxyxyy\", s2 = \"yxyxyxyxyxyyxy\") == 5\n    assert candidate(s1 = \"xxyxyxx\", s2 = \"yyxyxyy\") == -1\n    assert candidate(s1 = \"xxyxyxyxyx\", s2 = \"xyxyxyxyyx\") == -1\n    assert candidate(s1 = \"xyxyxyyy\", s2 = \"yxyxyxxx\") == 5\n    assert candidate(s1 = \"xyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxy\", s2 = \"yxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyx\") == 18\n    assert candidate(s1 = \"xxyxyxyxyx\", s2 = \"xyxxyxyxyx\") == 2\n    assert candidate(s1 = \"xyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxy\", s2 = \"yxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyx\") == 18\n    assert candidate(s1 = \"xyyxxyxyxy\", s2 = \"yxyxyxyxyx\") == 4\n    assert candidate(s1 = \"xxyxyx\", s2 = \"yyxyxy\") == 3\n    assert candidate(s1 = \"xxyyyy\", s2 = \"yyyxxx\") == -1\n    assert candidate(s1 = \"xyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxy\", s2 = \"yxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyx\") == 20\n    assert candidate(s1 = \"xyxxyxyx\", s2 = \"xyxyxyyx\") == -1\n    assert candidate(s1 = \"xyxyxyxyxy\", s2 = \"yxyxyxyxyy\") == -1\n    assert candidate(s1 = \"xyxxyxxyx\", s2 = \"yxyxyxyxy\") == 3\n    assert candidate(s1 = \"xyxxyxyxyxyxyxyxyxyxyxyxyxyx\", s2 = \"xyxyxyxyxyxyxyxyxyxyxyxyxyxy\") == -1\n    assert candidate(s1 = \"xxyxyxyxyy\", s2 = \"yyxyxyxyyx\") == -1\n    assert candidate(s1 = \"xyxyxyxyxyxyxyxy\", s2 = \"yxyxyxyxyxyxyxyx\") == 8\n    assert candidate(s1 = \"xyxxxy\", s2 = \"yxyyxy\") == 3\n    assert candidate(s1 = \"xxyxyyxy\", s2 = \"yyxyxyyx\") == -1",
+    "cpp": "void check(Solution& solution) {\n    assert(solution.minimumSwap(\"xyyy\", \"yxxx\") == vector<int>3);\n    assert(solution.minimumSwap(\"xx\", \"yy\") == vector<int>1);\n    assert(solution.minimumSwap(\"xxyy\", \"xyxy\") == vector<int>2);\n    assert(solution.minimumSwap(\"xxyyxyxyxx\", \"xyyxyxxxyx\") == vector<int>4);\n    assert(solution.minimumSwap(\"xxxyyy\", \"yyyxxx\") == vector<int>4);\n    assert(solution.minimumSwap(\"xyyx\", \"xxyy\") == vector<int>2);\n    assert(solution.minimumSwap(\"yx\", \"xy\") == vector<int>2);\n    assert(solution.minimumSwap(\"xxxx\", \"yyyy\") == vector<int>2);\n    assert(solution.minimumSwap(\"yxyy\", \"xyyx\") == vector<int>-1);\n    assert(solution.minimumSwap(\"xx\", \"xy\") == vector<int>-1);\n    assert(solution.minimumSwap(\"yy\", \"xx\") == vector<int>1);\n    assert(solution.minimumSwap(\"xyyx\", \"xyyx\") == vector<int>0);\n    assert(solution.minimumSwap(\"yyyy\", \"xxxx\") == vector<int>2);\n    assert(solution.minimumSwap(\"xyxy\", \"yxyx\") == vector<int>2);\n    assert(solution.minimumSwap(\"xyxx\", \"xyyx\") == vector<int>-1);\n    assert(solution.minimumSwap(\"xxyx\", \"xyxy\") == vector<int>-1);\n    assert(solution.minimumSwap(\"xy\", \"yx\") == vector<int>2);\n    assert(solution.minimumSwap(\"xyxyxy\", \"yxyxyx\") == vector<int>4);\n    assert(solution.minimumSwap(\"xyxyxyxyxyxyxyxyxyxyxyxyxy\", \"yxyxyxyxyxyxyxyxyxyxyxyxyx\") == vector<int>14);\n    assert(solution.minimumSwap(\"xyxxxyxxyy\", \"yxyyxyyxxy\") == vector<int>3);\n    assert(solution.minimumSwap(\"xyyyxy\", \"yxyxyx\") == vector<int>-1);\n    assert(solution.minimumSwap(\"xxyyxx\", \"yyxxxy\") == vector<int>-1);\n    assert(solution.minimumSwap(\"xyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxy\", \"yxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyx\") == vector<int>16);\n    assert(solution.minimumSwap(\"xyxyyx\", \"yxyxyx\") == vector<int>2);\n    assert(solution.minimumSwap(\"xyxyxyxyxyxyxyxyxyxyxyxyxyxy\", \"yxyxyxyxyxyxyxyxyxyxyxyxyxyx\") == vector<int>14);\n    assert(solution.minimumSwap(\"xyxyxyxyxyxy\", \"yxyxyxyxyxyx\") == vector<int>6);\n    assert(solution.minimumSwap(\"xxxyyyxx\", \"yyxxxyyy\") == vector<int>3);\n    assert(solution.minimumSwap(\"xyyxxyyyxy\", \"yxyyxxyxyx\") == vector<int>-1);\n    assert(solution.minimumSwap(\"xyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxy\", \"yxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyx\") == vector<int>20);\n    assert(solution.minimumSwap(\"yxyxyxyxyx\", \"xyxyxyxyxy\") == vector<int>6);\n    assert(solution.minimumSwap(\"xyyxxyyxxy\", \"yxyxyxyxyx\") == vector<int>4);\n    assert(solution.minimumSwap(\"xxxyyyy\", \"yyyxxxx\") == vector<int>-1);\n    assert(solution.minimumSwap(\"xyyxxyyx\", \"yxyxyxyx\") == vector<int>2);\n    assert(solution.minimumSwap(\"xxyyyy\", \"yyxxyx\") == vector<int>-1);\n    assert(solution.minimumSwap(\"xxxxxyyyyy\", \"yyyyyyxxxx\") == vector<int>-1);\n    assert(solution.minimumSwap(\"xxyxyxyy\", \"yyxyxyyx\") == vector<int>-1);\n    assert(solution.minimumSwap(\"xyxyxxxy\", \"yyxxyxyx\") == vector<int>-1);\n    assert(solution.minimumSwap(\"xxyxxyxyxy\", \"yxyxyxyxyy\") == vector<int>3);\n    assert(solution.minimumSwap(\"xxxyyyxy\", \"yyxxyxxy\") == vector<int>2);\n    assert(solution.minimumSwap(\"xyyx\", \"yxyx\") == vector<int>2);\n    assert(solution.minimumSwap(\"xxyyxyyx\", \"yyxyxxxy\") == vector<int>4);\n    assert(solution.minimumSwap(\"xxyxxy\", \"yyxyyx\") == vector<int>3);\n    assert(solution.minimumSwap(\"xyyxxyxyxy\", \"yxyxyxyxyy\") == vector<int>-1);\n    assert(solution.minimumSwap(\"xyxyxyxyxyxyxy\", \"yxyxyxyxyxyxyx\") == vector<int>8);\n    assert(solution.minimumSwap(\"xxyyxy\", \"yyxyxx\") == vector<int>2);\n    assert(solution.minimumSwap(\"xyxyxy\", \"yxyxyy\") == vector<int>-1);\n    assert(solution.minimumSwap(\"xyxxyyxy\", \"yxyyyxyx\") == vector<int>-1);\n    assert(solution.minimumSwap(\"xxyxyxyxyx\", \"yxyxyxyxyx\") == vector<int>-1);\n    assert(solution.minimumSwap(\"xxyyxyxyx\", \"yyxyxyxyx\") == vector<int>-1);\n    assert(solution.minimumSwap(\"yxyxyxyxyx\", \"xyxyxyxyyx\") == vector<int>4);\n    assert(solution.minimumSwap(\"xyxxyxxyxy\", \"yxyxyxyxyx\") == vector<int>-1);\n    assert(solution.minimumSwap(\"xyxyxyyxyx\", \"xyxyxyxyxy\") == vector<int>2);\n    assert(solution.minimumSwap(\"xxxxxy\", \"yyyxxx\") == vector<int>3);\n    assert(solution.minimumSwap(\"xxyyxxxyyy\", \"yyxxyyxyxx\") == vector<int>4);\n    assert(solution.minimumSwap(\"xxxxxx\", \"yyyyyy\") == vector<int>3);\n    assert(solution.minimumSwap(\"xyxyxyxyxy\", \"yxyxyxyxyx\") == vector<int>6);\n    assert(solution.minimumSwap(\"xxxxxyyyy\", \"yyyyxxxyx\") == vector<int>-1);\n    assert(solution.minimumSwap(\"xxyx\", \"xyyx\") == vector<int>-1);\n    assert(solution.minimumSwap(\"xxxxxxxx\", \"yyyyyyyy\") == vector<int>4);\n    assert(solution.minimumSwap(\"xxxxxxxxxx\", \"yyyyyyyyyy\") == vector<int>5);\n    assert(solution.minimumSwap(\"xyxxyxxyx\", \"yxyxyxyyx\") == vector<int>3);\n    assert(solution.minimumSwap(\"xyxxyy\", \"yxyxyx\") == vector<int>2);\n    assert(solution.minimumSwap(\"xxyxyxyx\", \"yxyxyxyy\") == vector<int>1);\n    assert(solution.minimumSwap(\"xyxyxxxyyx\", \"yxyxyxxyxy\") == vector<int>-1);\n    assert(solution.minimumSwap(\"xxyyxxyyxx\", \"yyxyxxyyxy\") == vector<int>3);\n    assert(solution.minimumSwap(\"xyxyxyxyxyxyxyxyxyxy\", \"yxyxyxyxyxyxyxyxyxyx\") == vector<int>10);\n    assert(solution.minimumSwap(\"xyxyxyxy\", \"yxyxyxyx\") == vector<int>4);\n    assert(solution.minimumSwap(\"xxyy\", \"yyxx\") == vector<int>2);\n    assert(solution.minimumSwap(\"xxyxyxyxyxyxyxyxyx\", \"xyxyxyxyxyxyxyxyyx\") == vector<int>-1);\n    assert(solution.minimumSwap(\"xxyyxyxyxyxyxy\", \"yyxyxyxyxyxyyx\") == vector<int>-1);\n    assert(solution.minimumSwap(\"xyxyy\", \"yxyyx\") == vector<int>2);\n    assert(solution.minimumSwap(\"xyyxxyyxxyyx\", \"yxyxyxyxyxyy\") == vector<int>-1);\n    assert(solution.minimumSwap(\"xxyxyxyx\", \"xyxyxyyx\") == vector<int>-1);\n    assert(solution.minimumSwap(\"xxxxxyyy\", \"yyyyxxxx\") == vector<int>-1);\n    assert(solution.minimumSwap(\"xyxyxyxyyy\", \"yxyxyxyxxx\") == vector<int>5);\n    assert(solution.minimumSwap(\"yyxyyyxxxyyy\", \"xyxxyyxyxxyx\") == vector<int>-1);\n    assert(solution.minimumSwap(\"yxyxyxyx\", \"xyxyxyxy\") == vector<int>4);\n    assert(solution.minimumSwap(\"xyxxyxyxyx\", \"xyxyxyxyyx\") == vector<int>-1);\n    assert(solution.minimumSwap(\"xyxxyxyx\", \"yxxyxyyx\") == vector<int>-1);\n    assert(solution.minimumSwap(\"xxxxxxyy\", \"yyxxxxyx\") == vector<int>-1);\n    assert(solution.minimumSwap(\"xyxyxyxyxyxyxyxyxyxyxy\", \"yxyxyxyxyxyxyxyxyxyxyx\") == vector<int>12);\n    assert(solution.minimumSwap(\"xxyyxyyx\", \"yyxyxyyx\") == vector<int>-1);\n    assert(solution.minimumSwap(\"xxxyyyxyyx\", \"yyxyyxyxxy\") == vector<int>-1);\n    assert(solution.minimumSwap(\"xxyxxyxyxy\", \"yxyxyxyxyx\") == vector<int>-1);\n    assert(solution.minimumSwap(\"xyxxyxxyxxyxyy\", \"yxyxyxyxyxyyxy\") == vector<int>5);\n    assert(solution.minimumSwap(\"xxyxyxx\", \"yyxyxyy\") == vector<int>-1);\n    assert(solution.minimumSwap(\"xxyxyxyxyx\", \"xyxyxyxyyx\") == vector<int>-1);\n    assert(solution.minimumSwap(\"xyxyxyyy\", \"yxyxyxxx\") == vector<int>5);\n    assert(solution.minimumSwap(\"xyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxy\", \"yxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyx\") == vector<int>18);\n    assert(solution.minimumSwap(\"xxyxyxyxyx\", \"xyxxyxyxyx\") == vector<int>2);\n    assert(solution.minimumSwap(\"xyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxy\", \"yxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyx\") == vector<int>18);\n    assert(solution.minimumSwap(\"xyyxxyxyxy\", \"yxyxyxyxyx\") == vector<int>4);\n    assert(solution.minimumSwap(\"xxyxyx\", \"yyxyxy\") == vector<int>3);\n    assert(solution.minimumSwap(\"xxyyyy\", \"yyyxxx\") == vector<int>-1);\n    assert(solution.minimumSwap(\"xyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxy\", \"yxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyx\") == vector<int>20);\n    assert(solution.minimumSwap(\"xyxxyxyx\", \"xyxyxyyx\") == vector<int>-1);\n    assert(solution.minimumSwap(\"xyxyxyxyxy\", \"yxyxyxyxyy\") == vector<int>-1);\n    assert(solution.minimumSwap(\"xyxxyxxyx\", \"yxyxyxyxy\") == vector<int>3);\n    assert(solution.minimumSwap(\"xyxxyxyxyxyxyxyxyxyxyxyxyxyx\", \"xyxyxyxyxyxyxyxyxyxyxyxyxyxy\") == vector<int>-1);\n    assert(solution.minimumSwap(\"xxyxyxyxyy\", \"yyxyxyxyyx\") == vector<int>-1);\n    assert(solution.minimumSwap(\"xyxyxyxyxyxyxyxy\", \"yxyxyxyxyxyxyxyx\") == vector<int>8);\n    assert(solution.minimumSwap(\"xyxxxy\", \"yxyyxy\") == vector<int>3);\n    assert(solution.minimumSwap(\"xxyxyyxy\", \"yyxyxyyx\") == vector<int>-1);\n}",
+    "java": "public static void check(Solution solution) {\n    assert Arrays.equals(solution.minimumSwap(\"xyyy\", \"yxxx\"), 3);\n    assert Arrays.equals(solution.minimumSwap(\"xx\", \"yy\"), 1);\n    assert Arrays.equals(solution.minimumSwap(\"xxyy\", \"xyxy\"), 2);\n    assert Arrays.equals(solution.minimumSwap(\"xxyyxyxyxx\", \"xyyxyxxxyx\"), 4);\n    assert Arrays.equals(solution.minimumSwap(\"xxxyyy\", \"yyyxxx\"), 4);\n    assert Arrays.equals(solution.minimumSwap(\"xyyx\", \"xxyy\"), 2);\n    assert Arrays.equals(solution.minimumSwap(\"yx\", \"xy\"), 2);\n    assert Arrays.equals(solution.minimumSwap(\"xxxx\", \"yyyy\"), 2);\n    assert Arrays.equals(solution.minimumSwap(\"yxyy\", \"xyyx\"), -1);\n    assert Arrays.equals(solution.minimumSwap(\"xx\", \"xy\"), -1);\n    assert Arrays.equals(solution.minimumSwap(\"yy\", \"xx\"), 1);\n    assert Arrays.equals(solution.minimumSwap(\"xyyx\", \"xyyx\"), 0);\n    assert Arrays.equals(solution.minimumSwap(\"yyyy\", \"xxxx\"), 2);\n    assert Arrays.equals(solution.minimumSwap(\"xyxy\", \"yxyx\"), 2);\n    assert Arrays.equals(solution.minimumSwap(\"xyxx\", \"xyyx\"), -1);\n    assert Arrays.equals(solution.minimumSwap(\"xxyx\", \"xyxy\"), -1);\n    assert Arrays.equals(solution.minimumSwap(\"xy\", \"yx\"), 2);\n    assert Arrays.equals(solution.minimumSwap(\"xyxyxy\", \"yxyxyx\"), 4);\n    assert Arrays.equals(solution.minimumSwap(\"xyxyxyxyxyxyxyxyxyxyxyxyxy\", \"yxyxyxyxyxyxyxyxyxyxyxyxyx\"), 14);\n    assert Arrays.equals(solution.minimumSwap(\"xyxxxyxxyy\", \"yxyyxyyxxy\"), 3);\n    assert Arrays.equals(solution.minimumSwap(\"xyyyxy\", \"yxyxyx\"), -1);\n    assert Arrays.equals(solution.minimumSwap(\"xxyyxx\", \"yyxxxy\"), -1);\n    assert Arrays.equals(solution.minimumSwap(\"xyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxy\", \"yxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyx\"), 16);\n    assert Arrays.equals(solution.minimumSwap(\"xyxyyx\", \"yxyxyx\"), 2);\n    assert Arrays.equals(solution.minimumSwap(\"xyxyxyxyxyxyxyxyxyxyxyxyxyxy\", \"yxyxyxyxyxyxyxyxyxyxyxyxyxyx\"), 14);\n    assert Arrays.equals(solution.minimumSwap(\"xyxyxyxyxyxy\", \"yxyxyxyxyxyx\"), 6);\n    assert Arrays.equals(solution.minimumSwap(\"xxxyyyxx\", \"yyxxxyyy\"), 3);\n    assert Arrays.equals(solution.minimumSwap(\"xyyxxyyyxy\", \"yxyyxxyxyx\"), -1);\n    assert Arrays.equals(solution.minimumSwap(\"xyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxy\", \"yxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyx\"), 20);\n    assert Arrays.equals(solution.minimumSwap(\"yxyxyxyxyx\", \"xyxyxyxyxy\"), 6);\n    assert Arrays.equals(solution.minimumSwap(\"xyyxxyyxxy\", \"yxyxyxyxyx\"), 4);\n    assert Arrays.equals(solution.minimumSwap(\"xxxyyyy\", \"yyyxxxx\"), -1);\n    assert Arrays.equals(solution.minimumSwap(\"xyyxxyyx\", \"yxyxyxyx\"), 2);\n    assert Arrays.equals(solution.minimumSwap(\"xxyyyy\", \"yyxxyx\"), -1);\n    assert Arrays.equals(solution.minimumSwap(\"xxxxxyyyyy\", \"yyyyyyxxxx\"), -1);\n    assert Arrays.equals(solution.minimumSwap(\"xxyxyxyy\", \"yyxyxyyx\"), -1);\n    assert Arrays.equals(solution.minimumSwap(\"xyxyxxxy\", \"yyxxyxyx\"), -1);\n    assert Arrays.equals(solution.minimumSwap(\"xxyxxyxyxy\", \"yxyxyxyxyy\"), 3);\n    assert Arrays.equals(solution.minimumSwap(\"xxxyyyxy\", \"yyxxyxxy\"), 2);\n    assert Arrays.equals(solution.minimumSwap(\"xyyx\", \"yxyx\"), 2);\n    assert Arrays.equals(solution.minimumSwap(\"xxyyxyyx\", \"yyxyxxxy\"), 4);\n    assert Arrays.equals(solution.minimumSwap(\"xxyxxy\", \"yyxyyx\"), 3);\n    assert Arrays.equals(solution.minimumSwap(\"xyyxxyxyxy\", \"yxyxyxyxyy\"), -1);\n    assert Arrays.equals(solution.minimumSwap(\"xyxyxyxyxyxyxy\", \"yxyxyxyxyxyxyx\"), 8);\n    assert Arrays.equals(solution.minimumSwap(\"xxyyxy\", \"yyxyxx\"), 2);\n    assert Arrays.equals(solution.minimumSwap(\"xyxyxy\", \"yxyxyy\"), -1);\n    assert Arrays.equals(solution.minimumSwap(\"xyxxyyxy\", \"yxyyyxyx\"), -1);\n    assert Arrays.equals(solution.minimumSwap(\"xxyxyxyxyx\", \"yxyxyxyxyx\"), -1);\n    assert Arrays.equals(solution.minimumSwap(\"xxyyxyxyx\", \"yyxyxyxyx\"), -1);\n    assert Arrays.equals(solution.minimumSwap(\"yxyxyxyxyx\", \"xyxyxyxyyx\"), 4);\n    assert Arrays.equals(solution.minimumSwap(\"xyxxyxxyxy\", \"yxyxyxyxyx\"), -1);\n    assert Arrays.equals(solution.minimumSwap(\"xyxyxyyxyx\", \"xyxyxyxyxy\"), 2);\n    assert Arrays.equals(solution.minimumSwap(\"xxxxxy\", \"yyyxxx\"), 3);\n    assert Arrays.equals(solution.minimumSwap(\"xxyyxxxyyy\", \"yyxxyyxyxx\"), 4);\n    assert Arrays.equals(solution.minimumSwap(\"xxxxxx\", \"yyyyyy\"), 3);\n    assert Arrays.equals(solution.minimumSwap(\"xyxyxyxyxy\", \"yxyxyxyxyx\"), 6);\n    assert Arrays.equals(solution.minimumSwap(\"xxxxxyyyy\", \"yyyyxxxyx\"), -1);\n    assert Arrays.equals(solution.minimumSwap(\"xxyx\", \"xyyx\"), -1);\n    assert Arrays.equals(solution.minimumSwap(\"xxxxxxxx\", \"yyyyyyyy\"), 4);\n    assert Arrays.equals(solution.minimumSwap(\"xxxxxxxxxx\", \"yyyyyyyyyy\"), 5);\n    assert Arrays.equals(solution.minimumSwap(\"xyxxyxxyx\", \"yxyxyxyyx\"), 3);\n    assert Arrays.equals(solution.minimumSwap(\"xyxxyy\", \"yxyxyx\"), 2);\n    assert Arrays.equals(solution.minimumSwap(\"xxyxyxyx\", \"yxyxyxyy\"), 1);\n    assert Arrays.equals(solution.minimumSwap(\"xyxyxxxyyx\", \"yxyxyxxyxy\"), -1);\n    assert Arrays.equals(solution.minimumSwap(\"xxyyxxyyxx\", \"yyxyxxyyxy\"), 3);\n    assert Arrays.equals(solution.minimumSwap(\"xyxyxyxyxyxyxyxyxyxy\", \"yxyxyxyxyxyxyxyxyxyx\"), 10);\n    assert Arrays.equals(solution.minimumSwap(\"xyxyxyxy\", \"yxyxyxyx\"), 4);\n    assert Arrays.equals(solution.minimumSwap(\"xxyy\", \"yyxx\"), 2);\n    assert Arrays.equals(solution.minimumSwap(\"xxyxyxyxyxyxyxyxyx\", \"xyxyxyxyxyxyxyxyyx\"), -1);\n    assert Arrays.equals(solution.minimumSwap(\"xxyyxyxyxyxyxy\", \"yyxyxyxyxyxyyx\"), -1);\n    assert Arrays.equals(solution.minimumSwap(\"xyxyy\", \"yxyyx\"), 2);\n    assert Arrays.equals(solution.minimumSwap(\"xyyxxyyxxyyx\", \"yxyxyxyxyxyy\"), -1);\n    assert Arrays.equals(solution.minimumSwap(\"xxyxyxyx\", \"xyxyxyyx\"), -1);\n    assert Arrays.equals(solution.minimumSwap(\"xxxxxyyy\", \"yyyyxxxx\"), -1);\n    assert Arrays.equals(solution.minimumSwap(\"xyxyxyxyyy\", \"yxyxyxyxxx\"), 5);\n    assert Arrays.equals(solution.minimumSwap(\"yyxyyyxxxyyy\", \"xyxxyyxyxxyx\"), -1);\n    assert Arrays.equals(solution.minimumSwap(\"yxyxyxyx\", \"xyxyxyxy\"), 4);\n    assert Arrays.equals(solution.minimumSwap(\"xyxxyxyxyx\", \"xyxyxyxyyx\"), -1);\n    assert Arrays.equals(solution.minimumSwap(\"xyxxyxyx\", \"yxxyxyyx\"), -1);\n    assert Arrays.equals(solution.minimumSwap(\"xxxxxxyy\", \"yyxxxxyx\"), -1);\n    assert Arrays.equals(solution.minimumSwap(\"xyxyxyxyxyxyxyxyxyxyxy\", \"yxyxyxyxyxyxyxyxyxyxyx\"), 12);\n    assert Arrays.equals(solution.minimumSwap(\"xxyyxyyx\", \"yyxyxyyx\"), -1);\n    assert Arrays.equals(solution.minimumSwap(\"xxxyyyxyyx\", \"yyxyyxyxxy\"), -1);\n    assert Arrays.equals(solution.minimumSwap(\"xxyxxyxyxy\", \"yxyxyxyxyx\"), -1);\n    assert Arrays.equals(solution.minimumSwap(\"xyxxyxxyxxyxyy\", \"yxyxyxyxyxyyxy\"), 5);\n    assert Arrays.equals(solution.minimumSwap(\"xxyxyxx\", \"yyxyxyy\"), -1);\n    assert Arrays.equals(solution.minimumSwap(\"xxyxyxyxyx\", \"xyxyxyxyyx\"), -1);\n    assert Arrays.equals(solution.minimumSwap(\"xyxyxyyy\", \"yxyxyxxx\"), 5);\n    assert Arrays.equals(solution.minimumSwap(\"xyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxy\", \"yxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyx\"), 18);\n    assert Arrays.equals(solution.minimumSwap(\"xxyxyxyxyx\", \"xyxxyxyxyx\"), 2);\n    assert Arrays.equals(solution.minimumSwap(\"xyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxy\", \"yxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyx\"), 18);\n    assert Arrays.equals(solution.minimumSwap(\"xyyxxyxyxy\", \"yxyxyxyxyx\"), 4);\n    assert Arrays.equals(solution.minimumSwap(\"xxyxyx\", \"yyxyxy\"), 3);\n    assert Arrays.equals(solution.minimumSwap(\"xxyyyy\", \"yyyxxx\"), -1);\n    assert Arrays.equals(solution.minimumSwap(\"xyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxy\", \"yxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyx\"), 20);\n    assert Arrays.equals(solution.minimumSwap(\"xyxxyxyx\", \"xyxyxyyx\"), -1);\n    assert Arrays.equals(solution.minimumSwap(\"xyxyxyxyxy\", \"yxyxyxyxyy\"), -1);\n    assert Arrays.equals(solution.minimumSwap(\"xyxxyxxyx\", \"yxyxyxyxy\"), 3);\n    assert Arrays.equals(solution.minimumSwap(\"xyxxyxyxyxyxyxyxyxyxyxyxyxyx\", \"xyxyxyxyxyxyxyxyxyxyxyxyxyxy\"), -1);\n    assert Arrays.equals(solution.minimumSwap(\"xxyxyxyxyy\", \"yyxyxyxyyx\"), -1);\n    assert Arrays.equals(solution.minimumSwap(\"xyxyxyxyxyxyxyxy\", \"yxyxyxyxyxyxyxyx\"), 8);\n    assert Arrays.equals(solution.minimumSwap(\"xyxxxy\", \"yxyyxy\"), 3);\n    assert Arrays.equals(solution.minimumSwap(\"xxyxyyxy\", \"yyxyxyyx\"), -1);\n}",
+    "javascript": "function check(candidate) {\n    console.assert(JSON.stringify(candidate(\"xyyy\", \"yxxx\")) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate(\"xx\", \"yy\")) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate(\"xxyy\", \"xyxy\")) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(\"xxyyxyxyxx\", \"xyyxyxxxyx\")) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate(\"xxxyyy\", \"yyyxxx\")) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate(\"xyyx\", \"xxyy\")) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(\"yx\", \"xy\")) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(\"xxxx\", \"yyyy\")) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(\"yxyy\", \"xyyx\")) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate(\"xx\", \"xy\")) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate(\"yy\", \"xx\")) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate(\"xyyx\", \"xyyx\")) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"yyyy\", \"xxxx\")) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(\"xyxy\", \"yxyx\")) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(\"xyxx\", \"xyyx\")) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate(\"xxyx\", \"xyxy\")) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate(\"xy\", \"yx\")) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(\"xyxyxy\", \"yxyxyx\")) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate(\"xyxyxyxyxyxyxyxyxyxyxyxyxy\", \"yxyxyxyxyxyxyxyxyxyxyxyxyx\")) === JSON.stringify(14));\n    console.assert(JSON.stringify(candidate(\"xyxxxyxxyy\", \"yxyyxyyxxy\")) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate(\"xyyyxy\", \"yxyxyx\")) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate(\"xxyyxx\", \"yyxxxy\")) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate(\"xyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxy\", \"yxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyx\")) === JSON.stringify(16));\n    console.assert(JSON.stringify(candidate(\"xyxyyx\", \"yxyxyx\")) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(\"xyxyxyxyxyxyxyxyxyxyxyxyxyxy\", \"yxyxyxyxyxyxyxyxyxyxyxyxyxyx\")) === JSON.stringify(14));\n    console.assert(JSON.stringify(candidate(\"xyxyxyxyxyxy\", \"yxyxyxyxyxyx\")) === JSON.stringify(6));\n    console.assert(JSON.stringify(candidate(\"xxxyyyxx\", \"yyxxxyyy\")) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate(\"xyyxxyyyxy\", \"yxyyxxyxyx\")) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate(\"xyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxy\", \"yxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyx\")) === JSON.stringify(20));\n    console.assert(JSON.stringify(candidate(\"yxyxyxyxyx\", \"xyxyxyxyxy\")) === JSON.stringify(6));\n    console.assert(JSON.stringify(candidate(\"xyyxxyyxxy\", \"yxyxyxyxyx\")) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate(\"xxxyyyy\", \"yyyxxxx\")) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate(\"xyyxxyyx\", \"yxyxyxyx\")) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(\"xxyyyy\", \"yyxxyx\")) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate(\"xxxxxyyyyy\", \"yyyyyyxxxx\")) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate(\"xxyxyxyy\", \"yyxyxyyx\")) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate(\"xyxyxxxy\", \"yyxxyxyx\")) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate(\"xxyxxyxyxy\", \"yxyxyxyxyy\")) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate(\"xxxyyyxy\", \"yyxxyxxy\")) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(\"xyyx\", \"yxyx\")) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(\"xxyyxyyx\", \"yyxyxxxy\")) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate(\"xxyxxy\", \"yyxyyx\")) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate(\"xyyxxyxyxy\", \"yxyxyxyxyy\")) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate(\"xyxyxyxyxyxyxy\", \"yxyxyxyxyxyxyx\")) === JSON.stringify(8));\n    console.assert(JSON.stringify(candidate(\"xxyyxy\", \"yyxyxx\")) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(\"xyxyxy\", \"yxyxyy\")) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate(\"xyxxyyxy\", \"yxyyyxyx\")) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate(\"xxyxyxyxyx\", \"yxyxyxyxyx\")) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate(\"xxyyxyxyx\", \"yyxyxyxyx\")) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate(\"yxyxyxyxyx\", \"xyxyxyxyyx\")) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate(\"xyxxyxxyxy\", \"yxyxyxyxyx\")) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate(\"xyxyxyyxyx\", \"xyxyxyxyxy\")) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(\"xxxxxy\", \"yyyxxx\")) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate(\"xxyyxxxyyy\", \"yyxxyyxyxx\")) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate(\"xxxxxx\", \"yyyyyy\")) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate(\"xyxyxyxyxy\", \"yxyxyxyxyx\")) === JSON.stringify(6));\n    console.assert(JSON.stringify(candidate(\"xxxxxyyyy\", \"yyyyxxxyx\")) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate(\"xxyx\", \"xyyx\")) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate(\"xxxxxxxx\", \"yyyyyyyy\")) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate(\"xxxxxxxxxx\", \"yyyyyyyyyy\")) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate(\"xyxxyxxyx\", \"yxyxyxyyx\")) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate(\"xyxxyy\", \"yxyxyx\")) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(\"xxyxyxyx\", \"yxyxyxyy\")) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate(\"xyxyxxxyyx\", \"yxyxyxxyxy\")) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate(\"xxyyxxyyxx\", \"yyxyxxyyxy\")) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate(\"xyxyxyxyxyxyxyxyxyxy\", \"yxyxyxyxyxyxyxyxyxyx\")) === JSON.stringify(10));\n    console.assert(JSON.stringify(candidate(\"xyxyxyxy\", \"yxyxyxyx\")) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate(\"xxyy\", \"yyxx\")) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(\"xxyxyxyxyxyxyxyxyx\", \"xyxyxyxyxyxyxyxyyx\")) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate(\"xxyyxyxyxyxyxy\", \"yyxyxyxyxyxyyx\")) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate(\"xyxyy\", \"yxyyx\")) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(\"xyyxxyyxxyyx\", \"yxyxyxyxyxyy\")) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate(\"xxyxyxyx\", \"xyxyxyyx\")) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate(\"xxxxxyyy\", \"yyyyxxxx\")) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate(\"xyxyxyxyyy\", \"yxyxyxyxxx\")) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate(\"yyxyyyxxxyyy\", \"xyxxyyxyxxyx\")) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate(\"yxyxyxyx\", \"xyxyxyxy\")) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate(\"xyxxyxyxyx\", \"xyxyxyxyyx\")) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate(\"xyxxyxyx\", \"yxxyxyyx\")) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate(\"xxxxxxyy\", \"yyxxxxyx\")) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate(\"xyxyxyxyxyxyxyxyxyxyxy\", \"yxyxyxyxyxyxyxyxyxyxyx\")) === JSON.stringify(12));\n    console.assert(JSON.stringify(candidate(\"xxyyxyyx\", \"yyxyxyyx\")) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate(\"xxxyyyxyyx\", \"yyxyyxyxxy\")) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate(\"xxyxxyxyxy\", \"yxyxyxyxyx\")) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate(\"xyxxyxxyxxyxyy\", \"yxyxyxyxyxyyxy\")) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate(\"xxyxyxx\", \"yyxyxyy\")) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate(\"xxyxyxyxyx\", \"xyxyxyxyyx\")) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate(\"xyxyxyyy\", \"yxyxyxxx\")) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate(\"xyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxy\", \"yxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyx\")) === JSON.stringify(18));\n    console.assert(JSON.stringify(candidate(\"xxyxyxyxyx\", \"xyxxyxyxyx\")) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(\"xyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxy\", \"yxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyx\")) === JSON.stringify(18));\n    console.assert(JSON.stringify(candidate(\"xyyxxyxyxy\", \"yxyxyxyxyx\")) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate(\"xxyxyx\", \"yyxyxy\")) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate(\"xxyyyy\", \"yyyxxx\")) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate(\"xyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxy\", \"yxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyx\")) === JSON.stringify(20));\n    console.assert(JSON.stringify(candidate(\"xyxxyxyx\", \"xyxyxyyx\")) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate(\"xyxyxyxyxy\", \"yxyxyxyxyy\")) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate(\"xyxxyxxyx\", \"yxyxyxyxy\")) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate(\"xyxxyxyxyxyxyxyxyxyxyxyxyxyx\", \"xyxyxyxyxyxyxyxyxyxyxyxyxyxy\")) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate(\"xxyxyxyxyy\", \"yyxyxyxyyx\")) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate(\"xyxyxyxyxyxyxyxy\", \"yxyxyxyxyxyxyxyx\")) === JSON.stringify(8));\n    console.assert(JSON.stringify(candidate(\"xyxxxy\", \"yxyyxy\")) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate(\"xxyxyyxy\", \"yyxyxyyx\")) === JSON.stringify(-1));\n}",
+    "typescript": "function check(candidate: Function): void {\n    console.assert(JSON.stringify(candidate(\"xyyy\", \"yxxx\")) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate(\"xx\", \"yy\")) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate(\"xxyy\", \"xyxy\")) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(\"xxyyxyxyxx\", \"xyyxyxxxyx\")) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate(\"xxxyyy\", \"yyyxxx\")) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate(\"xyyx\", \"xxyy\")) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(\"yx\", \"xy\")) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(\"xxxx\", \"yyyy\")) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(\"yxyy\", \"xyyx\")) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate(\"xx\", \"xy\")) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate(\"yy\", \"xx\")) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate(\"xyyx\", \"xyyx\")) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"yyyy\", \"xxxx\")) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(\"xyxy\", \"yxyx\")) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(\"xyxx\", \"xyyx\")) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate(\"xxyx\", \"xyxy\")) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate(\"xy\", \"yx\")) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(\"xyxyxy\", \"yxyxyx\")) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate(\"xyxyxyxyxyxyxyxyxyxyxyxyxy\", \"yxyxyxyxyxyxyxyxyxyxyxyxyx\")) === JSON.stringify(14));\n    console.assert(JSON.stringify(candidate(\"xyxxxyxxyy\", \"yxyyxyyxxy\")) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate(\"xyyyxy\", \"yxyxyx\")) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate(\"xxyyxx\", \"yyxxxy\")) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate(\"xyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxy\", \"yxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyx\")) === JSON.stringify(16));\n    console.assert(JSON.stringify(candidate(\"xyxyyx\", \"yxyxyx\")) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(\"xyxyxyxyxyxyxyxyxyxyxyxyxyxy\", \"yxyxyxyxyxyxyxyxyxyxyxyxyxyx\")) === JSON.stringify(14));\n    console.assert(JSON.stringify(candidate(\"xyxyxyxyxyxy\", \"yxyxyxyxyxyx\")) === JSON.stringify(6));\n    console.assert(JSON.stringify(candidate(\"xxxyyyxx\", \"yyxxxyyy\")) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate(\"xyyxxyyyxy\", \"yxyyxxyxyx\")) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate(\"xyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxy\", \"yxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyx\")) === JSON.stringify(20));\n    console.assert(JSON.stringify(candidate(\"yxyxyxyxyx\", \"xyxyxyxyxy\")) === JSON.stringify(6));\n    console.assert(JSON.stringify(candidate(\"xyyxxyyxxy\", \"yxyxyxyxyx\")) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate(\"xxxyyyy\", \"yyyxxxx\")) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate(\"xyyxxyyx\", \"yxyxyxyx\")) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(\"xxyyyy\", \"yyxxyx\")) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate(\"xxxxxyyyyy\", \"yyyyyyxxxx\")) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate(\"xxyxyxyy\", \"yyxyxyyx\")) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate(\"xyxyxxxy\", \"yyxxyxyx\")) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate(\"xxyxxyxyxy\", \"yxyxyxyxyy\")) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate(\"xxxyyyxy\", \"yyxxyxxy\")) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(\"xyyx\", \"yxyx\")) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(\"xxyyxyyx\", \"yyxyxxxy\")) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate(\"xxyxxy\", \"yyxyyx\")) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate(\"xyyxxyxyxy\", \"yxyxyxyxyy\")) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate(\"xyxyxyxyxyxyxy\", \"yxyxyxyxyxyxyx\")) === JSON.stringify(8));\n    console.assert(JSON.stringify(candidate(\"xxyyxy\", \"yyxyxx\")) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(\"xyxyxy\", \"yxyxyy\")) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate(\"xyxxyyxy\", \"yxyyyxyx\")) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate(\"xxyxyxyxyx\", \"yxyxyxyxyx\")) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate(\"xxyyxyxyx\", \"yyxyxyxyx\")) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate(\"yxyxyxyxyx\", \"xyxyxyxyyx\")) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate(\"xyxxyxxyxy\", \"yxyxyxyxyx\")) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate(\"xyxyxyyxyx\", \"xyxyxyxyxy\")) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(\"xxxxxy\", \"yyyxxx\")) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate(\"xxyyxxxyyy\", \"yyxxyyxyxx\")) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate(\"xxxxxx\", \"yyyyyy\")) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate(\"xyxyxyxyxy\", \"yxyxyxyxyx\")) === JSON.stringify(6));\n    console.assert(JSON.stringify(candidate(\"xxxxxyyyy\", \"yyyyxxxyx\")) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate(\"xxyx\", \"xyyx\")) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate(\"xxxxxxxx\", \"yyyyyyyy\")) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate(\"xxxxxxxxxx\", \"yyyyyyyyyy\")) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate(\"xyxxyxxyx\", \"yxyxyxyyx\")) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate(\"xyxxyy\", \"yxyxyx\")) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(\"xxyxyxyx\", \"yxyxyxyy\")) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate(\"xyxyxxxyyx\", \"yxyxyxxyxy\")) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate(\"xxyyxxyyxx\", \"yyxyxxyyxy\")) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate(\"xyxyxyxyxyxyxyxyxyxy\", \"yxyxyxyxyxyxyxyxyxyx\")) === JSON.stringify(10));\n    console.assert(JSON.stringify(candidate(\"xyxyxyxy\", \"yxyxyxyx\")) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate(\"xxyy\", \"yyxx\")) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(\"xxyxyxyxyxyxyxyxyx\", \"xyxyxyxyxyxyxyxyyx\")) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate(\"xxyyxyxyxyxyxy\", \"yyxyxyxyxyxyyx\")) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate(\"xyxyy\", \"yxyyx\")) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(\"xyyxxyyxxyyx\", \"yxyxyxyxyxyy\")) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate(\"xxyxyxyx\", \"xyxyxyyx\")) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate(\"xxxxxyyy\", \"yyyyxxxx\")) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate(\"xyxyxyxyyy\", \"yxyxyxyxxx\")) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate(\"yyxyyyxxxyyy\", \"xyxxyyxyxxyx\")) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate(\"yxyxyxyx\", \"xyxyxyxy\")) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate(\"xyxxyxyxyx\", \"xyxyxyxyyx\")) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate(\"xyxxyxyx\", \"yxxyxyyx\")) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate(\"xxxxxxyy\", \"yyxxxxyx\")) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate(\"xyxyxyxyxyxyxyxyxyxyxy\", \"yxyxyxyxyxyxyxyxyxyxyx\")) === JSON.stringify(12));\n    console.assert(JSON.stringify(candidate(\"xxyyxyyx\", \"yyxyxyyx\")) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate(\"xxxyyyxyyx\", \"yyxyyxyxxy\")) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate(\"xxyxxyxyxy\", \"yxyxyxyxyx\")) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate(\"xyxxyxxyxxyxyy\", \"yxyxyxyxyxyyxy\")) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate(\"xxyxyxx\", \"yyxyxyy\")) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate(\"xxyxyxyxyx\", \"xyxyxyxyyx\")) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate(\"xyxyxyyy\", \"yxyxyxxx\")) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate(\"xyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxy\", \"yxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyx\")) === JSON.stringify(18));\n    console.assert(JSON.stringify(candidate(\"xxyxyxyxyx\", \"xyxxyxyxyx\")) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(\"xyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxy\", \"yxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyx\")) === JSON.stringify(18));\n    console.assert(JSON.stringify(candidate(\"xyyxxyxyxy\", \"yxyxyxyxyx\")) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate(\"xxyxyx\", \"yyxyxy\")) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate(\"xxyyyy\", \"yyyxxx\")) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate(\"xyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxy\", \"yxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyx\")) === JSON.stringify(20));\n    console.assert(JSON.stringify(candidate(\"xyxxyxyx\", \"xyxyxyyx\")) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate(\"xyxyxyxyxy\", \"yxyxyxyxyy\")) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate(\"xyxxyxxyx\", \"yxyxyxyxy\")) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate(\"xyxxyxyxyxyxyxyxyxyxyxyxyxyx\", \"xyxyxyxyxyxyxyxyxyxyxyxyxyxy\")) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate(\"xxyxyxyxyy\", \"yyxyxyxyyx\")) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate(\"xyxyxyxyxyxyxyxy\", \"yxyxyxyxyxyxyxyx\")) === JSON.stringify(8));\n    console.assert(JSON.stringify(candidate(\"xyxxxy\", \"yxyyxy\")) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate(\"xxyxyyxy\", \"yyxyxyyx\")) === JSON.stringify(-1));\n}",
+    "golang": "func check(candidate func([]int, int) []int) {\n    assert reflect.DeepEqual(candidate(\"xyyy\", \"yxxx\"), 3)\n    assert reflect.DeepEqual(candidate(\"xx\", \"yy\"), 1)\n    assert reflect.DeepEqual(candidate(\"xxyy\", \"xyxy\"), 2)\n    assert reflect.DeepEqual(candidate(\"xxyyxyxyxx\", \"xyyxyxxxyx\"), 4)\n    assert reflect.DeepEqual(candidate(\"xxxyyy\", \"yyyxxx\"), 4)\n    assert reflect.DeepEqual(candidate(\"xyyx\", \"xxyy\"), 2)\n    assert reflect.DeepEqual(candidate(\"yx\", \"xy\"), 2)\n    assert reflect.DeepEqual(candidate(\"xxxx\", \"yyyy\"), 2)\n    assert reflect.DeepEqual(candidate(\"yxyy\", \"xyyx\"), -1)\n    assert reflect.DeepEqual(candidate(\"xx\", \"xy\"), -1)\n    assert reflect.DeepEqual(candidate(\"yy\", \"xx\"), 1)\n    assert reflect.DeepEqual(candidate(\"xyyx\", \"xyyx\"), 0)\n    assert reflect.DeepEqual(candidate(\"yyyy\", \"xxxx\"), 2)\n    assert reflect.DeepEqual(candidate(\"xyxy\", \"yxyx\"), 2)\n    assert reflect.DeepEqual(candidate(\"xyxx\", \"xyyx\"), -1)\n    assert reflect.DeepEqual(candidate(\"xxyx\", \"xyxy\"), -1)\n    assert reflect.DeepEqual(candidate(\"xy\", \"yx\"), 2)\n    assert reflect.DeepEqual(candidate(\"xyxyxy\", \"yxyxyx\"), 4)\n    assert reflect.DeepEqual(candidate(\"xyxyxyxyxyxyxyxyxyxyxyxyxy\", \"yxyxyxyxyxyxyxyxyxyxyxyxyx\"), 14)\n    assert reflect.DeepEqual(candidate(\"xyxxxyxxyy\", \"yxyyxyyxxy\"), 3)\n    assert reflect.DeepEqual(candidate(\"xyyyxy\", \"yxyxyx\"), -1)\n    assert reflect.DeepEqual(candidate(\"xxyyxx\", \"yyxxxy\"), -1)\n    assert reflect.DeepEqual(candidate(\"xyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxy\", \"yxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyx\"), 16)\n    assert reflect.DeepEqual(candidate(\"xyxyyx\", \"yxyxyx\"), 2)\n    assert reflect.DeepEqual(candidate(\"xyxyxyxyxyxyxyxyxyxyxyxyxyxy\", \"yxyxyxyxyxyxyxyxyxyxyxyxyxyx\"), 14)\n    assert reflect.DeepEqual(candidate(\"xyxyxyxyxyxy\", \"yxyxyxyxyxyx\"), 6)\n    assert reflect.DeepEqual(candidate(\"xxxyyyxx\", \"yyxxxyyy\"), 3)\n    assert reflect.DeepEqual(candidate(\"xyyxxyyyxy\", \"yxyyxxyxyx\"), -1)\n    assert reflect.DeepEqual(candidate(\"xyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxy\", \"yxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyx\"), 20)\n    assert reflect.DeepEqual(candidate(\"yxyxyxyxyx\", \"xyxyxyxyxy\"), 6)\n    assert reflect.DeepEqual(candidate(\"xyyxxyyxxy\", \"yxyxyxyxyx\"), 4)\n    assert reflect.DeepEqual(candidate(\"xxxyyyy\", \"yyyxxxx\"), -1)\n    assert reflect.DeepEqual(candidate(\"xyyxxyyx\", \"yxyxyxyx\"), 2)\n    assert reflect.DeepEqual(candidate(\"xxyyyy\", \"yyxxyx\"), -1)\n    assert reflect.DeepEqual(candidate(\"xxxxxyyyyy\", \"yyyyyyxxxx\"), -1)\n    assert reflect.DeepEqual(candidate(\"xxyxyxyy\", \"yyxyxyyx\"), -1)\n    assert reflect.DeepEqual(candidate(\"xyxyxxxy\", \"yyxxyxyx\"), -1)\n    assert reflect.DeepEqual(candidate(\"xxyxxyxyxy\", \"yxyxyxyxyy\"), 3)\n    assert reflect.DeepEqual(candidate(\"xxxyyyxy\", \"yyxxyxxy\"), 2)\n    assert reflect.DeepEqual(candidate(\"xyyx\", \"yxyx\"), 2)\n    assert reflect.DeepEqual(candidate(\"xxyyxyyx\", \"yyxyxxxy\"), 4)\n    assert reflect.DeepEqual(candidate(\"xxyxxy\", \"yyxyyx\"), 3)\n    assert reflect.DeepEqual(candidate(\"xyyxxyxyxy\", \"yxyxyxyxyy\"), -1)\n    assert reflect.DeepEqual(candidate(\"xyxyxyxyxyxyxy\", \"yxyxyxyxyxyxyx\"), 8)\n    assert reflect.DeepEqual(candidate(\"xxyyxy\", \"yyxyxx\"), 2)\n    assert reflect.DeepEqual(candidate(\"xyxyxy\", \"yxyxyy\"), -1)\n    assert reflect.DeepEqual(candidate(\"xyxxyyxy\", \"yxyyyxyx\"), -1)\n    assert reflect.DeepEqual(candidate(\"xxyxyxyxyx\", \"yxyxyxyxyx\"), -1)\n    assert reflect.DeepEqual(candidate(\"xxyyxyxyx\", \"yyxyxyxyx\"), -1)\n    assert reflect.DeepEqual(candidate(\"yxyxyxyxyx\", \"xyxyxyxyyx\"), 4)\n    assert reflect.DeepEqual(candidate(\"xyxxyxxyxy\", \"yxyxyxyxyx\"), -1)\n    assert reflect.DeepEqual(candidate(\"xyxyxyyxyx\", \"xyxyxyxyxy\"), 2)\n    assert reflect.DeepEqual(candidate(\"xxxxxy\", \"yyyxxx\"), 3)\n    assert reflect.DeepEqual(candidate(\"xxyyxxxyyy\", \"yyxxyyxyxx\"), 4)\n    assert reflect.DeepEqual(candidate(\"xxxxxx\", \"yyyyyy\"), 3)\n    assert reflect.DeepEqual(candidate(\"xyxyxyxyxy\", \"yxyxyxyxyx\"), 6)\n    assert reflect.DeepEqual(candidate(\"xxxxxyyyy\", \"yyyyxxxyx\"), -1)\n    assert reflect.DeepEqual(candidate(\"xxyx\", \"xyyx\"), -1)\n    assert reflect.DeepEqual(candidate(\"xxxxxxxx\", \"yyyyyyyy\"), 4)\n    assert reflect.DeepEqual(candidate(\"xxxxxxxxxx\", \"yyyyyyyyyy\"), 5)\n    assert reflect.DeepEqual(candidate(\"xyxxyxxyx\", \"yxyxyxyyx\"), 3)\n    assert reflect.DeepEqual(candidate(\"xyxxyy\", \"yxyxyx\"), 2)\n    assert reflect.DeepEqual(candidate(\"xxyxyxyx\", \"yxyxyxyy\"), 1)\n    assert reflect.DeepEqual(candidate(\"xyxyxxxyyx\", \"yxyxyxxyxy\"), -1)\n    assert reflect.DeepEqual(candidate(\"xxyyxxyyxx\", \"yyxyxxyyxy\"), 3)\n    assert reflect.DeepEqual(candidate(\"xyxyxyxyxyxyxyxyxyxy\", \"yxyxyxyxyxyxyxyxyxyx\"), 10)\n    assert reflect.DeepEqual(candidate(\"xyxyxyxy\", \"yxyxyxyx\"), 4)\n    assert reflect.DeepEqual(candidate(\"xxyy\", \"yyxx\"), 2)\n    assert reflect.DeepEqual(candidate(\"xxyxyxyxyxyxyxyxyx\", \"xyxyxyxyxyxyxyxyyx\"), -1)\n    assert reflect.DeepEqual(candidate(\"xxyyxyxyxyxyxy\", \"yyxyxyxyxyxyyx\"), -1)\n    assert reflect.DeepEqual(candidate(\"xyxyy\", \"yxyyx\"), 2)\n    assert reflect.DeepEqual(candidate(\"xyyxxyyxxyyx\", \"yxyxyxyxyxyy\"), -1)\n    assert reflect.DeepEqual(candidate(\"xxyxyxyx\", \"xyxyxyyx\"), -1)\n    assert reflect.DeepEqual(candidate(\"xxxxxyyy\", \"yyyyxxxx\"), -1)\n    assert reflect.DeepEqual(candidate(\"xyxyxyxyyy\", \"yxyxyxyxxx\"), 5)\n    assert reflect.DeepEqual(candidate(\"yyxyyyxxxyyy\", \"xyxxyyxyxxyx\"), -1)\n    assert reflect.DeepEqual(candidate(\"yxyxyxyx\", \"xyxyxyxy\"), 4)\n    assert reflect.DeepEqual(candidate(\"xyxxyxyxyx\", \"xyxyxyxyyx\"), -1)\n    assert reflect.DeepEqual(candidate(\"xyxxyxyx\", \"yxxyxyyx\"), -1)\n    assert reflect.DeepEqual(candidate(\"xxxxxxyy\", \"yyxxxxyx\"), -1)\n    assert reflect.DeepEqual(candidate(\"xyxyxyxyxyxyxyxyxyxyxy\", \"yxyxyxyxyxyxyxyxyxyxyx\"), 12)\n    assert reflect.DeepEqual(candidate(\"xxyyxyyx\", \"yyxyxyyx\"), -1)\n    assert reflect.DeepEqual(candidate(\"xxxyyyxyyx\", \"yyxyyxyxxy\"), -1)\n    assert reflect.DeepEqual(candidate(\"xxyxxyxyxy\", \"yxyxyxyxyx\"), -1)\n    assert reflect.DeepEqual(candidate(\"xyxxyxxyxxyxyy\", \"yxyxyxyxyxyyxy\"), 5)\n    assert reflect.DeepEqual(candidate(\"xxyxyxx\", \"yyxyxyy\"), -1)\n    assert reflect.DeepEqual(candidate(\"xxyxyxyxyx\", \"xyxyxyxyyx\"), -1)\n    assert reflect.DeepEqual(candidate(\"xyxyxyyy\", \"yxyxyxxx\"), 5)\n    assert reflect.DeepEqual(candidate(\"xyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxy\", \"yxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyx\"), 18)\n    assert reflect.DeepEqual(candidate(\"xxyxyxyxyx\", \"xyxxyxyxyx\"), 2)\n    assert reflect.DeepEqual(candidate(\"xyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxy\", \"yxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyx\"), 18)\n    assert reflect.DeepEqual(candidate(\"xyyxxyxyxy\", \"yxyxyxyxyx\"), 4)\n    assert reflect.DeepEqual(candidate(\"xxyxyx\", \"yyxyxy\"), 3)\n    assert reflect.DeepEqual(candidate(\"xxyyyy\", \"yyyxxx\"), -1)\n    assert reflect.DeepEqual(candidate(\"xyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxy\", \"yxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyx\"), 20)\n    assert reflect.DeepEqual(candidate(\"xyxxyxyx\", \"xyxyxyyx\"), -1)\n    assert reflect.DeepEqual(candidate(\"xyxyxyxyxy\", \"yxyxyxyxyy\"), -1)\n    assert reflect.DeepEqual(candidate(\"xyxxyxxyx\", \"yxyxyxyxy\"), 3)\n    assert reflect.DeepEqual(candidate(\"xyxxyxyxyxyxyxyxyxyxyxyxyxyx\", \"xyxyxyxyxyxyxyxyxyxyxyxyxyxy\"), -1)\n    assert reflect.DeepEqual(candidate(\"xxyxyxyxyy\", \"yyxyxyxyyx\"), -1)\n    assert reflect.DeepEqual(candidate(\"xyxyxyxyxyxyxyxy\", \"yxyxyxyxyxyxyxyx\"), 8)\n    assert reflect.DeepEqual(candidate(\"xyxxxy\", \"yxyyxy\"), 3)\n    assert reflect.DeepEqual(candidate(\"xxyxyyxy\", \"yyxyxyyx\"), -1)\n}",
+    "rust": "fn check(candidate: fn(Vec<i32>, i32) -> Vec<i32>) {\n    assert_eq!(candidate(\"xyyy\", \"yxxx\"), 3);\n    assert_eq!(candidate(\"xx\", \"yy\"), 1);\n    assert_eq!(candidate(\"xxyy\", \"xyxy\"), 2);\n    assert_eq!(candidate(\"xxyyxyxyxx\", \"xyyxyxxxyx\"), 4);\n    assert_eq!(candidate(\"xxxyyy\", \"yyyxxx\"), 4);\n    assert_eq!(candidate(\"xyyx\", \"xxyy\"), 2);\n    assert_eq!(candidate(\"yx\", \"xy\"), 2);\n    assert_eq!(candidate(\"xxxx\", \"yyyy\"), 2);\n    assert_eq!(candidate(\"yxyy\", \"xyyx\"), -1);\n    assert_eq!(candidate(\"xx\", \"xy\"), -1);\n    assert_eq!(candidate(\"yy\", \"xx\"), 1);\n    assert_eq!(candidate(\"xyyx\", \"xyyx\"), 0);\n    assert_eq!(candidate(\"yyyy\", \"xxxx\"), 2);\n    assert_eq!(candidate(\"xyxy\", \"yxyx\"), 2);\n    assert_eq!(candidate(\"xyxx\", \"xyyx\"), -1);\n    assert_eq!(candidate(\"xxyx\", \"xyxy\"), -1);\n    assert_eq!(candidate(\"xy\", \"yx\"), 2);\n    assert_eq!(candidate(\"xyxyxy\", \"yxyxyx\"), 4);\n    assert_eq!(candidate(\"xyxyxyxyxyxyxyxyxyxyxyxyxy\", \"yxyxyxyxyxyxyxyxyxyxyxyxyx\"), 14);\n    assert_eq!(candidate(\"xyxxxyxxyy\", \"yxyyxyyxxy\"), 3);\n    assert_eq!(candidate(\"xyyyxy\", \"yxyxyx\"), -1);\n    assert_eq!(candidate(\"xxyyxx\", \"yyxxxy\"), -1);\n    assert_eq!(candidate(\"xyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxy\", \"yxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyx\"), 16);\n    assert_eq!(candidate(\"xyxyyx\", \"yxyxyx\"), 2);\n    assert_eq!(candidate(\"xyxyxyxyxyxyxyxyxyxyxyxyxyxy\", \"yxyxyxyxyxyxyxyxyxyxyxyxyxyx\"), 14);\n    assert_eq!(candidate(\"xyxyxyxyxyxy\", \"yxyxyxyxyxyx\"), 6);\n    assert_eq!(candidate(\"xxxyyyxx\", \"yyxxxyyy\"), 3);\n    assert_eq!(candidate(\"xyyxxyyyxy\", \"yxyyxxyxyx\"), -1);\n    assert_eq!(candidate(\"xyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxy\", \"yxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyx\"), 20);\n    assert_eq!(candidate(\"yxyxyxyxyx\", \"xyxyxyxyxy\"), 6);\n    assert_eq!(candidate(\"xyyxxyyxxy\", \"yxyxyxyxyx\"), 4);\n    assert_eq!(candidate(\"xxxyyyy\", \"yyyxxxx\"), -1);\n    assert_eq!(candidate(\"xyyxxyyx\", \"yxyxyxyx\"), 2);\n    assert_eq!(candidate(\"xxyyyy\", \"yyxxyx\"), -1);\n    assert_eq!(candidate(\"xxxxxyyyyy\", \"yyyyyyxxxx\"), -1);\n    assert_eq!(candidate(\"xxyxyxyy\", \"yyxyxyyx\"), -1);\n    assert_eq!(candidate(\"xyxyxxxy\", \"yyxxyxyx\"), -1);\n    assert_eq!(candidate(\"xxyxxyxyxy\", \"yxyxyxyxyy\"), 3);\n    assert_eq!(candidate(\"xxxyyyxy\", \"yyxxyxxy\"), 2);\n    assert_eq!(candidate(\"xyyx\", \"yxyx\"), 2);\n    assert_eq!(candidate(\"xxyyxyyx\", \"yyxyxxxy\"), 4);\n    assert_eq!(candidate(\"xxyxxy\", \"yyxyyx\"), 3);\n    assert_eq!(candidate(\"xyyxxyxyxy\", \"yxyxyxyxyy\"), -1);\n    assert_eq!(candidate(\"xyxyxyxyxyxyxy\", \"yxyxyxyxyxyxyx\"), 8);\n    assert_eq!(candidate(\"xxyyxy\", \"yyxyxx\"), 2);\n    assert_eq!(candidate(\"xyxyxy\", \"yxyxyy\"), -1);\n    assert_eq!(candidate(\"xyxxyyxy\", \"yxyyyxyx\"), -1);\n    assert_eq!(candidate(\"xxyxyxyxyx\", \"yxyxyxyxyx\"), -1);\n    assert_eq!(candidate(\"xxyyxyxyx\", \"yyxyxyxyx\"), -1);\n    assert_eq!(candidate(\"yxyxyxyxyx\", \"xyxyxyxyyx\"), 4);\n    assert_eq!(candidate(\"xyxxyxxyxy\", \"yxyxyxyxyx\"), -1);\n    assert_eq!(candidate(\"xyxyxyyxyx\", \"xyxyxyxyxy\"), 2);\n    assert_eq!(candidate(\"xxxxxy\", \"yyyxxx\"), 3);\n    assert_eq!(candidate(\"xxyyxxxyyy\", \"yyxxyyxyxx\"), 4);\n    assert_eq!(candidate(\"xxxxxx\", \"yyyyyy\"), 3);\n    assert_eq!(candidate(\"xyxyxyxyxy\", \"yxyxyxyxyx\"), 6);\n    assert_eq!(candidate(\"xxxxxyyyy\", \"yyyyxxxyx\"), -1);\n    assert_eq!(candidate(\"xxyx\", \"xyyx\"), -1);\n    assert_eq!(candidate(\"xxxxxxxx\", \"yyyyyyyy\"), 4);\n    assert_eq!(candidate(\"xxxxxxxxxx\", \"yyyyyyyyyy\"), 5);\n    assert_eq!(candidate(\"xyxxyxxyx\", \"yxyxyxyyx\"), 3);\n    assert_eq!(candidate(\"xyxxyy\", \"yxyxyx\"), 2);\n    assert_eq!(candidate(\"xxyxyxyx\", \"yxyxyxyy\"), 1);\n    assert_eq!(candidate(\"xyxyxxxyyx\", \"yxyxyxxyxy\"), -1);\n    assert_eq!(candidate(\"xxyyxxyyxx\", \"yyxyxxyyxy\"), 3);\n    assert_eq!(candidate(\"xyxyxyxyxyxyxyxyxyxy\", \"yxyxyxyxyxyxyxyxyxyx\"), 10);\n    assert_eq!(candidate(\"xyxyxyxy\", \"yxyxyxyx\"), 4);\n    assert_eq!(candidate(\"xxyy\", \"yyxx\"), 2);\n    assert_eq!(candidate(\"xxyxyxyxyxyxyxyxyx\", \"xyxyxyxyxyxyxyxyyx\"), -1);\n    assert_eq!(candidate(\"xxyyxyxyxyxyxy\", \"yyxyxyxyxyxyyx\"), -1);\n    assert_eq!(candidate(\"xyxyy\", \"yxyyx\"), 2);\n    assert_eq!(candidate(\"xyyxxyyxxyyx\", \"yxyxyxyxyxyy\"), -1);\n    assert_eq!(candidate(\"xxyxyxyx\", \"xyxyxyyx\"), -1);\n    assert_eq!(candidate(\"xxxxxyyy\", \"yyyyxxxx\"), -1);\n    assert_eq!(candidate(\"xyxyxyxyyy\", \"yxyxyxyxxx\"), 5);\n    assert_eq!(candidate(\"yyxyyyxxxyyy\", \"xyxxyyxyxxyx\"), -1);\n    assert_eq!(candidate(\"yxyxyxyx\", \"xyxyxyxy\"), 4);\n    assert_eq!(candidate(\"xyxxyxyxyx\", \"xyxyxyxyyx\"), -1);\n    assert_eq!(candidate(\"xyxxyxyx\", \"yxxyxyyx\"), -1);\n    assert_eq!(candidate(\"xxxxxxyy\", \"yyxxxxyx\"), -1);\n    assert_eq!(candidate(\"xyxyxyxyxyxyxyxyxyxyxy\", \"yxyxyxyxyxyxyxyxyxyxyx\"), 12);\n    assert_eq!(candidate(\"xxyyxyyx\", \"yyxyxyyx\"), -1);\n    assert_eq!(candidate(\"xxxyyyxyyx\", \"yyxyyxyxxy\"), -1);\n    assert_eq!(candidate(\"xxyxxyxyxy\", \"yxyxyxyxyx\"), -1);\n    assert_eq!(candidate(\"xyxxyxxyxxyxyy\", \"yxyxyxyxyxyyxy\"), 5);\n    assert_eq!(candidate(\"xxyxyxx\", \"yyxyxyy\"), -1);\n    assert_eq!(candidate(\"xxyxyxyxyx\", \"xyxyxyxyyx\"), -1);\n    assert_eq!(candidate(\"xyxyxyyy\", \"yxyxyxxx\"), 5);\n    assert_eq!(candidate(\"xyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxy\", \"yxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyx\"), 18);\n    assert_eq!(candidate(\"xxyxyxyxyx\", \"xyxxyxyxyx\"), 2);\n    assert_eq!(candidate(\"xyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxy\", \"yxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyx\"), 18);\n    assert_eq!(candidate(\"xyyxxyxyxy\", \"yxyxyxyxyx\"), 4);\n    assert_eq!(candidate(\"xxyxyx\", \"yyxyxy\"), 3);\n    assert_eq!(candidate(\"xxyyyy\", \"yyyxxx\"), -1);\n    assert_eq!(candidate(\"xyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxy\", \"yxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyx\"), 20);\n    assert_eq!(candidate(\"xyxxyxyx\", \"xyxyxyyx\"), -1);\n    assert_eq!(candidate(\"xyxyxyxyxy\", \"yxyxyxyxyy\"), -1);\n    assert_eq!(candidate(\"xyxxyxxyx\", \"yxyxyxyxy\"), 3);\n    assert_eq!(candidate(\"xyxxyxyxyxyxyxyxyxyxyxyxyxyx\", \"xyxyxyxyxyxyxyxyxyxyxyxyxyxy\"), -1);\n    assert_eq!(candidate(\"xxyxyxyxyy\", \"yyxyxyxyyx\"), -1);\n    assert_eq!(candidate(\"xyxyxyxyxyxyxyxy\", \"yxyxyxyxyxyxyxyx\"), 8);\n    assert_eq!(candidate(\"xyxxxy\", \"yxyyxy\"), 3);\n    assert_eq!(candidate(\"xxyxyyxy\", \"yyxyxyyx\"), -1);\n}"
+  },
+  "test_cases": [
+    {
+      "input": "s1 = \"xyyy\", s2 = \"yxxx\"",
+      "output": "3"
+    },
+    {
+      "input": "s1 = \"xx\", s2 = \"yy\"",
+      "output": "1"
+    },
+    {
+      "input": "s1 = \"xxyy\", s2 = \"xyxy\"",
+      "output": "2"
+    },
+    {
+      "input": "s1 = \"xxyyxyxyxx\", s2 = \"xyyxyxxxyx\"",
+      "output": "4"
+    },
+    {
+      "input": "s1 = \"xxxyyy\", s2 = \"yyyxxx\"",
+      "output": "4"
+    },
+    {
+      "input": "s1 = \"xyyx\", s2 = \"xxyy\"",
+      "output": "2"
+    },
+    {
+      "input": "s1 = \"yx\", s2 = \"xy\"",
+      "output": "2"
+    },
+    {
+      "input": "s1 = \"xxxx\", s2 = \"yyyy\"",
+      "output": "2"
+    },
+    {
+      "input": "s1 = \"yxyy\", s2 = \"xyyx\"",
+      "output": "-1"
+    },
+    {
+      "input": "s1 = \"xx\", s2 = \"xy\"",
+      "output": "-1"
+    },
+    {
+      "input": "s1 = \"yy\", s2 = \"xx\"",
+      "output": "1"
+    },
+    {
+      "input": "s1 = \"xyyx\", s2 = \"xyyx\"",
+      "output": "0"
+    },
+    {
+      "input": "s1 = \"yyyy\", s2 = \"xxxx\"",
+      "output": "2"
+    },
+    {
+      "input": "s1 = \"xyxy\", s2 = \"yxyx\"",
+      "output": "2"
+    },
+    {
+      "input": "s1 = \"xyxx\", s2 = \"xyyx\"",
+      "output": "-1"
+    },
+    {
+      "input": "s1 = \"xxyx\", s2 = \"xyxy\"",
+      "output": "-1"
+    },
+    {
+      "input": "s1 = \"xy\", s2 = \"yx\"",
+      "output": "2"
+    },
+    {
+      "input": "s1 = \"xyxyxy\", s2 = \"yxyxyx\"",
+      "output": "4"
+    },
+    {
+      "input": "s1 = \"xyxyxyxyxyxyxyxyxyxyxyxyxy\", s2 = \"yxyxyxyxyxyxyxyxyxyxyxyxyx\"",
+      "output": "14"
+    },
+    {
+      "input": "s1 = \"xyxxxyxxyy\", s2 = \"yxyyxyyxxy\"",
+      "output": "3"
+    },
+    {
+      "input": "s1 = \"xyyyxy\", s2 = \"yxyxyx\"",
+      "output": "-1"
+    },
+    {
+      "input": "s1 = \"xxyyxx\", s2 = \"yyxxxy\"",
+      "output": "-1"
+    },
+    {
+      "input": "s1 = \"xyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxy\", s2 = \"yxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyx\"",
+      "output": "16"
+    },
+    {
+      "input": "s1 = \"xyxyyx\", s2 = \"yxyxyx\"",
+      "output": "2"
+    },
+    {
+      "input": "s1 = \"xyxyxyxyxyxyxyxyxyxyxyxyxyxy\", s2 = \"yxyxyxyxyxyxyxyxyxyxyxyxyxyx\"",
+      "output": "14"
+    },
+    {
+      "input": "s1 = \"xyxyxyxyxyxy\", s2 = \"yxyxyxyxyxyx\"",
+      "output": "6"
+    },
+    {
+      "input": "s1 = \"xxxyyyxx\", s2 = \"yyxxxyyy\"",
+      "output": "3"
+    },
+    {
+      "input": "s1 = \"xyyxxyyyxy\", s2 = \"yxyyxxyxyx\"",
+      "output": "-1"
+    },
+    {
+      "input": "s1 = \"xyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxy\", s2 = \"yxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyx\"",
+      "output": "20"
+    },
+    {
+      "input": "s1 = \"yxyxyxyxyx\", s2 = \"xyxyxyxyxy\"",
+      "output": "6"
+    },
+    {
+      "input": "s1 = \"xyyxxyyxxy\", s2 = \"yxyxyxyxyx\"",
+      "output": "4"
+    },
+    {
+      "input": "s1 = \"xxxyyyy\", s2 = \"yyyxxxx\"",
+      "output": "-1"
+    },
+    {
+      "input": "s1 = \"xyyxxyyx\", s2 = \"yxyxyxyx\"",
+      "output": "2"
+    },
+    {
+      "input": "s1 = \"xxyyyy\", s2 = \"yyxxyx\"",
+      "output": "-1"
+    },
+    {
+      "input": "s1 = \"xxxxxyyyyy\", s2 = \"yyyyyyxxxx\"",
+      "output": "-1"
+    },
+    {
+      "input": "s1 = \"xxyxyxyy\", s2 = \"yyxyxyyx\"",
+      "output": "-1"
+    },
+    {
+      "input": "s1 = \"xyxyxxxy\", s2 = \"yyxxyxyx\"",
+      "output": "-1"
+    },
+    {
+      "input": "s1 = \"xxyxxyxyxy\", s2 = \"yxyxyxyxyy\"",
+      "output": "3"
+    },
+    {
+      "input": "s1 = \"xxxyyyxy\", s2 = \"yyxxyxxy\"",
+      "output": "2"
+    },
+    {
+      "input": "s1 = \"xyyx\", s2 = \"yxyx\"",
+      "output": "2"
+    },
+    {
+      "input": "s1 = \"xxyyxyyx\", s2 = \"yyxyxxxy\"",
+      "output": "4"
+    },
+    {
+      "input": "s1 = \"xxyxxy\", s2 = \"yyxyyx\"",
+      "output": "3"
+    },
+    {
+      "input": "s1 = \"xyyxxyxyxy\", s2 = \"yxyxyxyxyy\"",
+      "output": "-1"
+    },
+    {
+      "input": "s1 = \"xyxyxyxyxyxyxy\", s2 = \"yxyxyxyxyxyxyx\"",
+      "output": "8"
+    },
+    {
+      "input": "s1 = \"xxyyxy\", s2 = \"yyxyxx\"",
+      "output": "2"
+    },
+    {
+      "input": "s1 = \"xyxyxy\", s2 = \"yxyxyy\"",
+      "output": "-1"
+    },
+    {
+      "input": "s1 = \"xyxxyyxy\", s2 = \"yxyyyxyx\"",
+      "output": "-1"
+    },
+    {
+      "input": "s1 = \"xxyxyxyxyx\", s2 = \"yxyxyxyxyx\"",
+      "output": "-1"
+    },
+    {
+      "input": "s1 = \"xxyyxyxyx\", s2 = \"yyxyxyxyx\"",
+      "output": "-1"
+    },
+    {
+      "input": "s1 = \"yxyxyxyxyx\", s2 = \"xyxyxyxyyx\"",
+      "output": "4"
+    },
+    {
+      "input": "s1 = \"xyxxyxxyxy\", s2 = \"yxyxyxyxyx\"",
+      "output": "-1"
+    },
+    {
+      "input": "s1 = \"xyxyxyyxyx\", s2 = \"xyxyxyxyxy\"",
+      "output": "2"
+    },
+    {
+      "input": "s1 = \"xxxxxy\", s2 = \"yyyxxx\"",
+      "output": "3"
+    },
+    {
+      "input": "s1 = \"xxyyxxxyyy\", s2 = \"yyxxyyxyxx\"",
+      "output": "4"
+    },
+    {
+      "input": "s1 = \"xxxxxx\", s2 = \"yyyyyy\"",
+      "output": "3"
+    },
+    {
+      "input": "s1 = \"xyxyxyxyxy\", s2 = \"yxyxyxyxyx\"",
+      "output": "6"
+    },
+    {
+      "input": "s1 = \"xxxxxyyyy\", s2 = \"yyyyxxxyx\"",
+      "output": "-1"
+    },
+    {
+      "input": "s1 = \"xxyx\", s2 = \"xyyx\"",
+      "output": "-1"
+    },
+    {
+      "input": "s1 = \"xxxxxxxx\", s2 = \"yyyyyyyy\"",
+      "output": "4"
+    },
+    {
+      "input": "s1 = \"xxxxxxxxxx\", s2 = \"yyyyyyyyyy\"",
+      "output": "5"
+    },
+    {
+      "input": "s1 = \"xyxxyxxyx\", s2 = \"yxyxyxyyx\"",
+      "output": "3"
+    },
+    {
+      "input": "s1 = \"xyxxyy\", s2 = \"yxyxyx\"",
+      "output": "2"
+    },
+    {
+      "input": "s1 = \"xxyxyxyx\", s2 = \"yxyxyxyy\"",
+      "output": "1"
+    },
+    {
+      "input": "s1 = \"xyxyxxxyyx\", s2 = \"yxyxyxxyxy\"",
+      "output": "-1"
+    },
+    {
+      "input": "s1 = \"xxyyxxyyxx\", s2 = \"yyxyxxyyxy\"",
+      "output": "3"
+    },
+    {
+      "input": "s1 = \"xyxyxyxyxyxyxyxyxyxy\", s2 = \"yxyxyxyxyxyxyxyxyxyx\"",
+      "output": "10"
+    },
+    {
+      "input": "s1 = \"xyxyxyxy\", s2 = \"yxyxyxyx\"",
+      "output": "4"
+    },
+    {
+      "input": "s1 = \"xxyy\", s2 = \"yyxx\"",
+      "output": "2"
+    },
+    {
+      "input": "s1 = \"xxyxyxyxyxyxyxyxyx\", s2 = \"xyxyxyxyxyxyxyxyyx\"",
+      "output": "-1"
+    },
+    {
+      "input": "s1 = \"xxyyxyxyxyxyxy\", s2 = \"yyxyxyxyxyxyyx\"",
+      "output": "-1"
+    },
+    {
+      "input": "s1 = \"xyxyy\", s2 = \"yxyyx\"",
+      "output": "2"
+    },
+    {
+      "input": "s1 = \"xyyxxyyxxyyx\", s2 = \"yxyxyxyxyxyy\"",
+      "output": "-1"
+    },
+    {
+      "input": "s1 = \"xxyxyxyx\", s2 = \"xyxyxyyx\"",
+      "output": "-1"
+    },
+    {
+      "input": "s1 = \"xxxxxyyy\", s2 = \"yyyyxxxx\"",
+      "output": "-1"
+    },
+    {
+      "input": "s1 = \"xyxyxyxyyy\", s2 = \"yxyxyxyxxx\"",
+      "output": "5"
+    },
+    {
+      "input": "s1 = \"yyxyyyxxxyyy\", s2 = \"xyxxyyxyxxyx\"",
+      "output": "-1"
+    },
+    {
+      "input": "s1 = \"yxyxyxyx\", s2 = \"xyxyxyxy\"",
+      "output": "4"
+    },
+    {
+      "input": "s1 = \"xyxxyxyxyx\", s2 = \"xyxyxyxyyx\"",
+      "output": "-1"
+    },
+    {
+      "input": "s1 = \"xyxxyxyx\", s2 = \"yxxyxyyx\"",
+      "output": "-1"
+    },
+    {
+      "input": "s1 = \"xxxxxxyy\", s2 = \"yyxxxxyx\"",
+      "output": "-1"
+    },
+    {
+      "input": "s1 = \"xyxyxyxyxyxyxyxyxyxyxy\", s2 = \"yxyxyxyxyxyxyxyxyxyxyx\"",
+      "output": "12"
+    },
+    {
+      "input": "s1 = \"xxyyxyyx\", s2 = \"yyxyxyyx\"",
+      "output": "-1"
+    },
+    {
+      "input": "s1 = \"xxxyyyxyyx\", s2 = \"yyxyyxyxxy\"",
+      "output": "-1"
+    },
+    {
+      "input": "s1 = \"xxyxxyxyxy\", s2 = \"yxyxyxyxyx\"",
+      "output": "-1"
+    },
+    {
+      "input": "s1 = \"xyxxyxxyxxyxyy\", s2 = \"yxyxyxyxyxyyxy\"",
+      "output": "5"
+    },
+    {
+      "input": "s1 = \"xxyxyxx\", s2 = \"yyxyxyy\"",
+      "output": "-1"
+    },
+    {
+      "input": "s1 = \"xxyxyxyxyx\", s2 = \"xyxyxyxyyx\"",
+      "output": "-1"
+    },
+    {
+      "input": "s1 = \"xyxyxyyy\", s2 = \"yxyxyxxx\"",
+      "output": "5"
+    },
+    {
+      "input": "s1 = \"xyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxy\", s2 = \"yxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyx\"",
+      "output": "18"
+    },
+    {
+      "input": "s1 = \"xxyxyxyxyx\", s2 = \"xyxxyxyxyx\"",
+      "output": "2"
+    },
+    {
+      "input": "s1 = \"xyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxy\", s2 = \"yxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyx\"",
+      "output": "18"
+    },
+    {
+      "input": "s1 = \"xyyxxyxyxy\", s2 = \"yxyxyxyxyx\"",
+      "output": "4"
+    },
+    {
+      "input": "s1 = \"xxyxyx\", s2 = \"yyxyxy\"",
+      "output": "3"
+    },
+    {
+      "input": "s1 = \"xxyyyy\", s2 = \"yyyxxx\"",
+      "output": "-1"
+    },
+    {
+      "input": "s1 = \"xyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxy\", s2 = \"yxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyx\"",
+      "output": "20"
+    },
+    {
+      "input": "s1 = \"xyxxyxyx\", s2 = \"xyxyxyyx\"",
+      "output": "-1"
+    },
+    {
+      "input": "s1 = \"xyxyxyxyxy\", s2 = \"yxyxyxyxyy\"",
+      "output": "-1"
+    },
+    {
+      "input": "s1 = \"xyxxyxxyx\", s2 = \"yxyxyxyxy\"",
+      "output": "3"
+    },
+    {
+      "input": "s1 = \"xyxxyxyxyxyxyxyxyxyxyxyxyxyx\", s2 = \"xyxyxyxyxyxyxyxyxyxyxyxyxyxy\"",
+      "output": "-1"
+    },
+    {
+      "input": "s1 = \"xxyxyxyxyy\", s2 = \"yyxyxyxyyx\"",
+      "output": "-1"
+    },
+    {
+      "input": "s1 = \"xyxyxyxyxyxyxyxy\", s2 = \"yxyxyxyxyxyxyxyx\"",
+      "output": "8"
+    },
+    {
+      "input": "s1 = \"xyxxxy\", s2 = \"yxyyxy\"",
+      "output": "3"
+    },
+    {
+      "input": "s1 = \"xxyxyyxy\", s2 = \"yyxyxyyx\"",
+      "output": "-1"
+    }
+  ],
+  "types": {
+    "python3": {
+      "input": [
+        {
+          "s1": "str"
+        },
+        {
+          "s2": "str"
+        }
+      ],
+      "output": "int"
+    },
+    "cpp": {
+      "input": [
+        {
+          "s1": "string"
+        },
+        {
+          "s2": "string"
+        }
+      ],
+      "output": "int"
+    },
+    "java": {
+      "input": [
+        {
+          "s1": "String"
+        },
+        {
+          "s2": "String"
+        }
+      ],
+      "output": "int"
+    },
+    "javascript": {
+      "input": [
+        {
+          "s1": "string"
+        },
+        {
+          "s2": "string"
+        }
+      ],
+      "output": "number"
+    },
+    "typescript": {
+      "input": [
+        {
+          "s1": "string"
+        },
+        {
+          "s2": "string"
+        }
+      ],
+      "output": "number"
+    },
+    "golang": {
+      "input": [
+        {
+          "s1": "string"
+        },
+        {
+          "s2": "string"
+        }
+      ],
+      "output": "int"
+    },
+    "rust": {
+      "input": [
+        {
+          "s1": "String"
+        },
+        {
+          "s2": "String"
+        }
+      ],
+      "output": "i32"
+    }
+  },
+  "tags": [
+    "math",
+    "string",
+    "greedy"
+  ]
+}

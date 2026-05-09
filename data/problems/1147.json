@@ -1,0 +1,851 @@
+{
+  "id": 1147,
+  "title": "Longest Chunked Palindrome Decomposition",
+  "slug": "longest-chunked-palindrome-decomposition",
+  "difficulty": "Hard",
+  "description": "You are given a string text. You should split it to k substrings (subtext1, subtext2, ..., subtextk) such that:\nReturn the largest possible value of k.\nExample 1:\nExample 2:\nExample 3:\nConstraints:",
+  "examples": [
+    {
+      "example_num": 1,
+      "example_text": "Input: text = \"ghiabcdefhelloadamhelloabcdefghi\"\nOutput: 7\nExplanation: We can split the string on \"(ghi)(abcdef)(hello)(adam)(hello)(abcdef)(ghi)\".",
+      "images": []
+    },
+    {
+      "example_num": 2,
+      "example_text": "Input: text = \"merchant\"\nOutput: 1\nExplanation: We can split the string on \"(merchant)\".",
+      "images": []
+    },
+    {
+      "example_num": 3,
+      "example_text": "Input: text = \"antaprezatepzapreanta\"\nOutput: 11\nExplanation: We can split the string on \"(a)(nt)(a)(pre)(za)(tep)(za)(pre)(a)(nt)(a)\".",
+      "images": []
+    }
+  ],
+  "constraints": [
+    "1 <= text.length <= 1000",
+    "text consists only of lowercase English characters."
+  ],
+  "hints": [
+    "Using a rolling hash, we can quickly check whether two strings are equal.",
+    "Use that as the basis of a dp."
+  ],
+  "code_snippets": {
+    "cpp": "class Solution {\npublic:\n    int longestDecomposition(string text) {\n        \n    }\n};",
+    "java": "class Solution {\n    public int longestDecomposition(String text) {\n        \n    }\n}",
+    "python3": "class Solution:\n    def longestDecomposition(self, text: str) -> int:\n        ",
+    "javascript": "/**\n * @param {string} text\n * @return {number}\n */\nvar longestDecomposition = function(text) {\n    \n};",
+    "typescript": "function longestDecomposition(text: string): number {\n    \n};",
+    "golang": "func longestDecomposition(text string) int {\n    \n}",
+    "rust": "impl Solution {\n    pub fn longest_decomposition(text: String) -> i32 {\n        \n    }\n}"
+  },
+  "entry_points": {
+    "python3": "Solution().longestDecomposition",
+    "cpp": "Solution().longestDecomposition",
+    "java": "new Solution().longestDecomposition",
+    "javascript": "longestDecomposition",
+    "typescript": "longestDecomposition",
+    "golang": "longestDecomposition",
+    "rust": "Solution::longest_decomposition"
+  },
+  "test_snippets": {
+    "python3": "def check(candidate):\n    assert candidate(text = \"abcabc\") == 2\n    assert candidate(text = \"abcabcabc\") == 3\n    assert candidate(text = \"level\") == 5\n    assert candidate(text = \"zyxzyxzyx\") == 3\n    assert candidate(text = \"madam\") == 5\n    assert candidate(text = \"aaaaa\") == 5\n    assert candidate(text = \"merchant\") == 1\n    assert candidate(text = \"aabbccddeedccbbaa\") == 15\n    assert candidate(text = \"repaper\") == 7\n    assert candidate(text = \"ghiabcdefhelloadamhelloabcdefghi\") == 7\n    assert candidate(text = \"aaa\") == 3\n    assert candidate(text = \"antaprezatepzapreanta\") == 11\n    assert candidate(text = \"abcdabcdabcdabcd\") == 4\n    assert candidate(text = \"abacaba\") == 7\n    assert candidate(text = \"abcdefghijklmnopqrstuvwxyzzyxwvutsrqponmlkjihgfedcba\") == 52\n    assert candidate(text = \"xyzzyx\") == 6\n    assert candidate(text = \"abcddcba\") == 8\n    assert candidate(text = \"rotor\") == 5\n    assert candidate(text = \"abcdedcba\") == 9\n    assert candidate(text = \"refer\") == 5\n    assert candidate(text = \"redder\") == 6\n    assert candidate(text = \"peep\") == 4\n    assert candidate(text = \"abba\") == 4\n    assert candidate(text = \"racecar\") == 7\n    assert candidate(text = \"civic\") == 5\n    assert candidate(text = \"abcdabcd\") == 2\n    assert candidate(text = \"a\") == 1\n    assert candidate(text = \"abcabcabcabcabcabc\") == 6\n    assert candidate(text = \"xyzzyxxyzzyx\") == 12\n    assert candidate(text = \"noon\") == 4\n    assert candidate(text = \"deified\") == 7\n    assert candidate(text = \"racecarlevelracecar\") == 19\n    assert candidate(text = \"deed\") == 4\n    assert candidate(text = \"abccba\") == 6\n    assert candidate(text = \"abab\") == 2\n    assert candidate(text = \"aabbccddeeddccbbaa\") == 18\n    assert candidate(text = \"abcba\") == 5\n    assert candidate(text = \"abcdeedcba\") == 10\n    assert candidate(text = \"levellevel\") == 10\n    assert candidate(text = \"ababababab\") == 5\n    assert candidate(text = \"bananaananabayananabanana\") == 13\n    assert candidate(text = \"abcdabcabcabcabcd\") == 5\n    assert candidate(text = \"racecarannakayakracecar\") == 15\n    assert candidate(text = \"abcabcabcabcabcabcabc\") == 7\n    assert candidate(text = \"xxyyxxyyxyyxxyyxxyy\") == 5\n    assert candidate(text = \"xylophonephoneyloxyxylophonephoneyloxy\") == 10\n    assert candidate(text = \"leveloneleveltwolevelonelevel\") == 23\n    assert candidate(text = \"aaaaabaaaabaaaa\") == 13\n    assert candidate(text = \"abacababacaba\") == 13\n    assert candidate(text = \"rotorcarrot\") == 3\n    assert candidate(text = \"leveloneonetwothreefourthreefourtwoonelevel\") == 15\n    assert candidate(text = \"aaaaabaaaabaaaaaaaabaaaaabaaaabaaaa\") == 27\n    assert candidate(text = \"noonnoonnoonnoonnoonnoon\") == 24\n    assert candidate(text = \"annakayakannakayakannakayakannakayakannakayak\") == 5\n    assert candidate(text = \"abcdefghihgfedcbaabcdefghihgfedcba\") == 34\n    assert candidate(text = \"abcdefgfedcbaabcdefgfedcbaabcdefgfedcba\") == 39\n    assert candidate(text = \"abacabaabacaba\") == 14\n    assert candidate(text = \"qwertyuiopasdfghjklzxcvbnmmnbvcxzlkjhgfdsapoiuytrewq\") == 52\n    assert candidate(text = \"madamimadamimadam\") == 17\n    assert candidate(text = \"kayak\") == 5\n    assert candidate(text = \"thisisaverylongstringwhichdoesnotrepeatthisisaverylongstring\") == 3\n    assert candidate(text = \"deifiedrotorcarcaretordeified\") == 21\n    assert candidate(text = \"madamimadamimadamimadamimadam\") == 29\n    assert candidate(text = \"noonnoonnoonnoonnoonnoonnoonnoon\") == 32\n    assert candidate(text = \"deifiedrotordeified\") == 19\n    assert candidate(text = \"noonracecarnoon\") == 15\n    assert candidate(text = \"madamimadam\") == 11\n    assert candidate(text = \"repaperdeified\") == 1\n    assert candidate(text = \"deededeed\") == 9\n    assert candidate(text = \"ananaananaananananananananananana\") == 15\n    assert candidate(text = \"racecarlevelracecarlevelracecarlevel\") == 3\n    assert candidate(text = \"abcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabc\") == 18\n    assert candidate(text = \"racecarlevelmadamracecar\") == 15\n    assert candidate(text = \"leveloneonelevel\") == 12\n    assert candidate(text = \"xyzyxzyzyxzyzyxzyx\") == 15\n    assert candidate(text = \"abcdefghihgfedcba\") == 17\n    assert candidate(text = \"abbaabbaabbaabbaabba\") == 20\n    assert candidate(text = \"abacabaabacabaabacaba\") == 21\n    assert candidate(text = \"abcdabcdeedcbadcbabcd\") == 3\n    assert candidate(text = \"abccbaabccba\") == 12\n    assert candidate(text = \"abracadabra\") == 7\n    assert candidate(text = \"madammadam\") == 10\n    assert candidate(text = \"aaaaaaaaabbbbbbbbbbbbbbbccccccccccccccccccccdd\") == 1\n    assert candidate(text = \"deifiedrotorleveldeified\") == 15\n    assert candidate(text = \"racecarlevelracecarlevelracecarlevelracecarlevel\") == 4\n    assert candidate(text = \"madaminnadammadam\") == 11\n    assert candidate(text = \"leveldeifiedmadamdeifiedlevel\") == 29\n    assert candidate(text = \"abacabacabacabac\") == 4\n    assert candidate(text = \"aaaabbbbccccaaaabbbbcccc\") == 2\n    assert candidate(text = \"noonnoonnoon\") == 12\n    assert candidate(text = \"xyzyxzyzyxzyxzyzyxzyzyxzyzyxzyzyxzyzyxzyzyxzyzyxzyzyxzyzyx\") == 33\n    assert candidate(text = \"abcdefgabcdefgabcdefg\") == 3\n    assert candidate(text = \"abracadabraabracadabra\") == 14\n    assert candidate(text = \"civiccivic\") == 10\n    assert candidate(text = \"annakayakannakayakannakayakannakayakannakayakannakayakannakayak\") == 7\n    assert candidate(text = \"rotorcarrots\") == 1\n    assert candidate(text = \"abracadabraacarab\") == 11\n    assert candidate(text = \"kayakkayakkayak\") == 15\n    assert candidate(text = \"nun\") == 3\n    assert candidate(text = \"annakayakannakayakannakayak\") == 3\n    assert candidate(text = \"rotorlevelrotor\") == 15\n    assert candidate(text = \"qwertyuiopasdfghjklzxcvbnmqwertyuiopasdfghjklzxcvbnm\") == 2\n    assert candidate(text = \"aabbccddeeddccbaa\") == 7\n    assert candidate(text = \"abbaabbaabba\") == 12\n    assert candidate(text = \"xyzxyzxyzxyzxyzxyzxyzxyz\") == 8\n    assert candidate(text = \"levellevellevellevel\") == 20\n    assert candidate(text = \"abccbaabccbaabccba\") == 18\n    assert candidate(text = \"abcdeedcbaabcdeedcbaabcdeedcba\") == 30\n    assert candidate(text = \"abcdefgfedcbaabcdefg\") == 3\n    assert candidate(text = \"levelmadamlevel\") == 15\n    assert candidate(text = \"abcabcabcabc\") == 4\n    assert candidate(text = \"abacabadabacabaabacabadabacaba\") == 30\n    assert candidate(text = \"rotorcarcaretor\") == 7\n    assert candidate(text = \"annakayakannakayakannakayakannakayak\") == 4\n    assert candidate(text = \"levellevellevellevellevellevellevellevellevellevellevellevel\") == 60\n    assert candidate(text = \"levellevellevellevellevellevel\") == 30\n    assert candidate(text = \"aaaaabbbbbaaaabbbbbaaaaa\") == 24\n    assert candidate(text = \"abcdabcabcabcd\") == 4\n    assert candidate(text = \"aaaabbbbccccbbbbaaaa\") == 20\n    assert candidate(text = \"madamimadamimadamimadamimadamimadamimadamimadam\") == 47\n    assert candidate(text = \"abcdxyzyxzyxcddcbaabcdxyzyxzyxcddcba\") == 18\n    assert candidate(text = \"abacabadabacabadabacaba\") == 23\n    assert candidate(text = \"deifieddeified\") == 14\n    assert candidate(text = \"deifiedracecardeified\") == 21\n    assert candidate(text = \"noonnoonnoonnoon\") == 16\n    assert candidate(text = \"radar\") == 5\n    assert candidate(text = \"abacabadabacaba\") == 15\n    assert candidate(text = \"annakayakannakayak\") == 2\n    assert candidate(text = \"abcdabcdefgabcdefgdcba\") == 10\n    assert candidate(text = \"racecarannakayak\") == 1\n    assert candidate(text = \"abbaabbaabbaabbaabbaabbaabbaabbaabbaabbaabba\") == 44\n    assert candidate(text = \"abacabadabacabad\") == 2\n    assert candidate(text = \"rotorrotor\") == 10\n    assert candidate(text = \"abcabcabcabcabc\") == 5\n    assert candidate(text = \"abracadabracadabra\") == 11\n    assert candidate(text = \"levellevellevellevellevel\") == 25\n    assert candidate(text = \"aaaaaabaaaaa\") == 11\n    assert candidate(text = \"aabbccddeedcbaabbccdd\") == 3\n    assert candidate(text = \"hellohellobellohellobellohello\") == 4\n    assert candidate(text = \"xyzzxyzzxyzz\") == 3\n    assert candidate(text = \"xxyyzzzyyxxyyyzzzzyyxx\") == 15\n    assert candidate(text = \"aabbccddeeeedddccbbaaa\") == 5\n    assert candidate(text = \"deifiedrotor\") == 1\n    assert candidate(text = \"abcdeedcbaabcdeedcba\") == 20\n    assert candidate(text = \"abababababababab\") == 8\n    assert candidate(text = \"abacabaabacabaabacabaabacaba\") == 28\n    assert candidate(text = \"aaaabbbbccccddddeeeeffffeeeeggggccccbbbbaaaaffff\") == 1\n    assert candidate(text = \"wow\") == 3\n    assert candidate(text = \"abcdabccbaabcd\") == 8\n    assert candidate(text = \"abcabcabcabcabcabcabcd\") == 1\n    assert candidate(text = \"abcxyzzyxcba\") == 12\n    assert candidate(text = \"racecarlevelracecarlevelracecarlevelracecarlevelracecarlevel\") == 5\n    assert candidate(text = \"madamimadamimadamimadamimadamimadam\") == 35\n    assert candidate(text = \"noonabbadacabbaaddaabbnoon\") == 15\n    assert candidate(text = \"xyzzyxzyxzyxzyxzyxzyxzyxyz\") == 15\n    assert candidate(text = \"levellevellevellevellevellevellevellevel\") == 40\n    assert candidate(text = \"abababababababababababab\") == 12\n    assert candidate(text = \"mississippiississimississimississippi\") == 17\n    assert candidate(text = \"aabbccddeedcba\") == 3\n    assert candidate(text = \"xyzyxzyzyxzyx\") == 11\n    assert candidate(text = \"aaaaabaaa\") == 7\n    assert candidate(text = \"abcdcdeabcdcdeabcdcdeabcd\") == 7\n    assert candidate(text = \"racecarracecar\") == 14\n    assert candidate(text = \"rotorrotorrotor\") == 15\n    assert candidate(text = \"racecarlevelracecarlevel\") == 2\n    assert candidate(text = \"kayakkayak\") == 10\n    assert candidate(text = \"noonnoon\") == 8\n    assert candidate(text = \"racecarlevelmadamracecarlevelmadam\") == 2\n    assert candidate(text = \"abcxyzzyxcbaabcxyzzyxcba\") == 24\n    assert candidate(text = \"redividerrotorredivider\") == 23\n    assert candidate(text = \"ababababababababababababababababab\") == 17\n    assert candidate(text = \"referrefer\") == 10\n    assert candidate(text = \"noonnoonnoonnoonnoonnoonnoonnoonnoonnoon\") == 40\n    assert candidate(text = \"madamimadamimadamimadam\") == 23\n    assert candidate(text = \"abbaabbaabbaabba\") == 16\n    assert candidate(text = \"mississippi\") == 1\n    assert candidate(text = \"aabbccddeedccbbaaa\") == 5\n    assert candidate(text = \"abcdeabcdeabcde\") == 3\n    assert candidate(text = \"racecarracecarracecar\") == 21\n    assert candidate(text = \"redivider\") == 9\n    assert candidate(text = \"thisisaverylongstringwithnorepeatedpattern\") == 1",
+    "cpp": "void check(Solution& solution) {\n    assert(solution.longestDecomposition(\"abcabc\") == vector<int>2);\n    assert(solution.longestDecomposition(\"abcabcabc\") == vector<int>3);\n    assert(solution.longestDecomposition(\"level\") == vector<int>5);\n    assert(solution.longestDecomposition(\"zyxzyxzyx\") == vector<int>3);\n    assert(solution.longestDecomposition(\"madam\") == vector<int>5);\n    assert(solution.longestDecomposition(\"aaaaa\") == vector<int>5);\n    assert(solution.longestDecomposition(\"merchant\") == vector<int>1);\n    assert(solution.longestDecomposition(\"aabbccddeedccbbaa\") == vector<int>15);\n    assert(solution.longestDecomposition(\"repaper\") == vector<int>7);\n    assert(solution.longestDecomposition(\"ghiabcdefhelloadamhelloabcdefghi\") == vector<int>7);\n    assert(solution.longestDecomposition(\"aaa\") == vector<int>3);\n    assert(solution.longestDecomposition(\"antaprezatepzapreanta\") == vector<int>11);\n    assert(solution.longestDecomposition(\"abcdabcdabcdabcd\") == vector<int>4);\n    assert(solution.longestDecomposition(\"abacaba\") == vector<int>7);\n    assert(solution.longestDecomposition(\"abcdefghijklmnopqrstuvwxyzzyxwvutsrqponmlkjihgfedcba\") == vector<int>52);\n    assert(solution.longestDecomposition(\"xyzzyx\") == vector<int>6);\n    assert(solution.longestDecomposition(\"abcddcba\") == vector<int>8);\n    assert(solution.longestDecomposition(\"rotor\") == vector<int>5);\n    assert(solution.longestDecomposition(\"abcdedcba\") == vector<int>9);\n    assert(solution.longestDecomposition(\"refer\") == vector<int>5);\n    assert(solution.longestDecomposition(\"redder\") == vector<int>6);\n    assert(solution.longestDecomposition(\"peep\") == vector<int>4);\n    assert(solution.longestDecomposition(\"abba\") == vector<int>4);\n    assert(solution.longestDecomposition(\"racecar\") == vector<int>7);\n    assert(solution.longestDecomposition(\"civic\") == vector<int>5);\n    assert(solution.longestDecomposition(\"abcdabcd\") == vector<int>2);\n    assert(solution.longestDecomposition(\"a\") == vector<int>1);\n    assert(solution.longestDecomposition(\"abcabcabcabcabcabc\") == vector<int>6);\n    assert(solution.longestDecomposition(\"xyzzyxxyzzyx\") == vector<int>12);\n    assert(solution.longestDecomposition(\"noon\") == vector<int>4);\n    assert(solution.longestDecomposition(\"deified\") == vector<int>7);\n    assert(solution.longestDecomposition(\"racecarlevelracecar\") == vector<int>19);\n    assert(solution.longestDecomposition(\"deed\") == vector<int>4);\n    assert(solution.longestDecomposition(\"abccba\") == vector<int>6);\n    assert(solution.longestDecomposition(\"abab\") == vector<int>2);\n    assert(solution.longestDecomposition(\"aabbccddeeddccbbaa\") == vector<int>18);\n    assert(solution.longestDecomposition(\"abcba\") == vector<int>5);\n    assert(solution.longestDecomposition(\"abcdeedcba\") == vector<int>10);\n    assert(solution.longestDecomposition(\"levellevel\") == vector<int>10);\n    assert(solution.longestDecomposition(\"ababababab\") == vector<int>5);\n    assert(solution.longestDecomposition(\"bananaananabayananabanana\") == vector<int>13);\n    assert(solution.longestDecomposition(\"abcdabcabcabcabcd\") == vector<int>5);\n    assert(solution.longestDecomposition(\"racecarannakayakracecar\") == vector<int>15);\n    assert(solution.longestDecomposition(\"abcabcabcabcabcabcabc\") == vector<int>7);\n    assert(solution.longestDecomposition(\"xxyyxxyyxyyxxyyxxyy\") == vector<int>5);\n    assert(solution.longestDecomposition(\"xylophonephoneyloxyxylophonephoneyloxy\") == vector<int>10);\n    assert(solution.longestDecomposition(\"leveloneleveltwolevelonelevel\") == vector<int>23);\n    assert(solution.longestDecomposition(\"aaaaabaaaabaaaa\") == vector<int>13);\n    assert(solution.longestDecomposition(\"abacababacaba\") == vector<int>13);\n    assert(solution.longestDecomposition(\"rotorcarrot\") == vector<int>3);\n    assert(solution.longestDecomposition(\"leveloneonetwothreefourthreefourtwoonelevel\") == vector<int>15);\n    assert(solution.longestDecomposition(\"aaaaabaaaabaaaaaaaabaaaaabaaaabaaaa\") == vector<int>27);\n    assert(solution.longestDecomposition(\"noonnoonnoonnoonnoonnoon\") == vector<int>24);\n    assert(solution.longestDecomposition(\"annakayakannakayakannakayakannakayakannakayak\") == vector<int>5);\n    assert(solution.longestDecomposition(\"abcdefghihgfedcbaabcdefghihgfedcba\") == vector<int>34);\n    assert(solution.longestDecomposition(\"abcdefgfedcbaabcdefgfedcbaabcdefgfedcba\") == vector<int>39);\n    assert(solution.longestDecomposition(\"abacabaabacaba\") == vector<int>14);\n    assert(solution.longestDecomposition(\"qwertyuiopasdfghjklzxcvbnmmnbvcxzlkjhgfdsapoiuytrewq\") == vector<int>52);\n    assert(solution.longestDecomposition(\"madamimadamimadam\") == vector<int>17);\n    assert(solution.longestDecomposition(\"kayak\") == vector<int>5);\n    assert(solution.longestDecomposition(\"thisisaverylongstringwhichdoesnotrepeatthisisaverylongstring\") == vector<int>3);\n    assert(solution.longestDecomposition(\"deifiedrotorcarcaretordeified\") == vector<int>21);\n    assert(solution.longestDecomposition(\"madamimadamimadamimadamimadam\") == vector<int>29);\n    assert(solution.longestDecomposition(\"noonnoonnoonnoonnoonnoonnoonnoon\") == vector<int>32);\n    assert(solution.longestDecomposition(\"deifiedrotordeified\") == vector<int>19);\n    assert(solution.longestDecomposition(\"noonracecarnoon\") == vector<int>15);\n    assert(solution.longestDecomposition(\"madamimadam\") == vector<int>11);\n    assert(solution.longestDecomposition(\"repaperdeified\") == vector<int>1);\n    assert(solution.longestDecomposition(\"deededeed\") == vector<int>9);\n    assert(solution.longestDecomposition(\"ananaananaananananananananananana\") == vector<int>15);\n    assert(solution.longestDecomposition(\"racecarlevelracecarlevelracecarlevel\") == vector<int>3);\n    assert(solution.longestDecomposition(\"abcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabc\") == vector<int>18);\n    assert(solution.longestDecomposition(\"racecarlevelmadamracecar\") == vector<int>15);\n    assert(solution.longestDecomposition(\"leveloneonelevel\") == vector<int>12);\n    assert(solution.longestDecomposition(\"xyzyxzyzyxzyzyxzyx\") == vector<int>15);\n    assert(solution.longestDecomposition(\"abcdefghihgfedcba\") == vector<int>17);\n    assert(solution.longestDecomposition(\"abbaabbaabbaabbaabba\") == vector<int>20);\n    assert(solution.longestDecomposition(\"abacabaabacabaabacaba\") == vector<int>21);\n    assert(solution.longestDecomposition(\"abcdabcdeedcbadcbabcd\") == vector<int>3);\n    assert(solution.longestDecomposition(\"abccbaabccba\") == vector<int>12);\n    assert(solution.longestDecomposition(\"abracadabra\") == vector<int>7);\n    assert(solution.longestDecomposition(\"madammadam\") == vector<int>10);\n    assert(solution.longestDecomposition(\"aaaaaaaaabbbbbbbbbbbbbbbccccccccccccccccccccdd\") == vector<int>1);\n    assert(solution.longestDecomposition(\"deifiedrotorleveldeified\") == vector<int>15);\n    assert(solution.longestDecomposition(\"racecarlevelracecarlevelracecarlevelracecarlevel\") == vector<int>4);\n    assert(solution.longestDecomposition(\"madaminnadammadam\") == vector<int>11);\n    assert(solution.longestDecomposition(\"leveldeifiedmadamdeifiedlevel\") == vector<int>29);\n    assert(solution.longestDecomposition(\"abacabacabacabac\") == vector<int>4);\n    assert(solution.longestDecomposition(\"aaaabbbbccccaaaabbbbcccc\") == vector<int>2);\n    assert(solution.longestDecomposition(\"noonnoonnoon\") == vector<int>12);\n    assert(solution.longestDecomposition(\"xyzyxzyzyxzyxzyzyxzyzyxzyzyxzyzyxzyzyxzyzyxzyzyxzyzyxzyzyx\") == vector<int>33);\n    assert(solution.longestDecomposition(\"abcdefgabcdefgabcdefg\") == vector<int>3);\n    assert(solution.longestDecomposition(\"abracadabraabracadabra\") == vector<int>14);\n    assert(solution.longestDecomposition(\"civiccivic\") == vector<int>10);\n    assert(solution.longestDecomposition(\"annakayakannakayakannakayakannakayakannakayakannakayakannakayak\") == vector<int>7);\n    assert(solution.longestDecomposition(\"rotorcarrots\") == vector<int>1);\n    assert(solution.longestDecomposition(\"abracadabraacarab\") == vector<int>11);\n    assert(solution.longestDecomposition(\"kayakkayakkayak\") == vector<int>15);\n    assert(solution.longestDecomposition(\"nun\") == vector<int>3);\n    assert(solution.longestDecomposition(\"annakayakannakayakannakayak\") == vector<int>3);\n    assert(solution.longestDecomposition(\"rotorlevelrotor\") == vector<int>15);\n    assert(solution.longestDecomposition(\"qwertyuiopasdfghjklzxcvbnmqwertyuiopasdfghjklzxcvbnm\") == vector<int>2);\n    assert(solution.longestDecomposition(\"aabbccddeeddccbaa\") == vector<int>7);\n    assert(solution.longestDecomposition(\"abbaabbaabba\") == vector<int>12);\n    assert(solution.longestDecomposition(\"xyzxyzxyzxyzxyzxyzxyzxyz\") == vector<int>8);\n    assert(solution.longestDecomposition(\"levellevellevellevel\") == vector<int>20);\n    assert(solution.longestDecomposition(\"abccbaabccbaabccba\") == vector<int>18);\n    assert(solution.longestDecomposition(\"abcdeedcbaabcdeedcbaabcdeedcba\") == vector<int>30);\n    assert(solution.longestDecomposition(\"abcdefgfedcbaabcdefg\") == vector<int>3);\n    assert(solution.longestDecomposition(\"levelmadamlevel\") == vector<int>15);\n    assert(solution.longestDecomposition(\"abcabcabcabc\") == vector<int>4);\n    assert(solution.longestDecomposition(\"abacabadabacabaabacabadabacaba\") == vector<int>30);\n    assert(solution.longestDecomposition(\"rotorcarcaretor\") == vector<int>7);\n    assert(solution.longestDecomposition(\"annakayakannakayakannakayakannakayak\") == vector<int>4);\n    assert(solution.longestDecomposition(\"levellevellevellevellevellevellevellevellevellevellevellevel\") == vector<int>60);\n    assert(solution.longestDecomposition(\"levellevellevellevellevellevel\") == vector<int>30);\n    assert(solution.longestDecomposition(\"aaaaabbbbbaaaabbbbbaaaaa\") == vector<int>24);\n    assert(solution.longestDecomposition(\"abcdabcabcabcd\") == vector<int>4);\n    assert(solution.longestDecomposition(\"aaaabbbbccccbbbbaaaa\") == vector<int>20);\n    assert(solution.longestDecomposition(\"madamimadamimadamimadamimadamimadamimadamimadam\") == vector<int>47);\n    assert(solution.longestDecomposition(\"abcdxyzyxzyxcddcbaabcdxyzyxzyxcddcba\") == vector<int>18);\n    assert(solution.longestDecomposition(\"abacabadabacabadabacaba\") == vector<int>23);\n    assert(solution.longestDecomposition(\"deifieddeified\") == vector<int>14);\n    assert(solution.longestDecomposition(\"deifiedracecardeified\") == vector<int>21);\n    assert(solution.longestDecomposition(\"noonnoonnoonnoon\") == vector<int>16);\n    assert(solution.longestDecomposition(\"radar\") == vector<int>5);\n    assert(solution.longestDecomposition(\"abacabadabacaba\") == vector<int>15);\n    assert(solution.longestDecomposition(\"annakayakannakayak\") == vector<int>2);\n    assert(solution.longestDecomposition(\"abcdabcdefgabcdefgdcba\") == vector<int>10);\n    assert(solution.longestDecomposition(\"racecarannakayak\") == vector<int>1);\n    assert(solution.longestDecomposition(\"abbaabbaabbaabbaabbaabbaabbaabbaabbaabbaabba\") == vector<int>44);\n    assert(solution.longestDecomposition(\"abacabadabacabad\") == vector<int>2);\n    assert(solution.longestDecomposition(\"rotorrotor\") == vector<int>10);\n    assert(solution.longestDecomposition(\"abcabcabcabcabc\") == vector<int>5);\n    assert(solution.longestDecomposition(\"abracadabracadabra\") == vector<int>11);\n    assert(solution.longestDecomposition(\"levellevellevellevellevel\") == vector<int>25);\n    assert(solution.longestDecomposition(\"aaaaaabaaaaa\") == vector<int>11);\n    assert(solution.longestDecomposition(\"aabbccddeedcbaabbccdd\") == vector<int>3);\n    assert(solution.longestDecomposition(\"hellohellobellohellobellohello\") == vector<int>4);\n    assert(solution.longestDecomposition(\"xyzzxyzzxyzz\") == vector<int>3);\n    assert(solution.longestDecomposition(\"xxyyzzzyyxxyyyzzzzyyxx\") == vector<int>15);\n    assert(solution.longestDecomposition(\"aabbccddeeeedddccbbaaa\") == vector<int>5);\n    assert(solution.longestDecomposition(\"deifiedrotor\") == vector<int>1);\n    assert(solution.longestDecomposition(\"abcdeedcbaabcdeedcba\") == vector<int>20);\n    assert(solution.longestDecomposition(\"abababababababab\") == vector<int>8);\n    assert(solution.longestDecomposition(\"abacabaabacabaabacabaabacaba\") == vector<int>28);\n    assert(solution.longestDecomposition(\"aaaabbbbccccddddeeeeffffeeeeggggccccbbbbaaaaffff\") == vector<int>1);\n    assert(solution.longestDecomposition(\"wow\") == vector<int>3);\n    assert(solution.longestDecomposition(\"abcdabccbaabcd\") == vector<int>8);\n    assert(solution.longestDecomposition(\"abcabcabcabcabcabcabcd\") == vector<int>1);\n    assert(solution.longestDecomposition(\"abcxyzzyxcba\") == vector<int>12);\n    assert(solution.longestDecomposition(\"racecarlevelracecarlevelracecarlevelracecarlevelracecarlevel\") == vector<int>5);\n    assert(solution.longestDecomposition(\"madamimadamimadamimadamimadamimadam\") == vector<int>35);\n    assert(solution.longestDecomposition(\"noonabbadacabbaaddaabbnoon\") == vector<int>15);\n    assert(solution.longestDecomposition(\"xyzzyxzyxzyxzyxzyxzyxzyxyz\") == vector<int>15);\n    assert(solution.longestDecomposition(\"levellevellevellevellevellevellevellevel\") == vector<int>40);\n    assert(solution.longestDecomposition(\"abababababababababababab\") == vector<int>12);\n    assert(solution.longestDecomposition(\"mississippiississimississimississippi\") == vector<int>17);\n    assert(solution.longestDecomposition(\"aabbccddeedcba\") == vector<int>3);\n    assert(solution.longestDecomposition(\"xyzyxzyzyxzyx\") == vector<int>11);\n    assert(solution.longestDecomposition(\"aaaaabaaa\") == vector<int>7);\n    assert(solution.longestDecomposition(\"abcdcdeabcdcdeabcdcdeabcd\") == vector<int>7);\n    assert(solution.longestDecomposition(\"racecarracecar\") == vector<int>14);\n    assert(solution.longestDecomposition(\"rotorrotorrotor\") == vector<int>15);\n    assert(solution.longestDecomposition(\"racecarlevelracecarlevel\") == vector<int>2);\n    assert(solution.longestDecomposition(\"kayakkayak\") == vector<int>10);\n    assert(solution.longestDecomposition(\"noonnoon\") == vector<int>8);\n    assert(solution.longestDecomposition(\"racecarlevelmadamracecarlevelmadam\") == vector<int>2);\n    assert(solution.longestDecomposition(\"abcxyzzyxcbaabcxyzzyxcba\") == vector<int>24);\n    assert(solution.longestDecomposition(\"redividerrotorredivider\") == vector<int>23);\n    assert(solution.longestDecomposition(\"ababababababababababababababababab\") == vector<int>17);\n    assert(solution.longestDecomposition(\"referrefer\") == vector<int>10);\n    assert(solution.longestDecomposition(\"noonnoonnoonnoonnoonnoonnoonnoonnoonnoon\") == vector<int>40);\n    assert(solution.longestDecomposition(\"madamimadamimadamimadam\") == vector<int>23);\n    assert(solution.longestDecomposition(\"abbaabbaabbaabba\") == vector<int>16);\n    assert(solution.longestDecomposition(\"mississippi\") == vector<int>1);\n    assert(solution.longestDecomposition(\"aabbccddeedccbbaaa\") == vector<int>5);\n    assert(solution.longestDecomposition(\"abcdeabcdeabcde\") == vector<int>3);\n    assert(solution.longestDecomposition(\"racecarracecarracecar\") == vector<int>21);\n    assert(solution.longestDecomposition(\"redivider\") == vector<int>9);\n    assert(solution.longestDecomposition(\"thisisaverylongstringwithnorepeatedpattern\") == vector<int>1);\n}",
+    "java": "public static void check(Solution solution) {\n    assert Arrays.equals(solution.longestDecomposition(\"abcabc\"), 2);\n    assert Arrays.equals(solution.longestDecomposition(\"abcabcabc\"), 3);\n    assert Arrays.equals(solution.longestDecomposition(\"level\"), 5);\n    assert Arrays.equals(solution.longestDecomposition(\"zyxzyxzyx\"), 3);\n    assert Arrays.equals(solution.longestDecomposition(\"madam\"), 5);\n    assert Arrays.equals(solution.longestDecomposition(\"aaaaa\"), 5);\n    assert Arrays.equals(solution.longestDecomposition(\"merchant\"), 1);\n    assert Arrays.equals(solution.longestDecomposition(\"aabbccddeedccbbaa\"), 15);\n    assert Arrays.equals(solution.longestDecomposition(\"repaper\"), 7);\n    assert Arrays.equals(solution.longestDecomposition(\"ghiabcdefhelloadamhelloabcdefghi\"), 7);\n    assert Arrays.equals(solution.longestDecomposition(\"aaa\"), 3);\n    assert Arrays.equals(solution.longestDecomposition(\"antaprezatepzapreanta\"), 11);\n    assert Arrays.equals(solution.longestDecomposition(\"abcdabcdabcdabcd\"), 4);\n    assert Arrays.equals(solution.longestDecomposition(\"abacaba\"), 7);\n    assert Arrays.equals(solution.longestDecomposition(\"abcdefghijklmnopqrstuvwxyzzyxwvutsrqponmlkjihgfedcba\"), 52);\n    assert Arrays.equals(solution.longestDecomposition(\"xyzzyx\"), 6);\n    assert Arrays.equals(solution.longestDecomposition(\"abcddcba\"), 8);\n    assert Arrays.equals(solution.longestDecomposition(\"rotor\"), 5);\n    assert Arrays.equals(solution.longestDecomposition(\"abcdedcba\"), 9);\n    assert Arrays.equals(solution.longestDecomposition(\"refer\"), 5);\n    assert Arrays.equals(solution.longestDecomposition(\"redder\"), 6);\n    assert Arrays.equals(solution.longestDecomposition(\"peep\"), 4);\n    assert Arrays.equals(solution.longestDecomposition(\"abba\"), 4);\n    assert Arrays.equals(solution.longestDecomposition(\"racecar\"), 7);\n    assert Arrays.equals(solution.longestDecomposition(\"civic\"), 5);\n    assert Arrays.equals(solution.longestDecomposition(\"abcdabcd\"), 2);\n    assert Arrays.equals(solution.longestDecomposition(\"a\"), 1);\n    assert Arrays.equals(solution.longestDecomposition(\"abcabcabcabcabcabc\"), 6);\n    assert Arrays.equals(solution.longestDecomposition(\"xyzzyxxyzzyx\"), 12);\n    assert Arrays.equals(solution.longestDecomposition(\"noon\"), 4);\n    assert Arrays.equals(solution.longestDecomposition(\"deified\"), 7);\n    assert Arrays.equals(solution.longestDecomposition(\"racecarlevelracecar\"), 19);\n    assert Arrays.equals(solution.longestDecomposition(\"deed\"), 4);\n    assert Arrays.equals(solution.longestDecomposition(\"abccba\"), 6);\n    assert Arrays.equals(solution.longestDecomposition(\"abab\"), 2);\n    assert Arrays.equals(solution.longestDecomposition(\"aabbccddeeddccbbaa\"), 18);\n    assert Arrays.equals(solution.longestDecomposition(\"abcba\"), 5);\n    assert Arrays.equals(solution.longestDecomposition(\"abcdeedcba\"), 10);\n    assert Arrays.equals(solution.longestDecomposition(\"levellevel\"), 10);\n    assert Arrays.equals(solution.longestDecomposition(\"ababababab\"), 5);\n    assert Arrays.equals(solution.longestDecomposition(\"bananaananabayananabanana\"), 13);\n    assert Arrays.equals(solution.longestDecomposition(\"abcdabcabcabcabcd\"), 5);\n    assert Arrays.equals(solution.longestDecomposition(\"racecarannakayakracecar\"), 15);\n    assert Arrays.equals(solution.longestDecomposition(\"abcabcabcabcabcabcabc\"), 7);\n    assert Arrays.equals(solution.longestDecomposition(\"xxyyxxyyxyyxxyyxxyy\"), 5);\n    assert Arrays.equals(solution.longestDecomposition(\"xylophonephoneyloxyxylophonephoneyloxy\"), 10);\n    assert Arrays.equals(solution.longestDecomposition(\"leveloneleveltwolevelonelevel\"), 23);\n    assert Arrays.equals(solution.longestDecomposition(\"aaaaabaaaabaaaa\"), 13);\n    assert Arrays.equals(solution.longestDecomposition(\"abacababacaba\"), 13);\n    assert Arrays.equals(solution.longestDecomposition(\"rotorcarrot\"), 3);\n    assert Arrays.equals(solution.longestDecomposition(\"leveloneonetwothreefourthreefourtwoonelevel\"), 15);\n    assert Arrays.equals(solution.longestDecomposition(\"aaaaabaaaabaaaaaaaabaaaaabaaaabaaaa\"), 27);\n    assert Arrays.equals(solution.longestDecomposition(\"noonnoonnoonnoonnoonnoon\"), 24);\n    assert Arrays.equals(solution.longestDecomposition(\"annakayakannakayakannakayakannakayakannakayak\"), 5);\n    assert Arrays.equals(solution.longestDecomposition(\"abcdefghihgfedcbaabcdefghihgfedcba\"), 34);\n    assert Arrays.equals(solution.longestDecomposition(\"abcdefgfedcbaabcdefgfedcbaabcdefgfedcba\"), 39);\n    assert Arrays.equals(solution.longestDecomposition(\"abacabaabacaba\"), 14);\n    assert Arrays.equals(solution.longestDecomposition(\"qwertyuiopasdfghjklzxcvbnmmnbvcxzlkjhgfdsapoiuytrewq\"), 52);\n    assert Arrays.equals(solution.longestDecomposition(\"madamimadamimadam\"), 17);\n    assert Arrays.equals(solution.longestDecomposition(\"kayak\"), 5);\n    assert Arrays.equals(solution.longestDecomposition(\"thisisaverylongstringwhichdoesnotrepeatthisisaverylongstring\"), 3);\n    assert Arrays.equals(solution.longestDecomposition(\"deifiedrotorcarcaretordeified\"), 21);\n    assert Arrays.equals(solution.longestDecomposition(\"madamimadamimadamimadamimadam\"), 29);\n    assert Arrays.equals(solution.longestDecomposition(\"noonnoonnoonnoonnoonnoonnoonnoon\"), 32);\n    assert Arrays.equals(solution.longestDecomposition(\"deifiedrotordeified\"), 19);\n    assert Arrays.equals(solution.longestDecomposition(\"noonracecarnoon\"), 15);\n    assert Arrays.equals(solution.longestDecomposition(\"madamimadam\"), 11);\n    assert Arrays.equals(solution.longestDecomposition(\"repaperdeified\"), 1);\n    assert Arrays.equals(solution.longestDecomposition(\"deededeed\"), 9);\n    assert Arrays.equals(solution.longestDecomposition(\"ananaananaananananananananananana\"), 15);\n    assert Arrays.equals(solution.longestDecomposition(\"racecarlevelracecarlevelracecarlevel\"), 3);\n    assert Arrays.equals(solution.longestDecomposition(\"abcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabc\"), 18);\n    assert Arrays.equals(solution.longestDecomposition(\"racecarlevelmadamracecar\"), 15);\n    assert Arrays.equals(solution.longestDecomposition(\"leveloneonelevel\"), 12);\n    assert Arrays.equals(solution.longestDecomposition(\"xyzyxzyzyxzyzyxzyx\"), 15);\n    assert Arrays.equals(solution.longestDecomposition(\"abcdefghihgfedcba\"), 17);\n    assert Arrays.equals(solution.longestDecomposition(\"abbaabbaabbaabbaabba\"), 20);\n    assert Arrays.equals(solution.longestDecomposition(\"abacabaabacabaabacaba\"), 21);\n    assert Arrays.equals(solution.longestDecomposition(\"abcdabcdeedcbadcbabcd\"), 3);\n    assert Arrays.equals(solution.longestDecomposition(\"abccbaabccba\"), 12);\n    assert Arrays.equals(solution.longestDecomposition(\"abracadabra\"), 7);\n    assert Arrays.equals(solution.longestDecomposition(\"madammadam\"), 10);\n    assert Arrays.equals(solution.longestDecomposition(\"aaaaaaaaabbbbbbbbbbbbbbbccccccccccccccccccccdd\"), 1);\n    assert Arrays.equals(solution.longestDecomposition(\"deifiedrotorleveldeified\"), 15);\n    assert Arrays.equals(solution.longestDecomposition(\"racecarlevelracecarlevelracecarlevelracecarlevel\"), 4);\n    assert Arrays.equals(solution.longestDecomposition(\"madaminnadammadam\"), 11);\n    assert Arrays.equals(solution.longestDecomposition(\"leveldeifiedmadamdeifiedlevel\"), 29);\n    assert Arrays.equals(solution.longestDecomposition(\"abacabacabacabac\"), 4);\n    assert Arrays.equals(solution.longestDecomposition(\"aaaabbbbccccaaaabbbbcccc\"), 2);\n    assert Arrays.equals(solution.longestDecomposition(\"noonnoonnoon\"), 12);\n    assert Arrays.equals(solution.longestDecomposition(\"xyzyxzyzyxzyxzyzyxzyzyxzyzyxzyzyxzyzyxzyzyxzyzyxzyzyxzyzyx\"), 33);\n    assert Arrays.equals(solution.longestDecomposition(\"abcdefgabcdefgabcdefg\"), 3);\n    assert Arrays.equals(solution.longestDecomposition(\"abracadabraabracadabra\"), 14);\n    assert Arrays.equals(solution.longestDecomposition(\"civiccivic\"), 10);\n    assert Arrays.equals(solution.longestDecomposition(\"annakayakannakayakannakayakannakayakannakayakannakayakannakayak\"), 7);\n    assert Arrays.equals(solution.longestDecomposition(\"rotorcarrots\"), 1);\n    assert Arrays.equals(solution.longestDecomposition(\"abracadabraacarab\"), 11);\n    assert Arrays.equals(solution.longestDecomposition(\"kayakkayakkayak\"), 15);\n    assert Arrays.equals(solution.longestDecomposition(\"nun\"), 3);\n    assert Arrays.equals(solution.longestDecomposition(\"annakayakannakayakannakayak\"), 3);\n    assert Arrays.equals(solution.longestDecomposition(\"rotorlevelrotor\"), 15);\n    assert Arrays.equals(solution.longestDecomposition(\"qwertyuiopasdfghjklzxcvbnmqwertyuiopasdfghjklzxcvbnm\"), 2);\n    assert Arrays.equals(solution.longestDecomposition(\"aabbccddeeddccbaa\"), 7);\n    assert Arrays.equals(solution.longestDecomposition(\"abbaabbaabba\"), 12);\n    assert Arrays.equals(solution.longestDecomposition(\"xyzxyzxyzxyzxyzxyzxyzxyz\"), 8);\n    assert Arrays.equals(solution.longestDecomposition(\"levellevellevellevel\"), 20);\n    assert Arrays.equals(solution.longestDecomposition(\"abccbaabccbaabccba\"), 18);\n    assert Arrays.equals(solution.longestDecomposition(\"abcdeedcbaabcdeedcbaabcdeedcba\"), 30);\n    assert Arrays.equals(solution.longestDecomposition(\"abcdefgfedcbaabcdefg\"), 3);\n    assert Arrays.equals(solution.longestDecomposition(\"levelmadamlevel\"), 15);\n    assert Arrays.equals(solution.longestDecomposition(\"abcabcabcabc\"), 4);\n    assert Arrays.equals(solution.longestDecomposition(\"abacabadabacabaabacabadabacaba\"), 30);\n    assert Arrays.equals(solution.longestDecomposition(\"rotorcarcaretor\"), 7);\n    assert Arrays.equals(solution.longestDecomposition(\"annakayakannakayakannakayakannakayak\"), 4);\n    assert Arrays.equals(solution.longestDecomposition(\"levellevellevellevellevellevellevellevellevellevellevellevel\"), 60);\n    assert Arrays.equals(solution.longestDecomposition(\"levellevellevellevellevellevel\"), 30);\n    assert Arrays.equals(solution.longestDecomposition(\"aaaaabbbbbaaaabbbbbaaaaa\"), 24);\n    assert Arrays.equals(solution.longestDecomposition(\"abcdabcabcabcd\"), 4);\n    assert Arrays.equals(solution.longestDecomposition(\"aaaabbbbccccbbbbaaaa\"), 20);\n    assert Arrays.equals(solution.longestDecomposition(\"madamimadamimadamimadamimadamimadamimadamimadam\"), 47);\n    assert Arrays.equals(solution.longestDecomposition(\"abcdxyzyxzyxcddcbaabcdxyzyxzyxcddcba\"), 18);\n    assert Arrays.equals(solution.longestDecomposition(\"abacabadabacabadabacaba\"), 23);\n    assert Arrays.equals(solution.longestDecomposition(\"deifieddeified\"), 14);\n    assert Arrays.equals(solution.longestDecomposition(\"deifiedracecardeified\"), 21);\n    assert Arrays.equals(solution.longestDecomposition(\"noonnoonnoonnoon\"), 16);\n    assert Arrays.equals(solution.longestDecomposition(\"radar\"), 5);\n    assert Arrays.equals(solution.longestDecomposition(\"abacabadabacaba\"), 15);\n    assert Arrays.equals(solution.longestDecomposition(\"annakayakannakayak\"), 2);\n    assert Arrays.equals(solution.longestDecomposition(\"abcdabcdefgabcdefgdcba\"), 10);\n    assert Arrays.equals(solution.longestDecomposition(\"racecarannakayak\"), 1);\n    assert Arrays.equals(solution.longestDecomposition(\"abbaabbaabbaabbaabbaabbaabbaabbaabbaabbaabba\"), 44);\n    assert Arrays.equals(solution.longestDecomposition(\"abacabadabacabad\"), 2);\n    assert Arrays.equals(solution.longestDecomposition(\"rotorrotor\"), 10);\n    assert Arrays.equals(solution.longestDecomposition(\"abcabcabcabcabc\"), 5);\n    assert Arrays.equals(solution.longestDecomposition(\"abracadabracadabra\"), 11);\n    assert Arrays.equals(solution.longestDecomposition(\"levellevellevellevellevel\"), 25);\n    assert Arrays.equals(solution.longestDecomposition(\"aaaaaabaaaaa\"), 11);\n    assert Arrays.equals(solution.longestDecomposition(\"aabbccddeedcbaabbccdd\"), 3);\n    assert Arrays.equals(solution.longestDecomposition(\"hellohellobellohellobellohello\"), 4);\n    assert Arrays.equals(solution.longestDecomposition(\"xyzzxyzzxyzz\"), 3);\n    assert Arrays.equals(solution.longestDecomposition(\"xxyyzzzyyxxyyyzzzzyyxx\"), 15);\n    assert Arrays.equals(solution.longestDecomposition(\"aabbccddeeeedddccbbaaa\"), 5);\n    assert Arrays.equals(solution.longestDecomposition(\"deifiedrotor\"), 1);\n    assert Arrays.equals(solution.longestDecomposition(\"abcdeedcbaabcdeedcba\"), 20);\n    assert Arrays.equals(solution.longestDecomposition(\"abababababababab\"), 8);\n    assert Arrays.equals(solution.longestDecomposition(\"abacabaabacabaabacabaabacaba\"), 28);\n    assert Arrays.equals(solution.longestDecomposition(\"aaaabbbbccccddddeeeeffffeeeeggggccccbbbbaaaaffff\"), 1);\n    assert Arrays.equals(solution.longestDecomposition(\"wow\"), 3);\n    assert Arrays.equals(solution.longestDecomposition(\"abcdabccbaabcd\"), 8);\n    assert Arrays.equals(solution.longestDecomposition(\"abcabcabcabcabcabcabcd\"), 1);\n    assert Arrays.equals(solution.longestDecomposition(\"abcxyzzyxcba\"), 12);\n    assert Arrays.equals(solution.longestDecomposition(\"racecarlevelracecarlevelracecarlevelracecarlevelracecarlevel\"), 5);\n    assert Arrays.equals(solution.longestDecomposition(\"madamimadamimadamimadamimadamimadam\"), 35);\n    assert Arrays.equals(solution.longestDecomposition(\"noonabbadacabbaaddaabbnoon\"), 15);\n    assert Arrays.equals(solution.longestDecomposition(\"xyzzyxzyxzyxzyxzyxzyxzyxyz\"), 15);\n    assert Arrays.equals(solution.longestDecomposition(\"levellevellevellevellevellevellevellevel\"), 40);\n    assert Arrays.equals(solution.longestDecomposition(\"abababababababababababab\"), 12);\n    assert Arrays.equals(solution.longestDecomposition(\"mississippiississimississimississippi\"), 17);\n    assert Arrays.equals(solution.longestDecomposition(\"aabbccddeedcba\"), 3);\n    assert Arrays.equals(solution.longestDecomposition(\"xyzyxzyzyxzyx\"), 11);\n    assert Arrays.equals(solution.longestDecomposition(\"aaaaabaaa\"), 7);\n    assert Arrays.equals(solution.longestDecomposition(\"abcdcdeabcdcdeabcdcdeabcd\"), 7);\n    assert Arrays.equals(solution.longestDecomposition(\"racecarracecar\"), 14);\n    assert Arrays.equals(solution.longestDecomposition(\"rotorrotorrotor\"), 15);\n    assert Arrays.equals(solution.longestDecomposition(\"racecarlevelracecarlevel\"), 2);\n    assert Arrays.equals(solution.longestDecomposition(\"kayakkayak\"), 10);\n    assert Arrays.equals(solution.longestDecomposition(\"noonnoon\"), 8);\n    assert Arrays.equals(solution.longestDecomposition(\"racecarlevelmadamracecarlevelmadam\"), 2);\n    assert Arrays.equals(solution.longestDecomposition(\"abcxyzzyxcbaabcxyzzyxcba\"), 24);\n    assert Arrays.equals(solution.longestDecomposition(\"redividerrotorredivider\"), 23);\n    assert Arrays.equals(solution.longestDecomposition(\"ababababababababababababababababab\"), 17);\n    assert Arrays.equals(solution.longestDecomposition(\"referrefer\"), 10);\n    assert Arrays.equals(solution.longestDecomposition(\"noonnoonnoonnoonnoonnoonnoonnoonnoonnoon\"), 40);\n    assert Arrays.equals(solution.longestDecomposition(\"madamimadamimadamimadam\"), 23);\n    assert Arrays.equals(solution.longestDecomposition(\"abbaabbaabbaabba\"), 16);\n    assert Arrays.equals(solution.longestDecomposition(\"mississippi\"), 1);\n    assert Arrays.equals(solution.longestDecomposition(\"aabbccddeedccbbaaa\"), 5);\n    assert Arrays.equals(solution.longestDecomposition(\"abcdeabcdeabcde\"), 3);\n    assert Arrays.equals(solution.longestDecomposition(\"racecarracecarracecar\"), 21);\n    assert Arrays.equals(solution.longestDecomposition(\"redivider\"), 9);\n    assert Arrays.equals(solution.longestDecomposition(\"thisisaverylongstringwithnorepeatedpattern\"), 1);\n}",
+    "javascript": "function check(candidate) {\n    console.assert(JSON.stringify(candidate(\"abcabc\")) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(\"abcabcabc\")) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate(\"level\")) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate(\"zyxzyxzyx\")) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate(\"madam\")) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate(\"aaaaa\")) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate(\"merchant\")) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate(\"aabbccddeedccbbaa\")) === JSON.stringify(15));\n    console.assert(JSON.stringify(candidate(\"repaper\")) === JSON.stringify(7));\n    console.assert(JSON.stringify(candidate(\"ghiabcdefhelloadamhelloabcdefghi\")) === JSON.stringify(7));\n    console.assert(JSON.stringify(candidate(\"aaa\")) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate(\"antaprezatepzapreanta\")) === JSON.stringify(11));\n    console.assert(JSON.stringify(candidate(\"abcdabcdabcdabcd\")) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate(\"abacaba\")) === JSON.stringify(7));\n    console.assert(JSON.stringify(candidate(\"abcdefghijklmnopqrstuvwxyzzyxwvutsrqponmlkjihgfedcba\")) === JSON.stringify(52));\n    console.assert(JSON.stringify(candidate(\"xyzzyx\")) === JSON.stringify(6));\n    console.assert(JSON.stringify(candidate(\"abcddcba\")) === JSON.stringify(8));\n    console.assert(JSON.stringify(candidate(\"rotor\")) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate(\"abcdedcba\")) === JSON.stringify(9));\n    console.assert(JSON.stringify(candidate(\"refer\")) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate(\"redder\")) === JSON.stringify(6));\n    console.assert(JSON.stringify(candidate(\"peep\")) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate(\"abba\")) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate(\"racecar\")) === JSON.stringify(7));\n    console.assert(JSON.stringify(candidate(\"civic\")) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate(\"abcdabcd\")) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(\"a\")) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate(\"abcabcabcabcabcabc\")) === JSON.stringify(6));\n    console.assert(JSON.stringify(candidate(\"xyzzyxxyzzyx\")) === JSON.stringify(12));\n    console.assert(JSON.stringify(candidate(\"noon\")) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate(\"deified\")) === JSON.stringify(7));\n    console.assert(JSON.stringify(candidate(\"racecarlevelracecar\")) === JSON.stringify(19));\n    console.assert(JSON.stringify(candidate(\"deed\")) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate(\"abccba\")) === JSON.stringify(6));\n    console.assert(JSON.stringify(candidate(\"abab\")) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(\"aabbccddeeddccbbaa\")) === JSON.stringify(18));\n    console.assert(JSON.stringify(candidate(\"abcba\")) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate(\"abcdeedcba\")) === JSON.stringify(10));\n    console.assert(JSON.stringify(candidate(\"levellevel\")) === JSON.stringify(10));\n    console.assert(JSON.stringify(candidate(\"ababababab\")) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate(\"bananaananabayananabanana\")) === JSON.stringify(13));\n    console.assert(JSON.stringify(candidate(\"abcdabcabcabcabcd\")) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate(\"racecarannakayakracecar\")) === JSON.stringify(15));\n    console.assert(JSON.stringify(candidate(\"abcabcabcabcabcabcabc\")) === JSON.stringify(7));\n    console.assert(JSON.stringify(candidate(\"xxyyxxyyxyyxxyyxxyy\")) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate(\"xylophonephoneyloxyxylophonephoneyloxy\")) === JSON.stringify(10));\n    console.assert(JSON.stringify(candidate(\"leveloneleveltwolevelonelevel\")) === JSON.stringify(23));\n    console.assert(JSON.stringify(candidate(\"aaaaabaaaabaaaa\")) === JSON.stringify(13));\n    console.assert(JSON.stringify(candidate(\"abacababacaba\")) === JSON.stringify(13));\n    console.assert(JSON.stringify(candidate(\"rotorcarrot\")) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate(\"leveloneonetwothreefourthreefourtwoonelevel\")) === JSON.stringify(15));\n    console.assert(JSON.stringify(candidate(\"aaaaabaaaabaaaaaaaabaaaaabaaaabaaaa\")) === JSON.stringify(27));\n    console.assert(JSON.stringify(candidate(\"noonnoonnoonnoonnoonnoon\")) === JSON.stringify(24));\n    console.assert(JSON.stringify(candidate(\"annakayakannakayakannakayakannakayakannakayak\")) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate(\"abcdefghihgfedcbaabcdefghihgfedcba\")) === JSON.stringify(34));\n    console.assert(JSON.stringify(candidate(\"abcdefgfedcbaabcdefgfedcbaabcdefgfedcba\")) === JSON.stringify(39));\n    console.assert(JSON.stringify(candidate(\"abacabaabacaba\")) === JSON.stringify(14));\n    console.assert(JSON.stringify(candidate(\"qwertyuiopasdfghjklzxcvbnmmnbvcxzlkjhgfdsapoiuytrewq\")) === JSON.stringify(52));\n    console.assert(JSON.stringify(candidate(\"madamimadamimadam\")) === JSON.stringify(17));\n    console.assert(JSON.stringify(candidate(\"kayak\")) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate(\"thisisaverylongstringwhichdoesnotrepeatthisisaverylongstring\")) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate(\"deifiedrotorcarcaretordeified\")) === JSON.stringify(21));\n    console.assert(JSON.stringify(candidate(\"madamimadamimadamimadamimadam\")) === JSON.stringify(29));\n    console.assert(JSON.stringify(candidate(\"noonnoonnoonnoonnoonnoonnoonnoon\")) === JSON.stringify(32));\n    console.assert(JSON.stringify(candidate(\"deifiedrotordeified\")) === JSON.stringify(19));\n    console.assert(JSON.stringify(candidate(\"noonracecarnoon\")) === JSON.stringify(15));\n    console.assert(JSON.stringify(candidate(\"madamimadam\")) === JSON.stringify(11));\n    console.assert(JSON.stringify(candidate(\"repaperdeified\")) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate(\"deededeed\")) === JSON.stringify(9));\n    console.assert(JSON.stringify(candidate(\"ananaananaananananananananananana\")) === JSON.stringify(15));\n    console.assert(JSON.stringify(candidate(\"racecarlevelracecarlevelracecarlevel\")) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate(\"abcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabc\")) === JSON.stringify(18));\n    console.assert(JSON.stringify(candidate(\"racecarlevelmadamracecar\")) === JSON.stringify(15));\n    console.assert(JSON.stringify(candidate(\"leveloneonelevel\")) === JSON.stringify(12));\n    console.assert(JSON.stringify(candidate(\"xyzyxzyzyxzyzyxzyx\")) === JSON.stringify(15));\n    console.assert(JSON.stringify(candidate(\"abcdefghihgfedcba\")) === JSON.stringify(17));\n    console.assert(JSON.stringify(candidate(\"abbaabbaabbaabbaabba\")) === JSON.stringify(20));\n    console.assert(JSON.stringify(candidate(\"abacabaabacabaabacaba\")) === JSON.stringify(21));\n    console.assert(JSON.stringify(candidate(\"abcdabcdeedcbadcbabcd\")) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate(\"abccbaabccba\")) === JSON.stringify(12));\n    console.assert(JSON.stringify(candidate(\"abracadabra\")) === JSON.stringify(7));\n    console.assert(JSON.stringify(candidate(\"madammadam\")) === JSON.stringify(10));\n    console.assert(JSON.stringify(candidate(\"aaaaaaaaabbbbbbbbbbbbbbbccccccccccccccccccccdd\")) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate(\"deifiedrotorleveldeified\")) === JSON.stringify(15));\n    console.assert(JSON.stringify(candidate(\"racecarlevelracecarlevelracecarlevelracecarlevel\")) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate(\"madaminnadammadam\")) === JSON.stringify(11));\n    console.assert(JSON.stringify(candidate(\"leveldeifiedmadamdeifiedlevel\")) === JSON.stringify(29));\n    console.assert(JSON.stringify(candidate(\"abacabacabacabac\")) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate(\"aaaabbbbccccaaaabbbbcccc\")) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(\"noonnoonnoon\")) === JSON.stringify(12));\n    console.assert(JSON.stringify(candidate(\"xyzyxzyzyxzyxzyzyxzyzyxzyzyxzyzyxzyzyxzyzyxzyzyxzyzyxzyzyx\")) === JSON.stringify(33));\n    console.assert(JSON.stringify(candidate(\"abcdefgabcdefgabcdefg\")) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate(\"abracadabraabracadabra\")) === JSON.stringify(14));\n    console.assert(JSON.stringify(candidate(\"civiccivic\")) === JSON.stringify(10));\n    console.assert(JSON.stringify(candidate(\"annakayakannakayakannakayakannakayakannakayakannakayakannakayak\")) === JSON.stringify(7));\n    console.assert(JSON.stringify(candidate(\"rotorcarrots\")) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate(\"abracadabraacarab\")) === JSON.stringify(11));\n    console.assert(JSON.stringify(candidate(\"kayakkayakkayak\")) === JSON.stringify(15));\n    console.assert(JSON.stringify(candidate(\"nun\")) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate(\"annakayakannakayakannakayak\")) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate(\"rotorlevelrotor\")) === JSON.stringify(15));\n    console.assert(JSON.stringify(candidate(\"qwertyuiopasdfghjklzxcvbnmqwertyuiopasdfghjklzxcvbnm\")) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(\"aabbccddeeddccbaa\")) === JSON.stringify(7));\n    console.assert(JSON.stringify(candidate(\"abbaabbaabba\")) === JSON.stringify(12));\n    console.assert(JSON.stringify(candidate(\"xyzxyzxyzxyzxyzxyzxyzxyz\")) === JSON.stringify(8));\n    console.assert(JSON.stringify(candidate(\"levellevellevellevel\")) === JSON.stringify(20));\n    console.assert(JSON.stringify(candidate(\"abccbaabccbaabccba\")) === JSON.stringify(18));\n    console.assert(JSON.stringify(candidate(\"abcdeedcbaabcdeedcbaabcdeedcba\")) === JSON.stringify(30));\n    console.assert(JSON.stringify(candidate(\"abcdefgfedcbaabcdefg\")) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate(\"levelmadamlevel\")) === JSON.stringify(15));\n    console.assert(JSON.stringify(candidate(\"abcabcabcabc\")) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate(\"abacabadabacabaabacabadabacaba\")) === JSON.stringify(30));\n    console.assert(JSON.stringify(candidate(\"rotorcarcaretor\")) === JSON.stringify(7));\n    console.assert(JSON.stringify(candidate(\"annakayakannakayakannakayakannakayak\")) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate(\"levellevellevellevellevellevellevellevellevellevellevellevel\")) === JSON.stringify(60));\n    console.assert(JSON.stringify(candidate(\"levellevellevellevellevellevel\")) === JSON.stringify(30));\n    console.assert(JSON.stringify(candidate(\"aaaaabbbbbaaaabbbbbaaaaa\")) === JSON.stringify(24));\n    console.assert(JSON.stringify(candidate(\"abcdabcabcabcd\")) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate(\"aaaabbbbccccbbbbaaaa\")) === JSON.stringify(20));\n    console.assert(JSON.stringify(candidate(\"madamimadamimadamimadamimadamimadamimadamimadam\")) === JSON.stringify(47));\n    console.assert(JSON.stringify(candidate(\"abcdxyzyxzyxcddcbaabcdxyzyxzyxcddcba\")) === JSON.stringify(18));\n    console.assert(JSON.stringify(candidate(\"abacabadabacabadabacaba\")) === JSON.stringify(23));\n    console.assert(JSON.stringify(candidate(\"deifieddeified\")) === JSON.stringify(14));\n    console.assert(JSON.stringify(candidate(\"deifiedracecardeified\")) === JSON.stringify(21));\n    console.assert(JSON.stringify(candidate(\"noonnoonnoonnoon\")) === JSON.stringify(16));\n    console.assert(JSON.stringify(candidate(\"radar\")) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate(\"abacabadabacaba\")) === JSON.stringify(15));\n    console.assert(JSON.stringify(candidate(\"annakayakannakayak\")) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(\"abcdabcdefgabcdefgdcba\")) === JSON.stringify(10));\n    console.assert(JSON.stringify(candidate(\"racecarannakayak\")) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate(\"abbaabbaabbaabbaabbaabbaabbaabbaabbaabbaabba\")) === JSON.stringify(44));\n    console.assert(JSON.stringify(candidate(\"abacabadabacabad\")) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(\"rotorrotor\")) === JSON.stringify(10));\n    console.assert(JSON.stringify(candidate(\"abcabcabcabcabc\")) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate(\"abracadabracadabra\")) === JSON.stringify(11));\n    console.assert(JSON.stringify(candidate(\"levellevellevellevellevel\")) === JSON.stringify(25));\n    console.assert(JSON.stringify(candidate(\"aaaaaabaaaaa\")) === JSON.stringify(11));\n    console.assert(JSON.stringify(candidate(\"aabbccddeedcbaabbccdd\")) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate(\"hellohellobellohellobellohello\")) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate(\"xyzzxyzzxyzz\")) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate(\"xxyyzzzyyxxyyyzzzzyyxx\")) === JSON.stringify(15));\n    console.assert(JSON.stringify(candidate(\"aabbccddeeeedddccbbaaa\")) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate(\"deifiedrotor\")) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate(\"abcdeedcbaabcdeedcba\")) === JSON.stringify(20));\n    console.assert(JSON.stringify(candidate(\"abababababababab\")) === JSON.stringify(8));\n    console.assert(JSON.stringify(candidate(\"abacabaabacabaabacabaabacaba\")) === JSON.stringify(28));\n    console.assert(JSON.stringify(candidate(\"aaaabbbbccccddddeeeeffffeeeeggggccccbbbbaaaaffff\")) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate(\"wow\")) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate(\"abcdabccbaabcd\")) === JSON.stringify(8));\n    console.assert(JSON.stringify(candidate(\"abcabcabcabcabcabcabcd\")) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate(\"abcxyzzyxcba\")) === JSON.stringify(12));\n    console.assert(JSON.stringify(candidate(\"racecarlevelracecarlevelracecarlevelracecarlevelracecarlevel\")) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate(\"madamimadamimadamimadamimadamimadam\")) === JSON.stringify(35));\n    console.assert(JSON.stringify(candidate(\"noonabbadacabbaaddaabbnoon\")) === JSON.stringify(15));\n    console.assert(JSON.stringify(candidate(\"xyzzyxzyxzyxzyxzyxzyxzyxyz\")) === JSON.stringify(15));\n    console.assert(JSON.stringify(candidate(\"levellevellevellevellevellevellevellevel\")) === JSON.stringify(40));\n    console.assert(JSON.stringify(candidate(\"abababababababababababab\")) === JSON.stringify(12));\n    console.assert(JSON.stringify(candidate(\"mississippiississimississimississippi\")) === JSON.stringify(17));\n    console.assert(JSON.stringify(candidate(\"aabbccddeedcba\")) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate(\"xyzyxzyzyxzyx\")) === JSON.stringify(11));\n    console.assert(JSON.stringify(candidate(\"aaaaabaaa\")) === JSON.stringify(7));\n    console.assert(JSON.stringify(candidate(\"abcdcdeabcdcdeabcdcdeabcd\")) === JSON.stringify(7));\n    console.assert(JSON.stringify(candidate(\"racecarracecar\")) === JSON.stringify(14));\n    console.assert(JSON.stringify(candidate(\"rotorrotorrotor\")) === JSON.stringify(15));\n    console.assert(JSON.stringify(candidate(\"racecarlevelracecarlevel\")) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(\"kayakkayak\")) === JSON.stringify(10));\n    console.assert(JSON.stringify(candidate(\"noonnoon\")) === JSON.stringify(8));\n    console.assert(JSON.stringify(candidate(\"racecarlevelmadamracecarlevelmadam\")) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(\"abcxyzzyxcbaabcxyzzyxcba\")) === JSON.stringify(24));\n    console.assert(JSON.stringify(candidate(\"redividerrotorredivider\")) === JSON.stringify(23));\n    console.assert(JSON.stringify(candidate(\"ababababababababababababababababab\")) === JSON.stringify(17));\n    console.assert(JSON.stringify(candidate(\"referrefer\")) === JSON.stringify(10));\n    console.assert(JSON.stringify(candidate(\"noonnoonnoonnoonnoonnoonnoonnoonnoonnoon\")) === JSON.stringify(40));\n    console.assert(JSON.stringify(candidate(\"madamimadamimadamimadam\")) === JSON.stringify(23));\n    console.assert(JSON.stringify(candidate(\"abbaabbaabbaabba\")) === JSON.stringify(16));\n    console.assert(JSON.stringify(candidate(\"mississippi\")) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate(\"aabbccddeedccbbaaa\")) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate(\"abcdeabcdeabcde\")) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate(\"racecarracecarracecar\")) === JSON.stringify(21));\n    console.assert(JSON.stringify(candidate(\"redivider\")) === JSON.stringify(9));\n    console.assert(JSON.stringify(candidate(\"thisisaverylongstringwithnorepeatedpattern\")) === JSON.stringify(1));\n}",
+    "typescript": "function check(candidate: Function): void {\n    console.assert(JSON.stringify(candidate(\"abcabc\")) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(\"abcabcabc\")) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate(\"level\")) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate(\"zyxzyxzyx\")) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate(\"madam\")) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate(\"aaaaa\")) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate(\"merchant\")) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate(\"aabbccddeedccbbaa\")) === JSON.stringify(15));\n    console.assert(JSON.stringify(candidate(\"repaper\")) === JSON.stringify(7));\n    console.assert(JSON.stringify(candidate(\"ghiabcdefhelloadamhelloabcdefghi\")) === JSON.stringify(7));\n    console.assert(JSON.stringify(candidate(\"aaa\")) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate(\"antaprezatepzapreanta\")) === JSON.stringify(11));\n    console.assert(JSON.stringify(candidate(\"abcdabcdabcdabcd\")) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate(\"abacaba\")) === JSON.stringify(7));\n    console.assert(JSON.stringify(candidate(\"abcdefghijklmnopqrstuvwxyzzyxwvutsrqponmlkjihgfedcba\")) === JSON.stringify(52));\n    console.assert(JSON.stringify(candidate(\"xyzzyx\")) === JSON.stringify(6));\n    console.assert(JSON.stringify(candidate(\"abcddcba\")) === JSON.stringify(8));\n    console.assert(JSON.stringify(candidate(\"rotor\")) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate(\"abcdedcba\")) === JSON.stringify(9));\n    console.assert(JSON.stringify(candidate(\"refer\")) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate(\"redder\")) === JSON.stringify(6));\n    console.assert(JSON.stringify(candidate(\"peep\")) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate(\"abba\")) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate(\"racecar\")) === JSON.stringify(7));\n    console.assert(JSON.stringify(candidate(\"civic\")) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate(\"abcdabcd\")) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(\"a\")) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate(\"abcabcabcabcabcabc\")) === JSON.stringify(6));\n    console.assert(JSON.stringify(candidate(\"xyzzyxxyzzyx\")) === JSON.stringify(12));\n    console.assert(JSON.stringify(candidate(\"noon\")) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate(\"deified\")) === JSON.stringify(7));\n    console.assert(JSON.stringify(candidate(\"racecarlevelracecar\")) === JSON.stringify(19));\n    console.assert(JSON.stringify(candidate(\"deed\")) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate(\"abccba\")) === JSON.stringify(6));\n    console.assert(JSON.stringify(candidate(\"abab\")) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(\"aabbccddeeddccbbaa\")) === JSON.stringify(18));\n    console.assert(JSON.stringify(candidate(\"abcba\")) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate(\"abcdeedcba\")) === JSON.stringify(10));\n    console.assert(JSON.stringify(candidate(\"levellevel\")) === JSON.stringify(10));\n    console.assert(JSON.stringify(candidate(\"ababababab\")) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate(\"bananaananabayananabanana\")) === JSON.stringify(13));\n    console.assert(JSON.stringify(candidate(\"abcdabcabcabcabcd\")) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate(\"racecarannakayakracecar\")) === JSON.stringify(15));\n    console.assert(JSON.stringify(candidate(\"abcabcabcabcabcabcabc\")) === JSON.stringify(7));\n    console.assert(JSON.stringify(candidate(\"xxyyxxyyxyyxxyyxxyy\")) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate(\"xylophonephoneyloxyxylophonephoneyloxy\")) === JSON.stringify(10));\n    console.assert(JSON.stringify(candidate(\"leveloneleveltwolevelonelevel\")) === JSON.stringify(23));\n    console.assert(JSON.stringify(candidate(\"aaaaabaaaabaaaa\")) === JSON.stringify(13));\n    console.assert(JSON.stringify(candidate(\"abacababacaba\")) === JSON.stringify(13));\n    console.assert(JSON.stringify(candidate(\"rotorcarrot\")) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate(\"leveloneonetwothreefourthreefourtwoonelevel\")) === JSON.stringify(15));\n    console.assert(JSON.stringify(candidate(\"aaaaabaaaabaaaaaaaabaaaaabaaaabaaaa\")) === JSON.stringify(27));\n    console.assert(JSON.stringify(candidate(\"noonnoonnoonnoonnoonnoon\")) === JSON.stringify(24));\n    console.assert(JSON.stringify(candidate(\"annakayakannakayakannakayakannakayakannakayak\")) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate(\"abcdefghihgfedcbaabcdefghihgfedcba\")) === JSON.stringify(34));\n    console.assert(JSON.stringify(candidate(\"abcdefgfedcbaabcdefgfedcbaabcdefgfedcba\")) === JSON.stringify(39));\n    console.assert(JSON.stringify(candidate(\"abacabaabacaba\")) === JSON.stringify(14));\n    console.assert(JSON.stringify(candidate(\"qwertyuiopasdfghjklzxcvbnmmnbvcxzlkjhgfdsapoiuytrewq\")) === JSON.stringify(52));\n    console.assert(JSON.stringify(candidate(\"madamimadamimadam\")) === JSON.stringify(17));\n    console.assert(JSON.stringify(candidate(\"kayak\")) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate(\"thisisaverylongstringwhichdoesnotrepeatthisisaverylongstring\")) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate(\"deifiedrotorcarcaretordeified\")) === JSON.stringify(21));\n    console.assert(JSON.stringify(candidate(\"madamimadamimadamimadamimadam\")) === JSON.stringify(29));\n    console.assert(JSON.stringify(candidate(\"noonnoonnoonnoonnoonnoonnoonnoon\")) === JSON.stringify(32));\n    console.assert(JSON.stringify(candidate(\"deifiedrotordeified\")) === JSON.stringify(19));\n    console.assert(JSON.stringify(candidate(\"noonracecarnoon\")) === JSON.stringify(15));\n    console.assert(JSON.stringify(candidate(\"madamimadam\")) === JSON.stringify(11));\n    console.assert(JSON.stringify(candidate(\"repaperdeified\")) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate(\"deededeed\")) === JSON.stringify(9));\n    console.assert(JSON.stringify(candidate(\"ananaananaananananananananananana\")) === JSON.stringify(15));\n    console.assert(JSON.stringify(candidate(\"racecarlevelracecarlevelracecarlevel\")) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate(\"abcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabc\")) === JSON.stringify(18));\n    console.assert(JSON.stringify(candidate(\"racecarlevelmadamracecar\")) === JSON.stringify(15));\n    console.assert(JSON.stringify(candidate(\"leveloneonelevel\")) === JSON.stringify(12));\n    console.assert(JSON.stringify(candidate(\"xyzyxzyzyxzyzyxzyx\")) === JSON.stringify(15));\n    console.assert(JSON.stringify(candidate(\"abcdefghihgfedcba\")) === JSON.stringify(17));\n    console.assert(JSON.stringify(candidate(\"abbaabbaabbaabbaabba\")) === JSON.stringify(20));\n    console.assert(JSON.stringify(candidate(\"abacabaabacabaabacaba\")) === JSON.stringify(21));\n    console.assert(JSON.stringify(candidate(\"abcdabcdeedcbadcbabcd\")) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate(\"abccbaabccba\")) === JSON.stringify(12));\n    console.assert(JSON.stringify(candidate(\"abracadabra\")) === JSON.stringify(7));\n    console.assert(JSON.stringify(candidate(\"madammadam\")) === JSON.stringify(10));\n    console.assert(JSON.stringify(candidate(\"aaaaaaaaabbbbbbbbbbbbbbbccccccccccccccccccccdd\")) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate(\"deifiedrotorleveldeified\")) === JSON.stringify(15));\n    console.assert(JSON.stringify(candidate(\"racecarlevelracecarlevelracecarlevelracecarlevel\")) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate(\"madaminnadammadam\")) === JSON.stringify(11));\n    console.assert(JSON.stringify(candidate(\"leveldeifiedmadamdeifiedlevel\")) === JSON.stringify(29));\n    console.assert(JSON.stringify(candidate(\"abacabacabacabac\")) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate(\"aaaabbbbccccaaaabbbbcccc\")) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(\"noonnoonnoon\")) === JSON.stringify(12));\n    console.assert(JSON.stringify(candidate(\"xyzyxzyzyxzyxzyzyxzyzyxzyzyxzyzyxzyzyxzyzyxzyzyxzyzyxzyzyx\")) === JSON.stringify(33));\n    console.assert(JSON.stringify(candidate(\"abcdefgabcdefgabcdefg\")) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate(\"abracadabraabracadabra\")) === JSON.stringify(14));\n    console.assert(JSON.stringify(candidate(\"civiccivic\")) === JSON.stringify(10));\n    console.assert(JSON.stringify(candidate(\"annakayakannakayakannakayakannakayakannakayakannakayakannakayak\")) === JSON.stringify(7));\n    console.assert(JSON.stringify(candidate(\"rotorcarrots\")) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate(\"abracadabraacarab\")) === JSON.stringify(11));\n    console.assert(JSON.stringify(candidate(\"kayakkayakkayak\")) === JSON.stringify(15));\n    console.assert(JSON.stringify(candidate(\"nun\")) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate(\"annakayakannakayakannakayak\")) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate(\"rotorlevelrotor\")) === JSON.stringify(15));\n    console.assert(JSON.stringify(candidate(\"qwertyuiopasdfghjklzxcvbnmqwertyuiopasdfghjklzxcvbnm\")) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(\"aabbccddeeddccbaa\")) === JSON.stringify(7));\n    console.assert(JSON.stringify(candidate(\"abbaabbaabba\")) === JSON.stringify(12));\n    console.assert(JSON.stringify(candidate(\"xyzxyzxyzxyzxyzxyzxyzxyz\")) === JSON.stringify(8));\n    console.assert(JSON.stringify(candidate(\"levellevellevellevel\")) === JSON.stringify(20));\n    console.assert(JSON.stringify(candidate(\"abccbaabccbaabccba\")) === JSON.stringify(18));\n    console.assert(JSON.stringify(candidate(\"abcdeedcbaabcdeedcbaabcdeedcba\")) === JSON.stringify(30));\n    console.assert(JSON.stringify(candidate(\"abcdefgfedcbaabcdefg\")) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate(\"levelmadamlevel\")) === JSON.stringify(15));\n    console.assert(JSON.stringify(candidate(\"abcabcabcabc\")) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate(\"abacabadabacabaabacabadabacaba\")) === JSON.stringify(30));\n    console.assert(JSON.stringify(candidate(\"rotorcarcaretor\")) === JSON.stringify(7));\n    console.assert(JSON.stringify(candidate(\"annakayakannakayakannakayakannakayak\")) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate(\"levellevellevellevellevellevellevellevellevellevellevellevel\")) === JSON.stringify(60));\n    console.assert(JSON.stringify(candidate(\"levellevellevellevellevellevel\")) === JSON.stringify(30));\n    console.assert(JSON.stringify(candidate(\"aaaaabbbbbaaaabbbbbaaaaa\")) === JSON.stringify(24));\n    console.assert(JSON.stringify(candidate(\"abcdabcabcabcd\")) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate(\"aaaabbbbccccbbbbaaaa\")) === JSON.stringify(20));\n    console.assert(JSON.stringify(candidate(\"madamimadamimadamimadamimadamimadamimadamimadam\")) === JSON.stringify(47));\n    console.assert(JSON.stringify(candidate(\"abcdxyzyxzyxcddcbaabcdxyzyxzyxcddcba\")) === JSON.stringify(18));\n    console.assert(JSON.stringify(candidate(\"abacabadabacabadabacaba\")) === JSON.stringify(23));\n    console.assert(JSON.stringify(candidate(\"deifieddeified\")) === JSON.stringify(14));\n    console.assert(JSON.stringify(candidate(\"deifiedracecardeified\")) === JSON.stringify(21));\n    console.assert(JSON.stringify(candidate(\"noonnoonnoonnoon\")) === JSON.stringify(16));\n    console.assert(JSON.stringify(candidate(\"radar\")) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate(\"abacabadabacaba\")) === JSON.stringify(15));\n    console.assert(JSON.stringify(candidate(\"annakayakannakayak\")) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(\"abcdabcdefgabcdefgdcba\")) === JSON.stringify(10));\n    console.assert(JSON.stringify(candidate(\"racecarannakayak\")) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate(\"abbaabbaabbaabbaabbaabbaabbaabbaabbaabbaabba\")) === JSON.stringify(44));\n    console.assert(JSON.stringify(candidate(\"abacabadabacabad\")) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(\"rotorrotor\")) === JSON.stringify(10));\n    console.assert(JSON.stringify(candidate(\"abcabcabcabcabc\")) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate(\"abracadabracadabra\")) === JSON.stringify(11));\n    console.assert(JSON.stringify(candidate(\"levellevellevellevellevel\")) === JSON.stringify(25));\n    console.assert(JSON.stringify(candidate(\"aaaaaabaaaaa\")) === JSON.stringify(11));\n    console.assert(JSON.stringify(candidate(\"aabbccddeedcbaabbccdd\")) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate(\"hellohellobellohellobellohello\")) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate(\"xyzzxyzzxyzz\")) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate(\"xxyyzzzyyxxyyyzzzzyyxx\")) === JSON.stringify(15));\n    console.assert(JSON.stringify(candidate(\"aabbccddeeeedddccbbaaa\")) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate(\"deifiedrotor\")) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate(\"abcdeedcbaabcdeedcba\")) === JSON.stringify(20));\n    console.assert(JSON.stringify(candidate(\"abababababababab\")) === JSON.stringify(8));\n    console.assert(JSON.stringify(candidate(\"abacabaabacabaabacabaabacaba\")) === JSON.stringify(28));\n    console.assert(JSON.stringify(candidate(\"aaaabbbbccccddddeeeeffffeeeeggggccccbbbbaaaaffff\")) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate(\"wow\")) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate(\"abcdabccbaabcd\")) === JSON.stringify(8));\n    console.assert(JSON.stringify(candidate(\"abcabcabcabcabcabcabcd\")) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate(\"abcxyzzyxcba\")) === JSON.stringify(12));\n    console.assert(JSON.stringify(candidate(\"racecarlevelracecarlevelracecarlevelracecarlevelracecarlevel\")) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate(\"madamimadamimadamimadamimadamimadam\")) === JSON.stringify(35));\n    console.assert(JSON.stringify(candidate(\"noonabbadacabbaaddaabbnoon\")) === JSON.stringify(15));\n    console.assert(JSON.stringify(candidate(\"xyzzyxzyxzyxzyxzyxzyxzyxyz\")) === JSON.stringify(15));\n    console.assert(JSON.stringify(candidate(\"levellevellevellevellevellevellevellevel\")) === JSON.stringify(40));\n    console.assert(JSON.stringify(candidate(\"abababababababababababab\")) === JSON.stringify(12));\n    console.assert(JSON.stringify(candidate(\"mississippiississimississimississippi\")) === JSON.stringify(17));\n    console.assert(JSON.stringify(candidate(\"aabbccddeedcba\")) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate(\"xyzyxzyzyxzyx\")) === JSON.stringify(11));\n    console.assert(JSON.stringify(candidate(\"aaaaabaaa\")) === JSON.stringify(7));\n    console.assert(JSON.stringify(candidate(\"abcdcdeabcdcdeabcdcdeabcd\")) === JSON.stringify(7));\n    console.assert(JSON.stringify(candidate(\"racecarracecar\")) === JSON.stringify(14));\n    console.assert(JSON.stringify(candidate(\"rotorrotorrotor\")) === JSON.stringify(15));\n    console.assert(JSON.stringify(candidate(\"racecarlevelracecarlevel\")) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(\"kayakkayak\")) === JSON.stringify(10));\n    console.assert(JSON.stringify(candidate(\"noonnoon\")) === JSON.stringify(8));\n    console.assert(JSON.stringify(candidate(\"racecarlevelmadamracecarlevelmadam\")) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(\"abcxyzzyxcbaabcxyzzyxcba\")) === JSON.stringify(24));\n    console.assert(JSON.stringify(candidate(\"redividerrotorredivider\")) === JSON.stringify(23));\n    console.assert(JSON.stringify(candidate(\"ababababababababababababababababab\")) === JSON.stringify(17));\n    console.assert(JSON.stringify(candidate(\"referrefer\")) === JSON.stringify(10));\n    console.assert(JSON.stringify(candidate(\"noonnoonnoonnoonnoonnoonnoonnoonnoonnoon\")) === JSON.stringify(40));\n    console.assert(JSON.stringify(candidate(\"madamimadamimadamimadam\")) === JSON.stringify(23));\n    console.assert(JSON.stringify(candidate(\"abbaabbaabbaabba\")) === JSON.stringify(16));\n    console.assert(JSON.stringify(candidate(\"mississippi\")) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate(\"aabbccddeedccbbaaa\")) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate(\"abcdeabcdeabcde\")) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate(\"racecarracecarracecar\")) === JSON.stringify(21));\n    console.assert(JSON.stringify(candidate(\"redivider\")) === JSON.stringify(9));\n    console.assert(JSON.stringify(candidate(\"thisisaverylongstringwithnorepeatedpattern\")) === JSON.stringify(1));\n}",
+    "golang": "func check(candidate func([]int, int) []int) {\n    assert reflect.DeepEqual(candidate(\"abcabc\"), 2)\n    assert reflect.DeepEqual(candidate(\"abcabcabc\"), 3)\n    assert reflect.DeepEqual(candidate(\"level\"), 5)\n    assert reflect.DeepEqual(candidate(\"zyxzyxzyx\"), 3)\n    assert reflect.DeepEqual(candidate(\"madam\"), 5)\n    assert reflect.DeepEqual(candidate(\"aaaaa\"), 5)\n    assert reflect.DeepEqual(candidate(\"merchant\"), 1)\n    assert reflect.DeepEqual(candidate(\"aabbccddeedccbbaa\"), 15)\n    assert reflect.DeepEqual(candidate(\"repaper\"), 7)\n    assert reflect.DeepEqual(candidate(\"ghiabcdefhelloadamhelloabcdefghi\"), 7)\n    assert reflect.DeepEqual(candidate(\"aaa\"), 3)\n    assert reflect.DeepEqual(candidate(\"antaprezatepzapreanta\"), 11)\n    assert reflect.DeepEqual(candidate(\"abcdabcdabcdabcd\"), 4)\n    assert reflect.DeepEqual(candidate(\"abacaba\"), 7)\n    assert reflect.DeepEqual(candidate(\"abcdefghijklmnopqrstuvwxyzzyxwvutsrqponmlkjihgfedcba\"), 52)\n    assert reflect.DeepEqual(candidate(\"xyzzyx\"), 6)\n    assert reflect.DeepEqual(candidate(\"abcddcba\"), 8)\n    assert reflect.DeepEqual(candidate(\"rotor\"), 5)\n    assert reflect.DeepEqual(candidate(\"abcdedcba\"), 9)\n    assert reflect.DeepEqual(candidate(\"refer\"), 5)\n    assert reflect.DeepEqual(candidate(\"redder\"), 6)\n    assert reflect.DeepEqual(candidate(\"peep\"), 4)\n    assert reflect.DeepEqual(candidate(\"abba\"), 4)\n    assert reflect.DeepEqual(candidate(\"racecar\"), 7)\n    assert reflect.DeepEqual(candidate(\"civic\"), 5)\n    assert reflect.DeepEqual(candidate(\"abcdabcd\"), 2)\n    assert reflect.DeepEqual(candidate(\"a\"), 1)\n    assert reflect.DeepEqual(candidate(\"abcabcabcabcabcabc\"), 6)\n    assert reflect.DeepEqual(candidate(\"xyzzyxxyzzyx\"), 12)\n    assert reflect.DeepEqual(candidate(\"noon\"), 4)\n    assert reflect.DeepEqual(candidate(\"deified\"), 7)\n    assert reflect.DeepEqual(candidate(\"racecarlevelracecar\"), 19)\n    assert reflect.DeepEqual(candidate(\"deed\"), 4)\n    assert reflect.DeepEqual(candidate(\"abccba\"), 6)\n    assert reflect.DeepEqual(candidate(\"abab\"), 2)\n    assert reflect.DeepEqual(candidate(\"aabbccddeeddccbbaa\"), 18)\n    assert reflect.DeepEqual(candidate(\"abcba\"), 5)\n    assert reflect.DeepEqual(candidate(\"abcdeedcba\"), 10)\n    assert reflect.DeepEqual(candidate(\"levellevel\"), 10)\n    assert reflect.DeepEqual(candidate(\"ababababab\"), 5)\n    assert reflect.DeepEqual(candidate(\"bananaananabayananabanana\"), 13)\n    assert reflect.DeepEqual(candidate(\"abcdabcabcabcabcd\"), 5)\n    assert reflect.DeepEqual(candidate(\"racecarannakayakracecar\"), 15)\n    assert reflect.DeepEqual(candidate(\"abcabcabcabcabcabcabc\"), 7)\n    assert reflect.DeepEqual(candidate(\"xxyyxxyyxyyxxyyxxyy\"), 5)\n    assert reflect.DeepEqual(candidate(\"xylophonephoneyloxyxylophonephoneyloxy\"), 10)\n    assert reflect.DeepEqual(candidate(\"leveloneleveltwolevelonelevel\"), 23)\n    assert reflect.DeepEqual(candidate(\"aaaaabaaaabaaaa\"), 13)\n    assert reflect.DeepEqual(candidate(\"abacababacaba\"), 13)\n    assert reflect.DeepEqual(candidate(\"rotorcarrot\"), 3)\n    assert reflect.DeepEqual(candidate(\"leveloneonetwothreefourthreefourtwoonelevel\"), 15)\n    assert reflect.DeepEqual(candidate(\"aaaaabaaaabaaaaaaaabaaaaabaaaabaaaa\"), 27)\n    assert reflect.DeepEqual(candidate(\"noonnoonnoonnoonnoonnoon\"), 24)\n    assert reflect.DeepEqual(candidate(\"annakayakannakayakannakayakannakayakannakayak\"), 5)\n    assert reflect.DeepEqual(candidate(\"abcdefghihgfedcbaabcdefghihgfedcba\"), 34)\n    assert reflect.DeepEqual(candidate(\"abcdefgfedcbaabcdefgfedcbaabcdefgfedcba\"), 39)\n    assert reflect.DeepEqual(candidate(\"abacabaabacaba\"), 14)\n    assert reflect.DeepEqual(candidate(\"qwertyuiopasdfghjklzxcvbnmmnbvcxzlkjhgfdsapoiuytrewq\"), 52)\n    assert reflect.DeepEqual(candidate(\"madamimadamimadam\"), 17)\n    assert reflect.DeepEqual(candidate(\"kayak\"), 5)\n    assert reflect.DeepEqual(candidate(\"thisisaverylongstringwhichdoesnotrepeatthisisaverylongstring\"), 3)\n    assert reflect.DeepEqual(candidate(\"deifiedrotorcarcaretordeified\"), 21)\n    assert reflect.DeepEqual(candidate(\"madamimadamimadamimadamimadam\"), 29)\n    assert reflect.DeepEqual(candidate(\"noonnoonnoonnoonnoonnoonnoonnoon\"), 32)\n    assert reflect.DeepEqual(candidate(\"deifiedrotordeified\"), 19)\n    assert reflect.DeepEqual(candidate(\"noonracecarnoon\"), 15)\n    assert reflect.DeepEqual(candidate(\"madamimadam\"), 11)\n    assert reflect.DeepEqual(candidate(\"repaperdeified\"), 1)\n    assert reflect.DeepEqual(candidate(\"deededeed\"), 9)\n    assert reflect.DeepEqual(candidate(\"ananaananaananananananananananana\"), 15)\n    assert reflect.DeepEqual(candidate(\"racecarlevelracecarlevelracecarlevel\"), 3)\n    assert reflect.DeepEqual(candidate(\"abcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabc\"), 18)\n    assert reflect.DeepEqual(candidate(\"racecarlevelmadamracecar\"), 15)\n    assert reflect.DeepEqual(candidate(\"leveloneonelevel\"), 12)\n    assert reflect.DeepEqual(candidate(\"xyzyxzyzyxzyzyxzyx\"), 15)\n    assert reflect.DeepEqual(candidate(\"abcdefghihgfedcba\"), 17)\n    assert reflect.DeepEqual(candidate(\"abbaabbaabbaabbaabba\"), 20)\n    assert reflect.DeepEqual(candidate(\"abacabaabacabaabacaba\"), 21)\n    assert reflect.DeepEqual(candidate(\"abcdabcdeedcbadcbabcd\"), 3)\n    assert reflect.DeepEqual(candidate(\"abccbaabccba\"), 12)\n    assert reflect.DeepEqual(candidate(\"abracadabra\"), 7)\n    assert reflect.DeepEqual(candidate(\"madammadam\"), 10)\n    assert reflect.DeepEqual(candidate(\"aaaaaaaaabbbbbbbbbbbbbbbccccccccccccccccccccdd\"), 1)\n    assert reflect.DeepEqual(candidate(\"deifiedrotorleveldeified\"), 15)\n    assert reflect.DeepEqual(candidate(\"racecarlevelracecarlevelracecarlevelracecarlevel\"), 4)\n    assert reflect.DeepEqual(candidate(\"madaminnadammadam\"), 11)\n    assert reflect.DeepEqual(candidate(\"leveldeifiedmadamdeifiedlevel\"), 29)\n    assert reflect.DeepEqual(candidate(\"abacabacabacabac\"), 4)\n    assert reflect.DeepEqual(candidate(\"aaaabbbbccccaaaabbbbcccc\"), 2)\n    assert reflect.DeepEqual(candidate(\"noonnoonnoon\"), 12)\n    assert reflect.DeepEqual(candidate(\"xyzyxzyzyxzyxzyzyxzyzyxzyzyxzyzyxzyzyxzyzyxzyzyxzyzyxzyzyx\"), 33)\n    assert reflect.DeepEqual(candidate(\"abcdefgabcdefgabcdefg\"), 3)\n    assert reflect.DeepEqual(candidate(\"abracadabraabracadabra\"), 14)\n    assert reflect.DeepEqual(candidate(\"civiccivic\"), 10)\n    assert reflect.DeepEqual(candidate(\"annakayakannakayakannakayakannakayakannakayakannakayakannakayak\"), 7)\n    assert reflect.DeepEqual(candidate(\"rotorcarrots\"), 1)\n    assert reflect.DeepEqual(candidate(\"abracadabraacarab\"), 11)\n    assert reflect.DeepEqual(candidate(\"kayakkayakkayak\"), 15)\n    assert reflect.DeepEqual(candidate(\"nun\"), 3)\n    assert reflect.DeepEqual(candidate(\"annakayakannakayakannakayak\"), 3)\n    assert reflect.DeepEqual(candidate(\"rotorlevelrotor\"), 15)\n    assert reflect.DeepEqual(candidate(\"qwertyuiopasdfghjklzxcvbnmqwertyuiopasdfghjklzxcvbnm\"), 2)\n    assert reflect.DeepEqual(candidate(\"aabbccddeeddccbaa\"), 7)\n    assert reflect.DeepEqual(candidate(\"abbaabbaabba\"), 12)\n    assert reflect.DeepEqual(candidate(\"xyzxyzxyzxyzxyzxyzxyzxyz\"), 8)\n    assert reflect.DeepEqual(candidate(\"levellevellevellevel\"), 20)\n    assert reflect.DeepEqual(candidate(\"abccbaabccbaabccba\"), 18)\n    assert reflect.DeepEqual(candidate(\"abcdeedcbaabcdeedcbaabcdeedcba\"), 30)\n    assert reflect.DeepEqual(candidate(\"abcdefgfedcbaabcdefg\"), 3)\n    assert reflect.DeepEqual(candidate(\"levelmadamlevel\"), 15)\n    assert reflect.DeepEqual(candidate(\"abcabcabcabc\"), 4)\n    assert reflect.DeepEqual(candidate(\"abacabadabacabaabacabadabacaba\"), 30)\n    assert reflect.DeepEqual(candidate(\"rotorcarcaretor\"), 7)\n    assert reflect.DeepEqual(candidate(\"annakayakannakayakannakayakannakayak\"), 4)\n    assert reflect.DeepEqual(candidate(\"levellevellevellevellevellevellevellevellevellevellevellevel\"), 60)\n    assert reflect.DeepEqual(candidate(\"levellevellevellevellevellevel\"), 30)\n    assert reflect.DeepEqual(candidate(\"aaaaabbbbbaaaabbbbbaaaaa\"), 24)\n    assert reflect.DeepEqual(candidate(\"abcdabcabcabcd\"), 4)\n    assert reflect.DeepEqual(candidate(\"aaaabbbbccccbbbbaaaa\"), 20)\n    assert reflect.DeepEqual(candidate(\"madamimadamimadamimadamimadamimadamimadamimadam\"), 47)\n    assert reflect.DeepEqual(candidate(\"abcdxyzyxzyxcddcbaabcdxyzyxzyxcddcba\"), 18)\n    assert reflect.DeepEqual(candidate(\"abacabadabacabadabacaba\"), 23)\n    assert reflect.DeepEqual(candidate(\"deifieddeified\"), 14)\n    assert reflect.DeepEqual(candidate(\"deifiedracecardeified\"), 21)\n    assert reflect.DeepEqual(candidate(\"noonnoonnoonnoon\"), 16)\n    assert reflect.DeepEqual(candidate(\"radar\"), 5)\n    assert reflect.DeepEqual(candidate(\"abacabadabacaba\"), 15)\n    assert reflect.DeepEqual(candidate(\"annakayakannakayak\"), 2)\n    assert reflect.DeepEqual(candidate(\"abcdabcdefgabcdefgdcba\"), 10)\n    assert reflect.DeepEqual(candidate(\"racecarannakayak\"), 1)\n    assert reflect.DeepEqual(candidate(\"abbaabbaabbaabbaabbaabbaabbaabbaabbaabbaabba\"), 44)\n    assert reflect.DeepEqual(candidate(\"abacabadabacabad\"), 2)\n    assert reflect.DeepEqual(candidate(\"rotorrotor\"), 10)\n    assert reflect.DeepEqual(candidate(\"abcabcabcabcabc\"), 5)\n    assert reflect.DeepEqual(candidate(\"abracadabracadabra\"), 11)\n    assert reflect.DeepEqual(candidate(\"levellevellevellevellevel\"), 25)\n    assert reflect.DeepEqual(candidate(\"aaaaaabaaaaa\"), 11)\n    assert reflect.DeepEqual(candidate(\"aabbccddeedcbaabbccdd\"), 3)\n    assert reflect.DeepEqual(candidate(\"hellohellobellohellobellohello\"), 4)\n    assert reflect.DeepEqual(candidate(\"xyzzxyzzxyzz\"), 3)\n    assert reflect.DeepEqual(candidate(\"xxyyzzzyyxxyyyzzzzyyxx\"), 15)\n    assert reflect.DeepEqual(candidate(\"aabbccddeeeedddccbbaaa\"), 5)\n    assert reflect.DeepEqual(candidate(\"deifiedrotor\"), 1)\n    assert reflect.DeepEqual(candidate(\"abcdeedcbaabcdeedcba\"), 20)\n    assert reflect.DeepEqual(candidate(\"abababababababab\"), 8)\n    assert reflect.DeepEqual(candidate(\"abacabaabacabaabacabaabacaba\"), 28)\n    assert reflect.DeepEqual(candidate(\"aaaabbbbccccddddeeeeffffeeeeggggccccbbbbaaaaffff\"), 1)\n    assert reflect.DeepEqual(candidate(\"wow\"), 3)\n    assert reflect.DeepEqual(candidate(\"abcdabccbaabcd\"), 8)\n    assert reflect.DeepEqual(candidate(\"abcabcabcabcabcabcabcd\"), 1)\n    assert reflect.DeepEqual(candidate(\"abcxyzzyxcba\"), 12)\n    assert reflect.DeepEqual(candidate(\"racecarlevelracecarlevelracecarlevelracecarlevelracecarlevel\"), 5)\n    assert reflect.DeepEqual(candidate(\"madamimadamimadamimadamimadamimadam\"), 35)\n    assert reflect.DeepEqual(candidate(\"noonabbadacabbaaddaabbnoon\"), 15)\n    assert reflect.DeepEqual(candidate(\"xyzzyxzyxzyxzyxzyxzyxzyxyz\"), 15)\n    assert reflect.DeepEqual(candidate(\"levellevellevellevellevellevellevellevel\"), 40)\n    assert reflect.DeepEqual(candidate(\"abababababababababababab\"), 12)\n    assert reflect.DeepEqual(candidate(\"mississippiississimississimississippi\"), 17)\n    assert reflect.DeepEqual(candidate(\"aabbccddeedcba\"), 3)\n    assert reflect.DeepEqual(candidate(\"xyzyxzyzyxzyx\"), 11)\n    assert reflect.DeepEqual(candidate(\"aaaaabaaa\"), 7)\n    assert reflect.DeepEqual(candidate(\"abcdcdeabcdcdeabcdcdeabcd\"), 7)\n    assert reflect.DeepEqual(candidate(\"racecarracecar\"), 14)\n    assert reflect.DeepEqual(candidate(\"rotorrotorrotor\"), 15)\n    assert reflect.DeepEqual(candidate(\"racecarlevelracecarlevel\"), 2)\n    assert reflect.DeepEqual(candidate(\"kayakkayak\"), 10)\n    assert reflect.DeepEqual(candidate(\"noonnoon\"), 8)\n    assert reflect.DeepEqual(candidate(\"racecarlevelmadamracecarlevelmadam\"), 2)\n    assert reflect.DeepEqual(candidate(\"abcxyzzyxcbaabcxyzzyxcba\"), 24)\n    assert reflect.DeepEqual(candidate(\"redividerrotorredivider\"), 23)\n    assert reflect.DeepEqual(candidate(\"ababababababababababababababababab\"), 17)\n    assert reflect.DeepEqual(candidate(\"referrefer\"), 10)\n    assert reflect.DeepEqual(candidate(\"noonnoonnoonnoonnoonnoonnoonnoonnoonnoon\"), 40)\n    assert reflect.DeepEqual(candidate(\"madamimadamimadamimadam\"), 23)\n    assert reflect.DeepEqual(candidate(\"abbaabbaabbaabba\"), 16)\n    assert reflect.DeepEqual(candidate(\"mississippi\"), 1)\n    assert reflect.DeepEqual(candidate(\"aabbccddeedccbbaaa\"), 5)\n    assert reflect.DeepEqual(candidate(\"abcdeabcdeabcde\"), 3)\n    assert reflect.DeepEqual(candidate(\"racecarracecarracecar\"), 21)\n    assert reflect.DeepEqual(candidate(\"redivider\"), 9)\n    assert reflect.DeepEqual(candidate(\"thisisaverylongstringwithnorepeatedpattern\"), 1)\n}",
+    "rust": "fn check(candidate: fn(Vec<i32>, i32) -> Vec<i32>) {\n    assert_eq!(candidate(\"abcabc\"), 2);\n    assert_eq!(candidate(\"abcabcabc\"), 3);\n    assert_eq!(candidate(\"level\"), 5);\n    assert_eq!(candidate(\"zyxzyxzyx\"), 3);\n    assert_eq!(candidate(\"madam\"), 5);\n    assert_eq!(candidate(\"aaaaa\"), 5);\n    assert_eq!(candidate(\"merchant\"), 1);\n    assert_eq!(candidate(\"aabbccddeedccbbaa\"), 15);\n    assert_eq!(candidate(\"repaper\"), 7);\n    assert_eq!(candidate(\"ghiabcdefhelloadamhelloabcdefghi\"), 7);\n    assert_eq!(candidate(\"aaa\"), 3);\n    assert_eq!(candidate(\"antaprezatepzapreanta\"), 11);\n    assert_eq!(candidate(\"abcdabcdabcdabcd\"), 4);\n    assert_eq!(candidate(\"abacaba\"), 7);\n    assert_eq!(candidate(\"abcdefghijklmnopqrstuvwxyzzyxwvutsrqponmlkjihgfedcba\"), 52);\n    assert_eq!(candidate(\"xyzzyx\"), 6);\n    assert_eq!(candidate(\"abcddcba\"), 8);\n    assert_eq!(candidate(\"rotor\"), 5);\n    assert_eq!(candidate(\"abcdedcba\"), 9);\n    assert_eq!(candidate(\"refer\"), 5);\n    assert_eq!(candidate(\"redder\"), 6);\n    assert_eq!(candidate(\"peep\"), 4);\n    assert_eq!(candidate(\"abba\"), 4);\n    assert_eq!(candidate(\"racecar\"), 7);\n    assert_eq!(candidate(\"civic\"), 5);\n    assert_eq!(candidate(\"abcdabcd\"), 2);\n    assert_eq!(candidate(\"a\"), 1);\n    assert_eq!(candidate(\"abcabcabcabcabcabc\"), 6);\n    assert_eq!(candidate(\"xyzzyxxyzzyx\"), 12);\n    assert_eq!(candidate(\"noon\"), 4);\n    assert_eq!(candidate(\"deified\"), 7);\n    assert_eq!(candidate(\"racecarlevelracecar\"), 19);\n    assert_eq!(candidate(\"deed\"), 4);\n    assert_eq!(candidate(\"abccba\"), 6);\n    assert_eq!(candidate(\"abab\"), 2);\n    assert_eq!(candidate(\"aabbccddeeddccbbaa\"), 18);\n    assert_eq!(candidate(\"abcba\"), 5);\n    assert_eq!(candidate(\"abcdeedcba\"), 10);\n    assert_eq!(candidate(\"levellevel\"), 10);\n    assert_eq!(candidate(\"ababababab\"), 5);\n    assert_eq!(candidate(\"bananaananabayananabanana\"), 13);\n    assert_eq!(candidate(\"abcdabcabcabcabcd\"), 5);\n    assert_eq!(candidate(\"racecarannakayakracecar\"), 15);\n    assert_eq!(candidate(\"abcabcabcabcabcabcabc\"), 7);\n    assert_eq!(candidate(\"xxyyxxyyxyyxxyyxxyy\"), 5);\n    assert_eq!(candidate(\"xylophonephoneyloxyxylophonephoneyloxy\"), 10);\n    assert_eq!(candidate(\"leveloneleveltwolevelonelevel\"), 23);\n    assert_eq!(candidate(\"aaaaabaaaabaaaa\"), 13);\n    assert_eq!(candidate(\"abacababacaba\"), 13);\n    assert_eq!(candidate(\"rotorcarrot\"), 3);\n    assert_eq!(candidate(\"leveloneonetwothreefourthreefourtwoonelevel\"), 15);\n    assert_eq!(candidate(\"aaaaabaaaabaaaaaaaabaaaaabaaaabaaaa\"), 27);\n    assert_eq!(candidate(\"noonnoonnoonnoonnoonnoon\"), 24);\n    assert_eq!(candidate(\"annakayakannakayakannakayakannakayakannakayak\"), 5);\n    assert_eq!(candidate(\"abcdefghihgfedcbaabcdefghihgfedcba\"), 34);\n    assert_eq!(candidate(\"abcdefgfedcbaabcdefgfedcbaabcdefgfedcba\"), 39);\n    assert_eq!(candidate(\"abacabaabacaba\"), 14);\n    assert_eq!(candidate(\"qwertyuiopasdfghjklzxcvbnmmnbvcxzlkjhgfdsapoiuytrewq\"), 52);\n    assert_eq!(candidate(\"madamimadamimadam\"), 17);\n    assert_eq!(candidate(\"kayak\"), 5);\n    assert_eq!(candidate(\"thisisaverylongstringwhichdoesnotrepeatthisisaverylongstring\"), 3);\n    assert_eq!(candidate(\"deifiedrotorcarcaretordeified\"), 21);\n    assert_eq!(candidate(\"madamimadamimadamimadamimadam\"), 29);\n    assert_eq!(candidate(\"noonnoonnoonnoonnoonnoonnoonnoon\"), 32);\n    assert_eq!(candidate(\"deifiedrotordeified\"), 19);\n    assert_eq!(candidate(\"noonracecarnoon\"), 15);\n    assert_eq!(candidate(\"madamimadam\"), 11);\n    assert_eq!(candidate(\"repaperdeified\"), 1);\n    assert_eq!(candidate(\"deededeed\"), 9);\n    assert_eq!(candidate(\"ananaananaananananananananananana\"), 15);\n    assert_eq!(candidate(\"racecarlevelracecarlevelracecarlevel\"), 3);\n    assert_eq!(candidate(\"abcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabc\"), 18);\n    assert_eq!(candidate(\"racecarlevelmadamracecar\"), 15);\n    assert_eq!(candidate(\"leveloneonelevel\"), 12);\n    assert_eq!(candidate(\"xyzyxzyzyxzyzyxzyx\"), 15);\n    assert_eq!(candidate(\"abcdefghihgfedcba\"), 17);\n    assert_eq!(candidate(\"abbaabbaabbaabbaabba\"), 20);\n    assert_eq!(candidate(\"abacabaabacabaabacaba\"), 21);\n    assert_eq!(candidate(\"abcdabcdeedcbadcbabcd\"), 3);\n    assert_eq!(candidate(\"abccbaabccba\"), 12);\n    assert_eq!(candidate(\"abracadabra\"), 7);\n    assert_eq!(candidate(\"madammadam\"), 10);\n    assert_eq!(candidate(\"aaaaaaaaabbbbbbbbbbbbbbbccccccccccccccccccccdd\"), 1);\n    assert_eq!(candidate(\"deifiedrotorleveldeified\"), 15);\n    assert_eq!(candidate(\"racecarlevelracecarlevelracecarlevelracecarlevel\"), 4);\n    assert_eq!(candidate(\"madaminnadammadam\"), 11);\n    assert_eq!(candidate(\"leveldeifiedmadamdeifiedlevel\"), 29);\n    assert_eq!(candidate(\"abacabacabacabac\"), 4);\n    assert_eq!(candidate(\"aaaabbbbccccaaaabbbbcccc\"), 2);\n    assert_eq!(candidate(\"noonnoonnoon\"), 12);\n    assert_eq!(candidate(\"xyzyxzyzyxzyxzyzyxzyzyxzyzyxzyzyxzyzyxzyzyxzyzyxzyzyxzyzyx\"), 33);\n    assert_eq!(candidate(\"abcdefgabcdefgabcdefg\"), 3);\n    assert_eq!(candidate(\"abracadabraabracadabra\"), 14);\n    assert_eq!(candidate(\"civiccivic\"), 10);\n    assert_eq!(candidate(\"annakayakannakayakannakayakannakayakannakayakannakayakannakayak\"), 7);\n    assert_eq!(candidate(\"rotorcarrots\"), 1);\n    assert_eq!(candidate(\"abracadabraacarab\"), 11);\n    assert_eq!(candidate(\"kayakkayakkayak\"), 15);\n    assert_eq!(candidate(\"nun\"), 3);\n    assert_eq!(candidate(\"annakayakannakayakannakayak\"), 3);\n    assert_eq!(candidate(\"rotorlevelrotor\"), 15);\n    assert_eq!(candidate(\"qwertyuiopasdfghjklzxcvbnmqwertyuiopasdfghjklzxcvbnm\"), 2);\n    assert_eq!(candidate(\"aabbccddeeddccbaa\"), 7);\n    assert_eq!(candidate(\"abbaabbaabba\"), 12);\n    assert_eq!(candidate(\"xyzxyzxyzxyzxyzxyzxyzxyz\"), 8);\n    assert_eq!(candidate(\"levellevellevellevel\"), 20);\n    assert_eq!(candidate(\"abccbaabccbaabccba\"), 18);\n    assert_eq!(candidate(\"abcdeedcbaabcdeedcbaabcdeedcba\"), 30);\n    assert_eq!(candidate(\"abcdefgfedcbaabcdefg\"), 3);\n    assert_eq!(candidate(\"levelmadamlevel\"), 15);\n    assert_eq!(candidate(\"abcabcabcabc\"), 4);\n    assert_eq!(candidate(\"abacabadabacabaabacabadabacaba\"), 30);\n    assert_eq!(candidate(\"rotorcarcaretor\"), 7);\n    assert_eq!(candidate(\"annakayakannakayakannakayakannakayak\"), 4);\n    assert_eq!(candidate(\"levellevellevellevellevellevellevellevellevellevellevellevel\"), 60);\n    assert_eq!(candidate(\"levellevellevellevellevellevel\"), 30);\n    assert_eq!(candidate(\"aaaaabbbbbaaaabbbbbaaaaa\"), 24);\n    assert_eq!(candidate(\"abcdabcabcabcd\"), 4);\n    assert_eq!(candidate(\"aaaabbbbccccbbbbaaaa\"), 20);\n    assert_eq!(candidate(\"madamimadamimadamimadamimadamimadamimadamimadam\"), 47);\n    assert_eq!(candidate(\"abcdxyzyxzyxcddcbaabcdxyzyxzyxcddcba\"), 18);\n    assert_eq!(candidate(\"abacabadabacabadabacaba\"), 23);\n    assert_eq!(candidate(\"deifieddeified\"), 14);\n    assert_eq!(candidate(\"deifiedracecardeified\"), 21);\n    assert_eq!(candidate(\"noonnoonnoonnoon\"), 16);\n    assert_eq!(candidate(\"radar\"), 5);\n    assert_eq!(candidate(\"abacabadabacaba\"), 15);\n    assert_eq!(candidate(\"annakayakannakayak\"), 2);\n    assert_eq!(candidate(\"abcdabcdefgabcdefgdcba\"), 10);\n    assert_eq!(candidate(\"racecarannakayak\"), 1);\n    assert_eq!(candidate(\"abbaabbaabbaabbaabbaabbaabbaabbaabbaabbaabba\"), 44);\n    assert_eq!(candidate(\"abacabadabacabad\"), 2);\n    assert_eq!(candidate(\"rotorrotor\"), 10);\n    assert_eq!(candidate(\"abcabcabcabcabc\"), 5);\n    assert_eq!(candidate(\"abracadabracadabra\"), 11);\n    assert_eq!(candidate(\"levellevellevellevellevel\"), 25);\n    assert_eq!(candidate(\"aaaaaabaaaaa\"), 11);\n    assert_eq!(candidate(\"aabbccddeedcbaabbccdd\"), 3);\n    assert_eq!(candidate(\"hellohellobellohellobellohello\"), 4);\n    assert_eq!(candidate(\"xyzzxyzzxyzz\"), 3);\n    assert_eq!(candidate(\"xxyyzzzyyxxyyyzzzzyyxx\"), 15);\n    assert_eq!(candidate(\"aabbccddeeeedddccbbaaa\"), 5);\n    assert_eq!(candidate(\"deifiedrotor\"), 1);\n    assert_eq!(candidate(\"abcdeedcbaabcdeedcba\"), 20);\n    assert_eq!(candidate(\"abababababababab\"), 8);\n    assert_eq!(candidate(\"abacabaabacabaabacabaabacaba\"), 28);\n    assert_eq!(candidate(\"aaaabbbbccccddddeeeeffffeeeeggggccccbbbbaaaaffff\"), 1);\n    assert_eq!(candidate(\"wow\"), 3);\n    assert_eq!(candidate(\"abcdabccbaabcd\"), 8);\n    assert_eq!(candidate(\"abcabcabcabcabcabcabcd\"), 1);\n    assert_eq!(candidate(\"abcxyzzyxcba\"), 12);\n    assert_eq!(candidate(\"racecarlevelracecarlevelracecarlevelracecarlevelracecarlevel\"), 5);\n    assert_eq!(candidate(\"madamimadamimadamimadamimadamimadam\"), 35);\n    assert_eq!(candidate(\"noonabbadacabbaaddaabbnoon\"), 15);\n    assert_eq!(candidate(\"xyzzyxzyxzyxzyxzyxzyxzyxyz\"), 15);\n    assert_eq!(candidate(\"levellevellevellevellevellevellevellevel\"), 40);\n    assert_eq!(candidate(\"abababababababababababab\"), 12);\n    assert_eq!(candidate(\"mississippiississimississimississippi\"), 17);\n    assert_eq!(candidate(\"aabbccddeedcba\"), 3);\n    assert_eq!(candidate(\"xyzyxzyzyxzyx\"), 11);\n    assert_eq!(candidate(\"aaaaabaaa\"), 7);\n    assert_eq!(candidate(\"abcdcdeabcdcdeabcdcdeabcd\"), 7);\n    assert_eq!(candidate(\"racecarracecar\"), 14);\n    assert_eq!(candidate(\"rotorrotorrotor\"), 15);\n    assert_eq!(candidate(\"racecarlevelracecarlevel\"), 2);\n    assert_eq!(candidate(\"kayakkayak\"), 10);\n    assert_eq!(candidate(\"noonnoon\"), 8);\n    assert_eq!(candidate(\"racecarlevelmadamracecarlevelmadam\"), 2);\n    assert_eq!(candidate(\"abcxyzzyxcbaabcxyzzyxcba\"), 24);\n    assert_eq!(candidate(\"redividerrotorredivider\"), 23);\n    assert_eq!(candidate(\"ababababababababababababababababab\"), 17);\n    assert_eq!(candidate(\"referrefer\"), 10);\n    assert_eq!(candidate(\"noonnoonnoonnoonnoonnoonnoonnoonnoonnoon\"), 40);\n    assert_eq!(candidate(\"madamimadamimadamimadam\"), 23);\n    assert_eq!(candidate(\"abbaabbaabbaabba\"), 16);\n    assert_eq!(candidate(\"mississippi\"), 1);\n    assert_eq!(candidate(\"aabbccddeedccbbaaa\"), 5);\n    assert_eq!(candidate(\"abcdeabcdeabcde\"), 3);\n    assert_eq!(candidate(\"racecarracecarracecar\"), 21);\n    assert_eq!(candidate(\"redivider\"), 9);\n    assert_eq!(candidate(\"thisisaverylongstringwithnorepeatedpattern\"), 1);\n}"
+  },
+  "test_cases": [
+    {
+      "input": "text = \"abcabc\"",
+      "output": "2"
+    },
+    {
+      "input": "text = \"abcabcabc\"",
+      "output": "3"
+    },
+    {
+      "input": "text = \"level\"",
+      "output": "5"
+    },
+    {
+      "input": "text = \"zyxzyxzyx\"",
+      "output": "3"
+    },
+    {
+      "input": "text = \"madam\"",
+      "output": "5"
+    },
+    {
+      "input": "text = \"aaaaa\"",
+      "output": "5"
+    },
+    {
+      "input": "text = \"merchant\"",
+      "output": "1"
+    },
+    {
+      "input": "text = \"aabbccddeedccbbaa\"",
+      "output": "15"
+    },
+    {
+      "input": "text = \"repaper\"",
+      "output": "7"
+    },
+    {
+      "input": "text = \"ghiabcdefhelloadamhelloabcdefghi\"",
+      "output": "7"
+    },
+    {
+      "input": "text = \"aaa\"",
+      "output": "3"
+    },
+    {
+      "input": "text = \"antaprezatepzapreanta\"",
+      "output": "11"
+    },
+    {
+      "input": "text = \"abcdabcdabcdabcd\"",
+      "output": "4"
+    },
+    {
+      "input": "text = \"abacaba\"",
+      "output": "7"
+    },
+    {
+      "input": "text = \"abcdefghijklmnopqrstuvwxyzzyxwvutsrqponmlkjihgfedcba\"",
+      "output": "52"
+    },
+    {
+      "input": "text = \"xyzzyx\"",
+      "output": "6"
+    },
+    {
+      "input": "text = \"abcddcba\"",
+      "output": "8"
+    },
+    {
+      "input": "text = \"rotor\"",
+      "output": "5"
+    },
+    {
+      "input": "text = \"abcdedcba\"",
+      "output": "9"
+    },
+    {
+      "input": "text = \"refer\"",
+      "output": "5"
+    },
+    {
+      "input": "text = \"redder\"",
+      "output": "6"
+    },
+    {
+      "input": "text = \"peep\"",
+      "output": "4"
+    },
+    {
+      "input": "text = \"abba\"",
+      "output": "4"
+    },
+    {
+      "input": "text = \"racecar\"",
+      "output": "7"
+    },
+    {
+      "input": "text = \"civic\"",
+      "output": "5"
+    },
+    {
+      "input": "text = \"abcdabcd\"",
+      "output": "2"
+    },
+    {
+      "input": "text = \"a\"",
+      "output": "1"
+    },
+    {
+      "input": "text = \"abcabcabcabcabcabc\"",
+      "output": "6"
+    },
+    {
+      "input": "text = \"xyzzyxxyzzyx\"",
+      "output": "12"
+    },
+    {
+      "input": "text = \"noon\"",
+      "output": "4"
+    },
+    {
+      "input": "text = \"deified\"",
+      "output": "7"
+    },
+    {
+      "input": "text = \"racecarlevelracecar\"",
+      "output": "19"
+    },
+    {
+      "input": "text = \"deed\"",
+      "output": "4"
+    },
+    {
+      "input": "text = \"abccba\"",
+      "output": "6"
+    },
+    {
+      "input": "text = \"abab\"",
+      "output": "2"
+    },
+    {
+      "input": "text = \"aabbccddeeddccbbaa\"",
+      "output": "18"
+    },
+    {
+      "input": "text = \"abcba\"",
+      "output": "5"
+    },
+    {
+      "input": "text = \"abcdeedcba\"",
+      "output": "10"
+    },
+    {
+      "input": "text = \"levellevel\"",
+      "output": "10"
+    },
+    {
+      "input": "text = \"ababababab\"",
+      "output": "5"
+    },
+    {
+      "input": "text = \"bananaananabayananabanana\"",
+      "output": "13"
+    },
+    {
+      "input": "text = \"abcdabcabcabcabcd\"",
+      "output": "5"
+    },
+    {
+      "input": "text = \"racecarannakayakracecar\"",
+      "output": "15"
+    },
+    {
+      "input": "text = \"abcabcabcabcabcabcabc\"",
+      "output": "7"
+    },
+    {
+      "input": "text = \"xxyyxxyyxyyxxyyxxyy\"",
+      "output": "5"
+    },
+    {
+      "input": "text = \"xylophonephoneyloxyxylophonephoneyloxy\"",
+      "output": "10"
+    },
+    {
+      "input": "text = \"leveloneleveltwolevelonelevel\"",
+      "output": "23"
+    },
+    {
+      "input": "text = \"aaaaabaaaabaaaa\"",
+      "output": "13"
+    },
+    {
+      "input": "text = \"abacababacaba\"",
+      "output": "13"
+    },
+    {
+      "input": "text = \"rotorcarrot\"",
+      "output": "3"
+    },
+    {
+      "input": "text = \"leveloneonetwothreefourthreefourtwoonelevel\"",
+      "output": "15"
+    },
+    {
+      "input": "text = \"aaaaabaaaabaaaaaaaabaaaaabaaaabaaaa\"",
+      "output": "27"
+    },
+    {
+      "input": "text = \"noonnoonnoonnoonnoonnoon\"",
+      "output": "24"
+    },
+    {
+      "input": "text = \"annakayakannakayakannakayakannakayakannakayak\"",
+      "output": "5"
+    },
+    {
+      "input": "text = \"abcdefghihgfedcbaabcdefghihgfedcba\"",
+      "output": "34"
+    },
+    {
+      "input": "text = \"abcdefgfedcbaabcdefgfedcbaabcdefgfedcba\"",
+      "output": "39"
+    },
+    {
+      "input": "text = \"abacabaabacaba\"",
+      "output": "14"
+    },
+    {
+      "input": "text = \"qwertyuiopasdfghjklzxcvbnmmnbvcxzlkjhgfdsapoiuytrewq\"",
+      "output": "52"
+    },
+    {
+      "input": "text = \"madamimadamimadam\"",
+      "output": "17"
+    },
+    {
+      "input": "text = \"kayak\"",
+      "output": "5"
+    },
+    {
+      "input": "text = \"thisisaverylongstringwhichdoesnotrepeatthisisaverylongstring\"",
+      "output": "3"
+    },
+    {
+      "input": "text = \"deifiedrotorcarcaretordeified\"",
+      "output": "21"
+    },
+    {
+      "input": "text = \"madamimadamimadamimadamimadam\"",
+      "output": "29"
+    },
+    {
+      "input": "text = \"noonnoonnoonnoonnoonnoonnoonnoon\"",
+      "output": "32"
+    },
+    {
+      "input": "text = \"deifiedrotordeified\"",
+      "output": "19"
+    },
+    {
+      "input": "text = \"noonracecarnoon\"",
+      "output": "15"
+    },
+    {
+      "input": "text = \"madamimadam\"",
+      "output": "11"
+    },
+    {
+      "input": "text = \"repaperdeified\"",
+      "output": "1"
+    },
+    {
+      "input": "text = \"deededeed\"",
+      "output": "9"
+    },
+    {
+      "input": "text = \"ananaananaananananananananananana\"",
+      "output": "15"
+    },
+    {
+      "input": "text = \"racecarlevelracecarlevelracecarlevel\"",
+      "output": "3"
+    },
+    {
+      "input": "text = \"abcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabc\"",
+      "output": "18"
+    },
+    {
+      "input": "text = \"racecarlevelmadamracecar\"",
+      "output": "15"
+    },
+    {
+      "input": "text = \"leveloneonelevel\"",
+      "output": "12"
+    },
+    {
+      "input": "text = \"xyzyxzyzyxzyzyxzyx\"",
+      "output": "15"
+    },
+    {
+      "input": "text = \"abcdefghihgfedcba\"",
+      "output": "17"
+    },
+    {
+      "input": "text = \"abbaabbaabbaabbaabba\"",
+      "output": "20"
+    },
+    {
+      "input": "text = \"abacabaabacabaabacaba\"",
+      "output": "21"
+    },
+    {
+      "input": "text = \"abcdabcdeedcbadcbabcd\"",
+      "output": "3"
+    },
+    {
+      "input": "text = \"abccbaabccba\"",
+      "output": "12"
+    },
+    {
+      "input": "text = \"abracadabra\"",
+      "output": "7"
+    },
+    {
+      "input": "text = \"madammadam\"",
+      "output": "10"
+    },
+    {
+      "input": "text = \"aaaaaaaaabbbbbbbbbbbbbbbccccccccccccccccccccdd\"",
+      "output": "1"
+    },
+    {
+      "input": "text = \"deifiedrotorleveldeified\"",
+      "output": "15"
+    },
+    {
+      "input": "text = \"racecarlevelracecarlevelracecarlevelracecarlevel\"",
+      "output": "4"
+    },
+    {
+      "input": "text = \"madaminnadammadam\"",
+      "output": "11"
+    },
+    {
+      "input": "text = \"leveldeifiedmadamdeifiedlevel\"",
+      "output": "29"
+    },
+    {
+      "input": "text = \"abacabacabacabac\"",
+      "output": "4"
+    },
+    {
+      "input": "text = \"aaaabbbbccccaaaabbbbcccc\"",
+      "output": "2"
+    },
+    {
+      "input": "text = \"noonnoonnoon\"",
+      "output": "12"
+    },
+    {
+      "input": "text = \"xyzyxzyzyxzyxzyzyxzyzyxzyzyxzyzyxzyzyxzyzyxzyzyxzyzyxzyzyx\"",
+      "output": "33"
+    },
+    {
+      "input": "text = \"abcdefgabcdefgabcdefg\"",
+      "output": "3"
+    },
+    {
+      "input": "text = \"abracadabraabracadabra\"",
+      "output": "14"
+    },
+    {
+      "input": "text = \"civiccivic\"",
+      "output": "10"
+    },
+    {
+      "input": "text = \"annakayakannakayakannakayakannakayakannakayakannakayakannakayak\"",
+      "output": "7"
+    },
+    {
+      "input": "text = \"rotorcarrots\"",
+      "output": "1"
+    },
+    {
+      "input": "text = \"abracadabraacarab\"",
+      "output": "11"
+    },
+    {
+      "input": "text = \"kayakkayakkayak\"",
+      "output": "15"
+    },
+    {
+      "input": "text = \"nun\"",
+      "output": "3"
+    },
+    {
+      "input": "text = \"annakayakannakayakannakayak\"",
+      "output": "3"
+    },
+    {
+      "input": "text = \"rotorlevelrotor\"",
+      "output": "15"
+    },
+    {
+      "input": "text = \"qwertyuiopasdfghjklzxcvbnmqwertyuiopasdfghjklzxcvbnm\"",
+      "output": "2"
+    },
+    {
+      "input": "text = \"aabbccddeeddccbaa\"",
+      "output": "7"
+    },
+    {
+      "input": "text = \"abbaabbaabba\"",
+      "output": "12"
+    },
+    {
+      "input": "text = \"xyzxyzxyzxyzxyzxyzxyzxyz\"",
+      "output": "8"
+    },
+    {
+      "input": "text = \"levellevellevellevel\"",
+      "output": "20"
+    },
+    {
+      "input": "text = \"abccbaabccbaabccba\"",
+      "output": "18"
+    },
+    {
+      "input": "text = \"abcdeedcbaabcdeedcbaabcdeedcba\"",
+      "output": "30"
+    },
+    {
+      "input": "text = \"abcdefgfedcbaabcdefg\"",
+      "output": "3"
+    },
+    {
+      "input": "text = \"levelmadamlevel\"",
+      "output": "15"
+    },
+    {
+      "input": "text = \"abcabcabcabc\"",
+      "output": "4"
+    },
+    {
+      "input": "text = \"abacabadabacabaabacabadabacaba\"",
+      "output": "30"
+    },
+    {
+      "input": "text = \"rotorcarcaretor\"",
+      "output": "7"
+    },
+    {
+      "input": "text = \"annakayakannakayakannakayakannakayak\"",
+      "output": "4"
+    },
+    {
+      "input": "text = \"levellevellevellevellevellevellevellevellevellevellevellevel\"",
+      "output": "60"
+    },
+    {
+      "input": "text = \"levellevellevellevellevellevel\"",
+      "output": "30"
+    },
+    {
+      "input": "text = \"aaaaabbbbbaaaabbbbbaaaaa\"",
+      "output": "24"
+    },
+    {
+      "input": "text = \"abcdabcabcabcd\"",
+      "output": "4"
+    },
+    {
+      "input": "text = \"aaaabbbbccccbbbbaaaa\"",
+      "output": "20"
+    },
+    {
+      "input": "text = \"madamimadamimadamimadamimadamimadamimadamimadam\"",
+      "output": "47"
+    },
+    {
+      "input": "text = \"abcdxyzyxzyxcddcbaabcdxyzyxzyxcddcba\"",
+      "output": "18"
+    },
+    {
+      "input": "text = \"abacabadabacabadabacaba\"",
+      "output": "23"
+    },
+    {
+      "input": "text = \"deifieddeified\"",
+      "output": "14"
+    },
+    {
+      "input": "text = \"deifiedracecardeified\"",
+      "output": "21"
+    },
+    {
+      "input": "text = \"noonnoonnoonnoon\"",
+      "output": "16"
+    },
+    {
+      "input": "text = \"radar\"",
+      "output": "5"
+    },
+    {
+      "input": "text = \"abacabadabacaba\"",
+      "output": "15"
+    },
+    {
+      "input": "text = \"annakayakannakayak\"",
+      "output": "2"
+    },
+    {
+      "input": "text = \"abcdabcdefgabcdefgdcba\"",
+      "output": "10"
+    },
+    {
+      "input": "text = \"racecarannakayak\"",
+      "output": "1"
+    },
+    {
+      "input": "text = \"abbaabbaabbaabbaabbaabbaabbaabbaabbaabbaabba\"",
+      "output": "44"
+    },
+    {
+      "input": "text = \"abacabadabacabad\"",
+      "output": "2"
+    },
+    {
+      "input": "text = \"rotorrotor\"",
+      "output": "10"
+    },
+    {
+      "input": "text = \"abcabcabcabcabc\"",
+      "output": "5"
+    },
+    {
+      "input": "text = \"abracadabracadabra\"",
+      "output": "11"
+    },
+    {
+      "input": "text = \"levellevellevellevellevel\"",
+      "output": "25"
+    },
+    {
+      "input": "text = \"aaaaaabaaaaa\"",
+      "output": "11"
+    },
+    {
+      "input": "text = \"aabbccddeedcbaabbccdd\"",
+      "output": "3"
+    },
+    {
+      "input": "text = \"hellohellobellohellobellohello\"",
+      "output": "4"
+    },
+    {
+      "input": "text = \"xyzzxyzzxyzz\"",
+      "output": "3"
+    },
+    {
+      "input": "text = \"xxyyzzzyyxxyyyzzzzyyxx\"",
+      "output": "15"
+    },
+    {
+      "input": "text = \"aabbccddeeeedddccbbaaa\"",
+      "output": "5"
+    },
+    {
+      "input": "text = \"deifiedrotor\"",
+      "output": "1"
+    },
+    {
+      "input": "text = \"abcdeedcbaabcdeedcba\"",
+      "output": "20"
+    },
+    {
+      "input": "text = \"abababababababab\"",
+      "output": "8"
+    },
+    {
+      "input": "text = \"abacabaabacabaabacabaabacaba\"",
+      "output": "28"
+    },
+    {
+      "input": "text = \"aaaabbbbccccddddeeeeffffeeeeggggccccbbbbaaaaffff\"",
+      "output": "1"
+    },
+    {
+      "input": "text = \"wow\"",
+      "output": "3"
+    },
+    {
+      "input": "text = \"abcdabccbaabcd\"",
+      "output": "8"
+    },
+    {
+      "input": "text = \"abcabcabcabcabcabcabcd\"",
+      "output": "1"
+    },
+    {
+      "input": "text = \"abcxyzzyxcba\"",
+      "output": "12"
+    },
+    {
+      "input": "text = \"racecarlevelracecarlevelracecarlevelracecarlevelracecarlevel\"",
+      "output": "5"
+    },
+    {
+      "input": "text = \"madamimadamimadamimadamimadamimadam\"",
+      "output": "35"
+    },
+    {
+      "input": "text = \"noonabbadacabbaaddaabbnoon\"",
+      "output": "15"
+    },
+    {
+      "input": "text = \"xyzzyxzyxzyxzyxzyxzyxzyxyz\"",
+      "output": "15"
+    },
+    {
+      "input": "text = \"levellevellevellevellevellevellevellevel\"",
+      "output": "40"
+    },
+    {
+      "input": "text = \"abababababababababababab\"",
+      "output": "12"
+    },
+    {
+      "input": "text = \"mississippiississimississimississippi\"",
+      "output": "17"
+    },
+    {
+      "input": "text = \"aabbccddeedcba\"",
+      "output": "3"
+    },
+    {
+      "input": "text = \"xyzyxzyzyxzyx\"",
+      "output": "11"
+    },
+    {
+      "input": "text = \"aaaaabaaa\"",
+      "output": "7"
+    },
+    {
+      "input": "text = \"abcdcdeabcdcdeabcdcdeabcd\"",
+      "output": "7"
+    },
+    {
+      "input": "text = \"racecarracecar\"",
+      "output": "14"
+    },
+    {
+      "input": "text = \"rotorrotorrotor\"",
+      "output": "15"
+    },
+    {
+      "input": "text = \"racecarlevelracecarlevel\"",
+      "output": "2"
+    },
+    {
+      "input": "text = \"kayakkayak\"",
+      "output": "10"
+    },
+    {
+      "input": "text = \"noonnoon\"",
+      "output": "8"
+    },
+    {
+      "input": "text = \"racecarlevelmadamracecarlevelmadam\"",
+      "output": "2"
+    },
+    {
+      "input": "text = \"abcxyzzyxcbaabcxyzzyxcba\"",
+      "output": "24"
+    },
+    {
+      "input": "text = \"redividerrotorredivider\"",
+      "output": "23"
+    },
+    {
+      "input": "text = \"ababababababababababababababababab\"",
+      "output": "17"
+    },
+    {
+      "input": "text = \"referrefer\"",
+      "output": "10"
+    },
+    {
+      "input": "text = \"noonnoonnoonnoonnoonnoonnoonnoonnoonnoon\"",
+      "output": "40"
+    },
+    {
+      "input": "text = \"madamimadamimadamimadam\"",
+      "output": "23"
+    },
+    {
+      "input": "text = \"abbaabbaabbaabba\"",
+      "output": "16"
+    },
+    {
+      "input": "text = \"mississippi\"",
+      "output": "1"
+    },
+    {
+      "input": "text = \"aabbccddeedccbbaaa\"",
+      "output": "5"
+    },
+    {
+      "input": "text = \"abcdeabcdeabcde\"",
+      "output": "3"
+    },
+    {
+      "input": "text = \"racecarracecarracecar\"",
+      "output": "21"
+    },
+    {
+      "input": "text = \"redivider\"",
+      "output": "9"
+    },
+    {
+      "input": "text = \"thisisaverylongstringwithnorepeatedpattern\"",
+      "output": "1"
+    }
+  ],
+  "types": {
+    "python3": {
+      "input": [
+        {
+          "text": "str"
+        }
+      ],
+      "output": "int"
+    },
+    "cpp": {
+      "input": [
+        {
+          "text": "string"
+        }
+      ],
+      "output": "int"
+    },
+    "java": {
+      "input": [
+        {
+          "text": "String"
+        }
+      ],
+      "output": "int"
+    },
+    "javascript": {
+      "input": [
+        {
+          "text": "string"
+        }
+      ],
+      "output": "number"
+    },
+    "typescript": {
+      "input": [
+        {
+          "text": "string"
+        }
+      ],
+      "output": "number"
+    },
+    "golang": {
+      "input": [
+        {
+          "text": "string"
+        }
+      ],
+      "output": "int"
+    },
+    "rust": {
+      "input": [
+        {
+          "text": "String"
+        }
+      ],
+      "output": "i32"
+    }
+  },
+  "tags": [
+    "two-pointers",
+    "string",
+    "dynamic-programming",
+    "greedy",
+    "rolling-hash",
+    "hash-function"
+  ]
+}

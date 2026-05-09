@@ -1,0 +1,588 @@
+{
+  "id": 3036,
+  "title": "Number of Subarrays That Match a Pattern II",
+  "slug": "number-of-subarrays-that-match-a-pattern-ii",
+  "difficulty": "Hard",
+  "description": "You are given a 0-indexed integer array nums of size n, and a 0-indexed integer array pattern of size m consisting of integers -1, 0, and 1.\nA subarray nums[i..j] of size m + 1 is said to match the pattern if the following conditions hold for each element pattern[k]:\nReturn the count of subarrays in nums that match the pattern.\nExample 1:\nExample 2:\nConstraints:",
+  "examples": [
+    {
+      "example_num": 1,
+      "example_text": "Input: nums = [1,2,3,4,5,6], pattern = [1,1]\nOutput: 4\nExplanation: The pattern [1,1] indicates that we are looking for strictly increasing subarrays of size 3. In the array nums, the subarrays [1,2,3], [2,3,4], [3,4,5], and [4,5,6] match this pattern.\nHence, there are 4 subarrays in nums that match the pattern.",
+      "images": []
+    },
+    {
+      "example_num": 2,
+      "example_text": "Input: nums = [1,4,4,1,3,5,5,3], pattern = [1,0,-1]\nOutput: 2\nExplanation: Here, the pattern [1,0,-1] indicates that we are looking for a sequence where the first number is smaller than the second, the second is equal to the third, and the third is greater than the fourth. In the array nums, the subarrays [1,4,4,1], and [3,5,5,3] match this pattern.\nHence, there are 2 subarrays in nums that match the pattern.",
+      "images": []
+    }
+  ],
+  "constraints": [
+    "2 <= n == nums.length <= 106",
+    "1 <= nums[i] <= 109",
+    "1 <= m == pattern.length < n",
+    "-1 <= pattern[i] <= 1"
+  ],
+  "hints": [
+    "Create a second array <code>nums2</code> such that <code>nums2[i] = 1</code> if <code>nums[i + 1] > nums[i]</code>, <code>nums2[i] = 0</code> if <code>nums[i + 1] == nums[i]</code>, and <code>nums2[i] = -1</code> if <code>nums[i + 1] < nums[i]</code>.",
+    "The problem becomes: “Count the number of subarrays in <code>nums2</code> that are equal to <code>pattern</code>.",
+    "Use Knuth-Morris-Pratt or Z-Function algorithms."
+  ],
+  "code_snippets": {
+    "cpp": "class Solution {\npublic:\n    int countMatchingSubarrays(vector<int>& nums, vector<int>& pattern) {\n        \n    }\n};",
+    "java": "class Solution {\n    public int countMatchingSubarrays(int[] nums, int[] pattern) {\n        \n    }\n}",
+    "python3": "class Solution:\n    def countMatchingSubarrays(self, nums: List[int], pattern: List[int]) -> int:\n        ",
+    "javascript": "/**\n * @param {number[]} nums\n * @param {number[]} pattern\n * @return {number}\n */\nvar countMatchingSubarrays = function(nums, pattern) {\n    \n};",
+    "typescript": "function countMatchingSubarrays(nums: number[], pattern: number[]): number {\n    \n};",
+    "golang": "func countMatchingSubarrays(nums []int, pattern []int) int {\n    \n}",
+    "rust": "impl Solution {\n    pub fn count_matching_subarrays(nums: Vec<i32>, pattern: Vec<i32>) -> i32 {\n        \n    }\n}"
+  },
+  "entry_points": {
+    "python3": "Solution().countMatchingSubarrays",
+    "cpp": "Solution().countMatchingSubarrays",
+    "java": "new Solution().countMatchingSubarrays",
+    "javascript": "countMatchingSubarrays",
+    "typescript": "countMatchingSubarrays",
+    "golang": "countMatchingSubarrays",
+    "rust": "Solution::count_matching_subarrays"
+  },
+  "test_snippets": {
+    "python3": "def check(candidate):\n    assert candidate(nums = [1,3,2,3,1,4,3,2], pattern = [1,-1,1,-1]) == 2\n    assert candidate(nums = [1,2,2,3,4,5], pattern = [1,0,1]) == 1\n    assert candidate(nums = [1,4,4,1,3,5,5,3], pattern = [1,0,-1]) == 2\n    assert candidate(nums = [5,5,5,5,5,5], pattern = [0,0,0]) == 3\n    assert candidate(nums = [1,2,2,3,4], pattern = [1,0,1]) == 1\n    assert candidate(nums = [1,2,2,3,3,4], pattern = [1,0,1,0]) == 1\n    assert candidate(nums = [1,2,3,4,5,6], pattern = [1,1]) == 4\n    assert candidate(nums = [1,1,1,1,1], pattern = [0,0,0]) == 2\n    assert candidate(nums = [5,4,3,2,1], pattern = [-1,-1,-1]) == 2\n    assert candidate(nums = [1,3,2,3,4,5], pattern = [1,-1,1]) == 1\n    assert candidate(nums = [1,1,1,1,1], pattern = [0,0]) == 3\n    assert candidate(nums = [1,2,2,3,3,4,4,5], pattern = [1,0,0,1,0,0]) == 0\n    assert candidate(nums = [1,3,2,4,3,5], pattern = [1,-1,1]) == 2\n    assert candidate(nums = [10,10,10,10], pattern = [0,0]) == 2\n    assert candidate(nums = [10,9,8,7,6,5], pattern = [-1,-1,-1]) == 3\n    assert candidate(nums = [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1], pattern = [0,0,0,0,0,0,0,0,0,0,0,0,0]) == 2\n    assert candidate(nums = [1,2,3,2,1,2,3,2,1,2], pattern = [1,-1,1,-1,1]) == 0\n    assert candidate(nums = [1,2,3,2,1,2,3,4,5,4,3,2,1], pattern = [1,-1,1,1,1,-1,-1]) == 0\n    assert candidate(nums = [7,10,10,8,10,5,6,7,8,9], pattern = [1,0,-1,1,1,-1,1,1]) == 0\n    assert candidate(nums = [10, 9, 8, 9, 10, 11, 10, 9, 8, 9, 10], pattern = [-1, -1, 1, 1, -1, -1, 1]) == 0\n    assert candidate(nums = [1,2,2,3,3,4,5,5,6], pattern = [1,0,1,0,1,0,1]) == 0\n    assert candidate(nums = [1, 2, 2, 3, 3, 3, 4, 4, 5, 5, 6], pattern = [1, 0, 0, 1, 0, 0, 1]) == 0\n    assert candidate(nums = [1, 2, 1, 3, 2, 4, 3, 5, 4, 6], pattern = [1, -1, 1, -1, 1, -1]) == 2\n    assert candidate(nums = [1,1,1,2,2,2,3,3,3,2,2,2,1,1,1,1,2,2,2,2,3,3,3,3,2,2,2,2,1,1,1,1], pattern = [0,1,0,1,0,1,-1,0,-1,0,-1,0,-1,0,-1,0,1,0,1,0,1,0,1,-1,0,-1,0,-1,0,-1,0]) == 0\n    assert candidate(nums = [1, 2, 1, 3, 2, 1, 4, 3, 2, 1, 5, 4, 3, 2, 1], pattern = [1, -1, 1, -1, 1]) == 0\n    assert candidate(nums = [10, 9, 8, 7, 6, 5, 4, 3, 2, 1], pattern = [-1, -1, -1, -1, -1]) == 5\n    assert candidate(nums = [1,2,3,3,3,2,1,1,1,2,3], pattern = [1,0,0,-1,-1,0,0,1,1]) == 1\n    assert candidate(nums = [1,2,3,4,5,4,5,6,7,8], pattern = [1,1,-1,1,1,-1,1,1]) == 0\n    assert candidate(nums = [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1], pattern = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]) == 1\n    assert candidate(nums = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1], pattern = [0, 0, 0, 0, 0, 0, 0]) == 3\n    assert candidate(nums = [1,3,2,4,3,5,7,8,7,6,5,4,3,2,1,2,3,4,5,6,7,8,9], pattern = [1,-1,1,-1,1,-1,1,-1,1,-1,1,-1,1,-1,1,-1,1,-1,1,-1,1]) == 0\n    assert candidate(nums = [10,9,8,8,7,6,5,4,3,2,1], pattern = [-1,-1,0,-1,-1,-1,-1,-1,-1]) == 1\n    assert candidate(nums = [1,3,2,4,3,5,4,6,5,7], pattern = [1,-1,1,-1,1,-1,1]) == 2\n    assert candidate(nums = [1,2,3,2,1,2,3,2,1], pattern = [1,-1,1,-1,1,-1]) == 0\n    assert candidate(nums = [1,2,3,4,5,6,5,4,3,2,1], pattern = [1,1,1,-1,-1,-1]) == 1\n    assert candidate(nums = [1,2,3,4,5,6,7,8,9,10], pattern = [1,1,1,1,1]) == 5\n    assert candidate(nums = [1,2,3,4,5,6,5,4,3,2,1], pattern = [1,1,1,1,1,-1,-1,-1,-1,-1]) == 1\n    assert candidate(nums = [1,2,3,4,5,6,7,8,9,10,9,8,7,6,5,4,3,2,1,1,2,3,4,5,6,7,8,9,10], pattern = [1,1,1,1,1,1,1,1,1,-1,-1,-1,-1,-1,-1,-1,-1,-1,1,1,1,1,1,1,1,1,1]) == 0\n    assert candidate(nums = [1, 2, 3, 4, 3, 2, 1, 2, 3, 4, 3, 2, 1], pattern = [1, 1, -1, -1, 1, 1]) == 0\n    assert candidate(nums = [100, 200, 150, 250, 200, 300, 250, 350, 300, 400], pattern = [1, -1, 1, -1, 1, -1, 1]) == 2\n    assert candidate(nums = [1,2,2,2,3,3,3,2,2,2,1,1,1,2,2,2,3,3,3], pattern = [1,0,0,1,0,0,-1,0,0,-1,0,0,1,0,0]) == 1\n    assert candidate(nums = [1,2,1,2,1,2,1,2,1], pattern = [1,-1,1,-1,1,-1,1]) == 1\n    assert candidate(nums = [1, 1, 1, 2, 2, 2, 3, 3, 3, 1, 1, 1], pattern = [0, 1, 0, -1, 0]) == 0\n    assert candidate(nums = [1,2,3,2,3,4,3,4,5,4,5,6], pattern = [1,-1,1,1,-1,1,-1,1]) == 0\n    assert candidate(nums = [10,9,8,7,6,5,4,3,2,1], pattern = [-1,-1,-1,-1,-1,-1,-1,-1,-1]) == 1\n    assert candidate(nums = [1, 2, 2, 2, 3, 3, 3, 2, 2, 2, 1, 1, 1, 1], pattern = [1, 0, 1, 0, -1, 0, -1]) == 0\n    assert candidate(nums = [1,1,2,2,1,1,2,2,1,1,2,2,1,1], pattern = [0,1,0,-1,0,1,0,-1,0,1]) == 1\n    assert candidate(nums = [1,1,2,1,3,2,4,3,5,4,6,5,7,6,8], pattern = [0,-1,1,-1,1,-1,1,-1,1,-1]) == 0\n    assert candidate(nums = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15], pattern = [1,1,1,1,1,1,1,1,1,1,1,1]) == 3\n    assert candidate(nums = [10, 20, 10, 30, 20, 40, 30, 50], pattern = [1, -1, 1, -1, 1]) == 2\n    assert candidate(nums = [1,2,3,2,1,2,3,2,1,2,3,2,1,2,3,2], pattern = [1,-1,1,-1,1,-1,1,-1]) == 0\n    assert candidate(nums = [1,2,3,4,5,6,7,8,9,10,9,8,7,6,5,4,3,2,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15], pattern = [1,1,1,1,1,1,1,1,1,-1,-1,-1,-1,-1,-1,-1,-1,-1,1,1,1,1,1,1,1,1,1,1,1,1,1]) == 1\n    assert candidate(nums = [5,4,3,2,1,1,2,3,4,5,5,6,7,8,9,10], pattern = [-1,-1,-1,-1,0,1,1,1,1,0,1,1,1,1]) == 1\n    assert candidate(nums = [1,1,1,1,2,2,2,2,3,3,3,3], pattern = [0,0,0,1,0,0,0,1,0,0,0]) == 1\n    assert candidate(nums = [5,4,3,2,1,1,2,3,4,5,5,4,3,2,1,1,2,3,4,5], pattern = [-1,-1,-1,-1,0,1,1,1,1,0,-1,-1,-1,-1,0,1,1,1,1]) == 1\n    assert candidate(nums = [10, 9, 8, 7, 6, 5, 4, 3, 2, 1], pattern = [-1, -1, -1, -1, -1, -1]) == 4\n    assert candidate(nums = [1, 2, 1, 1, 2, 1, 2, 1, 2, 1, 2, 1], pattern = [1, -1, 0, 1, -1, 1, -1, 1, -1]) == 1\n    assert candidate(nums = [1,2,3,4,3,2,1,2,3,4,3,2,1,2,3,4,3,2,1,2,3,4], pattern = [1,1,-1,-1,1,1,-1,-1,1,1,-1,-1,1,1,-1,-1,1,1,-1]) == 0\n    assert candidate(nums = [9, 8, 7, 6, 5, 4, 3, 2, 1], pattern = [-1, -1, -1, -1, -1, -1]) == 3\n    assert candidate(nums = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15], pattern = [1,1,1,1,1,1,1,1,1,1,1,1,1]) == 2\n    assert candidate(nums = [1, 1, 1, 1, 2, 2, 2, 2, 3, 3], pattern = [0, 0, 0, 1, 0, 0, 0]) == 1\n    assert candidate(nums = [1,3,2,4,3,5,4,6,5,7], pattern = [1,-1,1,-1,1]) == 3\n    assert candidate(nums = [1, 2, 3, 4, 5, 4, 3, 2, 1, 2], pattern = [1, 1, 1, -1, -1, -1, 1]) == 0\n    assert candidate(nums = [1, 2, 3, 2, 1, 2, 3, 4, 3, 2, 1], pattern = [1, -1, 1, -1, 1]) == 0\n    assert candidate(nums = [10,10,11,12,13,13,12,11,12,13,13,12,10], pattern = [0,1,1,1,0,-1,-1,1,1,0,-1,-1]) == 1\n    assert candidate(nums = [1,1,2,2,3,3,4,4,5,5], pattern = [0,1,0,1,0]) == 3\n    assert candidate(nums = [1,1,2,2,3,3,4,4,5,5,6,6,7,7,8,8,9,9], pattern = [0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1]) == 1\n    assert candidate(nums = [1,2,2,1,2,2,1,2,2,1], pattern = [1,0,-1,1,0,-1,1,0]) == 1\n    assert candidate(nums = [1, 1, 2, 2, 3, 3, 4, 4, 5, 5], pattern = [0, 1, 0, 1, 0, 1]) == 2\n    assert candidate(nums = [1, 2, 3, 4, 5, 6, 5, 4, 3, 2, 1, 2, 3, 4, 5], pattern = [1, 1, 1, -1, -1, -1, 1, 1, 1]) == 0\n    assert candidate(nums = [5,4,3,2,1,1,2,3,4,5,5,4,3,2,1], pattern = [-1,-1,-1,-1,0,1,1,1,1,0,-1,-1,-1,-1]) == 1\n    assert candidate(nums = [5,1,5,2,5,3,5,4,5,5,5,6,7,8], pattern = [1,-1,1,-1,1,0,1,0,0,1,1]) == 0\n    assert candidate(nums = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10], pattern = [0, 0, 0, 0, 0, 0, 0]) == 0\n    assert candidate(nums = [1,1,1,1,1,1,1,1,1,1], pattern = [0,0,0,0,0]) == 5\n    assert candidate(nums = [1,2,3,2,1,2,3,2,1,2,3,2,1,2,3,2,1,2,3,2,1,2,3,2,1,2,3,2,1,2,3], pattern = [1,-1,1,-1,1,-1,1,-1,1,-1,1,-1,1,-1,1,-1,1,-1,1,-1,1,-1,1,-1,1,-1,1,-1]) == 0\n    assert candidate(nums = [1,2,2,2,3,3,3,4,4,4,5,5,5,6,6,6,7,7,7,8,8,8,9,9,9,10,10,10], pattern = [0,0,1,0,0,1,0,0,1,0,0,1,0,0,1,0,0,1,0,0,1,0,0,1,0,0,1]) == 0\n    assert candidate(nums = [1,3,5,4,6,5,7,8,7,9,10,9,11,12], pattern = [1,1,-1,1,-1,1,-1,1,-1,1]) == 0\n    assert candidate(nums = [1,2,2,3,3,4,4,5,5,6], pattern = [1,0,1,0,1,0,1]) == 2\n    assert candidate(nums = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20], pattern = [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]) == 1\n    assert candidate(nums = [9,8,7,8,9,10,9,8,7,8,9,10], pattern = [-1,-1,1,-1,1,-1,1,-1,1,-1]) == 0\n    assert candidate(nums = [1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8], pattern = [0, 1, 0, 1, 0, 1, 0, 1]) == 4\n    assert candidate(nums = [1,1,2,2,3,3,4,4,5,5], pattern = [0,1,0,1,0,1,0]) == 2\n    assert candidate(nums = [1,2,2,3,4,4,5,6,6,7,8], pattern = [1,0,1,0,1,0,1,0]) == 0\n    assert candidate(nums = [1,1,1,1,2,3,4,5,6,7,8,9,10], pattern = [0,0,0,1,1,1,1,1,1,1]) == 1\n    assert candidate(nums = [3,1,2,4,3,5,6,5,7,8,7,9,10,11,10,12,13,14,13,15,16], pattern = [1,-1,1,1,-1,1,1,-1,1,1,-1,1,1,-1,1,1,-1]) == 0\n    assert candidate(nums = [1,3,2,4,3,5,6,5,7,8,7,9,10,11,10,12,13,14,13,15,16,15,17,18,17,19,20,19,21,22], pattern = [1,-1,1,1,-1,1,1,-1,1,1,-1,1,1,-1,1,1,-1,1,1,-1,1,1,-1,1,1,-1]) == 0\n    assert candidate(nums = [3, 2, 3, 2, 3, 2, 3, 2, 3, 2], pattern = [-1, 1, -1, 1, -1, 1, -1]) == 2\n    assert candidate(nums = [1,2,2,3,4,4,5,5,6,7,8,9,10], pattern = [1,0,1,0,1,0,1,0,1,0]) == 0\n    assert candidate(nums = [1,2,3,4,5,6,7,8,9,10,9,8,7,6,5,4,3,2,1], pattern = [1,1,1,1,1,1,1,1,-1,-1,-1,-1,-1,-1,-1,-1]) == 1\n    assert candidate(nums = [9,8,7,6,5,4,3,2,1], pattern = [-1,-1,-1,-1,-1,-1]) == 3\n    assert candidate(nums = [10,9,8,7,6,5,4,3,2,1], pattern = [-1,-1,-1,-1,-1]) == 5\n    assert candidate(nums = [1,2,2,3,4,5,6,7,8,9], pattern = [1,0,1,1,1,1]) == 1\n    assert candidate(nums = [5, 6, 5, 6, 5, 6, 5, 6, 5, 6], pattern = [1, -1, 1, -1, 1, -1, 1]) == 2\n    assert candidate(nums = [1,2,3,4,5,6,5,4,3,2,1,2,3,4,5,6], pattern = [1,1,1,-1,-1,-1,1,1,1]) == 0\n    assert candidate(nums = [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1], pattern = [0,0,0,0,0,0,0,0,0,0,0,0,0,0]) == 1\n    assert candidate(nums = [1, 3, 2, 1, 2, 3, 2, 1, 3, 2, 1], pattern = [1, -1, 1, -1, 1, -1]) == 0\n    assert candidate(nums = [1,2,2,3,3,2,2,1,1,2,2,3,3,2,2,1,1,2,2,3,3,2,2,1,1], pattern = [1,0,0,1,0,0,-1,-1,0,0,1,0,0,-1,-1,0,0,1,0,0,-1,-1,0,0]) == 0\n    assert candidate(nums = [1,2,3,4,5,6,5,4,3,2,1,2,3,4,5,6,5,4,3,2,1], pattern = [1,1,1,1,1,-1,-1,-1,-1,-1,1,1,1,1,1,-1,-1,-1,-1,-1]) == 1\n    assert candidate(nums = [1,3,5,4,6,7,5,6,7,8,9,8,7,6,5,4,3,2,1], pattern = [1,1,-1,1,1,1,-1,1,1,1,-1,-1,-1,-1,-1,-1,-1,-1]) == 0\n    assert candidate(nums = [1, 2, 3, 2, 3, 4, 5, 4, 5, 6], pattern = [1, -1, 1, 1, -1, 1]) == 0\n    assert candidate(nums = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10], pattern = [1, 1, 1, 1, 1, 1, 1, 1]) == 2\n    assert candidate(nums = [1,2,3,2,1,2,3,4,5,4,3,2,1], pattern = [1,-1,1,-1,1,-1,1,-1]) == 0\n    assert candidate(nums = [1, 2, 1, 2, 1, 2, 1, 2, 1, 2], pattern = [1, -1, 1, -1, 1, -1, 1]) == 2\n    assert candidate(nums = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10], pattern = [1, 1, 1, 1, 1, 1, 1]) == 3\n    assert candidate(nums = [9, 8, 7, 6, 5, 4, 3, 2, 1, 1, 2, 3, 4, 5], pattern = [-1, -1, -1, -1, -1, -1, 1, 1, 1]) == 0\n    assert candidate(nums = [5, 6, 7, 8, 7, 6, 7, 8, 9, 10], pattern = [1, 1, -1, -1, 1, 1, 1]) == 1\n    assert candidate(nums = [10,9,8,7,6,5,4,3,2,1], pattern = [-1,-1,-1,-1,-1,-1,-1]) == 3\n    assert candidate(nums = [3,3,3,4,4,4,5,5,5,6,6,6], pattern = [0,1,0,1,0,1,0,1]) == 0\n    assert candidate(nums = [1,2,3,2,1,2,3,2,1], pattern = [1,-1,1,-1,1,-1,1]) == 0\n    assert candidate(nums = [1,1,2,2,3,3,2,2,1,1,2,2,3,3], pattern = [0,1,0,-1,0,1,0,-1]) == 0\n    assert candidate(nums = [1,2,1,2,1,2,1,2,1,2], pattern = [1,-1,1,-1,1]) == 3",
+    "cpp": "void check(Solution& solution) {\n    assert(solution.countMatchingSubarrays({1,3,2,3,1,4,3,2}, {1,-1,1,-1}) == vector<int>2);\n    assert(solution.countMatchingSubarrays({1,2,2,3,4,5}, {1,0,1}) == vector<int>1);\n    assert(solution.countMatchingSubarrays({1,4,4,1,3,5,5,3}, {1,0,-1}) == vector<int>2);\n    assert(solution.countMatchingSubarrays({5,5,5,5,5,5}, {0,0,0}) == vector<int>3);\n    assert(solution.countMatchingSubarrays({1,2,2,3,4}, {1,0,1}) == vector<int>1);\n    assert(solution.countMatchingSubarrays({1,2,2,3,3,4}, {1,0,1,0}) == vector<int>1);\n    assert(solution.countMatchingSubarrays({1,2,3,4,5,6}, {1,1}) == vector<int>4);\n    assert(solution.countMatchingSubarrays({1,1,1,1,1}, {0,0,0}) == vector<int>2);\n    assert(solution.countMatchingSubarrays({5,4,3,2,1}, {-1,-1,-1}) == vector<int>2);\n    assert(solution.countMatchingSubarrays({1,3,2,3,4,5}, {1,-1,1}) == vector<int>1);\n    assert(solution.countMatchingSubarrays({1,1,1,1,1}, {0,0}) == vector<int>3);\n    assert(solution.countMatchingSubarrays({1,2,2,3,3,4,4,5}, {1,0,0,1,0,0}) == vector<int>0);\n    assert(solution.countMatchingSubarrays({1,3,2,4,3,5}, {1,-1,1}) == vector<int>2);\n    assert(solution.countMatchingSubarrays({10,10,10,10}, {0,0}) == vector<int>2);\n    assert(solution.countMatchingSubarrays({10,9,8,7,6,5}, {-1,-1,-1}) == vector<int>3);\n    assert(solution.countMatchingSubarrays({1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}, {0,0,0,0,0,0,0,0,0,0,0,0,0}) == vector<int>2);\n    assert(solution.countMatchingSubarrays({1,2,3,2,1,2,3,2,1,2}, {1,-1,1,-1,1}) == vector<int>0);\n    assert(solution.countMatchingSubarrays({1,2,3,2,1,2,3,4,5,4,3,2,1}, {1,-1,1,1,1,-1,-1}) == vector<int>0);\n    assert(solution.countMatchingSubarrays({7,10,10,8,10,5,6,7,8,9}, {1,0,-1,1,1,-1,1,1}) == vector<int>0);\n    assert(solution.countMatchingSubarrays({10, 9, 8, 9, 10, 11, 10, 9, 8, 9, 10}, {-1, -1, 1, 1, -1, -1, 1}) == vector<int>0);\n    assert(solution.countMatchingSubarrays({1,2,2,3,3,4,5,5,6}, {1,0,1,0,1,0,1}) == vector<int>0);\n    assert(solution.countMatchingSubarrays({1, 2, 2, 3, 3, 3, 4, 4, 5, 5, 6}, {1, 0, 0, 1, 0, 0, 1}) == vector<int>0);\n    assert(solution.countMatchingSubarrays({1, 2, 1, 3, 2, 4, 3, 5, 4, 6}, {1, -1, 1, -1, 1, -1}) == vector<int>2);\n    assert(solution.countMatchingSubarrays({1,1,1,2,2,2,3,3,3,2,2,2,1,1,1,1,2,2,2,2,3,3,3,3,2,2,2,2,1,1,1,1}, {0,1,0,1,0,1,-1,0,-1,0,-1,0,-1,0,-1,0,1,0,1,0,1,0,1,-1,0,-1,0,-1,0,-1,0}) == vector<int>0);\n    assert(solution.countMatchingSubarrays({1, 2, 1, 3, 2, 1, 4, 3, 2, 1, 5, 4, 3, 2, 1}, {1, -1, 1, -1, 1}) == vector<int>0);\n    assert(solution.countMatchingSubarrays({10, 9, 8, 7, 6, 5, 4, 3, 2, 1}, {-1, -1, -1, -1, -1}) == vector<int>5);\n    assert(solution.countMatchingSubarrays({1,2,3,3,3,2,1,1,1,2,3}, {1,0,0,-1,-1,0,0,1,1}) == vector<int>1);\n    assert(solution.countMatchingSubarrays({1,2,3,4,5,4,5,6,7,8}, {1,1,-1,1,1,-1,1,1}) == vector<int>0);\n    assert(solution.countMatchingSubarrays({1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}, {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}) == vector<int>1);\n    assert(solution.countMatchingSubarrays({1, 1, 1, 1, 1, 1, 1, 1, 1, 1}, {0, 0, 0, 0, 0, 0, 0}) == vector<int>3);\n    assert(solution.countMatchingSubarrays({1,3,2,4,3,5,7,8,7,6,5,4,3,2,1,2,3,4,5,6,7,8,9}, {1,-1,1,-1,1,-1,1,-1,1,-1,1,-1,1,-1,1,-1,1,-1,1,-1,1}) == vector<int>0);\n    assert(solution.countMatchingSubarrays({10,9,8,8,7,6,5,4,3,2,1}, {-1,-1,0,-1,-1,-1,-1,-1,-1}) == vector<int>1);\n    assert(solution.countMatchingSubarrays({1,3,2,4,3,5,4,6,5,7}, {1,-1,1,-1,1,-1,1}) == vector<int>2);\n    assert(solution.countMatchingSubarrays({1,2,3,2,1,2,3,2,1}, {1,-1,1,-1,1,-1}) == vector<int>0);\n    assert(solution.countMatchingSubarrays({1,2,3,4,5,6,5,4,3,2,1}, {1,1,1,-1,-1,-1}) == vector<int>1);\n    assert(solution.countMatchingSubarrays({1,2,3,4,5,6,7,8,9,10}, {1,1,1,1,1}) == vector<int>5);\n    assert(solution.countMatchingSubarrays({1,2,3,4,5,6,5,4,3,2,1}, {1,1,1,1,1,-1,-1,-1,-1,-1}) == vector<int>1);\n    assert(solution.countMatchingSubarrays({1,2,3,4,5,6,7,8,9,10,9,8,7,6,5,4,3,2,1,1,2,3,4,5,6,7,8,9,10}, {1,1,1,1,1,1,1,1,1,-1,-1,-1,-1,-1,-1,-1,-1,-1,1,1,1,1,1,1,1,1,1}) == vector<int>0);\n    assert(solution.countMatchingSubarrays({1, 2, 3, 4, 3, 2, 1, 2, 3, 4, 3, 2, 1}, {1, 1, -1, -1, 1, 1}) == vector<int>0);\n    assert(solution.countMatchingSubarrays({100, 200, 150, 250, 200, 300, 250, 350, 300, 400}, {1, -1, 1, -1, 1, -1, 1}) == vector<int>2);\n    assert(solution.countMatchingSubarrays({1,2,2,2,3,3,3,2,2,2,1,1,1,2,2,2,3,3,3}, {1,0,0,1,0,0,-1,0,0,-1,0,0,1,0,0}) == vector<int>1);\n    assert(solution.countMatchingSubarrays({1,2,1,2,1,2,1,2,1}, {1,-1,1,-1,1,-1,1}) == vector<int>1);\n    assert(solution.countMatchingSubarrays({1, 1, 1, 2, 2, 2, 3, 3, 3, 1, 1, 1}, {0, 1, 0, -1, 0}) == vector<int>0);\n    assert(solution.countMatchingSubarrays({1,2,3,2,3,4,3,4,5,4,5,6}, {1,-1,1,1,-1,1,-1,1}) == vector<int>0);\n    assert(solution.countMatchingSubarrays({10,9,8,7,6,5,4,3,2,1}, {-1,-1,-1,-1,-1,-1,-1,-1,-1}) == vector<int>1);\n    assert(solution.countMatchingSubarrays({1, 2, 2, 2, 3, 3, 3, 2, 2, 2, 1, 1, 1, 1}, {1, 0, 1, 0, -1, 0, -1}) == vector<int>0);\n    assert(solution.countMatchingSubarrays({1,1,2,2,1,1,2,2,1,1,2,2,1,1}, {0,1,0,-1,0,1,0,-1,0,1}) == vector<int>1);\n    assert(solution.countMatchingSubarrays({1,1,2,1,3,2,4,3,5,4,6,5,7,6,8}, {0,-1,1,-1,1,-1,1,-1,1,-1}) == vector<int>0);\n    assert(solution.countMatchingSubarrays({1,2,3,4,5,6,7,8,9,10,11,12,13,14,15}, {1,1,1,1,1,1,1,1,1,1,1,1}) == vector<int>3);\n    assert(solution.countMatchingSubarrays({10, 20, 10, 30, 20, 40, 30, 50}, {1, -1, 1, -1, 1}) == vector<int>2);\n    assert(solution.countMatchingSubarrays({1,2,3,2,1,2,3,2,1,2,3,2,1,2,3,2}, {1,-1,1,-1,1,-1,1,-1}) == vector<int>0);\n    assert(solution.countMatchingSubarrays({1,2,3,4,5,6,7,8,9,10,9,8,7,6,5,4,3,2,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15}, {1,1,1,1,1,1,1,1,1,-1,-1,-1,-1,-1,-1,-1,-1,-1,1,1,1,1,1,1,1,1,1,1,1,1,1}) == vector<int>1);\n    assert(solution.countMatchingSubarrays({5,4,3,2,1,1,2,3,4,5,5,6,7,8,9,10}, {-1,-1,-1,-1,0,1,1,1,1,0,1,1,1,1}) == vector<int>1);\n    assert(solution.countMatchingSubarrays({1,1,1,1,2,2,2,2,3,3,3,3}, {0,0,0,1,0,0,0,1,0,0,0}) == vector<int>1);\n    assert(solution.countMatchingSubarrays({5,4,3,2,1,1,2,3,4,5,5,4,3,2,1,1,2,3,4,5}, {-1,-1,-1,-1,0,1,1,1,1,0,-1,-1,-1,-1,0,1,1,1,1}) == vector<int>1);\n    assert(solution.countMatchingSubarrays({10, 9, 8, 7, 6, 5, 4, 3, 2, 1}, {-1, -1, -1, -1, -1, -1}) == vector<int>4);\n    assert(solution.countMatchingSubarrays({1, 2, 1, 1, 2, 1, 2, 1, 2, 1, 2, 1}, {1, -1, 0, 1, -1, 1, -1, 1, -1}) == vector<int>1);\n    assert(solution.countMatchingSubarrays({1,2,3,4,3,2,1,2,3,4,3,2,1,2,3,4,3,2,1,2,3,4}, {1,1,-1,-1,1,1,-1,-1,1,1,-1,-1,1,1,-1,-1,1,1,-1}) == vector<int>0);\n    assert(solution.countMatchingSubarrays({9, 8, 7, 6, 5, 4, 3, 2, 1}, {-1, -1, -1, -1, -1, -1}) == vector<int>3);\n    assert(solution.countMatchingSubarrays({1,2,3,4,5,6,7,8,9,10,11,12,13,14,15}, {1,1,1,1,1,1,1,1,1,1,1,1,1}) == vector<int>2);\n    assert(solution.countMatchingSubarrays({1, 1, 1, 1, 2, 2, 2, 2, 3, 3}, {0, 0, 0, 1, 0, 0, 0}) == vector<int>1);\n    assert(solution.countMatchingSubarrays({1,3,2,4,3,5,4,6,5,7}, {1,-1,1,-1,1}) == vector<int>3);\n    assert(solution.countMatchingSubarrays({1, 2, 3, 4, 5, 4, 3, 2, 1, 2}, {1, 1, 1, -1, -1, -1, 1}) == vector<int>0);\n    assert(solution.countMatchingSubarrays({1, 2, 3, 2, 1, 2, 3, 4, 3, 2, 1}, {1, -1, 1, -1, 1}) == vector<int>0);\n    assert(solution.countMatchingSubarrays({10,10,11,12,13,13,12,11,12,13,13,12,10}, {0,1,1,1,0,-1,-1,1,1,0,-1,-1}) == vector<int>1);\n    assert(solution.countMatchingSubarrays({1,1,2,2,3,3,4,4,5,5}, {0,1,0,1,0}) == vector<int>3);\n    assert(solution.countMatchingSubarrays({1,1,2,2,3,3,4,4,5,5,6,6,7,7,8,8,9,9}, {0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1}) == vector<int>1);\n    assert(solution.countMatchingSubarrays({1,2,2,1,2,2,1,2,2,1}, {1,0,-1,1,0,-1,1,0}) == vector<int>1);\n    assert(solution.countMatchingSubarrays({1, 1, 2, 2, 3, 3, 4, 4, 5, 5}, {0, 1, 0, 1, 0, 1}) == vector<int>2);\n    assert(solution.countMatchingSubarrays({1, 2, 3, 4, 5, 6, 5, 4, 3, 2, 1, 2, 3, 4, 5}, {1, 1, 1, -1, -1, -1, 1, 1, 1}) == vector<int>0);\n    assert(solution.countMatchingSubarrays({5,4,3,2,1,1,2,3,4,5,5,4,3,2,1}, {-1,-1,-1,-1,0,1,1,1,1,0,-1,-1,-1,-1}) == vector<int>1);\n    assert(solution.countMatchingSubarrays({5,1,5,2,5,3,5,4,5,5,5,6,7,8}, {1,-1,1,-1,1,0,1,0,0,1,1}) == vector<int>0);\n    assert(solution.countMatchingSubarrays({1, 2, 3, 4, 5, 6, 7, 8, 9, 10}, {0, 0, 0, 0, 0, 0, 0}) == vector<int>0);\n    assert(solution.countMatchingSubarrays({1,1,1,1,1,1,1,1,1,1}, {0,0,0,0,0}) == vector<int>5);\n    assert(solution.countMatchingSubarrays({1,2,3,2,1,2,3,2,1,2,3,2,1,2,3,2,1,2,3,2,1,2,3,2,1,2,3,2,1,2,3}, {1,-1,1,-1,1,-1,1,-1,1,-1,1,-1,1,-1,1,-1,1,-1,1,-1,1,-1,1,-1,1,-1,1,-1}) == vector<int>0);\n    assert(solution.countMatchingSubarrays({1,2,2,2,3,3,3,4,4,4,5,5,5,6,6,6,7,7,7,8,8,8,9,9,9,10,10,10}, {0,0,1,0,0,1,0,0,1,0,0,1,0,0,1,0,0,1,0,0,1,0,0,1,0,0,1}) == vector<int>0);\n    assert(solution.countMatchingSubarrays({1,3,5,4,6,5,7,8,7,9,10,9,11,12}, {1,1,-1,1,-1,1,-1,1,-1,1}) == vector<int>0);\n    assert(solution.countMatchingSubarrays({1,2,2,3,3,4,4,5,5,6}, {1,0,1,0,1,0,1}) == vector<int>2);\n    assert(solution.countMatchingSubarrays({1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20}, {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}) == vector<int>1);\n    assert(solution.countMatchingSubarrays({9,8,7,8,9,10,9,8,7,8,9,10}, {-1,-1,1,-1,1,-1,1,-1,1,-1}) == vector<int>0);\n    assert(solution.countMatchingSubarrays({1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8}, {0, 1, 0, 1, 0, 1, 0, 1}) == vector<int>4);\n    assert(solution.countMatchingSubarrays({1,1,2,2,3,3,4,4,5,5}, {0,1,0,1,0,1,0}) == vector<int>2);\n    assert(solution.countMatchingSubarrays({1,2,2,3,4,4,5,6,6,7,8}, {1,0,1,0,1,0,1,0}) == vector<int>0);\n    assert(solution.countMatchingSubarrays({1,1,1,1,2,3,4,5,6,7,8,9,10}, {0,0,0,1,1,1,1,1,1,1}) == vector<int>1);\n    assert(solution.countMatchingSubarrays({3,1,2,4,3,5,6,5,7,8,7,9,10,11,10,12,13,14,13,15,16}, {1,-1,1,1,-1,1,1,-1,1,1,-1,1,1,-1,1,1,-1}) == vector<int>0);\n    assert(solution.countMatchingSubarrays({1,3,2,4,3,5,6,5,7,8,7,9,10,11,10,12,13,14,13,15,16,15,17,18,17,19,20,19,21,22}, {1,-1,1,1,-1,1,1,-1,1,1,-1,1,1,-1,1,1,-1,1,1,-1,1,1,-1,1,1,-1}) == vector<int>0);\n    assert(solution.countMatchingSubarrays({3, 2, 3, 2, 3, 2, 3, 2, 3, 2}, {-1, 1, -1, 1, -1, 1, -1}) == vector<int>2);\n    assert(solution.countMatchingSubarrays({1,2,2,3,4,4,5,5,6,7,8,9,10}, {1,0,1,0,1,0,1,0,1,0}) == vector<int>0);\n    assert(solution.countMatchingSubarrays({1,2,3,4,5,6,7,8,9,10,9,8,7,6,5,4,3,2,1}, {1,1,1,1,1,1,1,1,-1,-1,-1,-1,-1,-1,-1,-1}) == vector<int>1);\n    assert(solution.countMatchingSubarrays({9,8,7,6,5,4,3,2,1}, {-1,-1,-1,-1,-1,-1}) == vector<int>3);\n    assert(solution.countMatchingSubarrays({10,9,8,7,6,5,4,3,2,1}, {-1,-1,-1,-1,-1}) == vector<int>5);\n    assert(solution.countMatchingSubarrays({1,2,2,3,4,5,6,7,8,9}, {1,0,1,1,1,1}) == vector<int>1);\n    assert(solution.countMatchingSubarrays({5, 6, 5, 6, 5, 6, 5, 6, 5, 6}, {1, -1, 1, -1, 1, -1, 1}) == vector<int>2);\n    assert(solution.countMatchingSubarrays({1,2,3,4,5,6,5,4,3,2,1,2,3,4,5,6}, {1,1,1,-1,-1,-1,1,1,1}) == vector<int>0);\n    assert(solution.countMatchingSubarrays({1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}, {0,0,0,0,0,0,0,0,0,0,0,0,0,0}) == vector<int>1);\n    assert(solution.countMatchingSubarrays({1, 3, 2, 1, 2, 3, 2, 1, 3, 2, 1}, {1, -1, 1, -1, 1, -1}) == vector<int>0);\n    assert(solution.countMatchingSubarrays({1,2,2,3,3,2,2,1,1,2,2,3,3,2,2,1,1,2,2,3,3,2,2,1,1}, {1,0,0,1,0,0,-1,-1,0,0,1,0,0,-1,-1,0,0,1,0,0,-1,-1,0,0}) == vector<int>0);\n    assert(solution.countMatchingSubarrays({1,2,3,4,5,6,5,4,3,2,1,2,3,4,5,6,5,4,3,2,1}, {1,1,1,1,1,-1,-1,-1,-1,-1,1,1,1,1,1,-1,-1,-1,-1,-1}) == vector<int>1);\n    assert(solution.countMatchingSubarrays({1,3,5,4,6,7,5,6,7,8,9,8,7,6,5,4,3,2,1}, {1,1,-1,1,1,1,-1,1,1,1,-1,-1,-1,-1,-1,-1,-1,-1}) == vector<int>0);\n    assert(solution.countMatchingSubarrays({1, 2, 3, 2, 3, 4, 5, 4, 5, 6}, {1, -1, 1, 1, -1, 1}) == vector<int>0);\n    assert(solution.countMatchingSubarrays({1, 2, 3, 4, 5, 6, 7, 8, 9, 10}, {1, 1, 1, 1, 1, 1, 1, 1}) == vector<int>2);\n    assert(solution.countMatchingSubarrays({1,2,3,2,1,2,3,4,5,4,3,2,1}, {1,-1,1,-1,1,-1,1,-1}) == vector<int>0);\n    assert(solution.countMatchingSubarrays({1, 2, 1, 2, 1, 2, 1, 2, 1, 2}, {1, -1, 1, -1, 1, -1, 1}) == vector<int>2);\n    assert(solution.countMatchingSubarrays({1, 2, 3, 4, 5, 6, 7, 8, 9, 10}, {1, 1, 1, 1, 1, 1, 1}) == vector<int>3);\n    assert(solution.countMatchingSubarrays({9, 8, 7, 6, 5, 4, 3, 2, 1, 1, 2, 3, 4, 5}, {-1, -1, -1, -1, -1, -1, 1, 1, 1}) == vector<int>0);\n    assert(solution.countMatchingSubarrays({5, 6, 7, 8, 7, 6, 7, 8, 9, 10}, {1, 1, -1, -1, 1, 1, 1}) == vector<int>1);\n    assert(solution.countMatchingSubarrays({10,9,8,7,6,5,4,3,2,1}, {-1,-1,-1,-1,-1,-1,-1}) == vector<int>3);\n    assert(solution.countMatchingSubarrays({3,3,3,4,4,4,5,5,5,6,6,6}, {0,1,0,1,0,1,0,1}) == vector<int>0);\n    assert(solution.countMatchingSubarrays({1,2,3,2,1,2,3,2,1}, {1,-1,1,-1,1,-1,1}) == vector<int>0);\n    assert(solution.countMatchingSubarrays({1,1,2,2,3,3,2,2,1,1,2,2,3,3}, {0,1,0,-1,0,1,0,-1}) == vector<int>0);\n    assert(solution.countMatchingSubarrays({1,2,1,2,1,2,1,2,1,2}, {1,-1,1,-1,1}) == vector<int>3);\n}",
+    "java": "public static void check(Solution solution) {\n    assert Arrays.equals(solution.countMatchingSubarrays(new int[]{1,3,2,3,1,4,3,2}, new int[]{1,-1,1,-1}), 2);\n    assert Arrays.equals(solution.countMatchingSubarrays(new int[]{1,2,2,3,4,5}, new int[]{1,0,1}), 1);\n    assert Arrays.equals(solution.countMatchingSubarrays(new int[]{1,4,4,1,3,5,5,3}, new int[]{1,0,-1}), 2);\n    assert Arrays.equals(solution.countMatchingSubarrays(new int[]{5,5,5,5,5,5}, new int[]{0,0,0}), 3);\n    assert Arrays.equals(solution.countMatchingSubarrays(new int[]{1,2,2,3,4}, new int[]{1,0,1}), 1);\n    assert Arrays.equals(solution.countMatchingSubarrays(new int[]{1,2,2,3,3,4}, new int[]{1,0,1,0}), 1);\n    assert Arrays.equals(solution.countMatchingSubarrays(new int[]{1,2,3,4,5,6}, new int[]{1,1}), 4);\n    assert Arrays.equals(solution.countMatchingSubarrays(new int[]{1,1,1,1,1}, new int[]{0,0,0}), 2);\n    assert Arrays.equals(solution.countMatchingSubarrays(new int[]{5,4,3,2,1}, new int[]{-1,-1,-1}), 2);\n    assert Arrays.equals(solution.countMatchingSubarrays(new int[]{1,3,2,3,4,5}, new int[]{1,-1,1}), 1);\n    assert Arrays.equals(solution.countMatchingSubarrays(new int[]{1,1,1,1,1}, new int[]{0,0}), 3);\n    assert Arrays.equals(solution.countMatchingSubarrays(new int[]{1,2,2,3,3,4,4,5}, new int[]{1,0,0,1,0,0}), 0);\n    assert Arrays.equals(solution.countMatchingSubarrays(new int[]{1,3,2,4,3,5}, new int[]{1,-1,1}), 2);\n    assert Arrays.equals(solution.countMatchingSubarrays(new int[]{10,10,10,10}, new int[]{0,0}), 2);\n    assert Arrays.equals(solution.countMatchingSubarrays(new int[]{10,9,8,7,6,5}, new int[]{-1,-1,-1}), 3);\n    assert Arrays.equals(solution.countMatchingSubarrays(new int[]{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}, new int[]{0,0,0,0,0,0,0,0,0,0,0,0,0}), 2);\n    assert Arrays.equals(solution.countMatchingSubarrays(new int[]{1,2,3,2,1,2,3,2,1,2}, new int[]{1,-1,1,-1,1}), 0);\n    assert Arrays.equals(solution.countMatchingSubarrays(new int[]{1,2,3,2,1,2,3,4,5,4,3,2,1}, new int[]{1,-1,1,1,1,-1,-1}), 0);\n    assert Arrays.equals(solution.countMatchingSubarrays(new int[]{7,10,10,8,10,5,6,7,8,9}, new int[]{1,0,-1,1,1,-1,1,1}), 0);\n    assert Arrays.equals(solution.countMatchingSubarrays(new int[]{10, 9, 8, 9, 10, 11, 10, 9, 8, 9, 10}, new int[]{-1, -1, 1, 1, -1, -1, 1}), 0);\n    assert Arrays.equals(solution.countMatchingSubarrays(new int[]{1,2,2,3,3,4,5,5,6}, new int[]{1,0,1,0,1,0,1}), 0);\n    assert Arrays.equals(solution.countMatchingSubarrays(new int[]{1, 2, 2, 3, 3, 3, 4, 4, 5, 5, 6}, new int[]{1, 0, 0, 1, 0, 0, 1}), 0);\n    assert Arrays.equals(solution.countMatchingSubarrays(new int[]{1, 2, 1, 3, 2, 4, 3, 5, 4, 6}, new int[]{1, -1, 1, -1, 1, -1}), 2);\n    assert Arrays.equals(solution.countMatchingSubarrays(new int[]{1,1,1,2,2,2,3,3,3,2,2,2,1,1,1,1,2,2,2,2,3,3,3,3,2,2,2,2,1,1,1,1}, new int[]{0,1,0,1,0,1,-1,0,-1,0,-1,0,-1,0,-1,0,1,0,1,0,1,0,1,-1,0,-1,0,-1,0,-1,0}), 0);\n    assert Arrays.equals(solution.countMatchingSubarrays(new int[]{1, 2, 1, 3, 2, 1, 4, 3, 2, 1, 5, 4, 3, 2, 1}, new int[]{1, -1, 1, -1, 1}), 0);\n    assert Arrays.equals(solution.countMatchingSubarrays(new int[]{10, 9, 8, 7, 6, 5, 4, 3, 2, 1}, new int[]{-1, -1, -1, -1, -1}), 5);\n    assert Arrays.equals(solution.countMatchingSubarrays(new int[]{1,2,3,3,3,2,1,1,1,2,3}, new int[]{1,0,0,-1,-1,0,0,1,1}), 1);\n    assert Arrays.equals(solution.countMatchingSubarrays(new int[]{1,2,3,4,5,4,5,6,7,8}, new int[]{1,1,-1,1,1,-1,1,1}), 0);\n    assert Arrays.equals(solution.countMatchingSubarrays(new int[]{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}, new int[]{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}), 1);\n    assert Arrays.equals(solution.countMatchingSubarrays(new int[]{1, 1, 1, 1, 1, 1, 1, 1, 1, 1}, new int[]{0, 0, 0, 0, 0, 0, 0}), 3);\n    assert Arrays.equals(solution.countMatchingSubarrays(new int[]{1,3,2,4,3,5,7,8,7,6,5,4,3,2,1,2,3,4,5,6,7,8,9}, new int[]{1,-1,1,-1,1,-1,1,-1,1,-1,1,-1,1,-1,1,-1,1,-1,1,-1,1}), 0);\n    assert Arrays.equals(solution.countMatchingSubarrays(new int[]{10,9,8,8,7,6,5,4,3,2,1}, new int[]{-1,-1,0,-1,-1,-1,-1,-1,-1}), 1);\n    assert Arrays.equals(solution.countMatchingSubarrays(new int[]{1,3,2,4,3,5,4,6,5,7}, new int[]{1,-1,1,-1,1,-1,1}), 2);\n    assert Arrays.equals(solution.countMatchingSubarrays(new int[]{1,2,3,2,1,2,3,2,1}, new int[]{1,-1,1,-1,1,-1}), 0);\n    assert Arrays.equals(solution.countMatchingSubarrays(new int[]{1,2,3,4,5,6,5,4,3,2,1}, new int[]{1,1,1,-1,-1,-1}), 1);\n    assert Arrays.equals(solution.countMatchingSubarrays(new int[]{1,2,3,4,5,6,7,8,9,10}, new int[]{1,1,1,1,1}), 5);\n    assert Arrays.equals(solution.countMatchingSubarrays(new int[]{1,2,3,4,5,6,5,4,3,2,1}, new int[]{1,1,1,1,1,-1,-1,-1,-1,-1}), 1);\n    assert Arrays.equals(solution.countMatchingSubarrays(new int[]{1,2,3,4,5,6,7,8,9,10,9,8,7,6,5,4,3,2,1,1,2,3,4,5,6,7,8,9,10}, new int[]{1,1,1,1,1,1,1,1,1,-1,-1,-1,-1,-1,-1,-1,-1,-1,1,1,1,1,1,1,1,1,1}), 0);\n    assert Arrays.equals(solution.countMatchingSubarrays(new int[]{1, 2, 3, 4, 3, 2, 1, 2, 3, 4, 3, 2, 1}, new int[]{1, 1, -1, -1, 1, 1}), 0);\n    assert Arrays.equals(solution.countMatchingSubarrays(new int[]{100, 200, 150, 250, 200, 300, 250, 350, 300, 400}, new int[]{1, -1, 1, -1, 1, -1, 1}), 2);\n    assert Arrays.equals(solution.countMatchingSubarrays(new int[]{1,2,2,2,3,3,3,2,2,2,1,1,1,2,2,2,3,3,3}, new int[]{1,0,0,1,0,0,-1,0,0,-1,0,0,1,0,0}), 1);\n    assert Arrays.equals(solution.countMatchingSubarrays(new int[]{1,2,1,2,1,2,1,2,1}, new int[]{1,-1,1,-1,1,-1,1}), 1);\n    assert Arrays.equals(solution.countMatchingSubarrays(new int[]{1, 1, 1, 2, 2, 2, 3, 3, 3, 1, 1, 1}, new int[]{0, 1, 0, -1, 0}), 0);\n    assert Arrays.equals(solution.countMatchingSubarrays(new int[]{1,2,3,2,3,4,3,4,5,4,5,6}, new int[]{1,-1,1,1,-1,1,-1,1}), 0);\n    assert Arrays.equals(solution.countMatchingSubarrays(new int[]{10,9,8,7,6,5,4,3,2,1}, new int[]{-1,-1,-1,-1,-1,-1,-1,-1,-1}), 1);\n    assert Arrays.equals(solution.countMatchingSubarrays(new int[]{1, 2, 2, 2, 3, 3, 3, 2, 2, 2, 1, 1, 1, 1}, new int[]{1, 0, 1, 0, -1, 0, -1}), 0);\n    assert Arrays.equals(solution.countMatchingSubarrays(new int[]{1,1,2,2,1,1,2,2,1,1,2,2,1,1}, new int[]{0,1,0,-1,0,1,0,-1,0,1}), 1);\n    assert Arrays.equals(solution.countMatchingSubarrays(new int[]{1,1,2,1,3,2,4,3,5,4,6,5,7,6,8}, new int[]{0,-1,1,-1,1,-1,1,-1,1,-1}), 0);\n    assert Arrays.equals(solution.countMatchingSubarrays(new int[]{1,2,3,4,5,6,7,8,9,10,11,12,13,14,15}, new int[]{1,1,1,1,1,1,1,1,1,1,1,1}), 3);\n    assert Arrays.equals(solution.countMatchingSubarrays(new int[]{10, 20, 10, 30, 20, 40, 30, 50}, new int[]{1, -1, 1, -1, 1}), 2);\n    assert Arrays.equals(solution.countMatchingSubarrays(new int[]{1,2,3,2,1,2,3,2,1,2,3,2,1,2,3,2}, new int[]{1,-1,1,-1,1,-1,1,-1}), 0);\n    assert Arrays.equals(solution.countMatchingSubarrays(new int[]{1,2,3,4,5,6,7,8,9,10,9,8,7,6,5,4,3,2,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15}, new int[]{1,1,1,1,1,1,1,1,1,-1,-1,-1,-1,-1,-1,-1,-1,-1,1,1,1,1,1,1,1,1,1,1,1,1,1}), 1);\n    assert Arrays.equals(solution.countMatchingSubarrays(new int[]{5,4,3,2,1,1,2,3,4,5,5,6,7,8,9,10}, new int[]{-1,-1,-1,-1,0,1,1,1,1,0,1,1,1,1}), 1);\n    assert Arrays.equals(solution.countMatchingSubarrays(new int[]{1,1,1,1,2,2,2,2,3,3,3,3}, new int[]{0,0,0,1,0,0,0,1,0,0,0}), 1);\n    assert Arrays.equals(solution.countMatchingSubarrays(new int[]{5,4,3,2,1,1,2,3,4,5,5,4,3,2,1,1,2,3,4,5}, new int[]{-1,-1,-1,-1,0,1,1,1,1,0,-1,-1,-1,-1,0,1,1,1,1}), 1);\n    assert Arrays.equals(solution.countMatchingSubarrays(new int[]{10, 9, 8, 7, 6, 5, 4, 3, 2, 1}, new int[]{-1, -1, -1, -1, -1, -1}), 4);\n    assert Arrays.equals(solution.countMatchingSubarrays(new int[]{1, 2, 1, 1, 2, 1, 2, 1, 2, 1, 2, 1}, new int[]{1, -1, 0, 1, -1, 1, -1, 1, -1}), 1);\n    assert Arrays.equals(solution.countMatchingSubarrays(new int[]{1,2,3,4,3,2,1,2,3,4,3,2,1,2,3,4,3,2,1,2,3,4}, new int[]{1,1,-1,-1,1,1,-1,-1,1,1,-1,-1,1,1,-1,-1,1,1,-1}), 0);\n    assert Arrays.equals(solution.countMatchingSubarrays(new int[]{9, 8, 7, 6, 5, 4, 3, 2, 1}, new int[]{-1, -1, -1, -1, -1, -1}), 3);\n    assert Arrays.equals(solution.countMatchingSubarrays(new int[]{1,2,3,4,5,6,7,8,9,10,11,12,13,14,15}, new int[]{1,1,1,1,1,1,1,1,1,1,1,1,1}), 2);\n    assert Arrays.equals(solution.countMatchingSubarrays(new int[]{1, 1, 1, 1, 2, 2, 2, 2, 3, 3}, new int[]{0, 0, 0, 1, 0, 0, 0}), 1);\n    assert Arrays.equals(solution.countMatchingSubarrays(new int[]{1,3,2,4,3,5,4,6,5,7}, new int[]{1,-1,1,-1,1}), 3);\n    assert Arrays.equals(solution.countMatchingSubarrays(new int[]{1, 2, 3, 4, 5, 4, 3, 2, 1, 2}, new int[]{1, 1, 1, -1, -1, -1, 1}), 0);\n    assert Arrays.equals(solution.countMatchingSubarrays(new int[]{1, 2, 3, 2, 1, 2, 3, 4, 3, 2, 1}, new int[]{1, -1, 1, -1, 1}), 0);\n    assert Arrays.equals(solution.countMatchingSubarrays(new int[]{10,10,11,12,13,13,12,11,12,13,13,12,10}, new int[]{0,1,1,1,0,-1,-1,1,1,0,-1,-1}), 1);\n    assert Arrays.equals(solution.countMatchingSubarrays(new int[]{1,1,2,2,3,3,4,4,5,5}, new int[]{0,1,0,1,0}), 3);\n    assert Arrays.equals(solution.countMatchingSubarrays(new int[]{1,1,2,2,3,3,4,4,5,5,6,6,7,7,8,8,9,9}, new int[]{0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1}), 1);\n    assert Arrays.equals(solution.countMatchingSubarrays(new int[]{1,2,2,1,2,2,1,2,2,1}, new int[]{1,0,-1,1,0,-1,1,0}), 1);\n    assert Arrays.equals(solution.countMatchingSubarrays(new int[]{1, 1, 2, 2, 3, 3, 4, 4, 5, 5}, new int[]{0, 1, 0, 1, 0, 1}), 2);\n    assert Arrays.equals(solution.countMatchingSubarrays(new int[]{1, 2, 3, 4, 5, 6, 5, 4, 3, 2, 1, 2, 3, 4, 5}, new int[]{1, 1, 1, -1, -1, -1, 1, 1, 1}), 0);\n    assert Arrays.equals(solution.countMatchingSubarrays(new int[]{5,4,3,2,1,1,2,3,4,5,5,4,3,2,1}, new int[]{-1,-1,-1,-1,0,1,1,1,1,0,-1,-1,-1,-1}), 1);\n    assert Arrays.equals(solution.countMatchingSubarrays(new int[]{5,1,5,2,5,3,5,4,5,5,5,6,7,8}, new int[]{1,-1,1,-1,1,0,1,0,0,1,1}), 0);\n    assert Arrays.equals(solution.countMatchingSubarrays(new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}, new int[]{0, 0, 0, 0, 0, 0, 0}), 0);\n    assert Arrays.equals(solution.countMatchingSubarrays(new int[]{1,1,1,1,1,1,1,1,1,1}, new int[]{0,0,0,0,0}), 5);\n    assert Arrays.equals(solution.countMatchingSubarrays(new int[]{1,2,3,2,1,2,3,2,1,2,3,2,1,2,3,2,1,2,3,2,1,2,3,2,1,2,3,2,1,2,3}, new int[]{1,-1,1,-1,1,-1,1,-1,1,-1,1,-1,1,-1,1,-1,1,-1,1,-1,1,-1,1,-1,1,-1,1,-1}), 0);\n    assert Arrays.equals(solution.countMatchingSubarrays(new int[]{1,2,2,2,3,3,3,4,4,4,5,5,5,6,6,6,7,7,7,8,8,8,9,9,9,10,10,10}, new int[]{0,0,1,0,0,1,0,0,1,0,0,1,0,0,1,0,0,1,0,0,1,0,0,1,0,0,1}), 0);\n    assert Arrays.equals(solution.countMatchingSubarrays(new int[]{1,3,5,4,6,5,7,8,7,9,10,9,11,12}, new int[]{1,1,-1,1,-1,1,-1,1,-1,1}), 0);\n    assert Arrays.equals(solution.countMatchingSubarrays(new int[]{1,2,2,3,3,4,4,5,5,6}, new int[]{1,0,1,0,1,0,1}), 2);\n    assert Arrays.equals(solution.countMatchingSubarrays(new int[]{1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20}, new int[]{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}), 1);\n    assert Arrays.equals(solution.countMatchingSubarrays(new int[]{9,8,7,8,9,10,9,8,7,8,9,10}, new int[]{-1,-1,1,-1,1,-1,1,-1,1,-1}), 0);\n    assert Arrays.equals(solution.countMatchingSubarrays(new int[]{1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8}, new int[]{0, 1, 0, 1, 0, 1, 0, 1}), 4);\n    assert Arrays.equals(solution.countMatchingSubarrays(new int[]{1,1,2,2,3,3,4,4,5,5}, new int[]{0,1,0,1,0,1,0}), 2);\n    assert Arrays.equals(solution.countMatchingSubarrays(new int[]{1,2,2,3,4,4,5,6,6,7,8}, new int[]{1,0,1,0,1,0,1,0}), 0);\n    assert Arrays.equals(solution.countMatchingSubarrays(new int[]{1,1,1,1,2,3,4,5,6,7,8,9,10}, new int[]{0,0,0,1,1,1,1,1,1,1}), 1);\n    assert Arrays.equals(solution.countMatchingSubarrays(new int[]{3,1,2,4,3,5,6,5,7,8,7,9,10,11,10,12,13,14,13,15,16}, new int[]{1,-1,1,1,-1,1,1,-1,1,1,-1,1,1,-1,1,1,-1}), 0);\n    assert Arrays.equals(solution.countMatchingSubarrays(new int[]{1,3,2,4,3,5,6,5,7,8,7,9,10,11,10,12,13,14,13,15,16,15,17,18,17,19,20,19,21,22}, new int[]{1,-1,1,1,-1,1,1,-1,1,1,-1,1,1,-1,1,1,-1,1,1,-1,1,1,-1,1,1,-1}), 0);\n    assert Arrays.equals(solution.countMatchingSubarrays(new int[]{3, 2, 3, 2, 3, 2, 3, 2, 3, 2}, new int[]{-1, 1, -1, 1, -1, 1, -1}), 2);\n    assert Arrays.equals(solution.countMatchingSubarrays(new int[]{1,2,2,3,4,4,5,5,6,7,8,9,10}, new int[]{1,0,1,0,1,0,1,0,1,0}), 0);\n    assert Arrays.equals(solution.countMatchingSubarrays(new int[]{1,2,3,4,5,6,7,8,9,10,9,8,7,6,5,4,3,2,1}, new int[]{1,1,1,1,1,1,1,1,-1,-1,-1,-1,-1,-1,-1,-1}), 1);\n    assert Arrays.equals(solution.countMatchingSubarrays(new int[]{9,8,7,6,5,4,3,2,1}, new int[]{-1,-1,-1,-1,-1,-1}), 3);\n    assert Arrays.equals(solution.countMatchingSubarrays(new int[]{10,9,8,7,6,5,4,3,2,1}, new int[]{-1,-1,-1,-1,-1}), 5);\n    assert Arrays.equals(solution.countMatchingSubarrays(new int[]{1,2,2,3,4,5,6,7,8,9}, new int[]{1,0,1,1,1,1}), 1);\n    assert Arrays.equals(solution.countMatchingSubarrays(new int[]{5, 6, 5, 6, 5, 6, 5, 6, 5, 6}, new int[]{1, -1, 1, -1, 1, -1, 1}), 2);\n    assert Arrays.equals(solution.countMatchingSubarrays(new int[]{1,2,3,4,5,6,5,4,3,2,1,2,3,4,5,6}, new int[]{1,1,1,-1,-1,-1,1,1,1}), 0);\n    assert Arrays.equals(solution.countMatchingSubarrays(new int[]{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}, new int[]{0,0,0,0,0,0,0,0,0,0,0,0,0,0}), 1);\n    assert Arrays.equals(solution.countMatchingSubarrays(new int[]{1, 3, 2, 1, 2, 3, 2, 1, 3, 2, 1}, new int[]{1, -1, 1, -1, 1, -1}), 0);\n    assert Arrays.equals(solution.countMatchingSubarrays(new int[]{1,2,2,3,3,2,2,1,1,2,2,3,3,2,2,1,1,2,2,3,3,2,2,1,1}, new int[]{1,0,0,1,0,0,-1,-1,0,0,1,0,0,-1,-1,0,0,1,0,0,-1,-1,0,0}), 0);\n    assert Arrays.equals(solution.countMatchingSubarrays(new int[]{1,2,3,4,5,6,5,4,3,2,1,2,3,4,5,6,5,4,3,2,1}, new int[]{1,1,1,1,1,-1,-1,-1,-1,-1,1,1,1,1,1,-1,-1,-1,-1,-1}), 1);\n    assert Arrays.equals(solution.countMatchingSubarrays(new int[]{1,3,5,4,6,7,5,6,7,8,9,8,7,6,5,4,3,2,1}, new int[]{1,1,-1,1,1,1,-1,1,1,1,-1,-1,-1,-1,-1,-1,-1,-1}), 0);\n    assert Arrays.equals(solution.countMatchingSubarrays(new int[]{1, 2, 3, 2, 3, 4, 5, 4, 5, 6}, new int[]{1, -1, 1, 1, -1, 1}), 0);\n    assert Arrays.equals(solution.countMatchingSubarrays(new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}, new int[]{1, 1, 1, 1, 1, 1, 1, 1}), 2);\n    assert Arrays.equals(solution.countMatchingSubarrays(new int[]{1,2,3,2,1,2,3,4,5,4,3,2,1}, new int[]{1,-1,1,-1,1,-1,1,-1}), 0);\n    assert Arrays.equals(solution.countMatchingSubarrays(new int[]{1, 2, 1, 2, 1, 2, 1, 2, 1, 2}, new int[]{1, -1, 1, -1, 1, -1, 1}), 2);\n    assert Arrays.equals(solution.countMatchingSubarrays(new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}, new int[]{1, 1, 1, 1, 1, 1, 1}), 3);\n    assert Arrays.equals(solution.countMatchingSubarrays(new int[]{9, 8, 7, 6, 5, 4, 3, 2, 1, 1, 2, 3, 4, 5}, new int[]{-1, -1, -1, -1, -1, -1, 1, 1, 1}), 0);\n    assert Arrays.equals(solution.countMatchingSubarrays(new int[]{5, 6, 7, 8, 7, 6, 7, 8, 9, 10}, new int[]{1, 1, -1, -1, 1, 1, 1}), 1);\n    assert Arrays.equals(solution.countMatchingSubarrays(new int[]{10,9,8,7,6,5,4,3,2,1}, new int[]{-1,-1,-1,-1,-1,-1,-1}), 3);\n    assert Arrays.equals(solution.countMatchingSubarrays(new int[]{3,3,3,4,4,4,5,5,5,6,6,6}, new int[]{0,1,0,1,0,1,0,1}), 0);\n    assert Arrays.equals(solution.countMatchingSubarrays(new int[]{1,2,3,2,1,2,3,2,1}, new int[]{1,-1,1,-1,1,-1,1}), 0);\n    assert Arrays.equals(solution.countMatchingSubarrays(new int[]{1,1,2,2,3,3,2,2,1,1,2,2,3,3}, new int[]{0,1,0,-1,0,1,0,-1}), 0);\n    assert Arrays.equals(solution.countMatchingSubarrays(new int[]{1,2,1,2,1,2,1,2,1,2}, new int[]{1,-1,1,-1,1}), 3);\n}",
+    "javascript": "function check(candidate) {\n    console.assert(JSON.stringify(candidate([1,3,2,3,1,4,3,2], [1,-1,1,-1])) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate([1,2,2,3,4,5], [1,0,1])) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate([1,4,4,1,3,5,5,3], [1,0,-1])) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate([5,5,5,5,5,5], [0,0,0])) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate([1,2,2,3,4], [1,0,1])) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate([1,2,2,3,3,4], [1,0,1,0])) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate([1,2,3,4,5,6], [1,1])) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate([1,1,1,1,1], [0,0,0])) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate([5,4,3,2,1], [-1,-1,-1])) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate([1,3,2,3,4,5], [1,-1,1])) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate([1,1,1,1,1], [0,0])) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate([1,2,2,3,3,4,4,5], [1,0,0,1,0,0])) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate([1,3,2,4,3,5], [1,-1,1])) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate([10,10,10,10], [0,0])) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate([10,9,8,7,6,5], [-1,-1,-1])) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate([1,1,1,1,1,1,1,1,1,1,1,1,1,1,1], [0,0,0,0,0,0,0,0,0,0,0,0,0])) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate([1,2,3,2,1,2,3,2,1,2], [1,-1,1,-1,1])) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate([1,2,3,2,1,2,3,4,5,4,3,2,1], [1,-1,1,1,1,-1,-1])) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate([7,10,10,8,10,5,6,7,8,9], [1,0,-1,1,1,-1,1,1])) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate([10, 9, 8, 9, 10, 11, 10, 9, 8, 9, 10], [-1, -1, 1, 1, -1, -1, 1])) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate([1,2,2,3,3,4,5,5,6], [1,0,1,0,1,0,1])) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate([1, 2, 2, 3, 3, 3, 4, 4, 5, 5, 6], [1, 0, 0, 1, 0, 0, 1])) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate([1, 2, 1, 3, 2, 4, 3, 5, 4, 6], [1, -1, 1, -1, 1, -1])) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate([1,1,1,2,2,2,3,3,3,2,2,2,1,1,1,1,2,2,2,2,3,3,3,3,2,2,2,2,1,1,1,1], [0,1,0,1,0,1,-1,0,-1,0,-1,0,-1,0,-1,0,1,0,1,0,1,0,1,-1,0,-1,0,-1,0,-1,0])) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate([1, 2, 1, 3, 2, 1, 4, 3, 2, 1, 5, 4, 3, 2, 1], [1, -1, 1, -1, 1])) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate([10, 9, 8, 7, 6, 5, 4, 3, 2, 1], [-1, -1, -1, -1, -1])) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate([1,2,3,3,3,2,1,1,1,2,3], [1,0,0,-1,-1,0,0,1,1])) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate([1,2,3,4,5,4,5,6,7,8], [1,1,-1,1,1,-1,1,1])) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate([1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1], [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0])) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate([1, 1, 1, 1, 1, 1, 1, 1, 1, 1], [0, 0, 0, 0, 0, 0, 0])) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate([1,3,2,4,3,5,7,8,7,6,5,4,3,2,1,2,3,4,5,6,7,8,9], [1,-1,1,-1,1,-1,1,-1,1,-1,1,-1,1,-1,1,-1,1,-1,1,-1,1])) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate([10,9,8,8,7,6,5,4,3,2,1], [-1,-1,0,-1,-1,-1,-1,-1,-1])) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate([1,3,2,4,3,5,4,6,5,7], [1,-1,1,-1,1,-1,1])) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate([1,2,3,2,1,2,3,2,1], [1,-1,1,-1,1,-1])) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate([1,2,3,4,5,6,5,4,3,2,1], [1,1,1,-1,-1,-1])) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate([1,2,3,4,5,6,7,8,9,10], [1,1,1,1,1])) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate([1,2,3,4,5,6,5,4,3,2,1], [1,1,1,1,1,-1,-1,-1,-1,-1])) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate([1,2,3,4,5,6,7,8,9,10,9,8,7,6,5,4,3,2,1,1,2,3,4,5,6,7,8,9,10], [1,1,1,1,1,1,1,1,1,-1,-1,-1,-1,-1,-1,-1,-1,-1,1,1,1,1,1,1,1,1,1])) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate([1, 2, 3, 4, 3, 2, 1, 2, 3, 4, 3, 2, 1], [1, 1, -1, -1, 1, 1])) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate([100, 200, 150, 250, 200, 300, 250, 350, 300, 400], [1, -1, 1, -1, 1, -1, 1])) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate([1,2,2,2,3,3,3,2,2,2,1,1,1,2,2,2,3,3,3], [1,0,0,1,0,0,-1,0,0,-1,0,0,1,0,0])) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate([1,2,1,2,1,2,1,2,1], [1,-1,1,-1,1,-1,1])) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate([1, 1, 1, 2, 2, 2, 3, 3, 3, 1, 1, 1], [0, 1, 0, -1, 0])) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate([1,2,3,2,3,4,3,4,5,4,5,6], [1,-1,1,1,-1,1,-1,1])) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate([10,9,8,7,6,5,4,3,2,1], [-1,-1,-1,-1,-1,-1,-1,-1,-1])) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate([1, 2, 2, 2, 3, 3, 3, 2, 2, 2, 1, 1, 1, 1], [1, 0, 1, 0, -1, 0, -1])) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate([1,1,2,2,1,1,2,2,1,1,2,2,1,1], [0,1,0,-1,0,1,0,-1,0,1])) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate([1,1,2,1,3,2,4,3,5,4,6,5,7,6,8], [0,-1,1,-1,1,-1,1,-1,1,-1])) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15], [1,1,1,1,1,1,1,1,1,1,1,1])) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate([10, 20, 10, 30, 20, 40, 30, 50], [1, -1, 1, -1, 1])) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate([1,2,3,2,1,2,3,2,1,2,3,2,1,2,3,2], [1,-1,1,-1,1,-1,1,-1])) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate([1,2,3,4,5,6,7,8,9,10,9,8,7,6,5,4,3,2,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15], [1,1,1,1,1,1,1,1,1,-1,-1,-1,-1,-1,-1,-1,-1,-1,1,1,1,1,1,1,1,1,1,1,1,1,1])) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate([5,4,3,2,1,1,2,3,4,5,5,6,7,8,9,10], [-1,-1,-1,-1,0,1,1,1,1,0,1,1,1,1])) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate([1,1,1,1,2,2,2,2,3,3,3,3], [0,0,0,1,0,0,0,1,0,0,0])) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate([5,4,3,2,1,1,2,3,4,5,5,4,3,2,1,1,2,3,4,5], [-1,-1,-1,-1,0,1,1,1,1,0,-1,-1,-1,-1,0,1,1,1,1])) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate([10, 9, 8, 7, 6, 5, 4, 3, 2, 1], [-1, -1, -1, -1, -1, -1])) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate([1, 2, 1, 1, 2, 1, 2, 1, 2, 1, 2, 1], [1, -1, 0, 1, -1, 1, -1, 1, -1])) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate([1,2,3,4,3,2,1,2,3,4,3,2,1,2,3,4,3,2,1,2,3,4], [1,1,-1,-1,1,1,-1,-1,1,1,-1,-1,1,1,-1,-1,1,1,-1])) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate([9, 8, 7, 6, 5, 4, 3, 2, 1], [-1, -1, -1, -1, -1, -1])) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15], [1,1,1,1,1,1,1,1,1,1,1,1,1])) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate([1, 1, 1, 1, 2, 2, 2, 2, 3, 3], [0, 0, 0, 1, 0, 0, 0])) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate([1,3,2,4,3,5,4,6,5,7], [1,-1,1,-1,1])) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate([1, 2, 3, 4, 5, 4, 3, 2, 1, 2], [1, 1, 1, -1, -1, -1, 1])) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate([1, 2, 3, 2, 1, 2, 3, 4, 3, 2, 1], [1, -1, 1, -1, 1])) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate([10,10,11,12,13,13,12,11,12,13,13,12,10], [0,1,1,1,0,-1,-1,1,1,0,-1,-1])) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate([1,1,2,2,3,3,4,4,5,5], [0,1,0,1,0])) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate([1,1,2,2,3,3,4,4,5,5,6,6,7,7,8,8,9,9], [0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1])) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate([1,2,2,1,2,2,1,2,2,1], [1,0,-1,1,0,-1,1,0])) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate([1, 1, 2, 2, 3, 3, 4, 4, 5, 5], [0, 1, 0, 1, 0, 1])) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate([1, 2, 3, 4, 5, 6, 5, 4, 3, 2, 1, 2, 3, 4, 5], [1, 1, 1, -1, -1, -1, 1, 1, 1])) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate([5,4,3,2,1,1,2,3,4,5,5,4,3,2,1], [-1,-1,-1,-1,0,1,1,1,1,0,-1,-1,-1,-1])) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate([5,1,5,2,5,3,5,4,5,5,5,6,7,8], [1,-1,1,-1,1,0,1,0,0,1,1])) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], [0, 0, 0, 0, 0, 0, 0])) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate([1,1,1,1,1,1,1,1,1,1], [0,0,0,0,0])) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate([1,2,3,2,1,2,3,2,1,2,3,2,1,2,3,2,1,2,3,2,1,2,3,2,1,2,3,2,1,2,3], [1,-1,1,-1,1,-1,1,-1,1,-1,1,-1,1,-1,1,-1,1,-1,1,-1,1,-1,1,-1,1,-1,1,-1])) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate([1,2,2,2,3,3,3,4,4,4,5,5,5,6,6,6,7,7,7,8,8,8,9,9,9,10,10,10], [0,0,1,0,0,1,0,0,1,0,0,1,0,0,1,0,0,1,0,0,1,0,0,1,0,0,1])) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate([1,3,5,4,6,5,7,8,7,9,10,9,11,12], [1,1,-1,1,-1,1,-1,1,-1,1])) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate([1,2,2,3,3,4,4,5,5,6], [1,0,1,0,1,0,1])) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20], [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1])) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate([9,8,7,8,9,10,9,8,7,8,9,10], [-1,-1,1,-1,1,-1,1,-1,1,-1])) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate([1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8], [0, 1, 0, 1, 0, 1, 0, 1])) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate([1,1,2,2,3,3,4,4,5,5], [0,1,0,1,0,1,0])) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate([1,2,2,3,4,4,5,6,6,7,8], [1,0,1,0,1,0,1,0])) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate([1,1,1,1,2,3,4,5,6,7,8,9,10], [0,0,0,1,1,1,1,1,1,1])) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate([3,1,2,4,3,5,6,5,7,8,7,9,10,11,10,12,13,14,13,15,16], [1,-1,1,1,-1,1,1,-1,1,1,-1,1,1,-1,1,1,-1])) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate([1,3,2,4,3,5,6,5,7,8,7,9,10,11,10,12,13,14,13,15,16,15,17,18,17,19,20,19,21,22], [1,-1,1,1,-1,1,1,-1,1,1,-1,1,1,-1,1,1,-1,1,1,-1,1,1,-1,1,1,-1])) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate([3, 2, 3, 2, 3, 2, 3, 2, 3, 2], [-1, 1, -1, 1, -1, 1, -1])) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate([1,2,2,3,4,4,5,5,6,7,8,9,10], [1,0,1,0,1,0,1,0,1,0])) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate([1,2,3,4,5,6,7,8,9,10,9,8,7,6,5,4,3,2,1], [1,1,1,1,1,1,1,1,-1,-1,-1,-1,-1,-1,-1,-1])) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate([9,8,7,6,5,4,3,2,1], [-1,-1,-1,-1,-1,-1])) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate([10,9,8,7,6,5,4,3,2,1], [-1,-1,-1,-1,-1])) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate([1,2,2,3,4,5,6,7,8,9], [1,0,1,1,1,1])) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate([5, 6, 5, 6, 5, 6, 5, 6, 5, 6], [1, -1, 1, -1, 1, -1, 1])) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate([1,2,3,4,5,6,5,4,3,2,1,2,3,4,5,6], [1,1,1,-1,-1,-1,1,1,1])) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate([1,1,1,1,1,1,1,1,1,1,1,1,1,1,1], [0,0,0,0,0,0,0,0,0,0,0,0,0,0])) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate([1, 3, 2, 1, 2, 3, 2, 1, 3, 2, 1], [1, -1, 1, -1, 1, -1])) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate([1,2,2,3,3,2,2,1,1,2,2,3,3,2,2,1,1,2,2,3,3,2,2,1,1], [1,0,0,1,0,0,-1,-1,0,0,1,0,0,-1,-1,0,0,1,0,0,-1,-1,0,0])) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate([1,2,3,4,5,6,5,4,3,2,1,2,3,4,5,6,5,4,3,2,1], [1,1,1,1,1,-1,-1,-1,-1,-1,1,1,1,1,1,-1,-1,-1,-1,-1])) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate([1,3,5,4,6,7,5,6,7,8,9,8,7,6,5,4,3,2,1], [1,1,-1,1,1,1,-1,1,1,1,-1,-1,-1,-1,-1,-1,-1,-1])) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate([1, 2, 3, 2, 3, 4, 5, 4, 5, 6], [1, -1, 1, 1, -1, 1])) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], [1, 1, 1, 1, 1, 1, 1, 1])) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate([1,2,3,2,1,2,3,4,5,4,3,2,1], [1,-1,1,-1,1,-1,1,-1])) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate([1, 2, 1, 2, 1, 2, 1, 2, 1, 2], [1, -1, 1, -1, 1, -1, 1])) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], [1, 1, 1, 1, 1, 1, 1])) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate([9, 8, 7, 6, 5, 4, 3, 2, 1, 1, 2, 3, 4, 5], [-1, -1, -1, -1, -1, -1, 1, 1, 1])) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate([5, 6, 7, 8, 7, 6, 7, 8, 9, 10], [1, 1, -1, -1, 1, 1, 1])) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate([10,9,8,7,6,5,4,3,2,1], [-1,-1,-1,-1,-1,-1,-1])) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate([3,3,3,4,4,4,5,5,5,6,6,6], [0,1,0,1,0,1,0,1])) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate([1,2,3,2,1,2,3,2,1], [1,-1,1,-1,1,-1,1])) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate([1,1,2,2,3,3,2,2,1,1,2,2,3,3], [0,1,0,-1,0,1,0,-1])) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate([1,2,1,2,1,2,1,2,1,2], [1,-1,1,-1,1])) === JSON.stringify(3));\n}",
+    "typescript": "function check(candidate: Function): void {\n    console.assert(JSON.stringify(candidate([1,3,2,3,1,4,3,2], [1,-1,1,-1])) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate([1,2,2,3,4,5], [1,0,1])) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate([1,4,4,1,3,5,5,3], [1,0,-1])) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate([5,5,5,5,5,5], [0,0,0])) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate([1,2,2,3,4], [1,0,1])) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate([1,2,2,3,3,4], [1,0,1,0])) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate([1,2,3,4,5,6], [1,1])) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate([1,1,1,1,1], [0,0,0])) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate([5,4,3,2,1], [-1,-1,-1])) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate([1,3,2,3,4,5], [1,-1,1])) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate([1,1,1,1,1], [0,0])) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate([1,2,2,3,3,4,4,5], [1,0,0,1,0,0])) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate([1,3,2,4,3,5], [1,-1,1])) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate([10,10,10,10], [0,0])) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate([10,9,8,7,6,5], [-1,-1,-1])) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate([1,1,1,1,1,1,1,1,1,1,1,1,1,1,1], [0,0,0,0,0,0,0,0,0,0,0,0,0])) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate([1,2,3,2,1,2,3,2,1,2], [1,-1,1,-1,1])) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate([1,2,3,2,1,2,3,4,5,4,3,2,1], [1,-1,1,1,1,-1,-1])) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate([7,10,10,8,10,5,6,7,8,9], [1,0,-1,1,1,-1,1,1])) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate([10, 9, 8, 9, 10, 11, 10, 9, 8, 9, 10], [-1, -1, 1, 1, -1, -1, 1])) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate([1,2,2,3,3,4,5,5,6], [1,0,1,0,1,0,1])) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate([1, 2, 2, 3, 3, 3, 4, 4, 5, 5, 6], [1, 0, 0, 1, 0, 0, 1])) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate([1, 2, 1, 3, 2, 4, 3, 5, 4, 6], [1, -1, 1, -1, 1, -1])) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate([1,1,1,2,2,2,3,3,3,2,2,2,1,1,1,1,2,2,2,2,3,3,3,3,2,2,2,2,1,1,1,1], [0,1,0,1,0,1,-1,0,-1,0,-1,0,-1,0,-1,0,1,0,1,0,1,0,1,-1,0,-1,0,-1,0,-1,0])) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate([1, 2, 1, 3, 2, 1, 4, 3, 2, 1, 5, 4, 3, 2, 1], [1, -1, 1, -1, 1])) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate([10, 9, 8, 7, 6, 5, 4, 3, 2, 1], [-1, -1, -1, -1, -1])) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate([1,2,3,3,3,2,1,1,1,2,3], [1,0,0,-1,-1,0,0,1,1])) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate([1,2,3,4,5,4,5,6,7,8], [1,1,-1,1,1,-1,1,1])) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate([1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1], [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0])) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate([1, 1, 1, 1, 1, 1, 1, 1, 1, 1], [0, 0, 0, 0, 0, 0, 0])) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate([1,3,2,4,3,5,7,8,7,6,5,4,3,2,1,2,3,4,5,6,7,8,9], [1,-1,1,-1,1,-1,1,-1,1,-1,1,-1,1,-1,1,-1,1,-1,1,-1,1])) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate([10,9,8,8,7,6,5,4,3,2,1], [-1,-1,0,-1,-1,-1,-1,-1,-1])) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate([1,3,2,4,3,5,4,6,5,7], [1,-1,1,-1,1,-1,1])) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate([1,2,3,2,1,2,3,2,1], [1,-1,1,-1,1,-1])) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate([1,2,3,4,5,6,5,4,3,2,1], [1,1,1,-1,-1,-1])) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate([1,2,3,4,5,6,7,8,9,10], [1,1,1,1,1])) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate([1,2,3,4,5,6,5,4,3,2,1], [1,1,1,1,1,-1,-1,-1,-1,-1])) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate([1,2,3,4,5,6,7,8,9,10,9,8,7,6,5,4,3,2,1,1,2,3,4,5,6,7,8,9,10], [1,1,1,1,1,1,1,1,1,-1,-1,-1,-1,-1,-1,-1,-1,-1,1,1,1,1,1,1,1,1,1])) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate([1, 2, 3, 4, 3, 2, 1, 2, 3, 4, 3, 2, 1], [1, 1, -1, -1, 1, 1])) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate([100, 200, 150, 250, 200, 300, 250, 350, 300, 400], [1, -1, 1, -1, 1, -1, 1])) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate([1,2,2,2,3,3,3,2,2,2,1,1,1,2,2,2,3,3,3], [1,0,0,1,0,0,-1,0,0,-1,0,0,1,0,0])) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate([1,2,1,2,1,2,1,2,1], [1,-1,1,-1,1,-1,1])) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate([1, 1, 1, 2, 2, 2, 3, 3, 3, 1, 1, 1], [0, 1, 0, -1, 0])) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate([1,2,3,2,3,4,3,4,5,4,5,6], [1,-1,1,1,-1,1,-1,1])) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate([10,9,8,7,6,5,4,3,2,1], [-1,-1,-1,-1,-1,-1,-1,-1,-1])) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate([1, 2, 2, 2, 3, 3, 3, 2, 2, 2, 1, 1, 1, 1], [1, 0, 1, 0, -1, 0, -1])) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate([1,1,2,2,1,1,2,2,1,1,2,2,1,1], [0,1,0,-1,0,1,0,-1,0,1])) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate([1,1,2,1,3,2,4,3,5,4,6,5,7,6,8], [0,-1,1,-1,1,-1,1,-1,1,-1])) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15], [1,1,1,1,1,1,1,1,1,1,1,1])) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate([10, 20, 10, 30, 20, 40, 30, 50], [1, -1, 1, -1, 1])) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate([1,2,3,2,1,2,3,2,1,2,3,2,1,2,3,2], [1,-1,1,-1,1,-1,1,-1])) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate([1,2,3,4,5,6,7,8,9,10,9,8,7,6,5,4,3,2,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15], [1,1,1,1,1,1,1,1,1,-1,-1,-1,-1,-1,-1,-1,-1,-1,1,1,1,1,1,1,1,1,1,1,1,1,1])) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate([5,4,3,2,1,1,2,3,4,5,5,6,7,8,9,10], [-1,-1,-1,-1,0,1,1,1,1,0,1,1,1,1])) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate([1,1,1,1,2,2,2,2,3,3,3,3], [0,0,0,1,0,0,0,1,0,0,0])) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate([5,4,3,2,1,1,2,3,4,5,5,4,3,2,1,1,2,3,4,5], [-1,-1,-1,-1,0,1,1,1,1,0,-1,-1,-1,-1,0,1,1,1,1])) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate([10, 9, 8, 7, 6, 5, 4, 3, 2, 1], [-1, -1, -1, -1, -1, -1])) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate([1, 2, 1, 1, 2, 1, 2, 1, 2, 1, 2, 1], [1, -1, 0, 1, -1, 1, -1, 1, -1])) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate([1,2,3,4,3,2,1,2,3,4,3,2,1,2,3,4,3,2,1,2,3,4], [1,1,-1,-1,1,1,-1,-1,1,1,-1,-1,1,1,-1,-1,1,1,-1])) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate([9, 8, 7, 6, 5, 4, 3, 2, 1], [-1, -1, -1, -1, -1, -1])) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15], [1,1,1,1,1,1,1,1,1,1,1,1,1])) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate([1, 1, 1, 1, 2, 2, 2, 2, 3, 3], [0, 0, 0, 1, 0, 0, 0])) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate([1,3,2,4,3,5,4,6,5,7], [1,-1,1,-1,1])) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate([1, 2, 3, 4, 5, 4, 3, 2, 1, 2], [1, 1, 1, -1, -1, -1, 1])) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate([1, 2, 3, 2, 1, 2, 3, 4, 3, 2, 1], [1, -1, 1, -1, 1])) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate([10,10,11,12,13,13,12,11,12,13,13,12,10], [0,1,1,1,0,-1,-1,1,1,0,-1,-1])) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate([1,1,2,2,3,3,4,4,5,5], [0,1,0,1,0])) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate([1,1,2,2,3,3,4,4,5,5,6,6,7,7,8,8,9,9], [0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1])) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate([1,2,2,1,2,2,1,2,2,1], [1,0,-1,1,0,-1,1,0])) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate([1, 1, 2, 2, 3, 3, 4, 4, 5, 5], [0, 1, 0, 1, 0, 1])) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate([1, 2, 3, 4, 5, 6, 5, 4, 3, 2, 1, 2, 3, 4, 5], [1, 1, 1, -1, -1, -1, 1, 1, 1])) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate([5,4,3,2,1,1,2,3,4,5,5,4,3,2,1], [-1,-1,-1,-1,0,1,1,1,1,0,-1,-1,-1,-1])) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate([5,1,5,2,5,3,5,4,5,5,5,6,7,8], [1,-1,1,-1,1,0,1,0,0,1,1])) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], [0, 0, 0, 0, 0, 0, 0])) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate([1,1,1,1,1,1,1,1,1,1], [0,0,0,0,0])) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate([1,2,3,2,1,2,3,2,1,2,3,2,1,2,3,2,1,2,3,2,1,2,3,2,1,2,3,2,1,2,3], [1,-1,1,-1,1,-1,1,-1,1,-1,1,-1,1,-1,1,-1,1,-1,1,-1,1,-1,1,-1,1,-1,1,-1])) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate([1,2,2,2,3,3,3,4,4,4,5,5,5,6,6,6,7,7,7,8,8,8,9,9,9,10,10,10], [0,0,1,0,0,1,0,0,1,0,0,1,0,0,1,0,0,1,0,0,1,0,0,1,0,0,1])) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate([1,3,5,4,6,5,7,8,7,9,10,9,11,12], [1,1,-1,1,-1,1,-1,1,-1,1])) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate([1,2,2,3,3,4,4,5,5,6], [1,0,1,0,1,0,1])) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20], [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1])) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate([9,8,7,8,9,10,9,8,7,8,9,10], [-1,-1,1,-1,1,-1,1,-1,1,-1])) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate([1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8], [0, 1, 0, 1, 0, 1, 0, 1])) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate([1,1,2,2,3,3,4,4,5,5], [0,1,0,1,0,1,0])) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate([1,2,2,3,4,4,5,6,6,7,8], [1,0,1,0,1,0,1,0])) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate([1,1,1,1,2,3,4,5,6,7,8,9,10], [0,0,0,1,1,1,1,1,1,1])) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate([3,1,2,4,3,5,6,5,7,8,7,9,10,11,10,12,13,14,13,15,16], [1,-1,1,1,-1,1,1,-1,1,1,-1,1,1,-1,1,1,-1])) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate([1,3,2,4,3,5,6,5,7,8,7,9,10,11,10,12,13,14,13,15,16,15,17,18,17,19,20,19,21,22], [1,-1,1,1,-1,1,1,-1,1,1,-1,1,1,-1,1,1,-1,1,1,-1,1,1,-1,1,1,-1])) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate([3, 2, 3, 2, 3, 2, 3, 2, 3, 2], [-1, 1, -1, 1, -1, 1, -1])) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate([1,2,2,3,4,4,5,5,6,7,8,9,10], [1,0,1,0,1,0,1,0,1,0])) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate([1,2,3,4,5,6,7,8,9,10,9,8,7,6,5,4,3,2,1], [1,1,1,1,1,1,1,1,-1,-1,-1,-1,-1,-1,-1,-1])) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate([9,8,7,6,5,4,3,2,1], [-1,-1,-1,-1,-1,-1])) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate([10,9,8,7,6,5,4,3,2,1], [-1,-1,-1,-1,-1])) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate([1,2,2,3,4,5,6,7,8,9], [1,0,1,1,1,1])) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate([5, 6, 5, 6, 5, 6, 5, 6, 5, 6], [1, -1, 1, -1, 1, -1, 1])) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate([1,2,3,4,5,6,5,4,3,2,1,2,3,4,5,6], [1,1,1,-1,-1,-1,1,1,1])) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate([1,1,1,1,1,1,1,1,1,1,1,1,1,1,1], [0,0,0,0,0,0,0,0,0,0,0,0,0,0])) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate([1, 3, 2, 1, 2, 3, 2, 1, 3, 2, 1], [1, -1, 1, -1, 1, -1])) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate([1,2,2,3,3,2,2,1,1,2,2,3,3,2,2,1,1,2,2,3,3,2,2,1,1], [1,0,0,1,0,0,-1,-1,0,0,1,0,0,-1,-1,0,0,1,0,0,-1,-1,0,0])) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate([1,2,3,4,5,6,5,4,3,2,1,2,3,4,5,6,5,4,3,2,1], [1,1,1,1,1,-1,-1,-1,-1,-1,1,1,1,1,1,-1,-1,-1,-1,-1])) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate([1,3,5,4,6,7,5,6,7,8,9,8,7,6,5,4,3,2,1], [1,1,-1,1,1,1,-1,1,1,1,-1,-1,-1,-1,-1,-1,-1,-1])) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate([1, 2, 3, 2, 3, 4, 5, 4, 5, 6], [1, -1, 1, 1, -1, 1])) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], [1, 1, 1, 1, 1, 1, 1, 1])) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate([1,2,3,2,1,2,3,4,5,4,3,2,1], [1,-1,1,-1,1,-1,1,-1])) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate([1, 2, 1, 2, 1, 2, 1, 2, 1, 2], [1, -1, 1, -1, 1, -1, 1])) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], [1, 1, 1, 1, 1, 1, 1])) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate([9, 8, 7, 6, 5, 4, 3, 2, 1, 1, 2, 3, 4, 5], [-1, -1, -1, -1, -1, -1, 1, 1, 1])) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate([5, 6, 7, 8, 7, 6, 7, 8, 9, 10], [1, 1, -1, -1, 1, 1, 1])) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate([10,9,8,7,6,5,4,3,2,1], [-1,-1,-1,-1,-1,-1,-1])) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate([3,3,3,4,4,4,5,5,5,6,6,6], [0,1,0,1,0,1,0,1])) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate([1,2,3,2,1,2,3,2,1], [1,-1,1,-1,1,-1,1])) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate([1,1,2,2,3,3,2,2,1,1,2,2,3,3], [0,1,0,-1,0,1,0,-1])) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate([1,2,1,2,1,2,1,2,1,2], [1,-1,1,-1,1])) === JSON.stringify(3));\n}",
+    "golang": "func check(candidate func([]int, int) []int) {\n    assert reflect.DeepEqual(candidate([]int{1,3,2,3,1,4,3,2}, []int{1,-1,1,-1}), 2)\n    assert reflect.DeepEqual(candidate([]int{1,2,2,3,4,5}, []int{1,0,1}), 1)\n    assert reflect.DeepEqual(candidate([]int{1,4,4,1,3,5,5,3}, []int{1,0,-1}), 2)\n    assert reflect.DeepEqual(candidate([]int{5,5,5,5,5,5}, []int{0,0,0}), 3)\n    assert reflect.DeepEqual(candidate([]int{1,2,2,3,4}, []int{1,0,1}), 1)\n    assert reflect.DeepEqual(candidate([]int{1,2,2,3,3,4}, []int{1,0,1,0}), 1)\n    assert reflect.DeepEqual(candidate([]int{1,2,3,4,5,6}, []int{1,1}), 4)\n    assert reflect.DeepEqual(candidate([]int{1,1,1,1,1}, []int{0,0,0}), 2)\n    assert reflect.DeepEqual(candidate([]int{5,4,3,2,1}, []int{-1,-1,-1}), 2)\n    assert reflect.DeepEqual(candidate([]int{1,3,2,3,4,5}, []int{1,-1,1}), 1)\n    assert reflect.DeepEqual(candidate([]int{1,1,1,1,1}, []int{0,0}), 3)\n    assert reflect.DeepEqual(candidate([]int{1,2,2,3,3,4,4,5}, []int{1,0,0,1,0,0}), 0)\n    assert reflect.DeepEqual(candidate([]int{1,3,2,4,3,5}, []int{1,-1,1}), 2)\n    assert reflect.DeepEqual(candidate([]int{10,10,10,10}, []int{0,0}), 2)\n    assert reflect.DeepEqual(candidate([]int{10,9,8,7,6,5}, []int{-1,-1,-1}), 3)\n    assert reflect.DeepEqual(candidate([]int{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}, []int{0,0,0,0,0,0,0,0,0,0,0,0,0}), 2)\n    assert reflect.DeepEqual(candidate([]int{1,2,3,2,1,2,3,2,1,2}, []int{1,-1,1,-1,1}), 0)\n    assert reflect.DeepEqual(candidate([]int{1,2,3,2,1,2,3,4,5,4,3,2,1}, []int{1,-1,1,1,1,-1,-1}), 0)\n    assert reflect.DeepEqual(candidate([]int{7,10,10,8,10,5,6,7,8,9}, []int{1,0,-1,1,1,-1,1,1}), 0)\n    assert reflect.DeepEqual(candidate([]int{10, 9, 8, 9, 10, 11, 10, 9, 8, 9, 10}, []int{-1, -1, 1, 1, -1, -1, 1}), 0)\n    assert reflect.DeepEqual(candidate([]int{1,2,2,3,3,4,5,5,6}, []int{1,0,1,0,1,0,1}), 0)\n    assert reflect.DeepEqual(candidate([]int{1, 2, 2, 3, 3, 3, 4, 4, 5, 5, 6}, []int{1, 0, 0, 1, 0, 0, 1}), 0)\n    assert reflect.DeepEqual(candidate([]int{1, 2, 1, 3, 2, 4, 3, 5, 4, 6}, []int{1, -1, 1, -1, 1, -1}), 2)\n    assert reflect.DeepEqual(candidate([]int{1,1,1,2,2,2,3,3,3,2,2,2,1,1,1,1,2,2,2,2,3,3,3,3,2,2,2,2,1,1,1,1}, []int{0,1,0,1,0,1,-1,0,-1,0,-1,0,-1,0,-1,0,1,0,1,0,1,0,1,-1,0,-1,0,-1,0,-1,0}), 0)\n    assert reflect.DeepEqual(candidate([]int{1, 2, 1, 3, 2, 1, 4, 3, 2, 1, 5, 4, 3, 2, 1}, []int{1, -1, 1, -1, 1}), 0)\n    assert reflect.DeepEqual(candidate([]int{10, 9, 8, 7, 6, 5, 4, 3, 2, 1}, []int{-1, -1, -1, -1, -1}), 5)\n    assert reflect.DeepEqual(candidate([]int{1,2,3,3,3,2,1,1,1,2,3}, []int{1,0,0,-1,-1,0,0,1,1}), 1)\n    assert reflect.DeepEqual(candidate([]int{1,2,3,4,5,4,5,6,7,8}, []int{1,1,-1,1,1,-1,1,1}), 0)\n    assert reflect.DeepEqual(candidate([]int{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}, []int{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}), 1)\n    assert reflect.DeepEqual(candidate([]int{1, 1, 1, 1, 1, 1, 1, 1, 1, 1}, []int{0, 0, 0, 0, 0, 0, 0}), 3)\n    assert reflect.DeepEqual(candidate([]int{1,3,2,4,3,5,7,8,7,6,5,4,3,2,1,2,3,4,5,6,7,8,9}, []int{1,-1,1,-1,1,-1,1,-1,1,-1,1,-1,1,-1,1,-1,1,-1,1,-1,1}), 0)\n    assert reflect.DeepEqual(candidate([]int{10,9,8,8,7,6,5,4,3,2,1}, []int{-1,-1,0,-1,-1,-1,-1,-1,-1}), 1)\n    assert reflect.DeepEqual(candidate([]int{1,3,2,4,3,5,4,6,5,7}, []int{1,-1,1,-1,1,-1,1}), 2)\n    assert reflect.DeepEqual(candidate([]int{1,2,3,2,1,2,3,2,1}, []int{1,-1,1,-1,1,-1}), 0)\n    assert reflect.DeepEqual(candidate([]int{1,2,3,4,5,6,5,4,3,2,1}, []int{1,1,1,-1,-1,-1}), 1)\n    assert reflect.DeepEqual(candidate([]int{1,2,3,4,5,6,7,8,9,10}, []int{1,1,1,1,1}), 5)\n    assert reflect.DeepEqual(candidate([]int{1,2,3,4,5,6,5,4,3,2,1}, []int{1,1,1,1,1,-1,-1,-1,-1,-1}), 1)\n    assert reflect.DeepEqual(candidate([]int{1,2,3,4,5,6,7,8,9,10,9,8,7,6,5,4,3,2,1,1,2,3,4,5,6,7,8,9,10}, []int{1,1,1,1,1,1,1,1,1,-1,-1,-1,-1,-1,-1,-1,-1,-1,1,1,1,1,1,1,1,1,1}), 0)\n    assert reflect.DeepEqual(candidate([]int{1, 2, 3, 4, 3, 2, 1, 2, 3, 4, 3, 2, 1}, []int{1, 1, -1, -1, 1, 1}), 0)\n    assert reflect.DeepEqual(candidate([]int{100, 200, 150, 250, 200, 300, 250, 350, 300, 400}, []int{1, -1, 1, -1, 1, -1, 1}), 2)\n    assert reflect.DeepEqual(candidate([]int{1,2,2,2,3,3,3,2,2,2,1,1,1,2,2,2,3,3,3}, []int{1,0,0,1,0,0,-1,0,0,-1,0,0,1,0,0}), 1)\n    assert reflect.DeepEqual(candidate([]int{1,2,1,2,1,2,1,2,1}, []int{1,-1,1,-1,1,-1,1}), 1)\n    assert reflect.DeepEqual(candidate([]int{1, 1, 1, 2, 2, 2, 3, 3, 3, 1, 1, 1}, []int{0, 1, 0, -1, 0}), 0)\n    assert reflect.DeepEqual(candidate([]int{1,2,3,2,3,4,3,4,5,4,5,6}, []int{1,-1,1,1,-1,1,-1,1}), 0)\n    assert reflect.DeepEqual(candidate([]int{10,9,8,7,6,5,4,3,2,1}, []int{-1,-1,-1,-1,-1,-1,-1,-1,-1}), 1)\n    assert reflect.DeepEqual(candidate([]int{1, 2, 2, 2, 3, 3, 3, 2, 2, 2, 1, 1, 1, 1}, []int{1, 0, 1, 0, -1, 0, -1}), 0)\n    assert reflect.DeepEqual(candidate([]int{1,1,2,2,1,1,2,2,1,1,2,2,1,1}, []int{0,1,0,-1,0,1,0,-1,0,1}), 1)\n    assert reflect.DeepEqual(candidate([]int{1,1,2,1,3,2,4,3,5,4,6,5,7,6,8}, []int{0,-1,1,-1,1,-1,1,-1,1,-1}), 0)\n    assert reflect.DeepEqual(candidate([]int{1,2,3,4,5,6,7,8,9,10,11,12,13,14,15}, []int{1,1,1,1,1,1,1,1,1,1,1,1}), 3)\n    assert reflect.DeepEqual(candidate([]int{10, 20, 10, 30, 20, 40, 30, 50}, []int{1, -1, 1, -1, 1}), 2)\n    assert reflect.DeepEqual(candidate([]int{1,2,3,2,1,2,3,2,1,2,3,2,1,2,3,2}, []int{1,-1,1,-1,1,-1,1,-1}), 0)\n    assert reflect.DeepEqual(candidate([]int{1,2,3,4,5,6,7,8,9,10,9,8,7,6,5,4,3,2,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15}, []int{1,1,1,1,1,1,1,1,1,-1,-1,-1,-1,-1,-1,-1,-1,-1,1,1,1,1,1,1,1,1,1,1,1,1,1}), 1)\n    assert reflect.DeepEqual(candidate([]int{5,4,3,2,1,1,2,3,4,5,5,6,7,8,9,10}, []int{-1,-1,-1,-1,0,1,1,1,1,0,1,1,1,1}), 1)\n    assert reflect.DeepEqual(candidate([]int{1,1,1,1,2,2,2,2,3,3,3,3}, []int{0,0,0,1,0,0,0,1,0,0,0}), 1)\n    assert reflect.DeepEqual(candidate([]int{5,4,3,2,1,1,2,3,4,5,5,4,3,2,1,1,2,3,4,5}, []int{-1,-1,-1,-1,0,1,1,1,1,0,-1,-1,-1,-1,0,1,1,1,1}), 1)\n    assert reflect.DeepEqual(candidate([]int{10, 9, 8, 7, 6, 5, 4, 3, 2, 1}, []int{-1, -1, -1, -1, -1, -1}), 4)\n    assert reflect.DeepEqual(candidate([]int{1, 2, 1, 1, 2, 1, 2, 1, 2, 1, 2, 1}, []int{1, -1, 0, 1, -1, 1, -1, 1, -1}), 1)\n    assert reflect.DeepEqual(candidate([]int{1,2,3,4,3,2,1,2,3,4,3,2,1,2,3,4,3,2,1,2,3,4}, []int{1,1,-1,-1,1,1,-1,-1,1,1,-1,-1,1,1,-1,-1,1,1,-1}), 0)\n    assert reflect.DeepEqual(candidate([]int{9, 8, 7, 6, 5, 4, 3, 2, 1}, []int{-1, -1, -1, -1, -1, -1}), 3)\n    assert reflect.DeepEqual(candidate([]int{1,2,3,4,5,6,7,8,9,10,11,12,13,14,15}, []int{1,1,1,1,1,1,1,1,1,1,1,1,1}), 2)\n    assert reflect.DeepEqual(candidate([]int{1, 1, 1, 1, 2, 2, 2, 2, 3, 3}, []int{0, 0, 0, 1, 0, 0, 0}), 1)\n    assert reflect.DeepEqual(candidate([]int{1,3,2,4,3,5,4,6,5,7}, []int{1,-1,1,-1,1}), 3)\n    assert reflect.DeepEqual(candidate([]int{1, 2, 3, 4, 5, 4, 3, 2, 1, 2}, []int{1, 1, 1, -1, -1, -1, 1}), 0)\n    assert reflect.DeepEqual(candidate([]int{1, 2, 3, 2, 1, 2, 3, 4, 3, 2, 1}, []int{1, -1, 1, -1, 1}), 0)\n    assert reflect.DeepEqual(candidate([]int{10,10,11,12,13,13,12,11,12,13,13,12,10}, []int{0,1,1,1,0,-1,-1,1,1,0,-1,-1}), 1)\n    assert reflect.DeepEqual(candidate([]int{1,1,2,2,3,3,4,4,5,5}, []int{0,1,0,1,0}), 3)\n    assert reflect.DeepEqual(candidate([]int{1,1,2,2,3,3,4,4,5,5,6,6,7,7,8,8,9,9}, []int{0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1}), 1)\n    assert reflect.DeepEqual(candidate([]int{1,2,2,1,2,2,1,2,2,1}, []int{1,0,-1,1,0,-1,1,0}), 1)\n    assert reflect.DeepEqual(candidate([]int{1, 1, 2, 2, 3, 3, 4, 4, 5, 5}, []int{0, 1, 0, 1, 0, 1}), 2)\n    assert reflect.DeepEqual(candidate([]int{1, 2, 3, 4, 5, 6, 5, 4, 3, 2, 1, 2, 3, 4, 5}, []int{1, 1, 1, -1, -1, -1, 1, 1, 1}), 0)\n    assert reflect.DeepEqual(candidate([]int{5,4,3,2,1,1,2,3,4,5,5,4,3,2,1}, []int{-1,-1,-1,-1,0,1,1,1,1,0,-1,-1,-1,-1}), 1)\n    assert reflect.DeepEqual(candidate([]int{5,1,5,2,5,3,5,4,5,5,5,6,7,8}, []int{1,-1,1,-1,1,0,1,0,0,1,1}), 0)\n    assert reflect.DeepEqual(candidate([]int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}, []int{0, 0, 0, 0, 0, 0, 0}), 0)\n    assert reflect.DeepEqual(candidate([]int{1,1,1,1,1,1,1,1,1,1}, []int{0,0,0,0,0}), 5)\n    assert reflect.DeepEqual(candidate([]int{1,2,3,2,1,2,3,2,1,2,3,2,1,2,3,2,1,2,3,2,1,2,3,2,1,2,3,2,1,2,3}, []int{1,-1,1,-1,1,-1,1,-1,1,-1,1,-1,1,-1,1,-1,1,-1,1,-1,1,-1,1,-1,1,-1,1,-1}), 0)\n    assert reflect.DeepEqual(candidate([]int{1,2,2,2,3,3,3,4,4,4,5,5,5,6,6,6,7,7,7,8,8,8,9,9,9,10,10,10}, []int{0,0,1,0,0,1,0,0,1,0,0,1,0,0,1,0,0,1,0,0,1,0,0,1,0,0,1}), 0)\n    assert reflect.DeepEqual(candidate([]int{1,3,5,4,6,5,7,8,7,9,10,9,11,12}, []int{1,1,-1,1,-1,1,-1,1,-1,1}), 0)\n    assert reflect.DeepEqual(candidate([]int{1,2,2,3,3,4,4,5,5,6}, []int{1,0,1,0,1,0,1}), 2)\n    assert reflect.DeepEqual(candidate([]int{1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20}, []int{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}), 1)\n    assert reflect.DeepEqual(candidate([]int{9,8,7,8,9,10,9,8,7,8,9,10}, []int{-1,-1,1,-1,1,-1,1,-1,1,-1}), 0)\n    assert reflect.DeepEqual(candidate([]int{1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8}, []int{0, 1, 0, 1, 0, 1, 0, 1}), 4)\n    assert reflect.DeepEqual(candidate([]int{1,1,2,2,3,3,4,4,5,5}, []int{0,1,0,1,0,1,0}), 2)\n    assert reflect.DeepEqual(candidate([]int{1,2,2,3,4,4,5,6,6,7,8}, []int{1,0,1,0,1,0,1,0}), 0)\n    assert reflect.DeepEqual(candidate([]int{1,1,1,1,2,3,4,5,6,7,8,9,10}, []int{0,0,0,1,1,1,1,1,1,1}), 1)\n    assert reflect.DeepEqual(candidate([]int{3,1,2,4,3,5,6,5,7,8,7,9,10,11,10,12,13,14,13,15,16}, []int{1,-1,1,1,-1,1,1,-1,1,1,-1,1,1,-1,1,1,-1}), 0)\n    assert reflect.DeepEqual(candidate([]int{1,3,2,4,3,5,6,5,7,8,7,9,10,11,10,12,13,14,13,15,16,15,17,18,17,19,20,19,21,22}, []int{1,-1,1,1,-1,1,1,-1,1,1,-1,1,1,-1,1,1,-1,1,1,-1,1,1,-1,1,1,-1}), 0)\n    assert reflect.DeepEqual(candidate([]int{3, 2, 3, 2, 3, 2, 3, 2, 3, 2}, []int{-1, 1, -1, 1, -1, 1, -1}), 2)\n    assert reflect.DeepEqual(candidate([]int{1,2,2,3,4,4,5,5,6,7,8,9,10}, []int{1,0,1,0,1,0,1,0,1,0}), 0)\n    assert reflect.DeepEqual(candidate([]int{1,2,3,4,5,6,7,8,9,10,9,8,7,6,5,4,3,2,1}, []int{1,1,1,1,1,1,1,1,-1,-1,-1,-1,-1,-1,-1,-1}), 1)\n    assert reflect.DeepEqual(candidate([]int{9,8,7,6,5,4,3,2,1}, []int{-1,-1,-1,-1,-1,-1}), 3)\n    assert reflect.DeepEqual(candidate([]int{10,9,8,7,6,5,4,3,2,1}, []int{-1,-1,-1,-1,-1}), 5)\n    assert reflect.DeepEqual(candidate([]int{1,2,2,3,4,5,6,7,8,9}, []int{1,0,1,1,1,1}), 1)\n    assert reflect.DeepEqual(candidate([]int{5, 6, 5, 6, 5, 6, 5, 6, 5, 6}, []int{1, -1, 1, -1, 1, -1, 1}), 2)\n    assert reflect.DeepEqual(candidate([]int{1,2,3,4,5,6,5,4,3,2,1,2,3,4,5,6}, []int{1,1,1,-1,-1,-1,1,1,1}), 0)\n    assert reflect.DeepEqual(candidate([]int{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}, []int{0,0,0,0,0,0,0,0,0,0,0,0,0,0}), 1)\n    assert reflect.DeepEqual(candidate([]int{1, 3, 2, 1, 2, 3, 2, 1, 3, 2, 1}, []int{1, -1, 1, -1, 1, -1}), 0)\n    assert reflect.DeepEqual(candidate([]int{1,2,2,3,3,2,2,1,1,2,2,3,3,2,2,1,1,2,2,3,3,2,2,1,1}, []int{1,0,0,1,0,0,-1,-1,0,0,1,0,0,-1,-1,0,0,1,0,0,-1,-1,0,0}), 0)\n    assert reflect.DeepEqual(candidate([]int{1,2,3,4,5,6,5,4,3,2,1,2,3,4,5,6,5,4,3,2,1}, []int{1,1,1,1,1,-1,-1,-1,-1,-1,1,1,1,1,1,-1,-1,-1,-1,-1}), 1)\n    assert reflect.DeepEqual(candidate([]int{1,3,5,4,6,7,5,6,7,8,9,8,7,6,5,4,3,2,1}, []int{1,1,-1,1,1,1,-1,1,1,1,-1,-1,-1,-1,-1,-1,-1,-1}), 0)\n    assert reflect.DeepEqual(candidate([]int{1, 2, 3, 2, 3, 4, 5, 4, 5, 6}, []int{1, -1, 1, 1, -1, 1}), 0)\n    assert reflect.DeepEqual(candidate([]int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}, []int{1, 1, 1, 1, 1, 1, 1, 1}), 2)\n    assert reflect.DeepEqual(candidate([]int{1,2,3,2,1,2,3,4,5,4,3,2,1}, []int{1,-1,1,-1,1,-1,1,-1}), 0)\n    assert reflect.DeepEqual(candidate([]int{1, 2, 1, 2, 1, 2, 1, 2, 1, 2}, []int{1, -1, 1, -1, 1, -1, 1}), 2)\n    assert reflect.DeepEqual(candidate([]int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}, []int{1, 1, 1, 1, 1, 1, 1}), 3)\n    assert reflect.DeepEqual(candidate([]int{9, 8, 7, 6, 5, 4, 3, 2, 1, 1, 2, 3, 4, 5}, []int{-1, -1, -1, -1, -1, -1, 1, 1, 1}), 0)\n    assert reflect.DeepEqual(candidate([]int{5, 6, 7, 8, 7, 6, 7, 8, 9, 10}, []int{1, 1, -1, -1, 1, 1, 1}), 1)\n    assert reflect.DeepEqual(candidate([]int{10,9,8,7,6,5,4,3,2,1}, []int{-1,-1,-1,-1,-1,-1,-1}), 3)\n    assert reflect.DeepEqual(candidate([]int{3,3,3,4,4,4,5,5,5,6,6,6}, []int{0,1,0,1,0,1,0,1}), 0)\n    assert reflect.DeepEqual(candidate([]int{1,2,3,2,1,2,3,2,1}, []int{1,-1,1,-1,1,-1,1}), 0)\n    assert reflect.DeepEqual(candidate([]int{1,1,2,2,3,3,2,2,1,1,2,2,3,3}, []int{0,1,0,-1,0,1,0,-1}), 0)\n    assert reflect.DeepEqual(candidate([]int{1,2,1,2,1,2,1,2,1,2}, []int{1,-1,1,-1,1}), 3)\n}",
+    "rust": "fn check(candidate: fn(Vec<i32>, i32) -> Vec<i32>) {\n    assert_eq!(candidate(vec![1,3,2,3,1,4,3,2], vec![1,-1,1,-1]), 2);\n    assert_eq!(candidate(vec![1,2,2,3,4,5], vec![1,0,1]), 1);\n    assert_eq!(candidate(vec![1,4,4,1,3,5,5,3], vec![1,0,-1]), 2);\n    assert_eq!(candidate(vec![5,5,5,5,5,5], vec![0,0,0]), 3);\n    assert_eq!(candidate(vec![1,2,2,3,4], vec![1,0,1]), 1);\n    assert_eq!(candidate(vec![1,2,2,3,3,4], vec![1,0,1,0]), 1);\n    assert_eq!(candidate(vec![1,2,3,4,5,6], vec![1,1]), 4);\n    assert_eq!(candidate(vec![1,1,1,1,1], vec![0,0,0]), 2);\n    assert_eq!(candidate(vec![5,4,3,2,1], vec![-1,-1,-1]), 2);\n    assert_eq!(candidate(vec![1,3,2,3,4,5], vec![1,-1,1]), 1);\n    assert_eq!(candidate(vec![1,1,1,1,1], vec![0,0]), 3);\n    assert_eq!(candidate(vec![1,2,2,3,3,4,4,5], vec![1,0,0,1,0,0]), 0);\n    assert_eq!(candidate(vec![1,3,2,4,3,5], vec![1,-1,1]), 2);\n    assert_eq!(candidate(vec![10,10,10,10], vec![0,0]), 2);\n    assert_eq!(candidate(vec![10,9,8,7,6,5], vec![-1,-1,-1]), 3);\n    assert_eq!(candidate(vec![1,1,1,1,1,1,1,1,1,1,1,1,1,1,1], vec![0,0,0,0,0,0,0,0,0,0,0,0,0]), 2);\n    assert_eq!(candidate(vec![1,2,3,2,1,2,3,2,1,2], vec![1,-1,1,-1,1]), 0);\n    assert_eq!(candidate(vec![1,2,3,2,1,2,3,4,5,4,3,2,1], vec![1,-1,1,1,1,-1,-1]), 0);\n    assert_eq!(candidate(vec![7,10,10,8,10,5,6,7,8,9], vec![1,0,-1,1,1,-1,1,1]), 0);\n    assert_eq!(candidate(vec![10, 9, 8, 9, 10, 11, 10, 9, 8, 9, 10], vec![-1, -1, 1, 1, -1, -1, 1]), 0);\n    assert_eq!(candidate(vec![1,2,2,3,3,4,5,5,6], vec![1,0,1,0,1,0,1]), 0);\n    assert_eq!(candidate(vec![1, 2, 2, 3, 3, 3, 4, 4, 5, 5, 6], vec![1, 0, 0, 1, 0, 0, 1]), 0);\n    assert_eq!(candidate(vec![1, 2, 1, 3, 2, 4, 3, 5, 4, 6], vec![1, -1, 1, -1, 1, -1]), 2);\n    assert_eq!(candidate(vec![1,1,1,2,2,2,3,3,3,2,2,2,1,1,1,1,2,2,2,2,3,3,3,3,2,2,2,2,1,1,1,1], vec![0,1,0,1,0,1,-1,0,-1,0,-1,0,-1,0,-1,0,1,0,1,0,1,0,1,-1,0,-1,0,-1,0,-1,0]), 0);\n    assert_eq!(candidate(vec![1, 2, 1, 3, 2, 1, 4, 3, 2, 1, 5, 4, 3, 2, 1], vec![1, -1, 1, -1, 1]), 0);\n    assert_eq!(candidate(vec![10, 9, 8, 7, 6, 5, 4, 3, 2, 1], vec![-1, -1, -1, -1, -1]), 5);\n    assert_eq!(candidate(vec![1,2,3,3,3,2,1,1,1,2,3], vec![1,0,0,-1,-1,0,0,1,1]), 1);\n    assert_eq!(candidate(vec![1,2,3,4,5,4,5,6,7,8], vec![1,1,-1,1,1,-1,1,1]), 0);\n    assert_eq!(candidate(vec![1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1], vec![0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]), 1);\n    assert_eq!(candidate(vec![1, 1, 1, 1, 1, 1, 1, 1, 1, 1], vec![0, 0, 0, 0, 0, 0, 0]), 3);\n    assert_eq!(candidate(vec![1,3,2,4,3,5,7,8,7,6,5,4,3,2,1,2,3,4,5,6,7,8,9], vec![1,-1,1,-1,1,-1,1,-1,1,-1,1,-1,1,-1,1,-1,1,-1,1,-1,1]), 0);\n    assert_eq!(candidate(vec![10,9,8,8,7,6,5,4,3,2,1], vec![-1,-1,0,-1,-1,-1,-1,-1,-1]), 1);\n    assert_eq!(candidate(vec![1,3,2,4,3,5,4,6,5,7], vec![1,-1,1,-1,1,-1,1]), 2);\n    assert_eq!(candidate(vec![1,2,3,2,1,2,3,2,1], vec![1,-1,1,-1,1,-1]), 0);\n    assert_eq!(candidate(vec![1,2,3,4,5,6,5,4,3,2,1], vec![1,1,1,-1,-1,-1]), 1);\n    assert_eq!(candidate(vec![1,2,3,4,5,6,7,8,9,10], vec![1,1,1,1,1]), 5);\n    assert_eq!(candidate(vec![1,2,3,4,5,6,5,4,3,2,1], vec![1,1,1,1,1,-1,-1,-1,-1,-1]), 1);\n    assert_eq!(candidate(vec![1,2,3,4,5,6,7,8,9,10,9,8,7,6,5,4,3,2,1,1,2,3,4,5,6,7,8,9,10], vec![1,1,1,1,1,1,1,1,1,-1,-1,-1,-1,-1,-1,-1,-1,-1,1,1,1,1,1,1,1,1,1]), 0);\n    assert_eq!(candidate(vec![1, 2, 3, 4, 3, 2, 1, 2, 3, 4, 3, 2, 1], vec![1, 1, -1, -1, 1, 1]), 0);\n    assert_eq!(candidate(vec![100, 200, 150, 250, 200, 300, 250, 350, 300, 400], vec![1, -1, 1, -1, 1, -1, 1]), 2);\n    assert_eq!(candidate(vec![1,2,2,2,3,3,3,2,2,2,1,1,1,2,2,2,3,3,3], vec![1,0,0,1,0,0,-1,0,0,-1,0,0,1,0,0]), 1);\n    assert_eq!(candidate(vec![1,2,1,2,1,2,1,2,1], vec![1,-1,1,-1,1,-1,1]), 1);\n    assert_eq!(candidate(vec![1, 1, 1, 2, 2, 2, 3, 3, 3, 1, 1, 1], vec![0, 1, 0, -1, 0]), 0);\n    assert_eq!(candidate(vec![1,2,3,2,3,4,3,4,5,4,5,6], vec![1,-1,1,1,-1,1,-1,1]), 0);\n    assert_eq!(candidate(vec![10,9,8,7,6,5,4,3,2,1], vec![-1,-1,-1,-1,-1,-1,-1,-1,-1]), 1);\n    assert_eq!(candidate(vec![1, 2, 2, 2, 3, 3, 3, 2, 2, 2, 1, 1, 1, 1], vec![1, 0, 1, 0, -1, 0, -1]), 0);\n    assert_eq!(candidate(vec![1,1,2,2,1,1,2,2,1,1,2,2,1,1], vec![0,1,0,-1,0,1,0,-1,0,1]), 1);\n    assert_eq!(candidate(vec![1,1,2,1,3,2,4,3,5,4,6,5,7,6,8], vec![0,-1,1,-1,1,-1,1,-1,1,-1]), 0);\n    assert_eq!(candidate(vec![1,2,3,4,5,6,7,8,9,10,11,12,13,14,15], vec![1,1,1,1,1,1,1,1,1,1,1,1]), 3);\n    assert_eq!(candidate(vec![10, 20, 10, 30, 20, 40, 30, 50], vec![1, -1, 1, -1, 1]), 2);\n    assert_eq!(candidate(vec![1,2,3,2,1,2,3,2,1,2,3,2,1,2,3,2], vec![1,-1,1,-1,1,-1,1,-1]), 0);\n    assert_eq!(candidate(vec![1,2,3,4,5,6,7,8,9,10,9,8,7,6,5,4,3,2,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15], vec![1,1,1,1,1,1,1,1,1,-1,-1,-1,-1,-1,-1,-1,-1,-1,1,1,1,1,1,1,1,1,1,1,1,1,1]), 1);\n    assert_eq!(candidate(vec![5,4,3,2,1,1,2,3,4,5,5,6,7,8,9,10], vec![-1,-1,-1,-1,0,1,1,1,1,0,1,1,1,1]), 1);\n    assert_eq!(candidate(vec![1,1,1,1,2,2,2,2,3,3,3,3], vec![0,0,0,1,0,0,0,1,0,0,0]), 1);\n    assert_eq!(candidate(vec![5,4,3,2,1,1,2,3,4,5,5,4,3,2,1,1,2,3,4,5], vec![-1,-1,-1,-1,0,1,1,1,1,0,-1,-1,-1,-1,0,1,1,1,1]), 1);\n    assert_eq!(candidate(vec![10, 9, 8, 7, 6, 5, 4, 3, 2, 1], vec![-1, -1, -1, -1, -1, -1]), 4);\n    assert_eq!(candidate(vec![1, 2, 1, 1, 2, 1, 2, 1, 2, 1, 2, 1], vec![1, -1, 0, 1, -1, 1, -1, 1, -1]), 1);\n    assert_eq!(candidate(vec![1,2,3,4,3,2,1,2,3,4,3,2,1,2,3,4,3,2,1,2,3,4], vec![1,1,-1,-1,1,1,-1,-1,1,1,-1,-1,1,1,-1,-1,1,1,-1]), 0);\n    assert_eq!(candidate(vec![9, 8, 7, 6, 5, 4, 3, 2, 1], vec![-1, -1, -1, -1, -1, -1]), 3);\n    assert_eq!(candidate(vec![1,2,3,4,5,6,7,8,9,10,11,12,13,14,15], vec![1,1,1,1,1,1,1,1,1,1,1,1,1]), 2);\n    assert_eq!(candidate(vec![1, 1, 1, 1, 2, 2, 2, 2, 3, 3], vec![0, 0, 0, 1, 0, 0, 0]), 1);\n    assert_eq!(candidate(vec![1,3,2,4,3,5,4,6,5,7], vec![1,-1,1,-1,1]), 3);\n    assert_eq!(candidate(vec![1, 2, 3, 4, 5, 4, 3, 2, 1, 2], vec![1, 1, 1, -1, -1, -1, 1]), 0);\n    assert_eq!(candidate(vec![1, 2, 3, 2, 1, 2, 3, 4, 3, 2, 1], vec![1, -1, 1, -1, 1]), 0);\n    assert_eq!(candidate(vec![10,10,11,12,13,13,12,11,12,13,13,12,10], vec![0,1,1,1,0,-1,-1,1,1,0,-1,-1]), 1);\n    assert_eq!(candidate(vec![1,1,2,2,3,3,4,4,5,5], vec![0,1,0,1,0]), 3);\n    assert_eq!(candidate(vec![1,1,2,2,3,3,4,4,5,5,6,6,7,7,8,8,9,9], vec![0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1]), 1);\n    assert_eq!(candidate(vec![1,2,2,1,2,2,1,2,2,1], vec![1,0,-1,1,0,-1,1,0]), 1);\n    assert_eq!(candidate(vec![1, 1, 2, 2, 3, 3, 4, 4, 5, 5], vec![0, 1, 0, 1, 0, 1]), 2);\n    assert_eq!(candidate(vec![1, 2, 3, 4, 5, 6, 5, 4, 3, 2, 1, 2, 3, 4, 5], vec![1, 1, 1, -1, -1, -1, 1, 1, 1]), 0);\n    assert_eq!(candidate(vec![5,4,3,2,1,1,2,3,4,5,5,4,3,2,1], vec![-1,-1,-1,-1,0,1,1,1,1,0,-1,-1,-1,-1]), 1);\n    assert_eq!(candidate(vec![5,1,5,2,5,3,5,4,5,5,5,6,7,8], vec![1,-1,1,-1,1,0,1,0,0,1,1]), 0);\n    assert_eq!(candidate(vec![1, 2, 3, 4, 5, 6, 7, 8, 9, 10], vec![0, 0, 0, 0, 0, 0, 0]), 0);\n    assert_eq!(candidate(vec![1,1,1,1,1,1,1,1,1,1], vec![0,0,0,0,0]), 5);\n    assert_eq!(candidate(vec![1,2,3,2,1,2,3,2,1,2,3,2,1,2,3,2,1,2,3,2,1,2,3,2,1,2,3,2,1,2,3], vec![1,-1,1,-1,1,-1,1,-1,1,-1,1,-1,1,-1,1,-1,1,-1,1,-1,1,-1,1,-1,1,-1,1,-1]), 0);\n    assert_eq!(candidate(vec![1,2,2,2,3,3,3,4,4,4,5,5,5,6,6,6,7,7,7,8,8,8,9,9,9,10,10,10], vec![0,0,1,0,0,1,0,0,1,0,0,1,0,0,1,0,0,1,0,0,1,0,0,1,0,0,1]), 0);\n    assert_eq!(candidate(vec![1,3,5,4,6,5,7,8,7,9,10,9,11,12], vec![1,1,-1,1,-1,1,-1,1,-1,1]), 0);\n    assert_eq!(candidate(vec![1,2,2,3,3,4,4,5,5,6], vec![1,0,1,0,1,0,1]), 2);\n    assert_eq!(candidate(vec![1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20], vec![1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]), 1);\n    assert_eq!(candidate(vec![9,8,7,8,9,10,9,8,7,8,9,10], vec![-1,-1,1,-1,1,-1,1,-1,1,-1]), 0);\n    assert_eq!(candidate(vec![1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8], vec![0, 1, 0, 1, 0, 1, 0, 1]), 4);\n    assert_eq!(candidate(vec![1,1,2,2,3,3,4,4,5,5], vec![0,1,0,1,0,1,0]), 2);\n    assert_eq!(candidate(vec![1,2,2,3,4,4,5,6,6,7,8], vec![1,0,1,0,1,0,1,0]), 0);\n    assert_eq!(candidate(vec![1,1,1,1,2,3,4,5,6,7,8,9,10], vec![0,0,0,1,1,1,1,1,1,1]), 1);\n    assert_eq!(candidate(vec![3,1,2,4,3,5,6,5,7,8,7,9,10,11,10,12,13,14,13,15,16], vec![1,-1,1,1,-1,1,1,-1,1,1,-1,1,1,-1,1,1,-1]), 0);\n    assert_eq!(candidate(vec![1,3,2,4,3,5,6,5,7,8,7,9,10,11,10,12,13,14,13,15,16,15,17,18,17,19,20,19,21,22], vec![1,-1,1,1,-1,1,1,-1,1,1,-1,1,1,-1,1,1,-1,1,1,-1,1,1,-1,1,1,-1]), 0);\n    assert_eq!(candidate(vec![3, 2, 3, 2, 3, 2, 3, 2, 3, 2], vec![-1, 1, -1, 1, -1, 1, -1]), 2);\n    assert_eq!(candidate(vec![1,2,2,3,4,4,5,5,6,7,8,9,10], vec![1,0,1,0,1,0,1,0,1,0]), 0);\n    assert_eq!(candidate(vec![1,2,3,4,5,6,7,8,9,10,9,8,7,6,5,4,3,2,1], vec![1,1,1,1,1,1,1,1,-1,-1,-1,-1,-1,-1,-1,-1]), 1);\n    assert_eq!(candidate(vec![9,8,7,6,5,4,3,2,1], vec![-1,-1,-1,-1,-1,-1]), 3);\n    assert_eq!(candidate(vec![10,9,8,7,6,5,4,3,2,1], vec![-1,-1,-1,-1,-1]), 5);\n    assert_eq!(candidate(vec![1,2,2,3,4,5,6,7,8,9], vec![1,0,1,1,1,1]), 1);\n    assert_eq!(candidate(vec![5, 6, 5, 6, 5, 6, 5, 6, 5, 6], vec![1, -1, 1, -1, 1, -1, 1]), 2);\n    assert_eq!(candidate(vec![1,2,3,4,5,6,5,4,3,2,1,2,3,4,5,6], vec![1,1,1,-1,-1,-1,1,1,1]), 0);\n    assert_eq!(candidate(vec![1,1,1,1,1,1,1,1,1,1,1,1,1,1,1], vec![0,0,0,0,0,0,0,0,0,0,0,0,0,0]), 1);\n    assert_eq!(candidate(vec![1, 3, 2, 1, 2, 3, 2, 1, 3, 2, 1], vec![1, -1, 1, -1, 1, -1]), 0);\n    assert_eq!(candidate(vec![1,2,2,3,3,2,2,1,1,2,2,3,3,2,2,1,1,2,2,3,3,2,2,1,1], vec![1,0,0,1,0,0,-1,-1,0,0,1,0,0,-1,-1,0,0,1,0,0,-1,-1,0,0]), 0);\n    assert_eq!(candidate(vec![1,2,3,4,5,6,5,4,3,2,1,2,3,4,5,6,5,4,3,2,1], vec![1,1,1,1,1,-1,-1,-1,-1,-1,1,1,1,1,1,-1,-1,-1,-1,-1]), 1);\n    assert_eq!(candidate(vec![1,3,5,4,6,7,5,6,7,8,9,8,7,6,5,4,3,2,1], vec![1,1,-1,1,1,1,-1,1,1,1,-1,-1,-1,-1,-1,-1,-1,-1]), 0);\n    assert_eq!(candidate(vec![1, 2, 3, 2, 3, 4, 5, 4, 5, 6], vec![1, -1, 1, 1, -1, 1]), 0);\n    assert_eq!(candidate(vec![1, 2, 3, 4, 5, 6, 7, 8, 9, 10], vec![1, 1, 1, 1, 1, 1, 1, 1]), 2);\n    assert_eq!(candidate(vec![1,2,3,2,1,2,3,4,5,4,3,2,1], vec![1,-1,1,-1,1,-1,1,-1]), 0);\n    assert_eq!(candidate(vec![1, 2, 1, 2, 1, 2, 1, 2, 1, 2], vec![1, -1, 1, -1, 1, -1, 1]), 2);\n    assert_eq!(candidate(vec![1, 2, 3, 4, 5, 6, 7, 8, 9, 10], vec![1, 1, 1, 1, 1, 1, 1]), 3);\n    assert_eq!(candidate(vec![9, 8, 7, 6, 5, 4, 3, 2, 1, 1, 2, 3, 4, 5], vec![-1, -1, -1, -1, -1, -1, 1, 1, 1]), 0);\n    assert_eq!(candidate(vec![5, 6, 7, 8, 7, 6, 7, 8, 9, 10], vec![1, 1, -1, -1, 1, 1, 1]), 1);\n    assert_eq!(candidate(vec![10,9,8,7,6,5,4,3,2,1], vec![-1,-1,-1,-1,-1,-1,-1]), 3);\n    assert_eq!(candidate(vec![3,3,3,4,4,4,5,5,5,6,6,6], vec![0,1,0,1,0,1,0,1]), 0);\n    assert_eq!(candidate(vec![1,2,3,2,1,2,3,2,1], vec![1,-1,1,-1,1,-1,1]), 0);\n    assert_eq!(candidate(vec![1,1,2,2,3,3,2,2,1,1,2,2,3,3], vec![0,1,0,-1,0,1,0,-1]), 0);\n    assert_eq!(candidate(vec![1,2,1,2,1,2,1,2,1,2], vec![1,-1,1,-1,1]), 3);\n}"
+  },
+  "test_cases": [
+    {
+      "input": "nums = [1,3,2,3,1,4,3,2], pattern = [1,-1,1,-1]",
+      "output": "2"
+    },
+    {
+      "input": "nums = [1,2,2,3,4,5], pattern = [1,0,1]",
+      "output": "1"
+    },
+    {
+      "input": "nums = [1,4,4,1,3,5,5,3], pattern = [1,0,-1]",
+      "output": "2"
+    },
+    {
+      "input": "nums = [5,5,5,5,5,5], pattern = [0,0,0]",
+      "output": "3"
+    },
+    {
+      "input": "nums = [1,2,2,3,4], pattern = [1,0,1]",
+      "output": "1"
+    },
+    {
+      "input": "nums = [1,2,2,3,3,4], pattern = [1,0,1,0]",
+      "output": "1"
+    },
+    {
+      "input": "nums = [1,2,3,4,5,6], pattern = [1,1]",
+      "output": "4"
+    },
+    {
+      "input": "nums = [1,1,1,1,1], pattern = [0,0,0]",
+      "output": "2"
+    },
+    {
+      "input": "nums = [5,4,3,2,1], pattern = [-1,-1,-1]",
+      "output": "2"
+    },
+    {
+      "input": "nums = [1,3,2,3,4,5], pattern = [1,-1,1]",
+      "output": "1"
+    },
+    {
+      "input": "nums = [1,1,1,1,1], pattern = [0,0]",
+      "output": "3"
+    },
+    {
+      "input": "nums = [1,2,2,3,3,4,4,5], pattern = [1,0,0,1,0,0]",
+      "output": "0"
+    },
+    {
+      "input": "nums = [1,3,2,4,3,5], pattern = [1,-1,1]",
+      "output": "2"
+    },
+    {
+      "input": "nums = [10,10,10,10], pattern = [0,0]",
+      "output": "2"
+    },
+    {
+      "input": "nums = [10,9,8,7,6,5], pattern = [-1,-1,-1]",
+      "output": "3"
+    },
+    {
+      "input": "nums = [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1], pattern = [0,0,0,0,0,0,0,0,0,0,0,0,0]",
+      "output": "2"
+    },
+    {
+      "input": "nums = [1,2,3,2,1,2,3,2,1,2], pattern = [1,-1,1,-1,1]",
+      "output": "0"
+    },
+    {
+      "input": "nums = [1,2,3,2,1,2,3,4,5,4,3,2,1], pattern = [1,-1,1,1,1,-1,-1]",
+      "output": "0"
+    },
+    {
+      "input": "nums = [7,10,10,8,10,5,6,7,8,9], pattern = [1,0,-1,1,1,-1,1,1]",
+      "output": "0"
+    },
+    {
+      "input": "nums = [10, 9, 8, 9, 10, 11, 10, 9, 8, 9, 10], pattern = [-1, -1, 1, 1, -1, -1, 1]",
+      "output": "0"
+    },
+    {
+      "input": "nums = [1,2,2,3,3,4,5,5,6], pattern = [1,0,1,0,1,0,1]",
+      "output": "0"
+    },
+    {
+      "input": "nums = [1, 2, 2, 3, 3, 3, 4, 4, 5, 5, 6], pattern = [1, 0, 0, 1, 0, 0, 1]",
+      "output": "0"
+    },
+    {
+      "input": "nums = [1, 2, 1, 3, 2, 4, 3, 5, 4, 6], pattern = [1, -1, 1, -1, 1, -1]",
+      "output": "2"
+    },
+    {
+      "input": "nums = [1,1,1,2,2,2,3,3,3,2,2,2,1,1,1,1,2,2,2,2,3,3,3,3,2,2,2,2,1,1,1,1], pattern = [0,1,0,1,0,1,-1,0,-1,0,-1,0,-1,0,-1,0,1,0,1,0,1,0,1,-1,0,-1,0,-1,0,-1,0]",
+      "output": "0"
+    },
+    {
+      "input": "nums = [1, 2, 1, 3, 2, 1, 4, 3, 2, 1, 5, 4, 3, 2, 1], pattern = [1, -1, 1, -1, 1]",
+      "output": "0"
+    },
+    {
+      "input": "nums = [10, 9, 8, 7, 6, 5, 4, 3, 2, 1], pattern = [-1, -1, -1, -1, -1]",
+      "output": "5"
+    },
+    {
+      "input": "nums = [1,2,3,3,3,2,1,1,1,2,3], pattern = [1,0,0,-1,-1,0,0,1,1]",
+      "output": "1"
+    },
+    {
+      "input": "nums = [1,2,3,4,5,4,5,6,7,8], pattern = [1,1,-1,1,1,-1,1,1]",
+      "output": "0"
+    },
+    {
+      "input": "nums = [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1], pattern = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]",
+      "output": "1"
+    },
+    {
+      "input": "nums = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1], pattern = [0, 0, 0, 0, 0, 0, 0]",
+      "output": "3"
+    },
+    {
+      "input": "nums = [1,3,2,4,3,5,7,8,7,6,5,4,3,2,1,2,3,4,5,6,7,8,9], pattern = [1,-1,1,-1,1,-1,1,-1,1,-1,1,-1,1,-1,1,-1,1,-1,1,-1,1]",
+      "output": "0"
+    },
+    {
+      "input": "nums = [10,9,8,8,7,6,5,4,3,2,1], pattern = [-1,-1,0,-1,-1,-1,-1,-1,-1]",
+      "output": "1"
+    },
+    {
+      "input": "nums = [1,3,2,4,3,5,4,6,5,7], pattern = [1,-1,1,-1,1,-1,1]",
+      "output": "2"
+    },
+    {
+      "input": "nums = [1,2,3,2,1,2,3,2,1], pattern = [1,-1,1,-1,1,-1]",
+      "output": "0"
+    },
+    {
+      "input": "nums = [1,2,3,4,5,6,5,4,3,2,1], pattern = [1,1,1,-1,-1,-1]",
+      "output": "1"
+    },
+    {
+      "input": "nums = [1,2,3,4,5,6,7,8,9,10], pattern = [1,1,1,1,1]",
+      "output": "5"
+    },
+    {
+      "input": "nums = [1,2,3,4,5,6,5,4,3,2,1], pattern = [1,1,1,1,1,-1,-1,-1,-1,-1]",
+      "output": "1"
+    },
+    {
+      "input": "nums = [1,2,3,4,5,6,7,8,9,10,9,8,7,6,5,4,3,2,1,1,2,3,4,5,6,7,8,9,10], pattern = [1,1,1,1,1,1,1,1,1,-1,-1,-1,-1,-1,-1,-1,-1,-1,1,1,1,1,1,1,1,1,1]",
+      "output": "0"
+    },
+    {
+      "input": "nums = [1, 2, 3, 4, 3, 2, 1, 2, 3, 4, 3, 2, 1], pattern = [1, 1, -1, -1, 1, 1]",
+      "output": "0"
+    },
+    {
+      "input": "nums = [100, 200, 150, 250, 200, 300, 250, 350, 300, 400], pattern = [1, -1, 1, -1, 1, -1, 1]",
+      "output": "2"
+    },
+    {
+      "input": "nums = [1,2,2,2,3,3,3,2,2,2,1,1,1,2,2,2,3,3,3], pattern = [1,0,0,1,0,0,-1,0,0,-1,0,0,1,0,0]",
+      "output": "1"
+    },
+    {
+      "input": "nums = [1,2,1,2,1,2,1,2,1], pattern = [1,-1,1,-1,1,-1,1]",
+      "output": "1"
+    },
+    {
+      "input": "nums = [1, 1, 1, 2, 2, 2, 3, 3, 3, 1, 1, 1], pattern = [0, 1, 0, -1, 0]",
+      "output": "0"
+    },
+    {
+      "input": "nums = [1,2,3,2,3,4,3,4,5,4,5,6], pattern = [1,-1,1,1,-1,1,-1,1]",
+      "output": "0"
+    },
+    {
+      "input": "nums = [10,9,8,7,6,5,4,3,2,1], pattern = [-1,-1,-1,-1,-1,-1,-1,-1,-1]",
+      "output": "1"
+    },
+    {
+      "input": "nums = [1, 2, 2, 2, 3, 3, 3, 2, 2, 2, 1, 1, 1, 1], pattern = [1, 0, 1, 0, -1, 0, -1]",
+      "output": "0"
+    },
+    {
+      "input": "nums = [1,1,2,2,1,1,2,2,1,1,2,2,1,1], pattern = [0,1,0,-1,0,1,0,-1,0,1]",
+      "output": "1"
+    },
+    {
+      "input": "nums = [1,1,2,1,3,2,4,3,5,4,6,5,7,6,8], pattern = [0,-1,1,-1,1,-1,1,-1,1,-1]",
+      "output": "0"
+    },
+    {
+      "input": "nums = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15], pattern = [1,1,1,1,1,1,1,1,1,1,1,1]",
+      "output": "3"
+    },
+    {
+      "input": "nums = [10, 20, 10, 30, 20, 40, 30, 50], pattern = [1, -1, 1, -1, 1]",
+      "output": "2"
+    },
+    {
+      "input": "nums = [1,2,3,2,1,2,3,2,1,2,3,2,1,2,3,2], pattern = [1,-1,1,-1,1,-1,1,-1]",
+      "output": "0"
+    },
+    {
+      "input": "nums = [1,2,3,4,5,6,7,8,9,10,9,8,7,6,5,4,3,2,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15], pattern = [1,1,1,1,1,1,1,1,1,-1,-1,-1,-1,-1,-1,-1,-1,-1,1,1,1,1,1,1,1,1,1,1,1,1,1]",
+      "output": "1"
+    },
+    {
+      "input": "nums = [5,4,3,2,1,1,2,3,4,5,5,6,7,8,9,10], pattern = [-1,-1,-1,-1,0,1,1,1,1,0,1,1,1,1]",
+      "output": "1"
+    },
+    {
+      "input": "nums = [1,1,1,1,2,2,2,2,3,3,3,3], pattern = [0,0,0,1,0,0,0,1,0,0,0]",
+      "output": "1"
+    },
+    {
+      "input": "nums = [5,4,3,2,1,1,2,3,4,5,5,4,3,2,1,1,2,3,4,5], pattern = [-1,-1,-1,-1,0,1,1,1,1,0,-1,-1,-1,-1,0,1,1,1,1]",
+      "output": "1"
+    },
+    {
+      "input": "nums = [10, 9, 8, 7, 6, 5, 4, 3, 2, 1], pattern = [-1, -1, -1, -1, -1, -1]",
+      "output": "4"
+    },
+    {
+      "input": "nums = [1, 2, 1, 1, 2, 1, 2, 1, 2, 1, 2, 1], pattern = [1, -1, 0, 1, -1, 1, -1, 1, -1]",
+      "output": "1"
+    },
+    {
+      "input": "nums = [1,2,3,4,3,2,1,2,3,4,3,2,1,2,3,4,3,2,1,2,3,4], pattern = [1,1,-1,-1,1,1,-1,-1,1,1,-1,-1,1,1,-1,-1,1,1,-1]",
+      "output": "0"
+    },
+    {
+      "input": "nums = [9, 8, 7, 6, 5, 4, 3, 2, 1], pattern = [-1, -1, -1, -1, -1, -1]",
+      "output": "3"
+    },
+    {
+      "input": "nums = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15], pattern = [1,1,1,1,1,1,1,1,1,1,1,1,1]",
+      "output": "2"
+    },
+    {
+      "input": "nums = [1, 1, 1, 1, 2, 2, 2, 2, 3, 3], pattern = [0, 0, 0, 1, 0, 0, 0]",
+      "output": "1"
+    },
+    {
+      "input": "nums = [1,3,2,4,3,5,4,6,5,7], pattern = [1,-1,1,-1,1]",
+      "output": "3"
+    },
+    {
+      "input": "nums = [1, 2, 3, 4, 5, 4, 3, 2, 1, 2], pattern = [1, 1, 1, -1, -1, -1, 1]",
+      "output": "0"
+    },
+    {
+      "input": "nums = [1, 2, 3, 2, 1, 2, 3, 4, 3, 2, 1], pattern = [1, -1, 1, -1, 1]",
+      "output": "0"
+    },
+    {
+      "input": "nums = [10,10,11,12,13,13,12,11,12,13,13,12,10], pattern = [0,1,1,1,0,-1,-1,1,1,0,-1,-1]",
+      "output": "1"
+    },
+    {
+      "input": "nums = [1,1,2,2,3,3,4,4,5,5], pattern = [0,1,0,1,0]",
+      "output": "3"
+    },
+    {
+      "input": "nums = [1,1,2,2,3,3,4,4,5,5,6,6,7,7,8,8,9,9], pattern = [0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1]",
+      "output": "1"
+    },
+    {
+      "input": "nums = [1,2,2,1,2,2,1,2,2,1], pattern = [1,0,-1,1,0,-1,1,0]",
+      "output": "1"
+    },
+    {
+      "input": "nums = [1, 1, 2, 2, 3, 3, 4, 4, 5, 5], pattern = [0, 1, 0, 1, 0, 1]",
+      "output": "2"
+    },
+    {
+      "input": "nums = [1, 2, 3, 4, 5, 6, 5, 4, 3, 2, 1, 2, 3, 4, 5], pattern = [1, 1, 1, -1, -1, -1, 1, 1, 1]",
+      "output": "0"
+    },
+    {
+      "input": "nums = [5,4,3,2,1,1,2,3,4,5,5,4,3,2,1], pattern = [-1,-1,-1,-1,0,1,1,1,1,0,-1,-1,-1,-1]",
+      "output": "1"
+    },
+    {
+      "input": "nums = [5,1,5,2,5,3,5,4,5,5,5,6,7,8], pattern = [1,-1,1,-1,1,0,1,0,0,1,1]",
+      "output": "0"
+    },
+    {
+      "input": "nums = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10], pattern = [0, 0, 0, 0, 0, 0, 0]",
+      "output": "0"
+    },
+    {
+      "input": "nums = [1,1,1,1,1,1,1,1,1,1], pattern = [0,0,0,0,0]",
+      "output": "5"
+    },
+    {
+      "input": "nums = [1,2,3,2,1,2,3,2,1,2,3,2,1,2,3,2,1,2,3,2,1,2,3,2,1,2,3,2,1,2,3], pattern = [1,-1,1,-1,1,-1,1,-1,1,-1,1,-1,1,-1,1,-1,1,-1,1,-1,1,-1,1,-1,1,-1,1,-1]",
+      "output": "0"
+    },
+    {
+      "input": "nums = [1,2,2,2,3,3,3,4,4,4,5,5,5,6,6,6,7,7,7,8,8,8,9,9,9,10,10,10], pattern = [0,0,1,0,0,1,0,0,1,0,0,1,0,0,1,0,0,1,0,0,1,0,0,1,0,0,1]",
+      "output": "0"
+    },
+    {
+      "input": "nums = [1,3,5,4,6,5,7,8,7,9,10,9,11,12], pattern = [1,1,-1,1,-1,1,-1,1,-1,1]",
+      "output": "0"
+    },
+    {
+      "input": "nums = [1,2,2,3,3,4,4,5,5,6], pattern = [1,0,1,0,1,0,1]",
+      "output": "2"
+    },
+    {
+      "input": "nums = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20], pattern = [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]",
+      "output": "1"
+    },
+    {
+      "input": "nums = [9,8,7,8,9,10,9,8,7,8,9,10], pattern = [-1,-1,1,-1,1,-1,1,-1,1,-1]",
+      "output": "0"
+    },
+    {
+      "input": "nums = [1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8], pattern = [0, 1, 0, 1, 0, 1, 0, 1]",
+      "output": "4"
+    },
+    {
+      "input": "nums = [1,1,2,2,3,3,4,4,5,5], pattern = [0,1,0,1,0,1,0]",
+      "output": "2"
+    },
+    {
+      "input": "nums = [1,2,2,3,4,4,5,6,6,7,8], pattern = [1,0,1,0,1,0,1,0]",
+      "output": "0"
+    },
+    {
+      "input": "nums = [1,1,1,1,2,3,4,5,6,7,8,9,10], pattern = [0,0,0,1,1,1,1,1,1,1]",
+      "output": "1"
+    },
+    {
+      "input": "nums = [3,1,2,4,3,5,6,5,7,8,7,9,10,11,10,12,13,14,13,15,16], pattern = [1,-1,1,1,-1,1,1,-1,1,1,-1,1,1,-1,1,1,-1]",
+      "output": "0"
+    },
+    {
+      "input": "nums = [1,3,2,4,3,5,6,5,7,8,7,9,10,11,10,12,13,14,13,15,16,15,17,18,17,19,20,19,21,22], pattern = [1,-1,1,1,-1,1,1,-1,1,1,-1,1,1,-1,1,1,-1,1,1,-1,1,1,-1,1,1,-1]",
+      "output": "0"
+    },
+    {
+      "input": "nums = [3, 2, 3, 2, 3, 2, 3, 2, 3, 2], pattern = [-1, 1, -1, 1, -1, 1, -1]",
+      "output": "2"
+    },
+    {
+      "input": "nums = [1,2,2,3,4,4,5,5,6,7,8,9,10], pattern = [1,0,1,0,1,0,1,0,1,0]",
+      "output": "0"
+    },
+    {
+      "input": "nums = [1,2,3,4,5,6,7,8,9,10,9,8,7,6,5,4,3,2,1], pattern = [1,1,1,1,1,1,1,1,-1,-1,-1,-1,-1,-1,-1,-1]",
+      "output": "1"
+    },
+    {
+      "input": "nums = [9,8,7,6,5,4,3,2,1], pattern = [-1,-1,-1,-1,-1,-1]",
+      "output": "3"
+    },
+    {
+      "input": "nums = [10,9,8,7,6,5,4,3,2,1], pattern = [-1,-1,-1,-1,-1]",
+      "output": "5"
+    },
+    {
+      "input": "nums = [1,2,2,3,4,5,6,7,8,9], pattern = [1,0,1,1,1,1]",
+      "output": "1"
+    },
+    {
+      "input": "nums = [5, 6, 5, 6, 5, 6, 5, 6, 5, 6], pattern = [1, -1, 1, -1, 1, -1, 1]",
+      "output": "2"
+    },
+    {
+      "input": "nums = [1,2,3,4,5,6,5,4,3,2,1,2,3,4,5,6], pattern = [1,1,1,-1,-1,-1,1,1,1]",
+      "output": "0"
+    },
+    {
+      "input": "nums = [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1], pattern = [0,0,0,0,0,0,0,0,0,0,0,0,0,0]",
+      "output": "1"
+    },
+    {
+      "input": "nums = [1, 3, 2, 1, 2, 3, 2, 1, 3, 2, 1], pattern = [1, -1, 1, -1, 1, -1]",
+      "output": "0"
+    },
+    {
+      "input": "nums = [1,2,2,3,3,2,2,1,1,2,2,3,3,2,2,1,1,2,2,3,3,2,2,1,1], pattern = [1,0,0,1,0,0,-1,-1,0,0,1,0,0,-1,-1,0,0,1,0,0,-1,-1,0,0]",
+      "output": "0"
+    },
+    {
+      "input": "nums = [1,2,3,4,5,6,5,4,3,2,1,2,3,4,5,6,5,4,3,2,1], pattern = [1,1,1,1,1,-1,-1,-1,-1,-1,1,1,1,1,1,-1,-1,-1,-1,-1]",
+      "output": "1"
+    },
+    {
+      "input": "nums = [1,3,5,4,6,7,5,6,7,8,9,8,7,6,5,4,3,2,1], pattern = [1,1,-1,1,1,1,-1,1,1,1,-1,-1,-1,-1,-1,-1,-1,-1]",
+      "output": "0"
+    },
+    {
+      "input": "nums = [1, 2, 3, 2, 3, 4, 5, 4, 5, 6], pattern = [1, -1, 1, 1, -1, 1]",
+      "output": "0"
+    },
+    {
+      "input": "nums = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10], pattern = [1, 1, 1, 1, 1, 1, 1, 1]",
+      "output": "2"
+    },
+    {
+      "input": "nums = [1,2,3,2,1,2,3,4,5,4,3,2,1], pattern = [1,-1,1,-1,1,-1,1,-1]",
+      "output": "0"
+    },
+    {
+      "input": "nums = [1, 2, 1, 2, 1, 2, 1, 2, 1, 2], pattern = [1, -1, 1, -1, 1, -1, 1]",
+      "output": "2"
+    },
+    {
+      "input": "nums = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10], pattern = [1, 1, 1, 1, 1, 1, 1]",
+      "output": "3"
+    },
+    {
+      "input": "nums = [9, 8, 7, 6, 5, 4, 3, 2, 1, 1, 2, 3, 4, 5], pattern = [-1, -1, -1, -1, -1, -1, 1, 1, 1]",
+      "output": "0"
+    },
+    {
+      "input": "nums = [5, 6, 7, 8, 7, 6, 7, 8, 9, 10], pattern = [1, 1, -1, -1, 1, 1, 1]",
+      "output": "1"
+    },
+    {
+      "input": "nums = [10,9,8,7,6,5,4,3,2,1], pattern = [-1,-1,-1,-1,-1,-1,-1]",
+      "output": "3"
+    },
+    {
+      "input": "nums = [3,3,3,4,4,4,5,5,5,6,6,6], pattern = [0,1,0,1,0,1,0,1]",
+      "output": "0"
+    },
+    {
+      "input": "nums = [1,2,3,2,1,2,3,2,1], pattern = [1,-1,1,-1,1,-1,1]",
+      "output": "0"
+    },
+    {
+      "input": "nums = [1,1,2,2,3,3,2,2,1,1,2,2,3,3], pattern = [0,1,0,-1,0,1,0,-1]",
+      "output": "0"
+    },
+    {
+      "input": "nums = [1,2,1,2,1,2,1,2,1,2], pattern = [1,-1,1,-1,1]",
+      "output": "3"
+    }
+  ],
+  "types": {
+    "python3": {
+      "input": [
+        {
+          "nums": "List[int]"
+        },
+        {
+          "pattern": "List[int]"
+        }
+      ],
+      "output": "int"
+    },
+    "cpp": {
+      "input": [
+        {
+          "nums": "vector<int>&"
+        },
+        {
+          "pattern": "vector<int>&"
+        }
+      ],
+      "output": "int"
+    },
+    "java": {
+      "input": [
+        {
+          "nums": "int[]"
+        },
+        {
+          "pattern": "int[]"
+        }
+      ],
+      "output": "int"
+    },
+    "javascript": {
+      "input": [
+        {
+          "nums": "number[]"
+        },
+        {
+          "pattern": "number[]"
+        }
+      ],
+      "output": "number"
+    },
+    "typescript": {
+      "input": [
+        {
+          "nums": "number[]"
+        },
+        {
+          "pattern": "number[]"
+        }
+      ],
+      "output": "number"
+    },
+    "golang": {
+      "input": [
+        {
+          "nums": "[]int"
+        },
+        {
+          "pattern": "[]int"
+        }
+      ],
+      "output": "int"
+    },
+    "rust": {
+      "input": [
+        {
+          "nums": "Vec<i32>"
+        },
+        {
+          "pattern": "Vec<i32>"
+        }
+      ],
+      "output": "i32"
+    }
+  },
+  "tags": [
+    "array",
+    "rolling-hash",
+    "string-matching",
+    "hash-function"
+  ]
+}

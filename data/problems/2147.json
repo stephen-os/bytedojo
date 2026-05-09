@@ -1,0 +1,713 @@
+{
+  "id": 2147,
+  "title": "Number of Ways to Divide a Long Corridor",
+  "slug": "number-of-ways-to-divide-a-long-corridor",
+  "difficulty": "Hard",
+  "description": "Along a long library corridor, there is a line of seats and decorative plants. You are given a 0-indexed string corridor of length n consisting of letters 'S' and 'P' where each 'S' represents a seat and each 'P' represents a plant.\nOne room divider has already been installed to the left of index 0, and another to the right of index n - 1. Additional room dividers can be installed. For each position between indices i - 1 and i (1 <= i <= n - 1), at most one divider can be installed.\nDivide the corridor into non-overlapping sections, where each section has exactly two seats with any number of plants. There may be multiple ways to perform the division. Two ways are different if there is a position with a room divider installed in the first way but not in the second way.\nReturn the number of ways to divide the corridor. Since the answer may be very large, return it modulo 109 + 7. If there is no way, return 0.\nExample 1:\nExample 2:\nExample 3:\nConstraints:",
+  "examples": [
+    {
+      "example_num": 1,
+      "example_text": "Input: corridor = \"SSPPSPS\"\nOutput: 3\nExplanation: There are 3 different ways to divide the corridor.\nThe black bars in the above image indicate the two room dividers already installed.\nNote that in each of the ways, each section has exactly two seats.",
+      "images": [
+        "https://assets.leetcode.com/uploads/2021/12/04/1.png"
+      ]
+    },
+    {
+      "example_num": 2,
+      "example_text": "Input: corridor = \"PPSPSP\"\nOutput: 1\nExplanation: There is only 1 way to divide the corridor, by not installing any additional dividers.\nInstalling any would create some section that does not have exactly two seats.",
+      "images": [
+        "https://assets.leetcode.com/uploads/2021/12/04/2.png"
+      ]
+    },
+    {
+      "example_num": 3,
+      "example_text": "Input: corridor = \"S\"\nOutput: 0\nExplanation: There is no way to divide the corridor because there will always be a section that does not have exactly two seats.",
+      "images": [
+        "https://assets.leetcode.com/uploads/2021/12/12/3.png"
+      ]
+    }
+  ],
+  "constraints": [
+    "n == corridor.length",
+    "1 <= n <= 105",
+    "corridor[i] is either 'S' or 'P'."
+  ],
+  "hints": [
+    "Divide the corridor into segments. Each segment has two seats, starts precisely with one seat, and ends precisely with the other seat.",
+    "How many dividers can you install between two adjacent segments? You must install precisely one. Otherwise, you would have created a section with not exactly two seats.",
+    "If there are k plants between two adjacent segments, there are k + 1 positions (ways) you could install the divider you must install.",
+    "The problem now becomes: Find the product of all possible positions between every two adjacent segments."
+  ],
+  "code_snippets": {
+    "cpp": "class Solution {\npublic:\n    int numberOfWays(string corridor) {\n        \n    }\n};",
+    "java": "class Solution {\n    public int numberOfWays(String corridor) {\n        \n    }\n}",
+    "python3": "class Solution:\n    def numberOfWays(self, corridor: str) -> int:\n        ",
+    "javascript": "/**\n * @param {string} corridor\n * @return {number}\n */\nvar numberOfWays = function(corridor) {\n    \n};",
+    "typescript": "function numberOfWays(corridor: string): number {\n    \n};",
+    "golang": "func numberOfWays(corridor string) int {\n    \n}",
+    "rust": "impl Solution {\n    pub fn number_of_ways(corridor: String) -> i32 {\n        \n    }\n}"
+  },
+  "entry_points": {
+    "python3": "Solution().numberOfWays",
+    "cpp": "Solution().numberOfWays",
+    "java": "new Solution().numberOfWays",
+    "javascript": "numberOfWays",
+    "typescript": "numberOfWays",
+    "golang": "numberOfWays",
+    "rust": "Solution::number_of_ways"
+  },
+  "test_snippets": {
+    "python3": "def check(candidate):\n    assert candidate(corridor = \"PPPPSSPPPPSSPPPP\") == 5\n    assert candidate(corridor = \"SSSSSSSSSS\") == 1\n    assert candidate(corridor = \"SPSPSPSP\") == 2\n    assert candidate(corridor = \"SSSPPSS\") == 0\n    assert candidate(corridor = \"PSSPSPSPPS\") == 0\n    assert candidate(corridor = \"SS\") == 1\n    assert candidate(corridor = \"PPPP\") == 0\n    assert candidate(corridor = \"SSPPSS\") == 3\n    assert candidate(corridor = \"SSSSPPSSSS\") == 3\n    assert candidate(corridor = \"SSPSSP\") == 2\n    assert candidate(corridor = \"SSPSSPSS\") == 4\n    assert candidate(corridor = \"SSPPPPPSSPPPPSS\") == 30\n    assert candidate(corridor = \"SSPSPSPSPS\") == 4\n    assert candidate(corridor = \"SSSS\") == 1\n    assert candidate(corridor = \"SSSPPPSS\") == 0\n    assert candidate(corridor = \"SSSPPS\") == 1\n    assert candidate(corridor = \"PPSSPPSSPP\") == 3\n    assert candidate(corridor = \"SSPPSSPPSS\") == 9\n    assert candidate(corridor = \"SSPPSPS\") == 3\n    assert candidate(corridor = \"SSPPSPPS\") == 3\n    assert candidate(corridor = \"S\") == 0\n    assert candidate(corridor = \"PPSPSP\") == 1\n    assert candidate(corridor = \"SPPSPPSPPS\") == 3\n    assert candidate(corridor = \"PPSPSPSPSPSPSPSPSP\") == 8\n    assert candidate(corridor = \"SSSPSSSSPPSSPPSSSSPPSSSSPPSSSSSSSSSS\") == 0\n    assert candidate(corridor = \"SPPSPSPSPSPSPSPSPS\") == 0\n    assert candidate(corridor = \"SSPSSPSSPSSPSSPSSPSS\") == 64\n    assert candidate(corridor = \"PPSSPPSPSSPPSS\") == 0\n    assert candidate(corridor = \"SSPPSSSSSSSSPPSSSSSSSSPPSSSSSSSSSS\") == 27\n    assert candidate(corridor = \"SSPPSSPPSSPPSS\") == 27\n    assert candidate(corridor = \"SPSSPSSPSSPSSPSS\") == 0\n    assert candidate(corridor = \"PPPPPPSSPPPPSSPPPP\") == 5\n    assert candidate(corridor = \"SSPPPPPPSSPPPPSSPPPPSSPPSS\") == 525\n    assert candidate(corridor = \"PPSSPPSSPPSSPPSS\") == 27\n    assert candidate(corridor = \"PPPPSSPPPPSSPPPPSSPPPPSSPPPPSSPPPP\") == 625\n    assert candidate(corridor = \"SSSPSPSPSPSPSSSSPSPS\") == 0\n    assert candidate(corridor = \"SSPPSPSPSSSSPPPPSS\") == 30\n    assert candidate(corridor = \"SSPPSSSSSSSSSSSSSS\") == 3\n    assert candidate(corridor = \"PPPPPPPPPPPPPPPPPP\") == 0\n    assert candidate(corridor = \"SPPSPSPSPSPSPSPSPSPS\") == 16\n    assert candidate(corridor = \"SPSPPSPSPPSPSPPSPSPP\") == 27\n    assert candidate(corridor = \"PPSSPPSSPPSSPP\") == 9\n    assert candidate(corridor = \"SSPSPSPSPSPS\") == 0\n    assert candidate(corridor = \"SSSPSSSPSSSPSSSPSS\") == 4\n    assert candidate(corridor = \"PPSSPPSSSSSSSSSSSS\") == 3\n    assert candidate(corridor = \"SSPPPPPPPPSSPPPPSS\") == 45\n    assert candidate(corridor = \"SSPPSSSSSSPPSS\") == 9\n    assert candidate(corridor = \"SSPPPPPPSSPPPPPSS\") == 42\n    assert candidate(corridor = \"SSSSPPPPSSPPSSPPSSSSPPPPSSSSSS\") == 225\n    assert candidate(corridor = \"SSPPPPSSPPSS\") == 15\n    assert candidate(corridor = \"SSSSPPPPSSPPPPSSSSPPPPSS\") == 125\n    assert candidate(corridor = \"SSPPPPSSPPPPSSPPPPSSPPPPSS\") == 625\n    assert candidate(corridor = \"SSPPSPSSSSSSSSSSPPSS\") == 0\n    assert candidate(corridor = \"SPPSPPSPPSPPS\") == 0\n    assert candidate(corridor = \"SSPSPPSPSPSPSPPPSS\") == 0\n    assert candidate(corridor = \"SSPPSSPPSSPPSSPPSSPPSSPPSSPPSSPPSSPPSSPPSSPPSS\") == 177147\n    assert candidate(corridor = \"PPPPPPSPPPPSPPPPSPPPPS\") == 5\n    assert candidate(corridor = \"SSSSSSSSSSSSSSSS\") == 1\n    assert candidate(corridor = \"SSPPSPSSPPSPSSPPSPSS\") == 0\n    assert candidate(corridor = \"PPSSPPSSPPSS\") == 9\n    assert candidate(corridor = \"SSPPSPSPSPSPSPSPSPSPSPSPSPSPSPSPSPSPSPSPSPS\") == 1536\n    assert candidate(corridor = \"SSSPSSPPSSPPSSSSPPSSPPSSPPSSSSPPSSSS\") == 0\n    assert candidate(corridor = \"SSSSSSSSSSSSSSSSSSSSSSSSSS\") == 1\n    assert candidate(corridor = \"SSPPSSPPSSPPSSPPSSSSPPSSSSPPSSSS\") == 729\n    assert candidate(corridor = \"SSPPSPPPSPSPPS\") == 6\n    assert candidate(corridor = \"SSPPPPSSPPPPSSPPSSPPPPSS\") == 375\n    assert candidate(corridor = \"SSPPPPPPSPPPPPSSSSPP\") == 0\n    assert candidate(corridor = \"PPSSSSPPPPSS\") == 5\n    assert candidate(corridor = \"SSPPSPPPSSSSPPSPSS\") == 6\n    assert candidate(corridor = \"PPPPPPSSPPSS\") == 3\n    assert candidate(corridor = \"SSPPSPSSPPSPSSPPSPSSPPSPSS\") == 36\n    assert candidate(corridor = \"SSSPSSSPSSSPSSSPSSSPSSSPSSS\") == 0\n    assert candidate(corridor = \"SSSPSSSSPPSSPPSSSSPPSSSSPPSSSS\") == 0\n    assert candidate(corridor = \"SPPPPPPPPPPP\") == 0\n    assert candidate(corridor = \"PPPPSPSPPPPSPSPPPPSP\") == 0\n    assert candidate(corridor = \"PPSSPPSSPPSSPPSSPPSSPPSSPPSS\") == 729\n    assert candidate(corridor = \"PPPPPPPPPPPPPPPPPPPP\") == 0\n    assert candidate(corridor = \"SSPSSPSSPSSPSSPSSPSSPSS\") == 128\n    assert candidate(corridor = \"SSPPPPSPSPPPSS\") == 20\n    assert candidate(corridor = \"PPSSPSSPPSSPSSPPSSPSSPPSS\") == 216\n    assert candidate(corridor = \"SSPPPSSPPPSSPPPSS\") == 64\n    assert candidate(corridor = \"SSPSSSPSSPSSPSSPSS\") == 0\n    assert candidate(corridor = \"SSPPSSPPSSPPSSPPSSPPSSPPSS\") == 729\n    assert candidate(corridor = \"PPSSPPPPSSPPPPSS\") == 25\n    assert candidate(corridor = \"SPSSSPSSSPSSSPSSSPSS\") == 0\n    assert candidate(corridor = \"PSPSPSPSPSPSPSPSPS\") == 0\n    assert candidate(corridor = \"SSPPSSPSPSPSSP\") == 12\n    assert candidate(corridor = \"SSSSSSSSSSSSSSSSSS\") == 1\n    assert candidate(corridor = \"SSPPSSPPSSPPSPSSPPSS\") == 0\n    assert candidate(corridor = \"SSPPSPSPPPSSSPPSS\") == 0\n    assert candidate(corridor = \"SSPPSSSSPPSSSSPPS\") == 0\n    assert candidate(corridor = \"SSPPPPPPSSSSSSSSSS\") == 7\n    assert candidate(corridor = \"SSPPPPSSPPPPSSSSPPPPSSSSPPPPSSSS\") == 625\n    assert candidate(corridor = \"SSSSSSSSSSPPPPPPSS\") == 7\n    assert candidate(corridor = \"SSSSPPSSSSSSPPSSSS\") == 9\n    assert candidate(corridor = \"SSPSSPSSPSSPSSPSSPSSPSSPSSPS\") == 0\n    assert candidate(corridor = \"SSPPSPSPSPPSS\") == 0\n    assert candidate(corridor = \"PPSSPPPPSSPPSSPP\") == 15\n    assert candidate(corridor = \"SPSSSPSSSPSSSPSS\") == 4\n    assert candidate(corridor = \"PSPPSPSPSPSPSPSPSPSP\") == 0\n    assert candidate(corridor = \"SSSSSSPPSSSSSSPPSSSSSSPPSSSSSS\") == 27\n    assert candidate(corridor = \"SSPPSSPSSPPSSPSSPPSS\") == 108\n    assert candidate(corridor = \"SSSPSPSPSPSPSPSPSPSPSP\") == 16\n    assert candidate(corridor = \"PPPPPPSSPPPP\") == 1\n    assert candidate(corridor = \"PPSSPPSSPPSSPPSSPPSSPPSSPPSSPPSSPPSSPPSS\") == 19683\n    assert candidate(corridor = \"SSPPSPSSPSPSSPSPSSPSPSS\") == 24\n    assert candidate(corridor = \"SSSPPSSSPPPSSS\") == 0\n    assert candidate(corridor = \"SSSSSSSSSSSS\") == 1\n    assert candidate(corridor = \"SSSSSPPPSSSSSPPPSSSS\") == 4\n    assert candidate(corridor = \"SSSSSSSSPPPPPPPPSSSSSSSSPPPPPPPPSSSS\") == 81\n    assert candidate(corridor = \"SSSSSS\") == 1\n    assert candidate(corridor = \"SSPPPPPPSSSSSSPPSSPP\") == 21\n    assert candidate(corridor = \"SSPSPSPSPSPSPSPSPSPSPSPSPSPSPS\") == 128\n    assert candidate(corridor = \"SSPPSSPPSSPPSSPPSS\") == 81\n    assert candidate(corridor = \"SSSSPPPPSSSSPPPPSSSS\") == 25\n    assert candidate(corridor = \"SSPSPPSSPSPPSSPSPPSS\") == 0\n    assert candidate(corridor = \"SPSPSP\") == 0\n    assert candidate(corridor = \"SSPPPPSPSSPPPSS\") == 0\n    assert candidate(corridor = \"SSSSPSPSPSPS\") == 4\n    assert candidate(corridor = \"PPPPPP\") == 0\n    assert candidate(corridor = \"SSPPPPPPPPPPSSPPPPSSPPSS\") == 165\n    assert candidate(corridor = \"SSPPSSPPSSPPSSPPSSPPSSPPSSPPSSPPSS\") == 6561\n    assert candidate(corridor = \"SSPPPPSSPPPPSSPPSS\") == 75\n    assert candidate(corridor = \"SSSSSSSSSSSSSSSSSSSS\") == 1\n    assert candidate(corridor = \"SSSSPPPPSSSSPPSSSS\") == 15\n    assert candidate(corridor = \"PPPPPPPPPPPPPPPP\") == 0\n    assert candidate(corridor = \"SSSPSPSPSPSPSPSPSPSS\") == 16\n    assert candidate(corridor = \"SSPPSPSSSSPPSPSSSS\") == 6\n    assert candidate(corridor = \"SSPSSPSSPSSPSSPSS\") == 32\n    assert candidate(corridor = \"SSPPSSPPSSPPSSPPSSPP\") == 81\n    assert candidate(corridor = \"PPPPSSPPPPSSPPPPSSPPPPSSPPPPSS\") == 625\n    assert candidate(corridor = \"SSPPSSPPSSPPSSPPSSPPSSPPSSPPSS\") == 2187\n    assert candidate(corridor = \"SSSSPPSSSSPPSSSS\") == 9\n    assert candidate(corridor = \"SSSSSSPPPPSSSSPPPPSSSSSSPPPP\") == 25\n    assert candidate(corridor = \"SSPPSSPPSSPPSSPPSSPPSS\") == 243\n    assert candidate(corridor = \"SSPPSSPPSSPPSSSS\") == 27\n    assert candidate(corridor = \"SSPSPSPSPSPSPSPS\") == 0\n    assert candidate(corridor = \"SSPPSPSPSPSPSS\") == 12\n    assert candidate(corridor = \"SPSPSPSPSPSPSPSPSPSP\") == 16\n    assert candidate(corridor = \"SSPPSSSSPPPPSSSSSSSS\") == 15\n    assert candidate(corridor = \"PPPPSSPPSSPPSSPPPP\") == 9\n    assert candidate(corridor = \"SPSPPSPSPPSPSPPSPSPPSP\") == 0\n    assert candidate(corridor = \"PPSPSPSPSPSPPSPSPS\") == 8\n    assert candidate(corridor = \"SPSPSPSPPSPS\") == 6\n    assert candidate(corridor = \"SSPPSSPPSSPPSSSSPPSSPPSSSSPPSS\") == 729",
+    "cpp": "void check(Solution& solution) {\n    assert(solution.numberOfWays(\"PPPPSSPPPPSSPPPP\") == vector<int>5);\n    assert(solution.numberOfWays(\"SSSSSSSSSS\") == vector<int>1);\n    assert(solution.numberOfWays(\"SPSPSPSP\") == vector<int>2);\n    assert(solution.numberOfWays(\"SSSPPSS\") == vector<int>0);\n    assert(solution.numberOfWays(\"PSSPSPSPPS\") == vector<int>0);\n    assert(solution.numberOfWays(\"SS\") == vector<int>1);\n    assert(solution.numberOfWays(\"PPPP\") == vector<int>0);\n    assert(solution.numberOfWays(\"SSPPSS\") == vector<int>3);\n    assert(solution.numberOfWays(\"SSSSPPSSSS\") == vector<int>3);\n    assert(solution.numberOfWays(\"SSPSSP\") == vector<int>2);\n    assert(solution.numberOfWays(\"SSPSSPSS\") == vector<int>4);\n    assert(solution.numberOfWays(\"SSPPPPPSSPPPPSS\") == vector<int>30);\n    assert(solution.numberOfWays(\"SSPSPSPSPS\") == vector<int>4);\n    assert(solution.numberOfWays(\"SSSS\") == vector<int>1);\n    assert(solution.numberOfWays(\"SSSPPPSS\") == vector<int>0);\n    assert(solution.numberOfWays(\"SSSPPS\") == vector<int>1);\n    assert(solution.numberOfWays(\"PPSSPPSSPP\") == vector<int>3);\n    assert(solution.numberOfWays(\"SSPPSSPPSS\") == vector<int>9);\n    assert(solution.numberOfWays(\"SSPPSPS\") == vector<int>3);\n    assert(solution.numberOfWays(\"SSPPSPPS\") == vector<int>3);\n    assert(solution.numberOfWays(\"S\") == vector<int>0);\n    assert(solution.numberOfWays(\"PPSPSP\") == vector<int>1);\n    assert(solution.numberOfWays(\"SPPSPPSPPS\") == vector<int>3);\n    assert(solution.numberOfWays(\"PPSPSPSPSPSPSPSPSP\") == vector<int>8);\n    assert(solution.numberOfWays(\"SSSPSSSSPPSSPPSSSSPPSSSSPPSSSSSSSSSS\") == vector<int>0);\n    assert(solution.numberOfWays(\"SPPSPSPSPSPSPSPSPS\") == vector<int>0);\n    assert(solution.numberOfWays(\"SSPSSPSSPSSPSSPSSPSS\") == vector<int>64);\n    assert(solution.numberOfWays(\"PPSSPPSPSSPPSS\") == vector<int>0);\n    assert(solution.numberOfWays(\"SSPPSSSSSSSSPPSSSSSSSSPPSSSSSSSSSS\") == vector<int>27);\n    assert(solution.numberOfWays(\"SSPPSSPPSSPPSS\") == vector<int>27);\n    assert(solution.numberOfWays(\"SPSSPSSPSSPSSPSS\") == vector<int>0);\n    assert(solution.numberOfWays(\"PPPPPPSSPPPPSSPPPP\") == vector<int>5);\n    assert(solution.numberOfWays(\"SSPPPPPPSSPPPPSSPPPPSSPPSS\") == vector<int>525);\n    assert(solution.numberOfWays(\"PPSSPPSSPPSSPPSS\") == vector<int>27);\n    assert(solution.numberOfWays(\"PPPPSSPPPPSSPPPPSSPPPPSSPPPPSSPPPP\") == vector<int>625);\n    assert(solution.numberOfWays(\"SSSPSPSPSPSPSSSSPSPS\") == vector<int>0);\n    assert(solution.numberOfWays(\"SSPPSPSPSSSSPPPPSS\") == vector<int>30);\n    assert(solution.numberOfWays(\"SSPPSSSSSSSSSSSSSS\") == vector<int>3);\n    assert(solution.numberOfWays(\"PPPPPPPPPPPPPPPPPP\") == vector<int>0);\n    assert(solution.numberOfWays(\"SPPSPSPSPSPSPSPSPSPS\") == vector<int>16);\n    assert(solution.numberOfWays(\"SPSPPSPSPPSPSPPSPSPP\") == vector<int>27);\n    assert(solution.numberOfWays(\"PPSSPPSSPPSSPP\") == vector<int>9);\n    assert(solution.numberOfWays(\"SSPSPSPSPSPS\") == vector<int>0);\n    assert(solution.numberOfWays(\"SSSPSSSPSSSPSSSPSS\") == vector<int>4);\n    assert(solution.numberOfWays(\"PPSSPPSSSSSSSSSSSS\") == vector<int>3);\n    assert(solution.numberOfWays(\"SSPPPPPPPPSSPPPPSS\") == vector<int>45);\n    assert(solution.numberOfWays(\"SSPPSSSSSSPPSS\") == vector<int>9);\n    assert(solution.numberOfWays(\"SSPPPPPPSSPPPPPSS\") == vector<int>42);\n    assert(solution.numberOfWays(\"SSSSPPPPSSPPSSPPSSSSPPPPSSSSSS\") == vector<int>225);\n    assert(solution.numberOfWays(\"SSPPPPSSPPSS\") == vector<int>15);\n    assert(solution.numberOfWays(\"SSSSPPPPSSPPPPSSSSPPPPSS\") == vector<int>125);\n    assert(solution.numberOfWays(\"SSPPPPSSPPPPSSPPPPSSPPPPSS\") == vector<int>625);\n    assert(solution.numberOfWays(\"SSPPSPSSSSSSSSSSPPSS\") == vector<int>0);\n    assert(solution.numberOfWays(\"SPPSPPSPPSPPS\") == vector<int>0);\n    assert(solution.numberOfWays(\"SSPSPPSPSPSPSPPPSS\") == vector<int>0);\n    assert(solution.numberOfWays(\"SSPPSSPPSSPPSSPPSSPPSSPPSSPPSSPPSSPPSSPPSSPPSS\") == vector<int>177147);\n    assert(solution.numberOfWays(\"PPPPPPSPPPPSPPPPSPPPPS\") == vector<int>5);\n    assert(solution.numberOfWays(\"SSSSSSSSSSSSSSSS\") == vector<int>1);\n    assert(solution.numberOfWays(\"SSPPSPSSPPSPSSPPSPSS\") == vector<int>0);\n    assert(solution.numberOfWays(\"PPSSPPSSPPSS\") == vector<int>9);\n    assert(solution.numberOfWays(\"SSPPSPSPSPSPSPSPSPSPSPSPSPSPSPSPSPSPSPSPSPS\") == vector<int>1536);\n    assert(solution.numberOfWays(\"SSSPSSPPSSPPSSSSPPSSPPSSPPSSSSPPSSSS\") == vector<int>0);\n    assert(solution.numberOfWays(\"SSSSSSSSSSSSSSSSSSSSSSSSSS\") == vector<int>1);\n    assert(solution.numberOfWays(\"SSPPSSPPSSPPSSPPSSSSPPSSSSPPSSSS\") == vector<int>729);\n    assert(solution.numberOfWays(\"SSPPSPPPSPSPPS\") == vector<int>6);\n    assert(solution.numberOfWays(\"SSPPPPSSPPPPSSPPSSPPPPSS\") == vector<int>375);\n    assert(solution.numberOfWays(\"SSPPPPPPSPPPPPSSSSPP\") == vector<int>0);\n    assert(solution.numberOfWays(\"PPSSSSPPPPSS\") == vector<int>5);\n    assert(solution.numberOfWays(\"SSPPSPPPSSSSPPSPSS\") == vector<int>6);\n    assert(solution.numberOfWays(\"PPPPPPSSPPSS\") == vector<int>3);\n    assert(solution.numberOfWays(\"SSPPSPSSPPSPSSPPSPSSPPSPSS\") == vector<int>36);\n    assert(solution.numberOfWays(\"SSSPSSSPSSSPSSSPSSSPSSSPSSS\") == vector<int>0);\n    assert(solution.numberOfWays(\"SSSPSSSSPPSSPPSSSSPPSSSSPPSSSS\") == vector<int>0);\n    assert(solution.numberOfWays(\"SPPPPPPPPPPP\") == vector<int>0);\n    assert(solution.numberOfWays(\"PPPPSPSPPPPSPSPPPPSP\") == vector<int>0);\n    assert(solution.numberOfWays(\"PPSSPPSSPPSSPPSSPPSSPPSSPPSS\") == vector<int>729);\n    assert(solution.numberOfWays(\"PPPPPPPPPPPPPPPPPPPP\") == vector<int>0);\n    assert(solution.numberOfWays(\"SSPSSPSSPSSPSSPSSPSSPSS\") == vector<int>128);\n    assert(solution.numberOfWays(\"SSPPPPSPSPPPSS\") == vector<int>20);\n    assert(solution.numberOfWays(\"PPSSPSSPPSSPSSPPSSPSSPPSS\") == vector<int>216);\n    assert(solution.numberOfWays(\"SSPPPSSPPPSSPPPSS\") == vector<int>64);\n    assert(solution.numberOfWays(\"SSPSSSPSSPSSPSSPSS\") == vector<int>0);\n    assert(solution.numberOfWays(\"SSPPSSPPSSPPSSPPSSPPSSPPSS\") == vector<int>729);\n    assert(solution.numberOfWays(\"PPSSPPPPSSPPPPSS\") == vector<int>25);\n    assert(solution.numberOfWays(\"SPSSSPSSSPSSSPSSSPSS\") == vector<int>0);\n    assert(solution.numberOfWays(\"PSPSPSPSPSPSPSPSPS\") == vector<int>0);\n    assert(solution.numberOfWays(\"SSPPSSPSPSPSSP\") == vector<int>12);\n    assert(solution.numberOfWays(\"SSSSSSSSSSSSSSSSSS\") == vector<int>1);\n    assert(solution.numberOfWays(\"SSPPSSPPSSPPSPSSPPSS\") == vector<int>0);\n    assert(solution.numberOfWays(\"SSPPSPSPPPSSSPPSS\") == vector<int>0);\n    assert(solution.numberOfWays(\"SSPPSSSSPPSSSSPPS\") == vector<int>0);\n    assert(solution.numberOfWays(\"SSPPPPPPSSSSSSSSSS\") == vector<int>7);\n    assert(solution.numberOfWays(\"SSPPPPSSPPPPSSSSPPPPSSSSPPPPSSSS\") == vector<int>625);\n    assert(solution.numberOfWays(\"SSSSSSSSSSPPPPPPSS\") == vector<int>7);\n    assert(solution.numberOfWays(\"SSSSPPSSSSSSPPSSSS\") == vector<int>9);\n    assert(solution.numberOfWays(\"SSPSSPSSPSSPSSPSSPSSPSSPSSPS\") == vector<int>0);\n    assert(solution.numberOfWays(\"SSPPSPSPSPPSS\") == vector<int>0);\n    assert(solution.numberOfWays(\"PPSSPPPPSSPPSSPP\") == vector<int>15);\n    assert(solution.numberOfWays(\"SPSSSPSSSPSSSPSS\") == vector<int>4);\n    assert(solution.numberOfWays(\"PSPPSPSPSPSPSPSPSPSP\") == vector<int>0);\n    assert(solution.numberOfWays(\"SSSSSSPPSSSSSSPPSSSSSSPPSSSSSS\") == vector<int>27);\n    assert(solution.numberOfWays(\"SSPPSSPSSPPSSPSSPPSS\") == vector<int>108);\n    assert(solution.numberOfWays(\"SSSPSPSPSPSPSPSPSPSPSP\") == vector<int>16);\n    assert(solution.numberOfWays(\"PPPPPPSSPPPP\") == vector<int>1);\n    assert(solution.numberOfWays(\"PPSSPPSSPPSSPPSSPPSSPPSSPPSSPPSSPPSSPPSS\") == vector<int>19683);\n    assert(solution.numberOfWays(\"SSPPSPSSPSPSSPSPSSPSPSS\") == vector<int>24);\n    assert(solution.numberOfWays(\"SSSPPSSSPPPSSS\") == vector<int>0);\n    assert(solution.numberOfWays(\"SSSSSSSSSSSS\") == vector<int>1);\n    assert(solution.numberOfWays(\"SSSSSPPPSSSSSPPPSSSS\") == vector<int>4);\n    assert(solution.numberOfWays(\"SSSSSSSSPPPPPPPPSSSSSSSSPPPPPPPPSSSS\") == vector<int>81);\n    assert(solution.numberOfWays(\"SSSSSS\") == vector<int>1);\n    assert(solution.numberOfWays(\"SSPPPPPPSSSSSSPPSSPP\") == vector<int>21);\n    assert(solution.numberOfWays(\"SSPSPSPSPSPSPSPSPSPSPSPSPSPSPS\") == vector<int>128);\n    assert(solution.numberOfWays(\"SSPPSSPPSSPPSSPPSS\") == vector<int>81);\n    assert(solution.numberOfWays(\"SSSSPPPPSSSSPPPPSSSS\") == vector<int>25);\n    assert(solution.numberOfWays(\"SSPSPPSSPSPPSSPSPPSS\") == vector<int>0);\n    assert(solution.numberOfWays(\"SPSPSP\") == vector<int>0);\n    assert(solution.numberOfWays(\"SSPPPPSPSSPPPSS\") == vector<int>0);\n    assert(solution.numberOfWays(\"SSSSPSPSPSPS\") == vector<int>4);\n    assert(solution.numberOfWays(\"PPPPPP\") == vector<int>0);\n    assert(solution.numberOfWays(\"SSPPPPPPPPPPSSPPPPSSPPSS\") == vector<int>165);\n    assert(solution.numberOfWays(\"SSPPSSPPSSPPSSPPSSPPSSPPSSPPSSPPSS\") == vector<int>6561);\n    assert(solution.numberOfWays(\"SSPPPPSSPPPPSSPPSS\") == vector<int>75);\n    assert(solution.numberOfWays(\"SSSSSSSSSSSSSSSSSSSS\") == vector<int>1);\n    assert(solution.numberOfWays(\"SSSSPPPPSSSSPPSSSS\") == vector<int>15);\n    assert(solution.numberOfWays(\"PPPPPPPPPPPPPPPP\") == vector<int>0);\n    assert(solution.numberOfWays(\"SSSPSPSPSPSPSPSPSPSS\") == vector<int>16);\n    assert(solution.numberOfWays(\"SSPPSPSSSSPPSPSSSS\") == vector<int>6);\n    assert(solution.numberOfWays(\"SSPSSPSSPSSPSSPSS\") == vector<int>32);\n    assert(solution.numberOfWays(\"SSPPSSPPSSPPSSPPSSPP\") == vector<int>81);\n    assert(solution.numberOfWays(\"PPPPSSPPPPSSPPPPSSPPPPSSPPPPSS\") == vector<int>625);\n    assert(solution.numberOfWays(\"SSPPSSPPSSPPSSPPSSPPSSPPSSPPSS\") == vector<int>2187);\n    assert(solution.numberOfWays(\"SSSSPPSSSSPPSSSS\") == vector<int>9);\n    assert(solution.numberOfWays(\"SSSSSSPPPPSSSSPPPPSSSSSSPPPP\") == vector<int>25);\n    assert(solution.numberOfWays(\"SSPPSSPPSSPPSSPPSSPPSS\") == vector<int>243);\n    assert(solution.numberOfWays(\"SSPPSSPPSSPPSSSS\") == vector<int>27);\n    assert(solution.numberOfWays(\"SSPSPSPSPSPSPSPS\") == vector<int>0);\n    assert(solution.numberOfWays(\"SSPPSPSPSPSPSS\") == vector<int>12);\n    assert(solution.numberOfWays(\"SPSPSPSPSPSPSPSPSPSP\") == vector<int>16);\n    assert(solution.numberOfWays(\"SSPPSSSSPPPPSSSSSSSS\") == vector<int>15);\n    assert(solution.numberOfWays(\"PPPPSSPPSSPPSSPPPP\") == vector<int>9);\n    assert(solution.numberOfWays(\"SPSPPSPSPPSPSPPSPSPPSP\") == vector<int>0);\n    assert(solution.numberOfWays(\"PPSPSPSPSPSPPSPSPS\") == vector<int>8);\n    assert(solution.numberOfWays(\"SPSPSPSPPSPS\") == vector<int>6);\n    assert(solution.numberOfWays(\"SSPPSSPPSSPPSSSSPPSSPPSSSSPPSS\") == vector<int>729);\n}",
+    "java": "public static void check(Solution solution) {\n    assert Arrays.equals(solution.numberOfWays(\"PPPPSSPPPPSSPPPP\"), 5);\n    assert Arrays.equals(solution.numberOfWays(\"SSSSSSSSSS\"), 1);\n    assert Arrays.equals(solution.numberOfWays(\"SPSPSPSP\"), 2);\n    assert Arrays.equals(solution.numberOfWays(\"SSSPPSS\"), 0);\n    assert Arrays.equals(solution.numberOfWays(\"PSSPSPSPPS\"), 0);\n    assert Arrays.equals(solution.numberOfWays(\"SS\"), 1);\n    assert Arrays.equals(solution.numberOfWays(\"PPPP\"), 0);\n    assert Arrays.equals(solution.numberOfWays(\"SSPPSS\"), 3);\n    assert Arrays.equals(solution.numberOfWays(\"SSSSPPSSSS\"), 3);\n    assert Arrays.equals(solution.numberOfWays(\"SSPSSP\"), 2);\n    assert Arrays.equals(solution.numberOfWays(\"SSPSSPSS\"), 4);\n    assert Arrays.equals(solution.numberOfWays(\"SSPPPPPSSPPPPSS\"), 30);\n    assert Arrays.equals(solution.numberOfWays(\"SSPSPSPSPS\"), 4);\n    assert Arrays.equals(solution.numberOfWays(\"SSSS\"), 1);\n    assert Arrays.equals(solution.numberOfWays(\"SSSPPPSS\"), 0);\n    assert Arrays.equals(solution.numberOfWays(\"SSSPPS\"), 1);\n    assert Arrays.equals(solution.numberOfWays(\"PPSSPPSSPP\"), 3);\n    assert Arrays.equals(solution.numberOfWays(\"SSPPSSPPSS\"), 9);\n    assert Arrays.equals(solution.numberOfWays(\"SSPPSPS\"), 3);\n    assert Arrays.equals(solution.numberOfWays(\"SSPPSPPS\"), 3);\n    assert Arrays.equals(solution.numberOfWays(\"S\"), 0);\n    assert Arrays.equals(solution.numberOfWays(\"PPSPSP\"), 1);\n    assert Arrays.equals(solution.numberOfWays(\"SPPSPPSPPS\"), 3);\n    assert Arrays.equals(solution.numberOfWays(\"PPSPSPSPSPSPSPSPSP\"), 8);\n    assert Arrays.equals(solution.numberOfWays(\"SSSPSSSSPPSSPPSSSSPPSSSSPPSSSSSSSSSS\"), 0);\n    assert Arrays.equals(solution.numberOfWays(\"SPPSPSPSPSPSPSPSPS\"), 0);\n    assert Arrays.equals(solution.numberOfWays(\"SSPSSPSSPSSPSSPSSPSS\"), 64);\n    assert Arrays.equals(solution.numberOfWays(\"PPSSPPSPSSPPSS\"), 0);\n    assert Arrays.equals(solution.numberOfWays(\"SSPPSSSSSSSSPPSSSSSSSSPPSSSSSSSSSS\"), 27);\n    assert Arrays.equals(solution.numberOfWays(\"SSPPSSPPSSPPSS\"), 27);\n    assert Arrays.equals(solution.numberOfWays(\"SPSSPSSPSSPSSPSS\"), 0);\n    assert Arrays.equals(solution.numberOfWays(\"PPPPPPSSPPPPSSPPPP\"), 5);\n    assert Arrays.equals(solution.numberOfWays(\"SSPPPPPPSSPPPPSSPPPPSSPPSS\"), 525);\n    assert Arrays.equals(solution.numberOfWays(\"PPSSPPSSPPSSPPSS\"), 27);\n    assert Arrays.equals(solution.numberOfWays(\"PPPPSSPPPPSSPPPPSSPPPPSSPPPPSSPPPP\"), 625);\n    assert Arrays.equals(solution.numberOfWays(\"SSSPSPSPSPSPSSSSPSPS\"), 0);\n    assert Arrays.equals(solution.numberOfWays(\"SSPPSPSPSSSSPPPPSS\"), 30);\n    assert Arrays.equals(solution.numberOfWays(\"SSPPSSSSSSSSSSSSSS\"), 3);\n    assert Arrays.equals(solution.numberOfWays(\"PPPPPPPPPPPPPPPPPP\"), 0);\n    assert Arrays.equals(solution.numberOfWays(\"SPPSPSPSPSPSPSPSPSPS\"), 16);\n    assert Arrays.equals(solution.numberOfWays(\"SPSPPSPSPPSPSPPSPSPP\"), 27);\n    assert Arrays.equals(solution.numberOfWays(\"PPSSPPSSPPSSPP\"), 9);\n    assert Arrays.equals(solution.numberOfWays(\"SSPSPSPSPSPS\"), 0);\n    assert Arrays.equals(solution.numberOfWays(\"SSSPSSSPSSSPSSSPSS\"), 4);\n    assert Arrays.equals(solution.numberOfWays(\"PPSSPPSSSSSSSSSSSS\"), 3);\n    assert Arrays.equals(solution.numberOfWays(\"SSPPPPPPPPSSPPPPSS\"), 45);\n    assert Arrays.equals(solution.numberOfWays(\"SSPPSSSSSSPPSS\"), 9);\n    assert Arrays.equals(solution.numberOfWays(\"SSPPPPPPSSPPPPPSS\"), 42);\n    assert Arrays.equals(solution.numberOfWays(\"SSSSPPPPSSPPSSPPSSSSPPPPSSSSSS\"), 225);\n    assert Arrays.equals(solution.numberOfWays(\"SSPPPPSSPPSS\"), 15);\n    assert Arrays.equals(solution.numberOfWays(\"SSSSPPPPSSPPPPSSSSPPPPSS\"), 125);\n    assert Arrays.equals(solution.numberOfWays(\"SSPPPPSSPPPPSSPPPPSSPPPPSS\"), 625);\n    assert Arrays.equals(solution.numberOfWays(\"SSPPSPSSSSSSSSSSPPSS\"), 0);\n    assert Arrays.equals(solution.numberOfWays(\"SPPSPPSPPSPPS\"), 0);\n    assert Arrays.equals(solution.numberOfWays(\"SSPSPPSPSPSPSPPPSS\"), 0);\n    assert Arrays.equals(solution.numberOfWays(\"SSPPSSPPSSPPSSPPSSPPSSPPSSPPSSPPSSPPSSPPSSPPSS\"), 177147);\n    assert Arrays.equals(solution.numberOfWays(\"PPPPPPSPPPPSPPPPSPPPPS\"), 5);\n    assert Arrays.equals(solution.numberOfWays(\"SSSSSSSSSSSSSSSS\"), 1);\n    assert Arrays.equals(solution.numberOfWays(\"SSPPSPSSPPSPSSPPSPSS\"), 0);\n    assert Arrays.equals(solution.numberOfWays(\"PPSSPPSSPPSS\"), 9);\n    assert Arrays.equals(solution.numberOfWays(\"SSPPSPSPSPSPSPSPSPSPSPSPSPSPSPSPSPSPSPSPSPS\"), 1536);\n    assert Arrays.equals(solution.numberOfWays(\"SSSPSSPPSSPPSSSSPPSSPPSSPPSSSSPPSSSS\"), 0);\n    assert Arrays.equals(solution.numberOfWays(\"SSSSSSSSSSSSSSSSSSSSSSSSSS\"), 1);\n    assert Arrays.equals(solution.numberOfWays(\"SSPPSSPPSSPPSSPPSSSSPPSSSSPPSSSS\"), 729);\n    assert Arrays.equals(solution.numberOfWays(\"SSPPSPPPSPSPPS\"), 6);\n    assert Arrays.equals(solution.numberOfWays(\"SSPPPPSSPPPPSSPPSSPPPPSS\"), 375);\n    assert Arrays.equals(solution.numberOfWays(\"SSPPPPPPSPPPPPSSSSPP\"), 0);\n    assert Arrays.equals(solution.numberOfWays(\"PPSSSSPPPPSS\"), 5);\n    assert Arrays.equals(solution.numberOfWays(\"SSPPSPPPSSSSPPSPSS\"), 6);\n    assert Arrays.equals(solution.numberOfWays(\"PPPPPPSSPPSS\"), 3);\n    assert Arrays.equals(solution.numberOfWays(\"SSPPSPSSPPSPSSPPSPSSPPSPSS\"), 36);\n    assert Arrays.equals(solution.numberOfWays(\"SSSPSSSPSSSPSSSPSSSPSSSPSSS\"), 0);\n    assert Arrays.equals(solution.numberOfWays(\"SSSPSSSSPPSSPPSSSSPPSSSSPPSSSS\"), 0);\n    assert Arrays.equals(solution.numberOfWays(\"SPPPPPPPPPPP\"), 0);\n    assert Arrays.equals(solution.numberOfWays(\"PPPPSPSPPPPSPSPPPPSP\"), 0);\n    assert Arrays.equals(solution.numberOfWays(\"PPSSPPSSPPSSPPSSPPSSPPSSPPSS\"), 729);\n    assert Arrays.equals(solution.numberOfWays(\"PPPPPPPPPPPPPPPPPPPP\"), 0);\n    assert Arrays.equals(solution.numberOfWays(\"SSPSSPSSPSSPSSPSSPSSPSS\"), 128);\n    assert Arrays.equals(solution.numberOfWays(\"SSPPPPSPSPPPSS\"), 20);\n    assert Arrays.equals(solution.numberOfWays(\"PPSSPSSPPSSPSSPPSSPSSPPSS\"), 216);\n    assert Arrays.equals(solution.numberOfWays(\"SSPPPSSPPPSSPPPSS\"), 64);\n    assert Arrays.equals(solution.numberOfWays(\"SSPSSSPSSPSSPSSPSS\"), 0);\n    assert Arrays.equals(solution.numberOfWays(\"SSPPSSPPSSPPSSPPSSPPSSPPSS\"), 729);\n    assert Arrays.equals(solution.numberOfWays(\"PPSSPPPPSSPPPPSS\"), 25);\n    assert Arrays.equals(solution.numberOfWays(\"SPSSSPSSSPSSSPSSSPSS\"), 0);\n    assert Arrays.equals(solution.numberOfWays(\"PSPSPSPSPSPSPSPSPS\"), 0);\n    assert Arrays.equals(solution.numberOfWays(\"SSPPSSPSPSPSSP\"), 12);\n    assert Arrays.equals(solution.numberOfWays(\"SSSSSSSSSSSSSSSSSS\"), 1);\n    assert Arrays.equals(solution.numberOfWays(\"SSPPSSPPSSPPSPSSPPSS\"), 0);\n    assert Arrays.equals(solution.numberOfWays(\"SSPPSPSPPPSSSPPSS\"), 0);\n    assert Arrays.equals(solution.numberOfWays(\"SSPPSSSSPPSSSSPPS\"), 0);\n    assert Arrays.equals(solution.numberOfWays(\"SSPPPPPPSSSSSSSSSS\"), 7);\n    assert Arrays.equals(solution.numberOfWays(\"SSPPPPSSPPPPSSSSPPPPSSSSPPPPSSSS\"), 625);\n    assert Arrays.equals(solution.numberOfWays(\"SSSSSSSSSSPPPPPPSS\"), 7);\n    assert Arrays.equals(solution.numberOfWays(\"SSSSPPSSSSSSPPSSSS\"), 9);\n    assert Arrays.equals(solution.numberOfWays(\"SSPSSPSSPSSPSSPSSPSSPSSPSSPS\"), 0);\n    assert Arrays.equals(solution.numberOfWays(\"SSPPSPSPSPPSS\"), 0);\n    assert Arrays.equals(solution.numberOfWays(\"PPSSPPPPSSPPSSPP\"), 15);\n    assert Arrays.equals(solution.numberOfWays(\"SPSSSPSSSPSSSPSS\"), 4);\n    assert Arrays.equals(solution.numberOfWays(\"PSPPSPSPSPSPSPSPSPSP\"), 0);\n    assert Arrays.equals(solution.numberOfWays(\"SSSSSSPPSSSSSSPPSSSSSSPPSSSSSS\"), 27);\n    assert Arrays.equals(solution.numberOfWays(\"SSPPSSPSSPPSSPSSPPSS\"), 108);\n    assert Arrays.equals(solution.numberOfWays(\"SSSPSPSPSPSPSPSPSPSPSP\"), 16);\n    assert Arrays.equals(solution.numberOfWays(\"PPPPPPSSPPPP\"), 1);\n    assert Arrays.equals(solution.numberOfWays(\"PPSSPPSSPPSSPPSSPPSSPPSSPPSSPPSSPPSSPPSS\"), 19683);\n    assert Arrays.equals(solution.numberOfWays(\"SSPPSPSSPSPSSPSPSSPSPSS\"), 24);\n    assert Arrays.equals(solution.numberOfWays(\"SSSPPSSSPPPSSS\"), 0);\n    assert Arrays.equals(solution.numberOfWays(\"SSSSSSSSSSSS\"), 1);\n    assert Arrays.equals(solution.numberOfWays(\"SSSSSPPPSSSSSPPPSSSS\"), 4);\n    assert Arrays.equals(solution.numberOfWays(\"SSSSSSSSPPPPPPPPSSSSSSSSPPPPPPPPSSSS\"), 81);\n    assert Arrays.equals(solution.numberOfWays(\"SSSSSS\"), 1);\n    assert Arrays.equals(solution.numberOfWays(\"SSPPPPPPSSSSSSPPSSPP\"), 21);\n    assert Arrays.equals(solution.numberOfWays(\"SSPSPSPSPSPSPSPSPSPSPSPSPSPSPS\"), 128);\n    assert Arrays.equals(solution.numberOfWays(\"SSPPSSPPSSPPSSPPSS\"), 81);\n    assert Arrays.equals(solution.numberOfWays(\"SSSSPPPPSSSSPPPPSSSS\"), 25);\n    assert Arrays.equals(solution.numberOfWays(\"SSPSPPSSPSPPSSPSPPSS\"), 0);\n    assert Arrays.equals(solution.numberOfWays(\"SPSPSP\"), 0);\n    assert Arrays.equals(solution.numberOfWays(\"SSPPPPSPSSPPPSS\"), 0);\n    assert Arrays.equals(solution.numberOfWays(\"SSSSPSPSPSPS\"), 4);\n    assert Arrays.equals(solution.numberOfWays(\"PPPPPP\"), 0);\n    assert Arrays.equals(solution.numberOfWays(\"SSPPPPPPPPPPSSPPPPSSPPSS\"), 165);\n    assert Arrays.equals(solution.numberOfWays(\"SSPPSSPPSSPPSSPPSSPPSSPPSSPPSSPPSS\"), 6561);\n    assert Arrays.equals(solution.numberOfWays(\"SSPPPPSSPPPPSSPPSS\"), 75);\n    assert Arrays.equals(solution.numberOfWays(\"SSSSSSSSSSSSSSSSSSSS\"), 1);\n    assert Arrays.equals(solution.numberOfWays(\"SSSSPPPPSSSSPPSSSS\"), 15);\n    assert Arrays.equals(solution.numberOfWays(\"PPPPPPPPPPPPPPPP\"), 0);\n    assert Arrays.equals(solution.numberOfWays(\"SSSPSPSPSPSPSPSPSPSS\"), 16);\n    assert Arrays.equals(solution.numberOfWays(\"SSPPSPSSSSPPSPSSSS\"), 6);\n    assert Arrays.equals(solution.numberOfWays(\"SSPSSPSSPSSPSSPSS\"), 32);\n    assert Arrays.equals(solution.numberOfWays(\"SSPPSSPPSSPPSSPPSSPP\"), 81);\n    assert Arrays.equals(solution.numberOfWays(\"PPPPSSPPPPSSPPPPSSPPPPSSPPPPSS\"), 625);\n    assert Arrays.equals(solution.numberOfWays(\"SSPPSSPPSSPPSSPPSSPPSSPPSSPPSS\"), 2187);\n    assert Arrays.equals(solution.numberOfWays(\"SSSSPPSSSSPPSSSS\"), 9);\n    assert Arrays.equals(solution.numberOfWays(\"SSSSSSPPPPSSSSPPPPSSSSSSPPPP\"), 25);\n    assert Arrays.equals(solution.numberOfWays(\"SSPPSSPPSSPPSSPPSSPPSS\"), 243);\n    assert Arrays.equals(solution.numberOfWays(\"SSPPSSPPSSPPSSSS\"), 27);\n    assert Arrays.equals(solution.numberOfWays(\"SSPSPSPSPSPSPSPS\"), 0);\n    assert Arrays.equals(solution.numberOfWays(\"SSPPSPSPSPSPSS\"), 12);\n    assert Arrays.equals(solution.numberOfWays(\"SPSPSPSPSPSPSPSPSPSP\"), 16);\n    assert Arrays.equals(solution.numberOfWays(\"SSPPSSSSPPPPSSSSSSSS\"), 15);\n    assert Arrays.equals(solution.numberOfWays(\"PPPPSSPPSSPPSSPPPP\"), 9);\n    assert Arrays.equals(solution.numberOfWays(\"SPSPPSPSPPSPSPPSPSPPSP\"), 0);\n    assert Arrays.equals(solution.numberOfWays(\"PPSPSPSPSPSPPSPSPS\"), 8);\n    assert Arrays.equals(solution.numberOfWays(\"SPSPSPSPPSPS\"), 6);\n    assert Arrays.equals(solution.numberOfWays(\"SSPPSSPPSSPPSSSSPPSSPPSSSSPPSS\"), 729);\n}",
+    "javascript": "function check(candidate) {\n    console.assert(JSON.stringify(candidate(\"PPPPSSPPPPSSPPPP\")) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate(\"SSSSSSSSSS\")) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate(\"SPSPSPSP\")) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(\"SSSPPSS\")) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"PSSPSPSPPS\")) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"SS\")) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate(\"PPPP\")) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"SSPPSS\")) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate(\"SSSSPPSSSS\")) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate(\"SSPSSP\")) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(\"SSPSSPSS\")) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate(\"SSPPPPPSSPPPPSS\")) === JSON.stringify(30));\n    console.assert(JSON.stringify(candidate(\"SSPSPSPSPS\")) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate(\"SSSS\")) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate(\"SSSPPPSS\")) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"SSSPPS\")) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate(\"PPSSPPSSPP\")) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate(\"SSPPSSPPSS\")) === JSON.stringify(9));\n    console.assert(JSON.stringify(candidate(\"SSPPSPS\")) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate(\"SSPPSPPS\")) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate(\"S\")) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"PPSPSP\")) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate(\"SPPSPPSPPS\")) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate(\"PPSPSPSPSPSPSPSPSP\")) === JSON.stringify(8));\n    console.assert(JSON.stringify(candidate(\"SSSPSSSSPPSSPPSSSSPPSSSSPPSSSSSSSSSS\")) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"SPPSPSPSPSPSPSPSPS\")) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"SSPSSPSSPSSPSSPSSPSS\")) === JSON.stringify(64));\n    console.assert(JSON.stringify(candidate(\"PPSSPPSPSSPPSS\")) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"SSPPSSSSSSSSPPSSSSSSSSPPSSSSSSSSSS\")) === JSON.stringify(27));\n    console.assert(JSON.stringify(candidate(\"SSPPSSPPSSPPSS\")) === JSON.stringify(27));\n    console.assert(JSON.stringify(candidate(\"SPSSPSSPSSPSSPSS\")) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"PPPPPPSSPPPPSSPPPP\")) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate(\"SSPPPPPPSSPPPPSSPPPPSSPPSS\")) === JSON.stringify(525));\n    console.assert(JSON.stringify(candidate(\"PPSSPPSSPPSSPPSS\")) === JSON.stringify(27));\n    console.assert(JSON.stringify(candidate(\"PPPPSSPPPPSSPPPPSSPPPPSSPPPPSSPPPP\")) === JSON.stringify(625));\n    console.assert(JSON.stringify(candidate(\"SSSPSPSPSPSPSSSSPSPS\")) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"SSPPSPSPSSSSPPPPSS\")) === JSON.stringify(30));\n    console.assert(JSON.stringify(candidate(\"SSPPSSSSSSSSSSSSSS\")) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate(\"PPPPPPPPPPPPPPPPPP\")) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"SPPSPSPSPSPSPSPSPSPS\")) === JSON.stringify(16));\n    console.assert(JSON.stringify(candidate(\"SPSPPSPSPPSPSPPSPSPP\")) === JSON.stringify(27));\n    console.assert(JSON.stringify(candidate(\"PPSSPPSSPPSSPP\")) === JSON.stringify(9));\n    console.assert(JSON.stringify(candidate(\"SSPSPSPSPSPS\")) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"SSSPSSSPSSSPSSSPSS\")) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate(\"PPSSPPSSSSSSSSSSSS\")) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate(\"SSPPPPPPPPSSPPPPSS\")) === JSON.stringify(45));\n    console.assert(JSON.stringify(candidate(\"SSPPSSSSSSPPSS\")) === JSON.stringify(9));\n    console.assert(JSON.stringify(candidate(\"SSPPPPPPSSPPPPPSS\")) === JSON.stringify(42));\n    console.assert(JSON.stringify(candidate(\"SSSSPPPPSSPPSSPPSSSSPPPPSSSSSS\")) === JSON.stringify(225));\n    console.assert(JSON.stringify(candidate(\"SSPPPPSSPPSS\")) === JSON.stringify(15));\n    console.assert(JSON.stringify(candidate(\"SSSSPPPPSSPPPPSSSSPPPPSS\")) === JSON.stringify(125));\n    console.assert(JSON.stringify(candidate(\"SSPPPPSSPPPPSSPPPPSSPPPPSS\")) === JSON.stringify(625));\n    console.assert(JSON.stringify(candidate(\"SSPPSPSSSSSSSSSSPPSS\")) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"SPPSPPSPPSPPS\")) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"SSPSPPSPSPSPSPPPSS\")) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"SSPPSSPPSSPPSSPPSSPPSSPPSSPPSSPPSSPPSSPPSSPPSS\")) === JSON.stringify(177147));\n    console.assert(JSON.stringify(candidate(\"PPPPPPSPPPPSPPPPSPPPPS\")) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate(\"SSSSSSSSSSSSSSSS\")) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate(\"SSPPSPSSPPSPSSPPSPSS\")) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"PPSSPPSSPPSS\")) === JSON.stringify(9));\n    console.assert(JSON.stringify(candidate(\"SSPPSPSPSPSPSPSPSPSPSPSPSPSPSPSPSPSPSPSPSPS\")) === JSON.stringify(1536));\n    console.assert(JSON.stringify(candidate(\"SSSPSSPPSSPPSSSSPPSSPPSSPPSSSSPPSSSS\")) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"SSSSSSSSSSSSSSSSSSSSSSSSSS\")) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate(\"SSPPSSPPSSPPSSPPSSSSPPSSSSPPSSSS\")) === JSON.stringify(729));\n    console.assert(JSON.stringify(candidate(\"SSPPSPPPSPSPPS\")) === JSON.stringify(6));\n    console.assert(JSON.stringify(candidate(\"SSPPPPSSPPPPSSPPSSPPPPSS\")) === JSON.stringify(375));\n    console.assert(JSON.stringify(candidate(\"SSPPPPPPSPPPPPSSSSPP\")) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"PPSSSSPPPPSS\")) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate(\"SSPPSPPPSSSSPPSPSS\")) === JSON.stringify(6));\n    console.assert(JSON.stringify(candidate(\"PPPPPPSSPPSS\")) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate(\"SSPPSPSSPPSPSSPPSPSSPPSPSS\")) === JSON.stringify(36));\n    console.assert(JSON.stringify(candidate(\"SSSPSSSPSSSPSSSPSSSPSSSPSSS\")) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"SSSPSSSSPPSSPPSSSSPPSSSSPPSSSS\")) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"SPPPPPPPPPPP\")) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"PPPPSPSPPPPSPSPPPPSP\")) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"PPSSPPSSPPSSPPSSPPSSPPSSPPSS\")) === JSON.stringify(729));\n    console.assert(JSON.stringify(candidate(\"PPPPPPPPPPPPPPPPPPPP\")) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"SSPSSPSSPSSPSSPSSPSSPSS\")) === JSON.stringify(128));\n    console.assert(JSON.stringify(candidate(\"SSPPPPSPSPPPSS\")) === JSON.stringify(20));\n    console.assert(JSON.stringify(candidate(\"PPSSPSSPPSSPSSPPSSPSSPPSS\")) === JSON.stringify(216));\n    console.assert(JSON.stringify(candidate(\"SSPPPSSPPPSSPPPSS\")) === JSON.stringify(64));\n    console.assert(JSON.stringify(candidate(\"SSPSSSPSSPSSPSSPSS\")) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"SSPPSSPPSSPPSSPPSSPPSSPPSS\")) === JSON.stringify(729));\n    console.assert(JSON.stringify(candidate(\"PPSSPPPPSSPPPPSS\")) === JSON.stringify(25));\n    console.assert(JSON.stringify(candidate(\"SPSSSPSSSPSSSPSSSPSS\")) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"PSPSPSPSPSPSPSPSPS\")) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"SSPPSSPSPSPSSP\")) === JSON.stringify(12));\n    console.assert(JSON.stringify(candidate(\"SSSSSSSSSSSSSSSSSS\")) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate(\"SSPPSSPPSSPPSPSSPPSS\")) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"SSPPSPSPPPSSSPPSS\")) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"SSPPSSSSPPSSSSPPS\")) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"SSPPPPPPSSSSSSSSSS\")) === JSON.stringify(7));\n    console.assert(JSON.stringify(candidate(\"SSPPPPSSPPPPSSSSPPPPSSSSPPPPSSSS\")) === JSON.stringify(625));\n    console.assert(JSON.stringify(candidate(\"SSSSSSSSSSPPPPPPSS\")) === JSON.stringify(7));\n    console.assert(JSON.stringify(candidate(\"SSSSPPSSSSSSPPSSSS\")) === JSON.stringify(9));\n    console.assert(JSON.stringify(candidate(\"SSPSSPSSPSSPSSPSSPSSPSSPSSPS\")) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"SSPPSPSPSPPSS\")) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"PPSSPPPPSSPPSSPP\")) === JSON.stringify(15));\n    console.assert(JSON.stringify(candidate(\"SPSSSPSSSPSSSPSS\")) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate(\"PSPPSPSPSPSPSPSPSPSP\")) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"SSSSSSPPSSSSSSPPSSSSSSPPSSSSSS\")) === JSON.stringify(27));\n    console.assert(JSON.stringify(candidate(\"SSPPSSPSSPPSSPSSPPSS\")) === JSON.stringify(108));\n    console.assert(JSON.stringify(candidate(\"SSSPSPSPSPSPSPSPSPSPSP\")) === JSON.stringify(16));\n    console.assert(JSON.stringify(candidate(\"PPPPPPSSPPPP\")) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate(\"PPSSPPSSPPSSPPSSPPSSPPSSPPSSPPSSPPSSPPSS\")) === JSON.stringify(19683));\n    console.assert(JSON.stringify(candidate(\"SSPPSPSSPSPSSPSPSSPSPSS\")) === JSON.stringify(24));\n    console.assert(JSON.stringify(candidate(\"SSSPPSSSPPPSSS\")) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"SSSSSSSSSSSS\")) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate(\"SSSSSPPPSSSSSPPPSSSS\")) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate(\"SSSSSSSSPPPPPPPPSSSSSSSSPPPPPPPPSSSS\")) === JSON.stringify(81));\n    console.assert(JSON.stringify(candidate(\"SSSSSS\")) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate(\"SSPPPPPPSSSSSSPPSSPP\")) === JSON.stringify(21));\n    console.assert(JSON.stringify(candidate(\"SSPSPSPSPSPSPSPSPSPSPSPSPSPSPS\")) === JSON.stringify(128));\n    console.assert(JSON.stringify(candidate(\"SSPPSSPPSSPPSSPPSS\")) === JSON.stringify(81));\n    console.assert(JSON.stringify(candidate(\"SSSSPPPPSSSSPPPPSSSS\")) === JSON.stringify(25));\n    console.assert(JSON.stringify(candidate(\"SSPSPPSSPSPPSSPSPPSS\")) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"SPSPSP\")) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"SSPPPPSPSSPPPSS\")) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"SSSSPSPSPSPS\")) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate(\"PPPPPP\")) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"SSPPPPPPPPPPSSPPPPSSPPSS\")) === JSON.stringify(165));\n    console.assert(JSON.stringify(candidate(\"SSPPSSPPSSPPSSPPSSPPSSPPSSPPSSPPSS\")) === JSON.stringify(6561));\n    console.assert(JSON.stringify(candidate(\"SSPPPPSSPPPPSSPPSS\")) === JSON.stringify(75));\n    console.assert(JSON.stringify(candidate(\"SSSSSSSSSSSSSSSSSSSS\")) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate(\"SSSSPPPPSSSSPPSSSS\")) === JSON.stringify(15));\n    console.assert(JSON.stringify(candidate(\"PPPPPPPPPPPPPPPP\")) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"SSSPSPSPSPSPSPSPSPSS\")) === JSON.stringify(16));\n    console.assert(JSON.stringify(candidate(\"SSPPSPSSSSPPSPSSSS\")) === JSON.stringify(6));\n    console.assert(JSON.stringify(candidate(\"SSPSSPSSPSSPSSPSS\")) === JSON.stringify(32));\n    console.assert(JSON.stringify(candidate(\"SSPPSSPPSSPPSSPPSSPP\")) === JSON.stringify(81));\n    console.assert(JSON.stringify(candidate(\"PPPPSSPPPPSSPPPPSSPPPPSSPPPPSS\")) === JSON.stringify(625));\n    console.assert(JSON.stringify(candidate(\"SSPPSSPPSSPPSSPPSSPPSSPPSSPPSS\")) === JSON.stringify(2187));\n    console.assert(JSON.stringify(candidate(\"SSSSPPSSSSPPSSSS\")) === JSON.stringify(9));\n    console.assert(JSON.stringify(candidate(\"SSSSSSPPPPSSSSPPPPSSSSSSPPPP\")) === JSON.stringify(25));\n    console.assert(JSON.stringify(candidate(\"SSPPSSPPSSPPSSPPSSPPSS\")) === JSON.stringify(243));\n    console.assert(JSON.stringify(candidate(\"SSPPSSPPSSPPSSSS\")) === JSON.stringify(27));\n    console.assert(JSON.stringify(candidate(\"SSPSPSPSPSPSPSPS\")) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"SSPPSPSPSPSPSS\")) === JSON.stringify(12));\n    console.assert(JSON.stringify(candidate(\"SPSPSPSPSPSPSPSPSPSP\")) === JSON.stringify(16));\n    console.assert(JSON.stringify(candidate(\"SSPPSSSSPPPPSSSSSSSS\")) === JSON.stringify(15));\n    console.assert(JSON.stringify(candidate(\"PPPPSSPPSSPPSSPPPP\")) === JSON.stringify(9));\n    console.assert(JSON.stringify(candidate(\"SPSPPSPSPPSPSPPSPSPPSP\")) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"PPSPSPSPSPSPPSPSPS\")) === JSON.stringify(8));\n    console.assert(JSON.stringify(candidate(\"SPSPSPSPPSPS\")) === JSON.stringify(6));\n    console.assert(JSON.stringify(candidate(\"SSPPSSPPSSPPSSSSPPSSPPSSSSPPSS\")) === JSON.stringify(729));\n}",
+    "typescript": "function check(candidate: Function): void {\n    console.assert(JSON.stringify(candidate(\"PPPPSSPPPPSSPPPP\")) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate(\"SSSSSSSSSS\")) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate(\"SPSPSPSP\")) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(\"SSSPPSS\")) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"PSSPSPSPPS\")) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"SS\")) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate(\"PPPP\")) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"SSPPSS\")) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate(\"SSSSPPSSSS\")) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate(\"SSPSSP\")) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(\"SSPSSPSS\")) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate(\"SSPPPPPSSPPPPSS\")) === JSON.stringify(30));\n    console.assert(JSON.stringify(candidate(\"SSPSPSPSPS\")) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate(\"SSSS\")) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate(\"SSSPPPSS\")) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"SSSPPS\")) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate(\"PPSSPPSSPP\")) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate(\"SSPPSSPPSS\")) === JSON.stringify(9));\n    console.assert(JSON.stringify(candidate(\"SSPPSPS\")) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate(\"SSPPSPPS\")) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate(\"S\")) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"PPSPSP\")) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate(\"SPPSPPSPPS\")) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate(\"PPSPSPSPSPSPSPSPSP\")) === JSON.stringify(8));\n    console.assert(JSON.stringify(candidate(\"SSSPSSSSPPSSPPSSSSPPSSSSPPSSSSSSSSSS\")) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"SPPSPSPSPSPSPSPSPS\")) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"SSPSSPSSPSSPSSPSSPSS\")) === JSON.stringify(64));\n    console.assert(JSON.stringify(candidate(\"PPSSPPSPSSPPSS\")) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"SSPPSSSSSSSSPPSSSSSSSSPPSSSSSSSSSS\")) === JSON.stringify(27));\n    console.assert(JSON.stringify(candidate(\"SSPPSSPPSSPPSS\")) === JSON.stringify(27));\n    console.assert(JSON.stringify(candidate(\"SPSSPSSPSSPSSPSS\")) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"PPPPPPSSPPPPSSPPPP\")) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate(\"SSPPPPPPSSPPPPSSPPPPSSPPSS\")) === JSON.stringify(525));\n    console.assert(JSON.stringify(candidate(\"PPSSPPSSPPSSPPSS\")) === JSON.stringify(27));\n    console.assert(JSON.stringify(candidate(\"PPPPSSPPPPSSPPPPSSPPPPSSPPPPSSPPPP\")) === JSON.stringify(625));\n    console.assert(JSON.stringify(candidate(\"SSSPSPSPSPSPSSSSPSPS\")) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"SSPPSPSPSSSSPPPPSS\")) === JSON.stringify(30));\n    console.assert(JSON.stringify(candidate(\"SSPPSSSSSSSSSSSSSS\")) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate(\"PPPPPPPPPPPPPPPPPP\")) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"SPPSPSPSPSPSPSPSPSPS\")) === JSON.stringify(16));\n    console.assert(JSON.stringify(candidate(\"SPSPPSPSPPSPSPPSPSPP\")) === JSON.stringify(27));\n    console.assert(JSON.stringify(candidate(\"PPSSPPSSPPSSPP\")) === JSON.stringify(9));\n    console.assert(JSON.stringify(candidate(\"SSPSPSPSPSPS\")) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"SSSPSSSPSSSPSSSPSS\")) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate(\"PPSSPPSSSSSSSSSSSS\")) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate(\"SSPPPPPPPPSSPPPPSS\")) === JSON.stringify(45));\n    console.assert(JSON.stringify(candidate(\"SSPPSSSSSSPPSS\")) === JSON.stringify(9));\n    console.assert(JSON.stringify(candidate(\"SSPPPPPPSSPPPPPSS\")) === JSON.stringify(42));\n    console.assert(JSON.stringify(candidate(\"SSSSPPPPSSPPSSPPSSSSPPPPSSSSSS\")) === JSON.stringify(225));\n    console.assert(JSON.stringify(candidate(\"SSPPPPSSPPSS\")) === JSON.stringify(15));\n    console.assert(JSON.stringify(candidate(\"SSSSPPPPSSPPPPSSSSPPPPSS\")) === JSON.stringify(125));\n    console.assert(JSON.stringify(candidate(\"SSPPPPSSPPPPSSPPPPSSPPPPSS\")) === JSON.stringify(625));\n    console.assert(JSON.stringify(candidate(\"SSPPSPSSSSSSSSSSPPSS\")) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"SPPSPPSPPSPPS\")) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"SSPSPPSPSPSPSPPPSS\")) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"SSPPSSPPSSPPSSPPSSPPSSPPSSPPSSPPSSPPSSPPSSPPSS\")) === JSON.stringify(177147));\n    console.assert(JSON.stringify(candidate(\"PPPPPPSPPPPSPPPPSPPPPS\")) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate(\"SSSSSSSSSSSSSSSS\")) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate(\"SSPPSPSSPPSPSSPPSPSS\")) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"PPSSPPSSPPSS\")) === JSON.stringify(9));\n    console.assert(JSON.stringify(candidate(\"SSPPSPSPSPSPSPSPSPSPSPSPSPSPSPSPSPSPSPSPSPS\")) === JSON.stringify(1536));\n    console.assert(JSON.stringify(candidate(\"SSSPSSPPSSPPSSSSPPSSPPSSPPSSSSPPSSSS\")) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"SSSSSSSSSSSSSSSSSSSSSSSSSS\")) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate(\"SSPPSSPPSSPPSSPPSSSSPPSSSSPPSSSS\")) === JSON.stringify(729));\n    console.assert(JSON.stringify(candidate(\"SSPPSPPPSPSPPS\")) === JSON.stringify(6));\n    console.assert(JSON.stringify(candidate(\"SSPPPPSSPPPPSSPPSSPPPPSS\")) === JSON.stringify(375));\n    console.assert(JSON.stringify(candidate(\"SSPPPPPPSPPPPPSSSSPP\")) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"PPSSSSPPPPSS\")) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate(\"SSPPSPPPSSSSPPSPSS\")) === JSON.stringify(6));\n    console.assert(JSON.stringify(candidate(\"PPPPPPSSPPSS\")) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate(\"SSPPSPSSPPSPSSPPSPSSPPSPSS\")) === JSON.stringify(36));\n    console.assert(JSON.stringify(candidate(\"SSSPSSSPSSSPSSSPSSSPSSSPSSS\")) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"SSSPSSSSPPSSPPSSSSPPSSSSPPSSSS\")) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"SPPPPPPPPPPP\")) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"PPPPSPSPPPPSPSPPPPSP\")) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"PPSSPPSSPPSSPPSSPPSSPPSSPPSS\")) === JSON.stringify(729));\n    console.assert(JSON.stringify(candidate(\"PPPPPPPPPPPPPPPPPPPP\")) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"SSPSSPSSPSSPSSPSSPSSPSS\")) === JSON.stringify(128));\n    console.assert(JSON.stringify(candidate(\"SSPPPPSPSPPPSS\")) === JSON.stringify(20));\n    console.assert(JSON.stringify(candidate(\"PPSSPSSPPSSPSSPPSSPSSPPSS\")) === JSON.stringify(216));\n    console.assert(JSON.stringify(candidate(\"SSPPPSSPPPSSPPPSS\")) === JSON.stringify(64));\n    console.assert(JSON.stringify(candidate(\"SSPSSSPSSPSSPSSPSS\")) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"SSPPSSPPSSPPSSPPSSPPSSPPSS\")) === JSON.stringify(729));\n    console.assert(JSON.stringify(candidate(\"PPSSPPPPSSPPPPSS\")) === JSON.stringify(25));\n    console.assert(JSON.stringify(candidate(\"SPSSSPSSSPSSSPSSSPSS\")) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"PSPSPSPSPSPSPSPSPS\")) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"SSPPSSPSPSPSSP\")) === JSON.stringify(12));\n    console.assert(JSON.stringify(candidate(\"SSSSSSSSSSSSSSSSSS\")) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate(\"SSPPSSPPSSPPSPSSPPSS\")) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"SSPPSPSPPPSSSPPSS\")) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"SSPPSSSSPPSSSSPPS\")) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"SSPPPPPPSSSSSSSSSS\")) === JSON.stringify(7));\n    console.assert(JSON.stringify(candidate(\"SSPPPPSSPPPPSSSSPPPPSSSSPPPPSSSS\")) === JSON.stringify(625));\n    console.assert(JSON.stringify(candidate(\"SSSSSSSSSSPPPPPPSS\")) === JSON.stringify(7));\n    console.assert(JSON.stringify(candidate(\"SSSSPPSSSSSSPPSSSS\")) === JSON.stringify(9));\n    console.assert(JSON.stringify(candidate(\"SSPSSPSSPSSPSSPSSPSSPSSPSSPS\")) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"SSPPSPSPSPPSS\")) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"PPSSPPPPSSPPSSPP\")) === JSON.stringify(15));\n    console.assert(JSON.stringify(candidate(\"SPSSSPSSSPSSSPSS\")) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate(\"PSPPSPSPSPSPSPSPSPSP\")) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"SSSSSSPPSSSSSSPPSSSSSSPPSSSSSS\")) === JSON.stringify(27));\n    console.assert(JSON.stringify(candidate(\"SSPPSSPSSPPSSPSSPPSS\")) === JSON.stringify(108));\n    console.assert(JSON.stringify(candidate(\"SSSPSPSPSPSPSPSPSPSPSP\")) === JSON.stringify(16));\n    console.assert(JSON.stringify(candidate(\"PPPPPPSSPPPP\")) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate(\"PPSSPPSSPPSSPPSSPPSSPPSSPPSSPPSSPPSSPPSS\")) === JSON.stringify(19683));\n    console.assert(JSON.stringify(candidate(\"SSPPSPSSPSPSSPSPSSPSPSS\")) === JSON.stringify(24));\n    console.assert(JSON.stringify(candidate(\"SSSPPSSSPPPSSS\")) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"SSSSSSSSSSSS\")) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate(\"SSSSSPPPSSSSSPPPSSSS\")) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate(\"SSSSSSSSPPPPPPPPSSSSSSSSPPPPPPPPSSSS\")) === JSON.stringify(81));\n    console.assert(JSON.stringify(candidate(\"SSSSSS\")) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate(\"SSPPPPPPSSSSSSPPSSPP\")) === JSON.stringify(21));\n    console.assert(JSON.stringify(candidate(\"SSPSPSPSPSPSPSPSPSPSPSPSPSPSPS\")) === JSON.stringify(128));\n    console.assert(JSON.stringify(candidate(\"SSPPSSPPSSPPSSPPSS\")) === JSON.stringify(81));\n    console.assert(JSON.stringify(candidate(\"SSSSPPPPSSSSPPPPSSSS\")) === JSON.stringify(25));\n    console.assert(JSON.stringify(candidate(\"SSPSPPSSPSPPSSPSPPSS\")) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"SPSPSP\")) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"SSPPPPSPSSPPPSS\")) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"SSSSPSPSPSPS\")) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate(\"PPPPPP\")) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"SSPPPPPPPPPPSSPPPPSSPPSS\")) === JSON.stringify(165));\n    console.assert(JSON.stringify(candidate(\"SSPPSSPPSSPPSSPPSSPPSSPPSSPPSSPPSS\")) === JSON.stringify(6561));\n    console.assert(JSON.stringify(candidate(\"SSPPPPSSPPPPSSPPSS\")) === JSON.stringify(75));\n    console.assert(JSON.stringify(candidate(\"SSSSSSSSSSSSSSSSSSSS\")) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate(\"SSSSPPPPSSSSPPSSSS\")) === JSON.stringify(15));\n    console.assert(JSON.stringify(candidate(\"PPPPPPPPPPPPPPPP\")) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"SSSPSPSPSPSPSPSPSPSS\")) === JSON.stringify(16));\n    console.assert(JSON.stringify(candidate(\"SSPPSPSSSSPPSPSSSS\")) === JSON.stringify(6));\n    console.assert(JSON.stringify(candidate(\"SSPSSPSSPSSPSSPSS\")) === JSON.stringify(32));\n    console.assert(JSON.stringify(candidate(\"SSPPSSPPSSPPSSPPSSPP\")) === JSON.stringify(81));\n    console.assert(JSON.stringify(candidate(\"PPPPSSPPPPSSPPPPSSPPPPSSPPPPSS\")) === JSON.stringify(625));\n    console.assert(JSON.stringify(candidate(\"SSPPSSPPSSPPSSPPSSPPSSPPSSPPSS\")) === JSON.stringify(2187));\n    console.assert(JSON.stringify(candidate(\"SSSSPPSSSSPPSSSS\")) === JSON.stringify(9));\n    console.assert(JSON.stringify(candidate(\"SSSSSSPPPPSSSSPPPPSSSSSSPPPP\")) === JSON.stringify(25));\n    console.assert(JSON.stringify(candidate(\"SSPPSSPPSSPPSSPPSSPPSS\")) === JSON.stringify(243));\n    console.assert(JSON.stringify(candidate(\"SSPPSSPPSSPPSSSS\")) === JSON.stringify(27));\n    console.assert(JSON.stringify(candidate(\"SSPSPSPSPSPSPSPS\")) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"SSPPSPSPSPSPSS\")) === JSON.stringify(12));\n    console.assert(JSON.stringify(candidate(\"SPSPSPSPSPSPSPSPSPSP\")) === JSON.stringify(16));\n    console.assert(JSON.stringify(candidate(\"SSPPSSSSPPPPSSSSSSSS\")) === JSON.stringify(15));\n    console.assert(JSON.stringify(candidate(\"PPPPSSPPSSPPSSPPPP\")) === JSON.stringify(9));\n    console.assert(JSON.stringify(candidate(\"SPSPPSPSPPSPSPPSPSPPSP\")) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"PPSPSPSPSPSPPSPSPS\")) === JSON.stringify(8));\n    console.assert(JSON.stringify(candidate(\"SPSPSPSPPSPS\")) === JSON.stringify(6));\n    console.assert(JSON.stringify(candidate(\"SSPPSSPPSSPPSSSSPPSSPPSSSSPPSS\")) === JSON.stringify(729));\n}",
+    "golang": "func check(candidate func([]int, int) []int) {\n    assert reflect.DeepEqual(candidate(\"PPPPSSPPPPSSPPPP\"), 5)\n    assert reflect.DeepEqual(candidate(\"SSSSSSSSSS\"), 1)\n    assert reflect.DeepEqual(candidate(\"SPSPSPSP\"), 2)\n    assert reflect.DeepEqual(candidate(\"SSSPPSS\"), 0)\n    assert reflect.DeepEqual(candidate(\"PSSPSPSPPS\"), 0)\n    assert reflect.DeepEqual(candidate(\"SS\"), 1)\n    assert reflect.DeepEqual(candidate(\"PPPP\"), 0)\n    assert reflect.DeepEqual(candidate(\"SSPPSS\"), 3)\n    assert reflect.DeepEqual(candidate(\"SSSSPPSSSS\"), 3)\n    assert reflect.DeepEqual(candidate(\"SSPSSP\"), 2)\n    assert reflect.DeepEqual(candidate(\"SSPSSPSS\"), 4)\n    assert reflect.DeepEqual(candidate(\"SSPPPPPSSPPPPSS\"), 30)\n    assert reflect.DeepEqual(candidate(\"SSPSPSPSPS\"), 4)\n    assert reflect.DeepEqual(candidate(\"SSSS\"), 1)\n    assert reflect.DeepEqual(candidate(\"SSSPPPSS\"), 0)\n    assert reflect.DeepEqual(candidate(\"SSSPPS\"), 1)\n    assert reflect.DeepEqual(candidate(\"PPSSPPSSPP\"), 3)\n    assert reflect.DeepEqual(candidate(\"SSPPSSPPSS\"), 9)\n    assert reflect.DeepEqual(candidate(\"SSPPSPS\"), 3)\n    assert reflect.DeepEqual(candidate(\"SSPPSPPS\"), 3)\n    assert reflect.DeepEqual(candidate(\"S\"), 0)\n    assert reflect.DeepEqual(candidate(\"PPSPSP\"), 1)\n    assert reflect.DeepEqual(candidate(\"SPPSPPSPPS\"), 3)\n    assert reflect.DeepEqual(candidate(\"PPSPSPSPSPSPSPSPSP\"), 8)\n    assert reflect.DeepEqual(candidate(\"SSSPSSSSPPSSPPSSSSPPSSSSPPSSSSSSSSSS\"), 0)\n    assert reflect.DeepEqual(candidate(\"SPPSPSPSPSPSPSPSPS\"), 0)\n    assert reflect.DeepEqual(candidate(\"SSPSSPSSPSSPSSPSSPSS\"), 64)\n    assert reflect.DeepEqual(candidate(\"PPSSPPSPSSPPSS\"), 0)\n    assert reflect.DeepEqual(candidate(\"SSPPSSSSSSSSPPSSSSSSSSPPSSSSSSSSSS\"), 27)\n    assert reflect.DeepEqual(candidate(\"SSPPSSPPSSPPSS\"), 27)\n    assert reflect.DeepEqual(candidate(\"SPSSPSSPSSPSSPSS\"), 0)\n    assert reflect.DeepEqual(candidate(\"PPPPPPSSPPPPSSPPPP\"), 5)\n    assert reflect.DeepEqual(candidate(\"SSPPPPPPSSPPPPSSPPPPSSPPSS\"), 525)\n    assert reflect.DeepEqual(candidate(\"PPSSPPSSPPSSPPSS\"), 27)\n    assert reflect.DeepEqual(candidate(\"PPPPSSPPPPSSPPPPSSPPPPSSPPPPSSPPPP\"), 625)\n    assert reflect.DeepEqual(candidate(\"SSSPSPSPSPSPSSSSPSPS\"), 0)\n    assert reflect.DeepEqual(candidate(\"SSPPSPSPSSSSPPPPSS\"), 30)\n    assert reflect.DeepEqual(candidate(\"SSPPSSSSSSSSSSSSSS\"), 3)\n    assert reflect.DeepEqual(candidate(\"PPPPPPPPPPPPPPPPPP\"), 0)\n    assert reflect.DeepEqual(candidate(\"SPPSPSPSPSPSPSPSPSPS\"), 16)\n    assert reflect.DeepEqual(candidate(\"SPSPPSPSPPSPSPPSPSPP\"), 27)\n    assert reflect.DeepEqual(candidate(\"PPSSPPSSPPSSPP\"), 9)\n    assert reflect.DeepEqual(candidate(\"SSPSPSPSPSPS\"), 0)\n    assert reflect.DeepEqual(candidate(\"SSSPSSSPSSSPSSSPSS\"), 4)\n    assert reflect.DeepEqual(candidate(\"PPSSPPSSSSSSSSSSSS\"), 3)\n    assert reflect.DeepEqual(candidate(\"SSPPPPPPPPSSPPPPSS\"), 45)\n    assert reflect.DeepEqual(candidate(\"SSPPSSSSSSPPSS\"), 9)\n    assert reflect.DeepEqual(candidate(\"SSPPPPPPSSPPPPPSS\"), 42)\n    assert reflect.DeepEqual(candidate(\"SSSSPPPPSSPPSSPPSSSSPPPPSSSSSS\"), 225)\n    assert reflect.DeepEqual(candidate(\"SSPPPPSSPPSS\"), 15)\n    assert reflect.DeepEqual(candidate(\"SSSSPPPPSSPPPPSSSSPPPPSS\"), 125)\n    assert reflect.DeepEqual(candidate(\"SSPPPPSSPPPPSSPPPPSSPPPPSS\"), 625)\n    assert reflect.DeepEqual(candidate(\"SSPPSPSSSSSSSSSSPPSS\"), 0)\n    assert reflect.DeepEqual(candidate(\"SPPSPPSPPSPPS\"), 0)\n    assert reflect.DeepEqual(candidate(\"SSPSPPSPSPSPSPPPSS\"), 0)\n    assert reflect.DeepEqual(candidate(\"SSPPSSPPSSPPSSPPSSPPSSPPSSPPSSPPSSPPSSPPSSPPSS\"), 177147)\n    assert reflect.DeepEqual(candidate(\"PPPPPPSPPPPSPPPPSPPPPS\"), 5)\n    assert reflect.DeepEqual(candidate(\"SSSSSSSSSSSSSSSS\"), 1)\n    assert reflect.DeepEqual(candidate(\"SSPPSPSSPPSPSSPPSPSS\"), 0)\n    assert reflect.DeepEqual(candidate(\"PPSSPPSSPPSS\"), 9)\n    assert reflect.DeepEqual(candidate(\"SSPPSPSPSPSPSPSPSPSPSPSPSPSPSPSPSPSPSPSPSPS\"), 1536)\n    assert reflect.DeepEqual(candidate(\"SSSPSSPPSSPPSSSSPPSSPPSSPPSSSSPPSSSS\"), 0)\n    assert reflect.DeepEqual(candidate(\"SSSSSSSSSSSSSSSSSSSSSSSSSS\"), 1)\n    assert reflect.DeepEqual(candidate(\"SSPPSSPPSSPPSSPPSSSSPPSSSSPPSSSS\"), 729)\n    assert reflect.DeepEqual(candidate(\"SSPPSPPPSPSPPS\"), 6)\n    assert reflect.DeepEqual(candidate(\"SSPPPPSSPPPPSSPPSSPPPPSS\"), 375)\n    assert reflect.DeepEqual(candidate(\"SSPPPPPPSPPPPPSSSSPP\"), 0)\n    assert reflect.DeepEqual(candidate(\"PPSSSSPPPPSS\"), 5)\n    assert reflect.DeepEqual(candidate(\"SSPPSPPPSSSSPPSPSS\"), 6)\n    assert reflect.DeepEqual(candidate(\"PPPPPPSSPPSS\"), 3)\n    assert reflect.DeepEqual(candidate(\"SSPPSPSSPPSPSSPPSPSSPPSPSS\"), 36)\n    assert reflect.DeepEqual(candidate(\"SSSPSSSPSSSPSSSPSSSPSSSPSSS\"), 0)\n    assert reflect.DeepEqual(candidate(\"SSSPSSSSPPSSPPSSSSPPSSSSPPSSSS\"), 0)\n    assert reflect.DeepEqual(candidate(\"SPPPPPPPPPPP\"), 0)\n    assert reflect.DeepEqual(candidate(\"PPPPSPSPPPPSPSPPPPSP\"), 0)\n    assert reflect.DeepEqual(candidate(\"PPSSPPSSPPSSPPSSPPSSPPSSPPSS\"), 729)\n    assert reflect.DeepEqual(candidate(\"PPPPPPPPPPPPPPPPPPPP\"), 0)\n    assert reflect.DeepEqual(candidate(\"SSPSSPSSPSSPSSPSSPSSPSS\"), 128)\n    assert reflect.DeepEqual(candidate(\"SSPPPPSPSPPPSS\"), 20)\n    assert reflect.DeepEqual(candidate(\"PPSSPSSPPSSPSSPPSSPSSPPSS\"), 216)\n    assert reflect.DeepEqual(candidate(\"SSPPPSSPPPSSPPPSS\"), 64)\n    assert reflect.DeepEqual(candidate(\"SSPSSSPSSPSSPSSPSS\"), 0)\n    assert reflect.DeepEqual(candidate(\"SSPPSSPPSSPPSSPPSSPPSSPPSS\"), 729)\n    assert reflect.DeepEqual(candidate(\"PPSSPPPPSSPPPPSS\"), 25)\n    assert reflect.DeepEqual(candidate(\"SPSSSPSSSPSSSPSSSPSS\"), 0)\n    assert reflect.DeepEqual(candidate(\"PSPSPSPSPSPSPSPSPS\"), 0)\n    assert reflect.DeepEqual(candidate(\"SSPPSSPSPSPSSP\"), 12)\n    assert reflect.DeepEqual(candidate(\"SSSSSSSSSSSSSSSSSS\"), 1)\n    assert reflect.DeepEqual(candidate(\"SSPPSSPPSSPPSPSSPPSS\"), 0)\n    assert reflect.DeepEqual(candidate(\"SSPPSPSPPPSSSPPSS\"), 0)\n    assert reflect.DeepEqual(candidate(\"SSPPSSSSPPSSSSPPS\"), 0)\n    assert reflect.DeepEqual(candidate(\"SSPPPPPPSSSSSSSSSS\"), 7)\n    assert reflect.DeepEqual(candidate(\"SSPPPPSSPPPPSSSSPPPPSSSSPPPPSSSS\"), 625)\n    assert reflect.DeepEqual(candidate(\"SSSSSSSSSSPPPPPPSS\"), 7)\n    assert reflect.DeepEqual(candidate(\"SSSSPPSSSSSSPPSSSS\"), 9)\n    assert reflect.DeepEqual(candidate(\"SSPSSPSSPSSPSSPSSPSSPSSPSSPS\"), 0)\n    assert reflect.DeepEqual(candidate(\"SSPPSPSPSPPSS\"), 0)\n    assert reflect.DeepEqual(candidate(\"PPSSPPPPSSPPSSPP\"), 15)\n    assert reflect.DeepEqual(candidate(\"SPSSSPSSSPSSSPSS\"), 4)\n    assert reflect.DeepEqual(candidate(\"PSPPSPSPSPSPSPSPSPSP\"), 0)\n    assert reflect.DeepEqual(candidate(\"SSSSSSPPSSSSSSPPSSSSSSPPSSSSSS\"), 27)\n    assert reflect.DeepEqual(candidate(\"SSPPSSPSSPPSSPSSPPSS\"), 108)\n    assert reflect.DeepEqual(candidate(\"SSSPSPSPSPSPSPSPSPSPSP\"), 16)\n    assert reflect.DeepEqual(candidate(\"PPPPPPSSPPPP\"), 1)\n    assert reflect.DeepEqual(candidate(\"PPSSPPSSPPSSPPSSPPSSPPSSPPSSPPSSPPSSPPSS\"), 19683)\n    assert reflect.DeepEqual(candidate(\"SSPPSPSSPSPSSPSPSSPSPSS\"), 24)\n    assert reflect.DeepEqual(candidate(\"SSSPPSSSPPPSSS\"), 0)\n    assert reflect.DeepEqual(candidate(\"SSSSSSSSSSSS\"), 1)\n    assert reflect.DeepEqual(candidate(\"SSSSSPPPSSSSSPPPSSSS\"), 4)\n    assert reflect.DeepEqual(candidate(\"SSSSSSSSPPPPPPPPSSSSSSSSPPPPPPPPSSSS\"), 81)\n    assert reflect.DeepEqual(candidate(\"SSSSSS\"), 1)\n    assert reflect.DeepEqual(candidate(\"SSPPPPPPSSSSSSPPSSPP\"), 21)\n    assert reflect.DeepEqual(candidate(\"SSPSPSPSPSPSPSPSPSPSPSPSPSPSPS\"), 128)\n    assert reflect.DeepEqual(candidate(\"SSPPSSPPSSPPSSPPSS\"), 81)\n    assert reflect.DeepEqual(candidate(\"SSSSPPPPSSSSPPPPSSSS\"), 25)\n    assert reflect.DeepEqual(candidate(\"SSPSPPSSPSPPSSPSPPSS\"), 0)\n    assert reflect.DeepEqual(candidate(\"SPSPSP\"), 0)\n    assert reflect.DeepEqual(candidate(\"SSPPPPSPSSPPPSS\"), 0)\n    assert reflect.DeepEqual(candidate(\"SSSSPSPSPSPS\"), 4)\n    assert reflect.DeepEqual(candidate(\"PPPPPP\"), 0)\n    assert reflect.DeepEqual(candidate(\"SSPPPPPPPPPPSSPPPPSSPPSS\"), 165)\n    assert reflect.DeepEqual(candidate(\"SSPPSSPPSSPPSSPPSSPPSSPPSSPPSSPPSS\"), 6561)\n    assert reflect.DeepEqual(candidate(\"SSPPPPSSPPPPSSPPSS\"), 75)\n    assert reflect.DeepEqual(candidate(\"SSSSSSSSSSSSSSSSSSSS\"), 1)\n    assert reflect.DeepEqual(candidate(\"SSSSPPPPSSSSPPSSSS\"), 15)\n    assert reflect.DeepEqual(candidate(\"PPPPPPPPPPPPPPPP\"), 0)\n    assert reflect.DeepEqual(candidate(\"SSSPSPSPSPSPSPSPSPSS\"), 16)\n    assert reflect.DeepEqual(candidate(\"SSPPSPSSSSPPSPSSSS\"), 6)\n    assert reflect.DeepEqual(candidate(\"SSPSSPSSPSSPSSPSS\"), 32)\n    assert reflect.DeepEqual(candidate(\"SSPPSSPPSSPPSSPPSSPP\"), 81)\n    assert reflect.DeepEqual(candidate(\"PPPPSSPPPPSSPPPPSSPPPPSSPPPPSS\"), 625)\n    assert reflect.DeepEqual(candidate(\"SSPPSSPPSSPPSSPPSSPPSSPPSSPPSS\"), 2187)\n    assert reflect.DeepEqual(candidate(\"SSSSPPSSSSPPSSSS\"), 9)\n    assert reflect.DeepEqual(candidate(\"SSSSSSPPPPSSSSPPPPSSSSSSPPPP\"), 25)\n    assert reflect.DeepEqual(candidate(\"SSPPSSPPSSPPSSPPSSPPSS\"), 243)\n    assert reflect.DeepEqual(candidate(\"SSPPSSPPSSPPSSSS\"), 27)\n    assert reflect.DeepEqual(candidate(\"SSPSPSPSPSPSPSPS\"), 0)\n    assert reflect.DeepEqual(candidate(\"SSPPSPSPSPSPSS\"), 12)\n    assert reflect.DeepEqual(candidate(\"SPSPSPSPSPSPSPSPSPSP\"), 16)\n    assert reflect.DeepEqual(candidate(\"SSPPSSSSPPPPSSSSSSSS\"), 15)\n    assert reflect.DeepEqual(candidate(\"PPPPSSPPSSPPSSPPPP\"), 9)\n    assert reflect.DeepEqual(candidate(\"SPSPPSPSPPSPSPPSPSPPSP\"), 0)\n    assert reflect.DeepEqual(candidate(\"PPSPSPSPSPSPPSPSPS\"), 8)\n    assert reflect.DeepEqual(candidate(\"SPSPSPSPPSPS\"), 6)\n    assert reflect.DeepEqual(candidate(\"SSPPSSPPSSPPSSSSPPSSPPSSSSPPSS\"), 729)\n}",
+    "rust": "fn check(candidate: fn(Vec<i32>, i32) -> Vec<i32>) {\n    assert_eq!(candidate(\"PPPPSSPPPPSSPPPP\"), 5);\n    assert_eq!(candidate(\"SSSSSSSSSS\"), 1);\n    assert_eq!(candidate(\"SPSPSPSP\"), 2);\n    assert_eq!(candidate(\"SSSPPSS\"), 0);\n    assert_eq!(candidate(\"PSSPSPSPPS\"), 0);\n    assert_eq!(candidate(\"SS\"), 1);\n    assert_eq!(candidate(\"PPPP\"), 0);\n    assert_eq!(candidate(\"SSPPSS\"), 3);\n    assert_eq!(candidate(\"SSSSPPSSSS\"), 3);\n    assert_eq!(candidate(\"SSPSSP\"), 2);\n    assert_eq!(candidate(\"SSPSSPSS\"), 4);\n    assert_eq!(candidate(\"SSPPPPPSSPPPPSS\"), 30);\n    assert_eq!(candidate(\"SSPSPSPSPS\"), 4);\n    assert_eq!(candidate(\"SSSS\"), 1);\n    assert_eq!(candidate(\"SSSPPPSS\"), 0);\n    assert_eq!(candidate(\"SSSPPS\"), 1);\n    assert_eq!(candidate(\"PPSSPPSSPP\"), 3);\n    assert_eq!(candidate(\"SSPPSSPPSS\"), 9);\n    assert_eq!(candidate(\"SSPPSPS\"), 3);\n    assert_eq!(candidate(\"SSPPSPPS\"), 3);\n    assert_eq!(candidate(\"S\"), 0);\n    assert_eq!(candidate(\"PPSPSP\"), 1);\n    assert_eq!(candidate(\"SPPSPPSPPS\"), 3);\n    assert_eq!(candidate(\"PPSPSPSPSPSPSPSPSP\"), 8);\n    assert_eq!(candidate(\"SSSPSSSSPPSSPPSSSSPPSSSSPPSSSSSSSSSS\"), 0);\n    assert_eq!(candidate(\"SPPSPSPSPSPSPSPSPS\"), 0);\n    assert_eq!(candidate(\"SSPSSPSSPSSPSSPSSPSS\"), 64);\n    assert_eq!(candidate(\"PPSSPPSPSSPPSS\"), 0);\n    assert_eq!(candidate(\"SSPPSSSSSSSSPPSSSSSSSSPPSSSSSSSSSS\"), 27);\n    assert_eq!(candidate(\"SSPPSSPPSSPPSS\"), 27);\n    assert_eq!(candidate(\"SPSSPSSPSSPSSPSS\"), 0);\n    assert_eq!(candidate(\"PPPPPPSSPPPPSSPPPP\"), 5);\n    assert_eq!(candidate(\"SSPPPPPPSSPPPPSSPPPPSSPPSS\"), 525);\n    assert_eq!(candidate(\"PPSSPPSSPPSSPPSS\"), 27);\n    assert_eq!(candidate(\"PPPPSSPPPPSSPPPPSSPPPPSSPPPPSSPPPP\"), 625);\n    assert_eq!(candidate(\"SSSPSPSPSPSPSSSSPSPS\"), 0);\n    assert_eq!(candidate(\"SSPPSPSPSSSSPPPPSS\"), 30);\n    assert_eq!(candidate(\"SSPPSSSSSSSSSSSSSS\"), 3);\n    assert_eq!(candidate(\"PPPPPPPPPPPPPPPPPP\"), 0);\n    assert_eq!(candidate(\"SPPSPSPSPSPSPSPSPSPS\"), 16);\n    assert_eq!(candidate(\"SPSPPSPSPPSPSPPSPSPP\"), 27);\n    assert_eq!(candidate(\"PPSSPPSSPPSSPP\"), 9);\n    assert_eq!(candidate(\"SSPSPSPSPSPS\"), 0);\n    assert_eq!(candidate(\"SSSPSSSPSSSPSSSPSS\"), 4);\n    assert_eq!(candidate(\"PPSSPPSSSSSSSSSSSS\"), 3);\n    assert_eq!(candidate(\"SSPPPPPPPPSSPPPPSS\"), 45);\n    assert_eq!(candidate(\"SSPPSSSSSSPPSS\"), 9);\n    assert_eq!(candidate(\"SSPPPPPPSSPPPPPSS\"), 42);\n    assert_eq!(candidate(\"SSSSPPPPSSPPSSPPSSSSPPPPSSSSSS\"), 225);\n    assert_eq!(candidate(\"SSPPPPSSPPSS\"), 15);\n    assert_eq!(candidate(\"SSSSPPPPSSPPPPSSSSPPPPSS\"), 125);\n    assert_eq!(candidate(\"SSPPPPSSPPPPSSPPPPSSPPPPSS\"), 625);\n    assert_eq!(candidate(\"SSPPSPSSSSSSSSSSPPSS\"), 0);\n    assert_eq!(candidate(\"SPPSPPSPPSPPS\"), 0);\n    assert_eq!(candidate(\"SSPSPPSPSPSPSPPPSS\"), 0);\n    assert_eq!(candidate(\"SSPPSSPPSSPPSSPPSSPPSSPPSSPPSSPPSSPPSSPPSSPPSS\"), 177147);\n    assert_eq!(candidate(\"PPPPPPSPPPPSPPPPSPPPPS\"), 5);\n    assert_eq!(candidate(\"SSSSSSSSSSSSSSSS\"), 1);\n    assert_eq!(candidate(\"SSPPSPSSPPSPSSPPSPSS\"), 0);\n    assert_eq!(candidate(\"PPSSPPSSPPSS\"), 9);\n    assert_eq!(candidate(\"SSPPSPSPSPSPSPSPSPSPSPSPSPSPSPSPSPSPSPSPSPS\"), 1536);\n    assert_eq!(candidate(\"SSSPSSPPSSPPSSSSPPSSPPSSPPSSSSPPSSSS\"), 0);\n    assert_eq!(candidate(\"SSSSSSSSSSSSSSSSSSSSSSSSSS\"), 1);\n    assert_eq!(candidate(\"SSPPSSPPSSPPSSPPSSSSPPSSSSPPSSSS\"), 729);\n    assert_eq!(candidate(\"SSPPSPPPSPSPPS\"), 6);\n    assert_eq!(candidate(\"SSPPPPSSPPPPSSPPSSPPPPSS\"), 375);\n    assert_eq!(candidate(\"SSPPPPPPSPPPPPSSSSPP\"), 0);\n    assert_eq!(candidate(\"PPSSSSPPPPSS\"), 5);\n    assert_eq!(candidate(\"SSPPSPPPSSSSPPSPSS\"), 6);\n    assert_eq!(candidate(\"PPPPPPSSPPSS\"), 3);\n    assert_eq!(candidate(\"SSPPSPSSPPSPSSPPSPSSPPSPSS\"), 36);\n    assert_eq!(candidate(\"SSSPSSSPSSSPSSSPSSSPSSSPSSS\"), 0);\n    assert_eq!(candidate(\"SSSPSSSSPPSSPPSSSSPPSSSSPPSSSS\"), 0);\n    assert_eq!(candidate(\"SPPPPPPPPPPP\"), 0);\n    assert_eq!(candidate(\"PPPPSPSPPPPSPSPPPPSP\"), 0);\n    assert_eq!(candidate(\"PPSSPPSSPPSSPPSSPPSSPPSSPPSS\"), 729);\n    assert_eq!(candidate(\"PPPPPPPPPPPPPPPPPPPP\"), 0);\n    assert_eq!(candidate(\"SSPSSPSSPSSPSSPSSPSSPSS\"), 128);\n    assert_eq!(candidate(\"SSPPPPSPSPPPSS\"), 20);\n    assert_eq!(candidate(\"PPSSPSSPPSSPSSPPSSPSSPPSS\"), 216);\n    assert_eq!(candidate(\"SSPPPSSPPPSSPPPSS\"), 64);\n    assert_eq!(candidate(\"SSPSSSPSSPSSPSSPSS\"), 0);\n    assert_eq!(candidate(\"SSPPSSPPSSPPSSPPSSPPSSPPSS\"), 729);\n    assert_eq!(candidate(\"PPSSPPPPSSPPPPSS\"), 25);\n    assert_eq!(candidate(\"SPSSSPSSSPSSSPSSSPSS\"), 0);\n    assert_eq!(candidate(\"PSPSPSPSPSPSPSPSPS\"), 0);\n    assert_eq!(candidate(\"SSPPSSPSPSPSSP\"), 12);\n    assert_eq!(candidate(\"SSSSSSSSSSSSSSSSSS\"), 1);\n    assert_eq!(candidate(\"SSPPSSPPSSPPSPSSPPSS\"), 0);\n    assert_eq!(candidate(\"SSPPSPSPPPSSSPPSS\"), 0);\n    assert_eq!(candidate(\"SSPPSSSSPPSSSSPPS\"), 0);\n    assert_eq!(candidate(\"SSPPPPPPSSSSSSSSSS\"), 7);\n    assert_eq!(candidate(\"SSPPPPSSPPPPSSSSPPPPSSSSPPPPSSSS\"), 625);\n    assert_eq!(candidate(\"SSSSSSSSSSPPPPPPSS\"), 7);\n    assert_eq!(candidate(\"SSSSPPSSSSSSPPSSSS\"), 9);\n    assert_eq!(candidate(\"SSPSSPSSPSSPSSPSSPSSPSSPSSPS\"), 0);\n    assert_eq!(candidate(\"SSPPSPSPSPPSS\"), 0);\n    assert_eq!(candidate(\"PPSSPPPPSSPPSSPP\"), 15);\n    assert_eq!(candidate(\"SPSSSPSSSPSSSPSS\"), 4);\n    assert_eq!(candidate(\"PSPPSPSPSPSPSPSPSPSP\"), 0);\n    assert_eq!(candidate(\"SSSSSSPPSSSSSSPPSSSSSSPPSSSSSS\"), 27);\n    assert_eq!(candidate(\"SSPPSSPSSPPSSPSSPPSS\"), 108);\n    assert_eq!(candidate(\"SSSPSPSPSPSPSPSPSPSPSP\"), 16);\n    assert_eq!(candidate(\"PPPPPPSSPPPP\"), 1);\n    assert_eq!(candidate(\"PPSSPPSSPPSSPPSSPPSSPPSSPPSSPPSSPPSSPPSS\"), 19683);\n    assert_eq!(candidate(\"SSPPSPSSPSPSSPSPSSPSPSS\"), 24);\n    assert_eq!(candidate(\"SSSPPSSSPPPSSS\"), 0);\n    assert_eq!(candidate(\"SSSSSSSSSSSS\"), 1);\n    assert_eq!(candidate(\"SSSSSPPPSSSSSPPPSSSS\"), 4);\n    assert_eq!(candidate(\"SSSSSSSSPPPPPPPPSSSSSSSSPPPPPPPPSSSS\"), 81);\n    assert_eq!(candidate(\"SSSSSS\"), 1);\n    assert_eq!(candidate(\"SSPPPPPPSSSSSSPPSSPP\"), 21);\n    assert_eq!(candidate(\"SSPSPSPSPSPSPSPSPSPSPSPSPSPSPS\"), 128);\n    assert_eq!(candidate(\"SSPPSSPPSSPPSSPPSS\"), 81);\n    assert_eq!(candidate(\"SSSSPPPPSSSSPPPPSSSS\"), 25);\n    assert_eq!(candidate(\"SSPSPPSSPSPPSSPSPPSS\"), 0);\n    assert_eq!(candidate(\"SPSPSP\"), 0);\n    assert_eq!(candidate(\"SSPPPPSPSSPPPSS\"), 0);\n    assert_eq!(candidate(\"SSSSPSPSPSPS\"), 4);\n    assert_eq!(candidate(\"PPPPPP\"), 0);\n    assert_eq!(candidate(\"SSPPPPPPPPPPSSPPPPSSPPSS\"), 165);\n    assert_eq!(candidate(\"SSPPSSPPSSPPSSPPSSPPSSPPSSPPSSPPSS\"), 6561);\n    assert_eq!(candidate(\"SSPPPPSSPPPPSSPPSS\"), 75);\n    assert_eq!(candidate(\"SSSSSSSSSSSSSSSSSSSS\"), 1);\n    assert_eq!(candidate(\"SSSSPPPPSSSSPPSSSS\"), 15);\n    assert_eq!(candidate(\"PPPPPPPPPPPPPPPP\"), 0);\n    assert_eq!(candidate(\"SSSPSPSPSPSPSPSPSPSS\"), 16);\n    assert_eq!(candidate(\"SSPPSPSSSSPPSPSSSS\"), 6);\n    assert_eq!(candidate(\"SSPSSPSSPSSPSSPSS\"), 32);\n    assert_eq!(candidate(\"SSPPSSPPSSPPSSPPSSPP\"), 81);\n    assert_eq!(candidate(\"PPPPSSPPPPSSPPPPSSPPPPSSPPPPSS\"), 625);\n    assert_eq!(candidate(\"SSPPSSPPSSPPSSPPSSPPSSPPSSPPSS\"), 2187);\n    assert_eq!(candidate(\"SSSSPPSSSSPPSSSS\"), 9);\n    assert_eq!(candidate(\"SSSSSSPPPPSSSSPPPPSSSSSSPPPP\"), 25);\n    assert_eq!(candidate(\"SSPPSSPPSSPPSSPPSSPPSS\"), 243);\n    assert_eq!(candidate(\"SSPPSSPPSSPPSSSS\"), 27);\n    assert_eq!(candidate(\"SSPSPSPSPSPSPSPS\"), 0);\n    assert_eq!(candidate(\"SSPPSPSPSPSPSS\"), 12);\n    assert_eq!(candidate(\"SPSPSPSPSPSPSPSPSPSP\"), 16);\n    assert_eq!(candidate(\"SSPPSSSSPPPPSSSSSSSS\"), 15);\n    assert_eq!(candidate(\"PPPPSSPPSSPPSSPPPP\"), 9);\n    assert_eq!(candidate(\"SPSPPSPSPPSPSPPSPSPPSP\"), 0);\n    assert_eq!(candidate(\"PPSPSPSPSPSPPSPSPS\"), 8);\n    assert_eq!(candidate(\"SPSPSPSPPSPS\"), 6);\n    assert_eq!(candidate(\"SSPPSSPPSSPPSSSSPPSSPPSSSSPPSS\"), 729);\n}"
+  },
+  "test_cases": [
+    {
+      "input": "corridor = \"PPPPSSPPPPSSPPPP\"",
+      "output": "5"
+    },
+    {
+      "input": "corridor = \"SSSSSSSSSS\"",
+      "output": "1"
+    },
+    {
+      "input": "corridor = \"SPSPSPSP\"",
+      "output": "2"
+    },
+    {
+      "input": "corridor = \"SSSPPSS\"",
+      "output": "0"
+    },
+    {
+      "input": "corridor = \"PSSPSPSPPS\"",
+      "output": "0"
+    },
+    {
+      "input": "corridor = \"SS\"",
+      "output": "1"
+    },
+    {
+      "input": "corridor = \"PPPP\"",
+      "output": "0"
+    },
+    {
+      "input": "corridor = \"SSPPSS\"",
+      "output": "3"
+    },
+    {
+      "input": "corridor = \"SSSSPPSSSS\"",
+      "output": "3"
+    },
+    {
+      "input": "corridor = \"SSPSSP\"",
+      "output": "2"
+    },
+    {
+      "input": "corridor = \"SSPSSPSS\"",
+      "output": "4"
+    },
+    {
+      "input": "corridor = \"SSPPPPPSSPPPPSS\"",
+      "output": "30"
+    },
+    {
+      "input": "corridor = \"SSPSPSPSPS\"",
+      "output": "4"
+    },
+    {
+      "input": "corridor = \"SSSS\"",
+      "output": "1"
+    },
+    {
+      "input": "corridor = \"SSSPPPSS\"",
+      "output": "0"
+    },
+    {
+      "input": "corridor = \"SSSPPS\"",
+      "output": "1"
+    },
+    {
+      "input": "corridor = \"PPSSPPSSPP\"",
+      "output": "3"
+    },
+    {
+      "input": "corridor = \"SSPPSSPPSS\"",
+      "output": "9"
+    },
+    {
+      "input": "corridor = \"SSPPSPS\"",
+      "output": "3"
+    },
+    {
+      "input": "corridor = \"SSPPSPPS\"",
+      "output": "3"
+    },
+    {
+      "input": "corridor = \"S\"",
+      "output": "0"
+    },
+    {
+      "input": "corridor = \"PPSPSP\"",
+      "output": "1"
+    },
+    {
+      "input": "corridor = \"SPPSPPSPPS\"",
+      "output": "3"
+    },
+    {
+      "input": "corridor = \"PPSPSPSPSPSPSPSPSP\"",
+      "output": "8"
+    },
+    {
+      "input": "corridor = \"SSSPSSSSPPSSPPSSSSPPSSSSPPSSSSSSSSSS\"",
+      "output": "0"
+    },
+    {
+      "input": "corridor = \"SPPSPSPSPSPSPSPSPS\"",
+      "output": "0"
+    },
+    {
+      "input": "corridor = \"SSPSSPSSPSSPSSPSSPSS\"",
+      "output": "64"
+    },
+    {
+      "input": "corridor = \"PPSSPPSPSSPPSS\"",
+      "output": "0"
+    },
+    {
+      "input": "corridor = \"SSPPSSSSSSSSPPSSSSSSSSPPSSSSSSSSSS\"",
+      "output": "27"
+    },
+    {
+      "input": "corridor = \"SSPPSSPPSSPPSS\"",
+      "output": "27"
+    },
+    {
+      "input": "corridor = \"SPSSPSSPSSPSSPSS\"",
+      "output": "0"
+    },
+    {
+      "input": "corridor = \"PPPPPPSSPPPPSSPPPP\"",
+      "output": "5"
+    },
+    {
+      "input": "corridor = \"SSPPPPPPSSPPPPSSPPPPSSPPSS\"",
+      "output": "525"
+    },
+    {
+      "input": "corridor = \"PPSSPPSSPPSSPPSS\"",
+      "output": "27"
+    },
+    {
+      "input": "corridor = \"PPPPSSPPPPSSPPPPSSPPPPSSPPPPSSPPPP\"",
+      "output": "625"
+    },
+    {
+      "input": "corridor = \"SSSPSPSPSPSPSSSSPSPS\"",
+      "output": "0"
+    },
+    {
+      "input": "corridor = \"SSPPSPSPSSSSPPPPSS\"",
+      "output": "30"
+    },
+    {
+      "input": "corridor = \"SSPPSSSSSSSSSSSSSS\"",
+      "output": "3"
+    },
+    {
+      "input": "corridor = \"PPPPPPPPPPPPPPPPPP\"",
+      "output": "0"
+    },
+    {
+      "input": "corridor = \"SPPSPSPSPSPSPSPSPSPS\"",
+      "output": "16"
+    },
+    {
+      "input": "corridor = \"SPSPPSPSPPSPSPPSPSPP\"",
+      "output": "27"
+    },
+    {
+      "input": "corridor = \"PPSSPPSSPPSSPP\"",
+      "output": "9"
+    },
+    {
+      "input": "corridor = \"SSPSPSPSPSPS\"",
+      "output": "0"
+    },
+    {
+      "input": "corridor = \"SSSPSSSPSSSPSSSPSS\"",
+      "output": "4"
+    },
+    {
+      "input": "corridor = \"PPSSPPSSSSSSSSSSSS\"",
+      "output": "3"
+    },
+    {
+      "input": "corridor = \"SSPPPPPPPPSSPPPPSS\"",
+      "output": "45"
+    },
+    {
+      "input": "corridor = \"SSPPSSSSSSPPSS\"",
+      "output": "9"
+    },
+    {
+      "input": "corridor = \"SSPPPPPPSSPPPPPSS\"",
+      "output": "42"
+    },
+    {
+      "input": "corridor = \"SSSSPPPPSSPPSSPPSSSSPPPPSSSSSS\"",
+      "output": "225"
+    },
+    {
+      "input": "corridor = \"SSPPPPSSPPSS\"",
+      "output": "15"
+    },
+    {
+      "input": "corridor = \"SSSSPPPPSSPPPPSSSSPPPPSS\"",
+      "output": "125"
+    },
+    {
+      "input": "corridor = \"SSPPPPSSPPPPSSPPPPSSPPPPSS\"",
+      "output": "625"
+    },
+    {
+      "input": "corridor = \"SSPPSPSSSSSSSSSSPPSS\"",
+      "output": "0"
+    },
+    {
+      "input": "corridor = \"SPPSPPSPPSPPS\"",
+      "output": "0"
+    },
+    {
+      "input": "corridor = \"SSPSPPSPSPSPSPPPSS\"",
+      "output": "0"
+    },
+    {
+      "input": "corridor = \"SSPPSSPPSSPPSSPPSSPPSSPPSSPPSSPPSSPPSSPPSSPPSS\"",
+      "output": "177147"
+    },
+    {
+      "input": "corridor = \"PPPPPPSPPPPSPPPPSPPPPS\"",
+      "output": "5"
+    },
+    {
+      "input": "corridor = \"SSSSSSSSSSSSSSSS\"",
+      "output": "1"
+    },
+    {
+      "input": "corridor = \"SSPPSPSSPPSPSSPPSPSS\"",
+      "output": "0"
+    },
+    {
+      "input": "corridor = \"PPSSPPSSPPSS\"",
+      "output": "9"
+    },
+    {
+      "input": "corridor = \"SSPPSPSPSPSPSPSPSPSPSPSPSPSPSPSPSPSPSPSPSPS\"",
+      "output": "1536"
+    },
+    {
+      "input": "corridor = \"SSSPSSPPSSPPSSSSPPSSPPSSPPSSSSPPSSSS\"",
+      "output": "0"
+    },
+    {
+      "input": "corridor = \"SSSSSSSSSSSSSSSSSSSSSSSSSS\"",
+      "output": "1"
+    },
+    {
+      "input": "corridor = \"SSPPSSPPSSPPSSPPSSSSPPSSSSPPSSSS\"",
+      "output": "729"
+    },
+    {
+      "input": "corridor = \"SSPPSPPPSPSPPS\"",
+      "output": "6"
+    },
+    {
+      "input": "corridor = \"SSPPPPSSPPPPSSPPSSPPPPSS\"",
+      "output": "375"
+    },
+    {
+      "input": "corridor = \"SSPPPPPPSPPPPPSSSSPP\"",
+      "output": "0"
+    },
+    {
+      "input": "corridor = \"PPSSSSPPPPSS\"",
+      "output": "5"
+    },
+    {
+      "input": "corridor = \"SSPPSPPPSSSSPPSPSS\"",
+      "output": "6"
+    },
+    {
+      "input": "corridor = \"PPPPPPSSPPSS\"",
+      "output": "3"
+    },
+    {
+      "input": "corridor = \"SSPPSPSSPPSPSSPPSPSSPPSPSS\"",
+      "output": "36"
+    },
+    {
+      "input": "corridor = \"SSSPSSSPSSSPSSSPSSSPSSSPSSS\"",
+      "output": "0"
+    },
+    {
+      "input": "corridor = \"SSSPSSSSPPSSPPSSSSPPSSSSPPSSSS\"",
+      "output": "0"
+    },
+    {
+      "input": "corridor = \"SPPPPPPPPPPP\"",
+      "output": "0"
+    },
+    {
+      "input": "corridor = \"PPPPSPSPPPPSPSPPPPSP\"",
+      "output": "0"
+    },
+    {
+      "input": "corridor = \"PPSSPPSSPPSSPPSSPPSSPPSSPPSS\"",
+      "output": "729"
+    },
+    {
+      "input": "corridor = \"PPPPPPPPPPPPPPPPPPPP\"",
+      "output": "0"
+    },
+    {
+      "input": "corridor = \"SSPSSPSSPSSPSSPSSPSSPSS\"",
+      "output": "128"
+    },
+    {
+      "input": "corridor = \"SSPPPPSPSPPPSS\"",
+      "output": "20"
+    },
+    {
+      "input": "corridor = \"PPSSPSSPPSSPSSPPSSPSSPPSS\"",
+      "output": "216"
+    },
+    {
+      "input": "corridor = \"SSPPPSSPPPSSPPPSS\"",
+      "output": "64"
+    },
+    {
+      "input": "corridor = \"SSPSSSPSSPSSPSSPSS\"",
+      "output": "0"
+    },
+    {
+      "input": "corridor = \"SSPPSSPPSSPPSSPPSSPPSSPPSS\"",
+      "output": "729"
+    },
+    {
+      "input": "corridor = \"PPSSPPPPSSPPPPSS\"",
+      "output": "25"
+    },
+    {
+      "input": "corridor = \"SPSSSPSSSPSSSPSSSPSS\"",
+      "output": "0"
+    },
+    {
+      "input": "corridor = \"PSPSPSPSPSPSPSPSPS\"",
+      "output": "0"
+    },
+    {
+      "input": "corridor = \"SSPPSSPSPSPSSP\"",
+      "output": "12"
+    },
+    {
+      "input": "corridor = \"SSSSSSSSSSSSSSSSSS\"",
+      "output": "1"
+    },
+    {
+      "input": "corridor = \"SSPPSSPPSSPPSPSSPPSS\"",
+      "output": "0"
+    },
+    {
+      "input": "corridor = \"SSPPSPSPPPSSSPPSS\"",
+      "output": "0"
+    },
+    {
+      "input": "corridor = \"SSPPSSSSPPSSSSPPS\"",
+      "output": "0"
+    },
+    {
+      "input": "corridor = \"SSPPPPPPSSSSSSSSSS\"",
+      "output": "7"
+    },
+    {
+      "input": "corridor = \"SSPPPPSSPPPPSSSSPPPPSSSSPPPPSSSS\"",
+      "output": "625"
+    },
+    {
+      "input": "corridor = \"SSSSSSSSSSPPPPPPSS\"",
+      "output": "7"
+    },
+    {
+      "input": "corridor = \"SSSSPPSSSSSSPPSSSS\"",
+      "output": "9"
+    },
+    {
+      "input": "corridor = \"SSPSSPSSPSSPSSPSSPSSPSSPSSPS\"",
+      "output": "0"
+    },
+    {
+      "input": "corridor = \"SSPPSPSPSPPSS\"",
+      "output": "0"
+    },
+    {
+      "input": "corridor = \"PPSSPPPPSSPPSSPP\"",
+      "output": "15"
+    },
+    {
+      "input": "corridor = \"SPSSSPSSSPSSSPSS\"",
+      "output": "4"
+    },
+    {
+      "input": "corridor = \"PSPPSPSPSPSPSPSPSPSP\"",
+      "output": "0"
+    },
+    {
+      "input": "corridor = \"SSSSSSPPSSSSSSPPSSSSSSPPSSSSSS\"",
+      "output": "27"
+    },
+    {
+      "input": "corridor = \"SSPPSSPSSPPSSPSSPPSS\"",
+      "output": "108"
+    },
+    {
+      "input": "corridor = \"SSSPSPSPSPSPSPSPSPSPSP\"",
+      "output": "16"
+    },
+    {
+      "input": "corridor = \"PPPPPPSSPPPP\"",
+      "output": "1"
+    },
+    {
+      "input": "corridor = \"PPSSPPSSPPSSPPSSPPSSPPSSPPSSPPSSPPSSPPSS\"",
+      "output": "19683"
+    },
+    {
+      "input": "corridor = \"SSPPSPSSPSPSSPSPSSPSPSS\"",
+      "output": "24"
+    },
+    {
+      "input": "corridor = \"SSSPPSSSPPPSSS\"",
+      "output": "0"
+    },
+    {
+      "input": "corridor = \"SSSSSSSSSSSS\"",
+      "output": "1"
+    },
+    {
+      "input": "corridor = \"SSSSSPPPSSSSSPPPSSSS\"",
+      "output": "4"
+    },
+    {
+      "input": "corridor = \"SSSSSSSSPPPPPPPPSSSSSSSSPPPPPPPPSSSS\"",
+      "output": "81"
+    },
+    {
+      "input": "corridor = \"SSSSSS\"",
+      "output": "1"
+    },
+    {
+      "input": "corridor = \"SSPPPPPPSSSSSSPPSSPP\"",
+      "output": "21"
+    },
+    {
+      "input": "corridor = \"SSPSPSPSPSPSPSPSPSPSPSPSPSPSPS\"",
+      "output": "128"
+    },
+    {
+      "input": "corridor = \"SSPPSSPPSSPPSSPPSS\"",
+      "output": "81"
+    },
+    {
+      "input": "corridor = \"SSSSPPPPSSSSPPPPSSSS\"",
+      "output": "25"
+    },
+    {
+      "input": "corridor = \"SSPSPPSSPSPPSSPSPPSS\"",
+      "output": "0"
+    },
+    {
+      "input": "corridor = \"SPSPSP\"",
+      "output": "0"
+    },
+    {
+      "input": "corridor = \"SSPPPPSPSSPPPSS\"",
+      "output": "0"
+    },
+    {
+      "input": "corridor = \"SSSSPSPSPSPS\"",
+      "output": "4"
+    },
+    {
+      "input": "corridor = \"PPPPPP\"",
+      "output": "0"
+    },
+    {
+      "input": "corridor = \"SSPPPPPPPPPPSSPPPPSSPPSS\"",
+      "output": "165"
+    },
+    {
+      "input": "corridor = \"SSPPSSPPSSPPSSPPSSPPSSPPSSPPSSPPSS\"",
+      "output": "6561"
+    },
+    {
+      "input": "corridor = \"SSPPPPSSPPPPSSPPSS\"",
+      "output": "75"
+    },
+    {
+      "input": "corridor = \"SSSSSSSSSSSSSSSSSSSS\"",
+      "output": "1"
+    },
+    {
+      "input": "corridor = \"SSSSPPPPSSSSPPSSSS\"",
+      "output": "15"
+    },
+    {
+      "input": "corridor = \"PPPPPPPPPPPPPPPP\"",
+      "output": "0"
+    },
+    {
+      "input": "corridor = \"SSSPSPSPSPSPSPSPSPSS\"",
+      "output": "16"
+    },
+    {
+      "input": "corridor = \"SSPPSPSSSSPPSPSSSS\"",
+      "output": "6"
+    },
+    {
+      "input": "corridor = \"SSPSSPSSPSSPSSPSS\"",
+      "output": "32"
+    },
+    {
+      "input": "corridor = \"SSPPSSPPSSPPSSPPSSPP\"",
+      "output": "81"
+    },
+    {
+      "input": "corridor = \"PPPPSSPPPPSSPPPPSSPPPPSSPPPPSS\"",
+      "output": "625"
+    },
+    {
+      "input": "corridor = \"SSPPSSPPSSPPSSPPSSPPSSPPSSPPSS\"",
+      "output": "2187"
+    },
+    {
+      "input": "corridor = \"SSSSPPSSSSPPSSSS\"",
+      "output": "9"
+    },
+    {
+      "input": "corridor = \"SSSSSSPPPPSSSSPPPPSSSSSSPPPP\"",
+      "output": "25"
+    },
+    {
+      "input": "corridor = \"SSPPSSPPSSPPSSPPSSPPSS\"",
+      "output": "243"
+    },
+    {
+      "input": "corridor = \"SSPPSSPPSSPPSSSS\"",
+      "output": "27"
+    },
+    {
+      "input": "corridor = \"SSPSPSPSPSPSPSPS\"",
+      "output": "0"
+    },
+    {
+      "input": "corridor = \"SSPPSPSPSPSPSS\"",
+      "output": "12"
+    },
+    {
+      "input": "corridor = \"SPSPSPSPSPSPSPSPSPSP\"",
+      "output": "16"
+    },
+    {
+      "input": "corridor = \"SSPPSSSSPPPPSSSSSSSS\"",
+      "output": "15"
+    },
+    {
+      "input": "corridor = \"PPPPSSPPSSPPSSPPPP\"",
+      "output": "9"
+    },
+    {
+      "input": "corridor = \"SPSPPSPSPPSPSPPSPSPPSP\"",
+      "output": "0"
+    },
+    {
+      "input": "corridor = \"PPSPSPSPSPSPPSPSPS\"",
+      "output": "8"
+    },
+    {
+      "input": "corridor = \"SPSPSPSPPSPS\"",
+      "output": "6"
+    },
+    {
+      "input": "corridor = \"SSPPSSPPSSPPSSSSPPSSPPSSSSPPSS\"",
+      "output": "729"
+    }
+  ],
+  "types": {
+    "python3": {
+      "input": [
+        {
+          "corridor": "str"
+        }
+      ],
+      "output": "int"
+    },
+    "cpp": {
+      "input": [
+        {
+          "corridor": "string"
+        }
+      ],
+      "output": "int"
+    },
+    "java": {
+      "input": [
+        {
+          "corridor": "String"
+        }
+      ],
+      "output": "int"
+    },
+    "javascript": {
+      "input": [
+        {
+          "corridor": "string"
+        }
+      ],
+      "output": "number"
+    },
+    "typescript": {
+      "input": [
+        {
+          "corridor": "string"
+        }
+      ],
+      "output": "number"
+    },
+    "golang": {
+      "input": [
+        {
+          "corridor": "string"
+        }
+      ],
+      "output": "int"
+    },
+    "rust": {
+      "input": [
+        {
+          "corridor": "String"
+        }
+      ],
+      "output": "i32"
+    }
+  },
+  "tags": [
+    "math",
+    "string",
+    "dynamic-programming"
+  ]
+}

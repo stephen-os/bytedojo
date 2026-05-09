@@ -1,0 +1,560 @@
+{
+  "id": 3494,
+  "title": "Find the Minimum Amount of Time to Brew Potions",
+  "slug": "find-the-minimum-amount-of-time-to-brew-potions",
+  "difficulty": "Medium",
+  "description": "You are given two integer arrays, skill and mana, of length n and m, respectively.\nIn a laboratory, n wizards must brew m potions in order. Each potion has a mana capacity mana[j] and must pass through all the wizards sequentially to be brewed properly. The time taken by the ith wizard on the jth potion is timeij = skill[i] * mana[j].\nSince the brewing process is delicate, a potion must be passed to the next wizard immediately after the current wizard completes their work. This means the timing must be synchronized so that each wizard begins working on a potion exactly when it arrives. ​\nReturn the minimum amount of time required for the potions to be brewed properly.\nExample 1:\nExample 2:\nExample 3:\nConstraints:",
+  "examples": [
+    {
+      "example_num": 1,
+      "example_text": "Input: skill = [1,5,2,4], mana = [5,1,4,2]\nOutput: 110\nExplanation:\nAs an example for why wizard 0 cannot start working on the 1 st potion before time t = 52 , consider the case where the wizards started preparing the 1 st potion at time t = 50 . At time t = 58 , wizard 2 is done with the 1 st potion, but wizard 3 will still be working on the 0 th potion till time t = 60 .",
+      "images": []
+    },
+    {
+      "example_num": 2,
+      "example_text": "Input: skill = [1,1,1], mana = [1,1,1]\nOutput: 5\nExplanation:",
+      "images": []
+    },
+    {
+      "example_num": 3,
+      "example_text": "Input: skill = [1,2,3,4], mana = [1,2]\nOutput: 21",
+      "images": []
+    }
+  ],
+  "constraints": [
+    "n == skill.length",
+    "m == mana.length",
+    "1 <= n, m <= 5000",
+    "1 <= mana[i], skill[i] <= 5000"
+  ],
+  "hints": [
+    "Maintain each wizard's earliest free time (for the last potion) as <code>f[i]</code>.",
+    "Let <code>x</code> be the current mana value. Starting from <code>now = f[0]</code>, update <code>now = max(now + skill[i - 1] * x, f[i])</code> for <code>i in [1..n]</code>. Then, the final <code>f[n - 1] = now + skill[n - 1] * x</code> for this potion.",
+    "Update all other <code>f</code> values by <code>f[i] = f[i + 1] - skill[i + 1] * x</code> for <code>i in [0..n - 2]</code> (in reverse order)."
+  ],
+  "code_snippets": {
+    "cpp": "class Solution {\npublic:\n    long long minTime(vector<int>& skill, vector<int>& mana) {\n        \n    }\n};",
+    "java": "class Solution {\n    public long minTime(int[] skill, int[] mana) {\n        \n    }\n}",
+    "python3": "class Solution:\n    def minTime(self, skill: List[int], mana: List[int]) -> int:\n        ",
+    "javascript": "/**\n * @param {number[]} skill\n * @param {number[]} mana\n * @return {number}\n */\nvar minTime = function(skill, mana) {\n    \n};",
+    "typescript": "function minTime(skill: number[], mana: number[]): number {\n    \n};",
+    "golang": "func minTime(skill []int, mana []int) int64 {\n    \n}",
+    "rust": "impl Solution {\n    pub fn min_time(skill: Vec<i32>, mana: Vec<i32>) -> i64 {\n        \n    }\n}"
+  },
+  "entry_points": {
+    "python3": "Solution().minTime",
+    "cpp": "Solution().minTime",
+    "java": "new Solution().minTime",
+    "javascript": "minTime",
+    "typescript": "minTime",
+    "golang": "minTime",
+    "rust": "Solution::min_time"
+  },
+  "test_snippets": {
+    "python3": "def check(candidate):\n    assert candidate(skill = [10,20,30], mana = [1,2,3,4,5]) == 490\n    assert candidate(skill = [3,2,1], mana = [6,5,4]) == 57\n    assert candidate(skill = [1,1,1], mana = [1,1,1]) == 5\n    assert candidate(skill = [1,2,3], mana = [4,5,6,7]) == 78\n    assert candidate(skill = [5000, 5000], mana = [1, 5000]) == 50005000\n    assert candidate(skill = [1, 2, 3], mana = [4, 5, 6, 7, 8]) == 102\n    assert candidate(skill = [1,5,2,4], mana = [5,1,4,2]) == 110\n    assert candidate(skill = [10, 20, 30], mana = [1, 2, 3, 4, 5]) == 490\n    assert candidate(skill = [1,2,3,4], mana = [1,2]) == 21\n    assert candidate(skill = [5000, 5000, 5000], mana = [5000, 5000, 5000]) == 125000000\n    assert candidate(skill = [3, 1, 4, 1, 5], mana = [9, 2, 6, 5, 3, 5]) == 275\n    assert candidate(skill = [2, 3, 4, 5], mana = [1, 2, 3, 4, 5, 6, 7]) == 159\n    assert candidate(skill = [1, 1, 2, 2, 3, 3], mana = [1, 2, 3, 4, 5, 6]) == 94\n    assert candidate(skill = [10, 20, 30, 40, 50], mana = [5, 10, 15, 20, 25]) == 4750\n    assert candidate(skill = [2, 3, 5, 7, 11, 13, 17, 19], mana = [23, 29, 31, 37, 41, 43, 47, 53, 59, 61]) == 9500\n    assert candidate(skill = [2, 3, 5, 7, 11], mana = [13, 17, 19, 23, 29, 31, 37, 41]) == 2531\n    assert candidate(skill = [100, 100, 100, 100, 100], mana = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]) == 9500\n    assert candidate(skill = [5, 5, 5, 5, 5], mana = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]) == 475\n    assert candidate(skill = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15], mana = [15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1]) == 3375\n    assert candidate(skill = [4999, 4998, 4997, 4996], mana = [5000, 4999, 4998, 4997, 4996]) == 199820050\n    assert candidate(skill = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100], mana = [10, 20, 30, 40, 50]) == 29500\n    assert candidate(skill = [100, 200, 300, 400, 500], mana = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100]) == 295000\n    assert candidate(skill = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29], mana = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29]) == 4585\n    assert candidate(skill = [300, 200, 100, 400, 500], mana = [100, 200, 300, 400, 500]) == 1050000\n    assert candidate(skill = [1,2,3,4,5,6], mana = [6,5,4,3,2,1]) == 216\n    assert candidate(skill = [4,3,2,1], mana = [100,200,300,400,500]) == 9000\n    assert candidate(skill = [1000, 2000, 3000, 4000, 5000], mana = [1000, 2000, 3000, 4000, 5000]) == 95000000\n    assert candidate(skill = [2, 4, 6, 8, 10, 12, 14, 16, 18, 20], mana = [1, 3, 5, 7, 9, 11, 13, 15, 17, 19]) == 2660\n    assert candidate(skill = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10], mana = [5000, 5000, 5000, 5000, 5000]) == 475000\n    assert candidate(skill = [100, 200, 300, 400, 500, 600], mana = [600, 500, 400, 300, 200, 100]) == 2160000\n    assert candidate(skill = [10, 20, 30, 40, 50], mana = [5, 10, 15, 20, 25, 30]) == 6250\n    assert candidate(skill = [25, 50, 75, 100, 125, 150, 175, 200, 225, 250], mana = [100, 200, 300, 400, 500, 600, 700, 800, 900, 1000]) == 1787500\n    assert candidate(skill = [100, 200, 300], mana = [50, 25, 75, 100]) == 100000\n    assert candidate(skill = [1, 2, 3, 4, 5], mana = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100]) == 2950\n    assert candidate(skill = [5,3,8,2,4], mana = [15,25,10,40,5]) == 1395\n    assert candidate(skill = [1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21], mana = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]) == 1771\n    assert candidate(skill = [29, 65, 12, 48, 77], mana = [31, 89, 17, 63, 54, 20, 41, 73]) == 54255\n    assert candidate(skill = [1, 5, 10, 20, 50, 100, 200], mana = [1, 2, 3, 4, 5, 6, 7]) == 5786\n    assert candidate(skill = [1500, 1500, 1500, 1500], mana = [2500, 2500, 2500, 2500, 2500]) == 30000000\n    assert candidate(skill = [4000, 3000, 2000, 1000], mana = [1000, 2000, 3000, 4000, 5000]) == 90000000\n    assert candidate(skill = [100, 200, 300, 400, 500], mana = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]) == 29500\n    assert candidate(skill = [3,6,9,12], mana = [10,20,30,40,50]) == 2100\n    assert candidate(skill = [1, 1, 1, 1, 1], mana = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]) == 95\n    assert candidate(skill = [1000, 2000, 3000], mana = [500, 1000, 1500, 2000, 2500]) == 24500000\n    assert candidate(skill = [100, 150, 200, 250, 300], mana = [50, 100, 150, 200, 250, 300, 350]) == 505000\n    assert candidate(skill = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10], mana = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100]) == 7150\n    assert candidate(skill = [7,14,21,28], mana = [2,4,6,8,10,12,14,16]) == 2156\n    assert candidate(skill = [2, 4, 6, 8, 10, 12], mana = [1, 3, 5, 7, 9, 11, 13, 15]) == 908\n    assert candidate(skill = [5, 10, 15, 20, 25, 30, 35, 40, 45, 50], mana = [5, 10, 15, 20, 25, 30, 35, 40, 45, 50]) == 17875\n    assert candidate(skill = [3000, 2500, 2000, 1500], mana = [1000, 1200, 1400, 1600, 1800]) == 31800000\n    assert candidate(skill = [500, 1000, 1500, 2000], mana = [200, 400, 600, 800, 1000, 1200]) == 9400000\n    assert candidate(skill = [100, 100, 100, 100, 100], mana = [100, 100, 100, 100, 100, 100, 100, 100, 100, 100]) == 140000\n    assert candidate(skill = [2, 4, 6, 8, 10, 12], mana = [12, 10, 8, 6, 4, 2]) == 864\n    assert candidate(skill = [100, 200, 150, 50, 250], mana = [50, 75, 100, 125, 150]) == 172500\n    assert candidate(skill = [2, 4, 6, 8, 10], mana = [1, 3, 5, 7, 9]) == 330\n    assert candidate(skill = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100], mana = [5, 10, 15, 20, 25, 30, 35, 40, 45, 50]) == 35750\n    assert candidate(skill = [4, 2, 6, 5, 1], mana = [9, 3, 7, 8, 2, 10]) == 465\n    assert candidate(skill = [2,4,6,8,10], mana = [1,1,1,1,1,1,1,1,1,1]) == 120\n    assert candidate(skill = [5000, 5000, 5000, 5000], mana = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]) == 425000\n    assert candidate(skill = [1, 3, 2, 4, 5], mana = [2, 1, 3, 4, 5]) == 115\n    assert candidate(skill = [5, 10, 15, 20, 25], mana = [5, 5, 5, 5, 5, 5, 5, 5, 5, 5]) == 1500\n    assert candidate(skill = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10], mana = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]) == 715\n    assert candidate(skill = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10], mana = [100, 200, 300, 400, 500, 600, 700, 800, 900, 1000]) == 71500\n    assert candidate(skill = [100, 200, 150, 50], mana = [300, 250, 400, 100, 350]) == 440000\n    assert candidate(skill = [50, 40, 30, 20, 10], mana = [25, 20, 15, 10, 5]) == 4750\n    assert candidate(skill = [100, 200, 300, 400], mana = [10, 20, 30, 40, 50, 60]) == 94000\n    assert candidate(skill = [7, 14, 21, 28, 35], mana = [35, 28, 21, 14, 7]) == 6125\n    assert candidate(skill = [42, 15, 88, 34, 99, 56], mana = [72, 33, 19, 55, 48, 62, 28]) == 53845\n    assert candidate(skill = [2500,1000,5000,3000], mana = [5000,2000,1000,3000,4000]) == 115000000\n    assert candidate(skill = [500, 1000, 1500, 2000], mana = [500, 1000, 1500, 2000, 2500]) == 17500000\n    assert candidate(skill = [10, 20, 30, 40, 50], mana = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]) == 2950\n    assert candidate(skill = [1, 2, 3, 4, 5], mana = [5, 10, 15, 20, 25]) == 475\n    assert candidate(skill = [3, 7, 5, 2, 8], mana = [4, 6, 2, 9, 1]) == 377\n    assert candidate(skill = [5, 3, 8, 6, 2], mana = [7, 1, 4, 2, 9, 5, 3]) == 469\n    assert candidate(skill = [500, 1000, 1500, 2000], mana = [100, 200, 300, 400, 500, 600, 700, 800]) == 7700000\n    assert candidate(skill = [1000,2000,3000,4000,5000], mana = [1,2,3,4,5,6,7,8,9,10]) == 295000\n    assert candidate(skill = [1000, 2000, 3000, 4000, 5000], mana = [1, 10, 100, 1000, 10000]) == 151111000\n    assert candidate(skill = [10, 15, 20, 25, 30], mana = [35, 40, 45, 50, 55, 60, 65, 70]) == 15050\n    assert candidate(skill = [100,200,300,400], mana = [5,10,15,20,25,30]) == 47000\n    assert candidate(skill = [1000, 2000, 3000, 4000, 5000], mana = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150]) == 6200000\n    assert candidate(skill = [300, 200, 100], mana = [5, 15, 25, 35, 45, 55]) == 70500\n    assert candidate(skill = [1, 3, 5, 7, 9, 11, 13, 15, 17, 19], mana = [19, 17, 15, 13, 11, 9, 7, 5, 3, 1]) == 3439\n    assert candidate(skill = [2, 5, 7, 8], mana = [1, 3, 6, 9, 12]) == 341\n    assert candidate(skill = [100, 200, 300, 400, 500, 600, 700, 800, 900, 1000], mana = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100]) == 715000\n    assert candidate(skill = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10], mana = [10, 9, 8, 7, 6, 5, 4, 3, 2, 1]) == 1000\n    assert candidate(skill = [100, 200, 300, 400], mana = [50, 60, 70, 80, 90]) == 170000\n    assert candidate(skill = [100, 200, 300, 400, 500], mana = [5, 10, 15, 20, 25, 30, 35, 40, 45, 50]) == 147500\n    assert candidate(skill = [300, 200, 100], mana = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]) == 40500\n    assert candidate(skill = [3, 7, 2, 8], mana = [6, 4, 9, 1, 5]) == 356\n    assert candidate(skill = [1, 3, 2, 4], mana = [2, 3, 4, 5]) == 74\n    assert candidate(skill = [1,10,100,1000], mana = [1,10,100,1000,10000]) == 11111111\n    assert candidate(skill = [5, 10, 15, 20, 25, 30], mana = [1, 3, 5, 7, 9]) == 1095\n    assert candidate(skill = [1, 1, 1, 1, 1], mana = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]) == 24\n    assert candidate(skill = [500, 1000, 1500, 2000, 2500], mana = [250, 500, 750, 1000, 1250]) == 11875000\n    assert candidate(skill = [3, 6, 9, 12, 15], mana = [2, 4, 6, 8, 10, 12, 14, 16, 18, 20]) == 1770\n    assert candidate(skill = [5000, 4000, 3000, 2000, 1000], mana = [1000, 2000, 3000, 4000, 5000]) == 125000000\n    assert candidate(skill = [1, 10, 100, 1000, 5000], mana = [1, 10, 100, 1000, 5000]) == 31111111\n    assert candidate(skill = [4000, 3000, 2000, 1000, 500], mana = [500, 1000, 1500, 2000, 2500, 3000, 3500, 4000, 4500, 5000]) == 142500000\n    assert candidate(skill = [1, 3, 5, 7, 9, 11, 13, 15, 17, 19], mana = [2, 4, 6, 8, 10, 12, 14, 16, 18, 20]) == 2660\n    assert candidate(skill = [3, 5, 7, 9], mana = [2, 4, 6, 8]) == 238\n    assert candidate(skill = [5000, 1000, 2000, 3000, 4000], mana = [100, 200, 300, 400, 500, 600, 700, 800, 900, 1000]) == 37500000\n    assert candidate(skill = [1500, 1500, 1500, 1500], mana = [500, 1000, 1500, 2000, 2500, 3000]) == 29250000\n    assert candidate(skill = [2, 3, 5, 7, 11], mana = [13, 17, 19, 23, 29, 31, 37]) == 2080",
+    "cpp": "void check(Solution& solution) {\n    assert(solution.minTime({10,20,30}, {1,2,3,4,5}) == vector<int>490);\n    assert(solution.minTime({3,2,1}, {6,5,4}) == vector<int>57);\n    assert(solution.minTime({1,1,1}, {1,1,1}) == vector<int>5);\n    assert(solution.minTime({1,2,3}, {4,5,6,7}) == vector<int>78);\n    assert(solution.minTime({5000, 5000}, {1, 5000}) == vector<int>50005000);\n    assert(solution.minTime({1, 2, 3}, {4, 5, 6, 7, 8}) == vector<int>102);\n    assert(solution.minTime({1,5,2,4}, {5,1,4,2}) == vector<int>110);\n    assert(solution.minTime({10, 20, 30}, {1, 2, 3, 4, 5}) == vector<int>490);\n    assert(solution.minTime({1,2,3,4}, {1,2}) == vector<int>21);\n    assert(solution.minTime({5000, 5000, 5000}, {5000, 5000, 5000}) == vector<int>125000000);\n    assert(solution.minTime({3, 1, 4, 1, 5}, {9, 2, 6, 5, 3, 5}) == vector<int>275);\n    assert(solution.minTime({2, 3, 4, 5}, {1, 2, 3, 4, 5, 6, 7}) == vector<int>159);\n    assert(solution.minTime({1, 1, 2, 2, 3, 3}, {1, 2, 3, 4, 5, 6}) == vector<int>94);\n    assert(solution.minTime({10, 20, 30, 40, 50}, {5, 10, 15, 20, 25}) == vector<int>4750);\n    assert(solution.minTime({2, 3, 5, 7, 11, 13, 17, 19}, {23, 29, 31, 37, 41, 43, 47, 53, 59, 61}) == vector<int>9500);\n    assert(solution.minTime({2, 3, 5, 7, 11}, {13, 17, 19, 23, 29, 31, 37, 41}) == vector<int>2531);\n    assert(solution.minTime({100, 100, 100, 100, 100}, {1, 2, 3, 4, 5, 6, 7, 8, 9, 10}) == vector<int>9500);\n    assert(solution.minTime({5, 5, 5, 5, 5}, {1, 2, 3, 4, 5, 6, 7, 8, 9, 10}) == vector<int>475);\n    assert(solution.minTime({1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15}, {15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1}) == vector<int>3375);\n    assert(solution.minTime({4999, 4998, 4997, 4996}, {5000, 4999, 4998, 4997, 4996}) == vector<int>199820050);\n    assert(solution.minTime({10, 20, 30, 40, 50, 60, 70, 80, 90, 100}, {10, 20, 30, 40, 50}) == vector<int>29500);\n    assert(solution.minTime({100, 200, 300, 400, 500}, {10, 20, 30, 40, 50, 60, 70, 80, 90, 100}) == vector<int>295000);\n    assert(solution.minTime({2, 3, 5, 7, 11, 13, 17, 19, 23, 29}, {2, 3, 5, 7, 11, 13, 17, 19, 23, 29}) == vector<int>4585);\n    assert(solution.minTime({300, 200, 100, 400, 500}, {100, 200, 300, 400, 500}) == vector<int>1050000);\n    assert(solution.minTime({1,2,3,4,5,6}, {6,5,4,3,2,1}) == vector<int>216);\n    assert(solution.minTime({4,3,2,1}, {100,200,300,400,500}) == vector<int>9000);\n    assert(solution.minTime({1000, 2000, 3000, 4000, 5000}, {1000, 2000, 3000, 4000, 5000}) == vector<int>95000000);\n    assert(solution.minTime({2, 4, 6, 8, 10, 12, 14, 16, 18, 20}, {1, 3, 5, 7, 9, 11, 13, 15, 17, 19}) == vector<int>2660);\n    assert(solution.minTime({1, 2, 3, 4, 5, 6, 7, 8, 9, 10}, {5000, 5000, 5000, 5000, 5000}) == vector<int>475000);\n    assert(solution.minTime({100, 200, 300, 400, 500, 600}, {600, 500, 400, 300, 200, 100}) == vector<int>2160000);\n    assert(solution.minTime({10, 20, 30, 40, 50}, {5, 10, 15, 20, 25, 30}) == vector<int>6250);\n    assert(solution.minTime({25, 50, 75, 100, 125, 150, 175, 200, 225, 250}, {100, 200, 300, 400, 500, 600, 700, 800, 900, 1000}) == vector<int>1787500);\n    assert(solution.minTime({100, 200, 300}, {50, 25, 75, 100}) == vector<int>100000);\n    assert(solution.minTime({1, 2, 3, 4, 5}, {10, 20, 30, 40, 50, 60, 70, 80, 90, 100}) == vector<int>2950);\n    assert(solution.minTime({5,3,8,2,4}, {15,25,10,40,5}) == vector<int>1395);\n    assert(solution.minTime({1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21}, {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11}) == vector<int>1771);\n    assert(solution.minTime({29, 65, 12, 48, 77}, {31, 89, 17, 63, 54, 20, 41, 73}) == vector<int>54255);\n    assert(solution.minTime({1, 5, 10, 20, 50, 100, 200}, {1, 2, 3, 4, 5, 6, 7}) == vector<int>5786);\n    assert(solution.minTime({1500, 1500, 1500, 1500}, {2500, 2500, 2500, 2500, 2500}) == vector<int>30000000);\n    assert(solution.minTime({4000, 3000, 2000, 1000}, {1000, 2000, 3000, 4000, 5000}) == vector<int>90000000);\n    assert(solution.minTime({100, 200, 300, 400, 500}, {1, 2, 3, 4, 5, 6, 7, 8, 9, 10}) == vector<int>29500);\n    assert(solution.minTime({3,6,9,12}, {10,20,30,40,50}) == vector<int>2100);\n    assert(solution.minTime({1, 1, 1, 1, 1}, {1, 2, 3, 4, 5, 6, 7, 8, 9, 10}) == vector<int>95);\n    assert(solution.minTime({1000, 2000, 3000}, {500, 1000, 1500, 2000, 2500}) == vector<int>24500000);\n    assert(solution.minTime({100, 150, 200, 250, 300}, {50, 100, 150, 200, 250, 300, 350}) == vector<int>505000);\n    assert(solution.minTime({1, 2, 3, 4, 5, 6, 7, 8, 9, 10}, {10, 20, 30, 40, 50, 60, 70, 80, 90, 100}) == vector<int>7150);\n    assert(solution.minTime({7,14,21,28}, {2,4,6,8,10,12,14,16}) == vector<int>2156);\n    assert(solution.minTime({2, 4, 6, 8, 10, 12}, {1, 3, 5, 7, 9, 11, 13, 15}) == vector<int>908);\n    assert(solution.minTime({5, 10, 15, 20, 25, 30, 35, 40, 45, 50}, {5, 10, 15, 20, 25, 30, 35, 40, 45, 50}) == vector<int>17875);\n    assert(solution.minTime({3000, 2500, 2000, 1500}, {1000, 1200, 1400, 1600, 1800}) == vector<int>31800000);\n    assert(solution.minTime({500, 1000, 1500, 2000}, {200, 400, 600, 800, 1000, 1200}) == vector<int>9400000);\n    assert(solution.minTime({100, 100, 100, 100, 100}, {100, 100, 100, 100, 100, 100, 100, 100, 100, 100}) == vector<int>140000);\n    assert(solution.minTime({2, 4, 6, 8, 10, 12}, {12, 10, 8, 6, 4, 2}) == vector<int>864);\n    assert(solution.minTime({100, 200, 150, 50, 250}, {50, 75, 100, 125, 150}) == vector<int>172500);\n    assert(solution.minTime({2, 4, 6, 8, 10}, {1, 3, 5, 7, 9}) == vector<int>330);\n    assert(solution.minTime({10, 20, 30, 40, 50, 60, 70, 80, 90, 100}, {5, 10, 15, 20, 25, 30, 35, 40, 45, 50}) == vector<int>35750);\n    assert(solution.minTime({4, 2, 6, 5, 1}, {9, 3, 7, 8, 2, 10}) == vector<int>465);\n    assert(solution.minTime({2,4,6,8,10}, {1,1,1,1,1,1,1,1,1,1}) == vector<int>120);\n    assert(solution.minTime({5000, 5000, 5000, 5000}, {1, 2, 3, 4, 5, 6, 7, 8, 9, 10}) == vector<int>425000);\n    assert(solution.minTime({1, 3, 2, 4, 5}, {2, 1, 3, 4, 5}) == vector<int>115);\n    assert(solution.minTime({5, 10, 15, 20, 25}, {5, 5, 5, 5, 5, 5, 5, 5, 5, 5}) == vector<int>1500);\n    assert(solution.minTime({1, 2, 3, 4, 5, 6, 7, 8, 9, 10}, {1, 2, 3, 4, 5, 6, 7, 8, 9, 10}) == vector<int>715);\n    assert(solution.minTime({1, 2, 3, 4, 5, 6, 7, 8, 9, 10}, {100, 200, 300, 400, 500, 600, 700, 800, 900, 1000}) == vector<int>71500);\n    assert(solution.minTime({100, 200, 150, 50}, {300, 250, 400, 100, 350}) == vector<int>440000);\n    assert(solution.minTime({50, 40, 30, 20, 10}, {25, 20, 15, 10, 5}) == vector<int>4750);\n    assert(solution.minTime({100, 200, 300, 400}, {10, 20, 30, 40, 50, 60}) == vector<int>94000);\n    assert(solution.minTime({7, 14, 21, 28, 35}, {35, 28, 21, 14, 7}) == vector<int>6125);\n    assert(solution.minTime({42, 15, 88, 34, 99, 56}, {72, 33, 19, 55, 48, 62, 28}) == vector<int>53845);\n    assert(solution.minTime({2500,1000,5000,3000}, {5000,2000,1000,3000,4000}) == vector<int>115000000);\n    assert(solution.minTime({500, 1000, 1500, 2000}, {500, 1000, 1500, 2000, 2500}) == vector<int>17500000);\n    assert(solution.minTime({10, 20, 30, 40, 50}, {1, 2, 3, 4, 5, 6, 7, 8, 9, 10}) == vector<int>2950);\n    assert(solution.minTime({1, 2, 3, 4, 5}, {5, 10, 15, 20, 25}) == vector<int>475);\n    assert(solution.minTime({3, 7, 5, 2, 8}, {4, 6, 2, 9, 1}) == vector<int>377);\n    assert(solution.minTime({5, 3, 8, 6, 2}, {7, 1, 4, 2, 9, 5, 3}) == vector<int>469);\n    assert(solution.minTime({500, 1000, 1500, 2000}, {100, 200, 300, 400, 500, 600, 700, 800}) == vector<int>7700000);\n    assert(solution.minTime({1000,2000,3000,4000,5000}, {1,2,3,4,5,6,7,8,9,10}) == vector<int>295000);\n    assert(solution.minTime({1000, 2000, 3000, 4000, 5000}, {1, 10, 100, 1000, 10000}) == vector<int>151111000);\n    assert(solution.minTime({10, 15, 20, 25, 30}, {35, 40, 45, 50, 55, 60, 65, 70}) == vector<int>15050);\n    assert(solution.minTime({100,200,300,400}, {5,10,15,20,25,30}) == vector<int>47000);\n    assert(solution.minTime({1000, 2000, 3000, 4000, 5000}, {10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150}) == vector<int>6200000);\n    assert(solution.minTime({300, 200, 100}, {5, 15, 25, 35, 45, 55}) == vector<int>70500);\n    assert(solution.minTime({1, 3, 5, 7, 9, 11, 13, 15, 17, 19}, {19, 17, 15, 13, 11, 9, 7, 5, 3, 1}) == vector<int>3439);\n    assert(solution.minTime({2, 5, 7, 8}, {1, 3, 6, 9, 12}) == vector<int>341);\n    assert(solution.minTime({100, 200, 300, 400, 500, 600, 700, 800, 900, 1000}, {10, 20, 30, 40, 50, 60, 70, 80, 90, 100}) == vector<int>715000);\n    assert(solution.minTime({1, 2, 3, 4, 5, 6, 7, 8, 9, 10}, {10, 9, 8, 7, 6, 5, 4, 3, 2, 1}) == vector<int>1000);\n    assert(solution.minTime({100, 200, 300, 400}, {50, 60, 70, 80, 90}) == vector<int>170000);\n    assert(solution.minTime({100, 200, 300, 400, 500}, {5, 10, 15, 20, 25, 30, 35, 40, 45, 50}) == vector<int>147500);\n    assert(solution.minTime({300, 200, 100}, {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15}) == vector<int>40500);\n    assert(solution.minTime({3, 7, 2, 8}, {6, 4, 9, 1, 5}) == vector<int>356);\n    assert(solution.minTime({1, 3, 2, 4}, {2, 3, 4, 5}) == vector<int>74);\n    assert(solution.minTime({1,10,100,1000}, {1,10,100,1000,10000}) == vector<int>11111111);\n    assert(solution.minTime({5, 10, 15, 20, 25, 30}, {1, 3, 5, 7, 9}) == vector<int>1095);\n    assert(solution.minTime({1, 1, 1, 1, 1}, {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}) == vector<int>24);\n    assert(solution.minTime({500, 1000, 1500, 2000, 2500}, {250, 500, 750, 1000, 1250}) == vector<int>11875000);\n    assert(solution.minTime({3, 6, 9, 12, 15}, {2, 4, 6, 8, 10, 12, 14, 16, 18, 20}) == vector<int>1770);\n    assert(solution.minTime({5000, 4000, 3000, 2000, 1000}, {1000, 2000, 3000, 4000, 5000}) == vector<int>125000000);\n    assert(solution.minTime({1, 10, 100, 1000, 5000}, {1, 10, 100, 1000, 5000}) == vector<int>31111111);\n    assert(solution.minTime({4000, 3000, 2000, 1000, 500}, {500, 1000, 1500, 2000, 2500, 3000, 3500, 4000, 4500, 5000}) == vector<int>142500000);\n    assert(solution.minTime({1, 3, 5, 7, 9, 11, 13, 15, 17, 19}, {2, 4, 6, 8, 10, 12, 14, 16, 18, 20}) == vector<int>2660);\n    assert(solution.minTime({3, 5, 7, 9}, {2, 4, 6, 8}) == vector<int>238);\n    assert(solution.minTime({5000, 1000, 2000, 3000, 4000}, {100, 200, 300, 400, 500, 600, 700, 800, 900, 1000}) == vector<int>37500000);\n    assert(solution.minTime({1500, 1500, 1500, 1500}, {500, 1000, 1500, 2000, 2500, 3000}) == vector<int>29250000);\n    assert(solution.minTime({2, 3, 5, 7, 11}, {13, 17, 19, 23, 29, 31, 37}) == vector<int>2080);\n}",
+    "java": "public static void check(Solution solution) {\n    assert Arrays.equals(solution.minTime(new int[]{10,20,30}, new int[]{1,2,3,4,5}), 490);\n    assert Arrays.equals(solution.minTime(new int[]{3,2,1}, new int[]{6,5,4}), 57);\n    assert Arrays.equals(solution.minTime(new int[]{1,1,1}, new int[]{1,1,1}), 5);\n    assert Arrays.equals(solution.minTime(new int[]{1,2,3}, new int[]{4,5,6,7}), 78);\n    assert Arrays.equals(solution.minTime(new int[]{5000, 5000}, new int[]{1, 5000}), 50005000);\n    assert Arrays.equals(solution.minTime(new int[]{1, 2, 3}, new int[]{4, 5, 6, 7, 8}), 102);\n    assert Arrays.equals(solution.minTime(new int[]{1,5,2,4}, new int[]{5,1,4,2}), 110);\n    assert Arrays.equals(solution.minTime(new int[]{10, 20, 30}, new int[]{1, 2, 3, 4, 5}), 490);\n    assert Arrays.equals(solution.minTime(new int[]{1,2,3,4}, new int[]{1,2}), 21);\n    assert Arrays.equals(solution.minTime(new int[]{5000, 5000, 5000}, new int[]{5000, 5000, 5000}), 125000000);\n    assert Arrays.equals(solution.minTime(new int[]{3, 1, 4, 1, 5}, new int[]{9, 2, 6, 5, 3, 5}), 275);\n    assert Arrays.equals(solution.minTime(new int[]{2, 3, 4, 5}, new int[]{1, 2, 3, 4, 5, 6, 7}), 159);\n    assert Arrays.equals(solution.minTime(new int[]{1, 1, 2, 2, 3, 3}, new int[]{1, 2, 3, 4, 5, 6}), 94);\n    assert Arrays.equals(solution.minTime(new int[]{10, 20, 30, 40, 50}, new int[]{5, 10, 15, 20, 25}), 4750);\n    assert Arrays.equals(solution.minTime(new int[]{2, 3, 5, 7, 11, 13, 17, 19}, new int[]{23, 29, 31, 37, 41, 43, 47, 53, 59, 61}), 9500);\n    assert Arrays.equals(solution.minTime(new int[]{2, 3, 5, 7, 11}, new int[]{13, 17, 19, 23, 29, 31, 37, 41}), 2531);\n    assert Arrays.equals(solution.minTime(new int[]{100, 100, 100, 100, 100}, new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}), 9500);\n    assert Arrays.equals(solution.minTime(new int[]{5, 5, 5, 5, 5}, new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}), 475);\n    assert Arrays.equals(solution.minTime(new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15}, new int[]{15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1}), 3375);\n    assert Arrays.equals(solution.minTime(new int[]{4999, 4998, 4997, 4996}, new int[]{5000, 4999, 4998, 4997, 4996}), 199820050);\n    assert Arrays.equals(solution.minTime(new int[]{10, 20, 30, 40, 50, 60, 70, 80, 90, 100}, new int[]{10, 20, 30, 40, 50}), 29500);\n    assert Arrays.equals(solution.minTime(new int[]{100, 200, 300, 400, 500}, new int[]{10, 20, 30, 40, 50, 60, 70, 80, 90, 100}), 295000);\n    assert Arrays.equals(solution.minTime(new int[]{2, 3, 5, 7, 11, 13, 17, 19, 23, 29}, new int[]{2, 3, 5, 7, 11, 13, 17, 19, 23, 29}), 4585);\n    assert Arrays.equals(solution.minTime(new int[]{300, 200, 100, 400, 500}, new int[]{100, 200, 300, 400, 500}), 1050000);\n    assert Arrays.equals(solution.minTime(new int[]{1,2,3,4,5,6}, new int[]{6,5,4,3,2,1}), 216);\n    assert Arrays.equals(solution.minTime(new int[]{4,3,2,1}, new int[]{100,200,300,400,500}), 9000);\n    assert Arrays.equals(solution.minTime(new int[]{1000, 2000, 3000, 4000, 5000}, new int[]{1000, 2000, 3000, 4000, 5000}), 95000000);\n    assert Arrays.equals(solution.minTime(new int[]{2, 4, 6, 8, 10, 12, 14, 16, 18, 20}, new int[]{1, 3, 5, 7, 9, 11, 13, 15, 17, 19}), 2660);\n    assert Arrays.equals(solution.minTime(new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}, new int[]{5000, 5000, 5000, 5000, 5000}), 475000);\n    assert Arrays.equals(solution.minTime(new int[]{100, 200, 300, 400, 500, 600}, new int[]{600, 500, 400, 300, 200, 100}), 2160000);\n    assert Arrays.equals(solution.minTime(new int[]{10, 20, 30, 40, 50}, new int[]{5, 10, 15, 20, 25, 30}), 6250);\n    assert Arrays.equals(solution.minTime(new int[]{25, 50, 75, 100, 125, 150, 175, 200, 225, 250}, new int[]{100, 200, 300, 400, 500, 600, 700, 800, 900, 1000}), 1787500);\n    assert Arrays.equals(solution.minTime(new int[]{100, 200, 300}, new int[]{50, 25, 75, 100}), 100000);\n    assert Arrays.equals(solution.minTime(new int[]{1, 2, 3, 4, 5}, new int[]{10, 20, 30, 40, 50, 60, 70, 80, 90, 100}), 2950);\n    assert Arrays.equals(solution.minTime(new int[]{5,3,8,2,4}, new int[]{15,25,10,40,5}), 1395);\n    assert Arrays.equals(solution.minTime(new int[]{1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21}, new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11}), 1771);\n    assert Arrays.equals(solution.minTime(new int[]{29, 65, 12, 48, 77}, new int[]{31, 89, 17, 63, 54, 20, 41, 73}), 54255);\n    assert Arrays.equals(solution.minTime(new int[]{1, 5, 10, 20, 50, 100, 200}, new int[]{1, 2, 3, 4, 5, 6, 7}), 5786);\n    assert Arrays.equals(solution.minTime(new int[]{1500, 1500, 1500, 1500}, new int[]{2500, 2500, 2500, 2500, 2500}), 30000000);\n    assert Arrays.equals(solution.minTime(new int[]{4000, 3000, 2000, 1000}, new int[]{1000, 2000, 3000, 4000, 5000}), 90000000);\n    assert Arrays.equals(solution.minTime(new int[]{100, 200, 300, 400, 500}, new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}), 29500);\n    assert Arrays.equals(solution.minTime(new int[]{3,6,9,12}, new int[]{10,20,30,40,50}), 2100);\n    assert Arrays.equals(solution.minTime(new int[]{1, 1, 1, 1, 1}, new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}), 95);\n    assert Arrays.equals(solution.minTime(new int[]{1000, 2000, 3000}, new int[]{500, 1000, 1500, 2000, 2500}), 24500000);\n    assert Arrays.equals(solution.minTime(new int[]{100, 150, 200, 250, 300}, new int[]{50, 100, 150, 200, 250, 300, 350}), 505000);\n    assert Arrays.equals(solution.minTime(new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}, new int[]{10, 20, 30, 40, 50, 60, 70, 80, 90, 100}), 7150);\n    assert Arrays.equals(solution.minTime(new int[]{7,14,21,28}, new int[]{2,4,6,8,10,12,14,16}), 2156);\n    assert Arrays.equals(solution.minTime(new int[]{2, 4, 6, 8, 10, 12}, new int[]{1, 3, 5, 7, 9, 11, 13, 15}), 908);\n    assert Arrays.equals(solution.minTime(new int[]{5, 10, 15, 20, 25, 30, 35, 40, 45, 50}, new int[]{5, 10, 15, 20, 25, 30, 35, 40, 45, 50}), 17875);\n    assert Arrays.equals(solution.minTime(new int[]{3000, 2500, 2000, 1500}, new int[]{1000, 1200, 1400, 1600, 1800}), 31800000);\n    assert Arrays.equals(solution.minTime(new int[]{500, 1000, 1500, 2000}, new int[]{200, 400, 600, 800, 1000, 1200}), 9400000);\n    assert Arrays.equals(solution.minTime(new int[]{100, 100, 100, 100, 100}, new int[]{100, 100, 100, 100, 100, 100, 100, 100, 100, 100}), 140000);\n    assert Arrays.equals(solution.minTime(new int[]{2, 4, 6, 8, 10, 12}, new int[]{12, 10, 8, 6, 4, 2}), 864);\n    assert Arrays.equals(solution.minTime(new int[]{100, 200, 150, 50, 250}, new int[]{50, 75, 100, 125, 150}), 172500);\n    assert Arrays.equals(solution.minTime(new int[]{2, 4, 6, 8, 10}, new int[]{1, 3, 5, 7, 9}), 330);\n    assert Arrays.equals(solution.minTime(new int[]{10, 20, 30, 40, 50, 60, 70, 80, 90, 100}, new int[]{5, 10, 15, 20, 25, 30, 35, 40, 45, 50}), 35750);\n    assert Arrays.equals(solution.minTime(new int[]{4, 2, 6, 5, 1}, new int[]{9, 3, 7, 8, 2, 10}), 465);\n    assert Arrays.equals(solution.minTime(new int[]{2,4,6,8,10}, new int[]{1,1,1,1,1,1,1,1,1,1}), 120);\n    assert Arrays.equals(solution.minTime(new int[]{5000, 5000, 5000, 5000}, new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}), 425000);\n    assert Arrays.equals(solution.minTime(new int[]{1, 3, 2, 4, 5}, new int[]{2, 1, 3, 4, 5}), 115);\n    assert Arrays.equals(solution.minTime(new int[]{5, 10, 15, 20, 25}, new int[]{5, 5, 5, 5, 5, 5, 5, 5, 5, 5}), 1500);\n    assert Arrays.equals(solution.minTime(new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}, new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}), 715);\n    assert Arrays.equals(solution.minTime(new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}, new int[]{100, 200, 300, 400, 500, 600, 700, 800, 900, 1000}), 71500);\n    assert Arrays.equals(solution.minTime(new int[]{100, 200, 150, 50}, new int[]{300, 250, 400, 100, 350}), 440000);\n    assert Arrays.equals(solution.minTime(new int[]{50, 40, 30, 20, 10}, new int[]{25, 20, 15, 10, 5}), 4750);\n    assert Arrays.equals(solution.minTime(new int[]{100, 200, 300, 400}, new int[]{10, 20, 30, 40, 50, 60}), 94000);\n    assert Arrays.equals(solution.minTime(new int[]{7, 14, 21, 28, 35}, new int[]{35, 28, 21, 14, 7}), 6125);\n    assert Arrays.equals(solution.minTime(new int[]{42, 15, 88, 34, 99, 56}, new int[]{72, 33, 19, 55, 48, 62, 28}), 53845);\n    assert Arrays.equals(solution.minTime(new int[]{2500,1000,5000,3000}, new int[]{5000,2000,1000,3000,4000}), 115000000);\n    assert Arrays.equals(solution.minTime(new int[]{500, 1000, 1500, 2000}, new int[]{500, 1000, 1500, 2000, 2500}), 17500000);\n    assert Arrays.equals(solution.minTime(new int[]{10, 20, 30, 40, 50}, new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}), 2950);\n    assert Arrays.equals(solution.minTime(new int[]{1, 2, 3, 4, 5}, new int[]{5, 10, 15, 20, 25}), 475);\n    assert Arrays.equals(solution.minTime(new int[]{3, 7, 5, 2, 8}, new int[]{4, 6, 2, 9, 1}), 377);\n    assert Arrays.equals(solution.minTime(new int[]{5, 3, 8, 6, 2}, new int[]{7, 1, 4, 2, 9, 5, 3}), 469);\n    assert Arrays.equals(solution.minTime(new int[]{500, 1000, 1500, 2000}, new int[]{100, 200, 300, 400, 500, 600, 700, 800}), 7700000);\n    assert Arrays.equals(solution.minTime(new int[]{1000,2000,3000,4000,5000}, new int[]{1,2,3,4,5,6,7,8,9,10}), 295000);\n    assert Arrays.equals(solution.minTime(new int[]{1000, 2000, 3000, 4000, 5000}, new int[]{1, 10, 100, 1000, 10000}), 151111000);\n    assert Arrays.equals(solution.minTime(new int[]{10, 15, 20, 25, 30}, new int[]{35, 40, 45, 50, 55, 60, 65, 70}), 15050);\n    assert Arrays.equals(solution.minTime(new int[]{100,200,300,400}, new int[]{5,10,15,20,25,30}), 47000);\n    assert Arrays.equals(solution.minTime(new int[]{1000, 2000, 3000, 4000, 5000}, new int[]{10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150}), 6200000);\n    assert Arrays.equals(solution.minTime(new int[]{300, 200, 100}, new int[]{5, 15, 25, 35, 45, 55}), 70500);\n    assert Arrays.equals(solution.minTime(new int[]{1, 3, 5, 7, 9, 11, 13, 15, 17, 19}, new int[]{19, 17, 15, 13, 11, 9, 7, 5, 3, 1}), 3439);\n    assert Arrays.equals(solution.minTime(new int[]{2, 5, 7, 8}, new int[]{1, 3, 6, 9, 12}), 341);\n    assert Arrays.equals(solution.minTime(new int[]{100, 200, 300, 400, 500, 600, 700, 800, 900, 1000}, new int[]{10, 20, 30, 40, 50, 60, 70, 80, 90, 100}), 715000);\n    assert Arrays.equals(solution.minTime(new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}, new int[]{10, 9, 8, 7, 6, 5, 4, 3, 2, 1}), 1000);\n    assert Arrays.equals(solution.minTime(new int[]{100, 200, 300, 400}, new int[]{50, 60, 70, 80, 90}), 170000);\n    assert Arrays.equals(solution.minTime(new int[]{100, 200, 300, 400, 500}, new int[]{5, 10, 15, 20, 25, 30, 35, 40, 45, 50}), 147500);\n    assert Arrays.equals(solution.minTime(new int[]{300, 200, 100}, new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15}), 40500);\n    assert Arrays.equals(solution.minTime(new int[]{3, 7, 2, 8}, new int[]{6, 4, 9, 1, 5}), 356);\n    assert Arrays.equals(solution.minTime(new int[]{1, 3, 2, 4}, new int[]{2, 3, 4, 5}), 74);\n    assert Arrays.equals(solution.minTime(new int[]{1,10,100,1000}, new int[]{1,10,100,1000,10000}), 11111111);\n    assert Arrays.equals(solution.minTime(new int[]{5, 10, 15, 20, 25, 30}, new int[]{1, 3, 5, 7, 9}), 1095);\n    assert Arrays.equals(solution.minTime(new int[]{1, 1, 1, 1, 1}, new int[]{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}), 24);\n    assert Arrays.equals(solution.minTime(new int[]{500, 1000, 1500, 2000, 2500}, new int[]{250, 500, 750, 1000, 1250}), 11875000);\n    assert Arrays.equals(solution.minTime(new int[]{3, 6, 9, 12, 15}, new int[]{2, 4, 6, 8, 10, 12, 14, 16, 18, 20}), 1770);\n    assert Arrays.equals(solution.minTime(new int[]{5000, 4000, 3000, 2000, 1000}, new int[]{1000, 2000, 3000, 4000, 5000}), 125000000);\n    assert Arrays.equals(solution.minTime(new int[]{1, 10, 100, 1000, 5000}, new int[]{1, 10, 100, 1000, 5000}), 31111111);\n    assert Arrays.equals(solution.minTime(new int[]{4000, 3000, 2000, 1000, 500}, new int[]{500, 1000, 1500, 2000, 2500, 3000, 3500, 4000, 4500, 5000}), 142500000);\n    assert Arrays.equals(solution.minTime(new int[]{1, 3, 5, 7, 9, 11, 13, 15, 17, 19}, new int[]{2, 4, 6, 8, 10, 12, 14, 16, 18, 20}), 2660);\n    assert Arrays.equals(solution.minTime(new int[]{3, 5, 7, 9}, new int[]{2, 4, 6, 8}), 238);\n    assert Arrays.equals(solution.minTime(new int[]{5000, 1000, 2000, 3000, 4000}, new int[]{100, 200, 300, 400, 500, 600, 700, 800, 900, 1000}), 37500000);\n    assert Arrays.equals(solution.minTime(new int[]{1500, 1500, 1500, 1500}, new int[]{500, 1000, 1500, 2000, 2500, 3000}), 29250000);\n    assert Arrays.equals(solution.minTime(new int[]{2, 3, 5, 7, 11}, new int[]{13, 17, 19, 23, 29, 31, 37}), 2080);\n}",
+    "javascript": "function check(candidate) {\n    console.assert(JSON.stringify(candidate([10,20,30], [1,2,3,4,5])) === JSON.stringify(490));\n    console.assert(JSON.stringify(candidate([3,2,1], [6,5,4])) === JSON.stringify(57));\n    console.assert(JSON.stringify(candidate([1,1,1], [1,1,1])) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate([1,2,3], [4,5,6,7])) === JSON.stringify(78));\n    console.assert(JSON.stringify(candidate([5000, 5000], [1, 5000])) === JSON.stringify(50005000));\n    console.assert(JSON.stringify(candidate([1, 2, 3], [4, 5, 6, 7, 8])) === JSON.stringify(102));\n    console.assert(JSON.stringify(candidate([1,5,2,4], [5,1,4,2])) === JSON.stringify(110));\n    console.assert(JSON.stringify(candidate([10, 20, 30], [1, 2, 3, 4, 5])) === JSON.stringify(490));\n    console.assert(JSON.stringify(candidate([1,2,3,4], [1,2])) === JSON.stringify(21));\n    console.assert(JSON.stringify(candidate([5000, 5000, 5000], [5000, 5000, 5000])) === JSON.stringify(125000000));\n    console.assert(JSON.stringify(candidate([3, 1, 4, 1, 5], [9, 2, 6, 5, 3, 5])) === JSON.stringify(275));\n    console.assert(JSON.stringify(candidate([2, 3, 4, 5], [1, 2, 3, 4, 5, 6, 7])) === JSON.stringify(159));\n    console.assert(JSON.stringify(candidate([1, 1, 2, 2, 3, 3], [1, 2, 3, 4, 5, 6])) === JSON.stringify(94));\n    console.assert(JSON.stringify(candidate([10, 20, 30, 40, 50], [5, 10, 15, 20, 25])) === JSON.stringify(4750));\n    console.assert(JSON.stringify(candidate([2, 3, 5, 7, 11, 13, 17, 19], [23, 29, 31, 37, 41, 43, 47, 53, 59, 61])) === JSON.stringify(9500));\n    console.assert(JSON.stringify(candidate([2, 3, 5, 7, 11], [13, 17, 19, 23, 29, 31, 37, 41])) === JSON.stringify(2531));\n    console.assert(JSON.stringify(candidate([100, 100, 100, 100, 100], [1, 2, 3, 4, 5, 6, 7, 8, 9, 10])) === JSON.stringify(9500));\n    console.assert(JSON.stringify(candidate([5, 5, 5, 5, 5], [1, 2, 3, 4, 5, 6, 7, 8, 9, 10])) === JSON.stringify(475));\n    console.assert(JSON.stringify(candidate([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15], [15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1])) === JSON.stringify(3375));\n    console.assert(JSON.stringify(candidate([4999, 4998, 4997, 4996], [5000, 4999, 4998, 4997, 4996])) === JSON.stringify(199820050));\n    console.assert(JSON.stringify(candidate([10, 20, 30, 40, 50, 60, 70, 80, 90, 100], [10, 20, 30, 40, 50])) === JSON.stringify(29500));\n    console.assert(JSON.stringify(candidate([100, 200, 300, 400, 500], [10, 20, 30, 40, 50, 60, 70, 80, 90, 100])) === JSON.stringify(295000));\n    console.assert(JSON.stringify(candidate([2, 3, 5, 7, 11, 13, 17, 19, 23, 29], [2, 3, 5, 7, 11, 13, 17, 19, 23, 29])) === JSON.stringify(4585));\n    console.assert(JSON.stringify(candidate([300, 200, 100, 400, 500], [100, 200, 300, 400, 500])) === JSON.stringify(1050000));\n    console.assert(JSON.stringify(candidate([1,2,3,4,5,6], [6,5,4,3,2,1])) === JSON.stringify(216));\n    console.assert(JSON.stringify(candidate([4,3,2,1], [100,200,300,400,500])) === JSON.stringify(9000));\n    console.assert(JSON.stringify(candidate([1000, 2000, 3000, 4000, 5000], [1000, 2000, 3000, 4000, 5000])) === JSON.stringify(95000000));\n    console.assert(JSON.stringify(candidate([2, 4, 6, 8, 10, 12, 14, 16, 18, 20], [1, 3, 5, 7, 9, 11, 13, 15, 17, 19])) === JSON.stringify(2660));\n    console.assert(JSON.stringify(candidate([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], [5000, 5000, 5000, 5000, 5000])) === JSON.stringify(475000));\n    console.assert(JSON.stringify(candidate([100, 200, 300, 400, 500, 600], [600, 500, 400, 300, 200, 100])) === JSON.stringify(2160000));\n    console.assert(JSON.stringify(candidate([10, 20, 30, 40, 50], [5, 10, 15, 20, 25, 30])) === JSON.stringify(6250));\n    console.assert(JSON.stringify(candidate([25, 50, 75, 100, 125, 150, 175, 200, 225, 250], [100, 200, 300, 400, 500, 600, 700, 800, 900, 1000])) === JSON.stringify(1787500));\n    console.assert(JSON.stringify(candidate([100, 200, 300], [50, 25, 75, 100])) === JSON.stringify(100000));\n    console.assert(JSON.stringify(candidate([1, 2, 3, 4, 5], [10, 20, 30, 40, 50, 60, 70, 80, 90, 100])) === JSON.stringify(2950));\n    console.assert(JSON.stringify(candidate([5,3,8,2,4], [15,25,10,40,5])) === JSON.stringify(1395));\n    console.assert(JSON.stringify(candidate([1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21], [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11])) === JSON.stringify(1771));\n    console.assert(JSON.stringify(candidate([29, 65, 12, 48, 77], [31, 89, 17, 63, 54, 20, 41, 73])) === JSON.stringify(54255));\n    console.assert(JSON.stringify(candidate([1, 5, 10, 20, 50, 100, 200], [1, 2, 3, 4, 5, 6, 7])) === JSON.stringify(5786));\n    console.assert(JSON.stringify(candidate([1500, 1500, 1500, 1500], [2500, 2500, 2500, 2500, 2500])) === JSON.stringify(30000000));\n    console.assert(JSON.stringify(candidate([4000, 3000, 2000, 1000], [1000, 2000, 3000, 4000, 5000])) === JSON.stringify(90000000));\n    console.assert(JSON.stringify(candidate([100, 200, 300, 400, 500], [1, 2, 3, 4, 5, 6, 7, 8, 9, 10])) === JSON.stringify(29500));\n    console.assert(JSON.stringify(candidate([3,6,9,12], [10,20,30,40,50])) === JSON.stringify(2100));\n    console.assert(JSON.stringify(candidate([1, 1, 1, 1, 1], [1, 2, 3, 4, 5, 6, 7, 8, 9, 10])) === JSON.stringify(95));\n    console.assert(JSON.stringify(candidate([1000, 2000, 3000], [500, 1000, 1500, 2000, 2500])) === JSON.stringify(24500000));\n    console.assert(JSON.stringify(candidate([100, 150, 200, 250, 300], [50, 100, 150, 200, 250, 300, 350])) === JSON.stringify(505000));\n    console.assert(JSON.stringify(candidate([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], [10, 20, 30, 40, 50, 60, 70, 80, 90, 100])) === JSON.stringify(7150));\n    console.assert(JSON.stringify(candidate([7,14,21,28], [2,4,6,8,10,12,14,16])) === JSON.stringify(2156));\n    console.assert(JSON.stringify(candidate([2, 4, 6, 8, 10, 12], [1, 3, 5, 7, 9, 11, 13, 15])) === JSON.stringify(908));\n    console.assert(JSON.stringify(candidate([5, 10, 15, 20, 25, 30, 35, 40, 45, 50], [5, 10, 15, 20, 25, 30, 35, 40, 45, 50])) === JSON.stringify(17875));\n    console.assert(JSON.stringify(candidate([3000, 2500, 2000, 1500], [1000, 1200, 1400, 1600, 1800])) === JSON.stringify(31800000));\n    console.assert(JSON.stringify(candidate([500, 1000, 1500, 2000], [200, 400, 600, 800, 1000, 1200])) === JSON.stringify(9400000));\n    console.assert(JSON.stringify(candidate([100, 100, 100, 100, 100], [100, 100, 100, 100, 100, 100, 100, 100, 100, 100])) === JSON.stringify(140000));\n    console.assert(JSON.stringify(candidate([2, 4, 6, 8, 10, 12], [12, 10, 8, 6, 4, 2])) === JSON.stringify(864));\n    console.assert(JSON.stringify(candidate([100, 200, 150, 50, 250], [50, 75, 100, 125, 150])) === JSON.stringify(172500));\n    console.assert(JSON.stringify(candidate([2, 4, 6, 8, 10], [1, 3, 5, 7, 9])) === JSON.stringify(330));\n    console.assert(JSON.stringify(candidate([10, 20, 30, 40, 50, 60, 70, 80, 90, 100], [5, 10, 15, 20, 25, 30, 35, 40, 45, 50])) === JSON.stringify(35750));\n    console.assert(JSON.stringify(candidate([4, 2, 6, 5, 1], [9, 3, 7, 8, 2, 10])) === JSON.stringify(465));\n    console.assert(JSON.stringify(candidate([2,4,6,8,10], [1,1,1,1,1,1,1,1,1,1])) === JSON.stringify(120));\n    console.assert(JSON.stringify(candidate([5000, 5000, 5000, 5000], [1, 2, 3, 4, 5, 6, 7, 8, 9, 10])) === JSON.stringify(425000));\n    console.assert(JSON.stringify(candidate([1, 3, 2, 4, 5], [2, 1, 3, 4, 5])) === JSON.stringify(115));\n    console.assert(JSON.stringify(candidate([5, 10, 15, 20, 25], [5, 5, 5, 5, 5, 5, 5, 5, 5, 5])) === JSON.stringify(1500));\n    console.assert(JSON.stringify(candidate([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], [1, 2, 3, 4, 5, 6, 7, 8, 9, 10])) === JSON.stringify(715));\n    console.assert(JSON.stringify(candidate([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], [100, 200, 300, 400, 500, 600, 700, 800, 900, 1000])) === JSON.stringify(71500));\n    console.assert(JSON.stringify(candidate([100, 200, 150, 50], [300, 250, 400, 100, 350])) === JSON.stringify(440000));\n    console.assert(JSON.stringify(candidate([50, 40, 30, 20, 10], [25, 20, 15, 10, 5])) === JSON.stringify(4750));\n    console.assert(JSON.stringify(candidate([100, 200, 300, 400], [10, 20, 30, 40, 50, 60])) === JSON.stringify(94000));\n    console.assert(JSON.stringify(candidate([7, 14, 21, 28, 35], [35, 28, 21, 14, 7])) === JSON.stringify(6125));\n    console.assert(JSON.stringify(candidate([42, 15, 88, 34, 99, 56], [72, 33, 19, 55, 48, 62, 28])) === JSON.stringify(53845));\n    console.assert(JSON.stringify(candidate([2500,1000,5000,3000], [5000,2000,1000,3000,4000])) === JSON.stringify(115000000));\n    console.assert(JSON.stringify(candidate([500, 1000, 1500, 2000], [500, 1000, 1500, 2000, 2500])) === JSON.stringify(17500000));\n    console.assert(JSON.stringify(candidate([10, 20, 30, 40, 50], [1, 2, 3, 4, 5, 6, 7, 8, 9, 10])) === JSON.stringify(2950));\n    console.assert(JSON.stringify(candidate([1, 2, 3, 4, 5], [5, 10, 15, 20, 25])) === JSON.stringify(475));\n    console.assert(JSON.stringify(candidate([3, 7, 5, 2, 8], [4, 6, 2, 9, 1])) === JSON.stringify(377));\n    console.assert(JSON.stringify(candidate([5, 3, 8, 6, 2], [7, 1, 4, 2, 9, 5, 3])) === JSON.stringify(469));\n    console.assert(JSON.stringify(candidate([500, 1000, 1500, 2000], [100, 200, 300, 400, 500, 600, 700, 800])) === JSON.stringify(7700000));\n    console.assert(JSON.stringify(candidate([1000,2000,3000,4000,5000], [1,2,3,4,5,6,7,8,9,10])) === JSON.stringify(295000));\n    console.assert(JSON.stringify(candidate([1000, 2000, 3000, 4000, 5000], [1, 10, 100, 1000, 10000])) === JSON.stringify(151111000));\n    console.assert(JSON.stringify(candidate([10, 15, 20, 25, 30], [35, 40, 45, 50, 55, 60, 65, 70])) === JSON.stringify(15050));\n    console.assert(JSON.stringify(candidate([100,200,300,400], [5,10,15,20,25,30])) === JSON.stringify(47000));\n    console.assert(JSON.stringify(candidate([1000, 2000, 3000, 4000, 5000], [10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150])) === JSON.stringify(6200000));\n    console.assert(JSON.stringify(candidate([300, 200, 100], [5, 15, 25, 35, 45, 55])) === JSON.stringify(70500));\n    console.assert(JSON.stringify(candidate([1, 3, 5, 7, 9, 11, 13, 15, 17, 19], [19, 17, 15, 13, 11, 9, 7, 5, 3, 1])) === JSON.stringify(3439));\n    console.assert(JSON.stringify(candidate([2, 5, 7, 8], [1, 3, 6, 9, 12])) === JSON.stringify(341));\n    console.assert(JSON.stringify(candidate([100, 200, 300, 400, 500, 600, 700, 800, 900, 1000], [10, 20, 30, 40, 50, 60, 70, 80, 90, 100])) === JSON.stringify(715000));\n    console.assert(JSON.stringify(candidate([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], [10, 9, 8, 7, 6, 5, 4, 3, 2, 1])) === JSON.stringify(1000));\n    console.assert(JSON.stringify(candidate([100, 200, 300, 400], [50, 60, 70, 80, 90])) === JSON.stringify(170000));\n    console.assert(JSON.stringify(candidate([100, 200, 300, 400, 500], [5, 10, 15, 20, 25, 30, 35, 40, 45, 50])) === JSON.stringify(147500));\n    console.assert(JSON.stringify(candidate([300, 200, 100], [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15])) === JSON.stringify(40500));\n    console.assert(JSON.stringify(candidate([3, 7, 2, 8], [6, 4, 9, 1, 5])) === JSON.stringify(356));\n    console.assert(JSON.stringify(candidate([1, 3, 2, 4], [2, 3, 4, 5])) === JSON.stringify(74));\n    console.assert(JSON.stringify(candidate([1,10,100,1000], [1,10,100,1000,10000])) === JSON.stringify(11111111));\n    console.assert(JSON.stringify(candidate([5, 10, 15, 20, 25, 30], [1, 3, 5, 7, 9])) === JSON.stringify(1095));\n    console.assert(JSON.stringify(candidate([1, 1, 1, 1, 1], [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1])) === JSON.stringify(24));\n    console.assert(JSON.stringify(candidate([500, 1000, 1500, 2000, 2500], [250, 500, 750, 1000, 1250])) === JSON.stringify(11875000));\n    console.assert(JSON.stringify(candidate([3, 6, 9, 12, 15], [2, 4, 6, 8, 10, 12, 14, 16, 18, 20])) === JSON.stringify(1770));\n    console.assert(JSON.stringify(candidate([5000, 4000, 3000, 2000, 1000], [1000, 2000, 3000, 4000, 5000])) === JSON.stringify(125000000));\n    console.assert(JSON.stringify(candidate([1, 10, 100, 1000, 5000], [1, 10, 100, 1000, 5000])) === JSON.stringify(31111111));\n    console.assert(JSON.stringify(candidate([4000, 3000, 2000, 1000, 500], [500, 1000, 1500, 2000, 2500, 3000, 3500, 4000, 4500, 5000])) === JSON.stringify(142500000));\n    console.assert(JSON.stringify(candidate([1, 3, 5, 7, 9, 11, 13, 15, 17, 19], [2, 4, 6, 8, 10, 12, 14, 16, 18, 20])) === JSON.stringify(2660));\n    console.assert(JSON.stringify(candidate([3, 5, 7, 9], [2, 4, 6, 8])) === JSON.stringify(238));\n    console.assert(JSON.stringify(candidate([5000, 1000, 2000, 3000, 4000], [100, 200, 300, 400, 500, 600, 700, 800, 900, 1000])) === JSON.stringify(37500000));\n    console.assert(JSON.stringify(candidate([1500, 1500, 1500, 1500], [500, 1000, 1500, 2000, 2500, 3000])) === JSON.stringify(29250000));\n    console.assert(JSON.stringify(candidate([2, 3, 5, 7, 11], [13, 17, 19, 23, 29, 31, 37])) === JSON.stringify(2080));\n}",
+    "typescript": "function check(candidate: Function): void {\n    console.assert(JSON.stringify(candidate([10,20,30], [1,2,3,4,5])) === JSON.stringify(490));\n    console.assert(JSON.stringify(candidate([3,2,1], [6,5,4])) === JSON.stringify(57));\n    console.assert(JSON.stringify(candidate([1,1,1], [1,1,1])) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate([1,2,3], [4,5,6,7])) === JSON.stringify(78));\n    console.assert(JSON.stringify(candidate([5000, 5000], [1, 5000])) === JSON.stringify(50005000));\n    console.assert(JSON.stringify(candidate([1, 2, 3], [4, 5, 6, 7, 8])) === JSON.stringify(102));\n    console.assert(JSON.stringify(candidate([1,5,2,4], [5,1,4,2])) === JSON.stringify(110));\n    console.assert(JSON.stringify(candidate([10, 20, 30], [1, 2, 3, 4, 5])) === JSON.stringify(490));\n    console.assert(JSON.stringify(candidate([1,2,3,4], [1,2])) === JSON.stringify(21));\n    console.assert(JSON.stringify(candidate([5000, 5000, 5000], [5000, 5000, 5000])) === JSON.stringify(125000000));\n    console.assert(JSON.stringify(candidate([3, 1, 4, 1, 5], [9, 2, 6, 5, 3, 5])) === JSON.stringify(275));\n    console.assert(JSON.stringify(candidate([2, 3, 4, 5], [1, 2, 3, 4, 5, 6, 7])) === JSON.stringify(159));\n    console.assert(JSON.stringify(candidate([1, 1, 2, 2, 3, 3], [1, 2, 3, 4, 5, 6])) === JSON.stringify(94));\n    console.assert(JSON.stringify(candidate([10, 20, 30, 40, 50], [5, 10, 15, 20, 25])) === JSON.stringify(4750));\n    console.assert(JSON.stringify(candidate([2, 3, 5, 7, 11, 13, 17, 19], [23, 29, 31, 37, 41, 43, 47, 53, 59, 61])) === JSON.stringify(9500));\n    console.assert(JSON.stringify(candidate([2, 3, 5, 7, 11], [13, 17, 19, 23, 29, 31, 37, 41])) === JSON.stringify(2531));\n    console.assert(JSON.stringify(candidate([100, 100, 100, 100, 100], [1, 2, 3, 4, 5, 6, 7, 8, 9, 10])) === JSON.stringify(9500));\n    console.assert(JSON.stringify(candidate([5, 5, 5, 5, 5], [1, 2, 3, 4, 5, 6, 7, 8, 9, 10])) === JSON.stringify(475));\n    console.assert(JSON.stringify(candidate([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15], [15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1])) === JSON.stringify(3375));\n    console.assert(JSON.stringify(candidate([4999, 4998, 4997, 4996], [5000, 4999, 4998, 4997, 4996])) === JSON.stringify(199820050));\n    console.assert(JSON.stringify(candidate([10, 20, 30, 40, 50, 60, 70, 80, 90, 100], [10, 20, 30, 40, 50])) === JSON.stringify(29500));\n    console.assert(JSON.stringify(candidate([100, 200, 300, 400, 500], [10, 20, 30, 40, 50, 60, 70, 80, 90, 100])) === JSON.stringify(295000));\n    console.assert(JSON.stringify(candidate([2, 3, 5, 7, 11, 13, 17, 19, 23, 29], [2, 3, 5, 7, 11, 13, 17, 19, 23, 29])) === JSON.stringify(4585));\n    console.assert(JSON.stringify(candidate([300, 200, 100, 400, 500], [100, 200, 300, 400, 500])) === JSON.stringify(1050000));\n    console.assert(JSON.stringify(candidate([1,2,3,4,5,6], [6,5,4,3,2,1])) === JSON.stringify(216));\n    console.assert(JSON.stringify(candidate([4,3,2,1], [100,200,300,400,500])) === JSON.stringify(9000));\n    console.assert(JSON.stringify(candidate([1000, 2000, 3000, 4000, 5000], [1000, 2000, 3000, 4000, 5000])) === JSON.stringify(95000000));\n    console.assert(JSON.stringify(candidate([2, 4, 6, 8, 10, 12, 14, 16, 18, 20], [1, 3, 5, 7, 9, 11, 13, 15, 17, 19])) === JSON.stringify(2660));\n    console.assert(JSON.stringify(candidate([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], [5000, 5000, 5000, 5000, 5000])) === JSON.stringify(475000));\n    console.assert(JSON.stringify(candidate([100, 200, 300, 400, 500, 600], [600, 500, 400, 300, 200, 100])) === JSON.stringify(2160000));\n    console.assert(JSON.stringify(candidate([10, 20, 30, 40, 50], [5, 10, 15, 20, 25, 30])) === JSON.stringify(6250));\n    console.assert(JSON.stringify(candidate([25, 50, 75, 100, 125, 150, 175, 200, 225, 250], [100, 200, 300, 400, 500, 600, 700, 800, 900, 1000])) === JSON.stringify(1787500));\n    console.assert(JSON.stringify(candidate([100, 200, 300], [50, 25, 75, 100])) === JSON.stringify(100000));\n    console.assert(JSON.stringify(candidate([1, 2, 3, 4, 5], [10, 20, 30, 40, 50, 60, 70, 80, 90, 100])) === JSON.stringify(2950));\n    console.assert(JSON.stringify(candidate([5,3,8,2,4], [15,25,10,40,5])) === JSON.stringify(1395));\n    console.assert(JSON.stringify(candidate([1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21], [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11])) === JSON.stringify(1771));\n    console.assert(JSON.stringify(candidate([29, 65, 12, 48, 77], [31, 89, 17, 63, 54, 20, 41, 73])) === JSON.stringify(54255));\n    console.assert(JSON.stringify(candidate([1, 5, 10, 20, 50, 100, 200], [1, 2, 3, 4, 5, 6, 7])) === JSON.stringify(5786));\n    console.assert(JSON.stringify(candidate([1500, 1500, 1500, 1500], [2500, 2500, 2500, 2500, 2500])) === JSON.stringify(30000000));\n    console.assert(JSON.stringify(candidate([4000, 3000, 2000, 1000], [1000, 2000, 3000, 4000, 5000])) === JSON.stringify(90000000));\n    console.assert(JSON.stringify(candidate([100, 200, 300, 400, 500], [1, 2, 3, 4, 5, 6, 7, 8, 9, 10])) === JSON.stringify(29500));\n    console.assert(JSON.stringify(candidate([3,6,9,12], [10,20,30,40,50])) === JSON.stringify(2100));\n    console.assert(JSON.stringify(candidate([1, 1, 1, 1, 1], [1, 2, 3, 4, 5, 6, 7, 8, 9, 10])) === JSON.stringify(95));\n    console.assert(JSON.stringify(candidate([1000, 2000, 3000], [500, 1000, 1500, 2000, 2500])) === JSON.stringify(24500000));\n    console.assert(JSON.stringify(candidate([100, 150, 200, 250, 300], [50, 100, 150, 200, 250, 300, 350])) === JSON.stringify(505000));\n    console.assert(JSON.stringify(candidate([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], [10, 20, 30, 40, 50, 60, 70, 80, 90, 100])) === JSON.stringify(7150));\n    console.assert(JSON.stringify(candidate([7,14,21,28], [2,4,6,8,10,12,14,16])) === JSON.stringify(2156));\n    console.assert(JSON.stringify(candidate([2, 4, 6, 8, 10, 12], [1, 3, 5, 7, 9, 11, 13, 15])) === JSON.stringify(908));\n    console.assert(JSON.stringify(candidate([5, 10, 15, 20, 25, 30, 35, 40, 45, 50], [5, 10, 15, 20, 25, 30, 35, 40, 45, 50])) === JSON.stringify(17875));\n    console.assert(JSON.stringify(candidate([3000, 2500, 2000, 1500], [1000, 1200, 1400, 1600, 1800])) === JSON.stringify(31800000));\n    console.assert(JSON.stringify(candidate([500, 1000, 1500, 2000], [200, 400, 600, 800, 1000, 1200])) === JSON.stringify(9400000));\n    console.assert(JSON.stringify(candidate([100, 100, 100, 100, 100], [100, 100, 100, 100, 100, 100, 100, 100, 100, 100])) === JSON.stringify(140000));\n    console.assert(JSON.stringify(candidate([2, 4, 6, 8, 10, 12], [12, 10, 8, 6, 4, 2])) === JSON.stringify(864));\n    console.assert(JSON.stringify(candidate([100, 200, 150, 50, 250], [50, 75, 100, 125, 150])) === JSON.stringify(172500));\n    console.assert(JSON.stringify(candidate([2, 4, 6, 8, 10], [1, 3, 5, 7, 9])) === JSON.stringify(330));\n    console.assert(JSON.stringify(candidate([10, 20, 30, 40, 50, 60, 70, 80, 90, 100], [5, 10, 15, 20, 25, 30, 35, 40, 45, 50])) === JSON.stringify(35750));\n    console.assert(JSON.stringify(candidate([4, 2, 6, 5, 1], [9, 3, 7, 8, 2, 10])) === JSON.stringify(465));\n    console.assert(JSON.stringify(candidate([2,4,6,8,10], [1,1,1,1,1,1,1,1,1,1])) === JSON.stringify(120));\n    console.assert(JSON.stringify(candidate([5000, 5000, 5000, 5000], [1, 2, 3, 4, 5, 6, 7, 8, 9, 10])) === JSON.stringify(425000));\n    console.assert(JSON.stringify(candidate([1, 3, 2, 4, 5], [2, 1, 3, 4, 5])) === JSON.stringify(115));\n    console.assert(JSON.stringify(candidate([5, 10, 15, 20, 25], [5, 5, 5, 5, 5, 5, 5, 5, 5, 5])) === JSON.stringify(1500));\n    console.assert(JSON.stringify(candidate([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], [1, 2, 3, 4, 5, 6, 7, 8, 9, 10])) === JSON.stringify(715));\n    console.assert(JSON.stringify(candidate([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], [100, 200, 300, 400, 500, 600, 700, 800, 900, 1000])) === JSON.stringify(71500));\n    console.assert(JSON.stringify(candidate([100, 200, 150, 50], [300, 250, 400, 100, 350])) === JSON.stringify(440000));\n    console.assert(JSON.stringify(candidate([50, 40, 30, 20, 10], [25, 20, 15, 10, 5])) === JSON.stringify(4750));\n    console.assert(JSON.stringify(candidate([100, 200, 300, 400], [10, 20, 30, 40, 50, 60])) === JSON.stringify(94000));\n    console.assert(JSON.stringify(candidate([7, 14, 21, 28, 35], [35, 28, 21, 14, 7])) === JSON.stringify(6125));\n    console.assert(JSON.stringify(candidate([42, 15, 88, 34, 99, 56], [72, 33, 19, 55, 48, 62, 28])) === JSON.stringify(53845));\n    console.assert(JSON.stringify(candidate([2500,1000,5000,3000], [5000,2000,1000,3000,4000])) === JSON.stringify(115000000));\n    console.assert(JSON.stringify(candidate([500, 1000, 1500, 2000], [500, 1000, 1500, 2000, 2500])) === JSON.stringify(17500000));\n    console.assert(JSON.stringify(candidate([10, 20, 30, 40, 50], [1, 2, 3, 4, 5, 6, 7, 8, 9, 10])) === JSON.stringify(2950));\n    console.assert(JSON.stringify(candidate([1, 2, 3, 4, 5], [5, 10, 15, 20, 25])) === JSON.stringify(475));\n    console.assert(JSON.stringify(candidate([3, 7, 5, 2, 8], [4, 6, 2, 9, 1])) === JSON.stringify(377));\n    console.assert(JSON.stringify(candidate([5, 3, 8, 6, 2], [7, 1, 4, 2, 9, 5, 3])) === JSON.stringify(469));\n    console.assert(JSON.stringify(candidate([500, 1000, 1500, 2000], [100, 200, 300, 400, 500, 600, 700, 800])) === JSON.stringify(7700000));\n    console.assert(JSON.stringify(candidate([1000,2000,3000,4000,5000], [1,2,3,4,5,6,7,8,9,10])) === JSON.stringify(295000));\n    console.assert(JSON.stringify(candidate([1000, 2000, 3000, 4000, 5000], [1, 10, 100, 1000, 10000])) === JSON.stringify(151111000));\n    console.assert(JSON.stringify(candidate([10, 15, 20, 25, 30], [35, 40, 45, 50, 55, 60, 65, 70])) === JSON.stringify(15050));\n    console.assert(JSON.stringify(candidate([100,200,300,400], [5,10,15,20,25,30])) === JSON.stringify(47000));\n    console.assert(JSON.stringify(candidate([1000, 2000, 3000, 4000, 5000], [10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150])) === JSON.stringify(6200000));\n    console.assert(JSON.stringify(candidate([300, 200, 100], [5, 15, 25, 35, 45, 55])) === JSON.stringify(70500));\n    console.assert(JSON.stringify(candidate([1, 3, 5, 7, 9, 11, 13, 15, 17, 19], [19, 17, 15, 13, 11, 9, 7, 5, 3, 1])) === JSON.stringify(3439));\n    console.assert(JSON.stringify(candidate([2, 5, 7, 8], [1, 3, 6, 9, 12])) === JSON.stringify(341));\n    console.assert(JSON.stringify(candidate([100, 200, 300, 400, 500, 600, 700, 800, 900, 1000], [10, 20, 30, 40, 50, 60, 70, 80, 90, 100])) === JSON.stringify(715000));\n    console.assert(JSON.stringify(candidate([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], [10, 9, 8, 7, 6, 5, 4, 3, 2, 1])) === JSON.stringify(1000));\n    console.assert(JSON.stringify(candidate([100, 200, 300, 400], [50, 60, 70, 80, 90])) === JSON.stringify(170000));\n    console.assert(JSON.stringify(candidate([100, 200, 300, 400, 500], [5, 10, 15, 20, 25, 30, 35, 40, 45, 50])) === JSON.stringify(147500));\n    console.assert(JSON.stringify(candidate([300, 200, 100], [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15])) === JSON.stringify(40500));\n    console.assert(JSON.stringify(candidate([3, 7, 2, 8], [6, 4, 9, 1, 5])) === JSON.stringify(356));\n    console.assert(JSON.stringify(candidate([1, 3, 2, 4], [2, 3, 4, 5])) === JSON.stringify(74));\n    console.assert(JSON.stringify(candidate([1,10,100,1000], [1,10,100,1000,10000])) === JSON.stringify(11111111));\n    console.assert(JSON.stringify(candidate([5, 10, 15, 20, 25, 30], [1, 3, 5, 7, 9])) === JSON.stringify(1095));\n    console.assert(JSON.stringify(candidate([1, 1, 1, 1, 1], [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1])) === JSON.stringify(24));\n    console.assert(JSON.stringify(candidate([500, 1000, 1500, 2000, 2500], [250, 500, 750, 1000, 1250])) === JSON.stringify(11875000));\n    console.assert(JSON.stringify(candidate([3, 6, 9, 12, 15], [2, 4, 6, 8, 10, 12, 14, 16, 18, 20])) === JSON.stringify(1770));\n    console.assert(JSON.stringify(candidate([5000, 4000, 3000, 2000, 1000], [1000, 2000, 3000, 4000, 5000])) === JSON.stringify(125000000));\n    console.assert(JSON.stringify(candidate([1, 10, 100, 1000, 5000], [1, 10, 100, 1000, 5000])) === JSON.stringify(31111111));\n    console.assert(JSON.stringify(candidate([4000, 3000, 2000, 1000, 500], [500, 1000, 1500, 2000, 2500, 3000, 3500, 4000, 4500, 5000])) === JSON.stringify(142500000));\n    console.assert(JSON.stringify(candidate([1, 3, 5, 7, 9, 11, 13, 15, 17, 19], [2, 4, 6, 8, 10, 12, 14, 16, 18, 20])) === JSON.stringify(2660));\n    console.assert(JSON.stringify(candidate([3, 5, 7, 9], [2, 4, 6, 8])) === JSON.stringify(238));\n    console.assert(JSON.stringify(candidate([5000, 1000, 2000, 3000, 4000], [100, 200, 300, 400, 500, 600, 700, 800, 900, 1000])) === JSON.stringify(37500000));\n    console.assert(JSON.stringify(candidate([1500, 1500, 1500, 1500], [500, 1000, 1500, 2000, 2500, 3000])) === JSON.stringify(29250000));\n    console.assert(JSON.stringify(candidate([2, 3, 5, 7, 11], [13, 17, 19, 23, 29, 31, 37])) === JSON.stringify(2080));\n}",
+    "golang": "func check(candidate func([]int, int) []int) {\n    assert reflect.DeepEqual(candidate([]int{10,20,30}, []int{1,2,3,4,5}), 490)\n    assert reflect.DeepEqual(candidate([]int{3,2,1}, []int{6,5,4}), 57)\n    assert reflect.DeepEqual(candidate([]int{1,1,1}, []int{1,1,1}), 5)\n    assert reflect.DeepEqual(candidate([]int{1,2,3}, []int{4,5,6,7}), 78)\n    assert reflect.DeepEqual(candidate([]int{5000, 5000}, []int{1, 5000}), 50005000)\n    assert reflect.DeepEqual(candidate([]int{1, 2, 3}, []int{4, 5, 6, 7, 8}), 102)\n    assert reflect.DeepEqual(candidate([]int{1,5,2,4}, []int{5,1,4,2}), 110)\n    assert reflect.DeepEqual(candidate([]int{10, 20, 30}, []int{1, 2, 3, 4, 5}), 490)\n    assert reflect.DeepEqual(candidate([]int{1,2,3,4}, []int{1,2}), 21)\n    assert reflect.DeepEqual(candidate([]int{5000, 5000, 5000}, []int{5000, 5000, 5000}), 125000000)\n    assert reflect.DeepEqual(candidate([]int{3, 1, 4, 1, 5}, []int{9, 2, 6, 5, 3, 5}), 275)\n    assert reflect.DeepEqual(candidate([]int{2, 3, 4, 5}, []int{1, 2, 3, 4, 5, 6, 7}), 159)\n    assert reflect.DeepEqual(candidate([]int{1, 1, 2, 2, 3, 3}, []int{1, 2, 3, 4, 5, 6}), 94)\n    assert reflect.DeepEqual(candidate([]int{10, 20, 30, 40, 50}, []int{5, 10, 15, 20, 25}), 4750)\n    assert reflect.DeepEqual(candidate([]int{2, 3, 5, 7, 11, 13, 17, 19}, []int{23, 29, 31, 37, 41, 43, 47, 53, 59, 61}), 9500)\n    assert reflect.DeepEqual(candidate([]int{2, 3, 5, 7, 11}, []int{13, 17, 19, 23, 29, 31, 37, 41}), 2531)\n    assert reflect.DeepEqual(candidate([]int{100, 100, 100, 100, 100}, []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}), 9500)\n    assert reflect.DeepEqual(candidate([]int{5, 5, 5, 5, 5}, []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}), 475)\n    assert reflect.DeepEqual(candidate([]int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15}, []int{15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1}), 3375)\n    assert reflect.DeepEqual(candidate([]int{4999, 4998, 4997, 4996}, []int{5000, 4999, 4998, 4997, 4996}), 199820050)\n    assert reflect.DeepEqual(candidate([]int{10, 20, 30, 40, 50, 60, 70, 80, 90, 100}, []int{10, 20, 30, 40, 50}), 29500)\n    assert reflect.DeepEqual(candidate([]int{100, 200, 300, 400, 500}, []int{10, 20, 30, 40, 50, 60, 70, 80, 90, 100}), 295000)\n    assert reflect.DeepEqual(candidate([]int{2, 3, 5, 7, 11, 13, 17, 19, 23, 29}, []int{2, 3, 5, 7, 11, 13, 17, 19, 23, 29}), 4585)\n    assert reflect.DeepEqual(candidate([]int{300, 200, 100, 400, 500}, []int{100, 200, 300, 400, 500}), 1050000)\n    assert reflect.DeepEqual(candidate([]int{1,2,3,4,5,6}, []int{6,5,4,3,2,1}), 216)\n    assert reflect.DeepEqual(candidate([]int{4,3,2,1}, []int{100,200,300,400,500}), 9000)\n    assert reflect.DeepEqual(candidate([]int{1000, 2000, 3000, 4000, 5000}, []int{1000, 2000, 3000, 4000, 5000}), 95000000)\n    assert reflect.DeepEqual(candidate([]int{2, 4, 6, 8, 10, 12, 14, 16, 18, 20}, []int{1, 3, 5, 7, 9, 11, 13, 15, 17, 19}), 2660)\n    assert reflect.DeepEqual(candidate([]int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}, []int{5000, 5000, 5000, 5000, 5000}), 475000)\n    assert reflect.DeepEqual(candidate([]int{100, 200, 300, 400, 500, 600}, []int{600, 500, 400, 300, 200, 100}), 2160000)\n    assert reflect.DeepEqual(candidate([]int{10, 20, 30, 40, 50}, []int{5, 10, 15, 20, 25, 30}), 6250)\n    assert reflect.DeepEqual(candidate([]int{25, 50, 75, 100, 125, 150, 175, 200, 225, 250}, []int{100, 200, 300, 400, 500, 600, 700, 800, 900, 1000}), 1787500)\n    assert reflect.DeepEqual(candidate([]int{100, 200, 300}, []int{50, 25, 75, 100}), 100000)\n    assert reflect.DeepEqual(candidate([]int{1, 2, 3, 4, 5}, []int{10, 20, 30, 40, 50, 60, 70, 80, 90, 100}), 2950)\n    assert reflect.DeepEqual(candidate([]int{5,3,8,2,4}, []int{15,25,10,40,5}), 1395)\n    assert reflect.DeepEqual(candidate([]int{1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21}, []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11}), 1771)\n    assert reflect.DeepEqual(candidate([]int{29, 65, 12, 48, 77}, []int{31, 89, 17, 63, 54, 20, 41, 73}), 54255)\n    assert reflect.DeepEqual(candidate([]int{1, 5, 10, 20, 50, 100, 200}, []int{1, 2, 3, 4, 5, 6, 7}), 5786)\n    assert reflect.DeepEqual(candidate([]int{1500, 1500, 1500, 1500}, []int{2500, 2500, 2500, 2500, 2500}), 30000000)\n    assert reflect.DeepEqual(candidate([]int{4000, 3000, 2000, 1000}, []int{1000, 2000, 3000, 4000, 5000}), 90000000)\n    assert reflect.DeepEqual(candidate([]int{100, 200, 300, 400, 500}, []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}), 29500)\n    assert reflect.DeepEqual(candidate([]int{3,6,9,12}, []int{10,20,30,40,50}), 2100)\n    assert reflect.DeepEqual(candidate([]int{1, 1, 1, 1, 1}, []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}), 95)\n    assert reflect.DeepEqual(candidate([]int{1000, 2000, 3000}, []int{500, 1000, 1500, 2000, 2500}), 24500000)\n    assert reflect.DeepEqual(candidate([]int{100, 150, 200, 250, 300}, []int{50, 100, 150, 200, 250, 300, 350}), 505000)\n    assert reflect.DeepEqual(candidate([]int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}, []int{10, 20, 30, 40, 50, 60, 70, 80, 90, 100}), 7150)\n    assert reflect.DeepEqual(candidate([]int{7,14,21,28}, []int{2,4,6,8,10,12,14,16}), 2156)\n    assert reflect.DeepEqual(candidate([]int{2, 4, 6, 8, 10, 12}, []int{1, 3, 5, 7, 9, 11, 13, 15}), 908)\n    assert reflect.DeepEqual(candidate([]int{5, 10, 15, 20, 25, 30, 35, 40, 45, 50}, []int{5, 10, 15, 20, 25, 30, 35, 40, 45, 50}), 17875)\n    assert reflect.DeepEqual(candidate([]int{3000, 2500, 2000, 1500}, []int{1000, 1200, 1400, 1600, 1800}), 31800000)\n    assert reflect.DeepEqual(candidate([]int{500, 1000, 1500, 2000}, []int{200, 400, 600, 800, 1000, 1200}), 9400000)\n    assert reflect.DeepEqual(candidate([]int{100, 100, 100, 100, 100}, []int{100, 100, 100, 100, 100, 100, 100, 100, 100, 100}), 140000)\n    assert reflect.DeepEqual(candidate([]int{2, 4, 6, 8, 10, 12}, []int{12, 10, 8, 6, 4, 2}), 864)\n    assert reflect.DeepEqual(candidate([]int{100, 200, 150, 50, 250}, []int{50, 75, 100, 125, 150}), 172500)\n    assert reflect.DeepEqual(candidate([]int{2, 4, 6, 8, 10}, []int{1, 3, 5, 7, 9}), 330)\n    assert reflect.DeepEqual(candidate([]int{10, 20, 30, 40, 50, 60, 70, 80, 90, 100}, []int{5, 10, 15, 20, 25, 30, 35, 40, 45, 50}), 35750)\n    assert reflect.DeepEqual(candidate([]int{4, 2, 6, 5, 1}, []int{9, 3, 7, 8, 2, 10}), 465)\n    assert reflect.DeepEqual(candidate([]int{2,4,6,8,10}, []int{1,1,1,1,1,1,1,1,1,1}), 120)\n    assert reflect.DeepEqual(candidate([]int{5000, 5000, 5000, 5000}, []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}), 425000)\n    assert reflect.DeepEqual(candidate([]int{1, 3, 2, 4, 5}, []int{2, 1, 3, 4, 5}), 115)\n    assert reflect.DeepEqual(candidate([]int{5, 10, 15, 20, 25}, []int{5, 5, 5, 5, 5, 5, 5, 5, 5, 5}), 1500)\n    assert reflect.DeepEqual(candidate([]int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}, []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}), 715)\n    assert reflect.DeepEqual(candidate([]int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}, []int{100, 200, 300, 400, 500, 600, 700, 800, 900, 1000}), 71500)\n    assert reflect.DeepEqual(candidate([]int{100, 200, 150, 50}, []int{300, 250, 400, 100, 350}), 440000)\n    assert reflect.DeepEqual(candidate([]int{50, 40, 30, 20, 10}, []int{25, 20, 15, 10, 5}), 4750)\n    assert reflect.DeepEqual(candidate([]int{100, 200, 300, 400}, []int{10, 20, 30, 40, 50, 60}), 94000)\n    assert reflect.DeepEqual(candidate([]int{7, 14, 21, 28, 35}, []int{35, 28, 21, 14, 7}), 6125)\n    assert reflect.DeepEqual(candidate([]int{42, 15, 88, 34, 99, 56}, []int{72, 33, 19, 55, 48, 62, 28}), 53845)\n    assert reflect.DeepEqual(candidate([]int{2500,1000,5000,3000}, []int{5000,2000,1000,3000,4000}), 115000000)\n    assert reflect.DeepEqual(candidate([]int{500, 1000, 1500, 2000}, []int{500, 1000, 1500, 2000, 2500}), 17500000)\n    assert reflect.DeepEqual(candidate([]int{10, 20, 30, 40, 50}, []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}), 2950)\n    assert reflect.DeepEqual(candidate([]int{1, 2, 3, 4, 5}, []int{5, 10, 15, 20, 25}), 475)\n    assert reflect.DeepEqual(candidate([]int{3, 7, 5, 2, 8}, []int{4, 6, 2, 9, 1}), 377)\n    assert reflect.DeepEqual(candidate([]int{5, 3, 8, 6, 2}, []int{7, 1, 4, 2, 9, 5, 3}), 469)\n    assert reflect.DeepEqual(candidate([]int{500, 1000, 1500, 2000}, []int{100, 200, 300, 400, 500, 600, 700, 800}), 7700000)\n    assert reflect.DeepEqual(candidate([]int{1000,2000,3000,4000,5000}, []int{1,2,3,4,5,6,7,8,9,10}), 295000)\n    assert reflect.DeepEqual(candidate([]int{1000, 2000, 3000, 4000, 5000}, []int{1, 10, 100, 1000, 10000}), 151111000)\n    assert reflect.DeepEqual(candidate([]int{10, 15, 20, 25, 30}, []int{35, 40, 45, 50, 55, 60, 65, 70}), 15050)\n    assert reflect.DeepEqual(candidate([]int{100,200,300,400}, []int{5,10,15,20,25,30}), 47000)\n    assert reflect.DeepEqual(candidate([]int{1000, 2000, 3000, 4000, 5000}, []int{10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150}), 6200000)\n    assert reflect.DeepEqual(candidate([]int{300, 200, 100}, []int{5, 15, 25, 35, 45, 55}), 70500)\n    assert reflect.DeepEqual(candidate([]int{1, 3, 5, 7, 9, 11, 13, 15, 17, 19}, []int{19, 17, 15, 13, 11, 9, 7, 5, 3, 1}), 3439)\n    assert reflect.DeepEqual(candidate([]int{2, 5, 7, 8}, []int{1, 3, 6, 9, 12}), 341)\n    assert reflect.DeepEqual(candidate([]int{100, 200, 300, 400, 500, 600, 700, 800, 900, 1000}, []int{10, 20, 30, 40, 50, 60, 70, 80, 90, 100}), 715000)\n    assert reflect.DeepEqual(candidate([]int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}, []int{10, 9, 8, 7, 6, 5, 4, 3, 2, 1}), 1000)\n    assert reflect.DeepEqual(candidate([]int{100, 200, 300, 400}, []int{50, 60, 70, 80, 90}), 170000)\n    assert reflect.DeepEqual(candidate([]int{100, 200, 300, 400, 500}, []int{5, 10, 15, 20, 25, 30, 35, 40, 45, 50}), 147500)\n    assert reflect.DeepEqual(candidate([]int{300, 200, 100}, []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15}), 40500)\n    assert reflect.DeepEqual(candidate([]int{3, 7, 2, 8}, []int{6, 4, 9, 1, 5}), 356)\n    assert reflect.DeepEqual(candidate([]int{1, 3, 2, 4}, []int{2, 3, 4, 5}), 74)\n    assert reflect.DeepEqual(candidate([]int{1,10,100,1000}, []int{1,10,100,1000,10000}), 11111111)\n    assert reflect.DeepEqual(candidate([]int{5, 10, 15, 20, 25, 30}, []int{1, 3, 5, 7, 9}), 1095)\n    assert reflect.DeepEqual(candidate([]int{1, 1, 1, 1, 1}, []int{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}), 24)\n    assert reflect.DeepEqual(candidate([]int{500, 1000, 1500, 2000, 2500}, []int{250, 500, 750, 1000, 1250}), 11875000)\n    assert reflect.DeepEqual(candidate([]int{3, 6, 9, 12, 15}, []int{2, 4, 6, 8, 10, 12, 14, 16, 18, 20}), 1770)\n    assert reflect.DeepEqual(candidate([]int{5000, 4000, 3000, 2000, 1000}, []int{1000, 2000, 3000, 4000, 5000}), 125000000)\n    assert reflect.DeepEqual(candidate([]int{1, 10, 100, 1000, 5000}, []int{1, 10, 100, 1000, 5000}), 31111111)\n    assert reflect.DeepEqual(candidate([]int{4000, 3000, 2000, 1000, 500}, []int{500, 1000, 1500, 2000, 2500, 3000, 3500, 4000, 4500, 5000}), 142500000)\n    assert reflect.DeepEqual(candidate([]int{1, 3, 5, 7, 9, 11, 13, 15, 17, 19}, []int{2, 4, 6, 8, 10, 12, 14, 16, 18, 20}), 2660)\n    assert reflect.DeepEqual(candidate([]int{3, 5, 7, 9}, []int{2, 4, 6, 8}), 238)\n    assert reflect.DeepEqual(candidate([]int{5000, 1000, 2000, 3000, 4000}, []int{100, 200, 300, 400, 500, 600, 700, 800, 900, 1000}), 37500000)\n    assert reflect.DeepEqual(candidate([]int{1500, 1500, 1500, 1500}, []int{500, 1000, 1500, 2000, 2500, 3000}), 29250000)\n    assert reflect.DeepEqual(candidate([]int{2, 3, 5, 7, 11}, []int{13, 17, 19, 23, 29, 31, 37}), 2080)\n}",
+    "rust": "fn check(candidate: fn(Vec<i32>, i32) -> Vec<i32>) {\n    assert_eq!(candidate(vec![10,20,30], vec![1,2,3,4,5]), 490);\n    assert_eq!(candidate(vec![3,2,1], vec![6,5,4]), 57);\n    assert_eq!(candidate(vec![1,1,1], vec![1,1,1]), 5);\n    assert_eq!(candidate(vec![1,2,3], vec![4,5,6,7]), 78);\n    assert_eq!(candidate(vec![5000, 5000], vec![1, 5000]), 50005000);\n    assert_eq!(candidate(vec![1, 2, 3], vec![4, 5, 6, 7, 8]), 102);\n    assert_eq!(candidate(vec![1,5,2,4], vec![5,1,4,2]), 110);\n    assert_eq!(candidate(vec![10, 20, 30], vec![1, 2, 3, 4, 5]), 490);\n    assert_eq!(candidate(vec![1,2,3,4], vec![1,2]), 21);\n    assert_eq!(candidate(vec![5000, 5000, 5000], vec![5000, 5000, 5000]), 125000000);\n    assert_eq!(candidate(vec![3, 1, 4, 1, 5], vec![9, 2, 6, 5, 3, 5]), 275);\n    assert_eq!(candidate(vec![2, 3, 4, 5], vec![1, 2, 3, 4, 5, 6, 7]), 159);\n    assert_eq!(candidate(vec![1, 1, 2, 2, 3, 3], vec![1, 2, 3, 4, 5, 6]), 94);\n    assert_eq!(candidate(vec![10, 20, 30, 40, 50], vec![5, 10, 15, 20, 25]), 4750);\n    assert_eq!(candidate(vec![2, 3, 5, 7, 11, 13, 17, 19], vec![23, 29, 31, 37, 41, 43, 47, 53, 59, 61]), 9500);\n    assert_eq!(candidate(vec![2, 3, 5, 7, 11], vec![13, 17, 19, 23, 29, 31, 37, 41]), 2531);\n    assert_eq!(candidate(vec![100, 100, 100, 100, 100], vec![1, 2, 3, 4, 5, 6, 7, 8, 9, 10]), 9500);\n    assert_eq!(candidate(vec![5, 5, 5, 5, 5], vec![1, 2, 3, 4, 5, 6, 7, 8, 9, 10]), 475);\n    assert_eq!(candidate(vec![1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15], vec![15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1]), 3375);\n    assert_eq!(candidate(vec![4999, 4998, 4997, 4996], vec![5000, 4999, 4998, 4997, 4996]), 199820050);\n    assert_eq!(candidate(vec![10, 20, 30, 40, 50, 60, 70, 80, 90, 100], vec![10, 20, 30, 40, 50]), 29500);\n    assert_eq!(candidate(vec![100, 200, 300, 400, 500], vec![10, 20, 30, 40, 50, 60, 70, 80, 90, 100]), 295000);\n    assert_eq!(candidate(vec![2, 3, 5, 7, 11, 13, 17, 19, 23, 29], vec![2, 3, 5, 7, 11, 13, 17, 19, 23, 29]), 4585);\n    assert_eq!(candidate(vec![300, 200, 100, 400, 500], vec![100, 200, 300, 400, 500]), 1050000);\n    assert_eq!(candidate(vec![1,2,3,4,5,6], vec![6,5,4,3,2,1]), 216);\n    assert_eq!(candidate(vec![4,3,2,1], vec![100,200,300,400,500]), 9000);\n    assert_eq!(candidate(vec![1000, 2000, 3000, 4000, 5000], vec![1000, 2000, 3000, 4000, 5000]), 95000000);\n    assert_eq!(candidate(vec![2, 4, 6, 8, 10, 12, 14, 16, 18, 20], vec![1, 3, 5, 7, 9, 11, 13, 15, 17, 19]), 2660);\n    assert_eq!(candidate(vec![1, 2, 3, 4, 5, 6, 7, 8, 9, 10], vec![5000, 5000, 5000, 5000, 5000]), 475000);\n    assert_eq!(candidate(vec![100, 200, 300, 400, 500, 600], vec![600, 500, 400, 300, 200, 100]), 2160000);\n    assert_eq!(candidate(vec![10, 20, 30, 40, 50], vec![5, 10, 15, 20, 25, 30]), 6250);\n    assert_eq!(candidate(vec![25, 50, 75, 100, 125, 150, 175, 200, 225, 250], vec![100, 200, 300, 400, 500, 600, 700, 800, 900, 1000]), 1787500);\n    assert_eq!(candidate(vec![100, 200, 300], vec![50, 25, 75, 100]), 100000);\n    assert_eq!(candidate(vec![1, 2, 3, 4, 5], vec![10, 20, 30, 40, 50, 60, 70, 80, 90, 100]), 2950);\n    assert_eq!(candidate(vec![5,3,8,2,4], vec![15,25,10,40,5]), 1395);\n    assert_eq!(candidate(vec![1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21], vec![1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]), 1771);\n    assert_eq!(candidate(vec![29, 65, 12, 48, 77], vec![31, 89, 17, 63, 54, 20, 41, 73]), 54255);\n    assert_eq!(candidate(vec![1, 5, 10, 20, 50, 100, 200], vec![1, 2, 3, 4, 5, 6, 7]), 5786);\n    assert_eq!(candidate(vec![1500, 1500, 1500, 1500], vec![2500, 2500, 2500, 2500, 2500]), 30000000);\n    assert_eq!(candidate(vec![4000, 3000, 2000, 1000], vec![1000, 2000, 3000, 4000, 5000]), 90000000);\n    assert_eq!(candidate(vec![100, 200, 300, 400, 500], vec![1, 2, 3, 4, 5, 6, 7, 8, 9, 10]), 29500);\n    assert_eq!(candidate(vec![3,6,9,12], vec![10,20,30,40,50]), 2100);\n    assert_eq!(candidate(vec![1, 1, 1, 1, 1], vec![1, 2, 3, 4, 5, 6, 7, 8, 9, 10]), 95);\n    assert_eq!(candidate(vec![1000, 2000, 3000], vec![500, 1000, 1500, 2000, 2500]), 24500000);\n    assert_eq!(candidate(vec![100, 150, 200, 250, 300], vec![50, 100, 150, 200, 250, 300, 350]), 505000);\n    assert_eq!(candidate(vec![1, 2, 3, 4, 5, 6, 7, 8, 9, 10], vec![10, 20, 30, 40, 50, 60, 70, 80, 90, 100]), 7150);\n    assert_eq!(candidate(vec![7,14,21,28], vec![2,4,6,8,10,12,14,16]), 2156);\n    assert_eq!(candidate(vec![2, 4, 6, 8, 10, 12], vec![1, 3, 5, 7, 9, 11, 13, 15]), 908);\n    assert_eq!(candidate(vec![5, 10, 15, 20, 25, 30, 35, 40, 45, 50], vec![5, 10, 15, 20, 25, 30, 35, 40, 45, 50]), 17875);\n    assert_eq!(candidate(vec![3000, 2500, 2000, 1500], vec![1000, 1200, 1400, 1600, 1800]), 31800000);\n    assert_eq!(candidate(vec![500, 1000, 1500, 2000], vec![200, 400, 600, 800, 1000, 1200]), 9400000);\n    assert_eq!(candidate(vec![100, 100, 100, 100, 100], vec![100, 100, 100, 100, 100, 100, 100, 100, 100, 100]), 140000);\n    assert_eq!(candidate(vec![2, 4, 6, 8, 10, 12], vec![12, 10, 8, 6, 4, 2]), 864);\n    assert_eq!(candidate(vec![100, 200, 150, 50, 250], vec![50, 75, 100, 125, 150]), 172500);\n    assert_eq!(candidate(vec![2, 4, 6, 8, 10], vec![1, 3, 5, 7, 9]), 330);\n    assert_eq!(candidate(vec![10, 20, 30, 40, 50, 60, 70, 80, 90, 100], vec![5, 10, 15, 20, 25, 30, 35, 40, 45, 50]), 35750);\n    assert_eq!(candidate(vec![4, 2, 6, 5, 1], vec![9, 3, 7, 8, 2, 10]), 465);\n    assert_eq!(candidate(vec![2,4,6,8,10], vec![1,1,1,1,1,1,1,1,1,1]), 120);\n    assert_eq!(candidate(vec![5000, 5000, 5000, 5000], vec![1, 2, 3, 4, 5, 6, 7, 8, 9, 10]), 425000);\n    assert_eq!(candidate(vec![1, 3, 2, 4, 5], vec![2, 1, 3, 4, 5]), 115);\n    assert_eq!(candidate(vec![5, 10, 15, 20, 25], vec![5, 5, 5, 5, 5, 5, 5, 5, 5, 5]), 1500);\n    assert_eq!(candidate(vec![1, 2, 3, 4, 5, 6, 7, 8, 9, 10], vec![1, 2, 3, 4, 5, 6, 7, 8, 9, 10]), 715);\n    assert_eq!(candidate(vec![1, 2, 3, 4, 5, 6, 7, 8, 9, 10], vec![100, 200, 300, 400, 500, 600, 700, 800, 900, 1000]), 71500);\n    assert_eq!(candidate(vec![100, 200, 150, 50], vec![300, 250, 400, 100, 350]), 440000);\n    assert_eq!(candidate(vec![50, 40, 30, 20, 10], vec![25, 20, 15, 10, 5]), 4750);\n    assert_eq!(candidate(vec![100, 200, 300, 400], vec![10, 20, 30, 40, 50, 60]), 94000);\n    assert_eq!(candidate(vec![7, 14, 21, 28, 35], vec![35, 28, 21, 14, 7]), 6125);\n    assert_eq!(candidate(vec![42, 15, 88, 34, 99, 56], vec![72, 33, 19, 55, 48, 62, 28]), 53845);\n    assert_eq!(candidate(vec![2500,1000,5000,3000], vec![5000,2000,1000,3000,4000]), 115000000);\n    assert_eq!(candidate(vec![500, 1000, 1500, 2000], vec![500, 1000, 1500, 2000, 2500]), 17500000);\n    assert_eq!(candidate(vec![10, 20, 30, 40, 50], vec![1, 2, 3, 4, 5, 6, 7, 8, 9, 10]), 2950);\n    assert_eq!(candidate(vec![1, 2, 3, 4, 5], vec![5, 10, 15, 20, 25]), 475);\n    assert_eq!(candidate(vec![3, 7, 5, 2, 8], vec![4, 6, 2, 9, 1]), 377);\n    assert_eq!(candidate(vec![5, 3, 8, 6, 2], vec![7, 1, 4, 2, 9, 5, 3]), 469);\n    assert_eq!(candidate(vec![500, 1000, 1500, 2000], vec![100, 200, 300, 400, 500, 600, 700, 800]), 7700000);\n    assert_eq!(candidate(vec![1000,2000,3000,4000,5000], vec![1,2,3,4,5,6,7,8,9,10]), 295000);\n    assert_eq!(candidate(vec![1000, 2000, 3000, 4000, 5000], vec![1, 10, 100, 1000, 10000]), 151111000);\n    assert_eq!(candidate(vec![10, 15, 20, 25, 30], vec![35, 40, 45, 50, 55, 60, 65, 70]), 15050);\n    assert_eq!(candidate(vec![100,200,300,400], vec![5,10,15,20,25,30]), 47000);\n    assert_eq!(candidate(vec![1000, 2000, 3000, 4000, 5000], vec![10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150]), 6200000);\n    assert_eq!(candidate(vec![300, 200, 100], vec![5, 15, 25, 35, 45, 55]), 70500);\n    assert_eq!(candidate(vec![1, 3, 5, 7, 9, 11, 13, 15, 17, 19], vec![19, 17, 15, 13, 11, 9, 7, 5, 3, 1]), 3439);\n    assert_eq!(candidate(vec![2, 5, 7, 8], vec![1, 3, 6, 9, 12]), 341);\n    assert_eq!(candidate(vec![100, 200, 300, 400, 500, 600, 700, 800, 900, 1000], vec![10, 20, 30, 40, 50, 60, 70, 80, 90, 100]), 715000);\n    assert_eq!(candidate(vec![1, 2, 3, 4, 5, 6, 7, 8, 9, 10], vec![10, 9, 8, 7, 6, 5, 4, 3, 2, 1]), 1000);\n    assert_eq!(candidate(vec![100, 200, 300, 400], vec![50, 60, 70, 80, 90]), 170000);\n    assert_eq!(candidate(vec![100, 200, 300, 400, 500], vec![5, 10, 15, 20, 25, 30, 35, 40, 45, 50]), 147500);\n    assert_eq!(candidate(vec![300, 200, 100], vec![1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]), 40500);\n    assert_eq!(candidate(vec![3, 7, 2, 8], vec![6, 4, 9, 1, 5]), 356);\n    assert_eq!(candidate(vec![1, 3, 2, 4], vec![2, 3, 4, 5]), 74);\n    assert_eq!(candidate(vec![1,10,100,1000], vec![1,10,100,1000,10000]), 11111111);\n    assert_eq!(candidate(vec![5, 10, 15, 20, 25, 30], vec![1, 3, 5, 7, 9]), 1095);\n    assert_eq!(candidate(vec![1, 1, 1, 1, 1], vec![1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]), 24);\n    assert_eq!(candidate(vec![500, 1000, 1500, 2000, 2500], vec![250, 500, 750, 1000, 1250]), 11875000);\n    assert_eq!(candidate(vec![3, 6, 9, 12, 15], vec![2, 4, 6, 8, 10, 12, 14, 16, 18, 20]), 1770);\n    assert_eq!(candidate(vec![5000, 4000, 3000, 2000, 1000], vec![1000, 2000, 3000, 4000, 5000]), 125000000);\n    assert_eq!(candidate(vec![1, 10, 100, 1000, 5000], vec![1, 10, 100, 1000, 5000]), 31111111);\n    assert_eq!(candidate(vec![4000, 3000, 2000, 1000, 500], vec![500, 1000, 1500, 2000, 2500, 3000, 3500, 4000, 4500, 5000]), 142500000);\n    assert_eq!(candidate(vec![1, 3, 5, 7, 9, 11, 13, 15, 17, 19], vec![2, 4, 6, 8, 10, 12, 14, 16, 18, 20]), 2660);\n    assert_eq!(candidate(vec![3, 5, 7, 9], vec![2, 4, 6, 8]), 238);\n    assert_eq!(candidate(vec![5000, 1000, 2000, 3000, 4000], vec![100, 200, 300, 400, 500, 600, 700, 800, 900, 1000]), 37500000);\n    assert_eq!(candidate(vec![1500, 1500, 1500, 1500], vec![500, 1000, 1500, 2000, 2500, 3000]), 29250000);\n    assert_eq!(candidate(vec![2, 3, 5, 7, 11], vec![13, 17, 19, 23, 29, 31, 37]), 2080);\n}"
+  },
+  "test_cases": [
+    {
+      "input": "skill = [10,20,30], mana = [1,2,3,4,5]",
+      "output": "490"
+    },
+    {
+      "input": "skill = [3,2,1], mana = [6,5,4]",
+      "output": "57"
+    },
+    {
+      "input": "skill = [1,1,1], mana = [1,1,1]",
+      "output": "5"
+    },
+    {
+      "input": "skill = [1,2,3], mana = [4,5,6,7]",
+      "output": "78"
+    },
+    {
+      "input": "skill = [5000, 5000], mana = [1, 5000]",
+      "output": "50005000"
+    },
+    {
+      "input": "skill = [1, 2, 3], mana = [4, 5, 6, 7, 8]",
+      "output": "102"
+    },
+    {
+      "input": "skill = [1,5,2,4], mana = [5,1,4,2]",
+      "output": "110"
+    },
+    {
+      "input": "skill = [10, 20, 30], mana = [1, 2, 3, 4, 5]",
+      "output": "490"
+    },
+    {
+      "input": "skill = [1,2,3,4], mana = [1,2]",
+      "output": "21"
+    },
+    {
+      "input": "skill = [5000, 5000, 5000], mana = [5000, 5000, 5000]",
+      "output": "125000000"
+    },
+    {
+      "input": "skill = [3, 1, 4, 1, 5], mana = [9, 2, 6, 5, 3, 5]",
+      "output": "275"
+    },
+    {
+      "input": "skill = [2, 3, 4, 5], mana = [1, 2, 3, 4, 5, 6, 7]",
+      "output": "159"
+    },
+    {
+      "input": "skill = [1, 1, 2, 2, 3, 3], mana = [1, 2, 3, 4, 5, 6]",
+      "output": "94"
+    },
+    {
+      "input": "skill = [10, 20, 30, 40, 50], mana = [5, 10, 15, 20, 25]",
+      "output": "4750"
+    },
+    {
+      "input": "skill = [2, 3, 5, 7, 11, 13, 17, 19], mana = [23, 29, 31, 37, 41, 43, 47, 53, 59, 61]",
+      "output": "9500"
+    },
+    {
+      "input": "skill = [2, 3, 5, 7, 11], mana = [13, 17, 19, 23, 29, 31, 37, 41]",
+      "output": "2531"
+    },
+    {
+      "input": "skill = [100, 100, 100, 100, 100], mana = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]",
+      "output": "9500"
+    },
+    {
+      "input": "skill = [5, 5, 5, 5, 5], mana = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]",
+      "output": "475"
+    },
+    {
+      "input": "skill = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15], mana = [15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1]",
+      "output": "3375"
+    },
+    {
+      "input": "skill = [4999, 4998, 4997, 4996], mana = [5000, 4999, 4998, 4997, 4996]",
+      "output": "199820050"
+    },
+    {
+      "input": "skill = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100], mana = [10, 20, 30, 40, 50]",
+      "output": "29500"
+    },
+    {
+      "input": "skill = [100, 200, 300, 400, 500], mana = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100]",
+      "output": "295000"
+    },
+    {
+      "input": "skill = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29], mana = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29]",
+      "output": "4585"
+    },
+    {
+      "input": "skill = [300, 200, 100, 400, 500], mana = [100, 200, 300, 400, 500]",
+      "output": "1050000"
+    },
+    {
+      "input": "skill = [1,2,3,4,5,6], mana = [6,5,4,3,2,1]",
+      "output": "216"
+    },
+    {
+      "input": "skill = [4,3,2,1], mana = [100,200,300,400,500]",
+      "output": "9000"
+    },
+    {
+      "input": "skill = [1000, 2000, 3000, 4000, 5000], mana = [1000, 2000, 3000, 4000, 5000]",
+      "output": "95000000"
+    },
+    {
+      "input": "skill = [2, 4, 6, 8, 10, 12, 14, 16, 18, 20], mana = [1, 3, 5, 7, 9, 11, 13, 15, 17, 19]",
+      "output": "2660"
+    },
+    {
+      "input": "skill = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10], mana = [5000, 5000, 5000, 5000, 5000]",
+      "output": "475000"
+    },
+    {
+      "input": "skill = [100, 200, 300, 400, 500, 600], mana = [600, 500, 400, 300, 200, 100]",
+      "output": "2160000"
+    },
+    {
+      "input": "skill = [10, 20, 30, 40, 50], mana = [5, 10, 15, 20, 25, 30]",
+      "output": "6250"
+    },
+    {
+      "input": "skill = [25, 50, 75, 100, 125, 150, 175, 200, 225, 250], mana = [100, 200, 300, 400, 500, 600, 700, 800, 900, 1000]",
+      "output": "1787500"
+    },
+    {
+      "input": "skill = [100, 200, 300], mana = [50, 25, 75, 100]",
+      "output": "100000"
+    },
+    {
+      "input": "skill = [1, 2, 3, 4, 5], mana = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100]",
+      "output": "2950"
+    },
+    {
+      "input": "skill = [5,3,8,2,4], mana = [15,25,10,40,5]",
+      "output": "1395"
+    },
+    {
+      "input": "skill = [1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21], mana = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]",
+      "output": "1771"
+    },
+    {
+      "input": "skill = [29, 65, 12, 48, 77], mana = [31, 89, 17, 63, 54, 20, 41, 73]",
+      "output": "54255"
+    },
+    {
+      "input": "skill = [1, 5, 10, 20, 50, 100, 200], mana = [1, 2, 3, 4, 5, 6, 7]",
+      "output": "5786"
+    },
+    {
+      "input": "skill = [1500, 1500, 1500, 1500], mana = [2500, 2500, 2500, 2500, 2500]",
+      "output": "30000000"
+    },
+    {
+      "input": "skill = [4000, 3000, 2000, 1000], mana = [1000, 2000, 3000, 4000, 5000]",
+      "output": "90000000"
+    },
+    {
+      "input": "skill = [100, 200, 300, 400, 500], mana = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]",
+      "output": "29500"
+    },
+    {
+      "input": "skill = [3,6,9,12], mana = [10,20,30,40,50]",
+      "output": "2100"
+    },
+    {
+      "input": "skill = [1, 1, 1, 1, 1], mana = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]",
+      "output": "95"
+    },
+    {
+      "input": "skill = [1000, 2000, 3000], mana = [500, 1000, 1500, 2000, 2500]",
+      "output": "24500000"
+    },
+    {
+      "input": "skill = [100, 150, 200, 250, 300], mana = [50, 100, 150, 200, 250, 300, 350]",
+      "output": "505000"
+    },
+    {
+      "input": "skill = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10], mana = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100]",
+      "output": "7150"
+    },
+    {
+      "input": "skill = [7,14,21,28], mana = [2,4,6,8,10,12,14,16]",
+      "output": "2156"
+    },
+    {
+      "input": "skill = [2, 4, 6, 8, 10, 12], mana = [1, 3, 5, 7, 9, 11, 13, 15]",
+      "output": "908"
+    },
+    {
+      "input": "skill = [5, 10, 15, 20, 25, 30, 35, 40, 45, 50], mana = [5, 10, 15, 20, 25, 30, 35, 40, 45, 50]",
+      "output": "17875"
+    },
+    {
+      "input": "skill = [3000, 2500, 2000, 1500], mana = [1000, 1200, 1400, 1600, 1800]",
+      "output": "31800000"
+    },
+    {
+      "input": "skill = [500, 1000, 1500, 2000], mana = [200, 400, 600, 800, 1000, 1200]",
+      "output": "9400000"
+    },
+    {
+      "input": "skill = [100, 100, 100, 100, 100], mana = [100, 100, 100, 100, 100, 100, 100, 100, 100, 100]",
+      "output": "140000"
+    },
+    {
+      "input": "skill = [2, 4, 6, 8, 10, 12], mana = [12, 10, 8, 6, 4, 2]",
+      "output": "864"
+    },
+    {
+      "input": "skill = [100, 200, 150, 50, 250], mana = [50, 75, 100, 125, 150]",
+      "output": "172500"
+    },
+    {
+      "input": "skill = [2, 4, 6, 8, 10], mana = [1, 3, 5, 7, 9]",
+      "output": "330"
+    },
+    {
+      "input": "skill = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100], mana = [5, 10, 15, 20, 25, 30, 35, 40, 45, 50]",
+      "output": "35750"
+    },
+    {
+      "input": "skill = [4, 2, 6, 5, 1], mana = [9, 3, 7, 8, 2, 10]",
+      "output": "465"
+    },
+    {
+      "input": "skill = [2,4,6,8,10], mana = [1,1,1,1,1,1,1,1,1,1]",
+      "output": "120"
+    },
+    {
+      "input": "skill = [5000, 5000, 5000, 5000], mana = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]",
+      "output": "425000"
+    },
+    {
+      "input": "skill = [1, 3, 2, 4, 5], mana = [2, 1, 3, 4, 5]",
+      "output": "115"
+    },
+    {
+      "input": "skill = [5, 10, 15, 20, 25], mana = [5, 5, 5, 5, 5, 5, 5, 5, 5, 5]",
+      "output": "1500"
+    },
+    {
+      "input": "skill = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10], mana = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]",
+      "output": "715"
+    },
+    {
+      "input": "skill = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10], mana = [100, 200, 300, 400, 500, 600, 700, 800, 900, 1000]",
+      "output": "71500"
+    },
+    {
+      "input": "skill = [100, 200, 150, 50], mana = [300, 250, 400, 100, 350]",
+      "output": "440000"
+    },
+    {
+      "input": "skill = [50, 40, 30, 20, 10], mana = [25, 20, 15, 10, 5]",
+      "output": "4750"
+    },
+    {
+      "input": "skill = [100, 200, 300, 400], mana = [10, 20, 30, 40, 50, 60]",
+      "output": "94000"
+    },
+    {
+      "input": "skill = [7, 14, 21, 28, 35], mana = [35, 28, 21, 14, 7]",
+      "output": "6125"
+    },
+    {
+      "input": "skill = [42, 15, 88, 34, 99, 56], mana = [72, 33, 19, 55, 48, 62, 28]",
+      "output": "53845"
+    },
+    {
+      "input": "skill = [2500,1000,5000,3000], mana = [5000,2000,1000,3000,4000]",
+      "output": "115000000"
+    },
+    {
+      "input": "skill = [500, 1000, 1500, 2000], mana = [500, 1000, 1500, 2000, 2500]",
+      "output": "17500000"
+    },
+    {
+      "input": "skill = [10, 20, 30, 40, 50], mana = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]",
+      "output": "2950"
+    },
+    {
+      "input": "skill = [1, 2, 3, 4, 5], mana = [5, 10, 15, 20, 25]",
+      "output": "475"
+    },
+    {
+      "input": "skill = [3, 7, 5, 2, 8], mana = [4, 6, 2, 9, 1]",
+      "output": "377"
+    },
+    {
+      "input": "skill = [5, 3, 8, 6, 2], mana = [7, 1, 4, 2, 9, 5, 3]",
+      "output": "469"
+    },
+    {
+      "input": "skill = [500, 1000, 1500, 2000], mana = [100, 200, 300, 400, 500, 600, 700, 800]",
+      "output": "7700000"
+    },
+    {
+      "input": "skill = [1000,2000,3000,4000,5000], mana = [1,2,3,4,5,6,7,8,9,10]",
+      "output": "295000"
+    },
+    {
+      "input": "skill = [1000, 2000, 3000, 4000, 5000], mana = [1, 10, 100, 1000, 10000]",
+      "output": "151111000"
+    },
+    {
+      "input": "skill = [10, 15, 20, 25, 30], mana = [35, 40, 45, 50, 55, 60, 65, 70]",
+      "output": "15050"
+    },
+    {
+      "input": "skill = [100,200,300,400], mana = [5,10,15,20,25,30]",
+      "output": "47000"
+    },
+    {
+      "input": "skill = [1000, 2000, 3000, 4000, 5000], mana = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150]",
+      "output": "6200000"
+    },
+    {
+      "input": "skill = [300, 200, 100], mana = [5, 15, 25, 35, 45, 55]",
+      "output": "70500"
+    },
+    {
+      "input": "skill = [1, 3, 5, 7, 9, 11, 13, 15, 17, 19], mana = [19, 17, 15, 13, 11, 9, 7, 5, 3, 1]",
+      "output": "3439"
+    },
+    {
+      "input": "skill = [2, 5, 7, 8], mana = [1, 3, 6, 9, 12]",
+      "output": "341"
+    },
+    {
+      "input": "skill = [100, 200, 300, 400, 500, 600, 700, 800, 900, 1000], mana = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100]",
+      "output": "715000"
+    },
+    {
+      "input": "skill = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10], mana = [10, 9, 8, 7, 6, 5, 4, 3, 2, 1]",
+      "output": "1000"
+    },
+    {
+      "input": "skill = [100, 200, 300, 400], mana = [50, 60, 70, 80, 90]",
+      "output": "170000"
+    },
+    {
+      "input": "skill = [100, 200, 300, 400, 500], mana = [5, 10, 15, 20, 25, 30, 35, 40, 45, 50]",
+      "output": "147500"
+    },
+    {
+      "input": "skill = [300, 200, 100], mana = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]",
+      "output": "40500"
+    },
+    {
+      "input": "skill = [3, 7, 2, 8], mana = [6, 4, 9, 1, 5]",
+      "output": "356"
+    },
+    {
+      "input": "skill = [1, 3, 2, 4], mana = [2, 3, 4, 5]",
+      "output": "74"
+    },
+    {
+      "input": "skill = [1,10,100,1000], mana = [1,10,100,1000,10000]",
+      "output": "11111111"
+    },
+    {
+      "input": "skill = [5, 10, 15, 20, 25, 30], mana = [1, 3, 5, 7, 9]",
+      "output": "1095"
+    },
+    {
+      "input": "skill = [1, 1, 1, 1, 1], mana = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]",
+      "output": "24"
+    },
+    {
+      "input": "skill = [500, 1000, 1500, 2000, 2500], mana = [250, 500, 750, 1000, 1250]",
+      "output": "11875000"
+    },
+    {
+      "input": "skill = [3, 6, 9, 12, 15], mana = [2, 4, 6, 8, 10, 12, 14, 16, 18, 20]",
+      "output": "1770"
+    },
+    {
+      "input": "skill = [5000, 4000, 3000, 2000, 1000], mana = [1000, 2000, 3000, 4000, 5000]",
+      "output": "125000000"
+    },
+    {
+      "input": "skill = [1, 10, 100, 1000, 5000], mana = [1, 10, 100, 1000, 5000]",
+      "output": "31111111"
+    },
+    {
+      "input": "skill = [4000, 3000, 2000, 1000, 500], mana = [500, 1000, 1500, 2000, 2500, 3000, 3500, 4000, 4500, 5000]",
+      "output": "142500000"
+    },
+    {
+      "input": "skill = [1, 3, 5, 7, 9, 11, 13, 15, 17, 19], mana = [2, 4, 6, 8, 10, 12, 14, 16, 18, 20]",
+      "output": "2660"
+    },
+    {
+      "input": "skill = [3, 5, 7, 9], mana = [2, 4, 6, 8]",
+      "output": "238"
+    },
+    {
+      "input": "skill = [5000, 1000, 2000, 3000, 4000], mana = [100, 200, 300, 400, 500, 600, 700, 800, 900, 1000]",
+      "output": "37500000"
+    },
+    {
+      "input": "skill = [1500, 1500, 1500, 1500], mana = [500, 1000, 1500, 2000, 2500, 3000]",
+      "output": "29250000"
+    },
+    {
+      "input": "skill = [2, 3, 5, 7, 11], mana = [13, 17, 19, 23, 29, 31, 37]",
+      "output": "2080"
+    }
+  ],
+  "types": {
+    "python3": {
+      "input": [
+        {
+          "skill": "List[int]"
+        },
+        {
+          "mana": "List[int]"
+        }
+      ],
+      "output": "int"
+    },
+    "cpp": {
+      "input": [
+        {
+          "skill": "vector<int>&"
+        },
+        {
+          "mana": "vector<int>&"
+        }
+      ],
+      "output": "long long"
+    },
+    "java": {
+      "input": [
+        {
+          "skill": "int[]"
+        },
+        {
+          "mana": "int[]"
+        }
+      ],
+      "output": "long"
+    },
+    "javascript": {
+      "input": [
+        {
+          "skill": "number[]"
+        },
+        {
+          "mana": "number[]"
+        }
+      ],
+      "output": "number"
+    },
+    "typescript": {
+      "input": [
+        {
+          "skill": "number[]"
+        },
+        {
+          "mana": "number[]"
+        }
+      ],
+      "output": "number"
+    },
+    "golang": {
+      "input": [
+        {
+          "skill": "[]int"
+        },
+        {
+          "mana": "[]int"
+        }
+      ],
+      "output": "int64"
+    },
+    "rust": {
+      "input": [
+        {
+          "skill": "Vec<i32>"
+        },
+        {
+          "mana": "Vec<i32>"
+        }
+      ],
+      "output": "i64"
+    }
+  },
+  "tags": [
+    "array",
+    "simulation",
+    "prefix-sum"
+  ]
+}

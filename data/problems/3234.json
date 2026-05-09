@@ -1,0 +1,780 @@
+{
+  "id": 3234,
+  "title": "Count the Number of Substrings With Dominant Ones",
+  "slug": "count-the-number-of-substrings-with-dominant-ones",
+  "difficulty": "Medium",
+  "description": "You are given a binary string s.\nReturn the number of substrings with dominant ones.\nA string has dominant ones if the number of ones in the string is greater than or equal to the square of the number of zeros in the string.\nExample 1:\nExample 2:\nConstraints:",
+  "examples": [
+    {
+      "example_num": 1,
+      "example_text": "Input: s = \"00011\"\nOutput: 5\nExplanation:\nThe substrings with dominant ones are shown in the table below.",
+      "images": []
+    },
+    {
+      "example_num": 2,
+      "example_text": "Input: s = \"101101\"\nOutput: 16\nExplanation:\nThe substrings with non-dominant ones are shown in the table below.\nSince there are 21 substrings total and 5 of them have non-dominant ones, it follows that there are 16 substrings with dominant ones.",
+      "images": []
+    }
+  ],
+  "constraints": [
+    "1 <= s.length <= 4 * 104",
+    "s consists only of characters '0' and '1'."
+  ],
+  "hints": [
+    "Let us fix the starting index <code>l</code> of the substring and count the number of indices <code>r</code> such that <code>l <= r</code> and the substring <code>s[l..r]</code> has dominant ones.",
+    "A substring with dominant ones has at most <code>sqrt(n)</code> zeros.",
+    "We cannot iterate over every <code>r</code> and check if the  <code>s[l..r]</code> has dominant ones. Instead, we iterate over the next <code>sqrt(n)</code> zeros to the left of <code>l</code> and count the number of substrings with dominant ones where the current zero is the rightmost zero of the substring."
+  ],
+  "code_snippets": {
+    "cpp": "class Solution {\npublic:\n    int numberOfSubstrings(string s) {\n        \n    }\n};",
+    "java": "class Solution {\n    public int numberOfSubstrings(String s) {\n        \n    }\n}",
+    "python3": "class Solution:\n    def numberOfSubstrings(self, s: str) -> int:\n        ",
+    "javascript": "/**\n * @param {string} s\n * @return {number}\n */\nvar numberOfSubstrings = function(s) {\n    \n};",
+    "typescript": "function numberOfSubstrings(s: string): number {\n    \n};",
+    "golang": "func numberOfSubstrings(s string) int {\n    \n}",
+    "rust": "impl Solution {\n    pub fn number_of_substrings(s: String) -> i32 {\n        \n    }\n}"
+  },
+  "entry_points": {
+    "python3": "Solution().numberOfSubstrings",
+    "cpp": "Solution().numberOfSubstrings",
+    "java": "new Solution().numberOfSubstrings",
+    "javascript": "numberOfSubstrings",
+    "typescript": "numberOfSubstrings",
+    "golang": "numberOfSubstrings",
+    "rust": "Solution::number_of_substrings"
+  },
+  "test_snippets": {
+    "python3": "def check(candidate):\n    assert candidate(s = \"1111\") == 10\n    assert candidate(s = \"100100100\") == 8\n    assert candidate(s = \"1111010101\") == 33\n    assert candidate(s = \"000111000\") == 12\n    assert candidate(s = \"11110000\") == 15\n    assert candidate(s = \"0000\") == 0\n    assert candidate(s = \"111000\") == 9\n    assert candidate(s = \"01010101111\") == 34\n    assert candidate(s = \"0011110011\") == 31\n    assert candidate(s = \"0000101010\") == 11\n    assert candidate(s = \"00001111\") == 15\n    assert candidate(s = \"000111\") == 9\n    assert candidate(s = \"1001001001\") == 10\n    assert candidate(s = \"11111\") == 15\n    assert candidate(s = \"01010101\") == 14\n    assert candidate(s = \"11010101\") == 18\n    assert candidate(s = \"10101010\") == 14\n    assert candidate(s = \"1010100000\") == 10\n    assert candidate(s = \"010101\") == 10\n    assert candidate(s = \"1100111100\") == 31\n    assert candidate(s = \"101010\") == 10\n    assert candidate(s = \"00011\") == 5\n    assert candidate(s = \"11001100\") == 13\n    assert candidate(s = \"101101\") == 16\n    assert candidate(s = \"111000111\") == 18\n    assert candidate(s = \"1010101010101010\") == 30\n    assert candidate(s = \"00000\") == 0\n    assert candidate(s = \"10010010\") == 8\n    assert candidate(s = \"000111000111000111000\") == 36\n    assert candidate(s = \"111111111111111111111111\") == 300\n    assert candidate(s = \"000011000110001100011000\") == 28\n    assert candidate(s = \"1111110000000011\") == 35\n    assert candidate(s = \"111000111000111000\") == 33\n    assert candidate(s = \"1111000000000011111\") == 37\n    assert candidate(s = \"000000111111000000111111\") == 70\n    assert candidate(s = \"0110110110110110110\") == 88\n    assert candidate(s = \"1101010101010101\") == 34\n    assert candidate(s = \"111111111100000000000000000000\") == 74\n    assert candidate(s = \"10101010101010101010101010101010101010101010101010\") == 98\n    assert candidate(s = \"11000000001111111111\") == 79\n    assert candidate(s = \"00111111001111110011111100111111001111110011111100111111001111110011\") == 657\n    assert candidate(s = \"11110000000000000000000000000000000\") == 15\n    assert candidate(s = \"111110000011111000001111100000\") == 82\n    assert candidate(s = \"1100110011001100\") == 29\n    assert candidate(s = \"00000000000000000000000000001111111\") == 39\n    assert candidate(s = \"010101010101010101010101\") == 46\n    assert candidate(s = \"1100110011001100110011001100110011001100110011001100110011001100110\") == 133\n    assert candidate(s = \"0001110001110001\") == 26\n    assert candidate(s = \"1001001001001001001001001001001001001001001001001001001001001001\") == 64\n    assert candidate(s = \"000111000111000111\") == 33\n    assert candidate(s = \"101010101010101010101010\") == 46\n    assert candidate(s = \"1100000000000011\") == 10\n    assert candidate(s = \"1000000000001000\") == 5\n    assert candidate(s = \"111111111111111111111111111100000000000000000000\") == 496\n    assert candidate(s = \"1000000000000011\") == 7\n    assert candidate(s = \"010101010101010101\") == 34\n    assert candidate(s = \"1000000000000000000000000000\") == 2\n    assert candidate(s = \"111000111000111000111000111000\") == 57\n    assert candidate(s = \"1111111000000000000\") == 39\n    assert candidate(s = \"0000000000000000\") == 0\n    assert candidate(s = \"11111000001111100000111110000011111\") == 104\n    assert candidate(s = \"101010101010101010101010101010\") == 58\n    assert candidate(s = \"0100111101110010\") == 60\n    assert candidate(s = \"100100100100100100100\") == 20\n    assert candidate(s = \"111100001111000011110000\") == 57\n    assert candidate(s = \"0000000001111111110000000000\") == 80\n    assert candidate(s = \"0011001100110011\") == 29\n    assert candidate(s = \"11000011000011000011000011\") == 31\n    assert candidate(s = \"0000111100001111000011110000\") == 63\n    assert candidate(s = \"1000000010000000100000001\") == 10\n    assert candidate(s = \"0000000000000000000000000000000000000000000000000000000000000000\") == 0\n    assert candidate(s = \"11111000000000001111111111\") == 96\n    assert candidate(s = \"000000010000000100000001\") == 8\n    assert candidate(s = \"100010001000100010001000\") == 17\n    assert candidate(s = \"11111111111111111111000000000000\") == 264\n    assert candidate(s = \"1001001001001001001001001001001\") == 31\n    assert candidate(s = \"0000000000000000000000000000000000000000\") == 0\n    assert candidate(s = \"11110000111100001111\") == 51\n    assert candidate(s = \"1111111110000000000000000000\") == 61\n    assert candidate(s = \"010101010101010101010101010101010101010101010101\") == 94\n    assert candidate(s = \"11111000001111100000111110000011111000001111100000111110000011111\") == 194\n    assert candidate(s = \"111111111100000000001111111111\") == 148\n    assert candidate(s = \"01010101010101010101010101010101010101010101010101\") == 98\n    assert candidate(s = \"000000000000000000000000000000001111111111111111111111111111111\") == 601\n    assert candidate(s = \"111000011111000\") == 39\n    assert candidate(s = \"11111111111111111111\") == 210\n    assert candidate(s = \"1001001001001001001001001001001001001001001001001001\") == 52\n    assert candidate(s = \"0000000000000000000000000000001111111111111111111111111111111\") == 601\n    assert candidate(s = \"1111111111111111\") == 136\n    assert candidate(s = \"1111111111111111111111111111111111111111111111111111111111111111\") == 2080\n    assert candidate(s = \"0000000111111111111\") == 103\n    assert candidate(s = \"0101010111111111\") == 96\n    assert candidate(s = \"00000000000000000000000000000000111111111111111111111111111111111\") == 676\n    assert candidate(s = \"111111000000111111000000111111\") == 100\n    assert candidate(s = \"0000000001111111\") == 39\n    assert candidate(s = \"0001010101101011\") == 37\n    assert candidate(s = \"00000000001111111111\") == 74\n    assert candidate(s = \"0011001100110011001100110011001100110011001100110011001100110011001\") == 129\n    assert candidate(s = \"1111100000111110000011111\") == 74\n    assert candidate(s = \"111000111000111000111\") == 42\n    assert candidate(s = \"1001001001001001\") == 16\n    assert candidate(s = \"11001100110011001100\") == 37\n    assert candidate(s = \"01010101010101010101010101010101\") == 62\n    assert candidate(s = \"1110010001100011110\") == 40\n    assert candidate(s = \"1111000000000000000000000000000000000000\") == 15\n    assert candidate(s = \"00000000000000000000000000000000000000000000000000\") == 0\n    assert candidate(s = \"1001001001001001001001\") == 22\n    assert candidate(s = \"111000111000111000111000111\") == 54\n    assert candidate(s = \"0000111111110000\") == 63\n    assert candidate(s = \"0011110011110011\") == 65\n    assert candidate(s = \"1111111100000000\") == 49\n    assert candidate(s = \"1111000011110000111100001111000011110000\") == 99\n    assert candidate(s = \"11100111001110011100111001110011100111001110011100\") == 171\n    assert candidate(s = \"111110000111100001111\") == 58\n    assert candidate(s = \"110000110000110000110000110000\") == 33\n    assert candidate(s = \"0101010101010101\") == 30\n    assert candidate(s = \"000000000000000000000000\") == 0\n    assert candidate(s = \"111000111000111000111000111000111000111000111000\") == 93\n    assert candidate(s = \"00000000000000000000000000000000000111111111111111\") == 154\n    assert candidate(s = \"0000011111111100000\") == 80\n    assert candidate(s = \"0000111111111111\") == 103\n    assert candidate(s = \"000111000111000111000111000111\") == 57\n    assert candidate(s = \"1000100010001000100\") == 14\n    assert candidate(s = \"1001001001001001001\") == 19\n    assert candidate(s = \"0110011001100110011001\") == 41\n    assert candidate(s = \"11111111111111111000000000000000000000000000000000000000000000011\") == 200\n    assert candidate(s = \"0010110101101011\") == 46\n    assert candidate(s = \"000000000011111111110000000000\") == 96\n    assert candidate(s = \"00000111110000011111000001111100000111110000011111000001111100000\") == 180\n    assert candidate(s = \"11111111111111111111111111111111111111111111111111\") == 1275\n    assert candidate(s = \"11011011011011011011011011011011011\") == 184\n    assert candidate(s = \"1110001110001110\") == 33\n    assert candidate(s = \"10010010010010010010010010010010\") == 32\n    assert candidate(s = \"1110011100011100011\") == 44\n    assert candidate(s = \"00000000000000000000\") == 0\n    assert candidate(s = \"1111000011110000\") == 36\n    assert candidate(s = \"10101010101010101010101010101010\") == 62\n    assert candidate(s = \"01001001001001001001001\") == 23\n    assert candidate(s = \"1111111111000000\") == 74\n    assert candidate(s = \"0000000011111111\") == 49\n    assert candidate(s = \"1111000000001111\") == 30\n    assert candidate(s = \"01001001001001001001001001001001\") == 32\n    assert candidate(s = \"1000001111110000\") == 42\n    assert candidate(s = \"000000000011111111111111111111\") == 264\n    assert candidate(s = \"1100001100001100\") == 19\n    assert candidate(s = \"1111111111\") == 55\n    assert candidate(s = \"1010101010101010101010101010101010101010\") == 78\n    assert candidate(s = \"0110011001100110\") == 31\n    assert candidate(s = \"1111000000000000111111111111\") == 118\n    assert candidate(s = \"1111000011110000111100001111\") == 72\n    assert candidate(s = \"00000000000000000001\") == 2\n    assert candidate(s = \"0000000000111111\") == 30\n    assert candidate(s = \"0011001100110011001100110011\") == 53\n    assert candidate(s = \"01010101010101010101\") == 38\n    assert candidate(s = \"111110111110111110111110111110\") == 453\n    assert candidate(s = \"111110000000\") == 22\n    assert candidate(s = \"1111111101010101\") == 84\n    assert candidate(s = \"1101001010010100\") == 24\n    assert candidate(s = \"1111010101010101\") == 45\n    assert candidate(s = \"000001111100000111110000011111\") == 82\n    assert candidate(s = \"0000000000000000000000000001\") == 2\n    assert candidate(s = \"10101010101010101010\") == 38\n    assert candidate(s = \"0110110110110110110110110110110\") == 156\n    assert candidate(s = \"11111111111111110000000000\") == 174\n    assert candidate(s = \"0000111100001111\") == 36",
+    "cpp": "void check(Solution& solution) {\n    assert(solution.numberOfSubstrings(\"1111\") == vector<int>10);\n    assert(solution.numberOfSubstrings(\"100100100\") == vector<int>8);\n    assert(solution.numberOfSubstrings(\"1111010101\") == vector<int>33);\n    assert(solution.numberOfSubstrings(\"000111000\") == vector<int>12);\n    assert(solution.numberOfSubstrings(\"11110000\") == vector<int>15);\n    assert(solution.numberOfSubstrings(\"0000\") == vector<int>0);\n    assert(solution.numberOfSubstrings(\"111000\") == vector<int>9);\n    assert(solution.numberOfSubstrings(\"01010101111\") == vector<int>34);\n    assert(solution.numberOfSubstrings(\"0011110011\") == vector<int>31);\n    assert(solution.numberOfSubstrings(\"0000101010\") == vector<int>11);\n    assert(solution.numberOfSubstrings(\"00001111\") == vector<int>15);\n    assert(solution.numberOfSubstrings(\"000111\") == vector<int>9);\n    assert(solution.numberOfSubstrings(\"1001001001\") == vector<int>10);\n    assert(solution.numberOfSubstrings(\"11111\") == vector<int>15);\n    assert(solution.numberOfSubstrings(\"01010101\") == vector<int>14);\n    assert(solution.numberOfSubstrings(\"11010101\") == vector<int>18);\n    assert(solution.numberOfSubstrings(\"10101010\") == vector<int>14);\n    assert(solution.numberOfSubstrings(\"1010100000\") == vector<int>10);\n    assert(solution.numberOfSubstrings(\"010101\") == vector<int>10);\n    assert(solution.numberOfSubstrings(\"1100111100\") == vector<int>31);\n    assert(solution.numberOfSubstrings(\"101010\") == vector<int>10);\n    assert(solution.numberOfSubstrings(\"00011\") == vector<int>5);\n    assert(solution.numberOfSubstrings(\"11001100\") == vector<int>13);\n    assert(solution.numberOfSubstrings(\"101101\") == vector<int>16);\n    assert(solution.numberOfSubstrings(\"111000111\") == vector<int>18);\n    assert(solution.numberOfSubstrings(\"1010101010101010\") == vector<int>30);\n    assert(solution.numberOfSubstrings(\"00000\") == vector<int>0);\n    assert(solution.numberOfSubstrings(\"10010010\") == vector<int>8);\n    assert(solution.numberOfSubstrings(\"000111000111000111000\") == vector<int>36);\n    assert(solution.numberOfSubstrings(\"111111111111111111111111\") == vector<int>300);\n    assert(solution.numberOfSubstrings(\"000011000110001100011000\") == vector<int>28);\n    assert(solution.numberOfSubstrings(\"1111110000000011\") == vector<int>35);\n    assert(solution.numberOfSubstrings(\"111000111000111000\") == vector<int>33);\n    assert(solution.numberOfSubstrings(\"1111000000000011111\") == vector<int>37);\n    assert(solution.numberOfSubstrings(\"000000111111000000111111\") == vector<int>70);\n    assert(solution.numberOfSubstrings(\"0110110110110110110\") == vector<int>88);\n    assert(solution.numberOfSubstrings(\"1101010101010101\") == vector<int>34);\n    assert(solution.numberOfSubstrings(\"111111111100000000000000000000\") == vector<int>74);\n    assert(solution.numberOfSubstrings(\"10101010101010101010101010101010101010101010101010\") == vector<int>98);\n    assert(solution.numberOfSubstrings(\"11000000001111111111\") == vector<int>79);\n    assert(solution.numberOfSubstrings(\"00111111001111110011111100111111001111110011111100111111001111110011\") == vector<int>657);\n    assert(solution.numberOfSubstrings(\"11110000000000000000000000000000000\") == vector<int>15);\n    assert(solution.numberOfSubstrings(\"111110000011111000001111100000\") == vector<int>82);\n    assert(solution.numberOfSubstrings(\"1100110011001100\") == vector<int>29);\n    assert(solution.numberOfSubstrings(\"00000000000000000000000000001111111\") == vector<int>39);\n    assert(solution.numberOfSubstrings(\"010101010101010101010101\") == vector<int>46);\n    assert(solution.numberOfSubstrings(\"1100110011001100110011001100110011001100110011001100110011001100110\") == vector<int>133);\n    assert(solution.numberOfSubstrings(\"0001110001110001\") == vector<int>26);\n    assert(solution.numberOfSubstrings(\"1001001001001001001001001001001001001001001001001001001001001001\") == vector<int>64);\n    assert(solution.numberOfSubstrings(\"000111000111000111\") == vector<int>33);\n    assert(solution.numberOfSubstrings(\"101010101010101010101010\") == vector<int>46);\n    assert(solution.numberOfSubstrings(\"1100000000000011\") == vector<int>10);\n    assert(solution.numberOfSubstrings(\"1000000000001000\") == vector<int>5);\n    assert(solution.numberOfSubstrings(\"111111111111111111111111111100000000000000000000\") == vector<int>496);\n    assert(solution.numberOfSubstrings(\"1000000000000011\") == vector<int>7);\n    assert(solution.numberOfSubstrings(\"010101010101010101\") == vector<int>34);\n    assert(solution.numberOfSubstrings(\"1000000000000000000000000000\") == vector<int>2);\n    assert(solution.numberOfSubstrings(\"111000111000111000111000111000\") == vector<int>57);\n    assert(solution.numberOfSubstrings(\"1111111000000000000\") == vector<int>39);\n    assert(solution.numberOfSubstrings(\"0000000000000000\") == vector<int>0);\n    assert(solution.numberOfSubstrings(\"11111000001111100000111110000011111\") == vector<int>104);\n    assert(solution.numberOfSubstrings(\"101010101010101010101010101010\") == vector<int>58);\n    assert(solution.numberOfSubstrings(\"0100111101110010\") == vector<int>60);\n    assert(solution.numberOfSubstrings(\"100100100100100100100\") == vector<int>20);\n    assert(solution.numberOfSubstrings(\"111100001111000011110000\") == vector<int>57);\n    assert(solution.numberOfSubstrings(\"0000000001111111110000000000\") == vector<int>80);\n    assert(solution.numberOfSubstrings(\"0011001100110011\") == vector<int>29);\n    assert(solution.numberOfSubstrings(\"11000011000011000011000011\") == vector<int>31);\n    assert(solution.numberOfSubstrings(\"0000111100001111000011110000\") == vector<int>63);\n    assert(solution.numberOfSubstrings(\"1000000010000000100000001\") == vector<int>10);\n    assert(solution.numberOfSubstrings(\"0000000000000000000000000000000000000000000000000000000000000000\") == vector<int>0);\n    assert(solution.numberOfSubstrings(\"11111000000000001111111111\") == vector<int>96);\n    assert(solution.numberOfSubstrings(\"000000010000000100000001\") == vector<int>8);\n    assert(solution.numberOfSubstrings(\"100010001000100010001000\") == vector<int>17);\n    assert(solution.numberOfSubstrings(\"11111111111111111111000000000000\") == vector<int>264);\n    assert(solution.numberOfSubstrings(\"1001001001001001001001001001001\") == vector<int>31);\n    assert(solution.numberOfSubstrings(\"0000000000000000000000000000000000000000\") == vector<int>0);\n    assert(solution.numberOfSubstrings(\"11110000111100001111\") == vector<int>51);\n    assert(solution.numberOfSubstrings(\"1111111110000000000000000000\") == vector<int>61);\n    assert(solution.numberOfSubstrings(\"010101010101010101010101010101010101010101010101\") == vector<int>94);\n    assert(solution.numberOfSubstrings(\"11111000001111100000111110000011111000001111100000111110000011111\") == vector<int>194);\n    assert(solution.numberOfSubstrings(\"111111111100000000001111111111\") == vector<int>148);\n    assert(solution.numberOfSubstrings(\"01010101010101010101010101010101010101010101010101\") == vector<int>98);\n    assert(solution.numberOfSubstrings(\"000000000000000000000000000000001111111111111111111111111111111\") == vector<int>601);\n    assert(solution.numberOfSubstrings(\"111000011111000\") == vector<int>39);\n    assert(solution.numberOfSubstrings(\"11111111111111111111\") == vector<int>210);\n    assert(solution.numberOfSubstrings(\"1001001001001001001001001001001001001001001001001001\") == vector<int>52);\n    assert(solution.numberOfSubstrings(\"0000000000000000000000000000001111111111111111111111111111111\") == vector<int>601);\n    assert(solution.numberOfSubstrings(\"1111111111111111\") == vector<int>136);\n    assert(solution.numberOfSubstrings(\"1111111111111111111111111111111111111111111111111111111111111111\") == vector<int>2080);\n    assert(solution.numberOfSubstrings(\"0000000111111111111\") == vector<int>103);\n    assert(solution.numberOfSubstrings(\"0101010111111111\") == vector<int>96);\n    assert(solution.numberOfSubstrings(\"00000000000000000000000000000000111111111111111111111111111111111\") == vector<int>676);\n    assert(solution.numberOfSubstrings(\"111111000000111111000000111111\") == vector<int>100);\n    assert(solution.numberOfSubstrings(\"0000000001111111\") == vector<int>39);\n    assert(solution.numberOfSubstrings(\"0001010101101011\") == vector<int>37);\n    assert(solution.numberOfSubstrings(\"00000000001111111111\") == vector<int>74);\n    assert(solution.numberOfSubstrings(\"0011001100110011001100110011001100110011001100110011001100110011001\") == vector<int>129);\n    assert(solution.numberOfSubstrings(\"1111100000111110000011111\") == vector<int>74);\n    assert(solution.numberOfSubstrings(\"111000111000111000111\") == vector<int>42);\n    assert(solution.numberOfSubstrings(\"1001001001001001\") == vector<int>16);\n    assert(solution.numberOfSubstrings(\"11001100110011001100\") == vector<int>37);\n    assert(solution.numberOfSubstrings(\"01010101010101010101010101010101\") == vector<int>62);\n    assert(solution.numberOfSubstrings(\"1110010001100011110\") == vector<int>40);\n    assert(solution.numberOfSubstrings(\"1111000000000000000000000000000000000000\") == vector<int>15);\n    assert(solution.numberOfSubstrings(\"00000000000000000000000000000000000000000000000000\") == vector<int>0);\n    assert(solution.numberOfSubstrings(\"1001001001001001001001\") == vector<int>22);\n    assert(solution.numberOfSubstrings(\"111000111000111000111000111\") == vector<int>54);\n    assert(solution.numberOfSubstrings(\"0000111111110000\") == vector<int>63);\n    assert(solution.numberOfSubstrings(\"0011110011110011\") == vector<int>65);\n    assert(solution.numberOfSubstrings(\"1111111100000000\") == vector<int>49);\n    assert(solution.numberOfSubstrings(\"1111000011110000111100001111000011110000\") == vector<int>99);\n    assert(solution.numberOfSubstrings(\"11100111001110011100111001110011100111001110011100\") == vector<int>171);\n    assert(solution.numberOfSubstrings(\"111110000111100001111\") == vector<int>58);\n    assert(solution.numberOfSubstrings(\"110000110000110000110000110000\") == vector<int>33);\n    assert(solution.numberOfSubstrings(\"0101010101010101\") == vector<int>30);\n    assert(solution.numberOfSubstrings(\"000000000000000000000000\") == vector<int>0);\n    assert(solution.numberOfSubstrings(\"111000111000111000111000111000111000111000111000\") == vector<int>93);\n    assert(solution.numberOfSubstrings(\"00000000000000000000000000000000000111111111111111\") == vector<int>154);\n    assert(solution.numberOfSubstrings(\"0000011111111100000\") == vector<int>80);\n    assert(solution.numberOfSubstrings(\"0000111111111111\") == vector<int>103);\n    assert(solution.numberOfSubstrings(\"000111000111000111000111000111\") == vector<int>57);\n    assert(solution.numberOfSubstrings(\"1000100010001000100\") == vector<int>14);\n    assert(solution.numberOfSubstrings(\"1001001001001001001\") == vector<int>19);\n    assert(solution.numberOfSubstrings(\"0110011001100110011001\") == vector<int>41);\n    assert(solution.numberOfSubstrings(\"11111111111111111000000000000000000000000000000000000000000000011\") == vector<int>200);\n    assert(solution.numberOfSubstrings(\"0010110101101011\") == vector<int>46);\n    assert(solution.numberOfSubstrings(\"000000000011111111110000000000\") == vector<int>96);\n    assert(solution.numberOfSubstrings(\"00000111110000011111000001111100000111110000011111000001111100000\") == vector<int>180);\n    assert(solution.numberOfSubstrings(\"11111111111111111111111111111111111111111111111111\") == vector<int>1275);\n    assert(solution.numberOfSubstrings(\"11011011011011011011011011011011011\") == vector<int>184);\n    assert(solution.numberOfSubstrings(\"1110001110001110\") == vector<int>33);\n    assert(solution.numberOfSubstrings(\"10010010010010010010010010010010\") == vector<int>32);\n    assert(solution.numberOfSubstrings(\"1110011100011100011\") == vector<int>44);\n    assert(solution.numberOfSubstrings(\"00000000000000000000\") == vector<int>0);\n    assert(solution.numberOfSubstrings(\"1111000011110000\") == vector<int>36);\n    assert(solution.numberOfSubstrings(\"10101010101010101010101010101010\") == vector<int>62);\n    assert(solution.numberOfSubstrings(\"01001001001001001001001\") == vector<int>23);\n    assert(solution.numberOfSubstrings(\"1111111111000000\") == vector<int>74);\n    assert(solution.numberOfSubstrings(\"0000000011111111\") == vector<int>49);\n    assert(solution.numberOfSubstrings(\"1111000000001111\") == vector<int>30);\n    assert(solution.numberOfSubstrings(\"01001001001001001001001001001001\") == vector<int>32);\n    assert(solution.numberOfSubstrings(\"1000001111110000\") == vector<int>42);\n    assert(solution.numberOfSubstrings(\"000000000011111111111111111111\") == vector<int>264);\n    assert(solution.numberOfSubstrings(\"1100001100001100\") == vector<int>19);\n    assert(solution.numberOfSubstrings(\"1111111111\") == vector<int>55);\n    assert(solution.numberOfSubstrings(\"1010101010101010101010101010101010101010\") == vector<int>78);\n    assert(solution.numberOfSubstrings(\"0110011001100110\") == vector<int>31);\n    assert(solution.numberOfSubstrings(\"1111000000000000111111111111\") == vector<int>118);\n    assert(solution.numberOfSubstrings(\"1111000011110000111100001111\") == vector<int>72);\n    assert(solution.numberOfSubstrings(\"00000000000000000001\") == vector<int>2);\n    assert(solution.numberOfSubstrings(\"0000000000111111\") == vector<int>30);\n    assert(solution.numberOfSubstrings(\"0011001100110011001100110011\") == vector<int>53);\n    assert(solution.numberOfSubstrings(\"01010101010101010101\") == vector<int>38);\n    assert(solution.numberOfSubstrings(\"111110111110111110111110111110\") == vector<int>453);\n    assert(solution.numberOfSubstrings(\"111110000000\") == vector<int>22);\n    assert(solution.numberOfSubstrings(\"1111111101010101\") == vector<int>84);\n    assert(solution.numberOfSubstrings(\"1101001010010100\") == vector<int>24);\n    assert(solution.numberOfSubstrings(\"1111010101010101\") == vector<int>45);\n    assert(solution.numberOfSubstrings(\"000001111100000111110000011111\") == vector<int>82);\n    assert(solution.numberOfSubstrings(\"0000000000000000000000000001\") == vector<int>2);\n    assert(solution.numberOfSubstrings(\"10101010101010101010\") == vector<int>38);\n    assert(solution.numberOfSubstrings(\"0110110110110110110110110110110\") == vector<int>156);\n    assert(solution.numberOfSubstrings(\"11111111111111110000000000\") == vector<int>174);\n    assert(solution.numberOfSubstrings(\"0000111100001111\") == vector<int>36);\n}",
+    "java": "public static void check(Solution solution) {\n    assert Arrays.equals(solution.numberOfSubstrings(\"1111\"), 10);\n    assert Arrays.equals(solution.numberOfSubstrings(\"100100100\"), 8);\n    assert Arrays.equals(solution.numberOfSubstrings(\"1111010101\"), 33);\n    assert Arrays.equals(solution.numberOfSubstrings(\"000111000\"), 12);\n    assert Arrays.equals(solution.numberOfSubstrings(\"11110000\"), 15);\n    assert Arrays.equals(solution.numberOfSubstrings(\"0000\"), 0);\n    assert Arrays.equals(solution.numberOfSubstrings(\"111000\"), 9);\n    assert Arrays.equals(solution.numberOfSubstrings(\"01010101111\"), 34);\n    assert Arrays.equals(solution.numberOfSubstrings(\"0011110011\"), 31);\n    assert Arrays.equals(solution.numberOfSubstrings(\"0000101010\"), 11);\n    assert Arrays.equals(solution.numberOfSubstrings(\"00001111\"), 15);\n    assert Arrays.equals(solution.numberOfSubstrings(\"000111\"), 9);\n    assert Arrays.equals(solution.numberOfSubstrings(\"1001001001\"), 10);\n    assert Arrays.equals(solution.numberOfSubstrings(\"11111\"), 15);\n    assert Arrays.equals(solution.numberOfSubstrings(\"01010101\"), 14);\n    assert Arrays.equals(solution.numberOfSubstrings(\"11010101\"), 18);\n    assert Arrays.equals(solution.numberOfSubstrings(\"10101010\"), 14);\n    assert Arrays.equals(solution.numberOfSubstrings(\"1010100000\"), 10);\n    assert Arrays.equals(solution.numberOfSubstrings(\"010101\"), 10);\n    assert Arrays.equals(solution.numberOfSubstrings(\"1100111100\"), 31);\n    assert Arrays.equals(solution.numberOfSubstrings(\"101010\"), 10);\n    assert Arrays.equals(solution.numberOfSubstrings(\"00011\"), 5);\n    assert Arrays.equals(solution.numberOfSubstrings(\"11001100\"), 13);\n    assert Arrays.equals(solution.numberOfSubstrings(\"101101\"), 16);\n    assert Arrays.equals(solution.numberOfSubstrings(\"111000111\"), 18);\n    assert Arrays.equals(solution.numberOfSubstrings(\"1010101010101010\"), 30);\n    assert Arrays.equals(solution.numberOfSubstrings(\"00000\"), 0);\n    assert Arrays.equals(solution.numberOfSubstrings(\"10010010\"), 8);\n    assert Arrays.equals(solution.numberOfSubstrings(\"000111000111000111000\"), 36);\n    assert Arrays.equals(solution.numberOfSubstrings(\"111111111111111111111111\"), 300);\n    assert Arrays.equals(solution.numberOfSubstrings(\"000011000110001100011000\"), 28);\n    assert Arrays.equals(solution.numberOfSubstrings(\"1111110000000011\"), 35);\n    assert Arrays.equals(solution.numberOfSubstrings(\"111000111000111000\"), 33);\n    assert Arrays.equals(solution.numberOfSubstrings(\"1111000000000011111\"), 37);\n    assert Arrays.equals(solution.numberOfSubstrings(\"000000111111000000111111\"), 70);\n    assert Arrays.equals(solution.numberOfSubstrings(\"0110110110110110110\"), 88);\n    assert Arrays.equals(solution.numberOfSubstrings(\"1101010101010101\"), 34);\n    assert Arrays.equals(solution.numberOfSubstrings(\"111111111100000000000000000000\"), 74);\n    assert Arrays.equals(solution.numberOfSubstrings(\"10101010101010101010101010101010101010101010101010\"), 98);\n    assert Arrays.equals(solution.numberOfSubstrings(\"11000000001111111111\"), 79);\n    assert Arrays.equals(solution.numberOfSubstrings(\"00111111001111110011111100111111001111110011111100111111001111110011\"), 657);\n    assert Arrays.equals(solution.numberOfSubstrings(\"11110000000000000000000000000000000\"), 15);\n    assert Arrays.equals(solution.numberOfSubstrings(\"111110000011111000001111100000\"), 82);\n    assert Arrays.equals(solution.numberOfSubstrings(\"1100110011001100\"), 29);\n    assert Arrays.equals(solution.numberOfSubstrings(\"00000000000000000000000000001111111\"), 39);\n    assert Arrays.equals(solution.numberOfSubstrings(\"010101010101010101010101\"), 46);\n    assert Arrays.equals(solution.numberOfSubstrings(\"1100110011001100110011001100110011001100110011001100110011001100110\"), 133);\n    assert Arrays.equals(solution.numberOfSubstrings(\"0001110001110001\"), 26);\n    assert Arrays.equals(solution.numberOfSubstrings(\"1001001001001001001001001001001001001001001001001001001001001001\"), 64);\n    assert Arrays.equals(solution.numberOfSubstrings(\"000111000111000111\"), 33);\n    assert Arrays.equals(solution.numberOfSubstrings(\"101010101010101010101010\"), 46);\n    assert Arrays.equals(solution.numberOfSubstrings(\"1100000000000011\"), 10);\n    assert Arrays.equals(solution.numberOfSubstrings(\"1000000000001000\"), 5);\n    assert Arrays.equals(solution.numberOfSubstrings(\"111111111111111111111111111100000000000000000000\"), 496);\n    assert Arrays.equals(solution.numberOfSubstrings(\"1000000000000011\"), 7);\n    assert Arrays.equals(solution.numberOfSubstrings(\"010101010101010101\"), 34);\n    assert Arrays.equals(solution.numberOfSubstrings(\"1000000000000000000000000000\"), 2);\n    assert Arrays.equals(solution.numberOfSubstrings(\"111000111000111000111000111000\"), 57);\n    assert Arrays.equals(solution.numberOfSubstrings(\"1111111000000000000\"), 39);\n    assert Arrays.equals(solution.numberOfSubstrings(\"0000000000000000\"), 0);\n    assert Arrays.equals(solution.numberOfSubstrings(\"11111000001111100000111110000011111\"), 104);\n    assert Arrays.equals(solution.numberOfSubstrings(\"101010101010101010101010101010\"), 58);\n    assert Arrays.equals(solution.numberOfSubstrings(\"0100111101110010\"), 60);\n    assert Arrays.equals(solution.numberOfSubstrings(\"100100100100100100100\"), 20);\n    assert Arrays.equals(solution.numberOfSubstrings(\"111100001111000011110000\"), 57);\n    assert Arrays.equals(solution.numberOfSubstrings(\"0000000001111111110000000000\"), 80);\n    assert Arrays.equals(solution.numberOfSubstrings(\"0011001100110011\"), 29);\n    assert Arrays.equals(solution.numberOfSubstrings(\"11000011000011000011000011\"), 31);\n    assert Arrays.equals(solution.numberOfSubstrings(\"0000111100001111000011110000\"), 63);\n    assert Arrays.equals(solution.numberOfSubstrings(\"1000000010000000100000001\"), 10);\n    assert Arrays.equals(solution.numberOfSubstrings(\"0000000000000000000000000000000000000000000000000000000000000000\"), 0);\n    assert Arrays.equals(solution.numberOfSubstrings(\"11111000000000001111111111\"), 96);\n    assert Arrays.equals(solution.numberOfSubstrings(\"000000010000000100000001\"), 8);\n    assert Arrays.equals(solution.numberOfSubstrings(\"100010001000100010001000\"), 17);\n    assert Arrays.equals(solution.numberOfSubstrings(\"11111111111111111111000000000000\"), 264);\n    assert Arrays.equals(solution.numberOfSubstrings(\"1001001001001001001001001001001\"), 31);\n    assert Arrays.equals(solution.numberOfSubstrings(\"0000000000000000000000000000000000000000\"), 0);\n    assert Arrays.equals(solution.numberOfSubstrings(\"11110000111100001111\"), 51);\n    assert Arrays.equals(solution.numberOfSubstrings(\"1111111110000000000000000000\"), 61);\n    assert Arrays.equals(solution.numberOfSubstrings(\"010101010101010101010101010101010101010101010101\"), 94);\n    assert Arrays.equals(solution.numberOfSubstrings(\"11111000001111100000111110000011111000001111100000111110000011111\"), 194);\n    assert Arrays.equals(solution.numberOfSubstrings(\"111111111100000000001111111111\"), 148);\n    assert Arrays.equals(solution.numberOfSubstrings(\"01010101010101010101010101010101010101010101010101\"), 98);\n    assert Arrays.equals(solution.numberOfSubstrings(\"000000000000000000000000000000001111111111111111111111111111111\"), 601);\n    assert Arrays.equals(solution.numberOfSubstrings(\"111000011111000\"), 39);\n    assert Arrays.equals(solution.numberOfSubstrings(\"11111111111111111111\"), 210);\n    assert Arrays.equals(solution.numberOfSubstrings(\"1001001001001001001001001001001001001001001001001001\"), 52);\n    assert Arrays.equals(solution.numberOfSubstrings(\"0000000000000000000000000000001111111111111111111111111111111\"), 601);\n    assert Arrays.equals(solution.numberOfSubstrings(\"1111111111111111\"), 136);\n    assert Arrays.equals(solution.numberOfSubstrings(\"1111111111111111111111111111111111111111111111111111111111111111\"), 2080);\n    assert Arrays.equals(solution.numberOfSubstrings(\"0000000111111111111\"), 103);\n    assert Arrays.equals(solution.numberOfSubstrings(\"0101010111111111\"), 96);\n    assert Arrays.equals(solution.numberOfSubstrings(\"00000000000000000000000000000000111111111111111111111111111111111\"), 676);\n    assert Arrays.equals(solution.numberOfSubstrings(\"111111000000111111000000111111\"), 100);\n    assert Arrays.equals(solution.numberOfSubstrings(\"0000000001111111\"), 39);\n    assert Arrays.equals(solution.numberOfSubstrings(\"0001010101101011\"), 37);\n    assert Arrays.equals(solution.numberOfSubstrings(\"00000000001111111111\"), 74);\n    assert Arrays.equals(solution.numberOfSubstrings(\"0011001100110011001100110011001100110011001100110011001100110011001\"), 129);\n    assert Arrays.equals(solution.numberOfSubstrings(\"1111100000111110000011111\"), 74);\n    assert Arrays.equals(solution.numberOfSubstrings(\"111000111000111000111\"), 42);\n    assert Arrays.equals(solution.numberOfSubstrings(\"1001001001001001\"), 16);\n    assert Arrays.equals(solution.numberOfSubstrings(\"11001100110011001100\"), 37);\n    assert Arrays.equals(solution.numberOfSubstrings(\"01010101010101010101010101010101\"), 62);\n    assert Arrays.equals(solution.numberOfSubstrings(\"1110010001100011110\"), 40);\n    assert Arrays.equals(solution.numberOfSubstrings(\"1111000000000000000000000000000000000000\"), 15);\n    assert Arrays.equals(solution.numberOfSubstrings(\"00000000000000000000000000000000000000000000000000\"), 0);\n    assert Arrays.equals(solution.numberOfSubstrings(\"1001001001001001001001\"), 22);\n    assert Arrays.equals(solution.numberOfSubstrings(\"111000111000111000111000111\"), 54);\n    assert Arrays.equals(solution.numberOfSubstrings(\"0000111111110000\"), 63);\n    assert Arrays.equals(solution.numberOfSubstrings(\"0011110011110011\"), 65);\n    assert Arrays.equals(solution.numberOfSubstrings(\"1111111100000000\"), 49);\n    assert Arrays.equals(solution.numberOfSubstrings(\"1111000011110000111100001111000011110000\"), 99);\n    assert Arrays.equals(solution.numberOfSubstrings(\"11100111001110011100111001110011100111001110011100\"), 171);\n    assert Arrays.equals(solution.numberOfSubstrings(\"111110000111100001111\"), 58);\n    assert Arrays.equals(solution.numberOfSubstrings(\"110000110000110000110000110000\"), 33);\n    assert Arrays.equals(solution.numberOfSubstrings(\"0101010101010101\"), 30);\n    assert Arrays.equals(solution.numberOfSubstrings(\"000000000000000000000000\"), 0);\n    assert Arrays.equals(solution.numberOfSubstrings(\"111000111000111000111000111000111000111000111000\"), 93);\n    assert Arrays.equals(solution.numberOfSubstrings(\"00000000000000000000000000000000000111111111111111\"), 154);\n    assert Arrays.equals(solution.numberOfSubstrings(\"0000011111111100000\"), 80);\n    assert Arrays.equals(solution.numberOfSubstrings(\"0000111111111111\"), 103);\n    assert Arrays.equals(solution.numberOfSubstrings(\"000111000111000111000111000111\"), 57);\n    assert Arrays.equals(solution.numberOfSubstrings(\"1000100010001000100\"), 14);\n    assert Arrays.equals(solution.numberOfSubstrings(\"1001001001001001001\"), 19);\n    assert Arrays.equals(solution.numberOfSubstrings(\"0110011001100110011001\"), 41);\n    assert Arrays.equals(solution.numberOfSubstrings(\"11111111111111111000000000000000000000000000000000000000000000011\"), 200);\n    assert Arrays.equals(solution.numberOfSubstrings(\"0010110101101011\"), 46);\n    assert Arrays.equals(solution.numberOfSubstrings(\"000000000011111111110000000000\"), 96);\n    assert Arrays.equals(solution.numberOfSubstrings(\"00000111110000011111000001111100000111110000011111000001111100000\"), 180);\n    assert Arrays.equals(solution.numberOfSubstrings(\"11111111111111111111111111111111111111111111111111\"), 1275);\n    assert Arrays.equals(solution.numberOfSubstrings(\"11011011011011011011011011011011011\"), 184);\n    assert Arrays.equals(solution.numberOfSubstrings(\"1110001110001110\"), 33);\n    assert Arrays.equals(solution.numberOfSubstrings(\"10010010010010010010010010010010\"), 32);\n    assert Arrays.equals(solution.numberOfSubstrings(\"1110011100011100011\"), 44);\n    assert Arrays.equals(solution.numberOfSubstrings(\"00000000000000000000\"), 0);\n    assert Arrays.equals(solution.numberOfSubstrings(\"1111000011110000\"), 36);\n    assert Arrays.equals(solution.numberOfSubstrings(\"10101010101010101010101010101010\"), 62);\n    assert Arrays.equals(solution.numberOfSubstrings(\"01001001001001001001001\"), 23);\n    assert Arrays.equals(solution.numberOfSubstrings(\"1111111111000000\"), 74);\n    assert Arrays.equals(solution.numberOfSubstrings(\"0000000011111111\"), 49);\n    assert Arrays.equals(solution.numberOfSubstrings(\"1111000000001111\"), 30);\n    assert Arrays.equals(solution.numberOfSubstrings(\"01001001001001001001001001001001\"), 32);\n    assert Arrays.equals(solution.numberOfSubstrings(\"1000001111110000\"), 42);\n    assert Arrays.equals(solution.numberOfSubstrings(\"000000000011111111111111111111\"), 264);\n    assert Arrays.equals(solution.numberOfSubstrings(\"1100001100001100\"), 19);\n    assert Arrays.equals(solution.numberOfSubstrings(\"1111111111\"), 55);\n    assert Arrays.equals(solution.numberOfSubstrings(\"1010101010101010101010101010101010101010\"), 78);\n    assert Arrays.equals(solution.numberOfSubstrings(\"0110011001100110\"), 31);\n    assert Arrays.equals(solution.numberOfSubstrings(\"1111000000000000111111111111\"), 118);\n    assert Arrays.equals(solution.numberOfSubstrings(\"1111000011110000111100001111\"), 72);\n    assert Arrays.equals(solution.numberOfSubstrings(\"00000000000000000001\"), 2);\n    assert Arrays.equals(solution.numberOfSubstrings(\"0000000000111111\"), 30);\n    assert Arrays.equals(solution.numberOfSubstrings(\"0011001100110011001100110011\"), 53);\n    assert Arrays.equals(solution.numberOfSubstrings(\"01010101010101010101\"), 38);\n    assert Arrays.equals(solution.numberOfSubstrings(\"111110111110111110111110111110\"), 453);\n    assert Arrays.equals(solution.numberOfSubstrings(\"111110000000\"), 22);\n    assert Arrays.equals(solution.numberOfSubstrings(\"1111111101010101\"), 84);\n    assert Arrays.equals(solution.numberOfSubstrings(\"1101001010010100\"), 24);\n    assert Arrays.equals(solution.numberOfSubstrings(\"1111010101010101\"), 45);\n    assert Arrays.equals(solution.numberOfSubstrings(\"000001111100000111110000011111\"), 82);\n    assert Arrays.equals(solution.numberOfSubstrings(\"0000000000000000000000000001\"), 2);\n    assert Arrays.equals(solution.numberOfSubstrings(\"10101010101010101010\"), 38);\n    assert Arrays.equals(solution.numberOfSubstrings(\"0110110110110110110110110110110\"), 156);\n    assert Arrays.equals(solution.numberOfSubstrings(\"11111111111111110000000000\"), 174);\n    assert Arrays.equals(solution.numberOfSubstrings(\"0000111100001111\"), 36);\n}",
+    "javascript": "function check(candidate) {\n    console.assert(JSON.stringify(candidate(\"1111\")) === JSON.stringify(10));\n    console.assert(JSON.stringify(candidate(\"100100100\")) === JSON.stringify(8));\n    console.assert(JSON.stringify(candidate(\"1111010101\")) === JSON.stringify(33));\n    console.assert(JSON.stringify(candidate(\"000111000\")) === JSON.stringify(12));\n    console.assert(JSON.stringify(candidate(\"11110000\")) === JSON.stringify(15));\n    console.assert(JSON.stringify(candidate(\"0000\")) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"111000\")) === JSON.stringify(9));\n    console.assert(JSON.stringify(candidate(\"01010101111\")) === JSON.stringify(34));\n    console.assert(JSON.stringify(candidate(\"0011110011\")) === JSON.stringify(31));\n    console.assert(JSON.stringify(candidate(\"0000101010\")) === JSON.stringify(11));\n    console.assert(JSON.stringify(candidate(\"00001111\")) === JSON.stringify(15));\n    console.assert(JSON.stringify(candidate(\"000111\")) === JSON.stringify(9));\n    console.assert(JSON.stringify(candidate(\"1001001001\")) === JSON.stringify(10));\n    console.assert(JSON.stringify(candidate(\"11111\")) === JSON.stringify(15));\n    console.assert(JSON.stringify(candidate(\"01010101\")) === JSON.stringify(14));\n    console.assert(JSON.stringify(candidate(\"11010101\")) === JSON.stringify(18));\n    console.assert(JSON.stringify(candidate(\"10101010\")) === JSON.stringify(14));\n    console.assert(JSON.stringify(candidate(\"1010100000\")) === JSON.stringify(10));\n    console.assert(JSON.stringify(candidate(\"010101\")) === JSON.stringify(10));\n    console.assert(JSON.stringify(candidate(\"1100111100\")) === JSON.stringify(31));\n    console.assert(JSON.stringify(candidate(\"101010\")) === JSON.stringify(10));\n    console.assert(JSON.stringify(candidate(\"00011\")) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate(\"11001100\")) === JSON.stringify(13));\n    console.assert(JSON.stringify(candidate(\"101101\")) === JSON.stringify(16));\n    console.assert(JSON.stringify(candidate(\"111000111\")) === JSON.stringify(18));\n    console.assert(JSON.stringify(candidate(\"1010101010101010\")) === JSON.stringify(30));\n    console.assert(JSON.stringify(candidate(\"00000\")) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"10010010\")) === JSON.stringify(8));\n    console.assert(JSON.stringify(candidate(\"000111000111000111000\")) === JSON.stringify(36));\n    console.assert(JSON.stringify(candidate(\"111111111111111111111111\")) === JSON.stringify(300));\n    console.assert(JSON.stringify(candidate(\"000011000110001100011000\")) === JSON.stringify(28));\n    console.assert(JSON.stringify(candidate(\"1111110000000011\")) === JSON.stringify(35));\n    console.assert(JSON.stringify(candidate(\"111000111000111000\")) === JSON.stringify(33));\n    console.assert(JSON.stringify(candidate(\"1111000000000011111\")) === JSON.stringify(37));\n    console.assert(JSON.stringify(candidate(\"000000111111000000111111\")) === JSON.stringify(70));\n    console.assert(JSON.stringify(candidate(\"0110110110110110110\")) === JSON.stringify(88));\n    console.assert(JSON.stringify(candidate(\"1101010101010101\")) === JSON.stringify(34));\n    console.assert(JSON.stringify(candidate(\"111111111100000000000000000000\")) === JSON.stringify(74));\n    console.assert(JSON.stringify(candidate(\"10101010101010101010101010101010101010101010101010\")) === JSON.stringify(98));\n    console.assert(JSON.stringify(candidate(\"11000000001111111111\")) === JSON.stringify(79));\n    console.assert(JSON.stringify(candidate(\"00111111001111110011111100111111001111110011111100111111001111110011\")) === JSON.stringify(657));\n    console.assert(JSON.stringify(candidate(\"11110000000000000000000000000000000\")) === JSON.stringify(15));\n    console.assert(JSON.stringify(candidate(\"111110000011111000001111100000\")) === JSON.stringify(82));\n    console.assert(JSON.stringify(candidate(\"1100110011001100\")) === JSON.stringify(29));\n    console.assert(JSON.stringify(candidate(\"00000000000000000000000000001111111\")) === JSON.stringify(39));\n    console.assert(JSON.stringify(candidate(\"010101010101010101010101\")) === JSON.stringify(46));\n    console.assert(JSON.stringify(candidate(\"1100110011001100110011001100110011001100110011001100110011001100110\")) === JSON.stringify(133));\n    console.assert(JSON.stringify(candidate(\"0001110001110001\")) === JSON.stringify(26));\n    console.assert(JSON.stringify(candidate(\"1001001001001001001001001001001001001001001001001001001001001001\")) === JSON.stringify(64));\n    console.assert(JSON.stringify(candidate(\"000111000111000111\")) === JSON.stringify(33));\n    console.assert(JSON.stringify(candidate(\"101010101010101010101010\")) === JSON.stringify(46));\n    console.assert(JSON.stringify(candidate(\"1100000000000011\")) === JSON.stringify(10));\n    console.assert(JSON.stringify(candidate(\"1000000000001000\")) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate(\"111111111111111111111111111100000000000000000000\")) === JSON.stringify(496));\n    console.assert(JSON.stringify(candidate(\"1000000000000011\")) === JSON.stringify(7));\n    console.assert(JSON.stringify(candidate(\"010101010101010101\")) === JSON.stringify(34));\n    console.assert(JSON.stringify(candidate(\"1000000000000000000000000000\")) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(\"111000111000111000111000111000\")) === JSON.stringify(57));\n    console.assert(JSON.stringify(candidate(\"1111111000000000000\")) === JSON.stringify(39));\n    console.assert(JSON.stringify(candidate(\"0000000000000000\")) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"11111000001111100000111110000011111\")) === JSON.stringify(104));\n    console.assert(JSON.stringify(candidate(\"101010101010101010101010101010\")) === JSON.stringify(58));\n    console.assert(JSON.stringify(candidate(\"0100111101110010\")) === JSON.stringify(60));\n    console.assert(JSON.stringify(candidate(\"100100100100100100100\")) === JSON.stringify(20));\n    console.assert(JSON.stringify(candidate(\"111100001111000011110000\")) === JSON.stringify(57));\n    console.assert(JSON.stringify(candidate(\"0000000001111111110000000000\")) === JSON.stringify(80));\n    console.assert(JSON.stringify(candidate(\"0011001100110011\")) === JSON.stringify(29));\n    console.assert(JSON.stringify(candidate(\"11000011000011000011000011\")) === JSON.stringify(31));\n    console.assert(JSON.stringify(candidate(\"0000111100001111000011110000\")) === JSON.stringify(63));\n    console.assert(JSON.stringify(candidate(\"1000000010000000100000001\")) === JSON.stringify(10));\n    console.assert(JSON.stringify(candidate(\"0000000000000000000000000000000000000000000000000000000000000000\")) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"11111000000000001111111111\")) === JSON.stringify(96));\n    console.assert(JSON.stringify(candidate(\"000000010000000100000001\")) === JSON.stringify(8));\n    console.assert(JSON.stringify(candidate(\"100010001000100010001000\")) === JSON.stringify(17));\n    console.assert(JSON.stringify(candidate(\"11111111111111111111000000000000\")) === JSON.stringify(264));\n    console.assert(JSON.stringify(candidate(\"1001001001001001001001001001001\")) === JSON.stringify(31));\n    console.assert(JSON.stringify(candidate(\"0000000000000000000000000000000000000000\")) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"11110000111100001111\")) === JSON.stringify(51));\n    console.assert(JSON.stringify(candidate(\"1111111110000000000000000000\")) === JSON.stringify(61));\n    console.assert(JSON.stringify(candidate(\"010101010101010101010101010101010101010101010101\")) === JSON.stringify(94));\n    console.assert(JSON.stringify(candidate(\"11111000001111100000111110000011111000001111100000111110000011111\")) === JSON.stringify(194));\n    console.assert(JSON.stringify(candidate(\"111111111100000000001111111111\")) === JSON.stringify(148));\n    console.assert(JSON.stringify(candidate(\"01010101010101010101010101010101010101010101010101\")) === JSON.stringify(98));\n    console.assert(JSON.stringify(candidate(\"000000000000000000000000000000001111111111111111111111111111111\")) === JSON.stringify(601));\n    console.assert(JSON.stringify(candidate(\"111000011111000\")) === JSON.stringify(39));\n    console.assert(JSON.stringify(candidate(\"11111111111111111111\")) === JSON.stringify(210));\n    console.assert(JSON.stringify(candidate(\"1001001001001001001001001001001001001001001001001001\")) === JSON.stringify(52));\n    console.assert(JSON.stringify(candidate(\"0000000000000000000000000000001111111111111111111111111111111\")) === JSON.stringify(601));\n    console.assert(JSON.stringify(candidate(\"1111111111111111\")) === JSON.stringify(136));\n    console.assert(JSON.stringify(candidate(\"1111111111111111111111111111111111111111111111111111111111111111\")) === JSON.stringify(2080));\n    console.assert(JSON.stringify(candidate(\"0000000111111111111\")) === JSON.stringify(103));\n    console.assert(JSON.stringify(candidate(\"0101010111111111\")) === JSON.stringify(96));\n    console.assert(JSON.stringify(candidate(\"00000000000000000000000000000000111111111111111111111111111111111\")) === JSON.stringify(676));\n    console.assert(JSON.stringify(candidate(\"111111000000111111000000111111\")) === JSON.stringify(100));\n    console.assert(JSON.stringify(candidate(\"0000000001111111\")) === JSON.stringify(39));\n    console.assert(JSON.stringify(candidate(\"0001010101101011\")) === JSON.stringify(37));\n    console.assert(JSON.stringify(candidate(\"00000000001111111111\")) === JSON.stringify(74));\n    console.assert(JSON.stringify(candidate(\"0011001100110011001100110011001100110011001100110011001100110011001\")) === JSON.stringify(129));\n    console.assert(JSON.stringify(candidate(\"1111100000111110000011111\")) === JSON.stringify(74));\n    console.assert(JSON.stringify(candidate(\"111000111000111000111\")) === JSON.stringify(42));\n    console.assert(JSON.stringify(candidate(\"1001001001001001\")) === JSON.stringify(16));\n    console.assert(JSON.stringify(candidate(\"11001100110011001100\")) === JSON.stringify(37));\n    console.assert(JSON.stringify(candidate(\"01010101010101010101010101010101\")) === JSON.stringify(62));\n    console.assert(JSON.stringify(candidate(\"1110010001100011110\")) === JSON.stringify(40));\n    console.assert(JSON.stringify(candidate(\"1111000000000000000000000000000000000000\")) === JSON.stringify(15));\n    console.assert(JSON.stringify(candidate(\"00000000000000000000000000000000000000000000000000\")) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"1001001001001001001001\")) === JSON.stringify(22));\n    console.assert(JSON.stringify(candidate(\"111000111000111000111000111\")) === JSON.stringify(54));\n    console.assert(JSON.stringify(candidate(\"0000111111110000\")) === JSON.stringify(63));\n    console.assert(JSON.stringify(candidate(\"0011110011110011\")) === JSON.stringify(65));\n    console.assert(JSON.stringify(candidate(\"1111111100000000\")) === JSON.stringify(49));\n    console.assert(JSON.stringify(candidate(\"1111000011110000111100001111000011110000\")) === JSON.stringify(99));\n    console.assert(JSON.stringify(candidate(\"11100111001110011100111001110011100111001110011100\")) === JSON.stringify(171));\n    console.assert(JSON.stringify(candidate(\"111110000111100001111\")) === JSON.stringify(58));\n    console.assert(JSON.stringify(candidate(\"110000110000110000110000110000\")) === JSON.stringify(33));\n    console.assert(JSON.stringify(candidate(\"0101010101010101\")) === JSON.stringify(30));\n    console.assert(JSON.stringify(candidate(\"000000000000000000000000\")) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"111000111000111000111000111000111000111000111000\")) === JSON.stringify(93));\n    console.assert(JSON.stringify(candidate(\"00000000000000000000000000000000000111111111111111\")) === JSON.stringify(154));\n    console.assert(JSON.stringify(candidate(\"0000011111111100000\")) === JSON.stringify(80));\n    console.assert(JSON.stringify(candidate(\"0000111111111111\")) === JSON.stringify(103));\n    console.assert(JSON.stringify(candidate(\"000111000111000111000111000111\")) === JSON.stringify(57));\n    console.assert(JSON.stringify(candidate(\"1000100010001000100\")) === JSON.stringify(14));\n    console.assert(JSON.stringify(candidate(\"1001001001001001001\")) === JSON.stringify(19));\n    console.assert(JSON.stringify(candidate(\"0110011001100110011001\")) === JSON.stringify(41));\n    console.assert(JSON.stringify(candidate(\"11111111111111111000000000000000000000000000000000000000000000011\")) === JSON.stringify(200));\n    console.assert(JSON.stringify(candidate(\"0010110101101011\")) === JSON.stringify(46));\n    console.assert(JSON.stringify(candidate(\"000000000011111111110000000000\")) === JSON.stringify(96));\n    console.assert(JSON.stringify(candidate(\"00000111110000011111000001111100000111110000011111000001111100000\")) === JSON.stringify(180));\n    console.assert(JSON.stringify(candidate(\"11111111111111111111111111111111111111111111111111\")) === JSON.stringify(1275));\n    console.assert(JSON.stringify(candidate(\"11011011011011011011011011011011011\")) === JSON.stringify(184));\n    console.assert(JSON.stringify(candidate(\"1110001110001110\")) === JSON.stringify(33));\n    console.assert(JSON.stringify(candidate(\"10010010010010010010010010010010\")) === JSON.stringify(32));\n    console.assert(JSON.stringify(candidate(\"1110011100011100011\")) === JSON.stringify(44));\n    console.assert(JSON.stringify(candidate(\"00000000000000000000\")) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"1111000011110000\")) === JSON.stringify(36));\n    console.assert(JSON.stringify(candidate(\"10101010101010101010101010101010\")) === JSON.stringify(62));\n    console.assert(JSON.stringify(candidate(\"01001001001001001001001\")) === JSON.stringify(23));\n    console.assert(JSON.stringify(candidate(\"1111111111000000\")) === JSON.stringify(74));\n    console.assert(JSON.stringify(candidate(\"0000000011111111\")) === JSON.stringify(49));\n    console.assert(JSON.stringify(candidate(\"1111000000001111\")) === JSON.stringify(30));\n    console.assert(JSON.stringify(candidate(\"01001001001001001001001001001001\")) === JSON.stringify(32));\n    console.assert(JSON.stringify(candidate(\"1000001111110000\")) === JSON.stringify(42));\n    console.assert(JSON.stringify(candidate(\"000000000011111111111111111111\")) === JSON.stringify(264));\n    console.assert(JSON.stringify(candidate(\"1100001100001100\")) === JSON.stringify(19));\n    console.assert(JSON.stringify(candidate(\"1111111111\")) === JSON.stringify(55));\n    console.assert(JSON.stringify(candidate(\"1010101010101010101010101010101010101010\")) === JSON.stringify(78));\n    console.assert(JSON.stringify(candidate(\"0110011001100110\")) === JSON.stringify(31));\n    console.assert(JSON.stringify(candidate(\"1111000000000000111111111111\")) === JSON.stringify(118));\n    console.assert(JSON.stringify(candidate(\"1111000011110000111100001111\")) === JSON.stringify(72));\n    console.assert(JSON.stringify(candidate(\"00000000000000000001\")) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(\"0000000000111111\")) === JSON.stringify(30));\n    console.assert(JSON.stringify(candidate(\"0011001100110011001100110011\")) === JSON.stringify(53));\n    console.assert(JSON.stringify(candidate(\"01010101010101010101\")) === JSON.stringify(38));\n    console.assert(JSON.stringify(candidate(\"111110111110111110111110111110\")) === JSON.stringify(453));\n    console.assert(JSON.stringify(candidate(\"111110000000\")) === JSON.stringify(22));\n    console.assert(JSON.stringify(candidate(\"1111111101010101\")) === JSON.stringify(84));\n    console.assert(JSON.stringify(candidate(\"1101001010010100\")) === JSON.stringify(24));\n    console.assert(JSON.stringify(candidate(\"1111010101010101\")) === JSON.stringify(45));\n    console.assert(JSON.stringify(candidate(\"000001111100000111110000011111\")) === JSON.stringify(82));\n    console.assert(JSON.stringify(candidate(\"0000000000000000000000000001\")) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(\"10101010101010101010\")) === JSON.stringify(38));\n    console.assert(JSON.stringify(candidate(\"0110110110110110110110110110110\")) === JSON.stringify(156));\n    console.assert(JSON.stringify(candidate(\"11111111111111110000000000\")) === JSON.stringify(174));\n    console.assert(JSON.stringify(candidate(\"0000111100001111\")) === JSON.stringify(36));\n}",
+    "typescript": "function check(candidate: Function): void {\n    console.assert(JSON.stringify(candidate(\"1111\")) === JSON.stringify(10));\n    console.assert(JSON.stringify(candidate(\"100100100\")) === JSON.stringify(8));\n    console.assert(JSON.stringify(candidate(\"1111010101\")) === JSON.stringify(33));\n    console.assert(JSON.stringify(candidate(\"000111000\")) === JSON.stringify(12));\n    console.assert(JSON.stringify(candidate(\"11110000\")) === JSON.stringify(15));\n    console.assert(JSON.stringify(candidate(\"0000\")) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"111000\")) === JSON.stringify(9));\n    console.assert(JSON.stringify(candidate(\"01010101111\")) === JSON.stringify(34));\n    console.assert(JSON.stringify(candidate(\"0011110011\")) === JSON.stringify(31));\n    console.assert(JSON.stringify(candidate(\"0000101010\")) === JSON.stringify(11));\n    console.assert(JSON.stringify(candidate(\"00001111\")) === JSON.stringify(15));\n    console.assert(JSON.stringify(candidate(\"000111\")) === JSON.stringify(9));\n    console.assert(JSON.stringify(candidate(\"1001001001\")) === JSON.stringify(10));\n    console.assert(JSON.stringify(candidate(\"11111\")) === JSON.stringify(15));\n    console.assert(JSON.stringify(candidate(\"01010101\")) === JSON.stringify(14));\n    console.assert(JSON.stringify(candidate(\"11010101\")) === JSON.stringify(18));\n    console.assert(JSON.stringify(candidate(\"10101010\")) === JSON.stringify(14));\n    console.assert(JSON.stringify(candidate(\"1010100000\")) === JSON.stringify(10));\n    console.assert(JSON.stringify(candidate(\"010101\")) === JSON.stringify(10));\n    console.assert(JSON.stringify(candidate(\"1100111100\")) === JSON.stringify(31));\n    console.assert(JSON.stringify(candidate(\"101010\")) === JSON.stringify(10));\n    console.assert(JSON.stringify(candidate(\"00011\")) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate(\"11001100\")) === JSON.stringify(13));\n    console.assert(JSON.stringify(candidate(\"101101\")) === JSON.stringify(16));\n    console.assert(JSON.stringify(candidate(\"111000111\")) === JSON.stringify(18));\n    console.assert(JSON.stringify(candidate(\"1010101010101010\")) === JSON.stringify(30));\n    console.assert(JSON.stringify(candidate(\"00000\")) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"10010010\")) === JSON.stringify(8));\n    console.assert(JSON.stringify(candidate(\"000111000111000111000\")) === JSON.stringify(36));\n    console.assert(JSON.stringify(candidate(\"111111111111111111111111\")) === JSON.stringify(300));\n    console.assert(JSON.stringify(candidate(\"000011000110001100011000\")) === JSON.stringify(28));\n    console.assert(JSON.stringify(candidate(\"1111110000000011\")) === JSON.stringify(35));\n    console.assert(JSON.stringify(candidate(\"111000111000111000\")) === JSON.stringify(33));\n    console.assert(JSON.stringify(candidate(\"1111000000000011111\")) === JSON.stringify(37));\n    console.assert(JSON.stringify(candidate(\"000000111111000000111111\")) === JSON.stringify(70));\n    console.assert(JSON.stringify(candidate(\"0110110110110110110\")) === JSON.stringify(88));\n    console.assert(JSON.stringify(candidate(\"1101010101010101\")) === JSON.stringify(34));\n    console.assert(JSON.stringify(candidate(\"111111111100000000000000000000\")) === JSON.stringify(74));\n    console.assert(JSON.stringify(candidate(\"10101010101010101010101010101010101010101010101010\")) === JSON.stringify(98));\n    console.assert(JSON.stringify(candidate(\"11000000001111111111\")) === JSON.stringify(79));\n    console.assert(JSON.stringify(candidate(\"00111111001111110011111100111111001111110011111100111111001111110011\")) === JSON.stringify(657));\n    console.assert(JSON.stringify(candidate(\"11110000000000000000000000000000000\")) === JSON.stringify(15));\n    console.assert(JSON.stringify(candidate(\"111110000011111000001111100000\")) === JSON.stringify(82));\n    console.assert(JSON.stringify(candidate(\"1100110011001100\")) === JSON.stringify(29));\n    console.assert(JSON.stringify(candidate(\"00000000000000000000000000001111111\")) === JSON.stringify(39));\n    console.assert(JSON.stringify(candidate(\"010101010101010101010101\")) === JSON.stringify(46));\n    console.assert(JSON.stringify(candidate(\"1100110011001100110011001100110011001100110011001100110011001100110\")) === JSON.stringify(133));\n    console.assert(JSON.stringify(candidate(\"0001110001110001\")) === JSON.stringify(26));\n    console.assert(JSON.stringify(candidate(\"1001001001001001001001001001001001001001001001001001001001001001\")) === JSON.stringify(64));\n    console.assert(JSON.stringify(candidate(\"000111000111000111\")) === JSON.stringify(33));\n    console.assert(JSON.stringify(candidate(\"101010101010101010101010\")) === JSON.stringify(46));\n    console.assert(JSON.stringify(candidate(\"1100000000000011\")) === JSON.stringify(10));\n    console.assert(JSON.stringify(candidate(\"1000000000001000\")) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate(\"111111111111111111111111111100000000000000000000\")) === JSON.stringify(496));\n    console.assert(JSON.stringify(candidate(\"1000000000000011\")) === JSON.stringify(7));\n    console.assert(JSON.stringify(candidate(\"010101010101010101\")) === JSON.stringify(34));\n    console.assert(JSON.stringify(candidate(\"1000000000000000000000000000\")) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(\"111000111000111000111000111000\")) === JSON.stringify(57));\n    console.assert(JSON.stringify(candidate(\"1111111000000000000\")) === JSON.stringify(39));\n    console.assert(JSON.stringify(candidate(\"0000000000000000\")) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"11111000001111100000111110000011111\")) === JSON.stringify(104));\n    console.assert(JSON.stringify(candidate(\"101010101010101010101010101010\")) === JSON.stringify(58));\n    console.assert(JSON.stringify(candidate(\"0100111101110010\")) === JSON.stringify(60));\n    console.assert(JSON.stringify(candidate(\"100100100100100100100\")) === JSON.stringify(20));\n    console.assert(JSON.stringify(candidate(\"111100001111000011110000\")) === JSON.stringify(57));\n    console.assert(JSON.stringify(candidate(\"0000000001111111110000000000\")) === JSON.stringify(80));\n    console.assert(JSON.stringify(candidate(\"0011001100110011\")) === JSON.stringify(29));\n    console.assert(JSON.stringify(candidate(\"11000011000011000011000011\")) === JSON.stringify(31));\n    console.assert(JSON.stringify(candidate(\"0000111100001111000011110000\")) === JSON.stringify(63));\n    console.assert(JSON.stringify(candidate(\"1000000010000000100000001\")) === JSON.stringify(10));\n    console.assert(JSON.stringify(candidate(\"0000000000000000000000000000000000000000000000000000000000000000\")) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"11111000000000001111111111\")) === JSON.stringify(96));\n    console.assert(JSON.stringify(candidate(\"000000010000000100000001\")) === JSON.stringify(8));\n    console.assert(JSON.stringify(candidate(\"100010001000100010001000\")) === JSON.stringify(17));\n    console.assert(JSON.stringify(candidate(\"11111111111111111111000000000000\")) === JSON.stringify(264));\n    console.assert(JSON.stringify(candidate(\"1001001001001001001001001001001\")) === JSON.stringify(31));\n    console.assert(JSON.stringify(candidate(\"0000000000000000000000000000000000000000\")) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"11110000111100001111\")) === JSON.stringify(51));\n    console.assert(JSON.stringify(candidate(\"1111111110000000000000000000\")) === JSON.stringify(61));\n    console.assert(JSON.stringify(candidate(\"010101010101010101010101010101010101010101010101\")) === JSON.stringify(94));\n    console.assert(JSON.stringify(candidate(\"11111000001111100000111110000011111000001111100000111110000011111\")) === JSON.stringify(194));\n    console.assert(JSON.stringify(candidate(\"111111111100000000001111111111\")) === JSON.stringify(148));\n    console.assert(JSON.stringify(candidate(\"01010101010101010101010101010101010101010101010101\")) === JSON.stringify(98));\n    console.assert(JSON.stringify(candidate(\"000000000000000000000000000000001111111111111111111111111111111\")) === JSON.stringify(601));\n    console.assert(JSON.stringify(candidate(\"111000011111000\")) === JSON.stringify(39));\n    console.assert(JSON.stringify(candidate(\"11111111111111111111\")) === JSON.stringify(210));\n    console.assert(JSON.stringify(candidate(\"1001001001001001001001001001001001001001001001001001\")) === JSON.stringify(52));\n    console.assert(JSON.stringify(candidate(\"0000000000000000000000000000001111111111111111111111111111111\")) === JSON.stringify(601));\n    console.assert(JSON.stringify(candidate(\"1111111111111111\")) === JSON.stringify(136));\n    console.assert(JSON.stringify(candidate(\"1111111111111111111111111111111111111111111111111111111111111111\")) === JSON.stringify(2080));\n    console.assert(JSON.stringify(candidate(\"0000000111111111111\")) === JSON.stringify(103));\n    console.assert(JSON.stringify(candidate(\"0101010111111111\")) === JSON.stringify(96));\n    console.assert(JSON.stringify(candidate(\"00000000000000000000000000000000111111111111111111111111111111111\")) === JSON.stringify(676));\n    console.assert(JSON.stringify(candidate(\"111111000000111111000000111111\")) === JSON.stringify(100));\n    console.assert(JSON.stringify(candidate(\"0000000001111111\")) === JSON.stringify(39));\n    console.assert(JSON.stringify(candidate(\"0001010101101011\")) === JSON.stringify(37));\n    console.assert(JSON.stringify(candidate(\"00000000001111111111\")) === JSON.stringify(74));\n    console.assert(JSON.stringify(candidate(\"0011001100110011001100110011001100110011001100110011001100110011001\")) === JSON.stringify(129));\n    console.assert(JSON.stringify(candidate(\"1111100000111110000011111\")) === JSON.stringify(74));\n    console.assert(JSON.stringify(candidate(\"111000111000111000111\")) === JSON.stringify(42));\n    console.assert(JSON.stringify(candidate(\"1001001001001001\")) === JSON.stringify(16));\n    console.assert(JSON.stringify(candidate(\"11001100110011001100\")) === JSON.stringify(37));\n    console.assert(JSON.stringify(candidate(\"01010101010101010101010101010101\")) === JSON.stringify(62));\n    console.assert(JSON.stringify(candidate(\"1110010001100011110\")) === JSON.stringify(40));\n    console.assert(JSON.stringify(candidate(\"1111000000000000000000000000000000000000\")) === JSON.stringify(15));\n    console.assert(JSON.stringify(candidate(\"00000000000000000000000000000000000000000000000000\")) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"1001001001001001001001\")) === JSON.stringify(22));\n    console.assert(JSON.stringify(candidate(\"111000111000111000111000111\")) === JSON.stringify(54));\n    console.assert(JSON.stringify(candidate(\"0000111111110000\")) === JSON.stringify(63));\n    console.assert(JSON.stringify(candidate(\"0011110011110011\")) === JSON.stringify(65));\n    console.assert(JSON.stringify(candidate(\"1111111100000000\")) === JSON.stringify(49));\n    console.assert(JSON.stringify(candidate(\"1111000011110000111100001111000011110000\")) === JSON.stringify(99));\n    console.assert(JSON.stringify(candidate(\"11100111001110011100111001110011100111001110011100\")) === JSON.stringify(171));\n    console.assert(JSON.stringify(candidate(\"111110000111100001111\")) === JSON.stringify(58));\n    console.assert(JSON.stringify(candidate(\"110000110000110000110000110000\")) === JSON.stringify(33));\n    console.assert(JSON.stringify(candidate(\"0101010101010101\")) === JSON.stringify(30));\n    console.assert(JSON.stringify(candidate(\"000000000000000000000000\")) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"111000111000111000111000111000111000111000111000\")) === JSON.stringify(93));\n    console.assert(JSON.stringify(candidate(\"00000000000000000000000000000000000111111111111111\")) === JSON.stringify(154));\n    console.assert(JSON.stringify(candidate(\"0000011111111100000\")) === JSON.stringify(80));\n    console.assert(JSON.stringify(candidate(\"0000111111111111\")) === JSON.stringify(103));\n    console.assert(JSON.stringify(candidate(\"000111000111000111000111000111\")) === JSON.stringify(57));\n    console.assert(JSON.stringify(candidate(\"1000100010001000100\")) === JSON.stringify(14));\n    console.assert(JSON.stringify(candidate(\"1001001001001001001\")) === JSON.stringify(19));\n    console.assert(JSON.stringify(candidate(\"0110011001100110011001\")) === JSON.stringify(41));\n    console.assert(JSON.stringify(candidate(\"11111111111111111000000000000000000000000000000000000000000000011\")) === JSON.stringify(200));\n    console.assert(JSON.stringify(candidate(\"0010110101101011\")) === JSON.stringify(46));\n    console.assert(JSON.stringify(candidate(\"000000000011111111110000000000\")) === JSON.stringify(96));\n    console.assert(JSON.stringify(candidate(\"00000111110000011111000001111100000111110000011111000001111100000\")) === JSON.stringify(180));\n    console.assert(JSON.stringify(candidate(\"11111111111111111111111111111111111111111111111111\")) === JSON.stringify(1275));\n    console.assert(JSON.stringify(candidate(\"11011011011011011011011011011011011\")) === JSON.stringify(184));\n    console.assert(JSON.stringify(candidate(\"1110001110001110\")) === JSON.stringify(33));\n    console.assert(JSON.stringify(candidate(\"10010010010010010010010010010010\")) === JSON.stringify(32));\n    console.assert(JSON.stringify(candidate(\"1110011100011100011\")) === JSON.stringify(44));\n    console.assert(JSON.stringify(candidate(\"00000000000000000000\")) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"1111000011110000\")) === JSON.stringify(36));\n    console.assert(JSON.stringify(candidate(\"10101010101010101010101010101010\")) === JSON.stringify(62));\n    console.assert(JSON.stringify(candidate(\"01001001001001001001001\")) === JSON.stringify(23));\n    console.assert(JSON.stringify(candidate(\"1111111111000000\")) === JSON.stringify(74));\n    console.assert(JSON.stringify(candidate(\"0000000011111111\")) === JSON.stringify(49));\n    console.assert(JSON.stringify(candidate(\"1111000000001111\")) === JSON.stringify(30));\n    console.assert(JSON.stringify(candidate(\"01001001001001001001001001001001\")) === JSON.stringify(32));\n    console.assert(JSON.stringify(candidate(\"1000001111110000\")) === JSON.stringify(42));\n    console.assert(JSON.stringify(candidate(\"000000000011111111111111111111\")) === JSON.stringify(264));\n    console.assert(JSON.stringify(candidate(\"1100001100001100\")) === JSON.stringify(19));\n    console.assert(JSON.stringify(candidate(\"1111111111\")) === JSON.stringify(55));\n    console.assert(JSON.stringify(candidate(\"1010101010101010101010101010101010101010\")) === JSON.stringify(78));\n    console.assert(JSON.stringify(candidate(\"0110011001100110\")) === JSON.stringify(31));\n    console.assert(JSON.stringify(candidate(\"1111000000000000111111111111\")) === JSON.stringify(118));\n    console.assert(JSON.stringify(candidate(\"1111000011110000111100001111\")) === JSON.stringify(72));\n    console.assert(JSON.stringify(candidate(\"00000000000000000001\")) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(\"0000000000111111\")) === JSON.stringify(30));\n    console.assert(JSON.stringify(candidate(\"0011001100110011001100110011\")) === JSON.stringify(53));\n    console.assert(JSON.stringify(candidate(\"01010101010101010101\")) === JSON.stringify(38));\n    console.assert(JSON.stringify(candidate(\"111110111110111110111110111110\")) === JSON.stringify(453));\n    console.assert(JSON.stringify(candidate(\"111110000000\")) === JSON.stringify(22));\n    console.assert(JSON.stringify(candidate(\"1111111101010101\")) === JSON.stringify(84));\n    console.assert(JSON.stringify(candidate(\"1101001010010100\")) === JSON.stringify(24));\n    console.assert(JSON.stringify(candidate(\"1111010101010101\")) === JSON.stringify(45));\n    console.assert(JSON.stringify(candidate(\"000001111100000111110000011111\")) === JSON.stringify(82));\n    console.assert(JSON.stringify(candidate(\"0000000000000000000000000001\")) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(\"10101010101010101010\")) === JSON.stringify(38));\n    console.assert(JSON.stringify(candidate(\"0110110110110110110110110110110\")) === JSON.stringify(156));\n    console.assert(JSON.stringify(candidate(\"11111111111111110000000000\")) === JSON.stringify(174));\n    console.assert(JSON.stringify(candidate(\"0000111100001111\")) === JSON.stringify(36));\n}",
+    "golang": "func check(candidate func([]int, int) []int) {\n    assert reflect.DeepEqual(candidate(\"1111\"), 10)\n    assert reflect.DeepEqual(candidate(\"100100100\"), 8)\n    assert reflect.DeepEqual(candidate(\"1111010101\"), 33)\n    assert reflect.DeepEqual(candidate(\"000111000\"), 12)\n    assert reflect.DeepEqual(candidate(\"11110000\"), 15)\n    assert reflect.DeepEqual(candidate(\"0000\"), 0)\n    assert reflect.DeepEqual(candidate(\"111000\"), 9)\n    assert reflect.DeepEqual(candidate(\"01010101111\"), 34)\n    assert reflect.DeepEqual(candidate(\"0011110011\"), 31)\n    assert reflect.DeepEqual(candidate(\"0000101010\"), 11)\n    assert reflect.DeepEqual(candidate(\"00001111\"), 15)\n    assert reflect.DeepEqual(candidate(\"000111\"), 9)\n    assert reflect.DeepEqual(candidate(\"1001001001\"), 10)\n    assert reflect.DeepEqual(candidate(\"11111\"), 15)\n    assert reflect.DeepEqual(candidate(\"01010101\"), 14)\n    assert reflect.DeepEqual(candidate(\"11010101\"), 18)\n    assert reflect.DeepEqual(candidate(\"10101010\"), 14)\n    assert reflect.DeepEqual(candidate(\"1010100000\"), 10)\n    assert reflect.DeepEqual(candidate(\"010101\"), 10)\n    assert reflect.DeepEqual(candidate(\"1100111100\"), 31)\n    assert reflect.DeepEqual(candidate(\"101010\"), 10)\n    assert reflect.DeepEqual(candidate(\"00011\"), 5)\n    assert reflect.DeepEqual(candidate(\"11001100\"), 13)\n    assert reflect.DeepEqual(candidate(\"101101\"), 16)\n    assert reflect.DeepEqual(candidate(\"111000111\"), 18)\n    assert reflect.DeepEqual(candidate(\"1010101010101010\"), 30)\n    assert reflect.DeepEqual(candidate(\"00000\"), 0)\n    assert reflect.DeepEqual(candidate(\"10010010\"), 8)\n    assert reflect.DeepEqual(candidate(\"000111000111000111000\"), 36)\n    assert reflect.DeepEqual(candidate(\"111111111111111111111111\"), 300)\n    assert reflect.DeepEqual(candidate(\"000011000110001100011000\"), 28)\n    assert reflect.DeepEqual(candidate(\"1111110000000011\"), 35)\n    assert reflect.DeepEqual(candidate(\"111000111000111000\"), 33)\n    assert reflect.DeepEqual(candidate(\"1111000000000011111\"), 37)\n    assert reflect.DeepEqual(candidate(\"000000111111000000111111\"), 70)\n    assert reflect.DeepEqual(candidate(\"0110110110110110110\"), 88)\n    assert reflect.DeepEqual(candidate(\"1101010101010101\"), 34)\n    assert reflect.DeepEqual(candidate(\"111111111100000000000000000000\"), 74)\n    assert reflect.DeepEqual(candidate(\"10101010101010101010101010101010101010101010101010\"), 98)\n    assert reflect.DeepEqual(candidate(\"11000000001111111111\"), 79)\n    assert reflect.DeepEqual(candidate(\"00111111001111110011111100111111001111110011111100111111001111110011\"), 657)\n    assert reflect.DeepEqual(candidate(\"11110000000000000000000000000000000\"), 15)\n    assert reflect.DeepEqual(candidate(\"111110000011111000001111100000\"), 82)\n    assert reflect.DeepEqual(candidate(\"1100110011001100\"), 29)\n    assert reflect.DeepEqual(candidate(\"00000000000000000000000000001111111\"), 39)\n    assert reflect.DeepEqual(candidate(\"010101010101010101010101\"), 46)\n    assert reflect.DeepEqual(candidate(\"1100110011001100110011001100110011001100110011001100110011001100110\"), 133)\n    assert reflect.DeepEqual(candidate(\"0001110001110001\"), 26)\n    assert reflect.DeepEqual(candidate(\"1001001001001001001001001001001001001001001001001001001001001001\"), 64)\n    assert reflect.DeepEqual(candidate(\"000111000111000111\"), 33)\n    assert reflect.DeepEqual(candidate(\"101010101010101010101010\"), 46)\n    assert reflect.DeepEqual(candidate(\"1100000000000011\"), 10)\n    assert reflect.DeepEqual(candidate(\"1000000000001000\"), 5)\n    assert reflect.DeepEqual(candidate(\"111111111111111111111111111100000000000000000000\"), 496)\n    assert reflect.DeepEqual(candidate(\"1000000000000011\"), 7)\n    assert reflect.DeepEqual(candidate(\"010101010101010101\"), 34)\n    assert reflect.DeepEqual(candidate(\"1000000000000000000000000000\"), 2)\n    assert reflect.DeepEqual(candidate(\"111000111000111000111000111000\"), 57)\n    assert reflect.DeepEqual(candidate(\"1111111000000000000\"), 39)\n    assert reflect.DeepEqual(candidate(\"0000000000000000\"), 0)\n    assert reflect.DeepEqual(candidate(\"11111000001111100000111110000011111\"), 104)\n    assert reflect.DeepEqual(candidate(\"101010101010101010101010101010\"), 58)\n    assert reflect.DeepEqual(candidate(\"0100111101110010\"), 60)\n    assert reflect.DeepEqual(candidate(\"100100100100100100100\"), 20)\n    assert reflect.DeepEqual(candidate(\"111100001111000011110000\"), 57)\n    assert reflect.DeepEqual(candidate(\"0000000001111111110000000000\"), 80)\n    assert reflect.DeepEqual(candidate(\"0011001100110011\"), 29)\n    assert reflect.DeepEqual(candidate(\"11000011000011000011000011\"), 31)\n    assert reflect.DeepEqual(candidate(\"0000111100001111000011110000\"), 63)\n    assert reflect.DeepEqual(candidate(\"1000000010000000100000001\"), 10)\n    assert reflect.DeepEqual(candidate(\"0000000000000000000000000000000000000000000000000000000000000000\"), 0)\n    assert reflect.DeepEqual(candidate(\"11111000000000001111111111\"), 96)\n    assert reflect.DeepEqual(candidate(\"000000010000000100000001\"), 8)\n    assert reflect.DeepEqual(candidate(\"100010001000100010001000\"), 17)\n    assert reflect.DeepEqual(candidate(\"11111111111111111111000000000000\"), 264)\n    assert reflect.DeepEqual(candidate(\"1001001001001001001001001001001\"), 31)\n    assert reflect.DeepEqual(candidate(\"0000000000000000000000000000000000000000\"), 0)\n    assert reflect.DeepEqual(candidate(\"11110000111100001111\"), 51)\n    assert reflect.DeepEqual(candidate(\"1111111110000000000000000000\"), 61)\n    assert reflect.DeepEqual(candidate(\"010101010101010101010101010101010101010101010101\"), 94)\n    assert reflect.DeepEqual(candidate(\"11111000001111100000111110000011111000001111100000111110000011111\"), 194)\n    assert reflect.DeepEqual(candidate(\"111111111100000000001111111111\"), 148)\n    assert reflect.DeepEqual(candidate(\"01010101010101010101010101010101010101010101010101\"), 98)\n    assert reflect.DeepEqual(candidate(\"000000000000000000000000000000001111111111111111111111111111111\"), 601)\n    assert reflect.DeepEqual(candidate(\"111000011111000\"), 39)\n    assert reflect.DeepEqual(candidate(\"11111111111111111111\"), 210)\n    assert reflect.DeepEqual(candidate(\"1001001001001001001001001001001001001001001001001001\"), 52)\n    assert reflect.DeepEqual(candidate(\"0000000000000000000000000000001111111111111111111111111111111\"), 601)\n    assert reflect.DeepEqual(candidate(\"1111111111111111\"), 136)\n    assert reflect.DeepEqual(candidate(\"1111111111111111111111111111111111111111111111111111111111111111\"), 2080)\n    assert reflect.DeepEqual(candidate(\"0000000111111111111\"), 103)\n    assert reflect.DeepEqual(candidate(\"0101010111111111\"), 96)\n    assert reflect.DeepEqual(candidate(\"00000000000000000000000000000000111111111111111111111111111111111\"), 676)\n    assert reflect.DeepEqual(candidate(\"111111000000111111000000111111\"), 100)\n    assert reflect.DeepEqual(candidate(\"0000000001111111\"), 39)\n    assert reflect.DeepEqual(candidate(\"0001010101101011\"), 37)\n    assert reflect.DeepEqual(candidate(\"00000000001111111111\"), 74)\n    assert reflect.DeepEqual(candidate(\"0011001100110011001100110011001100110011001100110011001100110011001\"), 129)\n    assert reflect.DeepEqual(candidate(\"1111100000111110000011111\"), 74)\n    assert reflect.DeepEqual(candidate(\"111000111000111000111\"), 42)\n    assert reflect.DeepEqual(candidate(\"1001001001001001\"), 16)\n    assert reflect.DeepEqual(candidate(\"11001100110011001100\"), 37)\n    assert reflect.DeepEqual(candidate(\"01010101010101010101010101010101\"), 62)\n    assert reflect.DeepEqual(candidate(\"1110010001100011110\"), 40)\n    assert reflect.DeepEqual(candidate(\"1111000000000000000000000000000000000000\"), 15)\n    assert reflect.DeepEqual(candidate(\"00000000000000000000000000000000000000000000000000\"), 0)\n    assert reflect.DeepEqual(candidate(\"1001001001001001001001\"), 22)\n    assert reflect.DeepEqual(candidate(\"111000111000111000111000111\"), 54)\n    assert reflect.DeepEqual(candidate(\"0000111111110000\"), 63)\n    assert reflect.DeepEqual(candidate(\"0011110011110011\"), 65)\n    assert reflect.DeepEqual(candidate(\"1111111100000000\"), 49)\n    assert reflect.DeepEqual(candidate(\"1111000011110000111100001111000011110000\"), 99)\n    assert reflect.DeepEqual(candidate(\"11100111001110011100111001110011100111001110011100\"), 171)\n    assert reflect.DeepEqual(candidate(\"111110000111100001111\"), 58)\n    assert reflect.DeepEqual(candidate(\"110000110000110000110000110000\"), 33)\n    assert reflect.DeepEqual(candidate(\"0101010101010101\"), 30)\n    assert reflect.DeepEqual(candidate(\"000000000000000000000000\"), 0)\n    assert reflect.DeepEqual(candidate(\"111000111000111000111000111000111000111000111000\"), 93)\n    assert reflect.DeepEqual(candidate(\"00000000000000000000000000000000000111111111111111\"), 154)\n    assert reflect.DeepEqual(candidate(\"0000011111111100000\"), 80)\n    assert reflect.DeepEqual(candidate(\"0000111111111111\"), 103)\n    assert reflect.DeepEqual(candidate(\"000111000111000111000111000111\"), 57)\n    assert reflect.DeepEqual(candidate(\"1000100010001000100\"), 14)\n    assert reflect.DeepEqual(candidate(\"1001001001001001001\"), 19)\n    assert reflect.DeepEqual(candidate(\"0110011001100110011001\"), 41)\n    assert reflect.DeepEqual(candidate(\"11111111111111111000000000000000000000000000000000000000000000011\"), 200)\n    assert reflect.DeepEqual(candidate(\"0010110101101011\"), 46)\n    assert reflect.DeepEqual(candidate(\"000000000011111111110000000000\"), 96)\n    assert reflect.DeepEqual(candidate(\"00000111110000011111000001111100000111110000011111000001111100000\"), 180)\n    assert reflect.DeepEqual(candidate(\"11111111111111111111111111111111111111111111111111\"), 1275)\n    assert reflect.DeepEqual(candidate(\"11011011011011011011011011011011011\"), 184)\n    assert reflect.DeepEqual(candidate(\"1110001110001110\"), 33)\n    assert reflect.DeepEqual(candidate(\"10010010010010010010010010010010\"), 32)\n    assert reflect.DeepEqual(candidate(\"1110011100011100011\"), 44)\n    assert reflect.DeepEqual(candidate(\"00000000000000000000\"), 0)\n    assert reflect.DeepEqual(candidate(\"1111000011110000\"), 36)\n    assert reflect.DeepEqual(candidate(\"10101010101010101010101010101010\"), 62)\n    assert reflect.DeepEqual(candidate(\"01001001001001001001001\"), 23)\n    assert reflect.DeepEqual(candidate(\"1111111111000000\"), 74)\n    assert reflect.DeepEqual(candidate(\"0000000011111111\"), 49)\n    assert reflect.DeepEqual(candidate(\"1111000000001111\"), 30)\n    assert reflect.DeepEqual(candidate(\"01001001001001001001001001001001\"), 32)\n    assert reflect.DeepEqual(candidate(\"1000001111110000\"), 42)\n    assert reflect.DeepEqual(candidate(\"000000000011111111111111111111\"), 264)\n    assert reflect.DeepEqual(candidate(\"1100001100001100\"), 19)\n    assert reflect.DeepEqual(candidate(\"1111111111\"), 55)\n    assert reflect.DeepEqual(candidate(\"1010101010101010101010101010101010101010\"), 78)\n    assert reflect.DeepEqual(candidate(\"0110011001100110\"), 31)\n    assert reflect.DeepEqual(candidate(\"1111000000000000111111111111\"), 118)\n    assert reflect.DeepEqual(candidate(\"1111000011110000111100001111\"), 72)\n    assert reflect.DeepEqual(candidate(\"00000000000000000001\"), 2)\n    assert reflect.DeepEqual(candidate(\"0000000000111111\"), 30)\n    assert reflect.DeepEqual(candidate(\"0011001100110011001100110011\"), 53)\n    assert reflect.DeepEqual(candidate(\"01010101010101010101\"), 38)\n    assert reflect.DeepEqual(candidate(\"111110111110111110111110111110\"), 453)\n    assert reflect.DeepEqual(candidate(\"111110000000\"), 22)\n    assert reflect.DeepEqual(candidate(\"1111111101010101\"), 84)\n    assert reflect.DeepEqual(candidate(\"1101001010010100\"), 24)\n    assert reflect.DeepEqual(candidate(\"1111010101010101\"), 45)\n    assert reflect.DeepEqual(candidate(\"000001111100000111110000011111\"), 82)\n    assert reflect.DeepEqual(candidate(\"0000000000000000000000000001\"), 2)\n    assert reflect.DeepEqual(candidate(\"10101010101010101010\"), 38)\n    assert reflect.DeepEqual(candidate(\"0110110110110110110110110110110\"), 156)\n    assert reflect.DeepEqual(candidate(\"11111111111111110000000000\"), 174)\n    assert reflect.DeepEqual(candidate(\"0000111100001111\"), 36)\n}",
+    "rust": "fn check(candidate: fn(Vec<i32>, i32) -> Vec<i32>) {\n    assert_eq!(candidate(\"1111\"), 10);\n    assert_eq!(candidate(\"100100100\"), 8);\n    assert_eq!(candidate(\"1111010101\"), 33);\n    assert_eq!(candidate(\"000111000\"), 12);\n    assert_eq!(candidate(\"11110000\"), 15);\n    assert_eq!(candidate(\"0000\"), 0);\n    assert_eq!(candidate(\"111000\"), 9);\n    assert_eq!(candidate(\"01010101111\"), 34);\n    assert_eq!(candidate(\"0011110011\"), 31);\n    assert_eq!(candidate(\"0000101010\"), 11);\n    assert_eq!(candidate(\"00001111\"), 15);\n    assert_eq!(candidate(\"000111\"), 9);\n    assert_eq!(candidate(\"1001001001\"), 10);\n    assert_eq!(candidate(\"11111\"), 15);\n    assert_eq!(candidate(\"01010101\"), 14);\n    assert_eq!(candidate(\"11010101\"), 18);\n    assert_eq!(candidate(\"10101010\"), 14);\n    assert_eq!(candidate(\"1010100000\"), 10);\n    assert_eq!(candidate(\"010101\"), 10);\n    assert_eq!(candidate(\"1100111100\"), 31);\n    assert_eq!(candidate(\"101010\"), 10);\n    assert_eq!(candidate(\"00011\"), 5);\n    assert_eq!(candidate(\"11001100\"), 13);\n    assert_eq!(candidate(\"101101\"), 16);\n    assert_eq!(candidate(\"111000111\"), 18);\n    assert_eq!(candidate(\"1010101010101010\"), 30);\n    assert_eq!(candidate(\"00000\"), 0);\n    assert_eq!(candidate(\"10010010\"), 8);\n    assert_eq!(candidate(\"000111000111000111000\"), 36);\n    assert_eq!(candidate(\"111111111111111111111111\"), 300);\n    assert_eq!(candidate(\"000011000110001100011000\"), 28);\n    assert_eq!(candidate(\"1111110000000011\"), 35);\n    assert_eq!(candidate(\"111000111000111000\"), 33);\n    assert_eq!(candidate(\"1111000000000011111\"), 37);\n    assert_eq!(candidate(\"000000111111000000111111\"), 70);\n    assert_eq!(candidate(\"0110110110110110110\"), 88);\n    assert_eq!(candidate(\"1101010101010101\"), 34);\n    assert_eq!(candidate(\"111111111100000000000000000000\"), 74);\n    assert_eq!(candidate(\"10101010101010101010101010101010101010101010101010\"), 98);\n    assert_eq!(candidate(\"11000000001111111111\"), 79);\n    assert_eq!(candidate(\"00111111001111110011111100111111001111110011111100111111001111110011\"), 657);\n    assert_eq!(candidate(\"11110000000000000000000000000000000\"), 15);\n    assert_eq!(candidate(\"111110000011111000001111100000\"), 82);\n    assert_eq!(candidate(\"1100110011001100\"), 29);\n    assert_eq!(candidate(\"00000000000000000000000000001111111\"), 39);\n    assert_eq!(candidate(\"010101010101010101010101\"), 46);\n    assert_eq!(candidate(\"1100110011001100110011001100110011001100110011001100110011001100110\"), 133);\n    assert_eq!(candidate(\"0001110001110001\"), 26);\n    assert_eq!(candidate(\"1001001001001001001001001001001001001001001001001001001001001001\"), 64);\n    assert_eq!(candidate(\"000111000111000111\"), 33);\n    assert_eq!(candidate(\"101010101010101010101010\"), 46);\n    assert_eq!(candidate(\"1100000000000011\"), 10);\n    assert_eq!(candidate(\"1000000000001000\"), 5);\n    assert_eq!(candidate(\"111111111111111111111111111100000000000000000000\"), 496);\n    assert_eq!(candidate(\"1000000000000011\"), 7);\n    assert_eq!(candidate(\"010101010101010101\"), 34);\n    assert_eq!(candidate(\"1000000000000000000000000000\"), 2);\n    assert_eq!(candidate(\"111000111000111000111000111000\"), 57);\n    assert_eq!(candidate(\"1111111000000000000\"), 39);\n    assert_eq!(candidate(\"0000000000000000\"), 0);\n    assert_eq!(candidate(\"11111000001111100000111110000011111\"), 104);\n    assert_eq!(candidate(\"101010101010101010101010101010\"), 58);\n    assert_eq!(candidate(\"0100111101110010\"), 60);\n    assert_eq!(candidate(\"100100100100100100100\"), 20);\n    assert_eq!(candidate(\"111100001111000011110000\"), 57);\n    assert_eq!(candidate(\"0000000001111111110000000000\"), 80);\n    assert_eq!(candidate(\"0011001100110011\"), 29);\n    assert_eq!(candidate(\"11000011000011000011000011\"), 31);\n    assert_eq!(candidate(\"0000111100001111000011110000\"), 63);\n    assert_eq!(candidate(\"1000000010000000100000001\"), 10);\n    assert_eq!(candidate(\"0000000000000000000000000000000000000000000000000000000000000000\"), 0);\n    assert_eq!(candidate(\"11111000000000001111111111\"), 96);\n    assert_eq!(candidate(\"000000010000000100000001\"), 8);\n    assert_eq!(candidate(\"100010001000100010001000\"), 17);\n    assert_eq!(candidate(\"11111111111111111111000000000000\"), 264);\n    assert_eq!(candidate(\"1001001001001001001001001001001\"), 31);\n    assert_eq!(candidate(\"0000000000000000000000000000000000000000\"), 0);\n    assert_eq!(candidate(\"11110000111100001111\"), 51);\n    assert_eq!(candidate(\"1111111110000000000000000000\"), 61);\n    assert_eq!(candidate(\"010101010101010101010101010101010101010101010101\"), 94);\n    assert_eq!(candidate(\"11111000001111100000111110000011111000001111100000111110000011111\"), 194);\n    assert_eq!(candidate(\"111111111100000000001111111111\"), 148);\n    assert_eq!(candidate(\"01010101010101010101010101010101010101010101010101\"), 98);\n    assert_eq!(candidate(\"000000000000000000000000000000001111111111111111111111111111111\"), 601);\n    assert_eq!(candidate(\"111000011111000\"), 39);\n    assert_eq!(candidate(\"11111111111111111111\"), 210);\n    assert_eq!(candidate(\"1001001001001001001001001001001001001001001001001001\"), 52);\n    assert_eq!(candidate(\"0000000000000000000000000000001111111111111111111111111111111\"), 601);\n    assert_eq!(candidate(\"1111111111111111\"), 136);\n    assert_eq!(candidate(\"1111111111111111111111111111111111111111111111111111111111111111\"), 2080);\n    assert_eq!(candidate(\"0000000111111111111\"), 103);\n    assert_eq!(candidate(\"0101010111111111\"), 96);\n    assert_eq!(candidate(\"00000000000000000000000000000000111111111111111111111111111111111\"), 676);\n    assert_eq!(candidate(\"111111000000111111000000111111\"), 100);\n    assert_eq!(candidate(\"0000000001111111\"), 39);\n    assert_eq!(candidate(\"0001010101101011\"), 37);\n    assert_eq!(candidate(\"00000000001111111111\"), 74);\n    assert_eq!(candidate(\"0011001100110011001100110011001100110011001100110011001100110011001\"), 129);\n    assert_eq!(candidate(\"1111100000111110000011111\"), 74);\n    assert_eq!(candidate(\"111000111000111000111\"), 42);\n    assert_eq!(candidate(\"1001001001001001\"), 16);\n    assert_eq!(candidate(\"11001100110011001100\"), 37);\n    assert_eq!(candidate(\"01010101010101010101010101010101\"), 62);\n    assert_eq!(candidate(\"1110010001100011110\"), 40);\n    assert_eq!(candidate(\"1111000000000000000000000000000000000000\"), 15);\n    assert_eq!(candidate(\"00000000000000000000000000000000000000000000000000\"), 0);\n    assert_eq!(candidate(\"1001001001001001001001\"), 22);\n    assert_eq!(candidate(\"111000111000111000111000111\"), 54);\n    assert_eq!(candidate(\"0000111111110000\"), 63);\n    assert_eq!(candidate(\"0011110011110011\"), 65);\n    assert_eq!(candidate(\"1111111100000000\"), 49);\n    assert_eq!(candidate(\"1111000011110000111100001111000011110000\"), 99);\n    assert_eq!(candidate(\"11100111001110011100111001110011100111001110011100\"), 171);\n    assert_eq!(candidate(\"111110000111100001111\"), 58);\n    assert_eq!(candidate(\"110000110000110000110000110000\"), 33);\n    assert_eq!(candidate(\"0101010101010101\"), 30);\n    assert_eq!(candidate(\"000000000000000000000000\"), 0);\n    assert_eq!(candidate(\"111000111000111000111000111000111000111000111000\"), 93);\n    assert_eq!(candidate(\"00000000000000000000000000000000000111111111111111\"), 154);\n    assert_eq!(candidate(\"0000011111111100000\"), 80);\n    assert_eq!(candidate(\"0000111111111111\"), 103);\n    assert_eq!(candidate(\"000111000111000111000111000111\"), 57);\n    assert_eq!(candidate(\"1000100010001000100\"), 14);\n    assert_eq!(candidate(\"1001001001001001001\"), 19);\n    assert_eq!(candidate(\"0110011001100110011001\"), 41);\n    assert_eq!(candidate(\"11111111111111111000000000000000000000000000000000000000000000011\"), 200);\n    assert_eq!(candidate(\"0010110101101011\"), 46);\n    assert_eq!(candidate(\"000000000011111111110000000000\"), 96);\n    assert_eq!(candidate(\"00000111110000011111000001111100000111110000011111000001111100000\"), 180);\n    assert_eq!(candidate(\"11111111111111111111111111111111111111111111111111\"), 1275);\n    assert_eq!(candidate(\"11011011011011011011011011011011011\"), 184);\n    assert_eq!(candidate(\"1110001110001110\"), 33);\n    assert_eq!(candidate(\"10010010010010010010010010010010\"), 32);\n    assert_eq!(candidate(\"1110011100011100011\"), 44);\n    assert_eq!(candidate(\"00000000000000000000\"), 0);\n    assert_eq!(candidate(\"1111000011110000\"), 36);\n    assert_eq!(candidate(\"10101010101010101010101010101010\"), 62);\n    assert_eq!(candidate(\"01001001001001001001001\"), 23);\n    assert_eq!(candidate(\"1111111111000000\"), 74);\n    assert_eq!(candidate(\"0000000011111111\"), 49);\n    assert_eq!(candidate(\"1111000000001111\"), 30);\n    assert_eq!(candidate(\"01001001001001001001001001001001\"), 32);\n    assert_eq!(candidate(\"1000001111110000\"), 42);\n    assert_eq!(candidate(\"000000000011111111111111111111\"), 264);\n    assert_eq!(candidate(\"1100001100001100\"), 19);\n    assert_eq!(candidate(\"1111111111\"), 55);\n    assert_eq!(candidate(\"1010101010101010101010101010101010101010\"), 78);\n    assert_eq!(candidate(\"0110011001100110\"), 31);\n    assert_eq!(candidate(\"1111000000000000111111111111\"), 118);\n    assert_eq!(candidate(\"1111000011110000111100001111\"), 72);\n    assert_eq!(candidate(\"00000000000000000001\"), 2);\n    assert_eq!(candidate(\"0000000000111111\"), 30);\n    assert_eq!(candidate(\"0011001100110011001100110011\"), 53);\n    assert_eq!(candidate(\"01010101010101010101\"), 38);\n    assert_eq!(candidate(\"111110111110111110111110111110\"), 453);\n    assert_eq!(candidate(\"111110000000\"), 22);\n    assert_eq!(candidate(\"1111111101010101\"), 84);\n    assert_eq!(candidate(\"1101001010010100\"), 24);\n    assert_eq!(candidate(\"1111010101010101\"), 45);\n    assert_eq!(candidate(\"000001111100000111110000011111\"), 82);\n    assert_eq!(candidate(\"0000000000000000000000000001\"), 2);\n    assert_eq!(candidate(\"10101010101010101010\"), 38);\n    assert_eq!(candidate(\"0110110110110110110110110110110\"), 156);\n    assert_eq!(candidate(\"11111111111111110000000000\"), 174);\n    assert_eq!(candidate(\"0000111100001111\"), 36);\n}"
+  },
+  "test_cases": [
+    {
+      "input": "s = \"1111\"",
+      "output": "10"
+    },
+    {
+      "input": "s = \"100100100\"",
+      "output": "8"
+    },
+    {
+      "input": "s = \"1111010101\"",
+      "output": "33"
+    },
+    {
+      "input": "s = \"000111000\"",
+      "output": "12"
+    },
+    {
+      "input": "s = \"11110000\"",
+      "output": "15"
+    },
+    {
+      "input": "s = \"0000\"",
+      "output": "0"
+    },
+    {
+      "input": "s = \"111000\"",
+      "output": "9"
+    },
+    {
+      "input": "s = \"01010101111\"",
+      "output": "34"
+    },
+    {
+      "input": "s = \"0011110011\"",
+      "output": "31"
+    },
+    {
+      "input": "s = \"0000101010\"",
+      "output": "11"
+    },
+    {
+      "input": "s = \"00001111\"",
+      "output": "15"
+    },
+    {
+      "input": "s = \"000111\"",
+      "output": "9"
+    },
+    {
+      "input": "s = \"1001001001\"",
+      "output": "10"
+    },
+    {
+      "input": "s = \"11111\"",
+      "output": "15"
+    },
+    {
+      "input": "s = \"01010101\"",
+      "output": "14"
+    },
+    {
+      "input": "s = \"11010101\"",
+      "output": "18"
+    },
+    {
+      "input": "s = \"10101010\"",
+      "output": "14"
+    },
+    {
+      "input": "s = \"1010100000\"",
+      "output": "10"
+    },
+    {
+      "input": "s = \"010101\"",
+      "output": "10"
+    },
+    {
+      "input": "s = \"1100111100\"",
+      "output": "31"
+    },
+    {
+      "input": "s = \"101010\"",
+      "output": "10"
+    },
+    {
+      "input": "s = \"00011\"",
+      "output": "5"
+    },
+    {
+      "input": "s = \"11001100\"",
+      "output": "13"
+    },
+    {
+      "input": "s = \"101101\"",
+      "output": "16"
+    },
+    {
+      "input": "s = \"111000111\"",
+      "output": "18"
+    },
+    {
+      "input": "s = \"1010101010101010\"",
+      "output": "30"
+    },
+    {
+      "input": "s = \"00000\"",
+      "output": "0"
+    },
+    {
+      "input": "s = \"10010010\"",
+      "output": "8"
+    },
+    {
+      "input": "s = \"000111000111000111000\"",
+      "output": "36"
+    },
+    {
+      "input": "s = \"111111111111111111111111\"",
+      "output": "300"
+    },
+    {
+      "input": "s = \"000011000110001100011000\"",
+      "output": "28"
+    },
+    {
+      "input": "s = \"1111110000000011\"",
+      "output": "35"
+    },
+    {
+      "input": "s = \"111000111000111000\"",
+      "output": "33"
+    },
+    {
+      "input": "s = \"1111000000000011111\"",
+      "output": "37"
+    },
+    {
+      "input": "s = \"000000111111000000111111\"",
+      "output": "70"
+    },
+    {
+      "input": "s = \"0110110110110110110\"",
+      "output": "88"
+    },
+    {
+      "input": "s = \"1101010101010101\"",
+      "output": "34"
+    },
+    {
+      "input": "s = \"111111111100000000000000000000\"",
+      "output": "74"
+    },
+    {
+      "input": "s = \"10101010101010101010101010101010101010101010101010\"",
+      "output": "98"
+    },
+    {
+      "input": "s = \"11000000001111111111\"",
+      "output": "79"
+    },
+    {
+      "input": "s = \"00111111001111110011111100111111001111110011111100111111001111110011\"",
+      "output": "657"
+    },
+    {
+      "input": "s = \"11110000000000000000000000000000000\"",
+      "output": "15"
+    },
+    {
+      "input": "s = \"111110000011111000001111100000\"",
+      "output": "82"
+    },
+    {
+      "input": "s = \"1100110011001100\"",
+      "output": "29"
+    },
+    {
+      "input": "s = \"00000000000000000000000000001111111\"",
+      "output": "39"
+    },
+    {
+      "input": "s = \"010101010101010101010101\"",
+      "output": "46"
+    },
+    {
+      "input": "s = \"1100110011001100110011001100110011001100110011001100110011001100110\"",
+      "output": "133"
+    },
+    {
+      "input": "s = \"0001110001110001\"",
+      "output": "26"
+    },
+    {
+      "input": "s = \"1001001001001001001001001001001001001001001001001001001001001001\"",
+      "output": "64"
+    },
+    {
+      "input": "s = \"000111000111000111\"",
+      "output": "33"
+    },
+    {
+      "input": "s = \"101010101010101010101010\"",
+      "output": "46"
+    },
+    {
+      "input": "s = \"1100000000000011\"",
+      "output": "10"
+    },
+    {
+      "input": "s = \"1000000000001000\"",
+      "output": "5"
+    },
+    {
+      "input": "s = \"111111111111111111111111111100000000000000000000\"",
+      "output": "496"
+    },
+    {
+      "input": "s = \"1000000000000011\"",
+      "output": "7"
+    },
+    {
+      "input": "s = \"010101010101010101\"",
+      "output": "34"
+    },
+    {
+      "input": "s = \"1000000000000000000000000000\"",
+      "output": "2"
+    },
+    {
+      "input": "s = \"111000111000111000111000111000\"",
+      "output": "57"
+    },
+    {
+      "input": "s = \"1111111000000000000\"",
+      "output": "39"
+    },
+    {
+      "input": "s = \"0000000000000000\"",
+      "output": "0"
+    },
+    {
+      "input": "s = \"11111000001111100000111110000011111\"",
+      "output": "104"
+    },
+    {
+      "input": "s = \"101010101010101010101010101010\"",
+      "output": "58"
+    },
+    {
+      "input": "s = \"0100111101110010\"",
+      "output": "60"
+    },
+    {
+      "input": "s = \"100100100100100100100\"",
+      "output": "20"
+    },
+    {
+      "input": "s = \"111100001111000011110000\"",
+      "output": "57"
+    },
+    {
+      "input": "s = \"0000000001111111110000000000\"",
+      "output": "80"
+    },
+    {
+      "input": "s = \"0011001100110011\"",
+      "output": "29"
+    },
+    {
+      "input": "s = \"11000011000011000011000011\"",
+      "output": "31"
+    },
+    {
+      "input": "s = \"0000111100001111000011110000\"",
+      "output": "63"
+    },
+    {
+      "input": "s = \"1000000010000000100000001\"",
+      "output": "10"
+    },
+    {
+      "input": "s = \"0000000000000000000000000000000000000000000000000000000000000000\"",
+      "output": "0"
+    },
+    {
+      "input": "s = \"11111000000000001111111111\"",
+      "output": "96"
+    },
+    {
+      "input": "s = \"000000010000000100000001\"",
+      "output": "8"
+    },
+    {
+      "input": "s = \"100010001000100010001000\"",
+      "output": "17"
+    },
+    {
+      "input": "s = \"11111111111111111111000000000000\"",
+      "output": "264"
+    },
+    {
+      "input": "s = \"1001001001001001001001001001001\"",
+      "output": "31"
+    },
+    {
+      "input": "s = \"0000000000000000000000000000000000000000\"",
+      "output": "0"
+    },
+    {
+      "input": "s = \"11110000111100001111\"",
+      "output": "51"
+    },
+    {
+      "input": "s = \"1111111110000000000000000000\"",
+      "output": "61"
+    },
+    {
+      "input": "s = \"010101010101010101010101010101010101010101010101\"",
+      "output": "94"
+    },
+    {
+      "input": "s = \"11111000001111100000111110000011111000001111100000111110000011111\"",
+      "output": "194"
+    },
+    {
+      "input": "s = \"111111111100000000001111111111\"",
+      "output": "148"
+    },
+    {
+      "input": "s = \"01010101010101010101010101010101010101010101010101\"",
+      "output": "98"
+    },
+    {
+      "input": "s = \"000000000000000000000000000000001111111111111111111111111111111\"",
+      "output": "601"
+    },
+    {
+      "input": "s = \"111000011111000\"",
+      "output": "39"
+    },
+    {
+      "input": "s = \"11111111111111111111\"",
+      "output": "210"
+    },
+    {
+      "input": "s = \"1001001001001001001001001001001001001001001001001001\"",
+      "output": "52"
+    },
+    {
+      "input": "s = \"0000000000000000000000000000001111111111111111111111111111111\"",
+      "output": "601"
+    },
+    {
+      "input": "s = \"1111111111111111\"",
+      "output": "136"
+    },
+    {
+      "input": "s = \"1111111111111111111111111111111111111111111111111111111111111111\"",
+      "output": "2080"
+    },
+    {
+      "input": "s = \"0000000111111111111\"",
+      "output": "103"
+    },
+    {
+      "input": "s = \"0101010111111111\"",
+      "output": "96"
+    },
+    {
+      "input": "s = \"00000000000000000000000000000000111111111111111111111111111111111\"",
+      "output": "676"
+    },
+    {
+      "input": "s = \"111111000000111111000000111111\"",
+      "output": "100"
+    },
+    {
+      "input": "s = \"0000000001111111\"",
+      "output": "39"
+    },
+    {
+      "input": "s = \"0001010101101011\"",
+      "output": "37"
+    },
+    {
+      "input": "s = \"00000000001111111111\"",
+      "output": "74"
+    },
+    {
+      "input": "s = \"0011001100110011001100110011001100110011001100110011001100110011001\"",
+      "output": "129"
+    },
+    {
+      "input": "s = \"1111100000111110000011111\"",
+      "output": "74"
+    },
+    {
+      "input": "s = \"111000111000111000111\"",
+      "output": "42"
+    },
+    {
+      "input": "s = \"1001001001001001\"",
+      "output": "16"
+    },
+    {
+      "input": "s = \"11001100110011001100\"",
+      "output": "37"
+    },
+    {
+      "input": "s = \"01010101010101010101010101010101\"",
+      "output": "62"
+    },
+    {
+      "input": "s = \"1110010001100011110\"",
+      "output": "40"
+    },
+    {
+      "input": "s = \"1111000000000000000000000000000000000000\"",
+      "output": "15"
+    },
+    {
+      "input": "s = \"00000000000000000000000000000000000000000000000000\"",
+      "output": "0"
+    },
+    {
+      "input": "s = \"1001001001001001001001\"",
+      "output": "22"
+    },
+    {
+      "input": "s = \"111000111000111000111000111\"",
+      "output": "54"
+    },
+    {
+      "input": "s = \"0000111111110000\"",
+      "output": "63"
+    },
+    {
+      "input": "s = \"0011110011110011\"",
+      "output": "65"
+    },
+    {
+      "input": "s = \"1111111100000000\"",
+      "output": "49"
+    },
+    {
+      "input": "s = \"1111000011110000111100001111000011110000\"",
+      "output": "99"
+    },
+    {
+      "input": "s = \"11100111001110011100111001110011100111001110011100\"",
+      "output": "171"
+    },
+    {
+      "input": "s = \"111110000111100001111\"",
+      "output": "58"
+    },
+    {
+      "input": "s = \"110000110000110000110000110000\"",
+      "output": "33"
+    },
+    {
+      "input": "s = \"0101010101010101\"",
+      "output": "30"
+    },
+    {
+      "input": "s = \"000000000000000000000000\"",
+      "output": "0"
+    },
+    {
+      "input": "s = \"111000111000111000111000111000111000111000111000\"",
+      "output": "93"
+    },
+    {
+      "input": "s = \"00000000000000000000000000000000000111111111111111\"",
+      "output": "154"
+    },
+    {
+      "input": "s = \"0000011111111100000\"",
+      "output": "80"
+    },
+    {
+      "input": "s = \"0000111111111111\"",
+      "output": "103"
+    },
+    {
+      "input": "s = \"000111000111000111000111000111\"",
+      "output": "57"
+    },
+    {
+      "input": "s = \"1000100010001000100\"",
+      "output": "14"
+    },
+    {
+      "input": "s = \"1001001001001001001\"",
+      "output": "19"
+    },
+    {
+      "input": "s = \"0110011001100110011001\"",
+      "output": "41"
+    },
+    {
+      "input": "s = \"11111111111111111000000000000000000000000000000000000000000000011\"",
+      "output": "200"
+    },
+    {
+      "input": "s = \"0010110101101011\"",
+      "output": "46"
+    },
+    {
+      "input": "s = \"000000000011111111110000000000\"",
+      "output": "96"
+    },
+    {
+      "input": "s = \"00000111110000011111000001111100000111110000011111000001111100000\"",
+      "output": "180"
+    },
+    {
+      "input": "s = \"11111111111111111111111111111111111111111111111111\"",
+      "output": "1275"
+    },
+    {
+      "input": "s = \"11011011011011011011011011011011011\"",
+      "output": "184"
+    },
+    {
+      "input": "s = \"1110001110001110\"",
+      "output": "33"
+    },
+    {
+      "input": "s = \"10010010010010010010010010010010\"",
+      "output": "32"
+    },
+    {
+      "input": "s = \"1110011100011100011\"",
+      "output": "44"
+    },
+    {
+      "input": "s = \"00000000000000000000\"",
+      "output": "0"
+    },
+    {
+      "input": "s = \"1111000011110000\"",
+      "output": "36"
+    },
+    {
+      "input": "s = \"10101010101010101010101010101010\"",
+      "output": "62"
+    },
+    {
+      "input": "s = \"01001001001001001001001\"",
+      "output": "23"
+    },
+    {
+      "input": "s = \"1111111111000000\"",
+      "output": "74"
+    },
+    {
+      "input": "s = \"0000000011111111\"",
+      "output": "49"
+    },
+    {
+      "input": "s = \"1111000000001111\"",
+      "output": "30"
+    },
+    {
+      "input": "s = \"01001001001001001001001001001001\"",
+      "output": "32"
+    },
+    {
+      "input": "s = \"1000001111110000\"",
+      "output": "42"
+    },
+    {
+      "input": "s = \"000000000011111111111111111111\"",
+      "output": "264"
+    },
+    {
+      "input": "s = \"1100001100001100\"",
+      "output": "19"
+    },
+    {
+      "input": "s = \"1111111111\"",
+      "output": "55"
+    },
+    {
+      "input": "s = \"1010101010101010101010101010101010101010\"",
+      "output": "78"
+    },
+    {
+      "input": "s = \"0110011001100110\"",
+      "output": "31"
+    },
+    {
+      "input": "s = \"1111000000000000111111111111\"",
+      "output": "118"
+    },
+    {
+      "input": "s = \"1111000011110000111100001111\"",
+      "output": "72"
+    },
+    {
+      "input": "s = \"00000000000000000001\"",
+      "output": "2"
+    },
+    {
+      "input": "s = \"0000000000111111\"",
+      "output": "30"
+    },
+    {
+      "input": "s = \"0011001100110011001100110011\"",
+      "output": "53"
+    },
+    {
+      "input": "s = \"01010101010101010101\"",
+      "output": "38"
+    },
+    {
+      "input": "s = \"111110111110111110111110111110\"",
+      "output": "453"
+    },
+    {
+      "input": "s = \"111110000000\"",
+      "output": "22"
+    },
+    {
+      "input": "s = \"1111111101010101\"",
+      "output": "84"
+    },
+    {
+      "input": "s = \"1101001010010100\"",
+      "output": "24"
+    },
+    {
+      "input": "s = \"1111010101010101\"",
+      "output": "45"
+    },
+    {
+      "input": "s = \"000001111100000111110000011111\"",
+      "output": "82"
+    },
+    {
+      "input": "s = \"0000000000000000000000000001\"",
+      "output": "2"
+    },
+    {
+      "input": "s = \"10101010101010101010\"",
+      "output": "38"
+    },
+    {
+      "input": "s = \"0110110110110110110110110110110\"",
+      "output": "156"
+    },
+    {
+      "input": "s = \"11111111111111110000000000\"",
+      "output": "174"
+    },
+    {
+      "input": "s = \"0000111100001111\"",
+      "output": "36"
+    }
+  ],
+  "types": {
+    "python3": {
+      "input": [
+        {
+          "s": "str"
+        }
+      ],
+      "output": "int"
+    },
+    "cpp": {
+      "input": [
+        {
+          "s": "string"
+        }
+      ],
+      "output": "int"
+    },
+    "java": {
+      "input": [
+        {
+          "s": "String"
+        }
+      ],
+      "output": "int"
+    },
+    "javascript": {
+      "input": [
+        {
+          "s": "string"
+        }
+      ],
+      "output": "number"
+    },
+    "typescript": {
+      "input": [
+        {
+          "s": "string"
+        }
+      ],
+      "output": "number"
+    },
+    "golang": {
+      "input": [
+        {
+          "s": "string"
+        }
+      ],
+      "output": "int"
+    },
+    "rust": {
+      "input": [
+        {
+          "s": "String"
+        }
+      ],
+      "output": "i32"
+    }
+  },
+  "tags": [
+    "string",
+    "sliding-window",
+    "enumeration"
+  ]
+}

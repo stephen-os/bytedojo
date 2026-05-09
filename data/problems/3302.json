@@ -1,0 +1,772 @@
+{
+  "id": 3302,
+  "title": "Find the Lexicographically Smallest Valid Sequence",
+  "slug": "find-the-lexicographically-smallest-valid-sequence",
+  "difficulty": "Medium",
+  "description": "You are given two strings word1 and word2.\nA string x is called almost equal to y if you can change at most one character in x to make it identical to y.\nA sequence of indices seq is called valid if:\nReturn an array of size word2.length representing the lexicographically smallest valid sequence of indices. If no such sequence of indices exists, return an empty array.\nNote that the answer must represent the lexicographically smallest array, not the corresponding string formed by those indices.\nExample 1:\nExample 2:\nExample 3:\nExample 4:\nConstraints:",
+  "examples": [
+    {
+      "example_num": 1,
+      "example_text": "Input: word1 = \"vbcca\", word2 = \"abc\"\nOutput: [0,1,2]\nExplanation:\nThe lexicographically smallest valid sequence of indices is [0, 1, 2] :",
+      "images": []
+    },
+    {
+      "example_num": 2,
+      "example_text": "Input: word1 = \"bacdc\", word2 = \"abc\"\nOutput: [1,2,4]\nExplanation:\nThe lexicographically smallest valid sequence of indices is [1, 2, 4] :",
+      "images": []
+    },
+    {
+      "example_num": 3,
+      "example_text": "Input: word1 = \"aaaaaa\", word2 = \"aaabc\"\nOutput: []\nExplanation:\nThere is no valid sequence of indices.",
+      "images": []
+    },
+    {
+      "example_num": 4,
+      "example_text": "Input: word1 = \"abc\", word2 = \"ab\"\nOutput: [0,1]",
+      "images": []
+    }
+  ],
+  "constraints": [
+    "1 <= word2.length < word1.length <= 3 * 105",
+    "word1 and word2 consist only of lowercase English letters."
+  ],
+  "hints": [
+    "Let <code>dp[i]</code> be the longest suffix of <code>word2</code> that exists as a subsequence of suffix of the substring of <code>word1</code> starting at index <code>i</code>.",
+    "If <code>dp[i + 1] < m</code> and <code>word1[i] == word2[m - dp[i + 1] - 1]</code>,<code>dp[i] =  dp[i + 1] + 1</code>. Otherwise, <code>dp[i] =  dp[i + 1]</code>.",
+    "For each index <code>i</code>, greedily select characters using the <code>dp</code> array to know whether a solution exists."
+  ],
+  "code_snippets": {
+    "cpp": "class Solution {\npublic:\n    vector<int> validSequence(string word1, string word2) {\n        \n    }\n};",
+    "java": "class Solution {\n    public int[] validSequence(String word1, String word2) {\n        \n    }\n}",
+    "python3": "class Solution:\n    def validSequence(self, word1: str, word2: str) -> List[int]:\n        ",
+    "javascript": "/**\n * @param {string} word1\n * @param {string} word2\n * @return {number[]}\n */\nvar validSequence = function(word1, word2) {\n    \n};",
+    "typescript": "function validSequence(word1: string, word2: string): number[] {\n    \n};",
+    "golang": "func validSequence(word1 string, word2 string) []int {\n    \n}",
+    "rust": "impl Solution {\n    pub fn valid_sequence(word1: String, word2: String) -> Vec<i32> {\n        \n    }\n}"
+  },
+  "entry_points": {
+    "python3": "Solution().validSequence",
+    "cpp": "Solution().validSequence",
+    "java": "new Solution().validSequence",
+    "javascript": "validSequence",
+    "typescript": "validSequence",
+    "golang": "validSequence",
+    "rust": "Solution::valid_sequence"
+  },
+  "test_snippets": {
+    "python3": "def check(candidate):\n    assert candidate(word1 = \"hello\", word2 = \"heo\") == [0, 1, 2]\n    assert candidate(word1 = \"abcdefghijklmnopqrstuvwxyz\", word2 = \"abcdefghijklmnopqrstuvwxyz\") == [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25]\n    assert candidate(word1 = \"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", word2 = \"abc\") == []\n    assert candidate(word1 = \"abcde\", word2 = \"edcba\") == []\n    assert candidate(word1 = \"abcdefg\", word2 = \"bdf\") == [0, 3, 5]\n    assert candidate(word1 = \"mississippi\", word2 = \"issi\") == [0, 2, 3, 4]\n    assert candidate(word1 = \"vbcca\", word2 = \"abc\") == [0, 1, 2]\n    assert candidate(word1 = \"leetcode\", word2 = \"code\") == [0, 5, 6, 7]\n    assert candidate(word1 = \"bacdc\", word2 = \"abc\") == [1, 2, 4]\n    assert candidate(word1 = \"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", word2 = \"aaa\") == []\n    assert candidate(word1 = \"xyz\", word2 = \"xy\") == [0, 1]\n    assert candidate(word1 = \"abcabcabc\", word2 = \"abc\") == [0, 1, 2]\n    assert candidate(word1 = \"abcdefghijklmnopqrstuvwxyz\", word2 = \"abc\") == [0, 1, 2]\n    assert candidate(word1 = \"abcdefghijklmnopqrstuvwxyz\", word2 = \"aaa\") == []\n    assert candidate(word1 = \"zyxwvutsrqponmlkjihgfedcba\", word2 = \"xyz\") == []\n    assert candidate(word1 = \"abcdefghij\", word2 = \"aceg\") == [0, 1, 4, 6]\n    assert candidate(word1 = \"xyzz\", word2 = \"xyz\") == [0, 1, 2]\n    assert candidate(word1 = \"aabbccddeeff\", word2 = \"abcdef\") == [0, 1, 4, 6, 8, 10]\n    assert candidate(word1 = \"abcdefghijklmnopqrstuvwxyz\", word2 = \"zzz\") == []\n    assert candidate(word1 = \"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", word2 = \"zyxwvutsrqponmlkjihgfedcba\") == []\n    assert candidate(word1 = \"abcdefghijklmnopqrstuvwxyz\", word2 = \"az\") == [0, 1]\n    assert candidate(word1 = \"leetcode\", word2 = \"leet\") == [0, 1, 2, 3]\n    assert candidate(word1 = \"abababababab\", word2 = \"aab\") == [0, 1, 3]\n    assert candidate(word1 = \"zzzzzzzzzzzz\", word2 = \"zzz\") == [0, 1, 2]\n    assert candidate(word1 = \"aaabaaa\", word2 = \"aaa\") == [0, 1, 2]\n    assert candidate(word1 = \"aabbcc\", word2 = \"abc\") == [0, 1, 4]\n    assert candidate(word1 = \"aaaaaa\", word2 = \"aaabc\") == []\n    assert candidate(word1 = \"mississippi\", word2 = \"sip\") == [0, 1, 8]\n    assert candidate(word1 = \"zzzzz\", word2 = \"aaa\") == []\n    assert candidate(word1 = \"abababababababababababababababababababababababababababab\", word2 = \"aaa\") == [0, 1, 2]\n    assert candidate(word1 = \"abc\", word2 = \"ab\") == [0, 1]\n    assert candidate(word1 = \"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\", word2 = \"aaaaaa\") == [0, 1, 2, 3, 4, 5]\n    assert candidate(word1 = \"abcdefghijklmnopqrstuvwxyz\", word2 = \"zyxwvutsrqponmlkjihgfedcba\") == []\n    assert candidate(word1 = \"abababababababababab\", word2 = \"ababab\") == [0, 1, 2, 3, 4, 5]\n    assert candidate(word1 = \"hellohellohello\", word2 = \"ell\") == [0, 2, 3]\n    assert candidate(word1 = \"abcdefghijklmnopqrstuvwxyz\", word2 = \"abcdefghijklmnopqxyz\") == [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 24, 25]\n    assert candidate(word1 = \"abcdefghijklmnopqrstuvwxyz\", word2 = \"adgjmoqsuwy\") == [0, 1, 6, 9, 12, 14, 16, 18, 20, 22, 24]\n    assert candidate(word1 = \"axxayyazz\", word2 = \"xyz\") == [0, 4, 7]\n    assert candidate(word1 = \"abracadabra\", word2 = \"abra\") == [0, 1, 2, 3]\n    assert candidate(word1 = \"abcdefghijklmnopqrstuvwxyz\", word2 = \"qrstuvwxyzz\") == []\n    assert candidate(word1 = \"zyxzyxzyxzyxzyxzyxzyxzyxzyxzyx\", word2 = \"zyxzyxzyxzyx\") == [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]\n    assert candidate(word1 = \"sequenceofcharacters\", word2 = \"sequence\") == [0, 1, 2, 3, 4, 5, 6, 7]\n    assert candidate(word1 = \"abcdefghijklmnopqrstuvwxyz\", word2 = \"zyxwvut\") == []\n    assert candidate(word1 = \"abracadabra\", word2 = \"acad\") == [0, 1, 3, 6]\n    assert candidate(word1 = \"thequickbrownfoxjumpsoverthelazydog\", word2 = \"thezog\") == [0, 1, 2, 3, 10, 34]\n    assert candidate(word1 = \"ababababababababab\", word2 = \"aba\") == [0, 1, 2]\n    assert candidate(word1 = \"aababababa\", word2 = \"aaa\") == [0, 1, 2]\n    assert candidate(word1 = \"xyzz\", word2 = \"zyx\") == []\n    assert candidate(word1 = \"abcdefghijklmnopqrstuvwxyz\", word2 = \"xyz\") == [0, 24, 25]\n    assert candidate(word1 = \"abcdexyz\", word2 = \"xyz\") == [0, 6, 7]\n    assert candidate(word1 = \"xyzxyzxyzxyzxyzxyzxyzxyz\", word2 = \"xyzxyzxyz\") == [0, 1, 2, 3, 4, 5, 6, 7, 8]\n    assert candidate(word1 = \"abcdefg\", word2 = \"aceg\") == [0, 1, 4, 6]\n    assert candidate(word1 = \"axbxcxdxe\", word2 = \"abcde\") == [0, 1, 4, 6, 8]\n    assert candidate(word1 = \"abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz\", word2 = \"zyxwvutsrqponmlkjihgfedcba\") == []\n    assert candidate(word1 = \"abcdefghijklmnopqrstuvwxyz\", word2 = \"abcde\") == [0, 1, 2, 3, 4]\n    assert candidate(word1 = \"abcdefghij\", word2 = \"jihgfedcba\") == []\n    assert candidate(word1 = \"xyxyxyxyxy\", word2 = \"xyxy\") == [0, 1, 2, 3]\n    assert candidate(word1 = \"aabbaabbaabbaabbaabbaabb\", word2 = \"aaabb\") == [0, 1, 2, 3, 6]\n    assert candidate(word1 = \"abcdefghijklmnopqrstuvwxyz\", word2 = \"mnopq\") == [0, 13, 14, 15, 16]\n    assert candidate(word1 = \"abababababababab\", word2 = \"abab\") == [0, 1, 2, 3]\n    assert candidate(word1 = \"abacabadabacabadabacabadabacabad\", word2 = \"abcabcabc\") == [0, 1, 2, 4, 5, 11, 12, 13, 19]\n    assert candidate(word1 = \"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", word2 = \"abcdefghijklmnopqrstuvwxy\") == [0, 1, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36, 38, 40, 42, 44, 46, 48]\n    assert candidate(word1 = \"abcdabcdabcd\", word2 = \"abcd\") == [0, 1, 2, 3]\n    assert candidate(word1 = \"abcdefghijklmnopqrstuvwxyz\", word2 = \"abcdefghijklmnop\") == [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]\n    assert candidate(word1 = \"abcdefghijabcdefghijabcdefghij\", word2 = \"abcdefghij\") == [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]\n    assert candidate(word1 = \"abacabadabacaba\", word2 = \"abab\") == [0, 1, 2, 3]\n    assert candidate(word1 = \"aaaabbbbcccc\", word2 = \"abccba\") == []\n    assert candidate(word1 = \"qwertyuiopasdfghjklzxcvbnm\", word2 = \"qaz\") == [0, 1, 19]\n    assert candidate(word1 = \"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", word2 = \"zzz\") == [0, 1, 2]\n    assert candidate(word1 = \"bacdefghijklmnopqrstuvwxyz\", word2 = \"abcdefg\") == []\n    assert candidate(word1 = \"alibabacloud\", word2 = \"abcl\") == [0, 1, 7, 8]\n    assert candidate(word1 = \"aaaaaaaabbbbbbbbbbcccccccccddddddeeeeeeeeeeffffffffff\", word2 = \"abcdefghij\") == []\n    assert candidate(word1 = \"bbaabbaabbaabbaabbaabbaabbaab\", word2 = \"bbabbb\") == [0, 1, 2, 3, 4, 5]\n    assert candidate(word1 = \"abcdefghij\", word2 = \"afh\") == [0, 1, 7]\n    assert candidate(word1 = \"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", word2 = \"abc\") == []\n    assert candidate(word1 = \"abcdexyz\", word2 = \"abcdef\") == [0, 1, 2, 3, 4, 5]\n    assert candidate(word1 = \"banana\", word2 = \"an\") == [0, 2]\n    assert candidate(word1 = \"abcdefghijklmnopqrstuvwxyz\", word2 = \"abcdefg\") == [0, 1, 2, 3, 4, 5, 6]\n    assert candidate(word1 = \"abcdefghijklmnopqrstuvwxyz\", word2 = \"abcdefghijklmnopqrstu\") == [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]\n    assert candidate(word1 = \"abababababababababababababababababababababababababababababababababababababababababababababababababababababababab\", word2 = \"abab\") == [0, 1, 2, 3]\n    assert candidate(word1 = \"zzzzyyyxxxwwwwvvvvuuuuttttssssrrrrqqqqppppooooonnnnmmmmllllkkkkjjjjiiiihhhhggggffffffeeeeeeeedddddccccbbbaaaa\", word2 = \"abcdefg\") == []\n    assert candidate(word1 = \"xyzzyxzyxzyxzyxzyx\", word2 = \"xyzzyx\") == [0, 1, 2, 3, 4, 5]\n    assert candidate(word1 = \"acacacacacacacacac\", word2 = \"aaaa\") == [0, 1, 2, 4]\n    assert candidate(word1 = \"bbaaabbbaaabbbaaabbbaa\", word2 = \"baaba\") == [0, 1, 2, 5, 8]\n    assert candidate(word1 = \"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", word2 = \"abcdefghijklmnopqrstuvwxyz\") == [0, 1, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36, 38, 40, 42, 44, 46, 48, 50]\n    assert candidate(word1 = \"banana\", word2 = \"bana\") == [0, 1, 2, 3]\n    assert candidate(word1 = \"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", word2 = \"zzzyxwvutsrqponmlkjihgfedcba\") == []\n    assert candidate(word1 = \"abbaabbaabba\", word2 = \"abab\") == [0, 1, 2, 5]\n    assert candidate(word1 = \"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", word2 = \"mnopqrstuvwxyz\") == [0, 26, 28, 30, 32, 34, 36, 38, 40, 42, 44, 46, 48, 50]\n    assert candidate(word1 = \"abcdabcabcabcabcabcabcabcabcabcabc\", word2 = \"abcde\") == [0, 1, 2, 3, 4]\n    assert candidate(word1 = \"abcabcabcabcabcabcabcabcabcabc\", word2 = \"abcabc\") == [0, 1, 2, 3, 4, 5]\n    assert candidate(word1 = \"thisisalongstring\", word2 = \"this\") == [0, 1, 2, 3]\n    assert candidate(word1 = \"zyxwvutsrqponmlkjihgfedcba\", word2 = \"fedcba\") == [0, 21, 22, 23, 24, 25]\n    assert candidate(word1 = \"qwertyuiopasdfghjklzxcvbnm\", word2 = \"qwertyuiop\") == [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]\n    assert candidate(word1 = \"abcdefghijklmnopqrstuvwxyz\", word2 = \"qrstuv\") == [0, 17, 18, 19, 20, 21]\n    assert candidate(word1 = \"abcdabc\", word2 = \"abc\") == [0, 1, 2]\n    assert candidate(word1 = \"abcdabcdabcdabcd\", word2 = \"abca\") == [0, 1, 2, 3]\n    assert candidate(word1 = \"abacabadabacaba\", word2 = \"abada\") == [0, 1, 2, 3, 4]\n    assert candidate(word1 = \"racecar\", word2 = \"ace\") == [0, 2, 3]\n    assert candidate(word1 = \"abcabcabcabcabcabcabc\", word2 = \"abcabc\") == [0, 1, 2, 3, 4, 5]\n    assert candidate(word1 = \"bbaaaabaaaabbaa\", word2 = \"bab\") == [0, 1, 6]\n    assert candidate(word1 = \"abababababababababab\", word2 = \"aaa\") == [0, 1, 2]\n    assert candidate(word1 = \"abcdabcdabcdabcd\", word2 = \"abcdabcd\") == [0, 1, 2, 3, 4, 5, 6, 7]\n    assert candidate(word1 = \"aaaaabbbbbcccccddddd\", word2 = \"abcde\") == [0, 5, 10, 15, 16]\n    assert candidate(word1 = \"xyzzxyzzxyzz\", word2 = \"xyzxyz\") == [0, 1, 2, 3, 5, 6]\n    assert candidate(word1 = \"abcdefghiklmnopqrstuvwxyz\", word2 = \"aikuyz\") == [0, 1, 9, 19, 23, 24]\n    assert candidate(word1 = \"amazingrace\", word2 = \"amazing\") == [0, 1, 2, 3, 4, 5, 6]\n    assert candidate(word1 = \"pythonprogramming\", word2 = \"python\") == [0, 1, 2, 3, 4, 5]\n    assert candidate(word1 = \"aabbaabbaabbaabb\", word2 = \"aabb\") == [0, 1, 2, 3]\n    assert candidate(word1 = \"abacabadabacabadabacabad\", word2 = \"abcabc\") == [0, 1, 2, 4, 5, 11]\n    assert candidate(word1 = \"abcdefghijklmnopqrstuvwxyz\", word2 = \"xyzabc\") == []\n    assert candidate(word1 = \"abcdefghijklmnopqrstuvwxyzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", word2 = \"abcdefghijklmnopqrstuvwxyz\") == [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25]\n    assert candidate(word1 = \"acbacbacbac\", word2 = \"abcabc\") == [0, 1, 4, 6, 8, 10]\n    assert candidate(word1 = \"abacaba\", word2 = \"aaa\") == [0, 1, 2]\n    assert candidate(word1 = \"repeatedrepeatedrepeated\", word2 = \"repeated\") == [0, 1, 2, 3, 4, 5, 6, 7]\n    assert candidate(word1 = \"xyzxyzxyzxyzxyzxyzxyz\", word2 = \"xyzxyz\") == [0, 1, 2, 3, 4, 5]\n    assert candidate(word1 = \"abcdefgabcdefgabcdefgabcdefg\", word2 = \"abcdefg\") == [0, 1, 2, 3, 4, 5, 6]\n    assert candidate(word1 = \"aaabbbcccdddeeefffggghhhiii\", word2 = \"abcdefghi\") == [0, 1, 6, 9, 12, 15, 18, 21, 24]\n    assert candidate(word1 = \"xyzxyzxyzxyz\", word2 = \"xyzxyz\") == [0, 1, 2, 3, 4, 5]\n    assert candidate(word1 = \"mississippi\", word2 = \"miss\") == [0, 1, 2, 3]\n    assert candidate(word1 = \"foobartoobarfoo\", word2 = \"foobar\") == [0, 1, 2, 3, 4, 5]\n    assert candidate(word1 = \"aabbaabbaabbaabbaabb\", word2 = \"aabbaab\") == [0, 1, 2, 3, 4, 5, 6]\n    assert candidate(word1 = \"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", word2 = \"zzzzzz\") == [0, 1, 2, 3, 4, 5]\n    assert candidate(word1 = \"mississippi\", word2 = \"mis\") == [0, 1, 2]\n    assert candidate(word1 = \"hellotherehellotherehellotherehellotherehellotherehellotherehellotherehellotherehellothere\", word2 = \"here\") == [0, 1, 2, 7]\n    assert candidate(word1 = \"thisisaverylongstringthatweneedtouse\", word2 = \"string\") == [0, 16, 17, 18, 19, 20]\n    assert candidate(word1 = \"xyzzxyzzxyzzxyzz\", word2 = \"zzzz\") == [0, 2, 3, 6]\n    assert candidate(word1 = \"abcabcabcabcabc\", word2 = \"abcabc\") == [0, 1, 2, 3, 4, 5]\n    assert candidate(word1 = \"hellothere\", word2 = \"her\") == [0, 1, 2]\n    assert candidate(word1 = \"abacabadabacaba\", word2 = \"abc\") == [0, 1, 2]\n    assert candidate(word1 = \"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", word2 = \"abcdefghijklmnopqrstuvw\") == [0, 1, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36, 38, 40, 42, 44]\n    assert candidate(word1 = \"pneumonoultramicroscopicsilicovolcanoconiosis\", word2 = \"pneumo\") == [0, 1, 2, 3, 4, 5]\n    assert candidate(word1 = \"baaabaaaabaaabaababaaaab\", word2 = \"baaba\") == [0, 1, 2, 3, 5]\n    assert candidate(word1 = \"abacabadabacaba\", word2 = \"abaca\") == [0, 1, 2, 3, 4]\n    assert candidate(word1 = \"zyxwvutsrqponmlkjihgfedcba\", word2 = \"abcde\") == []\n    assert candidate(word1 = \"hellohellohellohellohellohello\", word2 = \"hello\") == [0, 1, 2, 3, 4]\n    assert candidate(word1 = \"hellohellohello\", word2 = \"helo\") == [0, 1, 2, 3]\n    assert candidate(word1 = \"zyxwvutsrqponmlkjihgfedcba\", word2 = \"mnopqrstuvwxyza\") == []\n    assert candidate(word1 = \"xxxxxxxxxyyyyyyyyyzzzzzzzzz\", word2 = \"xyz\") == [0, 1, 18]\n    assert candidate(word1 = \"zyxzyxzyxzyxzyxzyxzyxzyxzyx\", word2 = \"zyxzyxzyx\") == [0, 1, 2, 3, 4, 5, 6, 7, 8]\n    assert candidate(word1 = \"abababab\", word2 = \"aba\") == [0, 1, 2]\n    assert candidate(word1 = \"zyxwvutsrqponmlkjihgfedcba\", word2 = \"zyxwv\") == [0, 1, 2, 3, 4]\n    assert candidate(word1 = \"programming\", word2 = \"pgm\") == [0, 1, 6]\n    assert candidate(word1 = \"abacabadabacabadabacaba\", word2 = \"ababa\") == [0, 1, 2, 3, 4]\n    assert candidate(word1 = \"zzzzzzzzzzzzzzzzzzzzzzzzzzzz\", word2 = \"zzz\") == [0, 1, 2]\n    assert candidate(word1 = \"abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz\", word2 = \"abcdefghijklmnopqrstuvwxyz\") == [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25]\n    assert candidate(word1 = \"abacabadabacabadaba\", word2 = \"abc\") == [0, 1, 2]\n    assert candidate(word1 = \"aaaabbbbccccddddeeeeffffgggg\", word2 = \"abcdefg\") == [0, 1, 8, 12, 16, 20, 24]\n    assert candidate(word1 = \"aaaaaabbbaaaaabaaaaabbbaaa\", word2 = \"aabbaab\") == [0, 1, 2, 6, 9, 10, 14]\n    assert candidate(word1 = \"qwertyuiopasdfghjklzxcvbnm\", word2 = \"qwerty\") == [0, 1, 2, 3, 4, 5]\n    assert candidate(word1 = \"qwertyuiopasdfghjklzxcvbnm\", word2 = \"qzpm\") == [0, 1, 9, 25]\n    assert candidate(word1 = \"mississippiississippi\", word2 = \"misis\") == [0, 1, 2, 3, 5]\n    assert candidate(word1 = \"thisisaverylongstringwithsomerepeatingcharacters\", word2 = \"thisis\") == [0, 1, 2, 3, 4, 5]\n    assert candidate(word1 = \"pppppppppppppppppp\", word2 = \"ppp\") == [0, 1, 2]\n    assert candidate(word1 = \"abcdefghijklmnopqrstuvwxyz\", word2 = \"zyx\") == []",
+    "cpp": "void check(Solution& solution) {\n    assert(solution.validSequence(\"hello\", \"heo\") == vector<int>{0, 1, 2});\n    assert(solution.validSequence(\"abcdefghijklmnopqrstuvwxyz\", \"abcdefghijklmnopqrstuvwxyz\") == vector<int>{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25});\n    assert(solution.validSequence(\"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", \"abc\") == vector<int>{});\n    assert(solution.validSequence(\"abcde\", \"edcba\") == vector<int>{});\n    assert(solution.validSequence(\"abcdefg\", \"bdf\") == vector<int>{0, 3, 5});\n    assert(solution.validSequence(\"mississippi\", \"issi\") == vector<int>{0, 2, 3, 4});\n    assert(solution.validSequence(\"vbcca\", \"abc\") == vector<int>{0, 1, 2});\n    assert(solution.validSequence(\"leetcode\", \"code\") == vector<int>{0, 5, 6, 7});\n    assert(solution.validSequence(\"bacdc\", \"abc\") == vector<int>{1, 2, 4});\n    assert(solution.validSequence(\"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", \"aaa\") == vector<int>{});\n    assert(solution.validSequence(\"xyz\", \"xy\") == vector<int>{0, 1});\n    assert(solution.validSequence(\"abcabcabc\", \"abc\") == vector<int>{0, 1, 2});\n    assert(solution.validSequence(\"abcdefghijklmnopqrstuvwxyz\", \"abc\") == vector<int>{0, 1, 2});\n    assert(solution.validSequence(\"abcdefghijklmnopqrstuvwxyz\", \"aaa\") == vector<int>{});\n    assert(solution.validSequence(\"zyxwvutsrqponmlkjihgfedcba\", \"xyz\") == vector<int>{});\n    assert(solution.validSequence(\"abcdefghij\", \"aceg\") == vector<int>{0, 1, 4, 6});\n    assert(solution.validSequence(\"xyzz\", \"xyz\") == vector<int>{0, 1, 2});\n    assert(solution.validSequence(\"aabbccddeeff\", \"abcdef\") == vector<int>{0, 1, 4, 6, 8, 10});\n    assert(solution.validSequence(\"abcdefghijklmnopqrstuvwxyz\", \"zzz\") == vector<int>{});\n    assert(solution.validSequence(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", \"zyxwvutsrqponmlkjihgfedcba\") == vector<int>{});\n    assert(solution.validSequence(\"abcdefghijklmnopqrstuvwxyz\", \"az\") == vector<int>{0, 1});\n    assert(solution.validSequence(\"leetcode\", \"leet\") == vector<int>{0, 1, 2, 3});\n    assert(solution.validSequence(\"abababababab\", \"aab\") == vector<int>{0, 1, 3});\n    assert(solution.validSequence(\"zzzzzzzzzzzz\", \"zzz\") == vector<int>{0, 1, 2});\n    assert(solution.validSequence(\"aaabaaa\", \"aaa\") == vector<int>{0, 1, 2});\n    assert(solution.validSequence(\"aabbcc\", \"abc\") == vector<int>{0, 1, 4});\n    assert(solution.validSequence(\"aaaaaa\", \"aaabc\") == vector<int>{});\n    assert(solution.validSequence(\"mississippi\", \"sip\") == vector<int>{0, 1, 8});\n    assert(solution.validSequence(\"zzzzz\", \"aaa\") == vector<int>{});\n    assert(solution.validSequence(\"abababababababababababababababababababababababababababab\", \"aaa\") == vector<int>{0, 1, 2});\n    assert(solution.validSequence(\"abc\", \"ab\") == vector<int>{0, 1});\n    assert(solution.validSequence(\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\", \"aaaaaa\") == vector<int>{0, 1, 2, 3, 4, 5});\n    assert(solution.validSequence(\"abcdefghijklmnopqrstuvwxyz\", \"zyxwvutsrqponmlkjihgfedcba\") == vector<int>{});\n    assert(solution.validSequence(\"abababababababababab\", \"ababab\") == vector<int>{0, 1, 2, 3, 4, 5});\n    assert(solution.validSequence(\"hellohellohello\", \"ell\") == vector<int>{0, 2, 3});\n    assert(solution.validSequence(\"abcdefghijklmnopqrstuvwxyz\", \"abcdefghijklmnopqxyz\") == vector<int>{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 24, 25});\n    assert(solution.validSequence(\"abcdefghijklmnopqrstuvwxyz\", \"adgjmoqsuwy\") == vector<int>{0, 1, 6, 9, 12, 14, 16, 18, 20, 22, 24});\n    assert(solution.validSequence(\"axxayyazz\", \"xyz\") == vector<int>{0, 4, 7});\n    assert(solution.validSequence(\"abracadabra\", \"abra\") == vector<int>{0, 1, 2, 3});\n    assert(solution.validSequence(\"abcdefghijklmnopqrstuvwxyz\", \"qrstuvwxyzz\") == vector<int>{});\n    assert(solution.validSequence(\"zyxzyxzyxzyxzyxzyxzyxzyxzyxzyx\", \"zyxzyxzyxzyx\") == vector<int>{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11});\n    assert(solution.validSequence(\"sequenceofcharacters\", \"sequence\") == vector<int>{0, 1, 2, 3, 4, 5, 6, 7});\n    assert(solution.validSequence(\"abcdefghijklmnopqrstuvwxyz\", \"zyxwvut\") == vector<int>{});\n    assert(solution.validSequence(\"abracadabra\", \"acad\") == vector<int>{0, 1, 3, 6});\n    assert(solution.validSequence(\"thequickbrownfoxjumpsoverthelazydog\", \"thezog\") == vector<int>{0, 1, 2, 3, 10, 34});\n    assert(solution.validSequence(\"ababababababababab\", \"aba\") == vector<int>{0, 1, 2});\n    assert(solution.validSequence(\"aababababa\", \"aaa\") == vector<int>{0, 1, 2});\n    assert(solution.validSequence(\"xyzz\", \"zyx\") == vector<int>{});\n    assert(solution.validSequence(\"abcdefghijklmnopqrstuvwxyz\", \"xyz\") == vector<int>{0, 24, 25});\n    assert(solution.validSequence(\"abcdexyz\", \"xyz\") == vector<int>{0, 6, 7});\n    assert(solution.validSequence(\"xyzxyzxyzxyzxyzxyzxyzxyz\", \"xyzxyzxyz\") == vector<int>{0, 1, 2, 3, 4, 5, 6, 7, 8});\n    assert(solution.validSequence(\"abcdefg\", \"aceg\") == vector<int>{0, 1, 4, 6});\n    assert(solution.validSequence(\"axbxcxdxe\", \"abcde\") == vector<int>{0, 1, 4, 6, 8});\n    assert(solution.validSequence(\"abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz\", \"zyxwvutsrqponmlkjihgfedcba\") == vector<int>{});\n    assert(solution.validSequence(\"abcdefghijklmnopqrstuvwxyz\", \"abcde\") == vector<int>{0, 1, 2, 3, 4});\n    assert(solution.validSequence(\"abcdefghij\", \"jihgfedcba\") == vector<int>{});\n    assert(solution.validSequence(\"xyxyxyxyxy\", \"xyxy\") == vector<int>{0, 1, 2, 3});\n    assert(solution.validSequence(\"aabbaabbaabbaabbaabbaabb\", \"aaabb\") == vector<int>{0, 1, 2, 3, 6});\n    assert(solution.validSequence(\"abcdefghijklmnopqrstuvwxyz\", \"mnopq\") == vector<int>{0, 13, 14, 15, 16});\n    assert(solution.validSequence(\"abababababababab\", \"abab\") == vector<int>{0, 1, 2, 3});\n    assert(solution.validSequence(\"abacabadabacabadabacabadabacabad\", \"abcabcabc\") == vector<int>{0, 1, 2, 4, 5, 11, 12, 13, 19});\n    assert(solution.validSequence(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", \"abcdefghijklmnopqrstuvwxy\") == vector<int>{0, 1, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36, 38, 40, 42, 44, 46, 48});\n    assert(solution.validSequence(\"abcdabcdabcd\", \"abcd\") == vector<int>{0, 1, 2, 3});\n    assert(solution.validSequence(\"abcdefghijklmnopqrstuvwxyz\", \"abcdefghijklmnop\") == vector<int>{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15});\n    assert(solution.validSequence(\"abcdefghijabcdefghijabcdefghij\", \"abcdefghij\") == vector<int>{0, 1, 2, 3, 4, 5, 6, 7, 8, 9});\n    assert(solution.validSequence(\"abacabadabacaba\", \"abab\") == vector<int>{0, 1, 2, 3});\n    assert(solution.validSequence(\"aaaabbbbcccc\", \"abccba\") == vector<int>{});\n    assert(solution.validSequence(\"qwertyuiopasdfghjklzxcvbnm\", \"qaz\") == vector<int>{0, 1, 19});\n    assert(solution.validSequence(\"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", \"zzz\") == vector<int>{0, 1, 2});\n    assert(solution.validSequence(\"bacdefghijklmnopqrstuvwxyz\", \"abcdefg\") == vector<int>{});\n    assert(solution.validSequence(\"alibabacloud\", \"abcl\") == vector<int>{0, 1, 7, 8});\n    assert(solution.validSequence(\"aaaaaaaabbbbbbbbbbcccccccccddddddeeeeeeeeeeffffffffff\", \"abcdefghij\") == vector<int>{});\n    assert(solution.validSequence(\"bbaabbaabbaabbaabbaabbaabbaab\", \"bbabbb\") == vector<int>{0, 1, 2, 3, 4, 5});\n    assert(solution.validSequence(\"abcdefghij\", \"afh\") == vector<int>{0, 1, 7});\n    assert(solution.validSequence(\"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", \"abc\") == vector<int>{});\n    assert(solution.validSequence(\"abcdexyz\", \"abcdef\") == vector<int>{0, 1, 2, 3, 4, 5});\n    assert(solution.validSequence(\"banana\", \"an\") == vector<int>{0, 2});\n    assert(solution.validSequence(\"abcdefghijklmnopqrstuvwxyz\", \"abcdefg\") == vector<int>{0, 1, 2, 3, 4, 5, 6});\n    assert(solution.validSequence(\"abcdefghijklmnopqrstuvwxyz\", \"abcdefghijklmnopqrstu\") == vector<int>{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20});\n    assert(solution.validSequence(\"abababababababababababababababababababababababababababababababababababababababababababababababababababababababab\", \"abab\") == vector<int>{0, 1, 2, 3});\n    assert(solution.validSequence(\"zzzzyyyxxxwwwwvvvvuuuuttttssssrrrrqqqqppppooooonnnnmmmmllllkkkkjjjjiiiihhhhggggffffffeeeeeeeedddddccccbbbaaaa\", \"abcdefg\") == vector<int>{});\n    assert(solution.validSequence(\"xyzzyxzyxzyxzyxzyx\", \"xyzzyx\") == vector<int>{0, 1, 2, 3, 4, 5});\n    assert(solution.validSequence(\"acacacacacacacacac\", \"aaaa\") == vector<int>{0, 1, 2, 4});\n    assert(solution.validSequence(\"bbaaabbbaaabbbaaabbbaa\", \"baaba\") == vector<int>{0, 1, 2, 5, 8});\n    assert(solution.validSequence(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", \"abcdefghijklmnopqrstuvwxyz\") == vector<int>{0, 1, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36, 38, 40, 42, 44, 46, 48, 50});\n    assert(solution.validSequence(\"banana\", \"bana\") == vector<int>{0, 1, 2, 3});\n    assert(solution.validSequence(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", \"zzzyxwvutsrqponmlkjihgfedcba\") == vector<int>{});\n    assert(solution.validSequence(\"abbaabbaabba\", \"abab\") == vector<int>{0, 1, 2, 5});\n    assert(solution.validSequence(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", \"mnopqrstuvwxyz\") == vector<int>{0, 26, 28, 30, 32, 34, 36, 38, 40, 42, 44, 46, 48, 50});\n    assert(solution.validSequence(\"abcdabcabcabcabcabcabcabcabcabcabc\", \"abcde\") == vector<int>{0, 1, 2, 3, 4});\n    assert(solution.validSequence(\"abcabcabcabcabcabcabcabcabcabc\", \"abcabc\") == vector<int>{0, 1, 2, 3, 4, 5});\n    assert(solution.validSequence(\"thisisalongstring\", \"this\") == vector<int>{0, 1, 2, 3});\n    assert(solution.validSequence(\"zyxwvutsrqponmlkjihgfedcba\", \"fedcba\") == vector<int>{0, 21, 22, 23, 24, 25});\n    assert(solution.validSequence(\"qwertyuiopasdfghjklzxcvbnm\", \"qwertyuiop\") == vector<int>{0, 1, 2, 3, 4, 5, 6, 7, 8, 9});\n    assert(solution.validSequence(\"abcdefghijklmnopqrstuvwxyz\", \"qrstuv\") == vector<int>{0, 17, 18, 19, 20, 21});\n    assert(solution.validSequence(\"abcdabc\", \"abc\") == vector<int>{0, 1, 2});\n    assert(solution.validSequence(\"abcdabcdabcdabcd\", \"abca\") == vector<int>{0, 1, 2, 3});\n    assert(solution.validSequence(\"abacabadabacaba\", \"abada\") == vector<int>{0, 1, 2, 3, 4});\n    assert(solution.validSequence(\"racecar\", \"ace\") == vector<int>{0, 2, 3});\n    assert(solution.validSequence(\"abcabcabcabcabcabcabc\", \"abcabc\") == vector<int>{0, 1, 2, 3, 4, 5});\n    assert(solution.validSequence(\"bbaaaabaaaabbaa\", \"bab\") == vector<int>{0, 1, 6});\n    assert(solution.validSequence(\"abababababababababab\", \"aaa\") == vector<int>{0, 1, 2});\n    assert(solution.validSequence(\"abcdabcdabcdabcd\", \"abcdabcd\") == vector<int>{0, 1, 2, 3, 4, 5, 6, 7});\n    assert(solution.validSequence(\"aaaaabbbbbcccccddddd\", \"abcde\") == vector<int>{0, 5, 10, 15, 16});\n    assert(solution.validSequence(\"xyzzxyzzxyzz\", \"xyzxyz\") == vector<int>{0, 1, 2, 3, 5, 6});\n    assert(solution.validSequence(\"abcdefghiklmnopqrstuvwxyz\", \"aikuyz\") == vector<int>{0, 1, 9, 19, 23, 24});\n    assert(solution.validSequence(\"amazingrace\", \"amazing\") == vector<int>{0, 1, 2, 3, 4, 5, 6});\n    assert(solution.validSequence(\"pythonprogramming\", \"python\") == vector<int>{0, 1, 2, 3, 4, 5});\n    assert(solution.validSequence(\"aabbaabbaabbaabb\", \"aabb\") == vector<int>{0, 1, 2, 3});\n    assert(solution.validSequence(\"abacabadabacabadabacabad\", \"abcabc\") == vector<int>{0, 1, 2, 4, 5, 11});\n    assert(solution.validSequence(\"abcdefghijklmnopqrstuvwxyz\", \"xyzabc\") == vector<int>{});\n    assert(solution.validSequence(\"abcdefghijklmnopqrstuvwxyzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", \"abcdefghijklmnopqrstuvwxyz\") == vector<int>{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25});\n    assert(solution.validSequence(\"acbacbacbac\", \"abcabc\") == vector<int>{0, 1, 4, 6, 8, 10});\n    assert(solution.validSequence(\"abacaba\", \"aaa\") == vector<int>{0, 1, 2});\n    assert(solution.validSequence(\"repeatedrepeatedrepeated\", \"repeated\") == vector<int>{0, 1, 2, 3, 4, 5, 6, 7});\n    assert(solution.validSequence(\"xyzxyzxyzxyzxyzxyzxyz\", \"xyzxyz\") == vector<int>{0, 1, 2, 3, 4, 5});\n    assert(solution.validSequence(\"abcdefgabcdefgabcdefgabcdefg\", \"abcdefg\") == vector<int>{0, 1, 2, 3, 4, 5, 6});\n    assert(solution.validSequence(\"aaabbbcccdddeeefffggghhhiii\", \"abcdefghi\") == vector<int>{0, 1, 6, 9, 12, 15, 18, 21, 24});\n    assert(solution.validSequence(\"xyzxyzxyzxyz\", \"xyzxyz\") == vector<int>{0, 1, 2, 3, 4, 5});\n    assert(solution.validSequence(\"mississippi\", \"miss\") == vector<int>{0, 1, 2, 3});\n    assert(solution.validSequence(\"foobartoobarfoo\", \"foobar\") == vector<int>{0, 1, 2, 3, 4, 5});\n    assert(solution.validSequence(\"aabbaabbaabbaabbaabb\", \"aabbaab\") == vector<int>{0, 1, 2, 3, 4, 5, 6});\n    assert(solution.validSequence(\"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", \"zzzzzz\") == vector<int>{0, 1, 2, 3, 4, 5});\n    assert(solution.validSequence(\"mississippi\", \"mis\") == vector<int>{0, 1, 2});\n    assert(solution.validSequence(\"hellotherehellotherehellotherehellotherehellotherehellotherehellotherehellotherehellothere\", \"here\") == vector<int>{0, 1, 2, 7});\n    assert(solution.validSequence(\"thisisaverylongstringthatweneedtouse\", \"string\") == vector<int>{0, 16, 17, 18, 19, 20});\n    assert(solution.validSequence(\"xyzzxyzzxyzzxyzz\", \"zzzz\") == vector<int>{0, 2, 3, 6});\n    assert(solution.validSequence(\"abcabcabcabcabc\", \"abcabc\") == vector<int>{0, 1, 2, 3, 4, 5});\n    assert(solution.validSequence(\"hellothere\", \"her\") == vector<int>{0, 1, 2});\n    assert(solution.validSequence(\"abacabadabacaba\", \"abc\") == vector<int>{0, 1, 2});\n    assert(solution.validSequence(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", \"abcdefghijklmnopqrstuvw\") == vector<int>{0, 1, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36, 38, 40, 42, 44});\n    assert(solution.validSequence(\"pneumonoultramicroscopicsilicovolcanoconiosis\", \"pneumo\") == vector<int>{0, 1, 2, 3, 4, 5});\n    assert(solution.validSequence(\"baaabaaaabaaabaababaaaab\", \"baaba\") == vector<int>{0, 1, 2, 3, 5});\n    assert(solution.validSequence(\"abacabadabacaba\", \"abaca\") == vector<int>{0, 1, 2, 3, 4});\n    assert(solution.validSequence(\"zyxwvutsrqponmlkjihgfedcba\", \"abcde\") == vector<int>{});\n    assert(solution.validSequence(\"hellohellohellohellohellohello\", \"hello\") == vector<int>{0, 1, 2, 3, 4});\n    assert(solution.validSequence(\"hellohellohello\", \"helo\") == vector<int>{0, 1, 2, 3});\n    assert(solution.validSequence(\"zyxwvutsrqponmlkjihgfedcba\", \"mnopqrstuvwxyza\") == vector<int>{});\n    assert(solution.validSequence(\"xxxxxxxxxyyyyyyyyyzzzzzzzzz\", \"xyz\") == vector<int>{0, 1, 18});\n    assert(solution.validSequence(\"zyxzyxzyxzyxzyxzyxzyxzyxzyx\", \"zyxzyxzyx\") == vector<int>{0, 1, 2, 3, 4, 5, 6, 7, 8});\n    assert(solution.validSequence(\"abababab\", \"aba\") == vector<int>{0, 1, 2});\n    assert(solution.validSequence(\"zyxwvutsrqponmlkjihgfedcba\", \"zyxwv\") == vector<int>{0, 1, 2, 3, 4});\n    assert(solution.validSequence(\"programming\", \"pgm\") == vector<int>{0, 1, 6});\n    assert(solution.validSequence(\"abacabadabacabadabacaba\", \"ababa\") == vector<int>{0, 1, 2, 3, 4});\n    assert(solution.validSequence(\"zzzzzzzzzzzzzzzzzzzzzzzzzzzz\", \"zzz\") == vector<int>{0, 1, 2});\n    assert(solution.validSequence(\"abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz\", \"abcdefghijklmnopqrstuvwxyz\") == vector<int>{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25});\n    assert(solution.validSequence(\"abacabadabacabadaba\", \"abc\") == vector<int>{0, 1, 2});\n    assert(solution.validSequence(\"aaaabbbbccccddddeeeeffffgggg\", \"abcdefg\") == vector<int>{0, 1, 8, 12, 16, 20, 24});\n    assert(solution.validSequence(\"aaaaaabbbaaaaabaaaaabbbaaa\", \"aabbaab\") == vector<int>{0, 1, 2, 6, 9, 10, 14});\n    assert(solution.validSequence(\"qwertyuiopasdfghjklzxcvbnm\", \"qwerty\") == vector<int>{0, 1, 2, 3, 4, 5});\n    assert(solution.validSequence(\"qwertyuiopasdfghjklzxcvbnm\", \"qzpm\") == vector<int>{0, 1, 9, 25});\n    assert(solution.validSequence(\"mississippiississippi\", \"misis\") == vector<int>{0, 1, 2, 3, 5});\n    assert(solution.validSequence(\"thisisaverylongstringwithsomerepeatingcharacters\", \"thisis\") == vector<int>{0, 1, 2, 3, 4, 5});\n    assert(solution.validSequence(\"pppppppppppppppppp\", \"ppp\") == vector<int>{0, 1, 2});\n    assert(solution.validSequence(\"abcdefghijklmnopqrstuvwxyz\", \"zyx\") == vector<int>{});\n}",
+    "java": "public static void check(Solution solution) {\n    assert Arrays.equals(solution.validSequence(\"hello\", \"heo\"), new int[]{0, 1, 2});\n    assert Arrays.equals(solution.validSequence(\"abcdefghijklmnopqrstuvwxyz\", \"abcdefghijklmnopqrstuvwxyz\"), new int[]{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25});\n    assert Arrays.equals(solution.validSequence(\"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", \"abc\"), new int[]{});\n    assert Arrays.equals(solution.validSequence(\"abcde\", \"edcba\"), new int[]{});\n    assert Arrays.equals(solution.validSequence(\"abcdefg\", \"bdf\"), new int[]{0, 3, 5});\n    assert Arrays.equals(solution.validSequence(\"mississippi\", \"issi\"), new int[]{0, 2, 3, 4});\n    assert Arrays.equals(solution.validSequence(\"vbcca\", \"abc\"), new int[]{0, 1, 2});\n    assert Arrays.equals(solution.validSequence(\"leetcode\", \"code\"), new int[]{0, 5, 6, 7});\n    assert Arrays.equals(solution.validSequence(\"bacdc\", \"abc\"), new int[]{1, 2, 4});\n    assert Arrays.equals(solution.validSequence(\"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", \"aaa\"), new int[]{});\n    assert Arrays.equals(solution.validSequence(\"xyz\", \"xy\"), new int[]{0, 1});\n    assert Arrays.equals(solution.validSequence(\"abcabcabc\", \"abc\"), new int[]{0, 1, 2});\n    assert Arrays.equals(solution.validSequence(\"abcdefghijklmnopqrstuvwxyz\", \"abc\"), new int[]{0, 1, 2});\n    assert Arrays.equals(solution.validSequence(\"abcdefghijklmnopqrstuvwxyz\", \"aaa\"), new int[]{});\n    assert Arrays.equals(solution.validSequence(\"zyxwvutsrqponmlkjihgfedcba\", \"xyz\"), new int[]{});\n    assert Arrays.equals(solution.validSequence(\"abcdefghij\", \"aceg\"), new int[]{0, 1, 4, 6});\n    assert Arrays.equals(solution.validSequence(\"xyzz\", \"xyz\"), new int[]{0, 1, 2});\n    assert Arrays.equals(solution.validSequence(\"aabbccddeeff\", \"abcdef\"), new int[]{0, 1, 4, 6, 8, 10});\n    assert Arrays.equals(solution.validSequence(\"abcdefghijklmnopqrstuvwxyz\", \"zzz\"), new int[]{});\n    assert Arrays.equals(solution.validSequence(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", \"zyxwvutsrqponmlkjihgfedcba\"), new int[]{});\n    assert Arrays.equals(solution.validSequence(\"abcdefghijklmnopqrstuvwxyz\", \"az\"), new int[]{0, 1});\n    assert Arrays.equals(solution.validSequence(\"leetcode\", \"leet\"), new int[]{0, 1, 2, 3});\n    assert Arrays.equals(solution.validSequence(\"abababababab\", \"aab\"), new int[]{0, 1, 3});\n    assert Arrays.equals(solution.validSequence(\"zzzzzzzzzzzz\", \"zzz\"), new int[]{0, 1, 2});\n    assert Arrays.equals(solution.validSequence(\"aaabaaa\", \"aaa\"), new int[]{0, 1, 2});\n    assert Arrays.equals(solution.validSequence(\"aabbcc\", \"abc\"), new int[]{0, 1, 4});\n    assert Arrays.equals(solution.validSequence(\"aaaaaa\", \"aaabc\"), new int[]{});\n    assert Arrays.equals(solution.validSequence(\"mississippi\", \"sip\"), new int[]{0, 1, 8});\n    assert Arrays.equals(solution.validSequence(\"zzzzz\", \"aaa\"), new int[]{});\n    assert Arrays.equals(solution.validSequence(\"abababababababababababababababababababababababababababab\", \"aaa\"), new int[]{0, 1, 2});\n    assert Arrays.equals(solution.validSequence(\"abc\", \"ab\"), new int[]{0, 1});\n    assert Arrays.equals(solution.validSequence(\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\", \"aaaaaa\"), new int[]{0, 1, 2, 3, 4, 5});\n    assert Arrays.equals(solution.validSequence(\"abcdefghijklmnopqrstuvwxyz\", \"zyxwvutsrqponmlkjihgfedcba\"), new int[]{});\n    assert Arrays.equals(solution.validSequence(\"abababababababababab\", \"ababab\"), new int[]{0, 1, 2, 3, 4, 5});\n    assert Arrays.equals(solution.validSequence(\"hellohellohello\", \"ell\"), new int[]{0, 2, 3});\n    assert Arrays.equals(solution.validSequence(\"abcdefghijklmnopqrstuvwxyz\", \"abcdefghijklmnopqxyz\"), new int[]{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 24, 25});\n    assert Arrays.equals(solution.validSequence(\"abcdefghijklmnopqrstuvwxyz\", \"adgjmoqsuwy\"), new int[]{0, 1, 6, 9, 12, 14, 16, 18, 20, 22, 24});\n    assert Arrays.equals(solution.validSequence(\"axxayyazz\", \"xyz\"), new int[]{0, 4, 7});\n    assert Arrays.equals(solution.validSequence(\"abracadabra\", \"abra\"), new int[]{0, 1, 2, 3});\n    assert Arrays.equals(solution.validSequence(\"abcdefghijklmnopqrstuvwxyz\", \"qrstuvwxyzz\"), new int[]{});\n    assert Arrays.equals(solution.validSequence(\"zyxzyxzyxzyxzyxzyxzyxzyxzyxzyx\", \"zyxzyxzyxzyx\"), new int[]{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11});\n    assert Arrays.equals(solution.validSequence(\"sequenceofcharacters\", \"sequence\"), new int[]{0, 1, 2, 3, 4, 5, 6, 7});\n    assert Arrays.equals(solution.validSequence(\"abcdefghijklmnopqrstuvwxyz\", \"zyxwvut\"), new int[]{});\n    assert Arrays.equals(solution.validSequence(\"abracadabra\", \"acad\"), new int[]{0, 1, 3, 6});\n    assert Arrays.equals(solution.validSequence(\"thequickbrownfoxjumpsoverthelazydog\", \"thezog\"), new int[]{0, 1, 2, 3, 10, 34});\n    assert Arrays.equals(solution.validSequence(\"ababababababababab\", \"aba\"), new int[]{0, 1, 2});\n    assert Arrays.equals(solution.validSequence(\"aababababa\", \"aaa\"), new int[]{0, 1, 2});\n    assert Arrays.equals(solution.validSequence(\"xyzz\", \"zyx\"), new int[]{});\n    assert Arrays.equals(solution.validSequence(\"abcdefghijklmnopqrstuvwxyz\", \"xyz\"), new int[]{0, 24, 25});\n    assert Arrays.equals(solution.validSequence(\"abcdexyz\", \"xyz\"), new int[]{0, 6, 7});\n    assert Arrays.equals(solution.validSequence(\"xyzxyzxyzxyzxyzxyzxyzxyz\", \"xyzxyzxyz\"), new int[]{0, 1, 2, 3, 4, 5, 6, 7, 8});\n    assert Arrays.equals(solution.validSequence(\"abcdefg\", \"aceg\"), new int[]{0, 1, 4, 6});\n    assert Arrays.equals(solution.validSequence(\"axbxcxdxe\", \"abcde\"), new int[]{0, 1, 4, 6, 8});\n    assert Arrays.equals(solution.validSequence(\"abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz\", \"zyxwvutsrqponmlkjihgfedcba\"), new int[]{});\n    assert Arrays.equals(solution.validSequence(\"abcdefghijklmnopqrstuvwxyz\", \"abcde\"), new int[]{0, 1, 2, 3, 4});\n    assert Arrays.equals(solution.validSequence(\"abcdefghij\", \"jihgfedcba\"), new int[]{});\n    assert Arrays.equals(solution.validSequence(\"xyxyxyxyxy\", \"xyxy\"), new int[]{0, 1, 2, 3});\n    assert Arrays.equals(solution.validSequence(\"aabbaabbaabbaabbaabbaabb\", \"aaabb\"), new int[]{0, 1, 2, 3, 6});\n    assert Arrays.equals(solution.validSequence(\"abcdefghijklmnopqrstuvwxyz\", \"mnopq\"), new int[]{0, 13, 14, 15, 16});\n    assert Arrays.equals(solution.validSequence(\"abababababababab\", \"abab\"), new int[]{0, 1, 2, 3});\n    assert Arrays.equals(solution.validSequence(\"abacabadabacabadabacabadabacabad\", \"abcabcabc\"), new int[]{0, 1, 2, 4, 5, 11, 12, 13, 19});\n    assert Arrays.equals(solution.validSequence(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", \"abcdefghijklmnopqrstuvwxy\"), new int[]{0, 1, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36, 38, 40, 42, 44, 46, 48});\n    assert Arrays.equals(solution.validSequence(\"abcdabcdabcd\", \"abcd\"), new int[]{0, 1, 2, 3});\n    assert Arrays.equals(solution.validSequence(\"abcdefghijklmnopqrstuvwxyz\", \"abcdefghijklmnop\"), new int[]{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15});\n    assert Arrays.equals(solution.validSequence(\"abcdefghijabcdefghijabcdefghij\", \"abcdefghij\"), new int[]{0, 1, 2, 3, 4, 5, 6, 7, 8, 9});\n    assert Arrays.equals(solution.validSequence(\"abacabadabacaba\", \"abab\"), new int[]{0, 1, 2, 3});\n    assert Arrays.equals(solution.validSequence(\"aaaabbbbcccc\", \"abccba\"), new int[]{});\n    assert Arrays.equals(solution.validSequence(\"qwertyuiopasdfghjklzxcvbnm\", \"qaz\"), new int[]{0, 1, 19});\n    assert Arrays.equals(solution.validSequence(\"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", \"zzz\"), new int[]{0, 1, 2});\n    assert Arrays.equals(solution.validSequence(\"bacdefghijklmnopqrstuvwxyz\", \"abcdefg\"), new int[]{});\n    assert Arrays.equals(solution.validSequence(\"alibabacloud\", \"abcl\"), new int[]{0, 1, 7, 8});\n    assert Arrays.equals(solution.validSequence(\"aaaaaaaabbbbbbbbbbcccccccccddddddeeeeeeeeeeffffffffff\", \"abcdefghij\"), new int[]{});\n    assert Arrays.equals(solution.validSequence(\"bbaabbaabbaabbaabbaabbaabbaab\", \"bbabbb\"), new int[]{0, 1, 2, 3, 4, 5});\n    assert Arrays.equals(solution.validSequence(\"abcdefghij\", \"afh\"), new int[]{0, 1, 7});\n    assert Arrays.equals(solution.validSequence(\"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", \"abc\"), new int[]{});\n    assert Arrays.equals(solution.validSequence(\"abcdexyz\", \"abcdef\"), new int[]{0, 1, 2, 3, 4, 5});\n    assert Arrays.equals(solution.validSequence(\"banana\", \"an\"), new int[]{0, 2});\n    assert Arrays.equals(solution.validSequence(\"abcdefghijklmnopqrstuvwxyz\", \"abcdefg\"), new int[]{0, 1, 2, 3, 4, 5, 6});\n    assert Arrays.equals(solution.validSequence(\"abcdefghijklmnopqrstuvwxyz\", \"abcdefghijklmnopqrstu\"), new int[]{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20});\n    assert Arrays.equals(solution.validSequence(\"abababababababababababababababababababababababababababababababababababababababababababababababababababababababab\", \"abab\"), new int[]{0, 1, 2, 3});\n    assert Arrays.equals(solution.validSequence(\"zzzzyyyxxxwwwwvvvvuuuuttttssssrrrrqqqqppppooooonnnnmmmmllllkkkkjjjjiiiihhhhggggffffffeeeeeeeedddddccccbbbaaaa\", \"abcdefg\"), new int[]{});\n    assert Arrays.equals(solution.validSequence(\"xyzzyxzyxzyxzyxzyx\", \"xyzzyx\"), new int[]{0, 1, 2, 3, 4, 5});\n    assert Arrays.equals(solution.validSequence(\"acacacacacacacacac\", \"aaaa\"), new int[]{0, 1, 2, 4});\n    assert Arrays.equals(solution.validSequence(\"bbaaabbbaaabbbaaabbbaa\", \"baaba\"), new int[]{0, 1, 2, 5, 8});\n    assert Arrays.equals(solution.validSequence(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", \"abcdefghijklmnopqrstuvwxyz\"), new int[]{0, 1, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36, 38, 40, 42, 44, 46, 48, 50});\n    assert Arrays.equals(solution.validSequence(\"banana\", \"bana\"), new int[]{0, 1, 2, 3});\n    assert Arrays.equals(solution.validSequence(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", \"zzzyxwvutsrqponmlkjihgfedcba\"), new int[]{});\n    assert Arrays.equals(solution.validSequence(\"abbaabbaabba\", \"abab\"), new int[]{0, 1, 2, 5});\n    assert Arrays.equals(solution.validSequence(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", \"mnopqrstuvwxyz\"), new int[]{0, 26, 28, 30, 32, 34, 36, 38, 40, 42, 44, 46, 48, 50});\n    assert Arrays.equals(solution.validSequence(\"abcdabcabcabcabcabcabcabcabcabcabc\", \"abcde\"), new int[]{0, 1, 2, 3, 4});\n    assert Arrays.equals(solution.validSequence(\"abcabcabcabcabcabcabcabcabcabc\", \"abcabc\"), new int[]{0, 1, 2, 3, 4, 5});\n    assert Arrays.equals(solution.validSequence(\"thisisalongstring\", \"this\"), new int[]{0, 1, 2, 3});\n    assert Arrays.equals(solution.validSequence(\"zyxwvutsrqponmlkjihgfedcba\", \"fedcba\"), new int[]{0, 21, 22, 23, 24, 25});\n    assert Arrays.equals(solution.validSequence(\"qwertyuiopasdfghjklzxcvbnm\", \"qwertyuiop\"), new int[]{0, 1, 2, 3, 4, 5, 6, 7, 8, 9});\n    assert Arrays.equals(solution.validSequence(\"abcdefghijklmnopqrstuvwxyz\", \"qrstuv\"), new int[]{0, 17, 18, 19, 20, 21});\n    assert Arrays.equals(solution.validSequence(\"abcdabc\", \"abc\"), new int[]{0, 1, 2});\n    assert Arrays.equals(solution.validSequence(\"abcdabcdabcdabcd\", \"abca\"), new int[]{0, 1, 2, 3});\n    assert Arrays.equals(solution.validSequence(\"abacabadabacaba\", \"abada\"), new int[]{0, 1, 2, 3, 4});\n    assert Arrays.equals(solution.validSequence(\"racecar\", \"ace\"), new int[]{0, 2, 3});\n    assert Arrays.equals(solution.validSequence(\"abcabcabcabcabcabcabc\", \"abcabc\"), new int[]{0, 1, 2, 3, 4, 5});\n    assert Arrays.equals(solution.validSequence(\"bbaaaabaaaabbaa\", \"bab\"), new int[]{0, 1, 6});\n    assert Arrays.equals(solution.validSequence(\"abababababababababab\", \"aaa\"), new int[]{0, 1, 2});\n    assert Arrays.equals(solution.validSequence(\"abcdabcdabcdabcd\", \"abcdabcd\"), new int[]{0, 1, 2, 3, 4, 5, 6, 7});\n    assert Arrays.equals(solution.validSequence(\"aaaaabbbbbcccccddddd\", \"abcde\"), new int[]{0, 5, 10, 15, 16});\n    assert Arrays.equals(solution.validSequence(\"xyzzxyzzxyzz\", \"xyzxyz\"), new int[]{0, 1, 2, 3, 5, 6});\n    assert Arrays.equals(solution.validSequence(\"abcdefghiklmnopqrstuvwxyz\", \"aikuyz\"), new int[]{0, 1, 9, 19, 23, 24});\n    assert Arrays.equals(solution.validSequence(\"amazingrace\", \"amazing\"), new int[]{0, 1, 2, 3, 4, 5, 6});\n    assert Arrays.equals(solution.validSequence(\"pythonprogramming\", \"python\"), new int[]{0, 1, 2, 3, 4, 5});\n    assert Arrays.equals(solution.validSequence(\"aabbaabbaabbaabb\", \"aabb\"), new int[]{0, 1, 2, 3});\n    assert Arrays.equals(solution.validSequence(\"abacabadabacabadabacabad\", \"abcabc\"), new int[]{0, 1, 2, 4, 5, 11});\n    assert Arrays.equals(solution.validSequence(\"abcdefghijklmnopqrstuvwxyz\", \"xyzabc\"), new int[]{});\n    assert Arrays.equals(solution.validSequence(\"abcdefghijklmnopqrstuvwxyzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", \"abcdefghijklmnopqrstuvwxyz\"), new int[]{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25});\n    assert Arrays.equals(solution.validSequence(\"acbacbacbac\", \"abcabc\"), new int[]{0, 1, 4, 6, 8, 10});\n    assert Arrays.equals(solution.validSequence(\"abacaba\", \"aaa\"), new int[]{0, 1, 2});\n    assert Arrays.equals(solution.validSequence(\"repeatedrepeatedrepeated\", \"repeated\"), new int[]{0, 1, 2, 3, 4, 5, 6, 7});\n    assert Arrays.equals(solution.validSequence(\"xyzxyzxyzxyzxyzxyzxyz\", \"xyzxyz\"), new int[]{0, 1, 2, 3, 4, 5});\n    assert Arrays.equals(solution.validSequence(\"abcdefgabcdefgabcdefgabcdefg\", \"abcdefg\"), new int[]{0, 1, 2, 3, 4, 5, 6});\n    assert Arrays.equals(solution.validSequence(\"aaabbbcccdddeeefffggghhhiii\", \"abcdefghi\"), new int[]{0, 1, 6, 9, 12, 15, 18, 21, 24});\n    assert Arrays.equals(solution.validSequence(\"xyzxyzxyzxyz\", \"xyzxyz\"), new int[]{0, 1, 2, 3, 4, 5});\n    assert Arrays.equals(solution.validSequence(\"mississippi\", \"miss\"), new int[]{0, 1, 2, 3});\n    assert Arrays.equals(solution.validSequence(\"foobartoobarfoo\", \"foobar\"), new int[]{0, 1, 2, 3, 4, 5});\n    assert Arrays.equals(solution.validSequence(\"aabbaabbaabbaabbaabb\", \"aabbaab\"), new int[]{0, 1, 2, 3, 4, 5, 6});\n    assert Arrays.equals(solution.validSequence(\"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", \"zzzzzz\"), new int[]{0, 1, 2, 3, 4, 5});\n    assert Arrays.equals(solution.validSequence(\"mississippi\", \"mis\"), new int[]{0, 1, 2});\n    assert Arrays.equals(solution.validSequence(\"hellotherehellotherehellotherehellotherehellotherehellotherehellotherehellotherehellothere\", \"here\"), new int[]{0, 1, 2, 7});\n    assert Arrays.equals(solution.validSequence(\"thisisaverylongstringthatweneedtouse\", \"string\"), new int[]{0, 16, 17, 18, 19, 20});\n    assert Arrays.equals(solution.validSequence(\"xyzzxyzzxyzzxyzz\", \"zzzz\"), new int[]{0, 2, 3, 6});\n    assert Arrays.equals(solution.validSequence(\"abcabcabcabcabc\", \"abcabc\"), new int[]{0, 1, 2, 3, 4, 5});\n    assert Arrays.equals(solution.validSequence(\"hellothere\", \"her\"), new int[]{0, 1, 2});\n    assert Arrays.equals(solution.validSequence(\"abacabadabacaba\", \"abc\"), new int[]{0, 1, 2});\n    assert Arrays.equals(solution.validSequence(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", \"abcdefghijklmnopqrstuvw\"), new int[]{0, 1, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36, 38, 40, 42, 44});\n    assert Arrays.equals(solution.validSequence(\"pneumonoultramicroscopicsilicovolcanoconiosis\", \"pneumo\"), new int[]{0, 1, 2, 3, 4, 5});\n    assert Arrays.equals(solution.validSequence(\"baaabaaaabaaabaababaaaab\", \"baaba\"), new int[]{0, 1, 2, 3, 5});\n    assert Arrays.equals(solution.validSequence(\"abacabadabacaba\", \"abaca\"), new int[]{0, 1, 2, 3, 4});\n    assert Arrays.equals(solution.validSequence(\"zyxwvutsrqponmlkjihgfedcba\", \"abcde\"), new int[]{});\n    assert Arrays.equals(solution.validSequence(\"hellohellohellohellohellohello\", \"hello\"), new int[]{0, 1, 2, 3, 4});\n    assert Arrays.equals(solution.validSequence(\"hellohellohello\", \"helo\"), new int[]{0, 1, 2, 3});\n    assert Arrays.equals(solution.validSequence(\"zyxwvutsrqponmlkjihgfedcba\", \"mnopqrstuvwxyza\"), new int[]{});\n    assert Arrays.equals(solution.validSequence(\"xxxxxxxxxyyyyyyyyyzzzzzzzzz\", \"xyz\"), new int[]{0, 1, 18});\n    assert Arrays.equals(solution.validSequence(\"zyxzyxzyxzyxzyxzyxzyxzyxzyx\", \"zyxzyxzyx\"), new int[]{0, 1, 2, 3, 4, 5, 6, 7, 8});\n    assert Arrays.equals(solution.validSequence(\"abababab\", \"aba\"), new int[]{0, 1, 2});\n    assert Arrays.equals(solution.validSequence(\"zyxwvutsrqponmlkjihgfedcba\", \"zyxwv\"), new int[]{0, 1, 2, 3, 4});\n    assert Arrays.equals(solution.validSequence(\"programming\", \"pgm\"), new int[]{0, 1, 6});\n    assert Arrays.equals(solution.validSequence(\"abacabadabacabadabacaba\", \"ababa\"), new int[]{0, 1, 2, 3, 4});\n    assert Arrays.equals(solution.validSequence(\"zzzzzzzzzzzzzzzzzzzzzzzzzzzz\", \"zzz\"), new int[]{0, 1, 2});\n    assert Arrays.equals(solution.validSequence(\"abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz\", \"abcdefghijklmnopqrstuvwxyz\"), new int[]{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25});\n    assert Arrays.equals(solution.validSequence(\"abacabadabacabadaba\", \"abc\"), new int[]{0, 1, 2});\n    assert Arrays.equals(solution.validSequence(\"aaaabbbbccccddddeeeeffffgggg\", \"abcdefg\"), new int[]{0, 1, 8, 12, 16, 20, 24});\n    assert Arrays.equals(solution.validSequence(\"aaaaaabbbaaaaabaaaaabbbaaa\", \"aabbaab\"), new int[]{0, 1, 2, 6, 9, 10, 14});\n    assert Arrays.equals(solution.validSequence(\"qwertyuiopasdfghjklzxcvbnm\", \"qwerty\"), new int[]{0, 1, 2, 3, 4, 5});\n    assert Arrays.equals(solution.validSequence(\"qwertyuiopasdfghjklzxcvbnm\", \"qzpm\"), new int[]{0, 1, 9, 25});\n    assert Arrays.equals(solution.validSequence(\"mississippiississippi\", \"misis\"), new int[]{0, 1, 2, 3, 5});\n    assert Arrays.equals(solution.validSequence(\"thisisaverylongstringwithsomerepeatingcharacters\", \"thisis\"), new int[]{0, 1, 2, 3, 4, 5});\n    assert Arrays.equals(solution.validSequence(\"pppppppppppppppppp\", \"ppp\"), new int[]{0, 1, 2});\n    assert Arrays.equals(solution.validSequence(\"abcdefghijklmnopqrstuvwxyz\", \"zyx\"), new int[]{});\n}",
+    "javascript": "function check(candidate) {\n    console.assert(JSON.stringify(candidate(\"hello\", \"heo\")) === JSON.stringify([0, 1, 2]));\n    console.assert(JSON.stringify(candidate(\"abcdefghijklmnopqrstuvwxyz\", \"abcdefghijklmnopqrstuvwxyz\")) === JSON.stringify([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25]));\n    console.assert(JSON.stringify(candidate(\"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", \"abc\")) === JSON.stringify([]));\n    console.assert(JSON.stringify(candidate(\"abcde\", \"edcba\")) === JSON.stringify([]));\n    console.assert(JSON.stringify(candidate(\"abcdefg\", \"bdf\")) === JSON.stringify([0, 3, 5]));\n    console.assert(JSON.stringify(candidate(\"mississippi\", \"issi\")) === JSON.stringify([0, 2, 3, 4]));\n    console.assert(JSON.stringify(candidate(\"vbcca\", \"abc\")) === JSON.stringify([0, 1, 2]));\n    console.assert(JSON.stringify(candidate(\"leetcode\", \"code\")) === JSON.stringify([0, 5, 6, 7]));\n    console.assert(JSON.stringify(candidate(\"bacdc\", \"abc\")) === JSON.stringify([1, 2, 4]));\n    console.assert(JSON.stringify(candidate(\"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", \"aaa\")) === JSON.stringify([]));\n    console.assert(JSON.stringify(candidate(\"xyz\", \"xy\")) === JSON.stringify([0, 1]));\n    console.assert(JSON.stringify(candidate(\"abcabcabc\", \"abc\")) === JSON.stringify([0, 1, 2]));\n    console.assert(JSON.stringify(candidate(\"abcdefghijklmnopqrstuvwxyz\", \"abc\")) === JSON.stringify([0, 1, 2]));\n    console.assert(JSON.stringify(candidate(\"abcdefghijklmnopqrstuvwxyz\", \"aaa\")) === JSON.stringify([]));\n    console.assert(JSON.stringify(candidate(\"zyxwvutsrqponmlkjihgfedcba\", \"xyz\")) === JSON.stringify([]));\n    console.assert(JSON.stringify(candidate(\"abcdefghij\", \"aceg\")) === JSON.stringify([0, 1, 4, 6]));\n    console.assert(JSON.stringify(candidate(\"xyzz\", \"xyz\")) === JSON.stringify([0, 1, 2]));\n    console.assert(JSON.stringify(candidate(\"aabbccddeeff\", \"abcdef\")) === JSON.stringify([0, 1, 4, 6, 8, 10]));\n    console.assert(JSON.stringify(candidate(\"abcdefghijklmnopqrstuvwxyz\", \"zzz\")) === JSON.stringify([]));\n    console.assert(JSON.stringify(candidate(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", \"zyxwvutsrqponmlkjihgfedcba\")) === JSON.stringify([]));\n    console.assert(JSON.stringify(candidate(\"abcdefghijklmnopqrstuvwxyz\", \"az\")) === JSON.stringify([0, 1]));\n    console.assert(JSON.stringify(candidate(\"leetcode\", \"leet\")) === JSON.stringify([0, 1, 2, 3]));\n    console.assert(JSON.stringify(candidate(\"abababababab\", \"aab\")) === JSON.stringify([0, 1, 3]));\n    console.assert(JSON.stringify(candidate(\"zzzzzzzzzzzz\", \"zzz\")) === JSON.stringify([0, 1, 2]));\n    console.assert(JSON.stringify(candidate(\"aaabaaa\", \"aaa\")) === JSON.stringify([0, 1, 2]));\n    console.assert(JSON.stringify(candidate(\"aabbcc\", \"abc\")) === JSON.stringify([0, 1, 4]));\n    console.assert(JSON.stringify(candidate(\"aaaaaa\", \"aaabc\")) === JSON.stringify([]));\n    console.assert(JSON.stringify(candidate(\"mississippi\", \"sip\")) === JSON.stringify([0, 1, 8]));\n    console.assert(JSON.stringify(candidate(\"zzzzz\", \"aaa\")) === JSON.stringify([]));\n    console.assert(JSON.stringify(candidate(\"abababababababababababababababababababababababababababab\", \"aaa\")) === JSON.stringify([0, 1, 2]));\n    console.assert(JSON.stringify(candidate(\"abc\", \"ab\")) === JSON.stringify([0, 1]));\n    console.assert(JSON.stringify(candidate(\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\", \"aaaaaa\")) === JSON.stringify([0, 1, 2, 3, 4, 5]));\n    console.assert(JSON.stringify(candidate(\"abcdefghijklmnopqrstuvwxyz\", \"zyxwvutsrqponmlkjihgfedcba\")) === JSON.stringify([]));\n    console.assert(JSON.stringify(candidate(\"abababababababababab\", \"ababab\")) === JSON.stringify([0, 1, 2, 3, 4, 5]));\n    console.assert(JSON.stringify(candidate(\"hellohellohello\", \"ell\")) === JSON.stringify([0, 2, 3]));\n    console.assert(JSON.stringify(candidate(\"abcdefghijklmnopqrstuvwxyz\", \"abcdefghijklmnopqxyz\")) === JSON.stringify([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 24, 25]));\n    console.assert(JSON.stringify(candidate(\"abcdefghijklmnopqrstuvwxyz\", \"adgjmoqsuwy\")) === JSON.stringify([0, 1, 6, 9, 12, 14, 16, 18, 20, 22, 24]));\n    console.assert(JSON.stringify(candidate(\"axxayyazz\", \"xyz\")) === JSON.stringify([0, 4, 7]));\n    console.assert(JSON.stringify(candidate(\"abracadabra\", \"abra\")) === JSON.stringify([0, 1, 2, 3]));\n    console.assert(JSON.stringify(candidate(\"abcdefghijklmnopqrstuvwxyz\", \"qrstuvwxyzz\")) === JSON.stringify([]));\n    console.assert(JSON.stringify(candidate(\"zyxzyxzyxzyxzyxzyxzyxzyxzyxzyx\", \"zyxzyxzyxzyx\")) === JSON.stringify([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]));\n    console.assert(JSON.stringify(candidate(\"sequenceofcharacters\", \"sequence\")) === JSON.stringify([0, 1, 2, 3, 4, 5, 6, 7]));\n    console.assert(JSON.stringify(candidate(\"abcdefghijklmnopqrstuvwxyz\", \"zyxwvut\")) === JSON.stringify([]));\n    console.assert(JSON.stringify(candidate(\"abracadabra\", \"acad\")) === JSON.stringify([0, 1, 3, 6]));\n    console.assert(JSON.stringify(candidate(\"thequickbrownfoxjumpsoverthelazydog\", \"thezog\")) === JSON.stringify([0, 1, 2, 3, 10, 34]));\n    console.assert(JSON.stringify(candidate(\"ababababababababab\", \"aba\")) === JSON.stringify([0, 1, 2]));\n    console.assert(JSON.stringify(candidate(\"aababababa\", \"aaa\")) === JSON.stringify([0, 1, 2]));\n    console.assert(JSON.stringify(candidate(\"xyzz\", \"zyx\")) === JSON.stringify([]));\n    console.assert(JSON.stringify(candidate(\"abcdefghijklmnopqrstuvwxyz\", \"xyz\")) === JSON.stringify([0, 24, 25]));\n    console.assert(JSON.stringify(candidate(\"abcdexyz\", \"xyz\")) === JSON.stringify([0, 6, 7]));\n    console.assert(JSON.stringify(candidate(\"xyzxyzxyzxyzxyzxyzxyzxyz\", \"xyzxyzxyz\")) === JSON.stringify([0, 1, 2, 3, 4, 5, 6, 7, 8]));\n    console.assert(JSON.stringify(candidate(\"abcdefg\", \"aceg\")) === JSON.stringify([0, 1, 4, 6]));\n    console.assert(JSON.stringify(candidate(\"axbxcxdxe\", \"abcde\")) === JSON.stringify([0, 1, 4, 6, 8]));\n    console.assert(JSON.stringify(candidate(\"abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz\", \"zyxwvutsrqponmlkjihgfedcba\")) === JSON.stringify([]));\n    console.assert(JSON.stringify(candidate(\"abcdefghijklmnopqrstuvwxyz\", \"abcde\")) === JSON.stringify([0, 1, 2, 3, 4]));\n    console.assert(JSON.stringify(candidate(\"abcdefghij\", \"jihgfedcba\")) === JSON.stringify([]));\n    console.assert(JSON.stringify(candidate(\"xyxyxyxyxy\", \"xyxy\")) === JSON.stringify([0, 1, 2, 3]));\n    console.assert(JSON.stringify(candidate(\"aabbaabbaabbaabbaabbaabb\", \"aaabb\")) === JSON.stringify([0, 1, 2, 3, 6]));\n    console.assert(JSON.stringify(candidate(\"abcdefghijklmnopqrstuvwxyz\", \"mnopq\")) === JSON.stringify([0, 13, 14, 15, 16]));\n    console.assert(JSON.stringify(candidate(\"abababababababab\", \"abab\")) === JSON.stringify([0, 1, 2, 3]));\n    console.assert(JSON.stringify(candidate(\"abacabadabacabadabacabadabacabad\", \"abcabcabc\")) === JSON.stringify([0, 1, 2, 4, 5, 11, 12, 13, 19]));\n    console.assert(JSON.stringify(candidate(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", \"abcdefghijklmnopqrstuvwxy\")) === JSON.stringify([0, 1, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36, 38, 40, 42, 44, 46, 48]));\n    console.assert(JSON.stringify(candidate(\"abcdabcdabcd\", \"abcd\")) === JSON.stringify([0, 1, 2, 3]));\n    console.assert(JSON.stringify(candidate(\"abcdefghijklmnopqrstuvwxyz\", \"abcdefghijklmnop\")) === JSON.stringify([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]));\n    console.assert(JSON.stringify(candidate(\"abcdefghijabcdefghijabcdefghij\", \"abcdefghij\")) === JSON.stringify([0, 1, 2, 3, 4, 5, 6, 7, 8, 9]));\n    console.assert(JSON.stringify(candidate(\"abacabadabacaba\", \"abab\")) === JSON.stringify([0, 1, 2, 3]));\n    console.assert(JSON.stringify(candidate(\"aaaabbbbcccc\", \"abccba\")) === JSON.stringify([]));\n    console.assert(JSON.stringify(candidate(\"qwertyuiopasdfghjklzxcvbnm\", \"qaz\")) === JSON.stringify([0, 1, 19]));\n    console.assert(JSON.stringify(candidate(\"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", \"zzz\")) === JSON.stringify([0, 1, 2]));\n    console.assert(JSON.stringify(candidate(\"bacdefghijklmnopqrstuvwxyz\", \"abcdefg\")) === JSON.stringify([]));\n    console.assert(JSON.stringify(candidate(\"alibabacloud\", \"abcl\")) === JSON.stringify([0, 1, 7, 8]));\n    console.assert(JSON.stringify(candidate(\"aaaaaaaabbbbbbbbbbcccccccccddddddeeeeeeeeeeffffffffff\", \"abcdefghij\")) === JSON.stringify([]));\n    console.assert(JSON.stringify(candidate(\"bbaabbaabbaabbaabbaabbaabbaab\", \"bbabbb\")) === JSON.stringify([0, 1, 2, 3, 4, 5]));\n    console.assert(JSON.stringify(candidate(\"abcdefghij\", \"afh\")) === JSON.stringify([0, 1, 7]));\n    console.assert(JSON.stringify(candidate(\"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", \"abc\")) === JSON.stringify([]));\n    console.assert(JSON.stringify(candidate(\"abcdexyz\", \"abcdef\")) === JSON.stringify([0, 1, 2, 3, 4, 5]));\n    console.assert(JSON.stringify(candidate(\"banana\", \"an\")) === JSON.stringify([0, 2]));\n    console.assert(JSON.stringify(candidate(\"abcdefghijklmnopqrstuvwxyz\", \"abcdefg\")) === JSON.stringify([0, 1, 2, 3, 4, 5, 6]));\n    console.assert(JSON.stringify(candidate(\"abcdefghijklmnopqrstuvwxyz\", \"abcdefghijklmnopqrstu\")) === JSON.stringify([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]));\n    console.assert(JSON.stringify(candidate(\"abababababababababababababababababababababababababababababababababababababababababababababababababababababababab\", \"abab\")) === JSON.stringify([0, 1, 2, 3]));\n    console.assert(JSON.stringify(candidate(\"zzzzyyyxxxwwwwvvvvuuuuttttssssrrrrqqqqppppooooonnnnmmmmllllkkkkjjjjiiiihhhhggggffffffeeeeeeeedddddccccbbbaaaa\", \"abcdefg\")) === JSON.stringify([]));\n    console.assert(JSON.stringify(candidate(\"xyzzyxzyxzyxzyxzyx\", \"xyzzyx\")) === JSON.stringify([0, 1, 2, 3, 4, 5]));\n    console.assert(JSON.stringify(candidate(\"acacacacacacacacac\", \"aaaa\")) === JSON.stringify([0, 1, 2, 4]));\n    console.assert(JSON.stringify(candidate(\"bbaaabbbaaabbbaaabbbaa\", \"baaba\")) === JSON.stringify([0, 1, 2, 5, 8]));\n    console.assert(JSON.stringify(candidate(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", \"abcdefghijklmnopqrstuvwxyz\")) === JSON.stringify([0, 1, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36, 38, 40, 42, 44, 46, 48, 50]));\n    console.assert(JSON.stringify(candidate(\"banana\", \"bana\")) === JSON.stringify([0, 1, 2, 3]));\n    console.assert(JSON.stringify(candidate(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", \"zzzyxwvutsrqponmlkjihgfedcba\")) === JSON.stringify([]));\n    console.assert(JSON.stringify(candidate(\"abbaabbaabba\", \"abab\")) === JSON.stringify([0, 1, 2, 5]));\n    console.assert(JSON.stringify(candidate(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", \"mnopqrstuvwxyz\")) === JSON.stringify([0, 26, 28, 30, 32, 34, 36, 38, 40, 42, 44, 46, 48, 50]));\n    console.assert(JSON.stringify(candidate(\"abcdabcabcabcabcabcabcabcabcabcabc\", \"abcde\")) === JSON.stringify([0, 1, 2, 3, 4]));\n    console.assert(JSON.stringify(candidate(\"abcabcabcabcabcabcabcabcabcabc\", \"abcabc\")) === JSON.stringify([0, 1, 2, 3, 4, 5]));\n    console.assert(JSON.stringify(candidate(\"thisisalongstring\", \"this\")) === JSON.stringify([0, 1, 2, 3]));\n    console.assert(JSON.stringify(candidate(\"zyxwvutsrqponmlkjihgfedcba\", \"fedcba\")) === JSON.stringify([0, 21, 22, 23, 24, 25]));\n    console.assert(JSON.stringify(candidate(\"qwertyuiopasdfghjklzxcvbnm\", \"qwertyuiop\")) === JSON.stringify([0, 1, 2, 3, 4, 5, 6, 7, 8, 9]));\n    console.assert(JSON.stringify(candidate(\"abcdefghijklmnopqrstuvwxyz\", \"qrstuv\")) === JSON.stringify([0, 17, 18, 19, 20, 21]));\n    console.assert(JSON.stringify(candidate(\"abcdabc\", \"abc\")) === JSON.stringify([0, 1, 2]));\n    console.assert(JSON.stringify(candidate(\"abcdabcdabcdabcd\", \"abca\")) === JSON.stringify([0, 1, 2, 3]));\n    console.assert(JSON.stringify(candidate(\"abacabadabacaba\", \"abada\")) === JSON.stringify([0, 1, 2, 3, 4]));\n    console.assert(JSON.stringify(candidate(\"racecar\", \"ace\")) === JSON.stringify([0, 2, 3]));\n    console.assert(JSON.stringify(candidate(\"abcabcabcabcabcabcabc\", \"abcabc\")) === JSON.stringify([0, 1, 2, 3, 4, 5]));\n    console.assert(JSON.stringify(candidate(\"bbaaaabaaaabbaa\", \"bab\")) === JSON.stringify([0, 1, 6]));\n    console.assert(JSON.stringify(candidate(\"abababababababababab\", \"aaa\")) === JSON.stringify([0, 1, 2]));\n    console.assert(JSON.stringify(candidate(\"abcdabcdabcdabcd\", \"abcdabcd\")) === JSON.stringify([0, 1, 2, 3, 4, 5, 6, 7]));\n    console.assert(JSON.stringify(candidate(\"aaaaabbbbbcccccddddd\", \"abcde\")) === JSON.stringify([0, 5, 10, 15, 16]));\n    console.assert(JSON.stringify(candidate(\"xyzzxyzzxyzz\", \"xyzxyz\")) === JSON.stringify([0, 1, 2, 3, 5, 6]));\n    console.assert(JSON.stringify(candidate(\"abcdefghiklmnopqrstuvwxyz\", \"aikuyz\")) === JSON.stringify([0, 1, 9, 19, 23, 24]));\n    console.assert(JSON.stringify(candidate(\"amazingrace\", \"amazing\")) === JSON.stringify([0, 1, 2, 3, 4, 5, 6]));\n    console.assert(JSON.stringify(candidate(\"pythonprogramming\", \"python\")) === JSON.stringify([0, 1, 2, 3, 4, 5]));\n    console.assert(JSON.stringify(candidate(\"aabbaabbaabbaabb\", \"aabb\")) === JSON.stringify([0, 1, 2, 3]));\n    console.assert(JSON.stringify(candidate(\"abacabadabacabadabacabad\", \"abcabc\")) === JSON.stringify([0, 1, 2, 4, 5, 11]));\n    console.assert(JSON.stringify(candidate(\"abcdefghijklmnopqrstuvwxyz\", \"xyzabc\")) === JSON.stringify([]));\n    console.assert(JSON.stringify(candidate(\"abcdefghijklmnopqrstuvwxyzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", \"abcdefghijklmnopqrstuvwxyz\")) === JSON.stringify([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25]));\n    console.assert(JSON.stringify(candidate(\"acbacbacbac\", \"abcabc\")) === JSON.stringify([0, 1, 4, 6, 8, 10]));\n    console.assert(JSON.stringify(candidate(\"abacaba\", \"aaa\")) === JSON.stringify([0, 1, 2]));\n    console.assert(JSON.stringify(candidate(\"repeatedrepeatedrepeated\", \"repeated\")) === JSON.stringify([0, 1, 2, 3, 4, 5, 6, 7]));\n    console.assert(JSON.stringify(candidate(\"xyzxyzxyzxyzxyzxyzxyz\", \"xyzxyz\")) === JSON.stringify([0, 1, 2, 3, 4, 5]));\n    console.assert(JSON.stringify(candidate(\"abcdefgabcdefgabcdefgabcdefg\", \"abcdefg\")) === JSON.stringify([0, 1, 2, 3, 4, 5, 6]));\n    console.assert(JSON.stringify(candidate(\"aaabbbcccdddeeefffggghhhiii\", \"abcdefghi\")) === JSON.stringify([0, 1, 6, 9, 12, 15, 18, 21, 24]));\n    console.assert(JSON.stringify(candidate(\"xyzxyzxyzxyz\", \"xyzxyz\")) === JSON.stringify([0, 1, 2, 3, 4, 5]));\n    console.assert(JSON.stringify(candidate(\"mississippi\", \"miss\")) === JSON.stringify([0, 1, 2, 3]));\n    console.assert(JSON.stringify(candidate(\"foobartoobarfoo\", \"foobar\")) === JSON.stringify([0, 1, 2, 3, 4, 5]));\n    console.assert(JSON.stringify(candidate(\"aabbaabbaabbaabbaabb\", \"aabbaab\")) === JSON.stringify([0, 1, 2, 3, 4, 5, 6]));\n    console.assert(JSON.stringify(candidate(\"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", \"zzzzzz\")) === JSON.stringify([0, 1, 2, 3, 4, 5]));\n    console.assert(JSON.stringify(candidate(\"mississippi\", \"mis\")) === JSON.stringify([0, 1, 2]));\n    console.assert(JSON.stringify(candidate(\"hellotherehellotherehellotherehellotherehellotherehellotherehellotherehellotherehellothere\", \"here\")) === JSON.stringify([0, 1, 2, 7]));\n    console.assert(JSON.stringify(candidate(\"thisisaverylongstringthatweneedtouse\", \"string\")) === JSON.stringify([0, 16, 17, 18, 19, 20]));\n    console.assert(JSON.stringify(candidate(\"xyzzxyzzxyzzxyzz\", \"zzzz\")) === JSON.stringify([0, 2, 3, 6]));\n    console.assert(JSON.stringify(candidate(\"abcabcabcabcabc\", \"abcabc\")) === JSON.stringify([0, 1, 2, 3, 4, 5]));\n    console.assert(JSON.stringify(candidate(\"hellothere\", \"her\")) === JSON.stringify([0, 1, 2]));\n    console.assert(JSON.stringify(candidate(\"abacabadabacaba\", \"abc\")) === JSON.stringify([0, 1, 2]));\n    console.assert(JSON.stringify(candidate(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", \"abcdefghijklmnopqrstuvw\")) === JSON.stringify([0, 1, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36, 38, 40, 42, 44]));\n    console.assert(JSON.stringify(candidate(\"pneumonoultramicroscopicsilicovolcanoconiosis\", \"pneumo\")) === JSON.stringify([0, 1, 2, 3, 4, 5]));\n    console.assert(JSON.stringify(candidate(\"baaabaaaabaaabaababaaaab\", \"baaba\")) === JSON.stringify([0, 1, 2, 3, 5]));\n    console.assert(JSON.stringify(candidate(\"abacabadabacaba\", \"abaca\")) === JSON.stringify([0, 1, 2, 3, 4]));\n    console.assert(JSON.stringify(candidate(\"zyxwvutsrqponmlkjihgfedcba\", \"abcde\")) === JSON.stringify([]));\n    console.assert(JSON.stringify(candidate(\"hellohellohellohellohellohello\", \"hello\")) === JSON.stringify([0, 1, 2, 3, 4]));\n    console.assert(JSON.stringify(candidate(\"hellohellohello\", \"helo\")) === JSON.stringify([0, 1, 2, 3]));\n    console.assert(JSON.stringify(candidate(\"zyxwvutsrqponmlkjihgfedcba\", \"mnopqrstuvwxyza\")) === JSON.stringify([]));\n    console.assert(JSON.stringify(candidate(\"xxxxxxxxxyyyyyyyyyzzzzzzzzz\", \"xyz\")) === JSON.stringify([0, 1, 18]));\n    console.assert(JSON.stringify(candidate(\"zyxzyxzyxzyxzyxzyxzyxzyxzyx\", \"zyxzyxzyx\")) === JSON.stringify([0, 1, 2, 3, 4, 5, 6, 7, 8]));\n    console.assert(JSON.stringify(candidate(\"abababab\", \"aba\")) === JSON.stringify([0, 1, 2]));\n    console.assert(JSON.stringify(candidate(\"zyxwvutsrqponmlkjihgfedcba\", \"zyxwv\")) === JSON.stringify([0, 1, 2, 3, 4]));\n    console.assert(JSON.stringify(candidate(\"programming\", \"pgm\")) === JSON.stringify([0, 1, 6]));\n    console.assert(JSON.stringify(candidate(\"abacabadabacabadabacaba\", \"ababa\")) === JSON.stringify([0, 1, 2, 3, 4]));\n    console.assert(JSON.stringify(candidate(\"zzzzzzzzzzzzzzzzzzzzzzzzzzzz\", \"zzz\")) === JSON.stringify([0, 1, 2]));\n    console.assert(JSON.stringify(candidate(\"abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz\", \"abcdefghijklmnopqrstuvwxyz\")) === JSON.stringify([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25]));\n    console.assert(JSON.stringify(candidate(\"abacabadabacabadaba\", \"abc\")) === JSON.stringify([0, 1, 2]));\n    console.assert(JSON.stringify(candidate(\"aaaabbbbccccddddeeeeffffgggg\", \"abcdefg\")) === JSON.stringify([0, 1, 8, 12, 16, 20, 24]));\n    console.assert(JSON.stringify(candidate(\"aaaaaabbbaaaaabaaaaabbbaaa\", \"aabbaab\")) === JSON.stringify([0, 1, 2, 6, 9, 10, 14]));\n    console.assert(JSON.stringify(candidate(\"qwertyuiopasdfghjklzxcvbnm\", \"qwerty\")) === JSON.stringify([0, 1, 2, 3, 4, 5]));\n    console.assert(JSON.stringify(candidate(\"qwertyuiopasdfghjklzxcvbnm\", \"qzpm\")) === JSON.stringify([0, 1, 9, 25]));\n    console.assert(JSON.stringify(candidate(\"mississippiississippi\", \"misis\")) === JSON.stringify([0, 1, 2, 3, 5]));\n    console.assert(JSON.stringify(candidate(\"thisisaverylongstringwithsomerepeatingcharacters\", \"thisis\")) === JSON.stringify([0, 1, 2, 3, 4, 5]));\n    console.assert(JSON.stringify(candidate(\"pppppppppppppppppp\", \"ppp\")) === JSON.stringify([0, 1, 2]));\n    console.assert(JSON.stringify(candidate(\"abcdefghijklmnopqrstuvwxyz\", \"zyx\")) === JSON.stringify([]));\n}",
+    "typescript": "function check(candidate: Function): void {\n    console.assert(JSON.stringify(candidate(\"hello\", \"heo\")) === JSON.stringify([0, 1, 2]));\n    console.assert(JSON.stringify(candidate(\"abcdefghijklmnopqrstuvwxyz\", \"abcdefghijklmnopqrstuvwxyz\")) === JSON.stringify([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25]));\n    console.assert(JSON.stringify(candidate(\"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", \"abc\")) === JSON.stringify([]));\n    console.assert(JSON.stringify(candidate(\"abcde\", \"edcba\")) === JSON.stringify([]));\n    console.assert(JSON.stringify(candidate(\"abcdefg\", \"bdf\")) === JSON.stringify([0, 3, 5]));\n    console.assert(JSON.stringify(candidate(\"mississippi\", \"issi\")) === JSON.stringify([0, 2, 3, 4]));\n    console.assert(JSON.stringify(candidate(\"vbcca\", \"abc\")) === JSON.stringify([0, 1, 2]));\n    console.assert(JSON.stringify(candidate(\"leetcode\", \"code\")) === JSON.stringify([0, 5, 6, 7]));\n    console.assert(JSON.stringify(candidate(\"bacdc\", \"abc\")) === JSON.stringify([1, 2, 4]));\n    console.assert(JSON.stringify(candidate(\"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", \"aaa\")) === JSON.stringify([]));\n    console.assert(JSON.stringify(candidate(\"xyz\", \"xy\")) === JSON.stringify([0, 1]));\n    console.assert(JSON.stringify(candidate(\"abcabcabc\", \"abc\")) === JSON.stringify([0, 1, 2]));\n    console.assert(JSON.stringify(candidate(\"abcdefghijklmnopqrstuvwxyz\", \"abc\")) === JSON.stringify([0, 1, 2]));\n    console.assert(JSON.stringify(candidate(\"abcdefghijklmnopqrstuvwxyz\", \"aaa\")) === JSON.stringify([]));\n    console.assert(JSON.stringify(candidate(\"zyxwvutsrqponmlkjihgfedcba\", \"xyz\")) === JSON.stringify([]));\n    console.assert(JSON.stringify(candidate(\"abcdefghij\", \"aceg\")) === JSON.stringify([0, 1, 4, 6]));\n    console.assert(JSON.stringify(candidate(\"xyzz\", \"xyz\")) === JSON.stringify([0, 1, 2]));\n    console.assert(JSON.stringify(candidate(\"aabbccddeeff\", \"abcdef\")) === JSON.stringify([0, 1, 4, 6, 8, 10]));\n    console.assert(JSON.stringify(candidate(\"abcdefghijklmnopqrstuvwxyz\", \"zzz\")) === JSON.stringify([]));\n    console.assert(JSON.stringify(candidate(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", \"zyxwvutsrqponmlkjihgfedcba\")) === JSON.stringify([]));\n    console.assert(JSON.stringify(candidate(\"abcdefghijklmnopqrstuvwxyz\", \"az\")) === JSON.stringify([0, 1]));\n    console.assert(JSON.stringify(candidate(\"leetcode\", \"leet\")) === JSON.stringify([0, 1, 2, 3]));\n    console.assert(JSON.stringify(candidate(\"abababababab\", \"aab\")) === JSON.stringify([0, 1, 3]));\n    console.assert(JSON.stringify(candidate(\"zzzzzzzzzzzz\", \"zzz\")) === JSON.stringify([0, 1, 2]));\n    console.assert(JSON.stringify(candidate(\"aaabaaa\", \"aaa\")) === JSON.stringify([0, 1, 2]));\n    console.assert(JSON.stringify(candidate(\"aabbcc\", \"abc\")) === JSON.stringify([0, 1, 4]));\n    console.assert(JSON.stringify(candidate(\"aaaaaa\", \"aaabc\")) === JSON.stringify([]));\n    console.assert(JSON.stringify(candidate(\"mississippi\", \"sip\")) === JSON.stringify([0, 1, 8]));\n    console.assert(JSON.stringify(candidate(\"zzzzz\", \"aaa\")) === JSON.stringify([]));\n    console.assert(JSON.stringify(candidate(\"abababababababababababababababababababababababababababab\", \"aaa\")) === JSON.stringify([0, 1, 2]));\n    console.assert(JSON.stringify(candidate(\"abc\", \"ab\")) === JSON.stringify([0, 1]));\n    console.assert(JSON.stringify(candidate(\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\", \"aaaaaa\")) === JSON.stringify([0, 1, 2, 3, 4, 5]));\n    console.assert(JSON.stringify(candidate(\"abcdefghijklmnopqrstuvwxyz\", \"zyxwvutsrqponmlkjihgfedcba\")) === JSON.stringify([]));\n    console.assert(JSON.stringify(candidate(\"abababababababababab\", \"ababab\")) === JSON.stringify([0, 1, 2, 3, 4, 5]));\n    console.assert(JSON.stringify(candidate(\"hellohellohello\", \"ell\")) === JSON.stringify([0, 2, 3]));\n    console.assert(JSON.stringify(candidate(\"abcdefghijklmnopqrstuvwxyz\", \"abcdefghijklmnopqxyz\")) === JSON.stringify([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 24, 25]));\n    console.assert(JSON.stringify(candidate(\"abcdefghijklmnopqrstuvwxyz\", \"adgjmoqsuwy\")) === JSON.stringify([0, 1, 6, 9, 12, 14, 16, 18, 20, 22, 24]));\n    console.assert(JSON.stringify(candidate(\"axxayyazz\", \"xyz\")) === JSON.stringify([0, 4, 7]));\n    console.assert(JSON.stringify(candidate(\"abracadabra\", \"abra\")) === JSON.stringify([0, 1, 2, 3]));\n    console.assert(JSON.stringify(candidate(\"abcdefghijklmnopqrstuvwxyz\", \"qrstuvwxyzz\")) === JSON.stringify([]));\n    console.assert(JSON.stringify(candidate(\"zyxzyxzyxzyxzyxzyxzyxzyxzyxzyx\", \"zyxzyxzyxzyx\")) === JSON.stringify([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]));\n    console.assert(JSON.stringify(candidate(\"sequenceofcharacters\", \"sequence\")) === JSON.stringify([0, 1, 2, 3, 4, 5, 6, 7]));\n    console.assert(JSON.stringify(candidate(\"abcdefghijklmnopqrstuvwxyz\", \"zyxwvut\")) === JSON.stringify([]));\n    console.assert(JSON.stringify(candidate(\"abracadabra\", \"acad\")) === JSON.stringify([0, 1, 3, 6]));\n    console.assert(JSON.stringify(candidate(\"thequickbrownfoxjumpsoverthelazydog\", \"thezog\")) === JSON.stringify([0, 1, 2, 3, 10, 34]));\n    console.assert(JSON.stringify(candidate(\"ababababababababab\", \"aba\")) === JSON.stringify([0, 1, 2]));\n    console.assert(JSON.stringify(candidate(\"aababababa\", \"aaa\")) === JSON.stringify([0, 1, 2]));\n    console.assert(JSON.stringify(candidate(\"xyzz\", \"zyx\")) === JSON.stringify([]));\n    console.assert(JSON.stringify(candidate(\"abcdefghijklmnopqrstuvwxyz\", \"xyz\")) === JSON.stringify([0, 24, 25]));\n    console.assert(JSON.stringify(candidate(\"abcdexyz\", \"xyz\")) === JSON.stringify([0, 6, 7]));\n    console.assert(JSON.stringify(candidate(\"xyzxyzxyzxyzxyzxyzxyzxyz\", \"xyzxyzxyz\")) === JSON.stringify([0, 1, 2, 3, 4, 5, 6, 7, 8]));\n    console.assert(JSON.stringify(candidate(\"abcdefg\", \"aceg\")) === JSON.stringify([0, 1, 4, 6]));\n    console.assert(JSON.stringify(candidate(\"axbxcxdxe\", \"abcde\")) === JSON.stringify([0, 1, 4, 6, 8]));\n    console.assert(JSON.stringify(candidate(\"abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz\", \"zyxwvutsrqponmlkjihgfedcba\")) === JSON.stringify([]));\n    console.assert(JSON.stringify(candidate(\"abcdefghijklmnopqrstuvwxyz\", \"abcde\")) === JSON.stringify([0, 1, 2, 3, 4]));\n    console.assert(JSON.stringify(candidate(\"abcdefghij\", \"jihgfedcba\")) === JSON.stringify([]));\n    console.assert(JSON.stringify(candidate(\"xyxyxyxyxy\", \"xyxy\")) === JSON.stringify([0, 1, 2, 3]));\n    console.assert(JSON.stringify(candidate(\"aabbaabbaabbaabbaabbaabb\", \"aaabb\")) === JSON.stringify([0, 1, 2, 3, 6]));\n    console.assert(JSON.stringify(candidate(\"abcdefghijklmnopqrstuvwxyz\", \"mnopq\")) === JSON.stringify([0, 13, 14, 15, 16]));\n    console.assert(JSON.stringify(candidate(\"abababababababab\", \"abab\")) === JSON.stringify([0, 1, 2, 3]));\n    console.assert(JSON.stringify(candidate(\"abacabadabacabadabacabadabacabad\", \"abcabcabc\")) === JSON.stringify([0, 1, 2, 4, 5, 11, 12, 13, 19]));\n    console.assert(JSON.stringify(candidate(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", \"abcdefghijklmnopqrstuvwxy\")) === JSON.stringify([0, 1, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36, 38, 40, 42, 44, 46, 48]));\n    console.assert(JSON.stringify(candidate(\"abcdabcdabcd\", \"abcd\")) === JSON.stringify([0, 1, 2, 3]));\n    console.assert(JSON.stringify(candidate(\"abcdefghijklmnopqrstuvwxyz\", \"abcdefghijklmnop\")) === JSON.stringify([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]));\n    console.assert(JSON.stringify(candidate(\"abcdefghijabcdefghijabcdefghij\", \"abcdefghij\")) === JSON.stringify([0, 1, 2, 3, 4, 5, 6, 7, 8, 9]));\n    console.assert(JSON.stringify(candidate(\"abacabadabacaba\", \"abab\")) === JSON.stringify([0, 1, 2, 3]));\n    console.assert(JSON.stringify(candidate(\"aaaabbbbcccc\", \"abccba\")) === JSON.stringify([]));\n    console.assert(JSON.stringify(candidate(\"qwertyuiopasdfghjklzxcvbnm\", \"qaz\")) === JSON.stringify([0, 1, 19]));\n    console.assert(JSON.stringify(candidate(\"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", \"zzz\")) === JSON.stringify([0, 1, 2]));\n    console.assert(JSON.stringify(candidate(\"bacdefghijklmnopqrstuvwxyz\", \"abcdefg\")) === JSON.stringify([]));\n    console.assert(JSON.stringify(candidate(\"alibabacloud\", \"abcl\")) === JSON.stringify([0, 1, 7, 8]));\n    console.assert(JSON.stringify(candidate(\"aaaaaaaabbbbbbbbbbcccccccccddddddeeeeeeeeeeffffffffff\", \"abcdefghij\")) === JSON.stringify([]));\n    console.assert(JSON.stringify(candidate(\"bbaabbaabbaabbaabbaabbaabbaab\", \"bbabbb\")) === JSON.stringify([0, 1, 2, 3, 4, 5]));\n    console.assert(JSON.stringify(candidate(\"abcdefghij\", \"afh\")) === JSON.stringify([0, 1, 7]));\n    console.assert(JSON.stringify(candidate(\"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", \"abc\")) === JSON.stringify([]));\n    console.assert(JSON.stringify(candidate(\"abcdexyz\", \"abcdef\")) === JSON.stringify([0, 1, 2, 3, 4, 5]));\n    console.assert(JSON.stringify(candidate(\"banana\", \"an\")) === JSON.stringify([0, 2]));\n    console.assert(JSON.stringify(candidate(\"abcdefghijklmnopqrstuvwxyz\", \"abcdefg\")) === JSON.stringify([0, 1, 2, 3, 4, 5, 6]));\n    console.assert(JSON.stringify(candidate(\"abcdefghijklmnopqrstuvwxyz\", \"abcdefghijklmnopqrstu\")) === JSON.stringify([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]));\n    console.assert(JSON.stringify(candidate(\"abababababababababababababababababababababababababababababababababababababababababababababababababababababababab\", \"abab\")) === JSON.stringify([0, 1, 2, 3]));\n    console.assert(JSON.stringify(candidate(\"zzzzyyyxxxwwwwvvvvuuuuttttssssrrrrqqqqppppooooonnnnmmmmllllkkkkjjjjiiiihhhhggggffffffeeeeeeeedddddccccbbbaaaa\", \"abcdefg\")) === JSON.stringify([]));\n    console.assert(JSON.stringify(candidate(\"xyzzyxzyxzyxzyxzyx\", \"xyzzyx\")) === JSON.stringify([0, 1, 2, 3, 4, 5]));\n    console.assert(JSON.stringify(candidate(\"acacacacacacacacac\", \"aaaa\")) === JSON.stringify([0, 1, 2, 4]));\n    console.assert(JSON.stringify(candidate(\"bbaaabbbaaabbbaaabbbaa\", \"baaba\")) === JSON.stringify([0, 1, 2, 5, 8]));\n    console.assert(JSON.stringify(candidate(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", \"abcdefghijklmnopqrstuvwxyz\")) === JSON.stringify([0, 1, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36, 38, 40, 42, 44, 46, 48, 50]));\n    console.assert(JSON.stringify(candidate(\"banana\", \"bana\")) === JSON.stringify([0, 1, 2, 3]));\n    console.assert(JSON.stringify(candidate(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", \"zzzyxwvutsrqponmlkjihgfedcba\")) === JSON.stringify([]));\n    console.assert(JSON.stringify(candidate(\"abbaabbaabba\", \"abab\")) === JSON.stringify([0, 1, 2, 5]));\n    console.assert(JSON.stringify(candidate(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", \"mnopqrstuvwxyz\")) === JSON.stringify([0, 26, 28, 30, 32, 34, 36, 38, 40, 42, 44, 46, 48, 50]));\n    console.assert(JSON.stringify(candidate(\"abcdabcabcabcabcabcabcabcabcabcabc\", \"abcde\")) === JSON.stringify([0, 1, 2, 3, 4]));\n    console.assert(JSON.stringify(candidate(\"abcabcabcabcabcabcabcabcabcabc\", \"abcabc\")) === JSON.stringify([0, 1, 2, 3, 4, 5]));\n    console.assert(JSON.stringify(candidate(\"thisisalongstring\", \"this\")) === JSON.stringify([0, 1, 2, 3]));\n    console.assert(JSON.stringify(candidate(\"zyxwvutsrqponmlkjihgfedcba\", \"fedcba\")) === JSON.stringify([0, 21, 22, 23, 24, 25]));\n    console.assert(JSON.stringify(candidate(\"qwertyuiopasdfghjklzxcvbnm\", \"qwertyuiop\")) === JSON.stringify([0, 1, 2, 3, 4, 5, 6, 7, 8, 9]));\n    console.assert(JSON.stringify(candidate(\"abcdefghijklmnopqrstuvwxyz\", \"qrstuv\")) === JSON.stringify([0, 17, 18, 19, 20, 21]));\n    console.assert(JSON.stringify(candidate(\"abcdabc\", \"abc\")) === JSON.stringify([0, 1, 2]));\n    console.assert(JSON.stringify(candidate(\"abcdabcdabcdabcd\", \"abca\")) === JSON.stringify([0, 1, 2, 3]));\n    console.assert(JSON.stringify(candidate(\"abacabadabacaba\", \"abada\")) === JSON.stringify([0, 1, 2, 3, 4]));\n    console.assert(JSON.stringify(candidate(\"racecar\", \"ace\")) === JSON.stringify([0, 2, 3]));\n    console.assert(JSON.stringify(candidate(\"abcabcabcabcabcabcabc\", \"abcabc\")) === JSON.stringify([0, 1, 2, 3, 4, 5]));\n    console.assert(JSON.stringify(candidate(\"bbaaaabaaaabbaa\", \"bab\")) === JSON.stringify([0, 1, 6]));\n    console.assert(JSON.stringify(candidate(\"abababababababababab\", \"aaa\")) === JSON.stringify([0, 1, 2]));\n    console.assert(JSON.stringify(candidate(\"abcdabcdabcdabcd\", \"abcdabcd\")) === JSON.stringify([0, 1, 2, 3, 4, 5, 6, 7]));\n    console.assert(JSON.stringify(candidate(\"aaaaabbbbbcccccddddd\", \"abcde\")) === JSON.stringify([0, 5, 10, 15, 16]));\n    console.assert(JSON.stringify(candidate(\"xyzzxyzzxyzz\", \"xyzxyz\")) === JSON.stringify([0, 1, 2, 3, 5, 6]));\n    console.assert(JSON.stringify(candidate(\"abcdefghiklmnopqrstuvwxyz\", \"aikuyz\")) === JSON.stringify([0, 1, 9, 19, 23, 24]));\n    console.assert(JSON.stringify(candidate(\"amazingrace\", \"amazing\")) === JSON.stringify([0, 1, 2, 3, 4, 5, 6]));\n    console.assert(JSON.stringify(candidate(\"pythonprogramming\", \"python\")) === JSON.stringify([0, 1, 2, 3, 4, 5]));\n    console.assert(JSON.stringify(candidate(\"aabbaabbaabbaabb\", \"aabb\")) === JSON.stringify([0, 1, 2, 3]));\n    console.assert(JSON.stringify(candidate(\"abacabadabacabadabacabad\", \"abcabc\")) === JSON.stringify([0, 1, 2, 4, 5, 11]));\n    console.assert(JSON.stringify(candidate(\"abcdefghijklmnopqrstuvwxyz\", \"xyzabc\")) === JSON.stringify([]));\n    console.assert(JSON.stringify(candidate(\"abcdefghijklmnopqrstuvwxyzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", \"abcdefghijklmnopqrstuvwxyz\")) === JSON.stringify([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25]));\n    console.assert(JSON.stringify(candidate(\"acbacbacbac\", \"abcabc\")) === JSON.stringify([0, 1, 4, 6, 8, 10]));\n    console.assert(JSON.stringify(candidate(\"abacaba\", \"aaa\")) === JSON.stringify([0, 1, 2]));\n    console.assert(JSON.stringify(candidate(\"repeatedrepeatedrepeated\", \"repeated\")) === JSON.stringify([0, 1, 2, 3, 4, 5, 6, 7]));\n    console.assert(JSON.stringify(candidate(\"xyzxyzxyzxyzxyzxyzxyz\", \"xyzxyz\")) === JSON.stringify([0, 1, 2, 3, 4, 5]));\n    console.assert(JSON.stringify(candidate(\"abcdefgabcdefgabcdefgabcdefg\", \"abcdefg\")) === JSON.stringify([0, 1, 2, 3, 4, 5, 6]));\n    console.assert(JSON.stringify(candidate(\"aaabbbcccdddeeefffggghhhiii\", \"abcdefghi\")) === JSON.stringify([0, 1, 6, 9, 12, 15, 18, 21, 24]));\n    console.assert(JSON.stringify(candidate(\"xyzxyzxyzxyz\", \"xyzxyz\")) === JSON.stringify([0, 1, 2, 3, 4, 5]));\n    console.assert(JSON.stringify(candidate(\"mississippi\", \"miss\")) === JSON.stringify([0, 1, 2, 3]));\n    console.assert(JSON.stringify(candidate(\"foobartoobarfoo\", \"foobar\")) === JSON.stringify([0, 1, 2, 3, 4, 5]));\n    console.assert(JSON.stringify(candidate(\"aabbaabbaabbaabbaabb\", \"aabbaab\")) === JSON.stringify([0, 1, 2, 3, 4, 5, 6]));\n    console.assert(JSON.stringify(candidate(\"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", \"zzzzzz\")) === JSON.stringify([0, 1, 2, 3, 4, 5]));\n    console.assert(JSON.stringify(candidate(\"mississippi\", \"mis\")) === JSON.stringify([0, 1, 2]));\n    console.assert(JSON.stringify(candidate(\"hellotherehellotherehellotherehellotherehellotherehellotherehellotherehellotherehellothere\", \"here\")) === JSON.stringify([0, 1, 2, 7]));\n    console.assert(JSON.stringify(candidate(\"thisisaverylongstringthatweneedtouse\", \"string\")) === JSON.stringify([0, 16, 17, 18, 19, 20]));\n    console.assert(JSON.stringify(candidate(\"xyzzxyzzxyzzxyzz\", \"zzzz\")) === JSON.stringify([0, 2, 3, 6]));\n    console.assert(JSON.stringify(candidate(\"abcabcabcabcabc\", \"abcabc\")) === JSON.stringify([0, 1, 2, 3, 4, 5]));\n    console.assert(JSON.stringify(candidate(\"hellothere\", \"her\")) === JSON.stringify([0, 1, 2]));\n    console.assert(JSON.stringify(candidate(\"abacabadabacaba\", \"abc\")) === JSON.stringify([0, 1, 2]));\n    console.assert(JSON.stringify(candidate(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", \"abcdefghijklmnopqrstuvw\")) === JSON.stringify([0, 1, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36, 38, 40, 42, 44]));\n    console.assert(JSON.stringify(candidate(\"pneumonoultramicroscopicsilicovolcanoconiosis\", \"pneumo\")) === JSON.stringify([0, 1, 2, 3, 4, 5]));\n    console.assert(JSON.stringify(candidate(\"baaabaaaabaaabaababaaaab\", \"baaba\")) === JSON.stringify([0, 1, 2, 3, 5]));\n    console.assert(JSON.stringify(candidate(\"abacabadabacaba\", \"abaca\")) === JSON.stringify([0, 1, 2, 3, 4]));\n    console.assert(JSON.stringify(candidate(\"zyxwvutsrqponmlkjihgfedcba\", \"abcde\")) === JSON.stringify([]));\n    console.assert(JSON.stringify(candidate(\"hellohellohellohellohellohello\", \"hello\")) === JSON.stringify([0, 1, 2, 3, 4]));\n    console.assert(JSON.stringify(candidate(\"hellohellohello\", \"helo\")) === JSON.stringify([0, 1, 2, 3]));\n    console.assert(JSON.stringify(candidate(\"zyxwvutsrqponmlkjihgfedcba\", \"mnopqrstuvwxyza\")) === JSON.stringify([]));\n    console.assert(JSON.stringify(candidate(\"xxxxxxxxxyyyyyyyyyzzzzzzzzz\", \"xyz\")) === JSON.stringify([0, 1, 18]));\n    console.assert(JSON.stringify(candidate(\"zyxzyxzyxzyxzyxzyxzyxzyxzyx\", \"zyxzyxzyx\")) === JSON.stringify([0, 1, 2, 3, 4, 5, 6, 7, 8]));\n    console.assert(JSON.stringify(candidate(\"abababab\", \"aba\")) === JSON.stringify([0, 1, 2]));\n    console.assert(JSON.stringify(candidate(\"zyxwvutsrqponmlkjihgfedcba\", \"zyxwv\")) === JSON.stringify([0, 1, 2, 3, 4]));\n    console.assert(JSON.stringify(candidate(\"programming\", \"pgm\")) === JSON.stringify([0, 1, 6]));\n    console.assert(JSON.stringify(candidate(\"abacabadabacabadabacaba\", \"ababa\")) === JSON.stringify([0, 1, 2, 3, 4]));\n    console.assert(JSON.stringify(candidate(\"zzzzzzzzzzzzzzzzzzzzzzzzzzzz\", \"zzz\")) === JSON.stringify([0, 1, 2]));\n    console.assert(JSON.stringify(candidate(\"abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz\", \"abcdefghijklmnopqrstuvwxyz\")) === JSON.stringify([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25]));\n    console.assert(JSON.stringify(candidate(\"abacabadabacabadaba\", \"abc\")) === JSON.stringify([0, 1, 2]));\n    console.assert(JSON.stringify(candidate(\"aaaabbbbccccddddeeeeffffgggg\", \"abcdefg\")) === JSON.stringify([0, 1, 8, 12, 16, 20, 24]));\n    console.assert(JSON.stringify(candidate(\"aaaaaabbbaaaaabaaaaabbbaaa\", \"aabbaab\")) === JSON.stringify([0, 1, 2, 6, 9, 10, 14]));\n    console.assert(JSON.stringify(candidate(\"qwertyuiopasdfghjklzxcvbnm\", \"qwerty\")) === JSON.stringify([0, 1, 2, 3, 4, 5]));\n    console.assert(JSON.stringify(candidate(\"qwertyuiopasdfghjklzxcvbnm\", \"qzpm\")) === JSON.stringify([0, 1, 9, 25]));\n    console.assert(JSON.stringify(candidate(\"mississippiississippi\", \"misis\")) === JSON.stringify([0, 1, 2, 3, 5]));\n    console.assert(JSON.stringify(candidate(\"thisisaverylongstringwithsomerepeatingcharacters\", \"thisis\")) === JSON.stringify([0, 1, 2, 3, 4, 5]));\n    console.assert(JSON.stringify(candidate(\"pppppppppppppppppp\", \"ppp\")) === JSON.stringify([0, 1, 2]));\n    console.assert(JSON.stringify(candidate(\"abcdefghijklmnopqrstuvwxyz\", \"zyx\")) === JSON.stringify([]));\n}",
+    "golang": "func check(candidate func([]int, int) []int) {\n    assert reflect.DeepEqual(candidate(\"hello\", \"heo\"), []int{0, 1, 2})\n    assert reflect.DeepEqual(candidate(\"abcdefghijklmnopqrstuvwxyz\", \"abcdefghijklmnopqrstuvwxyz\"), []int{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25})\n    assert reflect.DeepEqual(candidate(\"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", \"abc\"), []int{})\n    assert reflect.DeepEqual(candidate(\"abcde\", \"edcba\"), []int{})\n    assert reflect.DeepEqual(candidate(\"abcdefg\", \"bdf\"), []int{0, 3, 5})\n    assert reflect.DeepEqual(candidate(\"mississippi\", \"issi\"), []int{0, 2, 3, 4})\n    assert reflect.DeepEqual(candidate(\"vbcca\", \"abc\"), []int{0, 1, 2})\n    assert reflect.DeepEqual(candidate(\"leetcode\", \"code\"), []int{0, 5, 6, 7})\n    assert reflect.DeepEqual(candidate(\"bacdc\", \"abc\"), []int{1, 2, 4})\n    assert reflect.DeepEqual(candidate(\"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", \"aaa\"), []int{})\n    assert reflect.DeepEqual(candidate(\"xyz\", \"xy\"), []int{0, 1})\n    assert reflect.DeepEqual(candidate(\"abcabcabc\", \"abc\"), []int{0, 1, 2})\n    assert reflect.DeepEqual(candidate(\"abcdefghijklmnopqrstuvwxyz\", \"abc\"), []int{0, 1, 2})\n    assert reflect.DeepEqual(candidate(\"abcdefghijklmnopqrstuvwxyz\", \"aaa\"), []int{})\n    assert reflect.DeepEqual(candidate(\"zyxwvutsrqponmlkjihgfedcba\", \"xyz\"), []int{})\n    assert reflect.DeepEqual(candidate(\"abcdefghij\", \"aceg\"), []int{0, 1, 4, 6})\n    assert reflect.DeepEqual(candidate(\"xyzz\", \"xyz\"), []int{0, 1, 2})\n    assert reflect.DeepEqual(candidate(\"aabbccddeeff\", \"abcdef\"), []int{0, 1, 4, 6, 8, 10})\n    assert reflect.DeepEqual(candidate(\"abcdefghijklmnopqrstuvwxyz\", \"zzz\"), []int{})\n    assert reflect.DeepEqual(candidate(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", \"zyxwvutsrqponmlkjihgfedcba\"), []int{})\n    assert reflect.DeepEqual(candidate(\"abcdefghijklmnopqrstuvwxyz\", \"az\"), []int{0, 1})\n    assert reflect.DeepEqual(candidate(\"leetcode\", \"leet\"), []int{0, 1, 2, 3})\n    assert reflect.DeepEqual(candidate(\"abababababab\", \"aab\"), []int{0, 1, 3})\n    assert reflect.DeepEqual(candidate(\"zzzzzzzzzzzz\", \"zzz\"), []int{0, 1, 2})\n    assert reflect.DeepEqual(candidate(\"aaabaaa\", \"aaa\"), []int{0, 1, 2})\n    assert reflect.DeepEqual(candidate(\"aabbcc\", \"abc\"), []int{0, 1, 4})\n    assert reflect.DeepEqual(candidate(\"aaaaaa\", \"aaabc\"), []int{})\n    assert reflect.DeepEqual(candidate(\"mississippi\", \"sip\"), []int{0, 1, 8})\n    assert reflect.DeepEqual(candidate(\"zzzzz\", \"aaa\"), []int{})\n    assert reflect.DeepEqual(candidate(\"abababababababababababababababababababababababababababab\", \"aaa\"), []int{0, 1, 2})\n    assert reflect.DeepEqual(candidate(\"abc\", \"ab\"), []int{0, 1})\n    assert reflect.DeepEqual(candidate(\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\", \"aaaaaa\"), []int{0, 1, 2, 3, 4, 5})\n    assert reflect.DeepEqual(candidate(\"abcdefghijklmnopqrstuvwxyz\", \"zyxwvutsrqponmlkjihgfedcba\"), []int{})\n    assert reflect.DeepEqual(candidate(\"abababababababababab\", \"ababab\"), []int{0, 1, 2, 3, 4, 5})\n    assert reflect.DeepEqual(candidate(\"hellohellohello\", \"ell\"), []int{0, 2, 3})\n    assert reflect.DeepEqual(candidate(\"abcdefghijklmnopqrstuvwxyz\", \"abcdefghijklmnopqxyz\"), []int{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 24, 25})\n    assert reflect.DeepEqual(candidate(\"abcdefghijklmnopqrstuvwxyz\", \"adgjmoqsuwy\"), []int{0, 1, 6, 9, 12, 14, 16, 18, 20, 22, 24})\n    assert reflect.DeepEqual(candidate(\"axxayyazz\", \"xyz\"), []int{0, 4, 7})\n    assert reflect.DeepEqual(candidate(\"abracadabra\", \"abra\"), []int{0, 1, 2, 3})\n    assert reflect.DeepEqual(candidate(\"abcdefghijklmnopqrstuvwxyz\", \"qrstuvwxyzz\"), []int{})\n    assert reflect.DeepEqual(candidate(\"zyxzyxzyxzyxzyxzyxzyxzyxzyxzyx\", \"zyxzyxzyxzyx\"), []int{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11})\n    assert reflect.DeepEqual(candidate(\"sequenceofcharacters\", \"sequence\"), []int{0, 1, 2, 3, 4, 5, 6, 7})\n    assert reflect.DeepEqual(candidate(\"abcdefghijklmnopqrstuvwxyz\", \"zyxwvut\"), []int{})\n    assert reflect.DeepEqual(candidate(\"abracadabra\", \"acad\"), []int{0, 1, 3, 6})\n    assert reflect.DeepEqual(candidate(\"thequickbrownfoxjumpsoverthelazydog\", \"thezog\"), []int{0, 1, 2, 3, 10, 34})\n    assert reflect.DeepEqual(candidate(\"ababababababababab\", \"aba\"), []int{0, 1, 2})\n    assert reflect.DeepEqual(candidate(\"aababababa\", \"aaa\"), []int{0, 1, 2})\n    assert reflect.DeepEqual(candidate(\"xyzz\", \"zyx\"), []int{})\n    assert reflect.DeepEqual(candidate(\"abcdefghijklmnopqrstuvwxyz\", \"xyz\"), []int{0, 24, 25})\n    assert reflect.DeepEqual(candidate(\"abcdexyz\", \"xyz\"), []int{0, 6, 7})\n    assert reflect.DeepEqual(candidate(\"xyzxyzxyzxyzxyzxyzxyzxyz\", \"xyzxyzxyz\"), []int{0, 1, 2, 3, 4, 5, 6, 7, 8})\n    assert reflect.DeepEqual(candidate(\"abcdefg\", \"aceg\"), []int{0, 1, 4, 6})\n    assert reflect.DeepEqual(candidate(\"axbxcxdxe\", \"abcde\"), []int{0, 1, 4, 6, 8})\n    assert reflect.DeepEqual(candidate(\"abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz\", \"zyxwvutsrqponmlkjihgfedcba\"), []int{})\n    assert reflect.DeepEqual(candidate(\"abcdefghijklmnopqrstuvwxyz\", \"abcde\"), []int{0, 1, 2, 3, 4})\n    assert reflect.DeepEqual(candidate(\"abcdefghij\", \"jihgfedcba\"), []int{})\n    assert reflect.DeepEqual(candidate(\"xyxyxyxyxy\", \"xyxy\"), []int{0, 1, 2, 3})\n    assert reflect.DeepEqual(candidate(\"aabbaabbaabbaabbaabbaabb\", \"aaabb\"), []int{0, 1, 2, 3, 6})\n    assert reflect.DeepEqual(candidate(\"abcdefghijklmnopqrstuvwxyz\", \"mnopq\"), []int{0, 13, 14, 15, 16})\n    assert reflect.DeepEqual(candidate(\"abababababababab\", \"abab\"), []int{0, 1, 2, 3})\n    assert reflect.DeepEqual(candidate(\"abacabadabacabadabacabadabacabad\", \"abcabcabc\"), []int{0, 1, 2, 4, 5, 11, 12, 13, 19})\n    assert reflect.DeepEqual(candidate(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", \"abcdefghijklmnopqrstuvwxy\"), []int{0, 1, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36, 38, 40, 42, 44, 46, 48})\n    assert reflect.DeepEqual(candidate(\"abcdabcdabcd\", \"abcd\"), []int{0, 1, 2, 3})\n    assert reflect.DeepEqual(candidate(\"abcdefghijklmnopqrstuvwxyz\", \"abcdefghijklmnop\"), []int{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15})\n    assert reflect.DeepEqual(candidate(\"abcdefghijabcdefghijabcdefghij\", \"abcdefghij\"), []int{0, 1, 2, 3, 4, 5, 6, 7, 8, 9})\n    assert reflect.DeepEqual(candidate(\"abacabadabacaba\", \"abab\"), []int{0, 1, 2, 3})\n    assert reflect.DeepEqual(candidate(\"aaaabbbbcccc\", \"abccba\"), []int{})\n    assert reflect.DeepEqual(candidate(\"qwertyuiopasdfghjklzxcvbnm\", \"qaz\"), []int{0, 1, 19})\n    assert reflect.DeepEqual(candidate(\"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", \"zzz\"), []int{0, 1, 2})\n    assert reflect.DeepEqual(candidate(\"bacdefghijklmnopqrstuvwxyz\", \"abcdefg\"), []int{})\n    assert reflect.DeepEqual(candidate(\"alibabacloud\", \"abcl\"), []int{0, 1, 7, 8})\n    assert reflect.DeepEqual(candidate(\"aaaaaaaabbbbbbbbbbcccccccccddddddeeeeeeeeeeffffffffff\", \"abcdefghij\"), []int{})\n    assert reflect.DeepEqual(candidate(\"bbaabbaabbaabbaabbaabbaabbaab\", \"bbabbb\"), []int{0, 1, 2, 3, 4, 5})\n    assert reflect.DeepEqual(candidate(\"abcdefghij\", \"afh\"), []int{0, 1, 7})\n    assert reflect.DeepEqual(candidate(\"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", \"abc\"), []int{})\n    assert reflect.DeepEqual(candidate(\"abcdexyz\", \"abcdef\"), []int{0, 1, 2, 3, 4, 5})\n    assert reflect.DeepEqual(candidate(\"banana\", \"an\"), []int{0, 2})\n    assert reflect.DeepEqual(candidate(\"abcdefghijklmnopqrstuvwxyz\", \"abcdefg\"), []int{0, 1, 2, 3, 4, 5, 6})\n    assert reflect.DeepEqual(candidate(\"abcdefghijklmnopqrstuvwxyz\", \"abcdefghijklmnopqrstu\"), []int{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20})\n    assert reflect.DeepEqual(candidate(\"abababababababababababababababababababababababababababababababababababababababababababababababababababababababab\", \"abab\"), []int{0, 1, 2, 3})\n    assert reflect.DeepEqual(candidate(\"zzzzyyyxxxwwwwvvvvuuuuttttssssrrrrqqqqppppooooonnnnmmmmllllkkkkjjjjiiiihhhhggggffffffeeeeeeeedddddccccbbbaaaa\", \"abcdefg\"), []int{})\n    assert reflect.DeepEqual(candidate(\"xyzzyxzyxzyxzyxzyx\", \"xyzzyx\"), []int{0, 1, 2, 3, 4, 5})\n    assert reflect.DeepEqual(candidate(\"acacacacacacacacac\", \"aaaa\"), []int{0, 1, 2, 4})\n    assert reflect.DeepEqual(candidate(\"bbaaabbbaaabbbaaabbbaa\", \"baaba\"), []int{0, 1, 2, 5, 8})\n    assert reflect.DeepEqual(candidate(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", \"abcdefghijklmnopqrstuvwxyz\"), []int{0, 1, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36, 38, 40, 42, 44, 46, 48, 50})\n    assert reflect.DeepEqual(candidate(\"banana\", \"bana\"), []int{0, 1, 2, 3})\n    assert reflect.DeepEqual(candidate(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", \"zzzyxwvutsrqponmlkjihgfedcba\"), []int{})\n    assert reflect.DeepEqual(candidate(\"abbaabbaabba\", \"abab\"), []int{0, 1, 2, 5})\n    assert reflect.DeepEqual(candidate(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", \"mnopqrstuvwxyz\"), []int{0, 26, 28, 30, 32, 34, 36, 38, 40, 42, 44, 46, 48, 50})\n    assert reflect.DeepEqual(candidate(\"abcdabcabcabcabcabcabcabcabcabcabc\", \"abcde\"), []int{0, 1, 2, 3, 4})\n    assert reflect.DeepEqual(candidate(\"abcabcabcabcabcabcabcabcabcabc\", \"abcabc\"), []int{0, 1, 2, 3, 4, 5})\n    assert reflect.DeepEqual(candidate(\"thisisalongstring\", \"this\"), []int{0, 1, 2, 3})\n    assert reflect.DeepEqual(candidate(\"zyxwvutsrqponmlkjihgfedcba\", \"fedcba\"), []int{0, 21, 22, 23, 24, 25})\n    assert reflect.DeepEqual(candidate(\"qwertyuiopasdfghjklzxcvbnm\", \"qwertyuiop\"), []int{0, 1, 2, 3, 4, 5, 6, 7, 8, 9})\n    assert reflect.DeepEqual(candidate(\"abcdefghijklmnopqrstuvwxyz\", \"qrstuv\"), []int{0, 17, 18, 19, 20, 21})\n    assert reflect.DeepEqual(candidate(\"abcdabc\", \"abc\"), []int{0, 1, 2})\n    assert reflect.DeepEqual(candidate(\"abcdabcdabcdabcd\", \"abca\"), []int{0, 1, 2, 3})\n    assert reflect.DeepEqual(candidate(\"abacabadabacaba\", \"abada\"), []int{0, 1, 2, 3, 4})\n    assert reflect.DeepEqual(candidate(\"racecar\", \"ace\"), []int{0, 2, 3})\n    assert reflect.DeepEqual(candidate(\"abcabcabcabcabcabcabc\", \"abcabc\"), []int{0, 1, 2, 3, 4, 5})\n    assert reflect.DeepEqual(candidate(\"bbaaaabaaaabbaa\", \"bab\"), []int{0, 1, 6})\n    assert reflect.DeepEqual(candidate(\"abababababababababab\", \"aaa\"), []int{0, 1, 2})\n    assert reflect.DeepEqual(candidate(\"abcdabcdabcdabcd\", \"abcdabcd\"), []int{0, 1, 2, 3, 4, 5, 6, 7})\n    assert reflect.DeepEqual(candidate(\"aaaaabbbbbcccccddddd\", \"abcde\"), []int{0, 5, 10, 15, 16})\n    assert reflect.DeepEqual(candidate(\"xyzzxyzzxyzz\", \"xyzxyz\"), []int{0, 1, 2, 3, 5, 6})\n    assert reflect.DeepEqual(candidate(\"abcdefghiklmnopqrstuvwxyz\", \"aikuyz\"), []int{0, 1, 9, 19, 23, 24})\n    assert reflect.DeepEqual(candidate(\"amazingrace\", \"amazing\"), []int{0, 1, 2, 3, 4, 5, 6})\n    assert reflect.DeepEqual(candidate(\"pythonprogramming\", \"python\"), []int{0, 1, 2, 3, 4, 5})\n    assert reflect.DeepEqual(candidate(\"aabbaabbaabbaabb\", \"aabb\"), []int{0, 1, 2, 3})\n    assert reflect.DeepEqual(candidate(\"abacabadabacabadabacabad\", \"abcabc\"), []int{0, 1, 2, 4, 5, 11})\n    assert reflect.DeepEqual(candidate(\"abcdefghijklmnopqrstuvwxyz\", \"xyzabc\"), []int{})\n    assert reflect.DeepEqual(candidate(\"abcdefghijklmnopqrstuvwxyzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", \"abcdefghijklmnopqrstuvwxyz\"), []int{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25})\n    assert reflect.DeepEqual(candidate(\"acbacbacbac\", \"abcabc\"), []int{0, 1, 4, 6, 8, 10})\n    assert reflect.DeepEqual(candidate(\"abacaba\", \"aaa\"), []int{0, 1, 2})\n    assert reflect.DeepEqual(candidate(\"repeatedrepeatedrepeated\", \"repeated\"), []int{0, 1, 2, 3, 4, 5, 6, 7})\n    assert reflect.DeepEqual(candidate(\"xyzxyzxyzxyzxyzxyzxyz\", \"xyzxyz\"), []int{0, 1, 2, 3, 4, 5})\n    assert reflect.DeepEqual(candidate(\"abcdefgabcdefgabcdefgabcdefg\", \"abcdefg\"), []int{0, 1, 2, 3, 4, 5, 6})\n    assert reflect.DeepEqual(candidate(\"aaabbbcccdddeeefffggghhhiii\", \"abcdefghi\"), []int{0, 1, 6, 9, 12, 15, 18, 21, 24})\n    assert reflect.DeepEqual(candidate(\"xyzxyzxyzxyz\", \"xyzxyz\"), []int{0, 1, 2, 3, 4, 5})\n    assert reflect.DeepEqual(candidate(\"mississippi\", \"miss\"), []int{0, 1, 2, 3})\n    assert reflect.DeepEqual(candidate(\"foobartoobarfoo\", \"foobar\"), []int{0, 1, 2, 3, 4, 5})\n    assert reflect.DeepEqual(candidate(\"aabbaabbaabbaabbaabb\", \"aabbaab\"), []int{0, 1, 2, 3, 4, 5, 6})\n    assert reflect.DeepEqual(candidate(\"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", \"zzzzzz\"), []int{0, 1, 2, 3, 4, 5})\n    assert reflect.DeepEqual(candidate(\"mississippi\", \"mis\"), []int{0, 1, 2})\n    assert reflect.DeepEqual(candidate(\"hellotherehellotherehellotherehellotherehellotherehellotherehellotherehellotherehellothere\", \"here\"), []int{0, 1, 2, 7})\n    assert reflect.DeepEqual(candidate(\"thisisaverylongstringthatweneedtouse\", \"string\"), []int{0, 16, 17, 18, 19, 20})\n    assert reflect.DeepEqual(candidate(\"xyzzxyzzxyzzxyzz\", \"zzzz\"), []int{0, 2, 3, 6})\n    assert reflect.DeepEqual(candidate(\"abcabcabcabcabc\", \"abcabc\"), []int{0, 1, 2, 3, 4, 5})\n    assert reflect.DeepEqual(candidate(\"hellothere\", \"her\"), []int{0, 1, 2})\n    assert reflect.DeepEqual(candidate(\"abacabadabacaba\", \"abc\"), []int{0, 1, 2})\n    assert reflect.DeepEqual(candidate(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", \"abcdefghijklmnopqrstuvw\"), []int{0, 1, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36, 38, 40, 42, 44})\n    assert reflect.DeepEqual(candidate(\"pneumonoultramicroscopicsilicovolcanoconiosis\", \"pneumo\"), []int{0, 1, 2, 3, 4, 5})\n    assert reflect.DeepEqual(candidate(\"baaabaaaabaaabaababaaaab\", \"baaba\"), []int{0, 1, 2, 3, 5})\n    assert reflect.DeepEqual(candidate(\"abacabadabacaba\", \"abaca\"), []int{0, 1, 2, 3, 4})\n    assert reflect.DeepEqual(candidate(\"zyxwvutsrqponmlkjihgfedcba\", \"abcde\"), []int{})\n    assert reflect.DeepEqual(candidate(\"hellohellohellohellohellohello\", \"hello\"), []int{0, 1, 2, 3, 4})\n    assert reflect.DeepEqual(candidate(\"hellohellohello\", \"helo\"), []int{0, 1, 2, 3})\n    assert reflect.DeepEqual(candidate(\"zyxwvutsrqponmlkjihgfedcba\", \"mnopqrstuvwxyza\"), []int{})\n    assert reflect.DeepEqual(candidate(\"xxxxxxxxxyyyyyyyyyzzzzzzzzz\", \"xyz\"), []int{0, 1, 18})\n    assert reflect.DeepEqual(candidate(\"zyxzyxzyxzyxzyxzyxzyxzyxzyx\", \"zyxzyxzyx\"), []int{0, 1, 2, 3, 4, 5, 6, 7, 8})\n    assert reflect.DeepEqual(candidate(\"abababab\", \"aba\"), []int{0, 1, 2})\n    assert reflect.DeepEqual(candidate(\"zyxwvutsrqponmlkjihgfedcba\", \"zyxwv\"), []int{0, 1, 2, 3, 4})\n    assert reflect.DeepEqual(candidate(\"programming\", \"pgm\"), []int{0, 1, 6})\n    assert reflect.DeepEqual(candidate(\"abacabadabacabadabacaba\", \"ababa\"), []int{0, 1, 2, 3, 4})\n    assert reflect.DeepEqual(candidate(\"zzzzzzzzzzzzzzzzzzzzzzzzzzzz\", \"zzz\"), []int{0, 1, 2})\n    assert reflect.DeepEqual(candidate(\"abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz\", \"abcdefghijklmnopqrstuvwxyz\"), []int{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25})\n    assert reflect.DeepEqual(candidate(\"abacabadabacabadaba\", \"abc\"), []int{0, 1, 2})\n    assert reflect.DeepEqual(candidate(\"aaaabbbbccccddddeeeeffffgggg\", \"abcdefg\"), []int{0, 1, 8, 12, 16, 20, 24})\n    assert reflect.DeepEqual(candidate(\"aaaaaabbbaaaaabaaaaabbbaaa\", \"aabbaab\"), []int{0, 1, 2, 6, 9, 10, 14})\n    assert reflect.DeepEqual(candidate(\"qwertyuiopasdfghjklzxcvbnm\", \"qwerty\"), []int{0, 1, 2, 3, 4, 5})\n    assert reflect.DeepEqual(candidate(\"qwertyuiopasdfghjklzxcvbnm\", \"qzpm\"), []int{0, 1, 9, 25})\n    assert reflect.DeepEqual(candidate(\"mississippiississippi\", \"misis\"), []int{0, 1, 2, 3, 5})\n    assert reflect.DeepEqual(candidate(\"thisisaverylongstringwithsomerepeatingcharacters\", \"thisis\"), []int{0, 1, 2, 3, 4, 5})\n    assert reflect.DeepEqual(candidate(\"pppppppppppppppppp\", \"ppp\"), []int{0, 1, 2})\n    assert reflect.DeepEqual(candidate(\"abcdefghijklmnopqrstuvwxyz\", \"zyx\"), []int{})\n}",
+    "rust": "fn check(candidate: fn(Vec<i32>, i32) -> Vec<i32>) {\n    assert_eq!(candidate(\"hello\", \"heo\"), vec![0, 1, 2]);\n    assert_eq!(candidate(\"abcdefghijklmnopqrstuvwxyz\", \"abcdefghijklmnopqrstuvwxyz\"), vec![0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25]);\n    assert_eq!(candidate(\"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", \"abc\"), vec![]);\n    assert_eq!(candidate(\"abcde\", \"edcba\"), vec![]);\n    assert_eq!(candidate(\"abcdefg\", \"bdf\"), vec![0, 3, 5]);\n    assert_eq!(candidate(\"mississippi\", \"issi\"), vec![0, 2, 3, 4]);\n    assert_eq!(candidate(\"vbcca\", \"abc\"), vec![0, 1, 2]);\n    assert_eq!(candidate(\"leetcode\", \"code\"), vec![0, 5, 6, 7]);\n    assert_eq!(candidate(\"bacdc\", \"abc\"), vec![1, 2, 4]);\n    assert_eq!(candidate(\"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", \"aaa\"), vec![]);\n    assert_eq!(candidate(\"xyz\", \"xy\"), vec![0, 1]);\n    assert_eq!(candidate(\"abcabcabc\", \"abc\"), vec![0, 1, 2]);\n    assert_eq!(candidate(\"abcdefghijklmnopqrstuvwxyz\", \"abc\"), vec![0, 1, 2]);\n    assert_eq!(candidate(\"abcdefghijklmnopqrstuvwxyz\", \"aaa\"), vec![]);\n    assert_eq!(candidate(\"zyxwvutsrqponmlkjihgfedcba\", \"xyz\"), vec![]);\n    assert_eq!(candidate(\"abcdefghij\", \"aceg\"), vec![0, 1, 4, 6]);\n    assert_eq!(candidate(\"xyzz\", \"xyz\"), vec![0, 1, 2]);\n    assert_eq!(candidate(\"aabbccddeeff\", \"abcdef\"), vec![0, 1, 4, 6, 8, 10]);\n    assert_eq!(candidate(\"abcdefghijklmnopqrstuvwxyz\", \"zzz\"), vec![]);\n    assert_eq!(candidate(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", \"zyxwvutsrqponmlkjihgfedcba\"), vec![]);\n    assert_eq!(candidate(\"abcdefghijklmnopqrstuvwxyz\", \"az\"), vec![0, 1]);\n    assert_eq!(candidate(\"leetcode\", \"leet\"), vec![0, 1, 2, 3]);\n    assert_eq!(candidate(\"abababababab\", \"aab\"), vec![0, 1, 3]);\n    assert_eq!(candidate(\"zzzzzzzzzzzz\", \"zzz\"), vec![0, 1, 2]);\n    assert_eq!(candidate(\"aaabaaa\", \"aaa\"), vec![0, 1, 2]);\n    assert_eq!(candidate(\"aabbcc\", \"abc\"), vec![0, 1, 4]);\n    assert_eq!(candidate(\"aaaaaa\", \"aaabc\"), vec![]);\n    assert_eq!(candidate(\"mississippi\", \"sip\"), vec![0, 1, 8]);\n    assert_eq!(candidate(\"zzzzz\", \"aaa\"), vec![]);\n    assert_eq!(candidate(\"abababababababababababababababababababababababababababab\", \"aaa\"), vec![0, 1, 2]);\n    assert_eq!(candidate(\"abc\", \"ab\"), vec![0, 1]);\n    assert_eq!(candidate(\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\", \"aaaaaa\"), vec![0, 1, 2, 3, 4, 5]);\n    assert_eq!(candidate(\"abcdefghijklmnopqrstuvwxyz\", \"zyxwvutsrqponmlkjihgfedcba\"), vec![]);\n    assert_eq!(candidate(\"abababababababababab\", \"ababab\"), vec![0, 1, 2, 3, 4, 5]);\n    assert_eq!(candidate(\"hellohellohello\", \"ell\"), vec![0, 2, 3]);\n    assert_eq!(candidate(\"abcdefghijklmnopqrstuvwxyz\", \"abcdefghijklmnopqxyz\"), vec![0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 24, 25]);\n    assert_eq!(candidate(\"abcdefghijklmnopqrstuvwxyz\", \"adgjmoqsuwy\"), vec![0, 1, 6, 9, 12, 14, 16, 18, 20, 22, 24]);\n    assert_eq!(candidate(\"axxayyazz\", \"xyz\"), vec![0, 4, 7]);\n    assert_eq!(candidate(\"abracadabra\", \"abra\"), vec![0, 1, 2, 3]);\n    assert_eq!(candidate(\"abcdefghijklmnopqrstuvwxyz\", \"qrstuvwxyzz\"), vec![]);\n    assert_eq!(candidate(\"zyxzyxzyxzyxzyxzyxzyxzyxzyxzyx\", \"zyxzyxzyxzyx\"), vec![0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]);\n    assert_eq!(candidate(\"sequenceofcharacters\", \"sequence\"), vec![0, 1, 2, 3, 4, 5, 6, 7]);\n    assert_eq!(candidate(\"abcdefghijklmnopqrstuvwxyz\", \"zyxwvut\"), vec![]);\n    assert_eq!(candidate(\"abracadabra\", \"acad\"), vec![0, 1, 3, 6]);\n    assert_eq!(candidate(\"thequickbrownfoxjumpsoverthelazydog\", \"thezog\"), vec![0, 1, 2, 3, 10, 34]);\n    assert_eq!(candidate(\"ababababababababab\", \"aba\"), vec![0, 1, 2]);\n    assert_eq!(candidate(\"aababababa\", \"aaa\"), vec![0, 1, 2]);\n    assert_eq!(candidate(\"xyzz\", \"zyx\"), vec![]);\n    assert_eq!(candidate(\"abcdefghijklmnopqrstuvwxyz\", \"xyz\"), vec![0, 24, 25]);\n    assert_eq!(candidate(\"abcdexyz\", \"xyz\"), vec![0, 6, 7]);\n    assert_eq!(candidate(\"xyzxyzxyzxyzxyzxyzxyzxyz\", \"xyzxyzxyz\"), vec![0, 1, 2, 3, 4, 5, 6, 7, 8]);\n    assert_eq!(candidate(\"abcdefg\", \"aceg\"), vec![0, 1, 4, 6]);\n    assert_eq!(candidate(\"axbxcxdxe\", \"abcde\"), vec![0, 1, 4, 6, 8]);\n    assert_eq!(candidate(\"abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz\", \"zyxwvutsrqponmlkjihgfedcba\"), vec![]);\n    assert_eq!(candidate(\"abcdefghijklmnopqrstuvwxyz\", \"abcde\"), vec![0, 1, 2, 3, 4]);\n    assert_eq!(candidate(\"abcdefghij\", \"jihgfedcba\"), vec![]);\n    assert_eq!(candidate(\"xyxyxyxyxy\", \"xyxy\"), vec![0, 1, 2, 3]);\n    assert_eq!(candidate(\"aabbaabbaabbaabbaabbaabb\", \"aaabb\"), vec![0, 1, 2, 3, 6]);\n    assert_eq!(candidate(\"abcdefghijklmnopqrstuvwxyz\", \"mnopq\"), vec![0, 13, 14, 15, 16]);\n    assert_eq!(candidate(\"abababababababab\", \"abab\"), vec![0, 1, 2, 3]);\n    assert_eq!(candidate(\"abacabadabacabadabacabadabacabad\", \"abcabcabc\"), vec![0, 1, 2, 4, 5, 11, 12, 13, 19]);\n    assert_eq!(candidate(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", \"abcdefghijklmnopqrstuvwxy\"), vec![0, 1, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36, 38, 40, 42, 44, 46, 48]);\n    assert_eq!(candidate(\"abcdabcdabcd\", \"abcd\"), vec![0, 1, 2, 3]);\n    assert_eq!(candidate(\"abcdefghijklmnopqrstuvwxyz\", \"abcdefghijklmnop\"), vec![0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]);\n    assert_eq!(candidate(\"abcdefghijabcdefghijabcdefghij\", \"abcdefghij\"), vec![0, 1, 2, 3, 4, 5, 6, 7, 8, 9]);\n    assert_eq!(candidate(\"abacabadabacaba\", \"abab\"), vec![0, 1, 2, 3]);\n    assert_eq!(candidate(\"aaaabbbbcccc\", \"abccba\"), vec![]);\n    assert_eq!(candidate(\"qwertyuiopasdfghjklzxcvbnm\", \"qaz\"), vec![0, 1, 19]);\n    assert_eq!(candidate(\"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", \"zzz\"), vec![0, 1, 2]);\n    assert_eq!(candidate(\"bacdefghijklmnopqrstuvwxyz\", \"abcdefg\"), vec![]);\n    assert_eq!(candidate(\"alibabacloud\", \"abcl\"), vec![0, 1, 7, 8]);\n    assert_eq!(candidate(\"aaaaaaaabbbbbbbbbbcccccccccddddddeeeeeeeeeeffffffffff\", \"abcdefghij\"), vec![]);\n    assert_eq!(candidate(\"bbaabbaabbaabbaabbaabbaabbaab\", \"bbabbb\"), vec![0, 1, 2, 3, 4, 5]);\n    assert_eq!(candidate(\"abcdefghij\", \"afh\"), vec![0, 1, 7]);\n    assert_eq!(candidate(\"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", \"abc\"), vec![]);\n    assert_eq!(candidate(\"abcdexyz\", \"abcdef\"), vec![0, 1, 2, 3, 4, 5]);\n    assert_eq!(candidate(\"banana\", \"an\"), vec![0, 2]);\n    assert_eq!(candidate(\"abcdefghijklmnopqrstuvwxyz\", \"abcdefg\"), vec![0, 1, 2, 3, 4, 5, 6]);\n    assert_eq!(candidate(\"abcdefghijklmnopqrstuvwxyz\", \"abcdefghijklmnopqrstu\"), vec![0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]);\n    assert_eq!(candidate(\"abababababababababababababababababababababababababababababababababababababababababababababababababababababababab\", \"abab\"), vec![0, 1, 2, 3]);\n    assert_eq!(candidate(\"zzzzyyyxxxwwwwvvvvuuuuttttssssrrrrqqqqppppooooonnnnmmmmllllkkkkjjjjiiiihhhhggggffffffeeeeeeeedddddccccbbbaaaa\", \"abcdefg\"), vec![]);\n    assert_eq!(candidate(\"xyzzyxzyxzyxzyxzyx\", \"xyzzyx\"), vec![0, 1, 2, 3, 4, 5]);\n    assert_eq!(candidate(\"acacacacacacacacac\", \"aaaa\"), vec![0, 1, 2, 4]);\n    assert_eq!(candidate(\"bbaaabbbaaabbbaaabbbaa\", \"baaba\"), vec![0, 1, 2, 5, 8]);\n    assert_eq!(candidate(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", \"abcdefghijklmnopqrstuvwxyz\"), vec![0, 1, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36, 38, 40, 42, 44, 46, 48, 50]);\n    assert_eq!(candidate(\"banana\", \"bana\"), vec![0, 1, 2, 3]);\n    assert_eq!(candidate(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", \"zzzyxwvutsrqponmlkjihgfedcba\"), vec![]);\n    assert_eq!(candidate(\"abbaabbaabba\", \"abab\"), vec![0, 1, 2, 5]);\n    assert_eq!(candidate(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", \"mnopqrstuvwxyz\"), vec![0, 26, 28, 30, 32, 34, 36, 38, 40, 42, 44, 46, 48, 50]);\n    assert_eq!(candidate(\"abcdabcabcabcabcabcabcabcabcabcabc\", \"abcde\"), vec![0, 1, 2, 3, 4]);\n    assert_eq!(candidate(\"abcabcabcabcabcabcabcabcabcabc\", \"abcabc\"), vec![0, 1, 2, 3, 4, 5]);\n    assert_eq!(candidate(\"thisisalongstring\", \"this\"), vec![0, 1, 2, 3]);\n    assert_eq!(candidate(\"zyxwvutsrqponmlkjihgfedcba\", \"fedcba\"), vec![0, 21, 22, 23, 24, 25]);\n    assert_eq!(candidate(\"qwertyuiopasdfghjklzxcvbnm\", \"qwertyuiop\"), vec![0, 1, 2, 3, 4, 5, 6, 7, 8, 9]);\n    assert_eq!(candidate(\"abcdefghijklmnopqrstuvwxyz\", \"qrstuv\"), vec![0, 17, 18, 19, 20, 21]);\n    assert_eq!(candidate(\"abcdabc\", \"abc\"), vec![0, 1, 2]);\n    assert_eq!(candidate(\"abcdabcdabcdabcd\", \"abca\"), vec![0, 1, 2, 3]);\n    assert_eq!(candidate(\"abacabadabacaba\", \"abada\"), vec![0, 1, 2, 3, 4]);\n    assert_eq!(candidate(\"racecar\", \"ace\"), vec![0, 2, 3]);\n    assert_eq!(candidate(\"abcabcabcabcabcabcabc\", \"abcabc\"), vec![0, 1, 2, 3, 4, 5]);\n    assert_eq!(candidate(\"bbaaaabaaaabbaa\", \"bab\"), vec![0, 1, 6]);\n    assert_eq!(candidate(\"abababababababababab\", \"aaa\"), vec![0, 1, 2]);\n    assert_eq!(candidate(\"abcdabcdabcdabcd\", \"abcdabcd\"), vec![0, 1, 2, 3, 4, 5, 6, 7]);\n    assert_eq!(candidate(\"aaaaabbbbbcccccddddd\", \"abcde\"), vec![0, 5, 10, 15, 16]);\n    assert_eq!(candidate(\"xyzzxyzzxyzz\", \"xyzxyz\"), vec![0, 1, 2, 3, 5, 6]);\n    assert_eq!(candidate(\"abcdefghiklmnopqrstuvwxyz\", \"aikuyz\"), vec![0, 1, 9, 19, 23, 24]);\n    assert_eq!(candidate(\"amazingrace\", \"amazing\"), vec![0, 1, 2, 3, 4, 5, 6]);\n    assert_eq!(candidate(\"pythonprogramming\", \"python\"), vec![0, 1, 2, 3, 4, 5]);\n    assert_eq!(candidate(\"aabbaabbaabbaabb\", \"aabb\"), vec![0, 1, 2, 3]);\n    assert_eq!(candidate(\"abacabadabacabadabacabad\", \"abcabc\"), vec![0, 1, 2, 4, 5, 11]);\n    assert_eq!(candidate(\"abcdefghijklmnopqrstuvwxyz\", \"xyzabc\"), vec![]);\n    assert_eq!(candidate(\"abcdefghijklmnopqrstuvwxyzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", \"abcdefghijklmnopqrstuvwxyz\"), vec![0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25]);\n    assert_eq!(candidate(\"acbacbacbac\", \"abcabc\"), vec![0, 1, 4, 6, 8, 10]);\n    assert_eq!(candidate(\"abacaba\", \"aaa\"), vec![0, 1, 2]);\n    assert_eq!(candidate(\"repeatedrepeatedrepeated\", \"repeated\"), vec![0, 1, 2, 3, 4, 5, 6, 7]);\n    assert_eq!(candidate(\"xyzxyzxyzxyzxyzxyzxyz\", \"xyzxyz\"), vec![0, 1, 2, 3, 4, 5]);\n    assert_eq!(candidate(\"abcdefgabcdefgabcdefgabcdefg\", \"abcdefg\"), vec![0, 1, 2, 3, 4, 5, 6]);\n    assert_eq!(candidate(\"aaabbbcccdddeeefffggghhhiii\", \"abcdefghi\"), vec![0, 1, 6, 9, 12, 15, 18, 21, 24]);\n    assert_eq!(candidate(\"xyzxyzxyzxyz\", \"xyzxyz\"), vec![0, 1, 2, 3, 4, 5]);\n    assert_eq!(candidate(\"mississippi\", \"miss\"), vec![0, 1, 2, 3]);\n    assert_eq!(candidate(\"foobartoobarfoo\", \"foobar\"), vec![0, 1, 2, 3, 4, 5]);\n    assert_eq!(candidate(\"aabbaabbaabbaabbaabb\", \"aabbaab\"), vec![0, 1, 2, 3, 4, 5, 6]);\n    assert_eq!(candidate(\"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", \"zzzzzz\"), vec![0, 1, 2, 3, 4, 5]);\n    assert_eq!(candidate(\"mississippi\", \"mis\"), vec![0, 1, 2]);\n    assert_eq!(candidate(\"hellotherehellotherehellotherehellotherehellotherehellotherehellotherehellotherehellothere\", \"here\"), vec![0, 1, 2, 7]);\n    assert_eq!(candidate(\"thisisaverylongstringthatweneedtouse\", \"string\"), vec![0, 16, 17, 18, 19, 20]);\n    assert_eq!(candidate(\"xyzzxyzzxyzzxyzz\", \"zzzz\"), vec![0, 2, 3, 6]);\n    assert_eq!(candidate(\"abcabcabcabcabc\", \"abcabc\"), vec![0, 1, 2, 3, 4, 5]);\n    assert_eq!(candidate(\"hellothere\", \"her\"), vec![0, 1, 2]);\n    assert_eq!(candidate(\"abacabadabacaba\", \"abc\"), vec![0, 1, 2]);\n    assert_eq!(candidate(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", \"abcdefghijklmnopqrstuvw\"), vec![0, 1, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36, 38, 40, 42, 44]);\n    assert_eq!(candidate(\"pneumonoultramicroscopicsilicovolcanoconiosis\", \"pneumo\"), vec![0, 1, 2, 3, 4, 5]);\n    assert_eq!(candidate(\"baaabaaaabaaabaababaaaab\", \"baaba\"), vec![0, 1, 2, 3, 5]);\n    assert_eq!(candidate(\"abacabadabacaba\", \"abaca\"), vec![0, 1, 2, 3, 4]);\n    assert_eq!(candidate(\"zyxwvutsrqponmlkjihgfedcba\", \"abcde\"), vec![]);\n    assert_eq!(candidate(\"hellohellohellohellohellohello\", \"hello\"), vec![0, 1, 2, 3, 4]);\n    assert_eq!(candidate(\"hellohellohello\", \"helo\"), vec![0, 1, 2, 3]);\n    assert_eq!(candidate(\"zyxwvutsrqponmlkjihgfedcba\", \"mnopqrstuvwxyza\"), vec![]);\n    assert_eq!(candidate(\"xxxxxxxxxyyyyyyyyyzzzzzzzzz\", \"xyz\"), vec![0, 1, 18]);\n    assert_eq!(candidate(\"zyxzyxzyxzyxzyxzyxzyxzyxzyx\", \"zyxzyxzyx\"), vec![0, 1, 2, 3, 4, 5, 6, 7, 8]);\n    assert_eq!(candidate(\"abababab\", \"aba\"), vec![0, 1, 2]);\n    assert_eq!(candidate(\"zyxwvutsrqponmlkjihgfedcba\", \"zyxwv\"), vec![0, 1, 2, 3, 4]);\n    assert_eq!(candidate(\"programming\", \"pgm\"), vec![0, 1, 6]);\n    assert_eq!(candidate(\"abacabadabacabadabacaba\", \"ababa\"), vec![0, 1, 2, 3, 4]);\n    assert_eq!(candidate(\"zzzzzzzzzzzzzzzzzzzzzzzzzzzz\", \"zzz\"), vec![0, 1, 2]);\n    assert_eq!(candidate(\"abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz\", \"abcdefghijklmnopqrstuvwxyz\"), vec![0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25]);\n    assert_eq!(candidate(\"abacabadabacabadaba\", \"abc\"), vec![0, 1, 2]);\n    assert_eq!(candidate(\"aaaabbbbccccddddeeeeffffgggg\", \"abcdefg\"), vec![0, 1, 8, 12, 16, 20, 24]);\n    assert_eq!(candidate(\"aaaaaabbbaaaaabaaaaabbbaaa\", \"aabbaab\"), vec![0, 1, 2, 6, 9, 10, 14]);\n    assert_eq!(candidate(\"qwertyuiopasdfghjklzxcvbnm\", \"qwerty\"), vec![0, 1, 2, 3, 4, 5]);\n    assert_eq!(candidate(\"qwertyuiopasdfghjklzxcvbnm\", \"qzpm\"), vec![0, 1, 9, 25]);\n    assert_eq!(candidate(\"mississippiississippi\", \"misis\"), vec![0, 1, 2, 3, 5]);\n    assert_eq!(candidate(\"thisisaverylongstringwithsomerepeatingcharacters\", \"thisis\"), vec![0, 1, 2, 3, 4, 5]);\n    assert_eq!(candidate(\"pppppppppppppppppp\", \"ppp\"), vec![0, 1, 2]);\n    assert_eq!(candidate(\"abcdefghijklmnopqrstuvwxyz\", \"zyx\"), vec![]);\n}"
+  },
+  "test_cases": [
+    {
+      "input": "word1 = \"hello\", word2 = \"heo\"",
+      "output": "[0, 1, 2]"
+    },
+    {
+      "input": "word1 = \"abcdefghijklmnopqrstuvwxyz\", word2 = \"abcdefghijklmnopqrstuvwxyz\"",
+      "output": "[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25]"
+    },
+    {
+      "input": "word1 = \"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", word2 = \"abc\"",
+      "output": "[]"
+    },
+    {
+      "input": "word1 = \"abcde\", word2 = \"edcba\"",
+      "output": "[]"
+    },
+    {
+      "input": "word1 = \"abcdefg\", word2 = \"bdf\"",
+      "output": "[0, 3, 5]"
+    },
+    {
+      "input": "word1 = \"mississippi\", word2 = \"issi\"",
+      "output": "[0, 2, 3, 4]"
+    },
+    {
+      "input": "word1 = \"vbcca\", word2 = \"abc\"",
+      "output": "[0, 1, 2]"
+    },
+    {
+      "input": "word1 = \"leetcode\", word2 = \"code\"",
+      "output": "[0, 5, 6, 7]"
+    },
+    {
+      "input": "word1 = \"bacdc\", word2 = \"abc\"",
+      "output": "[1, 2, 4]"
+    },
+    {
+      "input": "word1 = \"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", word2 = \"aaa\"",
+      "output": "[]"
+    },
+    {
+      "input": "word1 = \"xyz\", word2 = \"xy\"",
+      "output": "[0, 1]"
+    },
+    {
+      "input": "word1 = \"abcabcabc\", word2 = \"abc\"",
+      "output": "[0, 1, 2]"
+    },
+    {
+      "input": "word1 = \"abcdefghijklmnopqrstuvwxyz\", word2 = \"abc\"",
+      "output": "[0, 1, 2]"
+    },
+    {
+      "input": "word1 = \"abcdefghijklmnopqrstuvwxyz\", word2 = \"aaa\"",
+      "output": "[]"
+    },
+    {
+      "input": "word1 = \"zyxwvutsrqponmlkjihgfedcba\", word2 = \"xyz\"",
+      "output": "[]"
+    },
+    {
+      "input": "word1 = \"abcdefghij\", word2 = \"aceg\"",
+      "output": "[0, 1, 4, 6]"
+    },
+    {
+      "input": "word1 = \"xyzz\", word2 = \"xyz\"",
+      "output": "[0, 1, 2]"
+    },
+    {
+      "input": "word1 = \"aabbccddeeff\", word2 = \"abcdef\"",
+      "output": "[0, 1, 4, 6, 8, 10]"
+    },
+    {
+      "input": "word1 = \"abcdefghijklmnopqrstuvwxyz\", word2 = \"zzz\"",
+      "output": "[]"
+    },
+    {
+      "input": "word1 = \"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", word2 = \"zyxwvutsrqponmlkjihgfedcba\"",
+      "output": "[]"
+    },
+    {
+      "input": "word1 = \"abcdefghijklmnopqrstuvwxyz\", word2 = \"az\"",
+      "output": "[0, 1]"
+    },
+    {
+      "input": "word1 = \"leetcode\", word2 = \"leet\"",
+      "output": "[0, 1, 2, 3]"
+    },
+    {
+      "input": "word1 = \"abababababab\", word2 = \"aab\"",
+      "output": "[0, 1, 3]"
+    },
+    {
+      "input": "word1 = \"zzzzzzzzzzzz\", word2 = \"zzz\"",
+      "output": "[0, 1, 2]"
+    },
+    {
+      "input": "word1 = \"aaabaaa\", word2 = \"aaa\"",
+      "output": "[0, 1, 2]"
+    },
+    {
+      "input": "word1 = \"aabbcc\", word2 = \"abc\"",
+      "output": "[0, 1, 4]"
+    },
+    {
+      "input": "word1 = \"aaaaaa\", word2 = \"aaabc\"",
+      "output": "[]"
+    },
+    {
+      "input": "word1 = \"mississippi\", word2 = \"sip\"",
+      "output": "[0, 1, 8]"
+    },
+    {
+      "input": "word1 = \"zzzzz\", word2 = \"aaa\"",
+      "output": "[]"
+    },
+    {
+      "input": "word1 = \"abababababababababababababababababababababababababababab\", word2 = \"aaa\"",
+      "output": "[0, 1, 2]"
+    },
+    {
+      "input": "word1 = \"abc\", word2 = \"ab\"",
+      "output": "[0, 1]"
+    },
+    {
+      "input": "word1 = \"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\", word2 = \"aaaaaa\"",
+      "output": "[0, 1, 2, 3, 4, 5]"
+    },
+    {
+      "input": "word1 = \"abcdefghijklmnopqrstuvwxyz\", word2 = \"zyxwvutsrqponmlkjihgfedcba\"",
+      "output": "[]"
+    },
+    {
+      "input": "word1 = \"abababababababababab\", word2 = \"ababab\"",
+      "output": "[0, 1, 2, 3, 4, 5]"
+    },
+    {
+      "input": "word1 = \"hellohellohello\", word2 = \"ell\"",
+      "output": "[0, 2, 3]"
+    },
+    {
+      "input": "word1 = \"abcdefghijklmnopqrstuvwxyz\", word2 = \"abcdefghijklmnopqxyz\"",
+      "output": "[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 24, 25]"
+    },
+    {
+      "input": "word1 = \"abcdefghijklmnopqrstuvwxyz\", word2 = \"adgjmoqsuwy\"",
+      "output": "[0, 1, 6, 9, 12, 14, 16, 18, 20, 22, 24]"
+    },
+    {
+      "input": "word1 = \"axxayyazz\", word2 = \"xyz\"",
+      "output": "[0, 4, 7]"
+    },
+    {
+      "input": "word1 = \"abracadabra\", word2 = \"abra\"",
+      "output": "[0, 1, 2, 3]"
+    },
+    {
+      "input": "word1 = \"abcdefghijklmnopqrstuvwxyz\", word2 = \"qrstuvwxyzz\"",
+      "output": "[]"
+    },
+    {
+      "input": "word1 = \"zyxzyxzyxzyxzyxzyxzyxzyxzyxzyx\", word2 = \"zyxzyxzyxzyx\"",
+      "output": "[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]"
+    },
+    {
+      "input": "word1 = \"sequenceofcharacters\", word2 = \"sequence\"",
+      "output": "[0, 1, 2, 3, 4, 5, 6, 7]"
+    },
+    {
+      "input": "word1 = \"abcdefghijklmnopqrstuvwxyz\", word2 = \"zyxwvut\"",
+      "output": "[]"
+    },
+    {
+      "input": "word1 = \"abracadabra\", word2 = \"acad\"",
+      "output": "[0, 1, 3, 6]"
+    },
+    {
+      "input": "word1 = \"thequickbrownfoxjumpsoverthelazydog\", word2 = \"thezog\"",
+      "output": "[0, 1, 2, 3, 10, 34]"
+    },
+    {
+      "input": "word1 = \"ababababababababab\", word2 = \"aba\"",
+      "output": "[0, 1, 2]"
+    },
+    {
+      "input": "word1 = \"aababababa\", word2 = \"aaa\"",
+      "output": "[0, 1, 2]"
+    },
+    {
+      "input": "word1 = \"xyzz\", word2 = \"zyx\"",
+      "output": "[]"
+    },
+    {
+      "input": "word1 = \"abcdefghijklmnopqrstuvwxyz\", word2 = \"xyz\"",
+      "output": "[0, 24, 25]"
+    },
+    {
+      "input": "word1 = \"abcdexyz\", word2 = \"xyz\"",
+      "output": "[0, 6, 7]"
+    },
+    {
+      "input": "word1 = \"xyzxyzxyzxyzxyzxyzxyzxyz\", word2 = \"xyzxyzxyz\"",
+      "output": "[0, 1, 2, 3, 4, 5, 6, 7, 8]"
+    },
+    {
+      "input": "word1 = \"abcdefg\", word2 = \"aceg\"",
+      "output": "[0, 1, 4, 6]"
+    },
+    {
+      "input": "word1 = \"axbxcxdxe\", word2 = \"abcde\"",
+      "output": "[0, 1, 4, 6, 8]"
+    },
+    {
+      "input": "word1 = \"abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz\", word2 = \"zyxwvutsrqponmlkjihgfedcba\"",
+      "output": "[]"
+    },
+    {
+      "input": "word1 = \"abcdefghijklmnopqrstuvwxyz\", word2 = \"abcde\"",
+      "output": "[0, 1, 2, 3, 4]"
+    },
+    {
+      "input": "word1 = \"abcdefghij\", word2 = \"jihgfedcba\"",
+      "output": "[]"
+    },
+    {
+      "input": "word1 = \"xyxyxyxyxy\", word2 = \"xyxy\"",
+      "output": "[0, 1, 2, 3]"
+    },
+    {
+      "input": "word1 = \"aabbaabbaabbaabbaabbaabb\", word2 = \"aaabb\"",
+      "output": "[0, 1, 2, 3, 6]"
+    },
+    {
+      "input": "word1 = \"abcdefghijklmnopqrstuvwxyz\", word2 = \"mnopq\"",
+      "output": "[0, 13, 14, 15, 16]"
+    },
+    {
+      "input": "word1 = \"abababababababab\", word2 = \"abab\"",
+      "output": "[0, 1, 2, 3]"
+    },
+    {
+      "input": "word1 = \"abacabadabacabadabacabadabacabad\", word2 = \"abcabcabc\"",
+      "output": "[0, 1, 2, 4, 5, 11, 12, 13, 19]"
+    },
+    {
+      "input": "word1 = \"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", word2 = \"abcdefghijklmnopqrstuvwxy\"",
+      "output": "[0, 1, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36, 38, 40, 42, 44, 46, 48]"
+    },
+    {
+      "input": "word1 = \"abcdabcdabcd\", word2 = \"abcd\"",
+      "output": "[0, 1, 2, 3]"
+    },
+    {
+      "input": "word1 = \"abcdefghijklmnopqrstuvwxyz\", word2 = \"abcdefghijklmnop\"",
+      "output": "[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]"
+    },
+    {
+      "input": "word1 = \"abcdefghijabcdefghijabcdefghij\", word2 = \"abcdefghij\"",
+      "output": "[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]"
+    },
+    {
+      "input": "word1 = \"abacabadabacaba\", word2 = \"abab\"",
+      "output": "[0, 1, 2, 3]"
+    },
+    {
+      "input": "word1 = \"aaaabbbbcccc\", word2 = \"abccba\"",
+      "output": "[]"
+    },
+    {
+      "input": "word1 = \"qwertyuiopasdfghjklzxcvbnm\", word2 = \"qaz\"",
+      "output": "[0, 1, 19]"
+    },
+    {
+      "input": "word1 = \"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", word2 = \"zzz\"",
+      "output": "[0, 1, 2]"
+    },
+    {
+      "input": "word1 = \"bacdefghijklmnopqrstuvwxyz\", word2 = \"abcdefg\"",
+      "output": "[]"
+    },
+    {
+      "input": "word1 = \"alibabacloud\", word2 = \"abcl\"",
+      "output": "[0, 1, 7, 8]"
+    },
+    {
+      "input": "word1 = \"aaaaaaaabbbbbbbbbbcccccccccddddddeeeeeeeeeeffffffffff\", word2 = \"abcdefghij\"",
+      "output": "[]"
+    },
+    {
+      "input": "word1 = \"bbaabbaabbaabbaabbaabbaabbaab\", word2 = \"bbabbb\"",
+      "output": "[0, 1, 2, 3, 4, 5]"
+    },
+    {
+      "input": "word1 = \"abcdefghij\", word2 = \"afh\"",
+      "output": "[0, 1, 7]"
+    },
+    {
+      "input": "word1 = \"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", word2 = \"abc\"",
+      "output": "[]"
+    },
+    {
+      "input": "word1 = \"abcdexyz\", word2 = \"abcdef\"",
+      "output": "[0, 1, 2, 3, 4, 5]"
+    },
+    {
+      "input": "word1 = \"banana\", word2 = \"an\"",
+      "output": "[0, 2]"
+    },
+    {
+      "input": "word1 = \"abcdefghijklmnopqrstuvwxyz\", word2 = \"abcdefg\"",
+      "output": "[0, 1, 2, 3, 4, 5, 6]"
+    },
+    {
+      "input": "word1 = \"abcdefghijklmnopqrstuvwxyz\", word2 = \"abcdefghijklmnopqrstu\"",
+      "output": "[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]"
+    },
+    {
+      "input": "word1 = \"abababababababababababababababababababababababababababababababababababababababababababababababababababababababab\", word2 = \"abab\"",
+      "output": "[0, 1, 2, 3]"
+    },
+    {
+      "input": "word1 = \"zzzzyyyxxxwwwwvvvvuuuuttttssssrrrrqqqqppppooooonnnnmmmmllllkkkkjjjjiiiihhhhggggffffffeeeeeeeedddddccccbbbaaaa\", word2 = \"abcdefg\"",
+      "output": "[]"
+    },
+    {
+      "input": "word1 = \"xyzzyxzyxzyxzyxzyx\", word2 = \"xyzzyx\"",
+      "output": "[0, 1, 2, 3, 4, 5]"
+    },
+    {
+      "input": "word1 = \"acacacacacacacacac\", word2 = \"aaaa\"",
+      "output": "[0, 1, 2, 4]"
+    },
+    {
+      "input": "word1 = \"bbaaabbbaaabbbaaabbbaa\", word2 = \"baaba\"",
+      "output": "[0, 1, 2, 5, 8]"
+    },
+    {
+      "input": "word1 = \"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", word2 = \"abcdefghijklmnopqrstuvwxyz\"",
+      "output": "[0, 1, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36, 38, 40, 42, 44, 46, 48, 50]"
+    },
+    {
+      "input": "word1 = \"banana\", word2 = \"bana\"",
+      "output": "[0, 1, 2, 3]"
+    },
+    {
+      "input": "word1 = \"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", word2 = \"zzzyxwvutsrqponmlkjihgfedcba\"",
+      "output": "[]"
+    },
+    {
+      "input": "word1 = \"abbaabbaabba\", word2 = \"abab\"",
+      "output": "[0, 1, 2, 5]"
+    },
+    {
+      "input": "word1 = \"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", word2 = \"mnopqrstuvwxyz\"",
+      "output": "[0, 26, 28, 30, 32, 34, 36, 38, 40, 42, 44, 46, 48, 50]"
+    },
+    {
+      "input": "word1 = \"abcdabcabcabcabcabcabcabcabcabcabc\", word2 = \"abcde\"",
+      "output": "[0, 1, 2, 3, 4]"
+    },
+    {
+      "input": "word1 = \"abcabcabcabcabcabcabcabcabcabc\", word2 = \"abcabc\"",
+      "output": "[0, 1, 2, 3, 4, 5]"
+    },
+    {
+      "input": "word1 = \"thisisalongstring\", word2 = \"this\"",
+      "output": "[0, 1, 2, 3]"
+    },
+    {
+      "input": "word1 = \"zyxwvutsrqponmlkjihgfedcba\", word2 = \"fedcba\"",
+      "output": "[0, 21, 22, 23, 24, 25]"
+    },
+    {
+      "input": "word1 = \"qwertyuiopasdfghjklzxcvbnm\", word2 = \"qwertyuiop\"",
+      "output": "[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]"
+    },
+    {
+      "input": "word1 = \"abcdefghijklmnopqrstuvwxyz\", word2 = \"qrstuv\"",
+      "output": "[0, 17, 18, 19, 20, 21]"
+    },
+    {
+      "input": "word1 = \"abcdabc\", word2 = \"abc\"",
+      "output": "[0, 1, 2]"
+    },
+    {
+      "input": "word1 = \"abcdabcdabcdabcd\", word2 = \"abca\"",
+      "output": "[0, 1, 2, 3]"
+    },
+    {
+      "input": "word1 = \"abacabadabacaba\", word2 = \"abada\"",
+      "output": "[0, 1, 2, 3, 4]"
+    },
+    {
+      "input": "word1 = \"racecar\", word2 = \"ace\"",
+      "output": "[0, 2, 3]"
+    },
+    {
+      "input": "word1 = \"abcabcabcabcabcabcabc\", word2 = \"abcabc\"",
+      "output": "[0, 1, 2, 3, 4, 5]"
+    },
+    {
+      "input": "word1 = \"bbaaaabaaaabbaa\", word2 = \"bab\"",
+      "output": "[0, 1, 6]"
+    },
+    {
+      "input": "word1 = \"abababababababababab\", word2 = \"aaa\"",
+      "output": "[0, 1, 2]"
+    },
+    {
+      "input": "word1 = \"abcdabcdabcdabcd\", word2 = \"abcdabcd\"",
+      "output": "[0, 1, 2, 3, 4, 5, 6, 7]"
+    },
+    {
+      "input": "word1 = \"aaaaabbbbbcccccddddd\", word2 = \"abcde\"",
+      "output": "[0, 5, 10, 15, 16]"
+    },
+    {
+      "input": "word1 = \"xyzzxyzzxyzz\", word2 = \"xyzxyz\"",
+      "output": "[0, 1, 2, 3, 5, 6]"
+    },
+    {
+      "input": "word1 = \"abcdefghiklmnopqrstuvwxyz\", word2 = \"aikuyz\"",
+      "output": "[0, 1, 9, 19, 23, 24]"
+    },
+    {
+      "input": "word1 = \"amazingrace\", word2 = \"amazing\"",
+      "output": "[0, 1, 2, 3, 4, 5, 6]"
+    },
+    {
+      "input": "word1 = \"pythonprogramming\", word2 = \"python\"",
+      "output": "[0, 1, 2, 3, 4, 5]"
+    },
+    {
+      "input": "word1 = \"aabbaabbaabbaabb\", word2 = \"aabb\"",
+      "output": "[0, 1, 2, 3]"
+    },
+    {
+      "input": "word1 = \"abacabadabacabadabacabad\", word2 = \"abcabc\"",
+      "output": "[0, 1, 2, 4, 5, 11]"
+    },
+    {
+      "input": "word1 = \"abcdefghijklmnopqrstuvwxyz\", word2 = \"xyzabc\"",
+      "output": "[]"
+    },
+    {
+      "input": "word1 = \"abcdefghijklmnopqrstuvwxyzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", word2 = \"abcdefghijklmnopqrstuvwxyz\"",
+      "output": "[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25]"
+    },
+    {
+      "input": "word1 = \"acbacbacbac\", word2 = \"abcabc\"",
+      "output": "[0, 1, 4, 6, 8, 10]"
+    },
+    {
+      "input": "word1 = \"abacaba\", word2 = \"aaa\"",
+      "output": "[0, 1, 2]"
+    },
+    {
+      "input": "word1 = \"repeatedrepeatedrepeated\", word2 = \"repeated\"",
+      "output": "[0, 1, 2, 3, 4, 5, 6, 7]"
+    },
+    {
+      "input": "word1 = \"xyzxyzxyzxyzxyzxyzxyz\", word2 = \"xyzxyz\"",
+      "output": "[0, 1, 2, 3, 4, 5]"
+    },
+    {
+      "input": "word1 = \"abcdefgabcdefgabcdefgabcdefg\", word2 = \"abcdefg\"",
+      "output": "[0, 1, 2, 3, 4, 5, 6]"
+    },
+    {
+      "input": "word1 = \"aaabbbcccdddeeefffggghhhiii\", word2 = \"abcdefghi\"",
+      "output": "[0, 1, 6, 9, 12, 15, 18, 21, 24]"
+    },
+    {
+      "input": "word1 = \"xyzxyzxyzxyz\", word2 = \"xyzxyz\"",
+      "output": "[0, 1, 2, 3, 4, 5]"
+    },
+    {
+      "input": "word1 = \"mississippi\", word2 = \"miss\"",
+      "output": "[0, 1, 2, 3]"
+    },
+    {
+      "input": "word1 = \"foobartoobarfoo\", word2 = \"foobar\"",
+      "output": "[0, 1, 2, 3, 4, 5]"
+    },
+    {
+      "input": "word1 = \"aabbaabbaabbaabbaabb\", word2 = \"aabbaab\"",
+      "output": "[0, 1, 2, 3, 4, 5, 6]"
+    },
+    {
+      "input": "word1 = \"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", word2 = \"zzzzzz\"",
+      "output": "[0, 1, 2, 3, 4, 5]"
+    },
+    {
+      "input": "word1 = \"mississippi\", word2 = \"mis\"",
+      "output": "[0, 1, 2]"
+    },
+    {
+      "input": "word1 = \"hellotherehellotherehellotherehellotherehellotherehellotherehellotherehellotherehellothere\", word2 = \"here\"",
+      "output": "[0, 1, 2, 7]"
+    },
+    {
+      "input": "word1 = \"thisisaverylongstringthatweneedtouse\", word2 = \"string\"",
+      "output": "[0, 16, 17, 18, 19, 20]"
+    },
+    {
+      "input": "word1 = \"xyzzxyzzxyzzxyzz\", word2 = \"zzzz\"",
+      "output": "[0, 2, 3, 6]"
+    },
+    {
+      "input": "word1 = \"abcabcabcabcabc\", word2 = \"abcabc\"",
+      "output": "[0, 1, 2, 3, 4, 5]"
+    },
+    {
+      "input": "word1 = \"hellothere\", word2 = \"her\"",
+      "output": "[0, 1, 2]"
+    },
+    {
+      "input": "word1 = \"abacabadabacaba\", word2 = \"abc\"",
+      "output": "[0, 1, 2]"
+    },
+    {
+      "input": "word1 = \"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", word2 = \"abcdefghijklmnopqrstuvw\"",
+      "output": "[0, 1, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36, 38, 40, 42, 44]"
+    },
+    {
+      "input": "word1 = \"pneumonoultramicroscopicsilicovolcanoconiosis\", word2 = \"pneumo\"",
+      "output": "[0, 1, 2, 3, 4, 5]"
+    },
+    {
+      "input": "word1 = \"baaabaaaabaaabaababaaaab\", word2 = \"baaba\"",
+      "output": "[0, 1, 2, 3, 5]"
+    },
+    {
+      "input": "word1 = \"abacabadabacaba\", word2 = \"abaca\"",
+      "output": "[0, 1, 2, 3, 4]"
+    },
+    {
+      "input": "word1 = \"zyxwvutsrqponmlkjihgfedcba\", word2 = \"abcde\"",
+      "output": "[]"
+    },
+    {
+      "input": "word1 = \"hellohellohellohellohellohello\", word2 = \"hello\"",
+      "output": "[0, 1, 2, 3, 4]"
+    },
+    {
+      "input": "word1 = \"hellohellohello\", word2 = \"helo\"",
+      "output": "[0, 1, 2, 3]"
+    },
+    {
+      "input": "word1 = \"zyxwvutsrqponmlkjihgfedcba\", word2 = \"mnopqrstuvwxyza\"",
+      "output": "[]"
+    },
+    {
+      "input": "word1 = \"xxxxxxxxxyyyyyyyyyzzzzzzzzz\", word2 = \"xyz\"",
+      "output": "[0, 1, 18]"
+    },
+    {
+      "input": "word1 = \"zyxzyxzyxzyxzyxzyxzyxzyxzyx\", word2 = \"zyxzyxzyx\"",
+      "output": "[0, 1, 2, 3, 4, 5, 6, 7, 8]"
+    },
+    {
+      "input": "word1 = \"abababab\", word2 = \"aba\"",
+      "output": "[0, 1, 2]"
+    },
+    {
+      "input": "word1 = \"zyxwvutsrqponmlkjihgfedcba\", word2 = \"zyxwv\"",
+      "output": "[0, 1, 2, 3, 4]"
+    },
+    {
+      "input": "word1 = \"programming\", word2 = \"pgm\"",
+      "output": "[0, 1, 6]"
+    },
+    {
+      "input": "word1 = \"abacabadabacabadabacaba\", word2 = \"ababa\"",
+      "output": "[0, 1, 2, 3, 4]"
+    },
+    {
+      "input": "word1 = \"zzzzzzzzzzzzzzzzzzzzzzzzzzzz\", word2 = \"zzz\"",
+      "output": "[0, 1, 2]"
+    },
+    {
+      "input": "word1 = \"abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz\", word2 = \"abcdefghijklmnopqrstuvwxyz\"",
+      "output": "[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25]"
+    },
+    {
+      "input": "word1 = \"abacabadabacabadaba\", word2 = \"abc\"",
+      "output": "[0, 1, 2]"
+    },
+    {
+      "input": "word1 = \"aaaabbbbccccddddeeeeffffgggg\", word2 = \"abcdefg\"",
+      "output": "[0, 1, 8, 12, 16, 20, 24]"
+    },
+    {
+      "input": "word1 = \"aaaaaabbbaaaaabaaaaabbbaaa\", word2 = \"aabbaab\"",
+      "output": "[0, 1, 2, 6, 9, 10, 14]"
+    },
+    {
+      "input": "word1 = \"qwertyuiopasdfghjklzxcvbnm\", word2 = \"qwerty\"",
+      "output": "[0, 1, 2, 3, 4, 5]"
+    },
+    {
+      "input": "word1 = \"qwertyuiopasdfghjklzxcvbnm\", word2 = \"qzpm\"",
+      "output": "[0, 1, 9, 25]"
+    },
+    {
+      "input": "word1 = \"mississippiississippi\", word2 = \"misis\"",
+      "output": "[0, 1, 2, 3, 5]"
+    },
+    {
+      "input": "word1 = \"thisisaverylongstringwithsomerepeatingcharacters\", word2 = \"thisis\"",
+      "output": "[0, 1, 2, 3, 4, 5]"
+    },
+    {
+      "input": "word1 = \"pppppppppppppppppp\", word2 = \"ppp\"",
+      "output": "[0, 1, 2]"
+    },
+    {
+      "input": "word1 = \"abcdefghijklmnopqrstuvwxyz\", word2 = \"zyx\"",
+      "output": "[]"
+    }
+  ],
+  "types": {
+    "python3": {
+      "input": [
+        {
+          "word1": "str"
+        },
+        {
+          "word2": "str"
+        }
+      ],
+      "output": "List[int]"
+    },
+    "cpp": {
+      "input": [
+        {
+          "word1": "string"
+        },
+        {
+          "word2": "string"
+        }
+      ],
+      "output": "vector<int>"
+    },
+    "java": {
+      "input": [
+        {
+          "word1": "String"
+        },
+        {
+          "word2": "String"
+        }
+      ],
+      "output": "int[]"
+    },
+    "javascript": {
+      "input": [
+        {
+          "word1": "string"
+        },
+        {
+          "word2": "string"
+        }
+      ],
+      "output": "number[]"
+    },
+    "typescript": {
+      "input": [
+        {
+          "word1": "string"
+        },
+        {
+          "word2": "string"
+        }
+      ],
+      "output": "number[]"
+    },
+    "golang": {
+      "input": [
+        {
+          "word1": "string"
+        },
+        {
+          "word2": "string"
+        }
+      ],
+      "output": "[]int"
+    },
+    "rust": {
+      "input": [
+        {
+          "word1": "String"
+        },
+        {
+          "word2": "String"
+        }
+      ],
+      "output": "Vec<i32>"
+    }
+  },
+  "tags": [
+    "two-pointers",
+    "string",
+    "dynamic-programming",
+    "greedy"
+  ]
+}

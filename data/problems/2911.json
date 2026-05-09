@@ -1,0 +1,623 @@
+{
+  "id": 2911,
+  "title": "Minimum Changes to Make K Semi-palindromes",
+  "slug": "minimum-changes-to-make-k-semi-palindromes",
+  "difficulty": "Hard",
+  "description": "Given a string s and an integer k, partition s into k substrings such that the letter changes needed to make each substring a semi-palindrome are minimized.\nReturn the minimum number of letter changes required.\nA semi-palindrome is a special type of string that can be divided into palindromes based on a repeating pattern. To check if a string is a semi-palindrome:​\nConsider the string \"abcabc\":\nExample 1:\nExample 2:\nExample 3:\nConstraints:",
+  "examples": [
+    {
+      "example_num": 1,
+      "example_text": "Input: s = \"abcac\", k = 2\nOutput: 1\nExplanation: Divide s into \"ab\" and \"cac\" . \"cac\" is already semi-palindrome. Change \"ab\" to \"aa\" , it becomes semi-palindrome with d = 1 .",
+      "images": []
+    },
+    {
+      "example_num": 2,
+      "example_text": "Input: s = \"abcdef\", k = 2\nOutput: 2\nExplanation: Divide s into substrings \"abc\" and \"def\" . Each needs one change to become semi-palindrome.",
+      "images": []
+    },
+    {
+      "example_num": 3,
+      "example_text": "Input: s = \"aabbaa\", k = 3\nOutput: 0\nExplanation: Divide s into substrings \"aa\" , \"bb\" and \"aa\" . All are already semi-palindromes.",
+      "images": []
+    }
+  ],
+  "constraints": [
+    "2 <= s.length <= 200",
+    "1 <= k <= s.length / 2",
+    "s contains only lowercase English letters."
+  ],
+  "hints": [
+    "Define <code>dp[i][j]</code> as the minimum count of letter changes needed to split the suffix of string <code>s</code> starting from <code>s[i]</code> into <code>j</code> valid parts.",
+    "We have <code>dp[i][j] = min(dp[x + 1][j - 1] + v[i][x])</code>. Here <code>v[i][x]</code> is the minimum number of letter changes to change substring <code>s[i..x]</code> into semi-palindrome.",
+    "<code>v[i][j]</code> can be calculated separately by <b>brute-force</b>. We can create a table of <code>v[i][j]</code> independently to improve the complexity. Also note that semi-palindrome’s length is at least <code>2</code>."
+  ],
+  "code_snippets": {
+    "cpp": "class Solution {\npublic:\n    int minimumChanges(string s, int k) {\n        \n    }\n};",
+    "java": "class Solution {\n    public int minimumChanges(String s, int k) {\n        \n    }\n}",
+    "python3": "class Solution:\n    def minimumChanges(self, s: str, k: int) -> int:\n        ",
+    "javascript": "/**\n * @param {string} s\n * @param {number} k\n * @return {number}\n */\nvar minimumChanges = function(s, k) {\n    \n};",
+    "typescript": "function minimumChanges(s: string, k: number): number {\n    \n};",
+    "golang": "func minimumChanges(s string, k int) int {\n    \n}",
+    "rust": "impl Solution {\n    pub fn minimum_changes(s: String, k: i32) -> i32 {\n        \n    }\n}"
+  },
+  "entry_points": {
+    "python3": "Solution().minimumChanges",
+    "cpp": "Solution().minimumChanges",
+    "java": "new Solution().minimumChanges",
+    "javascript": "minimumChanges",
+    "typescript": "minimumChanges",
+    "golang": "minimumChanges",
+    "rust": "Solution::minimum_changes"
+  },
+  "test_snippets": {
+    "python3": "def check(candidate):\n    assert candidate(s = \"aabbcc\", k = 3) == 0\n    assert candidate(s = \"abccba\", k = 2) == 2\n    assert candidate(s = \"aabbccdd\", k = 4) == 0\n    assert candidate(s = \"abcabcabc\", k = 4) == 4\n    assert candidate(s = \"aaaaaa\", k = 2) == 0\n    assert candidate(s = \"abcabcabcabc\", k = 4) == 3\n    assert candidate(s = \"abccba\", k = 1) == 0\n    assert candidate(s = \"aabbaa\", k = 3) == 0\n    assert candidate(s = \"racecar\", k = 1) == 0\n    assert candidate(s = \"abcac\", k = 2) == 1\n    assert candidate(s = \"zzzzzz\", k = 2) == 0\n    assert candidate(s = \"abcdabc\", k = 2) == 2\n    assert candidate(s = \"abcdefg\", k = 2) == 3\n    assert candidate(s = \"abcdcba\", k = 3) == 2\n    assert candidate(s = \"abcdefg\", k = 3) == 3\n    assert candidate(s = \"abcabcabc\", k = 3) == 3\n    assert candidate(s = \"aaaa\", k = 2) == 0\n    assert candidate(s = \"abcdabc\", k = 3) == 3\n    assert candidate(s = \"abcabc\", k = 3) == 3\n    assert candidate(s = \"abcdef\", k = 2) == 2\n    assert candidate(s = \"abccba\", k = 3) == 2\n    assert candidate(s = \"ababab\", k = 3) == 3\n    assert candidate(s = \"qwertyuiopqwertyuiopqwertyuiop\", k = 6) == 5\n    assert candidate(s = \"aabbccddeeaabbccddeeaabbccdd\", k = 6) == 2\n    assert candidate(s = \"abcdefedcbafedcba\", k = 3) == 1\n    assert candidate(s = \"abcdabcdabcdabcdabcdabcd\", k = 5) == 2\n    assert candidate(s = \"abcdabcdabcdabcd\", k = 4) == 2\n    assert candidate(s = \"xyzxyzxyzxyz\", k = 4) == 3\n    assert candidate(s = \"xyzxyzxyzxyzxyz\", k = 3) == 1\n    assert candidate(s = \"abcdefghijklmnopqrstuvwxyzyxwvutsrqponmlkjihgfedcba\", k = 5) == 4\n    assert candidate(s = \"abcdeabcdeabcde\", k = 4) == 5\n    assert candidate(s = \"level\", k = 1) == 0\n    assert candidate(s = \"banana\", k = 2) == 1\n    assert candidate(s = \"aabbaabbaabbaabb\", k = 4) == 0\n    assert candidate(s = \"aabbccddeeffgghhiijjkkllmmlloo\", k = 5) == 6\n    assert candidate(s = \"abccbaabccbaabccba\", k = 4) == 2\n    assert candidate(s = \"abracadabraabracadabra\", k = 4) == 5\n    assert candidate(s = \"redder\", k = 2) == 2\n    assert candidate(s = \"repaper\", k = 2) == 3\n    assert candidate(s = \"abababaabab\", k = 3) == 0\n    assert candidate(s = \"abcdefghij\", k = 2) == 4\n    assert candidate(s = \"abcdefabcdef\", k = 4) == 4\n    assert candidate(s = \"abcdefghiabcdefghiabcdefghi\", k = 4) == 3\n    assert candidate(s = \"xyzxyzxyzxyzxyz\", k = 5) == 4\n    assert candidate(s = \"aabbaaabbbaa\", k = 3) == 1\n    assert candidate(s = \"aaabbbcccdddaaa\", k = 4) == 2\n    assert candidate(s = \"abcdefgabcdefg\", k = 4) == 5\n    assert candidate(s = \"xyxzyxzyxzyxzyxzyx\", k = 4) == 1\n    assert candidate(s = \"xyxyxyxyxyxyxy\", k = 3) == 0\n    assert candidate(s = \"aaaaabbbbbcccc\", k = 3) == 0\n    assert candidate(s = \"ababababababab\", k = 3) == 0\n    assert candidate(s = \"abcdefghabcdefghabcdefgh\", k = 6) == 5\n    assert candidate(s = \"mississippi\", k = 2) == 2\n    assert candidate(s = \"abccbaabccba\", k = 2) == 0\n    assert candidate(s = \"abcdefabcdefabcdef\", k = 6) == 6\n    assert candidate(s = \"abcdefggfedcba\", k = 2) == 5\n    assert candidate(s = \"noonnoonnoon\", k = 3) == 0\n    assert candidate(s = \"aabbccddeeffgghhiijj\", k = 5) == 4\n    assert candidate(s = \"aabbccddeeffgghhiijjkkllmmnnoopp\", k = 6) == 8\n    assert candidate(s = \"aaabaaabaaabaaab\", k = 5) == 1\n    assert candidate(s = \"aabbccddeeff\", k = 3) == 4\n    assert candidate(s = \"abcdefgabcdefg\", k = 2) == 5\n    assert candidate(s = \"racecar\", k = 3) == 2\n    assert candidate(s = \"abababab\", k = 3) == 1\n    assert candidate(s = \"ababababababab\", k = 5) == 1\n    assert candidate(s = \"abcabcabcabcabcabc\", k = 6) == 5\n    assert candidate(s = \"mnopqrnopqr\", k = 3) == 4\n    assert candidate(s = \"deified\", k = 1) == 0\n    assert candidate(s = \"abcdefghijabcdefghijabcdefghij\", k = 5) == 4\n    assert candidate(s = \"abcabcabcabcabcabcabc\", k = 7) == 6\n    assert candidate(s = \"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", k = 7) == 0\n    assert candidate(s = \"abcdefghij\", k = 5) == 5\n    assert candidate(s = \"noon\", k = 1) == 0\n    assert candidate(s = \"aaaaaaaaaa\", k = 5) == 0\n    assert candidate(s = \"abcdefghijklnmopqrstuvwxyz\", k = 5) == 9\n    assert candidate(s = \"abcdefghij\", k = 3) == 4\n    assert candidate(s = \"racecar\", k = 2) == 3\n    assert candidate(s = \"rotor\", k = 1) == 0\n    assert candidate(s = \"abracadabraabracadabra\", k = 5) == 4\n    assert candidate(s = \"xyzyxzyxzyx\", k = 4) == 3\n    assert candidate(s = \"aaaaabbbbccccdddd\", k = 4) == 0\n    assert candidate(s = \"aaabbbcccdddeeefffggg\", k = 5) == 3\n    assert candidate(s = \"aaaabbbbccccdddd\", k = 4) == 0\n    assert candidate(s = \"abcabcabcabcabcabcabcabc\", k = 6) == 3\n    assert candidate(s = \"ababababab\", k = 3) == 0\n    assert candidate(s = \"aabaaabaaabaaa\", k = 4) == 1\n    assert candidate(s = \"aabbccddeeffgg\", k = 4) == 4\n    assert candidate(s = \"aaaaabbbbcccc\", k = 3) == 0\n    assert candidate(s = \"mnopqrsmnopqrsmno\", k = 3) == 6\n    assert candidate(s = \"aabbccddeeffgg\", k = 6) == 2\n    assert candidate(s = \"zzzaaaabbbccc\", k = 4) == 0\n    assert candidate(s = \"abcdefghijklmnopqrstuvwxyz\", k = 10) == 10\n    assert candidate(s = \"abababababababab\", k = 4) == 0\n    assert candidate(s = \"mnopqrspqrspqr\", k = 3) == 2\n    assert candidate(s = \"abacabadaba\", k = 3) == 1\n    assert candidate(s = \"mississippi\", k = 3) == 1\n    assert candidate(s = \"abacabadabacaba\", k = 5) == 2\n    assert candidate(s = \"abacabadabacaba\", k = 3) == 0\n    assert candidate(s = \"zzzzzyzzzzzz\", k = 5) == 0\n    assert candidate(s = \"xyxyxyxyxyxy\", k = 6) == 6\n    assert candidate(s = \"abcdeedcba\", k = 2) == 4\n    assert candidate(s = \"abcdabcdabcdabcdabcd\", k = 4) == 1\n    assert candidate(s = \"abcdefedcba\", k = 5) == 4\n    assert candidate(s = \"aaaaaaaaaaaaaaaaaaaa\", k = 5) == 0\n    assert candidate(s = \"zzzzzyzzzzz\", k = 2) == 0\n    assert candidate(s = \"abcabcabcabcabc\", k = 5) == 4\n    assert candidate(s = \"abcdefabcdef\", k = 2) == 1\n    assert candidate(s = \"abcdefabcdefabcdefabcdef\", k = 5) == 3\n    assert candidate(s = \"anana\", k = 1) == 0\n    assert candidate(s = \"abcdefghijabcdefghij\", k = 5) == 7\n    assert candidate(s = \"aaaabbbb\", k = 2) == 0\n    assert candidate(s = \"xyzyzyzyz\", k = 4) == 3\n    assert candidate(s = \"mnopqrstuvwx\", k = 4) == 4\n    assert candidate(s = \"zzzzzzyyyzzzzzyyy\", k = 2) == 0\n    assert candidate(s = \"reviled\", k = 2) == 3\n    assert candidate(s = \"aaabbbbccccaaa\", k = 3) == 3\n    assert candidate(s = \"abacabadabacaba\", k = 4) == 1\n    assert candidate(s = \"aabbccddeeff\", k = 4) == 2\n    assert candidate(s = \"xyzxyzxyzxyzxyz\", k = 4) == 3",
+    "cpp": "void check(Solution& solution) {\n    assert(solution.minimumChanges(\"aabbcc\", 3) == vector<int>0);\n    assert(solution.minimumChanges(\"abccba\", 2) == vector<int>2);\n    assert(solution.minimumChanges(\"aabbccdd\", 4) == vector<int>0);\n    assert(solution.minimumChanges(\"abcabcabc\", 4) == vector<int>4);\n    assert(solution.minimumChanges(\"aaaaaa\", 2) == vector<int>0);\n    assert(solution.minimumChanges(\"abcabcabcabc\", 4) == vector<int>3);\n    assert(solution.minimumChanges(\"abccba\", 1) == vector<int>0);\n    assert(solution.minimumChanges(\"aabbaa\", 3) == vector<int>0);\n    assert(solution.minimumChanges(\"racecar\", 1) == vector<int>0);\n    assert(solution.minimumChanges(\"abcac\", 2) == vector<int>1);\n    assert(solution.minimumChanges(\"zzzzzz\", 2) == vector<int>0);\n    assert(solution.minimumChanges(\"abcdabc\", 2) == vector<int>2);\n    assert(solution.minimumChanges(\"abcdefg\", 2) == vector<int>3);\n    assert(solution.minimumChanges(\"abcdcba\", 3) == vector<int>2);\n    assert(solution.minimumChanges(\"abcdefg\", 3) == vector<int>3);\n    assert(solution.minimumChanges(\"abcabcabc\", 3) == vector<int>3);\n    assert(solution.minimumChanges(\"aaaa\", 2) == vector<int>0);\n    assert(solution.minimumChanges(\"abcdabc\", 3) == vector<int>3);\n    assert(solution.minimumChanges(\"abcabc\", 3) == vector<int>3);\n    assert(solution.minimumChanges(\"abcdef\", 2) == vector<int>2);\n    assert(solution.minimumChanges(\"abccba\", 3) == vector<int>2);\n    assert(solution.minimumChanges(\"ababab\", 3) == vector<int>3);\n    assert(solution.minimumChanges(\"qwertyuiopqwertyuiopqwertyuiop\", 6) == vector<int>5);\n    assert(solution.minimumChanges(\"aabbccddeeaabbccddeeaabbccdd\", 6) == vector<int>2);\n    assert(solution.minimumChanges(\"abcdefedcbafedcba\", 3) == vector<int>1);\n    assert(solution.minimumChanges(\"abcdabcdabcdabcdabcdabcd\", 5) == vector<int>2);\n    assert(solution.minimumChanges(\"abcdabcdabcdabcd\", 4) == vector<int>2);\n    assert(solution.minimumChanges(\"xyzxyzxyzxyz\", 4) == vector<int>3);\n    assert(solution.minimumChanges(\"xyzxyzxyzxyzxyz\", 3) == vector<int>1);\n    assert(solution.minimumChanges(\"abcdefghijklmnopqrstuvwxyzyxwvutsrqponmlkjihgfedcba\", 5) == vector<int>4);\n    assert(solution.minimumChanges(\"abcdeabcdeabcde\", 4) == vector<int>5);\n    assert(solution.minimumChanges(\"level\", 1) == vector<int>0);\n    assert(solution.minimumChanges(\"banana\", 2) == vector<int>1);\n    assert(solution.minimumChanges(\"aabbaabbaabbaabb\", 4) == vector<int>0);\n    assert(solution.minimumChanges(\"aabbccddeeffgghhiijjkkllmmlloo\", 5) == vector<int>6);\n    assert(solution.minimumChanges(\"abccbaabccbaabccba\", 4) == vector<int>2);\n    assert(solution.minimumChanges(\"abracadabraabracadabra\", 4) == vector<int>5);\n    assert(solution.minimumChanges(\"redder\", 2) == vector<int>2);\n    assert(solution.minimumChanges(\"repaper\", 2) == vector<int>3);\n    assert(solution.minimumChanges(\"abababaabab\", 3) == vector<int>0);\n    assert(solution.minimumChanges(\"abcdefghij\", 2) == vector<int>4);\n    assert(solution.minimumChanges(\"abcdefabcdef\", 4) == vector<int>4);\n    assert(solution.minimumChanges(\"abcdefghiabcdefghiabcdefghi\", 4) == vector<int>3);\n    assert(solution.minimumChanges(\"xyzxyzxyzxyzxyz\", 5) == vector<int>4);\n    assert(solution.minimumChanges(\"aabbaaabbbaa\", 3) == vector<int>1);\n    assert(solution.minimumChanges(\"aaabbbcccdddaaa\", 4) == vector<int>2);\n    assert(solution.minimumChanges(\"abcdefgabcdefg\", 4) == vector<int>5);\n    assert(solution.minimumChanges(\"xyxzyxzyxzyxzyxzyx\", 4) == vector<int>1);\n    assert(solution.minimumChanges(\"xyxyxyxyxyxyxy\", 3) == vector<int>0);\n    assert(solution.minimumChanges(\"aaaaabbbbbcccc\", 3) == vector<int>0);\n    assert(solution.minimumChanges(\"ababababababab\", 3) == vector<int>0);\n    assert(solution.minimumChanges(\"abcdefghabcdefghabcdefgh\", 6) == vector<int>5);\n    assert(solution.minimumChanges(\"mississippi\", 2) == vector<int>2);\n    assert(solution.minimumChanges(\"abccbaabccba\", 2) == vector<int>0);\n    assert(solution.minimumChanges(\"abcdefabcdefabcdef\", 6) == vector<int>6);\n    assert(solution.minimumChanges(\"abcdefggfedcba\", 2) == vector<int>5);\n    assert(solution.minimumChanges(\"noonnoonnoon\", 3) == vector<int>0);\n    assert(solution.minimumChanges(\"aabbccddeeffgghhiijj\", 5) == vector<int>4);\n    assert(solution.minimumChanges(\"aabbccddeeffgghhiijjkkllmmnnoopp\", 6) == vector<int>8);\n    assert(solution.minimumChanges(\"aaabaaabaaabaaab\", 5) == vector<int>1);\n    assert(solution.minimumChanges(\"aabbccddeeff\", 3) == vector<int>4);\n    assert(solution.minimumChanges(\"abcdefgabcdefg\", 2) == vector<int>5);\n    assert(solution.minimumChanges(\"racecar\", 3) == vector<int>2);\n    assert(solution.minimumChanges(\"abababab\", 3) == vector<int>1);\n    assert(solution.minimumChanges(\"ababababababab\", 5) == vector<int>1);\n    assert(solution.minimumChanges(\"abcabcabcabcabcabc\", 6) == vector<int>5);\n    assert(solution.minimumChanges(\"mnopqrnopqr\", 3) == vector<int>4);\n    assert(solution.minimumChanges(\"deified\", 1) == vector<int>0);\n    assert(solution.minimumChanges(\"abcdefghijabcdefghijabcdefghij\", 5) == vector<int>4);\n    assert(solution.minimumChanges(\"abcabcabcabcabcabcabc\", 7) == vector<int>6);\n    assert(solution.minimumChanges(\"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", 7) == vector<int>0);\n    assert(solution.minimumChanges(\"abcdefghij\", 5) == vector<int>5);\n    assert(solution.minimumChanges(\"noon\", 1) == vector<int>0);\n    assert(solution.minimumChanges(\"aaaaaaaaaa\", 5) == vector<int>0);\n    assert(solution.minimumChanges(\"abcdefghijklnmopqrstuvwxyz\", 5) == vector<int>9);\n    assert(solution.minimumChanges(\"abcdefghij\", 3) == vector<int>4);\n    assert(solution.minimumChanges(\"racecar\", 2) == vector<int>3);\n    assert(solution.minimumChanges(\"rotor\", 1) == vector<int>0);\n    assert(solution.minimumChanges(\"abracadabraabracadabra\", 5) == vector<int>4);\n    assert(solution.minimumChanges(\"xyzyxzyxzyx\", 4) == vector<int>3);\n    assert(solution.minimumChanges(\"aaaaabbbbccccdddd\", 4) == vector<int>0);\n    assert(solution.minimumChanges(\"aaabbbcccdddeeefffggg\", 5) == vector<int>3);\n    assert(solution.minimumChanges(\"aaaabbbbccccdddd\", 4) == vector<int>0);\n    assert(solution.minimumChanges(\"abcabcabcabcabcabcabcabc\", 6) == vector<int>3);\n    assert(solution.minimumChanges(\"ababababab\", 3) == vector<int>0);\n    assert(solution.minimumChanges(\"aabaaabaaabaaa\", 4) == vector<int>1);\n    assert(solution.minimumChanges(\"aabbccddeeffgg\", 4) == vector<int>4);\n    assert(solution.minimumChanges(\"aaaaabbbbcccc\", 3) == vector<int>0);\n    assert(solution.minimumChanges(\"mnopqrsmnopqrsmno\", 3) == vector<int>6);\n    assert(solution.minimumChanges(\"aabbccddeeffgg\", 6) == vector<int>2);\n    assert(solution.minimumChanges(\"zzzaaaabbbccc\", 4) == vector<int>0);\n    assert(solution.minimumChanges(\"abcdefghijklmnopqrstuvwxyz\", 10) == vector<int>10);\n    assert(solution.minimumChanges(\"abababababababab\", 4) == vector<int>0);\n    assert(solution.minimumChanges(\"mnopqrspqrspqr\", 3) == vector<int>2);\n    assert(solution.minimumChanges(\"abacabadaba\", 3) == vector<int>1);\n    assert(solution.minimumChanges(\"mississippi\", 3) == vector<int>1);\n    assert(solution.minimumChanges(\"abacabadabacaba\", 5) == vector<int>2);\n    assert(solution.minimumChanges(\"abacabadabacaba\", 3) == vector<int>0);\n    assert(solution.minimumChanges(\"zzzzzyzzzzzz\", 5) == vector<int>0);\n    assert(solution.minimumChanges(\"xyxyxyxyxyxy\", 6) == vector<int>6);\n    assert(solution.minimumChanges(\"abcdeedcba\", 2) == vector<int>4);\n    assert(solution.minimumChanges(\"abcdabcdabcdabcdabcd\", 4) == vector<int>1);\n    assert(solution.minimumChanges(\"abcdefedcba\", 5) == vector<int>4);\n    assert(solution.minimumChanges(\"aaaaaaaaaaaaaaaaaaaa\", 5) == vector<int>0);\n    assert(solution.minimumChanges(\"zzzzzyzzzzz\", 2) == vector<int>0);\n    assert(solution.minimumChanges(\"abcabcabcabcabc\", 5) == vector<int>4);\n    assert(solution.minimumChanges(\"abcdefabcdef\", 2) == vector<int>1);\n    assert(solution.minimumChanges(\"abcdefabcdefabcdefabcdef\", 5) == vector<int>3);\n    assert(solution.minimumChanges(\"anana\", 1) == vector<int>0);\n    assert(solution.minimumChanges(\"abcdefghijabcdefghij\", 5) == vector<int>7);\n    assert(solution.minimumChanges(\"aaaabbbb\", 2) == vector<int>0);\n    assert(solution.minimumChanges(\"xyzyzyzyz\", 4) == vector<int>3);\n    assert(solution.minimumChanges(\"mnopqrstuvwx\", 4) == vector<int>4);\n    assert(solution.minimumChanges(\"zzzzzzyyyzzzzzyyy\", 2) == vector<int>0);\n    assert(solution.minimumChanges(\"reviled\", 2) == vector<int>3);\n    assert(solution.minimumChanges(\"aaabbbbccccaaa\", 3) == vector<int>3);\n    assert(solution.minimumChanges(\"abacabadabacaba\", 4) == vector<int>1);\n    assert(solution.minimumChanges(\"aabbccddeeff\", 4) == vector<int>2);\n    assert(solution.minimumChanges(\"xyzxyzxyzxyzxyz\", 4) == vector<int>3);\n}",
+    "java": "public static void check(Solution solution) {\n    assert Arrays.equals(solution.minimumChanges(\"aabbcc\", 3), 0);\n    assert Arrays.equals(solution.minimumChanges(\"abccba\", 2), 2);\n    assert Arrays.equals(solution.minimumChanges(\"aabbccdd\", 4), 0);\n    assert Arrays.equals(solution.minimumChanges(\"abcabcabc\", 4), 4);\n    assert Arrays.equals(solution.minimumChanges(\"aaaaaa\", 2), 0);\n    assert Arrays.equals(solution.minimumChanges(\"abcabcabcabc\", 4), 3);\n    assert Arrays.equals(solution.minimumChanges(\"abccba\", 1), 0);\n    assert Arrays.equals(solution.minimumChanges(\"aabbaa\", 3), 0);\n    assert Arrays.equals(solution.minimumChanges(\"racecar\", 1), 0);\n    assert Arrays.equals(solution.minimumChanges(\"abcac\", 2), 1);\n    assert Arrays.equals(solution.minimumChanges(\"zzzzzz\", 2), 0);\n    assert Arrays.equals(solution.minimumChanges(\"abcdabc\", 2), 2);\n    assert Arrays.equals(solution.minimumChanges(\"abcdefg\", 2), 3);\n    assert Arrays.equals(solution.minimumChanges(\"abcdcba\", 3), 2);\n    assert Arrays.equals(solution.minimumChanges(\"abcdefg\", 3), 3);\n    assert Arrays.equals(solution.minimumChanges(\"abcabcabc\", 3), 3);\n    assert Arrays.equals(solution.minimumChanges(\"aaaa\", 2), 0);\n    assert Arrays.equals(solution.minimumChanges(\"abcdabc\", 3), 3);\n    assert Arrays.equals(solution.minimumChanges(\"abcabc\", 3), 3);\n    assert Arrays.equals(solution.minimumChanges(\"abcdef\", 2), 2);\n    assert Arrays.equals(solution.minimumChanges(\"abccba\", 3), 2);\n    assert Arrays.equals(solution.minimumChanges(\"ababab\", 3), 3);\n    assert Arrays.equals(solution.minimumChanges(\"qwertyuiopqwertyuiopqwertyuiop\", 6), 5);\n    assert Arrays.equals(solution.minimumChanges(\"aabbccddeeaabbccddeeaabbccdd\", 6), 2);\n    assert Arrays.equals(solution.minimumChanges(\"abcdefedcbafedcba\", 3), 1);\n    assert Arrays.equals(solution.minimumChanges(\"abcdabcdabcdabcdabcdabcd\", 5), 2);\n    assert Arrays.equals(solution.minimumChanges(\"abcdabcdabcdabcd\", 4), 2);\n    assert Arrays.equals(solution.minimumChanges(\"xyzxyzxyzxyz\", 4), 3);\n    assert Arrays.equals(solution.minimumChanges(\"xyzxyzxyzxyzxyz\", 3), 1);\n    assert Arrays.equals(solution.minimumChanges(\"abcdefghijklmnopqrstuvwxyzyxwvutsrqponmlkjihgfedcba\", 5), 4);\n    assert Arrays.equals(solution.minimumChanges(\"abcdeabcdeabcde\", 4), 5);\n    assert Arrays.equals(solution.minimumChanges(\"level\", 1), 0);\n    assert Arrays.equals(solution.minimumChanges(\"banana\", 2), 1);\n    assert Arrays.equals(solution.minimumChanges(\"aabbaabbaabbaabb\", 4), 0);\n    assert Arrays.equals(solution.minimumChanges(\"aabbccddeeffgghhiijjkkllmmlloo\", 5), 6);\n    assert Arrays.equals(solution.minimumChanges(\"abccbaabccbaabccba\", 4), 2);\n    assert Arrays.equals(solution.minimumChanges(\"abracadabraabracadabra\", 4), 5);\n    assert Arrays.equals(solution.minimumChanges(\"redder\", 2), 2);\n    assert Arrays.equals(solution.minimumChanges(\"repaper\", 2), 3);\n    assert Arrays.equals(solution.minimumChanges(\"abababaabab\", 3), 0);\n    assert Arrays.equals(solution.minimumChanges(\"abcdefghij\", 2), 4);\n    assert Arrays.equals(solution.minimumChanges(\"abcdefabcdef\", 4), 4);\n    assert Arrays.equals(solution.minimumChanges(\"abcdefghiabcdefghiabcdefghi\", 4), 3);\n    assert Arrays.equals(solution.minimumChanges(\"xyzxyzxyzxyzxyz\", 5), 4);\n    assert Arrays.equals(solution.minimumChanges(\"aabbaaabbbaa\", 3), 1);\n    assert Arrays.equals(solution.minimumChanges(\"aaabbbcccdddaaa\", 4), 2);\n    assert Arrays.equals(solution.minimumChanges(\"abcdefgabcdefg\", 4), 5);\n    assert Arrays.equals(solution.minimumChanges(\"xyxzyxzyxzyxzyxzyx\", 4), 1);\n    assert Arrays.equals(solution.minimumChanges(\"xyxyxyxyxyxyxy\", 3), 0);\n    assert Arrays.equals(solution.minimumChanges(\"aaaaabbbbbcccc\", 3), 0);\n    assert Arrays.equals(solution.minimumChanges(\"ababababababab\", 3), 0);\n    assert Arrays.equals(solution.minimumChanges(\"abcdefghabcdefghabcdefgh\", 6), 5);\n    assert Arrays.equals(solution.minimumChanges(\"mississippi\", 2), 2);\n    assert Arrays.equals(solution.minimumChanges(\"abccbaabccba\", 2), 0);\n    assert Arrays.equals(solution.minimumChanges(\"abcdefabcdefabcdef\", 6), 6);\n    assert Arrays.equals(solution.minimumChanges(\"abcdefggfedcba\", 2), 5);\n    assert Arrays.equals(solution.minimumChanges(\"noonnoonnoon\", 3), 0);\n    assert Arrays.equals(solution.minimumChanges(\"aabbccddeeffgghhiijj\", 5), 4);\n    assert Arrays.equals(solution.minimumChanges(\"aabbccddeeffgghhiijjkkllmmnnoopp\", 6), 8);\n    assert Arrays.equals(solution.minimumChanges(\"aaabaaabaaabaaab\", 5), 1);\n    assert Arrays.equals(solution.minimumChanges(\"aabbccddeeff\", 3), 4);\n    assert Arrays.equals(solution.minimumChanges(\"abcdefgabcdefg\", 2), 5);\n    assert Arrays.equals(solution.minimumChanges(\"racecar\", 3), 2);\n    assert Arrays.equals(solution.minimumChanges(\"abababab\", 3), 1);\n    assert Arrays.equals(solution.minimumChanges(\"ababababababab\", 5), 1);\n    assert Arrays.equals(solution.minimumChanges(\"abcabcabcabcabcabc\", 6), 5);\n    assert Arrays.equals(solution.minimumChanges(\"mnopqrnopqr\", 3), 4);\n    assert Arrays.equals(solution.minimumChanges(\"deified\", 1), 0);\n    assert Arrays.equals(solution.minimumChanges(\"abcdefghijabcdefghijabcdefghij\", 5), 4);\n    assert Arrays.equals(solution.minimumChanges(\"abcabcabcabcabcabcabc\", 7), 6);\n    assert Arrays.equals(solution.minimumChanges(\"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", 7), 0);\n    assert Arrays.equals(solution.minimumChanges(\"abcdefghij\", 5), 5);\n    assert Arrays.equals(solution.minimumChanges(\"noon\", 1), 0);\n    assert Arrays.equals(solution.minimumChanges(\"aaaaaaaaaa\", 5), 0);\n    assert Arrays.equals(solution.minimumChanges(\"abcdefghijklnmopqrstuvwxyz\", 5), 9);\n    assert Arrays.equals(solution.minimumChanges(\"abcdefghij\", 3), 4);\n    assert Arrays.equals(solution.minimumChanges(\"racecar\", 2), 3);\n    assert Arrays.equals(solution.minimumChanges(\"rotor\", 1), 0);\n    assert Arrays.equals(solution.minimumChanges(\"abracadabraabracadabra\", 5), 4);\n    assert Arrays.equals(solution.minimumChanges(\"xyzyxzyxzyx\", 4), 3);\n    assert Arrays.equals(solution.minimumChanges(\"aaaaabbbbccccdddd\", 4), 0);\n    assert Arrays.equals(solution.minimumChanges(\"aaabbbcccdddeeefffggg\", 5), 3);\n    assert Arrays.equals(solution.minimumChanges(\"aaaabbbbccccdddd\", 4), 0);\n    assert Arrays.equals(solution.minimumChanges(\"abcabcabcabcabcabcabcabc\", 6), 3);\n    assert Arrays.equals(solution.minimumChanges(\"ababababab\", 3), 0);\n    assert Arrays.equals(solution.minimumChanges(\"aabaaabaaabaaa\", 4), 1);\n    assert Arrays.equals(solution.minimumChanges(\"aabbccddeeffgg\", 4), 4);\n    assert Arrays.equals(solution.minimumChanges(\"aaaaabbbbcccc\", 3), 0);\n    assert Arrays.equals(solution.minimumChanges(\"mnopqrsmnopqrsmno\", 3), 6);\n    assert Arrays.equals(solution.minimumChanges(\"aabbccddeeffgg\", 6), 2);\n    assert Arrays.equals(solution.minimumChanges(\"zzzaaaabbbccc\", 4), 0);\n    assert Arrays.equals(solution.minimumChanges(\"abcdefghijklmnopqrstuvwxyz\", 10), 10);\n    assert Arrays.equals(solution.minimumChanges(\"abababababababab\", 4), 0);\n    assert Arrays.equals(solution.minimumChanges(\"mnopqrspqrspqr\", 3), 2);\n    assert Arrays.equals(solution.minimumChanges(\"abacabadaba\", 3), 1);\n    assert Arrays.equals(solution.minimumChanges(\"mississippi\", 3), 1);\n    assert Arrays.equals(solution.minimumChanges(\"abacabadabacaba\", 5), 2);\n    assert Arrays.equals(solution.minimumChanges(\"abacabadabacaba\", 3), 0);\n    assert Arrays.equals(solution.minimumChanges(\"zzzzzyzzzzzz\", 5), 0);\n    assert Arrays.equals(solution.minimumChanges(\"xyxyxyxyxyxy\", 6), 6);\n    assert Arrays.equals(solution.minimumChanges(\"abcdeedcba\", 2), 4);\n    assert Arrays.equals(solution.minimumChanges(\"abcdabcdabcdabcdabcd\", 4), 1);\n    assert Arrays.equals(solution.minimumChanges(\"abcdefedcba\", 5), 4);\n    assert Arrays.equals(solution.minimumChanges(\"aaaaaaaaaaaaaaaaaaaa\", 5), 0);\n    assert Arrays.equals(solution.minimumChanges(\"zzzzzyzzzzz\", 2), 0);\n    assert Arrays.equals(solution.minimumChanges(\"abcabcabcabcabc\", 5), 4);\n    assert Arrays.equals(solution.minimumChanges(\"abcdefabcdef\", 2), 1);\n    assert Arrays.equals(solution.minimumChanges(\"abcdefabcdefabcdefabcdef\", 5), 3);\n    assert Arrays.equals(solution.minimumChanges(\"anana\", 1), 0);\n    assert Arrays.equals(solution.minimumChanges(\"abcdefghijabcdefghij\", 5), 7);\n    assert Arrays.equals(solution.minimumChanges(\"aaaabbbb\", 2), 0);\n    assert Arrays.equals(solution.minimumChanges(\"xyzyzyzyz\", 4), 3);\n    assert Arrays.equals(solution.minimumChanges(\"mnopqrstuvwx\", 4), 4);\n    assert Arrays.equals(solution.minimumChanges(\"zzzzzzyyyzzzzzyyy\", 2), 0);\n    assert Arrays.equals(solution.minimumChanges(\"reviled\", 2), 3);\n    assert Arrays.equals(solution.minimumChanges(\"aaabbbbccccaaa\", 3), 3);\n    assert Arrays.equals(solution.minimumChanges(\"abacabadabacaba\", 4), 1);\n    assert Arrays.equals(solution.minimumChanges(\"aabbccddeeff\", 4), 2);\n    assert Arrays.equals(solution.minimumChanges(\"xyzxyzxyzxyzxyz\", 4), 3);\n}",
+    "javascript": "function check(candidate) {\n    console.assert(JSON.stringify(candidate(\"aabbcc\", 3)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"abccba\", 2)) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(\"aabbccdd\", 4)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"abcabcabc\", 4)) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate(\"aaaaaa\", 2)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"abcabcabcabc\", 4)) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate(\"abccba\", 1)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"aabbaa\", 3)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"racecar\", 1)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"abcac\", 2)) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate(\"zzzzzz\", 2)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"abcdabc\", 2)) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(\"abcdefg\", 2)) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate(\"abcdcba\", 3)) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(\"abcdefg\", 3)) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate(\"abcabcabc\", 3)) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate(\"aaaa\", 2)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"abcdabc\", 3)) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate(\"abcabc\", 3)) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate(\"abcdef\", 2)) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(\"abccba\", 3)) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(\"ababab\", 3)) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate(\"qwertyuiopqwertyuiopqwertyuiop\", 6)) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate(\"aabbccddeeaabbccddeeaabbccdd\", 6)) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(\"abcdefedcbafedcba\", 3)) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate(\"abcdabcdabcdabcdabcdabcd\", 5)) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(\"abcdabcdabcdabcd\", 4)) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(\"xyzxyzxyzxyz\", 4)) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate(\"xyzxyzxyzxyzxyz\", 3)) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate(\"abcdefghijklmnopqrstuvwxyzyxwvutsrqponmlkjihgfedcba\", 5)) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate(\"abcdeabcdeabcde\", 4)) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate(\"level\", 1)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"banana\", 2)) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate(\"aabbaabbaabbaabb\", 4)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"aabbccddeeffgghhiijjkkllmmlloo\", 5)) === JSON.stringify(6));\n    console.assert(JSON.stringify(candidate(\"abccbaabccbaabccba\", 4)) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(\"abracadabraabracadabra\", 4)) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate(\"redder\", 2)) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(\"repaper\", 2)) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate(\"abababaabab\", 3)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"abcdefghij\", 2)) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate(\"abcdefabcdef\", 4)) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate(\"abcdefghiabcdefghiabcdefghi\", 4)) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate(\"xyzxyzxyzxyzxyz\", 5)) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate(\"aabbaaabbbaa\", 3)) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate(\"aaabbbcccdddaaa\", 4)) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(\"abcdefgabcdefg\", 4)) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate(\"xyxzyxzyxzyxzyxzyx\", 4)) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate(\"xyxyxyxyxyxyxy\", 3)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"aaaaabbbbbcccc\", 3)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"ababababababab\", 3)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"abcdefghabcdefghabcdefgh\", 6)) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate(\"mississippi\", 2)) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(\"abccbaabccba\", 2)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"abcdefabcdefabcdef\", 6)) === JSON.stringify(6));\n    console.assert(JSON.stringify(candidate(\"abcdefggfedcba\", 2)) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate(\"noonnoonnoon\", 3)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"aabbccddeeffgghhiijj\", 5)) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate(\"aabbccddeeffgghhiijjkkllmmnnoopp\", 6)) === JSON.stringify(8));\n    console.assert(JSON.stringify(candidate(\"aaabaaabaaabaaab\", 5)) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate(\"aabbccddeeff\", 3)) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate(\"abcdefgabcdefg\", 2)) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate(\"racecar\", 3)) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(\"abababab\", 3)) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate(\"ababababababab\", 5)) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate(\"abcabcabcabcabcabc\", 6)) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate(\"mnopqrnopqr\", 3)) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate(\"deified\", 1)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"abcdefghijabcdefghijabcdefghij\", 5)) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate(\"abcabcabcabcabcabcabc\", 7)) === JSON.stringify(6));\n    console.assert(JSON.stringify(candidate(\"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", 7)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"abcdefghij\", 5)) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate(\"noon\", 1)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"aaaaaaaaaa\", 5)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"abcdefghijklnmopqrstuvwxyz\", 5)) === JSON.stringify(9));\n    console.assert(JSON.stringify(candidate(\"abcdefghij\", 3)) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate(\"racecar\", 2)) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate(\"rotor\", 1)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"abracadabraabracadabra\", 5)) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate(\"xyzyxzyxzyx\", 4)) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate(\"aaaaabbbbccccdddd\", 4)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"aaabbbcccdddeeefffggg\", 5)) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate(\"aaaabbbbccccdddd\", 4)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"abcabcabcabcabcabcabcabc\", 6)) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate(\"ababababab\", 3)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"aabaaabaaabaaa\", 4)) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate(\"aabbccddeeffgg\", 4)) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate(\"aaaaabbbbcccc\", 3)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"mnopqrsmnopqrsmno\", 3)) === JSON.stringify(6));\n    console.assert(JSON.stringify(candidate(\"aabbccddeeffgg\", 6)) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(\"zzzaaaabbbccc\", 4)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"abcdefghijklmnopqrstuvwxyz\", 10)) === JSON.stringify(10));\n    console.assert(JSON.stringify(candidate(\"abababababababab\", 4)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"mnopqrspqrspqr\", 3)) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(\"abacabadaba\", 3)) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate(\"mississippi\", 3)) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate(\"abacabadabacaba\", 5)) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(\"abacabadabacaba\", 3)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"zzzzzyzzzzzz\", 5)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"xyxyxyxyxyxy\", 6)) === JSON.stringify(6));\n    console.assert(JSON.stringify(candidate(\"abcdeedcba\", 2)) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate(\"abcdabcdabcdabcdabcd\", 4)) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate(\"abcdefedcba\", 5)) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate(\"aaaaaaaaaaaaaaaaaaaa\", 5)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"zzzzzyzzzzz\", 2)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"abcabcabcabcabc\", 5)) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate(\"abcdefabcdef\", 2)) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate(\"abcdefabcdefabcdefabcdef\", 5)) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate(\"anana\", 1)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"abcdefghijabcdefghij\", 5)) === JSON.stringify(7));\n    console.assert(JSON.stringify(candidate(\"aaaabbbb\", 2)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"xyzyzyzyz\", 4)) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate(\"mnopqrstuvwx\", 4)) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate(\"zzzzzzyyyzzzzzyyy\", 2)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"reviled\", 2)) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate(\"aaabbbbccccaaa\", 3)) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate(\"abacabadabacaba\", 4)) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate(\"aabbccddeeff\", 4)) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(\"xyzxyzxyzxyzxyz\", 4)) === JSON.stringify(3));\n}",
+    "typescript": "function check(candidate: Function): void {\n    console.assert(JSON.stringify(candidate(\"aabbcc\", 3)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"abccba\", 2)) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(\"aabbccdd\", 4)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"abcabcabc\", 4)) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate(\"aaaaaa\", 2)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"abcabcabcabc\", 4)) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate(\"abccba\", 1)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"aabbaa\", 3)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"racecar\", 1)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"abcac\", 2)) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate(\"zzzzzz\", 2)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"abcdabc\", 2)) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(\"abcdefg\", 2)) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate(\"abcdcba\", 3)) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(\"abcdefg\", 3)) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate(\"abcabcabc\", 3)) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate(\"aaaa\", 2)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"abcdabc\", 3)) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate(\"abcabc\", 3)) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate(\"abcdef\", 2)) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(\"abccba\", 3)) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(\"ababab\", 3)) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate(\"qwertyuiopqwertyuiopqwertyuiop\", 6)) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate(\"aabbccddeeaabbccddeeaabbccdd\", 6)) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(\"abcdefedcbafedcba\", 3)) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate(\"abcdabcdabcdabcdabcdabcd\", 5)) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(\"abcdabcdabcdabcd\", 4)) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(\"xyzxyzxyzxyz\", 4)) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate(\"xyzxyzxyzxyzxyz\", 3)) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate(\"abcdefghijklmnopqrstuvwxyzyxwvutsrqponmlkjihgfedcba\", 5)) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate(\"abcdeabcdeabcde\", 4)) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate(\"level\", 1)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"banana\", 2)) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate(\"aabbaabbaabbaabb\", 4)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"aabbccddeeffgghhiijjkkllmmlloo\", 5)) === JSON.stringify(6));\n    console.assert(JSON.stringify(candidate(\"abccbaabccbaabccba\", 4)) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(\"abracadabraabracadabra\", 4)) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate(\"redder\", 2)) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(\"repaper\", 2)) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate(\"abababaabab\", 3)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"abcdefghij\", 2)) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate(\"abcdefabcdef\", 4)) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate(\"abcdefghiabcdefghiabcdefghi\", 4)) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate(\"xyzxyzxyzxyzxyz\", 5)) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate(\"aabbaaabbbaa\", 3)) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate(\"aaabbbcccdddaaa\", 4)) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(\"abcdefgabcdefg\", 4)) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate(\"xyxzyxzyxzyxzyxzyx\", 4)) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate(\"xyxyxyxyxyxyxy\", 3)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"aaaaabbbbbcccc\", 3)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"ababababababab\", 3)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"abcdefghabcdefghabcdefgh\", 6)) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate(\"mississippi\", 2)) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(\"abccbaabccba\", 2)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"abcdefabcdefabcdef\", 6)) === JSON.stringify(6));\n    console.assert(JSON.stringify(candidate(\"abcdefggfedcba\", 2)) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate(\"noonnoonnoon\", 3)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"aabbccddeeffgghhiijj\", 5)) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate(\"aabbccddeeffgghhiijjkkllmmnnoopp\", 6)) === JSON.stringify(8));\n    console.assert(JSON.stringify(candidate(\"aaabaaabaaabaaab\", 5)) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate(\"aabbccddeeff\", 3)) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate(\"abcdefgabcdefg\", 2)) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate(\"racecar\", 3)) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(\"abababab\", 3)) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate(\"ababababababab\", 5)) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate(\"abcabcabcabcabcabc\", 6)) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate(\"mnopqrnopqr\", 3)) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate(\"deified\", 1)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"abcdefghijabcdefghijabcdefghij\", 5)) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate(\"abcabcabcabcabcabcabc\", 7)) === JSON.stringify(6));\n    console.assert(JSON.stringify(candidate(\"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", 7)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"abcdefghij\", 5)) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate(\"noon\", 1)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"aaaaaaaaaa\", 5)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"abcdefghijklnmopqrstuvwxyz\", 5)) === JSON.stringify(9));\n    console.assert(JSON.stringify(candidate(\"abcdefghij\", 3)) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate(\"racecar\", 2)) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate(\"rotor\", 1)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"abracadabraabracadabra\", 5)) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate(\"xyzyxzyxzyx\", 4)) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate(\"aaaaabbbbccccdddd\", 4)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"aaabbbcccdddeeefffggg\", 5)) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate(\"aaaabbbbccccdddd\", 4)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"abcabcabcabcabcabcabcabc\", 6)) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate(\"ababababab\", 3)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"aabaaabaaabaaa\", 4)) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate(\"aabbccddeeffgg\", 4)) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate(\"aaaaabbbbcccc\", 3)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"mnopqrsmnopqrsmno\", 3)) === JSON.stringify(6));\n    console.assert(JSON.stringify(candidate(\"aabbccddeeffgg\", 6)) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(\"zzzaaaabbbccc\", 4)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"abcdefghijklmnopqrstuvwxyz\", 10)) === JSON.stringify(10));\n    console.assert(JSON.stringify(candidate(\"abababababababab\", 4)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"mnopqrspqrspqr\", 3)) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(\"abacabadaba\", 3)) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate(\"mississippi\", 3)) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate(\"abacabadabacaba\", 5)) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(\"abacabadabacaba\", 3)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"zzzzzyzzzzzz\", 5)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"xyxyxyxyxyxy\", 6)) === JSON.stringify(6));\n    console.assert(JSON.stringify(candidate(\"abcdeedcba\", 2)) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate(\"abcdabcdabcdabcdabcd\", 4)) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate(\"abcdefedcba\", 5)) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate(\"aaaaaaaaaaaaaaaaaaaa\", 5)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"zzzzzyzzzzz\", 2)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"abcabcabcabcabc\", 5)) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate(\"abcdefabcdef\", 2)) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate(\"abcdefabcdefabcdefabcdef\", 5)) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate(\"anana\", 1)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"abcdefghijabcdefghij\", 5)) === JSON.stringify(7));\n    console.assert(JSON.stringify(candidate(\"aaaabbbb\", 2)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"xyzyzyzyz\", 4)) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate(\"mnopqrstuvwx\", 4)) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate(\"zzzzzzyyyzzzzzyyy\", 2)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"reviled\", 2)) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate(\"aaabbbbccccaaa\", 3)) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate(\"abacabadabacaba\", 4)) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate(\"aabbccddeeff\", 4)) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(\"xyzxyzxyzxyzxyz\", 4)) === JSON.stringify(3));\n}",
+    "golang": "func check(candidate func([]int, int) []int) {\n    assert reflect.DeepEqual(candidate(\"aabbcc\", 3), 0)\n    assert reflect.DeepEqual(candidate(\"abccba\", 2), 2)\n    assert reflect.DeepEqual(candidate(\"aabbccdd\", 4), 0)\n    assert reflect.DeepEqual(candidate(\"abcabcabc\", 4), 4)\n    assert reflect.DeepEqual(candidate(\"aaaaaa\", 2), 0)\n    assert reflect.DeepEqual(candidate(\"abcabcabcabc\", 4), 3)\n    assert reflect.DeepEqual(candidate(\"abccba\", 1), 0)\n    assert reflect.DeepEqual(candidate(\"aabbaa\", 3), 0)\n    assert reflect.DeepEqual(candidate(\"racecar\", 1), 0)\n    assert reflect.DeepEqual(candidate(\"abcac\", 2), 1)\n    assert reflect.DeepEqual(candidate(\"zzzzzz\", 2), 0)\n    assert reflect.DeepEqual(candidate(\"abcdabc\", 2), 2)\n    assert reflect.DeepEqual(candidate(\"abcdefg\", 2), 3)\n    assert reflect.DeepEqual(candidate(\"abcdcba\", 3), 2)\n    assert reflect.DeepEqual(candidate(\"abcdefg\", 3), 3)\n    assert reflect.DeepEqual(candidate(\"abcabcabc\", 3), 3)\n    assert reflect.DeepEqual(candidate(\"aaaa\", 2), 0)\n    assert reflect.DeepEqual(candidate(\"abcdabc\", 3), 3)\n    assert reflect.DeepEqual(candidate(\"abcabc\", 3), 3)\n    assert reflect.DeepEqual(candidate(\"abcdef\", 2), 2)\n    assert reflect.DeepEqual(candidate(\"abccba\", 3), 2)\n    assert reflect.DeepEqual(candidate(\"ababab\", 3), 3)\n    assert reflect.DeepEqual(candidate(\"qwertyuiopqwertyuiopqwertyuiop\", 6), 5)\n    assert reflect.DeepEqual(candidate(\"aabbccddeeaabbccddeeaabbccdd\", 6), 2)\n    assert reflect.DeepEqual(candidate(\"abcdefedcbafedcba\", 3), 1)\n    assert reflect.DeepEqual(candidate(\"abcdabcdabcdabcdabcdabcd\", 5), 2)\n    assert reflect.DeepEqual(candidate(\"abcdabcdabcdabcd\", 4), 2)\n    assert reflect.DeepEqual(candidate(\"xyzxyzxyzxyz\", 4), 3)\n    assert reflect.DeepEqual(candidate(\"xyzxyzxyzxyzxyz\", 3), 1)\n    assert reflect.DeepEqual(candidate(\"abcdefghijklmnopqrstuvwxyzyxwvutsrqponmlkjihgfedcba\", 5), 4)\n    assert reflect.DeepEqual(candidate(\"abcdeabcdeabcde\", 4), 5)\n    assert reflect.DeepEqual(candidate(\"level\", 1), 0)\n    assert reflect.DeepEqual(candidate(\"banana\", 2), 1)\n    assert reflect.DeepEqual(candidate(\"aabbaabbaabbaabb\", 4), 0)\n    assert reflect.DeepEqual(candidate(\"aabbccddeeffgghhiijjkkllmmlloo\", 5), 6)\n    assert reflect.DeepEqual(candidate(\"abccbaabccbaabccba\", 4), 2)\n    assert reflect.DeepEqual(candidate(\"abracadabraabracadabra\", 4), 5)\n    assert reflect.DeepEqual(candidate(\"redder\", 2), 2)\n    assert reflect.DeepEqual(candidate(\"repaper\", 2), 3)\n    assert reflect.DeepEqual(candidate(\"abababaabab\", 3), 0)\n    assert reflect.DeepEqual(candidate(\"abcdefghij\", 2), 4)\n    assert reflect.DeepEqual(candidate(\"abcdefabcdef\", 4), 4)\n    assert reflect.DeepEqual(candidate(\"abcdefghiabcdefghiabcdefghi\", 4), 3)\n    assert reflect.DeepEqual(candidate(\"xyzxyzxyzxyzxyz\", 5), 4)\n    assert reflect.DeepEqual(candidate(\"aabbaaabbbaa\", 3), 1)\n    assert reflect.DeepEqual(candidate(\"aaabbbcccdddaaa\", 4), 2)\n    assert reflect.DeepEqual(candidate(\"abcdefgabcdefg\", 4), 5)\n    assert reflect.DeepEqual(candidate(\"xyxzyxzyxzyxzyxzyx\", 4), 1)\n    assert reflect.DeepEqual(candidate(\"xyxyxyxyxyxyxy\", 3), 0)\n    assert reflect.DeepEqual(candidate(\"aaaaabbbbbcccc\", 3), 0)\n    assert reflect.DeepEqual(candidate(\"ababababababab\", 3), 0)\n    assert reflect.DeepEqual(candidate(\"abcdefghabcdefghabcdefgh\", 6), 5)\n    assert reflect.DeepEqual(candidate(\"mississippi\", 2), 2)\n    assert reflect.DeepEqual(candidate(\"abccbaabccba\", 2), 0)\n    assert reflect.DeepEqual(candidate(\"abcdefabcdefabcdef\", 6), 6)\n    assert reflect.DeepEqual(candidate(\"abcdefggfedcba\", 2), 5)\n    assert reflect.DeepEqual(candidate(\"noonnoonnoon\", 3), 0)\n    assert reflect.DeepEqual(candidate(\"aabbccddeeffgghhiijj\", 5), 4)\n    assert reflect.DeepEqual(candidate(\"aabbccddeeffgghhiijjkkllmmnnoopp\", 6), 8)\n    assert reflect.DeepEqual(candidate(\"aaabaaabaaabaaab\", 5), 1)\n    assert reflect.DeepEqual(candidate(\"aabbccddeeff\", 3), 4)\n    assert reflect.DeepEqual(candidate(\"abcdefgabcdefg\", 2), 5)\n    assert reflect.DeepEqual(candidate(\"racecar\", 3), 2)\n    assert reflect.DeepEqual(candidate(\"abababab\", 3), 1)\n    assert reflect.DeepEqual(candidate(\"ababababababab\", 5), 1)\n    assert reflect.DeepEqual(candidate(\"abcabcabcabcabcabc\", 6), 5)\n    assert reflect.DeepEqual(candidate(\"mnopqrnopqr\", 3), 4)\n    assert reflect.DeepEqual(candidate(\"deified\", 1), 0)\n    assert reflect.DeepEqual(candidate(\"abcdefghijabcdefghijabcdefghij\", 5), 4)\n    assert reflect.DeepEqual(candidate(\"abcabcabcabcabcabcabc\", 7), 6)\n    assert reflect.DeepEqual(candidate(\"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", 7), 0)\n    assert reflect.DeepEqual(candidate(\"abcdefghij\", 5), 5)\n    assert reflect.DeepEqual(candidate(\"noon\", 1), 0)\n    assert reflect.DeepEqual(candidate(\"aaaaaaaaaa\", 5), 0)\n    assert reflect.DeepEqual(candidate(\"abcdefghijklnmopqrstuvwxyz\", 5), 9)\n    assert reflect.DeepEqual(candidate(\"abcdefghij\", 3), 4)\n    assert reflect.DeepEqual(candidate(\"racecar\", 2), 3)\n    assert reflect.DeepEqual(candidate(\"rotor\", 1), 0)\n    assert reflect.DeepEqual(candidate(\"abracadabraabracadabra\", 5), 4)\n    assert reflect.DeepEqual(candidate(\"xyzyxzyxzyx\", 4), 3)\n    assert reflect.DeepEqual(candidate(\"aaaaabbbbccccdddd\", 4), 0)\n    assert reflect.DeepEqual(candidate(\"aaabbbcccdddeeefffggg\", 5), 3)\n    assert reflect.DeepEqual(candidate(\"aaaabbbbccccdddd\", 4), 0)\n    assert reflect.DeepEqual(candidate(\"abcabcabcabcabcabcabcabc\", 6), 3)\n    assert reflect.DeepEqual(candidate(\"ababababab\", 3), 0)\n    assert reflect.DeepEqual(candidate(\"aabaaabaaabaaa\", 4), 1)\n    assert reflect.DeepEqual(candidate(\"aabbccddeeffgg\", 4), 4)\n    assert reflect.DeepEqual(candidate(\"aaaaabbbbcccc\", 3), 0)\n    assert reflect.DeepEqual(candidate(\"mnopqrsmnopqrsmno\", 3), 6)\n    assert reflect.DeepEqual(candidate(\"aabbccddeeffgg\", 6), 2)\n    assert reflect.DeepEqual(candidate(\"zzzaaaabbbccc\", 4), 0)\n    assert reflect.DeepEqual(candidate(\"abcdefghijklmnopqrstuvwxyz\", 10), 10)\n    assert reflect.DeepEqual(candidate(\"abababababababab\", 4), 0)\n    assert reflect.DeepEqual(candidate(\"mnopqrspqrspqr\", 3), 2)\n    assert reflect.DeepEqual(candidate(\"abacabadaba\", 3), 1)\n    assert reflect.DeepEqual(candidate(\"mississippi\", 3), 1)\n    assert reflect.DeepEqual(candidate(\"abacabadabacaba\", 5), 2)\n    assert reflect.DeepEqual(candidate(\"abacabadabacaba\", 3), 0)\n    assert reflect.DeepEqual(candidate(\"zzzzzyzzzzzz\", 5), 0)\n    assert reflect.DeepEqual(candidate(\"xyxyxyxyxyxy\", 6), 6)\n    assert reflect.DeepEqual(candidate(\"abcdeedcba\", 2), 4)\n    assert reflect.DeepEqual(candidate(\"abcdabcdabcdabcdabcd\", 4), 1)\n    assert reflect.DeepEqual(candidate(\"abcdefedcba\", 5), 4)\n    assert reflect.DeepEqual(candidate(\"aaaaaaaaaaaaaaaaaaaa\", 5), 0)\n    assert reflect.DeepEqual(candidate(\"zzzzzyzzzzz\", 2), 0)\n    assert reflect.DeepEqual(candidate(\"abcabcabcabcabc\", 5), 4)\n    assert reflect.DeepEqual(candidate(\"abcdefabcdef\", 2), 1)\n    assert reflect.DeepEqual(candidate(\"abcdefabcdefabcdefabcdef\", 5), 3)\n    assert reflect.DeepEqual(candidate(\"anana\", 1), 0)\n    assert reflect.DeepEqual(candidate(\"abcdefghijabcdefghij\", 5), 7)\n    assert reflect.DeepEqual(candidate(\"aaaabbbb\", 2), 0)\n    assert reflect.DeepEqual(candidate(\"xyzyzyzyz\", 4), 3)\n    assert reflect.DeepEqual(candidate(\"mnopqrstuvwx\", 4), 4)\n    assert reflect.DeepEqual(candidate(\"zzzzzzyyyzzzzzyyy\", 2), 0)\n    assert reflect.DeepEqual(candidate(\"reviled\", 2), 3)\n    assert reflect.DeepEqual(candidate(\"aaabbbbccccaaa\", 3), 3)\n    assert reflect.DeepEqual(candidate(\"abacabadabacaba\", 4), 1)\n    assert reflect.DeepEqual(candidate(\"aabbccddeeff\", 4), 2)\n    assert reflect.DeepEqual(candidate(\"xyzxyzxyzxyzxyz\", 4), 3)\n}",
+    "rust": "fn check(candidate: fn(Vec<i32>, i32) -> Vec<i32>) {\n    assert_eq!(candidate(\"aabbcc\", 3), 0);\n    assert_eq!(candidate(\"abccba\", 2), 2);\n    assert_eq!(candidate(\"aabbccdd\", 4), 0);\n    assert_eq!(candidate(\"abcabcabc\", 4), 4);\n    assert_eq!(candidate(\"aaaaaa\", 2), 0);\n    assert_eq!(candidate(\"abcabcabcabc\", 4), 3);\n    assert_eq!(candidate(\"abccba\", 1), 0);\n    assert_eq!(candidate(\"aabbaa\", 3), 0);\n    assert_eq!(candidate(\"racecar\", 1), 0);\n    assert_eq!(candidate(\"abcac\", 2), 1);\n    assert_eq!(candidate(\"zzzzzz\", 2), 0);\n    assert_eq!(candidate(\"abcdabc\", 2), 2);\n    assert_eq!(candidate(\"abcdefg\", 2), 3);\n    assert_eq!(candidate(\"abcdcba\", 3), 2);\n    assert_eq!(candidate(\"abcdefg\", 3), 3);\n    assert_eq!(candidate(\"abcabcabc\", 3), 3);\n    assert_eq!(candidate(\"aaaa\", 2), 0);\n    assert_eq!(candidate(\"abcdabc\", 3), 3);\n    assert_eq!(candidate(\"abcabc\", 3), 3);\n    assert_eq!(candidate(\"abcdef\", 2), 2);\n    assert_eq!(candidate(\"abccba\", 3), 2);\n    assert_eq!(candidate(\"ababab\", 3), 3);\n    assert_eq!(candidate(\"qwertyuiopqwertyuiopqwertyuiop\", 6), 5);\n    assert_eq!(candidate(\"aabbccddeeaabbccddeeaabbccdd\", 6), 2);\n    assert_eq!(candidate(\"abcdefedcbafedcba\", 3), 1);\n    assert_eq!(candidate(\"abcdabcdabcdabcdabcdabcd\", 5), 2);\n    assert_eq!(candidate(\"abcdabcdabcdabcd\", 4), 2);\n    assert_eq!(candidate(\"xyzxyzxyzxyz\", 4), 3);\n    assert_eq!(candidate(\"xyzxyzxyzxyzxyz\", 3), 1);\n    assert_eq!(candidate(\"abcdefghijklmnopqrstuvwxyzyxwvutsrqponmlkjihgfedcba\", 5), 4);\n    assert_eq!(candidate(\"abcdeabcdeabcde\", 4), 5);\n    assert_eq!(candidate(\"level\", 1), 0);\n    assert_eq!(candidate(\"banana\", 2), 1);\n    assert_eq!(candidate(\"aabbaabbaabbaabb\", 4), 0);\n    assert_eq!(candidate(\"aabbccddeeffgghhiijjkkllmmlloo\", 5), 6);\n    assert_eq!(candidate(\"abccbaabccbaabccba\", 4), 2);\n    assert_eq!(candidate(\"abracadabraabracadabra\", 4), 5);\n    assert_eq!(candidate(\"redder\", 2), 2);\n    assert_eq!(candidate(\"repaper\", 2), 3);\n    assert_eq!(candidate(\"abababaabab\", 3), 0);\n    assert_eq!(candidate(\"abcdefghij\", 2), 4);\n    assert_eq!(candidate(\"abcdefabcdef\", 4), 4);\n    assert_eq!(candidate(\"abcdefghiabcdefghiabcdefghi\", 4), 3);\n    assert_eq!(candidate(\"xyzxyzxyzxyzxyz\", 5), 4);\n    assert_eq!(candidate(\"aabbaaabbbaa\", 3), 1);\n    assert_eq!(candidate(\"aaabbbcccdddaaa\", 4), 2);\n    assert_eq!(candidate(\"abcdefgabcdefg\", 4), 5);\n    assert_eq!(candidate(\"xyxzyxzyxzyxzyxzyx\", 4), 1);\n    assert_eq!(candidate(\"xyxyxyxyxyxyxy\", 3), 0);\n    assert_eq!(candidate(\"aaaaabbbbbcccc\", 3), 0);\n    assert_eq!(candidate(\"ababababababab\", 3), 0);\n    assert_eq!(candidate(\"abcdefghabcdefghabcdefgh\", 6), 5);\n    assert_eq!(candidate(\"mississippi\", 2), 2);\n    assert_eq!(candidate(\"abccbaabccba\", 2), 0);\n    assert_eq!(candidate(\"abcdefabcdefabcdef\", 6), 6);\n    assert_eq!(candidate(\"abcdefggfedcba\", 2), 5);\n    assert_eq!(candidate(\"noonnoonnoon\", 3), 0);\n    assert_eq!(candidate(\"aabbccddeeffgghhiijj\", 5), 4);\n    assert_eq!(candidate(\"aabbccddeeffgghhiijjkkllmmnnoopp\", 6), 8);\n    assert_eq!(candidate(\"aaabaaabaaabaaab\", 5), 1);\n    assert_eq!(candidate(\"aabbccddeeff\", 3), 4);\n    assert_eq!(candidate(\"abcdefgabcdefg\", 2), 5);\n    assert_eq!(candidate(\"racecar\", 3), 2);\n    assert_eq!(candidate(\"abababab\", 3), 1);\n    assert_eq!(candidate(\"ababababababab\", 5), 1);\n    assert_eq!(candidate(\"abcabcabcabcabcabc\", 6), 5);\n    assert_eq!(candidate(\"mnopqrnopqr\", 3), 4);\n    assert_eq!(candidate(\"deified\", 1), 0);\n    assert_eq!(candidate(\"abcdefghijabcdefghijabcdefghij\", 5), 4);\n    assert_eq!(candidate(\"abcabcabcabcabcabcabc\", 7), 6);\n    assert_eq!(candidate(\"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", 7), 0);\n    assert_eq!(candidate(\"abcdefghij\", 5), 5);\n    assert_eq!(candidate(\"noon\", 1), 0);\n    assert_eq!(candidate(\"aaaaaaaaaa\", 5), 0);\n    assert_eq!(candidate(\"abcdefghijklnmopqrstuvwxyz\", 5), 9);\n    assert_eq!(candidate(\"abcdefghij\", 3), 4);\n    assert_eq!(candidate(\"racecar\", 2), 3);\n    assert_eq!(candidate(\"rotor\", 1), 0);\n    assert_eq!(candidate(\"abracadabraabracadabra\", 5), 4);\n    assert_eq!(candidate(\"xyzyxzyxzyx\", 4), 3);\n    assert_eq!(candidate(\"aaaaabbbbccccdddd\", 4), 0);\n    assert_eq!(candidate(\"aaabbbcccdddeeefffggg\", 5), 3);\n    assert_eq!(candidate(\"aaaabbbbccccdddd\", 4), 0);\n    assert_eq!(candidate(\"abcabcabcabcabcabcabcabc\", 6), 3);\n    assert_eq!(candidate(\"ababababab\", 3), 0);\n    assert_eq!(candidate(\"aabaaabaaabaaa\", 4), 1);\n    assert_eq!(candidate(\"aabbccddeeffgg\", 4), 4);\n    assert_eq!(candidate(\"aaaaabbbbcccc\", 3), 0);\n    assert_eq!(candidate(\"mnopqrsmnopqrsmno\", 3), 6);\n    assert_eq!(candidate(\"aabbccddeeffgg\", 6), 2);\n    assert_eq!(candidate(\"zzzaaaabbbccc\", 4), 0);\n    assert_eq!(candidate(\"abcdefghijklmnopqrstuvwxyz\", 10), 10);\n    assert_eq!(candidate(\"abababababababab\", 4), 0);\n    assert_eq!(candidate(\"mnopqrspqrspqr\", 3), 2);\n    assert_eq!(candidate(\"abacabadaba\", 3), 1);\n    assert_eq!(candidate(\"mississippi\", 3), 1);\n    assert_eq!(candidate(\"abacabadabacaba\", 5), 2);\n    assert_eq!(candidate(\"abacabadabacaba\", 3), 0);\n    assert_eq!(candidate(\"zzzzzyzzzzzz\", 5), 0);\n    assert_eq!(candidate(\"xyxyxyxyxyxy\", 6), 6);\n    assert_eq!(candidate(\"abcdeedcba\", 2), 4);\n    assert_eq!(candidate(\"abcdabcdabcdabcdabcd\", 4), 1);\n    assert_eq!(candidate(\"abcdefedcba\", 5), 4);\n    assert_eq!(candidate(\"aaaaaaaaaaaaaaaaaaaa\", 5), 0);\n    assert_eq!(candidate(\"zzzzzyzzzzz\", 2), 0);\n    assert_eq!(candidate(\"abcabcabcabcabc\", 5), 4);\n    assert_eq!(candidate(\"abcdefabcdef\", 2), 1);\n    assert_eq!(candidate(\"abcdefabcdefabcdefabcdef\", 5), 3);\n    assert_eq!(candidate(\"anana\", 1), 0);\n    assert_eq!(candidate(\"abcdefghijabcdefghij\", 5), 7);\n    assert_eq!(candidate(\"aaaabbbb\", 2), 0);\n    assert_eq!(candidate(\"xyzyzyzyz\", 4), 3);\n    assert_eq!(candidate(\"mnopqrstuvwx\", 4), 4);\n    assert_eq!(candidate(\"zzzzzzyyyzzzzzyyy\", 2), 0);\n    assert_eq!(candidate(\"reviled\", 2), 3);\n    assert_eq!(candidate(\"aaabbbbccccaaa\", 3), 3);\n    assert_eq!(candidate(\"abacabadabacaba\", 4), 1);\n    assert_eq!(candidate(\"aabbccddeeff\", 4), 2);\n    assert_eq!(candidate(\"xyzxyzxyzxyzxyz\", 4), 3);\n}"
+  },
+  "test_cases": [
+    {
+      "input": "s = \"aabbcc\", k = 3",
+      "output": "0"
+    },
+    {
+      "input": "s = \"abccba\", k = 2",
+      "output": "2"
+    },
+    {
+      "input": "s = \"aabbccdd\", k = 4",
+      "output": "0"
+    },
+    {
+      "input": "s = \"abcabcabc\", k = 4",
+      "output": "4"
+    },
+    {
+      "input": "s = \"aaaaaa\", k = 2",
+      "output": "0"
+    },
+    {
+      "input": "s = \"abcabcabcabc\", k = 4",
+      "output": "3"
+    },
+    {
+      "input": "s = \"abccba\", k = 1",
+      "output": "0"
+    },
+    {
+      "input": "s = \"aabbaa\", k = 3",
+      "output": "0"
+    },
+    {
+      "input": "s = \"racecar\", k = 1",
+      "output": "0"
+    },
+    {
+      "input": "s = \"abcac\", k = 2",
+      "output": "1"
+    },
+    {
+      "input": "s = \"zzzzzz\", k = 2",
+      "output": "0"
+    },
+    {
+      "input": "s = \"abcdabc\", k = 2",
+      "output": "2"
+    },
+    {
+      "input": "s = \"abcdefg\", k = 2",
+      "output": "3"
+    },
+    {
+      "input": "s = \"abcdcba\", k = 3",
+      "output": "2"
+    },
+    {
+      "input": "s = \"abcdefg\", k = 3",
+      "output": "3"
+    },
+    {
+      "input": "s = \"abcabcabc\", k = 3",
+      "output": "3"
+    },
+    {
+      "input": "s = \"aaaa\", k = 2",
+      "output": "0"
+    },
+    {
+      "input": "s = \"abcdabc\", k = 3",
+      "output": "3"
+    },
+    {
+      "input": "s = \"abcabc\", k = 3",
+      "output": "3"
+    },
+    {
+      "input": "s = \"abcdef\", k = 2",
+      "output": "2"
+    },
+    {
+      "input": "s = \"abccba\", k = 3",
+      "output": "2"
+    },
+    {
+      "input": "s = \"ababab\", k = 3",
+      "output": "3"
+    },
+    {
+      "input": "s = \"qwertyuiopqwertyuiopqwertyuiop\", k = 6",
+      "output": "5"
+    },
+    {
+      "input": "s = \"aabbccddeeaabbccddeeaabbccdd\", k = 6",
+      "output": "2"
+    },
+    {
+      "input": "s = \"abcdefedcbafedcba\", k = 3",
+      "output": "1"
+    },
+    {
+      "input": "s = \"abcdabcdabcdabcdabcdabcd\", k = 5",
+      "output": "2"
+    },
+    {
+      "input": "s = \"abcdabcdabcdabcd\", k = 4",
+      "output": "2"
+    },
+    {
+      "input": "s = \"xyzxyzxyzxyz\", k = 4",
+      "output": "3"
+    },
+    {
+      "input": "s = \"xyzxyzxyzxyzxyz\", k = 3",
+      "output": "1"
+    },
+    {
+      "input": "s = \"abcdefghijklmnopqrstuvwxyzyxwvutsrqponmlkjihgfedcba\", k = 5",
+      "output": "4"
+    },
+    {
+      "input": "s = \"abcdeabcdeabcde\", k = 4",
+      "output": "5"
+    },
+    {
+      "input": "s = \"level\", k = 1",
+      "output": "0"
+    },
+    {
+      "input": "s = \"banana\", k = 2",
+      "output": "1"
+    },
+    {
+      "input": "s = \"aabbaabbaabbaabb\", k = 4",
+      "output": "0"
+    },
+    {
+      "input": "s = \"aabbccddeeffgghhiijjkkllmmlloo\", k = 5",
+      "output": "6"
+    },
+    {
+      "input": "s = \"abccbaabccbaabccba\", k = 4",
+      "output": "2"
+    },
+    {
+      "input": "s = \"abracadabraabracadabra\", k = 4",
+      "output": "5"
+    },
+    {
+      "input": "s = \"redder\", k = 2",
+      "output": "2"
+    },
+    {
+      "input": "s = \"repaper\", k = 2",
+      "output": "3"
+    },
+    {
+      "input": "s = \"abababaabab\", k = 3",
+      "output": "0"
+    },
+    {
+      "input": "s = \"abcdefghij\", k = 2",
+      "output": "4"
+    },
+    {
+      "input": "s = \"abcdefabcdef\", k = 4",
+      "output": "4"
+    },
+    {
+      "input": "s = \"abcdefghiabcdefghiabcdefghi\", k = 4",
+      "output": "3"
+    },
+    {
+      "input": "s = \"xyzxyzxyzxyzxyz\", k = 5",
+      "output": "4"
+    },
+    {
+      "input": "s = \"aabbaaabbbaa\", k = 3",
+      "output": "1"
+    },
+    {
+      "input": "s = \"aaabbbcccdddaaa\", k = 4",
+      "output": "2"
+    },
+    {
+      "input": "s = \"abcdefgabcdefg\", k = 4",
+      "output": "5"
+    },
+    {
+      "input": "s = \"xyxzyxzyxzyxzyxzyx\", k = 4",
+      "output": "1"
+    },
+    {
+      "input": "s = \"xyxyxyxyxyxyxy\", k = 3",
+      "output": "0"
+    },
+    {
+      "input": "s = \"aaaaabbbbbcccc\", k = 3",
+      "output": "0"
+    },
+    {
+      "input": "s = \"ababababababab\", k = 3",
+      "output": "0"
+    },
+    {
+      "input": "s = \"abcdefghabcdefghabcdefgh\", k = 6",
+      "output": "5"
+    },
+    {
+      "input": "s = \"mississippi\", k = 2",
+      "output": "2"
+    },
+    {
+      "input": "s = \"abccbaabccba\", k = 2",
+      "output": "0"
+    },
+    {
+      "input": "s = \"abcdefabcdefabcdef\", k = 6",
+      "output": "6"
+    },
+    {
+      "input": "s = \"abcdefggfedcba\", k = 2",
+      "output": "5"
+    },
+    {
+      "input": "s = \"noonnoonnoon\", k = 3",
+      "output": "0"
+    },
+    {
+      "input": "s = \"aabbccddeeffgghhiijj\", k = 5",
+      "output": "4"
+    },
+    {
+      "input": "s = \"aabbccddeeffgghhiijjkkllmmnnoopp\", k = 6",
+      "output": "8"
+    },
+    {
+      "input": "s = \"aaabaaabaaabaaab\", k = 5",
+      "output": "1"
+    },
+    {
+      "input": "s = \"aabbccddeeff\", k = 3",
+      "output": "4"
+    },
+    {
+      "input": "s = \"abcdefgabcdefg\", k = 2",
+      "output": "5"
+    },
+    {
+      "input": "s = \"racecar\", k = 3",
+      "output": "2"
+    },
+    {
+      "input": "s = \"abababab\", k = 3",
+      "output": "1"
+    },
+    {
+      "input": "s = \"ababababababab\", k = 5",
+      "output": "1"
+    },
+    {
+      "input": "s = \"abcabcabcabcabcabc\", k = 6",
+      "output": "5"
+    },
+    {
+      "input": "s = \"mnopqrnopqr\", k = 3",
+      "output": "4"
+    },
+    {
+      "input": "s = \"deified\", k = 1",
+      "output": "0"
+    },
+    {
+      "input": "s = \"abcdefghijabcdefghijabcdefghij\", k = 5",
+      "output": "4"
+    },
+    {
+      "input": "s = \"abcabcabcabcabcabcabc\", k = 7",
+      "output": "6"
+    },
+    {
+      "input": "s = \"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", k = 7",
+      "output": "0"
+    },
+    {
+      "input": "s = \"abcdefghij\", k = 5",
+      "output": "5"
+    },
+    {
+      "input": "s = \"noon\", k = 1",
+      "output": "0"
+    },
+    {
+      "input": "s = \"aaaaaaaaaa\", k = 5",
+      "output": "0"
+    },
+    {
+      "input": "s = \"abcdefghijklnmopqrstuvwxyz\", k = 5",
+      "output": "9"
+    },
+    {
+      "input": "s = \"abcdefghij\", k = 3",
+      "output": "4"
+    },
+    {
+      "input": "s = \"racecar\", k = 2",
+      "output": "3"
+    },
+    {
+      "input": "s = \"rotor\", k = 1",
+      "output": "0"
+    },
+    {
+      "input": "s = \"abracadabraabracadabra\", k = 5",
+      "output": "4"
+    },
+    {
+      "input": "s = \"xyzyxzyxzyx\", k = 4",
+      "output": "3"
+    },
+    {
+      "input": "s = \"aaaaabbbbccccdddd\", k = 4",
+      "output": "0"
+    },
+    {
+      "input": "s = \"aaabbbcccdddeeefffggg\", k = 5",
+      "output": "3"
+    },
+    {
+      "input": "s = \"aaaabbbbccccdddd\", k = 4",
+      "output": "0"
+    },
+    {
+      "input": "s = \"abcabcabcabcabcabcabcabc\", k = 6",
+      "output": "3"
+    },
+    {
+      "input": "s = \"ababababab\", k = 3",
+      "output": "0"
+    },
+    {
+      "input": "s = \"aabaaabaaabaaa\", k = 4",
+      "output": "1"
+    },
+    {
+      "input": "s = \"aabbccddeeffgg\", k = 4",
+      "output": "4"
+    },
+    {
+      "input": "s = \"aaaaabbbbcccc\", k = 3",
+      "output": "0"
+    },
+    {
+      "input": "s = \"mnopqrsmnopqrsmno\", k = 3",
+      "output": "6"
+    },
+    {
+      "input": "s = \"aabbccddeeffgg\", k = 6",
+      "output": "2"
+    },
+    {
+      "input": "s = \"zzzaaaabbbccc\", k = 4",
+      "output": "0"
+    },
+    {
+      "input": "s = \"abcdefghijklmnopqrstuvwxyz\", k = 10",
+      "output": "10"
+    },
+    {
+      "input": "s = \"abababababababab\", k = 4",
+      "output": "0"
+    },
+    {
+      "input": "s = \"mnopqrspqrspqr\", k = 3",
+      "output": "2"
+    },
+    {
+      "input": "s = \"abacabadaba\", k = 3",
+      "output": "1"
+    },
+    {
+      "input": "s = \"mississippi\", k = 3",
+      "output": "1"
+    },
+    {
+      "input": "s = \"abacabadabacaba\", k = 5",
+      "output": "2"
+    },
+    {
+      "input": "s = \"abacabadabacaba\", k = 3",
+      "output": "0"
+    },
+    {
+      "input": "s = \"zzzzzyzzzzzz\", k = 5",
+      "output": "0"
+    },
+    {
+      "input": "s = \"xyxyxyxyxyxy\", k = 6",
+      "output": "6"
+    },
+    {
+      "input": "s = \"abcdeedcba\", k = 2",
+      "output": "4"
+    },
+    {
+      "input": "s = \"abcdabcdabcdabcdabcd\", k = 4",
+      "output": "1"
+    },
+    {
+      "input": "s = \"abcdefedcba\", k = 5",
+      "output": "4"
+    },
+    {
+      "input": "s = \"aaaaaaaaaaaaaaaaaaaa\", k = 5",
+      "output": "0"
+    },
+    {
+      "input": "s = \"zzzzzyzzzzz\", k = 2",
+      "output": "0"
+    },
+    {
+      "input": "s = \"abcabcabcabcabc\", k = 5",
+      "output": "4"
+    },
+    {
+      "input": "s = \"abcdefabcdef\", k = 2",
+      "output": "1"
+    },
+    {
+      "input": "s = \"abcdefabcdefabcdefabcdef\", k = 5",
+      "output": "3"
+    },
+    {
+      "input": "s = \"anana\", k = 1",
+      "output": "0"
+    },
+    {
+      "input": "s = \"abcdefghijabcdefghij\", k = 5",
+      "output": "7"
+    },
+    {
+      "input": "s = \"aaaabbbb\", k = 2",
+      "output": "0"
+    },
+    {
+      "input": "s = \"xyzyzyzyz\", k = 4",
+      "output": "3"
+    },
+    {
+      "input": "s = \"mnopqrstuvwx\", k = 4",
+      "output": "4"
+    },
+    {
+      "input": "s = \"zzzzzzyyyzzzzzyyy\", k = 2",
+      "output": "0"
+    },
+    {
+      "input": "s = \"reviled\", k = 2",
+      "output": "3"
+    },
+    {
+      "input": "s = \"aaabbbbccccaaa\", k = 3",
+      "output": "3"
+    },
+    {
+      "input": "s = \"abacabadabacaba\", k = 4",
+      "output": "1"
+    },
+    {
+      "input": "s = \"aabbccddeeff\", k = 4",
+      "output": "2"
+    },
+    {
+      "input": "s = \"xyzxyzxyzxyzxyz\", k = 4",
+      "output": "3"
+    }
+  ],
+  "types": {
+    "python3": {
+      "input": [
+        {
+          "s": "str"
+        },
+        {
+          "k": "int"
+        }
+      ],
+      "output": "int"
+    },
+    "cpp": {
+      "input": [
+        {
+          "s": "string"
+        },
+        {
+          "k": "int"
+        }
+      ],
+      "output": "int"
+    },
+    "java": {
+      "input": [
+        {
+          "s": "String"
+        },
+        {
+          "k": "int"
+        }
+      ],
+      "output": "int"
+    },
+    "javascript": {
+      "input": [
+        {
+          "s": "string"
+        },
+        {
+          "k": "number"
+        }
+      ],
+      "output": "number"
+    },
+    "typescript": {
+      "input": [
+        {
+          "s": "string"
+        },
+        {
+          "k": "number"
+        }
+      ],
+      "output": "number"
+    },
+    "golang": {
+      "input": [
+        {
+          "s": "string"
+        },
+        {
+          "k": "int"
+        }
+      ],
+      "output": "int"
+    },
+    "rust": {
+      "input": [
+        {
+          "s": "String"
+        },
+        {
+          "k": "i32"
+        }
+      ],
+      "output": "i32"
+    }
+  },
+  "tags": [
+    "two-pointers",
+    "string",
+    "dynamic-programming"
+  ]
+}

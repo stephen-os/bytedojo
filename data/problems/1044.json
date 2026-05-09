@@ -1,0 +1,590 @@
+{
+  "id": 1044,
+  "title": "Longest Duplicate Substring",
+  "slug": "longest-duplicate-substring",
+  "difficulty": "Hard",
+  "description": "Given a string s, consider all duplicated substrings: (contiguous) substrings of s that occur 2 or more times. The occurrences may overlap.\nReturn any duplicated substring that has the longest possible length. If s does not have a duplicated substring, the answer is \"\".\nExample 1:\nExample 2:\nConstraints:",
+  "examples": [
+    {
+      "example_num": 1,
+      "example_text": "Input: s = \"banana\"\nOutput: \"ana\"",
+      "images": []
+    },
+    {
+      "example_num": 2,
+      "example_text": "Input: s = \"abcd\"\nOutput: \"\"",
+      "images": []
+    }
+  ],
+  "constraints": [
+    "2 <= s.length <= 3 * 104",
+    "s consists of lowercase English letters."
+  ],
+  "hints": [
+    "Binary search for the length of the answer.  (If there's an answer of length 10, then there are answers of length 9, 8, 7, ...)",
+    "To check whether an answer of length K exists, we can use Rabin-Karp 's algorithm."
+  ],
+  "code_snippets": {
+    "cpp": "class Solution {\npublic:\n    string longestDupSubstring(string s) {\n        \n    }\n};",
+    "java": "class Solution {\n    public String longestDupSubstring(String s) {\n        \n    }\n}",
+    "python3": "class Solution:\n    def longestDupSubstring(self, s: str) -> str:\n        ",
+    "javascript": "/**\n * @param {string} s\n * @return {string}\n */\nvar longestDupSubstring = function(s) {\n    \n};",
+    "typescript": "function longestDupSubstring(s: string): string {\n    \n};",
+    "golang": "func longestDupSubstring(s string) string {\n    \n}",
+    "rust": "impl Solution {\n    pub fn longest_dup_substring(s: String) -> String {\n        \n    }\n}"
+  },
+  "entry_points": {
+    "python3": "Solution().longestDupSubstring",
+    "cpp": "Solution().longestDupSubstring",
+    "java": "new Solution().longestDupSubstring",
+    "javascript": "longestDupSubstring",
+    "typescript": "longestDupSubstring",
+    "golang": "longestDupSubstring",
+    "rust": "Solution::longest_dup_substring"
+  },
+  "test_snippets": {
+    "python3": "def check(candidate):\n    assert candidate(s = \"abcabcabc\") == abcabc\n    assert candidate(s = \"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\") == zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\n    assert candidate(s = \"mississippi\") == issi\n    assert candidate(s = \"banana\") == ana\n    assert candidate(s = \"bananaaa\") == ana\n    assert candidate(s = \"abcdefgh\") == None\n    assert candidate(s = \"abcd\") == None\n    assert candidate(s = \"aaaaa\") == aaaa\n    assert candidate(s = \"aabb\") == a\n    assert candidate(s = \"aaaa\") == aaa\n    assert candidate(s = \"abab\") == ab\n    assert candidate(s = \"longestrepeatingsubstringlongestrepeatingsubstring\") == longestrepeatingsubstring\n    assert candidate(s = \"abcdefghijkabcdefgh\") == abcdefgh\n    assert candidate(s = \"abcdefghijkabcdefghijkabcdefghijkabcdefghijk\") == abcdefghijkabcdefghijkabcdefghijk\n    assert candidate(s = \"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\") == aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n    assert candidate(s = \"norepeats\") == e\n    assert candidate(s = \"abcdeabcdeabcdeabcdeabcde\") == abcdeabcdeabcdeabcde\n    assert candidate(s = \"abcabcabcabcabcabcabcd\") == abcabcabcabcabcabc\n    assert candidate(s = \"abracadabra\") == abra\n    assert candidate(s = \"abcdefabcdefabcdef\") == abcdefabcdef\n    assert candidate(s = \"abcabcabcabc\") == abcabcabc\n    assert candidate(s = \"aaaaaaaaaabbbbbbbbbccccc\") == aaaaaaaaa\n    assert candidate(s = \"abcdefghabcdefghabcdefghabcdefgh\") == abcdefghabcdefghabcdefgh\n    assert candidate(s = \"aaaaaabbccccaaa\") == aaaaa\n    assert candidate(s = \"abcdefghigklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz\") == klmnopqrstuvwxyz\n    assert candidate(s = \"thisisaverylongstringwithrepeatedsubstringsubstring\") == substring\n    assert candidate(s = \"abcdefghijabcdefghijabcdefghij\") == abcdefghijabcdefghij\n    assert candidate(s = \"hellohellohello\") == hellohello\n    assert candidate(s = \"abababababababababababababababab\") == ababababababababababababababab\n    assert candidate(s = \"abcdefabcdefabcdefabcdefabcdefabcdefabcdefabcdefabcdef\") == abcdefabcdefabcdefabcdefabcdefabcdefabcdefabcdef\n    assert candidate(s = \"abcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabc\") == abcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabc\n    assert candidate(s = \"abcabcabcabcabcabcabcabcabcabcabcabcabc\") == abcabcabcabcabcabcabcabcabcabcabcabc\n    assert candidate(s = \"anvnvnvnvnvnvnvnvvnvnvnvnvnvnvnvnvnvn\") == vnvnvnvnvnvnvnvnvn\n    assert candidate(s = \"abcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabc\") == abcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabc\n    assert candidate(s = \"bananaananabanana\") == banana\n    assert candidate(s = \"abcabcabcabcabcabcabc\") == abcabcabcabcabcabc\n    assert candidate(s = \"bananaapplebananabananaapplebananabananaapple\") == bananaapplebananabananaapple\n    assert candidate(s = \"abcabcabcabcd\") == abcabcabc\n    assert candidate(s = \"mississippimississippimississippi\") == mississippimississippi\n    assert candidate(s = \"abcdeabcdeabcdeabcdeabcdeabcdeabcdeabcdeabcde\") == abcdeabcdeabcdeabcdeabcdeabcdeabcdeabcde\n    assert candidate(s = \"qwertyuiopqwertyuiop\") == qwertyuiop\n    assert candidate(s = \"abcabcabcabcabcabcabcabcabcabc\") == abcabcabcabcabcabcabcabcabc\n    assert candidate(s = \"abcdeabcdfabcde\") == abcde\n    assert candidate(s = \"abracadabraabracadabraabracadabraabracadabraabracadabra\") == abracadabraabracadabraabracadabraabracadabra\n    assert candidate(s = \"abracadabraabracadabraabracadabra\") == abracadabraabracadabra\n    assert candidate(s = \"zabacabadabacaba\") == abacaba\n    assert candidate(s = \"abcdefghijklmnopqrstuvwxyzzyxwvutsrqponmlkjihgfedcba\") == z\n    assert candidate(s = \"aaaaaa\") == aaaaa\n    assert candidate(s = \"xyzxyzxyzxyzxyzxyzxyzxyzxyzxyz\") == xyzxyzxyzxyzxyzxyzxyzxyzxyz\n    assert candidate(s = \"abcabcabcabcabcabc\") == abcabcabcabcabc\n    assert candidate(s = \"abcdefghijkabcdefghijk\") == abcdefghijk\n    assert candidate(s = \"12345678901234567890\") == 1234567890\n    assert candidate(s = \"aaaaaaaaaaaaaaaaaa\") == aaaaaaaaaaaaaaaaa\n    assert candidate(s = \"bananaananabananana\") == banana\n    assert candidate(s = \"pneumonoultramicroscopicsilicovolcanoconiosispneumonoultramicroscopicsilicovolcanoconiosispneumonoultramicroscopicsilicovolcanoconiosispneumonoultramicroscopicsilicovolcanoconiosis\") == pneumonoultramicroscopicsilicovolcanoconiosispneumonoultramicroscopicsilicovolcanoconiosispneumonoultramicroscopicsilicovolcanoconiosis\n    assert candidate(s = \"thisisaverylongstringwithsomerepeatedsubstringsubstring\") == substring\n    assert candidate(s = \"abcdefghijkabcdefghijkabcdefghijk\") == abcdefghijkabcdefghijk\n    assert candidate(s = \"pneumonoultramicroscopicsilicovolcanoconiosispneumonoultramicroscopicsilicovolcanoconiosis\") == pneumonoultramicroscopicsilicovolcanoconiosis\n    assert candidate(s = \"abcdabcdabcdabcd\") == abcdabcdabcd\n    assert candidate(s = \"bananaaaanaaanana\") == anaaa\n    assert candidate(s = \"aaaaaaa\") == aaaaaa\n    assert candidate(s = \"abababababababababababababab\") == ababababababababababababab\n    assert candidate(s = \"asdfghjklasdfghjklasdfghjkl\") == asdfghjklasdfghjkl\n    assert candidate(s = \"racecaracecaracecar\") == racecaracecar\n    assert candidate(s = \"abcdefghijk\") == None\n    assert candidate(s = \"ababababababababababab\") == abababababababababab\n    assert candidate(s = \"xyzxyzxyzxyzxyzxyzxyzxyzxyz\") == xyzxyzxyzxyzxyzxyzxyzxyz\n    assert candidate(s = \"abababababababababab\") == ababababababababab\n    assert candidate(s = \"qwertyuiopqwertyuiopqwertyuiopqwertyuiop\") == qwertyuiopqwertyuiopqwertyuiop\n    assert candidate(s = \"bananaananabanananabanana\") == ananabanana\n    assert candidate(s = \"abacabadabacaba\") == abacaba\n    assert candidate(s = \"zxyzyxyzxyzyxyzxyzyxzyzy\") == zxyzyxyzxyzyx\n    assert candidate(s = \"bananaananab\") == anana\n    assert candidate(s = \"ananananananananan\") == anananananananan\n    assert candidate(s = \"xyzxyzxyzxyzxyzxyz\") == xyzxyzxyzxyzxyz\n    assert candidate(s = \"abcdefghijkabcdefghijabcdefghij\") == abcdefghij\n    assert candidate(s = \"zzzzzzzzzzzzzzzz\") == zzzzzzzzzzzzzzz\n    assert candidate(s = \"thisisaverylongstringwithsomerepeatingpatterns\") == ing\n    assert candidate(s = \"xyxyxyxyxyxyxyxyxyxyxyxy\") == xyxyxyxyxyxyxyxyxyxyxy\n    assert candidate(s = \"xyzabcxyzabcxyzabcxyzabcxyz\") == xyzabcxyzabcxyzabcxyz\n    assert candidate(s = \"supercalifragilisticexpialidocioussupercalifragilisticexpialidocious\") == supercalifragilisticexpialidocious\n    assert candidate(s = \"aaaaabbbbbaaaaabbbb\") == aaaaabbbb\n    assert candidate(s = \"bananaapplebananabananaapple\") == bananaapple\n    assert candidate(s = \"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\") == zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\n    assert candidate(s = \"longestsubstringissubstring\") == substring\n    assert candidate(s = \"abcdefgabcdefg\") == abcdefg\n    assert candidate(s = \"abcdeabcdeabcdeabcde\") == abcdeabcdeabcde\n    assert candidate(s = \"thisisaverylongstringwitharepeatedsubstringthisisaverylongstringwitharepeatedsubstring\") == thisisaverylongstringwitharepeatedsubstring\n    assert candidate(s = \"abracadabraabracadabra\") == abracadabra\n    assert candidate(s = \"abcdabcdabcdabcdabcdabcd\") == abcdabcdabcdabcdabcd\n    assert candidate(s = \"xyzxyzxyzxyzxyz\") == xyzxyzxyzxyz\n    assert candidate(s = \"bananaanananab\") == anana\n    assert candidate(s = \"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\") == a\n    assert candidate(s = \"longestsubstrlongestsubstrlongestsubstr\") == longestsubstrlongestsubstr\n    assert candidate(s = \"anananananananananananananananananan\") == ananananananananananananananananan\n    assert candidate(s = \"aabbccddeeffaabbccddeeff\") == aabbccddeeff\n    assert candidate(s = \"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\") == zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\n    assert candidate(s = \"noonnoonnoon\") == noonnoon\n    assert candidate(s = \"abcdabcdabcdabcdabcdabcdabcdabcdabcd\") == abcdabcdabcdabcdabcdabcdabcdabcd\n    assert candidate(s = \"abcdefghabcdefghabcdefghabcdefghabcdefghabcdefgh\") == abcdefghabcdefghabcdefghabcdefghabcdefgh\n    assert candidate(s = \"anananananananananananananananananananananananananananananananananananananananananananan\") == ananananananananananananananananananananananananananananananananananananananananananan\n    assert candidate(s = \"abcdeabcdeabcde\") == abcdeabcde\n    assert candidate(s = \"mnopqrsmnopqrsmnopqrsmnopqrs\") == mnopqrsmnopqrsmnopqrs\n    assert candidate(s = \"abcdefgabcdefgabcdefg\") == abcdefgabcdefg\n    assert candidate(s = \"racecar\") == c\n    assert candidate(s = \"abcdefghijabcdefghij\") == abcdefghij\n    assert candidate(s = \"ababababababababababababababababababababababab\") == abababababababababababababababababababababab\n    assert candidate(s = \"abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz\") == abcdefghijklmnopqrstuvwxyz\n    assert candidate(s = \"abcdefghabcdefgh\") == abcdefgh\n    assert candidate(s = \"pneumonoultramicroscopicsilicovolcanoconiosis\") == ic\n    assert candidate(s = \"xylophonepianoguitarxylophonepianoguitarxylophonepianoguitar\") == xylophonepianoguitarxylophonepianoguitar\n    assert candidate(s = \"aaaaabaaaaabaaaaab\") == aaaaabaaaaab\n    assert candidate(s = \"mississippimississippimississippimississippimississippimississippi\") == mississippimississippimississippimississippimississippi\n    assert candidate(s = \"hellohellohellohello\") == hellohellohello\n    assert candidate(s = \"zxcvbnmzxcvbnmzxcvbnm\") == zxcvbnmzxcvbnm\n    assert candidate(s = \"aaaaaaaaaaaaaaaaaaaa\") == aaaaaaaaaaaaaaaaaaa\n    assert candidate(s = \"aaaaaaaaaaaaaaaaaaaaaaaa\") == aaaaaaaaaaaaaaaaaaaaaaa",
+    "cpp": "void check(Solution& solution) {\n    assert(solution.longestDupSubstring(\"abcabcabc\") == vector<int>abcabc);\n    assert(solution.longestDupSubstring(\"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\") == vector<int>zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz);\n    assert(solution.longestDupSubstring(\"mississippi\") == vector<int>issi);\n    assert(solution.longestDupSubstring(\"banana\") == vector<int>ana);\n    assert(solution.longestDupSubstring(\"bananaaa\") == vector<int>ana);\n    assert(solution.longestDupSubstring(\"abcdefgh\") == vector<int>nullptr);\n    assert(solution.longestDupSubstring(\"abcd\") == vector<int>nullptr);\n    assert(solution.longestDupSubstring(\"aaaaa\") == vector<int>aaaa);\n    assert(solution.longestDupSubstring(\"aabb\") == vector<int>a);\n    assert(solution.longestDupSubstring(\"aaaa\") == vector<int>aaa);\n    assert(solution.longestDupSubstring(\"abab\") == vector<int>ab);\n    assert(solution.longestDupSubstring(\"longestrepeatingsubstringlongestrepeatingsubstring\") == vector<int>longestrepeatingsubstring);\n    assert(solution.longestDupSubstring(\"abcdefghijkabcdefgh\") == vector<int>abcdefgh);\n    assert(solution.longestDupSubstring(\"abcdefghijkabcdefghijkabcdefghijkabcdefghijk\") == vector<int>abcdefghijkabcdefghijkabcdefghijk);\n    assert(solution.longestDupSubstring(\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\") == vector<int>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa);\n    assert(solution.longestDupSubstring(\"norepeats\") == vector<int>e);\n    assert(solution.longestDupSubstring(\"abcdeabcdeabcdeabcdeabcde\") == vector<int>abcdeabcdeabcdeabcde);\n    assert(solution.longestDupSubstring(\"abcabcabcabcabcabcabcd\") == vector<int>abcabcabcabcabcabc);\n    assert(solution.longestDupSubstring(\"abracadabra\") == vector<int>abra);\n    assert(solution.longestDupSubstring(\"abcdefabcdefabcdef\") == vector<int>abcdefabcdef);\n    assert(solution.longestDupSubstring(\"abcabcabcabc\") == vector<int>abcabcabc);\n    assert(solution.longestDupSubstring(\"aaaaaaaaaabbbbbbbbbccccc\") == vector<int>aaaaaaaaa);\n    assert(solution.longestDupSubstring(\"abcdefghabcdefghabcdefghabcdefgh\") == vector<int>abcdefghabcdefghabcdefgh);\n    assert(solution.longestDupSubstring(\"aaaaaabbccccaaa\") == vector<int>aaaaa);\n    assert(solution.longestDupSubstring(\"abcdefghigklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz\") == vector<int>klmnopqrstuvwxyz);\n    assert(solution.longestDupSubstring(\"thisisaverylongstringwithrepeatedsubstringsubstring\") == vector<int>substring);\n    assert(solution.longestDupSubstring(\"abcdefghijabcdefghijabcdefghij\") == vector<int>abcdefghijabcdefghij);\n    assert(solution.longestDupSubstring(\"hellohellohello\") == vector<int>hellohello);\n    assert(solution.longestDupSubstring(\"abababababababababababababababab\") == vector<int>ababababababababababababababab);\n    assert(solution.longestDupSubstring(\"abcdefabcdefabcdefabcdefabcdefabcdefabcdefabcdefabcdef\") == vector<int>abcdefabcdefabcdefabcdefabcdefabcdefabcdefabcdef);\n    assert(solution.longestDupSubstring(\"abcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabc\") == vector<int>abcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabc);\n    assert(solution.longestDupSubstring(\"abcabcabcabcabcabcabcabcabcabcabcabcabc\") == vector<int>abcabcabcabcabcabcabcabcabcabcabcabc);\n    assert(solution.longestDupSubstring(\"anvnvnvnvnvnvnvnvvnvnvnvnvnvnvnvnvnvn\") == vector<int>vnvnvnvnvnvnvnvnvn);\n    assert(solution.longestDupSubstring(\"abcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabc\") == vector<int>abcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabc);\n    assert(solution.longestDupSubstring(\"bananaananabanana\") == vector<int>banana);\n    assert(solution.longestDupSubstring(\"abcabcabcabcabcabcabc\") == vector<int>abcabcabcabcabcabc);\n    assert(solution.longestDupSubstring(\"bananaapplebananabananaapplebananabananaapple\") == vector<int>bananaapplebananabananaapple);\n    assert(solution.longestDupSubstring(\"abcabcabcabcd\") == vector<int>abcabcabc);\n    assert(solution.longestDupSubstring(\"mississippimississippimississippi\") == vector<int>mississippimississippi);\n    assert(solution.longestDupSubstring(\"abcdeabcdeabcdeabcdeabcdeabcdeabcdeabcdeabcde\") == vector<int>abcdeabcdeabcdeabcdeabcdeabcdeabcdeabcde);\n    assert(solution.longestDupSubstring(\"qwertyuiopqwertyuiop\") == vector<int>qwertyuiop);\n    assert(solution.longestDupSubstring(\"abcabcabcabcabcabcabcabcabcabc\") == vector<int>abcabcabcabcabcabcabcabcabc);\n    assert(solution.longestDupSubstring(\"abcdeabcdfabcde\") == vector<int>abcde);\n    assert(solution.longestDupSubstring(\"abracadabraabracadabraabracadabraabracadabraabracadabra\") == vector<int>abracadabraabracadabraabracadabraabracadabra);\n    assert(solution.longestDupSubstring(\"abracadabraabracadabraabracadabra\") == vector<int>abracadabraabracadabra);\n    assert(solution.longestDupSubstring(\"zabacabadabacaba\") == vector<int>abacaba);\n    assert(solution.longestDupSubstring(\"abcdefghijklmnopqrstuvwxyzzyxwvutsrqponmlkjihgfedcba\") == vector<int>z);\n    assert(solution.longestDupSubstring(\"aaaaaa\") == vector<int>aaaaa);\n    assert(solution.longestDupSubstring(\"xyzxyzxyzxyzxyzxyzxyzxyzxyzxyz\") == vector<int>xyzxyzxyzxyzxyzxyzxyzxyzxyz);\n    assert(solution.longestDupSubstring(\"abcabcabcabcabcabc\") == vector<int>abcabcabcabcabc);\n    assert(solution.longestDupSubstring(\"abcdefghijkabcdefghijk\") == vector<int>abcdefghijk);\n    assert(solution.longestDupSubstring(\"12345678901234567890\") == vector<int>1234567890);\n    assert(solution.longestDupSubstring(\"aaaaaaaaaaaaaaaaaa\") == vector<int>aaaaaaaaaaaaaaaaa);\n    assert(solution.longestDupSubstring(\"bananaananabananana\") == vector<int>banana);\n    assert(solution.longestDupSubstring(\"pneumonoultramicroscopicsilicovolcanoconiosispneumonoultramicroscopicsilicovolcanoconiosispneumonoultramicroscopicsilicovolcanoconiosispneumonoultramicroscopicsilicovolcanoconiosis\") == vector<int>pneumonoultramicroscopicsilicovolcanoconiosispneumonoultramicroscopicsilicovolcanoconiosispneumonoultramicroscopicsilicovolcanoconiosis);\n    assert(solution.longestDupSubstring(\"thisisaverylongstringwithsomerepeatedsubstringsubstring\") == vector<int>substring);\n    assert(solution.longestDupSubstring(\"abcdefghijkabcdefghijkabcdefghijk\") == vector<int>abcdefghijkabcdefghijk);\n    assert(solution.longestDupSubstring(\"pneumonoultramicroscopicsilicovolcanoconiosispneumonoultramicroscopicsilicovolcanoconiosis\") == vector<int>pneumonoultramicroscopicsilicovolcanoconiosis);\n    assert(solution.longestDupSubstring(\"abcdabcdabcdabcd\") == vector<int>abcdabcdabcd);\n    assert(solution.longestDupSubstring(\"bananaaaanaaanana\") == vector<int>anaaa);\n    assert(solution.longestDupSubstring(\"aaaaaaa\") == vector<int>aaaaaa);\n    assert(solution.longestDupSubstring(\"abababababababababababababab\") == vector<int>ababababababababababababab);\n    assert(solution.longestDupSubstring(\"asdfghjklasdfghjklasdfghjkl\") == vector<int>asdfghjklasdfghjkl);\n    assert(solution.longestDupSubstring(\"racecaracecaracecar\") == vector<int>racecaracecar);\n    assert(solution.longestDupSubstring(\"abcdefghijk\") == vector<int>nullptr);\n    assert(solution.longestDupSubstring(\"ababababababababababab\") == vector<int>abababababababababab);\n    assert(solution.longestDupSubstring(\"xyzxyzxyzxyzxyzxyzxyzxyzxyz\") == vector<int>xyzxyzxyzxyzxyzxyzxyzxyz);\n    assert(solution.longestDupSubstring(\"abababababababababab\") == vector<int>ababababababababab);\n    assert(solution.longestDupSubstring(\"qwertyuiopqwertyuiopqwertyuiopqwertyuiop\") == vector<int>qwertyuiopqwertyuiopqwertyuiop);\n    assert(solution.longestDupSubstring(\"bananaananabanananabanana\") == vector<int>ananabanana);\n    assert(solution.longestDupSubstring(\"abacabadabacaba\") == vector<int>abacaba);\n    assert(solution.longestDupSubstring(\"zxyzyxyzxyzyxyzxyzyxzyzy\") == vector<int>zxyzyxyzxyzyx);\n    assert(solution.longestDupSubstring(\"bananaananab\") == vector<int>anana);\n    assert(solution.longestDupSubstring(\"ananananananananan\") == vector<int>anananananananan);\n    assert(solution.longestDupSubstring(\"xyzxyzxyzxyzxyzxyz\") == vector<int>xyzxyzxyzxyzxyz);\n    assert(solution.longestDupSubstring(\"abcdefghijkabcdefghijabcdefghij\") == vector<int>abcdefghij);\n    assert(solution.longestDupSubstring(\"zzzzzzzzzzzzzzzz\") == vector<int>zzzzzzzzzzzzzzz);\n    assert(solution.longestDupSubstring(\"thisisaverylongstringwithsomerepeatingpatterns\") == vector<int>ing);\n    assert(solution.longestDupSubstring(\"xyxyxyxyxyxyxyxyxyxyxyxy\") == vector<int>xyxyxyxyxyxyxyxyxyxyxy);\n    assert(solution.longestDupSubstring(\"xyzabcxyzabcxyzabcxyzabcxyz\") == vector<int>xyzabcxyzabcxyzabcxyz);\n    assert(solution.longestDupSubstring(\"supercalifragilisticexpialidocioussupercalifragilisticexpialidocious\") == vector<int>supercalifragilisticexpialidocious);\n    assert(solution.longestDupSubstring(\"aaaaabbbbbaaaaabbbb\") == vector<int>aaaaabbbb);\n    assert(solution.longestDupSubstring(\"bananaapplebananabananaapple\") == vector<int>bananaapple);\n    assert(solution.longestDupSubstring(\"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\") == vector<int>zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz);\n    assert(solution.longestDupSubstring(\"longestsubstringissubstring\") == vector<int>substring);\n    assert(solution.longestDupSubstring(\"abcdefgabcdefg\") == vector<int>abcdefg);\n    assert(solution.longestDupSubstring(\"abcdeabcdeabcdeabcde\") == vector<int>abcdeabcdeabcde);\n    assert(solution.longestDupSubstring(\"thisisaverylongstringwitharepeatedsubstringthisisaverylongstringwitharepeatedsubstring\") == vector<int>thisisaverylongstringwitharepeatedsubstring);\n    assert(solution.longestDupSubstring(\"abracadabraabracadabra\") == vector<int>abracadabra);\n    assert(solution.longestDupSubstring(\"abcdabcdabcdabcdabcdabcd\") == vector<int>abcdabcdabcdabcdabcd);\n    assert(solution.longestDupSubstring(\"xyzxyzxyzxyzxyz\") == vector<int>xyzxyzxyzxyz);\n    assert(solution.longestDupSubstring(\"bananaanananab\") == vector<int>anana);\n    assert(solution.longestDupSubstring(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\") == vector<int>a);\n    assert(solution.longestDupSubstring(\"longestsubstrlongestsubstrlongestsubstr\") == vector<int>longestsubstrlongestsubstr);\n    assert(solution.longestDupSubstring(\"anananananananananananananananananan\") == vector<int>ananananananananananananananananan);\n    assert(solution.longestDupSubstring(\"aabbccddeeffaabbccddeeff\") == vector<int>aabbccddeeff);\n    assert(solution.longestDupSubstring(\"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\") == vector<int>zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz);\n    assert(solution.longestDupSubstring(\"noonnoonnoon\") == vector<int>noonnoon);\n    assert(solution.longestDupSubstring(\"abcdabcdabcdabcdabcdabcdabcdabcdabcd\") == vector<int>abcdabcdabcdabcdabcdabcdabcdabcd);\n    assert(solution.longestDupSubstring(\"abcdefghabcdefghabcdefghabcdefghabcdefghabcdefgh\") == vector<int>abcdefghabcdefghabcdefghabcdefghabcdefgh);\n    assert(solution.longestDupSubstring(\"anananananananananananananananananananananananananananananananananananananananananananan\") == vector<int>ananananananananananananananananananananananananananananananananananananananananananan);\n    assert(solution.longestDupSubstring(\"abcdeabcdeabcde\") == vector<int>abcdeabcde);\n    assert(solution.longestDupSubstring(\"mnopqrsmnopqrsmnopqrsmnopqrs\") == vector<int>mnopqrsmnopqrsmnopqrs);\n    assert(solution.longestDupSubstring(\"abcdefgabcdefgabcdefg\") == vector<int>abcdefgabcdefg);\n    assert(solution.longestDupSubstring(\"racecar\") == vector<int>c);\n    assert(solution.longestDupSubstring(\"abcdefghijabcdefghij\") == vector<int>abcdefghij);\n    assert(solution.longestDupSubstring(\"ababababababababababababababababababababababab\") == vector<int>abababababababababababababababababababababab);\n    assert(solution.longestDupSubstring(\"abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz\") == vector<int>abcdefghijklmnopqrstuvwxyz);\n    assert(solution.longestDupSubstring(\"abcdefghabcdefgh\") == vector<int>abcdefgh);\n    assert(solution.longestDupSubstring(\"pneumonoultramicroscopicsilicovolcanoconiosis\") == vector<int>ic);\n    assert(solution.longestDupSubstring(\"xylophonepianoguitarxylophonepianoguitarxylophonepianoguitar\") == vector<int>xylophonepianoguitarxylophonepianoguitar);\n    assert(solution.longestDupSubstring(\"aaaaabaaaaabaaaaab\") == vector<int>aaaaabaaaaab);\n    assert(solution.longestDupSubstring(\"mississippimississippimississippimississippimississippimississippi\") == vector<int>mississippimississippimississippimississippimississippi);\n    assert(solution.longestDupSubstring(\"hellohellohellohello\") == vector<int>hellohellohello);\n    assert(solution.longestDupSubstring(\"zxcvbnmzxcvbnmzxcvbnm\") == vector<int>zxcvbnmzxcvbnm);\n    assert(solution.longestDupSubstring(\"aaaaaaaaaaaaaaaaaaaa\") == vector<int>aaaaaaaaaaaaaaaaaaa);\n    assert(solution.longestDupSubstring(\"aaaaaaaaaaaaaaaaaaaaaaaa\") == vector<int>aaaaaaaaaaaaaaaaaaaaaaa);\n}",
+    "java": "public static void check(Solution solution) {\n    assert Arrays.equals(solution.longestDupSubstring(\"abcabcabc\"), abcabc);\n    assert Arrays.equals(solution.longestDupSubstring(\"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\"), zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz);\n    assert Arrays.equals(solution.longestDupSubstring(\"mississippi\"), issi);\n    assert Arrays.equals(solution.longestDupSubstring(\"banana\"), ana);\n    assert Arrays.equals(solution.longestDupSubstring(\"bananaaa\"), ana);\n    assert Arrays.equals(solution.longestDupSubstring(\"abcdefgh\"), null);\n    assert Arrays.equals(solution.longestDupSubstring(\"abcd\"), null);\n    assert Arrays.equals(solution.longestDupSubstring(\"aaaaa\"), aaaa);\n    assert Arrays.equals(solution.longestDupSubstring(\"aabb\"), a);\n    assert Arrays.equals(solution.longestDupSubstring(\"aaaa\"), aaa);\n    assert Arrays.equals(solution.longestDupSubstring(\"abab\"), ab);\n    assert Arrays.equals(solution.longestDupSubstring(\"longestrepeatingsubstringlongestrepeatingsubstring\"), longestrepeatingsubstring);\n    assert Arrays.equals(solution.longestDupSubstring(\"abcdefghijkabcdefgh\"), abcdefgh);\n    assert Arrays.equals(solution.longestDupSubstring(\"abcdefghijkabcdefghijkabcdefghijkabcdefghijk\"), abcdefghijkabcdefghijkabcdefghijk);\n    assert Arrays.equals(solution.longestDupSubstring(\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\"), aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa);\n    assert Arrays.equals(solution.longestDupSubstring(\"norepeats\"), e);\n    assert Arrays.equals(solution.longestDupSubstring(\"abcdeabcdeabcdeabcdeabcde\"), abcdeabcdeabcdeabcde);\n    assert Arrays.equals(solution.longestDupSubstring(\"abcabcabcabcabcabcabcd\"), abcabcabcabcabcabc);\n    assert Arrays.equals(solution.longestDupSubstring(\"abracadabra\"), abra);\n    assert Arrays.equals(solution.longestDupSubstring(\"abcdefabcdefabcdef\"), abcdefabcdef);\n    assert Arrays.equals(solution.longestDupSubstring(\"abcabcabcabc\"), abcabcabc);\n    assert Arrays.equals(solution.longestDupSubstring(\"aaaaaaaaaabbbbbbbbbccccc\"), aaaaaaaaa);\n    assert Arrays.equals(solution.longestDupSubstring(\"abcdefghabcdefghabcdefghabcdefgh\"), abcdefghabcdefghabcdefgh);\n    assert Arrays.equals(solution.longestDupSubstring(\"aaaaaabbccccaaa\"), aaaaa);\n    assert Arrays.equals(solution.longestDupSubstring(\"abcdefghigklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz\"), klmnopqrstuvwxyz);\n    assert Arrays.equals(solution.longestDupSubstring(\"thisisaverylongstringwithrepeatedsubstringsubstring\"), substring);\n    assert Arrays.equals(solution.longestDupSubstring(\"abcdefghijabcdefghijabcdefghij\"), abcdefghijabcdefghij);\n    assert Arrays.equals(solution.longestDupSubstring(\"hellohellohello\"), hellohello);\n    assert Arrays.equals(solution.longestDupSubstring(\"abababababababababababababababab\"), ababababababababababababababab);\n    assert Arrays.equals(solution.longestDupSubstring(\"abcdefabcdefabcdefabcdefabcdefabcdefabcdefabcdefabcdef\"), abcdefabcdefabcdefabcdefabcdefabcdefabcdefabcdef);\n    assert Arrays.equals(solution.longestDupSubstring(\"abcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabc\"), abcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabc);\n    assert Arrays.equals(solution.longestDupSubstring(\"abcabcabcabcabcabcabcabcabcabcabcabcabc\"), abcabcabcabcabcabcabcabcabcabcabcabc);\n    assert Arrays.equals(solution.longestDupSubstring(\"anvnvnvnvnvnvnvnvvnvnvnvnvnvnvnvnvnvn\"), vnvnvnvnvnvnvnvnvn);\n    assert Arrays.equals(solution.longestDupSubstring(\"abcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabc\"), abcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabc);\n    assert Arrays.equals(solution.longestDupSubstring(\"bananaananabanana\"), banana);\n    assert Arrays.equals(solution.longestDupSubstring(\"abcabcabcabcabcabcabc\"), abcabcabcabcabcabc);\n    assert Arrays.equals(solution.longestDupSubstring(\"bananaapplebananabananaapplebananabananaapple\"), bananaapplebananabananaapple);\n    assert Arrays.equals(solution.longestDupSubstring(\"abcabcabcabcd\"), abcabcabc);\n    assert Arrays.equals(solution.longestDupSubstring(\"mississippimississippimississippi\"), mississippimississippi);\n    assert Arrays.equals(solution.longestDupSubstring(\"abcdeabcdeabcdeabcdeabcdeabcdeabcdeabcdeabcde\"), abcdeabcdeabcdeabcdeabcdeabcdeabcdeabcde);\n    assert Arrays.equals(solution.longestDupSubstring(\"qwertyuiopqwertyuiop\"), qwertyuiop);\n    assert Arrays.equals(solution.longestDupSubstring(\"abcabcabcabcabcabcabcabcabcabc\"), abcabcabcabcabcabcabcabcabc);\n    assert Arrays.equals(solution.longestDupSubstring(\"abcdeabcdfabcde\"), abcde);\n    assert Arrays.equals(solution.longestDupSubstring(\"abracadabraabracadabraabracadabraabracadabraabracadabra\"), abracadabraabracadabraabracadabraabracadabra);\n    assert Arrays.equals(solution.longestDupSubstring(\"abracadabraabracadabraabracadabra\"), abracadabraabracadabra);\n    assert Arrays.equals(solution.longestDupSubstring(\"zabacabadabacaba\"), abacaba);\n    assert Arrays.equals(solution.longestDupSubstring(\"abcdefghijklmnopqrstuvwxyzzyxwvutsrqponmlkjihgfedcba\"), z);\n    assert Arrays.equals(solution.longestDupSubstring(\"aaaaaa\"), aaaaa);\n    assert Arrays.equals(solution.longestDupSubstring(\"xyzxyzxyzxyzxyzxyzxyzxyzxyzxyz\"), xyzxyzxyzxyzxyzxyzxyzxyzxyz);\n    assert Arrays.equals(solution.longestDupSubstring(\"abcabcabcabcabcabc\"), abcabcabcabcabc);\n    assert Arrays.equals(solution.longestDupSubstring(\"abcdefghijkabcdefghijk\"), abcdefghijk);\n    assert Arrays.equals(solution.longestDupSubstring(\"12345678901234567890\"), 1234567890);\n    assert Arrays.equals(solution.longestDupSubstring(\"aaaaaaaaaaaaaaaaaa\"), aaaaaaaaaaaaaaaaa);\n    assert Arrays.equals(solution.longestDupSubstring(\"bananaananabananana\"), banana);\n    assert Arrays.equals(solution.longestDupSubstring(\"pneumonoultramicroscopicsilicovolcanoconiosispneumonoultramicroscopicsilicovolcanoconiosispneumonoultramicroscopicsilicovolcanoconiosispneumonoultramicroscopicsilicovolcanoconiosis\"), pneumonoultramicroscopicsilicovolcanoconiosispneumonoultramicroscopicsilicovolcanoconiosispneumonoultramicroscopicsilicovolcanoconiosis);\n    assert Arrays.equals(solution.longestDupSubstring(\"thisisaverylongstringwithsomerepeatedsubstringsubstring\"), substring);\n    assert Arrays.equals(solution.longestDupSubstring(\"abcdefghijkabcdefghijkabcdefghijk\"), abcdefghijkabcdefghijk);\n    assert Arrays.equals(solution.longestDupSubstring(\"pneumonoultramicroscopicsilicovolcanoconiosispneumonoultramicroscopicsilicovolcanoconiosis\"), pneumonoultramicroscopicsilicovolcanoconiosis);\n    assert Arrays.equals(solution.longestDupSubstring(\"abcdabcdabcdabcd\"), abcdabcdabcd);\n    assert Arrays.equals(solution.longestDupSubstring(\"bananaaaanaaanana\"), anaaa);\n    assert Arrays.equals(solution.longestDupSubstring(\"aaaaaaa\"), aaaaaa);\n    assert Arrays.equals(solution.longestDupSubstring(\"abababababababababababababab\"), ababababababababababababab);\n    assert Arrays.equals(solution.longestDupSubstring(\"asdfghjklasdfghjklasdfghjkl\"), asdfghjklasdfghjkl);\n    assert Arrays.equals(solution.longestDupSubstring(\"racecaracecaracecar\"), racecaracecar);\n    assert Arrays.equals(solution.longestDupSubstring(\"abcdefghijk\"), null);\n    assert Arrays.equals(solution.longestDupSubstring(\"ababababababababababab\"), abababababababababab);\n    assert Arrays.equals(solution.longestDupSubstring(\"xyzxyzxyzxyzxyzxyzxyzxyzxyz\"), xyzxyzxyzxyzxyzxyzxyzxyz);\n    assert Arrays.equals(solution.longestDupSubstring(\"abababababababababab\"), ababababababababab);\n    assert Arrays.equals(solution.longestDupSubstring(\"qwertyuiopqwertyuiopqwertyuiopqwertyuiop\"), qwertyuiopqwertyuiopqwertyuiop);\n    assert Arrays.equals(solution.longestDupSubstring(\"bananaananabanananabanana\"), ananabanana);\n    assert Arrays.equals(solution.longestDupSubstring(\"abacabadabacaba\"), abacaba);\n    assert Arrays.equals(solution.longestDupSubstring(\"zxyzyxyzxyzyxyzxyzyxzyzy\"), zxyzyxyzxyzyx);\n    assert Arrays.equals(solution.longestDupSubstring(\"bananaananab\"), anana);\n    assert Arrays.equals(solution.longestDupSubstring(\"ananananananananan\"), anananananananan);\n    assert Arrays.equals(solution.longestDupSubstring(\"xyzxyzxyzxyzxyzxyz\"), xyzxyzxyzxyzxyz);\n    assert Arrays.equals(solution.longestDupSubstring(\"abcdefghijkabcdefghijabcdefghij\"), abcdefghij);\n    assert Arrays.equals(solution.longestDupSubstring(\"zzzzzzzzzzzzzzzz\"), zzzzzzzzzzzzzzz);\n    assert Arrays.equals(solution.longestDupSubstring(\"thisisaverylongstringwithsomerepeatingpatterns\"), ing);\n    assert Arrays.equals(solution.longestDupSubstring(\"xyxyxyxyxyxyxyxyxyxyxyxy\"), xyxyxyxyxyxyxyxyxyxyxy);\n    assert Arrays.equals(solution.longestDupSubstring(\"xyzabcxyzabcxyzabcxyzabcxyz\"), xyzabcxyzabcxyzabcxyz);\n    assert Arrays.equals(solution.longestDupSubstring(\"supercalifragilisticexpialidocioussupercalifragilisticexpialidocious\"), supercalifragilisticexpialidocious);\n    assert Arrays.equals(solution.longestDupSubstring(\"aaaaabbbbbaaaaabbbb\"), aaaaabbbb);\n    assert Arrays.equals(solution.longestDupSubstring(\"bananaapplebananabananaapple\"), bananaapple);\n    assert Arrays.equals(solution.longestDupSubstring(\"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\"), zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz);\n    assert Arrays.equals(solution.longestDupSubstring(\"longestsubstringissubstring\"), substring);\n    assert Arrays.equals(solution.longestDupSubstring(\"abcdefgabcdefg\"), abcdefg);\n    assert Arrays.equals(solution.longestDupSubstring(\"abcdeabcdeabcdeabcde\"), abcdeabcdeabcde);\n    assert Arrays.equals(solution.longestDupSubstring(\"thisisaverylongstringwitharepeatedsubstringthisisaverylongstringwitharepeatedsubstring\"), thisisaverylongstringwitharepeatedsubstring);\n    assert Arrays.equals(solution.longestDupSubstring(\"abracadabraabracadabra\"), abracadabra);\n    assert Arrays.equals(solution.longestDupSubstring(\"abcdabcdabcdabcdabcdabcd\"), abcdabcdabcdabcdabcd);\n    assert Arrays.equals(solution.longestDupSubstring(\"xyzxyzxyzxyzxyz\"), xyzxyzxyzxyz);\n    assert Arrays.equals(solution.longestDupSubstring(\"bananaanananab\"), anana);\n    assert Arrays.equals(solution.longestDupSubstring(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\"), a);\n    assert Arrays.equals(solution.longestDupSubstring(\"longestsubstrlongestsubstrlongestsubstr\"), longestsubstrlongestsubstr);\n    assert Arrays.equals(solution.longestDupSubstring(\"anananananananananananananananananan\"), ananananananananananananananananan);\n    assert Arrays.equals(solution.longestDupSubstring(\"aabbccddeeffaabbccddeeff\"), aabbccddeeff);\n    assert Arrays.equals(solution.longestDupSubstring(\"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\"), zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz);\n    assert Arrays.equals(solution.longestDupSubstring(\"noonnoonnoon\"), noonnoon);\n    assert Arrays.equals(solution.longestDupSubstring(\"abcdabcdabcdabcdabcdabcdabcdabcdabcd\"), abcdabcdabcdabcdabcdabcdabcdabcd);\n    assert Arrays.equals(solution.longestDupSubstring(\"abcdefghabcdefghabcdefghabcdefghabcdefghabcdefgh\"), abcdefghabcdefghabcdefghabcdefghabcdefgh);\n    assert Arrays.equals(solution.longestDupSubstring(\"anananananananananananananananananananananananananananananananananananananananananananan\"), ananananananananananananananananananananananananananananananananananananananananananan);\n    assert Arrays.equals(solution.longestDupSubstring(\"abcdeabcdeabcde\"), abcdeabcde);\n    assert Arrays.equals(solution.longestDupSubstring(\"mnopqrsmnopqrsmnopqrsmnopqrs\"), mnopqrsmnopqrsmnopqrs);\n    assert Arrays.equals(solution.longestDupSubstring(\"abcdefgabcdefgabcdefg\"), abcdefgabcdefg);\n    assert Arrays.equals(solution.longestDupSubstring(\"racecar\"), c);\n    assert Arrays.equals(solution.longestDupSubstring(\"abcdefghijabcdefghij\"), abcdefghij);\n    assert Arrays.equals(solution.longestDupSubstring(\"ababababababababababababababababababababababab\"), abababababababababababababababababababababab);\n    assert Arrays.equals(solution.longestDupSubstring(\"abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz\"), abcdefghijklmnopqrstuvwxyz);\n    assert Arrays.equals(solution.longestDupSubstring(\"abcdefghabcdefgh\"), abcdefgh);\n    assert Arrays.equals(solution.longestDupSubstring(\"pneumonoultramicroscopicsilicovolcanoconiosis\"), ic);\n    assert Arrays.equals(solution.longestDupSubstring(\"xylophonepianoguitarxylophonepianoguitarxylophonepianoguitar\"), xylophonepianoguitarxylophonepianoguitar);\n    assert Arrays.equals(solution.longestDupSubstring(\"aaaaabaaaaabaaaaab\"), aaaaabaaaaab);\n    assert Arrays.equals(solution.longestDupSubstring(\"mississippimississippimississippimississippimississippimississippi\"), mississippimississippimississippimississippimississippi);\n    assert Arrays.equals(solution.longestDupSubstring(\"hellohellohellohello\"), hellohellohello);\n    assert Arrays.equals(solution.longestDupSubstring(\"zxcvbnmzxcvbnmzxcvbnm\"), zxcvbnmzxcvbnm);\n    assert Arrays.equals(solution.longestDupSubstring(\"aaaaaaaaaaaaaaaaaaaa\"), aaaaaaaaaaaaaaaaaaa);\n    assert Arrays.equals(solution.longestDupSubstring(\"aaaaaaaaaaaaaaaaaaaaaaaa\"), aaaaaaaaaaaaaaaaaaaaaaa);\n}",
+    "javascript": "function check(candidate) {\n    console.assert(JSON.stringify(candidate(\"abcabcabc\")) === JSON.stringify(abcabc));\n    console.assert(JSON.stringify(candidate(\"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\")) === JSON.stringify(zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz));\n    console.assert(JSON.stringify(candidate(\"mississippi\")) === JSON.stringify(issi));\n    console.assert(JSON.stringify(candidate(\"banana\")) === JSON.stringify(ana));\n    console.assert(JSON.stringify(candidate(\"bananaaa\")) === JSON.stringify(ana));\n    console.assert(JSON.stringify(candidate(\"abcdefgh\")) === JSON.stringify(null));\n    console.assert(JSON.stringify(candidate(\"abcd\")) === JSON.stringify(null));\n    console.assert(JSON.stringify(candidate(\"aaaaa\")) === JSON.stringify(aaaa));\n    console.assert(JSON.stringify(candidate(\"aabb\")) === JSON.stringify(a));\n    console.assert(JSON.stringify(candidate(\"aaaa\")) === JSON.stringify(aaa));\n    console.assert(JSON.stringify(candidate(\"abab\")) === JSON.stringify(ab));\n    console.assert(JSON.stringify(candidate(\"longestrepeatingsubstringlongestrepeatingsubstring\")) === JSON.stringify(longestrepeatingsubstring));\n    console.assert(JSON.stringify(candidate(\"abcdefghijkabcdefgh\")) === JSON.stringify(abcdefgh));\n    console.assert(JSON.stringify(candidate(\"abcdefghijkabcdefghijkabcdefghijkabcdefghijk\")) === JSON.stringify(abcdefghijkabcdefghijkabcdefghijk));\n    console.assert(JSON.stringify(candidate(\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\")) === JSON.stringify(aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa));\n    console.assert(JSON.stringify(candidate(\"norepeats\")) === JSON.stringify(e));\n    console.assert(JSON.stringify(candidate(\"abcdeabcdeabcdeabcdeabcde\")) === JSON.stringify(abcdeabcdeabcdeabcde));\n    console.assert(JSON.stringify(candidate(\"abcabcabcabcabcabcabcd\")) === JSON.stringify(abcabcabcabcabcabc));\n    console.assert(JSON.stringify(candidate(\"abracadabra\")) === JSON.stringify(abra));\n    console.assert(JSON.stringify(candidate(\"abcdefabcdefabcdef\")) === JSON.stringify(abcdefabcdef));\n    console.assert(JSON.stringify(candidate(\"abcabcabcabc\")) === JSON.stringify(abcabcabc));\n    console.assert(JSON.stringify(candidate(\"aaaaaaaaaabbbbbbbbbccccc\")) === JSON.stringify(aaaaaaaaa));\n    console.assert(JSON.stringify(candidate(\"abcdefghabcdefghabcdefghabcdefgh\")) === JSON.stringify(abcdefghabcdefghabcdefgh));\n    console.assert(JSON.stringify(candidate(\"aaaaaabbccccaaa\")) === JSON.stringify(aaaaa));\n    console.assert(JSON.stringify(candidate(\"abcdefghigklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz\")) === JSON.stringify(klmnopqrstuvwxyz));\n    console.assert(JSON.stringify(candidate(\"thisisaverylongstringwithrepeatedsubstringsubstring\")) === JSON.stringify(substring));\n    console.assert(JSON.stringify(candidate(\"abcdefghijabcdefghijabcdefghij\")) === JSON.stringify(abcdefghijabcdefghij));\n    console.assert(JSON.stringify(candidate(\"hellohellohello\")) === JSON.stringify(hellohello));\n    console.assert(JSON.stringify(candidate(\"abababababababababababababababab\")) === JSON.stringify(ababababababababababababababab));\n    console.assert(JSON.stringify(candidate(\"abcdefabcdefabcdefabcdefabcdefabcdefabcdefabcdefabcdef\")) === JSON.stringify(abcdefabcdefabcdefabcdefabcdefabcdefabcdefabcdef));\n    console.assert(JSON.stringify(candidate(\"abcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabc\")) === JSON.stringify(abcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabc));\n    console.assert(JSON.stringify(candidate(\"abcabcabcabcabcabcabcabcabcabcabcabcabc\")) === JSON.stringify(abcabcabcabcabcabcabcabcabcabcabcabc));\n    console.assert(JSON.stringify(candidate(\"anvnvnvnvnvnvnvnvvnvnvnvnvnvnvnvnvnvn\")) === JSON.stringify(vnvnvnvnvnvnvnvnvn));\n    console.assert(JSON.stringify(candidate(\"abcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabc\")) === JSON.stringify(abcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabc));\n    console.assert(JSON.stringify(candidate(\"bananaananabanana\")) === JSON.stringify(banana));\n    console.assert(JSON.stringify(candidate(\"abcabcabcabcabcabcabc\")) === JSON.stringify(abcabcabcabcabcabc));\n    console.assert(JSON.stringify(candidate(\"bananaapplebananabananaapplebananabananaapple\")) === JSON.stringify(bananaapplebananabananaapple));\n    console.assert(JSON.stringify(candidate(\"abcabcabcabcd\")) === JSON.stringify(abcabcabc));\n    console.assert(JSON.stringify(candidate(\"mississippimississippimississippi\")) === JSON.stringify(mississippimississippi));\n    console.assert(JSON.stringify(candidate(\"abcdeabcdeabcdeabcdeabcdeabcdeabcdeabcdeabcde\")) === JSON.stringify(abcdeabcdeabcdeabcdeabcdeabcdeabcdeabcde));\n    console.assert(JSON.stringify(candidate(\"qwertyuiopqwertyuiop\")) === JSON.stringify(qwertyuiop));\n    console.assert(JSON.stringify(candidate(\"abcabcabcabcabcabcabcabcabcabc\")) === JSON.stringify(abcabcabcabcabcabcabcabcabc));\n    console.assert(JSON.stringify(candidate(\"abcdeabcdfabcde\")) === JSON.stringify(abcde));\n    console.assert(JSON.stringify(candidate(\"abracadabraabracadabraabracadabraabracadabraabracadabra\")) === JSON.stringify(abracadabraabracadabraabracadabraabracadabra));\n    console.assert(JSON.stringify(candidate(\"abracadabraabracadabraabracadabra\")) === JSON.stringify(abracadabraabracadabra));\n    console.assert(JSON.stringify(candidate(\"zabacabadabacaba\")) === JSON.stringify(abacaba));\n    console.assert(JSON.stringify(candidate(\"abcdefghijklmnopqrstuvwxyzzyxwvutsrqponmlkjihgfedcba\")) === JSON.stringify(z));\n    console.assert(JSON.stringify(candidate(\"aaaaaa\")) === JSON.stringify(aaaaa));\n    console.assert(JSON.stringify(candidate(\"xyzxyzxyzxyzxyzxyzxyzxyzxyzxyz\")) === JSON.stringify(xyzxyzxyzxyzxyzxyzxyzxyzxyz));\n    console.assert(JSON.stringify(candidate(\"abcabcabcabcabcabc\")) === JSON.stringify(abcabcabcabcabc));\n    console.assert(JSON.stringify(candidate(\"abcdefghijkabcdefghijk\")) === JSON.stringify(abcdefghijk));\n    console.assert(JSON.stringify(candidate(\"12345678901234567890\")) === JSON.stringify(1234567890));\n    console.assert(JSON.stringify(candidate(\"aaaaaaaaaaaaaaaaaa\")) === JSON.stringify(aaaaaaaaaaaaaaaaa));\n    console.assert(JSON.stringify(candidate(\"bananaananabananana\")) === JSON.stringify(banana));\n    console.assert(JSON.stringify(candidate(\"pneumonoultramicroscopicsilicovolcanoconiosispneumonoultramicroscopicsilicovolcanoconiosispneumonoultramicroscopicsilicovolcanoconiosispneumonoultramicroscopicsilicovolcanoconiosis\")) === JSON.stringify(pneumonoultramicroscopicsilicovolcanoconiosispneumonoultramicroscopicsilicovolcanoconiosispneumonoultramicroscopicsilicovolcanoconiosis));\n    console.assert(JSON.stringify(candidate(\"thisisaverylongstringwithsomerepeatedsubstringsubstring\")) === JSON.stringify(substring));\n    console.assert(JSON.stringify(candidate(\"abcdefghijkabcdefghijkabcdefghijk\")) === JSON.stringify(abcdefghijkabcdefghijk));\n    console.assert(JSON.stringify(candidate(\"pneumonoultramicroscopicsilicovolcanoconiosispneumonoultramicroscopicsilicovolcanoconiosis\")) === JSON.stringify(pneumonoultramicroscopicsilicovolcanoconiosis));\n    console.assert(JSON.stringify(candidate(\"abcdabcdabcdabcd\")) === JSON.stringify(abcdabcdabcd));\n    console.assert(JSON.stringify(candidate(\"bananaaaanaaanana\")) === JSON.stringify(anaaa));\n    console.assert(JSON.stringify(candidate(\"aaaaaaa\")) === JSON.stringify(aaaaaa));\n    console.assert(JSON.stringify(candidate(\"abababababababababababababab\")) === JSON.stringify(ababababababababababababab));\n    console.assert(JSON.stringify(candidate(\"asdfghjklasdfghjklasdfghjkl\")) === JSON.stringify(asdfghjklasdfghjkl));\n    console.assert(JSON.stringify(candidate(\"racecaracecaracecar\")) === JSON.stringify(racecaracecar));\n    console.assert(JSON.stringify(candidate(\"abcdefghijk\")) === JSON.stringify(null));\n    console.assert(JSON.stringify(candidate(\"ababababababababababab\")) === JSON.stringify(abababababababababab));\n    console.assert(JSON.stringify(candidate(\"xyzxyzxyzxyzxyzxyzxyzxyzxyz\")) === JSON.stringify(xyzxyzxyzxyzxyzxyzxyzxyz));\n    console.assert(JSON.stringify(candidate(\"abababababababababab\")) === JSON.stringify(ababababababababab));\n    console.assert(JSON.stringify(candidate(\"qwertyuiopqwertyuiopqwertyuiopqwertyuiop\")) === JSON.stringify(qwertyuiopqwertyuiopqwertyuiop));\n    console.assert(JSON.stringify(candidate(\"bananaananabanananabanana\")) === JSON.stringify(ananabanana));\n    console.assert(JSON.stringify(candidate(\"abacabadabacaba\")) === JSON.stringify(abacaba));\n    console.assert(JSON.stringify(candidate(\"zxyzyxyzxyzyxyzxyzyxzyzy\")) === JSON.stringify(zxyzyxyzxyzyx));\n    console.assert(JSON.stringify(candidate(\"bananaananab\")) === JSON.stringify(anana));\n    console.assert(JSON.stringify(candidate(\"ananananananananan\")) === JSON.stringify(anananananananan));\n    console.assert(JSON.stringify(candidate(\"xyzxyzxyzxyzxyzxyz\")) === JSON.stringify(xyzxyzxyzxyzxyz));\n    console.assert(JSON.stringify(candidate(\"abcdefghijkabcdefghijabcdefghij\")) === JSON.stringify(abcdefghij));\n    console.assert(JSON.stringify(candidate(\"zzzzzzzzzzzzzzzz\")) === JSON.stringify(zzzzzzzzzzzzzzz));\n    console.assert(JSON.stringify(candidate(\"thisisaverylongstringwithsomerepeatingpatterns\")) === JSON.stringify(ing));\n    console.assert(JSON.stringify(candidate(\"xyxyxyxyxyxyxyxyxyxyxyxy\")) === JSON.stringify(xyxyxyxyxyxyxyxyxyxyxy));\n    console.assert(JSON.stringify(candidate(\"xyzabcxyzabcxyzabcxyzabcxyz\")) === JSON.stringify(xyzabcxyzabcxyzabcxyz));\n    console.assert(JSON.stringify(candidate(\"supercalifragilisticexpialidocioussupercalifragilisticexpialidocious\")) === JSON.stringify(supercalifragilisticexpialidocious));\n    console.assert(JSON.stringify(candidate(\"aaaaabbbbbaaaaabbbb\")) === JSON.stringify(aaaaabbbb));\n    console.assert(JSON.stringify(candidate(\"bananaapplebananabananaapple\")) === JSON.stringify(bananaapple));\n    console.assert(JSON.stringify(candidate(\"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\")) === JSON.stringify(zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz));\n    console.assert(JSON.stringify(candidate(\"longestsubstringissubstring\")) === JSON.stringify(substring));\n    console.assert(JSON.stringify(candidate(\"abcdefgabcdefg\")) === JSON.stringify(abcdefg));\n    console.assert(JSON.stringify(candidate(\"abcdeabcdeabcdeabcde\")) === JSON.stringify(abcdeabcdeabcde));\n    console.assert(JSON.stringify(candidate(\"thisisaverylongstringwitharepeatedsubstringthisisaverylongstringwitharepeatedsubstring\")) === JSON.stringify(thisisaverylongstringwitharepeatedsubstring));\n    console.assert(JSON.stringify(candidate(\"abracadabraabracadabra\")) === JSON.stringify(abracadabra));\n    console.assert(JSON.stringify(candidate(\"abcdabcdabcdabcdabcdabcd\")) === JSON.stringify(abcdabcdabcdabcdabcd));\n    console.assert(JSON.stringify(candidate(\"xyzxyzxyzxyzxyz\")) === JSON.stringify(xyzxyzxyzxyz));\n    console.assert(JSON.stringify(candidate(\"bananaanananab\")) === JSON.stringify(anana));\n    console.assert(JSON.stringify(candidate(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\")) === JSON.stringify(a));\n    console.assert(JSON.stringify(candidate(\"longestsubstrlongestsubstrlongestsubstr\")) === JSON.stringify(longestsubstrlongestsubstr));\n    console.assert(JSON.stringify(candidate(\"anananananananananananananananananan\")) === JSON.stringify(ananananananananananananananananan));\n    console.assert(JSON.stringify(candidate(\"aabbccddeeffaabbccddeeff\")) === JSON.stringify(aabbccddeeff));\n    console.assert(JSON.stringify(candidate(\"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\")) === JSON.stringify(zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz));\n    console.assert(JSON.stringify(candidate(\"noonnoonnoon\")) === JSON.stringify(noonnoon));\n    console.assert(JSON.stringify(candidate(\"abcdabcdabcdabcdabcdabcdabcdabcdabcd\")) === JSON.stringify(abcdabcdabcdabcdabcdabcdabcdabcd));\n    console.assert(JSON.stringify(candidate(\"abcdefghabcdefghabcdefghabcdefghabcdefghabcdefgh\")) === JSON.stringify(abcdefghabcdefghabcdefghabcdefghabcdefgh));\n    console.assert(JSON.stringify(candidate(\"anananananananananananananananananananananananananananananananananananananananananananan\")) === JSON.stringify(ananananananananananananananananananananananananananananananananananananananananananan));\n    console.assert(JSON.stringify(candidate(\"abcdeabcdeabcde\")) === JSON.stringify(abcdeabcde));\n    console.assert(JSON.stringify(candidate(\"mnopqrsmnopqrsmnopqrsmnopqrs\")) === JSON.stringify(mnopqrsmnopqrsmnopqrs));\n    console.assert(JSON.stringify(candidate(\"abcdefgabcdefgabcdefg\")) === JSON.stringify(abcdefgabcdefg));\n    console.assert(JSON.stringify(candidate(\"racecar\")) === JSON.stringify(c));\n    console.assert(JSON.stringify(candidate(\"abcdefghijabcdefghij\")) === JSON.stringify(abcdefghij));\n    console.assert(JSON.stringify(candidate(\"ababababababababababababababababababababababab\")) === JSON.stringify(abababababababababababababababababababababab));\n    console.assert(JSON.stringify(candidate(\"abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz\")) === JSON.stringify(abcdefghijklmnopqrstuvwxyz));\n    console.assert(JSON.stringify(candidate(\"abcdefghabcdefgh\")) === JSON.stringify(abcdefgh));\n    console.assert(JSON.stringify(candidate(\"pneumonoultramicroscopicsilicovolcanoconiosis\")) === JSON.stringify(ic));\n    console.assert(JSON.stringify(candidate(\"xylophonepianoguitarxylophonepianoguitarxylophonepianoguitar\")) === JSON.stringify(xylophonepianoguitarxylophonepianoguitar));\n    console.assert(JSON.stringify(candidate(\"aaaaabaaaaabaaaaab\")) === JSON.stringify(aaaaabaaaaab));\n    console.assert(JSON.stringify(candidate(\"mississippimississippimississippimississippimississippimississippi\")) === JSON.stringify(mississippimississippimississippimississippimississippi));\n    console.assert(JSON.stringify(candidate(\"hellohellohellohello\")) === JSON.stringify(hellohellohello));\n    console.assert(JSON.stringify(candidate(\"zxcvbnmzxcvbnmzxcvbnm\")) === JSON.stringify(zxcvbnmzxcvbnm));\n    console.assert(JSON.stringify(candidate(\"aaaaaaaaaaaaaaaaaaaa\")) === JSON.stringify(aaaaaaaaaaaaaaaaaaa));\n    console.assert(JSON.stringify(candidate(\"aaaaaaaaaaaaaaaaaaaaaaaa\")) === JSON.stringify(aaaaaaaaaaaaaaaaaaaaaaa));\n}",
+    "typescript": "function check(candidate: Function): void {\n    console.assert(JSON.stringify(candidate(\"abcabcabc\")) === JSON.stringify(abcabc));\n    console.assert(JSON.stringify(candidate(\"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\")) === JSON.stringify(zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz));\n    console.assert(JSON.stringify(candidate(\"mississippi\")) === JSON.stringify(issi));\n    console.assert(JSON.stringify(candidate(\"banana\")) === JSON.stringify(ana));\n    console.assert(JSON.stringify(candidate(\"bananaaa\")) === JSON.stringify(ana));\n    console.assert(JSON.stringify(candidate(\"abcdefgh\")) === JSON.stringify(null));\n    console.assert(JSON.stringify(candidate(\"abcd\")) === JSON.stringify(null));\n    console.assert(JSON.stringify(candidate(\"aaaaa\")) === JSON.stringify(aaaa));\n    console.assert(JSON.stringify(candidate(\"aabb\")) === JSON.stringify(a));\n    console.assert(JSON.stringify(candidate(\"aaaa\")) === JSON.stringify(aaa));\n    console.assert(JSON.stringify(candidate(\"abab\")) === JSON.stringify(ab));\n    console.assert(JSON.stringify(candidate(\"longestrepeatingsubstringlongestrepeatingsubstring\")) === JSON.stringify(longestrepeatingsubstring));\n    console.assert(JSON.stringify(candidate(\"abcdefghijkabcdefgh\")) === JSON.stringify(abcdefgh));\n    console.assert(JSON.stringify(candidate(\"abcdefghijkabcdefghijkabcdefghijkabcdefghijk\")) === JSON.stringify(abcdefghijkabcdefghijkabcdefghijk));\n    console.assert(JSON.stringify(candidate(\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\")) === JSON.stringify(aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa));\n    console.assert(JSON.stringify(candidate(\"norepeats\")) === JSON.stringify(e));\n    console.assert(JSON.stringify(candidate(\"abcdeabcdeabcdeabcdeabcde\")) === JSON.stringify(abcdeabcdeabcdeabcde));\n    console.assert(JSON.stringify(candidate(\"abcabcabcabcabcabcabcd\")) === JSON.stringify(abcabcabcabcabcabc));\n    console.assert(JSON.stringify(candidate(\"abracadabra\")) === JSON.stringify(abra));\n    console.assert(JSON.stringify(candidate(\"abcdefabcdefabcdef\")) === JSON.stringify(abcdefabcdef));\n    console.assert(JSON.stringify(candidate(\"abcabcabcabc\")) === JSON.stringify(abcabcabc));\n    console.assert(JSON.stringify(candidate(\"aaaaaaaaaabbbbbbbbbccccc\")) === JSON.stringify(aaaaaaaaa));\n    console.assert(JSON.stringify(candidate(\"abcdefghabcdefghabcdefghabcdefgh\")) === JSON.stringify(abcdefghabcdefghabcdefgh));\n    console.assert(JSON.stringify(candidate(\"aaaaaabbccccaaa\")) === JSON.stringify(aaaaa));\n    console.assert(JSON.stringify(candidate(\"abcdefghigklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz\")) === JSON.stringify(klmnopqrstuvwxyz));\n    console.assert(JSON.stringify(candidate(\"thisisaverylongstringwithrepeatedsubstringsubstring\")) === JSON.stringify(substring));\n    console.assert(JSON.stringify(candidate(\"abcdefghijabcdefghijabcdefghij\")) === JSON.stringify(abcdefghijabcdefghij));\n    console.assert(JSON.stringify(candidate(\"hellohellohello\")) === JSON.stringify(hellohello));\n    console.assert(JSON.stringify(candidate(\"abababababababababababababababab\")) === JSON.stringify(ababababababababababababababab));\n    console.assert(JSON.stringify(candidate(\"abcdefabcdefabcdefabcdefabcdefabcdefabcdefabcdefabcdef\")) === JSON.stringify(abcdefabcdefabcdefabcdefabcdefabcdefabcdefabcdef));\n    console.assert(JSON.stringify(candidate(\"abcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabc\")) === JSON.stringify(abcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabc));\n    console.assert(JSON.stringify(candidate(\"abcabcabcabcabcabcabcabcabcabcabcabcabc\")) === JSON.stringify(abcabcabcabcabcabcabcabcabcabcabcabc));\n    console.assert(JSON.stringify(candidate(\"anvnvnvnvnvnvnvnvvnvnvnvnvnvnvnvnvnvn\")) === JSON.stringify(vnvnvnvnvnvnvnvnvn));\n    console.assert(JSON.stringify(candidate(\"abcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabc\")) === JSON.stringify(abcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabc));\n    console.assert(JSON.stringify(candidate(\"bananaananabanana\")) === JSON.stringify(banana));\n    console.assert(JSON.stringify(candidate(\"abcabcabcabcabcabcabc\")) === JSON.stringify(abcabcabcabcabcabc));\n    console.assert(JSON.stringify(candidate(\"bananaapplebananabananaapplebananabananaapple\")) === JSON.stringify(bananaapplebananabananaapple));\n    console.assert(JSON.stringify(candidate(\"abcabcabcabcd\")) === JSON.stringify(abcabcabc));\n    console.assert(JSON.stringify(candidate(\"mississippimississippimississippi\")) === JSON.stringify(mississippimississippi));\n    console.assert(JSON.stringify(candidate(\"abcdeabcdeabcdeabcdeabcdeabcdeabcdeabcdeabcde\")) === JSON.stringify(abcdeabcdeabcdeabcdeabcdeabcdeabcdeabcde));\n    console.assert(JSON.stringify(candidate(\"qwertyuiopqwertyuiop\")) === JSON.stringify(qwertyuiop));\n    console.assert(JSON.stringify(candidate(\"abcabcabcabcabcabcabcabcabcabc\")) === JSON.stringify(abcabcabcabcabcabcabcabcabc));\n    console.assert(JSON.stringify(candidate(\"abcdeabcdfabcde\")) === JSON.stringify(abcde));\n    console.assert(JSON.stringify(candidate(\"abracadabraabracadabraabracadabraabracadabraabracadabra\")) === JSON.stringify(abracadabraabracadabraabracadabraabracadabra));\n    console.assert(JSON.stringify(candidate(\"abracadabraabracadabraabracadabra\")) === JSON.stringify(abracadabraabracadabra));\n    console.assert(JSON.stringify(candidate(\"zabacabadabacaba\")) === JSON.stringify(abacaba));\n    console.assert(JSON.stringify(candidate(\"abcdefghijklmnopqrstuvwxyzzyxwvutsrqponmlkjihgfedcba\")) === JSON.stringify(z));\n    console.assert(JSON.stringify(candidate(\"aaaaaa\")) === JSON.stringify(aaaaa));\n    console.assert(JSON.stringify(candidate(\"xyzxyzxyzxyzxyzxyzxyzxyzxyzxyz\")) === JSON.stringify(xyzxyzxyzxyzxyzxyzxyzxyzxyz));\n    console.assert(JSON.stringify(candidate(\"abcabcabcabcabcabc\")) === JSON.stringify(abcabcabcabcabc));\n    console.assert(JSON.stringify(candidate(\"abcdefghijkabcdefghijk\")) === JSON.stringify(abcdefghijk));\n    console.assert(JSON.stringify(candidate(\"12345678901234567890\")) === JSON.stringify(1234567890));\n    console.assert(JSON.stringify(candidate(\"aaaaaaaaaaaaaaaaaa\")) === JSON.stringify(aaaaaaaaaaaaaaaaa));\n    console.assert(JSON.stringify(candidate(\"bananaananabananana\")) === JSON.stringify(banana));\n    console.assert(JSON.stringify(candidate(\"pneumonoultramicroscopicsilicovolcanoconiosispneumonoultramicroscopicsilicovolcanoconiosispneumonoultramicroscopicsilicovolcanoconiosispneumonoultramicroscopicsilicovolcanoconiosis\")) === JSON.stringify(pneumonoultramicroscopicsilicovolcanoconiosispneumonoultramicroscopicsilicovolcanoconiosispneumonoultramicroscopicsilicovolcanoconiosis));\n    console.assert(JSON.stringify(candidate(\"thisisaverylongstringwithsomerepeatedsubstringsubstring\")) === JSON.stringify(substring));\n    console.assert(JSON.stringify(candidate(\"abcdefghijkabcdefghijkabcdefghijk\")) === JSON.stringify(abcdefghijkabcdefghijk));\n    console.assert(JSON.stringify(candidate(\"pneumonoultramicroscopicsilicovolcanoconiosispneumonoultramicroscopicsilicovolcanoconiosis\")) === JSON.stringify(pneumonoultramicroscopicsilicovolcanoconiosis));\n    console.assert(JSON.stringify(candidate(\"abcdabcdabcdabcd\")) === JSON.stringify(abcdabcdabcd));\n    console.assert(JSON.stringify(candidate(\"bananaaaanaaanana\")) === JSON.stringify(anaaa));\n    console.assert(JSON.stringify(candidate(\"aaaaaaa\")) === JSON.stringify(aaaaaa));\n    console.assert(JSON.stringify(candidate(\"abababababababababababababab\")) === JSON.stringify(ababababababababababababab));\n    console.assert(JSON.stringify(candidate(\"asdfghjklasdfghjklasdfghjkl\")) === JSON.stringify(asdfghjklasdfghjkl));\n    console.assert(JSON.stringify(candidate(\"racecaracecaracecar\")) === JSON.stringify(racecaracecar));\n    console.assert(JSON.stringify(candidate(\"abcdefghijk\")) === JSON.stringify(null));\n    console.assert(JSON.stringify(candidate(\"ababababababababababab\")) === JSON.stringify(abababababababababab));\n    console.assert(JSON.stringify(candidate(\"xyzxyzxyzxyzxyzxyzxyzxyzxyz\")) === JSON.stringify(xyzxyzxyzxyzxyzxyzxyzxyz));\n    console.assert(JSON.stringify(candidate(\"abababababababababab\")) === JSON.stringify(ababababababababab));\n    console.assert(JSON.stringify(candidate(\"qwertyuiopqwertyuiopqwertyuiopqwertyuiop\")) === JSON.stringify(qwertyuiopqwertyuiopqwertyuiop));\n    console.assert(JSON.stringify(candidate(\"bananaananabanananabanana\")) === JSON.stringify(ananabanana));\n    console.assert(JSON.stringify(candidate(\"abacabadabacaba\")) === JSON.stringify(abacaba));\n    console.assert(JSON.stringify(candidate(\"zxyzyxyzxyzyxyzxyzyxzyzy\")) === JSON.stringify(zxyzyxyzxyzyx));\n    console.assert(JSON.stringify(candidate(\"bananaananab\")) === JSON.stringify(anana));\n    console.assert(JSON.stringify(candidate(\"ananananananananan\")) === JSON.stringify(anananananananan));\n    console.assert(JSON.stringify(candidate(\"xyzxyzxyzxyzxyzxyz\")) === JSON.stringify(xyzxyzxyzxyzxyz));\n    console.assert(JSON.stringify(candidate(\"abcdefghijkabcdefghijabcdefghij\")) === JSON.stringify(abcdefghij));\n    console.assert(JSON.stringify(candidate(\"zzzzzzzzzzzzzzzz\")) === JSON.stringify(zzzzzzzzzzzzzzz));\n    console.assert(JSON.stringify(candidate(\"thisisaverylongstringwithsomerepeatingpatterns\")) === JSON.stringify(ing));\n    console.assert(JSON.stringify(candidate(\"xyxyxyxyxyxyxyxyxyxyxyxy\")) === JSON.stringify(xyxyxyxyxyxyxyxyxyxyxy));\n    console.assert(JSON.stringify(candidate(\"xyzabcxyzabcxyzabcxyzabcxyz\")) === JSON.stringify(xyzabcxyzabcxyzabcxyz));\n    console.assert(JSON.stringify(candidate(\"supercalifragilisticexpialidocioussupercalifragilisticexpialidocious\")) === JSON.stringify(supercalifragilisticexpialidocious));\n    console.assert(JSON.stringify(candidate(\"aaaaabbbbbaaaaabbbb\")) === JSON.stringify(aaaaabbbb));\n    console.assert(JSON.stringify(candidate(\"bananaapplebananabananaapple\")) === JSON.stringify(bananaapple));\n    console.assert(JSON.stringify(candidate(\"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\")) === JSON.stringify(zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz));\n    console.assert(JSON.stringify(candidate(\"longestsubstringissubstring\")) === JSON.stringify(substring));\n    console.assert(JSON.stringify(candidate(\"abcdefgabcdefg\")) === JSON.stringify(abcdefg));\n    console.assert(JSON.stringify(candidate(\"abcdeabcdeabcdeabcde\")) === JSON.stringify(abcdeabcdeabcde));\n    console.assert(JSON.stringify(candidate(\"thisisaverylongstringwitharepeatedsubstringthisisaverylongstringwitharepeatedsubstring\")) === JSON.stringify(thisisaverylongstringwitharepeatedsubstring));\n    console.assert(JSON.stringify(candidate(\"abracadabraabracadabra\")) === JSON.stringify(abracadabra));\n    console.assert(JSON.stringify(candidate(\"abcdabcdabcdabcdabcdabcd\")) === JSON.stringify(abcdabcdabcdabcdabcd));\n    console.assert(JSON.stringify(candidate(\"xyzxyzxyzxyzxyz\")) === JSON.stringify(xyzxyzxyzxyz));\n    console.assert(JSON.stringify(candidate(\"bananaanananab\")) === JSON.stringify(anana));\n    console.assert(JSON.stringify(candidate(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\")) === JSON.stringify(a));\n    console.assert(JSON.stringify(candidate(\"longestsubstrlongestsubstrlongestsubstr\")) === JSON.stringify(longestsubstrlongestsubstr));\n    console.assert(JSON.stringify(candidate(\"anananananananananananananananananan\")) === JSON.stringify(ananananananananananananananananan));\n    console.assert(JSON.stringify(candidate(\"aabbccddeeffaabbccddeeff\")) === JSON.stringify(aabbccddeeff));\n    console.assert(JSON.stringify(candidate(\"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\")) === JSON.stringify(zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz));\n    console.assert(JSON.stringify(candidate(\"noonnoonnoon\")) === JSON.stringify(noonnoon));\n    console.assert(JSON.stringify(candidate(\"abcdabcdabcdabcdabcdabcdabcdabcdabcd\")) === JSON.stringify(abcdabcdabcdabcdabcdabcdabcdabcd));\n    console.assert(JSON.stringify(candidate(\"abcdefghabcdefghabcdefghabcdefghabcdefghabcdefgh\")) === JSON.stringify(abcdefghabcdefghabcdefghabcdefghabcdefgh));\n    console.assert(JSON.stringify(candidate(\"anananananananananananananananananananananananananananananananananananananananananananan\")) === JSON.stringify(ananananananananananananananananananananananananananananananananananananananananananan));\n    console.assert(JSON.stringify(candidate(\"abcdeabcdeabcde\")) === JSON.stringify(abcdeabcde));\n    console.assert(JSON.stringify(candidate(\"mnopqrsmnopqrsmnopqrsmnopqrs\")) === JSON.stringify(mnopqrsmnopqrsmnopqrs));\n    console.assert(JSON.stringify(candidate(\"abcdefgabcdefgabcdefg\")) === JSON.stringify(abcdefgabcdefg));\n    console.assert(JSON.stringify(candidate(\"racecar\")) === JSON.stringify(c));\n    console.assert(JSON.stringify(candidate(\"abcdefghijabcdefghij\")) === JSON.stringify(abcdefghij));\n    console.assert(JSON.stringify(candidate(\"ababababababababababababababababababababababab\")) === JSON.stringify(abababababababababababababababababababababab));\n    console.assert(JSON.stringify(candidate(\"abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz\")) === JSON.stringify(abcdefghijklmnopqrstuvwxyz));\n    console.assert(JSON.stringify(candidate(\"abcdefghabcdefgh\")) === JSON.stringify(abcdefgh));\n    console.assert(JSON.stringify(candidate(\"pneumonoultramicroscopicsilicovolcanoconiosis\")) === JSON.stringify(ic));\n    console.assert(JSON.stringify(candidate(\"xylophonepianoguitarxylophonepianoguitarxylophonepianoguitar\")) === JSON.stringify(xylophonepianoguitarxylophonepianoguitar));\n    console.assert(JSON.stringify(candidate(\"aaaaabaaaaabaaaaab\")) === JSON.stringify(aaaaabaaaaab));\n    console.assert(JSON.stringify(candidate(\"mississippimississippimississippimississippimississippimississippi\")) === JSON.stringify(mississippimississippimississippimississippimississippi));\n    console.assert(JSON.stringify(candidate(\"hellohellohellohello\")) === JSON.stringify(hellohellohello));\n    console.assert(JSON.stringify(candidate(\"zxcvbnmzxcvbnmzxcvbnm\")) === JSON.stringify(zxcvbnmzxcvbnm));\n    console.assert(JSON.stringify(candidate(\"aaaaaaaaaaaaaaaaaaaa\")) === JSON.stringify(aaaaaaaaaaaaaaaaaaa));\n    console.assert(JSON.stringify(candidate(\"aaaaaaaaaaaaaaaaaaaaaaaa\")) === JSON.stringify(aaaaaaaaaaaaaaaaaaaaaaa));\n}",
+    "golang": "func check(candidate func([]int, int) []int) {\n    assert reflect.DeepEqual(candidate(\"abcabcabc\"), abcabc)\n    assert reflect.DeepEqual(candidate(\"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\"), zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz)\n    assert reflect.DeepEqual(candidate(\"mississippi\"), issi)\n    assert reflect.DeepEqual(candidate(\"banana\"), ana)\n    assert reflect.DeepEqual(candidate(\"bananaaa\"), ana)\n    assert reflect.DeepEqual(candidate(\"abcdefgh\"), nil)\n    assert reflect.DeepEqual(candidate(\"abcd\"), nil)\n    assert reflect.DeepEqual(candidate(\"aaaaa\"), aaaa)\n    assert reflect.DeepEqual(candidate(\"aabb\"), a)\n    assert reflect.DeepEqual(candidate(\"aaaa\"), aaa)\n    assert reflect.DeepEqual(candidate(\"abab\"), ab)\n    assert reflect.DeepEqual(candidate(\"longestrepeatingsubstringlongestrepeatingsubstring\"), longestrepeatingsubstring)\n    assert reflect.DeepEqual(candidate(\"abcdefghijkabcdefgh\"), abcdefgh)\n    assert reflect.DeepEqual(candidate(\"abcdefghijkabcdefghijkabcdefghijkabcdefghijk\"), abcdefghijkabcdefghijkabcdefghijk)\n    assert reflect.DeepEqual(candidate(\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\"), aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa)\n    assert reflect.DeepEqual(candidate(\"norepeats\"), e)\n    assert reflect.DeepEqual(candidate(\"abcdeabcdeabcdeabcdeabcde\"), abcdeabcdeabcdeabcde)\n    assert reflect.DeepEqual(candidate(\"abcabcabcabcabcabcabcd\"), abcabcabcabcabcabc)\n    assert reflect.DeepEqual(candidate(\"abracadabra\"), abra)\n    assert reflect.DeepEqual(candidate(\"abcdefabcdefabcdef\"), abcdefabcdef)\n    assert reflect.DeepEqual(candidate(\"abcabcabcabc\"), abcabcabc)\n    assert reflect.DeepEqual(candidate(\"aaaaaaaaaabbbbbbbbbccccc\"), aaaaaaaaa)\n    assert reflect.DeepEqual(candidate(\"abcdefghabcdefghabcdefghabcdefgh\"), abcdefghabcdefghabcdefgh)\n    assert reflect.DeepEqual(candidate(\"aaaaaabbccccaaa\"), aaaaa)\n    assert reflect.DeepEqual(candidate(\"abcdefghigklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz\"), klmnopqrstuvwxyz)\n    assert reflect.DeepEqual(candidate(\"thisisaverylongstringwithrepeatedsubstringsubstring\"), substring)\n    assert reflect.DeepEqual(candidate(\"abcdefghijabcdefghijabcdefghij\"), abcdefghijabcdefghij)\n    assert reflect.DeepEqual(candidate(\"hellohellohello\"), hellohello)\n    assert reflect.DeepEqual(candidate(\"abababababababababababababababab\"), ababababababababababababababab)\n    assert reflect.DeepEqual(candidate(\"abcdefabcdefabcdefabcdefabcdefabcdefabcdefabcdefabcdef\"), abcdefabcdefabcdefabcdefabcdefabcdefabcdefabcdef)\n    assert reflect.DeepEqual(candidate(\"abcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabc\"), abcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabc)\n    assert reflect.DeepEqual(candidate(\"abcabcabcabcabcabcabcabcabcabcabcabcabc\"), abcabcabcabcabcabcabcabcabcabcabcabc)\n    assert reflect.DeepEqual(candidate(\"anvnvnvnvnvnvnvnvvnvnvnvnvnvnvnvnvnvn\"), vnvnvnvnvnvnvnvnvn)\n    assert reflect.DeepEqual(candidate(\"abcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabc\"), abcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabc)\n    assert reflect.DeepEqual(candidate(\"bananaananabanana\"), banana)\n    assert reflect.DeepEqual(candidate(\"abcabcabcabcabcabcabc\"), abcabcabcabcabcabc)\n    assert reflect.DeepEqual(candidate(\"bananaapplebananabananaapplebananabananaapple\"), bananaapplebananabananaapple)\n    assert reflect.DeepEqual(candidate(\"abcabcabcabcd\"), abcabcabc)\n    assert reflect.DeepEqual(candidate(\"mississippimississippimississippi\"), mississippimississippi)\n    assert reflect.DeepEqual(candidate(\"abcdeabcdeabcdeabcdeabcdeabcdeabcdeabcdeabcde\"), abcdeabcdeabcdeabcdeabcdeabcdeabcdeabcde)\n    assert reflect.DeepEqual(candidate(\"qwertyuiopqwertyuiop\"), qwertyuiop)\n    assert reflect.DeepEqual(candidate(\"abcabcabcabcabcabcabcabcabcabc\"), abcabcabcabcabcabcabcabcabc)\n    assert reflect.DeepEqual(candidate(\"abcdeabcdfabcde\"), abcde)\n    assert reflect.DeepEqual(candidate(\"abracadabraabracadabraabracadabraabracadabraabracadabra\"), abracadabraabracadabraabracadabraabracadabra)\n    assert reflect.DeepEqual(candidate(\"abracadabraabracadabraabracadabra\"), abracadabraabracadabra)\n    assert reflect.DeepEqual(candidate(\"zabacabadabacaba\"), abacaba)\n    assert reflect.DeepEqual(candidate(\"abcdefghijklmnopqrstuvwxyzzyxwvutsrqponmlkjihgfedcba\"), z)\n    assert reflect.DeepEqual(candidate(\"aaaaaa\"), aaaaa)\n    assert reflect.DeepEqual(candidate(\"xyzxyzxyzxyzxyzxyzxyzxyzxyzxyz\"), xyzxyzxyzxyzxyzxyzxyzxyzxyz)\n    assert reflect.DeepEqual(candidate(\"abcabcabcabcabcabc\"), abcabcabcabcabc)\n    assert reflect.DeepEqual(candidate(\"abcdefghijkabcdefghijk\"), abcdefghijk)\n    assert reflect.DeepEqual(candidate(\"12345678901234567890\"), 1234567890)\n    assert reflect.DeepEqual(candidate(\"aaaaaaaaaaaaaaaaaa\"), aaaaaaaaaaaaaaaaa)\n    assert reflect.DeepEqual(candidate(\"bananaananabananana\"), banana)\n    assert reflect.DeepEqual(candidate(\"pneumonoultramicroscopicsilicovolcanoconiosispneumonoultramicroscopicsilicovolcanoconiosispneumonoultramicroscopicsilicovolcanoconiosispneumonoultramicroscopicsilicovolcanoconiosis\"), pneumonoultramicroscopicsilicovolcanoconiosispneumonoultramicroscopicsilicovolcanoconiosispneumonoultramicroscopicsilicovolcanoconiosis)\n    assert reflect.DeepEqual(candidate(\"thisisaverylongstringwithsomerepeatedsubstringsubstring\"), substring)\n    assert reflect.DeepEqual(candidate(\"abcdefghijkabcdefghijkabcdefghijk\"), abcdefghijkabcdefghijk)\n    assert reflect.DeepEqual(candidate(\"pneumonoultramicroscopicsilicovolcanoconiosispneumonoultramicroscopicsilicovolcanoconiosis\"), pneumonoultramicroscopicsilicovolcanoconiosis)\n    assert reflect.DeepEqual(candidate(\"abcdabcdabcdabcd\"), abcdabcdabcd)\n    assert reflect.DeepEqual(candidate(\"bananaaaanaaanana\"), anaaa)\n    assert reflect.DeepEqual(candidate(\"aaaaaaa\"), aaaaaa)\n    assert reflect.DeepEqual(candidate(\"abababababababababababababab\"), ababababababababababababab)\n    assert reflect.DeepEqual(candidate(\"asdfghjklasdfghjklasdfghjkl\"), asdfghjklasdfghjkl)\n    assert reflect.DeepEqual(candidate(\"racecaracecaracecar\"), racecaracecar)\n    assert reflect.DeepEqual(candidate(\"abcdefghijk\"), nil)\n    assert reflect.DeepEqual(candidate(\"ababababababababababab\"), abababababababababab)\n    assert reflect.DeepEqual(candidate(\"xyzxyzxyzxyzxyzxyzxyzxyzxyz\"), xyzxyzxyzxyzxyzxyzxyzxyz)\n    assert reflect.DeepEqual(candidate(\"abababababababababab\"), ababababababababab)\n    assert reflect.DeepEqual(candidate(\"qwertyuiopqwertyuiopqwertyuiopqwertyuiop\"), qwertyuiopqwertyuiopqwertyuiop)\n    assert reflect.DeepEqual(candidate(\"bananaananabanananabanana\"), ananabanana)\n    assert reflect.DeepEqual(candidate(\"abacabadabacaba\"), abacaba)\n    assert reflect.DeepEqual(candidate(\"zxyzyxyzxyzyxyzxyzyxzyzy\"), zxyzyxyzxyzyx)\n    assert reflect.DeepEqual(candidate(\"bananaananab\"), anana)\n    assert reflect.DeepEqual(candidate(\"ananananananananan\"), anananananananan)\n    assert reflect.DeepEqual(candidate(\"xyzxyzxyzxyzxyzxyz\"), xyzxyzxyzxyzxyz)\n    assert reflect.DeepEqual(candidate(\"abcdefghijkabcdefghijabcdefghij\"), abcdefghij)\n    assert reflect.DeepEqual(candidate(\"zzzzzzzzzzzzzzzz\"), zzzzzzzzzzzzzzz)\n    assert reflect.DeepEqual(candidate(\"thisisaverylongstringwithsomerepeatingpatterns\"), ing)\n    assert reflect.DeepEqual(candidate(\"xyxyxyxyxyxyxyxyxyxyxyxy\"), xyxyxyxyxyxyxyxyxyxyxy)\n    assert reflect.DeepEqual(candidate(\"xyzabcxyzabcxyzabcxyzabcxyz\"), xyzabcxyzabcxyzabcxyz)\n    assert reflect.DeepEqual(candidate(\"supercalifragilisticexpialidocioussupercalifragilisticexpialidocious\"), supercalifragilisticexpialidocious)\n    assert reflect.DeepEqual(candidate(\"aaaaabbbbbaaaaabbbb\"), aaaaabbbb)\n    assert reflect.DeepEqual(candidate(\"bananaapplebananabananaapple\"), bananaapple)\n    assert reflect.DeepEqual(candidate(\"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\"), zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz)\n    assert reflect.DeepEqual(candidate(\"longestsubstringissubstring\"), substring)\n    assert reflect.DeepEqual(candidate(\"abcdefgabcdefg\"), abcdefg)\n    assert reflect.DeepEqual(candidate(\"abcdeabcdeabcdeabcde\"), abcdeabcdeabcde)\n    assert reflect.DeepEqual(candidate(\"thisisaverylongstringwitharepeatedsubstringthisisaverylongstringwitharepeatedsubstring\"), thisisaverylongstringwitharepeatedsubstring)\n    assert reflect.DeepEqual(candidate(\"abracadabraabracadabra\"), abracadabra)\n    assert reflect.DeepEqual(candidate(\"abcdabcdabcdabcdabcdabcd\"), abcdabcdabcdabcdabcd)\n    assert reflect.DeepEqual(candidate(\"xyzxyzxyzxyzxyz\"), xyzxyzxyzxyz)\n    assert reflect.DeepEqual(candidate(\"bananaanananab\"), anana)\n    assert reflect.DeepEqual(candidate(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\"), a)\n    assert reflect.DeepEqual(candidate(\"longestsubstrlongestsubstrlongestsubstr\"), longestsubstrlongestsubstr)\n    assert reflect.DeepEqual(candidate(\"anananananananananananananananananan\"), ananananananananananananananananan)\n    assert reflect.DeepEqual(candidate(\"aabbccddeeffaabbccddeeff\"), aabbccddeeff)\n    assert reflect.DeepEqual(candidate(\"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\"), zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz)\n    assert reflect.DeepEqual(candidate(\"noonnoonnoon\"), noonnoon)\n    assert reflect.DeepEqual(candidate(\"abcdabcdabcdabcdabcdabcdabcdabcdabcd\"), abcdabcdabcdabcdabcdabcdabcdabcd)\n    assert reflect.DeepEqual(candidate(\"abcdefghabcdefghabcdefghabcdefghabcdefghabcdefgh\"), abcdefghabcdefghabcdefghabcdefghabcdefgh)\n    assert reflect.DeepEqual(candidate(\"anananananananananananananananananananananananananananananananananananananananananananan\"), ananananananananananananananananananananananananananananananananananananananananananan)\n    assert reflect.DeepEqual(candidate(\"abcdeabcdeabcde\"), abcdeabcde)\n    assert reflect.DeepEqual(candidate(\"mnopqrsmnopqrsmnopqrsmnopqrs\"), mnopqrsmnopqrsmnopqrs)\n    assert reflect.DeepEqual(candidate(\"abcdefgabcdefgabcdefg\"), abcdefgabcdefg)\n    assert reflect.DeepEqual(candidate(\"racecar\"), c)\n    assert reflect.DeepEqual(candidate(\"abcdefghijabcdefghij\"), abcdefghij)\n    assert reflect.DeepEqual(candidate(\"ababababababababababababababababababababababab\"), abababababababababababababababababababababab)\n    assert reflect.DeepEqual(candidate(\"abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz\"), abcdefghijklmnopqrstuvwxyz)\n    assert reflect.DeepEqual(candidate(\"abcdefghabcdefgh\"), abcdefgh)\n    assert reflect.DeepEqual(candidate(\"pneumonoultramicroscopicsilicovolcanoconiosis\"), ic)\n    assert reflect.DeepEqual(candidate(\"xylophonepianoguitarxylophonepianoguitarxylophonepianoguitar\"), xylophonepianoguitarxylophonepianoguitar)\n    assert reflect.DeepEqual(candidate(\"aaaaabaaaaabaaaaab\"), aaaaabaaaaab)\n    assert reflect.DeepEqual(candidate(\"mississippimississippimississippimississippimississippimississippi\"), mississippimississippimississippimississippimississippi)\n    assert reflect.DeepEqual(candidate(\"hellohellohellohello\"), hellohellohello)\n    assert reflect.DeepEqual(candidate(\"zxcvbnmzxcvbnmzxcvbnm\"), zxcvbnmzxcvbnm)\n    assert reflect.DeepEqual(candidate(\"aaaaaaaaaaaaaaaaaaaa\"), aaaaaaaaaaaaaaaaaaa)\n    assert reflect.DeepEqual(candidate(\"aaaaaaaaaaaaaaaaaaaaaaaa\"), aaaaaaaaaaaaaaaaaaaaaaa)\n}",
+    "rust": "fn check(candidate: fn(Vec<i32>, i32) -> Vec<i32>) {\n    assert_eq!(candidate(\"abcabcabc\"), abcabc);\n    assert_eq!(candidate(\"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\"), zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz);\n    assert_eq!(candidate(\"mississippi\"), issi);\n    assert_eq!(candidate(\"banana\"), ana);\n    assert_eq!(candidate(\"bananaaa\"), ana);\n    assert_eq!(candidate(\"abcdefgh\"), None);\n    assert_eq!(candidate(\"abcd\"), None);\n    assert_eq!(candidate(\"aaaaa\"), aaaa);\n    assert_eq!(candidate(\"aabb\"), a);\n    assert_eq!(candidate(\"aaaa\"), aaa);\n    assert_eq!(candidate(\"abab\"), ab);\n    assert_eq!(candidate(\"longestrepeatingsubstringlongestrepeatingsubstring\"), longestrepeatingsubstring);\n    assert_eq!(candidate(\"abcdefghijkabcdefgh\"), abcdefgh);\n    assert_eq!(candidate(\"abcdefghijkabcdefghijkabcdefghijkabcdefghijk\"), abcdefghijkabcdefghijkabcdefghijk);\n    assert_eq!(candidate(\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\"), aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa);\n    assert_eq!(candidate(\"norepeats\"), e);\n    assert_eq!(candidate(\"abcdeabcdeabcdeabcdeabcde\"), abcdeabcdeabcdeabcde);\n    assert_eq!(candidate(\"abcabcabcabcabcabcabcd\"), abcabcabcabcabcabc);\n    assert_eq!(candidate(\"abracadabra\"), abra);\n    assert_eq!(candidate(\"abcdefabcdefabcdef\"), abcdefabcdef);\n    assert_eq!(candidate(\"abcabcabcabc\"), abcabcabc);\n    assert_eq!(candidate(\"aaaaaaaaaabbbbbbbbbccccc\"), aaaaaaaaa);\n    assert_eq!(candidate(\"abcdefghabcdefghabcdefghabcdefgh\"), abcdefghabcdefghabcdefgh);\n    assert_eq!(candidate(\"aaaaaabbccccaaa\"), aaaaa);\n    assert_eq!(candidate(\"abcdefghigklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz\"), klmnopqrstuvwxyz);\n    assert_eq!(candidate(\"thisisaverylongstringwithrepeatedsubstringsubstring\"), substring);\n    assert_eq!(candidate(\"abcdefghijabcdefghijabcdefghij\"), abcdefghijabcdefghij);\n    assert_eq!(candidate(\"hellohellohello\"), hellohello);\n    assert_eq!(candidate(\"abababababababababababababababab\"), ababababababababababababababab);\n    assert_eq!(candidate(\"abcdefabcdefabcdefabcdefabcdefabcdefabcdefabcdefabcdef\"), abcdefabcdefabcdefabcdefabcdefabcdefabcdefabcdef);\n    assert_eq!(candidate(\"abcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabc\"), abcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabc);\n    assert_eq!(candidate(\"abcabcabcabcabcabcabcabcabcabcabcabcabc\"), abcabcabcabcabcabcabcabcabcabcabcabc);\n    assert_eq!(candidate(\"anvnvnvnvnvnvnvnvvnvnvnvnvnvnvnvnvnvn\"), vnvnvnvnvnvnvnvnvn);\n    assert_eq!(candidate(\"abcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabc\"), abcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabc);\n    assert_eq!(candidate(\"bananaananabanana\"), banana);\n    assert_eq!(candidate(\"abcabcabcabcabcabcabc\"), abcabcabcabcabcabc);\n    assert_eq!(candidate(\"bananaapplebananabananaapplebananabananaapple\"), bananaapplebananabananaapple);\n    assert_eq!(candidate(\"abcabcabcabcd\"), abcabcabc);\n    assert_eq!(candidate(\"mississippimississippimississippi\"), mississippimississippi);\n    assert_eq!(candidate(\"abcdeabcdeabcdeabcdeabcdeabcdeabcdeabcdeabcde\"), abcdeabcdeabcdeabcdeabcdeabcdeabcdeabcde);\n    assert_eq!(candidate(\"qwertyuiopqwertyuiop\"), qwertyuiop);\n    assert_eq!(candidate(\"abcabcabcabcabcabcabcabcabcabc\"), abcabcabcabcabcabcabcabcabc);\n    assert_eq!(candidate(\"abcdeabcdfabcde\"), abcde);\n    assert_eq!(candidate(\"abracadabraabracadabraabracadabraabracadabraabracadabra\"), abracadabraabracadabraabracadabraabracadabra);\n    assert_eq!(candidate(\"abracadabraabracadabraabracadabra\"), abracadabraabracadabra);\n    assert_eq!(candidate(\"zabacabadabacaba\"), abacaba);\n    assert_eq!(candidate(\"abcdefghijklmnopqrstuvwxyzzyxwvutsrqponmlkjihgfedcba\"), z);\n    assert_eq!(candidate(\"aaaaaa\"), aaaaa);\n    assert_eq!(candidate(\"xyzxyzxyzxyzxyzxyzxyzxyzxyzxyz\"), xyzxyzxyzxyzxyzxyzxyzxyzxyz);\n    assert_eq!(candidate(\"abcabcabcabcabcabc\"), abcabcabcabcabc);\n    assert_eq!(candidate(\"abcdefghijkabcdefghijk\"), abcdefghijk);\n    assert_eq!(candidate(\"12345678901234567890\"), 1234567890);\n    assert_eq!(candidate(\"aaaaaaaaaaaaaaaaaa\"), aaaaaaaaaaaaaaaaa);\n    assert_eq!(candidate(\"bananaananabananana\"), banana);\n    assert_eq!(candidate(\"pneumonoultramicroscopicsilicovolcanoconiosispneumonoultramicroscopicsilicovolcanoconiosispneumonoultramicroscopicsilicovolcanoconiosispneumonoultramicroscopicsilicovolcanoconiosis\"), pneumonoultramicroscopicsilicovolcanoconiosispneumonoultramicroscopicsilicovolcanoconiosispneumonoultramicroscopicsilicovolcanoconiosis);\n    assert_eq!(candidate(\"thisisaverylongstringwithsomerepeatedsubstringsubstring\"), substring);\n    assert_eq!(candidate(\"abcdefghijkabcdefghijkabcdefghijk\"), abcdefghijkabcdefghijk);\n    assert_eq!(candidate(\"pneumonoultramicroscopicsilicovolcanoconiosispneumonoultramicroscopicsilicovolcanoconiosis\"), pneumonoultramicroscopicsilicovolcanoconiosis);\n    assert_eq!(candidate(\"abcdabcdabcdabcd\"), abcdabcdabcd);\n    assert_eq!(candidate(\"bananaaaanaaanana\"), anaaa);\n    assert_eq!(candidate(\"aaaaaaa\"), aaaaaa);\n    assert_eq!(candidate(\"abababababababababababababab\"), ababababababababababababab);\n    assert_eq!(candidate(\"asdfghjklasdfghjklasdfghjkl\"), asdfghjklasdfghjkl);\n    assert_eq!(candidate(\"racecaracecaracecar\"), racecaracecar);\n    assert_eq!(candidate(\"abcdefghijk\"), None);\n    assert_eq!(candidate(\"ababababababababababab\"), abababababababababab);\n    assert_eq!(candidate(\"xyzxyzxyzxyzxyzxyzxyzxyzxyz\"), xyzxyzxyzxyzxyzxyzxyzxyz);\n    assert_eq!(candidate(\"abababababababababab\"), ababababababababab);\n    assert_eq!(candidate(\"qwertyuiopqwertyuiopqwertyuiopqwertyuiop\"), qwertyuiopqwertyuiopqwertyuiop);\n    assert_eq!(candidate(\"bananaananabanananabanana\"), ananabanana);\n    assert_eq!(candidate(\"abacabadabacaba\"), abacaba);\n    assert_eq!(candidate(\"zxyzyxyzxyzyxyzxyzyxzyzy\"), zxyzyxyzxyzyx);\n    assert_eq!(candidate(\"bananaananab\"), anana);\n    assert_eq!(candidate(\"ananananananananan\"), anananananananan);\n    assert_eq!(candidate(\"xyzxyzxyzxyzxyzxyz\"), xyzxyzxyzxyzxyz);\n    assert_eq!(candidate(\"abcdefghijkabcdefghijabcdefghij\"), abcdefghij);\n    assert_eq!(candidate(\"zzzzzzzzzzzzzzzz\"), zzzzzzzzzzzzzzz);\n    assert_eq!(candidate(\"thisisaverylongstringwithsomerepeatingpatterns\"), ing);\n    assert_eq!(candidate(\"xyxyxyxyxyxyxyxyxyxyxyxy\"), xyxyxyxyxyxyxyxyxyxyxy);\n    assert_eq!(candidate(\"xyzabcxyzabcxyzabcxyzabcxyz\"), xyzabcxyzabcxyzabcxyz);\n    assert_eq!(candidate(\"supercalifragilisticexpialidocioussupercalifragilisticexpialidocious\"), supercalifragilisticexpialidocious);\n    assert_eq!(candidate(\"aaaaabbbbbaaaaabbbb\"), aaaaabbbb);\n    assert_eq!(candidate(\"bananaapplebananabananaapple\"), bananaapple);\n    assert_eq!(candidate(\"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\"), zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz);\n    assert_eq!(candidate(\"longestsubstringissubstring\"), substring);\n    assert_eq!(candidate(\"abcdefgabcdefg\"), abcdefg);\n    assert_eq!(candidate(\"abcdeabcdeabcdeabcde\"), abcdeabcdeabcde);\n    assert_eq!(candidate(\"thisisaverylongstringwitharepeatedsubstringthisisaverylongstringwitharepeatedsubstring\"), thisisaverylongstringwitharepeatedsubstring);\n    assert_eq!(candidate(\"abracadabraabracadabra\"), abracadabra);\n    assert_eq!(candidate(\"abcdabcdabcdabcdabcdabcd\"), abcdabcdabcdabcdabcd);\n    assert_eq!(candidate(\"xyzxyzxyzxyzxyz\"), xyzxyzxyzxyz);\n    assert_eq!(candidate(\"bananaanananab\"), anana);\n    assert_eq!(candidate(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\"), a);\n    assert_eq!(candidate(\"longestsubstrlongestsubstrlongestsubstr\"), longestsubstrlongestsubstr);\n    assert_eq!(candidate(\"anananananananananananananananananan\"), ananananananananananananananananan);\n    assert_eq!(candidate(\"aabbccddeeffaabbccddeeff\"), aabbccddeeff);\n    assert_eq!(candidate(\"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\"), zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz);\n    assert_eq!(candidate(\"noonnoonnoon\"), noonnoon);\n    assert_eq!(candidate(\"abcdabcdabcdabcdabcdabcdabcdabcdabcd\"), abcdabcdabcdabcdabcdabcdabcdabcd);\n    assert_eq!(candidate(\"abcdefghabcdefghabcdefghabcdefghabcdefghabcdefgh\"), abcdefghabcdefghabcdefghabcdefghabcdefgh);\n    assert_eq!(candidate(\"anananananananananananananananananananananananananananananananananananananananananananan\"), ananananananananananananananananananananananananananananananananananananananananananan);\n    assert_eq!(candidate(\"abcdeabcdeabcde\"), abcdeabcde);\n    assert_eq!(candidate(\"mnopqrsmnopqrsmnopqrsmnopqrs\"), mnopqrsmnopqrsmnopqrs);\n    assert_eq!(candidate(\"abcdefgabcdefgabcdefg\"), abcdefgabcdefg);\n    assert_eq!(candidate(\"racecar\"), c);\n    assert_eq!(candidate(\"abcdefghijabcdefghij\"), abcdefghij);\n    assert_eq!(candidate(\"ababababababababababababababababababababababab\"), abababababababababababababababababababababab);\n    assert_eq!(candidate(\"abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz\"), abcdefghijklmnopqrstuvwxyz);\n    assert_eq!(candidate(\"abcdefghabcdefgh\"), abcdefgh);\n    assert_eq!(candidate(\"pneumonoultramicroscopicsilicovolcanoconiosis\"), ic);\n    assert_eq!(candidate(\"xylophonepianoguitarxylophonepianoguitarxylophonepianoguitar\"), xylophonepianoguitarxylophonepianoguitar);\n    assert_eq!(candidate(\"aaaaabaaaaabaaaaab\"), aaaaabaaaaab);\n    assert_eq!(candidate(\"mississippimississippimississippimississippimississippimississippi\"), mississippimississippimississippimississippimississippi);\n    assert_eq!(candidate(\"hellohellohellohello\"), hellohellohello);\n    assert_eq!(candidate(\"zxcvbnmzxcvbnmzxcvbnm\"), zxcvbnmzxcvbnm);\n    assert_eq!(candidate(\"aaaaaaaaaaaaaaaaaaaa\"), aaaaaaaaaaaaaaaaaaa);\n    assert_eq!(candidate(\"aaaaaaaaaaaaaaaaaaaaaaaa\"), aaaaaaaaaaaaaaaaaaaaaaa);\n}"
+  },
+  "test_cases": [
+    {
+      "input": "s = \"abcabcabc\"",
+      "output": "abcabc"
+    },
+    {
+      "input": "s = \"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\"",
+      "output": "zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+    },
+    {
+      "input": "s = \"mississippi\"",
+      "output": "issi"
+    },
+    {
+      "input": "s = \"banana\"",
+      "output": "ana"
+    },
+    {
+      "input": "s = \"bananaaa\"",
+      "output": "ana"
+    },
+    {
+      "input": "s = \"abcdefgh\"",
+      "output": ""
+    },
+    {
+      "input": "s = \"abcd\"",
+      "output": ""
+    },
+    {
+      "input": "s = \"aaaaa\"",
+      "output": "aaaa"
+    },
+    {
+      "input": "s = \"aabb\"",
+      "output": "a"
+    },
+    {
+      "input": "s = \"aaaa\"",
+      "output": "aaa"
+    },
+    {
+      "input": "s = \"abab\"",
+      "output": "ab"
+    },
+    {
+      "input": "s = \"longestrepeatingsubstringlongestrepeatingsubstring\"",
+      "output": "longestrepeatingsubstring"
+    },
+    {
+      "input": "s = \"abcdefghijkabcdefgh\"",
+      "output": "abcdefgh"
+    },
+    {
+      "input": "s = \"abcdefghijkabcdefghijkabcdefghijkabcdefghijk\"",
+      "output": "abcdefghijkabcdefghijkabcdefghijk"
+    },
+    {
+      "input": "s = \"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\"",
+      "output": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    },
+    {
+      "input": "s = \"norepeats\"",
+      "output": "e"
+    },
+    {
+      "input": "s = \"abcdeabcdeabcdeabcdeabcde\"",
+      "output": "abcdeabcdeabcdeabcde"
+    },
+    {
+      "input": "s = \"abcabcabcabcabcabcabcd\"",
+      "output": "abcabcabcabcabcabc"
+    },
+    {
+      "input": "s = \"abracadabra\"",
+      "output": "abra"
+    },
+    {
+      "input": "s = \"abcdefabcdefabcdef\"",
+      "output": "abcdefabcdef"
+    },
+    {
+      "input": "s = \"abcabcabcabc\"",
+      "output": "abcabcabc"
+    },
+    {
+      "input": "s = \"aaaaaaaaaabbbbbbbbbccccc\"",
+      "output": "aaaaaaaaa"
+    },
+    {
+      "input": "s = \"abcdefghabcdefghabcdefghabcdefgh\"",
+      "output": "abcdefghabcdefghabcdefgh"
+    },
+    {
+      "input": "s = \"aaaaaabbccccaaa\"",
+      "output": "aaaaa"
+    },
+    {
+      "input": "s = \"abcdefghigklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz\"",
+      "output": "klmnopqrstuvwxyz"
+    },
+    {
+      "input": "s = \"thisisaverylongstringwithrepeatedsubstringsubstring\"",
+      "output": "substring"
+    },
+    {
+      "input": "s = \"abcdefghijabcdefghijabcdefghij\"",
+      "output": "abcdefghijabcdefghij"
+    },
+    {
+      "input": "s = \"hellohellohello\"",
+      "output": "hellohello"
+    },
+    {
+      "input": "s = \"abababababababababababababababab\"",
+      "output": "ababababababababababababababab"
+    },
+    {
+      "input": "s = \"abcdefabcdefabcdefabcdefabcdefabcdefabcdefabcdefabcdef\"",
+      "output": "abcdefabcdefabcdefabcdefabcdefabcdefabcdefabcdef"
+    },
+    {
+      "input": "s = \"abcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabc\"",
+      "output": "abcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabc"
+    },
+    {
+      "input": "s = \"abcabcabcabcabcabcabcabcabcabcabcabcabc\"",
+      "output": "abcabcabcabcabcabcabcabcabcabcabcabc"
+    },
+    {
+      "input": "s = \"anvnvnvnvnvnvnvnvvnvnvnvnvnvnvnvnvnvn\"",
+      "output": "vnvnvnvnvnvnvnvnvn"
+    },
+    {
+      "input": "s = \"abcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabc\"",
+      "output": "abcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabc"
+    },
+    {
+      "input": "s = \"bananaananabanana\"",
+      "output": "banana"
+    },
+    {
+      "input": "s = \"abcabcabcabcabcabcabc\"",
+      "output": "abcabcabcabcabcabc"
+    },
+    {
+      "input": "s = \"bananaapplebananabananaapplebananabananaapple\"",
+      "output": "bananaapplebananabananaapple"
+    },
+    {
+      "input": "s = \"abcabcabcabcd\"",
+      "output": "abcabcabc"
+    },
+    {
+      "input": "s = \"mississippimississippimississippi\"",
+      "output": "mississippimississippi"
+    },
+    {
+      "input": "s = \"abcdeabcdeabcdeabcdeabcdeabcdeabcdeabcdeabcde\"",
+      "output": "abcdeabcdeabcdeabcdeabcdeabcdeabcdeabcde"
+    },
+    {
+      "input": "s = \"qwertyuiopqwertyuiop\"",
+      "output": "qwertyuiop"
+    },
+    {
+      "input": "s = \"abcabcabcabcabcabcabcabcabcabc\"",
+      "output": "abcabcabcabcabcabcabcabcabc"
+    },
+    {
+      "input": "s = \"abcdeabcdfabcde\"",
+      "output": "abcde"
+    },
+    {
+      "input": "s = \"abracadabraabracadabraabracadabraabracadabraabracadabra\"",
+      "output": "abracadabraabracadabraabracadabraabracadabra"
+    },
+    {
+      "input": "s = \"abracadabraabracadabraabracadabra\"",
+      "output": "abracadabraabracadabra"
+    },
+    {
+      "input": "s = \"zabacabadabacaba\"",
+      "output": "abacaba"
+    },
+    {
+      "input": "s = \"abcdefghijklmnopqrstuvwxyzzyxwvutsrqponmlkjihgfedcba\"",
+      "output": "z"
+    },
+    {
+      "input": "s = \"aaaaaa\"",
+      "output": "aaaaa"
+    },
+    {
+      "input": "s = \"xyzxyzxyzxyzxyzxyzxyzxyzxyzxyz\"",
+      "output": "xyzxyzxyzxyzxyzxyzxyzxyzxyz"
+    },
+    {
+      "input": "s = \"abcabcabcabcabcabc\"",
+      "output": "abcabcabcabcabc"
+    },
+    {
+      "input": "s = \"abcdefghijkabcdefghijk\"",
+      "output": "abcdefghijk"
+    },
+    {
+      "input": "s = \"12345678901234567890\"",
+      "output": "1234567890"
+    },
+    {
+      "input": "s = \"aaaaaaaaaaaaaaaaaa\"",
+      "output": "aaaaaaaaaaaaaaaaa"
+    },
+    {
+      "input": "s = \"bananaananabananana\"",
+      "output": "banana"
+    },
+    {
+      "input": "s = \"pneumonoultramicroscopicsilicovolcanoconiosispneumonoultramicroscopicsilicovolcanoconiosispneumonoultramicroscopicsilicovolcanoconiosispneumonoultramicroscopicsilicovolcanoconiosis\"",
+      "output": "pneumonoultramicroscopicsilicovolcanoconiosispneumonoultramicroscopicsilicovolcanoconiosispneumonoultramicroscopicsilicovolcanoconiosis"
+    },
+    {
+      "input": "s = \"thisisaverylongstringwithsomerepeatedsubstringsubstring\"",
+      "output": "substring"
+    },
+    {
+      "input": "s = \"abcdefghijkabcdefghijkabcdefghijk\"",
+      "output": "abcdefghijkabcdefghijk"
+    },
+    {
+      "input": "s = \"pneumonoultramicroscopicsilicovolcanoconiosispneumonoultramicroscopicsilicovolcanoconiosis\"",
+      "output": "pneumonoultramicroscopicsilicovolcanoconiosis"
+    },
+    {
+      "input": "s = \"abcdabcdabcdabcd\"",
+      "output": "abcdabcdabcd"
+    },
+    {
+      "input": "s = \"bananaaaanaaanana\"",
+      "output": "anaaa"
+    },
+    {
+      "input": "s = \"aaaaaaa\"",
+      "output": "aaaaaa"
+    },
+    {
+      "input": "s = \"abababababababababababababab\"",
+      "output": "ababababababababababababab"
+    },
+    {
+      "input": "s = \"asdfghjklasdfghjklasdfghjkl\"",
+      "output": "asdfghjklasdfghjkl"
+    },
+    {
+      "input": "s = \"racecaracecaracecar\"",
+      "output": "racecaracecar"
+    },
+    {
+      "input": "s = \"abcdefghijk\"",
+      "output": ""
+    },
+    {
+      "input": "s = \"ababababababababababab\"",
+      "output": "abababababababababab"
+    },
+    {
+      "input": "s = \"xyzxyzxyzxyzxyzxyzxyzxyzxyz\"",
+      "output": "xyzxyzxyzxyzxyzxyzxyzxyz"
+    },
+    {
+      "input": "s = \"abababababababababab\"",
+      "output": "ababababababababab"
+    },
+    {
+      "input": "s = \"qwertyuiopqwertyuiopqwertyuiopqwertyuiop\"",
+      "output": "qwertyuiopqwertyuiopqwertyuiop"
+    },
+    {
+      "input": "s = \"bananaananabanananabanana\"",
+      "output": "ananabanana"
+    },
+    {
+      "input": "s = \"abacabadabacaba\"",
+      "output": "abacaba"
+    },
+    {
+      "input": "s = \"zxyzyxyzxyzyxyzxyzyxzyzy\"",
+      "output": "zxyzyxyzxyzyx"
+    },
+    {
+      "input": "s = \"bananaananab\"",
+      "output": "anana"
+    },
+    {
+      "input": "s = \"ananananananananan\"",
+      "output": "anananananananan"
+    },
+    {
+      "input": "s = \"xyzxyzxyzxyzxyzxyz\"",
+      "output": "xyzxyzxyzxyzxyz"
+    },
+    {
+      "input": "s = \"abcdefghijkabcdefghijabcdefghij\"",
+      "output": "abcdefghij"
+    },
+    {
+      "input": "s = \"zzzzzzzzzzzzzzzz\"",
+      "output": "zzzzzzzzzzzzzzz"
+    },
+    {
+      "input": "s = \"thisisaverylongstringwithsomerepeatingpatterns\"",
+      "output": "ing"
+    },
+    {
+      "input": "s = \"xyxyxyxyxyxyxyxyxyxyxyxy\"",
+      "output": "xyxyxyxyxyxyxyxyxyxyxy"
+    },
+    {
+      "input": "s = \"xyzabcxyzabcxyzabcxyzabcxyz\"",
+      "output": "xyzabcxyzabcxyzabcxyz"
+    },
+    {
+      "input": "s = \"supercalifragilisticexpialidocioussupercalifragilisticexpialidocious\"",
+      "output": "supercalifragilisticexpialidocious"
+    },
+    {
+      "input": "s = \"aaaaabbbbbaaaaabbbb\"",
+      "output": "aaaaabbbb"
+    },
+    {
+      "input": "s = \"bananaapplebananabananaapple\"",
+      "output": "bananaapple"
+    },
+    {
+      "input": "s = \"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\"",
+      "output": "zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+    },
+    {
+      "input": "s = \"longestsubstringissubstring\"",
+      "output": "substring"
+    },
+    {
+      "input": "s = \"abcdefgabcdefg\"",
+      "output": "abcdefg"
+    },
+    {
+      "input": "s = \"abcdeabcdeabcdeabcde\"",
+      "output": "abcdeabcdeabcde"
+    },
+    {
+      "input": "s = \"thisisaverylongstringwitharepeatedsubstringthisisaverylongstringwitharepeatedsubstring\"",
+      "output": "thisisaverylongstringwitharepeatedsubstring"
+    },
+    {
+      "input": "s = \"abracadabraabracadabra\"",
+      "output": "abracadabra"
+    },
+    {
+      "input": "s = \"abcdabcdabcdabcdabcdabcd\"",
+      "output": "abcdabcdabcdabcdabcd"
+    },
+    {
+      "input": "s = \"xyzxyzxyzxyzxyz\"",
+      "output": "xyzxyzxyzxyz"
+    },
+    {
+      "input": "s = \"bananaanananab\"",
+      "output": "anana"
+    },
+    {
+      "input": "s = \"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\"",
+      "output": "a"
+    },
+    {
+      "input": "s = \"longestsubstrlongestsubstrlongestsubstr\"",
+      "output": "longestsubstrlongestsubstr"
+    },
+    {
+      "input": "s = \"anananananananananananananananananan\"",
+      "output": "ananananananananananananananananan"
+    },
+    {
+      "input": "s = \"aabbccddeeffaabbccddeeff\"",
+      "output": "aabbccddeeff"
+    },
+    {
+      "input": "s = \"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\"",
+      "output": "zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+    },
+    {
+      "input": "s = \"noonnoonnoon\"",
+      "output": "noonnoon"
+    },
+    {
+      "input": "s = \"abcdabcdabcdabcdabcdabcdabcdabcdabcd\"",
+      "output": "abcdabcdabcdabcdabcdabcdabcdabcd"
+    },
+    {
+      "input": "s = \"abcdefghabcdefghabcdefghabcdefghabcdefghabcdefgh\"",
+      "output": "abcdefghabcdefghabcdefghabcdefghabcdefgh"
+    },
+    {
+      "input": "s = \"anananananananananananananananananananananananananananananananananananananananananananan\"",
+      "output": "ananananananananananananananananananananananananananananananananananananananananananan"
+    },
+    {
+      "input": "s = \"abcdeabcdeabcde\"",
+      "output": "abcdeabcde"
+    },
+    {
+      "input": "s = \"mnopqrsmnopqrsmnopqrsmnopqrs\"",
+      "output": "mnopqrsmnopqrsmnopqrs"
+    },
+    {
+      "input": "s = \"abcdefgabcdefgabcdefg\"",
+      "output": "abcdefgabcdefg"
+    },
+    {
+      "input": "s = \"racecar\"",
+      "output": "c"
+    },
+    {
+      "input": "s = \"abcdefghijabcdefghij\"",
+      "output": "abcdefghij"
+    },
+    {
+      "input": "s = \"ababababababababababababababababababababababab\"",
+      "output": "abababababababababababababababababababababab"
+    },
+    {
+      "input": "s = \"abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz\"",
+      "output": "abcdefghijklmnopqrstuvwxyz"
+    },
+    {
+      "input": "s = \"abcdefghabcdefgh\"",
+      "output": "abcdefgh"
+    },
+    {
+      "input": "s = \"pneumonoultramicroscopicsilicovolcanoconiosis\"",
+      "output": "ic"
+    },
+    {
+      "input": "s = \"xylophonepianoguitarxylophonepianoguitarxylophonepianoguitar\"",
+      "output": "xylophonepianoguitarxylophonepianoguitar"
+    },
+    {
+      "input": "s = \"aaaaabaaaaabaaaaab\"",
+      "output": "aaaaabaaaaab"
+    },
+    {
+      "input": "s = \"mississippimississippimississippimississippimississippimississippi\"",
+      "output": "mississippimississippimississippimississippimississippi"
+    },
+    {
+      "input": "s = \"hellohellohellohello\"",
+      "output": "hellohellohello"
+    },
+    {
+      "input": "s = \"zxcvbnmzxcvbnmzxcvbnm\"",
+      "output": "zxcvbnmzxcvbnm"
+    },
+    {
+      "input": "s = \"aaaaaaaaaaaaaaaaaaaa\"",
+      "output": "aaaaaaaaaaaaaaaaaaa"
+    },
+    {
+      "input": "s = \"aaaaaaaaaaaaaaaaaaaaaaaa\"",
+      "output": "aaaaaaaaaaaaaaaaaaaaaaa"
+    }
+  ],
+  "types": {
+    "python3": {
+      "input": [
+        {
+          "s": "str"
+        }
+      ],
+      "output": "str"
+    },
+    "cpp": {
+      "input": [
+        {
+          "s": "string"
+        }
+      ],
+      "output": "string"
+    },
+    "java": {
+      "input": [
+        {
+          "s": "String"
+        }
+      ],
+      "output": "String"
+    },
+    "javascript": {
+      "input": [
+        {
+          "s": "string"
+        }
+      ],
+      "output": "string"
+    },
+    "typescript": {
+      "input": [
+        {
+          "s": "string"
+        }
+      ],
+      "output": "string"
+    },
+    "golang": {
+      "input": [
+        {
+          "s": "string"
+        }
+      ],
+      "output": "string"
+    },
+    "rust": {
+      "input": [
+        {
+          "s": "String"
+        }
+      ],
+      "output": "String"
+    }
+  },
+  "tags": [
+    "string",
+    "binary-search",
+    "sliding-window",
+    "rolling-hash",
+    "suffix-array",
+    "hash-function"
+  ]
+}

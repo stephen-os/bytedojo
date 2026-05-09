@@ -1,0 +1,548 @@
+{
+  "id": 2463,
+  "title": "Minimum Total Distance Traveled",
+  "slug": "minimum-total-distance-traveled",
+  "difficulty": "Hard",
+  "description": "There are some robots and factories on the X-axis. You are given an integer array robot where robot[i] is the position of the ith robot. You are also given a 2D integer array factory where factory[j] = [positionj, limitj] indicates that positionj is the position of the jth factory and that the jth factory can repair at most limitj robots.\nThe positions of each robot are unique. The positions of each factory are also unique. Note that a robot can be in the same position as a factory initially.\nAll the robots are initially broken; they keep moving in one direction. The direction could be the negative or the positive direction of the X-axis. When a robot reaches a factory that did not reach its limit, the factory repairs the robot, and it stops moving.\nAt any moment, you can set the initial direction of moving for some robot. Your target is to minimize the total distance traveled by all the robots.\nReturn the minimum total distance traveled by all the robots. The test cases are generated such that all the robots can be repaired.\nNote that\nExample 1:\nExample 2:\nConstraints:",
+  "examples": [
+    {
+      "example_num": 1,
+      "example_text": "Input: robot = [0,4,6], factory = [[2,2],[6,2]]\nOutput: 4\nExplanation: As shown in the figure:\n- The first robot at position 0 moves in the positive direction. It will be repaired at the first factory.\n- The second robot at position 4 moves in the negative direction. It will be repaired at the first factory.\n- The third robot at position 6 will be repaired at the second factory. It does not need to move.\nThe limit of the first factory is 2, and it fixed 2 robots.\nThe limit of the second factory is 2, and it fixed 1 robot.\nThe total distance is |2 - 0| + |2 - 4| + |6 - 6| = 4. It can be shown that we cannot achieve a better total distance than 4.",
+      "images": [
+        "https://assets.leetcode.com/uploads/2022/09/15/example1.jpg"
+      ]
+    },
+    {
+      "example_num": 2,
+      "example_text": "Input: robot = [1,-1], factory = [[-2,1],[2,1]]\nOutput: 2\nExplanation: As shown in the figure:\n- The first robot at position 1 moves in the positive direction. It will be repaired at the second factory.\n- The second robot at position -1 moves in the negative direction. It will be repaired at the first factory.\nThe limit of the first factory is 1, and it fixed 1 robot.\nThe limit of the second factory is 1, and it fixed 1 robot.\nThe total distance is |2 - 1| + |(-2) - (-1)| = 2. It can be shown that we cannot achieve a better total distance than 2.",
+      "images": [
+        "https://assets.leetcode.com/uploads/2022/09/15/example-2.jpg"
+      ]
+    }
+  ],
+  "constraints": [
+    "1 <= robot.length, factory.length <= 100",
+    "factory[j].length == 2",
+    "-109 <= robot[i], positionj <= 109",
+    "0 <= limitj <= robot.length",
+    "The input will be generated such that it is always possible to repair every robot."
+  ],
+  "hints": [
+    "Sort robots and factories by their positions.",
+    "After sorting, notice that each factory should repair some subsegment of robots.",
+    "Find the minimum total distance to repair first i robots with first j factories."
+  ],
+  "code_snippets": {
+    "cpp": "class Solution {\npublic:\n    long long minimumTotalDistance(vector<int>& robot, vector<vector<int>>& factory) {\n        \n    }\n};",
+    "java": "class Solution {\n    public long minimumTotalDistance(List<Integer> robot, int[][] factory) {\n        \n    }\n}",
+    "python3": "class Solution:\n    def minimumTotalDistance(self, robot: List[int], factory: List[List[int]]) -> int:\n        ",
+    "javascript": "/**\n * @param {number[]} robot\n * @param {number[][]} factory\n * @return {number}\n */\nvar minimumTotalDistance = function(robot, factory) {\n    \n};",
+    "typescript": "function minimumTotalDistance(robot: number[], factory: number[][]): number {\n    \n};",
+    "golang": "func minimumTotalDistance(robot []int, factory [][]int) int64 {\n    \n}",
+    "rust": "impl Solution {\n    pub fn minimum_total_distance(robot: Vec<i32>, factory: Vec<Vec<i32>>) -> i64 {\n        \n    }\n}"
+  },
+  "entry_points": {
+    "python3": "Solution().minimumTotalDistance",
+    "cpp": "Solution().minimumTotalDistance",
+    "java": "new Solution().minimumTotalDistance",
+    "javascript": "minimumTotalDistance",
+    "typescript": "minimumTotalDistance",
+    "golang": "minimumTotalDistance",
+    "rust": "Solution::minimum_total_distance"
+  },
+  "test_snippets": {
+    "python3": "def check(candidate):\n    assert candidate(robot = [5,1,3], factory = [[2,3]]) == 5\n    assert candidate(robot = [5,5,5,5], factory = [[5,4]]) == 0\n    assert candidate(robot = [-3,0,3], factory = [[-2,1],[2,1],[5,2]]) == 5\n    assert candidate(robot = [-1, -3, 2, 4, 5], factory = [[-2, 1], [2, 2], [6, 2]]) == 7\n    assert candidate(robot = [-5,-2,0,2,5], factory = [[-3,2],[1,3]]) == 9\n    assert candidate(robot = [5,8,15], factory = [[10,2],[16,1]]) == 8\n    assert candidate(robot = [10,20,30,40], factory = [[5,2],[15,2],[25,2]]) == 30\n    assert candidate(robot = [-10,0,10], factory = [[-5,1],[0,2],[5,1]]) == 10\n    assert candidate(robot = [5, 2, -5], factory = [[-2, 2], [2, 2]]) == 6\n    assert candidate(robot = [10, -10, 0], factory = [[0, 3]]) == 20\n    assert candidate(robot = [0,4,6], factory = [[2,2],[6,2]]) == 4\n    assert candidate(robot = [3,7,12,15], factory = [[2,3],[10,2]]) == 13\n    assert candidate(robot = [-3,0,3], factory = [[-2,1],[2,2]]) == 4\n    assert candidate(robot = [1,-1], factory = [[-2,1],[2,1]]) == 2\n    assert candidate(robot = [-20, -10, 0, 10, 20], factory = [[-15, 2], [0, 1], [15, 2]]) == 20\n    assert candidate(robot = [-10, -20, -30, -40, -50, -60, -70, -80, -90, -100], factory = [[-5, 2], [-15, 2], [-25, 2], [-35, 2], [-45, 2], [-55, 2], [-65, 2], [-75, 2], [-85, 2], [-95, 2]]) == 50\n    assert candidate(robot = [-15, -10, -5, 0, 5, 10, 15], factory = [[-12, 2], [-7, 2], [-2, 2], [3, 2], [8, 2], [13, 2]]) == 15\n    assert candidate(robot = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10], factory = [[5, 3], [10, 4], [15, 3]]) == 45\n    assert candidate(robot = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9], factory = [[2, 2], [5, 2], [8, 2]]) == inf\n    assert candidate(robot = [-1, -2, -3, -4, -5], factory = [[-10, 3], [0, 2], [10, 1]]) == 21\n    assert candidate(robot = [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140], factory = [[5, 3], [15, 3], [25, 3], [35, 3], [45, 3], [55, 3], [65, 3], [75, 3], [85, 3], [95, 3], [105, 3], [115, 3], [125, 3], [135, 3]]) == 75\n    assert candidate(robot = [0, 2, 4, 6, 8, 10], factory = [[1, 1], [3, 1], [5, 1], [7, 1], [9, 1], [11, 1]]) == 6\n    assert candidate(robot = [100, 200, 300, 400, 500], factory = [[50, 1], [150, 2], [250, 2], [350, 2], [450, 1], [550, 1]]) == 250\n    assert candidate(robot = [1, 3, 5, 7, 9, 11, 13, 15, 17, 19], factory = [[0, 2], [6, 3], [12, 3], [18, 2]]) == 16\n    assert candidate(robot = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9], factory = [[0, 5], [5, 5]]) == 20\n    assert candidate(robot = [-1, 1, -2, 2, -3, 3, -4, 4, -5, 5], factory = [[-3, 3], [0, 4], [3, 3]]) == 12\n    assert candidate(robot = [-10, -5, 0, 5, 10, 15, 20, 25, 30, 35], factory = [[-7, 2], [2, 3], [17, 2], [32, 2]]) == inf\n    assert candidate(robot = [-5, 0, 5, 10, 15, 20, 25, 30, 35, 40], factory = [[-10, 2], [5, 3], [20, 3], [35, 2]]) == 50\n    assert candidate(robot = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10], factory = [[0, 2], [4, 2], [8, 2], [12, 2]]) == inf\n    assert candidate(robot = [1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25], factory = [[5, 3], [15, 3], [25, 3]]) == inf\n    assert candidate(robot = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10], factory = [[0, 3], [5, 4], [10, 3]]) == 13\n    assert candidate(robot = [-100, -50, 0, 50, 100], factory = [[-75, 2], [-25, 1], [25, 1], [75, 2]]) == 125\n    assert candidate(robot = [10, 20, 30, 40, 50, 60, 70, 80, 90], factory = [[0, 3], [10, 3], [20, 3], [30, 3], [40, 3], [50, 3], [60, 3], [70, 3], [80, 3], [90, 3]]) == 0\n    assert candidate(robot = [-2, -1, 0, 1, 2, 3, 4], factory = [[-3, 2], [0, 3], [3, 2]]) == 7\n    assert candidate(robot = [-2, -1, 0, 1, 2], factory = [[-3, 1], [-1, 1], [1, 1], [3, 1]]) == inf\n    assert candidate(robot = [-10, -5, 0, 5, 10, 15, 20], factory = [[-20, 1], [-10, 2], [0, 3], [10, 2], [20, 1]]) == 15\n    assert candidate(robot = [-100, -50, 0, 50, 100], factory = [[-75, 2], [0, 2], [75, 2]]) == 100\n    assert candidate(robot = [-100, -50, 0, 50, 100, 150], factory = [[-75, 3], [25, 2], [125, 2]]) == 150\n    assert candidate(robot = [-100, -50, 0, 50, 100, 150, 200], factory = [[-75, 2], [-25, 2], [25, 2], [75, 2], [125, 2], [175, 2]]) == 175\n    assert candidate(robot = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20], factory = [[0, 5], [5, 5], [10, 5], [15, 5]]) == 60\n    assert candidate(robot = [-20, -10, 0, 10, 20], factory = [[-15, 1], [-5, 2], [5, 3], [15, 1]]) == 25\n    assert candidate(robot = [1, 2, 3, 4, 5, 6, 7, 8, 9], factory = [[2, 3], [5, 3], [8, 3]]) == 6\n    assert candidate(robot = [-20, -10, 0, 10, 20], factory = [[-15, 2], [0, 3], [15, 2]]) == 20\n    assert candidate(robot = [100, 200, 300, 400, 500], factory = [[50, 2], [150, 1], [250, 2], [350, 1], [450, 1]]) == 250\n    assert candidate(robot = [1, 3, 5, 7, 9, 11], factory = [[2, 2], [6, 2], [10, 2]]) == 6\n    assert candidate(robot = [1, 3, 5, 7, 9], factory = [[2, 2], [4, 2], [6, 2], [8, 2], [10, 1]]) == 5\n    assert candidate(robot = [10, 20, 30, 40, 50, 60], factory = [[15, 2], [35, 2], [55, 2]]) == 30\n    assert candidate(robot = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15], factory = [[2, 3], [6, 3], [10, 3], [14, 3]]) == inf\n    assert candidate(robot = [-20, -10, 0, 10, 20], factory = [[-15, 2], [-5, 3], [5, 2], [15, 1]]) == 25\n    assert candidate(robot = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1], factory = [[0, 10]]) == 10\n    assert candidate(robot = [-100, -90, -80, -70, -60, -50, -40, -30, -20, -10], factory = [[-105, 2], [-95, 2], [-85, 2], [-75, 2], [-65, 2], [-55, 2], [-45, 2], [-35, 2], [-25, 2], [-15, 2]]) == 50\n    assert candidate(robot = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10], factory = [[0, 10]]) == 55\n    assert candidate(robot = [5, 10, 15, 20, 25, 30, 35, 40, 45, 50], factory = [[10, 2], [20, 2], [30, 2], [40, 2]]) == inf\n    assert candidate(robot = [10, 20, 30, 40], factory = [[15, 2], [25, 2], [35, 2]]) == 20\n    assert candidate(robot = [-10, -5, 0, 5, 10, 15, 20], factory = [[-7, 2], [-2, 2], [3, 2], [8, 2]]) == 35\n    assert candidate(robot = [-20, -10, 0, 10, 20], factory = [[-15, 2], [0, 3], [15, 1]]) == 25\n    assert candidate(robot = [-20, -15, -10, -5, 0, 5, 10, 15, 20], factory = [[-15, 2], [-10, 2], [-5, 2], [0, 2], [5, 2], [10, 2], [15, 2]]) == 10\n    assert candidate(robot = [-5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5], factory = [[-6, 3], [0, 5], [6, 3]]) == 18\n    assert candidate(robot = [1, 3, 5, 7, 9], factory = [[2, 1], [4, 1], [6, 1], [8, 1]]) == inf\n    assert candidate(robot = [-5, -3, -1, 1, 3, 5], factory = [[-10, 1], [-5, 2], [0, 3], [5, 2], [10, 1]]) == 6\n    assert candidate(robot = [-5, -3, -1, 1, 3, 5, 7, 9], factory = [[-4, 1], [0, 3], [4, 2]]) == inf\n    assert candidate(robot = [1, 3, 5, 7, 9], factory = [[0, 2], [4, 2], [8, 2]]) == 5\n    assert candidate(robot = [1, 4, 7, 10, 13, 16, 19, 22, 25, 28], factory = [[3, 3], [9, 3], [15, 3], [21, 3]]) == 25\n    assert candidate(robot = [10, 10, 10, 10], factory = [[10, 1], [10, 1], [10, 1], [10, 1]]) == 0\n    assert candidate(robot = [1, 4, 7, 10, 13, 16, 19, 22, 25], factory = [[3, 3], [9, 3], [15, 3], [21, 3]]) == 16\n    assert candidate(robot = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100], factory = [[5, 2], [15, 2], [25, 2], [35, 2], [45, 2], [55, 2], [65, 2], [75, 2], [85, 2], [95, 2]]) == 50\n    assert candidate(robot = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10], factory = [[0, 2], [5, 3], [10, 5]]) == 16\n    assert candidate(robot = [100, 200, 300, 400, 500, 600, 700, 800, 900, 1000], factory = [[150, 3], [500, 4], [850, 3]]) == 900\n    assert candidate(robot = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1], factory = [[-5, 5], [0, 5], [5, 5]]) == 25\n    assert candidate(robot = [-5, 0, 5, 10, 15, 20], factory = [[-10, 1], [0, 3], [10, 2], [20, 1]]) == 15\n    assert candidate(robot = [-50, -25, 0, 25, 50], factory = [[-75, 3], [0, 2], [75, 1]]) == 125\n    assert candidate(robot = [-10, -5, 0, 5, 10], factory = [[-15, 2], [-10, 1], [0, 3], [10, 2], [15, 1]]) == 10\n    assert candidate(robot = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19], factory = [[0, 5], [5, 5], [10, 5], [15, 5]]) == 40\n    assert candidate(robot = [-100, -200, -300, -400, -500], factory = [[-50, 2], [-150, 1], [-250, 2], [-350, 1], [-450, 1]]) == 250\n    assert candidate(robot = [-100, -50, 0, 50, 100], factory = [[-75, 1], [-25, 1], [25, 1], [75, 1]]) == inf\n    assert candidate(robot = [-100, -90, -80, -70, -60, -50, -40, -30, -20, -10], factory = [[-95, 2], [-85, 2], [-75, 2], [-65, 2], [-55, 2], [-45, 2], [-35, 2], [-25, 2], [-15, 2], [-5, 2]]) == 50\n    assert candidate(robot = [-100, -50, 0, 50, 100], factory = [[-75, 2], [-25, 2], [25, 2], [75, 1]]) == 125\n    assert candidate(robot = [-5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5], factory = [[-10, 6], [0, 5]]) == 60\n    assert candidate(robot = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10], factory = [[0, 5], [10, 5]]) == 25\n    assert candidate(robot = [-10, -5, 0, 5, 10, 15, 20, 25], factory = [[-15, 2], [0, 3], [15, 3], [25, 1]]) == 25\n    assert candidate(robot = [100, 200, 300, 400, 500], factory = [[50, 1], [150, 2], [250, 2], [350, 1], [450, 1]]) == 250\n    assert candidate(robot = [-10, -5, 0, 5, 10, 15], factory = [[-8, 2], [2, 3], [12, 2]]) == 15\n    assert candidate(robot = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], factory = [[-5, 5], [5, 5]]) == 50\n    assert candidate(robot = [0, 10, 20, 30, 40, 50, 60], factory = [[5, 3], [15, 3], [25, 3], [35, 3], [45, 3]]) == 45\n    assert candidate(robot = [-1, 0, 1], factory = [[-2, 1], [2, 1], [0, 1]]) == 2\n    assert candidate(robot = [-9, -6, -3, 0, 3, 6, 9], factory = [[-8, 2], [-2, 2], [2, 2], [8, 1]]) == 12\n    assert candidate(robot = [1, 3, 5, 7, 9, 11, 13, 15, 17, 19], factory = [[0, 5], [10, 5], [20, 5]]) == 26\n    assert candidate(robot = [0, 10, 20, 30, 40, 50, 60], factory = [[5, 1], [15, 2], [25, 2], [35, 1], [45, 2], [55, 1]]) == 35\n    assert candidate(robot = [-2, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10], factory = [[-4, 3], [2, 4], [7, 3], [11, 3]]) == 22\n    assert candidate(robot = [-1, -2, -3, -4, -5], factory = [[-3, 3], [0, 2]]) == 6\n    assert candidate(robot = [0, 2, 4, 6, 8, 10, 12], factory = [[1, 2], [5, 2], [9, 2], [13, 1]]) == 7\n    assert candidate(robot = [100, 200, 300, 400, 500], factory = [[50, 1], [150, 1], [250, 1], [350, 1], [450, 1]]) == 250\n    assert candidate(robot = [-5, -3, -1, 1, 3, 5], factory = [[-10, 1], [-6, 2], [-2, 2], [2, 2], [6, 1]]) == 6\n    assert candidate(robot = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10], factory = [[5, 5], [15, 5]]) == 45\n    assert candidate(robot = [-20, -10, 0, 10, 20], factory = [[-25, 2], [-15, 3], [-5, 2], [5, 3], [15, 2], [25, 1]]) == 25\n    assert candidate(robot = [-50, -40, -30, -20, -10, 0, 10, 20, 30, 40, 50], factory = [[-60, 3], [-40, 4], [-20, 4], [0, 4], [20, 4], [40, 3]]) == 60\n    assert candidate(robot = [1, 3, 5, 7, 9, 11, 13, 15, 17, 19], factory = [[0, 2], [4, 2], [8, 2], [12, 2], [16, 2]]) == 20\n    assert candidate(robot = [1, 3, 5, 7, 9], factory = [[0, 3], [6, 2], [12, 1]]) == 9\n    assert candidate(robot = [-100, -50, 0, 50, 100], factory = [[-150, 2], [-100, 2], [-50, 2], [0, 2], [50, 2], [100, 2], [150, 2]]) == 0\n    assert candidate(robot = [1, 3, 5, 7, 9, 11, 13, 15, 17, 19], factory = [[0, 2], [5, 2], [10, 2], [15, 2], [20, 2]]) == 14",
+    "cpp": "void check(Solution& solution) {\n    assert(solution.minimumTotalDistance({5,1,3}, {{2,3}}) == vector<int>5);\n    assert(solution.minimumTotalDistance({5,5,5,5}, {{5,4}}) == vector<int>0);\n    assert(solution.minimumTotalDistance({-3,0,3}, {{-2,1},{2,1},{5,2}}) == vector<int>5);\n    assert(solution.minimumTotalDistance({-1, -3, 2, 4, 5}, {{-2, 1}, {2, 2}, {6, 2}}) == vector<int>7);\n    assert(solution.minimumTotalDistance({-5,-2,0,2,5}, {{-3,2},{1,3}}) == vector<int>9);\n    assert(solution.minimumTotalDistance({5,8,15}, {{10,2},{16,1}}) == vector<int>8);\n    assert(solution.minimumTotalDistance({10,20,30,40}, {{5,2},{15,2},{25,2}}) == vector<int>30);\n    assert(solution.minimumTotalDistance({-10,0,10}, {{-5,1},{0,2},{5,1}}) == vector<int>10);\n    assert(solution.minimumTotalDistance({5, 2, -5}, {{-2, 2}, {2, 2}}) == vector<int>6);\n    assert(solution.minimumTotalDistance({10, -10, 0}, {{0, 3}}) == vector<int>20);\n    assert(solution.minimumTotalDistance({0,4,6}, {{2,2},{6,2}}) == vector<int>4);\n    assert(solution.minimumTotalDistance({3,7,12,15}, {{2,3},{10,2}}) == vector<int>13);\n    assert(solution.minimumTotalDistance({-3,0,3}, {{-2,1},{2,2}}) == vector<int>4);\n    assert(solution.minimumTotalDistance({1,-1}, {{-2,1},{2,1}}) == vector<int>2);\n    assert(solution.minimumTotalDistance({-20, -10, 0, 10, 20}, {{-15, 2}, {0, 1}, {15, 2}}) == vector<int>20);\n    assert(solution.minimumTotalDistance({-10, -20, -30, -40, -50, -60, -70, -80, -90, -100}, {{-5, 2}, {-15, 2}, {-25, 2}, {-35, 2}, {-45, 2}, {-55, 2}, {-65, 2}, {-75, 2}, {-85, 2}, {-95, 2}}) == vector<int>50);\n    assert(solution.minimumTotalDistance({-15, -10, -5, 0, 5, 10, 15}, {{-12, 2}, {-7, 2}, {-2, 2}, {3, 2}, {8, 2}, {13, 2}}) == vector<int>15);\n    assert(solution.minimumTotalDistance({1, 2, 3, 4, 5, 6, 7, 8, 9, 10}, {{5, 3}, {10, 4}, {15, 3}}) == vector<int>45);\n    assert(solution.minimumTotalDistance({0, 1, 2, 3, 4, 5, 6, 7, 8, 9}, {{2, 2}, {5, 2}, {8, 2}}) == vector<int>inf);\n    assert(solution.minimumTotalDistance({-1, -2, -3, -4, -5}, {{-10, 3}, {0, 2}, {10, 1}}) == vector<int>21);\n    assert(solution.minimumTotalDistance({0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140}, {{5, 3}, {15, 3}, {25, 3}, {35, 3}, {45, 3}, {55, 3}, {65, 3}, {75, 3}, {85, 3}, {95, 3}, {105, 3}, {115, 3}, {125, 3}, {135, 3}}) == vector<int>75);\n    assert(solution.minimumTotalDistance({0, 2, 4, 6, 8, 10}, {{1, 1}, {3, 1}, {5, 1}, {7, 1}, {9, 1}, {11, 1}}) == vector<int>6);\n    assert(solution.minimumTotalDistance({100, 200, 300, 400, 500}, {{50, 1}, {150, 2}, {250, 2}, {350, 2}, {450, 1}, {550, 1}}) == vector<int>250);\n    assert(solution.minimumTotalDistance({1, 3, 5, 7, 9, 11, 13, 15, 17, 19}, {{0, 2}, {6, 3}, {12, 3}, {18, 2}}) == vector<int>16);\n    assert(solution.minimumTotalDistance({0, 1, 2, 3, 4, 5, 6, 7, 8, 9}, {{0, 5}, {5, 5}}) == vector<int>20);\n    assert(solution.minimumTotalDistance({-1, 1, -2, 2, -3, 3, -4, 4, -5, 5}, {{-3, 3}, {0, 4}, {3, 3}}) == vector<int>12);\n    assert(solution.minimumTotalDistance({-10, -5, 0, 5, 10, 15, 20, 25, 30, 35}, {{-7, 2}, {2, 3}, {17, 2}, {32, 2}}) == vector<int>inf);\n    assert(solution.minimumTotalDistance({-5, 0, 5, 10, 15, 20, 25, 30, 35, 40}, {{-10, 2}, {5, 3}, {20, 3}, {35, 2}}) == vector<int>50);\n    assert(solution.minimumTotalDistance({1, 2, 3, 4, 5, 6, 7, 8, 9, 10}, {{0, 2}, {4, 2}, {8, 2}, {12, 2}}) == vector<int>inf);\n    assert(solution.minimumTotalDistance({1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25}, {{5, 3}, {15, 3}, {25, 3}}) == vector<int>inf);\n    assert(solution.minimumTotalDistance({1, 2, 3, 4, 5, 6, 7, 8, 9, 10}, {{0, 3}, {5, 4}, {10, 3}}) == vector<int>13);\n    assert(solution.minimumTotalDistance({-100, -50, 0, 50, 100}, {{-75, 2}, {-25, 1}, {25, 1}, {75, 2}}) == vector<int>125);\n    assert(solution.minimumTotalDistance({10, 20, 30, 40, 50, 60, 70, 80, 90}, {{0, 3}, {10, 3}, {20, 3}, {30, 3}, {40, 3}, {50, 3}, {60, 3}, {70, 3}, {80, 3}, {90, 3}}) == vector<int>0);\n    assert(solution.minimumTotalDistance({-2, -1, 0, 1, 2, 3, 4}, {{-3, 2}, {0, 3}, {3, 2}}) == vector<int>7);\n    assert(solution.minimumTotalDistance({-2, -1, 0, 1, 2}, {{-3, 1}, {-1, 1}, {1, 1}, {3, 1}}) == vector<int>inf);\n    assert(solution.minimumTotalDistance({-10, -5, 0, 5, 10, 15, 20}, {{-20, 1}, {-10, 2}, {0, 3}, {10, 2}, {20, 1}}) == vector<int>15);\n    assert(solution.minimumTotalDistance({-100, -50, 0, 50, 100}, {{-75, 2}, {0, 2}, {75, 2}}) == vector<int>100);\n    assert(solution.minimumTotalDistance({-100, -50, 0, 50, 100, 150}, {{-75, 3}, {25, 2}, {125, 2}}) == vector<int>150);\n    assert(solution.minimumTotalDistance({-100, -50, 0, 50, 100, 150, 200}, {{-75, 2}, {-25, 2}, {25, 2}, {75, 2}, {125, 2}, {175, 2}}) == vector<int>175);\n    assert(solution.minimumTotalDistance({1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20}, {{0, 5}, {5, 5}, {10, 5}, {15, 5}}) == vector<int>60);\n    assert(solution.minimumTotalDistance({-20, -10, 0, 10, 20}, {{-15, 1}, {-5, 2}, {5, 3}, {15, 1}}) == vector<int>25);\n    assert(solution.minimumTotalDistance({1, 2, 3, 4, 5, 6, 7, 8, 9}, {{2, 3}, {5, 3}, {8, 3}}) == vector<int>6);\n    assert(solution.minimumTotalDistance({-20, -10, 0, 10, 20}, {{-15, 2}, {0, 3}, {15, 2}}) == vector<int>20);\n    assert(solution.minimumTotalDistance({100, 200, 300, 400, 500}, {{50, 2}, {150, 1}, {250, 2}, {350, 1}, {450, 1}}) == vector<int>250);\n    assert(solution.minimumTotalDistance({1, 3, 5, 7, 9, 11}, {{2, 2}, {6, 2}, {10, 2}}) == vector<int>6);\n    assert(solution.minimumTotalDistance({1, 3, 5, 7, 9}, {{2, 2}, {4, 2}, {6, 2}, {8, 2}, {10, 1}}) == vector<int>5);\n    assert(solution.minimumTotalDistance({10, 20, 30, 40, 50, 60}, {{15, 2}, {35, 2}, {55, 2}}) == vector<int>30);\n    assert(solution.minimumTotalDistance({1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15}, {{2, 3}, {6, 3}, {10, 3}, {14, 3}}) == vector<int>inf);\n    assert(solution.minimumTotalDistance({-20, -10, 0, 10, 20}, {{-15, 2}, {-5, 3}, {5, 2}, {15, 1}}) == vector<int>25);\n    assert(solution.minimumTotalDistance({1, 1, 1, 1, 1, 1, 1, 1, 1, 1}, {{0, 10}}) == vector<int>10);\n    assert(solution.minimumTotalDistance({-100, -90, -80, -70, -60, -50, -40, -30, -20, -10}, {{-105, 2}, {-95, 2}, {-85, 2}, {-75, 2}, {-65, 2}, {-55, 2}, {-45, 2}, {-35, 2}, {-25, 2}, {-15, 2}}) == vector<int>50);\n    assert(solution.minimumTotalDistance({1, 2, 3, 4, 5, 6, 7, 8, 9, 10}, {{0, 10}}) == vector<int>55);\n    assert(solution.minimumTotalDistance({5, 10, 15, 20, 25, 30, 35, 40, 45, 50}, {{10, 2}, {20, 2}, {30, 2}, {40, 2}}) == vector<int>inf);\n    assert(solution.minimumTotalDistance({10, 20, 30, 40}, {{15, 2}, {25, 2}, {35, 2}}) == vector<int>20);\n    assert(solution.minimumTotalDistance({-10, -5, 0, 5, 10, 15, 20}, {{-7, 2}, {-2, 2}, {3, 2}, {8, 2}}) == vector<int>35);\n    assert(solution.minimumTotalDistance({-20, -10, 0, 10, 20}, {{-15, 2}, {0, 3}, {15, 1}}) == vector<int>25);\n    assert(solution.minimumTotalDistance({-20, -15, -10, -5, 0, 5, 10, 15, 20}, {{-15, 2}, {-10, 2}, {-5, 2}, {0, 2}, {5, 2}, {10, 2}, {15, 2}}) == vector<int>10);\n    assert(solution.minimumTotalDistance({-5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5}, {{-6, 3}, {0, 5}, {6, 3}}) == vector<int>18);\n    assert(solution.minimumTotalDistance({1, 3, 5, 7, 9}, {{2, 1}, {4, 1}, {6, 1}, {8, 1}}) == vector<int>inf);\n    assert(solution.minimumTotalDistance({-5, -3, -1, 1, 3, 5}, {{-10, 1}, {-5, 2}, {0, 3}, {5, 2}, {10, 1}}) == vector<int>6);\n    assert(solution.minimumTotalDistance({-5, -3, -1, 1, 3, 5, 7, 9}, {{-4, 1}, {0, 3}, {4, 2}}) == vector<int>inf);\n    assert(solution.minimumTotalDistance({1, 3, 5, 7, 9}, {{0, 2}, {4, 2}, {8, 2}}) == vector<int>5);\n    assert(solution.minimumTotalDistance({1, 4, 7, 10, 13, 16, 19, 22, 25, 28}, {{3, 3}, {9, 3}, {15, 3}, {21, 3}}) == vector<int>25);\n    assert(solution.minimumTotalDistance({10, 10, 10, 10}, {{10, 1}, {10, 1}, {10, 1}, {10, 1}}) == vector<int>0);\n    assert(solution.minimumTotalDistance({1, 4, 7, 10, 13, 16, 19, 22, 25}, {{3, 3}, {9, 3}, {15, 3}, {21, 3}}) == vector<int>16);\n    assert(solution.minimumTotalDistance({10, 20, 30, 40, 50, 60, 70, 80, 90, 100}, {{5, 2}, {15, 2}, {25, 2}, {35, 2}, {45, 2}, {55, 2}, {65, 2}, {75, 2}, {85, 2}, {95, 2}}) == vector<int>50);\n    assert(solution.minimumTotalDistance({1, 2, 3, 4, 5, 6, 7, 8, 9, 10}, {{0, 2}, {5, 3}, {10, 5}}) == vector<int>16);\n    assert(solution.minimumTotalDistance({100, 200, 300, 400, 500, 600, 700, 800, 900, 1000}, {{150, 3}, {500, 4}, {850, 3}}) == vector<int>900);\n    assert(solution.minimumTotalDistance({1, 1, 1, 1, 1, 1, 1, 1, 1, 1}, {{-5, 5}, {0, 5}, {5, 5}}) == vector<int>25);\n    assert(solution.minimumTotalDistance({-5, 0, 5, 10, 15, 20}, {{-10, 1}, {0, 3}, {10, 2}, {20, 1}}) == vector<int>15);\n    assert(solution.minimumTotalDistance({-50, -25, 0, 25, 50}, {{-75, 3}, {0, 2}, {75, 1}}) == vector<int>125);\n    assert(solution.minimumTotalDistance({-10, -5, 0, 5, 10}, {{-15, 2}, {-10, 1}, {0, 3}, {10, 2}, {15, 1}}) == vector<int>10);\n    assert(solution.minimumTotalDistance({0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19}, {{0, 5}, {5, 5}, {10, 5}, {15, 5}}) == vector<int>40);\n    assert(solution.minimumTotalDistance({-100, -200, -300, -400, -500}, {{-50, 2}, {-150, 1}, {-250, 2}, {-350, 1}, {-450, 1}}) == vector<int>250);\n    assert(solution.minimumTotalDistance({-100, -50, 0, 50, 100}, {{-75, 1}, {-25, 1}, {25, 1}, {75, 1}}) == vector<int>inf);\n    assert(solution.minimumTotalDistance({-100, -90, -80, -70, -60, -50, -40, -30, -20, -10}, {{-95, 2}, {-85, 2}, {-75, 2}, {-65, 2}, {-55, 2}, {-45, 2}, {-35, 2}, {-25, 2}, {-15, 2}, {-5, 2}}) == vector<int>50);\n    assert(solution.minimumTotalDistance({-100, -50, 0, 50, 100}, {{-75, 2}, {-25, 2}, {25, 2}, {75, 1}}) == vector<int>125);\n    assert(solution.minimumTotalDistance({-5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5}, {{-10, 6}, {0, 5}}) == vector<int>60);\n    assert(solution.minimumTotalDistance({1, 2, 3, 4, 5, 6, 7, 8, 9, 10}, {{0, 5}, {10, 5}}) == vector<int>25);\n    assert(solution.minimumTotalDistance({-10, -5, 0, 5, 10, 15, 20, 25}, {{-15, 2}, {0, 3}, {15, 3}, {25, 1}}) == vector<int>25);\n    assert(solution.minimumTotalDistance({100, 200, 300, 400, 500}, {{50, 1}, {150, 2}, {250, 2}, {350, 1}, {450, 1}}) == vector<int>250);\n    assert(solution.minimumTotalDistance({-10, -5, 0, 5, 10, 15}, {{-8, 2}, {2, 3}, {12, 2}}) == vector<int>15);\n    assert(solution.minimumTotalDistance({0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, {{-5, 5}, {5, 5}}) == vector<int>50);\n    assert(solution.minimumTotalDistance({0, 10, 20, 30, 40, 50, 60}, {{5, 3}, {15, 3}, {25, 3}, {35, 3}, {45, 3}}) == vector<int>45);\n    assert(solution.minimumTotalDistance({-1, 0, 1}, {{-2, 1}, {2, 1}, {0, 1}}) == vector<int>2);\n    assert(solution.minimumTotalDistance({-9, -6, -3, 0, 3, 6, 9}, {{-8, 2}, {-2, 2}, {2, 2}, {8, 1}}) == vector<int>12);\n    assert(solution.minimumTotalDistance({1, 3, 5, 7, 9, 11, 13, 15, 17, 19}, {{0, 5}, {10, 5}, {20, 5}}) == vector<int>26);\n    assert(solution.minimumTotalDistance({0, 10, 20, 30, 40, 50, 60}, {{5, 1}, {15, 2}, {25, 2}, {35, 1}, {45, 2}, {55, 1}}) == vector<int>35);\n    assert(solution.minimumTotalDistance({-2, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10}, {{-4, 3}, {2, 4}, {7, 3}, {11, 3}}) == vector<int>22);\n    assert(solution.minimumTotalDistance({-1, -2, -3, -4, -5}, {{-3, 3}, {0, 2}}) == vector<int>6);\n    assert(solution.minimumTotalDistance({0, 2, 4, 6, 8, 10, 12}, {{1, 2}, {5, 2}, {9, 2}, {13, 1}}) == vector<int>7);\n    assert(solution.minimumTotalDistance({100, 200, 300, 400, 500}, {{50, 1}, {150, 1}, {250, 1}, {350, 1}, {450, 1}}) == vector<int>250);\n    assert(solution.minimumTotalDistance({-5, -3, -1, 1, 3, 5}, {{-10, 1}, {-6, 2}, {-2, 2}, {2, 2}, {6, 1}}) == vector<int>6);\n    assert(solution.minimumTotalDistance({1, 2, 3, 4, 5, 6, 7, 8, 9, 10}, {{5, 5}, {15, 5}}) == vector<int>45);\n    assert(solution.minimumTotalDistance({-20, -10, 0, 10, 20}, {{-25, 2}, {-15, 3}, {-5, 2}, {5, 3}, {15, 2}, {25, 1}}) == vector<int>25);\n    assert(solution.minimumTotalDistance({-50, -40, -30, -20, -10, 0, 10, 20, 30, 40, 50}, {{-60, 3}, {-40, 4}, {-20, 4}, {0, 4}, {20, 4}, {40, 3}}) == vector<int>60);\n    assert(solution.minimumTotalDistance({1, 3, 5, 7, 9, 11, 13, 15, 17, 19}, {{0, 2}, {4, 2}, {8, 2}, {12, 2}, {16, 2}}) == vector<int>20);\n    assert(solution.minimumTotalDistance({1, 3, 5, 7, 9}, {{0, 3}, {6, 2}, {12, 1}}) == vector<int>9);\n    assert(solution.minimumTotalDistance({-100, -50, 0, 50, 100}, {{-150, 2}, {-100, 2}, {-50, 2}, {0, 2}, {50, 2}, {100, 2}, {150, 2}}) == vector<int>0);\n    assert(solution.minimumTotalDistance({1, 3, 5, 7, 9, 11, 13, 15, 17, 19}, {{0, 2}, {5, 2}, {10, 2}, {15, 2}, {20, 2}}) == vector<int>14);\n}",
+    "java": "public static void check(Solution solution) {\n    assert Arrays.equals(solution.minimumTotalDistance(new int[]{5,1,3}, new int[]{{2,3}}), 5);\n    assert Arrays.equals(solution.minimumTotalDistance(new int[]{5,5,5,5}, new int[]{{5,4}}), 0);\n    assert Arrays.equals(solution.minimumTotalDistance(new int[]{-3,0,3}, new int[]{{-2,1},{2,1},{5,2}}), 5);\n    assert Arrays.equals(solution.minimumTotalDistance(new int[]{-1, -3, 2, 4, 5}, new int[]{{-2, 1}, {2, 2}, {6, 2}}), 7);\n    assert Arrays.equals(solution.minimumTotalDistance(new int[]{-5,-2,0,2,5}, new int[]{{-3,2},{1,3}}), 9);\n    assert Arrays.equals(solution.minimumTotalDistance(new int[]{5,8,15}, new int[]{{10,2},{16,1}}), 8);\n    assert Arrays.equals(solution.minimumTotalDistance(new int[]{10,20,30,40}, new int[]{{5,2},{15,2},{25,2}}), 30);\n    assert Arrays.equals(solution.minimumTotalDistance(new int[]{-10,0,10}, new int[]{{-5,1},{0,2},{5,1}}), 10);\n    assert Arrays.equals(solution.minimumTotalDistance(new int[]{5, 2, -5}, new int[]{{-2, 2}, {2, 2}}), 6);\n    assert Arrays.equals(solution.minimumTotalDistance(new int[]{10, -10, 0}, new int[]{{0, 3}}), 20);\n    assert Arrays.equals(solution.minimumTotalDistance(new int[]{0,4,6}, new int[]{{2,2},{6,2}}), 4);\n    assert Arrays.equals(solution.minimumTotalDistance(new int[]{3,7,12,15}, new int[]{{2,3},{10,2}}), 13);\n    assert Arrays.equals(solution.minimumTotalDistance(new int[]{-3,0,3}, new int[]{{-2,1},{2,2}}), 4);\n    assert Arrays.equals(solution.minimumTotalDistance(new int[]{1,-1}, new int[]{{-2,1},{2,1}}), 2);\n    assert Arrays.equals(solution.minimumTotalDistance(new int[]{-20, -10, 0, 10, 20}, new int[]{{-15, 2}, {0, 1}, {15, 2}}), 20);\n    assert Arrays.equals(solution.minimumTotalDistance(new int[]{-10, -20, -30, -40, -50, -60, -70, -80, -90, -100}, new int[]{{-5, 2}, {-15, 2}, {-25, 2}, {-35, 2}, {-45, 2}, {-55, 2}, {-65, 2}, {-75, 2}, {-85, 2}, {-95, 2}}), 50);\n    assert Arrays.equals(solution.minimumTotalDistance(new int[]{-15, -10, -5, 0, 5, 10, 15}, new int[]{{-12, 2}, {-7, 2}, {-2, 2}, {3, 2}, {8, 2}, {13, 2}}), 15);\n    assert Arrays.equals(solution.minimumTotalDistance(new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}, new int[]{{5, 3}, {10, 4}, {15, 3}}), 45);\n    assert Arrays.equals(solution.minimumTotalDistance(new int[]{0, 1, 2, 3, 4, 5, 6, 7, 8, 9}, new int[]{{2, 2}, {5, 2}, {8, 2}}), inf);\n    assert Arrays.equals(solution.minimumTotalDistance(new int[]{-1, -2, -3, -4, -5}, new int[]{{-10, 3}, {0, 2}, {10, 1}}), 21);\n    assert Arrays.equals(solution.minimumTotalDistance(new int[]{0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140}, new int[]{{5, 3}, {15, 3}, {25, 3}, {35, 3}, {45, 3}, {55, 3}, {65, 3}, {75, 3}, {85, 3}, {95, 3}, {105, 3}, {115, 3}, {125, 3}, {135, 3}}), 75);\n    assert Arrays.equals(solution.minimumTotalDistance(new int[]{0, 2, 4, 6, 8, 10}, new int[]{{1, 1}, {3, 1}, {5, 1}, {7, 1}, {9, 1}, {11, 1}}), 6);\n    assert Arrays.equals(solution.minimumTotalDistance(new int[]{100, 200, 300, 400, 500}, new int[]{{50, 1}, {150, 2}, {250, 2}, {350, 2}, {450, 1}, {550, 1}}), 250);\n    assert Arrays.equals(solution.minimumTotalDistance(new int[]{1, 3, 5, 7, 9, 11, 13, 15, 17, 19}, new int[]{{0, 2}, {6, 3}, {12, 3}, {18, 2}}), 16);\n    assert Arrays.equals(solution.minimumTotalDistance(new int[]{0, 1, 2, 3, 4, 5, 6, 7, 8, 9}, new int[]{{0, 5}, {5, 5}}), 20);\n    assert Arrays.equals(solution.minimumTotalDistance(new int[]{-1, 1, -2, 2, -3, 3, -4, 4, -5, 5}, new int[]{{-3, 3}, {0, 4}, {3, 3}}), 12);\n    assert Arrays.equals(solution.minimumTotalDistance(new int[]{-10, -5, 0, 5, 10, 15, 20, 25, 30, 35}, new int[]{{-7, 2}, {2, 3}, {17, 2}, {32, 2}}), inf);\n    assert Arrays.equals(solution.minimumTotalDistance(new int[]{-5, 0, 5, 10, 15, 20, 25, 30, 35, 40}, new int[]{{-10, 2}, {5, 3}, {20, 3}, {35, 2}}), 50);\n    assert Arrays.equals(solution.minimumTotalDistance(new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}, new int[]{{0, 2}, {4, 2}, {8, 2}, {12, 2}}), inf);\n    assert Arrays.equals(solution.minimumTotalDistance(new int[]{1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25}, new int[]{{5, 3}, {15, 3}, {25, 3}}), inf);\n    assert Arrays.equals(solution.minimumTotalDistance(new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}, new int[]{{0, 3}, {5, 4}, {10, 3}}), 13);\n    assert Arrays.equals(solution.minimumTotalDistance(new int[]{-100, -50, 0, 50, 100}, new int[]{{-75, 2}, {-25, 1}, {25, 1}, {75, 2}}), 125);\n    assert Arrays.equals(solution.minimumTotalDistance(new int[]{10, 20, 30, 40, 50, 60, 70, 80, 90}, new int[]{{0, 3}, {10, 3}, {20, 3}, {30, 3}, {40, 3}, {50, 3}, {60, 3}, {70, 3}, {80, 3}, {90, 3}}), 0);\n    assert Arrays.equals(solution.minimumTotalDistance(new int[]{-2, -1, 0, 1, 2, 3, 4}, new int[]{{-3, 2}, {0, 3}, {3, 2}}), 7);\n    assert Arrays.equals(solution.minimumTotalDistance(new int[]{-2, -1, 0, 1, 2}, new int[]{{-3, 1}, {-1, 1}, {1, 1}, {3, 1}}), inf);\n    assert Arrays.equals(solution.minimumTotalDistance(new int[]{-10, -5, 0, 5, 10, 15, 20}, new int[]{{-20, 1}, {-10, 2}, {0, 3}, {10, 2}, {20, 1}}), 15);\n    assert Arrays.equals(solution.minimumTotalDistance(new int[]{-100, -50, 0, 50, 100}, new int[]{{-75, 2}, {0, 2}, {75, 2}}), 100);\n    assert Arrays.equals(solution.minimumTotalDistance(new int[]{-100, -50, 0, 50, 100, 150}, new int[]{{-75, 3}, {25, 2}, {125, 2}}), 150);\n    assert Arrays.equals(solution.minimumTotalDistance(new int[]{-100, -50, 0, 50, 100, 150, 200}, new int[]{{-75, 2}, {-25, 2}, {25, 2}, {75, 2}, {125, 2}, {175, 2}}), 175);\n    assert Arrays.equals(solution.minimumTotalDistance(new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20}, new int[]{{0, 5}, {5, 5}, {10, 5}, {15, 5}}), 60);\n    assert Arrays.equals(solution.minimumTotalDistance(new int[]{-20, -10, 0, 10, 20}, new int[]{{-15, 1}, {-5, 2}, {5, 3}, {15, 1}}), 25);\n    assert Arrays.equals(solution.minimumTotalDistance(new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9}, new int[]{{2, 3}, {5, 3}, {8, 3}}), 6);\n    assert Arrays.equals(solution.minimumTotalDistance(new int[]{-20, -10, 0, 10, 20}, new int[]{{-15, 2}, {0, 3}, {15, 2}}), 20);\n    assert Arrays.equals(solution.minimumTotalDistance(new int[]{100, 200, 300, 400, 500}, new int[]{{50, 2}, {150, 1}, {250, 2}, {350, 1}, {450, 1}}), 250);\n    assert Arrays.equals(solution.minimumTotalDistance(new int[]{1, 3, 5, 7, 9, 11}, new int[]{{2, 2}, {6, 2}, {10, 2}}), 6);\n    assert Arrays.equals(solution.minimumTotalDistance(new int[]{1, 3, 5, 7, 9}, new int[]{{2, 2}, {4, 2}, {6, 2}, {8, 2}, {10, 1}}), 5);\n    assert Arrays.equals(solution.minimumTotalDistance(new int[]{10, 20, 30, 40, 50, 60}, new int[]{{15, 2}, {35, 2}, {55, 2}}), 30);\n    assert Arrays.equals(solution.minimumTotalDistance(new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15}, new int[]{{2, 3}, {6, 3}, {10, 3}, {14, 3}}), inf);\n    assert Arrays.equals(solution.minimumTotalDistance(new int[]{-20, -10, 0, 10, 20}, new int[]{{-15, 2}, {-5, 3}, {5, 2}, {15, 1}}), 25);\n    assert Arrays.equals(solution.minimumTotalDistance(new int[]{1, 1, 1, 1, 1, 1, 1, 1, 1, 1}, new int[]{{0, 10}}), 10);\n    assert Arrays.equals(solution.minimumTotalDistance(new int[]{-100, -90, -80, -70, -60, -50, -40, -30, -20, -10}, new int[]{{-105, 2}, {-95, 2}, {-85, 2}, {-75, 2}, {-65, 2}, {-55, 2}, {-45, 2}, {-35, 2}, {-25, 2}, {-15, 2}}), 50);\n    assert Arrays.equals(solution.minimumTotalDistance(new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}, new int[]{{0, 10}}), 55);\n    assert Arrays.equals(solution.minimumTotalDistance(new int[]{5, 10, 15, 20, 25, 30, 35, 40, 45, 50}, new int[]{{10, 2}, {20, 2}, {30, 2}, {40, 2}}), inf);\n    assert Arrays.equals(solution.minimumTotalDistance(new int[]{10, 20, 30, 40}, new int[]{{15, 2}, {25, 2}, {35, 2}}), 20);\n    assert Arrays.equals(solution.minimumTotalDistance(new int[]{-10, -5, 0, 5, 10, 15, 20}, new int[]{{-7, 2}, {-2, 2}, {3, 2}, {8, 2}}), 35);\n    assert Arrays.equals(solution.minimumTotalDistance(new int[]{-20, -10, 0, 10, 20}, new int[]{{-15, 2}, {0, 3}, {15, 1}}), 25);\n    assert Arrays.equals(solution.minimumTotalDistance(new int[]{-20, -15, -10, -5, 0, 5, 10, 15, 20}, new int[]{{-15, 2}, {-10, 2}, {-5, 2}, {0, 2}, {5, 2}, {10, 2}, {15, 2}}), 10);\n    assert Arrays.equals(solution.minimumTotalDistance(new int[]{-5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5}, new int[]{{-6, 3}, {0, 5}, {6, 3}}), 18);\n    assert Arrays.equals(solution.minimumTotalDistance(new int[]{1, 3, 5, 7, 9}, new int[]{{2, 1}, {4, 1}, {6, 1}, {8, 1}}), inf);\n    assert Arrays.equals(solution.minimumTotalDistance(new int[]{-5, -3, -1, 1, 3, 5}, new int[]{{-10, 1}, {-5, 2}, {0, 3}, {5, 2}, {10, 1}}), 6);\n    assert Arrays.equals(solution.minimumTotalDistance(new int[]{-5, -3, -1, 1, 3, 5, 7, 9}, new int[]{{-4, 1}, {0, 3}, {4, 2}}), inf);\n    assert Arrays.equals(solution.minimumTotalDistance(new int[]{1, 3, 5, 7, 9}, new int[]{{0, 2}, {4, 2}, {8, 2}}), 5);\n    assert Arrays.equals(solution.minimumTotalDistance(new int[]{1, 4, 7, 10, 13, 16, 19, 22, 25, 28}, new int[]{{3, 3}, {9, 3}, {15, 3}, {21, 3}}), 25);\n    assert Arrays.equals(solution.minimumTotalDistance(new int[]{10, 10, 10, 10}, new int[]{{10, 1}, {10, 1}, {10, 1}, {10, 1}}), 0);\n    assert Arrays.equals(solution.minimumTotalDistance(new int[]{1, 4, 7, 10, 13, 16, 19, 22, 25}, new int[]{{3, 3}, {9, 3}, {15, 3}, {21, 3}}), 16);\n    assert Arrays.equals(solution.minimumTotalDistance(new int[]{10, 20, 30, 40, 50, 60, 70, 80, 90, 100}, new int[]{{5, 2}, {15, 2}, {25, 2}, {35, 2}, {45, 2}, {55, 2}, {65, 2}, {75, 2}, {85, 2}, {95, 2}}), 50);\n    assert Arrays.equals(solution.minimumTotalDistance(new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}, new int[]{{0, 2}, {5, 3}, {10, 5}}), 16);\n    assert Arrays.equals(solution.minimumTotalDistance(new int[]{100, 200, 300, 400, 500, 600, 700, 800, 900, 1000}, new int[]{{150, 3}, {500, 4}, {850, 3}}), 900);\n    assert Arrays.equals(solution.minimumTotalDistance(new int[]{1, 1, 1, 1, 1, 1, 1, 1, 1, 1}, new int[]{{-5, 5}, {0, 5}, {5, 5}}), 25);\n    assert Arrays.equals(solution.minimumTotalDistance(new int[]{-5, 0, 5, 10, 15, 20}, new int[]{{-10, 1}, {0, 3}, {10, 2}, {20, 1}}), 15);\n    assert Arrays.equals(solution.minimumTotalDistance(new int[]{-50, -25, 0, 25, 50}, new int[]{{-75, 3}, {0, 2}, {75, 1}}), 125);\n    assert Arrays.equals(solution.minimumTotalDistance(new int[]{-10, -5, 0, 5, 10}, new int[]{{-15, 2}, {-10, 1}, {0, 3}, {10, 2}, {15, 1}}), 10);\n    assert Arrays.equals(solution.minimumTotalDistance(new int[]{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19}, new int[]{{0, 5}, {5, 5}, {10, 5}, {15, 5}}), 40);\n    assert Arrays.equals(solution.minimumTotalDistance(new int[]{-100, -200, -300, -400, -500}, new int[]{{-50, 2}, {-150, 1}, {-250, 2}, {-350, 1}, {-450, 1}}), 250);\n    assert Arrays.equals(solution.minimumTotalDistance(new int[]{-100, -50, 0, 50, 100}, new int[]{{-75, 1}, {-25, 1}, {25, 1}, {75, 1}}), inf);\n    assert Arrays.equals(solution.minimumTotalDistance(new int[]{-100, -90, -80, -70, -60, -50, -40, -30, -20, -10}, new int[]{{-95, 2}, {-85, 2}, {-75, 2}, {-65, 2}, {-55, 2}, {-45, 2}, {-35, 2}, {-25, 2}, {-15, 2}, {-5, 2}}), 50);\n    assert Arrays.equals(solution.minimumTotalDistance(new int[]{-100, -50, 0, 50, 100}, new int[]{{-75, 2}, {-25, 2}, {25, 2}, {75, 1}}), 125);\n    assert Arrays.equals(solution.minimumTotalDistance(new int[]{-5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5}, new int[]{{-10, 6}, {0, 5}}), 60);\n    assert Arrays.equals(solution.minimumTotalDistance(new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}, new int[]{{0, 5}, {10, 5}}), 25);\n    assert Arrays.equals(solution.minimumTotalDistance(new int[]{-10, -5, 0, 5, 10, 15, 20, 25}, new int[]{{-15, 2}, {0, 3}, {15, 3}, {25, 1}}), 25);\n    assert Arrays.equals(solution.minimumTotalDistance(new int[]{100, 200, 300, 400, 500}, new int[]{{50, 1}, {150, 2}, {250, 2}, {350, 1}, {450, 1}}), 250);\n    assert Arrays.equals(solution.minimumTotalDistance(new int[]{-10, -5, 0, 5, 10, 15}, new int[]{{-8, 2}, {2, 3}, {12, 2}}), 15);\n    assert Arrays.equals(solution.minimumTotalDistance(new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, new int[]{{-5, 5}, {5, 5}}), 50);\n    assert Arrays.equals(solution.minimumTotalDistance(new int[]{0, 10, 20, 30, 40, 50, 60}, new int[]{{5, 3}, {15, 3}, {25, 3}, {35, 3}, {45, 3}}), 45);\n    assert Arrays.equals(solution.minimumTotalDistance(new int[]{-1, 0, 1}, new int[]{{-2, 1}, {2, 1}, {0, 1}}), 2);\n    assert Arrays.equals(solution.minimumTotalDistance(new int[]{-9, -6, -3, 0, 3, 6, 9}, new int[]{{-8, 2}, {-2, 2}, {2, 2}, {8, 1}}), 12);\n    assert Arrays.equals(solution.minimumTotalDistance(new int[]{1, 3, 5, 7, 9, 11, 13, 15, 17, 19}, new int[]{{0, 5}, {10, 5}, {20, 5}}), 26);\n    assert Arrays.equals(solution.minimumTotalDistance(new int[]{0, 10, 20, 30, 40, 50, 60}, new int[]{{5, 1}, {15, 2}, {25, 2}, {35, 1}, {45, 2}, {55, 1}}), 35);\n    assert Arrays.equals(solution.minimumTotalDistance(new int[]{-2, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10}, new int[]{{-4, 3}, {2, 4}, {7, 3}, {11, 3}}), 22);\n    assert Arrays.equals(solution.minimumTotalDistance(new int[]{-1, -2, -3, -4, -5}, new int[]{{-3, 3}, {0, 2}}), 6);\n    assert Arrays.equals(solution.minimumTotalDistance(new int[]{0, 2, 4, 6, 8, 10, 12}, new int[]{{1, 2}, {5, 2}, {9, 2}, {13, 1}}), 7);\n    assert Arrays.equals(solution.minimumTotalDistance(new int[]{100, 200, 300, 400, 500}, new int[]{{50, 1}, {150, 1}, {250, 1}, {350, 1}, {450, 1}}), 250);\n    assert Arrays.equals(solution.minimumTotalDistance(new int[]{-5, -3, -1, 1, 3, 5}, new int[]{{-10, 1}, {-6, 2}, {-2, 2}, {2, 2}, {6, 1}}), 6);\n    assert Arrays.equals(solution.minimumTotalDistance(new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}, new int[]{{5, 5}, {15, 5}}), 45);\n    assert Arrays.equals(solution.minimumTotalDistance(new int[]{-20, -10, 0, 10, 20}, new int[]{{-25, 2}, {-15, 3}, {-5, 2}, {5, 3}, {15, 2}, {25, 1}}), 25);\n    assert Arrays.equals(solution.minimumTotalDistance(new int[]{-50, -40, -30, -20, -10, 0, 10, 20, 30, 40, 50}, new int[]{{-60, 3}, {-40, 4}, {-20, 4}, {0, 4}, {20, 4}, {40, 3}}), 60);\n    assert Arrays.equals(solution.minimumTotalDistance(new int[]{1, 3, 5, 7, 9, 11, 13, 15, 17, 19}, new int[]{{0, 2}, {4, 2}, {8, 2}, {12, 2}, {16, 2}}), 20);\n    assert Arrays.equals(solution.minimumTotalDistance(new int[]{1, 3, 5, 7, 9}, new int[]{{0, 3}, {6, 2}, {12, 1}}), 9);\n    assert Arrays.equals(solution.minimumTotalDistance(new int[]{-100, -50, 0, 50, 100}, new int[]{{-150, 2}, {-100, 2}, {-50, 2}, {0, 2}, {50, 2}, {100, 2}, {150, 2}}), 0);\n    assert Arrays.equals(solution.minimumTotalDistance(new int[]{1, 3, 5, 7, 9, 11, 13, 15, 17, 19}, new int[]{{0, 2}, {5, 2}, {10, 2}, {15, 2}, {20, 2}}), 14);\n}",
+    "javascript": "function check(candidate) {\n    console.assert(JSON.stringify(candidate([5,1,3], [[2,3]])) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate([5,5,5,5], [[5,4]])) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate([-3,0,3], [[-2,1],[2,1],[5,2]])) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate([-1, -3, 2, 4, 5], [[-2, 1], [2, 2], [6, 2]])) === JSON.stringify(7));\n    console.assert(JSON.stringify(candidate([-5,-2,0,2,5], [[-3,2],[1,3]])) === JSON.stringify(9));\n    console.assert(JSON.stringify(candidate([5,8,15], [[10,2],[16,1]])) === JSON.stringify(8));\n    console.assert(JSON.stringify(candidate([10,20,30,40], [[5,2],[15,2],[25,2]])) === JSON.stringify(30));\n    console.assert(JSON.stringify(candidate([-10,0,10], [[-5,1],[0,2],[5,1]])) === JSON.stringify(10));\n    console.assert(JSON.stringify(candidate([5, 2, -5], [[-2, 2], [2, 2]])) === JSON.stringify(6));\n    console.assert(JSON.stringify(candidate([10, -10, 0], [[0, 3]])) === JSON.stringify(20));\n    console.assert(JSON.stringify(candidate([0,4,6], [[2,2],[6,2]])) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate([3,7,12,15], [[2,3],[10,2]])) === JSON.stringify(13));\n    console.assert(JSON.stringify(candidate([-3,0,3], [[-2,1],[2,2]])) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate([1,-1], [[-2,1],[2,1]])) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate([-20, -10, 0, 10, 20], [[-15, 2], [0, 1], [15, 2]])) === JSON.stringify(20));\n    console.assert(JSON.stringify(candidate([-10, -20, -30, -40, -50, -60, -70, -80, -90, -100], [[-5, 2], [-15, 2], [-25, 2], [-35, 2], [-45, 2], [-55, 2], [-65, 2], [-75, 2], [-85, 2], [-95, 2]])) === JSON.stringify(50));\n    console.assert(JSON.stringify(candidate([-15, -10, -5, 0, 5, 10, 15], [[-12, 2], [-7, 2], [-2, 2], [3, 2], [8, 2], [13, 2]])) === JSON.stringify(15));\n    console.assert(JSON.stringify(candidate([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], [[5, 3], [10, 4], [15, 3]])) === JSON.stringify(45));\n    console.assert(JSON.stringify(candidate([0, 1, 2, 3, 4, 5, 6, 7, 8, 9], [[2, 2], [5, 2], [8, 2]])) === JSON.stringify(inf));\n    console.assert(JSON.stringify(candidate([-1, -2, -3, -4, -5], [[-10, 3], [0, 2], [10, 1]])) === JSON.stringify(21));\n    console.assert(JSON.stringify(candidate([0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140], [[5, 3], [15, 3], [25, 3], [35, 3], [45, 3], [55, 3], [65, 3], [75, 3], [85, 3], [95, 3], [105, 3], [115, 3], [125, 3], [135, 3]])) === JSON.stringify(75));\n    console.assert(JSON.stringify(candidate([0, 2, 4, 6, 8, 10], [[1, 1], [3, 1], [5, 1], [7, 1], [9, 1], [11, 1]])) === JSON.stringify(6));\n    console.assert(JSON.stringify(candidate([100, 200, 300, 400, 500], [[50, 1], [150, 2], [250, 2], [350, 2], [450, 1], [550, 1]])) === JSON.stringify(250));\n    console.assert(JSON.stringify(candidate([1, 3, 5, 7, 9, 11, 13, 15, 17, 19], [[0, 2], [6, 3], [12, 3], [18, 2]])) === JSON.stringify(16));\n    console.assert(JSON.stringify(candidate([0, 1, 2, 3, 4, 5, 6, 7, 8, 9], [[0, 5], [5, 5]])) === JSON.stringify(20));\n    console.assert(JSON.stringify(candidate([-1, 1, -2, 2, -3, 3, -4, 4, -5, 5], [[-3, 3], [0, 4], [3, 3]])) === JSON.stringify(12));\n    console.assert(JSON.stringify(candidate([-10, -5, 0, 5, 10, 15, 20, 25, 30, 35], [[-7, 2], [2, 3], [17, 2], [32, 2]])) === JSON.stringify(inf));\n    console.assert(JSON.stringify(candidate([-5, 0, 5, 10, 15, 20, 25, 30, 35, 40], [[-10, 2], [5, 3], [20, 3], [35, 2]])) === JSON.stringify(50));\n    console.assert(JSON.stringify(candidate([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], [[0, 2], [4, 2], [8, 2], [12, 2]])) === JSON.stringify(inf));\n    console.assert(JSON.stringify(candidate([1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25], [[5, 3], [15, 3], [25, 3]])) === JSON.stringify(inf));\n    console.assert(JSON.stringify(candidate([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], [[0, 3], [5, 4], [10, 3]])) === JSON.stringify(13));\n    console.assert(JSON.stringify(candidate([-100, -50, 0, 50, 100], [[-75, 2], [-25, 1], [25, 1], [75, 2]])) === JSON.stringify(125));\n    console.assert(JSON.stringify(candidate([10, 20, 30, 40, 50, 60, 70, 80, 90], [[0, 3], [10, 3], [20, 3], [30, 3], [40, 3], [50, 3], [60, 3], [70, 3], [80, 3], [90, 3]])) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate([-2, -1, 0, 1, 2, 3, 4], [[-3, 2], [0, 3], [3, 2]])) === JSON.stringify(7));\n    console.assert(JSON.stringify(candidate([-2, -1, 0, 1, 2], [[-3, 1], [-1, 1], [1, 1], [3, 1]])) === JSON.stringify(inf));\n    console.assert(JSON.stringify(candidate([-10, -5, 0, 5, 10, 15, 20], [[-20, 1], [-10, 2], [0, 3], [10, 2], [20, 1]])) === JSON.stringify(15));\n    console.assert(JSON.stringify(candidate([-100, -50, 0, 50, 100], [[-75, 2], [0, 2], [75, 2]])) === JSON.stringify(100));\n    console.assert(JSON.stringify(candidate([-100, -50, 0, 50, 100, 150], [[-75, 3], [25, 2], [125, 2]])) === JSON.stringify(150));\n    console.assert(JSON.stringify(candidate([-100, -50, 0, 50, 100, 150, 200], [[-75, 2], [-25, 2], [25, 2], [75, 2], [125, 2], [175, 2]])) === JSON.stringify(175));\n    console.assert(JSON.stringify(candidate([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20], [[0, 5], [5, 5], [10, 5], [15, 5]])) === JSON.stringify(60));\n    console.assert(JSON.stringify(candidate([-20, -10, 0, 10, 20], [[-15, 1], [-5, 2], [5, 3], [15, 1]])) === JSON.stringify(25));\n    console.assert(JSON.stringify(candidate([1, 2, 3, 4, 5, 6, 7, 8, 9], [[2, 3], [5, 3], [8, 3]])) === JSON.stringify(6));\n    console.assert(JSON.stringify(candidate([-20, -10, 0, 10, 20], [[-15, 2], [0, 3], [15, 2]])) === JSON.stringify(20));\n    console.assert(JSON.stringify(candidate([100, 200, 300, 400, 500], [[50, 2], [150, 1], [250, 2], [350, 1], [450, 1]])) === JSON.stringify(250));\n    console.assert(JSON.stringify(candidate([1, 3, 5, 7, 9, 11], [[2, 2], [6, 2], [10, 2]])) === JSON.stringify(6));\n    console.assert(JSON.stringify(candidate([1, 3, 5, 7, 9], [[2, 2], [4, 2], [6, 2], [8, 2], [10, 1]])) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate([10, 20, 30, 40, 50, 60], [[15, 2], [35, 2], [55, 2]])) === JSON.stringify(30));\n    console.assert(JSON.stringify(candidate([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15], [[2, 3], [6, 3], [10, 3], [14, 3]])) === JSON.stringify(inf));\n    console.assert(JSON.stringify(candidate([-20, -10, 0, 10, 20], [[-15, 2], [-5, 3], [5, 2], [15, 1]])) === JSON.stringify(25));\n    console.assert(JSON.stringify(candidate([1, 1, 1, 1, 1, 1, 1, 1, 1, 1], [[0, 10]])) === JSON.stringify(10));\n    console.assert(JSON.stringify(candidate([-100, -90, -80, -70, -60, -50, -40, -30, -20, -10], [[-105, 2], [-95, 2], [-85, 2], [-75, 2], [-65, 2], [-55, 2], [-45, 2], [-35, 2], [-25, 2], [-15, 2]])) === JSON.stringify(50));\n    console.assert(JSON.stringify(candidate([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], [[0, 10]])) === JSON.stringify(55));\n    console.assert(JSON.stringify(candidate([5, 10, 15, 20, 25, 30, 35, 40, 45, 50], [[10, 2], [20, 2], [30, 2], [40, 2]])) === JSON.stringify(inf));\n    console.assert(JSON.stringify(candidate([10, 20, 30, 40], [[15, 2], [25, 2], [35, 2]])) === JSON.stringify(20));\n    console.assert(JSON.stringify(candidate([-10, -5, 0, 5, 10, 15, 20], [[-7, 2], [-2, 2], [3, 2], [8, 2]])) === JSON.stringify(35));\n    console.assert(JSON.stringify(candidate([-20, -10, 0, 10, 20], [[-15, 2], [0, 3], [15, 1]])) === JSON.stringify(25));\n    console.assert(JSON.stringify(candidate([-20, -15, -10, -5, 0, 5, 10, 15, 20], [[-15, 2], [-10, 2], [-5, 2], [0, 2], [5, 2], [10, 2], [15, 2]])) === JSON.stringify(10));\n    console.assert(JSON.stringify(candidate([-5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5], [[-6, 3], [0, 5], [6, 3]])) === JSON.stringify(18));\n    console.assert(JSON.stringify(candidate([1, 3, 5, 7, 9], [[2, 1], [4, 1], [6, 1], [8, 1]])) === JSON.stringify(inf));\n    console.assert(JSON.stringify(candidate([-5, -3, -1, 1, 3, 5], [[-10, 1], [-5, 2], [0, 3], [5, 2], [10, 1]])) === JSON.stringify(6));\n    console.assert(JSON.stringify(candidate([-5, -3, -1, 1, 3, 5, 7, 9], [[-4, 1], [0, 3], [4, 2]])) === JSON.stringify(inf));\n    console.assert(JSON.stringify(candidate([1, 3, 5, 7, 9], [[0, 2], [4, 2], [8, 2]])) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate([1, 4, 7, 10, 13, 16, 19, 22, 25, 28], [[3, 3], [9, 3], [15, 3], [21, 3]])) === JSON.stringify(25));\n    console.assert(JSON.stringify(candidate([10, 10, 10, 10], [[10, 1], [10, 1], [10, 1], [10, 1]])) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate([1, 4, 7, 10, 13, 16, 19, 22, 25], [[3, 3], [9, 3], [15, 3], [21, 3]])) === JSON.stringify(16));\n    console.assert(JSON.stringify(candidate([10, 20, 30, 40, 50, 60, 70, 80, 90, 100], [[5, 2], [15, 2], [25, 2], [35, 2], [45, 2], [55, 2], [65, 2], [75, 2], [85, 2], [95, 2]])) === JSON.stringify(50));\n    console.assert(JSON.stringify(candidate([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], [[0, 2], [5, 3], [10, 5]])) === JSON.stringify(16));\n    console.assert(JSON.stringify(candidate([100, 200, 300, 400, 500, 600, 700, 800, 900, 1000], [[150, 3], [500, 4], [850, 3]])) === JSON.stringify(900));\n    console.assert(JSON.stringify(candidate([1, 1, 1, 1, 1, 1, 1, 1, 1, 1], [[-5, 5], [0, 5], [5, 5]])) === JSON.stringify(25));\n    console.assert(JSON.stringify(candidate([-5, 0, 5, 10, 15, 20], [[-10, 1], [0, 3], [10, 2], [20, 1]])) === JSON.stringify(15));\n    console.assert(JSON.stringify(candidate([-50, -25, 0, 25, 50], [[-75, 3], [0, 2], [75, 1]])) === JSON.stringify(125));\n    console.assert(JSON.stringify(candidate([-10, -5, 0, 5, 10], [[-15, 2], [-10, 1], [0, 3], [10, 2], [15, 1]])) === JSON.stringify(10));\n    console.assert(JSON.stringify(candidate([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19], [[0, 5], [5, 5], [10, 5], [15, 5]])) === JSON.stringify(40));\n    console.assert(JSON.stringify(candidate([-100, -200, -300, -400, -500], [[-50, 2], [-150, 1], [-250, 2], [-350, 1], [-450, 1]])) === JSON.stringify(250));\n    console.assert(JSON.stringify(candidate([-100, -50, 0, 50, 100], [[-75, 1], [-25, 1], [25, 1], [75, 1]])) === JSON.stringify(inf));\n    console.assert(JSON.stringify(candidate([-100, -90, -80, -70, -60, -50, -40, -30, -20, -10], [[-95, 2], [-85, 2], [-75, 2], [-65, 2], [-55, 2], [-45, 2], [-35, 2], [-25, 2], [-15, 2], [-5, 2]])) === JSON.stringify(50));\n    console.assert(JSON.stringify(candidate([-100, -50, 0, 50, 100], [[-75, 2], [-25, 2], [25, 2], [75, 1]])) === JSON.stringify(125));\n    console.assert(JSON.stringify(candidate([-5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5], [[-10, 6], [0, 5]])) === JSON.stringify(60));\n    console.assert(JSON.stringify(candidate([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], [[0, 5], [10, 5]])) === JSON.stringify(25));\n    console.assert(JSON.stringify(candidate([-10, -5, 0, 5, 10, 15, 20, 25], [[-15, 2], [0, 3], [15, 3], [25, 1]])) === JSON.stringify(25));\n    console.assert(JSON.stringify(candidate([100, 200, 300, 400, 500], [[50, 1], [150, 2], [250, 2], [350, 1], [450, 1]])) === JSON.stringify(250));\n    console.assert(JSON.stringify(candidate([-10, -5, 0, 5, 10, 15], [[-8, 2], [2, 3], [12, 2]])) === JSON.stringify(15));\n    console.assert(JSON.stringify(candidate([0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [[-5, 5], [5, 5]])) === JSON.stringify(50));\n    console.assert(JSON.stringify(candidate([0, 10, 20, 30, 40, 50, 60], [[5, 3], [15, 3], [25, 3], [35, 3], [45, 3]])) === JSON.stringify(45));\n    console.assert(JSON.stringify(candidate([-1, 0, 1], [[-2, 1], [2, 1], [0, 1]])) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate([-9, -6, -3, 0, 3, 6, 9], [[-8, 2], [-2, 2], [2, 2], [8, 1]])) === JSON.stringify(12));\n    console.assert(JSON.stringify(candidate([1, 3, 5, 7, 9, 11, 13, 15, 17, 19], [[0, 5], [10, 5], [20, 5]])) === JSON.stringify(26));\n    console.assert(JSON.stringify(candidate([0, 10, 20, 30, 40, 50, 60], [[5, 1], [15, 2], [25, 2], [35, 1], [45, 2], [55, 1]])) === JSON.stringify(35));\n    console.assert(JSON.stringify(candidate([-2, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10], [[-4, 3], [2, 4], [7, 3], [11, 3]])) === JSON.stringify(22));\n    console.assert(JSON.stringify(candidate([-1, -2, -3, -4, -5], [[-3, 3], [0, 2]])) === JSON.stringify(6));\n    console.assert(JSON.stringify(candidate([0, 2, 4, 6, 8, 10, 12], [[1, 2], [5, 2], [9, 2], [13, 1]])) === JSON.stringify(7));\n    console.assert(JSON.stringify(candidate([100, 200, 300, 400, 500], [[50, 1], [150, 1], [250, 1], [350, 1], [450, 1]])) === JSON.stringify(250));\n    console.assert(JSON.stringify(candidate([-5, -3, -1, 1, 3, 5], [[-10, 1], [-6, 2], [-2, 2], [2, 2], [6, 1]])) === JSON.stringify(6));\n    console.assert(JSON.stringify(candidate([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], [[5, 5], [15, 5]])) === JSON.stringify(45));\n    console.assert(JSON.stringify(candidate([-20, -10, 0, 10, 20], [[-25, 2], [-15, 3], [-5, 2], [5, 3], [15, 2], [25, 1]])) === JSON.stringify(25));\n    console.assert(JSON.stringify(candidate([-50, -40, -30, -20, -10, 0, 10, 20, 30, 40, 50], [[-60, 3], [-40, 4], [-20, 4], [0, 4], [20, 4], [40, 3]])) === JSON.stringify(60));\n    console.assert(JSON.stringify(candidate([1, 3, 5, 7, 9, 11, 13, 15, 17, 19], [[0, 2], [4, 2], [8, 2], [12, 2], [16, 2]])) === JSON.stringify(20));\n    console.assert(JSON.stringify(candidate([1, 3, 5, 7, 9], [[0, 3], [6, 2], [12, 1]])) === JSON.stringify(9));\n    console.assert(JSON.stringify(candidate([-100, -50, 0, 50, 100], [[-150, 2], [-100, 2], [-50, 2], [0, 2], [50, 2], [100, 2], [150, 2]])) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate([1, 3, 5, 7, 9, 11, 13, 15, 17, 19], [[0, 2], [5, 2], [10, 2], [15, 2], [20, 2]])) === JSON.stringify(14));\n}",
+    "typescript": "function check(candidate: Function): void {\n    console.assert(JSON.stringify(candidate([5,1,3], [[2,3]])) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate([5,5,5,5], [[5,4]])) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate([-3,0,3], [[-2,1],[2,1],[5,2]])) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate([-1, -3, 2, 4, 5], [[-2, 1], [2, 2], [6, 2]])) === JSON.stringify(7));\n    console.assert(JSON.stringify(candidate([-5,-2,0,2,5], [[-3,2],[1,3]])) === JSON.stringify(9));\n    console.assert(JSON.stringify(candidate([5,8,15], [[10,2],[16,1]])) === JSON.stringify(8));\n    console.assert(JSON.stringify(candidate([10,20,30,40], [[5,2],[15,2],[25,2]])) === JSON.stringify(30));\n    console.assert(JSON.stringify(candidate([-10,0,10], [[-5,1],[0,2],[5,1]])) === JSON.stringify(10));\n    console.assert(JSON.stringify(candidate([5, 2, -5], [[-2, 2], [2, 2]])) === JSON.stringify(6));\n    console.assert(JSON.stringify(candidate([10, -10, 0], [[0, 3]])) === JSON.stringify(20));\n    console.assert(JSON.stringify(candidate([0,4,6], [[2,2],[6,2]])) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate([3,7,12,15], [[2,3],[10,2]])) === JSON.stringify(13));\n    console.assert(JSON.stringify(candidate([-3,0,3], [[-2,1],[2,2]])) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate([1,-1], [[-2,1],[2,1]])) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate([-20, -10, 0, 10, 20], [[-15, 2], [0, 1], [15, 2]])) === JSON.stringify(20));\n    console.assert(JSON.stringify(candidate([-10, -20, -30, -40, -50, -60, -70, -80, -90, -100], [[-5, 2], [-15, 2], [-25, 2], [-35, 2], [-45, 2], [-55, 2], [-65, 2], [-75, 2], [-85, 2], [-95, 2]])) === JSON.stringify(50));\n    console.assert(JSON.stringify(candidate([-15, -10, -5, 0, 5, 10, 15], [[-12, 2], [-7, 2], [-2, 2], [3, 2], [8, 2], [13, 2]])) === JSON.stringify(15));\n    console.assert(JSON.stringify(candidate([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], [[5, 3], [10, 4], [15, 3]])) === JSON.stringify(45));\n    console.assert(JSON.stringify(candidate([0, 1, 2, 3, 4, 5, 6, 7, 8, 9], [[2, 2], [5, 2], [8, 2]])) === JSON.stringify(inf));\n    console.assert(JSON.stringify(candidate([-1, -2, -3, -4, -5], [[-10, 3], [0, 2], [10, 1]])) === JSON.stringify(21));\n    console.assert(JSON.stringify(candidate([0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140], [[5, 3], [15, 3], [25, 3], [35, 3], [45, 3], [55, 3], [65, 3], [75, 3], [85, 3], [95, 3], [105, 3], [115, 3], [125, 3], [135, 3]])) === JSON.stringify(75));\n    console.assert(JSON.stringify(candidate([0, 2, 4, 6, 8, 10], [[1, 1], [3, 1], [5, 1], [7, 1], [9, 1], [11, 1]])) === JSON.stringify(6));\n    console.assert(JSON.stringify(candidate([100, 200, 300, 400, 500], [[50, 1], [150, 2], [250, 2], [350, 2], [450, 1], [550, 1]])) === JSON.stringify(250));\n    console.assert(JSON.stringify(candidate([1, 3, 5, 7, 9, 11, 13, 15, 17, 19], [[0, 2], [6, 3], [12, 3], [18, 2]])) === JSON.stringify(16));\n    console.assert(JSON.stringify(candidate([0, 1, 2, 3, 4, 5, 6, 7, 8, 9], [[0, 5], [5, 5]])) === JSON.stringify(20));\n    console.assert(JSON.stringify(candidate([-1, 1, -2, 2, -3, 3, -4, 4, -5, 5], [[-3, 3], [0, 4], [3, 3]])) === JSON.stringify(12));\n    console.assert(JSON.stringify(candidate([-10, -5, 0, 5, 10, 15, 20, 25, 30, 35], [[-7, 2], [2, 3], [17, 2], [32, 2]])) === JSON.stringify(inf));\n    console.assert(JSON.stringify(candidate([-5, 0, 5, 10, 15, 20, 25, 30, 35, 40], [[-10, 2], [5, 3], [20, 3], [35, 2]])) === JSON.stringify(50));\n    console.assert(JSON.stringify(candidate([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], [[0, 2], [4, 2], [8, 2], [12, 2]])) === JSON.stringify(inf));\n    console.assert(JSON.stringify(candidate([1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25], [[5, 3], [15, 3], [25, 3]])) === JSON.stringify(inf));\n    console.assert(JSON.stringify(candidate([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], [[0, 3], [5, 4], [10, 3]])) === JSON.stringify(13));\n    console.assert(JSON.stringify(candidate([-100, -50, 0, 50, 100], [[-75, 2], [-25, 1], [25, 1], [75, 2]])) === JSON.stringify(125));\n    console.assert(JSON.stringify(candidate([10, 20, 30, 40, 50, 60, 70, 80, 90], [[0, 3], [10, 3], [20, 3], [30, 3], [40, 3], [50, 3], [60, 3], [70, 3], [80, 3], [90, 3]])) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate([-2, -1, 0, 1, 2, 3, 4], [[-3, 2], [0, 3], [3, 2]])) === JSON.stringify(7));\n    console.assert(JSON.stringify(candidate([-2, -1, 0, 1, 2], [[-3, 1], [-1, 1], [1, 1], [3, 1]])) === JSON.stringify(inf));\n    console.assert(JSON.stringify(candidate([-10, -5, 0, 5, 10, 15, 20], [[-20, 1], [-10, 2], [0, 3], [10, 2], [20, 1]])) === JSON.stringify(15));\n    console.assert(JSON.stringify(candidate([-100, -50, 0, 50, 100], [[-75, 2], [0, 2], [75, 2]])) === JSON.stringify(100));\n    console.assert(JSON.stringify(candidate([-100, -50, 0, 50, 100, 150], [[-75, 3], [25, 2], [125, 2]])) === JSON.stringify(150));\n    console.assert(JSON.stringify(candidate([-100, -50, 0, 50, 100, 150, 200], [[-75, 2], [-25, 2], [25, 2], [75, 2], [125, 2], [175, 2]])) === JSON.stringify(175));\n    console.assert(JSON.stringify(candidate([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20], [[0, 5], [5, 5], [10, 5], [15, 5]])) === JSON.stringify(60));\n    console.assert(JSON.stringify(candidate([-20, -10, 0, 10, 20], [[-15, 1], [-5, 2], [5, 3], [15, 1]])) === JSON.stringify(25));\n    console.assert(JSON.stringify(candidate([1, 2, 3, 4, 5, 6, 7, 8, 9], [[2, 3], [5, 3], [8, 3]])) === JSON.stringify(6));\n    console.assert(JSON.stringify(candidate([-20, -10, 0, 10, 20], [[-15, 2], [0, 3], [15, 2]])) === JSON.stringify(20));\n    console.assert(JSON.stringify(candidate([100, 200, 300, 400, 500], [[50, 2], [150, 1], [250, 2], [350, 1], [450, 1]])) === JSON.stringify(250));\n    console.assert(JSON.stringify(candidate([1, 3, 5, 7, 9, 11], [[2, 2], [6, 2], [10, 2]])) === JSON.stringify(6));\n    console.assert(JSON.stringify(candidate([1, 3, 5, 7, 9], [[2, 2], [4, 2], [6, 2], [8, 2], [10, 1]])) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate([10, 20, 30, 40, 50, 60], [[15, 2], [35, 2], [55, 2]])) === JSON.stringify(30));\n    console.assert(JSON.stringify(candidate([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15], [[2, 3], [6, 3], [10, 3], [14, 3]])) === JSON.stringify(inf));\n    console.assert(JSON.stringify(candidate([-20, -10, 0, 10, 20], [[-15, 2], [-5, 3], [5, 2], [15, 1]])) === JSON.stringify(25));\n    console.assert(JSON.stringify(candidate([1, 1, 1, 1, 1, 1, 1, 1, 1, 1], [[0, 10]])) === JSON.stringify(10));\n    console.assert(JSON.stringify(candidate([-100, -90, -80, -70, -60, -50, -40, -30, -20, -10], [[-105, 2], [-95, 2], [-85, 2], [-75, 2], [-65, 2], [-55, 2], [-45, 2], [-35, 2], [-25, 2], [-15, 2]])) === JSON.stringify(50));\n    console.assert(JSON.stringify(candidate([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], [[0, 10]])) === JSON.stringify(55));\n    console.assert(JSON.stringify(candidate([5, 10, 15, 20, 25, 30, 35, 40, 45, 50], [[10, 2], [20, 2], [30, 2], [40, 2]])) === JSON.stringify(inf));\n    console.assert(JSON.stringify(candidate([10, 20, 30, 40], [[15, 2], [25, 2], [35, 2]])) === JSON.stringify(20));\n    console.assert(JSON.stringify(candidate([-10, -5, 0, 5, 10, 15, 20], [[-7, 2], [-2, 2], [3, 2], [8, 2]])) === JSON.stringify(35));\n    console.assert(JSON.stringify(candidate([-20, -10, 0, 10, 20], [[-15, 2], [0, 3], [15, 1]])) === JSON.stringify(25));\n    console.assert(JSON.stringify(candidate([-20, -15, -10, -5, 0, 5, 10, 15, 20], [[-15, 2], [-10, 2], [-5, 2], [0, 2], [5, 2], [10, 2], [15, 2]])) === JSON.stringify(10));\n    console.assert(JSON.stringify(candidate([-5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5], [[-6, 3], [0, 5], [6, 3]])) === JSON.stringify(18));\n    console.assert(JSON.stringify(candidate([1, 3, 5, 7, 9], [[2, 1], [4, 1], [6, 1], [8, 1]])) === JSON.stringify(inf));\n    console.assert(JSON.stringify(candidate([-5, -3, -1, 1, 3, 5], [[-10, 1], [-5, 2], [0, 3], [5, 2], [10, 1]])) === JSON.stringify(6));\n    console.assert(JSON.stringify(candidate([-5, -3, -1, 1, 3, 5, 7, 9], [[-4, 1], [0, 3], [4, 2]])) === JSON.stringify(inf));\n    console.assert(JSON.stringify(candidate([1, 3, 5, 7, 9], [[0, 2], [4, 2], [8, 2]])) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate([1, 4, 7, 10, 13, 16, 19, 22, 25, 28], [[3, 3], [9, 3], [15, 3], [21, 3]])) === JSON.stringify(25));\n    console.assert(JSON.stringify(candidate([10, 10, 10, 10], [[10, 1], [10, 1], [10, 1], [10, 1]])) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate([1, 4, 7, 10, 13, 16, 19, 22, 25], [[3, 3], [9, 3], [15, 3], [21, 3]])) === JSON.stringify(16));\n    console.assert(JSON.stringify(candidate([10, 20, 30, 40, 50, 60, 70, 80, 90, 100], [[5, 2], [15, 2], [25, 2], [35, 2], [45, 2], [55, 2], [65, 2], [75, 2], [85, 2], [95, 2]])) === JSON.stringify(50));\n    console.assert(JSON.stringify(candidate([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], [[0, 2], [5, 3], [10, 5]])) === JSON.stringify(16));\n    console.assert(JSON.stringify(candidate([100, 200, 300, 400, 500, 600, 700, 800, 900, 1000], [[150, 3], [500, 4], [850, 3]])) === JSON.stringify(900));\n    console.assert(JSON.stringify(candidate([1, 1, 1, 1, 1, 1, 1, 1, 1, 1], [[-5, 5], [0, 5], [5, 5]])) === JSON.stringify(25));\n    console.assert(JSON.stringify(candidate([-5, 0, 5, 10, 15, 20], [[-10, 1], [0, 3], [10, 2], [20, 1]])) === JSON.stringify(15));\n    console.assert(JSON.stringify(candidate([-50, -25, 0, 25, 50], [[-75, 3], [0, 2], [75, 1]])) === JSON.stringify(125));\n    console.assert(JSON.stringify(candidate([-10, -5, 0, 5, 10], [[-15, 2], [-10, 1], [0, 3], [10, 2], [15, 1]])) === JSON.stringify(10));\n    console.assert(JSON.stringify(candidate([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19], [[0, 5], [5, 5], [10, 5], [15, 5]])) === JSON.stringify(40));\n    console.assert(JSON.stringify(candidate([-100, -200, -300, -400, -500], [[-50, 2], [-150, 1], [-250, 2], [-350, 1], [-450, 1]])) === JSON.stringify(250));\n    console.assert(JSON.stringify(candidate([-100, -50, 0, 50, 100], [[-75, 1], [-25, 1], [25, 1], [75, 1]])) === JSON.stringify(inf));\n    console.assert(JSON.stringify(candidate([-100, -90, -80, -70, -60, -50, -40, -30, -20, -10], [[-95, 2], [-85, 2], [-75, 2], [-65, 2], [-55, 2], [-45, 2], [-35, 2], [-25, 2], [-15, 2], [-5, 2]])) === JSON.stringify(50));\n    console.assert(JSON.stringify(candidate([-100, -50, 0, 50, 100], [[-75, 2], [-25, 2], [25, 2], [75, 1]])) === JSON.stringify(125));\n    console.assert(JSON.stringify(candidate([-5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5], [[-10, 6], [0, 5]])) === JSON.stringify(60));\n    console.assert(JSON.stringify(candidate([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], [[0, 5], [10, 5]])) === JSON.stringify(25));\n    console.assert(JSON.stringify(candidate([-10, -5, 0, 5, 10, 15, 20, 25], [[-15, 2], [0, 3], [15, 3], [25, 1]])) === JSON.stringify(25));\n    console.assert(JSON.stringify(candidate([100, 200, 300, 400, 500], [[50, 1], [150, 2], [250, 2], [350, 1], [450, 1]])) === JSON.stringify(250));\n    console.assert(JSON.stringify(candidate([-10, -5, 0, 5, 10, 15], [[-8, 2], [2, 3], [12, 2]])) === JSON.stringify(15));\n    console.assert(JSON.stringify(candidate([0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [[-5, 5], [5, 5]])) === JSON.stringify(50));\n    console.assert(JSON.stringify(candidate([0, 10, 20, 30, 40, 50, 60], [[5, 3], [15, 3], [25, 3], [35, 3], [45, 3]])) === JSON.stringify(45));\n    console.assert(JSON.stringify(candidate([-1, 0, 1], [[-2, 1], [2, 1], [0, 1]])) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate([-9, -6, -3, 0, 3, 6, 9], [[-8, 2], [-2, 2], [2, 2], [8, 1]])) === JSON.stringify(12));\n    console.assert(JSON.stringify(candidate([1, 3, 5, 7, 9, 11, 13, 15, 17, 19], [[0, 5], [10, 5], [20, 5]])) === JSON.stringify(26));\n    console.assert(JSON.stringify(candidate([0, 10, 20, 30, 40, 50, 60], [[5, 1], [15, 2], [25, 2], [35, 1], [45, 2], [55, 1]])) === JSON.stringify(35));\n    console.assert(JSON.stringify(candidate([-2, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10], [[-4, 3], [2, 4], [7, 3], [11, 3]])) === JSON.stringify(22));\n    console.assert(JSON.stringify(candidate([-1, -2, -3, -4, -5], [[-3, 3], [0, 2]])) === JSON.stringify(6));\n    console.assert(JSON.stringify(candidate([0, 2, 4, 6, 8, 10, 12], [[1, 2], [5, 2], [9, 2], [13, 1]])) === JSON.stringify(7));\n    console.assert(JSON.stringify(candidate([100, 200, 300, 400, 500], [[50, 1], [150, 1], [250, 1], [350, 1], [450, 1]])) === JSON.stringify(250));\n    console.assert(JSON.stringify(candidate([-5, -3, -1, 1, 3, 5], [[-10, 1], [-6, 2], [-2, 2], [2, 2], [6, 1]])) === JSON.stringify(6));\n    console.assert(JSON.stringify(candidate([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], [[5, 5], [15, 5]])) === JSON.stringify(45));\n    console.assert(JSON.stringify(candidate([-20, -10, 0, 10, 20], [[-25, 2], [-15, 3], [-5, 2], [5, 3], [15, 2], [25, 1]])) === JSON.stringify(25));\n    console.assert(JSON.stringify(candidate([-50, -40, -30, -20, -10, 0, 10, 20, 30, 40, 50], [[-60, 3], [-40, 4], [-20, 4], [0, 4], [20, 4], [40, 3]])) === JSON.stringify(60));\n    console.assert(JSON.stringify(candidate([1, 3, 5, 7, 9, 11, 13, 15, 17, 19], [[0, 2], [4, 2], [8, 2], [12, 2], [16, 2]])) === JSON.stringify(20));\n    console.assert(JSON.stringify(candidate([1, 3, 5, 7, 9], [[0, 3], [6, 2], [12, 1]])) === JSON.stringify(9));\n    console.assert(JSON.stringify(candidate([-100, -50, 0, 50, 100], [[-150, 2], [-100, 2], [-50, 2], [0, 2], [50, 2], [100, 2], [150, 2]])) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate([1, 3, 5, 7, 9, 11, 13, 15, 17, 19], [[0, 2], [5, 2], [10, 2], [15, 2], [20, 2]])) === JSON.stringify(14));\n}",
+    "golang": "func check(candidate func([]int, int) []int) {\n    assert reflect.DeepEqual(candidate([]int{5,1,3}, []int{{2,3}}), 5)\n    assert reflect.DeepEqual(candidate([]int{5,5,5,5}, []int{{5,4}}), 0)\n    assert reflect.DeepEqual(candidate([]int{-3,0,3}, []int{{-2,1},{2,1},{5,2}}), 5)\n    assert reflect.DeepEqual(candidate([]int{-1, -3, 2, 4, 5}, []int{{-2, 1}, {2, 2}, {6, 2}}), 7)\n    assert reflect.DeepEqual(candidate([]int{-5,-2,0,2,5}, []int{{-3,2},{1,3}}), 9)\n    assert reflect.DeepEqual(candidate([]int{5,8,15}, []int{{10,2},{16,1}}), 8)\n    assert reflect.DeepEqual(candidate([]int{10,20,30,40}, []int{{5,2},{15,2},{25,2}}), 30)\n    assert reflect.DeepEqual(candidate([]int{-10,0,10}, []int{{-5,1},{0,2},{5,1}}), 10)\n    assert reflect.DeepEqual(candidate([]int{5, 2, -5}, []int{{-2, 2}, {2, 2}}), 6)\n    assert reflect.DeepEqual(candidate([]int{10, -10, 0}, []int{{0, 3}}), 20)\n    assert reflect.DeepEqual(candidate([]int{0,4,6}, []int{{2,2},{6,2}}), 4)\n    assert reflect.DeepEqual(candidate([]int{3,7,12,15}, []int{{2,3},{10,2}}), 13)\n    assert reflect.DeepEqual(candidate([]int{-3,0,3}, []int{{-2,1},{2,2}}), 4)\n    assert reflect.DeepEqual(candidate([]int{1,-1}, []int{{-2,1},{2,1}}), 2)\n    assert reflect.DeepEqual(candidate([]int{-20, -10, 0, 10, 20}, []int{{-15, 2}, {0, 1}, {15, 2}}), 20)\n    assert reflect.DeepEqual(candidate([]int{-10, -20, -30, -40, -50, -60, -70, -80, -90, -100}, []int{{-5, 2}, {-15, 2}, {-25, 2}, {-35, 2}, {-45, 2}, {-55, 2}, {-65, 2}, {-75, 2}, {-85, 2}, {-95, 2}}), 50)\n    assert reflect.DeepEqual(candidate([]int{-15, -10, -5, 0, 5, 10, 15}, []int{{-12, 2}, {-7, 2}, {-2, 2}, {3, 2}, {8, 2}, {13, 2}}), 15)\n    assert reflect.DeepEqual(candidate([]int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}, []int{{5, 3}, {10, 4}, {15, 3}}), 45)\n    assert reflect.DeepEqual(candidate([]int{0, 1, 2, 3, 4, 5, 6, 7, 8, 9}, []int{{2, 2}, {5, 2}, {8, 2}}), inf)\n    assert reflect.DeepEqual(candidate([]int{-1, -2, -3, -4, -5}, []int{{-10, 3}, {0, 2}, {10, 1}}), 21)\n    assert reflect.DeepEqual(candidate([]int{0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140}, []int{{5, 3}, {15, 3}, {25, 3}, {35, 3}, {45, 3}, {55, 3}, {65, 3}, {75, 3}, {85, 3}, {95, 3}, {105, 3}, {115, 3}, {125, 3}, {135, 3}}), 75)\n    assert reflect.DeepEqual(candidate([]int{0, 2, 4, 6, 8, 10}, []int{{1, 1}, {3, 1}, {5, 1}, {7, 1}, {9, 1}, {11, 1}}), 6)\n    assert reflect.DeepEqual(candidate([]int{100, 200, 300, 400, 500}, []int{{50, 1}, {150, 2}, {250, 2}, {350, 2}, {450, 1}, {550, 1}}), 250)\n    assert reflect.DeepEqual(candidate([]int{1, 3, 5, 7, 9, 11, 13, 15, 17, 19}, []int{{0, 2}, {6, 3}, {12, 3}, {18, 2}}), 16)\n    assert reflect.DeepEqual(candidate([]int{0, 1, 2, 3, 4, 5, 6, 7, 8, 9}, []int{{0, 5}, {5, 5}}), 20)\n    assert reflect.DeepEqual(candidate([]int{-1, 1, -2, 2, -3, 3, -4, 4, -5, 5}, []int{{-3, 3}, {0, 4}, {3, 3}}), 12)\n    assert reflect.DeepEqual(candidate([]int{-10, -5, 0, 5, 10, 15, 20, 25, 30, 35}, []int{{-7, 2}, {2, 3}, {17, 2}, {32, 2}}), inf)\n    assert reflect.DeepEqual(candidate([]int{-5, 0, 5, 10, 15, 20, 25, 30, 35, 40}, []int{{-10, 2}, {5, 3}, {20, 3}, {35, 2}}), 50)\n    assert reflect.DeepEqual(candidate([]int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}, []int{{0, 2}, {4, 2}, {8, 2}, {12, 2}}), inf)\n    assert reflect.DeepEqual(candidate([]int{1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25}, []int{{5, 3}, {15, 3}, {25, 3}}), inf)\n    assert reflect.DeepEqual(candidate([]int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}, []int{{0, 3}, {5, 4}, {10, 3}}), 13)\n    assert reflect.DeepEqual(candidate([]int{-100, -50, 0, 50, 100}, []int{{-75, 2}, {-25, 1}, {25, 1}, {75, 2}}), 125)\n    assert reflect.DeepEqual(candidate([]int{10, 20, 30, 40, 50, 60, 70, 80, 90}, []int{{0, 3}, {10, 3}, {20, 3}, {30, 3}, {40, 3}, {50, 3}, {60, 3}, {70, 3}, {80, 3}, {90, 3}}), 0)\n    assert reflect.DeepEqual(candidate([]int{-2, -1, 0, 1, 2, 3, 4}, []int{{-3, 2}, {0, 3}, {3, 2}}), 7)\n    assert reflect.DeepEqual(candidate([]int{-2, -1, 0, 1, 2}, []int{{-3, 1}, {-1, 1}, {1, 1}, {3, 1}}), inf)\n    assert reflect.DeepEqual(candidate([]int{-10, -5, 0, 5, 10, 15, 20}, []int{{-20, 1}, {-10, 2}, {0, 3}, {10, 2}, {20, 1}}), 15)\n    assert reflect.DeepEqual(candidate([]int{-100, -50, 0, 50, 100}, []int{{-75, 2}, {0, 2}, {75, 2}}), 100)\n    assert reflect.DeepEqual(candidate([]int{-100, -50, 0, 50, 100, 150}, []int{{-75, 3}, {25, 2}, {125, 2}}), 150)\n    assert reflect.DeepEqual(candidate([]int{-100, -50, 0, 50, 100, 150, 200}, []int{{-75, 2}, {-25, 2}, {25, 2}, {75, 2}, {125, 2}, {175, 2}}), 175)\n    assert reflect.DeepEqual(candidate([]int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20}, []int{{0, 5}, {5, 5}, {10, 5}, {15, 5}}), 60)\n    assert reflect.DeepEqual(candidate([]int{-20, -10, 0, 10, 20}, []int{{-15, 1}, {-5, 2}, {5, 3}, {15, 1}}), 25)\n    assert reflect.DeepEqual(candidate([]int{1, 2, 3, 4, 5, 6, 7, 8, 9}, []int{{2, 3}, {5, 3}, {8, 3}}), 6)\n    assert reflect.DeepEqual(candidate([]int{-20, -10, 0, 10, 20}, []int{{-15, 2}, {0, 3}, {15, 2}}), 20)\n    assert reflect.DeepEqual(candidate([]int{100, 200, 300, 400, 500}, []int{{50, 2}, {150, 1}, {250, 2}, {350, 1}, {450, 1}}), 250)\n    assert reflect.DeepEqual(candidate([]int{1, 3, 5, 7, 9, 11}, []int{{2, 2}, {6, 2}, {10, 2}}), 6)\n    assert reflect.DeepEqual(candidate([]int{1, 3, 5, 7, 9}, []int{{2, 2}, {4, 2}, {6, 2}, {8, 2}, {10, 1}}), 5)\n    assert reflect.DeepEqual(candidate([]int{10, 20, 30, 40, 50, 60}, []int{{15, 2}, {35, 2}, {55, 2}}), 30)\n    assert reflect.DeepEqual(candidate([]int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15}, []int{{2, 3}, {6, 3}, {10, 3}, {14, 3}}), inf)\n    assert reflect.DeepEqual(candidate([]int{-20, -10, 0, 10, 20}, []int{{-15, 2}, {-5, 3}, {5, 2}, {15, 1}}), 25)\n    assert reflect.DeepEqual(candidate([]int{1, 1, 1, 1, 1, 1, 1, 1, 1, 1}, []int{{0, 10}}), 10)\n    assert reflect.DeepEqual(candidate([]int{-100, -90, -80, -70, -60, -50, -40, -30, -20, -10}, []int{{-105, 2}, {-95, 2}, {-85, 2}, {-75, 2}, {-65, 2}, {-55, 2}, {-45, 2}, {-35, 2}, {-25, 2}, {-15, 2}}), 50)\n    assert reflect.DeepEqual(candidate([]int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}, []int{{0, 10}}), 55)\n    assert reflect.DeepEqual(candidate([]int{5, 10, 15, 20, 25, 30, 35, 40, 45, 50}, []int{{10, 2}, {20, 2}, {30, 2}, {40, 2}}), inf)\n    assert reflect.DeepEqual(candidate([]int{10, 20, 30, 40}, []int{{15, 2}, {25, 2}, {35, 2}}), 20)\n    assert reflect.DeepEqual(candidate([]int{-10, -5, 0, 5, 10, 15, 20}, []int{{-7, 2}, {-2, 2}, {3, 2}, {8, 2}}), 35)\n    assert reflect.DeepEqual(candidate([]int{-20, -10, 0, 10, 20}, []int{{-15, 2}, {0, 3}, {15, 1}}), 25)\n    assert reflect.DeepEqual(candidate([]int{-20, -15, -10, -5, 0, 5, 10, 15, 20}, []int{{-15, 2}, {-10, 2}, {-5, 2}, {0, 2}, {5, 2}, {10, 2}, {15, 2}}), 10)\n    assert reflect.DeepEqual(candidate([]int{-5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5}, []int{{-6, 3}, {0, 5}, {6, 3}}), 18)\n    assert reflect.DeepEqual(candidate([]int{1, 3, 5, 7, 9}, []int{{2, 1}, {4, 1}, {6, 1}, {8, 1}}), inf)\n    assert reflect.DeepEqual(candidate([]int{-5, -3, -1, 1, 3, 5}, []int{{-10, 1}, {-5, 2}, {0, 3}, {5, 2}, {10, 1}}), 6)\n    assert reflect.DeepEqual(candidate([]int{-5, -3, -1, 1, 3, 5, 7, 9}, []int{{-4, 1}, {0, 3}, {4, 2}}), inf)\n    assert reflect.DeepEqual(candidate([]int{1, 3, 5, 7, 9}, []int{{0, 2}, {4, 2}, {8, 2}}), 5)\n    assert reflect.DeepEqual(candidate([]int{1, 4, 7, 10, 13, 16, 19, 22, 25, 28}, []int{{3, 3}, {9, 3}, {15, 3}, {21, 3}}), 25)\n    assert reflect.DeepEqual(candidate([]int{10, 10, 10, 10}, []int{{10, 1}, {10, 1}, {10, 1}, {10, 1}}), 0)\n    assert reflect.DeepEqual(candidate([]int{1, 4, 7, 10, 13, 16, 19, 22, 25}, []int{{3, 3}, {9, 3}, {15, 3}, {21, 3}}), 16)\n    assert reflect.DeepEqual(candidate([]int{10, 20, 30, 40, 50, 60, 70, 80, 90, 100}, []int{{5, 2}, {15, 2}, {25, 2}, {35, 2}, {45, 2}, {55, 2}, {65, 2}, {75, 2}, {85, 2}, {95, 2}}), 50)\n    assert reflect.DeepEqual(candidate([]int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}, []int{{0, 2}, {5, 3}, {10, 5}}), 16)\n    assert reflect.DeepEqual(candidate([]int{100, 200, 300, 400, 500, 600, 700, 800, 900, 1000}, []int{{150, 3}, {500, 4}, {850, 3}}), 900)\n    assert reflect.DeepEqual(candidate([]int{1, 1, 1, 1, 1, 1, 1, 1, 1, 1}, []int{{-5, 5}, {0, 5}, {5, 5}}), 25)\n    assert reflect.DeepEqual(candidate([]int{-5, 0, 5, 10, 15, 20}, []int{{-10, 1}, {0, 3}, {10, 2}, {20, 1}}), 15)\n    assert reflect.DeepEqual(candidate([]int{-50, -25, 0, 25, 50}, []int{{-75, 3}, {0, 2}, {75, 1}}), 125)\n    assert reflect.DeepEqual(candidate([]int{-10, -5, 0, 5, 10}, []int{{-15, 2}, {-10, 1}, {0, 3}, {10, 2}, {15, 1}}), 10)\n    assert reflect.DeepEqual(candidate([]int{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19}, []int{{0, 5}, {5, 5}, {10, 5}, {15, 5}}), 40)\n    assert reflect.DeepEqual(candidate([]int{-100, -200, -300, -400, -500}, []int{{-50, 2}, {-150, 1}, {-250, 2}, {-350, 1}, {-450, 1}}), 250)\n    assert reflect.DeepEqual(candidate([]int{-100, -50, 0, 50, 100}, []int{{-75, 1}, {-25, 1}, {25, 1}, {75, 1}}), inf)\n    assert reflect.DeepEqual(candidate([]int{-100, -90, -80, -70, -60, -50, -40, -30, -20, -10}, []int{{-95, 2}, {-85, 2}, {-75, 2}, {-65, 2}, {-55, 2}, {-45, 2}, {-35, 2}, {-25, 2}, {-15, 2}, {-5, 2}}), 50)\n    assert reflect.DeepEqual(candidate([]int{-100, -50, 0, 50, 100}, []int{{-75, 2}, {-25, 2}, {25, 2}, {75, 1}}), 125)\n    assert reflect.DeepEqual(candidate([]int{-5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5}, []int{{-10, 6}, {0, 5}}), 60)\n    assert reflect.DeepEqual(candidate([]int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}, []int{{0, 5}, {10, 5}}), 25)\n    assert reflect.DeepEqual(candidate([]int{-10, -5, 0, 5, 10, 15, 20, 25}, []int{{-15, 2}, {0, 3}, {15, 3}, {25, 1}}), 25)\n    assert reflect.DeepEqual(candidate([]int{100, 200, 300, 400, 500}, []int{{50, 1}, {150, 2}, {250, 2}, {350, 1}, {450, 1}}), 250)\n    assert reflect.DeepEqual(candidate([]int{-10, -5, 0, 5, 10, 15}, []int{{-8, 2}, {2, 3}, {12, 2}}), 15)\n    assert reflect.DeepEqual(candidate([]int{0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, []int{{-5, 5}, {5, 5}}), 50)\n    assert reflect.DeepEqual(candidate([]int{0, 10, 20, 30, 40, 50, 60}, []int{{5, 3}, {15, 3}, {25, 3}, {35, 3}, {45, 3}}), 45)\n    assert reflect.DeepEqual(candidate([]int{-1, 0, 1}, []int{{-2, 1}, {2, 1}, {0, 1}}), 2)\n    assert reflect.DeepEqual(candidate([]int{-9, -6, -3, 0, 3, 6, 9}, []int{{-8, 2}, {-2, 2}, {2, 2}, {8, 1}}), 12)\n    assert reflect.DeepEqual(candidate([]int{1, 3, 5, 7, 9, 11, 13, 15, 17, 19}, []int{{0, 5}, {10, 5}, {20, 5}}), 26)\n    assert reflect.DeepEqual(candidate([]int{0, 10, 20, 30, 40, 50, 60}, []int{{5, 1}, {15, 2}, {25, 2}, {35, 1}, {45, 2}, {55, 1}}), 35)\n    assert reflect.DeepEqual(candidate([]int{-2, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10}, []int{{-4, 3}, {2, 4}, {7, 3}, {11, 3}}), 22)\n    assert reflect.DeepEqual(candidate([]int{-1, -2, -3, -4, -5}, []int{{-3, 3}, {0, 2}}), 6)\n    assert reflect.DeepEqual(candidate([]int{0, 2, 4, 6, 8, 10, 12}, []int{{1, 2}, {5, 2}, {9, 2}, {13, 1}}), 7)\n    assert reflect.DeepEqual(candidate([]int{100, 200, 300, 400, 500}, []int{{50, 1}, {150, 1}, {250, 1}, {350, 1}, {450, 1}}), 250)\n    assert reflect.DeepEqual(candidate([]int{-5, -3, -1, 1, 3, 5}, []int{{-10, 1}, {-6, 2}, {-2, 2}, {2, 2}, {6, 1}}), 6)\n    assert reflect.DeepEqual(candidate([]int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}, []int{{5, 5}, {15, 5}}), 45)\n    assert reflect.DeepEqual(candidate([]int{-20, -10, 0, 10, 20}, []int{{-25, 2}, {-15, 3}, {-5, 2}, {5, 3}, {15, 2}, {25, 1}}), 25)\n    assert reflect.DeepEqual(candidate([]int{-50, -40, -30, -20, -10, 0, 10, 20, 30, 40, 50}, []int{{-60, 3}, {-40, 4}, {-20, 4}, {0, 4}, {20, 4}, {40, 3}}), 60)\n    assert reflect.DeepEqual(candidate([]int{1, 3, 5, 7, 9, 11, 13, 15, 17, 19}, []int{{0, 2}, {4, 2}, {8, 2}, {12, 2}, {16, 2}}), 20)\n    assert reflect.DeepEqual(candidate([]int{1, 3, 5, 7, 9}, []int{{0, 3}, {6, 2}, {12, 1}}), 9)\n    assert reflect.DeepEqual(candidate([]int{-100, -50, 0, 50, 100}, []int{{-150, 2}, {-100, 2}, {-50, 2}, {0, 2}, {50, 2}, {100, 2}, {150, 2}}), 0)\n    assert reflect.DeepEqual(candidate([]int{1, 3, 5, 7, 9, 11, 13, 15, 17, 19}, []int{{0, 2}, {5, 2}, {10, 2}, {15, 2}, {20, 2}}), 14)\n}",
+    "rust": "fn check(candidate: fn(Vec<i32>, i32) -> Vec<i32>) {\n    assert_eq!(candidate(vec![5,1,3], vec![[2,3]]), 5);\n    assert_eq!(candidate(vec![5,5,5,5], vec![[5,4]]), 0);\n    assert_eq!(candidate(vec![-3,0,3], vec![[-2,1],[2,1],[5,2]]), 5);\n    assert_eq!(candidate(vec![-1, -3, 2, 4, 5], vec![[-2, 1], [2, 2], [6, 2]]), 7);\n    assert_eq!(candidate(vec![-5,-2,0,2,5], vec![[-3,2],[1,3]]), 9);\n    assert_eq!(candidate(vec![5,8,15], vec![[10,2],[16,1]]), 8);\n    assert_eq!(candidate(vec![10,20,30,40], vec![[5,2],[15,2],[25,2]]), 30);\n    assert_eq!(candidate(vec![-10,0,10], vec![[-5,1],[0,2],[5,1]]), 10);\n    assert_eq!(candidate(vec![5, 2, -5], vec![[-2, 2], [2, 2]]), 6);\n    assert_eq!(candidate(vec![10, -10, 0], vec![[0, 3]]), 20);\n    assert_eq!(candidate(vec![0,4,6], vec![[2,2],[6,2]]), 4);\n    assert_eq!(candidate(vec![3,7,12,15], vec![[2,3],[10,2]]), 13);\n    assert_eq!(candidate(vec![-3,0,3], vec![[-2,1],[2,2]]), 4);\n    assert_eq!(candidate(vec![1,-1], vec![[-2,1],[2,1]]), 2);\n    assert_eq!(candidate(vec![-20, -10, 0, 10, 20], vec![[-15, 2], [0, 1], [15, 2]]), 20);\n    assert_eq!(candidate(vec![-10, -20, -30, -40, -50, -60, -70, -80, -90, -100], vec![[-5, 2], [-15, 2], [-25, 2], [-35, 2], [-45, 2], [-55, 2], [-65, 2], [-75, 2], [-85, 2], [-95, 2]]), 50);\n    assert_eq!(candidate(vec![-15, -10, -5, 0, 5, 10, 15], vec![[-12, 2], [-7, 2], [-2, 2], [3, 2], [8, 2], [13, 2]]), 15);\n    assert_eq!(candidate(vec![1, 2, 3, 4, 5, 6, 7, 8, 9, 10], vec![[5, 3], [10, 4], [15, 3]]), 45);\n    assert_eq!(candidate(vec![0, 1, 2, 3, 4, 5, 6, 7, 8, 9], vec![[2, 2], [5, 2], [8, 2]]), inf);\n    assert_eq!(candidate(vec![-1, -2, -3, -4, -5], vec![[-10, 3], [0, 2], [10, 1]]), 21);\n    assert_eq!(candidate(vec![0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140], vec![[5, 3], [15, 3], [25, 3], [35, 3], [45, 3], [55, 3], [65, 3], [75, 3], [85, 3], [95, 3], [105, 3], [115, 3], [125, 3], [135, 3]]), 75);\n    assert_eq!(candidate(vec![0, 2, 4, 6, 8, 10], vec![[1, 1], [3, 1], [5, 1], [7, 1], [9, 1], [11, 1]]), 6);\n    assert_eq!(candidate(vec![100, 200, 300, 400, 500], vec![[50, 1], [150, 2], [250, 2], [350, 2], [450, 1], [550, 1]]), 250);\n    assert_eq!(candidate(vec![1, 3, 5, 7, 9, 11, 13, 15, 17, 19], vec![[0, 2], [6, 3], [12, 3], [18, 2]]), 16);\n    assert_eq!(candidate(vec![0, 1, 2, 3, 4, 5, 6, 7, 8, 9], vec![[0, 5], [5, 5]]), 20);\n    assert_eq!(candidate(vec![-1, 1, -2, 2, -3, 3, -4, 4, -5, 5], vec![[-3, 3], [0, 4], [3, 3]]), 12);\n    assert_eq!(candidate(vec![-10, -5, 0, 5, 10, 15, 20, 25, 30, 35], vec![[-7, 2], [2, 3], [17, 2], [32, 2]]), inf);\n    assert_eq!(candidate(vec![-5, 0, 5, 10, 15, 20, 25, 30, 35, 40], vec![[-10, 2], [5, 3], [20, 3], [35, 2]]), 50);\n    assert_eq!(candidate(vec![1, 2, 3, 4, 5, 6, 7, 8, 9, 10], vec![[0, 2], [4, 2], [8, 2], [12, 2]]), inf);\n    assert_eq!(candidate(vec![1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25], vec![[5, 3], [15, 3], [25, 3]]), inf);\n    assert_eq!(candidate(vec![1, 2, 3, 4, 5, 6, 7, 8, 9, 10], vec![[0, 3], [5, 4], [10, 3]]), 13);\n    assert_eq!(candidate(vec![-100, -50, 0, 50, 100], vec![[-75, 2], [-25, 1], [25, 1], [75, 2]]), 125);\n    assert_eq!(candidate(vec![10, 20, 30, 40, 50, 60, 70, 80, 90], vec![[0, 3], [10, 3], [20, 3], [30, 3], [40, 3], [50, 3], [60, 3], [70, 3], [80, 3], [90, 3]]), 0);\n    assert_eq!(candidate(vec![-2, -1, 0, 1, 2, 3, 4], vec![[-3, 2], [0, 3], [3, 2]]), 7);\n    assert_eq!(candidate(vec![-2, -1, 0, 1, 2], vec![[-3, 1], [-1, 1], [1, 1], [3, 1]]), inf);\n    assert_eq!(candidate(vec![-10, -5, 0, 5, 10, 15, 20], vec![[-20, 1], [-10, 2], [0, 3], [10, 2], [20, 1]]), 15);\n    assert_eq!(candidate(vec![-100, -50, 0, 50, 100], vec![[-75, 2], [0, 2], [75, 2]]), 100);\n    assert_eq!(candidate(vec![-100, -50, 0, 50, 100, 150], vec![[-75, 3], [25, 2], [125, 2]]), 150);\n    assert_eq!(candidate(vec![-100, -50, 0, 50, 100, 150, 200], vec![[-75, 2], [-25, 2], [25, 2], [75, 2], [125, 2], [175, 2]]), 175);\n    assert_eq!(candidate(vec![1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20], vec![[0, 5], [5, 5], [10, 5], [15, 5]]), 60);\n    assert_eq!(candidate(vec![-20, -10, 0, 10, 20], vec![[-15, 1], [-5, 2], [5, 3], [15, 1]]), 25);\n    assert_eq!(candidate(vec![1, 2, 3, 4, 5, 6, 7, 8, 9], vec![[2, 3], [5, 3], [8, 3]]), 6);\n    assert_eq!(candidate(vec![-20, -10, 0, 10, 20], vec![[-15, 2], [0, 3], [15, 2]]), 20);\n    assert_eq!(candidate(vec![100, 200, 300, 400, 500], vec![[50, 2], [150, 1], [250, 2], [350, 1], [450, 1]]), 250);\n    assert_eq!(candidate(vec![1, 3, 5, 7, 9, 11], vec![[2, 2], [6, 2], [10, 2]]), 6);\n    assert_eq!(candidate(vec![1, 3, 5, 7, 9], vec![[2, 2], [4, 2], [6, 2], [8, 2], [10, 1]]), 5);\n    assert_eq!(candidate(vec![10, 20, 30, 40, 50, 60], vec![[15, 2], [35, 2], [55, 2]]), 30);\n    assert_eq!(candidate(vec![1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15], vec![[2, 3], [6, 3], [10, 3], [14, 3]]), inf);\n    assert_eq!(candidate(vec![-20, -10, 0, 10, 20], vec![[-15, 2], [-5, 3], [5, 2], [15, 1]]), 25);\n    assert_eq!(candidate(vec![1, 1, 1, 1, 1, 1, 1, 1, 1, 1], vec![[0, 10]]), 10);\n    assert_eq!(candidate(vec![-100, -90, -80, -70, -60, -50, -40, -30, -20, -10], vec![[-105, 2], [-95, 2], [-85, 2], [-75, 2], [-65, 2], [-55, 2], [-45, 2], [-35, 2], [-25, 2], [-15, 2]]), 50);\n    assert_eq!(candidate(vec![1, 2, 3, 4, 5, 6, 7, 8, 9, 10], vec![[0, 10]]), 55);\n    assert_eq!(candidate(vec![5, 10, 15, 20, 25, 30, 35, 40, 45, 50], vec![[10, 2], [20, 2], [30, 2], [40, 2]]), inf);\n    assert_eq!(candidate(vec![10, 20, 30, 40], vec![[15, 2], [25, 2], [35, 2]]), 20);\n    assert_eq!(candidate(vec![-10, -5, 0, 5, 10, 15, 20], vec![[-7, 2], [-2, 2], [3, 2], [8, 2]]), 35);\n    assert_eq!(candidate(vec![-20, -10, 0, 10, 20], vec![[-15, 2], [0, 3], [15, 1]]), 25);\n    assert_eq!(candidate(vec![-20, -15, -10, -5, 0, 5, 10, 15, 20], vec![[-15, 2], [-10, 2], [-5, 2], [0, 2], [5, 2], [10, 2], [15, 2]]), 10);\n    assert_eq!(candidate(vec![-5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5], vec![[-6, 3], [0, 5], [6, 3]]), 18);\n    assert_eq!(candidate(vec![1, 3, 5, 7, 9], vec![[2, 1], [4, 1], [6, 1], [8, 1]]), inf);\n    assert_eq!(candidate(vec![-5, -3, -1, 1, 3, 5], vec![[-10, 1], [-5, 2], [0, 3], [5, 2], [10, 1]]), 6);\n    assert_eq!(candidate(vec![-5, -3, -1, 1, 3, 5, 7, 9], vec![[-4, 1], [0, 3], [4, 2]]), inf);\n    assert_eq!(candidate(vec![1, 3, 5, 7, 9], vec![[0, 2], [4, 2], [8, 2]]), 5);\n    assert_eq!(candidate(vec![1, 4, 7, 10, 13, 16, 19, 22, 25, 28], vec![[3, 3], [9, 3], [15, 3], [21, 3]]), 25);\n    assert_eq!(candidate(vec![10, 10, 10, 10], vec![[10, 1], [10, 1], [10, 1], [10, 1]]), 0);\n    assert_eq!(candidate(vec![1, 4, 7, 10, 13, 16, 19, 22, 25], vec![[3, 3], [9, 3], [15, 3], [21, 3]]), 16);\n    assert_eq!(candidate(vec![10, 20, 30, 40, 50, 60, 70, 80, 90, 100], vec![[5, 2], [15, 2], [25, 2], [35, 2], [45, 2], [55, 2], [65, 2], [75, 2], [85, 2], [95, 2]]), 50);\n    assert_eq!(candidate(vec![1, 2, 3, 4, 5, 6, 7, 8, 9, 10], vec![[0, 2], [5, 3], [10, 5]]), 16);\n    assert_eq!(candidate(vec![100, 200, 300, 400, 500, 600, 700, 800, 900, 1000], vec![[150, 3], [500, 4], [850, 3]]), 900);\n    assert_eq!(candidate(vec![1, 1, 1, 1, 1, 1, 1, 1, 1, 1], vec![[-5, 5], [0, 5], [5, 5]]), 25);\n    assert_eq!(candidate(vec![-5, 0, 5, 10, 15, 20], vec![[-10, 1], [0, 3], [10, 2], [20, 1]]), 15);\n    assert_eq!(candidate(vec![-50, -25, 0, 25, 50], vec![[-75, 3], [0, 2], [75, 1]]), 125);\n    assert_eq!(candidate(vec![-10, -5, 0, 5, 10], vec![[-15, 2], [-10, 1], [0, 3], [10, 2], [15, 1]]), 10);\n    assert_eq!(candidate(vec![0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19], vec![[0, 5], [5, 5], [10, 5], [15, 5]]), 40);\n    assert_eq!(candidate(vec![-100, -200, -300, -400, -500], vec![[-50, 2], [-150, 1], [-250, 2], [-350, 1], [-450, 1]]), 250);\n    assert_eq!(candidate(vec![-100, -50, 0, 50, 100], vec![[-75, 1], [-25, 1], [25, 1], [75, 1]]), inf);\n    assert_eq!(candidate(vec![-100, -90, -80, -70, -60, -50, -40, -30, -20, -10], vec![[-95, 2], [-85, 2], [-75, 2], [-65, 2], [-55, 2], [-45, 2], [-35, 2], [-25, 2], [-15, 2], [-5, 2]]), 50);\n    assert_eq!(candidate(vec![-100, -50, 0, 50, 100], vec![[-75, 2], [-25, 2], [25, 2], [75, 1]]), 125);\n    assert_eq!(candidate(vec![-5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5], vec![[-10, 6], [0, 5]]), 60);\n    assert_eq!(candidate(vec![1, 2, 3, 4, 5, 6, 7, 8, 9, 10], vec![[0, 5], [10, 5]]), 25);\n    assert_eq!(candidate(vec![-10, -5, 0, 5, 10, 15, 20, 25], vec![[-15, 2], [0, 3], [15, 3], [25, 1]]), 25);\n    assert_eq!(candidate(vec![100, 200, 300, 400, 500], vec![[50, 1], [150, 2], [250, 2], [350, 1], [450, 1]]), 250);\n    assert_eq!(candidate(vec![-10, -5, 0, 5, 10, 15], vec![[-8, 2], [2, 3], [12, 2]]), 15);\n    assert_eq!(candidate(vec![0, 0, 0, 0, 0, 0, 0, 0, 0, 0], vec![[-5, 5], [5, 5]]), 50);\n    assert_eq!(candidate(vec![0, 10, 20, 30, 40, 50, 60], vec![[5, 3], [15, 3], [25, 3], [35, 3], [45, 3]]), 45);\n    assert_eq!(candidate(vec![-1, 0, 1], vec![[-2, 1], [2, 1], [0, 1]]), 2);\n    assert_eq!(candidate(vec![-9, -6, -3, 0, 3, 6, 9], vec![[-8, 2], [-2, 2], [2, 2], [8, 1]]), 12);\n    assert_eq!(candidate(vec![1, 3, 5, 7, 9, 11, 13, 15, 17, 19], vec![[0, 5], [10, 5], [20, 5]]), 26);\n    assert_eq!(candidate(vec![0, 10, 20, 30, 40, 50, 60], vec![[5, 1], [15, 2], [25, 2], [35, 1], [45, 2], [55, 1]]), 35);\n    assert_eq!(candidate(vec![-2, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10], vec![[-4, 3], [2, 4], [7, 3], [11, 3]]), 22);\n    assert_eq!(candidate(vec![-1, -2, -3, -4, -5], vec![[-3, 3], [0, 2]]), 6);\n    assert_eq!(candidate(vec![0, 2, 4, 6, 8, 10, 12], vec![[1, 2], [5, 2], [9, 2], [13, 1]]), 7);\n    assert_eq!(candidate(vec![100, 200, 300, 400, 500], vec![[50, 1], [150, 1], [250, 1], [350, 1], [450, 1]]), 250);\n    assert_eq!(candidate(vec![-5, -3, -1, 1, 3, 5], vec![[-10, 1], [-6, 2], [-2, 2], [2, 2], [6, 1]]), 6);\n    assert_eq!(candidate(vec![1, 2, 3, 4, 5, 6, 7, 8, 9, 10], vec![[5, 5], [15, 5]]), 45);\n    assert_eq!(candidate(vec![-20, -10, 0, 10, 20], vec![[-25, 2], [-15, 3], [-5, 2], [5, 3], [15, 2], [25, 1]]), 25);\n    assert_eq!(candidate(vec![-50, -40, -30, -20, -10, 0, 10, 20, 30, 40, 50], vec![[-60, 3], [-40, 4], [-20, 4], [0, 4], [20, 4], [40, 3]]), 60);\n    assert_eq!(candidate(vec![1, 3, 5, 7, 9, 11, 13, 15, 17, 19], vec![[0, 2], [4, 2], [8, 2], [12, 2], [16, 2]]), 20);\n    assert_eq!(candidate(vec![1, 3, 5, 7, 9], vec![[0, 3], [6, 2], [12, 1]]), 9);\n    assert_eq!(candidate(vec![-100, -50, 0, 50, 100], vec![[-150, 2], [-100, 2], [-50, 2], [0, 2], [50, 2], [100, 2], [150, 2]]), 0);\n    assert_eq!(candidate(vec![1, 3, 5, 7, 9, 11, 13, 15, 17, 19], vec![[0, 2], [5, 2], [10, 2], [15, 2], [20, 2]]), 14);\n}"
+  },
+  "test_cases": [
+    {
+      "input": "robot = [5,1,3], factory = [[2,3]]",
+      "output": "5"
+    },
+    {
+      "input": "robot = [5,5,5,5], factory = [[5,4]]",
+      "output": "0"
+    },
+    {
+      "input": "robot = [-3,0,3], factory = [[-2,1],[2,1],[5,2]]",
+      "output": "5"
+    },
+    {
+      "input": "robot = [-1, -3, 2, 4, 5], factory = [[-2, 1], [2, 2], [6, 2]]",
+      "output": "7"
+    },
+    {
+      "input": "robot = [-5,-2,0,2,5], factory = [[-3,2],[1,3]]",
+      "output": "9"
+    },
+    {
+      "input": "robot = [5,8,15], factory = [[10,2],[16,1]]",
+      "output": "8"
+    },
+    {
+      "input": "robot = [10,20,30,40], factory = [[5,2],[15,2],[25,2]]",
+      "output": "30"
+    },
+    {
+      "input": "robot = [-10,0,10], factory = [[-5,1],[0,2],[5,1]]",
+      "output": "10"
+    },
+    {
+      "input": "robot = [5, 2, -5], factory = [[-2, 2], [2, 2]]",
+      "output": "6"
+    },
+    {
+      "input": "robot = [10, -10, 0], factory = [[0, 3]]",
+      "output": "20"
+    },
+    {
+      "input": "robot = [0,4,6], factory = [[2,2],[6,2]]",
+      "output": "4"
+    },
+    {
+      "input": "robot = [3,7,12,15], factory = [[2,3],[10,2]]",
+      "output": "13"
+    },
+    {
+      "input": "robot = [-3,0,3], factory = [[-2,1],[2,2]]",
+      "output": "4"
+    },
+    {
+      "input": "robot = [1,-1], factory = [[-2,1],[2,1]]",
+      "output": "2"
+    },
+    {
+      "input": "robot = [-20, -10, 0, 10, 20], factory = [[-15, 2], [0, 1], [15, 2]]",
+      "output": "20"
+    },
+    {
+      "input": "robot = [-10, -20, -30, -40, -50, -60, -70, -80, -90, -100], factory = [[-5, 2], [-15, 2], [-25, 2], [-35, 2], [-45, 2], [-55, 2], [-65, 2], [-75, 2], [-85, 2], [-95, 2]]",
+      "output": "50"
+    },
+    {
+      "input": "robot = [-15, -10, -5, 0, 5, 10, 15], factory = [[-12, 2], [-7, 2], [-2, 2], [3, 2], [8, 2], [13, 2]]",
+      "output": "15"
+    },
+    {
+      "input": "robot = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10], factory = [[5, 3], [10, 4], [15, 3]]",
+      "output": "45"
+    },
+    {
+      "input": "robot = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9], factory = [[2, 2], [5, 2], [8, 2]]",
+      "output": "inf"
+    },
+    {
+      "input": "robot = [-1, -2, -3, -4, -5], factory = [[-10, 3], [0, 2], [10, 1]]",
+      "output": "21"
+    },
+    {
+      "input": "robot = [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140], factory = [[5, 3], [15, 3], [25, 3], [35, 3], [45, 3], [55, 3], [65, 3], [75, 3], [85, 3], [95, 3], [105, 3], [115, 3], [125, 3], [135, 3]]",
+      "output": "75"
+    },
+    {
+      "input": "robot = [0, 2, 4, 6, 8, 10], factory = [[1, 1], [3, 1], [5, 1], [7, 1], [9, 1], [11, 1]]",
+      "output": "6"
+    },
+    {
+      "input": "robot = [100, 200, 300, 400, 500], factory = [[50, 1], [150, 2], [250, 2], [350, 2], [450, 1], [550, 1]]",
+      "output": "250"
+    },
+    {
+      "input": "robot = [1, 3, 5, 7, 9, 11, 13, 15, 17, 19], factory = [[0, 2], [6, 3], [12, 3], [18, 2]]",
+      "output": "16"
+    },
+    {
+      "input": "robot = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9], factory = [[0, 5], [5, 5]]",
+      "output": "20"
+    },
+    {
+      "input": "robot = [-1, 1, -2, 2, -3, 3, -4, 4, -5, 5], factory = [[-3, 3], [0, 4], [3, 3]]",
+      "output": "12"
+    },
+    {
+      "input": "robot = [-10, -5, 0, 5, 10, 15, 20, 25, 30, 35], factory = [[-7, 2], [2, 3], [17, 2], [32, 2]]",
+      "output": "inf"
+    },
+    {
+      "input": "robot = [-5, 0, 5, 10, 15, 20, 25, 30, 35, 40], factory = [[-10, 2], [5, 3], [20, 3], [35, 2]]",
+      "output": "50"
+    },
+    {
+      "input": "robot = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10], factory = [[0, 2], [4, 2], [8, 2], [12, 2]]",
+      "output": "inf"
+    },
+    {
+      "input": "robot = [1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25], factory = [[5, 3], [15, 3], [25, 3]]",
+      "output": "inf"
+    },
+    {
+      "input": "robot = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10], factory = [[0, 3], [5, 4], [10, 3]]",
+      "output": "13"
+    },
+    {
+      "input": "robot = [-100, -50, 0, 50, 100], factory = [[-75, 2], [-25, 1], [25, 1], [75, 2]]",
+      "output": "125"
+    },
+    {
+      "input": "robot = [10, 20, 30, 40, 50, 60, 70, 80, 90], factory = [[0, 3], [10, 3], [20, 3], [30, 3], [40, 3], [50, 3], [60, 3], [70, 3], [80, 3], [90, 3]]",
+      "output": "0"
+    },
+    {
+      "input": "robot = [-2, -1, 0, 1, 2, 3, 4], factory = [[-3, 2], [0, 3], [3, 2]]",
+      "output": "7"
+    },
+    {
+      "input": "robot = [-2, -1, 0, 1, 2], factory = [[-3, 1], [-1, 1], [1, 1], [3, 1]]",
+      "output": "inf"
+    },
+    {
+      "input": "robot = [-10, -5, 0, 5, 10, 15, 20], factory = [[-20, 1], [-10, 2], [0, 3], [10, 2], [20, 1]]",
+      "output": "15"
+    },
+    {
+      "input": "robot = [-100, -50, 0, 50, 100], factory = [[-75, 2], [0, 2], [75, 2]]",
+      "output": "100"
+    },
+    {
+      "input": "robot = [-100, -50, 0, 50, 100, 150], factory = [[-75, 3], [25, 2], [125, 2]]",
+      "output": "150"
+    },
+    {
+      "input": "robot = [-100, -50, 0, 50, 100, 150, 200], factory = [[-75, 2], [-25, 2], [25, 2], [75, 2], [125, 2], [175, 2]]",
+      "output": "175"
+    },
+    {
+      "input": "robot = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20], factory = [[0, 5], [5, 5], [10, 5], [15, 5]]",
+      "output": "60"
+    },
+    {
+      "input": "robot = [-20, -10, 0, 10, 20], factory = [[-15, 1], [-5, 2], [5, 3], [15, 1]]",
+      "output": "25"
+    },
+    {
+      "input": "robot = [1, 2, 3, 4, 5, 6, 7, 8, 9], factory = [[2, 3], [5, 3], [8, 3]]",
+      "output": "6"
+    },
+    {
+      "input": "robot = [-20, -10, 0, 10, 20], factory = [[-15, 2], [0, 3], [15, 2]]",
+      "output": "20"
+    },
+    {
+      "input": "robot = [100, 200, 300, 400, 500], factory = [[50, 2], [150, 1], [250, 2], [350, 1], [450, 1]]",
+      "output": "250"
+    },
+    {
+      "input": "robot = [1, 3, 5, 7, 9, 11], factory = [[2, 2], [6, 2], [10, 2]]",
+      "output": "6"
+    },
+    {
+      "input": "robot = [1, 3, 5, 7, 9], factory = [[2, 2], [4, 2], [6, 2], [8, 2], [10, 1]]",
+      "output": "5"
+    },
+    {
+      "input": "robot = [10, 20, 30, 40, 50, 60], factory = [[15, 2], [35, 2], [55, 2]]",
+      "output": "30"
+    },
+    {
+      "input": "robot = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15], factory = [[2, 3], [6, 3], [10, 3], [14, 3]]",
+      "output": "inf"
+    },
+    {
+      "input": "robot = [-20, -10, 0, 10, 20], factory = [[-15, 2], [-5, 3], [5, 2], [15, 1]]",
+      "output": "25"
+    },
+    {
+      "input": "robot = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1], factory = [[0, 10]]",
+      "output": "10"
+    },
+    {
+      "input": "robot = [-100, -90, -80, -70, -60, -50, -40, -30, -20, -10], factory = [[-105, 2], [-95, 2], [-85, 2], [-75, 2], [-65, 2], [-55, 2], [-45, 2], [-35, 2], [-25, 2], [-15, 2]]",
+      "output": "50"
+    },
+    {
+      "input": "robot = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10], factory = [[0, 10]]",
+      "output": "55"
+    },
+    {
+      "input": "robot = [5, 10, 15, 20, 25, 30, 35, 40, 45, 50], factory = [[10, 2], [20, 2], [30, 2], [40, 2]]",
+      "output": "inf"
+    },
+    {
+      "input": "robot = [10, 20, 30, 40], factory = [[15, 2], [25, 2], [35, 2]]",
+      "output": "20"
+    },
+    {
+      "input": "robot = [-10, -5, 0, 5, 10, 15, 20], factory = [[-7, 2], [-2, 2], [3, 2], [8, 2]]",
+      "output": "35"
+    },
+    {
+      "input": "robot = [-20, -10, 0, 10, 20], factory = [[-15, 2], [0, 3], [15, 1]]",
+      "output": "25"
+    },
+    {
+      "input": "robot = [-20, -15, -10, -5, 0, 5, 10, 15, 20], factory = [[-15, 2], [-10, 2], [-5, 2], [0, 2], [5, 2], [10, 2], [15, 2]]",
+      "output": "10"
+    },
+    {
+      "input": "robot = [-5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5], factory = [[-6, 3], [0, 5], [6, 3]]",
+      "output": "18"
+    },
+    {
+      "input": "robot = [1, 3, 5, 7, 9], factory = [[2, 1], [4, 1], [6, 1], [8, 1]]",
+      "output": "inf"
+    },
+    {
+      "input": "robot = [-5, -3, -1, 1, 3, 5], factory = [[-10, 1], [-5, 2], [0, 3], [5, 2], [10, 1]]",
+      "output": "6"
+    },
+    {
+      "input": "robot = [-5, -3, -1, 1, 3, 5, 7, 9], factory = [[-4, 1], [0, 3], [4, 2]]",
+      "output": "inf"
+    },
+    {
+      "input": "robot = [1, 3, 5, 7, 9], factory = [[0, 2], [4, 2], [8, 2]]",
+      "output": "5"
+    },
+    {
+      "input": "robot = [1, 4, 7, 10, 13, 16, 19, 22, 25, 28], factory = [[3, 3], [9, 3], [15, 3], [21, 3]]",
+      "output": "25"
+    },
+    {
+      "input": "robot = [10, 10, 10, 10], factory = [[10, 1], [10, 1], [10, 1], [10, 1]]",
+      "output": "0"
+    },
+    {
+      "input": "robot = [1, 4, 7, 10, 13, 16, 19, 22, 25], factory = [[3, 3], [9, 3], [15, 3], [21, 3]]",
+      "output": "16"
+    },
+    {
+      "input": "robot = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100], factory = [[5, 2], [15, 2], [25, 2], [35, 2], [45, 2], [55, 2], [65, 2], [75, 2], [85, 2], [95, 2]]",
+      "output": "50"
+    },
+    {
+      "input": "robot = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10], factory = [[0, 2], [5, 3], [10, 5]]",
+      "output": "16"
+    },
+    {
+      "input": "robot = [100, 200, 300, 400, 500, 600, 700, 800, 900, 1000], factory = [[150, 3], [500, 4], [850, 3]]",
+      "output": "900"
+    },
+    {
+      "input": "robot = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1], factory = [[-5, 5], [0, 5], [5, 5]]",
+      "output": "25"
+    },
+    {
+      "input": "robot = [-5, 0, 5, 10, 15, 20], factory = [[-10, 1], [0, 3], [10, 2], [20, 1]]",
+      "output": "15"
+    },
+    {
+      "input": "robot = [-50, -25, 0, 25, 50], factory = [[-75, 3], [0, 2], [75, 1]]",
+      "output": "125"
+    },
+    {
+      "input": "robot = [-10, -5, 0, 5, 10], factory = [[-15, 2], [-10, 1], [0, 3], [10, 2], [15, 1]]",
+      "output": "10"
+    },
+    {
+      "input": "robot = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19], factory = [[0, 5], [5, 5], [10, 5], [15, 5]]",
+      "output": "40"
+    },
+    {
+      "input": "robot = [-100, -200, -300, -400, -500], factory = [[-50, 2], [-150, 1], [-250, 2], [-350, 1], [-450, 1]]",
+      "output": "250"
+    },
+    {
+      "input": "robot = [-100, -50, 0, 50, 100], factory = [[-75, 1], [-25, 1], [25, 1], [75, 1]]",
+      "output": "inf"
+    },
+    {
+      "input": "robot = [-100, -90, -80, -70, -60, -50, -40, -30, -20, -10], factory = [[-95, 2], [-85, 2], [-75, 2], [-65, 2], [-55, 2], [-45, 2], [-35, 2], [-25, 2], [-15, 2], [-5, 2]]",
+      "output": "50"
+    },
+    {
+      "input": "robot = [-100, -50, 0, 50, 100], factory = [[-75, 2], [-25, 2], [25, 2], [75, 1]]",
+      "output": "125"
+    },
+    {
+      "input": "robot = [-5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5], factory = [[-10, 6], [0, 5]]",
+      "output": "60"
+    },
+    {
+      "input": "robot = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10], factory = [[0, 5], [10, 5]]",
+      "output": "25"
+    },
+    {
+      "input": "robot = [-10, -5, 0, 5, 10, 15, 20, 25], factory = [[-15, 2], [0, 3], [15, 3], [25, 1]]",
+      "output": "25"
+    },
+    {
+      "input": "robot = [100, 200, 300, 400, 500], factory = [[50, 1], [150, 2], [250, 2], [350, 1], [450, 1]]",
+      "output": "250"
+    },
+    {
+      "input": "robot = [-10, -5, 0, 5, 10, 15], factory = [[-8, 2], [2, 3], [12, 2]]",
+      "output": "15"
+    },
+    {
+      "input": "robot = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], factory = [[-5, 5], [5, 5]]",
+      "output": "50"
+    },
+    {
+      "input": "robot = [0, 10, 20, 30, 40, 50, 60], factory = [[5, 3], [15, 3], [25, 3], [35, 3], [45, 3]]",
+      "output": "45"
+    },
+    {
+      "input": "robot = [-1, 0, 1], factory = [[-2, 1], [2, 1], [0, 1]]",
+      "output": "2"
+    },
+    {
+      "input": "robot = [-9, -6, -3, 0, 3, 6, 9], factory = [[-8, 2], [-2, 2], [2, 2], [8, 1]]",
+      "output": "12"
+    },
+    {
+      "input": "robot = [1, 3, 5, 7, 9, 11, 13, 15, 17, 19], factory = [[0, 5], [10, 5], [20, 5]]",
+      "output": "26"
+    },
+    {
+      "input": "robot = [0, 10, 20, 30, 40, 50, 60], factory = [[5, 1], [15, 2], [25, 2], [35, 1], [45, 2], [55, 1]]",
+      "output": "35"
+    },
+    {
+      "input": "robot = [-2, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10], factory = [[-4, 3], [2, 4], [7, 3], [11, 3]]",
+      "output": "22"
+    },
+    {
+      "input": "robot = [-1, -2, -3, -4, -5], factory = [[-3, 3], [0, 2]]",
+      "output": "6"
+    },
+    {
+      "input": "robot = [0, 2, 4, 6, 8, 10, 12], factory = [[1, 2], [5, 2], [9, 2], [13, 1]]",
+      "output": "7"
+    },
+    {
+      "input": "robot = [100, 200, 300, 400, 500], factory = [[50, 1], [150, 1], [250, 1], [350, 1], [450, 1]]",
+      "output": "250"
+    },
+    {
+      "input": "robot = [-5, -3, -1, 1, 3, 5], factory = [[-10, 1], [-6, 2], [-2, 2], [2, 2], [6, 1]]",
+      "output": "6"
+    },
+    {
+      "input": "robot = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10], factory = [[5, 5], [15, 5]]",
+      "output": "45"
+    },
+    {
+      "input": "robot = [-20, -10, 0, 10, 20], factory = [[-25, 2], [-15, 3], [-5, 2], [5, 3], [15, 2], [25, 1]]",
+      "output": "25"
+    },
+    {
+      "input": "robot = [-50, -40, -30, -20, -10, 0, 10, 20, 30, 40, 50], factory = [[-60, 3], [-40, 4], [-20, 4], [0, 4], [20, 4], [40, 3]]",
+      "output": "60"
+    },
+    {
+      "input": "robot = [1, 3, 5, 7, 9, 11, 13, 15, 17, 19], factory = [[0, 2], [4, 2], [8, 2], [12, 2], [16, 2]]",
+      "output": "20"
+    },
+    {
+      "input": "robot = [1, 3, 5, 7, 9], factory = [[0, 3], [6, 2], [12, 1]]",
+      "output": "9"
+    },
+    {
+      "input": "robot = [-100, -50, 0, 50, 100], factory = [[-150, 2], [-100, 2], [-50, 2], [0, 2], [50, 2], [100, 2], [150, 2]]",
+      "output": "0"
+    },
+    {
+      "input": "robot = [1, 3, 5, 7, 9, 11, 13, 15, 17, 19], factory = [[0, 2], [5, 2], [10, 2], [15, 2], [20, 2]]",
+      "output": "14"
+    }
+  ],
+  "types": {
+    "python3": {
+      "input": [
+        {
+          "robot": "List[int]"
+        },
+        {
+          "factory": "List[List[int]]"
+        }
+      ],
+      "output": "int"
+    },
+    "cpp": {
+      "input": [
+        {
+          "robot": "vector<int>&"
+        },
+        {
+          "factory": "vector<vector<int>>&"
+        }
+      ],
+      "output": "long long"
+    },
+    "java": {
+      "input": [
+        {
+          "robot": "List<Integer>"
+        },
+        {
+          "factory": "int[][]"
+        }
+      ],
+      "output": "long"
+    },
+    "javascript": {
+      "input": [
+        {
+          "robot": "number[]"
+        },
+        {
+          "factory": "number[][]"
+        }
+      ],
+      "output": "number"
+    },
+    "typescript": {
+      "input": [
+        {
+          "robot": "number[]"
+        },
+        {
+          "factory": "number[][]"
+        }
+      ],
+      "output": "number"
+    },
+    "golang": {
+      "input": [
+        {
+          "robot": "[]int"
+        },
+        {
+          "factory": "[][]int"
+        }
+      ],
+      "output": "int64"
+    },
+    "rust": {
+      "input": [
+        {
+          "robot": "Vec<i32>"
+        },
+        {
+          "factory": "Vec<Vec<i32>>"
+        }
+      ],
+      "output": "i64"
+    }
+  },
+  "tags": [
+    "array",
+    "dynamic-programming",
+    "sorting"
+  ]
+}

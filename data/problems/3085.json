@@ -1,0 +1,362 @@
+{
+  "id": 3085,
+  "title": "Minimum Deletions to Make String K-Special",
+  "slug": "minimum-deletions-to-make-string-k-special",
+  "difficulty": "Medium",
+  "description": "You are given a string word and an integer k.\nWe consider word to be k-special if |freq(word[i]) - freq(word[j])| <= k for all indices i and j in the string.\nHere, freq(x) denotes the frequency of the character x in word, and |y| denotes the absolute value of y.\nReturn the minimum number of characters you need to delete to make word k-special.\nExample 1:\nExample 2:\nExample 3:\nConstraints:",
+  "examples": [
+    {
+      "example_num": 1,
+      "example_text": "Input: word = \"aabcaba\", k = 0\nOutput: 3\nExplanation: We can make word 0 -special by deleting 2 occurrences of \"a\" and 1 occurrence of \"c\" . Therefore, word becomes equal to \"baba\" where freq('a') == freq('b') == 2 .",
+      "images": []
+    },
+    {
+      "example_num": 2,
+      "example_text": "Input: word = \"dabdcbdcdcd\", k = 2\nOutput: 2\nExplanation: We can make word 2 -special by deleting 1 occurrence of \"a\" and 1 occurrence of \"d\" . Therefore, word becomes equal to \"bdcbdcdcd\" where freq('b') == 2 , freq('c') == 3 , and freq('d') == 4 .",
+      "images": []
+    },
+    {
+      "example_num": 3,
+      "example_text": "Input: word = \"aaabaaa\", k = 2\nOutput: 1\nExplanation: We can make word 2 -special by deleting 1 occurrence of \"b\" . Therefore, word becomes equal to \"aaaaaa\" where each letter's frequency is now uniformly 6 .",
+      "images": []
+    }
+  ],
+  "constraints": [
+    "1 <= word.length <= 105",
+    "0 <= k <= 105",
+    "word consists only of lowercase English letters."
+  ],
+  "hints": [
+    "Count the frequency of each letter.",
+    "Suppose we select several characters as the final answer, and let <code>x</code> be the character with the smallest frequency in the answer. It can be shown that out of the selected characters, the optimal solution will never delete an occurrence of character <code>x</code> to obtain the answer.",
+    "We will fix a character <code>c</code> and assume that it will be the character with the smallest frequency in the answer. Suppose its frequency is <code>x</code>.",
+    "Then, for every other character, we will count the number of occurrences that will be deleted. Suppose that the current character has <code>y</code> occurrences. <ol> <li>If y < x, we need to delete all of them.</li> <li> if y > x + k, we should delete y - x - k of such character.</li> <li> Otherwise we don’t need to delete it.</li></ol>"
+  ],
+  "code_snippets": {
+    "cpp": "class Solution {\npublic:\n    int minimumDeletions(string word, int k) {\n        \n    }\n};",
+    "java": "class Solution {\n    public int minimumDeletions(String word, int k) {\n        \n    }\n}",
+    "python3": "class Solution:\n    def minimumDeletions(self, word: str, k: int) -> int:\n        ",
+    "javascript": "/**\n * @param {string} word\n * @param {number} k\n * @return {number}\n */\nvar minimumDeletions = function(word, k) {\n    \n};",
+    "typescript": "function minimumDeletions(word: string, k: number): number {\n    \n};",
+    "golang": "func minimumDeletions(word string, k int) int {\n    \n}",
+    "rust": "impl Solution {\n    pub fn minimum_deletions(word: String, k: i32) -> i32 {\n        \n    }\n}"
+  },
+  "entry_points": {
+    "python3": "Solution().minimumDeletions",
+    "cpp": "Solution().minimumDeletions",
+    "java": "new Solution().minimumDeletions",
+    "javascript": "minimumDeletions",
+    "typescript": "minimumDeletions",
+    "golang": "minimumDeletions",
+    "rust": "Solution::minimum_deletions"
+  },
+  "test_snippets": {
+    "python3": "def check(candidate):\n    assert candidate(word = \"abacabadaba\", k = 2) == 3\n    assert candidate(word = \"abacabadabacaba\", k = 3) == 4\n    assert candidate(word = \"xyz\", k = 0) == 0\n    assert candidate(word = \"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", k = 10) == 0\n    assert candidate(word = \"abcabcabc\", k = 1) == 0\n    assert candidate(word = \"mnbvcxzlkjhgfdsapoiuytrewq\", k = 5) == 0\n    assert candidate(word = \"aabcaba\", k = 0) == 3\n    assert candidate(word = \"dabdcbdcdcd\", k = 2) == 2\n    assert candidate(word = \"zzzzz\", k = 0) == 0\n    assert candidate(word = \"aaabaaa\", k = 2) == 1\n    assert candidate(word = \"abcdabcdabcd\", k = 1) == 0\n    assert candidate(word = \"aaaaa\", k = 0) == 0\n    assert candidate(word = \"xyz\", k = 1) == 0\n    assert candidate(word = \"abcde\", k = 3) == 0\n    assert candidate(word = \"abacabadabacaba\", k = 1) == 6\n    assert candidate(word = \"qqwweerrttyyuuiioopp\", k = 2) == 0\n    assert candidate(word = \"aabcccdddd\", k = 1) == 2\n    assert candidate(word = \"xyxxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxy\", k = 2) == 0\n    assert candidate(word = \"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", k = 0) == 0\n    assert candidate(word = \"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", k = 10) == 0\n    assert candidate(word = \"lkjghwertyuiopasdfghjklzxcvbnmlkjhgfdwsazxcvbnmlkjhgfdwsazxcvbnmlkjhgfdwsa\", k = 15) == 0\n    assert candidate(word = \"zzzzzyyyyyxxxxxwwwwvvvvuttttssssrrrrqqqqppppooooonnnnmmmmmllllkkkkjjjjiiiihhhhggggffffffeeeeee\", k = 5) == 0\n    assert candidate(word = \"xyzzzzzzzzzyxyzzzzzzzzzyxyzzzzzzzzzy\", k = 5) == 9\n    assert candidate(word = \"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", k = 3) == 0\n    assert candidate(word = \"mnbvcxzlkjhgfdsapoiuytrewqmnbvcxzlkjhgfdsapoiuytrewqmnbvcxzlkjhgfdsapoiuytrewq\", k = 8) == 0\n    assert candidate(word = \"aaabbbcccddddeeeffffffgggggggg\", k = 4) == 1\n    assert candidate(word = \"thisisanexamplestringwithvariousfrequencies\", k = 3) == 4\n    assert candidate(word = \"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", k = 5) == 0\n    assert candidate(word = \"almosteveryletterisusedbutnotallabcdefghijklmnopqrstuvwxyzzzzzzzzzzz\", k = 2) == 17\n    assert candidate(word = \"thisisaverylongwordthatcontainsmanycharactersandneedscomplexprocessing\", k = 10) == 0\n    assert candidate(word = \"aaaaaaaaaaaaaaaaaabbbbbbbbbbbbbbbbcccccccccccccccc\", k = 2) == 0\n    assert candidate(word = \"aaaaaaaaaaabbbbbbbbbbbccccccccccdddddddddd\", k = 5) == 0\n    assert candidate(word = \"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", k = 25) == 0\n    assert candidate(word = \"zzzzzzzzzzzzzzzzzzzz\", k = 0) == 0\n    assert candidate(word = \"abcdefghijklmnopqrstuvwxyz\", k = 0) == 0\n    assert candidate(word = \"abcdefghijklmnopqrstuvwxyzzzzzzzzzz\", k = 5) == 4\n    assert candidate(word = \"aaaaaaaaaabbbbbbbbccccccccddddddddeeeeeeeffffffffggggggghhhhhhhhiiiiiiiiii\", k = 3) == 0\n    assert candidate(word = \"unevenfrequenciesaxbxcxdxeuxyvxuyvyvxvyvxvyvxvyvxvyvxvyvxyvxyvxyvxyvxyvxyvxyvxyvxyvxyvxyvxy\", k = 10) == 23\n    assert candidate(word = \"aaaaaabbbccccdddddeeeeeffffffffggggghhhhhiiiiijjjjjkkkkklllllmmmmmnnnnnooooo\", k = 5) == 0\n    assert candidate(word = \"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzzzzzzzzzzzzzzzzzzzz\", k = 1) == 17\n    assert candidate(word = \"abcdefghij\", k = 0) == 0\n    assert candidate(word = \"ppppppppppqqqqqqqqqqrrrrrrrrrrssssssssssttttttttttuuuuuuuuuuvvvvvvvvvvwwwwwwwwwwxxxxxxxxxxxyyyyyyyyyyzzzzzzzzzz\", k = 10) == 0\n    assert candidate(word = \"qwertyuiopasdfghjklzxcvbnm\", k = 10) == 0\n    assert candidate(word = \"abcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabc\", k = 10) == 0\n    assert candidate(word = \"verylongstringwithrepeatingcharactersaaaaaaaaaabbbbbbbbbbcccccccccc\", k = 4) == 20\n    assert candidate(word = \"ppppppppppppppppppppppppppppppppppppppppppppppppppppp\", k = 0) == 0\n    assert candidate(word = \"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", k = 1) == 0\n    assert candidate(word = \"abcdeabcdabcdeabcdeabcdeabcdeabcde\", k = 2) == 0\n    assert candidate(word = \"ppppqqqqrrrsssttttuuuuvvvvwwwwxxxxxyyyyyzzzzzaaaaabbbbccccddddeeeeffffgggghhhhiiii\", k = 5) == 0\n    assert candidate(word = \"aabbaaccddccbbbaaadddcccbbaaa\", k = 1) == 6\n    assert candidate(word = \"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", k = 0) == 0\n    assert candidate(word = \"abcabcabcabcabcabcabcabcabcabc\", k = 1) == 0\n    assert candidate(word = \"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzzqqqqqqqqqq\", k = 4) == 6",
+    "cpp": "void check(Solution& solution) {\n    assert(solution.minimumDeletions(\"abacabadaba\", 2) == vector<int>3);\n    assert(solution.minimumDeletions(\"abacabadabacaba\", 3) == vector<int>4);\n    assert(solution.minimumDeletions(\"xyz\", 0) == vector<int>0);\n    assert(solution.minimumDeletions(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", 10) == vector<int>0);\n    assert(solution.minimumDeletions(\"abcabcabc\", 1) == vector<int>0);\n    assert(solution.minimumDeletions(\"mnbvcxzlkjhgfdsapoiuytrewq\", 5) == vector<int>0);\n    assert(solution.minimumDeletions(\"aabcaba\", 0) == vector<int>3);\n    assert(solution.minimumDeletions(\"dabdcbdcdcd\", 2) == vector<int>2);\n    assert(solution.minimumDeletions(\"zzzzz\", 0) == vector<int>0);\n    assert(solution.minimumDeletions(\"aaabaaa\", 2) == vector<int>1);\n    assert(solution.minimumDeletions(\"abcdabcdabcd\", 1) == vector<int>0);\n    assert(solution.minimumDeletions(\"aaaaa\", 0) == vector<int>0);\n    assert(solution.minimumDeletions(\"xyz\", 1) == vector<int>0);\n    assert(solution.minimumDeletions(\"abcde\", 3) == vector<int>0);\n    assert(solution.minimumDeletions(\"abacabadabacaba\", 1) == vector<int>6);\n    assert(solution.minimumDeletions(\"qqwweerrttyyuuiioopp\", 2) == vector<int>0);\n    assert(solution.minimumDeletions(\"aabcccdddd\", 1) == vector<int>2);\n    assert(solution.minimumDeletions(\"xyxxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxy\", 2) == vector<int>0);\n    assert(solution.minimumDeletions(\"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", 0) == vector<int>0);\n    assert(solution.minimumDeletions(\"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", 10) == vector<int>0);\n    assert(solution.minimumDeletions(\"lkjghwertyuiopasdfghjklzxcvbnmlkjhgfdwsazxcvbnmlkjhgfdwsazxcvbnmlkjhgfdwsa\", 15) == vector<int>0);\n    assert(solution.minimumDeletions(\"zzzzzyyyyyxxxxxwwwwvvvvuttttssssrrrrqqqqppppooooonnnnmmmmmllllkkkkjjjjiiiihhhhggggffffffeeeeee\", 5) == vector<int>0);\n    assert(solution.minimumDeletions(\"xyzzzzzzzzzyxyzzzzzzzzzyxyzzzzzzzzzy\", 5) == vector<int>9);\n    assert(solution.minimumDeletions(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", 3) == vector<int>0);\n    assert(solution.minimumDeletions(\"mnbvcxzlkjhgfdsapoiuytrewqmnbvcxzlkjhgfdsapoiuytrewqmnbvcxzlkjhgfdsapoiuytrewq\", 8) == vector<int>0);\n    assert(solution.minimumDeletions(\"aaabbbcccddddeeeffffffgggggggg\", 4) == vector<int>1);\n    assert(solution.minimumDeletions(\"thisisanexamplestringwithvariousfrequencies\", 3) == vector<int>4);\n    assert(solution.minimumDeletions(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", 5) == vector<int>0);\n    assert(solution.minimumDeletions(\"almosteveryletterisusedbutnotallabcdefghijklmnopqrstuvwxyzzzzzzzzzzz\", 2) == vector<int>17);\n    assert(solution.minimumDeletions(\"thisisaverylongwordthatcontainsmanycharactersandneedscomplexprocessing\", 10) == vector<int>0);\n    assert(solution.minimumDeletions(\"aaaaaaaaaaaaaaaaaabbbbbbbbbbbbbbbbcccccccccccccccc\", 2) == vector<int>0);\n    assert(solution.minimumDeletions(\"aaaaaaaaaaabbbbbbbbbbbccccccccccdddddddddd\", 5) == vector<int>0);\n    assert(solution.minimumDeletions(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", 25) == vector<int>0);\n    assert(solution.minimumDeletions(\"zzzzzzzzzzzzzzzzzzzz\", 0) == vector<int>0);\n    assert(solution.minimumDeletions(\"abcdefghijklmnopqrstuvwxyz\", 0) == vector<int>0);\n    assert(solution.minimumDeletions(\"abcdefghijklmnopqrstuvwxyzzzzzzzzzz\", 5) == vector<int>4);\n    assert(solution.minimumDeletions(\"aaaaaaaaaabbbbbbbbccccccccddddddddeeeeeeeffffffffggggggghhhhhhhhiiiiiiiiii\", 3) == vector<int>0);\n    assert(solution.minimumDeletions(\"unevenfrequenciesaxbxcxdxeuxyvxuyvyvxvyvxvyvxvyvxvyvxvyvxyvxyvxyvxyvxyvxyvxyvxyvxyvxyvxyvxy\", 10) == vector<int>23);\n    assert(solution.minimumDeletions(\"aaaaaabbbccccdddddeeeeeffffffffggggghhhhhiiiiijjjjjkkkkklllllmmmmmnnnnnooooo\", 5) == vector<int>0);\n    assert(solution.minimumDeletions(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzzzzzzzzzzzzzzzzzzzz\", 1) == vector<int>17);\n    assert(solution.minimumDeletions(\"abcdefghij\", 0) == vector<int>0);\n    assert(solution.minimumDeletions(\"ppppppppppqqqqqqqqqqrrrrrrrrrrssssssssssttttttttttuuuuuuuuuuvvvvvvvvvvwwwwwwwwwwxxxxxxxxxxxyyyyyyyyyyzzzzzzzzzz\", 10) == vector<int>0);\n    assert(solution.minimumDeletions(\"qwertyuiopasdfghjklzxcvbnm\", 10) == vector<int>0);\n    assert(solution.minimumDeletions(\"abcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabc\", 10) == vector<int>0);\n    assert(solution.minimumDeletions(\"verylongstringwithrepeatingcharactersaaaaaaaaaabbbbbbbbbbcccccccccc\", 4) == vector<int>20);\n    assert(solution.minimumDeletions(\"ppppppppppppppppppppppppppppppppppppppppppppppppppppp\", 0) == vector<int>0);\n    assert(solution.minimumDeletions(\"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", 1) == vector<int>0);\n    assert(solution.minimumDeletions(\"abcdeabcdabcdeabcdeabcdeabcdeabcde\", 2) == vector<int>0);\n    assert(solution.minimumDeletions(\"ppppqqqqrrrsssttttuuuuvvvvwwwwxxxxxyyyyyzzzzzaaaaabbbbccccddddeeeeffffgggghhhhiiii\", 5) == vector<int>0);\n    assert(solution.minimumDeletions(\"aabbaaccddccbbbaaadddcccbbaaa\", 1) == vector<int>6);\n    assert(solution.minimumDeletions(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", 0) == vector<int>0);\n    assert(solution.minimumDeletions(\"abcabcabcabcabcabcabcabcabcabc\", 1) == vector<int>0);\n    assert(solution.minimumDeletions(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzzqqqqqqqqqq\", 4) == vector<int>6);\n}",
+    "java": "public static void check(Solution solution) {\n    assert Arrays.equals(solution.minimumDeletions(\"abacabadaba\", 2), 3);\n    assert Arrays.equals(solution.minimumDeletions(\"abacabadabacaba\", 3), 4);\n    assert Arrays.equals(solution.minimumDeletions(\"xyz\", 0), 0);\n    assert Arrays.equals(solution.minimumDeletions(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", 10), 0);\n    assert Arrays.equals(solution.minimumDeletions(\"abcabcabc\", 1), 0);\n    assert Arrays.equals(solution.minimumDeletions(\"mnbvcxzlkjhgfdsapoiuytrewq\", 5), 0);\n    assert Arrays.equals(solution.minimumDeletions(\"aabcaba\", 0), 3);\n    assert Arrays.equals(solution.minimumDeletions(\"dabdcbdcdcd\", 2), 2);\n    assert Arrays.equals(solution.minimumDeletions(\"zzzzz\", 0), 0);\n    assert Arrays.equals(solution.minimumDeletions(\"aaabaaa\", 2), 1);\n    assert Arrays.equals(solution.minimumDeletions(\"abcdabcdabcd\", 1), 0);\n    assert Arrays.equals(solution.minimumDeletions(\"aaaaa\", 0), 0);\n    assert Arrays.equals(solution.minimumDeletions(\"xyz\", 1), 0);\n    assert Arrays.equals(solution.minimumDeletions(\"abcde\", 3), 0);\n    assert Arrays.equals(solution.minimumDeletions(\"abacabadabacaba\", 1), 6);\n    assert Arrays.equals(solution.minimumDeletions(\"qqwweerrttyyuuiioopp\", 2), 0);\n    assert Arrays.equals(solution.minimumDeletions(\"aabcccdddd\", 1), 2);\n    assert Arrays.equals(solution.minimumDeletions(\"xyxxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxy\", 2), 0);\n    assert Arrays.equals(solution.minimumDeletions(\"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", 0), 0);\n    assert Arrays.equals(solution.minimumDeletions(\"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", 10), 0);\n    assert Arrays.equals(solution.minimumDeletions(\"lkjghwertyuiopasdfghjklzxcvbnmlkjhgfdwsazxcvbnmlkjhgfdwsazxcvbnmlkjhgfdwsa\", 15), 0);\n    assert Arrays.equals(solution.minimumDeletions(\"zzzzzyyyyyxxxxxwwwwvvvvuttttssssrrrrqqqqppppooooonnnnmmmmmllllkkkkjjjjiiiihhhhggggffffffeeeeee\", 5), 0);\n    assert Arrays.equals(solution.minimumDeletions(\"xyzzzzzzzzzyxyzzzzzzzzzyxyzzzzzzzzzy\", 5), 9);\n    assert Arrays.equals(solution.minimumDeletions(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", 3), 0);\n    assert Arrays.equals(solution.minimumDeletions(\"mnbvcxzlkjhgfdsapoiuytrewqmnbvcxzlkjhgfdsapoiuytrewqmnbvcxzlkjhgfdsapoiuytrewq\", 8), 0);\n    assert Arrays.equals(solution.minimumDeletions(\"aaabbbcccddddeeeffffffgggggggg\", 4), 1);\n    assert Arrays.equals(solution.minimumDeletions(\"thisisanexamplestringwithvariousfrequencies\", 3), 4);\n    assert Arrays.equals(solution.minimumDeletions(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", 5), 0);\n    assert Arrays.equals(solution.minimumDeletions(\"almosteveryletterisusedbutnotallabcdefghijklmnopqrstuvwxyzzzzzzzzzzz\", 2), 17);\n    assert Arrays.equals(solution.minimumDeletions(\"thisisaverylongwordthatcontainsmanycharactersandneedscomplexprocessing\", 10), 0);\n    assert Arrays.equals(solution.minimumDeletions(\"aaaaaaaaaaaaaaaaaabbbbbbbbbbbbbbbbcccccccccccccccc\", 2), 0);\n    assert Arrays.equals(solution.minimumDeletions(\"aaaaaaaaaaabbbbbbbbbbbccccccccccdddddddddd\", 5), 0);\n    assert Arrays.equals(solution.minimumDeletions(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", 25), 0);\n    assert Arrays.equals(solution.minimumDeletions(\"zzzzzzzzzzzzzzzzzzzz\", 0), 0);\n    assert Arrays.equals(solution.minimumDeletions(\"abcdefghijklmnopqrstuvwxyz\", 0), 0);\n    assert Arrays.equals(solution.minimumDeletions(\"abcdefghijklmnopqrstuvwxyzzzzzzzzzz\", 5), 4);\n    assert Arrays.equals(solution.minimumDeletions(\"aaaaaaaaaabbbbbbbbccccccccddddddddeeeeeeeffffffffggggggghhhhhhhhiiiiiiiiii\", 3), 0);\n    assert Arrays.equals(solution.minimumDeletions(\"unevenfrequenciesaxbxcxdxeuxyvxuyvyvxvyvxvyvxvyvxvyvxvyvxyvxyvxyvxyvxyvxyvxyvxyvxyvxyvxyvxy\", 10), 23);\n    assert Arrays.equals(solution.minimumDeletions(\"aaaaaabbbccccdddddeeeeeffffffffggggghhhhhiiiiijjjjjkkkkklllllmmmmmnnnnnooooo\", 5), 0);\n    assert Arrays.equals(solution.minimumDeletions(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzzzzzzzzzzzzzzzzzzzz\", 1), 17);\n    assert Arrays.equals(solution.minimumDeletions(\"abcdefghij\", 0), 0);\n    assert Arrays.equals(solution.minimumDeletions(\"ppppppppppqqqqqqqqqqrrrrrrrrrrssssssssssttttttttttuuuuuuuuuuvvvvvvvvvvwwwwwwwwwwxxxxxxxxxxxyyyyyyyyyyzzzzzzzzzz\", 10), 0);\n    assert Arrays.equals(solution.minimumDeletions(\"qwertyuiopasdfghjklzxcvbnm\", 10), 0);\n    assert Arrays.equals(solution.minimumDeletions(\"abcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabc\", 10), 0);\n    assert Arrays.equals(solution.minimumDeletions(\"verylongstringwithrepeatingcharactersaaaaaaaaaabbbbbbbbbbcccccccccc\", 4), 20);\n    assert Arrays.equals(solution.minimumDeletions(\"ppppppppppppppppppppppppppppppppppppppppppppppppppppp\", 0), 0);\n    assert Arrays.equals(solution.minimumDeletions(\"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", 1), 0);\n    assert Arrays.equals(solution.minimumDeletions(\"abcdeabcdabcdeabcdeabcdeabcdeabcde\", 2), 0);\n    assert Arrays.equals(solution.minimumDeletions(\"ppppqqqqrrrsssttttuuuuvvvvwwwwxxxxxyyyyyzzzzzaaaaabbbbccccddddeeeeffffgggghhhhiiii\", 5), 0);\n    assert Arrays.equals(solution.minimumDeletions(\"aabbaaccddccbbbaaadddcccbbaaa\", 1), 6);\n    assert Arrays.equals(solution.minimumDeletions(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", 0), 0);\n    assert Arrays.equals(solution.minimumDeletions(\"abcabcabcabcabcabcabcabcabcabc\", 1), 0);\n    assert Arrays.equals(solution.minimumDeletions(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzzqqqqqqqqqq\", 4), 6);\n}",
+    "javascript": "function check(candidate) {\n    console.assert(JSON.stringify(candidate(\"abacabadaba\", 2)) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate(\"abacabadabacaba\", 3)) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate(\"xyz\", 0)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", 10)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"abcabcabc\", 1)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"mnbvcxzlkjhgfdsapoiuytrewq\", 5)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"aabcaba\", 0)) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate(\"dabdcbdcdcd\", 2)) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(\"zzzzz\", 0)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"aaabaaa\", 2)) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate(\"abcdabcdabcd\", 1)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"aaaaa\", 0)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"xyz\", 1)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"abcde\", 3)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"abacabadabacaba\", 1)) === JSON.stringify(6));\n    console.assert(JSON.stringify(candidate(\"qqwweerrttyyuuiioopp\", 2)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"aabcccdddd\", 1)) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(\"xyxxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxy\", 2)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", 0)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", 10)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"lkjghwertyuiopasdfghjklzxcvbnmlkjhgfdwsazxcvbnmlkjhgfdwsazxcvbnmlkjhgfdwsa\", 15)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"zzzzzyyyyyxxxxxwwwwvvvvuttttssssrrrrqqqqppppooooonnnnmmmmmllllkkkkjjjjiiiihhhhggggffffffeeeeee\", 5)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"xyzzzzzzzzzyxyzzzzzzzzzyxyzzzzzzzzzy\", 5)) === JSON.stringify(9));\n    console.assert(JSON.stringify(candidate(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", 3)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"mnbvcxzlkjhgfdsapoiuytrewqmnbvcxzlkjhgfdsapoiuytrewqmnbvcxzlkjhgfdsapoiuytrewq\", 8)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"aaabbbcccddddeeeffffffgggggggg\", 4)) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate(\"thisisanexamplestringwithvariousfrequencies\", 3)) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", 5)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"almosteveryletterisusedbutnotallabcdefghijklmnopqrstuvwxyzzzzzzzzzzz\", 2)) === JSON.stringify(17));\n    console.assert(JSON.stringify(candidate(\"thisisaverylongwordthatcontainsmanycharactersandneedscomplexprocessing\", 10)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"aaaaaaaaaaaaaaaaaabbbbbbbbbbbbbbbbcccccccccccccccc\", 2)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"aaaaaaaaaaabbbbbbbbbbbccccccccccdddddddddd\", 5)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", 25)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"zzzzzzzzzzzzzzzzzzzz\", 0)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"abcdefghijklmnopqrstuvwxyz\", 0)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"abcdefghijklmnopqrstuvwxyzzzzzzzzzz\", 5)) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate(\"aaaaaaaaaabbbbbbbbccccccccddddddddeeeeeeeffffffffggggggghhhhhhhhiiiiiiiiii\", 3)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"unevenfrequenciesaxbxcxdxeuxyvxuyvyvxvyvxvyvxvyvxvyvxvyvxyvxyvxyvxyvxyvxyvxyvxyvxyvxyvxyvxy\", 10)) === JSON.stringify(23));\n    console.assert(JSON.stringify(candidate(\"aaaaaabbbccccdddddeeeeeffffffffggggghhhhhiiiiijjjjjkkkkklllllmmmmmnnnnnooooo\", 5)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzzzzzzzzzzzzzzzzzzzz\", 1)) === JSON.stringify(17));\n    console.assert(JSON.stringify(candidate(\"abcdefghij\", 0)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"ppppppppppqqqqqqqqqqrrrrrrrrrrssssssssssttttttttttuuuuuuuuuuvvvvvvvvvvwwwwwwwwwwxxxxxxxxxxxyyyyyyyyyyzzzzzzzzzz\", 10)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"qwertyuiopasdfghjklzxcvbnm\", 10)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"abcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabc\", 10)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"verylongstringwithrepeatingcharactersaaaaaaaaaabbbbbbbbbbcccccccccc\", 4)) === JSON.stringify(20));\n    console.assert(JSON.stringify(candidate(\"ppppppppppppppppppppppppppppppppppppppppppppppppppppp\", 0)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", 1)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"abcdeabcdabcdeabcdeabcdeabcdeabcde\", 2)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"ppppqqqqrrrsssttttuuuuvvvvwwwwxxxxxyyyyyzzzzzaaaaabbbbccccddddeeeeffffgggghhhhiiii\", 5)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"aabbaaccddccbbbaaadddcccbbaaa\", 1)) === JSON.stringify(6));\n    console.assert(JSON.stringify(candidate(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", 0)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"abcabcabcabcabcabcabcabcabcabc\", 1)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzzqqqqqqqqqq\", 4)) === JSON.stringify(6));\n}",
+    "typescript": "function check(candidate: Function): void {\n    console.assert(JSON.stringify(candidate(\"abacabadaba\", 2)) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate(\"abacabadabacaba\", 3)) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate(\"xyz\", 0)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", 10)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"abcabcabc\", 1)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"mnbvcxzlkjhgfdsapoiuytrewq\", 5)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"aabcaba\", 0)) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate(\"dabdcbdcdcd\", 2)) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(\"zzzzz\", 0)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"aaabaaa\", 2)) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate(\"abcdabcdabcd\", 1)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"aaaaa\", 0)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"xyz\", 1)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"abcde\", 3)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"abacabadabacaba\", 1)) === JSON.stringify(6));\n    console.assert(JSON.stringify(candidate(\"qqwweerrttyyuuiioopp\", 2)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"aabcccdddd\", 1)) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(\"xyxxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxy\", 2)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", 0)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", 10)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"lkjghwertyuiopasdfghjklzxcvbnmlkjhgfdwsazxcvbnmlkjhgfdwsazxcvbnmlkjhgfdwsa\", 15)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"zzzzzyyyyyxxxxxwwwwvvvvuttttssssrrrrqqqqppppooooonnnnmmmmmllllkkkkjjjjiiiihhhhggggffffffeeeeee\", 5)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"xyzzzzzzzzzyxyzzzzzzzzzyxyzzzzzzzzzy\", 5)) === JSON.stringify(9));\n    console.assert(JSON.stringify(candidate(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", 3)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"mnbvcxzlkjhgfdsapoiuytrewqmnbvcxzlkjhgfdsapoiuytrewqmnbvcxzlkjhgfdsapoiuytrewq\", 8)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"aaabbbcccddddeeeffffffgggggggg\", 4)) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate(\"thisisanexamplestringwithvariousfrequencies\", 3)) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", 5)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"almosteveryletterisusedbutnotallabcdefghijklmnopqrstuvwxyzzzzzzzzzzz\", 2)) === JSON.stringify(17));\n    console.assert(JSON.stringify(candidate(\"thisisaverylongwordthatcontainsmanycharactersandneedscomplexprocessing\", 10)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"aaaaaaaaaaaaaaaaaabbbbbbbbbbbbbbbbcccccccccccccccc\", 2)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"aaaaaaaaaaabbbbbbbbbbbccccccccccdddddddddd\", 5)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", 25)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"zzzzzzzzzzzzzzzzzzzz\", 0)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"abcdefghijklmnopqrstuvwxyz\", 0)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"abcdefghijklmnopqrstuvwxyzzzzzzzzzz\", 5)) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate(\"aaaaaaaaaabbbbbbbbccccccccddddddddeeeeeeeffffffffggggggghhhhhhhhiiiiiiiiii\", 3)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"unevenfrequenciesaxbxcxdxeuxyvxuyvyvxvyvxvyvxvyvxvyvxvyvxyvxyvxyvxyvxyvxyvxyvxyvxyvxyvxyvxy\", 10)) === JSON.stringify(23));\n    console.assert(JSON.stringify(candidate(\"aaaaaabbbccccdddddeeeeeffffffffggggghhhhhiiiiijjjjjkkkkklllllmmmmmnnnnnooooo\", 5)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzzzzzzzzzzzzzzzzzzzz\", 1)) === JSON.stringify(17));\n    console.assert(JSON.stringify(candidate(\"abcdefghij\", 0)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"ppppppppppqqqqqqqqqqrrrrrrrrrrssssssssssttttttttttuuuuuuuuuuvvvvvvvvvvwwwwwwwwwwxxxxxxxxxxxyyyyyyyyyyzzzzzzzzzz\", 10)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"qwertyuiopasdfghjklzxcvbnm\", 10)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"abcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabc\", 10)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"verylongstringwithrepeatingcharactersaaaaaaaaaabbbbbbbbbbcccccccccc\", 4)) === JSON.stringify(20));\n    console.assert(JSON.stringify(candidate(\"ppppppppppppppppppppppppppppppppppppppppppppppppppppp\", 0)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", 1)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"abcdeabcdabcdeabcdeabcdeabcdeabcde\", 2)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"ppppqqqqrrrsssttttuuuuvvvvwwwwxxxxxyyyyyzzzzzaaaaabbbbccccddddeeeeffffgggghhhhiiii\", 5)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"aabbaaccddccbbbaaadddcccbbaaa\", 1)) === JSON.stringify(6));\n    console.assert(JSON.stringify(candidate(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", 0)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"abcabcabcabcabcabcabcabcabcabc\", 1)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzzqqqqqqqqqq\", 4)) === JSON.stringify(6));\n}",
+    "golang": "func check(candidate func([]int, int) []int) {\n    assert reflect.DeepEqual(candidate(\"abacabadaba\", 2), 3)\n    assert reflect.DeepEqual(candidate(\"abacabadabacaba\", 3), 4)\n    assert reflect.DeepEqual(candidate(\"xyz\", 0), 0)\n    assert reflect.DeepEqual(candidate(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", 10), 0)\n    assert reflect.DeepEqual(candidate(\"abcabcabc\", 1), 0)\n    assert reflect.DeepEqual(candidate(\"mnbvcxzlkjhgfdsapoiuytrewq\", 5), 0)\n    assert reflect.DeepEqual(candidate(\"aabcaba\", 0), 3)\n    assert reflect.DeepEqual(candidate(\"dabdcbdcdcd\", 2), 2)\n    assert reflect.DeepEqual(candidate(\"zzzzz\", 0), 0)\n    assert reflect.DeepEqual(candidate(\"aaabaaa\", 2), 1)\n    assert reflect.DeepEqual(candidate(\"abcdabcdabcd\", 1), 0)\n    assert reflect.DeepEqual(candidate(\"aaaaa\", 0), 0)\n    assert reflect.DeepEqual(candidate(\"xyz\", 1), 0)\n    assert reflect.DeepEqual(candidate(\"abcde\", 3), 0)\n    assert reflect.DeepEqual(candidate(\"abacabadabacaba\", 1), 6)\n    assert reflect.DeepEqual(candidate(\"qqwweerrttyyuuiioopp\", 2), 0)\n    assert reflect.DeepEqual(candidate(\"aabcccdddd\", 1), 2)\n    assert reflect.DeepEqual(candidate(\"xyxxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxy\", 2), 0)\n    assert reflect.DeepEqual(candidate(\"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", 0), 0)\n    assert reflect.DeepEqual(candidate(\"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", 10), 0)\n    assert reflect.DeepEqual(candidate(\"lkjghwertyuiopasdfghjklzxcvbnmlkjhgfdwsazxcvbnmlkjhgfdwsazxcvbnmlkjhgfdwsa\", 15), 0)\n    assert reflect.DeepEqual(candidate(\"zzzzzyyyyyxxxxxwwwwvvvvuttttssssrrrrqqqqppppooooonnnnmmmmmllllkkkkjjjjiiiihhhhggggffffffeeeeee\", 5), 0)\n    assert reflect.DeepEqual(candidate(\"xyzzzzzzzzzyxyzzzzzzzzzyxyzzzzzzzzzy\", 5), 9)\n    assert reflect.DeepEqual(candidate(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", 3), 0)\n    assert reflect.DeepEqual(candidate(\"mnbvcxzlkjhgfdsapoiuytrewqmnbvcxzlkjhgfdsapoiuytrewqmnbvcxzlkjhgfdsapoiuytrewq\", 8), 0)\n    assert reflect.DeepEqual(candidate(\"aaabbbcccddddeeeffffffgggggggg\", 4), 1)\n    assert reflect.DeepEqual(candidate(\"thisisanexamplestringwithvariousfrequencies\", 3), 4)\n    assert reflect.DeepEqual(candidate(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", 5), 0)\n    assert reflect.DeepEqual(candidate(\"almosteveryletterisusedbutnotallabcdefghijklmnopqrstuvwxyzzzzzzzzzzz\", 2), 17)\n    assert reflect.DeepEqual(candidate(\"thisisaverylongwordthatcontainsmanycharactersandneedscomplexprocessing\", 10), 0)\n    assert reflect.DeepEqual(candidate(\"aaaaaaaaaaaaaaaaaabbbbbbbbbbbbbbbbcccccccccccccccc\", 2), 0)\n    assert reflect.DeepEqual(candidate(\"aaaaaaaaaaabbbbbbbbbbbccccccccccdddddddddd\", 5), 0)\n    assert reflect.DeepEqual(candidate(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", 25), 0)\n    assert reflect.DeepEqual(candidate(\"zzzzzzzzzzzzzzzzzzzz\", 0), 0)\n    assert reflect.DeepEqual(candidate(\"abcdefghijklmnopqrstuvwxyz\", 0), 0)\n    assert reflect.DeepEqual(candidate(\"abcdefghijklmnopqrstuvwxyzzzzzzzzzz\", 5), 4)\n    assert reflect.DeepEqual(candidate(\"aaaaaaaaaabbbbbbbbccccccccddddddddeeeeeeeffffffffggggggghhhhhhhhiiiiiiiiii\", 3), 0)\n    assert reflect.DeepEqual(candidate(\"unevenfrequenciesaxbxcxdxeuxyvxuyvyvxvyvxvyvxvyvxvyvxvyvxyvxyvxyvxyvxyvxyvxyvxyvxyvxyvxyvxy\", 10), 23)\n    assert reflect.DeepEqual(candidate(\"aaaaaabbbccccdddddeeeeeffffffffggggghhhhhiiiiijjjjjkkkkklllllmmmmmnnnnnooooo\", 5), 0)\n    assert reflect.DeepEqual(candidate(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzzzzzzzzzzzzzzzzzzzz\", 1), 17)\n    assert reflect.DeepEqual(candidate(\"abcdefghij\", 0), 0)\n    assert reflect.DeepEqual(candidate(\"ppppppppppqqqqqqqqqqrrrrrrrrrrssssssssssttttttttttuuuuuuuuuuvvvvvvvvvvwwwwwwwwwwxxxxxxxxxxxyyyyyyyyyyzzzzzzzzzz\", 10), 0)\n    assert reflect.DeepEqual(candidate(\"qwertyuiopasdfghjklzxcvbnm\", 10), 0)\n    assert reflect.DeepEqual(candidate(\"abcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabc\", 10), 0)\n    assert reflect.DeepEqual(candidate(\"verylongstringwithrepeatingcharactersaaaaaaaaaabbbbbbbbbbcccccccccc\", 4), 20)\n    assert reflect.DeepEqual(candidate(\"ppppppppppppppppppppppppppppppppppppppppppppppppppppp\", 0), 0)\n    assert reflect.DeepEqual(candidate(\"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", 1), 0)\n    assert reflect.DeepEqual(candidate(\"abcdeabcdabcdeabcdeabcdeabcdeabcde\", 2), 0)\n    assert reflect.DeepEqual(candidate(\"ppppqqqqrrrsssttttuuuuvvvvwwwwxxxxxyyyyyzzzzzaaaaabbbbccccddddeeeeffffgggghhhhiiii\", 5), 0)\n    assert reflect.DeepEqual(candidate(\"aabbaaccddccbbbaaadddcccbbaaa\", 1), 6)\n    assert reflect.DeepEqual(candidate(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", 0), 0)\n    assert reflect.DeepEqual(candidate(\"abcabcabcabcabcabcabcabcabcabc\", 1), 0)\n    assert reflect.DeepEqual(candidate(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzzqqqqqqqqqq\", 4), 6)\n}",
+    "rust": "fn check(candidate: fn(Vec<i32>, i32) -> Vec<i32>) {\n    assert_eq!(candidate(\"abacabadaba\", 2), 3);\n    assert_eq!(candidate(\"abacabadabacaba\", 3), 4);\n    assert_eq!(candidate(\"xyz\", 0), 0);\n    assert_eq!(candidate(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", 10), 0);\n    assert_eq!(candidate(\"abcabcabc\", 1), 0);\n    assert_eq!(candidate(\"mnbvcxzlkjhgfdsapoiuytrewq\", 5), 0);\n    assert_eq!(candidate(\"aabcaba\", 0), 3);\n    assert_eq!(candidate(\"dabdcbdcdcd\", 2), 2);\n    assert_eq!(candidate(\"zzzzz\", 0), 0);\n    assert_eq!(candidate(\"aaabaaa\", 2), 1);\n    assert_eq!(candidate(\"abcdabcdabcd\", 1), 0);\n    assert_eq!(candidate(\"aaaaa\", 0), 0);\n    assert_eq!(candidate(\"xyz\", 1), 0);\n    assert_eq!(candidate(\"abcde\", 3), 0);\n    assert_eq!(candidate(\"abacabadabacaba\", 1), 6);\n    assert_eq!(candidate(\"qqwweerrttyyuuiioopp\", 2), 0);\n    assert_eq!(candidate(\"aabcccdddd\", 1), 2);\n    assert_eq!(candidate(\"xyxxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxy\", 2), 0);\n    assert_eq!(candidate(\"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", 0), 0);\n    assert_eq!(candidate(\"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", 10), 0);\n    assert_eq!(candidate(\"lkjghwertyuiopasdfghjklzxcvbnmlkjhgfdwsazxcvbnmlkjhgfdwsazxcvbnmlkjhgfdwsa\", 15), 0);\n    assert_eq!(candidate(\"zzzzzyyyyyxxxxxwwwwvvvvuttttssssrrrrqqqqppppooooonnnnmmmmmllllkkkkjjjjiiiihhhhggggffffffeeeeee\", 5), 0);\n    assert_eq!(candidate(\"xyzzzzzzzzzyxyzzzzzzzzzyxyzzzzzzzzzy\", 5), 9);\n    assert_eq!(candidate(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", 3), 0);\n    assert_eq!(candidate(\"mnbvcxzlkjhgfdsapoiuytrewqmnbvcxzlkjhgfdsapoiuytrewqmnbvcxzlkjhgfdsapoiuytrewq\", 8), 0);\n    assert_eq!(candidate(\"aaabbbcccddddeeeffffffgggggggg\", 4), 1);\n    assert_eq!(candidate(\"thisisanexamplestringwithvariousfrequencies\", 3), 4);\n    assert_eq!(candidate(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", 5), 0);\n    assert_eq!(candidate(\"almosteveryletterisusedbutnotallabcdefghijklmnopqrstuvwxyzzzzzzzzzzz\", 2), 17);\n    assert_eq!(candidate(\"thisisaverylongwordthatcontainsmanycharactersandneedscomplexprocessing\", 10), 0);\n    assert_eq!(candidate(\"aaaaaaaaaaaaaaaaaabbbbbbbbbbbbbbbbcccccccccccccccc\", 2), 0);\n    assert_eq!(candidate(\"aaaaaaaaaaabbbbbbbbbbbccccccccccdddddddddd\", 5), 0);\n    assert_eq!(candidate(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", 25), 0);\n    assert_eq!(candidate(\"zzzzzzzzzzzzzzzzzzzz\", 0), 0);\n    assert_eq!(candidate(\"abcdefghijklmnopqrstuvwxyz\", 0), 0);\n    assert_eq!(candidate(\"abcdefghijklmnopqrstuvwxyzzzzzzzzzz\", 5), 4);\n    assert_eq!(candidate(\"aaaaaaaaaabbbbbbbbccccccccddddddddeeeeeeeffffffffggggggghhhhhhhhiiiiiiiiii\", 3), 0);\n    assert_eq!(candidate(\"unevenfrequenciesaxbxcxdxeuxyvxuyvyvxvyvxvyvxvyvxvyvxvyvxyvxyvxyvxyvxyvxyvxyvxyvxyvxyvxyvxy\", 10), 23);\n    assert_eq!(candidate(\"aaaaaabbbccccdddddeeeeeffffffffggggghhhhhiiiiijjjjjkkkkklllllmmmmmnnnnnooooo\", 5), 0);\n    assert_eq!(candidate(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzzzzzzzzzzzzzzzzzzzz\", 1), 17);\n    assert_eq!(candidate(\"abcdefghij\", 0), 0);\n    assert_eq!(candidate(\"ppppppppppqqqqqqqqqqrrrrrrrrrrssssssssssttttttttttuuuuuuuuuuvvvvvvvvvvwwwwwwwwwwxxxxxxxxxxxyyyyyyyyyyzzzzzzzzzz\", 10), 0);\n    assert_eq!(candidate(\"qwertyuiopasdfghjklzxcvbnm\", 10), 0);\n    assert_eq!(candidate(\"abcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabc\", 10), 0);\n    assert_eq!(candidate(\"verylongstringwithrepeatingcharactersaaaaaaaaaabbbbbbbbbbcccccccccc\", 4), 20);\n    assert_eq!(candidate(\"ppppppppppppppppppppppppppppppppppppppppppppppppppppp\", 0), 0);\n    assert_eq!(candidate(\"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", 1), 0);\n    assert_eq!(candidate(\"abcdeabcdabcdeabcdeabcdeabcdeabcde\", 2), 0);\n    assert_eq!(candidate(\"ppppqqqqrrrsssttttuuuuvvvvwwwwxxxxxyyyyyzzzzzaaaaabbbbccccddddeeeeffffgggghhhhiiii\", 5), 0);\n    assert_eq!(candidate(\"aabbaaccddccbbbaaadddcccbbaaa\", 1), 6);\n    assert_eq!(candidate(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", 0), 0);\n    assert_eq!(candidate(\"abcabcabcabcabcabcabcabcabcabc\", 1), 0);\n    assert_eq!(candidate(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzzqqqqqqqqqq\", 4), 6);\n}"
+  },
+  "test_cases": [
+    {
+      "input": "word = \"abacabadaba\", k = 2",
+      "output": "3"
+    },
+    {
+      "input": "word = \"abacabadabacaba\", k = 3",
+      "output": "4"
+    },
+    {
+      "input": "word = \"xyz\", k = 0",
+      "output": "0"
+    },
+    {
+      "input": "word = \"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", k = 10",
+      "output": "0"
+    },
+    {
+      "input": "word = \"abcabcabc\", k = 1",
+      "output": "0"
+    },
+    {
+      "input": "word = \"mnbvcxzlkjhgfdsapoiuytrewq\", k = 5",
+      "output": "0"
+    },
+    {
+      "input": "word = \"aabcaba\", k = 0",
+      "output": "3"
+    },
+    {
+      "input": "word = \"dabdcbdcdcd\", k = 2",
+      "output": "2"
+    },
+    {
+      "input": "word = \"zzzzz\", k = 0",
+      "output": "0"
+    },
+    {
+      "input": "word = \"aaabaaa\", k = 2",
+      "output": "1"
+    },
+    {
+      "input": "word = \"abcdabcdabcd\", k = 1",
+      "output": "0"
+    },
+    {
+      "input": "word = \"aaaaa\", k = 0",
+      "output": "0"
+    },
+    {
+      "input": "word = \"xyz\", k = 1",
+      "output": "0"
+    },
+    {
+      "input": "word = \"abcde\", k = 3",
+      "output": "0"
+    },
+    {
+      "input": "word = \"abacabadabacaba\", k = 1",
+      "output": "6"
+    },
+    {
+      "input": "word = \"qqwweerrttyyuuiioopp\", k = 2",
+      "output": "0"
+    },
+    {
+      "input": "word = \"aabcccdddd\", k = 1",
+      "output": "2"
+    },
+    {
+      "input": "word = \"xyxxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxy\", k = 2",
+      "output": "0"
+    },
+    {
+      "input": "word = \"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", k = 0",
+      "output": "0"
+    },
+    {
+      "input": "word = \"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", k = 10",
+      "output": "0"
+    },
+    {
+      "input": "word = \"lkjghwertyuiopasdfghjklzxcvbnmlkjhgfdwsazxcvbnmlkjhgfdwsazxcvbnmlkjhgfdwsa\", k = 15",
+      "output": "0"
+    },
+    {
+      "input": "word = \"zzzzzyyyyyxxxxxwwwwvvvvuttttssssrrrrqqqqppppooooonnnnmmmmmllllkkkkjjjjiiiihhhhggggffffffeeeeee\", k = 5",
+      "output": "0"
+    },
+    {
+      "input": "word = \"xyzzzzzzzzzyxyzzzzzzzzzyxyzzzzzzzzzy\", k = 5",
+      "output": "9"
+    },
+    {
+      "input": "word = \"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", k = 3",
+      "output": "0"
+    },
+    {
+      "input": "word = \"mnbvcxzlkjhgfdsapoiuytrewqmnbvcxzlkjhgfdsapoiuytrewqmnbvcxzlkjhgfdsapoiuytrewq\", k = 8",
+      "output": "0"
+    },
+    {
+      "input": "word = \"aaabbbcccddddeeeffffffgggggggg\", k = 4",
+      "output": "1"
+    },
+    {
+      "input": "word = \"thisisanexamplestringwithvariousfrequencies\", k = 3",
+      "output": "4"
+    },
+    {
+      "input": "word = \"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", k = 5",
+      "output": "0"
+    },
+    {
+      "input": "word = \"almosteveryletterisusedbutnotallabcdefghijklmnopqrstuvwxyzzzzzzzzzzz\", k = 2",
+      "output": "17"
+    },
+    {
+      "input": "word = \"thisisaverylongwordthatcontainsmanycharactersandneedscomplexprocessing\", k = 10",
+      "output": "0"
+    },
+    {
+      "input": "word = \"aaaaaaaaaaaaaaaaaabbbbbbbbbbbbbbbbcccccccccccccccc\", k = 2",
+      "output": "0"
+    },
+    {
+      "input": "word = \"aaaaaaaaaaabbbbbbbbbbbccccccccccdddddddddd\", k = 5",
+      "output": "0"
+    },
+    {
+      "input": "word = \"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", k = 25",
+      "output": "0"
+    },
+    {
+      "input": "word = \"zzzzzzzzzzzzzzzzzzzz\", k = 0",
+      "output": "0"
+    },
+    {
+      "input": "word = \"abcdefghijklmnopqrstuvwxyz\", k = 0",
+      "output": "0"
+    },
+    {
+      "input": "word = \"abcdefghijklmnopqrstuvwxyzzzzzzzzzz\", k = 5",
+      "output": "4"
+    },
+    {
+      "input": "word = \"aaaaaaaaaabbbbbbbbccccccccddddddddeeeeeeeffffffffggggggghhhhhhhhiiiiiiiiii\", k = 3",
+      "output": "0"
+    },
+    {
+      "input": "word = \"unevenfrequenciesaxbxcxdxeuxyvxuyvyvxvyvxvyvxvyvxvyvxvyvxyvxyvxyvxyvxyvxyvxyvxyvxyvxyvxyvxy\", k = 10",
+      "output": "23"
+    },
+    {
+      "input": "word = \"aaaaaabbbccccdddddeeeeeffffffffggggghhhhhiiiiijjjjjkkkkklllllmmmmmnnnnnooooo\", k = 5",
+      "output": "0"
+    },
+    {
+      "input": "word = \"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzzzzzzzzzzzzzzzzzzzz\", k = 1",
+      "output": "17"
+    },
+    {
+      "input": "word = \"abcdefghij\", k = 0",
+      "output": "0"
+    },
+    {
+      "input": "word = \"ppppppppppqqqqqqqqqqrrrrrrrrrrssssssssssttttttttttuuuuuuuuuuvvvvvvvvvvwwwwwwwwwwxxxxxxxxxxxyyyyyyyyyyzzzzzzzzzz\", k = 10",
+      "output": "0"
+    },
+    {
+      "input": "word = \"qwertyuiopasdfghjklzxcvbnm\", k = 10",
+      "output": "0"
+    },
+    {
+      "input": "word = \"abcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabc\", k = 10",
+      "output": "0"
+    },
+    {
+      "input": "word = \"verylongstringwithrepeatingcharactersaaaaaaaaaabbbbbbbbbbcccccccccc\", k = 4",
+      "output": "20"
+    },
+    {
+      "input": "word = \"ppppppppppppppppppppppppppppppppppppppppppppppppppppp\", k = 0",
+      "output": "0"
+    },
+    {
+      "input": "word = \"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", k = 1",
+      "output": "0"
+    },
+    {
+      "input": "word = \"abcdeabcdabcdeabcdeabcdeabcdeabcde\", k = 2",
+      "output": "0"
+    },
+    {
+      "input": "word = \"ppppqqqqrrrsssttttuuuuvvvvwwwwxxxxxyyyyyzzzzzaaaaabbbbccccddddeeeeffffgggghhhhiiii\", k = 5",
+      "output": "0"
+    },
+    {
+      "input": "word = \"aabbaaccddccbbbaaadddcccbbaaa\", k = 1",
+      "output": "6"
+    },
+    {
+      "input": "word = \"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", k = 0",
+      "output": "0"
+    },
+    {
+      "input": "word = \"abcabcabcabcabcabcabcabcabcabc\", k = 1",
+      "output": "0"
+    },
+    {
+      "input": "word = \"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzzqqqqqqqqqq\", k = 4",
+      "output": "6"
+    }
+  ],
+  "types": {
+    "python3": {
+      "input": [
+        {
+          "word": "str"
+        },
+        {
+          "k": "int"
+        }
+      ],
+      "output": "int"
+    },
+    "cpp": {
+      "input": [
+        {
+          "word": "string"
+        },
+        {
+          "k": "int"
+        }
+      ],
+      "output": "int"
+    },
+    "java": {
+      "input": [
+        {
+          "word": "String"
+        },
+        {
+          "k": "int"
+        }
+      ],
+      "output": "int"
+    },
+    "javascript": {
+      "input": [
+        {
+          "word": "string"
+        },
+        {
+          "k": "number"
+        }
+      ],
+      "output": "number"
+    },
+    "typescript": {
+      "input": [
+        {
+          "word": "string"
+        },
+        {
+          "k": "number"
+        }
+      ],
+      "output": "number"
+    },
+    "golang": {
+      "input": [
+        {
+          "word": "string"
+        },
+        {
+          "k": "int"
+        }
+      ],
+      "output": "int"
+    },
+    "rust": {
+      "input": [
+        {
+          "word": "String"
+        },
+        {
+          "k": "i32"
+        }
+      ],
+      "output": "i32"
+    }
+  },
+  "tags": [
+    "hash-table",
+    "string",
+    "greedy",
+    "sorting",
+    "counting"
+  ]
+}

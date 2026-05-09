@@ -1,0 +1,560 @@
+{
+  "id": 1749,
+  "title": "Maximum Absolute Sum of Any Subarray",
+  "slug": "maximum-absolute-sum-of-any-subarray",
+  "difficulty": "Medium",
+  "description": "You are given an integer array nums. The absolute sum of a subarray [numsl, numsl+1, ..., numsr-1, numsr] is abs(numsl + numsl+1 + ... + numsr-1 + numsr).\nReturn the maximum absolute sum of any (possibly empty) subarray of nums.\nNote that abs(x) is defined as follows:\nExample 1:\nExample 2:\nConstraints:",
+  "examples": [
+    {
+      "example_num": 1,
+      "example_text": "Input: nums = [1,-3,2,3,-4]\nOutput: 5\nExplanation: The subarray [2,3] has absolute sum = abs(2+3) = abs(5) = 5.",
+      "images": []
+    },
+    {
+      "example_num": 2,
+      "example_text": "Input: nums = [2,-5,1,-4,3,-2]\nOutput: 8\nExplanation: The subarray [-5,1,-4] has absolute sum = abs(-5+1-4) = abs(-8) = 8.",
+      "images": []
+    }
+  ],
+  "constraints": [
+    "1 <= nums.length <= 105",
+    "-104 <= nums[i] <= 104"
+  ],
+  "hints": [
+    "What if we asked for maximum sum, not absolute sum?",
+    "It's a standard problem that can be solved by Kadane's algorithm.",
+    "The key idea is the max absolute sum will be either the max sum or the min sum.",
+    "So just run kadane twice, once calculating the max sum and once calculating the min sum."
+  ],
+  "code_snippets": {
+    "cpp": "class Solution {\npublic:\n    int maxAbsoluteSum(vector<int>& nums) {\n        \n    }\n};",
+    "java": "class Solution {\n    public int maxAbsoluteSum(int[] nums) {\n        \n    }\n}",
+    "python3": "class Solution:\n    def maxAbsoluteSum(self, nums: List[int]) -> int:\n        ",
+    "javascript": "/**\n * @param {number[]} nums\n * @return {number}\n */\nvar maxAbsoluteSum = function(nums) {\n    \n};",
+    "typescript": "function maxAbsoluteSum(nums: number[]): number {\n    \n};",
+    "golang": "func maxAbsoluteSum(nums []int) int {\n    \n}",
+    "rust": "impl Solution {\n    pub fn max_absolute_sum(nums: Vec<i32>) -> i32 {\n        \n    }\n}"
+  },
+  "entry_points": {
+    "python3": "Solution().maxAbsoluteSum",
+    "cpp": "Solution().maxAbsoluteSum",
+    "java": "new Solution().maxAbsoluteSum",
+    "javascript": "maxAbsoluteSum",
+    "typescript": "maxAbsoluteSum",
+    "golang": "maxAbsoluteSum",
+    "rust": "Solution::max_absolute_sum"
+  },
+  "test_snippets": {
+    "python3": "def check(candidate):\n    assert candidate(nums = [1,-1,1,-1,1,-1]) == 1\n    assert candidate(nums = [1]) == 1\n    assert candidate(nums = [-10000,10000,-10000,10000]) == 10000\n    assert candidate(nums = [1,-3,2,3,-4]) == 5\n    assert candidate(nums = [0]) == 0\n    assert candidate(nums = [2,-5,1,-4,3,-2]) == 8\n    assert candidate(nums = [10000,-10000,10000,-10000,10000]) == 10000\n    assert candidate(nums = [-1,-2,-3,-4,-5]) == 15\n    assert candidate(nums = [0,0,0,0,0]) == 0\n    assert candidate(nums = [-1]) == 1\n    assert candidate(nums = [1,2,3,4,5]) == 15\n    assert candidate(nums = [-10000,10000,-10000,10000,-10000]) == 10000\n    assert candidate(nums = [0, 1, -1, 2, -2, 3, -3, 4, -4, 5, -5, 6, -6, 7, -7, 8, -8, 9, -9, 10]) == 10\n    assert candidate(nums = [1, 2, 3, 4, 5, -15, 6, 7, 8, 9, 10, -25, 11, 12, 13, 14, 15]) == 80\n    assert candidate(nums = [10, 20, -30, 40, -50, 60, -70, 80, -90, 100]) == 100\n    assert candidate(nums = [5,1,-2,4,-1,-3,6,-2,1]) == 10\n    assert candidate(nums = [1,2,3,4,5,6,7,8,9,10]) == 55\n    assert candidate(nums = [-100, 101, -102, 103, -104, 105, -106, 107]) == 107\n    assert candidate(nums = [100, -50, 25, -10, 5, -2, 1]) == 100\n    assert candidate(nums = [-1, -2, -3, -4, -5, 5, 4, 3, 2, 1, -1, -2, -3, -4, -5, 5, 4, 3, 2, 1]) == 15\n    assert candidate(nums = [5, -1, 3, -2, 4, -3, 6, -4, 7, -5]) == 15\n    assert candidate(nums = [1000, -500, 250, -125, 62, -31, 15, -7, 3, -1]) == 1000\n    assert candidate(nums = [100, -200, 300, -400, 500, -600, 700, -800, 900, -1000]) == 1000\n    assert candidate(nums = [1, 2, 3, -6, 1, 2, 3, -6, 1, 2, 3, -6]) == 6\n    assert candidate(nums = [5000, 4000, 3000, 2000, 1000, -5000, -4000, -3000, -2000, -1000]) == 15000\n    assert candidate(nums = [10000, 0, 0, 0, 0, 0, 0, 0, 0, 0, -10000]) == 10000\n    assert candidate(nums = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, -55]) == 55\n    assert candidate(nums = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, -1, -2, -3, -4, -5, -6, -7, -8, -9, -10]) == 55\n    assert candidate(nums = [43, 44, -87, 45, 46, 47, -135, 48, 49, 50, 51, -195, 52, 53, 54, 55, 56, -260, 57, 58]) == 276\n    assert candidate(nums = [100, -100, 200, -200, 300, -300, 400, -400, 500, -500]) == 500\n    assert candidate(nums = [1, 2, 3, 4, 5, -5, -4, -3, -2, -1, 1, 2, 3, 4, 5, -5, -4, -3, -2, -1]) == 15\n    assert candidate(nums = [10, 20, 30, -60, 40, 50, -100, 60, 70, 80, -230, 90, 100, 110, -340, 120]) == 340\n    assert candidate(nums = [-5,-4,-3,-2,-1,1,2,3,4,5]) == 15\n    assert candidate(nums = [5000, -1200, 3000, -1500, 2000, -1000, 4000]) == 10300\n    assert candidate(nums = [1, -2, 3, -4, 5, -6, 7, -8, 9, -10, 11, -12, 13, -14, 15, -16, 17, -18, 19, -20]) == 20\n    assert candidate(nums = [10000, -9999, 10000, -9999, 10000, -9999, 10000, -9999]) == 10003\n    assert candidate(nums = [-1, 2, -3, 4, -5, 6, -7, 8, -9, 10, -11, 12, -13, 14, -15, 16, -17, 18, -19, 20]) == 20\n    assert candidate(nums = [5, -1, 4, -2, 3, -3, 2, -2, 1, -1, 0, 1, -1, 2, -2, 3, -3, 4, -4, 5]) == 11\n    assert candidate(nums = [-1, 1, -1, 1, -1, 1, -1, 1, -1, 1]) == 1\n    assert candidate(nums = [-5, 10, -15, 20, -25, 30, -35, 40]) == 40\n    assert candidate(nums = [1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1, -1]) == 1\n    assert candidate(nums = [-5, 4, -3, 7, -8, 2, -6, 1, 9, -4]) == 12\n    assert candidate(nums = [26, -27, 28, -29, 30, -31, 32, -33, 34, -35, 36, -37, 38, -39, 40, -41, 42, -43, 44, -45, 46, -47, 48, -49, 50]) == 50\n    assert candidate(nums = [10, -3, 20, -40, 50, -60, 70, -80, 90]) == 90\n    assert candidate(nums = [10, -10, 20, -20, 30, -30, 40, -40, 50, -50]) == 50\n    assert candidate(nums = [-1, 2, -3, 4, -5, 6, -7, 8, -9, 10, -11, 12, -13, 14, -15, 16]) == 16\n    assert candidate(nums = [-10, 20, -30, 40, -50, 60, -70, 80, -90, 100, -110, 120, -130, 140, -150, 160, -170, 180, -190, 200]) == 200\n    assert candidate(nums = [1, -10, 100, -1000, 10000, -100000, 1000000, -10000000, 100000000, -1000000000]) == 1000000000\n    assert candidate(nums = [23, -24, 25, -26, 27, -28, 29, -30, 31, -32, 33, -34, 35, -36, 37, -38, 39, -40, 41, -42]) == 42\n    assert candidate(nums = [1, -100, 100, -50, 50, -25, 25, -12, 12, -6, 6]) == 100\n    assert candidate(nums = [2, 3, -5, 4, 2, 3, -4, 5, -6, 7, -8, 9, -10, 11, -12]) == 13\n    assert candidate(nums = [10,-20,30,-40,50,-60,70,-80,90,-100]) == 100\n    assert candidate(nums = [100, -100, 200, -200, 300, -300, 400, -400]) == 400\n    assert candidate(nums = [1, 2, 3, 4, 5, -1, -2, -3, -4, -5]) == 15\n    assert candidate(nums = [0, 1, -1, 2, -2, 3, -3, 4, -4, 5, -5]) == 5\n    assert candidate(nums = [0, 1, -1, 2, -2, 3, -3, 4, -4, 5, -5, 6, -6, 7, -7]) == 7\n    assert candidate(nums = [5000, -2000, 1500, -1000, 800, -700, 600, -500, 400, -300]) == 5000\n    assert candidate(nums = [-10000, -10000, 20000, -10000, -10000, 20000, -10000, -10000, 20000, -10000, -10000, 20000]) == 20000\n    assert candidate(nums = [-3000, 4500, -5000, 6000, -7000, 8000, -9000]) == 9000\n    assert candidate(nums = [-100, 200, -300, 400, -500, 600, -700, 800, -900, 1000]) == 1000\n    assert candidate(nums = [500, -500, 500, -500, 500, -500, 500, -500, 500, -500]) == 500\n    assert candidate(nums = [1, -2, 3, -4, 5, -6, 7, -8, 9, -10, 11, -12, 13]) == 13\n    assert candidate(nums = [0, -1, 2, -3, 4, -5, 6, -7, 8, -9, 10, -11, 12, -13, 14, -15, 16, -17, 18, -19, 20]) == 20\n    assert candidate(nums = [1, 2, -3, 4, -5, 6, -7, 8, -9, 10]) == 10\n    assert candidate(nums = [1, -1, 2, -2, 3, -3, 4, -4, 5, -5, 6, -6, 7, -7, 8, -8, 9, -9, 10, -10]) == 10\n    assert candidate(nums = [3,2,1,0,-1,-2,-3,0,3,2,1,0,-1,-2,-3]) == 6\n    assert candidate(nums = [9999, -9998, 9997, -9996, 9995, -9994, 9993, -9992, 9991, -9990]) == 9999\n    assert candidate(nums = [1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1]) == 1\n    assert candidate(nums = [10000, 9000, 8000, -7000, -6000, -5000, 4000, 3000, 2000, -1000]) == 27000\n    assert candidate(nums = [10000, 10000, -20000, 10000, 10000, -20000, 10000, 10000, -20000, 10000, 10000, -20000]) == 20000\n    assert candidate(nums = [1, -2, 3, -4, 5, -6, 7, -8, 9, -10]) == 10\n    assert candidate(nums = [5,-5,5,-5,5,-5,5,-5,5,-5,5,-5,5,-5,5,-5,5,-5,5,-5]) == 5\n    assert candidate(nums = [5, -1, 3, -2, 7, -8, 2, -6, 4]) == 12\n    assert candidate(nums = [100, 200, 300, -600, 400, 500, -1400, 600, 700, 800, 900, 1000]) == 4000\n    assert candidate(nums = [-10, -20, -30, 60, -40, -50, 100, -60, -70, -80, 230, -90, -100, -110, 340, -120]) == 340\n    assert candidate(nums = [-100, -200, -300, -400, -500, 1500, -600, -700, -800, -900, -1000]) == 4000\n    assert candidate(nums = [-100, -200, -300, -400, -500, -600, -700, -800, -900, -1000, 100, 200, 300, 400, 500]) == 5500\n    assert candidate(nums = [5, -1, 4, -2, 3, -3, 2, -4, 1, -5, 0, 6, -6, 7, -7, 8, -8, 9, -9, 10]) == 10\n    assert candidate(nums = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]) == 210\n    assert candidate(nums = [100, -200, 300, -400, 500, -600, 700, -800, 900, -1000, 100, -200, 300, -400, 500]) == 1200\n    assert candidate(nums = [9000, 9000, -18000, 9000, 9000, -18000, 9000, 9000]) == 18000\n    assert candidate(nums = [1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1]) == 1\n    assert candidate(nums = [10000, -9000, 8000, -7000, 6000, -5000, 4000, -3000, 2000, -1000]) == 10000\n    assert candidate(nums = [-1, 1, -2, 2, -3, 3, -4, 4, -5, 5, -6, 6, -7, 7, -8, 8, -9, 9, -10, 10]) == 10\n    assert candidate(nums = [-5000, 6000, -7000, 8000, -9000, 10000, -11000, 12000, -13000, 14000]) == 14000\n    assert candidate(nums = [-1, 2, -3, 4, -5, 6, -7, 8, -9, 10]) == 10\n    assert candidate(nums = [-5000, 5000, 0, -5000, 5000, 0, -5000, 5000, 0]) == 5000\n    assert candidate(nums = [1, 2, 3, 4, 5, -5, -4, -3, -2, -1]) == 15\n    assert candidate(nums = [10000,-10000,10000,-10000,10000,-10000]) == 10000\n    assert candidate(nums = [1, -2, 3, -4, 5, -6, 7, -8, 9, -10, 11, -12, 13, -14, 15, -16, 17, -18, 19, 20, -21, 22, -23, 24, -25]) == 41\n    assert candidate(nums = [5000, -2000, 1000, -500, 250, -125, 62, -31, 15, -7, 3, -1]) == 5000\n    assert candidate(nums = [10000, 10000, 10000, -10000, -10000, -10000, 10000]) == 30000\n    assert candidate(nums = [1,-1,1,-1,1,-1,1,-1,1,-1]) == 1\n    assert candidate(nums = [1, 2, 3, 4, 5, -15, 6, 7, 8, 9, 10]) == 40\n    assert candidate(nums = [1000, -2000, 3000, -4000, 5000]) == 5000\n    assert candidate(nums = [100, 200, 300, 400, 500, -1500, 600, 700, 800, 900, 1000]) == 4000\n    assert candidate(nums = [-9999, 9998, -9997, 9996, -9995, 9994]) == 9999\n    assert candidate(nums = [1, -1, 2, -2, 3, -3, 4, -4, 5, -5]) == 5\n    assert candidate(nums = [-20, 19, -18, 17, -16, 15, -14, 13, -12, 11, -10, 9, -8, 7, -6, 5, -4, 3, -2, 1]) == 20\n    assert candidate(nums = [100,-1,200,-2,300,-3,400,-4,500,-5]) == 1490\n    assert candidate(nums = [1, -1, 1, -1, 1, -1, 1, -1, 1, -1]) == 1\n    assert candidate(nums = [-1,0,1,-1,0,1,-1,0,1,-1,0,1,-1,0,1]) == 1\n    assert candidate(nums = [1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1, -1]) == 1\n    assert candidate(nums = [-10, 20, -30, 40, -50, 60, -70, 80, -90, 100, -110]) == 110\n    assert candidate(nums = [1, -2, 3, -4, 5, -6, 7, -8, 9, -10, 11, -12, 13, -14, 15]) == 15\n    assert candidate(nums = [1, -2, 3, -4, 5, -6, 7, -8, 9, -10, 11, -12, 13, -14, 15, -16, 17, -18, 19, 20, -21, 22]) == 40\n    assert candidate(nums = [10000, -9999, 9998, -9997, 9996, -9995, 9994, -9993, 9992, -9991]) == 10000\n    assert candidate(nums = [5, -3, 8, -1, 4, -7, 9, -2, 6, -10]) == 19\n    assert candidate(nums = [10000, -9999, 9998, -9997, 9996, -9995, 9994]) == 10000\n    assert candidate(nums = [5, -3, 8, -6, 2, -4, 7, -9, 1, -1]) == 10",
+    "cpp": "void check(Solution& solution) {\n    assert(solution.maxAbsoluteSum({1,-1,1,-1,1,-1}) == vector<int>1);\n    assert(solution.maxAbsoluteSum({1}) == vector<int>1);\n    assert(solution.maxAbsoluteSum({-10000,10000,-10000,10000}) == vector<int>10000);\n    assert(solution.maxAbsoluteSum({1,-3,2,3,-4}) == vector<int>5);\n    assert(solution.maxAbsoluteSum({0}) == vector<int>0);\n    assert(solution.maxAbsoluteSum({2,-5,1,-4,3,-2}) == vector<int>8);\n    assert(solution.maxAbsoluteSum({10000,-10000,10000,-10000,10000}) == vector<int>10000);\n    assert(solution.maxAbsoluteSum({-1,-2,-3,-4,-5}) == vector<int>15);\n    assert(solution.maxAbsoluteSum({0,0,0,0,0}) == vector<int>0);\n    assert(solution.maxAbsoluteSum({-1}) == vector<int>1);\n    assert(solution.maxAbsoluteSum({1,2,3,4,5}) == vector<int>15);\n    assert(solution.maxAbsoluteSum({-10000,10000,-10000,10000,-10000}) == vector<int>10000);\n    assert(solution.maxAbsoluteSum({0, 1, -1, 2, -2, 3, -3, 4, -4, 5, -5, 6, -6, 7, -7, 8, -8, 9, -9, 10}) == vector<int>10);\n    assert(solution.maxAbsoluteSum({1, 2, 3, 4, 5, -15, 6, 7, 8, 9, 10, -25, 11, 12, 13, 14, 15}) == vector<int>80);\n    assert(solution.maxAbsoluteSum({10, 20, -30, 40, -50, 60, -70, 80, -90, 100}) == vector<int>100);\n    assert(solution.maxAbsoluteSum({5,1,-2,4,-1,-3,6,-2,1}) == vector<int>10);\n    assert(solution.maxAbsoluteSum({1,2,3,4,5,6,7,8,9,10}) == vector<int>55);\n    assert(solution.maxAbsoluteSum({-100, 101, -102, 103, -104, 105, -106, 107}) == vector<int>107);\n    assert(solution.maxAbsoluteSum({100, -50, 25, -10, 5, -2, 1}) == vector<int>100);\n    assert(solution.maxAbsoluteSum({-1, -2, -3, -4, -5, 5, 4, 3, 2, 1, -1, -2, -3, -4, -5, 5, 4, 3, 2, 1}) == vector<int>15);\n    assert(solution.maxAbsoluteSum({5, -1, 3, -2, 4, -3, 6, -4, 7, -5}) == vector<int>15);\n    assert(solution.maxAbsoluteSum({1000, -500, 250, -125, 62, -31, 15, -7, 3, -1}) == vector<int>1000);\n    assert(solution.maxAbsoluteSum({100, -200, 300, -400, 500, -600, 700, -800, 900, -1000}) == vector<int>1000);\n    assert(solution.maxAbsoluteSum({1, 2, 3, -6, 1, 2, 3, -6, 1, 2, 3, -6}) == vector<int>6);\n    assert(solution.maxAbsoluteSum({5000, 4000, 3000, 2000, 1000, -5000, -4000, -3000, -2000, -1000}) == vector<int>15000);\n    assert(solution.maxAbsoluteSum({10000, 0, 0, 0, 0, 0, 0, 0, 0, 0, -10000}) == vector<int>10000);\n    assert(solution.maxAbsoluteSum({0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, -55}) == vector<int>55);\n    assert(solution.maxAbsoluteSum({1, 2, 3, 4, 5, 6, 7, 8, 9, 10, -1, -2, -3, -4, -5, -6, -7, -8, -9, -10}) == vector<int>55);\n    assert(solution.maxAbsoluteSum({43, 44, -87, 45, 46, 47, -135, 48, 49, 50, 51, -195, 52, 53, 54, 55, 56, -260, 57, 58}) == vector<int>276);\n    assert(solution.maxAbsoluteSum({100, -100, 200, -200, 300, -300, 400, -400, 500, -500}) == vector<int>500);\n    assert(solution.maxAbsoluteSum({1, 2, 3, 4, 5, -5, -4, -3, -2, -1, 1, 2, 3, 4, 5, -5, -4, -3, -2, -1}) == vector<int>15);\n    assert(solution.maxAbsoluteSum({10, 20, 30, -60, 40, 50, -100, 60, 70, 80, -230, 90, 100, 110, -340, 120}) == vector<int>340);\n    assert(solution.maxAbsoluteSum({-5,-4,-3,-2,-1,1,2,3,4,5}) == vector<int>15);\n    assert(solution.maxAbsoluteSum({5000, -1200, 3000, -1500, 2000, -1000, 4000}) == vector<int>10300);\n    assert(solution.maxAbsoluteSum({1, -2, 3, -4, 5, -6, 7, -8, 9, -10, 11, -12, 13, -14, 15, -16, 17, -18, 19, -20}) == vector<int>20);\n    assert(solution.maxAbsoluteSum({10000, -9999, 10000, -9999, 10000, -9999, 10000, -9999}) == vector<int>10003);\n    assert(solution.maxAbsoluteSum({-1, 2, -3, 4, -5, 6, -7, 8, -9, 10, -11, 12, -13, 14, -15, 16, -17, 18, -19, 20}) == vector<int>20);\n    assert(solution.maxAbsoluteSum({5, -1, 4, -2, 3, -3, 2, -2, 1, -1, 0, 1, -1, 2, -2, 3, -3, 4, -4, 5}) == vector<int>11);\n    assert(solution.maxAbsoluteSum({-1, 1, -1, 1, -1, 1, -1, 1, -1, 1}) == vector<int>1);\n    assert(solution.maxAbsoluteSum({-5, 10, -15, 20, -25, 30, -35, 40}) == vector<int>40);\n    assert(solution.maxAbsoluteSum({1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1, -1}) == vector<int>1);\n    assert(solution.maxAbsoluteSum({-5, 4, -3, 7, -8, 2, -6, 1, 9, -4}) == vector<int>12);\n    assert(solution.maxAbsoluteSum({26, -27, 28, -29, 30, -31, 32, -33, 34, -35, 36, -37, 38, -39, 40, -41, 42, -43, 44, -45, 46, -47, 48, -49, 50}) == vector<int>50);\n    assert(solution.maxAbsoluteSum({10, -3, 20, -40, 50, -60, 70, -80, 90}) == vector<int>90);\n    assert(solution.maxAbsoluteSum({10, -10, 20, -20, 30, -30, 40, -40, 50, -50}) == vector<int>50);\n    assert(solution.maxAbsoluteSum({-1, 2, -3, 4, -5, 6, -7, 8, -9, 10, -11, 12, -13, 14, -15, 16}) == vector<int>16);\n    assert(solution.maxAbsoluteSum({-10, 20, -30, 40, -50, 60, -70, 80, -90, 100, -110, 120, -130, 140, -150, 160, -170, 180, -190, 200}) == vector<int>200);\n    assert(solution.maxAbsoluteSum({1, -10, 100, -1000, 10000, -100000, 1000000, -10000000, 100000000, -1000000000}) == vector<int>1000000000);\n    assert(solution.maxAbsoluteSum({23, -24, 25, -26, 27, -28, 29, -30, 31, -32, 33, -34, 35, -36, 37, -38, 39, -40, 41, -42}) == vector<int>42);\n    assert(solution.maxAbsoluteSum({1, -100, 100, -50, 50, -25, 25, -12, 12, -6, 6}) == vector<int>100);\n    assert(solution.maxAbsoluteSum({2, 3, -5, 4, 2, 3, -4, 5, -6, 7, -8, 9, -10, 11, -12}) == vector<int>13);\n    assert(solution.maxAbsoluteSum({10,-20,30,-40,50,-60,70,-80,90,-100}) == vector<int>100);\n    assert(solution.maxAbsoluteSum({100, -100, 200, -200, 300, -300, 400, -400}) == vector<int>400);\n    assert(solution.maxAbsoluteSum({1, 2, 3, 4, 5, -1, -2, -3, -4, -5}) == vector<int>15);\n    assert(solution.maxAbsoluteSum({0, 1, -1, 2, -2, 3, -3, 4, -4, 5, -5}) == vector<int>5);\n    assert(solution.maxAbsoluteSum({0, 1, -1, 2, -2, 3, -3, 4, -4, 5, -5, 6, -6, 7, -7}) == vector<int>7);\n    assert(solution.maxAbsoluteSum({5000, -2000, 1500, -1000, 800, -700, 600, -500, 400, -300}) == vector<int>5000);\n    assert(solution.maxAbsoluteSum({-10000, -10000, 20000, -10000, -10000, 20000, -10000, -10000, 20000, -10000, -10000, 20000}) == vector<int>20000);\n    assert(solution.maxAbsoluteSum({-3000, 4500, -5000, 6000, -7000, 8000, -9000}) == vector<int>9000);\n    assert(solution.maxAbsoluteSum({-100, 200, -300, 400, -500, 600, -700, 800, -900, 1000}) == vector<int>1000);\n    assert(solution.maxAbsoluteSum({500, -500, 500, -500, 500, -500, 500, -500, 500, -500}) == vector<int>500);\n    assert(solution.maxAbsoluteSum({1, -2, 3, -4, 5, -6, 7, -8, 9, -10, 11, -12, 13}) == vector<int>13);\n    assert(solution.maxAbsoluteSum({0, -1, 2, -3, 4, -5, 6, -7, 8, -9, 10, -11, 12, -13, 14, -15, 16, -17, 18, -19, 20}) == vector<int>20);\n    assert(solution.maxAbsoluteSum({1, 2, -3, 4, -5, 6, -7, 8, -9, 10}) == vector<int>10);\n    assert(solution.maxAbsoluteSum({1, -1, 2, -2, 3, -3, 4, -4, 5, -5, 6, -6, 7, -7, 8, -8, 9, -9, 10, -10}) == vector<int>10);\n    assert(solution.maxAbsoluteSum({3,2,1,0,-1,-2,-3,0,3,2,1,0,-1,-2,-3}) == vector<int>6);\n    assert(solution.maxAbsoluteSum({9999, -9998, 9997, -9996, 9995, -9994, 9993, -9992, 9991, -9990}) == vector<int>9999);\n    assert(solution.maxAbsoluteSum({1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1}) == vector<int>1);\n    assert(solution.maxAbsoluteSum({10000, 9000, 8000, -7000, -6000, -5000, 4000, 3000, 2000, -1000}) == vector<int>27000);\n    assert(solution.maxAbsoluteSum({10000, 10000, -20000, 10000, 10000, -20000, 10000, 10000, -20000, 10000, 10000, -20000}) == vector<int>20000);\n    assert(solution.maxAbsoluteSum({1, -2, 3, -4, 5, -6, 7, -8, 9, -10}) == vector<int>10);\n    assert(solution.maxAbsoluteSum({5,-5,5,-5,5,-5,5,-5,5,-5,5,-5,5,-5,5,-5,5,-5,5,-5}) == vector<int>5);\n    assert(solution.maxAbsoluteSum({5, -1, 3, -2, 7, -8, 2, -6, 4}) == vector<int>12);\n    assert(solution.maxAbsoluteSum({100, 200, 300, -600, 400, 500, -1400, 600, 700, 800, 900, 1000}) == vector<int>4000);\n    assert(solution.maxAbsoluteSum({-10, -20, -30, 60, -40, -50, 100, -60, -70, -80, 230, -90, -100, -110, 340, -120}) == vector<int>340);\n    assert(solution.maxAbsoluteSum({-100, -200, -300, -400, -500, 1500, -600, -700, -800, -900, -1000}) == vector<int>4000);\n    assert(solution.maxAbsoluteSum({-100, -200, -300, -400, -500, -600, -700, -800, -900, -1000, 100, 200, 300, 400, 500}) == vector<int>5500);\n    assert(solution.maxAbsoluteSum({5, -1, 4, -2, 3, -3, 2, -4, 1, -5, 0, 6, -6, 7, -7, 8, -8, 9, -9, 10}) == vector<int>10);\n    assert(solution.maxAbsoluteSum({1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20}) == vector<int>210);\n    assert(solution.maxAbsoluteSum({100, -200, 300, -400, 500, -600, 700, -800, 900, -1000, 100, -200, 300, -400, 500}) == vector<int>1200);\n    assert(solution.maxAbsoluteSum({9000, 9000, -18000, 9000, 9000, -18000, 9000, 9000}) == vector<int>18000);\n    assert(solution.maxAbsoluteSum({1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1}) == vector<int>1);\n    assert(solution.maxAbsoluteSum({10000, -9000, 8000, -7000, 6000, -5000, 4000, -3000, 2000, -1000}) == vector<int>10000);\n    assert(solution.maxAbsoluteSum({-1, 1, -2, 2, -3, 3, -4, 4, -5, 5, -6, 6, -7, 7, -8, 8, -9, 9, -10, 10}) == vector<int>10);\n    assert(solution.maxAbsoluteSum({-5000, 6000, -7000, 8000, -9000, 10000, -11000, 12000, -13000, 14000}) == vector<int>14000);\n    assert(solution.maxAbsoluteSum({-1, 2, -3, 4, -5, 6, -7, 8, -9, 10}) == vector<int>10);\n    assert(solution.maxAbsoluteSum({-5000, 5000, 0, -5000, 5000, 0, -5000, 5000, 0}) == vector<int>5000);\n    assert(solution.maxAbsoluteSum({1, 2, 3, 4, 5, -5, -4, -3, -2, -1}) == vector<int>15);\n    assert(solution.maxAbsoluteSum({10000,-10000,10000,-10000,10000,-10000}) == vector<int>10000);\n    assert(solution.maxAbsoluteSum({1, -2, 3, -4, 5, -6, 7, -8, 9, -10, 11, -12, 13, -14, 15, -16, 17, -18, 19, 20, -21, 22, -23, 24, -25}) == vector<int>41);\n    assert(solution.maxAbsoluteSum({5000, -2000, 1000, -500, 250, -125, 62, -31, 15, -7, 3, -1}) == vector<int>5000);\n    assert(solution.maxAbsoluteSum({10000, 10000, 10000, -10000, -10000, -10000, 10000}) == vector<int>30000);\n    assert(solution.maxAbsoluteSum({1,-1,1,-1,1,-1,1,-1,1,-1}) == vector<int>1);\n    assert(solution.maxAbsoluteSum({1, 2, 3, 4, 5, -15, 6, 7, 8, 9, 10}) == vector<int>40);\n    assert(solution.maxAbsoluteSum({1000, -2000, 3000, -4000, 5000}) == vector<int>5000);\n    assert(solution.maxAbsoluteSum({100, 200, 300, 400, 500, -1500, 600, 700, 800, 900, 1000}) == vector<int>4000);\n    assert(solution.maxAbsoluteSum({-9999, 9998, -9997, 9996, -9995, 9994}) == vector<int>9999);\n    assert(solution.maxAbsoluteSum({1, -1, 2, -2, 3, -3, 4, -4, 5, -5}) == vector<int>5);\n    assert(solution.maxAbsoluteSum({-20, 19, -18, 17, -16, 15, -14, 13, -12, 11, -10, 9, -8, 7, -6, 5, -4, 3, -2, 1}) == vector<int>20);\n    assert(solution.maxAbsoluteSum({100,-1,200,-2,300,-3,400,-4,500,-5}) == vector<int>1490);\n    assert(solution.maxAbsoluteSum({1, -1, 1, -1, 1, -1, 1, -1, 1, -1}) == vector<int>1);\n    assert(solution.maxAbsoluteSum({-1,0,1,-1,0,1,-1,0,1,-1,0,1,-1,0,1}) == vector<int>1);\n    assert(solution.maxAbsoluteSum({1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1, -1}) == vector<int>1);\n    assert(solution.maxAbsoluteSum({-10, 20, -30, 40, -50, 60, -70, 80, -90, 100, -110}) == vector<int>110);\n    assert(solution.maxAbsoluteSum({1, -2, 3, -4, 5, -6, 7, -8, 9, -10, 11, -12, 13, -14, 15}) == vector<int>15);\n    assert(solution.maxAbsoluteSum({1, -2, 3, -4, 5, -6, 7, -8, 9, -10, 11, -12, 13, -14, 15, -16, 17, -18, 19, 20, -21, 22}) == vector<int>40);\n    assert(solution.maxAbsoluteSum({10000, -9999, 9998, -9997, 9996, -9995, 9994, -9993, 9992, -9991}) == vector<int>10000);\n    assert(solution.maxAbsoluteSum({5, -3, 8, -1, 4, -7, 9, -2, 6, -10}) == vector<int>19);\n    assert(solution.maxAbsoluteSum({10000, -9999, 9998, -9997, 9996, -9995, 9994}) == vector<int>10000);\n    assert(solution.maxAbsoluteSum({5, -3, 8, -6, 2, -4, 7, -9, 1, -1}) == vector<int>10);\n}",
+    "java": "public static void check(Solution solution) {\n    assert Arrays.equals(solution.maxAbsoluteSum(new int[]{1,-1,1,-1,1,-1}), 1);\n    assert Arrays.equals(solution.maxAbsoluteSum(new int[]{1}), 1);\n    assert Arrays.equals(solution.maxAbsoluteSum(new int[]{-10000,10000,-10000,10000}), 10000);\n    assert Arrays.equals(solution.maxAbsoluteSum(new int[]{1,-3,2,3,-4}), 5);\n    assert Arrays.equals(solution.maxAbsoluteSum(new int[]{0}), 0);\n    assert Arrays.equals(solution.maxAbsoluteSum(new int[]{2,-5,1,-4,3,-2}), 8);\n    assert Arrays.equals(solution.maxAbsoluteSum(new int[]{10000,-10000,10000,-10000,10000}), 10000);\n    assert Arrays.equals(solution.maxAbsoluteSum(new int[]{-1,-2,-3,-4,-5}), 15);\n    assert Arrays.equals(solution.maxAbsoluteSum(new int[]{0,0,0,0,0}), 0);\n    assert Arrays.equals(solution.maxAbsoluteSum(new int[]{-1}), 1);\n    assert Arrays.equals(solution.maxAbsoluteSum(new int[]{1,2,3,4,5}), 15);\n    assert Arrays.equals(solution.maxAbsoluteSum(new int[]{-10000,10000,-10000,10000,-10000}), 10000);\n    assert Arrays.equals(solution.maxAbsoluteSum(new int[]{0, 1, -1, 2, -2, 3, -3, 4, -4, 5, -5, 6, -6, 7, -7, 8, -8, 9, -9, 10}), 10);\n    assert Arrays.equals(solution.maxAbsoluteSum(new int[]{1, 2, 3, 4, 5, -15, 6, 7, 8, 9, 10, -25, 11, 12, 13, 14, 15}), 80);\n    assert Arrays.equals(solution.maxAbsoluteSum(new int[]{10, 20, -30, 40, -50, 60, -70, 80, -90, 100}), 100);\n    assert Arrays.equals(solution.maxAbsoluteSum(new int[]{5,1,-2,4,-1,-3,6,-2,1}), 10);\n    assert Arrays.equals(solution.maxAbsoluteSum(new int[]{1,2,3,4,5,6,7,8,9,10}), 55);\n    assert Arrays.equals(solution.maxAbsoluteSum(new int[]{-100, 101, -102, 103, -104, 105, -106, 107}), 107);\n    assert Arrays.equals(solution.maxAbsoluteSum(new int[]{100, -50, 25, -10, 5, -2, 1}), 100);\n    assert Arrays.equals(solution.maxAbsoluteSum(new int[]{-1, -2, -3, -4, -5, 5, 4, 3, 2, 1, -1, -2, -3, -4, -5, 5, 4, 3, 2, 1}), 15);\n    assert Arrays.equals(solution.maxAbsoluteSum(new int[]{5, -1, 3, -2, 4, -3, 6, -4, 7, -5}), 15);\n    assert Arrays.equals(solution.maxAbsoluteSum(new int[]{1000, -500, 250, -125, 62, -31, 15, -7, 3, -1}), 1000);\n    assert Arrays.equals(solution.maxAbsoluteSum(new int[]{100, -200, 300, -400, 500, -600, 700, -800, 900, -1000}), 1000);\n    assert Arrays.equals(solution.maxAbsoluteSum(new int[]{1, 2, 3, -6, 1, 2, 3, -6, 1, 2, 3, -6}), 6);\n    assert Arrays.equals(solution.maxAbsoluteSum(new int[]{5000, 4000, 3000, 2000, 1000, -5000, -4000, -3000, -2000, -1000}), 15000);\n    assert Arrays.equals(solution.maxAbsoluteSum(new int[]{10000, 0, 0, 0, 0, 0, 0, 0, 0, 0, -10000}), 10000);\n    assert Arrays.equals(solution.maxAbsoluteSum(new int[]{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, -55}), 55);\n    assert Arrays.equals(solution.maxAbsoluteSum(new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, -1, -2, -3, -4, -5, -6, -7, -8, -9, -10}), 55);\n    assert Arrays.equals(solution.maxAbsoluteSum(new int[]{43, 44, -87, 45, 46, 47, -135, 48, 49, 50, 51, -195, 52, 53, 54, 55, 56, -260, 57, 58}), 276);\n    assert Arrays.equals(solution.maxAbsoluteSum(new int[]{100, -100, 200, -200, 300, -300, 400, -400, 500, -500}), 500);\n    assert Arrays.equals(solution.maxAbsoluteSum(new int[]{1, 2, 3, 4, 5, -5, -4, -3, -2, -1, 1, 2, 3, 4, 5, -5, -4, -3, -2, -1}), 15);\n    assert Arrays.equals(solution.maxAbsoluteSum(new int[]{10, 20, 30, -60, 40, 50, -100, 60, 70, 80, -230, 90, 100, 110, -340, 120}), 340);\n    assert Arrays.equals(solution.maxAbsoluteSum(new int[]{-5,-4,-3,-2,-1,1,2,3,4,5}), 15);\n    assert Arrays.equals(solution.maxAbsoluteSum(new int[]{5000, -1200, 3000, -1500, 2000, -1000, 4000}), 10300);\n    assert Arrays.equals(solution.maxAbsoluteSum(new int[]{1, -2, 3, -4, 5, -6, 7, -8, 9, -10, 11, -12, 13, -14, 15, -16, 17, -18, 19, -20}), 20);\n    assert Arrays.equals(solution.maxAbsoluteSum(new int[]{10000, -9999, 10000, -9999, 10000, -9999, 10000, -9999}), 10003);\n    assert Arrays.equals(solution.maxAbsoluteSum(new int[]{-1, 2, -3, 4, -5, 6, -7, 8, -9, 10, -11, 12, -13, 14, -15, 16, -17, 18, -19, 20}), 20);\n    assert Arrays.equals(solution.maxAbsoluteSum(new int[]{5, -1, 4, -2, 3, -3, 2, -2, 1, -1, 0, 1, -1, 2, -2, 3, -3, 4, -4, 5}), 11);\n    assert Arrays.equals(solution.maxAbsoluteSum(new int[]{-1, 1, -1, 1, -1, 1, -1, 1, -1, 1}), 1);\n    assert Arrays.equals(solution.maxAbsoluteSum(new int[]{-5, 10, -15, 20, -25, 30, -35, 40}), 40);\n    assert Arrays.equals(solution.maxAbsoluteSum(new int[]{1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1, -1}), 1);\n    assert Arrays.equals(solution.maxAbsoluteSum(new int[]{-5, 4, -3, 7, -8, 2, -6, 1, 9, -4}), 12);\n    assert Arrays.equals(solution.maxAbsoluteSum(new int[]{26, -27, 28, -29, 30, -31, 32, -33, 34, -35, 36, -37, 38, -39, 40, -41, 42, -43, 44, -45, 46, -47, 48, -49, 50}), 50);\n    assert Arrays.equals(solution.maxAbsoluteSum(new int[]{10, -3, 20, -40, 50, -60, 70, -80, 90}), 90);\n    assert Arrays.equals(solution.maxAbsoluteSum(new int[]{10, -10, 20, -20, 30, -30, 40, -40, 50, -50}), 50);\n    assert Arrays.equals(solution.maxAbsoluteSum(new int[]{-1, 2, -3, 4, -5, 6, -7, 8, -9, 10, -11, 12, -13, 14, -15, 16}), 16);\n    assert Arrays.equals(solution.maxAbsoluteSum(new int[]{-10, 20, -30, 40, -50, 60, -70, 80, -90, 100, -110, 120, -130, 140, -150, 160, -170, 180, -190, 200}), 200);\n    assert Arrays.equals(solution.maxAbsoluteSum(new int[]{1, -10, 100, -1000, 10000, -100000, 1000000, -10000000, 100000000, -1000000000}), 1000000000);\n    assert Arrays.equals(solution.maxAbsoluteSum(new int[]{23, -24, 25, -26, 27, -28, 29, -30, 31, -32, 33, -34, 35, -36, 37, -38, 39, -40, 41, -42}), 42);\n    assert Arrays.equals(solution.maxAbsoluteSum(new int[]{1, -100, 100, -50, 50, -25, 25, -12, 12, -6, 6}), 100);\n    assert Arrays.equals(solution.maxAbsoluteSum(new int[]{2, 3, -5, 4, 2, 3, -4, 5, -6, 7, -8, 9, -10, 11, -12}), 13);\n    assert Arrays.equals(solution.maxAbsoluteSum(new int[]{10,-20,30,-40,50,-60,70,-80,90,-100}), 100);\n    assert Arrays.equals(solution.maxAbsoluteSum(new int[]{100, -100, 200, -200, 300, -300, 400, -400}), 400);\n    assert Arrays.equals(solution.maxAbsoluteSum(new int[]{1, 2, 3, 4, 5, -1, -2, -3, -4, -5}), 15);\n    assert Arrays.equals(solution.maxAbsoluteSum(new int[]{0, 1, -1, 2, -2, 3, -3, 4, -4, 5, -5}), 5);\n    assert Arrays.equals(solution.maxAbsoluteSum(new int[]{0, 1, -1, 2, -2, 3, -3, 4, -4, 5, -5, 6, -6, 7, -7}), 7);\n    assert Arrays.equals(solution.maxAbsoluteSum(new int[]{5000, -2000, 1500, -1000, 800, -700, 600, -500, 400, -300}), 5000);\n    assert Arrays.equals(solution.maxAbsoluteSum(new int[]{-10000, -10000, 20000, -10000, -10000, 20000, -10000, -10000, 20000, -10000, -10000, 20000}), 20000);\n    assert Arrays.equals(solution.maxAbsoluteSum(new int[]{-3000, 4500, -5000, 6000, -7000, 8000, -9000}), 9000);\n    assert Arrays.equals(solution.maxAbsoluteSum(new int[]{-100, 200, -300, 400, -500, 600, -700, 800, -900, 1000}), 1000);\n    assert Arrays.equals(solution.maxAbsoluteSum(new int[]{500, -500, 500, -500, 500, -500, 500, -500, 500, -500}), 500);\n    assert Arrays.equals(solution.maxAbsoluteSum(new int[]{1, -2, 3, -4, 5, -6, 7, -8, 9, -10, 11, -12, 13}), 13);\n    assert Arrays.equals(solution.maxAbsoluteSum(new int[]{0, -1, 2, -3, 4, -5, 6, -7, 8, -9, 10, -11, 12, -13, 14, -15, 16, -17, 18, -19, 20}), 20);\n    assert Arrays.equals(solution.maxAbsoluteSum(new int[]{1, 2, -3, 4, -5, 6, -7, 8, -9, 10}), 10);\n    assert Arrays.equals(solution.maxAbsoluteSum(new int[]{1, -1, 2, -2, 3, -3, 4, -4, 5, -5, 6, -6, 7, -7, 8, -8, 9, -9, 10, -10}), 10);\n    assert Arrays.equals(solution.maxAbsoluteSum(new int[]{3,2,1,0,-1,-2,-3,0,3,2,1,0,-1,-2,-3}), 6);\n    assert Arrays.equals(solution.maxAbsoluteSum(new int[]{9999, -9998, 9997, -9996, 9995, -9994, 9993, -9992, 9991, -9990}), 9999);\n    assert Arrays.equals(solution.maxAbsoluteSum(new int[]{1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1}), 1);\n    assert Arrays.equals(solution.maxAbsoluteSum(new int[]{10000, 9000, 8000, -7000, -6000, -5000, 4000, 3000, 2000, -1000}), 27000);\n    assert Arrays.equals(solution.maxAbsoluteSum(new int[]{10000, 10000, -20000, 10000, 10000, -20000, 10000, 10000, -20000, 10000, 10000, -20000}), 20000);\n    assert Arrays.equals(solution.maxAbsoluteSum(new int[]{1, -2, 3, -4, 5, -6, 7, -8, 9, -10}), 10);\n    assert Arrays.equals(solution.maxAbsoluteSum(new int[]{5,-5,5,-5,5,-5,5,-5,5,-5,5,-5,5,-5,5,-5,5,-5,5,-5}), 5);\n    assert Arrays.equals(solution.maxAbsoluteSum(new int[]{5, -1, 3, -2, 7, -8, 2, -6, 4}), 12);\n    assert Arrays.equals(solution.maxAbsoluteSum(new int[]{100, 200, 300, -600, 400, 500, -1400, 600, 700, 800, 900, 1000}), 4000);\n    assert Arrays.equals(solution.maxAbsoluteSum(new int[]{-10, -20, -30, 60, -40, -50, 100, -60, -70, -80, 230, -90, -100, -110, 340, -120}), 340);\n    assert Arrays.equals(solution.maxAbsoluteSum(new int[]{-100, -200, -300, -400, -500, 1500, -600, -700, -800, -900, -1000}), 4000);\n    assert Arrays.equals(solution.maxAbsoluteSum(new int[]{-100, -200, -300, -400, -500, -600, -700, -800, -900, -1000, 100, 200, 300, 400, 500}), 5500);\n    assert Arrays.equals(solution.maxAbsoluteSum(new int[]{5, -1, 4, -2, 3, -3, 2, -4, 1, -5, 0, 6, -6, 7, -7, 8, -8, 9, -9, 10}), 10);\n    assert Arrays.equals(solution.maxAbsoluteSum(new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20}), 210);\n    assert Arrays.equals(solution.maxAbsoluteSum(new int[]{100, -200, 300, -400, 500, -600, 700, -800, 900, -1000, 100, -200, 300, -400, 500}), 1200);\n    assert Arrays.equals(solution.maxAbsoluteSum(new int[]{9000, 9000, -18000, 9000, 9000, -18000, 9000, 9000}), 18000);\n    assert Arrays.equals(solution.maxAbsoluteSum(new int[]{1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1}), 1);\n    assert Arrays.equals(solution.maxAbsoluteSum(new int[]{10000, -9000, 8000, -7000, 6000, -5000, 4000, -3000, 2000, -1000}), 10000);\n    assert Arrays.equals(solution.maxAbsoluteSum(new int[]{-1, 1, -2, 2, -3, 3, -4, 4, -5, 5, -6, 6, -7, 7, -8, 8, -9, 9, -10, 10}), 10);\n    assert Arrays.equals(solution.maxAbsoluteSum(new int[]{-5000, 6000, -7000, 8000, -9000, 10000, -11000, 12000, -13000, 14000}), 14000);\n    assert Arrays.equals(solution.maxAbsoluteSum(new int[]{-1, 2, -3, 4, -5, 6, -7, 8, -9, 10}), 10);\n    assert Arrays.equals(solution.maxAbsoluteSum(new int[]{-5000, 5000, 0, -5000, 5000, 0, -5000, 5000, 0}), 5000);\n    assert Arrays.equals(solution.maxAbsoluteSum(new int[]{1, 2, 3, 4, 5, -5, -4, -3, -2, -1}), 15);\n    assert Arrays.equals(solution.maxAbsoluteSum(new int[]{10000,-10000,10000,-10000,10000,-10000}), 10000);\n    assert Arrays.equals(solution.maxAbsoluteSum(new int[]{1, -2, 3, -4, 5, -6, 7, -8, 9, -10, 11, -12, 13, -14, 15, -16, 17, -18, 19, 20, -21, 22, -23, 24, -25}), 41);\n    assert Arrays.equals(solution.maxAbsoluteSum(new int[]{5000, -2000, 1000, -500, 250, -125, 62, -31, 15, -7, 3, -1}), 5000);\n    assert Arrays.equals(solution.maxAbsoluteSum(new int[]{10000, 10000, 10000, -10000, -10000, -10000, 10000}), 30000);\n    assert Arrays.equals(solution.maxAbsoluteSum(new int[]{1,-1,1,-1,1,-1,1,-1,1,-1}), 1);\n    assert Arrays.equals(solution.maxAbsoluteSum(new int[]{1, 2, 3, 4, 5, -15, 6, 7, 8, 9, 10}), 40);\n    assert Arrays.equals(solution.maxAbsoluteSum(new int[]{1000, -2000, 3000, -4000, 5000}), 5000);\n    assert Arrays.equals(solution.maxAbsoluteSum(new int[]{100, 200, 300, 400, 500, -1500, 600, 700, 800, 900, 1000}), 4000);\n    assert Arrays.equals(solution.maxAbsoluteSum(new int[]{-9999, 9998, -9997, 9996, -9995, 9994}), 9999);\n    assert Arrays.equals(solution.maxAbsoluteSum(new int[]{1, -1, 2, -2, 3, -3, 4, -4, 5, -5}), 5);\n    assert Arrays.equals(solution.maxAbsoluteSum(new int[]{-20, 19, -18, 17, -16, 15, -14, 13, -12, 11, -10, 9, -8, 7, -6, 5, -4, 3, -2, 1}), 20);\n    assert Arrays.equals(solution.maxAbsoluteSum(new int[]{100,-1,200,-2,300,-3,400,-4,500,-5}), 1490);\n    assert Arrays.equals(solution.maxAbsoluteSum(new int[]{1, -1, 1, -1, 1, -1, 1, -1, 1, -1}), 1);\n    assert Arrays.equals(solution.maxAbsoluteSum(new int[]{-1,0,1,-1,0,1,-1,0,1,-1,0,1,-1,0,1}), 1);\n    assert Arrays.equals(solution.maxAbsoluteSum(new int[]{1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1, -1}), 1);\n    assert Arrays.equals(solution.maxAbsoluteSum(new int[]{-10, 20, -30, 40, -50, 60, -70, 80, -90, 100, -110}), 110);\n    assert Arrays.equals(solution.maxAbsoluteSum(new int[]{1, -2, 3, -4, 5, -6, 7, -8, 9, -10, 11, -12, 13, -14, 15}), 15);\n    assert Arrays.equals(solution.maxAbsoluteSum(new int[]{1, -2, 3, -4, 5, -6, 7, -8, 9, -10, 11, -12, 13, -14, 15, -16, 17, -18, 19, 20, -21, 22}), 40);\n    assert Arrays.equals(solution.maxAbsoluteSum(new int[]{10000, -9999, 9998, -9997, 9996, -9995, 9994, -9993, 9992, -9991}), 10000);\n    assert Arrays.equals(solution.maxAbsoluteSum(new int[]{5, -3, 8, -1, 4, -7, 9, -2, 6, -10}), 19);\n    assert Arrays.equals(solution.maxAbsoluteSum(new int[]{10000, -9999, 9998, -9997, 9996, -9995, 9994}), 10000);\n    assert Arrays.equals(solution.maxAbsoluteSum(new int[]{5, -3, 8, -6, 2, -4, 7, -9, 1, -1}), 10);\n}",
+    "javascript": "function check(candidate) {\n    console.assert(JSON.stringify(candidate([1,-1,1,-1,1,-1])) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate([1])) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate([-10000,10000,-10000,10000])) === JSON.stringify(10000));\n    console.assert(JSON.stringify(candidate([1,-3,2,3,-4])) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate([0])) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate([2,-5,1,-4,3,-2])) === JSON.stringify(8));\n    console.assert(JSON.stringify(candidate([10000,-10000,10000,-10000,10000])) === JSON.stringify(10000));\n    console.assert(JSON.stringify(candidate([-1,-2,-3,-4,-5])) === JSON.stringify(15));\n    console.assert(JSON.stringify(candidate([0,0,0,0,0])) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate([-1])) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate([1,2,3,4,5])) === JSON.stringify(15));\n    console.assert(JSON.stringify(candidate([-10000,10000,-10000,10000,-10000])) === JSON.stringify(10000));\n    console.assert(JSON.stringify(candidate([0, 1, -1, 2, -2, 3, -3, 4, -4, 5, -5, 6, -6, 7, -7, 8, -8, 9, -9, 10])) === JSON.stringify(10));\n    console.assert(JSON.stringify(candidate([1, 2, 3, 4, 5, -15, 6, 7, 8, 9, 10, -25, 11, 12, 13, 14, 15])) === JSON.stringify(80));\n    console.assert(JSON.stringify(candidate([10, 20, -30, 40, -50, 60, -70, 80, -90, 100])) === JSON.stringify(100));\n    console.assert(JSON.stringify(candidate([5,1,-2,4,-1,-3,6,-2,1])) === JSON.stringify(10));\n    console.assert(JSON.stringify(candidate([1,2,3,4,5,6,7,8,9,10])) === JSON.stringify(55));\n    console.assert(JSON.stringify(candidate([-100, 101, -102, 103, -104, 105, -106, 107])) === JSON.stringify(107));\n    console.assert(JSON.stringify(candidate([100, -50, 25, -10, 5, -2, 1])) === JSON.stringify(100));\n    console.assert(JSON.stringify(candidate([-1, -2, -3, -4, -5, 5, 4, 3, 2, 1, -1, -2, -3, -4, -5, 5, 4, 3, 2, 1])) === JSON.stringify(15));\n    console.assert(JSON.stringify(candidate([5, -1, 3, -2, 4, -3, 6, -4, 7, -5])) === JSON.stringify(15));\n    console.assert(JSON.stringify(candidate([1000, -500, 250, -125, 62, -31, 15, -7, 3, -1])) === JSON.stringify(1000));\n    console.assert(JSON.stringify(candidate([100, -200, 300, -400, 500, -600, 700, -800, 900, -1000])) === JSON.stringify(1000));\n    console.assert(JSON.stringify(candidate([1, 2, 3, -6, 1, 2, 3, -6, 1, 2, 3, -6])) === JSON.stringify(6));\n    console.assert(JSON.stringify(candidate([5000, 4000, 3000, 2000, 1000, -5000, -4000, -3000, -2000, -1000])) === JSON.stringify(15000));\n    console.assert(JSON.stringify(candidate([10000, 0, 0, 0, 0, 0, 0, 0, 0, 0, -10000])) === JSON.stringify(10000));\n    console.assert(JSON.stringify(candidate([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, -55])) === JSON.stringify(55));\n    console.assert(JSON.stringify(candidate([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, -1, -2, -3, -4, -5, -6, -7, -8, -9, -10])) === JSON.stringify(55));\n    console.assert(JSON.stringify(candidate([43, 44, -87, 45, 46, 47, -135, 48, 49, 50, 51, -195, 52, 53, 54, 55, 56, -260, 57, 58])) === JSON.stringify(276));\n    console.assert(JSON.stringify(candidate([100, -100, 200, -200, 300, -300, 400, -400, 500, -500])) === JSON.stringify(500));\n    console.assert(JSON.stringify(candidate([1, 2, 3, 4, 5, -5, -4, -3, -2, -1, 1, 2, 3, 4, 5, -5, -4, -3, -2, -1])) === JSON.stringify(15));\n    console.assert(JSON.stringify(candidate([10, 20, 30, -60, 40, 50, -100, 60, 70, 80, -230, 90, 100, 110, -340, 120])) === JSON.stringify(340));\n    console.assert(JSON.stringify(candidate([-5,-4,-3,-2,-1,1,2,3,4,5])) === JSON.stringify(15));\n    console.assert(JSON.stringify(candidate([5000, -1200, 3000, -1500, 2000, -1000, 4000])) === JSON.stringify(10300));\n    console.assert(JSON.stringify(candidate([1, -2, 3, -4, 5, -6, 7, -8, 9, -10, 11, -12, 13, -14, 15, -16, 17, -18, 19, -20])) === JSON.stringify(20));\n    console.assert(JSON.stringify(candidate([10000, -9999, 10000, -9999, 10000, -9999, 10000, -9999])) === JSON.stringify(10003));\n    console.assert(JSON.stringify(candidate([-1, 2, -3, 4, -5, 6, -7, 8, -9, 10, -11, 12, -13, 14, -15, 16, -17, 18, -19, 20])) === JSON.stringify(20));\n    console.assert(JSON.stringify(candidate([5, -1, 4, -2, 3, -3, 2, -2, 1, -1, 0, 1, -1, 2, -2, 3, -3, 4, -4, 5])) === JSON.stringify(11));\n    console.assert(JSON.stringify(candidate([-1, 1, -1, 1, -1, 1, -1, 1, -1, 1])) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate([-5, 10, -15, 20, -25, 30, -35, 40])) === JSON.stringify(40));\n    console.assert(JSON.stringify(candidate([1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1, -1])) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate([-5, 4, -3, 7, -8, 2, -6, 1, 9, -4])) === JSON.stringify(12));\n    console.assert(JSON.stringify(candidate([26, -27, 28, -29, 30, -31, 32, -33, 34, -35, 36, -37, 38, -39, 40, -41, 42, -43, 44, -45, 46, -47, 48, -49, 50])) === JSON.stringify(50));\n    console.assert(JSON.stringify(candidate([10, -3, 20, -40, 50, -60, 70, -80, 90])) === JSON.stringify(90));\n    console.assert(JSON.stringify(candidate([10, -10, 20, -20, 30, -30, 40, -40, 50, -50])) === JSON.stringify(50));\n    console.assert(JSON.stringify(candidate([-1, 2, -3, 4, -5, 6, -7, 8, -9, 10, -11, 12, -13, 14, -15, 16])) === JSON.stringify(16));\n    console.assert(JSON.stringify(candidate([-10, 20, -30, 40, -50, 60, -70, 80, -90, 100, -110, 120, -130, 140, -150, 160, -170, 180, -190, 200])) === JSON.stringify(200));\n    console.assert(JSON.stringify(candidate([1, -10, 100, -1000, 10000, -100000, 1000000, -10000000, 100000000, -1000000000])) === JSON.stringify(1000000000));\n    console.assert(JSON.stringify(candidate([23, -24, 25, -26, 27, -28, 29, -30, 31, -32, 33, -34, 35, -36, 37, -38, 39, -40, 41, -42])) === JSON.stringify(42));\n    console.assert(JSON.stringify(candidate([1, -100, 100, -50, 50, -25, 25, -12, 12, -6, 6])) === JSON.stringify(100));\n    console.assert(JSON.stringify(candidate([2, 3, -5, 4, 2, 3, -4, 5, -6, 7, -8, 9, -10, 11, -12])) === JSON.stringify(13));\n    console.assert(JSON.stringify(candidate([10,-20,30,-40,50,-60,70,-80,90,-100])) === JSON.stringify(100));\n    console.assert(JSON.stringify(candidate([100, -100, 200, -200, 300, -300, 400, -400])) === JSON.stringify(400));\n    console.assert(JSON.stringify(candidate([1, 2, 3, 4, 5, -1, -2, -3, -4, -5])) === JSON.stringify(15));\n    console.assert(JSON.stringify(candidate([0, 1, -1, 2, -2, 3, -3, 4, -4, 5, -5])) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate([0, 1, -1, 2, -2, 3, -3, 4, -4, 5, -5, 6, -6, 7, -7])) === JSON.stringify(7));\n    console.assert(JSON.stringify(candidate([5000, -2000, 1500, -1000, 800, -700, 600, -500, 400, -300])) === JSON.stringify(5000));\n    console.assert(JSON.stringify(candidate([-10000, -10000, 20000, -10000, -10000, 20000, -10000, -10000, 20000, -10000, -10000, 20000])) === JSON.stringify(20000));\n    console.assert(JSON.stringify(candidate([-3000, 4500, -5000, 6000, -7000, 8000, -9000])) === JSON.stringify(9000));\n    console.assert(JSON.stringify(candidate([-100, 200, -300, 400, -500, 600, -700, 800, -900, 1000])) === JSON.stringify(1000));\n    console.assert(JSON.stringify(candidate([500, -500, 500, -500, 500, -500, 500, -500, 500, -500])) === JSON.stringify(500));\n    console.assert(JSON.stringify(candidate([1, -2, 3, -4, 5, -6, 7, -8, 9, -10, 11, -12, 13])) === JSON.stringify(13));\n    console.assert(JSON.stringify(candidate([0, -1, 2, -3, 4, -5, 6, -7, 8, -9, 10, -11, 12, -13, 14, -15, 16, -17, 18, -19, 20])) === JSON.stringify(20));\n    console.assert(JSON.stringify(candidate([1, 2, -3, 4, -5, 6, -7, 8, -9, 10])) === JSON.stringify(10));\n    console.assert(JSON.stringify(candidate([1, -1, 2, -2, 3, -3, 4, -4, 5, -5, 6, -6, 7, -7, 8, -8, 9, -9, 10, -10])) === JSON.stringify(10));\n    console.assert(JSON.stringify(candidate([3,2,1,0,-1,-2,-3,0,3,2,1,0,-1,-2,-3])) === JSON.stringify(6));\n    console.assert(JSON.stringify(candidate([9999, -9998, 9997, -9996, 9995, -9994, 9993, -9992, 9991, -9990])) === JSON.stringify(9999));\n    console.assert(JSON.stringify(candidate([1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1])) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate([10000, 9000, 8000, -7000, -6000, -5000, 4000, 3000, 2000, -1000])) === JSON.stringify(27000));\n    console.assert(JSON.stringify(candidate([10000, 10000, -20000, 10000, 10000, -20000, 10000, 10000, -20000, 10000, 10000, -20000])) === JSON.stringify(20000));\n    console.assert(JSON.stringify(candidate([1, -2, 3, -4, 5, -6, 7, -8, 9, -10])) === JSON.stringify(10));\n    console.assert(JSON.stringify(candidate([5,-5,5,-5,5,-5,5,-5,5,-5,5,-5,5,-5,5,-5,5,-5,5,-5])) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate([5, -1, 3, -2, 7, -8, 2, -6, 4])) === JSON.stringify(12));\n    console.assert(JSON.stringify(candidate([100, 200, 300, -600, 400, 500, -1400, 600, 700, 800, 900, 1000])) === JSON.stringify(4000));\n    console.assert(JSON.stringify(candidate([-10, -20, -30, 60, -40, -50, 100, -60, -70, -80, 230, -90, -100, -110, 340, -120])) === JSON.stringify(340));\n    console.assert(JSON.stringify(candidate([-100, -200, -300, -400, -500, 1500, -600, -700, -800, -900, -1000])) === JSON.stringify(4000));\n    console.assert(JSON.stringify(candidate([-100, -200, -300, -400, -500, -600, -700, -800, -900, -1000, 100, 200, 300, 400, 500])) === JSON.stringify(5500));\n    console.assert(JSON.stringify(candidate([5, -1, 4, -2, 3, -3, 2, -4, 1, -5, 0, 6, -6, 7, -7, 8, -8, 9, -9, 10])) === JSON.stringify(10));\n    console.assert(JSON.stringify(candidate([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20])) === JSON.stringify(210));\n    console.assert(JSON.stringify(candidate([100, -200, 300, -400, 500, -600, 700, -800, 900, -1000, 100, -200, 300, -400, 500])) === JSON.stringify(1200));\n    console.assert(JSON.stringify(candidate([9000, 9000, -18000, 9000, 9000, -18000, 9000, 9000])) === JSON.stringify(18000));\n    console.assert(JSON.stringify(candidate([1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1])) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate([10000, -9000, 8000, -7000, 6000, -5000, 4000, -3000, 2000, -1000])) === JSON.stringify(10000));\n    console.assert(JSON.stringify(candidate([-1, 1, -2, 2, -3, 3, -4, 4, -5, 5, -6, 6, -7, 7, -8, 8, -9, 9, -10, 10])) === JSON.stringify(10));\n    console.assert(JSON.stringify(candidate([-5000, 6000, -7000, 8000, -9000, 10000, -11000, 12000, -13000, 14000])) === JSON.stringify(14000));\n    console.assert(JSON.stringify(candidate([-1, 2, -3, 4, -5, 6, -7, 8, -9, 10])) === JSON.stringify(10));\n    console.assert(JSON.stringify(candidate([-5000, 5000, 0, -5000, 5000, 0, -5000, 5000, 0])) === JSON.stringify(5000));\n    console.assert(JSON.stringify(candidate([1, 2, 3, 4, 5, -5, -4, -3, -2, -1])) === JSON.stringify(15));\n    console.assert(JSON.stringify(candidate([10000,-10000,10000,-10000,10000,-10000])) === JSON.stringify(10000));\n    console.assert(JSON.stringify(candidate([1, -2, 3, -4, 5, -6, 7, -8, 9, -10, 11, -12, 13, -14, 15, -16, 17, -18, 19, 20, -21, 22, -23, 24, -25])) === JSON.stringify(41));\n    console.assert(JSON.stringify(candidate([5000, -2000, 1000, -500, 250, -125, 62, -31, 15, -7, 3, -1])) === JSON.stringify(5000));\n    console.assert(JSON.stringify(candidate([10000, 10000, 10000, -10000, -10000, -10000, 10000])) === JSON.stringify(30000));\n    console.assert(JSON.stringify(candidate([1,-1,1,-1,1,-1,1,-1,1,-1])) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate([1, 2, 3, 4, 5, -15, 6, 7, 8, 9, 10])) === JSON.stringify(40));\n    console.assert(JSON.stringify(candidate([1000, -2000, 3000, -4000, 5000])) === JSON.stringify(5000));\n    console.assert(JSON.stringify(candidate([100, 200, 300, 400, 500, -1500, 600, 700, 800, 900, 1000])) === JSON.stringify(4000));\n    console.assert(JSON.stringify(candidate([-9999, 9998, -9997, 9996, -9995, 9994])) === JSON.stringify(9999));\n    console.assert(JSON.stringify(candidate([1, -1, 2, -2, 3, -3, 4, -4, 5, -5])) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate([-20, 19, -18, 17, -16, 15, -14, 13, -12, 11, -10, 9, -8, 7, -6, 5, -4, 3, -2, 1])) === JSON.stringify(20));\n    console.assert(JSON.stringify(candidate([100,-1,200,-2,300,-3,400,-4,500,-5])) === JSON.stringify(1490));\n    console.assert(JSON.stringify(candidate([1, -1, 1, -1, 1, -1, 1, -1, 1, -1])) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate([-1,0,1,-1,0,1,-1,0,1,-1,0,1,-1,0,1])) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate([1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1, -1])) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate([-10, 20, -30, 40, -50, 60, -70, 80, -90, 100, -110])) === JSON.stringify(110));\n    console.assert(JSON.stringify(candidate([1, -2, 3, -4, 5, -6, 7, -8, 9, -10, 11, -12, 13, -14, 15])) === JSON.stringify(15));\n    console.assert(JSON.stringify(candidate([1, -2, 3, -4, 5, -6, 7, -8, 9, -10, 11, -12, 13, -14, 15, -16, 17, -18, 19, 20, -21, 22])) === JSON.stringify(40));\n    console.assert(JSON.stringify(candidate([10000, -9999, 9998, -9997, 9996, -9995, 9994, -9993, 9992, -9991])) === JSON.stringify(10000));\n    console.assert(JSON.stringify(candidate([5, -3, 8, -1, 4, -7, 9, -2, 6, -10])) === JSON.stringify(19));\n    console.assert(JSON.stringify(candidate([10000, -9999, 9998, -9997, 9996, -9995, 9994])) === JSON.stringify(10000));\n    console.assert(JSON.stringify(candidate([5, -3, 8, -6, 2, -4, 7, -9, 1, -1])) === JSON.stringify(10));\n}",
+    "typescript": "function check(candidate: Function): void {\n    console.assert(JSON.stringify(candidate([1,-1,1,-1,1,-1])) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate([1])) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate([-10000,10000,-10000,10000])) === JSON.stringify(10000));\n    console.assert(JSON.stringify(candidate([1,-3,2,3,-4])) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate([0])) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate([2,-5,1,-4,3,-2])) === JSON.stringify(8));\n    console.assert(JSON.stringify(candidate([10000,-10000,10000,-10000,10000])) === JSON.stringify(10000));\n    console.assert(JSON.stringify(candidate([-1,-2,-3,-4,-5])) === JSON.stringify(15));\n    console.assert(JSON.stringify(candidate([0,0,0,0,0])) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate([-1])) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate([1,2,3,4,5])) === JSON.stringify(15));\n    console.assert(JSON.stringify(candidate([-10000,10000,-10000,10000,-10000])) === JSON.stringify(10000));\n    console.assert(JSON.stringify(candidate([0, 1, -1, 2, -2, 3, -3, 4, -4, 5, -5, 6, -6, 7, -7, 8, -8, 9, -9, 10])) === JSON.stringify(10));\n    console.assert(JSON.stringify(candidate([1, 2, 3, 4, 5, -15, 6, 7, 8, 9, 10, -25, 11, 12, 13, 14, 15])) === JSON.stringify(80));\n    console.assert(JSON.stringify(candidate([10, 20, -30, 40, -50, 60, -70, 80, -90, 100])) === JSON.stringify(100));\n    console.assert(JSON.stringify(candidate([5,1,-2,4,-1,-3,6,-2,1])) === JSON.stringify(10));\n    console.assert(JSON.stringify(candidate([1,2,3,4,5,6,7,8,9,10])) === JSON.stringify(55));\n    console.assert(JSON.stringify(candidate([-100, 101, -102, 103, -104, 105, -106, 107])) === JSON.stringify(107));\n    console.assert(JSON.stringify(candidate([100, -50, 25, -10, 5, -2, 1])) === JSON.stringify(100));\n    console.assert(JSON.stringify(candidate([-1, -2, -3, -4, -5, 5, 4, 3, 2, 1, -1, -2, -3, -4, -5, 5, 4, 3, 2, 1])) === JSON.stringify(15));\n    console.assert(JSON.stringify(candidate([5, -1, 3, -2, 4, -3, 6, -4, 7, -5])) === JSON.stringify(15));\n    console.assert(JSON.stringify(candidate([1000, -500, 250, -125, 62, -31, 15, -7, 3, -1])) === JSON.stringify(1000));\n    console.assert(JSON.stringify(candidate([100, -200, 300, -400, 500, -600, 700, -800, 900, -1000])) === JSON.stringify(1000));\n    console.assert(JSON.stringify(candidate([1, 2, 3, -6, 1, 2, 3, -6, 1, 2, 3, -6])) === JSON.stringify(6));\n    console.assert(JSON.stringify(candidate([5000, 4000, 3000, 2000, 1000, -5000, -4000, -3000, -2000, -1000])) === JSON.stringify(15000));\n    console.assert(JSON.stringify(candidate([10000, 0, 0, 0, 0, 0, 0, 0, 0, 0, -10000])) === JSON.stringify(10000));\n    console.assert(JSON.stringify(candidate([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, -55])) === JSON.stringify(55));\n    console.assert(JSON.stringify(candidate([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, -1, -2, -3, -4, -5, -6, -7, -8, -9, -10])) === JSON.stringify(55));\n    console.assert(JSON.stringify(candidate([43, 44, -87, 45, 46, 47, -135, 48, 49, 50, 51, -195, 52, 53, 54, 55, 56, -260, 57, 58])) === JSON.stringify(276));\n    console.assert(JSON.stringify(candidate([100, -100, 200, -200, 300, -300, 400, -400, 500, -500])) === JSON.stringify(500));\n    console.assert(JSON.stringify(candidate([1, 2, 3, 4, 5, -5, -4, -3, -2, -1, 1, 2, 3, 4, 5, -5, -4, -3, -2, -1])) === JSON.stringify(15));\n    console.assert(JSON.stringify(candidate([10, 20, 30, -60, 40, 50, -100, 60, 70, 80, -230, 90, 100, 110, -340, 120])) === JSON.stringify(340));\n    console.assert(JSON.stringify(candidate([-5,-4,-3,-2,-1,1,2,3,4,5])) === JSON.stringify(15));\n    console.assert(JSON.stringify(candidate([5000, -1200, 3000, -1500, 2000, -1000, 4000])) === JSON.stringify(10300));\n    console.assert(JSON.stringify(candidate([1, -2, 3, -4, 5, -6, 7, -8, 9, -10, 11, -12, 13, -14, 15, -16, 17, -18, 19, -20])) === JSON.stringify(20));\n    console.assert(JSON.stringify(candidate([10000, -9999, 10000, -9999, 10000, -9999, 10000, -9999])) === JSON.stringify(10003));\n    console.assert(JSON.stringify(candidate([-1, 2, -3, 4, -5, 6, -7, 8, -9, 10, -11, 12, -13, 14, -15, 16, -17, 18, -19, 20])) === JSON.stringify(20));\n    console.assert(JSON.stringify(candidate([5, -1, 4, -2, 3, -3, 2, -2, 1, -1, 0, 1, -1, 2, -2, 3, -3, 4, -4, 5])) === JSON.stringify(11));\n    console.assert(JSON.stringify(candidate([-1, 1, -1, 1, -1, 1, -1, 1, -1, 1])) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate([-5, 10, -15, 20, -25, 30, -35, 40])) === JSON.stringify(40));\n    console.assert(JSON.stringify(candidate([1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1, -1])) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate([-5, 4, -3, 7, -8, 2, -6, 1, 9, -4])) === JSON.stringify(12));\n    console.assert(JSON.stringify(candidate([26, -27, 28, -29, 30, -31, 32, -33, 34, -35, 36, -37, 38, -39, 40, -41, 42, -43, 44, -45, 46, -47, 48, -49, 50])) === JSON.stringify(50));\n    console.assert(JSON.stringify(candidate([10, -3, 20, -40, 50, -60, 70, -80, 90])) === JSON.stringify(90));\n    console.assert(JSON.stringify(candidate([10, -10, 20, -20, 30, -30, 40, -40, 50, -50])) === JSON.stringify(50));\n    console.assert(JSON.stringify(candidate([-1, 2, -3, 4, -5, 6, -7, 8, -9, 10, -11, 12, -13, 14, -15, 16])) === JSON.stringify(16));\n    console.assert(JSON.stringify(candidate([-10, 20, -30, 40, -50, 60, -70, 80, -90, 100, -110, 120, -130, 140, -150, 160, -170, 180, -190, 200])) === JSON.stringify(200));\n    console.assert(JSON.stringify(candidate([1, -10, 100, -1000, 10000, -100000, 1000000, -10000000, 100000000, -1000000000])) === JSON.stringify(1000000000));\n    console.assert(JSON.stringify(candidate([23, -24, 25, -26, 27, -28, 29, -30, 31, -32, 33, -34, 35, -36, 37, -38, 39, -40, 41, -42])) === JSON.stringify(42));\n    console.assert(JSON.stringify(candidate([1, -100, 100, -50, 50, -25, 25, -12, 12, -6, 6])) === JSON.stringify(100));\n    console.assert(JSON.stringify(candidate([2, 3, -5, 4, 2, 3, -4, 5, -6, 7, -8, 9, -10, 11, -12])) === JSON.stringify(13));\n    console.assert(JSON.stringify(candidate([10,-20,30,-40,50,-60,70,-80,90,-100])) === JSON.stringify(100));\n    console.assert(JSON.stringify(candidate([100, -100, 200, -200, 300, -300, 400, -400])) === JSON.stringify(400));\n    console.assert(JSON.stringify(candidate([1, 2, 3, 4, 5, -1, -2, -3, -4, -5])) === JSON.stringify(15));\n    console.assert(JSON.stringify(candidate([0, 1, -1, 2, -2, 3, -3, 4, -4, 5, -5])) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate([0, 1, -1, 2, -2, 3, -3, 4, -4, 5, -5, 6, -6, 7, -7])) === JSON.stringify(7));\n    console.assert(JSON.stringify(candidate([5000, -2000, 1500, -1000, 800, -700, 600, -500, 400, -300])) === JSON.stringify(5000));\n    console.assert(JSON.stringify(candidate([-10000, -10000, 20000, -10000, -10000, 20000, -10000, -10000, 20000, -10000, -10000, 20000])) === JSON.stringify(20000));\n    console.assert(JSON.stringify(candidate([-3000, 4500, -5000, 6000, -7000, 8000, -9000])) === JSON.stringify(9000));\n    console.assert(JSON.stringify(candidate([-100, 200, -300, 400, -500, 600, -700, 800, -900, 1000])) === JSON.stringify(1000));\n    console.assert(JSON.stringify(candidate([500, -500, 500, -500, 500, -500, 500, -500, 500, -500])) === JSON.stringify(500));\n    console.assert(JSON.stringify(candidate([1, -2, 3, -4, 5, -6, 7, -8, 9, -10, 11, -12, 13])) === JSON.stringify(13));\n    console.assert(JSON.stringify(candidate([0, -1, 2, -3, 4, -5, 6, -7, 8, -9, 10, -11, 12, -13, 14, -15, 16, -17, 18, -19, 20])) === JSON.stringify(20));\n    console.assert(JSON.stringify(candidate([1, 2, -3, 4, -5, 6, -7, 8, -9, 10])) === JSON.stringify(10));\n    console.assert(JSON.stringify(candidate([1, -1, 2, -2, 3, -3, 4, -4, 5, -5, 6, -6, 7, -7, 8, -8, 9, -9, 10, -10])) === JSON.stringify(10));\n    console.assert(JSON.stringify(candidate([3,2,1,0,-1,-2,-3,0,3,2,1,0,-1,-2,-3])) === JSON.stringify(6));\n    console.assert(JSON.stringify(candidate([9999, -9998, 9997, -9996, 9995, -9994, 9993, -9992, 9991, -9990])) === JSON.stringify(9999));\n    console.assert(JSON.stringify(candidate([1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1])) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate([10000, 9000, 8000, -7000, -6000, -5000, 4000, 3000, 2000, -1000])) === JSON.stringify(27000));\n    console.assert(JSON.stringify(candidate([10000, 10000, -20000, 10000, 10000, -20000, 10000, 10000, -20000, 10000, 10000, -20000])) === JSON.stringify(20000));\n    console.assert(JSON.stringify(candidate([1, -2, 3, -4, 5, -6, 7, -8, 9, -10])) === JSON.stringify(10));\n    console.assert(JSON.stringify(candidate([5,-5,5,-5,5,-5,5,-5,5,-5,5,-5,5,-5,5,-5,5,-5,5,-5])) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate([5, -1, 3, -2, 7, -8, 2, -6, 4])) === JSON.stringify(12));\n    console.assert(JSON.stringify(candidate([100, 200, 300, -600, 400, 500, -1400, 600, 700, 800, 900, 1000])) === JSON.stringify(4000));\n    console.assert(JSON.stringify(candidate([-10, -20, -30, 60, -40, -50, 100, -60, -70, -80, 230, -90, -100, -110, 340, -120])) === JSON.stringify(340));\n    console.assert(JSON.stringify(candidate([-100, -200, -300, -400, -500, 1500, -600, -700, -800, -900, -1000])) === JSON.stringify(4000));\n    console.assert(JSON.stringify(candidate([-100, -200, -300, -400, -500, -600, -700, -800, -900, -1000, 100, 200, 300, 400, 500])) === JSON.stringify(5500));\n    console.assert(JSON.stringify(candidate([5, -1, 4, -2, 3, -3, 2, -4, 1, -5, 0, 6, -6, 7, -7, 8, -8, 9, -9, 10])) === JSON.stringify(10));\n    console.assert(JSON.stringify(candidate([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20])) === JSON.stringify(210));\n    console.assert(JSON.stringify(candidate([100, -200, 300, -400, 500, -600, 700, -800, 900, -1000, 100, -200, 300, -400, 500])) === JSON.stringify(1200));\n    console.assert(JSON.stringify(candidate([9000, 9000, -18000, 9000, 9000, -18000, 9000, 9000])) === JSON.stringify(18000));\n    console.assert(JSON.stringify(candidate([1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1])) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate([10000, -9000, 8000, -7000, 6000, -5000, 4000, -3000, 2000, -1000])) === JSON.stringify(10000));\n    console.assert(JSON.stringify(candidate([-1, 1, -2, 2, -3, 3, -4, 4, -5, 5, -6, 6, -7, 7, -8, 8, -9, 9, -10, 10])) === JSON.stringify(10));\n    console.assert(JSON.stringify(candidate([-5000, 6000, -7000, 8000, -9000, 10000, -11000, 12000, -13000, 14000])) === JSON.stringify(14000));\n    console.assert(JSON.stringify(candidate([-1, 2, -3, 4, -5, 6, -7, 8, -9, 10])) === JSON.stringify(10));\n    console.assert(JSON.stringify(candidate([-5000, 5000, 0, -5000, 5000, 0, -5000, 5000, 0])) === JSON.stringify(5000));\n    console.assert(JSON.stringify(candidate([1, 2, 3, 4, 5, -5, -4, -3, -2, -1])) === JSON.stringify(15));\n    console.assert(JSON.stringify(candidate([10000,-10000,10000,-10000,10000,-10000])) === JSON.stringify(10000));\n    console.assert(JSON.stringify(candidate([1, -2, 3, -4, 5, -6, 7, -8, 9, -10, 11, -12, 13, -14, 15, -16, 17, -18, 19, 20, -21, 22, -23, 24, -25])) === JSON.stringify(41));\n    console.assert(JSON.stringify(candidate([5000, -2000, 1000, -500, 250, -125, 62, -31, 15, -7, 3, -1])) === JSON.stringify(5000));\n    console.assert(JSON.stringify(candidate([10000, 10000, 10000, -10000, -10000, -10000, 10000])) === JSON.stringify(30000));\n    console.assert(JSON.stringify(candidate([1,-1,1,-1,1,-1,1,-1,1,-1])) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate([1, 2, 3, 4, 5, -15, 6, 7, 8, 9, 10])) === JSON.stringify(40));\n    console.assert(JSON.stringify(candidate([1000, -2000, 3000, -4000, 5000])) === JSON.stringify(5000));\n    console.assert(JSON.stringify(candidate([100, 200, 300, 400, 500, -1500, 600, 700, 800, 900, 1000])) === JSON.stringify(4000));\n    console.assert(JSON.stringify(candidate([-9999, 9998, -9997, 9996, -9995, 9994])) === JSON.stringify(9999));\n    console.assert(JSON.stringify(candidate([1, -1, 2, -2, 3, -3, 4, -4, 5, -5])) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate([-20, 19, -18, 17, -16, 15, -14, 13, -12, 11, -10, 9, -8, 7, -6, 5, -4, 3, -2, 1])) === JSON.stringify(20));\n    console.assert(JSON.stringify(candidate([100,-1,200,-2,300,-3,400,-4,500,-5])) === JSON.stringify(1490));\n    console.assert(JSON.stringify(candidate([1, -1, 1, -1, 1, -1, 1, -1, 1, -1])) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate([-1,0,1,-1,0,1,-1,0,1,-1,0,1,-1,0,1])) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate([1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1, -1])) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate([-10, 20, -30, 40, -50, 60, -70, 80, -90, 100, -110])) === JSON.stringify(110));\n    console.assert(JSON.stringify(candidate([1, -2, 3, -4, 5, -6, 7, -8, 9, -10, 11, -12, 13, -14, 15])) === JSON.stringify(15));\n    console.assert(JSON.stringify(candidate([1, -2, 3, -4, 5, -6, 7, -8, 9, -10, 11, -12, 13, -14, 15, -16, 17, -18, 19, 20, -21, 22])) === JSON.stringify(40));\n    console.assert(JSON.stringify(candidate([10000, -9999, 9998, -9997, 9996, -9995, 9994, -9993, 9992, -9991])) === JSON.stringify(10000));\n    console.assert(JSON.stringify(candidate([5, -3, 8, -1, 4, -7, 9, -2, 6, -10])) === JSON.stringify(19));\n    console.assert(JSON.stringify(candidate([10000, -9999, 9998, -9997, 9996, -9995, 9994])) === JSON.stringify(10000));\n    console.assert(JSON.stringify(candidate([5, -3, 8, -6, 2, -4, 7, -9, 1, -1])) === JSON.stringify(10));\n}",
+    "golang": "func check(candidate func([]int, int) []int) {\n    assert reflect.DeepEqual(candidate([]int{1,-1,1,-1,1,-1}), 1)\n    assert reflect.DeepEqual(candidate([]int{1}), 1)\n    assert reflect.DeepEqual(candidate([]int{-10000,10000,-10000,10000}), 10000)\n    assert reflect.DeepEqual(candidate([]int{1,-3,2,3,-4}), 5)\n    assert reflect.DeepEqual(candidate([]int{0}), 0)\n    assert reflect.DeepEqual(candidate([]int{2,-5,1,-4,3,-2}), 8)\n    assert reflect.DeepEqual(candidate([]int{10000,-10000,10000,-10000,10000}), 10000)\n    assert reflect.DeepEqual(candidate([]int{-1,-2,-3,-4,-5}), 15)\n    assert reflect.DeepEqual(candidate([]int{0,0,0,0,0}), 0)\n    assert reflect.DeepEqual(candidate([]int{-1}), 1)\n    assert reflect.DeepEqual(candidate([]int{1,2,3,4,5}), 15)\n    assert reflect.DeepEqual(candidate([]int{-10000,10000,-10000,10000,-10000}), 10000)\n    assert reflect.DeepEqual(candidate([]int{0, 1, -1, 2, -2, 3, -3, 4, -4, 5, -5, 6, -6, 7, -7, 8, -8, 9, -9, 10}), 10)\n    assert reflect.DeepEqual(candidate([]int{1, 2, 3, 4, 5, -15, 6, 7, 8, 9, 10, -25, 11, 12, 13, 14, 15}), 80)\n    assert reflect.DeepEqual(candidate([]int{10, 20, -30, 40, -50, 60, -70, 80, -90, 100}), 100)\n    assert reflect.DeepEqual(candidate([]int{5,1,-2,4,-1,-3,6,-2,1}), 10)\n    assert reflect.DeepEqual(candidate([]int{1,2,3,4,5,6,7,8,9,10}), 55)\n    assert reflect.DeepEqual(candidate([]int{-100, 101, -102, 103, -104, 105, -106, 107}), 107)\n    assert reflect.DeepEqual(candidate([]int{100, -50, 25, -10, 5, -2, 1}), 100)\n    assert reflect.DeepEqual(candidate([]int{-1, -2, -3, -4, -5, 5, 4, 3, 2, 1, -1, -2, -3, -4, -5, 5, 4, 3, 2, 1}), 15)\n    assert reflect.DeepEqual(candidate([]int{5, -1, 3, -2, 4, -3, 6, -4, 7, -5}), 15)\n    assert reflect.DeepEqual(candidate([]int{1000, -500, 250, -125, 62, -31, 15, -7, 3, -1}), 1000)\n    assert reflect.DeepEqual(candidate([]int{100, -200, 300, -400, 500, -600, 700, -800, 900, -1000}), 1000)\n    assert reflect.DeepEqual(candidate([]int{1, 2, 3, -6, 1, 2, 3, -6, 1, 2, 3, -6}), 6)\n    assert reflect.DeepEqual(candidate([]int{5000, 4000, 3000, 2000, 1000, -5000, -4000, -3000, -2000, -1000}), 15000)\n    assert reflect.DeepEqual(candidate([]int{10000, 0, 0, 0, 0, 0, 0, 0, 0, 0, -10000}), 10000)\n    assert reflect.DeepEqual(candidate([]int{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, -55}), 55)\n    assert reflect.DeepEqual(candidate([]int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, -1, -2, -3, -4, -5, -6, -7, -8, -9, -10}), 55)\n    assert reflect.DeepEqual(candidate([]int{43, 44, -87, 45, 46, 47, -135, 48, 49, 50, 51, -195, 52, 53, 54, 55, 56, -260, 57, 58}), 276)\n    assert reflect.DeepEqual(candidate([]int{100, -100, 200, -200, 300, -300, 400, -400, 500, -500}), 500)\n    assert reflect.DeepEqual(candidate([]int{1, 2, 3, 4, 5, -5, -4, -3, -2, -1, 1, 2, 3, 4, 5, -5, -4, -3, -2, -1}), 15)\n    assert reflect.DeepEqual(candidate([]int{10, 20, 30, -60, 40, 50, -100, 60, 70, 80, -230, 90, 100, 110, -340, 120}), 340)\n    assert reflect.DeepEqual(candidate([]int{-5,-4,-3,-2,-1,1,2,3,4,5}), 15)\n    assert reflect.DeepEqual(candidate([]int{5000, -1200, 3000, -1500, 2000, -1000, 4000}), 10300)\n    assert reflect.DeepEqual(candidate([]int{1, -2, 3, -4, 5, -6, 7, -8, 9, -10, 11, -12, 13, -14, 15, -16, 17, -18, 19, -20}), 20)\n    assert reflect.DeepEqual(candidate([]int{10000, -9999, 10000, -9999, 10000, -9999, 10000, -9999}), 10003)\n    assert reflect.DeepEqual(candidate([]int{-1, 2, -3, 4, -5, 6, -7, 8, -9, 10, -11, 12, -13, 14, -15, 16, -17, 18, -19, 20}), 20)\n    assert reflect.DeepEqual(candidate([]int{5, -1, 4, -2, 3, -3, 2, -2, 1, -1, 0, 1, -1, 2, -2, 3, -3, 4, -4, 5}), 11)\n    assert reflect.DeepEqual(candidate([]int{-1, 1, -1, 1, -1, 1, -1, 1, -1, 1}), 1)\n    assert reflect.DeepEqual(candidate([]int{-5, 10, -15, 20, -25, 30, -35, 40}), 40)\n    assert reflect.DeepEqual(candidate([]int{1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1, -1}), 1)\n    assert reflect.DeepEqual(candidate([]int{-5, 4, -3, 7, -8, 2, -6, 1, 9, -4}), 12)\n    assert reflect.DeepEqual(candidate([]int{26, -27, 28, -29, 30, -31, 32, -33, 34, -35, 36, -37, 38, -39, 40, -41, 42, -43, 44, -45, 46, -47, 48, -49, 50}), 50)\n    assert reflect.DeepEqual(candidate([]int{10, -3, 20, -40, 50, -60, 70, -80, 90}), 90)\n    assert reflect.DeepEqual(candidate([]int{10, -10, 20, -20, 30, -30, 40, -40, 50, -50}), 50)\n    assert reflect.DeepEqual(candidate([]int{-1, 2, -3, 4, -5, 6, -7, 8, -9, 10, -11, 12, -13, 14, -15, 16}), 16)\n    assert reflect.DeepEqual(candidate([]int{-10, 20, -30, 40, -50, 60, -70, 80, -90, 100, -110, 120, -130, 140, -150, 160, -170, 180, -190, 200}), 200)\n    assert reflect.DeepEqual(candidate([]int{1, -10, 100, -1000, 10000, -100000, 1000000, -10000000, 100000000, -1000000000}), 1000000000)\n    assert reflect.DeepEqual(candidate([]int{23, -24, 25, -26, 27, -28, 29, -30, 31, -32, 33, -34, 35, -36, 37, -38, 39, -40, 41, -42}), 42)\n    assert reflect.DeepEqual(candidate([]int{1, -100, 100, -50, 50, -25, 25, -12, 12, -6, 6}), 100)\n    assert reflect.DeepEqual(candidate([]int{2, 3, -5, 4, 2, 3, -4, 5, -6, 7, -8, 9, -10, 11, -12}), 13)\n    assert reflect.DeepEqual(candidate([]int{10,-20,30,-40,50,-60,70,-80,90,-100}), 100)\n    assert reflect.DeepEqual(candidate([]int{100, -100, 200, -200, 300, -300, 400, -400}), 400)\n    assert reflect.DeepEqual(candidate([]int{1, 2, 3, 4, 5, -1, -2, -3, -4, -5}), 15)\n    assert reflect.DeepEqual(candidate([]int{0, 1, -1, 2, -2, 3, -3, 4, -4, 5, -5}), 5)\n    assert reflect.DeepEqual(candidate([]int{0, 1, -1, 2, -2, 3, -3, 4, -4, 5, -5, 6, -6, 7, -7}), 7)\n    assert reflect.DeepEqual(candidate([]int{5000, -2000, 1500, -1000, 800, -700, 600, -500, 400, -300}), 5000)\n    assert reflect.DeepEqual(candidate([]int{-10000, -10000, 20000, -10000, -10000, 20000, -10000, -10000, 20000, -10000, -10000, 20000}), 20000)\n    assert reflect.DeepEqual(candidate([]int{-3000, 4500, -5000, 6000, -7000, 8000, -9000}), 9000)\n    assert reflect.DeepEqual(candidate([]int{-100, 200, -300, 400, -500, 600, -700, 800, -900, 1000}), 1000)\n    assert reflect.DeepEqual(candidate([]int{500, -500, 500, -500, 500, -500, 500, -500, 500, -500}), 500)\n    assert reflect.DeepEqual(candidate([]int{1, -2, 3, -4, 5, -6, 7, -8, 9, -10, 11, -12, 13}), 13)\n    assert reflect.DeepEqual(candidate([]int{0, -1, 2, -3, 4, -5, 6, -7, 8, -9, 10, -11, 12, -13, 14, -15, 16, -17, 18, -19, 20}), 20)\n    assert reflect.DeepEqual(candidate([]int{1, 2, -3, 4, -5, 6, -7, 8, -9, 10}), 10)\n    assert reflect.DeepEqual(candidate([]int{1, -1, 2, -2, 3, -3, 4, -4, 5, -5, 6, -6, 7, -7, 8, -8, 9, -9, 10, -10}), 10)\n    assert reflect.DeepEqual(candidate([]int{3,2,1,0,-1,-2,-3,0,3,2,1,0,-1,-2,-3}), 6)\n    assert reflect.DeepEqual(candidate([]int{9999, -9998, 9997, -9996, 9995, -9994, 9993, -9992, 9991, -9990}), 9999)\n    assert reflect.DeepEqual(candidate([]int{1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1}), 1)\n    assert reflect.DeepEqual(candidate([]int{10000, 9000, 8000, -7000, -6000, -5000, 4000, 3000, 2000, -1000}), 27000)\n    assert reflect.DeepEqual(candidate([]int{10000, 10000, -20000, 10000, 10000, -20000, 10000, 10000, -20000, 10000, 10000, -20000}), 20000)\n    assert reflect.DeepEqual(candidate([]int{1, -2, 3, -4, 5, -6, 7, -8, 9, -10}), 10)\n    assert reflect.DeepEqual(candidate([]int{5,-5,5,-5,5,-5,5,-5,5,-5,5,-5,5,-5,5,-5,5,-5,5,-5}), 5)\n    assert reflect.DeepEqual(candidate([]int{5, -1, 3, -2, 7, -8, 2, -6, 4}), 12)\n    assert reflect.DeepEqual(candidate([]int{100, 200, 300, -600, 400, 500, -1400, 600, 700, 800, 900, 1000}), 4000)\n    assert reflect.DeepEqual(candidate([]int{-10, -20, -30, 60, -40, -50, 100, -60, -70, -80, 230, -90, -100, -110, 340, -120}), 340)\n    assert reflect.DeepEqual(candidate([]int{-100, -200, -300, -400, -500, 1500, -600, -700, -800, -900, -1000}), 4000)\n    assert reflect.DeepEqual(candidate([]int{-100, -200, -300, -400, -500, -600, -700, -800, -900, -1000, 100, 200, 300, 400, 500}), 5500)\n    assert reflect.DeepEqual(candidate([]int{5, -1, 4, -2, 3, -3, 2, -4, 1, -5, 0, 6, -6, 7, -7, 8, -8, 9, -9, 10}), 10)\n    assert reflect.DeepEqual(candidate([]int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20}), 210)\n    assert reflect.DeepEqual(candidate([]int{100, -200, 300, -400, 500, -600, 700, -800, 900, -1000, 100, -200, 300, -400, 500}), 1200)\n    assert reflect.DeepEqual(candidate([]int{9000, 9000, -18000, 9000, 9000, -18000, 9000, 9000}), 18000)\n    assert reflect.DeepEqual(candidate([]int{1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1}), 1)\n    assert reflect.DeepEqual(candidate([]int{10000, -9000, 8000, -7000, 6000, -5000, 4000, -3000, 2000, -1000}), 10000)\n    assert reflect.DeepEqual(candidate([]int{-1, 1, -2, 2, -3, 3, -4, 4, -5, 5, -6, 6, -7, 7, -8, 8, -9, 9, -10, 10}), 10)\n    assert reflect.DeepEqual(candidate([]int{-5000, 6000, -7000, 8000, -9000, 10000, -11000, 12000, -13000, 14000}), 14000)\n    assert reflect.DeepEqual(candidate([]int{-1, 2, -3, 4, -5, 6, -7, 8, -9, 10}), 10)\n    assert reflect.DeepEqual(candidate([]int{-5000, 5000, 0, -5000, 5000, 0, -5000, 5000, 0}), 5000)\n    assert reflect.DeepEqual(candidate([]int{1, 2, 3, 4, 5, -5, -4, -3, -2, -1}), 15)\n    assert reflect.DeepEqual(candidate([]int{10000,-10000,10000,-10000,10000,-10000}), 10000)\n    assert reflect.DeepEqual(candidate([]int{1, -2, 3, -4, 5, -6, 7, -8, 9, -10, 11, -12, 13, -14, 15, -16, 17, -18, 19, 20, -21, 22, -23, 24, -25}), 41)\n    assert reflect.DeepEqual(candidate([]int{5000, -2000, 1000, -500, 250, -125, 62, -31, 15, -7, 3, -1}), 5000)\n    assert reflect.DeepEqual(candidate([]int{10000, 10000, 10000, -10000, -10000, -10000, 10000}), 30000)\n    assert reflect.DeepEqual(candidate([]int{1,-1,1,-1,1,-1,1,-1,1,-1}), 1)\n    assert reflect.DeepEqual(candidate([]int{1, 2, 3, 4, 5, -15, 6, 7, 8, 9, 10}), 40)\n    assert reflect.DeepEqual(candidate([]int{1000, -2000, 3000, -4000, 5000}), 5000)\n    assert reflect.DeepEqual(candidate([]int{100, 200, 300, 400, 500, -1500, 600, 700, 800, 900, 1000}), 4000)\n    assert reflect.DeepEqual(candidate([]int{-9999, 9998, -9997, 9996, -9995, 9994}), 9999)\n    assert reflect.DeepEqual(candidate([]int{1, -1, 2, -2, 3, -3, 4, -4, 5, -5}), 5)\n    assert reflect.DeepEqual(candidate([]int{-20, 19, -18, 17, -16, 15, -14, 13, -12, 11, -10, 9, -8, 7, -6, 5, -4, 3, -2, 1}), 20)\n    assert reflect.DeepEqual(candidate([]int{100,-1,200,-2,300,-3,400,-4,500,-5}), 1490)\n    assert reflect.DeepEqual(candidate([]int{1, -1, 1, -1, 1, -1, 1, -1, 1, -1}), 1)\n    assert reflect.DeepEqual(candidate([]int{-1,0,1,-1,0,1,-1,0,1,-1,0,1,-1,0,1}), 1)\n    assert reflect.DeepEqual(candidate([]int{1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1, -1}), 1)\n    assert reflect.DeepEqual(candidate([]int{-10, 20, -30, 40, -50, 60, -70, 80, -90, 100, -110}), 110)\n    assert reflect.DeepEqual(candidate([]int{1, -2, 3, -4, 5, -6, 7, -8, 9, -10, 11, -12, 13, -14, 15}), 15)\n    assert reflect.DeepEqual(candidate([]int{1, -2, 3, -4, 5, -6, 7, -8, 9, -10, 11, -12, 13, -14, 15, -16, 17, -18, 19, 20, -21, 22}), 40)\n    assert reflect.DeepEqual(candidate([]int{10000, -9999, 9998, -9997, 9996, -9995, 9994, -9993, 9992, -9991}), 10000)\n    assert reflect.DeepEqual(candidate([]int{5, -3, 8, -1, 4, -7, 9, -2, 6, -10}), 19)\n    assert reflect.DeepEqual(candidate([]int{10000, -9999, 9998, -9997, 9996, -9995, 9994}), 10000)\n    assert reflect.DeepEqual(candidate([]int{5, -3, 8, -6, 2, -4, 7, -9, 1, -1}), 10)\n}",
+    "rust": "fn check(candidate: fn(Vec<i32>, i32) -> Vec<i32>) {\n    assert_eq!(candidate(vec![1,-1,1,-1,1,-1]), 1);\n    assert_eq!(candidate(vec![1]), 1);\n    assert_eq!(candidate(vec![-10000,10000,-10000,10000]), 10000);\n    assert_eq!(candidate(vec![1,-3,2,3,-4]), 5);\n    assert_eq!(candidate(vec![0]), 0);\n    assert_eq!(candidate(vec![2,-5,1,-4,3,-2]), 8);\n    assert_eq!(candidate(vec![10000,-10000,10000,-10000,10000]), 10000);\n    assert_eq!(candidate(vec![-1,-2,-3,-4,-5]), 15);\n    assert_eq!(candidate(vec![0,0,0,0,0]), 0);\n    assert_eq!(candidate(vec![-1]), 1);\n    assert_eq!(candidate(vec![1,2,3,4,5]), 15);\n    assert_eq!(candidate(vec![-10000,10000,-10000,10000,-10000]), 10000);\n    assert_eq!(candidate(vec![0, 1, -1, 2, -2, 3, -3, 4, -4, 5, -5, 6, -6, 7, -7, 8, -8, 9, -9, 10]), 10);\n    assert_eq!(candidate(vec![1, 2, 3, 4, 5, -15, 6, 7, 8, 9, 10, -25, 11, 12, 13, 14, 15]), 80);\n    assert_eq!(candidate(vec![10, 20, -30, 40, -50, 60, -70, 80, -90, 100]), 100);\n    assert_eq!(candidate(vec![5,1,-2,4,-1,-3,6,-2,1]), 10);\n    assert_eq!(candidate(vec![1,2,3,4,5,6,7,8,9,10]), 55);\n    assert_eq!(candidate(vec![-100, 101, -102, 103, -104, 105, -106, 107]), 107);\n    assert_eq!(candidate(vec![100, -50, 25, -10, 5, -2, 1]), 100);\n    assert_eq!(candidate(vec![-1, -2, -3, -4, -5, 5, 4, 3, 2, 1, -1, -2, -3, -4, -5, 5, 4, 3, 2, 1]), 15);\n    assert_eq!(candidate(vec![5, -1, 3, -2, 4, -3, 6, -4, 7, -5]), 15);\n    assert_eq!(candidate(vec![1000, -500, 250, -125, 62, -31, 15, -7, 3, -1]), 1000);\n    assert_eq!(candidate(vec![100, -200, 300, -400, 500, -600, 700, -800, 900, -1000]), 1000);\n    assert_eq!(candidate(vec![1, 2, 3, -6, 1, 2, 3, -6, 1, 2, 3, -6]), 6);\n    assert_eq!(candidate(vec![5000, 4000, 3000, 2000, 1000, -5000, -4000, -3000, -2000, -1000]), 15000);\n    assert_eq!(candidate(vec![10000, 0, 0, 0, 0, 0, 0, 0, 0, 0, -10000]), 10000);\n    assert_eq!(candidate(vec![0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, -55]), 55);\n    assert_eq!(candidate(vec![1, 2, 3, 4, 5, 6, 7, 8, 9, 10, -1, -2, -3, -4, -5, -6, -7, -8, -9, -10]), 55);\n    assert_eq!(candidate(vec![43, 44, -87, 45, 46, 47, -135, 48, 49, 50, 51, -195, 52, 53, 54, 55, 56, -260, 57, 58]), 276);\n    assert_eq!(candidate(vec![100, -100, 200, -200, 300, -300, 400, -400, 500, -500]), 500);\n    assert_eq!(candidate(vec![1, 2, 3, 4, 5, -5, -4, -3, -2, -1, 1, 2, 3, 4, 5, -5, -4, -3, -2, -1]), 15);\n    assert_eq!(candidate(vec![10, 20, 30, -60, 40, 50, -100, 60, 70, 80, -230, 90, 100, 110, -340, 120]), 340);\n    assert_eq!(candidate(vec![-5,-4,-3,-2,-1,1,2,3,4,5]), 15);\n    assert_eq!(candidate(vec![5000, -1200, 3000, -1500, 2000, -1000, 4000]), 10300);\n    assert_eq!(candidate(vec![1, -2, 3, -4, 5, -6, 7, -8, 9, -10, 11, -12, 13, -14, 15, -16, 17, -18, 19, -20]), 20);\n    assert_eq!(candidate(vec![10000, -9999, 10000, -9999, 10000, -9999, 10000, -9999]), 10003);\n    assert_eq!(candidate(vec![-1, 2, -3, 4, -5, 6, -7, 8, -9, 10, -11, 12, -13, 14, -15, 16, -17, 18, -19, 20]), 20);\n    assert_eq!(candidate(vec![5, -1, 4, -2, 3, -3, 2, -2, 1, -1, 0, 1, -1, 2, -2, 3, -3, 4, -4, 5]), 11);\n    assert_eq!(candidate(vec![-1, 1, -1, 1, -1, 1, -1, 1, -1, 1]), 1);\n    assert_eq!(candidate(vec![-5, 10, -15, 20, -25, 30, -35, 40]), 40);\n    assert_eq!(candidate(vec![1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1, -1]), 1);\n    assert_eq!(candidate(vec![-5, 4, -3, 7, -8, 2, -6, 1, 9, -4]), 12);\n    assert_eq!(candidate(vec![26, -27, 28, -29, 30, -31, 32, -33, 34, -35, 36, -37, 38, -39, 40, -41, 42, -43, 44, -45, 46, -47, 48, -49, 50]), 50);\n    assert_eq!(candidate(vec![10, -3, 20, -40, 50, -60, 70, -80, 90]), 90);\n    assert_eq!(candidate(vec![10, -10, 20, -20, 30, -30, 40, -40, 50, -50]), 50);\n    assert_eq!(candidate(vec![-1, 2, -3, 4, -5, 6, -7, 8, -9, 10, -11, 12, -13, 14, -15, 16]), 16);\n    assert_eq!(candidate(vec![-10, 20, -30, 40, -50, 60, -70, 80, -90, 100, -110, 120, -130, 140, -150, 160, -170, 180, -190, 200]), 200);\n    assert_eq!(candidate(vec![1, -10, 100, -1000, 10000, -100000, 1000000, -10000000, 100000000, -1000000000]), 1000000000);\n    assert_eq!(candidate(vec![23, -24, 25, -26, 27, -28, 29, -30, 31, -32, 33, -34, 35, -36, 37, -38, 39, -40, 41, -42]), 42);\n    assert_eq!(candidate(vec![1, -100, 100, -50, 50, -25, 25, -12, 12, -6, 6]), 100);\n    assert_eq!(candidate(vec![2, 3, -5, 4, 2, 3, -4, 5, -6, 7, -8, 9, -10, 11, -12]), 13);\n    assert_eq!(candidate(vec![10,-20,30,-40,50,-60,70,-80,90,-100]), 100);\n    assert_eq!(candidate(vec![100, -100, 200, -200, 300, -300, 400, -400]), 400);\n    assert_eq!(candidate(vec![1, 2, 3, 4, 5, -1, -2, -3, -4, -5]), 15);\n    assert_eq!(candidate(vec![0, 1, -1, 2, -2, 3, -3, 4, -4, 5, -5]), 5);\n    assert_eq!(candidate(vec![0, 1, -1, 2, -2, 3, -3, 4, -4, 5, -5, 6, -6, 7, -7]), 7);\n    assert_eq!(candidate(vec![5000, -2000, 1500, -1000, 800, -700, 600, -500, 400, -300]), 5000);\n    assert_eq!(candidate(vec![-10000, -10000, 20000, -10000, -10000, 20000, -10000, -10000, 20000, -10000, -10000, 20000]), 20000);\n    assert_eq!(candidate(vec![-3000, 4500, -5000, 6000, -7000, 8000, -9000]), 9000);\n    assert_eq!(candidate(vec![-100, 200, -300, 400, -500, 600, -700, 800, -900, 1000]), 1000);\n    assert_eq!(candidate(vec![500, -500, 500, -500, 500, -500, 500, -500, 500, -500]), 500);\n    assert_eq!(candidate(vec![1, -2, 3, -4, 5, -6, 7, -8, 9, -10, 11, -12, 13]), 13);\n    assert_eq!(candidate(vec![0, -1, 2, -3, 4, -5, 6, -7, 8, -9, 10, -11, 12, -13, 14, -15, 16, -17, 18, -19, 20]), 20);\n    assert_eq!(candidate(vec![1, 2, -3, 4, -5, 6, -7, 8, -9, 10]), 10);\n    assert_eq!(candidate(vec![1, -1, 2, -2, 3, -3, 4, -4, 5, -5, 6, -6, 7, -7, 8, -8, 9, -9, 10, -10]), 10);\n    assert_eq!(candidate(vec![3,2,1,0,-1,-2,-3,0,3,2,1,0,-1,-2,-3]), 6);\n    assert_eq!(candidate(vec![9999, -9998, 9997, -9996, 9995, -9994, 9993, -9992, 9991, -9990]), 9999);\n    assert_eq!(candidate(vec![1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1]), 1);\n    assert_eq!(candidate(vec![10000, 9000, 8000, -7000, -6000, -5000, 4000, 3000, 2000, -1000]), 27000);\n    assert_eq!(candidate(vec![10000, 10000, -20000, 10000, 10000, -20000, 10000, 10000, -20000, 10000, 10000, -20000]), 20000);\n    assert_eq!(candidate(vec![1, -2, 3, -4, 5, -6, 7, -8, 9, -10]), 10);\n    assert_eq!(candidate(vec![5,-5,5,-5,5,-5,5,-5,5,-5,5,-5,5,-5,5,-5,5,-5,5,-5]), 5);\n    assert_eq!(candidate(vec![5, -1, 3, -2, 7, -8, 2, -6, 4]), 12);\n    assert_eq!(candidate(vec![100, 200, 300, -600, 400, 500, -1400, 600, 700, 800, 900, 1000]), 4000);\n    assert_eq!(candidate(vec![-10, -20, -30, 60, -40, -50, 100, -60, -70, -80, 230, -90, -100, -110, 340, -120]), 340);\n    assert_eq!(candidate(vec![-100, -200, -300, -400, -500, 1500, -600, -700, -800, -900, -1000]), 4000);\n    assert_eq!(candidate(vec![-100, -200, -300, -400, -500, -600, -700, -800, -900, -1000, 100, 200, 300, 400, 500]), 5500);\n    assert_eq!(candidate(vec![5, -1, 4, -2, 3, -3, 2, -4, 1, -5, 0, 6, -6, 7, -7, 8, -8, 9, -9, 10]), 10);\n    assert_eq!(candidate(vec![1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]), 210);\n    assert_eq!(candidate(vec![100, -200, 300, -400, 500, -600, 700, -800, 900, -1000, 100, -200, 300, -400, 500]), 1200);\n    assert_eq!(candidate(vec![9000, 9000, -18000, 9000, 9000, -18000, 9000, 9000]), 18000);\n    assert_eq!(candidate(vec![1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1]), 1);\n    assert_eq!(candidate(vec![10000, -9000, 8000, -7000, 6000, -5000, 4000, -3000, 2000, -1000]), 10000);\n    assert_eq!(candidate(vec![-1, 1, -2, 2, -3, 3, -4, 4, -5, 5, -6, 6, -7, 7, -8, 8, -9, 9, -10, 10]), 10);\n    assert_eq!(candidate(vec![-5000, 6000, -7000, 8000, -9000, 10000, -11000, 12000, -13000, 14000]), 14000);\n    assert_eq!(candidate(vec![-1, 2, -3, 4, -5, 6, -7, 8, -9, 10]), 10);\n    assert_eq!(candidate(vec![-5000, 5000, 0, -5000, 5000, 0, -5000, 5000, 0]), 5000);\n    assert_eq!(candidate(vec![1, 2, 3, 4, 5, -5, -4, -3, -2, -1]), 15);\n    assert_eq!(candidate(vec![10000,-10000,10000,-10000,10000,-10000]), 10000);\n    assert_eq!(candidate(vec![1, -2, 3, -4, 5, -6, 7, -8, 9, -10, 11, -12, 13, -14, 15, -16, 17, -18, 19, 20, -21, 22, -23, 24, -25]), 41);\n    assert_eq!(candidate(vec![5000, -2000, 1000, -500, 250, -125, 62, -31, 15, -7, 3, -1]), 5000);\n    assert_eq!(candidate(vec![10000, 10000, 10000, -10000, -10000, -10000, 10000]), 30000);\n    assert_eq!(candidate(vec![1,-1,1,-1,1,-1,1,-1,1,-1]), 1);\n    assert_eq!(candidate(vec![1, 2, 3, 4, 5, -15, 6, 7, 8, 9, 10]), 40);\n    assert_eq!(candidate(vec![1000, -2000, 3000, -4000, 5000]), 5000);\n    assert_eq!(candidate(vec![100, 200, 300, 400, 500, -1500, 600, 700, 800, 900, 1000]), 4000);\n    assert_eq!(candidate(vec![-9999, 9998, -9997, 9996, -9995, 9994]), 9999);\n    assert_eq!(candidate(vec![1, -1, 2, -2, 3, -3, 4, -4, 5, -5]), 5);\n    assert_eq!(candidate(vec![-20, 19, -18, 17, -16, 15, -14, 13, -12, 11, -10, 9, -8, 7, -6, 5, -4, 3, -2, 1]), 20);\n    assert_eq!(candidate(vec![100,-1,200,-2,300,-3,400,-4,500,-5]), 1490);\n    assert_eq!(candidate(vec![1, -1, 1, -1, 1, -1, 1, -1, 1, -1]), 1);\n    assert_eq!(candidate(vec![-1,0,1,-1,0,1,-1,0,1,-1,0,1,-1,0,1]), 1);\n    assert_eq!(candidate(vec![1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1, -1]), 1);\n    assert_eq!(candidate(vec![-10, 20, -30, 40, -50, 60, -70, 80, -90, 100, -110]), 110);\n    assert_eq!(candidate(vec![1, -2, 3, -4, 5, -6, 7, -8, 9, -10, 11, -12, 13, -14, 15]), 15);\n    assert_eq!(candidate(vec![1, -2, 3, -4, 5, -6, 7, -8, 9, -10, 11, -12, 13, -14, 15, -16, 17, -18, 19, 20, -21, 22]), 40);\n    assert_eq!(candidate(vec![10000, -9999, 9998, -9997, 9996, -9995, 9994, -9993, 9992, -9991]), 10000);\n    assert_eq!(candidate(vec![5, -3, 8, -1, 4, -7, 9, -2, 6, -10]), 19);\n    assert_eq!(candidate(vec![10000, -9999, 9998, -9997, 9996, -9995, 9994]), 10000);\n    assert_eq!(candidate(vec![5, -3, 8, -6, 2, -4, 7, -9, 1, -1]), 10);\n}"
+  },
+  "test_cases": [
+    {
+      "input": "nums = [1,-1,1,-1,1,-1]",
+      "output": "1"
+    },
+    {
+      "input": "nums = [1]",
+      "output": "1"
+    },
+    {
+      "input": "nums = [-10000,10000,-10000,10000]",
+      "output": "10000"
+    },
+    {
+      "input": "nums = [1,-3,2,3,-4]",
+      "output": "5"
+    },
+    {
+      "input": "nums = [0]",
+      "output": "0"
+    },
+    {
+      "input": "nums = [2,-5,1,-4,3,-2]",
+      "output": "8"
+    },
+    {
+      "input": "nums = [10000,-10000,10000,-10000,10000]",
+      "output": "10000"
+    },
+    {
+      "input": "nums = [-1,-2,-3,-4,-5]",
+      "output": "15"
+    },
+    {
+      "input": "nums = [0,0,0,0,0]",
+      "output": "0"
+    },
+    {
+      "input": "nums = [-1]",
+      "output": "1"
+    },
+    {
+      "input": "nums = [1,2,3,4,5]",
+      "output": "15"
+    },
+    {
+      "input": "nums = [-10000,10000,-10000,10000,-10000]",
+      "output": "10000"
+    },
+    {
+      "input": "nums = [0, 1, -1, 2, -2, 3, -3, 4, -4, 5, -5, 6, -6, 7, -7, 8, -8, 9, -9, 10]",
+      "output": "10"
+    },
+    {
+      "input": "nums = [1, 2, 3, 4, 5, -15, 6, 7, 8, 9, 10, -25, 11, 12, 13, 14, 15]",
+      "output": "80"
+    },
+    {
+      "input": "nums = [10, 20, -30, 40, -50, 60, -70, 80, -90, 100]",
+      "output": "100"
+    },
+    {
+      "input": "nums = [5,1,-2,4,-1,-3,6,-2,1]",
+      "output": "10"
+    },
+    {
+      "input": "nums = [1,2,3,4,5,6,7,8,9,10]",
+      "output": "55"
+    },
+    {
+      "input": "nums = [-100, 101, -102, 103, -104, 105, -106, 107]",
+      "output": "107"
+    },
+    {
+      "input": "nums = [100, -50, 25, -10, 5, -2, 1]",
+      "output": "100"
+    },
+    {
+      "input": "nums = [-1, -2, -3, -4, -5, 5, 4, 3, 2, 1, -1, -2, -3, -4, -5, 5, 4, 3, 2, 1]",
+      "output": "15"
+    },
+    {
+      "input": "nums = [5, -1, 3, -2, 4, -3, 6, -4, 7, -5]",
+      "output": "15"
+    },
+    {
+      "input": "nums = [1000, -500, 250, -125, 62, -31, 15, -7, 3, -1]",
+      "output": "1000"
+    },
+    {
+      "input": "nums = [100, -200, 300, -400, 500, -600, 700, -800, 900, -1000]",
+      "output": "1000"
+    },
+    {
+      "input": "nums = [1, 2, 3, -6, 1, 2, 3, -6, 1, 2, 3, -6]",
+      "output": "6"
+    },
+    {
+      "input": "nums = [5000, 4000, 3000, 2000, 1000, -5000, -4000, -3000, -2000, -1000]",
+      "output": "15000"
+    },
+    {
+      "input": "nums = [10000, 0, 0, 0, 0, 0, 0, 0, 0, 0, -10000]",
+      "output": "10000"
+    },
+    {
+      "input": "nums = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, -55]",
+      "output": "55"
+    },
+    {
+      "input": "nums = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, -1, -2, -3, -4, -5, -6, -7, -8, -9, -10]",
+      "output": "55"
+    },
+    {
+      "input": "nums = [43, 44, -87, 45, 46, 47, -135, 48, 49, 50, 51, -195, 52, 53, 54, 55, 56, -260, 57, 58]",
+      "output": "276"
+    },
+    {
+      "input": "nums = [100, -100, 200, -200, 300, -300, 400, -400, 500, -500]",
+      "output": "500"
+    },
+    {
+      "input": "nums = [1, 2, 3, 4, 5, -5, -4, -3, -2, -1, 1, 2, 3, 4, 5, -5, -4, -3, -2, -1]",
+      "output": "15"
+    },
+    {
+      "input": "nums = [10, 20, 30, -60, 40, 50, -100, 60, 70, 80, -230, 90, 100, 110, -340, 120]",
+      "output": "340"
+    },
+    {
+      "input": "nums = [-5,-4,-3,-2,-1,1,2,3,4,5]",
+      "output": "15"
+    },
+    {
+      "input": "nums = [5000, -1200, 3000, -1500, 2000, -1000, 4000]",
+      "output": "10300"
+    },
+    {
+      "input": "nums = [1, -2, 3, -4, 5, -6, 7, -8, 9, -10, 11, -12, 13, -14, 15, -16, 17, -18, 19, -20]",
+      "output": "20"
+    },
+    {
+      "input": "nums = [10000, -9999, 10000, -9999, 10000, -9999, 10000, -9999]",
+      "output": "10003"
+    },
+    {
+      "input": "nums = [-1, 2, -3, 4, -5, 6, -7, 8, -9, 10, -11, 12, -13, 14, -15, 16, -17, 18, -19, 20]",
+      "output": "20"
+    },
+    {
+      "input": "nums = [5, -1, 4, -2, 3, -3, 2, -2, 1, -1, 0, 1, -1, 2, -2, 3, -3, 4, -4, 5]",
+      "output": "11"
+    },
+    {
+      "input": "nums = [-1, 1, -1, 1, -1, 1, -1, 1, -1, 1]",
+      "output": "1"
+    },
+    {
+      "input": "nums = [-5, 10, -15, 20, -25, 30, -35, 40]",
+      "output": "40"
+    },
+    {
+      "input": "nums = [1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1, -1]",
+      "output": "1"
+    },
+    {
+      "input": "nums = [-5, 4, -3, 7, -8, 2, -6, 1, 9, -4]",
+      "output": "12"
+    },
+    {
+      "input": "nums = [26, -27, 28, -29, 30, -31, 32, -33, 34, -35, 36, -37, 38, -39, 40, -41, 42, -43, 44, -45, 46, -47, 48, -49, 50]",
+      "output": "50"
+    },
+    {
+      "input": "nums = [10, -3, 20, -40, 50, -60, 70, -80, 90]",
+      "output": "90"
+    },
+    {
+      "input": "nums = [10, -10, 20, -20, 30, -30, 40, -40, 50, -50]",
+      "output": "50"
+    },
+    {
+      "input": "nums = [-1, 2, -3, 4, -5, 6, -7, 8, -9, 10, -11, 12, -13, 14, -15, 16]",
+      "output": "16"
+    },
+    {
+      "input": "nums = [-10, 20, -30, 40, -50, 60, -70, 80, -90, 100, -110, 120, -130, 140, -150, 160, -170, 180, -190, 200]",
+      "output": "200"
+    },
+    {
+      "input": "nums = [1, -10, 100, -1000, 10000, -100000, 1000000, -10000000, 100000000, -1000000000]",
+      "output": "1000000000"
+    },
+    {
+      "input": "nums = [23, -24, 25, -26, 27, -28, 29, -30, 31, -32, 33, -34, 35, -36, 37, -38, 39, -40, 41, -42]",
+      "output": "42"
+    },
+    {
+      "input": "nums = [1, -100, 100, -50, 50, -25, 25, -12, 12, -6, 6]",
+      "output": "100"
+    },
+    {
+      "input": "nums = [2, 3, -5, 4, 2, 3, -4, 5, -6, 7, -8, 9, -10, 11, -12]",
+      "output": "13"
+    },
+    {
+      "input": "nums = [10,-20,30,-40,50,-60,70,-80,90,-100]",
+      "output": "100"
+    },
+    {
+      "input": "nums = [100, -100, 200, -200, 300, -300, 400, -400]",
+      "output": "400"
+    },
+    {
+      "input": "nums = [1, 2, 3, 4, 5, -1, -2, -3, -4, -5]",
+      "output": "15"
+    },
+    {
+      "input": "nums = [0, 1, -1, 2, -2, 3, -3, 4, -4, 5, -5]",
+      "output": "5"
+    },
+    {
+      "input": "nums = [0, 1, -1, 2, -2, 3, -3, 4, -4, 5, -5, 6, -6, 7, -7]",
+      "output": "7"
+    },
+    {
+      "input": "nums = [5000, -2000, 1500, -1000, 800, -700, 600, -500, 400, -300]",
+      "output": "5000"
+    },
+    {
+      "input": "nums = [-10000, -10000, 20000, -10000, -10000, 20000, -10000, -10000, 20000, -10000, -10000, 20000]",
+      "output": "20000"
+    },
+    {
+      "input": "nums = [-3000, 4500, -5000, 6000, -7000, 8000, -9000]",
+      "output": "9000"
+    },
+    {
+      "input": "nums = [-100, 200, -300, 400, -500, 600, -700, 800, -900, 1000]",
+      "output": "1000"
+    },
+    {
+      "input": "nums = [500, -500, 500, -500, 500, -500, 500, -500, 500, -500]",
+      "output": "500"
+    },
+    {
+      "input": "nums = [1, -2, 3, -4, 5, -6, 7, -8, 9, -10, 11, -12, 13]",
+      "output": "13"
+    },
+    {
+      "input": "nums = [0, -1, 2, -3, 4, -5, 6, -7, 8, -9, 10, -11, 12, -13, 14, -15, 16, -17, 18, -19, 20]",
+      "output": "20"
+    },
+    {
+      "input": "nums = [1, 2, -3, 4, -5, 6, -7, 8, -9, 10]",
+      "output": "10"
+    },
+    {
+      "input": "nums = [1, -1, 2, -2, 3, -3, 4, -4, 5, -5, 6, -6, 7, -7, 8, -8, 9, -9, 10, -10]",
+      "output": "10"
+    },
+    {
+      "input": "nums = [3,2,1,0,-1,-2,-3,0,3,2,1,0,-1,-2,-3]",
+      "output": "6"
+    },
+    {
+      "input": "nums = [9999, -9998, 9997, -9996, 9995, -9994, 9993, -9992, 9991, -9990]",
+      "output": "9999"
+    },
+    {
+      "input": "nums = [1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1]",
+      "output": "1"
+    },
+    {
+      "input": "nums = [10000, 9000, 8000, -7000, -6000, -5000, 4000, 3000, 2000, -1000]",
+      "output": "27000"
+    },
+    {
+      "input": "nums = [10000, 10000, -20000, 10000, 10000, -20000, 10000, 10000, -20000, 10000, 10000, -20000]",
+      "output": "20000"
+    },
+    {
+      "input": "nums = [1, -2, 3, -4, 5, -6, 7, -8, 9, -10]",
+      "output": "10"
+    },
+    {
+      "input": "nums = [5,-5,5,-5,5,-5,5,-5,5,-5,5,-5,5,-5,5,-5,5,-5,5,-5]",
+      "output": "5"
+    },
+    {
+      "input": "nums = [5, -1, 3, -2, 7, -8, 2, -6, 4]",
+      "output": "12"
+    },
+    {
+      "input": "nums = [100, 200, 300, -600, 400, 500, -1400, 600, 700, 800, 900, 1000]",
+      "output": "4000"
+    },
+    {
+      "input": "nums = [-10, -20, -30, 60, -40, -50, 100, -60, -70, -80, 230, -90, -100, -110, 340, -120]",
+      "output": "340"
+    },
+    {
+      "input": "nums = [-100, -200, -300, -400, -500, 1500, -600, -700, -800, -900, -1000]",
+      "output": "4000"
+    },
+    {
+      "input": "nums = [-100, -200, -300, -400, -500, -600, -700, -800, -900, -1000, 100, 200, 300, 400, 500]",
+      "output": "5500"
+    },
+    {
+      "input": "nums = [5, -1, 4, -2, 3, -3, 2, -4, 1, -5, 0, 6, -6, 7, -7, 8, -8, 9, -9, 10]",
+      "output": "10"
+    },
+    {
+      "input": "nums = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]",
+      "output": "210"
+    },
+    {
+      "input": "nums = [100, -200, 300, -400, 500, -600, 700, -800, 900, -1000, 100, -200, 300, -400, 500]",
+      "output": "1200"
+    },
+    {
+      "input": "nums = [9000, 9000, -18000, 9000, 9000, -18000, 9000, 9000]",
+      "output": "18000"
+    },
+    {
+      "input": "nums = [1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1]",
+      "output": "1"
+    },
+    {
+      "input": "nums = [10000, -9000, 8000, -7000, 6000, -5000, 4000, -3000, 2000, -1000]",
+      "output": "10000"
+    },
+    {
+      "input": "nums = [-1, 1, -2, 2, -3, 3, -4, 4, -5, 5, -6, 6, -7, 7, -8, 8, -9, 9, -10, 10]",
+      "output": "10"
+    },
+    {
+      "input": "nums = [-5000, 6000, -7000, 8000, -9000, 10000, -11000, 12000, -13000, 14000]",
+      "output": "14000"
+    },
+    {
+      "input": "nums = [-1, 2, -3, 4, -5, 6, -7, 8, -9, 10]",
+      "output": "10"
+    },
+    {
+      "input": "nums = [-5000, 5000, 0, -5000, 5000, 0, -5000, 5000, 0]",
+      "output": "5000"
+    },
+    {
+      "input": "nums = [1, 2, 3, 4, 5, -5, -4, -3, -2, -1]",
+      "output": "15"
+    },
+    {
+      "input": "nums = [10000,-10000,10000,-10000,10000,-10000]",
+      "output": "10000"
+    },
+    {
+      "input": "nums = [1, -2, 3, -4, 5, -6, 7, -8, 9, -10, 11, -12, 13, -14, 15, -16, 17, -18, 19, 20, -21, 22, -23, 24, -25]",
+      "output": "41"
+    },
+    {
+      "input": "nums = [5000, -2000, 1000, -500, 250, -125, 62, -31, 15, -7, 3, -1]",
+      "output": "5000"
+    },
+    {
+      "input": "nums = [10000, 10000, 10000, -10000, -10000, -10000, 10000]",
+      "output": "30000"
+    },
+    {
+      "input": "nums = [1,-1,1,-1,1,-1,1,-1,1,-1]",
+      "output": "1"
+    },
+    {
+      "input": "nums = [1, 2, 3, 4, 5, -15, 6, 7, 8, 9, 10]",
+      "output": "40"
+    },
+    {
+      "input": "nums = [1000, -2000, 3000, -4000, 5000]",
+      "output": "5000"
+    },
+    {
+      "input": "nums = [100, 200, 300, 400, 500, -1500, 600, 700, 800, 900, 1000]",
+      "output": "4000"
+    },
+    {
+      "input": "nums = [-9999, 9998, -9997, 9996, -9995, 9994]",
+      "output": "9999"
+    },
+    {
+      "input": "nums = [1, -1, 2, -2, 3, -3, 4, -4, 5, -5]",
+      "output": "5"
+    },
+    {
+      "input": "nums = [-20, 19, -18, 17, -16, 15, -14, 13, -12, 11, -10, 9, -8, 7, -6, 5, -4, 3, -2, 1]",
+      "output": "20"
+    },
+    {
+      "input": "nums = [100,-1,200,-2,300,-3,400,-4,500,-5]",
+      "output": "1490"
+    },
+    {
+      "input": "nums = [1, -1, 1, -1, 1, -1, 1, -1, 1, -1]",
+      "output": "1"
+    },
+    {
+      "input": "nums = [-1,0,1,-1,0,1,-1,0,1,-1,0,1,-1,0,1]",
+      "output": "1"
+    },
+    {
+      "input": "nums = [1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1, -1]",
+      "output": "1"
+    },
+    {
+      "input": "nums = [-10, 20, -30, 40, -50, 60, -70, 80, -90, 100, -110]",
+      "output": "110"
+    },
+    {
+      "input": "nums = [1, -2, 3, -4, 5, -6, 7, -8, 9, -10, 11, -12, 13, -14, 15]",
+      "output": "15"
+    },
+    {
+      "input": "nums = [1, -2, 3, -4, 5, -6, 7, -8, 9, -10, 11, -12, 13, -14, 15, -16, 17, -18, 19, 20, -21, 22]",
+      "output": "40"
+    },
+    {
+      "input": "nums = [10000, -9999, 9998, -9997, 9996, -9995, 9994, -9993, 9992, -9991]",
+      "output": "10000"
+    },
+    {
+      "input": "nums = [5, -3, 8, -1, 4, -7, 9, -2, 6, -10]",
+      "output": "19"
+    },
+    {
+      "input": "nums = [10000, -9999, 9998, -9997, 9996, -9995, 9994]",
+      "output": "10000"
+    },
+    {
+      "input": "nums = [5, -3, 8, -6, 2, -4, 7, -9, 1, -1]",
+      "output": "10"
+    }
+  ],
+  "types": {
+    "python3": {
+      "input": [
+        {
+          "nums": "List[int]"
+        }
+      ],
+      "output": "int"
+    },
+    "cpp": {
+      "input": [
+        {
+          "nums": "vector<int>&"
+        }
+      ],
+      "output": "int"
+    },
+    "java": {
+      "input": [
+        {
+          "nums": "int[]"
+        }
+      ],
+      "output": "int"
+    },
+    "javascript": {
+      "input": [
+        {
+          "nums": "number[]"
+        }
+      ],
+      "output": "number"
+    },
+    "typescript": {
+      "input": [
+        {
+          "nums": "number[]"
+        }
+      ],
+      "output": "number"
+    },
+    "golang": {
+      "input": [
+        {
+          "nums": "[]int"
+        }
+      ],
+      "output": "int"
+    },
+    "rust": {
+      "input": [
+        {
+          "nums": "Vec<i32>"
+        }
+      ],
+      "output": "i32"
+    }
+  },
+  "tags": [
+    "array",
+    "dynamic-programming"
+  ]
+}

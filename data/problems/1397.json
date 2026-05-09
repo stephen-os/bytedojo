@@ -1,0 +1,403 @@
+{
+  "id": 1397,
+  "title": "Find All Good Strings",
+  "slug": "find-all-good-strings",
+  "difficulty": "Hard",
+  "description": "Given the strings s1 and s2 of size n and the string evil, return the number of good strings.\nA good string has size n, it is alphabetically greater than or equal to s1, it is alphabetically smaller than or equal to s2, and it does not contain the string evil as a substring. Since the answer can be a huge number, return this modulo 109 + 7.\nExample 1:\nExample 2:\nExample 3:\nConstraints:",
+  "examples": [
+    {
+      "example_num": 1,
+      "example_text": "Input: n = 2, s1 = \"aa\", s2 = \"da\", evil = \"b\"\nOutput: 51 \nExplanation: There are 25 good strings starting with 'a': \"aa\",\"ac\",\"ad\",...,\"az\". Then there are 25 good strings starting with 'c': \"ca\",\"cc\",\"cd\",...,\"cz\" and finally there is one good string starting with 'd': \"da\".",
+      "images": []
+    },
+    {
+      "example_num": 2,
+      "example_text": "Input: n = 8, s1 = \"leetcode\", s2 = \"leetgoes\", evil = \"leet\"\nOutput: 0 \nExplanation: All strings greater than or equal to s1 and smaller than or equal to s2 start with the prefix \"leet\", therefore, there is not any good string.",
+      "images": []
+    },
+    {
+      "example_num": 3,
+      "example_text": "Input: n = 2, s1 = \"gx\", s2 = \"gz\", evil = \"x\"\nOutput: 2",
+      "images": []
+    }
+  ],
+  "constraints": [
+    "s1.length == n",
+    "s2.length == n",
+    "s1 <= s2",
+    "1 <= n <= 500",
+    "1 <= evil.length <= 50",
+    "All strings consist of lowercase English letters."
+  ],
+  "hints": [
+    "Use DP with 4 states (pos: Int, posEvil: Int, equalToS1: Bool, equalToS2: Bool) which compute the number of valid strings of size \"pos\" where the maximum common suffix with string \"evil\" has size \"posEvil\". When \"equalToS1\" is \"true\", the current valid string is equal to \"S1\" otherwise it is greater. In a similar way when equalToS2 is \"true\" the current valid string is equal to \"S2\" otherwise it is smaller.",
+    "To update the maximum common suffix with string \"evil\" use KMP preprocessing."
+  ],
+  "code_snippets": {
+    "cpp": "class Solution {\npublic:\n    int findGoodStrings(int n, string s1, string s2, string evil) {\n        \n    }\n};",
+    "java": "class Solution {\n    public int findGoodStrings(int n, String s1, String s2, String evil) {\n        \n    }\n}",
+    "python3": "class Solution:\n    def findGoodStrings(self, n: int, s1: str, s2: str, evil: str) -> int:\n        ",
+    "javascript": "/**\n * @param {number} n\n * @param {string} s1\n * @param {string} s2\n * @param {string} evil\n * @return {number}\n */\nvar findGoodStrings = function(n, s1, s2, evil) {\n    \n};",
+    "typescript": "function findGoodStrings(n: number, s1: string, s2: string, evil: string): number {\n    \n};",
+    "golang": "func findGoodStrings(n int, s1 string, s2 string, evil string) int {\n    \n}",
+    "rust": "impl Solution {\n    pub fn find_good_strings(n: i32, s1: String, s2: String, evil: String) -> i32 {\n        \n    }\n}"
+  },
+  "entry_points": {
+    "python3": "Solution().findGoodStrings",
+    "cpp": "Solution().findGoodStrings",
+    "java": "new Solution().findGoodStrings",
+    "javascript": "findGoodStrings",
+    "typescript": "findGoodStrings",
+    "golang": "findGoodStrings",
+    "rust": "Solution::find_good_strings"
+  },
+  "test_snippets": {
+    "python3": "def check(candidate):\n    assert candidate(n = 5, s1 = \"apple\", s2 = \"zebra\", evil = \"app\") == 11220078\n    assert candidate(n = 5, s1 = \"a\", s2 = \"zzzzz\", evil = \"z\") == Error: string index out of range\n    assert candidate(n = 5, s1 = \"apple\", s2 = \"appla\", evil = \"appl\") == 0\n    assert candidate(n = 3, s1 = \"aaa\", s2 = \"zzz\", evil = \"abc\") == 17575\n    assert candidate(n = 5, s1 = \"aaaaa\", s2 = \"zzzzz\", evil = \"abc\") == 11879348\n    assert candidate(n = 10, s1 = \"abcdefghij\", s2 = \"abcdefghij\", evil = \"ghij\") == 0\n    assert candidate(n = 5, s1 = \"apple\", s2 = \"zebra\", evil = \"dog\") == 11219789\n    assert candidate(n = 2, s1 = \"gx\", s2 = \"gz\", evil = \"x\") == 2\n    assert candidate(n = 3, s1 = \"abc\", s2 = \"xyz\", evil = \"def\") == 16169\n    assert candidate(n = 8, s1 = \"leetcode\", s2 = \"leetgoes\", evil = \"leet\") == 0\n    assert candidate(n = 3, s1 = \"aaa\", s2 = \"zzz\", evil = \"xyz\") == 17575\n    assert candidate(n = 2, s1 = \"aa\", s2 = \"da\", evil = \"b\") == 51\n    assert candidate(n = 3, s1 = \"abc\", s2 = \"xyz\", evil = \"de\") == 16120\n    assert candidate(n = 100, s1 = \"a\"*100, s2 = \"z\"*100, evil = \"xyz\") == Error: Solution.findGoodStrings() missing 2 required positional arguments: 's1' and 's2'\n    assert candidate(n = 30, s1 = \"aaaaaaaaaaaaaaaaaaaaaaa\", s2 = \"zzzzzzzzzzzzzzzzzzzzzzzzz\", evil = \"zzz\") == Error: string index out of range\n    assert candidate(n = 50, s1 = \"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\", s2 = \"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", evil = \"ab\") == Error: string index out of range\n    assert candidate(n = 10, s1 = \"aaaaaaaaaa\", s2 = \"zzzzzzzzzz\", evil = \"mnop\") == 932258852\n    assert candidate(n = 20, s1 = \"aaaaaaaaaa\", s2 = \"zzzzzzzzzz\", evil = \"mnop\") == Error: string index out of range\n    assert candidate(n = 10, s1 = \"abcdefghij\", s2 = \"zzzzzzzzzz\", evil = \"mnop\") == 67339166\n    assert candidate(n = 45, s1 = \"abcdefghijklmnopqrstuvwxyzabcde\", s2 = \"zyxwvutsrqponmlkjihgfedcbaedcba\", evil = \"abcde\") == Error: string index out of range\n    assert candidate(n = 25, s1 = \"a\"*25, s2 = \"z\"*25, evil = \"qrstuv\") == Error: Solution.findGoodStrings() missing 2 required positional arguments: 's1' and 's2'\n    assert candidate(n = 25, s1 = \"abcdefghijklmnopqrstuvwxyz\", s2 = \"abcdefghijklmnopqrstuvwxyz\", evil = \"abcde\") == 0\n    assert candidate(n = 45, s1 = \"abcdefghijklmnopqrstuvwxyzabcdefghij\", s2 = \"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", evil = \"mnopqr\") == 720631236\n    assert candidate(n = 6, s1 = \"aaaaaa\", s2 = \"zzzzzz\", evil = \"ab\") == 306634951\n    assert candidate(n = 30, s1 = \"abcdefghijklmnopqrstuvwxyzabcde\", s2 = \"zzzzzzzzzzzzzzzzzzzzzzzzzzz\", evil = \"mnopqr\") == Error: string index out of range\n    assert candidate(n = 20, s1 = \"aaabaaabaaabaaabaa\", s2 = \"zzzzzzzzzzzzzzzzzzzz\", evil = \"aaa\") == 357553640\n    assert candidate(n = 35, s1 = \"applepieapplepieapplepieapplepie\", s2 = \"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", evil = \"apple\") == 695022504\n    assert candidate(n = 15, s1 = \"aaaaaabbbbb\", s2 = \"zzzzzzzzzzz\", evil = \"abcde\") == Error: string index out of range\n    assert candidate(n = 50, s1 = \"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\", s2 = \"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", evil = \"abcde\") == Error: string index out of range\n    assert candidate(n = 25, s1 = \"abcdeabcdeabcdeabcde\", s2 = \"edcbaedcbaedcbaedcba\", evil = \"abc\") == Error: string index out of range\n    assert candidate(n = 500, s1 = \"a\"*500, s2 = \"z\"*500, evil = \"abcdef\") == Error: Solution.findGoodStrings() missing 2 required positional arguments: 's1' and 's2'\n    assert candidate(n = 7, s1 = \"aaaaaaa\", s2 = \"zzzzzzz\", evil = \"abc\") == 29525318\n    assert candidate(n = 20, s1 = \"abcdabcdabcdabcdabcd\", s2 = \"zzzzzzzzzzzzzzzzzzzz\", evil = \"zabcd\") == 426896930\n    assert candidate(n = 15, s1 = \"abcdefghijklm\", s2 = \"nopqrstuvwxyz\", evil = \"uvw\") == Error: string index out of range\n    assert candidate(n = 10, s1 = \"abcdefghij\", s2 = \"abcdefghiz\", evil = \"ghi\") == 0\n    assert candidate(n = 50, s1 = \"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\", s2 = \"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", evil = \"zzz\") == Error: string index out of range\n    assert candidate(n = 50, s1 = \"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\", s2 = \"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", evil = \"xyzxyzxyzxyzxyz\") == Error: string index out of range\n    assert candidate(n = 50, s1 = \"a\"*50, s2 = \"z\"*50, evil = \"abcdefghijkl\") == Error: Solution.findGoodStrings() missing 2 required positional arguments: 's1' and 's2'\n    assert candidate(n = 15, s1 = \"abcdefghijklnmop\", s2 = \"abcdefghijklnmopqrstuvwxyz\", evil = \"mnop\") == 1\n    assert candidate(n = 30, s1 = \"abcdefghijklmnopqrstuvwxyzabcde\", s2 = \"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", evil = \"vwxyz\") == 858527385\n    assert candidate(n = 40, s1 = \"aaaabaaaabaaaabaaaab\", s2 = \"zzzzzzzzzzzzzzzzzzzz\", evil = \"aaaa\") == Error: string index out of range\n    assert candidate(n = 30, s1 = \"zzzzzzzzzzzzzzzzzzzz\", s2 = \"zzzzzzzzzzzzzzzzzzzz\", evil = \"abc\") == Error: string index out of range\n    assert candidate(n = 50, s1 = \"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\", s2 = \"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", evil = \"ab\") == Error: string index out of range\n    assert candidate(n = 40, s1 = \"abcdabcdabcdabcdabcdabcdabcdabcdabcd\", s2 = \"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", evil = \"xyz\") == Error: string index out of range\n    assert candidate(n = 50, s1 = \"leetcodeleetcodeleetcodeleetcodeleetcode\", s2 = \"leetgoesleetgoesleetgoesleetgoesleetgoes\", evil = \"leet\") == 0\n    assert candidate(n = 40, s1 = \"aaabbbcccdddeeefffggghhhiiijjjkkklllmmmnnnooopppqqqrrrssstttuuuvvvwwwxxxxyyyzzz\", s2 = \"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", evil = \"mnopqr\") == 438601268\n    assert candidate(n = 10, s1 = \"abcdefghij\", s2 = \"zjklmnopqr\", evil = \"mnop\") == 922212598\n    assert candidate(n = 40, s1 = \"abcdefghijabcdefghijabcdefghijabcdefghij\", s2 = \"zjklmnopqrzjklmnopqrzjklmnopqrzjklmnopqr\", evil = \"mnopqr\") == 54391096\n    assert candidate(n = 15, s1 = \"aaaabbbbcccc\", s2 = \"zzzzzzzzzzzzzz\", evil = \"xyz\") == Error: string index out of range\n    assert candidate(n = 40, s1 = \"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\", s2 = \"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", evil = \"xyz\") == Error: string index out of range\n    assert candidate(n = 5, s1 = \"aaaaa\", s2 = \"zzzzz\", evil = \"b\") == 9765625\n    assert candidate(n = 20, s1 = \"aaaaeaaaagaaaa\", s2 = \"zzzzkzzzzzzzzz\", evil = \"kzz\") == Error: string index out of range\n    assert candidate(n = 50, s1 = \"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\", s2 = \"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", evil = \"zzzz\") == Error: string index out of range",
+    "cpp": "void check(Solution& solution) {\n    assert(solution.findGoodStrings(5, \"apple\", \"zebra\", \"app\") == vector<int>11220078);\n    assert(solution.findGoodStrings(5, \"a\", \"zzzzz\", \"z\") == vector<int>Error: string index out of range);\n    assert(solution.findGoodStrings(5, \"apple\", \"appla\", \"appl\") == vector<int>0);\n    assert(solution.findGoodStrings(3, \"aaa\", \"zzz\", \"abc\") == vector<int>17575);\n    assert(solution.findGoodStrings(5, \"aaaaa\", \"zzzzz\", \"abc\") == vector<int>11879348);\n    assert(solution.findGoodStrings(10, \"abcdefghij\", \"abcdefghij\", \"ghij\") == vector<int>0);\n    assert(solution.findGoodStrings(5, \"apple\", \"zebra\", \"dog\") == vector<int>11219789);\n    assert(solution.findGoodStrings(2, \"gx\", \"gz\", \"x\") == vector<int>2);\n    assert(solution.findGoodStrings(3, \"abc\", \"xyz\", \"def\") == vector<int>16169);\n    assert(solution.findGoodStrings(8, \"leetcode\", \"leetgoes\", \"leet\") == vector<int>0);\n    assert(solution.findGoodStrings(3, \"aaa\", \"zzz\", \"xyz\") == vector<int>17575);\n    assert(solution.findGoodStrings(2, \"aa\", \"da\", \"b\") == vector<int>51);\n    assert(solution.findGoodStrings(3, \"abc\", \"xyz\", \"de\") == vector<int>16120);\n    assert(solution.findGoodStrings(100, \"a\"*100, \"z\"*100, \"xyz\") == vector<int>Error: Solution.findGoodStrings() missing 2 required positional arguments: 's1' and 's2');\n    assert(solution.findGoodStrings(30, \"aaaaaaaaaaaaaaaaaaaaaaa\", \"zzzzzzzzzzzzzzzzzzzzzzzzz\", \"zzz\") == vector<int>Error: string index out of range);\n    assert(solution.findGoodStrings(50, \"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\", \"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", \"ab\") == vector<int>Error: string index out of range);\n    assert(solution.findGoodStrings(10, \"aaaaaaaaaa\", \"zzzzzzzzzz\", \"mnop\") == vector<int>932258852);\n    assert(solution.findGoodStrings(20, \"aaaaaaaaaa\", \"zzzzzzzzzz\", \"mnop\") == vector<int>Error: string index out of range);\n    assert(solution.findGoodStrings(10, \"abcdefghij\", \"zzzzzzzzzz\", \"mnop\") == vector<int>67339166);\n    assert(solution.findGoodStrings(45, \"abcdefghijklmnopqrstuvwxyzabcde\", \"zyxwvutsrqponmlkjihgfedcbaedcba\", \"abcde\") == vector<int>Error: string index out of range);\n    assert(solution.findGoodStrings(25, \"a\"*25, \"z\"*25, \"qrstuv\") == vector<int>Error: Solution.findGoodStrings() missing 2 required positional arguments: 's1' and 's2');\n    assert(solution.findGoodStrings(25, \"abcdefghijklmnopqrstuvwxyz\", \"abcdefghijklmnopqrstuvwxyz\", \"abcde\") == vector<int>0);\n    assert(solution.findGoodStrings(45, \"abcdefghijklmnopqrstuvwxyzabcdefghij\", \"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", \"mnopqr\") == vector<int>720631236);\n    assert(solution.findGoodStrings(6, \"aaaaaa\", \"zzzzzz\", \"ab\") == vector<int>306634951);\n    assert(solution.findGoodStrings(30, \"abcdefghijklmnopqrstuvwxyzabcde\", \"zzzzzzzzzzzzzzzzzzzzzzzzzzz\", \"mnopqr\") == vector<int>Error: string index out of range);\n    assert(solution.findGoodStrings(20, \"aaabaaabaaabaaabaa\", \"zzzzzzzzzzzzzzzzzzzz\", \"aaa\") == vector<int>357553640);\n    assert(solution.findGoodStrings(35, \"applepieapplepieapplepieapplepie\", \"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", \"apple\") == vector<int>695022504);\n    assert(solution.findGoodStrings(15, \"aaaaaabbbbb\", \"zzzzzzzzzzz\", \"abcde\") == vector<int>Error: string index out of range);\n    assert(solution.findGoodStrings(50, \"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\", \"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", \"abcde\") == vector<int>Error: string index out of range);\n    assert(solution.findGoodStrings(25, \"abcdeabcdeabcdeabcde\", \"edcbaedcbaedcbaedcba\", \"abc\") == vector<int>Error: string index out of range);\n    assert(solution.findGoodStrings(500, \"a\"*500, \"z\"*500, \"abcdef\") == vector<int>Error: Solution.findGoodStrings() missing 2 required positional arguments: 's1' and 's2');\n    assert(solution.findGoodStrings(7, \"aaaaaaa\", \"zzzzzzz\", \"abc\") == vector<int>29525318);\n    assert(solution.findGoodStrings(20, \"abcdabcdabcdabcdabcd\", \"zzzzzzzzzzzzzzzzzzzz\", \"zabcd\") == vector<int>426896930);\n    assert(solution.findGoodStrings(15, \"abcdefghijklm\", \"nopqrstuvwxyz\", \"uvw\") == vector<int>Error: string index out of range);\n    assert(solution.findGoodStrings(10, \"abcdefghij\", \"abcdefghiz\", \"ghi\") == vector<int>0);\n    assert(solution.findGoodStrings(50, \"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\", \"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", \"zzz\") == vector<int>Error: string index out of range);\n    assert(solution.findGoodStrings(50, \"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\", \"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", \"xyzxyzxyzxyzxyz\") == vector<int>Error: string index out of range);\n    assert(solution.findGoodStrings(50, \"a\"*50, \"z\"*50, \"abcdefghijkl\") == vector<int>Error: Solution.findGoodStrings() missing 2 required positional arguments: 's1' and 's2');\n    assert(solution.findGoodStrings(15, \"abcdefghijklnmop\", \"abcdefghijklnmopqrstuvwxyz\", \"mnop\") == vector<int>1);\n    assert(solution.findGoodStrings(30, \"abcdefghijklmnopqrstuvwxyzabcde\", \"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", \"vwxyz\") == vector<int>858527385);\n    assert(solution.findGoodStrings(40, \"aaaabaaaabaaaabaaaab\", \"zzzzzzzzzzzzzzzzzzzz\", \"aaaa\") == vector<int>Error: string index out of range);\n    assert(solution.findGoodStrings(30, \"zzzzzzzzzzzzzzzzzzzz\", \"zzzzzzzzzzzzzzzzzzzz\", \"abc\") == vector<int>Error: string index out of range);\n    assert(solution.findGoodStrings(50, \"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\", \"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", \"ab\") == vector<int>Error: string index out of range);\n    assert(solution.findGoodStrings(40, \"abcdabcdabcdabcdabcdabcdabcdabcdabcd\", \"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", \"xyz\") == vector<int>Error: string index out of range);\n    assert(solution.findGoodStrings(50, \"leetcodeleetcodeleetcodeleetcodeleetcode\", \"leetgoesleetgoesleetgoesleetgoesleetgoes\", \"leet\") == vector<int>0);\n    assert(solution.findGoodStrings(40, \"aaabbbcccdddeeefffggghhhiiijjjkkklllmmmnnnooopppqqqrrrssstttuuuvvvwwwxxxxyyyzzz\", \"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", \"mnopqr\") == vector<int>438601268);\n    assert(solution.findGoodStrings(10, \"abcdefghij\", \"zjklmnopqr\", \"mnop\") == vector<int>922212598);\n    assert(solution.findGoodStrings(40, \"abcdefghijabcdefghijabcdefghijabcdefghij\", \"zjklmnopqrzjklmnopqrzjklmnopqrzjklmnopqr\", \"mnopqr\") == vector<int>54391096);\n    assert(solution.findGoodStrings(15, \"aaaabbbbcccc\", \"zzzzzzzzzzzzzz\", \"xyz\") == vector<int>Error: string index out of range);\n    assert(solution.findGoodStrings(40, \"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\", \"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", \"xyz\") == vector<int>Error: string index out of range);\n    assert(solution.findGoodStrings(5, \"aaaaa\", \"zzzzz\", \"b\") == vector<int>9765625);\n    assert(solution.findGoodStrings(20, \"aaaaeaaaagaaaa\", \"zzzzkzzzzzzzzz\", \"kzz\") == vector<int>Error: string index out of range);\n    assert(solution.findGoodStrings(50, \"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\", \"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", \"zzzz\") == vector<int>Error: string index out of range);\n}",
+    "java": "public static void check(Solution solution) {\n    assert Arrays.equals(solution.findGoodStrings(5, \"apple\", \"zebra\", \"app\"), 11220078);\n    assert Arrays.equals(solution.findGoodStrings(5, \"a\", \"zzzzz\", \"z\"), Error: string index out of range);\n    assert Arrays.equals(solution.findGoodStrings(5, \"apple\", \"appla\", \"appl\"), 0);\n    assert Arrays.equals(solution.findGoodStrings(3, \"aaa\", \"zzz\", \"abc\"), 17575);\n    assert Arrays.equals(solution.findGoodStrings(5, \"aaaaa\", \"zzzzz\", \"abc\"), 11879348);\n    assert Arrays.equals(solution.findGoodStrings(10, \"abcdefghij\", \"abcdefghij\", \"ghij\"), 0);\n    assert Arrays.equals(solution.findGoodStrings(5, \"apple\", \"zebra\", \"dog\"), 11219789);\n    assert Arrays.equals(solution.findGoodStrings(2, \"gx\", \"gz\", \"x\"), 2);\n    assert Arrays.equals(solution.findGoodStrings(3, \"abc\", \"xyz\", \"def\"), 16169);\n    assert Arrays.equals(solution.findGoodStrings(8, \"leetcode\", \"leetgoes\", \"leet\"), 0);\n    assert Arrays.equals(solution.findGoodStrings(3, \"aaa\", \"zzz\", \"xyz\"), 17575);\n    assert Arrays.equals(solution.findGoodStrings(2, \"aa\", \"da\", \"b\"), 51);\n    assert Arrays.equals(solution.findGoodStrings(3, \"abc\", \"xyz\", \"de\"), 16120);\n    assert Arrays.equals(solution.findGoodStrings(100, \"a\"*100, \"z\"*100, \"xyz\"), Error: Solution.findGoodStrings() missing 2 required positional arguments: 's1' and 's2');\n    assert Arrays.equals(solution.findGoodStrings(30, \"aaaaaaaaaaaaaaaaaaaaaaa\", \"zzzzzzzzzzzzzzzzzzzzzzzzz\", \"zzz\"), Error: string index out of range);\n    assert Arrays.equals(solution.findGoodStrings(50, \"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\", \"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", \"ab\"), Error: string index out of range);\n    assert Arrays.equals(solution.findGoodStrings(10, \"aaaaaaaaaa\", \"zzzzzzzzzz\", \"mnop\"), 932258852);\n    assert Arrays.equals(solution.findGoodStrings(20, \"aaaaaaaaaa\", \"zzzzzzzzzz\", \"mnop\"), Error: string index out of range);\n    assert Arrays.equals(solution.findGoodStrings(10, \"abcdefghij\", \"zzzzzzzzzz\", \"mnop\"), 67339166);\n    assert Arrays.equals(solution.findGoodStrings(45, \"abcdefghijklmnopqrstuvwxyzabcde\", \"zyxwvutsrqponmlkjihgfedcbaedcba\", \"abcde\"), Error: string index out of range);\n    assert Arrays.equals(solution.findGoodStrings(25, \"a\"*25, \"z\"*25, \"qrstuv\"), Error: Solution.findGoodStrings() missing 2 required positional arguments: 's1' and 's2');\n    assert Arrays.equals(solution.findGoodStrings(25, \"abcdefghijklmnopqrstuvwxyz\", \"abcdefghijklmnopqrstuvwxyz\", \"abcde\"), 0);\n    assert Arrays.equals(solution.findGoodStrings(45, \"abcdefghijklmnopqrstuvwxyzabcdefghij\", \"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", \"mnopqr\"), 720631236);\n    assert Arrays.equals(solution.findGoodStrings(6, \"aaaaaa\", \"zzzzzz\", \"ab\"), 306634951);\n    assert Arrays.equals(solution.findGoodStrings(30, \"abcdefghijklmnopqrstuvwxyzabcde\", \"zzzzzzzzzzzzzzzzzzzzzzzzzzz\", \"mnopqr\"), Error: string index out of range);\n    assert Arrays.equals(solution.findGoodStrings(20, \"aaabaaabaaabaaabaa\", \"zzzzzzzzzzzzzzzzzzzz\", \"aaa\"), 357553640);\n    assert Arrays.equals(solution.findGoodStrings(35, \"applepieapplepieapplepieapplepie\", \"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", \"apple\"), 695022504);\n    assert Arrays.equals(solution.findGoodStrings(15, \"aaaaaabbbbb\", \"zzzzzzzzzzz\", \"abcde\"), Error: string index out of range);\n    assert Arrays.equals(solution.findGoodStrings(50, \"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\", \"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", \"abcde\"), Error: string index out of range);\n    assert Arrays.equals(solution.findGoodStrings(25, \"abcdeabcdeabcdeabcde\", \"edcbaedcbaedcbaedcba\", \"abc\"), Error: string index out of range);\n    assert Arrays.equals(solution.findGoodStrings(500, \"a\"*500, \"z\"*500, \"abcdef\"), Error: Solution.findGoodStrings() missing 2 required positional arguments: 's1' and 's2');\n    assert Arrays.equals(solution.findGoodStrings(7, \"aaaaaaa\", \"zzzzzzz\", \"abc\"), 29525318);\n    assert Arrays.equals(solution.findGoodStrings(20, \"abcdabcdabcdabcdabcd\", \"zzzzzzzzzzzzzzzzzzzz\", \"zabcd\"), 426896930);\n    assert Arrays.equals(solution.findGoodStrings(15, \"abcdefghijklm\", \"nopqrstuvwxyz\", \"uvw\"), Error: string index out of range);\n    assert Arrays.equals(solution.findGoodStrings(10, \"abcdefghij\", \"abcdefghiz\", \"ghi\"), 0);\n    assert Arrays.equals(solution.findGoodStrings(50, \"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\", \"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", \"zzz\"), Error: string index out of range);\n    assert Arrays.equals(solution.findGoodStrings(50, \"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\", \"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", \"xyzxyzxyzxyzxyz\"), Error: string index out of range);\n    assert Arrays.equals(solution.findGoodStrings(50, \"a\"*50, \"z\"*50, \"abcdefghijkl\"), Error: Solution.findGoodStrings() missing 2 required positional arguments: 's1' and 's2');\n    assert Arrays.equals(solution.findGoodStrings(15, \"abcdefghijklnmop\", \"abcdefghijklnmopqrstuvwxyz\", \"mnop\"), 1);\n    assert Arrays.equals(solution.findGoodStrings(30, \"abcdefghijklmnopqrstuvwxyzabcde\", \"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", \"vwxyz\"), 858527385);\n    assert Arrays.equals(solution.findGoodStrings(40, \"aaaabaaaabaaaabaaaab\", \"zzzzzzzzzzzzzzzzzzzz\", \"aaaa\"), Error: string index out of range);\n    assert Arrays.equals(solution.findGoodStrings(30, \"zzzzzzzzzzzzzzzzzzzz\", \"zzzzzzzzzzzzzzzzzzzz\", \"abc\"), Error: string index out of range);\n    assert Arrays.equals(solution.findGoodStrings(50, \"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\", \"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", \"ab\"), Error: string index out of range);\n    assert Arrays.equals(solution.findGoodStrings(40, \"abcdabcdabcdabcdabcdabcdabcdabcdabcd\", \"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", \"xyz\"), Error: string index out of range);\n    assert Arrays.equals(solution.findGoodStrings(50, \"leetcodeleetcodeleetcodeleetcodeleetcode\", \"leetgoesleetgoesleetgoesleetgoesleetgoes\", \"leet\"), 0);\n    assert Arrays.equals(solution.findGoodStrings(40, \"aaabbbcccdddeeefffggghhhiiijjjkkklllmmmnnnooopppqqqrrrssstttuuuvvvwwwxxxxyyyzzz\", \"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", \"mnopqr\"), 438601268);\n    assert Arrays.equals(solution.findGoodStrings(10, \"abcdefghij\", \"zjklmnopqr\", \"mnop\"), 922212598);\n    assert Arrays.equals(solution.findGoodStrings(40, \"abcdefghijabcdefghijabcdefghijabcdefghij\", \"zjklmnopqrzjklmnopqrzjklmnopqrzjklmnopqr\", \"mnopqr\"), 54391096);\n    assert Arrays.equals(solution.findGoodStrings(15, \"aaaabbbbcccc\", \"zzzzzzzzzzzzzz\", \"xyz\"), Error: string index out of range);\n    assert Arrays.equals(solution.findGoodStrings(40, \"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\", \"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", \"xyz\"), Error: string index out of range);\n    assert Arrays.equals(solution.findGoodStrings(5, \"aaaaa\", \"zzzzz\", \"b\"), 9765625);\n    assert Arrays.equals(solution.findGoodStrings(20, \"aaaaeaaaagaaaa\", \"zzzzkzzzzzzzzz\", \"kzz\"), Error: string index out of range);\n    assert Arrays.equals(solution.findGoodStrings(50, \"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\", \"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", \"zzzz\"), Error: string index out of range);\n}",
+    "javascript": "function check(candidate) {\n    console.assert(JSON.stringify(candidate(5, \"apple\", \"zebra\", \"app\")) === JSON.stringify(11220078));\n    console.assert(JSON.stringify(candidate(5, \"a\", \"zzzzz\", \"z\")) === JSON.stringify(Error: string index out of range));\n    console.assert(JSON.stringify(candidate(5, \"apple\", \"appla\", \"appl\")) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(3, \"aaa\", \"zzz\", \"abc\")) === JSON.stringify(17575));\n    console.assert(JSON.stringify(candidate(5, \"aaaaa\", \"zzzzz\", \"abc\")) === JSON.stringify(11879348));\n    console.assert(JSON.stringify(candidate(10, \"abcdefghij\", \"abcdefghij\", \"ghij\")) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(5, \"apple\", \"zebra\", \"dog\")) === JSON.stringify(11219789));\n    console.assert(JSON.stringify(candidate(2, \"gx\", \"gz\", \"x\")) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(3, \"abc\", \"xyz\", \"def\")) === JSON.stringify(16169));\n    console.assert(JSON.stringify(candidate(8, \"leetcode\", \"leetgoes\", \"leet\")) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(3, \"aaa\", \"zzz\", \"xyz\")) === JSON.stringify(17575));\n    console.assert(JSON.stringify(candidate(2, \"aa\", \"da\", \"b\")) === JSON.stringify(51));\n    console.assert(JSON.stringify(candidate(3, \"abc\", \"xyz\", \"de\")) === JSON.stringify(16120));\n    console.assert(JSON.stringify(candidate(100, \"a\"*100, \"z\"*100, \"xyz\")) === JSON.stringify(Error: Solution.findGoodStrings() missing 2 required positional arguments: 's1' and 's2'));\n    console.assert(JSON.stringify(candidate(30, \"aaaaaaaaaaaaaaaaaaaaaaa\", \"zzzzzzzzzzzzzzzzzzzzzzzzz\", \"zzz\")) === JSON.stringify(Error: string index out of range));\n    console.assert(JSON.stringify(candidate(50, \"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\", \"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", \"ab\")) === JSON.stringify(Error: string index out of range));\n    console.assert(JSON.stringify(candidate(10, \"aaaaaaaaaa\", \"zzzzzzzzzz\", \"mnop\")) === JSON.stringify(932258852));\n    console.assert(JSON.stringify(candidate(20, \"aaaaaaaaaa\", \"zzzzzzzzzz\", \"mnop\")) === JSON.stringify(Error: string index out of range));\n    console.assert(JSON.stringify(candidate(10, \"abcdefghij\", \"zzzzzzzzzz\", \"mnop\")) === JSON.stringify(67339166));\n    console.assert(JSON.stringify(candidate(45, \"abcdefghijklmnopqrstuvwxyzabcde\", \"zyxwvutsrqponmlkjihgfedcbaedcba\", \"abcde\")) === JSON.stringify(Error: string index out of range));\n    console.assert(JSON.stringify(candidate(25, \"a\"*25, \"z\"*25, \"qrstuv\")) === JSON.stringify(Error: Solution.findGoodStrings() missing 2 required positional arguments: 's1' and 's2'));\n    console.assert(JSON.stringify(candidate(25, \"abcdefghijklmnopqrstuvwxyz\", \"abcdefghijklmnopqrstuvwxyz\", \"abcde\")) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(45, \"abcdefghijklmnopqrstuvwxyzabcdefghij\", \"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", \"mnopqr\")) === JSON.stringify(720631236));\n    console.assert(JSON.stringify(candidate(6, \"aaaaaa\", \"zzzzzz\", \"ab\")) === JSON.stringify(306634951));\n    console.assert(JSON.stringify(candidate(30, \"abcdefghijklmnopqrstuvwxyzabcde\", \"zzzzzzzzzzzzzzzzzzzzzzzzzzz\", \"mnopqr\")) === JSON.stringify(Error: string index out of range));\n    console.assert(JSON.stringify(candidate(20, \"aaabaaabaaabaaabaa\", \"zzzzzzzzzzzzzzzzzzzz\", \"aaa\")) === JSON.stringify(357553640));\n    console.assert(JSON.stringify(candidate(35, \"applepieapplepieapplepieapplepie\", \"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", \"apple\")) === JSON.stringify(695022504));\n    console.assert(JSON.stringify(candidate(15, \"aaaaaabbbbb\", \"zzzzzzzzzzz\", \"abcde\")) === JSON.stringify(Error: string index out of range));\n    console.assert(JSON.stringify(candidate(50, \"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\", \"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", \"abcde\")) === JSON.stringify(Error: string index out of range));\n    console.assert(JSON.stringify(candidate(25, \"abcdeabcdeabcdeabcde\", \"edcbaedcbaedcbaedcba\", \"abc\")) === JSON.stringify(Error: string index out of range));\n    console.assert(JSON.stringify(candidate(500, \"a\"*500, \"z\"*500, \"abcdef\")) === JSON.stringify(Error: Solution.findGoodStrings() missing 2 required positional arguments: 's1' and 's2'));\n    console.assert(JSON.stringify(candidate(7, \"aaaaaaa\", \"zzzzzzz\", \"abc\")) === JSON.stringify(29525318));\n    console.assert(JSON.stringify(candidate(20, \"abcdabcdabcdabcdabcd\", \"zzzzzzzzzzzzzzzzzzzz\", \"zabcd\")) === JSON.stringify(426896930));\n    console.assert(JSON.stringify(candidate(15, \"abcdefghijklm\", \"nopqrstuvwxyz\", \"uvw\")) === JSON.stringify(Error: string index out of range));\n    console.assert(JSON.stringify(candidate(10, \"abcdefghij\", \"abcdefghiz\", \"ghi\")) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(50, \"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\", \"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", \"zzz\")) === JSON.stringify(Error: string index out of range));\n    console.assert(JSON.stringify(candidate(50, \"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\", \"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", \"xyzxyzxyzxyzxyz\")) === JSON.stringify(Error: string index out of range));\n    console.assert(JSON.stringify(candidate(50, \"a\"*50, \"z\"*50, \"abcdefghijkl\")) === JSON.stringify(Error: Solution.findGoodStrings() missing 2 required positional arguments: 's1' and 's2'));\n    console.assert(JSON.stringify(candidate(15, \"abcdefghijklnmop\", \"abcdefghijklnmopqrstuvwxyz\", \"mnop\")) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate(30, \"abcdefghijklmnopqrstuvwxyzabcde\", \"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", \"vwxyz\")) === JSON.stringify(858527385));\n    console.assert(JSON.stringify(candidate(40, \"aaaabaaaabaaaabaaaab\", \"zzzzzzzzzzzzzzzzzzzz\", \"aaaa\")) === JSON.stringify(Error: string index out of range));\n    console.assert(JSON.stringify(candidate(30, \"zzzzzzzzzzzzzzzzzzzz\", \"zzzzzzzzzzzzzzzzzzzz\", \"abc\")) === JSON.stringify(Error: string index out of range));\n    console.assert(JSON.stringify(candidate(50, \"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\", \"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", \"ab\")) === JSON.stringify(Error: string index out of range));\n    console.assert(JSON.stringify(candidate(40, \"abcdabcdabcdabcdabcdabcdabcdabcdabcd\", \"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", \"xyz\")) === JSON.stringify(Error: string index out of range));\n    console.assert(JSON.stringify(candidate(50, \"leetcodeleetcodeleetcodeleetcodeleetcode\", \"leetgoesleetgoesleetgoesleetgoesleetgoes\", \"leet\")) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(40, \"aaabbbcccdddeeefffggghhhiiijjjkkklllmmmnnnooopppqqqrrrssstttuuuvvvwwwxxxxyyyzzz\", \"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", \"mnopqr\")) === JSON.stringify(438601268));\n    console.assert(JSON.stringify(candidate(10, \"abcdefghij\", \"zjklmnopqr\", \"mnop\")) === JSON.stringify(922212598));\n    console.assert(JSON.stringify(candidate(40, \"abcdefghijabcdefghijabcdefghijabcdefghij\", \"zjklmnopqrzjklmnopqrzjklmnopqrzjklmnopqr\", \"mnopqr\")) === JSON.stringify(54391096));\n    console.assert(JSON.stringify(candidate(15, \"aaaabbbbcccc\", \"zzzzzzzzzzzzzz\", \"xyz\")) === JSON.stringify(Error: string index out of range));\n    console.assert(JSON.stringify(candidate(40, \"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\", \"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", \"xyz\")) === JSON.stringify(Error: string index out of range));\n    console.assert(JSON.stringify(candidate(5, \"aaaaa\", \"zzzzz\", \"b\")) === JSON.stringify(9765625));\n    console.assert(JSON.stringify(candidate(20, \"aaaaeaaaagaaaa\", \"zzzzkzzzzzzzzz\", \"kzz\")) === JSON.stringify(Error: string index out of range));\n    console.assert(JSON.stringify(candidate(50, \"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\", \"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", \"zzzz\")) === JSON.stringify(Error: string index out of range));\n}",
+    "typescript": "function check(candidate: Function): void {\n    console.assert(JSON.stringify(candidate(5, \"apple\", \"zebra\", \"app\")) === JSON.stringify(11220078));\n    console.assert(JSON.stringify(candidate(5, \"a\", \"zzzzz\", \"z\")) === JSON.stringify(Error: string index out of range));\n    console.assert(JSON.stringify(candidate(5, \"apple\", \"appla\", \"appl\")) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(3, \"aaa\", \"zzz\", \"abc\")) === JSON.stringify(17575));\n    console.assert(JSON.stringify(candidate(5, \"aaaaa\", \"zzzzz\", \"abc\")) === JSON.stringify(11879348));\n    console.assert(JSON.stringify(candidate(10, \"abcdefghij\", \"abcdefghij\", \"ghij\")) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(5, \"apple\", \"zebra\", \"dog\")) === JSON.stringify(11219789));\n    console.assert(JSON.stringify(candidate(2, \"gx\", \"gz\", \"x\")) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(3, \"abc\", \"xyz\", \"def\")) === JSON.stringify(16169));\n    console.assert(JSON.stringify(candidate(8, \"leetcode\", \"leetgoes\", \"leet\")) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(3, \"aaa\", \"zzz\", \"xyz\")) === JSON.stringify(17575));\n    console.assert(JSON.stringify(candidate(2, \"aa\", \"da\", \"b\")) === JSON.stringify(51));\n    console.assert(JSON.stringify(candidate(3, \"abc\", \"xyz\", \"de\")) === JSON.stringify(16120));\n    console.assert(JSON.stringify(candidate(100, \"a\"*100, \"z\"*100, \"xyz\")) === JSON.stringify(Error: Solution.findGoodStrings() missing 2 required positional arguments: 's1' and 's2'));\n    console.assert(JSON.stringify(candidate(30, \"aaaaaaaaaaaaaaaaaaaaaaa\", \"zzzzzzzzzzzzzzzzzzzzzzzzz\", \"zzz\")) === JSON.stringify(Error: string index out of range));\n    console.assert(JSON.stringify(candidate(50, \"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\", \"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", \"ab\")) === JSON.stringify(Error: string index out of range));\n    console.assert(JSON.stringify(candidate(10, \"aaaaaaaaaa\", \"zzzzzzzzzz\", \"mnop\")) === JSON.stringify(932258852));\n    console.assert(JSON.stringify(candidate(20, \"aaaaaaaaaa\", \"zzzzzzzzzz\", \"mnop\")) === JSON.stringify(Error: string index out of range));\n    console.assert(JSON.stringify(candidate(10, \"abcdefghij\", \"zzzzzzzzzz\", \"mnop\")) === JSON.stringify(67339166));\n    console.assert(JSON.stringify(candidate(45, \"abcdefghijklmnopqrstuvwxyzabcde\", \"zyxwvutsrqponmlkjihgfedcbaedcba\", \"abcde\")) === JSON.stringify(Error: string index out of range));\n    console.assert(JSON.stringify(candidate(25, \"a\"*25, \"z\"*25, \"qrstuv\")) === JSON.stringify(Error: Solution.findGoodStrings() missing 2 required positional arguments: 's1' and 's2'));\n    console.assert(JSON.stringify(candidate(25, \"abcdefghijklmnopqrstuvwxyz\", \"abcdefghijklmnopqrstuvwxyz\", \"abcde\")) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(45, \"abcdefghijklmnopqrstuvwxyzabcdefghij\", \"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", \"mnopqr\")) === JSON.stringify(720631236));\n    console.assert(JSON.stringify(candidate(6, \"aaaaaa\", \"zzzzzz\", \"ab\")) === JSON.stringify(306634951));\n    console.assert(JSON.stringify(candidate(30, \"abcdefghijklmnopqrstuvwxyzabcde\", \"zzzzzzzzzzzzzzzzzzzzzzzzzzz\", \"mnopqr\")) === JSON.stringify(Error: string index out of range));\n    console.assert(JSON.stringify(candidate(20, \"aaabaaabaaabaaabaa\", \"zzzzzzzzzzzzzzzzzzzz\", \"aaa\")) === JSON.stringify(357553640));\n    console.assert(JSON.stringify(candidate(35, \"applepieapplepieapplepieapplepie\", \"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", \"apple\")) === JSON.stringify(695022504));\n    console.assert(JSON.stringify(candidate(15, \"aaaaaabbbbb\", \"zzzzzzzzzzz\", \"abcde\")) === JSON.stringify(Error: string index out of range));\n    console.assert(JSON.stringify(candidate(50, \"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\", \"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", \"abcde\")) === JSON.stringify(Error: string index out of range));\n    console.assert(JSON.stringify(candidate(25, \"abcdeabcdeabcdeabcde\", \"edcbaedcbaedcbaedcba\", \"abc\")) === JSON.stringify(Error: string index out of range));\n    console.assert(JSON.stringify(candidate(500, \"a\"*500, \"z\"*500, \"abcdef\")) === JSON.stringify(Error: Solution.findGoodStrings() missing 2 required positional arguments: 's1' and 's2'));\n    console.assert(JSON.stringify(candidate(7, \"aaaaaaa\", \"zzzzzzz\", \"abc\")) === JSON.stringify(29525318));\n    console.assert(JSON.stringify(candidate(20, \"abcdabcdabcdabcdabcd\", \"zzzzzzzzzzzzzzzzzzzz\", \"zabcd\")) === JSON.stringify(426896930));\n    console.assert(JSON.stringify(candidate(15, \"abcdefghijklm\", \"nopqrstuvwxyz\", \"uvw\")) === JSON.stringify(Error: string index out of range));\n    console.assert(JSON.stringify(candidate(10, \"abcdefghij\", \"abcdefghiz\", \"ghi\")) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(50, \"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\", \"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", \"zzz\")) === JSON.stringify(Error: string index out of range));\n    console.assert(JSON.stringify(candidate(50, \"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\", \"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", \"xyzxyzxyzxyzxyz\")) === JSON.stringify(Error: string index out of range));\n    console.assert(JSON.stringify(candidate(50, \"a\"*50, \"z\"*50, \"abcdefghijkl\")) === JSON.stringify(Error: Solution.findGoodStrings() missing 2 required positional arguments: 's1' and 's2'));\n    console.assert(JSON.stringify(candidate(15, \"abcdefghijklnmop\", \"abcdefghijklnmopqrstuvwxyz\", \"mnop\")) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate(30, \"abcdefghijklmnopqrstuvwxyzabcde\", \"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", \"vwxyz\")) === JSON.stringify(858527385));\n    console.assert(JSON.stringify(candidate(40, \"aaaabaaaabaaaabaaaab\", \"zzzzzzzzzzzzzzzzzzzz\", \"aaaa\")) === JSON.stringify(Error: string index out of range));\n    console.assert(JSON.stringify(candidate(30, \"zzzzzzzzzzzzzzzzzzzz\", \"zzzzzzzzzzzzzzzzzzzz\", \"abc\")) === JSON.stringify(Error: string index out of range));\n    console.assert(JSON.stringify(candidate(50, \"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\", \"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", \"ab\")) === JSON.stringify(Error: string index out of range));\n    console.assert(JSON.stringify(candidate(40, \"abcdabcdabcdabcdabcdabcdabcdabcdabcd\", \"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", \"xyz\")) === JSON.stringify(Error: string index out of range));\n    console.assert(JSON.stringify(candidate(50, \"leetcodeleetcodeleetcodeleetcodeleetcode\", \"leetgoesleetgoesleetgoesleetgoesleetgoes\", \"leet\")) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(40, \"aaabbbcccdddeeefffggghhhiiijjjkkklllmmmnnnooopppqqqrrrssstttuuuvvvwwwxxxxyyyzzz\", \"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", \"mnopqr\")) === JSON.stringify(438601268));\n    console.assert(JSON.stringify(candidate(10, \"abcdefghij\", \"zjklmnopqr\", \"mnop\")) === JSON.stringify(922212598));\n    console.assert(JSON.stringify(candidate(40, \"abcdefghijabcdefghijabcdefghijabcdefghij\", \"zjklmnopqrzjklmnopqrzjklmnopqrzjklmnopqr\", \"mnopqr\")) === JSON.stringify(54391096));\n    console.assert(JSON.stringify(candidate(15, \"aaaabbbbcccc\", \"zzzzzzzzzzzzzz\", \"xyz\")) === JSON.stringify(Error: string index out of range));\n    console.assert(JSON.stringify(candidate(40, \"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\", \"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", \"xyz\")) === JSON.stringify(Error: string index out of range));\n    console.assert(JSON.stringify(candidate(5, \"aaaaa\", \"zzzzz\", \"b\")) === JSON.stringify(9765625));\n    console.assert(JSON.stringify(candidate(20, \"aaaaeaaaagaaaa\", \"zzzzkzzzzzzzzz\", \"kzz\")) === JSON.stringify(Error: string index out of range));\n    console.assert(JSON.stringify(candidate(50, \"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\", \"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", \"zzzz\")) === JSON.stringify(Error: string index out of range));\n}",
+    "golang": "func check(candidate func([]int, int) []int) {\n    assert reflect.DeepEqual(candidate(5, \"apple\", \"zebra\", \"app\"), 11220078)\n    assert reflect.DeepEqual(candidate(5, \"a\", \"zzzzz\", \"z\"), Error: string index out of range)\n    assert reflect.DeepEqual(candidate(5, \"apple\", \"appla\", \"appl\"), 0)\n    assert reflect.DeepEqual(candidate(3, \"aaa\", \"zzz\", \"abc\"), 17575)\n    assert reflect.DeepEqual(candidate(5, \"aaaaa\", \"zzzzz\", \"abc\"), 11879348)\n    assert reflect.DeepEqual(candidate(10, \"abcdefghij\", \"abcdefghij\", \"ghij\"), 0)\n    assert reflect.DeepEqual(candidate(5, \"apple\", \"zebra\", \"dog\"), 11219789)\n    assert reflect.DeepEqual(candidate(2, \"gx\", \"gz\", \"x\"), 2)\n    assert reflect.DeepEqual(candidate(3, \"abc\", \"xyz\", \"def\"), 16169)\n    assert reflect.DeepEqual(candidate(8, \"leetcode\", \"leetgoes\", \"leet\"), 0)\n    assert reflect.DeepEqual(candidate(3, \"aaa\", \"zzz\", \"xyz\"), 17575)\n    assert reflect.DeepEqual(candidate(2, \"aa\", \"da\", \"b\"), 51)\n    assert reflect.DeepEqual(candidate(3, \"abc\", \"xyz\", \"de\"), 16120)\n    assert reflect.DeepEqual(candidate(100, \"a\"*100, \"z\"*100, \"xyz\"), Error: Solution.findGoodStrings() missing 2 required positional arguments: 's1' and 's2')\n    assert reflect.DeepEqual(candidate(30, \"aaaaaaaaaaaaaaaaaaaaaaa\", \"zzzzzzzzzzzzzzzzzzzzzzzzz\", \"zzz\"), Error: string index out of range)\n    assert reflect.DeepEqual(candidate(50, \"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\", \"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", \"ab\"), Error: string index out of range)\n    assert reflect.DeepEqual(candidate(10, \"aaaaaaaaaa\", \"zzzzzzzzzz\", \"mnop\"), 932258852)\n    assert reflect.DeepEqual(candidate(20, \"aaaaaaaaaa\", \"zzzzzzzzzz\", \"mnop\"), Error: string index out of range)\n    assert reflect.DeepEqual(candidate(10, \"abcdefghij\", \"zzzzzzzzzz\", \"mnop\"), 67339166)\n    assert reflect.DeepEqual(candidate(45, \"abcdefghijklmnopqrstuvwxyzabcde\", \"zyxwvutsrqponmlkjihgfedcbaedcba\", \"abcde\"), Error: string index out of range)\n    assert reflect.DeepEqual(candidate(25, \"a\"*25, \"z\"*25, \"qrstuv\"), Error: Solution.findGoodStrings() missing 2 required positional arguments: 's1' and 's2')\n    assert reflect.DeepEqual(candidate(25, \"abcdefghijklmnopqrstuvwxyz\", \"abcdefghijklmnopqrstuvwxyz\", \"abcde\"), 0)\n    assert reflect.DeepEqual(candidate(45, \"abcdefghijklmnopqrstuvwxyzabcdefghij\", \"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", \"mnopqr\"), 720631236)\n    assert reflect.DeepEqual(candidate(6, \"aaaaaa\", \"zzzzzz\", \"ab\"), 306634951)\n    assert reflect.DeepEqual(candidate(30, \"abcdefghijklmnopqrstuvwxyzabcde\", \"zzzzzzzzzzzzzzzzzzzzzzzzzzz\", \"mnopqr\"), Error: string index out of range)\n    assert reflect.DeepEqual(candidate(20, \"aaabaaabaaabaaabaa\", \"zzzzzzzzzzzzzzzzzzzz\", \"aaa\"), 357553640)\n    assert reflect.DeepEqual(candidate(35, \"applepieapplepieapplepieapplepie\", \"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", \"apple\"), 695022504)\n    assert reflect.DeepEqual(candidate(15, \"aaaaaabbbbb\", \"zzzzzzzzzzz\", \"abcde\"), Error: string index out of range)\n    assert reflect.DeepEqual(candidate(50, \"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\", \"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", \"abcde\"), Error: string index out of range)\n    assert reflect.DeepEqual(candidate(25, \"abcdeabcdeabcdeabcde\", \"edcbaedcbaedcbaedcba\", \"abc\"), Error: string index out of range)\n    assert reflect.DeepEqual(candidate(500, \"a\"*500, \"z\"*500, \"abcdef\"), Error: Solution.findGoodStrings() missing 2 required positional arguments: 's1' and 's2')\n    assert reflect.DeepEqual(candidate(7, \"aaaaaaa\", \"zzzzzzz\", \"abc\"), 29525318)\n    assert reflect.DeepEqual(candidate(20, \"abcdabcdabcdabcdabcd\", \"zzzzzzzzzzzzzzzzzzzz\", \"zabcd\"), 426896930)\n    assert reflect.DeepEqual(candidate(15, \"abcdefghijklm\", \"nopqrstuvwxyz\", \"uvw\"), Error: string index out of range)\n    assert reflect.DeepEqual(candidate(10, \"abcdefghij\", \"abcdefghiz\", \"ghi\"), 0)\n    assert reflect.DeepEqual(candidate(50, \"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\", \"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", \"zzz\"), Error: string index out of range)\n    assert reflect.DeepEqual(candidate(50, \"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\", \"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", \"xyzxyzxyzxyzxyz\"), Error: string index out of range)\n    assert reflect.DeepEqual(candidate(50, \"a\"*50, \"z\"*50, \"abcdefghijkl\"), Error: Solution.findGoodStrings() missing 2 required positional arguments: 's1' and 's2')\n    assert reflect.DeepEqual(candidate(15, \"abcdefghijklnmop\", \"abcdefghijklnmopqrstuvwxyz\", \"mnop\"), 1)\n    assert reflect.DeepEqual(candidate(30, \"abcdefghijklmnopqrstuvwxyzabcde\", \"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", \"vwxyz\"), 858527385)\n    assert reflect.DeepEqual(candidate(40, \"aaaabaaaabaaaabaaaab\", \"zzzzzzzzzzzzzzzzzzzz\", \"aaaa\"), Error: string index out of range)\n    assert reflect.DeepEqual(candidate(30, \"zzzzzzzzzzzzzzzzzzzz\", \"zzzzzzzzzzzzzzzzzzzz\", \"abc\"), Error: string index out of range)\n    assert reflect.DeepEqual(candidate(50, \"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\", \"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", \"ab\"), Error: string index out of range)\n    assert reflect.DeepEqual(candidate(40, \"abcdabcdabcdabcdabcdabcdabcdabcdabcd\", \"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", \"xyz\"), Error: string index out of range)\n    assert reflect.DeepEqual(candidate(50, \"leetcodeleetcodeleetcodeleetcodeleetcode\", \"leetgoesleetgoesleetgoesleetgoesleetgoes\", \"leet\"), 0)\n    assert reflect.DeepEqual(candidate(40, \"aaabbbcccdddeeefffggghhhiiijjjkkklllmmmnnnooopppqqqrrrssstttuuuvvvwwwxxxxyyyzzz\", \"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", \"mnopqr\"), 438601268)\n    assert reflect.DeepEqual(candidate(10, \"abcdefghij\", \"zjklmnopqr\", \"mnop\"), 922212598)\n    assert reflect.DeepEqual(candidate(40, \"abcdefghijabcdefghijabcdefghijabcdefghij\", \"zjklmnopqrzjklmnopqrzjklmnopqrzjklmnopqr\", \"mnopqr\"), 54391096)\n    assert reflect.DeepEqual(candidate(15, \"aaaabbbbcccc\", \"zzzzzzzzzzzzzz\", \"xyz\"), Error: string index out of range)\n    assert reflect.DeepEqual(candidate(40, \"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\", \"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", \"xyz\"), Error: string index out of range)\n    assert reflect.DeepEqual(candidate(5, \"aaaaa\", \"zzzzz\", \"b\"), 9765625)\n    assert reflect.DeepEqual(candidate(20, \"aaaaeaaaagaaaa\", \"zzzzkzzzzzzzzz\", \"kzz\"), Error: string index out of range)\n    assert reflect.DeepEqual(candidate(50, \"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\", \"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", \"zzzz\"), Error: string index out of range)\n}",
+    "rust": "fn check(candidate: fn(Vec<i32>, i32) -> Vec<i32>) {\n    assert_eq!(candidate(5, \"apple\", \"zebra\", \"app\"), 11220078);\n    assert_eq!(candidate(5, \"a\", \"zzzzz\", \"z\"), Error: string index out of range);\n    assert_eq!(candidate(5, \"apple\", \"appla\", \"appl\"), 0);\n    assert_eq!(candidate(3, \"aaa\", \"zzz\", \"abc\"), 17575);\n    assert_eq!(candidate(5, \"aaaaa\", \"zzzzz\", \"abc\"), 11879348);\n    assert_eq!(candidate(10, \"abcdefghij\", \"abcdefghij\", \"ghij\"), 0);\n    assert_eq!(candidate(5, \"apple\", \"zebra\", \"dog\"), 11219789);\n    assert_eq!(candidate(2, \"gx\", \"gz\", \"x\"), 2);\n    assert_eq!(candidate(3, \"abc\", \"xyz\", \"def\"), 16169);\n    assert_eq!(candidate(8, \"leetcode\", \"leetgoes\", \"leet\"), 0);\n    assert_eq!(candidate(3, \"aaa\", \"zzz\", \"xyz\"), 17575);\n    assert_eq!(candidate(2, \"aa\", \"da\", \"b\"), 51);\n    assert_eq!(candidate(3, \"abc\", \"xyz\", \"de\"), 16120);\n    assert_eq!(candidate(100, \"a\"*100, \"z\"*100, \"xyz\"), Error: Solution.findGoodStrings() missing 2 required positional arguments: 's1' and 's2');\n    assert_eq!(candidate(30, \"aaaaaaaaaaaaaaaaaaaaaaa\", \"zzzzzzzzzzzzzzzzzzzzzzzzz\", \"zzz\"), Error: string index out of range);\n    assert_eq!(candidate(50, \"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\", \"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", \"ab\"), Error: string index out of range);\n    assert_eq!(candidate(10, \"aaaaaaaaaa\", \"zzzzzzzzzz\", \"mnop\"), 932258852);\n    assert_eq!(candidate(20, \"aaaaaaaaaa\", \"zzzzzzzzzz\", \"mnop\"), Error: string index out of range);\n    assert_eq!(candidate(10, \"abcdefghij\", \"zzzzzzzzzz\", \"mnop\"), 67339166);\n    assert_eq!(candidate(45, \"abcdefghijklmnopqrstuvwxyzabcde\", \"zyxwvutsrqponmlkjihgfedcbaedcba\", \"abcde\"), Error: string index out of range);\n    assert_eq!(candidate(25, \"a\"*25, \"z\"*25, \"qrstuv\"), Error: Solution.findGoodStrings() missing 2 required positional arguments: 's1' and 's2');\n    assert_eq!(candidate(25, \"abcdefghijklmnopqrstuvwxyz\", \"abcdefghijklmnopqrstuvwxyz\", \"abcde\"), 0);\n    assert_eq!(candidate(45, \"abcdefghijklmnopqrstuvwxyzabcdefghij\", \"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", \"mnopqr\"), 720631236);\n    assert_eq!(candidate(6, \"aaaaaa\", \"zzzzzz\", \"ab\"), 306634951);\n    assert_eq!(candidate(30, \"abcdefghijklmnopqrstuvwxyzabcde\", \"zzzzzzzzzzzzzzzzzzzzzzzzzzz\", \"mnopqr\"), Error: string index out of range);\n    assert_eq!(candidate(20, \"aaabaaabaaabaaabaa\", \"zzzzzzzzzzzzzzzzzzzz\", \"aaa\"), 357553640);\n    assert_eq!(candidate(35, \"applepieapplepieapplepieapplepie\", \"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", \"apple\"), 695022504);\n    assert_eq!(candidate(15, \"aaaaaabbbbb\", \"zzzzzzzzzzz\", \"abcde\"), Error: string index out of range);\n    assert_eq!(candidate(50, \"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\", \"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", \"abcde\"), Error: string index out of range);\n    assert_eq!(candidate(25, \"abcdeabcdeabcdeabcde\", \"edcbaedcbaedcbaedcba\", \"abc\"), Error: string index out of range);\n    assert_eq!(candidate(500, \"a\"*500, \"z\"*500, \"abcdef\"), Error: Solution.findGoodStrings() missing 2 required positional arguments: 's1' and 's2');\n    assert_eq!(candidate(7, \"aaaaaaa\", \"zzzzzzz\", \"abc\"), 29525318);\n    assert_eq!(candidate(20, \"abcdabcdabcdabcdabcd\", \"zzzzzzzzzzzzzzzzzzzz\", \"zabcd\"), 426896930);\n    assert_eq!(candidate(15, \"abcdefghijklm\", \"nopqrstuvwxyz\", \"uvw\"), Error: string index out of range);\n    assert_eq!(candidate(10, \"abcdefghij\", \"abcdefghiz\", \"ghi\"), 0);\n    assert_eq!(candidate(50, \"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\", \"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", \"zzz\"), Error: string index out of range);\n    assert_eq!(candidate(50, \"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\", \"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", \"xyzxyzxyzxyzxyz\"), Error: string index out of range);\n    assert_eq!(candidate(50, \"a\"*50, \"z\"*50, \"abcdefghijkl\"), Error: Solution.findGoodStrings() missing 2 required positional arguments: 's1' and 's2');\n    assert_eq!(candidate(15, \"abcdefghijklnmop\", \"abcdefghijklnmopqrstuvwxyz\", \"mnop\"), 1);\n    assert_eq!(candidate(30, \"abcdefghijklmnopqrstuvwxyzabcde\", \"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", \"vwxyz\"), 858527385);\n    assert_eq!(candidate(40, \"aaaabaaaabaaaabaaaab\", \"zzzzzzzzzzzzzzzzzzzz\", \"aaaa\"), Error: string index out of range);\n    assert_eq!(candidate(30, \"zzzzzzzzzzzzzzzzzzzz\", \"zzzzzzzzzzzzzzzzzzzz\", \"abc\"), Error: string index out of range);\n    assert_eq!(candidate(50, \"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\", \"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", \"ab\"), Error: string index out of range);\n    assert_eq!(candidate(40, \"abcdabcdabcdabcdabcdabcdabcdabcdabcd\", \"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", \"xyz\"), Error: string index out of range);\n    assert_eq!(candidate(50, \"leetcodeleetcodeleetcodeleetcodeleetcode\", \"leetgoesleetgoesleetgoesleetgoesleetgoes\", \"leet\"), 0);\n    assert_eq!(candidate(40, \"aaabbbcccdddeeefffggghhhiiijjjkkklllmmmnnnooopppqqqrrrssstttuuuvvvwwwxxxxyyyzzz\", \"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", \"mnopqr\"), 438601268);\n    assert_eq!(candidate(10, \"abcdefghij\", \"zjklmnopqr\", \"mnop\"), 922212598);\n    assert_eq!(candidate(40, \"abcdefghijabcdefghijabcdefghijabcdefghij\", \"zjklmnopqrzjklmnopqrzjklmnopqrzjklmnopqr\", \"mnopqr\"), 54391096);\n    assert_eq!(candidate(15, \"aaaabbbbcccc\", \"zzzzzzzzzzzzzz\", \"xyz\"), Error: string index out of range);\n    assert_eq!(candidate(40, \"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\", \"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", \"xyz\"), Error: string index out of range);\n    assert_eq!(candidate(5, \"aaaaa\", \"zzzzz\", \"b\"), 9765625);\n    assert_eq!(candidate(20, \"aaaaeaaaagaaaa\", \"zzzzkzzzzzzzzz\", \"kzz\"), Error: string index out of range);\n    assert_eq!(candidate(50, \"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\", \"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", \"zzzz\"), Error: string index out of range);\n}"
+  },
+  "test_cases": [
+    {
+      "input": "n = 5, s1 = \"apple\", s2 = \"zebra\", evil = \"app\"",
+      "output": "11220078"
+    },
+    {
+      "input": "n = 5, s1 = \"a\", s2 = \"zzzzz\", evil = \"z\"",
+      "output": "Error: string index out of range"
+    },
+    {
+      "input": "n = 5, s1 = \"apple\", s2 = \"appla\", evil = \"appl\"",
+      "output": "0"
+    },
+    {
+      "input": "n = 3, s1 = \"aaa\", s2 = \"zzz\", evil = \"abc\"",
+      "output": "17575"
+    },
+    {
+      "input": "n = 5, s1 = \"aaaaa\", s2 = \"zzzzz\", evil = \"abc\"",
+      "output": "11879348"
+    },
+    {
+      "input": "n = 10, s1 = \"abcdefghij\", s2 = \"abcdefghij\", evil = \"ghij\"",
+      "output": "0"
+    },
+    {
+      "input": "n = 5, s1 = \"apple\", s2 = \"zebra\", evil = \"dog\"",
+      "output": "11219789"
+    },
+    {
+      "input": "n = 2, s1 = \"gx\", s2 = \"gz\", evil = \"x\"",
+      "output": "2"
+    },
+    {
+      "input": "n = 3, s1 = \"abc\", s2 = \"xyz\", evil = \"def\"",
+      "output": "16169"
+    },
+    {
+      "input": "n = 8, s1 = \"leetcode\", s2 = \"leetgoes\", evil = \"leet\"",
+      "output": "0"
+    },
+    {
+      "input": "n = 3, s1 = \"aaa\", s2 = \"zzz\", evil = \"xyz\"",
+      "output": "17575"
+    },
+    {
+      "input": "n = 2, s1 = \"aa\", s2 = \"da\", evil = \"b\"",
+      "output": "51"
+    },
+    {
+      "input": "n = 3, s1 = \"abc\", s2 = \"xyz\", evil = \"de\"",
+      "output": "16120"
+    },
+    {
+      "input": "n = 100, s1 = \"a\"*100, s2 = \"z\"*100, evil = \"xyz\"",
+      "output": "Error: Solution.findGoodStrings() missing 2 required positional arguments: 's1' and 's2'"
+    },
+    {
+      "input": "n = 30, s1 = \"aaaaaaaaaaaaaaaaaaaaaaa\", s2 = \"zzzzzzzzzzzzzzzzzzzzzzzzz\", evil = \"zzz\"",
+      "output": "Error: string index out of range"
+    },
+    {
+      "input": "n = 50, s1 = \"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\", s2 = \"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", evil = \"ab\"",
+      "output": "Error: string index out of range"
+    },
+    {
+      "input": "n = 10, s1 = \"aaaaaaaaaa\", s2 = \"zzzzzzzzzz\", evil = \"mnop\"",
+      "output": "932258852"
+    },
+    {
+      "input": "n = 20, s1 = \"aaaaaaaaaa\", s2 = \"zzzzzzzzzz\", evil = \"mnop\"",
+      "output": "Error: string index out of range"
+    },
+    {
+      "input": "n = 10, s1 = \"abcdefghij\", s2 = \"zzzzzzzzzz\", evil = \"mnop\"",
+      "output": "67339166"
+    },
+    {
+      "input": "n = 45, s1 = \"abcdefghijklmnopqrstuvwxyzabcde\", s2 = \"zyxwvutsrqponmlkjihgfedcbaedcba\", evil = \"abcde\"",
+      "output": "Error: string index out of range"
+    },
+    {
+      "input": "n = 25, s1 = \"a\"*25, s2 = \"z\"*25, evil = \"qrstuv\"",
+      "output": "Error: Solution.findGoodStrings() missing 2 required positional arguments: 's1' and 's2'"
+    },
+    {
+      "input": "n = 25, s1 = \"abcdefghijklmnopqrstuvwxyz\", s2 = \"abcdefghijklmnopqrstuvwxyz\", evil = \"abcde\"",
+      "output": "0"
+    },
+    {
+      "input": "n = 45, s1 = \"abcdefghijklmnopqrstuvwxyzabcdefghij\", s2 = \"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", evil = \"mnopqr\"",
+      "output": "720631236"
+    },
+    {
+      "input": "n = 6, s1 = \"aaaaaa\", s2 = \"zzzzzz\", evil = \"ab\"",
+      "output": "306634951"
+    },
+    {
+      "input": "n = 30, s1 = \"abcdefghijklmnopqrstuvwxyzabcde\", s2 = \"zzzzzzzzzzzzzzzzzzzzzzzzzzz\", evil = \"mnopqr\"",
+      "output": "Error: string index out of range"
+    },
+    {
+      "input": "n = 20, s1 = \"aaabaaabaaabaaabaa\", s2 = \"zzzzzzzzzzzzzzzzzzzz\", evil = \"aaa\"",
+      "output": "357553640"
+    },
+    {
+      "input": "n = 35, s1 = \"applepieapplepieapplepieapplepie\", s2 = \"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", evil = \"apple\"",
+      "output": "695022504"
+    },
+    {
+      "input": "n = 15, s1 = \"aaaaaabbbbb\", s2 = \"zzzzzzzzzzz\", evil = \"abcde\"",
+      "output": "Error: string index out of range"
+    },
+    {
+      "input": "n = 50, s1 = \"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\", s2 = \"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", evil = \"abcde\"",
+      "output": "Error: string index out of range"
+    },
+    {
+      "input": "n = 25, s1 = \"abcdeabcdeabcdeabcde\", s2 = \"edcbaedcbaedcbaedcba\", evil = \"abc\"",
+      "output": "Error: string index out of range"
+    },
+    {
+      "input": "n = 500, s1 = \"a\"*500, s2 = \"z\"*500, evil = \"abcdef\"",
+      "output": "Error: Solution.findGoodStrings() missing 2 required positional arguments: 's1' and 's2'"
+    },
+    {
+      "input": "n = 7, s1 = \"aaaaaaa\", s2 = \"zzzzzzz\", evil = \"abc\"",
+      "output": "29525318"
+    },
+    {
+      "input": "n = 20, s1 = \"abcdabcdabcdabcdabcd\", s2 = \"zzzzzzzzzzzzzzzzzzzz\", evil = \"zabcd\"",
+      "output": "426896930"
+    },
+    {
+      "input": "n = 15, s1 = \"abcdefghijklm\", s2 = \"nopqrstuvwxyz\", evil = \"uvw\"",
+      "output": "Error: string index out of range"
+    },
+    {
+      "input": "n = 10, s1 = \"abcdefghij\", s2 = \"abcdefghiz\", evil = \"ghi\"",
+      "output": "0"
+    },
+    {
+      "input": "n = 50, s1 = \"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\", s2 = \"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", evil = \"zzz\"",
+      "output": "Error: string index out of range"
+    },
+    {
+      "input": "n = 50, s1 = \"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\", s2 = \"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", evil = \"xyzxyzxyzxyzxyz\"",
+      "output": "Error: string index out of range"
+    },
+    {
+      "input": "n = 50, s1 = \"a\"*50, s2 = \"z\"*50, evil = \"abcdefghijkl\"",
+      "output": "Error: Solution.findGoodStrings() missing 2 required positional arguments: 's1' and 's2'"
+    },
+    {
+      "input": "n = 15, s1 = \"abcdefghijklnmop\", s2 = \"abcdefghijklnmopqrstuvwxyz\", evil = \"mnop\"",
+      "output": "1"
+    },
+    {
+      "input": "n = 30, s1 = \"abcdefghijklmnopqrstuvwxyzabcde\", s2 = \"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", evil = \"vwxyz\"",
+      "output": "858527385"
+    },
+    {
+      "input": "n = 40, s1 = \"aaaabaaaabaaaabaaaab\", s2 = \"zzzzzzzzzzzzzzzzzzzz\", evil = \"aaaa\"",
+      "output": "Error: string index out of range"
+    },
+    {
+      "input": "n = 30, s1 = \"zzzzzzzzzzzzzzzzzzzz\", s2 = \"zzzzzzzzzzzzzzzzzzzz\", evil = \"abc\"",
+      "output": "Error: string index out of range"
+    },
+    {
+      "input": "n = 50, s1 = \"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\", s2 = \"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", evil = \"ab\"",
+      "output": "Error: string index out of range"
+    },
+    {
+      "input": "n = 40, s1 = \"abcdabcdabcdabcdabcdabcdabcdabcdabcd\", s2 = \"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", evil = \"xyz\"",
+      "output": "Error: string index out of range"
+    },
+    {
+      "input": "n = 50, s1 = \"leetcodeleetcodeleetcodeleetcodeleetcode\", s2 = \"leetgoesleetgoesleetgoesleetgoesleetgoes\", evil = \"leet\"",
+      "output": "0"
+    },
+    {
+      "input": "n = 40, s1 = \"aaabbbcccdddeeefffggghhhiiijjjkkklllmmmnnnooopppqqqrrrssstttuuuvvvwwwxxxxyyyzzz\", s2 = \"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", evil = \"mnopqr\"",
+      "output": "438601268"
+    },
+    {
+      "input": "n = 10, s1 = \"abcdefghij\", s2 = \"zjklmnopqr\", evil = \"mnop\"",
+      "output": "922212598"
+    },
+    {
+      "input": "n = 40, s1 = \"abcdefghijabcdefghijabcdefghijabcdefghij\", s2 = \"zjklmnopqrzjklmnopqrzjklmnopqrzjklmnopqr\", evil = \"mnopqr\"",
+      "output": "54391096"
+    },
+    {
+      "input": "n = 15, s1 = \"aaaabbbbcccc\", s2 = \"zzzzzzzzzzzzzz\", evil = \"xyz\"",
+      "output": "Error: string index out of range"
+    },
+    {
+      "input": "n = 40, s1 = \"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\", s2 = \"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", evil = \"xyz\"",
+      "output": "Error: string index out of range"
+    },
+    {
+      "input": "n = 5, s1 = \"aaaaa\", s2 = \"zzzzz\", evil = \"b\"",
+      "output": "9765625"
+    },
+    {
+      "input": "n = 20, s1 = \"aaaaeaaaagaaaa\", s2 = \"zzzzkzzzzzzzzz\", evil = \"kzz\"",
+      "output": "Error: string index out of range"
+    },
+    {
+      "input": "n = 50, s1 = \"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\", s2 = \"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", evil = \"zzzz\"",
+      "output": "Error: string index out of range"
+    }
+  ],
+  "types": {
+    "python3": {
+      "input": [
+        {
+          "n": "int"
+        },
+        {
+          "s1": "str"
+        },
+        {
+          "s2": "str"
+        },
+        {
+          "evil": "str"
+        }
+      ],
+      "output": "int"
+    },
+    "cpp": {
+      "input": [
+        {
+          "n": "int"
+        },
+        {
+          "s1": "string"
+        },
+        {
+          "s2": "string"
+        },
+        {
+          "evil": "string"
+        }
+      ],
+      "output": "int"
+    },
+    "java": {
+      "input": [
+        {
+          "n": "int"
+        },
+        {
+          "s1": "String"
+        },
+        {
+          "s2": "String"
+        },
+        {
+          "evil": "String"
+        }
+      ],
+      "output": "int"
+    },
+    "javascript": {
+      "input": [
+        {
+          "n": "number"
+        },
+        {
+          "s1": "string"
+        },
+        {
+          "s2": "string"
+        },
+        {
+          "evil": "string"
+        }
+      ],
+      "output": "number"
+    },
+    "typescript": {
+      "input": [
+        {
+          "n": "number"
+        },
+        {
+          "s1": "string"
+        },
+        {
+          "s2": "string"
+        },
+        {
+          "evil": "string"
+        }
+      ],
+      "output": "number"
+    },
+    "golang": {
+      "input": [
+        {
+          "n": "int"
+        },
+        {
+          "s1": "string"
+        },
+        {
+          "s2": "string"
+        },
+        {
+          "evil": "string"
+        }
+      ],
+      "output": "int"
+    },
+    "rust": {
+      "input": [
+        {
+          "n": "i32"
+        },
+        {
+          "s1": "String"
+        },
+        {
+          "s2": "String"
+        },
+        {
+          "evil": "String"
+        }
+      ],
+      "output": "i32"
+    }
+  },
+  "tags": [
+    "string",
+    "dynamic-programming",
+    "string-matching"
+  ]
+}

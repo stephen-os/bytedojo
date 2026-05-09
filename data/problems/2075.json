@@ -1,0 +1,602 @@
+{
+  "id": 2075,
+  "title": "Decode the Slanted Ciphertext",
+  "slug": "decode-the-slanted-ciphertext",
+  "difficulty": "Medium",
+  "description": "A string originalText is encoded using a slanted transposition cipher to a string encodedText with the help of a matrix having a fixed number of rows rows.\noriginalText is placed first in a top-left to bottom-right manner.\nThe blue cells are filled first, followed by the red cells, then the yellow cells, and so on, until we reach the end of originalText. The arrow indicates the order in which the cells are filled. All empty cells are filled with ' '. The number of columns is chosen such that the rightmost column will not be empty after filling in originalText.\nencodedText is then formed by appending all characters of the matrix in a row-wise fashion.\nThe characters in the blue cells are appended first to encodedText, then the red cells, and so on, and finally the yellow cells. The arrow indicates the order in which the cells are accessed.\nFor example, if originalText = \"cipher\" and rows = 3, then we encode it in the following manner:\nThe blue arrows depict how originalText is placed in the matrix, and the red arrows denote the order in which encodedText is formed. In the above example, encodedText = \"ch ie pr\".\nGiven the encoded string encodedText and number of rows rows, return the original string originalText.\nNote: originalText does not have any trailing spaces ' '. The test cases are generated such that there is only one possible originalText.\nExample 1:\nExample 2:\nExample 3:\nConstraints:",
+  "examples": [
+    {
+      "example_num": 1,
+      "example_text": "Input: encodedText = \"ch   ie   pr\", rows = 3\nOutput: \"cipher\"\nExplanation: This is the same example described in the problem description.",
+      "images": [
+        "https://assets.leetcode.com/uploads/2021/10/25/desc2.png"
+      ]
+    },
+    {
+      "example_num": 2,
+      "example_text": "Input: encodedText = \"iveo    eed   l te   olc\", rows = 4\nOutput: \"i love leetcode\"\nExplanation: The figure above denotes the matrix that was used to encode originalText. \nThe blue arrows show how we can find originalText from encodedText.",
+      "images": [
+        "https://assets.leetcode.com/uploads/2021/10/26/exam1.png"
+      ]
+    },
+    {
+      "example_num": 3,
+      "example_text": "Input: encodedText = \"coding\", rows = 1\nOutput: \"coding\"\nExplanation: Since there is only 1 row, both originalText and encodedText are the same.",
+      "images": [
+        "https://assets.leetcode.com/uploads/2021/10/26/eg2.png"
+      ]
+    }
+  ],
+  "constraints": [
+    "0 <= encodedText.length <= 106",
+    "encodedText consists of lowercase English letters and ' ' only.",
+    "encodedText is a valid encoding of some originalText that does not have trailing spaces.",
+    "1 <= rows <= 1000",
+    "The testcases are generated such that there is only one possible originalText."
+  ],
+  "hints": [
+    "How can you use rows and encodedText to find the number of columns of the matrix?",
+    "Once you have the number of rows and columns, you can create the matrix and place encodedText in it. How should you place it in the matrix?",
+    "How should you traverse the matrix to \"decode\" originalText?"
+  ],
+  "code_snippets": {
+    "cpp": "class Solution {\npublic:\n    string decodeCiphertext(string encodedText, int rows) {\n        \n    }\n};",
+    "java": "class Solution {\n    public String decodeCiphertext(String encodedText, int rows) {\n        \n    }\n}",
+    "python3": "class Solution:\n    def decodeCiphertext(self, encodedText: str, rows: int) -> str:\n        ",
+    "javascript": "/**\n * @param {string} encodedText\n * @param {number} rows\n * @return {string}\n */\nvar decodeCiphertext = function(encodedText, rows) {\n    \n};",
+    "typescript": "function decodeCiphertext(encodedText: string, rows: number): string {\n    \n};",
+    "golang": "func decodeCiphertext(encodedText string, rows int) string {\n    \n}",
+    "rust": "impl Solution {\n    pub fn decode_ciphertext(encoded_text: String, rows: i32) -> String {\n        \n    }\n}"
+  },
+  "entry_points": {
+    "python3": "Solution().decodeCiphertext",
+    "cpp": "Solution().decodeCiphertext",
+    "java": "new Solution().decodeCiphertext",
+    "javascript": "decodeCiphertext",
+    "typescript": "decodeCiphertext",
+    "golang": "decodeCiphertext",
+    "rust": "Solution::decode_ciphertext"
+  },
+  "test_snippets": {
+    "python3": "def check(candidate):\n    assert candidate(encodedText = \"a\", rows = 1) == a\n    assert candidate(encodedText = \"abcd efg hijk\", rows = 3) == aeibfjcgd\n    assert candidate(encodedText = \"a   b   c   d\", rows = 2) == a  c    b\n    assert candidate(encodedText = \"coding\", rows = 1) == coding\n    assert candidate(encodedText = \"abc def ghi jkl mno\", rows = 5) == adgbec\n    assert candidate(encodedText = \"ab c  de\", rows = 2) == a bd ec\n    assert candidate(encodedText = \"ch   ie   pr\", rows = 3) == cipher\n    assert candidate(encodedText = \"iveo    eed   l te   olc\", rows = 4) == i love leetcode\n    assert candidate(encodedText = \"python programming is fun\", rows = 4) == ppm yriftonuhggorn\n    assert candidate(encodedText = \"algorithms and data structures\", rows = 5) == ah telmdrsgsauo trai\n    assert candidate(encodedText = \"hello world  from    leetcode     challenges\", rows = 6) == hrmt nel c gld ocl  do   fw\n    assert candidate(encodedText = \"t a c o s e q u i r r e s e l l   f o o d   s o u p\", rows = 5) == t e s q f a s o u o c e u i o o l  r s\n    assert candidate(encodedText = \"one    two    three    four    five    six\", rows = 3) == oh nrfeei ev  e      t  wf oos ui rx\n    assert candidate(encodedText = \"programming challenges are fun\", rows = 4) == pilrrneeogn g gfrceahm\n    assert candidate(encodedText = \"filling   the   matrix   in   a   slanted   manner\", rows = 6) == f t aaitr nnlhi tnlexaei   n  g\n    assert candidate(encodedText = \"p y trh    e  t s    o    n    a\", rows = 3) == pe    y   t t nrs h\n    assert candidate(encodedText = \"m e t a l l i c a\", rows = 3) == mai   elc  t\n    assert candidate(encodedText = \"\", rows = 10) == None\n    assert candidate(encodedText = \"padding   with   spaces   at   the   end     \", rows = 5) == pwc  aiet dtsh dh e i    n   g a s\n    assert candidate(encodedText = \"a    b    c    d    e    f    g    h    i\", rows = 9) == abcd\n    assert candidate(encodedText = \"qo   su   me   ve   rt\", rows = 5) == qsmvoue\n    assert candidate(encodedText = \"sh jfuew xq  z   r e\", rows = 3) == sw h   x jqrf u\n    assert candidate(encodedText = \"this  is a   test  string\", rows = 5) == ti  ghstsi esa\n    assert candidate(encodedText = \"abcdef ghijkl mnopqr stuvwx yz\", rows = 5) == agmsybhntzcioudjpekf\n    assert candidate(encodedText = \"a quick brown fox jumps over the lazy dog\", rows = 6) == a fp z bostqrx uo iwc\n    assert candidate(encodedText = \"wcy  hmu  eai  xfi\", rows = 3) == wu c xy f ei ah\n    assert candidate(encodedText = \"two words\", rows = 1) == two words\n    assert candidate(encodedText = \"th qzih xof  c \", rows = 3) == th h c x qoz\n    assert candidate(encodedText = \"ab  c   d    e     f      g       h        i         j\", rows = 10) == a    b ef d   c\n    assert candidate(encodedText = \"programming in python is fun\", rows = 3) == pgnr  oiignsr  apfmyumti\n    assert candidate(encodedText = \"spaces   in   between   words\", rows = 4) == s twpiwoanerc ede ns\n    assert candidate(encodedText = \"qjewukcuvm xs   ezmrg\", rows = 4) == qcsmju rev wmu\n    assert candidate(encodedText = \"this is a longer example to test the decoding function\", rows = 8) == t epteharlei  esle oi\n    assert candidate(encodedText = \"q w   e r   t y   u i   o p\", rows = 4) == q y  r  w\n    assert candidate(encodedText = \"a    q    o    q    r    s\", rows = 6) == aqoq\n    assert candidate(encodedText = \"abcdefghi jklmnop qrstuv wx yz\", rows = 5) == ahntybiouzc pvdj ekf\n    assert candidate(encodedText = \"i s l a n d   o f   d r e a m s\", rows = 3) == i r   s e o l a f a m   n\n    assert candidate(encodedText = \"s h e e l  s  s  f  i  r  e\", rows = 5) == se       hls  e\n    assert candidate(encodedText = \"abc def ghi jkl mno pqr stu vwx yz\", rows = 6) == afjosb k cgl hd\n    assert candidate(encodedText = \"hello   world   this   is   a   test\", rows = 5) == hwtsteoh elri slls od\n    assert candidate(encodedText = \"c o n s t a n t i n o p o l i s\", rows = 6) == csnno    ott  n\n    assert candidate(encodedText = \"a b c d e f g h i j k l m n o p q r s t u v w x y z\", rows = 5) == a l w g r b m x h s c n y i t d o  j e\n    assert candidate(encodedText = \"this is a test of the emergency broadcast system\", rows = 6) == t tedththnceieecamss ys te i mso\n    assert candidate(encodedText = \"x w v u t s r q p o n m l k j i h g f e d c b a\", rows = 26) == x\n    assert candidate(encodedText = \"keep it secret keep it safe\", rows = 6) == kicketre p\n    assert candidate(encodedText = \"a    b   c  d e f g h i j k l m n o p q r s t u v w x y z\", rows = 26) == a\n    assert candidate(encodedText = \"hello world from the other side\", rows = 4) == hr eeltrldh l esof  rw\n    assert candidate(encodedText = \"data structures and algorithms\", rows = 8) == d uast\n    assert candidate(encodedText = \"abcdefghij klmnopqrst uvwxyz\", rows = 3) == a tbk cludmvenwfoxgpyhqi\n    assert candidate(encodedText = \"singleword\", rows = 10) == s\n    assert candidate(encodedText = \"the quick brown fox jumps over the lazy dog\", rows = 6) == tkfshdh o eoebxo  r vqojuwi\n    assert candidate(encodedText = \"thisisaverylongstringthatwillbereconstructedusingtheslantedciphertechnique\", rows = 7) == tlhcunehoaostcintniehsgwsndnisitgcstlrtarluvibenr\n    assert candidate(encodedText = \"one\", rows = 1) == one\n    assert candidate(encodedText = \"z y x w v u t s r q p o n m l k j i h g f e d c b a\", rows = 5) == z o d t i y n c s h x m b r g w l  q v\n    assert candidate(encodedText = \"t h e q u i c k b r o w n   f o x   j u m p s   o v e r   t h e   l a z y   d o g\", rows = 7) == tcnjohy       hk uve        ebfme d      qropr    uox  i\n    assert candidate(encodedText = \"abcdefgh ijklmnop qrstuvwx yz      this is a test\", rows = 5) == ajs ibkt sclu  dmv aenw  foxtgp h\n    assert candidate(encodedText = \"a quick movement of the enemy will jeopardize five gunboats\", rows = 7) == aofme b v yofoqet piumhwaieeicn kt\n    assert candidate(encodedText = \"slantedtranspositioncipheriscomplexandfun\", rows = 7) == sdpoeltonarsnat\n    assert candidate(encodedText = \"one two three four five six seven eight nine ten eleven twelve\", rows = 4) == oun nr ee el fietigvwvheoetn    tsnthiiwrxnee eles  ef\n    assert candidate(encodedText = \"abcdefghij\", rows = 1) == abcdefghij\n    assert candidate(encodedText = \"x    y     z      \", rows = 3) == x            zy\n    assert candidate(encodedText = \"machine learning is fascinating\", rows = 7) == mnagaerc h\n    assert candidate(encodedText = \"lqtk e o mu yzfe ot i g rya wne l oxtesn gdeo\", rows = 5) == luie q   gtygldkz  e frooeeyx  aoo\n    assert candidate(encodedText = \"p r o g r a m m i n g   l a n g u a g e s\", rows = 5) == p n g a n r g e m g o    m g\n    assert candidate(encodedText = \"wecoloveleetcode\", rows = 2) == weeectocloodvee\n    assert candidate(encodedText = \"example     of    a    very    long    encoded    text\", rows = 7) == e  eon x  rnca aygm   po lfe\n    assert candidate(encodedText = \"longer text with multiple spaces in between\", rows = 3) == lheo snm guielnrt  ibtpeeltxewt e sewpi\n    assert candidate(encodedText = \"it wof  eit   ss dp\", rows = 4) == iftst    w\n    assert candidate(encodedText = \"a      b      c      d      e\", rows = 5) == a     b    c\n    assert candidate(encodedText = \"abcd efgh ijkl mnop qrst uvwx yz\", rows = 5) == ag rxbhms c ntdio je\n    assert candidate(encodedText = \"the quick brown fox jumps over lazy dogs\", rows = 4) == trmzhopyews  n dq ooufvgioescxrk\n    assert candidate(encodedText = \"special    characters    !@#$%^&*() are    allowed    in    the    text\", rows = 10) == s c * ep t!( e e@)ccr#ihsaal\n    assert candidate(encodedText = \"thisisaverylongtextthatneedstobeencodedusingaslantedtranspositioncipher\", rows = 8) == trtsdsaohyttelnilhodasoabuintesgnatv\n    assert candidate(encodedText = \"spaces    are   handled   correctly\", rows = 5) == s h tp a laancycrdoeels\n    assert candidate(encodedText = \"f l e x i b l e   r e s o u r c e s\", rows = 5) == fi oe     lbrus    ele  x\n    assert candidate(encodedText = \"t h e   q u i c k   b r o w n   f o x   j u m p s   o v e r   l a z y   d o g s\", rows = 3) == t v n h e   e r f     o q l x u a   i z j c y u k   m   d p b o s r g   o\n    assert candidate(encodedText = \"a    b     c      d       e        f         g          h           i\", rows = 9) == a              de  c     b\n    assert candidate(encodedText = \"python programming is fun\", rows = 3) == po ygitrsha omfnmu ip\n    assert candidate(encodedText = \"spaces   between   words   are   preserved\", rows = 3) == sn p  a  c pewrsoe rs de srb ve et dwae\n    assert candidate(encodedText = \"keep calm and code on\", rows = 2) == knede pc ocdael mo\n    assert candidate(encodedText = \"abcdefgh ijklmnop qrstuv wxyz\", rows = 4) == a p bi wcjqxdkryelsfmg\n    assert candidate(encodedText = \"decoding slanted transposition cipher is challenging\", rows = 7) == d  si gestipcclrthoaaidnnitn\n    assert candidate(encodedText = \"a quick brown fox jumps over the lazy dog\", rows = 3) == af  otqxhu eij culkma pzbsyr  oodwvn\n    assert candidate(encodedText = \"the quick brown fox jumps over the lazy dog and then some more text to fill\", rows = 8) == tbj der hrutonefeomhg   wpe sqns au  lifocok\n    assert candidate(encodedText = \"empty string test\", rows = 1) == empty string test\n    assert candidate(encodedText = \"u p   d o w n   w i d e   t h i n g s\", rows = 4) == uwdi    pnen       g    dwt  o\n    assert candidate(encodedText = \"this is a test of the emergency broadcast system\", rows = 5) == tteythe   isebsstmry  eosiorasfg  a\n    assert candidate(encodedText = \"shorttext\", rows = 1) == shorttext\n    assert candidate(encodedText = \"a quick brown fox jumps over the lazy dog\", rows = 5) == arjry ou  qwmtdunphoi secf ko\n    assert candidate(encodedText = \"a   bcd efgh  ijklm nopqrst uvwxy z\", rows = 5) == aekry fls  gmtz h  b nc d\n    assert candidate(encodedText = \"one two three four five six seven eight nine ten\", rows = 4) == o x nf neosi uentrvew e ofnt i etvenheir e\n    assert candidate(encodedText = \"a    b    c    d    e\", rows = 5) == abcd\n    assert candidate(encodedText = \"thisisaverylongtextthatneedstobeencodedproperly\", rows = 6) == teeeerhrxenoiytdcsltsiohsna\n    assert candidate(encodedText = \"the quick brown fox jumps over a lazy dog\", rows = 3) == tneh ref  oaqx u lijacuzkmy p bsdr o\n    assert candidate(encodedText = \"one two    three four    five six seven\", rows = 3) == oeene e s fitoxwu ors  e  v  e  ntfh\n    assert candidate(encodedText = \"pythonprogramminglanguageisawesome\", rows = 5) == priuwyonaetggghrloan\n    assert candidate(encodedText = \"sl  yz  vx  qu  tm\", rows = 4) == sz  l\n    assert candidate(encodedText = \"this   is   a   long   encoded   text   for   testing\", rows = 7) == tsln fsh octoi noes gd a\n    assert candidate(encodedText = \"abcdefghij    klmnopqrst    uvwxyz\", rows = 3) == a  b  ck dl emufnvgowhpxiqyjr\n    assert candidate(encodedText = \"a quick brown fox jumps over the lazy dog\", rows = 4) == awsl n aq ozufvyioe cxrdk  o jtbur\n    assert candidate(encodedText = \"a            b           c          d         e\", rows = 5) == a               b          c\n    assert candidate(encodedText = \"a   bcd   efgh   ijklm   nopqrst   uvwxyz\", rows = 6) == a  mqu    r     eibfc\n    assert candidate(encodedText = \"a   a   a   a   a   a   a   a   a   a\", rows = 10) == aaa\n    assert candidate(encodedText = \"exampleofasingleword\", rows = 1) == exampleofasingleword\n    assert candidate(encodedText = \"the quick brown fox jumps over lazy dogs\", rows = 5) == t xvdhb eoerjrg ou sqwmlunpi c\n    assert candidate(encodedText = \"a very long text that is used to test the edge cases of the problem statement\", rows = 10) == ao   ea ntut vghsee aerttye\n    assert candidate(encodedText = \"a  b c d e f g h i j k l m n o p q r s t u v w x y z\", rows = 6) == ae n w  j s  f o xb k t g pc l hd\n    assert candidate(encodedText = \"onewordonly\", rows = 1) == onewordonly\n    assert candidate(encodedText = \"python is an interpreted high level general purpose programming language\", rows = 6) == piiepayngrrntthaoghe lguorl ranpepag rvumeieermstlp e adn\n    assert candidate(encodedText = \"abcdefghijklmnopqrstuvwxyz\", rows = 10) == adb\n    assert candidate(encodedText = \"abcdefghijklmnopqrstuvwxyz\", rows = 26) == a\n    assert candidate(encodedText = \"slantedtranspositioncipherexample\", rows = 10) == strlea",
+    "cpp": "void check(Solution& solution) {\n    assert(solution.decodeCiphertext(\"a\", 1) == vector<int>a);\n    assert(solution.decodeCiphertext(\"abcd efg hijk\", 3) == vector<int>aeibfjcgd);\n    assert(solution.decodeCiphertext(\"a   b   c   d\", 2) == vector<int>a  c    b);\n    assert(solution.decodeCiphertext(\"coding\", 1) == vector<int>coding);\n    assert(solution.decodeCiphertext(\"abc def ghi jkl mno\", 5) == vector<int>adgbec);\n    assert(solution.decodeCiphertext(\"ab c  de\", 2) == vector<int>a bd ec);\n    assert(solution.decodeCiphertext(\"ch   ie   pr\", 3) == vector<int>cipher);\n    assert(solution.decodeCiphertext(\"iveo    eed   l te   olc\", 4) == vector<int>i love leetcode);\n    assert(solution.decodeCiphertext(\"python programming is fun\", 4) == vector<int>ppm yriftonuhggorn);\n    assert(solution.decodeCiphertext(\"algorithms and data structures\", 5) == vector<int>ah telmdrsgsauo trai);\n    assert(solution.decodeCiphertext(\"hello world  from    leetcode     challenges\", 6) == vector<int>hrmt nel c gld ocl  do   fw);\n    assert(solution.decodeCiphertext(\"t a c o s e q u i r r e s e l l   f o o d   s o u p\", 5) == vector<int>t e s q f a s o u o c e u i o o l  r s);\n    assert(solution.decodeCiphertext(\"one    two    three    four    five    six\", 3) == vector<int>oh nrfeei ev  e      t  wf oos ui rx);\n    assert(solution.decodeCiphertext(\"programming challenges are fun\", 4) == vector<int>pilrrneeogn g gfrceahm);\n    assert(solution.decodeCiphertext(\"filling   the   matrix   in   a   slanted   manner\", 6) == vector<int>f t aaitr nnlhi tnlexaei   n  g);\n    assert(solution.decodeCiphertext(\"p y trh    e  t s    o    n    a\", 3) == vector<int>pe    y   t t nrs h);\n    assert(solution.decodeCiphertext(\"m e t a l l i c a\", 3) == vector<int>mai   elc  t);\n    assert(solution.decodeCiphertext(\"\", 10) == vector<int>nullptr);\n    assert(solution.decodeCiphertext(\"padding   with   spaces   at   the   end     \", 5) == vector<int>pwc  aiet dtsh dh e i    n   g a s);\n    assert(solution.decodeCiphertext(\"a    b    c    d    e    f    g    h    i\", 9) == vector<int>abcd);\n    assert(solution.decodeCiphertext(\"qo   su   me   ve   rt\", 5) == vector<int>qsmvoue);\n    assert(solution.decodeCiphertext(\"sh jfuew xq  z   r e\", 3) == vector<int>sw h   x jqrf u);\n    assert(solution.decodeCiphertext(\"this  is a   test  string\", 5) == vector<int>ti  ghstsi esa);\n    assert(solution.decodeCiphertext(\"abcdef ghijkl mnopqr stuvwx yz\", 5) == vector<int>agmsybhntzcioudjpekf);\n    assert(solution.decodeCiphertext(\"a quick brown fox jumps over the lazy dog\", 6) == vector<int>a fp z bostqrx uo iwc);\n    assert(solution.decodeCiphertext(\"wcy  hmu  eai  xfi\", 3) == vector<int>wu c xy f ei ah);\n    assert(solution.decodeCiphertext(\"two words\", 1) == vector<int>two words);\n    assert(solution.decodeCiphertext(\"th qzih xof  c \", 3) == vector<int>th h c x qoz);\n    assert(solution.decodeCiphertext(\"ab  c   d    e     f      g       h        i         j\", 10) == vector<int>a    b ef d   c);\n    assert(solution.decodeCiphertext(\"programming in python is fun\", 3) == vector<int>pgnr  oiignsr  apfmyumti);\n    assert(solution.decodeCiphertext(\"spaces   in   between   words\", 4) == vector<int>s twpiwoanerc ede ns);\n    assert(solution.decodeCiphertext(\"qjewukcuvm xs   ezmrg\", 4) == vector<int>qcsmju rev wmu);\n    assert(solution.decodeCiphertext(\"this is a longer example to test the decoding function\", 8) == vector<int>t epteharlei  esle oi);\n    assert(solution.decodeCiphertext(\"q w   e r   t y   u i   o p\", 4) == vector<int>q y  r  w);\n    assert(solution.decodeCiphertext(\"a    q    o    q    r    s\", 6) == vector<int>aqoq);\n    assert(solution.decodeCiphertext(\"abcdefghi jklmnop qrstuv wx yz\", 5) == vector<int>ahntybiouzc pvdj ekf);\n    assert(solution.decodeCiphertext(\"i s l a n d   o f   d r e a m s\", 3) == vector<int>i r   s e o l a f a m   n);\n    assert(solution.decodeCiphertext(\"s h e e l  s  s  f  i  r  e\", 5) == vector<int>se       hls  e);\n    assert(solution.decodeCiphertext(\"abc def ghi jkl mno pqr stu vwx yz\", 6) == vector<int>afjosb k cgl hd);\n    assert(solution.decodeCiphertext(\"hello   world   this   is   a   test\", 5) == vector<int>hwtsteoh elri slls od);\n    assert(solution.decodeCiphertext(\"c o n s t a n t i n o p o l i s\", 6) == vector<int>csnno    ott  n);\n    assert(solution.decodeCiphertext(\"a b c d e f g h i j k l m n o p q r s t u v w x y z\", 5) == vector<int>a l w g r b m x h s c n y i t d o  j e);\n    assert(solution.decodeCiphertext(\"this is a test of the emergency broadcast system\", 6) == vector<int>t tedththnceieecamss ys te i mso);\n    assert(solution.decodeCiphertext(\"x w v u t s r q p o n m l k j i h g f e d c b a\", 26) == vector<int>x);\n    assert(solution.decodeCiphertext(\"keep it secret keep it safe\", 6) == vector<int>kicketre p);\n    assert(solution.decodeCiphertext(\"a    b   c  d e f g h i j k l m n o p q r s t u v w x y z\", 26) == vector<int>a);\n    assert(solution.decodeCiphertext(\"hello world from the other side\", 4) == vector<int>hr eeltrldh l esof  rw);\n    assert(solution.decodeCiphertext(\"data structures and algorithms\", 8) == vector<int>d uast);\n    assert(solution.decodeCiphertext(\"abcdefghij klmnopqrst uvwxyz\", 3) == vector<int>a tbk cludmvenwfoxgpyhqi);\n    assert(solution.decodeCiphertext(\"singleword\", 10) == vector<int>s);\n    assert(solution.decodeCiphertext(\"the quick brown fox jumps over the lazy dog\", 6) == vector<int>tkfshdh o eoebxo  r vqojuwi);\n    assert(solution.decodeCiphertext(\"thisisaverylongstringthatwillbereconstructedusingtheslantedciphertechnique\", 7) == vector<int>tlhcunehoaostcintniehsgwsndnisitgcstlrtarluvibenr);\n    assert(solution.decodeCiphertext(\"one\", 1) == vector<int>one);\n    assert(solution.decodeCiphertext(\"z y x w v u t s r q p o n m l k j i h g f e d c b a\", 5) == vector<int>z o d t i y n c s h x m b r g w l  q v);\n    assert(solution.decodeCiphertext(\"t h e q u i c k b r o w n   f o x   j u m p s   o v e r   t h e   l a z y   d o g\", 7) == vector<int>tcnjohy       hk uve        ebfme d      qropr    uox  i);\n    assert(solution.decodeCiphertext(\"abcdefgh ijklmnop qrstuvwx yz      this is a test\", 5) == vector<int>ajs ibkt sclu  dmv aenw  foxtgp h);\n    assert(solution.decodeCiphertext(\"a quick movement of the enemy will jeopardize five gunboats\", 7) == vector<int>aofme b v yofoqet piumhwaieeicn kt);\n    assert(solution.decodeCiphertext(\"slantedtranspositioncipheriscomplexandfun\", 7) == vector<int>sdpoeltonarsnat);\n    assert(solution.decodeCiphertext(\"one two three four five six seven eight nine ten eleven twelve\", 4) == vector<int>oun nr ee el fietigvwvheoetn    tsnthiiwrxnee eles  ef);\n    assert(solution.decodeCiphertext(\"abcdefghij\", 1) == vector<int>abcdefghij);\n    assert(solution.decodeCiphertext(\"x    y     z      \", 3) == vector<int>x            zy);\n    assert(solution.decodeCiphertext(\"machine learning is fascinating\", 7) == vector<int>mnagaerc h);\n    assert(solution.decodeCiphertext(\"lqtk e o mu yzfe ot i g rya wne l oxtesn gdeo\", 5) == vector<int>luie q   gtygldkz  e frooeeyx  aoo);\n    assert(solution.decodeCiphertext(\"p r o g r a m m i n g   l a n g u a g e s\", 5) == vector<int>p n g a n r g e m g o    m g);\n    assert(solution.decodeCiphertext(\"wecoloveleetcode\", 2) == vector<int>weeectocloodvee);\n    assert(solution.decodeCiphertext(\"example     of    a    very    long    encoded    text\", 7) == vector<int>e  eon x  rnca aygm   po lfe);\n    assert(solution.decodeCiphertext(\"longer text with multiple spaces in between\", 3) == vector<int>lheo snm guielnrt  ibtpeeltxewt e sewpi);\n    assert(solution.decodeCiphertext(\"it wof  eit   ss dp\", 4) == vector<int>iftst    w);\n    assert(solution.decodeCiphertext(\"a      b      c      d      e\", 5) == vector<int>a     b    c);\n    assert(solution.decodeCiphertext(\"abcd efgh ijkl mnop qrst uvwx yz\", 5) == vector<int>ag rxbhms c ntdio je);\n    assert(solution.decodeCiphertext(\"the quick brown fox jumps over lazy dogs\", 4) == vector<int>trmzhopyews  n dq ooufvgioescxrk);\n    assert(solution.decodeCiphertext(\"special    characters    !@#$%^&*() are    allowed    in    the    text\", 10) == vector<int>s c * ep t!( e e@)ccr#ihsaal);\n    assert(solution.decodeCiphertext(\"thisisaverylongtextthatneedstobeencodedusingaslantedtranspositioncipher\", 8) == vector<int>trtsdsaohyttelnilhodasoabuintesgnatv);\n    assert(solution.decodeCiphertext(\"spaces    are   handled   correctly\", 5) == vector<int>s h tp a laancycrdoeels);\n    assert(solution.decodeCiphertext(\"f l e x i b l e   r e s o u r c e s\", 5) == vector<int>fi oe     lbrus    ele  x);\n    assert(solution.decodeCiphertext(\"t h e   q u i c k   b r o w n   f o x   j u m p s   o v e r   l a z y   d o g s\", 3) == vector<int>t v n h e   e r f     o q l x u a   i z j c y u k   m   d p b o s r g   o);\n    assert(solution.decodeCiphertext(\"a    b     c      d       e        f         g          h           i\", 9) == vector<int>a              de  c     b);\n    assert(solution.decodeCiphertext(\"python programming is fun\", 3) == vector<int>po ygitrsha omfnmu ip);\n    assert(solution.decodeCiphertext(\"spaces   between   words   are   preserved\", 3) == vector<int>sn p  a  c pewrsoe rs de srb ve et dwae);\n    assert(solution.decodeCiphertext(\"keep calm and code on\", 2) == vector<int>knede pc ocdael mo);\n    assert(solution.decodeCiphertext(\"abcdefgh ijklmnop qrstuv wxyz\", 4) == vector<int>a p bi wcjqxdkryelsfmg);\n    assert(solution.decodeCiphertext(\"decoding slanted transposition cipher is challenging\", 7) == vector<int>d  si gestipcclrthoaaidnnitn);\n    assert(solution.decodeCiphertext(\"a quick brown fox jumps over the lazy dog\", 3) == vector<int>af  otqxhu eij culkma pzbsyr  oodwvn);\n    assert(solution.decodeCiphertext(\"the quick brown fox jumps over the lazy dog and then some more text to fill\", 8) == vector<int>tbj der hrutonefeomhg   wpe sqns au  lifocok);\n    assert(solution.decodeCiphertext(\"empty string test\", 1) == vector<int>empty string test);\n    assert(solution.decodeCiphertext(\"u p   d o w n   w i d e   t h i n g s\", 4) == vector<int>uwdi    pnen       g    dwt  o);\n    assert(solution.decodeCiphertext(\"this is a test of the emergency broadcast system\", 5) == vector<int>tteythe   isebsstmry  eosiorasfg  a);\n    assert(solution.decodeCiphertext(\"shorttext\", 1) == vector<int>shorttext);\n    assert(solution.decodeCiphertext(\"a quick brown fox jumps over the lazy dog\", 5) == vector<int>arjry ou  qwmtdunphoi secf ko);\n    assert(solution.decodeCiphertext(\"a   bcd efgh  ijklm nopqrst uvwxy z\", 5) == vector<int>aekry fls  gmtz h  b nc d);\n    assert(solution.decodeCiphertext(\"one two three four five six seven eight nine ten\", 4) == vector<int>o x nf neosi uentrvew e ofnt i etvenheir e);\n    assert(solution.decodeCiphertext(\"a    b    c    d    e\", 5) == vector<int>abcd);\n    assert(solution.decodeCiphertext(\"thisisaverylongtextthatneedstobeencodedproperly\", 6) == vector<int>teeeerhrxenoiytdcsltsiohsna);\n    assert(solution.decodeCiphertext(\"the quick brown fox jumps over a lazy dog\", 3) == vector<int>tneh ref  oaqx u lijacuzkmy p bsdr o);\n    assert(solution.decodeCiphertext(\"one two    three four    five six seven\", 3) == vector<int>oeene e s fitoxwu ors  e  v  e  ntfh);\n    assert(solution.decodeCiphertext(\"pythonprogramminglanguageisawesome\", 5) == vector<int>priuwyonaetggghrloan);\n    assert(solution.decodeCiphertext(\"sl  yz  vx  qu  tm\", 4) == vector<int>sz  l);\n    assert(solution.decodeCiphertext(\"this   is   a   long   encoded   text   for   testing\", 7) == vector<int>tsln fsh octoi noes gd a);\n    assert(solution.decodeCiphertext(\"abcdefghij    klmnopqrst    uvwxyz\", 3) == vector<int>a  b  ck dl emufnvgowhpxiqyjr);\n    assert(solution.decodeCiphertext(\"a quick brown fox jumps over the lazy dog\", 4) == vector<int>awsl n aq ozufvyioe cxrdk  o jtbur);\n    assert(solution.decodeCiphertext(\"a            b           c          d         e\", 5) == vector<int>a               b          c);\n    assert(solution.decodeCiphertext(\"a   bcd   efgh   ijklm   nopqrst   uvwxyz\", 6) == vector<int>a  mqu    r     eibfc);\n    assert(solution.decodeCiphertext(\"a   a   a   a   a   a   a   a   a   a\", 10) == vector<int>aaa);\n    assert(solution.decodeCiphertext(\"exampleofasingleword\", 1) == vector<int>exampleofasingleword);\n    assert(solution.decodeCiphertext(\"the quick brown fox jumps over lazy dogs\", 5) == vector<int>t xvdhb eoerjrg ou sqwmlunpi c);\n    assert(solution.decodeCiphertext(\"a very long text that is used to test the edge cases of the problem statement\", 10) == vector<int>ao   ea ntut vghsee aerttye);\n    assert(solution.decodeCiphertext(\"a  b c d e f g h i j k l m n o p q r s t u v w x y z\", 6) == vector<int>ae n w  j s  f o xb k t g pc l hd);\n    assert(solution.decodeCiphertext(\"onewordonly\", 1) == vector<int>onewordonly);\n    assert(solution.decodeCiphertext(\"python is an interpreted high level general purpose programming language\", 6) == vector<int>piiepayngrrntthaoghe lguorl ranpepag rvumeieermstlp e adn);\n    assert(solution.decodeCiphertext(\"abcdefghijklmnopqrstuvwxyz\", 10) == vector<int>adb);\n    assert(solution.decodeCiphertext(\"abcdefghijklmnopqrstuvwxyz\", 26) == vector<int>a);\n    assert(solution.decodeCiphertext(\"slantedtranspositioncipherexample\", 10) == vector<int>strlea);\n}",
+    "java": "public static void check(Solution solution) {\n    assert Arrays.equals(solution.decodeCiphertext(\"a\", 1), a);\n    assert Arrays.equals(solution.decodeCiphertext(\"abcd efg hijk\", 3), aeibfjcgd);\n    assert Arrays.equals(solution.decodeCiphertext(\"a   b   c   d\", 2), a  c    b);\n    assert Arrays.equals(solution.decodeCiphertext(\"coding\", 1), coding);\n    assert Arrays.equals(solution.decodeCiphertext(\"abc def ghi jkl mno\", 5), adgbec);\n    assert Arrays.equals(solution.decodeCiphertext(\"ab c  de\", 2), a bd ec);\n    assert Arrays.equals(solution.decodeCiphertext(\"ch   ie   pr\", 3), cipher);\n    assert Arrays.equals(solution.decodeCiphertext(\"iveo    eed   l te   olc\", 4), i love leetcode);\n    assert Arrays.equals(solution.decodeCiphertext(\"python programming is fun\", 4), ppm yriftonuhggorn);\n    assert Arrays.equals(solution.decodeCiphertext(\"algorithms and data structures\", 5), ah telmdrsgsauo trai);\n    assert Arrays.equals(solution.decodeCiphertext(\"hello world  from    leetcode     challenges\", 6), hrmt nel c gld ocl  do   fw);\n    assert Arrays.equals(solution.decodeCiphertext(\"t a c o s e q u i r r e s e l l   f o o d   s o u p\", 5), t e s q f a s o u o c e u i o o l  r s);\n    assert Arrays.equals(solution.decodeCiphertext(\"one    two    three    four    five    six\", 3), oh nrfeei ev  e      t  wf oos ui rx);\n    assert Arrays.equals(solution.decodeCiphertext(\"programming challenges are fun\", 4), pilrrneeogn g gfrceahm);\n    assert Arrays.equals(solution.decodeCiphertext(\"filling   the   matrix   in   a   slanted   manner\", 6), f t aaitr nnlhi tnlexaei   n  g);\n    assert Arrays.equals(solution.decodeCiphertext(\"p y trh    e  t s    o    n    a\", 3), pe    y   t t nrs h);\n    assert Arrays.equals(solution.decodeCiphertext(\"m e t a l l i c a\", 3), mai   elc  t);\n    assert Arrays.equals(solution.decodeCiphertext(\"\", 10), null);\n    assert Arrays.equals(solution.decodeCiphertext(\"padding   with   spaces   at   the   end     \", 5), pwc  aiet dtsh dh e i    n   g a s);\n    assert Arrays.equals(solution.decodeCiphertext(\"a    b    c    d    e    f    g    h    i\", 9), abcd);\n    assert Arrays.equals(solution.decodeCiphertext(\"qo   su   me   ve   rt\", 5), qsmvoue);\n    assert Arrays.equals(solution.decodeCiphertext(\"sh jfuew xq  z   r e\", 3), sw h   x jqrf u);\n    assert Arrays.equals(solution.decodeCiphertext(\"this  is a   test  string\", 5), ti  ghstsi esa);\n    assert Arrays.equals(solution.decodeCiphertext(\"abcdef ghijkl mnopqr stuvwx yz\", 5), agmsybhntzcioudjpekf);\n    assert Arrays.equals(solution.decodeCiphertext(\"a quick brown fox jumps over the lazy dog\", 6), a fp z bostqrx uo iwc);\n    assert Arrays.equals(solution.decodeCiphertext(\"wcy  hmu  eai  xfi\", 3), wu c xy f ei ah);\n    assert Arrays.equals(solution.decodeCiphertext(\"two words\", 1), two words);\n    assert Arrays.equals(solution.decodeCiphertext(\"th qzih xof  c \", 3), th h c x qoz);\n    assert Arrays.equals(solution.decodeCiphertext(\"ab  c   d    e     f      g       h        i         j\", 10), a    b ef d   c);\n    assert Arrays.equals(solution.decodeCiphertext(\"programming in python is fun\", 3), pgnr  oiignsr  apfmyumti);\n    assert Arrays.equals(solution.decodeCiphertext(\"spaces   in   between   words\", 4), s twpiwoanerc ede ns);\n    assert Arrays.equals(solution.decodeCiphertext(\"qjewukcuvm xs   ezmrg\", 4), qcsmju rev wmu);\n    assert Arrays.equals(solution.decodeCiphertext(\"this is a longer example to test the decoding function\", 8), t epteharlei  esle oi);\n    assert Arrays.equals(solution.decodeCiphertext(\"q w   e r   t y   u i   o p\", 4), q y  r  w);\n    assert Arrays.equals(solution.decodeCiphertext(\"a    q    o    q    r    s\", 6), aqoq);\n    assert Arrays.equals(solution.decodeCiphertext(\"abcdefghi jklmnop qrstuv wx yz\", 5), ahntybiouzc pvdj ekf);\n    assert Arrays.equals(solution.decodeCiphertext(\"i s l a n d   o f   d r e a m s\", 3), i r   s e o l a f a m   n);\n    assert Arrays.equals(solution.decodeCiphertext(\"s h e e l  s  s  f  i  r  e\", 5), se       hls  e);\n    assert Arrays.equals(solution.decodeCiphertext(\"abc def ghi jkl mno pqr stu vwx yz\", 6), afjosb k cgl hd);\n    assert Arrays.equals(solution.decodeCiphertext(\"hello   world   this   is   a   test\", 5), hwtsteoh elri slls od);\n    assert Arrays.equals(solution.decodeCiphertext(\"c o n s t a n t i n o p o l i s\", 6), csnno    ott  n);\n    assert Arrays.equals(solution.decodeCiphertext(\"a b c d e f g h i j k l m n o p q r s t u v w x y z\", 5), a l w g r b m x h s c n y i t d o  j e);\n    assert Arrays.equals(solution.decodeCiphertext(\"this is a test of the emergency broadcast system\", 6), t tedththnceieecamss ys te i mso);\n    assert Arrays.equals(solution.decodeCiphertext(\"x w v u t s r q p o n m l k j i h g f e d c b a\", 26), x);\n    assert Arrays.equals(solution.decodeCiphertext(\"keep it secret keep it safe\", 6), kicketre p);\n    assert Arrays.equals(solution.decodeCiphertext(\"a    b   c  d e f g h i j k l m n o p q r s t u v w x y z\", 26), a);\n    assert Arrays.equals(solution.decodeCiphertext(\"hello world from the other side\", 4), hr eeltrldh l esof  rw);\n    assert Arrays.equals(solution.decodeCiphertext(\"data structures and algorithms\", 8), d uast);\n    assert Arrays.equals(solution.decodeCiphertext(\"abcdefghij klmnopqrst uvwxyz\", 3), a tbk cludmvenwfoxgpyhqi);\n    assert Arrays.equals(solution.decodeCiphertext(\"singleword\", 10), s);\n    assert Arrays.equals(solution.decodeCiphertext(\"the quick brown fox jumps over the lazy dog\", 6), tkfshdh o eoebxo  r vqojuwi);\n    assert Arrays.equals(solution.decodeCiphertext(\"thisisaverylongstringthatwillbereconstructedusingtheslantedciphertechnique\", 7), tlhcunehoaostcintniehsgwsndnisitgcstlrtarluvibenr);\n    assert Arrays.equals(solution.decodeCiphertext(\"one\", 1), one);\n    assert Arrays.equals(solution.decodeCiphertext(\"z y x w v u t s r q p o n m l k j i h g f e d c b a\", 5), z o d t i y n c s h x m b r g w l  q v);\n    assert Arrays.equals(solution.decodeCiphertext(\"t h e q u i c k b r o w n   f o x   j u m p s   o v e r   t h e   l a z y   d o g\", 7), tcnjohy       hk uve        ebfme d      qropr    uox  i);\n    assert Arrays.equals(solution.decodeCiphertext(\"abcdefgh ijklmnop qrstuvwx yz      this is a test\", 5), ajs ibkt sclu  dmv aenw  foxtgp h);\n    assert Arrays.equals(solution.decodeCiphertext(\"a quick movement of the enemy will jeopardize five gunboats\", 7), aofme b v yofoqet piumhwaieeicn kt);\n    assert Arrays.equals(solution.decodeCiphertext(\"slantedtranspositioncipheriscomplexandfun\", 7), sdpoeltonarsnat);\n    assert Arrays.equals(solution.decodeCiphertext(\"one two three four five six seven eight nine ten eleven twelve\", 4), oun nr ee el fietigvwvheoetn    tsnthiiwrxnee eles  ef);\n    assert Arrays.equals(solution.decodeCiphertext(\"abcdefghij\", 1), abcdefghij);\n    assert Arrays.equals(solution.decodeCiphertext(\"x    y     z      \", 3), x            zy);\n    assert Arrays.equals(solution.decodeCiphertext(\"machine learning is fascinating\", 7), mnagaerc h);\n    assert Arrays.equals(solution.decodeCiphertext(\"lqtk e o mu yzfe ot i g rya wne l oxtesn gdeo\", 5), luie q   gtygldkz  e frooeeyx  aoo);\n    assert Arrays.equals(solution.decodeCiphertext(\"p r o g r a m m i n g   l a n g u a g e s\", 5), p n g a n r g e m g o    m g);\n    assert Arrays.equals(solution.decodeCiphertext(\"wecoloveleetcode\", 2), weeectocloodvee);\n    assert Arrays.equals(solution.decodeCiphertext(\"example     of    a    very    long    encoded    text\", 7), e  eon x  rnca aygm   po lfe);\n    assert Arrays.equals(solution.decodeCiphertext(\"longer text with multiple spaces in between\", 3), lheo snm guielnrt  ibtpeeltxewt e sewpi);\n    assert Arrays.equals(solution.decodeCiphertext(\"it wof  eit   ss dp\", 4), iftst    w);\n    assert Arrays.equals(solution.decodeCiphertext(\"a      b      c      d      e\", 5), a     b    c);\n    assert Arrays.equals(solution.decodeCiphertext(\"abcd efgh ijkl mnop qrst uvwx yz\", 5), ag rxbhms c ntdio je);\n    assert Arrays.equals(solution.decodeCiphertext(\"the quick brown fox jumps over lazy dogs\", 4), trmzhopyews  n dq ooufvgioescxrk);\n    assert Arrays.equals(solution.decodeCiphertext(\"special    characters    !@#$%^&*() are    allowed    in    the    text\", 10), s c * ep t!( e e@)ccr#ihsaal);\n    assert Arrays.equals(solution.decodeCiphertext(\"thisisaverylongtextthatneedstobeencodedusingaslantedtranspositioncipher\", 8), trtsdsaohyttelnilhodasoabuintesgnatv);\n    assert Arrays.equals(solution.decodeCiphertext(\"spaces    are   handled   correctly\", 5), s h tp a laancycrdoeels);\n    assert Arrays.equals(solution.decodeCiphertext(\"f l e x i b l e   r e s o u r c e s\", 5), fi oe     lbrus    ele  x);\n    assert Arrays.equals(solution.decodeCiphertext(\"t h e   q u i c k   b r o w n   f o x   j u m p s   o v e r   l a z y   d o g s\", 3), t v n h e   e r f     o q l x u a   i z j c y u k   m   d p b o s r g   o);\n    assert Arrays.equals(solution.decodeCiphertext(\"a    b     c      d       e        f         g          h           i\", 9), a              de  c     b);\n    assert Arrays.equals(solution.decodeCiphertext(\"python programming is fun\", 3), po ygitrsha omfnmu ip);\n    assert Arrays.equals(solution.decodeCiphertext(\"spaces   between   words   are   preserved\", 3), sn p  a  c pewrsoe rs de srb ve et dwae);\n    assert Arrays.equals(solution.decodeCiphertext(\"keep calm and code on\", 2), knede pc ocdael mo);\n    assert Arrays.equals(solution.decodeCiphertext(\"abcdefgh ijklmnop qrstuv wxyz\", 4), a p bi wcjqxdkryelsfmg);\n    assert Arrays.equals(solution.decodeCiphertext(\"decoding slanted transposition cipher is challenging\", 7), d  si gestipcclrthoaaidnnitn);\n    assert Arrays.equals(solution.decodeCiphertext(\"a quick brown fox jumps over the lazy dog\", 3), af  otqxhu eij culkma pzbsyr  oodwvn);\n    assert Arrays.equals(solution.decodeCiphertext(\"the quick brown fox jumps over the lazy dog and then some more text to fill\", 8), tbj der hrutonefeomhg   wpe sqns au  lifocok);\n    assert Arrays.equals(solution.decodeCiphertext(\"empty string test\", 1), empty string test);\n    assert Arrays.equals(solution.decodeCiphertext(\"u p   d o w n   w i d e   t h i n g s\", 4), uwdi    pnen       g    dwt  o);\n    assert Arrays.equals(solution.decodeCiphertext(\"this is a test of the emergency broadcast system\", 5), tteythe   isebsstmry  eosiorasfg  a);\n    assert Arrays.equals(solution.decodeCiphertext(\"shorttext\", 1), shorttext);\n    assert Arrays.equals(solution.decodeCiphertext(\"a quick brown fox jumps over the lazy dog\", 5), arjry ou  qwmtdunphoi secf ko);\n    assert Arrays.equals(solution.decodeCiphertext(\"a   bcd efgh  ijklm nopqrst uvwxy z\", 5), aekry fls  gmtz h  b nc d);\n    assert Arrays.equals(solution.decodeCiphertext(\"one two three four five six seven eight nine ten\", 4), o x nf neosi uentrvew e ofnt i etvenheir e);\n    assert Arrays.equals(solution.decodeCiphertext(\"a    b    c    d    e\", 5), abcd);\n    assert Arrays.equals(solution.decodeCiphertext(\"thisisaverylongtextthatneedstobeencodedproperly\", 6), teeeerhrxenoiytdcsltsiohsna);\n    assert Arrays.equals(solution.decodeCiphertext(\"the quick brown fox jumps over a lazy dog\", 3), tneh ref  oaqx u lijacuzkmy p bsdr o);\n    assert Arrays.equals(solution.decodeCiphertext(\"one two    three four    five six seven\", 3), oeene e s fitoxwu ors  e  v  e  ntfh);\n    assert Arrays.equals(solution.decodeCiphertext(\"pythonprogramminglanguageisawesome\", 5), priuwyonaetggghrloan);\n    assert Arrays.equals(solution.decodeCiphertext(\"sl  yz  vx  qu  tm\", 4), sz  l);\n    assert Arrays.equals(solution.decodeCiphertext(\"this   is   a   long   encoded   text   for   testing\", 7), tsln fsh octoi noes gd a);\n    assert Arrays.equals(solution.decodeCiphertext(\"abcdefghij    klmnopqrst    uvwxyz\", 3), a  b  ck dl emufnvgowhpxiqyjr);\n    assert Arrays.equals(solution.decodeCiphertext(\"a quick brown fox jumps over the lazy dog\", 4), awsl n aq ozufvyioe cxrdk  o jtbur);\n    assert Arrays.equals(solution.decodeCiphertext(\"a            b           c          d         e\", 5), a               b          c);\n    assert Arrays.equals(solution.decodeCiphertext(\"a   bcd   efgh   ijklm   nopqrst   uvwxyz\", 6), a  mqu    r     eibfc);\n    assert Arrays.equals(solution.decodeCiphertext(\"a   a   a   a   a   a   a   a   a   a\", 10), aaa);\n    assert Arrays.equals(solution.decodeCiphertext(\"exampleofasingleword\", 1), exampleofasingleword);\n    assert Arrays.equals(solution.decodeCiphertext(\"the quick brown fox jumps over lazy dogs\", 5), t xvdhb eoerjrg ou sqwmlunpi c);\n    assert Arrays.equals(solution.decodeCiphertext(\"a very long text that is used to test the edge cases of the problem statement\", 10), ao   ea ntut vghsee aerttye);\n    assert Arrays.equals(solution.decodeCiphertext(\"a  b c d e f g h i j k l m n o p q r s t u v w x y z\", 6), ae n w  j s  f o xb k t g pc l hd);\n    assert Arrays.equals(solution.decodeCiphertext(\"onewordonly\", 1), onewordonly);\n    assert Arrays.equals(solution.decodeCiphertext(\"python is an interpreted high level general purpose programming language\", 6), piiepayngrrntthaoghe lguorl ranpepag rvumeieermstlp e adn);\n    assert Arrays.equals(solution.decodeCiphertext(\"abcdefghijklmnopqrstuvwxyz\", 10), adb);\n    assert Arrays.equals(solution.decodeCiphertext(\"abcdefghijklmnopqrstuvwxyz\", 26), a);\n    assert Arrays.equals(solution.decodeCiphertext(\"slantedtranspositioncipherexample\", 10), strlea);\n}",
+    "javascript": "function check(candidate) {\n    console.assert(JSON.stringify(candidate(\"a\", 1)) === JSON.stringify(a));\n    console.assert(JSON.stringify(candidate(\"abcd efg hijk\", 3)) === JSON.stringify(aeibfjcgd));\n    console.assert(JSON.stringify(candidate(\"a   b   c   d\", 2)) === JSON.stringify(a  c    b));\n    console.assert(JSON.stringify(candidate(\"coding\", 1)) === JSON.stringify(coding));\n    console.assert(JSON.stringify(candidate(\"abc def ghi jkl mno\", 5)) === JSON.stringify(adgbec));\n    console.assert(JSON.stringify(candidate(\"ab c  de\", 2)) === JSON.stringify(a bd ec));\n    console.assert(JSON.stringify(candidate(\"ch   ie   pr\", 3)) === JSON.stringify(cipher));\n    console.assert(JSON.stringify(candidate(\"iveo    eed   l te   olc\", 4)) === JSON.stringify(i love leetcode));\n    console.assert(JSON.stringify(candidate(\"python programming is fun\", 4)) === JSON.stringify(ppm yriftonuhggorn));\n    console.assert(JSON.stringify(candidate(\"algorithms and data structures\", 5)) === JSON.stringify(ah telmdrsgsauo trai));\n    console.assert(JSON.stringify(candidate(\"hello world  from    leetcode     challenges\", 6)) === JSON.stringify(hrmt nel c gld ocl  do   fw));\n    console.assert(JSON.stringify(candidate(\"t a c o s e q u i r r e s e l l   f o o d   s o u p\", 5)) === JSON.stringify(t e s q f a s o u o c e u i o o l  r s));\n    console.assert(JSON.stringify(candidate(\"one    two    three    four    five    six\", 3)) === JSON.stringify(oh nrfeei ev  e      t  wf oos ui rx));\n    console.assert(JSON.stringify(candidate(\"programming challenges are fun\", 4)) === JSON.stringify(pilrrneeogn g gfrceahm));\n    console.assert(JSON.stringify(candidate(\"filling   the   matrix   in   a   slanted   manner\", 6)) === JSON.stringify(f t aaitr nnlhi tnlexaei   n  g));\n    console.assert(JSON.stringify(candidate(\"p y trh    e  t s    o    n    a\", 3)) === JSON.stringify(pe    y   t t nrs h));\n    console.assert(JSON.stringify(candidate(\"m e t a l l i c a\", 3)) === JSON.stringify(mai   elc  t));\n    console.assert(JSON.stringify(candidate(\"\", 10)) === JSON.stringify(null));\n    console.assert(JSON.stringify(candidate(\"padding   with   spaces   at   the   end     \", 5)) === JSON.stringify(pwc  aiet dtsh dh e i    n   g a s));\n    console.assert(JSON.stringify(candidate(\"a    b    c    d    e    f    g    h    i\", 9)) === JSON.stringify(abcd));\n    console.assert(JSON.stringify(candidate(\"qo   su   me   ve   rt\", 5)) === JSON.stringify(qsmvoue));\n    console.assert(JSON.stringify(candidate(\"sh jfuew xq  z   r e\", 3)) === JSON.stringify(sw h   x jqrf u));\n    console.assert(JSON.stringify(candidate(\"this  is a   test  string\", 5)) === JSON.stringify(ti  ghstsi esa));\n    console.assert(JSON.stringify(candidate(\"abcdef ghijkl mnopqr stuvwx yz\", 5)) === JSON.stringify(agmsybhntzcioudjpekf));\n    console.assert(JSON.stringify(candidate(\"a quick brown fox jumps over the lazy dog\", 6)) === JSON.stringify(a fp z bostqrx uo iwc));\n    console.assert(JSON.stringify(candidate(\"wcy  hmu  eai  xfi\", 3)) === JSON.stringify(wu c xy f ei ah));\n    console.assert(JSON.stringify(candidate(\"two words\", 1)) === JSON.stringify(two words));\n    console.assert(JSON.stringify(candidate(\"th qzih xof  c \", 3)) === JSON.stringify(th h c x qoz));\n    console.assert(JSON.stringify(candidate(\"ab  c   d    e     f      g       h        i         j\", 10)) === JSON.stringify(a    b ef d   c));\n    console.assert(JSON.stringify(candidate(\"programming in python is fun\", 3)) === JSON.stringify(pgnr  oiignsr  apfmyumti));\n    console.assert(JSON.stringify(candidate(\"spaces   in   between   words\", 4)) === JSON.stringify(s twpiwoanerc ede ns));\n    console.assert(JSON.stringify(candidate(\"qjewukcuvm xs   ezmrg\", 4)) === JSON.stringify(qcsmju rev wmu));\n    console.assert(JSON.stringify(candidate(\"this is a longer example to test the decoding function\", 8)) === JSON.stringify(t epteharlei  esle oi));\n    console.assert(JSON.stringify(candidate(\"q w   e r   t y   u i   o p\", 4)) === JSON.stringify(q y  r  w));\n    console.assert(JSON.stringify(candidate(\"a    q    o    q    r    s\", 6)) === JSON.stringify(aqoq));\n    console.assert(JSON.stringify(candidate(\"abcdefghi jklmnop qrstuv wx yz\", 5)) === JSON.stringify(ahntybiouzc pvdj ekf));\n    console.assert(JSON.stringify(candidate(\"i s l a n d   o f   d r e a m s\", 3)) === JSON.stringify(i r   s e o l a f a m   n));\n    console.assert(JSON.stringify(candidate(\"s h e e l  s  s  f  i  r  e\", 5)) === JSON.stringify(se       hls  e));\n    console.assert(JSON.stringify(candidate(\"abc def ghi jkl mno pqr stu vwx yz\", 6)) === JSON.stringify(afjosb k cgl hd));\n    console.assert(JSON.stringify(candidate(\"hello   world   this   is   a   test\", 5)) === JSON.stringify(hwtsteoh elri slls od));\n    console.assert(JSON.stringify(candidate(\"c o n s t a n t i n o p o l i s\", 6)) === JSON.stringify(csnno    ott  n));\n    console.assert(JSON.stringify(candidate(\"a b c d e f g h i j k l m n o p q r s t u v w x y z\", 5)) === JSON.stringify(a l w g r b m x h s c n y i t d o  j e));\n    console.assert(JSON.stringify(candidate(\"this is a test of the emergency broadcast system\", 6)) === JSON.stringify(t tedththnceieecamss ys te i mso));\n    console.assert(JSON.stringify(candidate(\"x w v u t s r q p o n m l k j i h g f e d c b a\", 26)) === JSON.stringify(x));\n    console.assert(JSON.stringify(candidate(\"keep it secret keep it safe\", 6)) === JSON.stringify(kicketre p));\n    console.assert(JSON.stringify(candidate(\"a    b   c  d e f g h i j k l m n o p q r s t u v w x y z\", 26)) === JSON.stringify(a));\n    console.assert(JSON.stringify(candidate(\"hello world from the other side\", 4)) === JSON.stringify(hr eeltrldh l esof  rw));\n    console.assert(JSON.stringify(candidate(\"data structures and algorithms\", 8)) === JSON.stringify(d uast));\n    console.assert(JSON.stringify(candidate(\"abcdefghij klmnopqrst uvwxyz\", 3)) === JSON.stringify(a tbk cludmvenwfoxgpyhqi));\n    console.assert(JSON.stringify(candidate(\"singleword\", 10)) === JSON.stringify(s));\n    console.assert(JSON.stringify(candidate(\"the quick brown fox jumps over the lazy dog\", 6)) === JSON.stringify(tkfshdh o eoebxo  r vqojuwi));\n    console.assert(JSON.stringify(candidate(\"thisisaverylongstringthatwillbereconstructedusingtheslantedciphertechnique\", 7)) === JSON.stringify(tlhcunehoaostcintniehsgwsndnisitgcstlrtarluvibenr));\n    console.assert(JSON.stringify(candidate(\"one\", 1)) === JSON.stringify(one));\n    console.assert(JSON.stringify(candidate(\"z y x w v u t s r q p o n m l k j i h g f e d c b a\", 5)) === JSON.stringify(z o d t i y n c s h x m b r g w l  q v));\n    console.assert(JSON.stringify(candidate(\"t h e q u i c k b r o w n   f o x   j u m p s   o v e r   t h e   l a z y   d o g\", 7)) === JSON.stringify(tcnjohy       hk uve        ebfme d      qropr    uox  i));\n    console.assert(JSON.stringify(candidate(\"abcdefgh ijklmnop qrstuvwx yz      this is a test\", 5)) === JSON.stringify(ajs ibkt sclu  dmv aenw  foxtgp h));\n    console.assert(JSON.stringify(candidate(\"a quick movement of the enemy will jeopardize five gunboats\", 7)) === JSON.stringify(aofme b v yofoqet piumhwaieeicn kt));\n    console.assert(JSON.stringify(candidate(\"slantedtranspositioncipheriscomplexandfun\", 7)) === JSON.stringify(sdpoeltonarsnat));\n    console.assert(JSON.stringify(candidate(\"one two three four five six seven eight nine ten eleven twelve\", 4)) === JSON.stringify(oun nr ee el fietigvwvheoetn    tsnthiiwrxnee eles  ef));\n    console.assert(JSON.stringify(candidate(\"abcdefghij\", 1)) === JSON.stringify(abcdefghij));\n    console.assert(JSON.stringify(candidate(\"x    y     z      \", 3)) === JSON.stringify(x            zy));\n    console.assert(JSON.stringify(candidate(\"machine learning is fascinating\", 7)) === JSON.stringify(mnagaerc h));\n    console.assert(JSON.stringify(candidate(\"lqtk e o mu yzfe ot i g rya wne l oxtesn gdeo\", 5)) === JSON.stringify(luie q   gtygldkz  e frooeeyx  aoo));\n    console.assert(JSON.stringify(candidate(\"p r o g r a m m i n g   l a n g u a g e s\", 5)) === JSON.stringify(p n g a n r g e m g o    m g));\n    console.assert(JSON.stringify(candidate(\"wecoloveleetcode\", 2)) === JSON.stringify(weeectocloodvee));\n    console.assert(JSON.stringify(candidate(\"example     of    a    very    long    encoded    text\", 7)) === JSON.stringify(e  eon x  rnca aygm   po lfe));\n    console.assert(JSON.stringify(candidate(\"longer text with multiple spaces in between\", 3)) === JSON.stringify(lheo snm guielnrt  ibtpeeltxewt e sewpi));\n    console.assert(JSON.stringify(candidate(\"it wof  eit   ss dp\", 4)) === JSON.stringify(iftst    w));\n    console.assert(JSON.stringify(candidate(\"a      b      c      d      e\", 5)) === JSON.stringify(a     b    c));\n    console.assert(JSON.stringify(candidate(\"abcd efgh ijkl mnop qrst uvwx yz\", 5)) === JSON.stringify(ag rxbhms c ntdio je));\n    console.assert(JSON.stringify(candidate(\"the quick brown fox jumps over lazy dogs\", 4)) === JSON.stringify(trmzhopyews  n dq ooufvgioescxrk));\n    console.assert(JSON.stringify(candidate(\"special    characters    !@#$%^&*() are    allowed    in    the    text\", 10)) === JSON.stringify(s c * ep t!( e e@)ccr#ihsaal));\n    console.assert(JSON.stringify(candidate(\"thisisaverylongtextthatneedstobeencodedusingaslantedtranspositioncipher\", 8)) === JSON.stringify(trtsdsaohyttelnilhodasoabuintesgnatv));\n    console.assert(JSON.stringify(candidate(\"spaces    are   handled   correctly\", 5)) === JSON.stringify(s h tp a laancycrdoeels));\n    console.assert(JSON.stringify(candidate(\"f l e x i b l e   r e s o u r c e s\", 5)) === JSON.stringify(fi oe     lbrus    ele  x));\n    console.assert(JSON.stringify(candidate(\"t h e   q u i c k   b r o w n   f o x   j u m p s   o v e r   l a z y   d o g s\", 3)) === JSON.stringify(t v n h e   e r f     o q l x u a   i z j c y u k   m   d p b o s r g   o));\n    console.assert(JSON.stringify(candidate(\"a    b     c      d       e        f         g          h           i\", 9)) === JSON.stringify(a              de  c     b));\n    console.assert(JSON.stringify(candidate(\"python programming is fun\", 3)) === JSON.stringify(po ygitrsha omfnmu ip));\n    console.assert(JSON.stringify(candidate(\"spaces   between   words   are   preserved\", 3)) === JSON.stringify(sn p  a  c pewrsoe rs de srb ve et dwae));\n    console.assert(JSON.stringify(candidate(\"keep calm and code on\", 2)) === JSON.stringify(knede pc ocdael mo));\n    console.assert(JSON.stringify(candidate(\"abcdefgh ijklmnop qrstuv wxyz\", 4)) === JSON.stringify(a p bi wcjqxdkryelsfmg));\n    console.assert(JSON.stringify(candidate(\"decoding slanted transposition cipher is challenging\", 7)) === JSON.stringify(d  si gestipcclrthoaaidnnitn));\n    console.assert(JSON.stringify(candidate(\"a quick brown fox jumps over the lazy dog\", 3)) === JSON.stringify(af  otqxhu eij culkma pzbsyr  oodwvn));\n    console.assert(JSON.stringify(candidate(\"the quick brown fox jumps over the lazy dog and then some more text to fill\", 8)) === JSON.stringify(tbj der hrutonefeomhg   wpe sqns au  lifocok));\n    console.assert(JSON.stringify(candidate(\"empty string test\", 1)) === JSON.stringify(empty string test));\n    console.assert(JSON.stringify(candidate(\"u p   d o w n   w i d e   t h i n g s\", 4)) === JSON.stringify(uwdi    pnen       g    dwt  o));\n    console.assert(JSON.stringify(candidate(\"this is a test of the emergency broadcast system\", 5)) === JSON.stringify(tteythe   isebsstmry  eosiorasfg  a));\n    console.assert(JSON.stringify(candidate(\"shorttext\", 1)) === JSON.stringify(shorttext));\n    console.assert(JSON.stringify(candidate(\"a quick brown fox jumps over the lazy dog\", 5)) === JSON.stringify(arjry ou  qwmtdunphoi secf ko));\n    console.assert(JSON.stringify(candidate(\"a   bcd efgh  ijklm nopqrst uvwxy z\", 5)) === JSON.stringify(aekry fls  gmtz h  b nc d));\n    console.assert(JSON.stringify(candidate(\"one two three four five six seven eight nine ten\", 4)) === JSON.stringify(o x nf neosi uentrvew e ofnt i etvenheir e));\n    console.assert(JSON.stringify(candidate(\"a    b    c    d    e\", 5)) === JSON.stringify(abcd));\n    console.assert(JSON.stringify(candidate(\"thisisaverylongtextthatneedstobeencodedproperly\", 6)) === JSON.stringify(teeeerhrxenoiytdcsltsiohsna));\n    console.assert(JSON.stringify(candidate(\"the quick brown fox jumps over a lazy dog\", 3)) === JSON.stringify(tneh ref  oaqx u lijacuzkmy p bsdr o));\n    console.assert(JSON.stringify(candidate(\"one two    three four    five six seven\", 3)) === JSON.stringify(oeene e s fitoxwu ors  e  v  e  ntfh));\n    console.assert(JSON.stringify(candidate(\"pythonprogramminglanguageisawesome\", 5)) === JSON.stringify(priuwyonaetggghrloan));\n    console.assert(JSON.stringify(candidate(\"sl  yz  vx  qu  tm\", 4)) === JSON.stringify(sz  l));\n    console.assert(JSON.stringify(candidate(\"this   is   a   long   encoded   text   for   testing\", 7)) === JSON.stringify(tsln fsh octoi noes gd a));\n    console.assert(JSON.stringify(candidate(\"abcdefghij    klmnopqrst    uvwxyz\", 3)) === JSON.stringify(a  b  ck dl emufnvgowhpxiqyjr));\n    console.assert(JSON.stringify(candidate(\"a quick brown fox jumps over the lazy dog\", 4)) === JSON.stringify(awsl n aq ozufvyioe cxrdk  o jtbur));\n    console.assert(JSON.stringify(candidate(\"a            b           c          d         e\", 5)) === JSON.stringify(a               b          c));\n    console.assert(JSON.stringify(candidate(\"a   bcd   efgh   ijklm   nopqrst   uvwxyz\", 6)) === JSON.stringify(a  mqu    r     eibfc));\n    console.assert(JSON.stringify(candidate(\"a   a   a   a   a   a   a   a   a   a\", 10)) === JSON.stringify(aaa));\n    console.assert(JSON.stringify(candidate(\"exampleofasingleword\", 1)) === JSON.stringify(exampleofasingleword));\n    console.assert(JSON.stringify(candidate(\"the quick brown fox jumps over lazy dogs\", 5)) === JSON.stringify(t xvdhb eoerjrg ou sqwmlunpi c));\n    console.assert(JSON.stringify(candidate(\"a very long text that is used to test the edge cases of the problem statement\", 10)) === JSON.stringify(ao   ea ntut vghsee aerttye));\n    console.assert(JSON.stringify(candidate(\"a  b c d e f g h i j k l m n o p q r s t u v w x y z\", 6)) === JSON.stringify(ae n w  j s  f o xb k t g pc l hd));\n    console.assert(JSON.stringify(candidate(\"onewordonly\", 1)) === JSON.stringify(onewordonly));\n    console.assert(JSON.stringify(candidate(\"python is an interpreted high level general purpose programming language\", 6)) === JSON.stringify(piiepayngrrntthaoghe lguorl ranpepag rvumeieermstlp e adn));\n    console.assert(JSON.stringify(candidate(\"abcdefghijklmnopqrstuvwxyz\", 10)) === JSON.stringify(adb));\n    console.assert(JSON.stringify(candidate(\"abcdefghijklmnopqrstuvwxyz\", 26)) === JSON.stringify(a));\n    console.assert(JSON.stringify(candidate(\"slantedtranspositioncipherexample\", 10)) === JSON.stringify(strlea));\n}",
+    "typescript": "function check(candidate: Function): void {\n    console.assert(JSON.stringify(candidate(\"a\", 1)) === JSON.stringify(a));\n    console.assert(JSON.stringify(candidate(\"abcd efg hijk\", 3)) === JSON.stringify(aeibfjcgd));\n    console.assert(JSON.stringify(candidate(\"a   b   c   d\", 2)) === JSON.stringify(a  c    b));\n    console.assert(JSON.stringify(candidate(\"coding\", 1)) === JSON.stringify(coding));\n    console.assert(JSON.stringify(candidate(\"abc def ghi jkl mno\", 5)) === JSON.stringify(adgbec));\n    console.assert(JSON.stringify(candidate(\"ab c  de\", 2)) === JSON.stringify(a bd ec));\n    console.assert(JSON.stringify(candidate(\"ch   ie   pr\", 3)) === JSON.stringify(cipher));\n    console.assert(JSON.stringify(candidate(\"iveo    eed   l te   olc\", 4)) === JSON.stringify(i love leetcode));\n    console.assert(JSON.stringify(candidate(\"python programming is fun\", 4)) === JSON.stringify(ppm yriftonuhggorn));\n    console.assert(JSON.stringify(candidate(\"algorithms and data structures\", 5)) === JSON.stringify(ah telmdrsgsauo trai));\n    console.assert(JSON.stringify(candidate(\"hello world  from    leetcode     challenges\", 6)) === JSON.stringify(hrmt nel c gld ocl  do   fw));\n    console.assert(JSON.stringify(candidate(\"t a c o s e q u i r r e s e l l   f o o d   s o u p\", 5)) === JSON.stringify(t e s q f a s o u o c e u i o o l  r s));\n    console.assert(JSON.stringify(candidate(\"one    two    three    four    five    six\", 3)) === JSON.stringify(oh nrfeei ev  e      t  wf oos ui rx));\n    console.assert(JSON.stringify(candidate(\"programming challenges are fun\", 4)) === JSON.stringify(pilrrneeogn g gfrceahm));\n    console.assert(JSON.stringify(candidate(\"filling   the   matrix   in   a   slanted   manner\", 6)) === JSON.stringify(f t aaitr nnlhi tnlexaei   n  g));\n    console.assert(JSON.stringify(candidate(\"p y trh    e  t s    o    n    a\", 3)) === JSON.stringify(pe    y   t t nrs h));\n    console.assert(JSON.stringify(candidate(\"m e t a l l i c a\", 3)) === JSON.stringify(mai   elc  t));\n    console.assert(JSON.stringify(candidate(\"\", 10)) === JSON.stringify(null));\n    console.assert(JSON.stringify(candidate(\"padding   with   spaces   at   the   end     \", 5)) === JSON.stringify(pwc  aiet dtsh dh e i    n   g a s));\n    console.assert(JSON.stringify(candidate(\"a    b    c    d    e    f    g    h    i\", 9)) === JSON.stringify(abcd));\n    console.assert(JSON.stringify(candidate(\"qo   su   me   ve   rt\", 5)) === JSON.stringify(qsmvoue));\n    console.assert(JSON.stringify(candidate(\"sh jfuew xq  z   r e\", 3)) === JSON.stringify(sw h   x jqrf u));\n    console.assert(JSON.stringify(candidate(\"this  is a   test  string\", 5)) === JSON.stringify(ti  ghstsi esa));\n    console.assert(JSON.stringify(candidate(\"abcdef ghijkl mnopqr stuvwx yz\", 5)) === JSON.stringify(agmsybhntzcioudjpekf));\n    console.assert(JSON.stringify(candidate(\"a quick brown fox jumps over the lazy dog\", 6)) === JSON.stringify(a fp z bostqrx uo iwc));\n    console.assert(JSON.stringify(candidate(\"wcy  hmu  eai  xfi\", 3)) === JSON.stringify(wu c xy f ei ah));\n    console.assert(JSON.stringify(candidate(\"two words\", 1)) === JSON.stringify(two words));\n    console.assert(JSON.stringify(candidate(\"th qzih xof  c \", 3)) === JSON.stringify(th h c x qoz));\n    console.assert(JSON.stringify(candidate(\"ab  c   d    e     f      g       h        i         j\", 10)) === JSON.stringify(a    b ef d   c));\n    console.assert(JSON.stringify(candidate(\"programming in python is fun\", 3)) === JSON.stringify(pgnr  oiignsr  apfmyumti));\n    console.assert(JSON.stringify(candidate(\"spaces   in   between   words\", 4)) === JSON.stringify(s twpiwoanerc ede ns));\n    console.assert(JSON.stringify(candidate(\"qjewukcuvm xs   ezmrg\", 4)) === JSON.stringify(qcsmju rev wmu));\n    console.assert(JSON.stringify(candidate(\"this is a longer example to test the decoding function\", 8)) === JSON.stringify(t epteharlei  esle oi));\n    console.assert(JSON.stringify(candidate(\"q w   e r   t y   u i   o p\", 4)) === JSON.stringify(q y  r  w));\n    console.assert(JSON.stringify(candidate(\"a    q    o    q    r    s\", 6)) === JSON.stringify(aqoq));\n    console.assert(JSON.stringify(candidate(\"abcdefghi jklmnop qrstuv wx yz\", 5)) === JSON.stringify(ahntybiouzc pvdj ekf));\n    console.assert(JSON.stringify(candidate(\"i s l a n d   o f   d r e a m s\", 3)) === JSON.stringify(i r   s e o l a f a m   n));\n    console.assert(JSON.stringify(candidate(\"s h e e l  s  s  f  i  r  e\", 5)) === JSON.stringify(se       hls  e));\n    console.assert(JSON.stringify(candidate(\"abc def ghi jkl mno pqr stu vwx yz\", 6)) === JSON.stringify(afjosb k cgl hd));\n    console.assert(JSON.stringify(candidate(\"hello   world   this   is   a   test\", 5)) === JSON.stringify(hwtsteoh elri slls od));\n    console.assert(JSON.stringify(candidate(\"c o n s t a n t i n o p o l i s\", 6)) === JSON.stringify(csnno    ott  n));\n    console.assert(JSON.stringify(candidate(\"a b c d e f g h i j k l m n o p q r s t u v w x y z\", 5)) === JSON.stringify(a l w g r b m x h s c n y i t d o  j e));\n    console.assert(JSON.stringify(candidate(\"this is a test of the emergency broadcast system\", 6)) === JSON.stringify(t tedththnceieecamss ys te i mso));\n    console.assert(JSON.stringify(candidate(\"x w v u t s r q p o n m l k j i h g f e d c b a\", 26)) === JSON.stringify(x));\n    console.assert(JSON.stringify(candidate(\"keep it secret keep it safe\", 6)) === JSON.stringify(kicketre p));\n    console.assert(JSON.stringify(candidate(\"a    b   c  d e f g h i j k l m n o p q r s t u v w x y z\", 26)) === JSON.stringify(a));\n    console.assert(JSON.stringify(candidate(\"hello world from the other side\", 4)) === JSON.stringify(hr eeltrldh l esof  rw));\n    console.assert(JSON.stringify(candidate(\"data structures and algorithms\", 8)) === JSON.stringify(d uast));\n    console.assert(JSON.stringify(candidate(\"abcdefghij klmnopqrst uvwxyz\", 3)) === JSON.stringify(a tbk cludmvenwfoxgpyhqi));\n    console.assert(JSON.stringify(candidate(\"singleword\", 10)) === JSON.stringify(s));\n    console.assert(JSON.stringify(candidate(\"the quick brown fox jumps over the lazy dog\", 6)) === JSON.stringify(tkfshdh o eoebxo  r vqojuwi));\n    console.assert(JSON.stringify(candidate(\"thisisaverylongstringthatwillbereconstructedusingtheslantedciphertechnique\", 7)) === JSON.stringify(tlhcunehoaostcintniehsgwsndnisitgcstlrtarluvibenr));\n    console.assert(JSON.stringify(candidate(\"one\", 1)) === JSON.stringify(one));\n    console.assert(JSON.stringify(candidate(\"z y x w v u t s r q p o n m l k j i h g f e d c b a\", 5)) === JSON.stringify(z o d t i y n c s h x m b r g w l  q v));\n    console.assert(JSON.stringify(candidate(\"t h e q u i c k b r o w n   f o x   j u m p s   o v e r   t h e   l a z y   d o g\", 7)) === JSON.stringify(tcnjohy       hk uve        ebfme d      qropr    uox  i));\n    console.assert(JSON.stringify(candidate(\"abcdefgh ijklmnop qrstuvwx yz      this is a test\", 5)) === JSON.stringify(ajs ibkt sclu  dmv aenw  foxtgp h));\n    console.assert(JSON.stringify(candidate(\"a quick movement of the enemy will jeopardize five gunboats\", 7)) === JSON.stringify(aofme b v yofoqet piumhwaieeicn kt));\n    console.assert(JSON.stringify(candidate(\"slantedtranspositioncipheriscomplexandfun\", 7)) === JSON.stringify(sdpoeltonarsnat));\n    console.assert(JSON.stringify(candidate(\"one two three four five six seven eight nine ten eleven twelve\", 4)) === JSON.stringify(oun nr ee el fietigvwvheoetn    tsnthiiwrxnee eles  ef));\n    console.assert(JSON.stringify(candidate(\"abcdefghij\", 1)) === JSON.stringify(abcdefghij));\n    console.assert(JSON.stringify(candidate(\"x    y     z      \", 3)) === JSON.stringify(x            zy));\n    console.assert(JSON.stringify(candidate(\"machine learning is fascinating\", 7)) === JSON.stringify(mnagaerc h));\n    console.assert(JSON.stringify(candidate(\"lqtk e o mu yzfe ot i g rya wne l oxtesn gdeo\", 5)) === JSON.stringify(luie q   gtygldkz  e frooeeyx  aoo));\n    console.assert(JSON.stringify(candidate(\"p r o g r a m m i n g   l a n g u a g e s\", 5)) === JSON.stringify(p n g a n r g e m g o    m g));\n    console.assert(JSON.stringify(candidate(\"wecoloveleetcode\", 2)) === JSON.stringify(weeectocloodvee));\n    console.assert(JSON.stringify(candidate(\"example     of    a    very    long    encoded    text\", 7)) === JSON.stringify(e  eon x  rnca aygm   po lfe));\n    console.assert(JSON.stringify(candidate(\"longer text with multiple spaces in between\", 3)) === JSON.stringify(lheo snm guielnrt  ibtpeeltxewt e sewpi));\n    console.assert(JSON.stringify(candidate(\"it wof  eit   ss dp\", 4)) === JSON.stringify(iftst    w));\n    console.assert(JSON.stringify(candidate(\"a      b      c      d      e\", 5)) === JSON.stringify(a     b    c));\n    console.assert(JSON.stringify(candidate(\"abcd efgh ijkl mnop qrst uvwx yz\", 5)) === JSON.stringify(ag rxbhms c ntdio je));\n    console.assert(JSON.stringify(candidate(\"the quick brown fox jumps over lazy dogs\", 4)) === JSON.stringify(trmzhopyews  n dq ooufvgioescxrk));\n    console.assert(JSON.stringify(candidate(\"special    characters    !@#$%^&*() are    allowed    in    the    text\", 10)) === JSON.stringify(s c * ep t!( e e@)ccr#ihsaal));\n    console.assert(JSON.stringify(candidate(\"thisisaverylongtextthatneedstobeencodedusingaslantedtranspositioncipher\", 8)) === JSON.stringify(trtsdsaohyttelnilhodasoabuintesgnatv));\n    console.assert(JSON.stringify(candidate(\"spaces    are   handled   correctly\", 5)) === JSON.stringify(s h tp a laancycrdoeels));\n    console.assert(JSON.stringify(candidate(\"f l e x i b l e   r e s o u r c e s\", 5)) === JSON.stringify(fi oe     lbrus    ele  x));\n    console.assert(JSON.stringify(candidate(\"t h e   q u i c k   b r o w n   f o x   j u m p s   o v e r   l a z y   d o g s\", 3)) === JSON.stringify(t v n h e   e r f     o q l x u a   i z j c y u k   m   d p b o s r g   o));\n    console.assert(JSON.stringify(candidate(\"a    b     c      d       e        f         g          h           i\", 9)) === JSON.stringify(a              de  c     b));\n    console.assert(JSON.stringify(candidate(\"python programming is fun\", 3)) === JSON.stringify(po ygitrsha omfnmu ip));\n    console.assert(JSON.stringify(candidate(\"spaces   between   words   are   preserved\", 3)) === JSON.stringify(sn p  a  c pewrsoe rs de srb ve et dwae));\n    console.assert(JSON.stringify(candidate(\"keep calm and code on\", 2)) === JSON.stringify(knede pc ocdael mo));\n    console.assert(JSON.stringify(candidate(\"abcdefgh ijklmnop qrstuv wxyz\", 4)) === JSON.stringify(a p bi wcjqxdkryelsfmg));\n    console.assert(JSON.stringify(candidate(\"decoding slanted transposition cipher is challenging\", 7)) === JSON.stringify(d  si gestipcclrthoaaidnnitn));\n    console.assert(JSON.stringify(candidate(\"a quick brown fox jumps over the lazy dog\", 3)) === JSON.stringify(af  otqxhu eij culkma pzbsyr  oodwvn));\n    console.assert(JSON.stringify(candidate(\"the quick brown fox jumps over the lazy dog and then some more text to fill\", 8)) === JSON.stringify(tbj der hrutonefeomhg   wpe sqns au  lifocok));\n    console.assert(JSON.stringify(candidate(\"empty string test\", 1)) === JSON.stringify(empty string test));\n    console.assert(JSON.stringify(candidate(\"u p   d o w n   w i d e   t h i n g s\", 4)) === JSON.stringify(uwdi    pnen       g    dwt  o));\n    console.assert(JSON.stringify(candidate(\"this is a test of the emergency broadcast system\", 5)) === JSON.stringify(tteythe   isebsstmry  eosiorasfg  a));\n    console.assert(JSON.stringify(candidate(\"shorttext\", 1)) === JSON.stringify(shorttext));\n    console.assert(JSON.stringify(candidate(\"a quick brown fox jumps over the lazy dog\", 5)) === JSON.stringify(arjry ou  qwmtdunphoi secf ko));\n    console.assert(JSON.stringify(candidate(\"a   bcd efgh  ijklm nopqrst uvwxy z\", 5)) === JSON.stringify(aekry fls  gmtz h  b nc d));\n    console.assert(JSON.stringify(candidate(\"one two three four five six seven eight nine ten\", 4)) === JSON.stringify(o x nf neosi uentrvew e ofnt i etvenheir e));\n    console.assert(JSON.stringify(candidate(\"a    b    c    d    e\", 5)) === JSON.stringify(abcd));\n    console.assert(JSON.stringify(candidate(\"thisisaverylongtextthatneedstobeencodedproperly\", 6)) === JSON.stringify(teeeerhrxenoiytdcsltsiohsna));\n    console.assert(JSON.stringify(candidate(\"the quick brown fox jumps over a lazy dog\", 3)) === JSON.stringify(tneh ref  oaqx u lijacuzkmy p bsdr o));\n    console.assert(JSON.stringify(candidate(\"one two    three four    five six seven\", 3)) === JSON.stringify(oeene e s fitoxwu ors  e  v  e  ntfh));\n    console.assert(JSON.stringify(candidate(\"pythonprogramminglanguageisawesome\", 5)) === JSON.stringify(priuwyonaetggghrloan));\n    console.assert(JSON.stringify(candidate(\"sl  yz  vx  qu  tm\", 4)) === JSON.stringify(sz  l));\n    console.assert(JSON.stringify(candidate(\"this   is   a   long   encoded   text   for   testing\", 7)) === JSON.stringify(tsln fsh octoi noes gd a));\n    console.assert(JSON.stringify(candidate(\"abcdefghij    klmnopqrst    uvwxyz\", 3)) === JSON.stringify(a  b  ck dl emufnvgowhpxiqyjr));\n    console.assert(JSON.stringify(candidate(\"a quick brown fox jumps over the lazy dog\", 4)) === JSON.stringify(awsl n aq ozufvyioe cxrdk  o jtbur));\n    console.assert(JSON.stringify(candidate(\"a            b           c          d         e\", 5)) === JSON.stringify(a               b          c));\n    console.assert(JSON.stringify(candidate(\"a   bcd   efgh   ijklm   nopqrst   uvwxyz\", 6)) === JSON.stringify(a  mqu    r     eibfc));\n    console.assert(JSON.stringify(candidate(\"a   a   a   a   a   a   a   a   a   a\", 10)) === JSON.stringify(aaa));\n    console.assert(JSON.stringify(candidate(\"exampleofasingleword\", 1)) === JSON.stringify(exampleofasingleword));\n    console.assert(JSON.stringify(candidate(\"the quick brown fox jumps over lazy dogs\", 5)) === JSON.stringify(t xvdhb eoerjrg ou sqwmlunpi c));\n    console.assert(JSON.stringify(candidate(\"a very long text that is used to test the edge cases of the problem statement\", 10)) === JSON.stringify(ao   ea ntut vghsee aerttye));\n    console.assert(JSON.stringify(candidate(\"a  b c d e f g h i j k l m n o p q r s t u v w x y z\", 6)) === JSON.stringify(ae n w  j s  f o xb k t g pc l hd));\n    console.assert(JSON.stringify(candidate(\"onewordonly\", 1)) === JSON.stringify(onewordonly));\n    console.assert(JSON.stringify(candidate(\"python is an interpreted high level general purpose programming language\", 6)) === JSON.stringify(piiepayngrrntthaoghe lguorl ranpepag rvumeieermstlp e adn));\n    console.assert(JSON.stringify(candidate(\"abcdefghijklmnopqrstuvwxyz\", 10)) === JSON.stringify(adb));\n    console.assert(JSON.stringify(candidate(\"abcdefghijklmnopqrstuvwxyz\", 26)) === JSON.stringify(a));\n    console.assert(JSON.stringify(candidate(\"slantedtranspositioncipherexample\", 10)) === JSON.stringify(strlea));\n}",
+    "golang": "func check(candidate func([]int, int) []int) {\n    assert reflect.DeepEqual(candidate(\"a\", 1), a)\n    assert reflect.DeepEqual(candidate(\"abcd efg hijk\", 3), aeibfjcgd)\n    assert reflect.DeepEqual(candidate(\"a   b   c   d\", 2), a  c    b)\n    assert reflect.DeepEqual(candidate(\"coding\", 1), coding)\n    assert reflect.DeepEqual(candidate(\"abc def ghi jkl mno\", 5), adgbec)\n    assert reflect.DeepEqual(candidate(\"ab c  de\", 2), a bd ec)\n    assert reflect.DeepEqual(candidate(\"ch   ie   pr\", 3), cipher)\n    assert reflect.DeepEqual(candidate(\"iveo    eed   l te   olc\", 4), i love leetcode)\n    assert reflect.DeepEqual(candidate(\"python programming is fun\", 4), ppm yriftonuhggorn)\n    assert reflect.DeepEqual(candidate(\"algorithms and data structures\", 5), ah telmdrsgsauo trai)\n    assert reflect.DeepEqual(candidate(\"hello world  from    leetcode     challenges\", 6), hrmt nel c gld ocl  do   fw)\n    assert reflect.DeepEqual(candidate(\"t a c o s e q u i r r e s e l l   f o o d   s o u p\", 5), t e s q f a s o u o c e u i o o l  r s)\n    assert reflect.DeepEqual(candidate(\"one    two    three    four    five    six\", 3), oh nrfeei ev  e      t  wf oos ui rx)\n    assert reflect.DeepEqual(candidate(\"programming challenges are fun\", 4), pilrrneeogn g gfrceahm)\n    assert reflect.DeepEqual(candidate(\"filling   the   matrix   in   a   slanted   manner\", 6), f t aaitr nnlhi tnlexaei   n  g)\n    assert reflect.DeepEqual(candidate(\"p y trh    e  t s    o    n    a\", 3), pe    y   t t nrs h)\n    assert reflect.DeepEqual(candidate(\"m e t a l l i c a\", 3), mai   elc  t)\n    assert reflect.DeepEqual(candidate(\"\", 10), nil)\n    assert reflect.DeepEqual(candidate(\"padding   with   spaces   at   the   end     \", 5), pwc  aiet dtsh dh e i    n   g a s)\n    assert reflect.DeepEqual(candidate(\"a    b    c    d    e    f    g    h    i\", 9), abcd)\n    assert reflect.DeepEqual(candidate(\"qo   su   me   ve   rt\", 5), qsmvoue)\n    assert reflect.DeepEqual(candidate(\"sh jfuew xq  z   r e\", 3), sw h   x jqrf u)\n    assert reflect.DeepEqual(candidate(\"this  is a   test  string\", 5), ti  ghstsi esa)\n    assert reflect.DeepEqual(candidate(\"abcdef ghijkl mnopqr stuvwx yz\", 5), agmsybhntzcioudjpekf)\n    assert reflect.DeepEqual(candidate(\"a quick brown fox jumps over the lazy dog\", 6), a fp z bostqrx uo iwc)\n    assert reflect.DeepEqual(candidate(\"wcy  hmu  eai  xfi\", 3), wu c xy f ei ah)\n    assert reflect.DeepEqual(candidate(\"two words\", 1), two words)\n    assert reflect.DeepEqual(candidate(\"th qzih xof  c \", 3), th h c x qoz)\n    assert reflect.DeepEqual(candidate(\"ab  c   d    e     f      g       h        i         j\", 10), a    b ef d   c)\n    assert reflect.DeepEqual(candidate(\"programming in python is fun\", 3), pgnr  oiignsr  apfmyumti)\n    assert reflect.DeepEqual(candidate(\"spaces   in   between   words\", 4), s twpiwoanerc ede ns)\n    assert reflect.DeepEqual(candidate(\"qjewukcuvm xs   ezmrg\", 4), qcsmju rev wmu)\n    assert reflect.DeepEqual(candidate(\"this is a longer example to test the decoding function\", 8), t epteharlei  esle oi)\n    assert reflect.DeepEqual(candidate(\"q w   e r   t y   u i   o p\", 4), q y  r  w)\n    assert reflect.DeepEqual(candidate(\"a    q    o    q    r    s\", 6), aqoq)\n    assert reflect.DeepEqual(candidate(\"abcdefghi jklmnop qrstuv wx yz\", 5), ahntybiouzc pvdj ekf)\n    assert reflect.DeepEqual(candidate(\"i s l a n d   o f   d r e a m s\", 3), i r   s e o l a f a m   n)\n    assert reflect.DeepEqual(candidate(\"s h e e l  s  s  f  i  r  e\", 5), se       hls  e)\n    assert reflect.DeepEqual(candidate(\"abc def ghi jkl mno pqr stu vwx yz\", 6), afjosb k cgl hd)\n    assert reflect.DeepEqual(candidate(\"hello   world   this   is   a   test\", 5), hwtsteoh elri slls od)\n    assert reflect.DeepEqual(candidate(\"c o n s t a n t i n o p o l i s\", 6), csnno    ott  n)\n    assert reflect.DeepEqual(candidate(\"a b c d e f g h i j k l m n o p q r s t u v w x y z\", 5), a l w g r b m x h s c n y i t d o  j e)\n    assert reflect.DeepEqual(candidate(\"this is a test of the emergency broadcast system\", 6), t tedththnceieecamss ys te i mso)\n    assert reflect.DeepEqual(candidate(\"x w v u t s r q p o n m l k j i h g f e d c b a\", 26), x)\n    assert reflect.DeepEqual(candidate(\"keep it secret keep it safe\", 6), kicketre p)\n    assert reflect.DeepEqual(candidate(\"a    b   c  d e f g h i j k l m n o p q r s t u v w x y z\", 26), a)\n    assert reflect.DeepEqual(candidate(\"hello world from the other side\", 4), hr eeltrldh l esof  rw)\n    assert reflect.DeepEqual(candidate(\"data structures and algorithms\", 8), d uast)\n    assert reflect.DeepEqual(candidate(\"abcdefghij klmnopqrst uvwxyz\", 3), a tbk cludmvenwfoxgpyhqi)\n    assert reflect.DeepEqual(candidate(\"singleword\", 10), s)\n    assert reflect.DeepEqual(candidate(\"the quick brown fox jumps over the lazy dog\", 6), tkfshdh o eoebxo  r vqojuwi)\n    assert reflect.DeepEqual(candidate(\"thisisaverylongstringthatwillbereconstructedusingtheslantedciphertechnique\", 7), tlhcunehoaostcintniehsgwsndnisitgcstlrtarluvibenr)\n    assert reflect.DeepEqual(candidate(\"one\", 1), one)\n    assert reflect.DeepEqual(candidate(\"z y x w v u t s r q p o n m l k j i h g f e d c b a\", 5), z o d t i y n c s h x m b r g w l  q v)\n    assert reflect.DeepEqual(candidate(\"t h e q u i c k b r o w n   f o x   j u m p s   o v e r   t h e   l a z y   d o g\", 7), tcnjohy       hk uve        ebfme d      qropr    uox  i)\n    assert reflect.DeepEqual(candidate(\"abcdefgh ijklmnop qrstuvwx yz      this is a test\", 5), ajs ibkt sclu  dmv aenw  foxtgp h)\n    assert reflect.DeepEqual(candidate(\"a quick movement of the enemy will jeopardize five gunboats\", 7), aofme b v yofoqet piumhwaieeicn kt)\n    assert reflect.DeepEqual(candidate(\"slantedtranspositioncipheriscomplexandfun\", 7), sdpoeltonarsnat)\n    assert reflect.DeepEqual(candidate(\"one two three four five six seven eight nine ten eleven twelve\", 4), oun nr ee el fietigvwvheoetn    tsnthiiwrxnee eles  ef)\n    assert reflect.DeepEqual(candidate(\"abcdefghij\", 1), abcdefghij)\n    assert reflect.DeepEqual(candidate(\"x    y     z      \", 3), x            zy)\n    assert reflect.DeepEqual(candidate(\"machine learning is fascinating\", 7), mnagaerc h)\n    assert reflect.DeepEqual(candidate(\"lqtk e o mu yzfe ot i g rya wne l oxtesn gdeo\", 5), luie q   gtygldkz  e frooeeyx  aoo)\n    assert reflect.DeepEqual(candidate(\"p r o g r a m m i n g   l a n g u a g e s\", 5), p n g a n r g e m g o    m g)\n    assert reflect.DeepEqual(candidate(\"wecoloveleetcode\", 2), weeectocloodvee)\n    assert reflect.DeepEqual(candidate(\"example     of    a    very    long    encoded    text\", 7), e  eon x  rnca aygm   po lfe)\n    assert reflect.DeepEqual(candidate(\"longer text with multiple spaces in between\", 3), lheo snm guielnrt  ibtpeeltxewt e sewpi)\n    assert reflect.DeepEqual(candidate(\"it wof  eit   ss dp\", 4), iftst    w)\n    assert reflect.DeepEqual(candidate(\"a      b      c      d      e\", 5), a     b    c)\n    assert reflect.DeepEqual(candidate(\"abcd efgh ijkl mnop qrst uvwx yz\", 5), ag rxbhms c ntdio je)\n    assert reflect.DeepEqual(candidate(\"the quick brown fox jumps over lazy dogs\", 4), trmzhopyews  n dq ooufvgioescxrk)\n    assert reflect.DeepEqual(candidate(\"special    characters    !@#$%^&*() are    allowed    in    the    text\", 10), s c * ep t!( e e@)ccr#ihsaal)\n    assert reflect.DeepEqual(candidate(\"thisisaverylongtextthatneedstobeencodedusingaslantedtranspositioncipher\", 8), trtsdsaohyttelnilhodasoabuintesgnatv)\n    assert reflect.DeepEqual(candidate(\"spaces    are   handled   correctly\", 5), s h tp a laancycrdoeels)\n    assert reflect.DeepEqual(candidate(\"f l e x i b l e   r e s o u r c e s\", 5), fi oe     lbrus    ele  x)\n    assert reflect.DeepEqual(candidate(\"t h e   q u i c k   b r o w n   f o x   j u m p s   o v e r   l a z y   d o g s\", 3), t v n h e   e r f     o q l x u a   i z j c y u k   m   d p b o s r g   o)\n    assert reflect.DeepEqual(candidate(\"a    b     c      d       e        f         g          h           i\", 9), a              de  c     b)\n    assert reflect.DeepEqual(candidate(\"python programming is fun\", 3), po ygitrsha omfnmu ip)\n    assert reflect.DeepEqual(candidate(\"spaces   between   words   are   preserved\", 3), sn p  a  c pewrsoe rs de srb ve et dwae)\n    assert reflect.DeepEqual(candidate(\"keep calm and code on\", 2), knede pc ocdael mo)\n    assert reflect.DeepEqual(candidate(\"abcdefgh ijklmnop qrstuv wxyz\", 4), a p bi wcjqxdkryelsfmg)\n    assert reflect.DeepEqual(candidate(\"decoding slanted transposition cipher is challenging\", 7), d  si gestipcclrthoaaidnnitn)\n    assert reflect.DeepEqual(candidate(\"a quick brown fox jumps over the lazy dog\", 3), af  otqxhu eij culkma pzbsyr  oodwvn)\n    assert reflect.DeepEqual(candidate(\"the quick brown fox jumps over the lazy dog and then some more text to fill\", 8), tbj der hrutonefeomhg   wpe sqns au  lifocok)\n    assert reflect.DeepEqual(candidate(\"empty string test\", 1), empty string test)\n    assert reflect.DeepEqual(candidate(\"u p   d o w n   w i d e   t h i n g s\", 4), uwdi    pnen       g    dwt  o)\n    assert reflect.DeepEqual(candidate(\"this is a test of the emergency broadcast system\", 5), tteythe   isebsstmry  eosiorasfg  a)\n    assert reflect.DeepEqual(candidate(\"shorttext\", 1), shorttext)\n    assert reflect.DeepEqual(candidate(\"a quick brown fox jumps over the lazy dog\", 5), arjry ou  qwmtdunphoi secf ko)\n    assert reflect.DeepEqual(candidate(\"a   bcd efgh  ijklm nopqrst uvwxy z\", 5), aekry fls  gmtz h  b nc d)\n    assert reflect.DeepEqual(candidate(\"one two three four five six seven eight nine ten\", 4), o x nf neosi uentrvew e ofnt i etvenheir e)\n    assert reflect.DeepEqual(candidate(\"a    b    c    d    e\", 5), abcd)\n    assert reflect.DeepEqual(candidate(\"thisisaverylongtextthatneedstobeencodedproperly\", 6), teeeerhrxenoiytdcsltsiohsna)\n    assert reflect.DeepEqual(candidate(\"the quick brown fox jumps over a lazy dog\", 3), tneh ref  oaqx u lijacuzkmy p bsdr o)\n    assert reflect.DeepEqual(candidate(\"one two    three four    five six seven\", 3), oeene e s fitoxwu ors  e  v  e  ntfh)\n    assert reflect.DeepEqual(candidate(\"pythonprogramminglanguageisawesome\", 5), priuwyonaetggghrloan)\n    assert reflect.DeepEqual(candidate(\"sl  yz  vx  qu  tm\", 4), sz  l)\n    assert reflect.DeepEqual(candidate(\"this   is   a   long   encoded   text   for   testing\", 7), tsln fsh octoi noes gd a)\n    assert reflect.DeepEqual(candidate(\"abcdefghij    klmnopqrst    uvwxyz\", 3), a  b  ck dl emufnvgowhpxiqyjr)\n    assert reflect.DeepEqual(candidate(\"a quick brown fox jumps over the lazy dog\", 4), awsl n aq ozufvyioe cxrdk  o jtbur)\n    assert reflect.DeepEqual(candidate(\"a            b           c          d         e\", 5), a               b          c)\n    assert reflect.DeepEqual(candidate(\"a   bcd   efgh   ijklm   nopqrst   uvwxyz\", 6), a  mqu    r     eibfc)\n    assert reflect.DeepEqual(candidate(\"a   a   a   a   a   a   a   a   a   a\", 10), aaa)\n    assert reflect.DeepEqual(candidate(\"exampleofasingleword\", 1), exampleofasingleword)\n    assert reflect.DeepEqual(candidate(\"the quick brown fox jumps over lazy dogs\", 5), t xvdhb eoerjrg ou sqwmlunpi c)\n    assert reflect.DeepEqual(candidate(\"a very long text that is used to test the edge cases of the problem statement\", 10), ao   ea ntut vghsee aerttye)\n    assert reflect.DeepEqual(candidate(\"a  b c d e f g h i j k l m n o p q r s t u v w x y z\", 6), ae n w  j s  f o xb k t g pc l hd)\n    assert reflect.DeepEqual(candidate(\"onewordonly\", 1), onewordonly)\n    assert reflect.DeepEqual(candidate(\"python is an interpreted high level general purpose programming language\", 6), piiepayngrrntthaoghe lguorl ranpepag rvumeieermstlp e adn)\n    assert reflect.DeepEqual(candidate(\"abcdefghijklmnopqrstuvwxyz\", 10), adb)\n    assert reflect.DeepEqual(candidate(\"abcdefghijklmnopqrstuvwxyz\", 26), a)\n    assert reflect.DeepEqual(candidate(\"slantedtranspositioncipherexample\", 10), strlea)\n}",
+    "rust": "fn check(candidate: fn(Vec<i32>, i32) -> Vec<i32>) {\n    assert_eq!(candidate(\"a\", 1), a);\n    assert_eq!(candidate(\"abcd efg hijk\", 3), aeibfjcgd);\n    assert_eq!(candidate(\"a   b   c   d\", 2), a  c    b);\n    assert_eq!(candidate(\"coding\", 1), coding);\n    assert_eq!(candidate(\"abc def ghi jkl mno\", 5), adgbec);\n    assert_eq!(candidate(\"ab c  de\", 2), a bd ec);\n    assert_eq!(candidate(\"ch   ie   pr\", 3), cipher);\n    assert_eq!(candidate(\"iveo    eed   l te   olc\", 4), i love leetcode);\n    assert_eq!(candidate(\"python programming is fun\", 4), ppm yriftonuhggorn);\n    assert_eq!(candidate(\"algorithms and data structures\", 5), ah telmdrsgsauo trai);\n    assert_eq!(candidate(\"hello world  from    leetcode     challenges\", 6), hrmt nel c gld ocl  do   fw);\n    assert_eq!(candidate(\"t a c o s e q u i r r e s e l l   f o o d   s o u p\", 5), t e s q f a s o u o c e u i o o l  r s);\n    assert_eq!(candidate(\"one    two    three    four    five    six\", 3), oh nrfeei ev  e      t  wf oos ui rx);\n    assert_eq!(candidate(\"programming challenges are fun\", 4), pilrrneeogn g gfrceahm);\n    assert_eq!(candidate(\"filling   the   matrix   in   a   slanted   manner\", 6), f t aaitr nnlhi tnlexaei   n  g);\n    assert_eq!(candidate(\"p y trh    e  t s    o    n    a\", 3), pe    y   t t nrs h);\n    assert_eq!(candidate(\"m e t a l l i c a\", 3), mai   elc  t);\n    assert_eq!(candidate(\"\", 10), None);\n    assert_eq!(candidate(\"padding   with   spaces   at   the   end     \", 5), pwc  aiet dtsh dh e i    n   g a s);\n    assert_eq!(candidate(\"a    b    c    d    e    f    g    h    i\", 9), abcd);\n    assert_eq!(candidate(\"qo   su   me   ve   rt\", 5), qsmvoue);\n    assert_eq!(candidate(\"sh jfuew xq  z   r e\", 3), sw h   x jqrf u);\n    assert_eq!(candidate(\"this  is a   test  string\", 5), ti  ghstsi esa);\n    assert_eq!(candidate(\"abcdef ghijkl mnopqr stuvwx yz\", 5), agmsybhntzcioudjpekf);\n    assert_eq!(candidate(\"a quick brown fox jumps over the lazy dog\", 6), a fp z bostqrx uo iwc);\n    assert_eq!(candidate(\"wcy  hmu  eai  xfi\", 3), wu c xy f ei ah);\n    assert_eq!(candidate(\"two words\", 1), two words);\n    assert_eq!(candidate(\"th qzih xof  c \", 3), th h c x qoz);\n    assert_eq!(candidate(\"ab  c   d    e     f      g       h        i         j\", 10), a    b ef d   c);\n    assert_eq!(candidate(\"programming in python is fun\", 3), pgnr  oiignsr  apfmyumti);\n    assert_eq!(candidate(\"spaces   in   between   words\", 4), s twpiwoanerc ede ns);\n    assert_eq!(candidate(\"qjewukcuvm xs   ezmrg\", 4), qcsmju rev wmu);\n    assert_eq!(candidate(\"this is a longer example to test the decoding function\", 8), t epteharlei  esle oi);\n    assert_eq!(candidate(\"q w   e r   t y   u i   o p\", 4), q y  r  w);\n    assert_eq!(candidate(\"a    q    o    q    r    s\", 6), aqoq);\n    assert_eq!(candidate(\"abcdefghi jklmnop qrstuv wx yz\", 5), ahntybiouzc pvdj ekf);\n    assert_eq!(candidate(\"i s l a n d   o f   d r e a m s\", 3), i r   s e o l a f a m   n);\n    assert_eq!(candidate(\"s h e e l  s  s  f  i  r  e\", 5), se       hls  e);\n    assert_eq!(candidate(\"abc def ghi jkl mno pqr stu vwx yz\", 6), afjosb k cgl hd);\n    assert_eq!(candidate(\"hello   world   this   is   a   test\", 5), hwtsteoh elri slls od);\n    assert_eq!(candidate(\"c o n s t a n t i n o p o l i s\", 6), csnno    ott  n);\n    assert_eq!(candidate(\"a b c d e f g h i j k l m n o p q r s t u v w x y z\", 5), a l w g r b m x h s c n y i t d o  j e);\n    assert_eq!(candidate(\"this is a test of the emergency broadcast system\", 6), t tedththnceieecamss ys te i mso);\n    assert_eq!(candidate(\"x w v u t s r q p o n m l k j i h g f e d c b a\", 26), x);\n    assert_eq!(candidate(\"keep it secret keep it safe\", 6), kicketre p);\n    assert_eq!(candidate(\"a    b   c  d e f g h i j k l m n o p q r s t u v w x y z\", 26), a);\n    assert_eq!(candidate(\"hello world from the other side\", 4), hr eeltrldh l esof  rw);\n    assert_eq!(candidate(\"data structures and algorithms\", 8), d uast);\n    assert_eq!(candidate(\"abcdefghij klmnopqrst uvwxyz\", 3), a tbk cludmvenwfoxgpyhqi);\n    assert_eq!(candidate(\"singleword\", 10), s);\n    assert_eq!(candidate(\"the quick brown fox jumps over the lazy dog\", 6), tkfshdh o eoebxo  r vqojuwi);\n    assert_eq!(candidate(\"thisisaverylongstringthatwillbereconstructedusingtheslantedciphertechnique\", 7), tlhcunehoaostcintniehsgwsndnisitgcstlrtarluvibenr);\n    assert_eq!(candidate(\"one\", 1), one);\n    assert_eq!(candidate(\"z y x w v u t s r q p o n m l k j i h g f e d c b a\", 5), z o d t i y n c s h x m b r g w l  q v);\n    assert_eq!(candidate(\"t h e q u i c k b r o w n   f o x   j u m p s   o v e r   t h e   l a z y   d o g\", 7), tcnjohy       hk uve        ebfme d      qropr    uox  i);\n    assert_eq!(candidate(\"abcdefgh ijklmnop qrstuvwx yz      this is a test\", 5), ajs ibkt sclu  dmv aenw  foxtgp h);\n    assert_eq!(candidate(\"a quick movement of the enemy will jeopardize five gunboats\", 7), aofme b v yofoqet piumhwaieeicn kt);\n    assert_eq!(candidate(\"slantedtranspositioncipheriscomplexandfun\", 7), sdpoeltonarsnat);\n    assert_eq!(candidate(\"one two three four five six seven eight nine ten eleven twelve\", 4), oun nr ee el fietigvwvheoetn    tsnthiiwrxnee eles  ef);\n    assert_eq!(candidate(\"abcdefghij\", 1), abcdefghij);\n    assert_eq!(candidate(\"x    y     z      \", 3), x            zy);\n    assert_eq!(candidate(\"machine learning is fascinating\", 7), mnagaerc h);\n    assert_eq!(candidate(\"lqtk e o mu yzfe ot i g rya wne l oxtesn gdeo\", 5), luie q   gtygldkz  e frooeeyx  aoo);\n    assert_eq!(candidate(\"p r o g r a m m i n g   l a n g u a g e s\", 5), p n g a n r g e m g o    m g);\n    assert_eq!(candidate(\"wecoloveleetcode\", 2), weeectocloodvee);\n    assert_eq!(candidate(\"example     of    a    very    long    encoded    text\", 7), e  eon x  rnca aygm   po lfe);\n    assert_eq!(candidate(\"longer text with multiple spaces in between\", 3), lheo snm guielnrt  ibtpeeltxewt e sewpi);\n    assert_eq!(candidate(\"it wof  eit   ss dp\", 4), iftst    w);\n    assert_eq!(candidate(\"a      b      c      d      e\", 5), a     b    c);\n    assert_eq!(candidate(\"abcd efgh ijkl mnop qrst uvwx yz\", 5), ag rxbhms c ntdio je);\n    assert_eq!(candidate(\"the quick brown fox jumps over lazy dogs\", 4), trmzhopyews  n dq ooufvgioescxrk);\n    assert_eq!(candidate(\"special    characters    !@#$%^&*() are    allowed    in    the    text\", 10), s c * ep t!( e e@)ccr#ihsaal);\n    assert_eq!(candidate(\"thisisaverylongtextthatneedstobeencodedusingaslantedtranspositioncipher\", 8), trtsdsaohyttelnilhodasoabuintesgnatv);\n    assert_eq!(candidate(\"spaces    are   handled   correctly\", 5), s h tp a laancycrdoeels);\n    assert_eq!(candidate(\"f l e x i b l e   r e s o u r c e s\", 5), fi oe     lbrus    ele  x);\n    assert_eq!(candidate(\"t h e   q u i c k   b r o w n   f o x   j u m p s   o v e r   l a z y   d o g s\", 3), t v n h e   e r f     o q l x u a   i z j c y u k   m   d p b o s r g   o);\n    assert_eq!(candidate(\"a    b     c      d       e        f         g          h           i\", 9), a              de  c     b);\n    assert_eq!(candidate(\"python programming is fun\", 3), po ygitrsha omfnmu ip);\n    assert_eq!(candidate(\"spaces   between   words   are   preserved\", 3), sn p  a  c pewrsoe rs de srb ve et dwae);\n    assert_eq!(candidate(\"keep calm and code on\", 2), knede pc ocdael mo);\n    assert_eq!(candidate(\"abcdefgh ijklmnop qrstuv wxyz\", 4), a p bi wcjqxdkryelsfmg);\n    assert_eq!(candidate(\"decoding slanted transposition cipher is challenging\", 7), d  si gestipcclrthoaaidnnitn);\n    assert_eq!(candidate(\"a quick brown fox jumps over the lazy dog\", 3), af  otqxhu eij culkma pzbsyr  oodwvn);\n    assert_eq!(candidate(\"the quick brown fox jumps over the lazy dog and then some more text to fill\", 8), tbj der hrutonefeomhg   wpe sqns au  lifocok);\n    assert_eq!(candidate(\"empty string test\", 1), empty string test);\n    assert_eq!(candidate(\"u p   d o w n   w i d e   t h i n g s\", 4), uwdi    pnen       g    dwt  o);\n    assert_eq!(candidate(\"this is a test of the emergency broadcast system\", 5), tteythe   isebsstmry  eosiorasfg  a);\n    assert_eq!(candidate(\"shorttext\", 1), shorttext);\n    assert_eq!(candidate(\"a quick brown fox jumps over the lazy dog\", 5), arjry ou  qwmtdunphoi secf ko);\n    assert_eq!(candidate(\"a   bcd efgh  ijklm nopqrst uvwxy z\", 5), aekry fls  gmtz h  b nc d);\n    assert_eq!(candidate(\"one two three four five six seven eight nine ten\", 4), o x nf neosi uentrvew e ofnt i etvenheir e);\n    assert_eq!(candidate(\"a    b    c    d    e\", 5), abcd);\n    assert_eq!(candidate(\"thisisaverylongtextthatneedstobeencodedproperly\", 6), teeeerhrxenoiytdcsltsiohsna);\n    assert_eq!(candidate(\"the quick brown fox jumps over a lazy dog\", 3), tneh ref  oaqx u lijacuzkmy p bsdr o);\n    assert_eq!(candidate(\"one two    three four    five six seven\", 3), oeene e s fitoxwu ors  e  v  e  ntfh);\n    assert_eq!(candidate(\"pythonprogramminglanguageisawesome\", 5), priuwyonaetggghrloan);\n    assert_eq!(candidate(\"sl  yz  vx  qu  tm\", 4), sz  l);\n    assert_eq!(candidate(\"this   is   a   long   encoded   text   for   testing\", 7), tsln fsh octoi noes gd a);\n    assert_eq!(candidate(\"abcdefghij    klmnopqrst    uvwxyz\", 3), a  b  ck dl emufnvgowhpxiqyjr);\n    assert_eq!(candidate(\"a quick brown fox jumps over the lazy dog\", 4), awsl n aq ozufvyioe cxrdk  o jtbur);\n    assert_eq!(candidate(\"a            b           c          d         e\", 5), a               b          c);\n    assert_eq!(candidate(\"a   bcd   efgh   ijklm   nopqrst   uvwxyz\", 6), a  mqu    r     eibfc);\n    assert_eq!(candidate(\"a   a   a   a   a   a   a   a   a   a\", 10), aaa);\n    assert_eq!(candidate(\"exampleofasingleword\", 1), exampleofasingleword);\n    assert_eq!(candidate(\"the quick brown fox jumps over lazy dogs\", 5), t xvdhb eoerjrg ou sqwmlunpi c);\n    assert_eq!(candidate(\"a very long text that is used to test the edge cases of the problem statement\", 10), ao   ea ntut vghsee aerttye);\n    assert_eq!(candidate(\"a  b c d e f g h i j k l m n o p q r s t u v w x y z\", 6), ae n w  j s  f o xb k t g pc l hd);\n    assert_eq!(candidate(\"onewordonly\", 1), onewordonly);\n    assert_eq!(candidate(\"python is an interpreted high level general purpose programming language\", 6), piiepayngrrntthaoghe lguorl ranpepag rvumeieermstlp e adn);\n    assert_eq!(candidate(\"abcdefghijklmnopqrstuvwxyz\", 10), adb);\n    assert_eq!(candidate(\"abcdefghijklmnopqrstuvwxyz\", 26), a);\n    assert_eq!(candidate(\"slantedtranspositioncipherexample\", 10), strlea);\n}"
+  },
+  "test_cases": [
+    {
+      "input": "encodedText = \"a\", rows = 1",
+      "output": "a"
+    },
+    {
+      "input": "encodedText = \"abcd efg hijk\", rows = 3",
+      "output": "aeibfjcgd"
+    },
+    {
+      "input": "encodedText = \"a   b   c   d\", rows = 2",
+      "output": "a  c    b"
+    },
+    {
+      "input": "encodedText = \"coding\", rows = 1",
+      "output": "coding"
+    },
+    {
+      "input": "encodedText = \"abc def ghi jkl mno\", rows = 5",
+      "output": "adgbec"
+    },
+    {
+      "input": "encodedText = \"ab c  de\", rows = 2",
+      "output": "a bd ec"
+    },
+    {
+      "input": "encodedText = \"ch   ie   pr\", rows = 3",
+      "output": "cipher"
+    },
+    {
+      "input": "encodedText = \"iveo    eed   l te   olc\", rows = 4",
+      "output": "i love leetcode"
+    },
+    {
+      "input": "encodedText = \"python programming is fun\", rows = 4",
+      "output": "ppm yriftonuhggorn"
+    },
+    {
+      "input": "encodedText = \"algorithms and data structures\", rows = 5",
+      "output": "ah telmdrsgsauo trai"
+    },
+    {
+      "input": "encodedText = \"hello world  from    leetcode     challenges\", rows = 6",
+      "output": "hrmt nel c gld ocl  do   fw"
+    },
+    {
+      "input": "encodedText = \"t a c o s e q u i r r e s e l l   f o o d   s o u p\", rows = 5",
+      "output": "t e s q f a s o u o c e u i o o l  r s"
+    },
+    {
+      "input": "encodedText = \"one    two    three    four    five    six\", rows = 3",
+      "output": "oh nrfeei ev  e      t  wf oos ui rx"
+    },
+    {
+      "input": "encodedText = \"programming challenges are fun\", rows = 4",
+      "output": "pilrrneeogn g gfrceahm"
+    },
+    {
+      "input": "encodedText = \"filling   the   matrix   in   a   slanted   manner\", rows = 6",
+      "output": "f t aaitr nnlhi tnlexaei   n  g"
+    },
+    {
+      "input": "encodedText = \"p y trh    e  t s    o    n    a\", rows = 3",
+      "output": "pe    y   t t nrs h"
+    },
+    {
+      "input": "encodedText = \"m e t a l l i c a\", rows = 3",
+      "output": "mai   elc  t"
+    },
+    {
+      "input": "encodedText = \"\", rows = 10",
+      "output": ""
+    },
+    {
+      "input": "encodedText = \"padding   with   spaces   at   the   end     \", rows = 5",
+      "output": "pwc  aiet dtsh dh e i    n   g a s"
+    },
+    {
+      "input": "encodedText = \"a    b    c    d    e    f    g    h    i\", rows = 9",
+      "output": "abcd"
+    },
+    {
+      "input": "encodedText = \"qo   su   me   ve   rt\", rows = 5",
+      "output": "qsmvoue"
+    },
+    {
+      "input": "encodedText = \"sh jfuew xq  z   r e\", rows = 3",
+      "output": "sw h   x jqrf u"
+    },
+    {
+      "input": "encodedText = \"this  is a   test  string\", rows = 5",
+      "output": "ti  ghstsi esa"
+    },
+    {
+      "input": "encodedText = \"abcdef ghijkl mnopqr stuvwx yz\", rows = 5",
+      "output": "agmsybhntzcioudjpekf"
+    },
+    {
+      "input": "encodedText = \"a quick brown fox jumps over the lazy dog\", rows = 6",
+      "output": "a fp z bostqrx uo iwc"
+    },
+    {
+      "input": "encodedText = \"wcy  hmu  eai  xfi\", rows = 3",
+      "output": "wu c xy f ei ah"
+    },
+    {
+      "input": "encodedText = \"two words\", rows = 1",
+      "output": "two words"
+    },
+    {
+      "input": "encodedText = \"th qzih xof  c \", rows = 3",
+      "output": "th h c x qoz"
+    },
+    {
+      "input": "encodedText = \"ab  c   d    e     f      g       h        i         j\", rows = 10",
+      "output": "a    b ef d   c"
+    },
+    {
+      "input": "encodedText = \"programming in python is fun\", rows = 3",
+      "output": "pgnr  oiignsr  apfmyumti"
+    },
+    {
+      "input": "encodedText = \"spaces   in   between   words\", rows = 4",
+      "output": "s twpiwoanerc ede ns"
+    },
+    {
+      "input": "encodedText = \"qjewukcuvm xs   ezmrg\", rows = 4",
+      "output": "qcsmju rev wmu"
+    },
+    {
+      "input": "encodedText = \"this is a longer example to test the decoding function\", rows = 8",
+      "output": "t epteharlei  esle oi"
+    },
+    {
+      "input": "encodedText = \"q w   e r   t y   u i   o p\", rows = 4",
+      "output": "q y  r  w"
+    },
+    {
+      "input": "encodedText = \"a    q    o    q    r    s\", rows = 6",
+      "output": "aqoq"
+    },
+    {
+      "input": "encodedText = \"abcdefghi jklmnop qrstuv wx yz\", rows = 5",
+      "output": "ahntybiouzc pvdj ekf"
+    },
+    {
+      "input": "encodedText = \"i s l a n d   o f   d r e a m s\", rows = 3",
+      "output": "i r   s e o l a f a m   n"
+    },
+    {
+      "input": "encodedText = \"s h e e l  s  s  f  i  r  e\", rows = 5",
+      "output": "se       hls  e"
+    },
+    {
+      "input": "encodedText = \"abc def ghi jkl mno pqr stu vwx yz\", rows = 6",
+      "output": "afjosb k cgl hd"
+    },
+    {
+      "input": "encodedText = \"hello   world   this   is   a   test\", rows = 5",
+      "output": "hwtsteoh elri slls od"
+    },
+    {
+      "input": "encodedText = \"c o n s t a n t i n o p o l i s\", rows = 6",
+      "output": "csnno    ott  n"
+    },
+    {
+      "input": "encodedText = \"a b c d e f g h i j k l m n o p q r s t u v w x y z\", rows = 5",
+      "output": "a l w g r b m x h s c n y i t d o  j e"
+    },
+    {
+      "input": "encodedText = \"this is a test of the emergency broadcast system\", rows = 6",
+      "output": "t tedththnceieecamss ys te i mso"
+    },
+    {
+      "input": "encodedText = \"x w v u t s r q p o n m l k j i h g f e d c b a\", rows = 26",
+      "output": "x"
+    },
+    {
+      "input": "encodedText = \"keep it secret keep it safe\", rows = 6",
+      "output": "kicketre p"
+    },
+    {
+      "input": "encodedText = \"a    b   c  d e f g h i j k l m n o p q r s t u v w x y z\", rows = 26",
+      "output": "a"
+    },
+    {
+      "input": "encodedText = \"hello world from the other side\", rows = 4",
+      "output": "hr eeltrldh l esof  rw"
+    },
+    {
+      "input": "encodedText = \"data structures and algorithms\", rows = 8",
+      "output": "d uast"
+    },
+    {
+      "input": "encodedText = \"abcdefghij klmnopqrst uvwxyz\", rows = 3",
+      "output": "a tbk cludmvenwfoxgpyhqi"
+    },
+    {
+      "input": "encodedText = \"singleword\", rows = 10",
+      "output": "s"
+    },
+    {
+      "input": "encodedText = \"the quick brown fox jumps over the lazy dog\", rows = 6",
+      "output": "tkfshdh o eoebxo  r vqojuwi"
+    },
+    {
+      "input": "encodedText = \"thisisaverylongstringthatwillbereconstructedusingtheslantedciphertechnique\", rows = 7",
+      "output": "tlhcunehoaostcintniehsgwsndnisitgcstlrtarluvibenr"
+    },
+    {
+      "input": "encodedText = \"one\", rows = 1",
+      "output": "one"
+    },
+    {
+      "input": "encodedText = \"z y x w v u t s r q p o n m l k j i h g f e d c b a\", rows = 5",
+      "output": "z o d t i y n c s h x m b r g w l  q v"
+    },
+    {
+      "input": "encodedText = \"t h e q u i c k b r o w n   f o x   j u m p s   o v e r   t h e   l a z y   d o g\", rows = 7",
+      "output": "tcnjohy       hk uve        ebfme d      qropr    uox  i"
+    },
+    {
+      "input": "encodedText = \"abcdefgh ijklmnop qrstuvwx yz      this is a test\", rows = 5",
+      "output": "ajs ibkt sclu  dmv aenw  foxtgp h"
+    },
+    {
+      "input": "encodedText = \"a quick movement of the enemy will jeopardize five gunboats\", rows = 7",
+      "output": "aofme b v yofoqet piumhwaieeicn kt"
+    },
+    {
+      "input": "encodedText = \"slantedtranspositioncipheriscomplexandfun\", rows = 7",
+      "output": "sdpoeltonarsnat"
+    },
+    {
+      "input": "encodedText = \"one two three four five six seven eight nine ten eleven twelve\", rows = 4",
+      "output": "oun nr ee el fietigvwvheoetn    tsnthiiwrxnee eles  ef"
+    },
+    {
+      "input": "encodedText = \"abcdefghij\", rows = 1",
+      "output": "abcdefghij"
+    },
+    {
+      "input": "encodedText = \"x    y     z      \", rows = 3",
+      "output": "x            zy"
+    },
+    {
+      "input": "encodedText = \"machine learning is fascinating\", rows = 7",
+      "output": "mnagaerc h"
+    },
+    {
+      "input": "encodedText = \"lqtk e o mu yzfe ot i g rya wne l oxtesn gdeo\", rows = 5",
+      "output": "luie q   gtygldkz  e frooeeyx  aoo"
+    },
+    {
+      "input": "encodedText = \"p r o g r a m m i n g   l a n g u a g e s\", rows = 5",
+      "output": "p n g a n r g e m g o    m g"
+    },
+    {
+      "input": "encodedText = \"wecoloveleetcode\", rows = 2",
+      "output": "weeectocloodvee"
+    },
+    {
+      "input": "encodedText = \"example     of    a    very    long    encoded    text\", rows = 7",
+      "output": "e  eon x  rnca aygm   po lfe"
+    },
+    {
+      "input": "encodedText = \"longer text with multiple spaces in between\", rows = 3",
+      "output": "lheo snm guielnrt  ibtpeeltxewt e sewpi"
+    },
+    {
+      "input": "encodedText = \"it wof  eit   ss dp\", rows = 4",
+      "output": "iftst    w"
+    },
+    {
+      "input": "encodedText = \"a      b      c      d      e\", rows = 5",
+      "output": "a     b    c"
+    },
+    {
+      "input": "encodedText = \"abcd efgh ijkl mnop qrst uvwx yz\", rows = 5",
+      "output": "ag rxbhms c ntdio je"
+    },
+    {
+      "input": "encodedText = \"the quick brown fox jumps over lazy dogs\", rows = 4",
+      "output": "trmzhopyews  n dq ooufvgioescxrk"
+    },
+    {
+      "input": "encodedText = \"special    characters    !@#$%^&*() are    allowed    in    the    text\", rows = 10",
+      "output": "s c * ep t!( e e@)ccr#ihsaal"
+    },
+    {
+      "input": "encodedText = \"thisisaverylongtextthatneedstobeencodedusingaslantedtranspositioncipher\", rows = 8",
+      "output": "trtsdsaohyttelnilhodasoabuintesgnatv"
+    },
+    {
+      "input": "encodedText = \"spaces    are   handled   correctly\", rows = 5",
+      "output": "s h tp a laancycrdoeels"
+    },
+    {
+      "input": "encodedText = \"f l e x i b l e   r e s o u r c e s\", rows = 5",
+      "output": "fi oe     lbrus    ele  x"
+    },
+    {
+      "input": "encodedText = \"t h e   q u i c k   b r o w n   f o x   j u m p s   o v e r   l a z y   d o g s\", rows = 3",
+      "output": "t v n h e   e r f     o q l x u a   i z j c y u k   m   d p b o s r g   o"
+    },
+    {
+      "input": "encodedText = \"a    b     c      d       e        f         g          h           i\", rows = 9",
+      "output": "a              de  c     b"
+    },
+    {
+      "input": "encodedText = \"python programming is fun\", rows = 3",
+      "output": "po ygitrsha omfnmu ip"
+    },
+    {
+      "input": "encodedText = \"spaces   between   words   are   preserved\", rows = 3",
+      "output": "sn p  a  c pewrsoe rs de srb ve et dwae"
+    },
+    {
+      "input": "encodedText = \"keep calm and code on\", rows = 2",
+      "output": "knede pc ocdael mo"
+    },
+    {
+      "input": "encodedText = \"abcdefgh ijklmnop qrstuv wxyz\", rows = 4",
+      "output": "a p bi wcjqxdkryelsfmg"
+    },
+    {
+      "input": "encodedText = \"decoding slanted transposition cipher is challenging\", rows = 7",
+      "output": "d  si gestipcclrthoaaidnnitn"
+    },
+    {
+      "input": "encodedText = \"a quick brown fox jumps over the lazy dog\", rows = 3",
+      "output": "af  otqxhu eij culkma pzbsyr  oodwvn"
+    },
+    {
+      "input": "encodedText = \"the quick brown fox jumps over the lazy dog and then some more text to fill\", rows = 8",
+      "output": "tbj der hrutonefeomhg   wpe sqns au  lifocok"
+    },
+    {
+      "input": "encodedText = \"empty string test\", rows = 1",
+      "output": "empty string test"
+    },
+    {
+      "input": "encodedText = \"u p   d o w n   w i d e   t h i n g s\", rows = 4",
+      "output": "uwdi    pnen       g    dwt  o"
+    },
+    {
+      "input": "encodedText = \"this is a test of the emergency broadcast system\", rows = 5",
+      "output": "tteythe   isebsstmry  eosiorasfg  a"
+    },
+    {
+      "input": "encodedText = \"shorttext\", rows = 1",
+      "output": "shorttext"
+    },
+    {
+      "input": "encodedText = \"a quick brown fox jumps over the lazy dog\", rows = 5",
+      "output": "arjry ou  qwmtdunphoi secf ko"
+    },
+    {
+      "input": "encodedText = \"a   bcd efgh  ijklm nopqrst uvwxy z\", rows = 5",
+      "output": "aekry fls  gmtz h  b nc d"
+    },
+    {
+      "input": "encodedText = \"one two three four five six seven eight nine ten\", rows = 4",
+      "output": "o x nf neosi uentrvew e ofnt i etvenheir e"
+    },
+    {
+      "input": "encodedText = \"a    b    c    d    e\", rows = 5",
+      "output": "abcd"
+    },
+    {
+      "input": "encodedText = \"thisisaverylongtextthatneedstobeencodedproperly\", rows = 6",
+      "output": "teeeerhrxenoiytdcsltsiohsna"
+    },
+    {
+      "input": "encodedText = \"the quick brown fox jumps over a lazy dog\", rows = 3",
+      "output": "tneh ref  oaqx u lijacuzkmy p bsdr o"
+    },
+    {
+      "input": "encodedText = \"one two    three four    five six seven\", rows = 3",
+      "output": "oeene e s fitoxwu ors  e  v  e  ntfh"
+    },
+    {
+      "input": "encodedText = \"pythonprogramminglanguageisawesome\", rows = 5",
+      "output": "priuwyonaetggghrloan"
+    },
+    {
+      "input": "encodedText = \"sl  yz  vx  qu  tm\", rows = 4",
+      "output": "sz  l"
+    },
+    {
+      "input": "encodedText = \"this   is   a   long   encoded   text   for   testing\", rows = 7",
+      "output": "tsln fsh octoi noes gd a"
+    },
+    {
+      "input": "encodedText = \"abcdefghij    klmnopqrst    uvwxyz\", rows = 3",
+      "output": "a  b  ck dl emufnvgowhpxiqyjr"
+    },
+    {
+      "input": "encodedText = \"a quick brown fox jumps over the lazy dog\", rows = 4",
+      "output": "awsl n aq ozufvyioe cxrdk  o jtbur"
+    },
+    {
+      "input": "encodedText = \"a            b           c          d         e\", rows = 5",
+      "output": "a               b          c"
+    },
+    {
+      "input": "encodedText = \"a   bcd   efgh   ijklm   nopqrst   uvwxyz\", rows = 6",
+      "output": "a  mqu    r     eibfc"
+    },
+    {
+      "input": "encodedText = \"a   a   a   a   a   a   a   a   a   a\", rows = 10",
+      "output": "aaa"
+    },
+    {
+      "input": "encodedText = \"exampleofasingleword\", rows = 1",
+      "output": "exampleofasingleword"
+    },
+    {
+      "input": "encodedText = \"the quick brown fox jumps over lazy dogs\", rows = 5",
+      "output": "t xvdhb eoerjrg ou sqwmlunpi c"
+    },
+    {
+      "input": "encodedText = \"a very long text that is used to test the edge cases of the problem statement\", rows = 10",
+      "output": "ao   ea ntut vghsee aerttye"
+    },
+    {
+      "input": "encodedText = \"a  b c d e f g h i j k l m n o p q r s t u v w x y z\", rows = 6",
+      "output": "ae n w  j s  f o xb k t g pc l hd"
+    },
+    {
+      "input": "encodedText = \"onewordonly\", rows = 1",
+      "output": "onewordonly"
+    },
+    {
+      "input": "encodedText = \"python is an interpreted high level general purpose programming language\", rows = 6",
+      "output": "piiepayngrrntthaoghe lguorl ranpepag rvumeieermstlp e adn"
+    },
+    {
+      "input": "encodedText = \"abcdefghijklmnopqrstuvwxyz\", rows = 10",
+      "output": "adb"
+    },
+    {
+      "input": "encodedText = \"abcdefghijklmnopqrstuvwxyz\", rows = 26",
+      "output": "a"
+    },
+    {
+      "input": "encodedText = \"slantedtranspositioncipherexample\", rows = 10",
+      "output": "strlea"
+    }
+  ],
+  "types": {
+    "python3": {
+      "input": [
+        {
+          "encodedText": "str"
+        },
+        {
+          "rows": "int"
+        }
+      ],
+      "output": "str"
+    },
+    "cpp": {
+      "input": [
+        {
+          "encodedText": "string"
+        },
+        {
+          "rows": "int"
+        }
+      ],
+      "output": "string"
+    },
+    "java": {
+      "input": [
+        {
+          "encodedText": "String"
+        },
+        {
+          "rows": "int"
+        }
+      ],
+      "output": "String"
+    },
+    "javascript": {
+      "input": [
+        {
+          "encodedText": "string"
+        },
+        {
+          "rows": "number"
+        }
+      ],
+      "output": "string"
+    },
+    "typescript": {
+      "input": [
+        {
+          "encodedText": "string"
+        },
+        {
+          "rows": "number"
+        }
+      ],
+      "output": "string"
+    },
+    "golang": {
+      "input": [
+        {
+          "encodedText": "string"
+        },
+        {
+          "rows": "int"
+        }
+      ],
+      "output": "string"
+    },
+    "rust": {
+      "input": [
+        {
+          "encoded_text": "String"
+        },
+        {
+          "rows": "i32"
+        }
+      ],
+      "output": "String"
+    }
+  },
+  "tags": [
+    "string",
+    "simulation"
+  ]
+}

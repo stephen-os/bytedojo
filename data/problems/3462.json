@@ -1,0 +1,535 @@
+{
+  "id": 3462,
+  "title": "Maximum Sum With at Most K Elements",
+  "slug": "maximum-sum-with-at-most-k-elements",
+  "difficulty": "Medium",
+  "description": "You are given a 2D integer matrix grid of size n x m, an integer array limits of length n, and an integer k. The task is to find the maximum sum of at most k elements from the matrix grid such that:\nReturn the maximum sum.\nExample 1:\nExample 2:\nConstraints:",
+  "examples": [
+    {
+      "example_num": 1,
+      "example_text": "Input: grid = [[1,2],[3,4]], limits = [1,2], k = 2\nOutput: 7\nExplanation:",
+      "images": []
+    },
+    {
+      "example_num": 2,
+      "example_text": "Input: grid = [[5,3,7],[8,2,6]], limits = [2,2], k = 3\nOutput: 21\nExplanation:",
+      "images": []
+    }
+  ],
+  "constraints": [
+    "n == grid.length == limits.length",
+    "m == grid[i].length",
+    "1 <= n, m <= 500",
+    "0 <= grid[i][j] <= 105",
+    "0 <= limits[i] <= m",
+    "0 <= k <= min(n * m, sum(limits))"
+  ],
+  "hints": [
+    "Sort each row in descending order and extract the top <code>limits[i]</code> elements.",
+    "Use a max-heap to efficiently pick the largest <code>k</code> elements across all rows."
+  ],
+  "code_snippets": {
+    "cpp": "class Solution {\npublic:\n    long long maxSum(vector<vector<int>>& grid, vector<int>& limits, int k) {\n        \n    }\n};",
+    "java": "class Solution {\n    public long maxSum(int[][] grid, int[] limits, int k) {\n        \n    }\n}",
+    "python3": "class Solution:\n    def maxSum(self, grid: List[List[int]], limits: List[int], k: int) -> int:\n        ",
+    "javascript": "/**\n * @param {number[][]} grid\n * @param {number[]} limits\n * @param {number} k\n * @return {number}\n */\nvar maxSum = function(grid, limits, k) {\n    \n};",
+    "typescript": "function maxSum(grid: number[][], limits: number[], k: number): number {\n    \n};",
+    "golang": "func maxSum(grid [][]int, limits []int, k int) int64 {\n    \n}",
+    "rust": "impl Solution {\n    pub fn max_sum(grid: Vec<Vec<i32>>, limits: Vec<i32>, k: i32) -> i64 {\n        \n    }\n}"
+  },
+  "entry_points": {
+    "python3": "Solution().maxSum",
+    "cpp": "Solution().maxSum",
+    "java": "new Solution().maxSum",
+    "javascript": "maxSum",
+    "typescript": "maxSum",
+    "golang": "maxSum",
+    "rust": "Solution::max_sum"
+  },
+  "test_snippets": {
+    "python3": "def check(candidate):\n    assert candidate(grid = [[10,20,30],[5,15,25],[1,9,18]], limits = [2,1,2], k = 5) == 102\n    assert candidate(grid = [[5,3,7],[8,2,6]], limits = [2,2], k = 3) == 21\n    assert candidate(grid = [[1,2],[3,4]], limits = [1,2], k = 2) == 7\n    assert candidate(grid = [[0,0,0],[0,0,0]], limits = [1,2], k = 1) == 0\n    assert candidate(grid = [[1,2,3],[4,5,6],[7,8,9]], limits = [3,3,3], k = 6) == 39\n    assert candidate(grid = [[1,1,1,1,1,1,1,1,1,1],[2,2,2,2,2,2,2,2,2,2],[3,3,3,3,3,3,3,3,3,3]], limits = [5,5,5], k = 12) == 27\n    assert candidate(grid = [[1000, 900, 800, 700, 600], [500, 400, 300, 200, 100]], limits = [3, 4], k = 6) == 3900\n    assert candidate(grid = [[9, 8, 7, 6, 5], [4, 3, 2, 1, 0], [99, 88, 77, 66, 55]], limits = [3, 2, 4], k = 12) == 361\n    assert candidate(grid = [[0, 0, 0, 0], [1, 1, 1, 1], [2, 2, 2, 2], [3, 3, 3, 3]], limits = [0, 2, 2, 2], k = 5) == 11\n    assert candidate(grid = [[1, 1, 1, 1, 1], [2, 2, 2, 2, 2], [3, 3, 3, 3, 3]], limits = [1, 2, 3], k = 6) == 14\n    assert candidate(grid = [[100, 200], [300, 400], [500, 600]], limits = [1, 1, 1], k = 3) == 1200\n    assert candidate(grid = [[100000, 90000, 80000, 70000], [60000, 50000, 40000, 30000]], limits = [4, 4], k = 3) == 270000\n    assert candidate(grid = [[1,1,1,1,1,1,1,1,1,1],[1,1,1,1,1,1,1,1,1,1],[1,1,1,1,1,1,1,1,1,1]], limits = [10,10,10], k = 15) == 15\n    assert candidate(grid = [[5, 3, 7, 9, 11], [8, 2, 6, 4, 10], [12, 14, 16, 18, 20]], limits = [3, 2, 5], k = 8) == 110\n    assert candidate(grid = [[9,8,7,6],[5,4,3,2],[1,0,9,8]], limits = [2,3,4], k = 6) == 43\n    assert candidate(grid = [[0,0,0],[0,0,0],[0,0,0]], limits = [1,1,1], k = 1) == 0\n    assert candidate(grid = [[5,2,9,1],[8,4,6,7],[3,10,12,11]], limits = [3,2,3], k = 6) == 57\n    assert candidate(grid = [[0,0,0],[0,0,0],[0,0,0]], limits = [1,1,1], k = 3) == 0\n    assert candidate(grid = [[10, 20, 30, 40, 50], [60, 70, 80, 90, 100], [110, 120, 130, 140, 150]], limits = [2, 3, 2], k = 7) == 650\n    assert candidate(grid = [[100,200,300],[50,150,250],[10,90,180],[5,15,25]], limits = [1,2,3,1], k = 8) == 1005\n    assert candidate(grid = [[5, 3, 7], [8, 2, 6], [1, 9, 18], [21, 2, 10], [3, 15, 12]], limits = [2, 2, 2, 2, 2], k = 10) == 111\n    assert candidate(grid = [[9,8,7,6],[5,4,3,2],[1,0,0,0]], limits = [3,3,2], k = 5) == 33\n    assert candidate(grid = [[100,200],[300,400],[500,600],[700,800]], limits = [1,2,2,1], k = 5) == 2600\n    assert candidate(grid = [[10, 20, 30], [30, 20, 10], [10, 20, 30]], limits = [1, 1, 1], k = 2) == 60\n    assert candidate(grid = [[10,20,30,40],[5,15,25,35],[1,9,18,27]], limits = [4,3,3], k = 7) == 195\n    assert candidate(grid = [[50, 40, 30], [20, 10, 0], [60, 70, 80], [90, 100, 110]], limits = [2, 2, 2, 2], k = 7) == 470\n    assert candidate(grid = [[1,2,3,4,5],[6,7,8,9,10],[11,12,13,14,15]], limits = [5,3,1], k = 8) == 56\n    assert candidate(grid = [[10000, 20000], [30000, 40000], [50000, 60000]], limits = [1, 1, 1], k = 2) == 100000\n    assert candidate(grid = [[1, 1, 1, 1, 1], [1, 1, 1, 1, 1], [1, 1, 1, 1, 1]], limits = [5, 5, 5], k = 15) == 15\n    assert candidate(grid = [[5, 3, 7], [8, 2, 6], [1, 9, 18], [10, 15, 20]], limits = [1, 2, 1, 2], k = 5) == 68\n    assert candidate(grid = [[10, 20, 30, 40, 50], [5, 15, 25, 35, 45], [1, 11, 21, 31, 41]], limits = [4, 3, 2], k = 7) == 272\n    assert candidate(grid = [[90, 5, 10, 70], [20, 60, 40, 30], [80, 10, 50, 45]], limits = [3, 3, 3], k = 5) == 350\n    assert candidate(grid = [[100000,100000,100000],[90000,90000,90000],[80000,80000,80000]], limits = [3,3,3], k = 5) == 480000\n    assert candidate(grid = [[1,1,1,1,1],[1,1,1,1,1],[1,1,1,1,1]], limits = [2,2,2], k = 5) == 5\n    assert candidate(grid = [[1, 1, 1, 1, 1], [1, 1, 1, 1, 1], [1, 1, 1, 1, 1]], limits = [3, 3, 3], k = 8) == 8\n    assert candidate(grid = [[1,2,3],[4,5,6],[7,8,9],[10,11,12],[13,14,15]], limits = [1,2,3,4,5], k = 15) == Error: pop from empty list\n    assert candidate(grid = [[1, 2, 3, 4, 5], [6, 7, 8, 9, 10], [11, 12, 13, 14, 15]], limits = [1, 3, 2], k = 6) == 61\n    assert candidate(grid = [[1,2,3,4,5,6,7,8,9,10],[11,12,13,14,15,16,17,18,19,20]], limits = [5,5], k = 8) == 117\n    assert candidate(grid = [[9, 8, 7], [6, 5, 4], [3, 2, 1]], limits = [2, 2, 2], k = 4) == 28\n    assert candidate(grid = [[5, 5, 5, 5, 5], [5, 5, 5, 5, 5], [5, 5, 5, 5, 5]], limits = [2, 2, 2], k = 5) == 25\n    assert candidate(grid = [[1000, 2000, 3000], [4000, 5000, 6000], [7000, 8000, 9000]], limits = [2, 2, 2], k = 4) == 28000\n    assert candidate(grid = [[9, 3, 5, 7], [1, 8, 6, 4], [2, 10, 12, 11]], limits = [3, 2, 3], k = 5) == 50\n    assert candidate(grid = [[1,3,5,7],[9,11,13,15],[17,19,21,23]], limits = [3,2,4], k = 7) == 115\n    assert candidate(grid = [[5, 3, 7], [8, 2, 6], [1, 9, 18], [12, 15, 17]], limits = [1, 2, 3, 3], k = 7) == 86\n    assert candidate(grid = [[1, 3, 5, 7, 9], [2, 4, 6, 8, 10], [0, 1, 2, 3, 4]], limits = [3, 3, 3], k = 7) == 49\n    assert candidate(grid = [[1, 1, 1, 1, 1], [2, 2, 2, 2, 2], [3, 3, 3, 3, 3]], limits = [3, 3, 3], k = 5) == 13\n    assert candidate(grid = [[0,0,0,0],[0,0,0,0],[0,0,0,0]], limits = [2,2,2], k = 5) == 0\n    assert candidate(grid = [[50, 40, 30, 20, 10], [10, 20, 30, 40, 50], [1, 2, 3, 4, 5], [5, 4, 3, 2, 1]], limits = [2, 3, 3, 2], k = 8) == 224\n    assert candidate(grid = [[1,1,1,1,1],[2,2,2,2,2],[3,3,3,3,3]], limits = [5,5,5], k = 15) == 30\n    assert candidate(grid = [[9,5,3,10],[8,1,12,4],[7,6,2,11]], limits = [3,2,3], k = 7) == 63\n    assert candidate(grid = [[10000,20000,30000],[15000,25000,35000],[5000,10000,15000]], limits = [3,3,3], k = 9) == 165000\n    assert candidate(grid = [[1, 2, 3, 4, 5], [5, 4, 3, 2, 1], [1, 2, 3, 4, 5], [5, 4, 3, 2, 1]], limits = [2, 2, 2, 2], k = 8) == 36\n    assert candidate(grid = [[1, 2, 3, 4, 5], [6, 7, 8, 9, 10], [11, 12, 13, 14, 15], [16, 17, 18, 19, 20]], limits = [1, 2, 3, 4], k = 10) == 140\n    assert candidate(grid = [[15, 25, 35], [5, 10, 45], [40, 60, 70], [80, 90, 100]], limits = [1, 2, 3, 3], k = 8) == 520\n    assert candidate(grid = [[5,6,7,8,9],[1,2,3,4,5],[9,8,7,6,5],[3,4,5,6,7]], limits = [3,4,3,4], k = 10) == 71\n    assert candidate(grid = [[50,40,30,20,10],[15,25,35,45,55],[5,10,15,20,25],[5,10,15,20,25]], limits = [5,5,4,3], k = 11) == 370\n    assert candidate(grid = [[10,20,30,40,50,60,70,80,90,100]], limits = [10], k = 10) == 550\n    assert candidate(grid = [[0, 0, 0], [0, 0, 0], [0, 0, 0]], limits = [3, 3, 3], k = 5) == 0\n    assert candidate(grid = [[2,3,4,5],[6,7,8,9],[10,11,12,13],[14,15,16,17]], limits = [4,4,4,4], k = 16) == 152\n    assert candidate(grid = [[1, 2], [3, 4], [5, 6], [7, 8], [9, 10]], limits = [1, 1, 1, 1, 1], k = 5) == 30\n    assert candidate(grid = [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]], limits = [4, 4, 4], k = 6) == 0\n    assert candidate(grid = [[5, 3, 8], [1, 4, 7], [6, 2, 9]], limits = [1, 1, 1], k = 2) == 17\n    assert candidate(grid = [[10,20],[30,40],[50,60]], limits = [1,1,1], k = 1) == 60\n    assert candidate(grid = [[100,50,25,12,6],[500,250,125,62,31],[1000,500,250,125,62],[5000,2500,1250,625,312]], limits = [4,3,2,1], k = 9) == 7550\n    assert candidate(grid = [[100, 200, 300], [10, 20, 30], [5, 15, 25]], limits = [2, 1, 2], k = 4) == 555\n    assert candidate(grid = [[10,20,30,40,50],[25,15,35,45,55],[1,2,3,4,5],[9,18,27,36,45]], limits = [4,4,3,4], k = 12) == 426\n    assert candidate(grid = [[1, 2, 3, 4, 5], [10, 20, 30, 40, 50], [100, 200, 300, 400, 500]], limits = [5, 5, 5], k = 10) == 1650\n    assert candidate(grid = [[1, 1, 1, 1, 1], [1, 1, 1, 1, 1], [1, 1, 1, 1, 1], [1, 1, 1, 1, 1]], limits = [5, 5, 5, 5], k = 10) == 10\n    assert candidate(grid = [[1, 2, 3, 4, 5], [10, 20, 30, 40, 50], [100, 200, 300, 400, 500]], limits = [1, 2, 3], k = 10) == 1295\n    assert candidate(grid = [[100,200],[150,50],[300,250]], limits = [1,2], k = 4) == 400\n    assert candidate(grid = [[100, 200, 300], [10, 20, 30], [5, 15, 25], [2, 4, 6]], limits = [2, 2, 2, 2], k = 6) == 590\n    assert candidate(grid = [[5, 3, 7], [8, 2, 6], [1, 9, 18], [10, 15, 20]], limits = [0, 0, 0, 0], k = 0) == 0\n    assert candidate(grid = [[100, 200, 300], [400, 500, 600], [700, 800, 900], [1000, 1100, 1200]], limits = [2, 2, 3, 4], k = 8) == Error: pop from empty list\n    assert candidate(grid = [[9, 1, 5, 7], [3, 8, 2, 6], [4, 0, 9, 1]], limits = [2, 3, 2], k = 5) == 39\n    assert candidate(grid = [[0, 0, 0], [0, 0, 0], [0, 0, 0]], limits = [1, 1, 1], k = 3) == 0\n    assert candidate(grid = [[1, 2, 3], [4, 5, 6], [7, 8, 9], [10, 11, 12], [13, 14, 15]], limits = [1, 1, 1, 1, 1], k = 5) == 45\n    assert candidate(grid = [[5, 3, 7, 9], [8, 2, 6, 4], [1, 9, 18, 27]], limits = [2, 3, 2], k = 6) == 75\n    assert candidate(grid = [[5, 3, 7], [8, 2, 6], [1, 9, 18], [10, 12, 11]], limits = [2, 2, 2, 2], k = 7) == 71\n    assert candidate(grid = [[1, 2, 3, 4], [4, 3, 2, 1], [5, 6, 7, 8], [8, 7, 6, 5]], limits = [2, 2, 2, 2], k = 6) == 38\n    assert candidate(grid = [[100000,90000,80000],[70000,60000,50000],[40000,30000,20000]], limits = [2,3,1], k = 4) == 320000\n    assert candidate(grid = [[5,8,12,3,7],[9,4,6,1,10],[2,15,11,13,14]], limits = [5,5,5], k = 10) == 105\n    assert candidate(grid = [[1, 3, 5, 7, 9], [2, 4, 6, 8, 10], [11, 13, 15, 17, 19], [21, 23, 25, 27, 29]], limits = [1, 2, 3, 4], k = 10) == 182\n    assert candidate(grid = [[100000, 100000], [100000, 100000], [100000, 100000]], limits = [1, 1, 1], k = 3) == 300000\n    assert candidate(grid = [[1, 2], [3, 4], [5, 6], [7, 8], [9, 10]], limits = [1, 1, 1, 1, 1], k = 3) == 24\n    assert candidate(grid = [[1, 2, 3, 4, 5], [6, 7, 8, 9, 10], [11, 12, 13, 14, 15]], limits = [1, 2, 3], k = 6) == 66\n    assert candidate(grid = [[100000, 90000, 80000], [70000, 60000, 50000], [40000, 30000, 20000]], limits = [2, 2, 3], k = 7) == 410000\n    assert candidate(grid = [[9, 8, 7, 6, 5], [4, 3, 2, 1, 0], [5, 6, 7, 8, 9]], limits = [3, 2, 3], k = 6) == 48\n    assert candidate(grid = [[1, 1, 1, 1, 1], [2, 2, 2, 2, 2], [3, 3, 3, 3, 3], [4, 4, 4, 4, 4]], limits = [1, 2, 3, 4], k = 10) == 30\n    assert candidate(grid = [[0, 0, 0], [0, 0, 0], [0, 0, 0]], limits = [2, 2, 2], k = 5) == 0\n    assert candidate(grid = [[50, 25, 12, 6, 3], [200, 100, 50, 25, 12], [1, 2, 3, 4, 5]], limits = [2, 3, 3], k = 11) == 437\n    assert candidate(grid = [[10, 20, 30, 40], [5, 15, 25, 35], [1, 9, 18, 27]], limits = [2, 3, 4], k = 7) == 190\n    assert candidate(grid = [[100, 200, 300], [50, 150, 250], [10, 90, 180], [5, 45, 85]], limits = [2, 1, 3, 2], k = 9) == 1160",
+    "cpp": "void check(Solution& solution) {\n    assert(solution.maxSum({{10,20,30},{5,15,25},{1,9,18}}, {2,1,2}, 5) == vector<int>102);\n    assert(solution.maxSum({{5,3,7},{8,2,6}}, {2,2}, 3) == vector<int>21);\n    assert(solution.maxSum({{1,2},{3,4}}, {1,2}, 2) == vector<int>7);\n    assert(solution.maxSum({{0,0,0},{0,0,0}}, {1,2}, 1) == vector<int>0);\n    assert(solution.maxSum({{1,2,3},{4,5,6},{7,8,9}}, {3,3,3}, 6) == vector<int>39);\n    assert(solution.maxSum({{1,1,1,1,1,1,1,1,1,1},{2,2,2,2,2,2,2,2,2,2},{3,3,3,3,3,3,3,3,3,3}}, {5,5,5}, 12) == vector<int>27);\n    assert(solution.maxSum({{1000, 900, 800, 700, 600}, {500, 400, 300, 200, 100}}, {3, 4}, 6) == vector<int>3900);\n    assert(solution.maxSum({{9, 8, 7, 6, 5}, {4, 3, 2, 1, 0}, {99, 88, 77, 66, 55}}, {3, 2, 4}, 12) == vector<int>361);\n    assert(solution.maxSum({{0, 0, 0, 0}, {1, 1, 1, 1}, {2, 2, 2, 2}, {3, 3, 3, 3}}, {0, 2, 2, 2}, 5) == vector<int>11);\n    assert(solution.maxSum({{1, 1, 1, 1, 1}, {2, 2, 2, 2, 2}, {3, 3, 3, 3, 3}}, {1, 2, 3}, 6) == vector<int>14);\n    assert(solution.maxSum({{100, 200}, {300, 400}, {500, 600}}, {1, 1, 1}, 3) == vector<int>1200);\n    assert(solution.maxSum({{100000, 90000, 80000, 70000}, {60000, 50000, 40000, 30000}}, {4, 4}, 3) == vector<int>270000);\n    assert(solution.maxSum({{1,1,1,1,1,1,1,1,1,1},{1,1,1,1,1,1,1,1,1,1},{1,1,1,1,1,1,1,1,1,1}}, {10,10,10}, 15) == vector<int>15);\n    assert(solution.maxSum({{5, 3, 7, 9, 11}, {8, 2, 6, 4, 10}, {12, 14, 16, 18, 20}}, {3, 2, 5}, 8) == vector<int>110);\n    assert(solution.maxSum({{9,8,7,6},{5,4,3,2},{1,0,9,8}}, {2,3,4}, 6) == vector<int>43);\n    assert(solution.maxSum({{0,0,0},{0,0,0},{0,0,0}}, {1,1,1}, 1) == vector<int>0);\n    assert(solution.maxSum({{5,2,9,1},{8,4,6,7},{3,10,12,11}}, {3,2,3}, 6) == vector<int>57);\n    assert(solution.maxSum({{0,0,0},{0,0,0},{0,0,0}}, {1,1,1}, 3) == vector<int>0);\n    assert(solution.maxSum({{10, 20, 30, 40, 50}, {60, 70, 80, 90, 100}, {110, 120, 130, 140, 150}}, {2, 3, 2}, 7) == vector<int>650);\n    assert(solution.maxSum({{100,200,300},{50,150,250},{10,90,180},{5,15,25}}, {1,2,3,1}, 8) == vector<int>1005);\n    assert(solution.maxSum({{5, 3, 7}, {8, 2, 6}, {1, 9, 18}, {21, 2, 10}, {3, 15, 12}}, {2, 2, 2, 2, 2}, 10) == vector<int>111);\n    assert(solution.maxSum({{9,8,7,6},{5,4,3,2},{1,0,0,0}}, {3,3,2}, 5) == vector<int>33);\n    assert(solution.maxSum({{100,200},{300,400},{500,600},{700,800}}, {1,2,2,1}, 5) == vector<int>2600);\n    assert(solution.maxSum({{10, 20, 30}, {30, 20, 10}, {10, 20, 30}}, {1, 1, 1}, 2) == vector<int>60);\n    assert(solution.maxSum({{10,20,30,40},{5,15,25,35},{1,9,18,27}}, {4,3,3}, 7) == vector<int>195);\n    assert(solution.maxSum({{50, 40, 30}, {20, 10, 0}, {60, 70, 80}, {90, 100, 110}}, {2, 2, 2, 2}, 7) == vector<int>470);\n    assert(solution.maxSum({{1,2,3,4,5},{6,7,8,9,10},{11,12,13,14,15}}, {5,3,1}, 8) == vector<int>56);\n    assert(solution.maxSum({{10000, 20000}, {30000, 40000}, {50000, 60000}}, {1, 1, 1}, 2) == vector<int>100000);\n    assert(solution.maxSum({{1, 1, 1, 1, 1}, {1, 1, 1, 1, 1}, {1, 1, 1, 1, 1}}, {5, 5, 5}, 15) == vector<int>15);\n    assert(solution.maxSum({{5, 3, 7}, {8, 2, 6}, {1, 9, 18}, {10, 15, 20}}, {1, 2, 1, 2}, 5) == vector<int>68);\n    assert(solution.maxSum({{10, 20, 30, 40, 50}, {5, 15, 25, 35, 45}, {1, 11, 21, 31, 41}}, {4, 3, 2}, 7) == vector<int>272);\n    assert(solution.maxSum({{90, 5, 10, 70}, {20, 60, 40, 30}, {80, 10, 50, 45}}, {3, 3, 3}, 5) == vector<int>350);\n    assert(solution.maxSum({{100000,100000,100000},{90000,90000,90000},{80000,80000,80000}}, {3,3,3}, 5) == vector<int>480000);\n    assert(solution.maxSum({{1,1,1,1,1},{1,1,1,1,1},{1,1,1,1,1}}, {2,2,2}, 5) == vector<int>5);\n    assert(solution.maxSum({{1, 1, 1, 1, 1}, {1, 1, 1, 1, 1}, {1, 1, 1, 1, 1}}, {3, 3, 3}, 8) == vector<int>8);\n    assert(solution.maxSum({{1,2,3},{4,5,6},{7,8,9},{10,11,12},{13,14,15}}, {1,2,3,4,5}, 15) == vector<int>Error: pop from empty list);\n    assert(solution.maxSum({{1, 2, 3, 4, 5}, {6, 7, 8, 9, 10}, {11, 12, 13, 14, 15}}, {1, 3, 2}, 6) == vector<int>61);\n    assert(solution.maxSum({{1,2,3,4,5,6,7,8,9,10},{11,12,13,14,15,16,17,18,19,20}}, {5,5}, 8) == vector<int>117);\n    assert(solution.maxSum({{9, 8, 7}, {6, 5, 4}, {3, 2, 1}}, {2, 2, 2}, 4) == vector<int>28);\n    assert(solution.maxSum({{5, 5, 5, 5, 5}, {5, 5, 5, 5, 5}, {5, 5, 5, 5, 5}}, {2, 2, 2}, 5) == vector<int>25);\n    assert(solution.maxSum({{1000, 2000, 3000}, {4000, 5000, 6000}, {7000, 8000, 9000}}, {2, 2, 2}, 4) == vector<int>28000);\n    assert(solution.maxSum({{9, 3, 5, 7}, {1, 8, 6, 4}, {2, 10, 12, 11}}, {3, 2, 3}, 5) == vector<int>50);\n    assert(solution.maxSum({{1,3,5,7},{9,11,13,15},{17,19,21,23}}, {3,2,4}, 7) == vector<int>115);\n    assert(solution.maxSum({{5, 3, 7}, {8, 2, 6}, {1, 9, 18}, {12, 15, 17}}, {1, 2, 3, 3}, 7) == vector<int>86);\n    assert(solution.maxSum({{1, 3, 5, 7, 9}, {2, 4, 6, 8, 10}, {0, 1, 2, 3, 4}}, {3, 3, 3}, 7) == vector<int>49);\n    assert(solution.maxSum({{1, 1, 1, 1, 1}, {2, 2, 2, 2, 2}, {3, 3, 3, 3, 3}}, {3, 3, 3}, 5) == vector<int>13);\n    assert(solution.maxSum({{0,0,0,0},{0,0,0,0},{0,0,0,0}}, {2,2,2}, 5) == vector<int>0);\n    assert(solution.maxSum({{50, 40, 30, 20, 10}, {10, 20, 30, 40, 50}, {1, 2, 3, 4, 5}, {5, 4, 3, 2, 1}}, {2, 3, 3, 2}, 8) == vector<int>224);\n    assert(solution.maxSum({{1,1,1,1,1},{2,2,2,2,2},{3,3,3,3,3}}, {5,5,5}, 15) == vector<int>30);\n    assert(solution.maxSum({{9,5,3,10},{8,1,12,4},{7,6,2,11}}, {3,2,3}, 7) == vector<int>63);\n    assert(solution.maxSum({{10000,20000,30000},{15000,25000,35000},{5000,10000,15000}}, {3,3,3}, 9) == vector<int>165000);\n    assert(solution.maxSum({{1, 2, 3, 4, 5}, {5, 4, 3, 2, 1}, {1, 2, 3, 4, 5}, {5, 4, 3, 2, 1}}, {2, 2, 2, 2}, 8) == vector<int>36);\n    assert(solution.maxSum({{1, 2, 3, 4, 5}, {6, 7, 8, 9, 10}, {11, 12, 13, 14, 15}, {16, 17, 18, 19, 20}}, {1, 2, 3, 4}, 10) == vector<int>140);\n    assert(solution.maxSum({{15, 25, 35}, {5, 10, 45}, {40, 60, 70}, {80, 90, 100}}, {1, 2, 3, 3}, 8) == vector<int>520);\n    assert(solution.maxSum({{5,6,7,8,9},{1,2,3,4,5},{9,8,7,6,5},{3,4,5,6,7}}, {3,4,3,4}, 10) == vector<int>71);\n    assert(solution.maxSum({{50,40,30,20,10},{15,25,35,45,55},{5,10,15,20,25},{5,10,15,20,25}}, {5,5,4,3}, 11) == vector<int>370);\n    assert(solution.maxSum({{10,20,30,40,50,60,70,80,90,100}}, {10}, 10) == vector<int>550);\n    assert(solution.maxSum({{0, 0, 0}, {0, 0, 0}, {0, 0, 0}}, {3, 3, 3}, 5) == vector<int>0);\n    assert(solution.maxSum({{2,3,4,5},{6,7,8,9},{10,11,12,13},{14,15,16,17}}, {4,4,4,4}, 16) == vector<int>152);\n    assert(solution.maxSum({{1, 2}, {3, 4}, {5, 6}, {7, 8}, {9, 10}}, {1, 1, 1, 1, 1}, 5) == vector<int>30);\n    assert(solution.maxSum({{0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}}, {4, 4, 4}, 6) == vector<int>0);\n    assert(solution.maxSum({{5, 3, 8}, {1, 4, 7}, {6, 2, 9}}, {1, 1, 1}, 2) == vector<int>17);\n    assert(solution.maxSum({{10,20},{30,40},{50,60}}, {1,1,1}, 1) == vector<int>60);\n    assert(solution.maxSum({{100,50,25,12,6},{500,250,125,62,31},{1000,500,250,125,62},{5000,2500,1250,625,312}}, {4,3,2,1}, 9) == vector<int>7550);\n    assert(solution.maxSum({{100, 200, 300}, {10, 20, 30}, {5, 15, 25}}, {2, 1, 2}, 4) == vector<int>555);\n    assert(solution.maxSum({{10,20,30,40,50},{25,15,35,45,55},{1,2,3,4,5},{9,18,27,36,45}}, {4,4,3,4}, 12) == vector<int>426);\n    assert(solution.maxSum({{1, 2, 3, 4, 5}, {10, 20, 30, 40, 50}, {100, 200, 300, 400, 500}}, {5, 5, 5}, 10) == vector<int>1650);\n    assert(solution.maxSum({{1, 1, 1, 1, 1}, {1, 1, 1, 1, 1}, {1, 1, 1, 1, 1}, {1, 1, 1, 1, 1}}, {5, 5, 5, 5}, 10) == vector<int>10);\n    assert(solution.maxSum({{1, 2, 3, 4, 5}, {10, 20, 30, 40, 50}, {100, 200, 300, 400, 500}}, {1, 2, 3}, 10) == vector<int>1295);\n    assert(solution.maxSum({{100,200},{150,50},{300,250}}, {1,2}, 4) == vector<int>400);\n    assert(solution.maxSum({{100, 200, 300}, {10, 20, 30}, {5, 15, 25}, {2, 4, 6}}, {2, 2, 2, 2}, 6) == vector<int>590);\n    assert(solution.maxSum({{5, 3, 7}, {8, 2, 6}, {1, 9, 18}, {10, 15, 20}}, {0, 0, 0, 0}, 0) == vector<int>0);\n    assert(solution.maxSum({{100, 200, 300}, {400, 500, 600}, {700, 800, 900}, {1000, 1100, 1200}}, {2, 2, 3, 4}, 8) == vector<int>Error: pop from empty list);\n    assert(solution.maxSum({{9, 1, 5, 7}, {3, 8, 2, 6}, {4, 0, 9, 1}}, {2, 3, 2}, 5) == vector<int>39);\n    assert(solution.maxSum({{0, 0, 0}, {0, 0, 0}, {0, 0, 0}}, {1, 1, 1}, 3) == vector<int>0);\n    assert(solution.maxSum({{1, 2, 3}, {4, 5, 6}, {7, 8, 9}, {10, 11, 12}, {13, 14, 15}}, {1, 1, 1, 1, 1}, 5) == vector<int>45);\n    assert(solution.maxSum({{5, 3, 7, 9}, {8, 2, 6, 4}, {1, 9, 18, 27}}, {2, 3, 2}, 6) == vector<int>75);\n    assert(solution.maxSum({{5, 3, 7}, {8, 2, 6}, {1, 9, 18}, {10, 12, 11}}, {2, 2, 2, 2}, 7) == vector<int>71);\n    assert(solution.maxSum({{1, 2, 3, 4}, {4, 3, 2, 1}, {5, 6, 7, 8}, {8, 7, 6, 5}}, {2, 2, 2, 2}, 6) == vector<int>38);\n    assert(solution.maxSum({{100000,90000,80000},{70000,60000,50000},{40000,30000,20000}}, {2,3,1}, 4) == vector<int>320000);\n    assert(solution.maxSum({{5,8,12,3,7},{9,4,6,1,10},{2,15,11,13,14}}, {5,5,5}, 10) == vector<int>105);\n    assert(solution.maxSum({{1, 3, 5, 7, 9}, {2, 4, 6, 8, 10}, {11, 13, 15, 17, 19}, {21, 23, 25, 27, 29}}, {1, 2, 3, 4}, 10) == vector<int>182);\n    assert(solution.maxSum({{100000, 100000}, {100000, 100000}, {100000, 100000}}, {1, 1, 1}, 3) == vector<int>300000);\n    assert(solution.maxSum({{1, 2}, {3, 4}, {5, 6}, {7, 8}, {9, 10}}, {1, 1, 1, 1, 1}, 3) == vector<int>24);\n    assert(solution.maxSum({{1, 2, 3, 4, 5}, {6, 7, 8, 9, 10}, {11, 12, 13, 14, 15}}, {1, 2, 3}, 6) == vector<int>66);\n    assert(solution.maxSum({{100000, 90000, 80000}, {70000, 60000, 50000}, {40000, 30000, 20000}}, {2, 2, 3}, 7) == vector<int>410000);\n    assert(solution.maxSum({{9, 8, 7, 6, 5}, {4, 3, 2, 1, 0}, {5, 6, 7, 8, 9}}, {3, 2, 3}, 6) == vector<int>48);\n    assert(solution.maxSum({{1, 1, 1, 1, 1}, {2, 2, 2, 2, 2}, {3, 3, 3, 3, 3}, {4, 4, 4, 4, 4}}, {1, 2, 3, 4}, 10) == vector<int>30);\n    assert(solution.maxSum({{0, 0, 0}, {0, 0, 0}, {0, 0, 0}}, {2, 2, 2}, 5) == vector<int>0);\n    assert(solution.maxSum({{50, 25, 12, 6, 3}, {200, 100, 50, 25, 12}, {1, 2, 3, 4, 5}}, {2, 3, 3}, 11) == vector<int>437);\n    assert(solution.maxSum({{10, 20, 30, 40}, {5, 15, 25, 35}, {1, 9, 18, 27}}, {2, 3, 4}, 7) == vector<int>190);\n    assert(solution.maxSum({{100, 200, 300}, {50, 150, 250}, {10, 90, 180}, {5, 45, 85}}, {2, 1, 3, 2}, 9) == vector<int>1160);\n}",
+    "java": "public static void check(Solution solution) {\n    assert Arrays.equals(solution.maxSum(new int[]{{10,20,30},{5,15,25},{1,9,18}}, new int[]{2,1,2}, 5), 102);\n    assert Arrays.equals(solution.maxSum(new int[]{{5,3,7},{8,2,6}}, new int[]{2,2}, 3), 21);\n    assert Arrays.equals(solution.maxSum(new int[]{{1,2},{3,4}}, new int[]{1,2}, 2), 7);\n    assert Arrays.equals(solution.maxSum(new int[]{{0,0,0},{0,0,0}}, new int[]{1,2}, 1), 0);\n    assert Arrays.equals(solution.maxSum(new int[]{{1,2,3},{4,5,6},{7,8,9}}, new int[]{3,3,3}, 6), 39);\n    assert Arrays.equals(solution.maxSum(new int[]{{1,1,1,1,1,1,1,1,1,1},{2,2,2,2,2,2,2,2,2,2},{3,3,3,3,3,3,3,3,3,3}}, new int[]{5,5,5}, 12), 27);\n    assert Arrays.equals(solution.maxSum(new int[]{{1000, 900, 800, 700, 600}, {500, 400, 300, 200, 100}}, new int[]{3, 4}, 6), 3900);\n    assert Arrays.equals(solution.maxSum(new int[]{{9, 8, 7, 6, 5}, {4, 3, 2, 1, 0}, {99, 88, 77, 66, 55}}, new int[]{3, 2, 4}, 12), 361);\n    assert Arrays.equals(solution.maxSum(new int[]{{0, 0, 0, 0}, {1, 1, 1, 1}, {2, 2, 2, 2}, {3, 3, 3, 3}}, new int[]{0, 2, 2, 2}, 5), 11);\n    assert Arrays.equals(solution.maxSum(new int[]{{1, 1, 1, 1, 1}, {2, 2, 2, 2, 2}, {3, 3, 3, 3, 3}}, new int[]{1, 2, 3}, 6), 14);\n    assert Arrays.equals(solution.maxSum(new int[]{{100, 200}, {300, 400}, {500, 600}}, new int[]{1, 1, 1}, 3), 1200);\n    assert Arrays.equals(solution.maxSum(new int[]{{100000, 90000, 80000, 70000}, {60000, 50000, 40000, 30000}}, new int[]{4, 4}, 3), 270000);\n    assert Arrays.equals(solution.maxSum(new int[]{{1,1,1,1,1,1,1,1,1,1},{1,1,1,1,1,1,1,1,1,1},{1,1,1,1,1,1,1,1,1,1}}, new int[]{10,10,10}, 15), 15);\n    assert Arrays.equals(solution.maxSum(new int[]{{5, 3, 7, 9, 11}, {8, 2, 6, 4, 10}, {12, 14, 16, 18, 20}}, new int[]{3, 2, 5}, 8), 110);\n    assert Arrays.equals(solution.maxSum(new int[]{{9,8,7,6},{5,4,3,2},{1,0,9,8}}, new int[]{2,3,4}, 6), 43);\n    assert Arrays.equals(solution.maxSum(new int[]{{0,0,0},{0,0,0},{0,0,0}}, new int[]{1,1,1}, 1), 0);\n    assert Arrays.equals(solution.maxSum(new int[]{{5,2,9,1},{8,4,6,7},{3,10,12,11}}, new int[]{3,2,3}, 6), 57);\n    assert Arrays.equals(solution.maxSum(new int[]{{0,0,0},{0,0,0},{0,0,0}}, new int[]{1,1,1}, 3), 0);\n    assert Arrays.equals(solution.maxSum(new int[]{{10, 20, 30, 40, 50}, {60, 70, 80, 90, 100}, {110, 120, 130, 140, 150}}, new int[]{2, 3, 2}, 7), 650);\n    assert Arrays.equals(solution.maxSum(new int[]{{100,200,300},{50,150,250},{10,90,180},{5,15,25}}, new int[]{1,2,3,1}, 8), 1005);\n    assert Arrays.equals(solution.maxSum(new int[]{{5, 3, 7}, {8, 2, 6}, {1, 9, 18}, {21, 2, 10}, {3, 15, 12}}, new int[]{2, 2, 2, 2, 2}, 10), 111);\n    assert Arrays.equals(solution.maxSum(new int[]{{9,8,7,6},{5,4,3,2},{1,0,0,0}}, new int[]{3,3,2}, 5), 33);\n    assert Arrays.equals(solution.maxSum(new int[]{{100,200},{300,400},{500,600},{700,800}}, new int[]{1,2,2,1}, 5), 2600);\n    assert Arrays.equals(solution.maxSum(new int[]{{10, 20, 30}, {30, 20, 10}, {10, 20, 30}}, new int[]{1, 1, 1}, 2), 60);\n    assert Arrays.equals(solution.maxSum(new int[]{{10,20,30,40},{5,15,25,35},{1,9,18,27}}, new int[]{4,3,3}, 7), 195);\n    assert Arrays.equals(solution.maxSum(new int[]{{50, 40, 30}, {20, 10, 0}, {60, 70, 80}, {90, 100, 110}}, new int[]{2, 2, 2, 2}, 7), 470);\n    assert Arrays.equals(solution.maxSum(new int[]{{1,2,3,4,5},{6,7,8,9,10},{11,12,13,14,15}}, new int[]{5,3,1}, 8), 56);\n    assert Arrays.equals(solution.maxSum(new int[]{{10000, 20000}, {30000, 40000}, {50000, 60000}}, new int[]{1, 1, 1}, 2), 100000);\n    assert Arrays.equals(solution.maxSum(new int[]{{1, 1, 1, 1, 1}, {1, 1, 1, 1, 1}, {1, 1, 1, 1, 1}}, new int[]{5, 5, 5}, 15), 15);\n    assert Arrays.equals(solution.maxSum(new int[]{{5, 3, 7}, {8, 2, 6}, {1, 9, 18}, {10, 15, 20}}, new int[]{1, 2, 1, 2}, 5), 68);\n    assert Arrays.equals(solution.maxSum(new int[]{{10, 20, 30, 40, 50}, {5, 15, 25, 35, 45}, {1, 11, 21, 31, 41}}, new int[]{4, 3, 2}, 7), 272);\n    assert Arrays.equals(solution.maxSum(new int[]{{90, 5, 10, 70}, {20, 60, 40, 30}, {80, 10, 50, 45}}, new int[]{3, 3, 3}, 5), 350);\n    assert Arrays.equals(solution.maxSum(new int[]{{100000,100000,100000},{90000,90000,90000},{80000,80000,80000}}, new int[]{3,3,3}, 5), 480000);\n    assert Arrays.equals(solution.maxSum(new int[]{{1,1,1,1,1},{1,1,1,1,1},{1,1,1,1,1}}, new int[]{2,2,2}, 5), 5);\n    assert Arrays.equals(solution.maxSum(new int[]{{1, 1, 1, 1, 1}, {1, 1, 1, 1, 1}, {1, 1, 1, 1, 1}}, new int[]{3, 3, 3}, 8), 8);\n    assert Arrays.equals(solution.maxSum(new int[]{{1,2,3},{4,5,6},{7,8,9},{10,11,12},{13,14,15}}, new int[]{1,2,3,4,5}, 15), Error: pop from empty list);\n    assert Arrays.equals(solution.maxSum(new int[]{{1, 2, 3, 4, 5}, {6, 7, 8, 9, 10}, {11, 12, 13, 14, 15}}, new int[]{1, 3, 2}, 6), 61);\n    assert Arrays.equals(solution.maxSum(new int[]{{1,2,3,4,5,6,7,8,9,10},{11,12,13,14,15,16,17,18,19,20}}, new int[]{5,5}, 8), 117);\n    assert Arrays.equals(solution.maxSum(new int[]{{9, 8, 7}, {6, 5, 4}, {3, 2, 1}}, new int[]{2, 2, 2}, 4), 28);\n    assert Arrays.equals(solution.maxSum(new int[]{{5, 5, 5, 5, 5}, {5, 5, 5, 5, 5}, {5, 5, 5, 5, 5}}, new int[]{2, 2, 2}, 5), 25);\n    assert Arrays.equals(solution.maxSum(new int[]{{1000, 2000, 3000}, {4000, 5000, 6000}, {7000, 8000, 9000}}, new int[]{2, 2, 2}, 4), 28000);\n    assert Arrays.equals(solution.maxSum(new int[]{{9, 3, 5, 7}, {1, 8, 6, 4}, {2, 10, 12, 11}}, new int[]{3, 2, 3}, 5), 50);\n    assert Arrays.equals(solution.maxSum(new int[]{{1,3,5,7},{9,11,13,15},{17,19,21,23}}, new int[]{3,2,4}, 7), 115);\n    assert Arrays.equals(solution.maxSum(new int[]{{5, 3, 7}, {8, 2, 6}, {1, 9, 18}, {12, 15, 17}}, new int[]{1, 2, 3, 3}, 7), 86);\n    assert Arrays.equals(solution.maxSum(new int[]{{1, 3, 5, 7, 9}, {2, 4, 6, 8, 10}, {0, 1, 2, 3, 4}}, new int[]{3, 3, 3}, 7), 49);\n    assert Arrays.equals(solution.maxSum(new int[]{{1, 1, 1, 1, 1}, {2, 2, 2, 2, 2}, {3, 3, 3, 3, 3}}, new int[]{3, 3, 3}, 5), 13);\n    assert Arrays.equals(solution.maxSum(new int[]{{0,0,0,0},{0,0,0,0},{0,0,0,0}}, new int[]{2,2,2}, 5), 0);\n    assert Arrays.equals(solution.maxSum(new int[]{{50, 40, 30, 20, 10}, {10, 20, 30, 40, 50}, {1, 2, 3, 4, 5}, {5, 4, 3, 2, 1}}, new int[]{2, 3, 3, 2}, 8), 224);\n    assert Arrays.equals(solution.maxSum(new int[]{{1,1,1,1,1},{2,2,2,2,2},{3,3,3,3,3}}, new int[]{5,5,5}, 15), 30);\n    assert Arrays.equals(solution.maxSum(new int[]{{9,5,3,10},{8,1,12,4},{7,6,2,11}}, new int[]{3,2,3}, 7), 63);\n    assert Arrays.equals(solution.maxSum(new int[]{{10000,20000,30000},{15000,25000,35000},{5000,10000,15000}}, new int[]{3,3,3}, 9), 165000);\n    assert Arrays.equals(solution.maxSum(new int[]{{1, 2, 3, 4, 5}, {5, 4, 3, 2, 1}, {1, 2, 3, 4, 5}, {5, 4, 3, 2, 1}}, new int[]{2, 2, 2, 2}, 8), 36);\n    assert Arrays.equals(solution.maxSum(new int[]{{1, 2, 3, 4, 5}, {6, 7, 8, 9, 10}, {11, 12, 13, 14, 15}, {16, 17, 18, 19, 20}}, new int[]{1, 2, 3, 4}, 10), 140);\n    assert Arrays.equals(solution.maxSum(new int[]{{15, 25, 35}, {5, 10, 45}, {40, 60, 70}, {80, 90, 100}}, new int[]{1, 2, 3, 3}, 8), 520);\n    assert Arrays.equals(solution.maxSum(new int[]{{5,6,7,8,9},{1,2,3,4,5},{9,8,7,6,5},{3,4,5,6,7}}, new int[]{3,4,3,4}, 10), 71);\n    assert Arrays.equals(solution.maxSum(new int[]{{50,40,30,20,10},{15,25,35,45,55},{5,10,15,20,25},{5,10,15,20,25}}, new int[]{5,5,4,3}, 11), 370);\n    assert Arrays.equals(solution.maxSum(new int[]{{10,20,30,40,50,60,70,80,90,100}}, new int[]{10}, 10), 550);\n    assert Arrays.equals(solution.maxSum(new int[]{{0, 0, 0}, {0, 0, 0}, {0, 0, 0}}, new int[]{3, 3, 3}, 5), 0);\n    assert Arrays.equals(solution.maxSum(new int[]{{2,3,4,5},{6,7,8,9},{10,11,12,13},{14,15,16,17}}, new int[]{4,4,4,4}, 16), 152);\n    assert Arrays.equals(solution.maxSum(new int[]{{1, 2}, {3, 4}, {5, 6}, {7, 8}, {9, 10}}, new int[]{1, 1, 1, 1, 1}, 5), 30);\n    assert Arrays.equals(solution.maxSum(new int[]{{0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}}, new int[]{4, 4, 4}, 6), 0);\n    assert Arrays.equals(solution.maxSum(new int[]{{5, 3, 8}, {1, 4, 7}, {6, 2, 9}}, new int[]{1, 1, 1}, 2), 17);\n    assert Arrays.equals(solution.maxSum(new int[]{{10,20},{30,40},{50,60}}, new int[]{1,1,1}, 1), 60);\n    assert Arrays.equals(solution.maxSum(new int[]{{100,50,25,12,6},{500,250,125,62,31},{1000,500,250,125,62},{5000,2500,1250,625,312}}, new int[]{4,3,2,1}, 9), 7550);\n    assert Arrays.equals(solution.maxSum(new int[]{{100, 200, 300}, {10, 20, 30}, {5, 15, 25}}, new int[]{2, 1, 2}, 4), 555);\n    assert Arrays.equals(solution.maxSum(new int[]{{10,20,30,40,50},{25,15,35,45,55},{1,2,3,4,5},{9,18,27,36,45}}, new int[]{4,4,3,4}, 12), 426);\n    assert Arrays.equals(solution.maxSum(new int[]{{1, 2, 3, 4, 5}, {10, 20, 30, 40, 50}, {100, 200, 300, 400, 500}}, new int[]{5, 5, 5}, 10), 1650);\n    assert Arrays.equals(solution.maxSum(new int[]{{1, 1, 1, 1, 1}, {1, 1, 1, 1, 1}, {1, 1, 1, 1, 1}, {1, 1, 1, 1, 1}}, new int[]{5, 5, 5, 5}, 10), 10);\n    assert Arrays.equals(solution.maxSum(new int[]{{1, 2, 3, 4, 5}, {10, 20, 30, 40, 50}, {100, 200, 300, 400, 500}}, new int[]{1, 2, 3}, 10), 1295);\n    assert Arrays.equals(solution.maxSum(new int[]{{100,200},{150,50},{300,250}}, new int[]{1,2}, 4), 400);\n    assert Arrays.equals(solution.maxSum(new int[]{{100, 200, 300}, {10, 20, 30}, {5, 15, 25}, {2, 4, 6}}, new int[]{2, 2, 2, 2}, 6), 590);\n    assert Arrays.equals(solution.maxSum(new int[]{{5, 3, 7}, {8, 2, 6}, {1, 9, 18}, {10, 15, 20}}, new int[]{0, 0, 0, 0}, 0), 0);\n    assert Arrays.equals(solution.maxSum(new int[]{{100, 200, 300}, {400, 500, 600}, {700, 800, 900}, {1000, 1100, 1200}}, new int[]{2, 2, 3, 4}, 8), Error: pop from empty list);\n    assert Arrays.equals(solution.maxSum(new int[]{{9, 1, 5, 7}, {3, 8, 2, 6}, {4, 0, 9, 1}}, new int[]{2, 3, 2}, 5), 39);\n    assert Arrays.equals(solution.maxSum(new int[]{{0, 0, 0}, {0, 0, 0}, {0, 0, 0}}, new int[]{1, 1, 1}, 3), 0);\n    assert Arrays.equals(solution.maxSum(new int[]{{1, 2, 3}, {4, 5, 6}, {7, 8, 9}, {10, 11, 12}, {13, 14, 15}}, new int[]{1, 1, 1, 1, 1}, 5), 45);\n    assert Arrays.equals(solution.maxSum(new int[]{{5, 3, 7, 9}, {8, 2, 6, 4}, {1, 9, 18, 27}}, new int[]{2, 3, 2}, 6), 75);\n    assert Arrays.equals(solution.maxSum(new int[]{{5, 3, 7}, {8, 2, 6}, {1, 9, 18}, {10, 12, 11}}, new int[]{2, 2, 2, 2}, 7), 71);\n    assert Arrays.equals(solution.maxSum(new int[]{{1, 2, 3, 4}, {4, 3, 2, 1}, {5, 6, 7, 8}, {8, 7, 6, 5}}, new int[]{2, 2, 2, 2}, 6), 38);\n    assert Arrays.equals(solution.maxSum(new int[]{{100000,90000,80000},{70000,60000,50000},{40000,30000,20000}}, new int[]{2,3,1}, 4), 320000);\n    assert Arrays.equals(solution.maxSum(new int[]{{5,8,12,3,7},{9,4,6,1,10},{2,15,11,13,14}}, new int[]{5,5,5}, 10), 105);\n    assert Arrays.equals(solution.maxSum(new int[]{{1, 3, 5, 7, 9}, {2, 4, 6, 8, 10}, {11, 13, 15, 17, 19}, {21, 23, 25, 27, 29}}, new int[]{1, 2, 3, 4}, 10), 182);\n    assert Arrays.equals(solution.maxSum(new int[]{{100000, 100000}, {100000, 100000}, {100000, 100000}}, new int[]{1, 1, 1}, 3), 300000);\n    assert Arrays.equals(solution.maxSum(new int[]{{1, 2}, {3, 4}, {5, 6}, {7, 8}, {9, 10}}, new int[]{1, 1, 1, 1, 1}, 3), 24);\n    assert Arrays.equals(solution.maxSum(new int[]{{1, 2, 3, 4, 5}, {6, 7, 8, 9, 10}, {11, 12, 13, 14, 15}}, new int[]{1, 2, 3}, 6), 66);\n    assert Arrays.equals(solution.maxSum(new int[]{{100000, 90000, 80000}, {70000, 60000, 50000}, {40000, 30000, 20000}}, new int[]{2, 2, 3}, 7), 410000);\n    assert Arrays.equals(solution.maxSum(new int[]{{9, 8, 7, 6, 5}, {4, 3, 2, 1, 0}, {5, 6, 7, 8, 9}}, new int[]{3, 2, 3}, 6), 48);\n    assert Arrays.equals(solution.maxSum(new int[]{{1, 1, 1, 1, 1}, {2, 2, 2, 2, 2}, {3, 3, 3, 3, 3}, {4, 4, 4, 4, 4}}, new int[]{1, 2, 3, 4}, 10), 30);\n    assert Arrays.equals(solution.maxSum(new int[]{{0, 0, 0}, {0, 0, 0}, {0, 0, 0}}, new int[]{2, 2, 2}, 5), 0);\n    assert Arrays.equals(solution.maxSum(new int[]{{50, 25, 12, 6, 3}, {200, 100, 50, 25, 12}, {1, 2, 3, 4, 5}}, new int[]{2, 3, 3}, 11), 437);\n    assert Arrays.equals(solution.maxSum(new int[]{{10, 20, 30, 40}, {5, 15, 25, 35}, {1, 9, 18, 27}}, new int[]{2, 3, 4}, 7), 190);\n    assert Arrays.equals(solution.maxSum(new int[]{{100, 200, 300}, {50, 150, 250}, {10, 90, 180}, {5, 45, 85}}, new int[]{2, 1, 3, 2}, 9), 1160);\n}",
+    "javascript": "function check(candidate) {\n    console.assert(JSON.stringify(candidate([[10,20,30],[5,15,25],[1,9,18]], [2,1,2], 5)) === JSON.stringify(102));\n    console.assert(JSON.stringify(candidate([[5,3,7],[8,2,6]], [2,2], 3)) === JSON.stringify(21));\n    console.assert(JSON.stringify(candidate([[1,2],[3,4]], [1,2], 2)) === JSON.stringify(7));\n    console.assert(JSON.stringify(candidate([[0,0,0],[0,0,0]], [1,2], 1)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate([[1,2,3],[4,5,6],[7,8,9]], [3,3,3], 6)) === JSON.stringify(39));\n    console.assert(JSON.stringify(candidate([[1,1,1,1,1,1,1,1,1,1],[2,2,2,2,2,2,2,2,2,2],[3,3,3,3,3,3,3,3,3,3]], [5,5,5], 12)) === JSON.stringify(27));\n    console.assert(JSON.stringify(candidate([[1000, 900, 800, 700, 600], [500, 400, 300, 200, 100]], [3, 4], 6)) === JSON.stringify(3900));\n    console.assert(JSON.stringify(candidate([[9, 8, 7, 6, 5], [4, 3, 2, 1, 0], [99, 88, 77, 66, 55]], [3, 2, 4], 12)) === JSON.stringify(361));\n    console.assert(JSON.stringify(candidate([[0, 0, 0, 0], [1, 1, 1, 1], [2, 2, 2, 2], [3, 3, 3, 3]], [0, 2, 2, 2], 5)) === JSON.stringify(11));\n    console.assert(JSON.stringify(candidate([[1, 1, 1, 1, 1], [2, 2, 2, 2, 2], [3, 3, 3, 3, 3]], [1, 2, 3], 6)) === JSON.stringify(14));\n    console.assert(JSON.stringify(candidate([[100, 200], [300, 400], [500, 600]], [1, 1, 1], 3)) === JSON.stringify(1200));\n    console.assert(JSON.stringify(candidate([[100000, 90000, 80000, 70000], [60000, 50000, 40000, 30000]], [4, 4], 3)) === JSON.stringify(270000));\n    console.assert(JSON.stringify(candidate([[1,1,1,1,1,1,1,1,1,1],[1,1,1,1,1,1,1,1,1,1],[1,1,1,1,1,1,1,1,1,1]], [10,10,10], 15)) === JSON.stringify(15));\n    console.assert(JSON.stringify(candidate([[5, 3, 7, 9, 11], [8, 2, 6, 4, 10], [12, 14, 16, 18, 20]], [3, 2, 5], 8)) === JSON.stringify(110));\n    console.assert(JSON.stringify(candidate([[9,8,7,6],[5,4,3,2],[1,0,9,8]], [2,3,4], 6)) === JSON.stringify(43));\n    console.assert(JSON.stringify(candidate([[0,0,0],[0,0,0],[0,0,0]], [1,1,1], 1)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate([[5,2,9,1],[8,4,6,7],[3,10,12,11]], [3,2,3], 6)) === JSON.stringify(57));\n    console.assert(JSON.stringify(candidate([[0,0,0],[0,0,0],[0,0,0]], [1,1,1], 3)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate([[10, 20, 30, 40, 50], [60, 70, 80, 90, 100], [110, 120, 130, 140, 150]], [2, 3, 2], 7)) === JSON.stringify(650));\n    console.assert(JSON.stringify(candidate([[100,200,300],[50,150,250],[10,90,180],[5,15,25]], [1,2,3,1], 8)) === JSON.stringify(1005));\n    console.assert(JSON.stringify(candidate([[5, 3, 7], [8, 2, 6], [1, 9, 18], [21, 2, 10], [3, 15, 12]], [2, 2, 2, 2, 2], 10)) === JSON.stringify(111));\n    console.assert(JSON.stringify(candidate([[9,8,7,6],[5,4,3,2],[1,0,0,0]], [3,3,2], 5)) === JSON.stringify(33));\n    console.assert(JSON.stringify(candidate([[100,200],[300,400],[500,600],[700,800]], [1,2,2,1], 5)) === JSON.stringify(2600));\n    console.assert(JSON.stringify(candidate([[10, 20, 30], [30, 20, 10], [10, 20, 30]], [1, 1, 1], 2)) === JSON.stringify(60));\n    console.assert(JSON.stringify(candidate([[10,20,30,40],[5,15,25,35],[1,9,18,27]], [4,3,3], 7)) === JSON.stringify(195));\n    console.assert(JSON.stringify(candidate([[50, 40, 30], [20, 10, 0], [60, 70, 80], [90, 100, 110]], [2, 2, 2, 2], 7)) === JSON.stringify(470));\n    console.assert(JSON.stringify(candidate([[1,2,3,4,5],[6,7,8,9,10],[11,12,13,14,15]], [5,3,1], 8)) === JSON.stringify(56));\n    console.assert(JSON.stringify(candidate([[10000, 20000], [30000, 40000], [50000, 60000]], [1, 1, 1], 2)) === JSON.stringify(100000));\n    console.assert(JSON.stringify(candidate([[1, 1, 1, 1, 1], [1, 1, 1, 1, 1], [1, 1, 1, 1, 1]], [5, 5, 5], 15)) === JSON.stringify(15));\n    console.assert(JSON.stringify(candidate([[5, 3, 7], [8, 2, 6], [1, 9, 18], [10, 15, 20]], [1, 2, 1, 2], 5)) === JSON.stringify(68));\n    console.assert(JSON.stringify(candidate([[10, 20, 30, 40, 50], [5, 15, 25, 35, 45], [1, 11, 21, 31, 41]], [4, 3, 2], 7)) === JSON.stringify(272));\n    console.assert(JSON.stringify(candidate([[90, 5, 10, 70], [20, 60, 40, 30], [80, 10, 50, 45]], [3, 3, 3], 5)) === JSON.stringify(350));\n    console.assert(JSON.stringify(candidate([[100000,100000,100000],[90000,90000,90000],[80000,80000,80000]], [3,3,3], 5)) === JSON.stringify(480000));\n    console.assert(JSON.stringify(candidate([[1,1,1,1,1],[1,1,1,1,1],[1,1,1,1,1]], [2,2,2], 5)) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate([[1, 1, 1, 1, 1], [1, 1, 1, 1, 1], [1, 1, 1, 1, 1]], [3, 3, 3], 8)) === JSON.stringify(8));\n    console.assert(JSON.stringify(candidate([[1,2,3],[4,5,6],[7,8,9],[10,11,12],[13,14,15]], [1,2,3,4,5], 15)) === JSON.stringify(Error: pop from empty list));\n    console.assert(JSON.stringify(candidate([[1, 2, 3, 4, 5], [6, 7, 8, 9, 10], [11, 12, 13, 14, 15]], [1, 3, 2], 6)) === JSON.stringify(61));\n    console.assert(JSON.stringify(candidate([[1,2,3,4,5,6,7,8,9,10],[11,12,13,14,15,16,17,18,19,20]], [5,5], 8)) === JSON.stringify(117));\n    console.assert(JSON.stringify(candidate([[9, 8, 7], [6, 5, 4], [3, 2, 1]], [2, 2, 2], 4)) === JSON.stringify(28));\n    console.assert(JSON.stringify(candidate([[5, 5, 5, 5, 5], [5, 5, 5, 5, 5], [5, 5, 5, 5, 5]], [2, 2, 2], 5)) === JSON.stringify(25));\n    console.assert(JSON.stringify(candidate([[1000, 2000, 3000], [4000, 5000, 6000], [7000, 8000, 9000]], [2, 2, 2], 4)) === JSON.stringify(28000));\n    console.assert(JSON.stringify(candidate([[9, 3, 5, 7], [1, 8, 6, 4], [2, 10, 12, 11]], [3, 2, 3], 5)) === JSON.stringify(50));\n    console.assert(JSON.stringify(candidate([[1,3,5,7],[9,11,13,15],[17,19,21,23]], [3,2,4], 7)) === JSON.stringify(115));\n    console.assert(JSON.stringify(candidate([[5, 3, 7], [8, 2, 6], [1, 9, 18], [12, 15, 17]], [1, 2, 3, 3], 7)) === JSON.stringify(86));\n    console.assert(JSON.stringify(candidate([[1, 3, 5, 7, 9], [2, 4, 6, 8, 10], [0, 1, 2, 3, 4]], [3, 3, 3], 7)) === JSON.stringify(49));\n    console.assert(JSON.stringify(candidate([[1, 1, 1, 1, 1], [2, 2, 2, 2, 2], [3, 3, 3, 3, 3]], [3, 3, 3], 5)) === JSON.stringify(13));\n    console.assert(JSON.stringify(candidate([[0,0,0,0],[0,0,0,0],[0,0,0,0]], [2,2,2], 5)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate([[50, 40, 30, 20, 10], [10, 20, 30, 40, 50], [1, 2, 3, 4, 5], [5, 4, 3, 2, 1]], [2, 3, 3, 2], 8)) === JSON.stringify(224));\n    console.assert(JSON.stringify(candidate([[1,1,1,1,1],[2,2,2,2,2],[3,3,3,3,3]], [5,5,5], 15)) === JSON.stringify(30));\n    console.assert(JSON.stringify(candidate([[9,5,3,10],[8,1,12,4],[7,6,2,11]], [3,2,3], 7)) === JSON.stringify(63));\n    console.assert(JSON.stringify(candidate([[10000,20000,30000],[15000,25000,35000],[5000,10000,15000]], [3,3,3], 9)) === JSON.stringify(165000));\n    console.assert(JSON.stringify(candidate([[1, 2, 3, 4, 5], [5, 4, 3, 2, 1], [1, 2, 3, 4, 5], [5, 4, 3, 2, 1]], [2, 2, 2, 2], 8)) === JSON.stringify(36));\n    console.assert(JSON.stringify(candidate([[1, 2, 3, 4, 5], [6, 7, 8, 9, 10], [11, 12, 13, 14, 15], [16, 17, 18, 19, 20]], [1, 2, 3, 4], 10)) === JSON.stringify(140));\n    console.assert(JSON.stringify(candidate([[15, 25, 35], [5, 10, 45], [40, 60, 70], [80, 90, 100]], [1, 2, 3, 3], 8)) === JSON.stringify(520));\n    console.assert(JSON.stringify(candidate([[5,6,7,8,9],[1,2,3,4,5],[9,8,7,6,5],[3,4,5,6,7]], [3,4,3,4], 10)) === JSON.stringify(71));\n    console.assert(JSON.stringify(candidate([[50,40,30,20,10],[15,25,35,45,55],[5,10,15,20,25],[5,10,15,20,25]], [5,5,4,3], 11)) === JSON.stringify(370));\n    console.assert(JSON.stringify(candidate([[10,20,30,40,50,60,70,80,90,100]], [10], 10)) === JSON.stringify(550));\n    console.assert(JSON.stringify(candidate([[0, 0, 0], [0, 0, 0], [0, 0, 0]], [3, 3, 3], 5)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate([[2,3,4,5],[6,7,8,9],[10,11,12,13],[14,15,16,17]], [4,4,4,4], 16)) === JSON.stringify(152));\n    console.assert(JSON.stringify(candidate([[1, 2], [3, 4], [5, 6], [7, 8], [9, 10]], [1, 1, 1, 1, 1], 5)) === JSON.stringify(30));\n    console.assert(JSON.stringify(candidate([[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]], [4, 4, 4], 6)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate([[5, 3, 8], [1, 4, 7], [6, 2, 9]], [1, 1, 1], 2)) === JSON.stringify(17));\n    console.assert(JSON.stringify(candidate([[10,20],[30,40],[50,60]], [1,1,1], 1)) === JSON.stringify(60));\n    console.assert(JSON.stringify(candidate([[100,50,25,12,6],[500,250,125,62,31],[1000,500,250,125,62],[5000,2500,1250,625,312]], [4,3,2,1], 9)) === JSON.stringify(7550));\n    console.assert(JSON.stringify(candidate([[100, 200, 300], [10, 20, 30], [5, 15, 25]], [2, 1, 2], 4)) === JSON.stringify(555));\n    console.assert(JSON.stringify(candidate([[10,20,30,40,50],[25,15,35,45,55],[1,2,3,4,5],[9,18,27,36,45]], [4,4,3,4], 12)) === JSON.stringify(426));\n    console.assert(JSON.stringify(candidate([[1, 2, 3, 4, 5], [10, 20, 30, 40, 50], [100, 200, 300, 400, 500]], [5, 5, 5], 10)) === JSON.stringify(1650));\n    console.assert(JSON.stringify(candidate([[1, 1, 1, 1, 1], [1, 1, 1, 1, 1], [1, 1, 1, 1, 1], [1, 1, 1, 1, 1]], [5, 5, 5, 5], 10)) === JSON.stringify(10));\n    console.assert(JSON.stringify(candidate([[1, 2, 3, 4, 5], [10, 20, 30, 40, 50], [100, 200, 300, 400, 500]], [1, 2, 3], 10)) === JSON.stringify(1295));\n    console.assert(JSON.stringify(candidate([[100,200],[150,50],[300,250]], [1,2], 4)) === JSON.stringify(400));\n    console.assert(JSON.stringify(candidate([[100, 200, 300], [10, 20, 30], [5, 15, 25], [2, 4, 6]], [2, 2, 2, 2], 6)) === JSON.stringify(590));\n    console.assert(JSON.stringify(candidate([[5, 3, 7], [8, 2, 6], [1, 9, 18], [10, 15, 20]], [0, 0, 0, 0], 0)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate([[100, 200, 300], [400, 500, 600], [700, 800, 900], [1000, 1100, 1200]], [2, 2, 3, 4], 8)) === JSON.stringify(Error: pop from empty list));\n    console.assert(JSON.stringify(candidate([[9, 1, 5, 7], [3, 8, 2, 6], [4, 0, 9, 1]], [2, 3, 2], 5)) === JSON.stringify(39));\n    console.assert(JSON.stringify(candidate([[0, 0, 0], [0, 0, 0], [0, 0, 0]], [1, 1, 1], 3)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate([[1, 2, 3], [4, 5, 6], [7, 8, 9], [10, 11, 12], [13, 14, 15]], [1, 1, 1, 1, 1], 5)) === JSON.stringify(45));\n    console.assert(JSON.stringify(candidate([[5, 3, 7, 9], [8, 2, 6, 4], [1, 9, 18, 27]], [2, 3, 2], 6)) === JSON.stringify(75));\n    console.assert(JSON.stringify(candidate([[5, 3, 7], [8, 2, 6], [1, 9, 18], [10, 12, 11]], [2, 2, 2, 2], 7)) === JSON.stringify(71));\n    console.assert(JSON.stringify(candidate([[1, 2, 3, 4], [4, 3, 2, 1], [5, 6, 7, 8], [8, 7, 6, 5]], [2, 2, 2, 2], 6)) === JSON.stringify(38));\n    console.assert(JSON.stringify(candidate([[100000,90000,80000],[70000,60000,50000],[40000,30000,20000]], [2,3,1], 4)) === JSON.stringify(320000));\n    console.assert(JSON.stringify(candidate([[5,8,12,3,7],[9,4,6,1,10],[2,15,11,13,14]], [5,5,5], 10)) === JSON.stringify(105));\n    console.assert(JSON.stringify(candidate([[1, 3, 5, 7, 9], [2, 4, 6, 8, 10], [11, 13, 15, 17, 19], [21, 23, 25, 27, 29]], [1, 2, 3, 4], 10)) === JSON.stringify(182));\n    console.assert(JSON.stringify(candidate([[100000, 100000], [100000, 100000], [100000, 100000]], [1, 1, 1], 3)) === JSON.stringify(300000));\n    console.assert(JSON.stringify(candidate([[1, 2], [3, 4], [5, 6], [7, 8], [9, 10]], [1, 1, 1, 1, 1], 3)) === JSON.stringify(24));\n    console.assert(JSON.stringify(candidate([[1, 2, 3, 4, 5], [6, 7, 8, 9, 10], [11, 12, 13, 14, 15]], [1, 2, 3], 6)) === JSON.stringify(66));\n    console.assert(JSON.stringify(candidate([[100000, 90000, 80000], [70000, 60000, 50000], [40000, 30000, 20000]], [2, 2, 3], 7)) === JSON.stringify(410000));\n    console.assert(JSON.stringify(candidate([[9, 8, 7, 6, 5], [4, 3, 2, 1, 0], [5, 6, 7, 8, 9]], [3, 2, 3], 6)) === JSON.stringify(48));\n    console.assert(JSON.stringify(candidate([[1, 1, 1, 1, 1], [2, 2, 2, 2, 2], [3, 3, 3, 3, 3], [4, 4, 4, 4, 4]], [1, 2, 3, 4], 10)) === JSON.stringify(30));\n    console.assert(JSON.stringify(candidate([[0, 0, 0], [0, 0, 0], [0, 0, 0]], [2, 2, 2], 5)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate([[50, 25, 12, 6, 3], [200, 100, 50, 25, 12], [1, 2, 3, 4, 5]], [2, 3, 3], 11)) === JSON.stringify(437));\n    console.assert(JSON.stringify(candidate([[10, 20, 30, 40], [5, 15, 25, 35], [1, 9, 18, 27]], [2, 3, 4], 7)) === JSON.stringify(190));\n    console.assert(JSON.stringify(candidate([[100, 200, 300], [50, 150, 250], [10, 90, 180], [5, 45, 85]], [2, 1, 3, 2], 9)) === JSON.stringify(1160));\n}",
+    "typescript": "function check(candidate: Function): void {\n    console.assert(JSON.stringify(candidate([[10,20,30],[5,15,25],[1,9,18]], [2,1,2], 5)) === JSON.stringify(102));\n    console.assert(JSON.stringify(candidate([[5,3,7],[8,2,6]], [2,2], 3)) === JSON.stringify(21));\n    console.assert(JSON.stringify(candidate([[1,2],[3,4]], [1,2], 2)) === JSON.stringify(7));\n    console.assert(JSON.stringify(candidate([[0,0,0],[0,0,0]], [1,2], 1)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate([[1,2,3],[4,5,6],[7,8,9]], [3,3,3], 6)) === JSON.stringify(39));\n    console.assert(JSON.stringify(candidate([[1,1,1,1,1,1,1,1,1,1],[2,2,2,2,2,2,2,2,2,2],[3,3,3,3,3,3,3,3,3,3]], [5,5,5], 12)) === JSON.stringify(27));\n    console.assert(JSON.stringify(candidate([[1000, 900, 800, 700, 600], [500, 400, 300, 200, 100]], [3, 4], 6)) === JSON.stringify(3900));\n    console.assert(JSON.stringify(candidate([[9, 8, 7, 6, 5], [4, 3, 2, 1, 0], [99, 88, 77, 66, 55]], [3, 2, 4], 12)) === JSON.stringify(361));\n    console.assert(JSON.stringify(candidate([[0, 0, 0, 0], [1, 1, 1, 1], [2, 2, 2, 2], [3, 3, 3, 3]], [0, 2, 2, 2], 5)) === JSON.stringify(11));\n    console.assert(JSON.stringify(candidate([[1, 1, 1, 1, 1], [2, 2, 2, 2, 2], [3, 3, 3, 3, 3]], [1, 2, 3], 6)) === JSON.stringify(14));\n    console.assert(JSON.stringify(candidate([[100, 200], [300, 400], [500, 600]], [1, 1, 1], 3)) === JSON.stringify(1200));\n    console.assert(JSON.stringify(candidate([[100000, 90000, 80000, 70000], [60000, 50000, 40000, 30000]], [4, 4], 3)) === JSON.stringify(270000));\n    console.assert(JSON.stringify(candidate([[1,1,1,1,1,1,1,1,1,1],[1,1,1,1,1,1,1,1,1,1],[1,1,1,1,1,1,1,1,1,1]], [10,10,10], 15)) === JSON.stringify(15));\n    console.assert(JSON.stringify(candidate([[5, 3, 7, 9, 11], [8, 2, 6, 4, 10], [12, 14, 16, 18, 20]], [3, 2, 5], 8)) === JSON.stringify(110));\n    console.assert(JSON.stringify(candidate([[9,8,7,6],[5,4,3,2],[1,0,9,8]], [2,3,4], 6)) === JSON.stringify(43));\n    console.assert(JSON.stringify(candidate([[0,0,0],[0,0,0],[0,0,0]], [1,1,1], 1)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate([[5,2,9,1],[8,4,6,7],[3,10,12,11]], [3,2,3], 6)) === JSON.stringify(57));\n    console.assert(JSON.stringify(candidate([[0,0,0],[0,0,0],[0,0,0]], [1,1,1], 3)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate([[10, 20, 30, 40, 50], [60, 70, 80, 90, 100], [110, 120, 130, 140, 150]], [2, 3, 2], 7)) === JSON.stringify(650));\n    console.assert(JSON.stringify(candidate([[100,200,300],[50,150,250],[10,90,180],[5,15,25]], [1,2,3,1], 8)) === JSON.stringify(1005));\n    console.assert(JSON.stringify(candidate([[5, 3, 7], [8, 2, 6], [1, 9, 18], [21, 2, 10], [3, 15, 12]], [2, 2, 2, 2, 2], 10)) === JSON.stringify(111));\n    console.assert(JSON.stringify(candidate([[9,8,7,6],[5,4,3,2],[1,0,0,0]], [3,3,2], 5)) === JSON.stringify(33));\n    console.assert(JSON.stringify(candidate([[100,200],[300,400],[500,600],[700,800]], [1,2,2,1], 5)) === JSON.stringify(2600));\n    console.assert(JSON.stringify(candidate([[10, 20, 30], [30, 20, 10], [10, 20, 30]], [1, 1, 1], 2)) === JSON.stringify(60));\n    console.assert(JSON.stringify(candidate([[10,20,30,40],[5,15,25,35],[1,9,18,27]], [4,3,3], 7)) === JSON.stringify(195));\n    console.assert(JSON.stringify(candidate([[50, 40, 30], [20, 10, 0], [60, 70, 80], [90, 100, 110]], [2, 2, 2, 2], 7)) === JSON.stringify(470));\n    console.assert(JSON.stringify(candidate([[1,2,3,4,5],[6,7,8,9,10],[11,12,13,14,15]], [5,3,1], 8)) === JSON.stringify(56));\n    console.assert(JSON.stringify(candidate([[10000, 20000], [30000, 40000], [50000, 60000]], [1, 1, 1], 2)) === JSON.stringify(100000));\n    console.assert(JSON.stringify(candidate([[1, 1, 1, 1, 1], [1, 1, 1, 1, 1], [1, 1, 1, 1, 1]], [5, 5, 5], 15)) === JSON.stringify(15));\n    console.assert(JSON.stringify(candidate([[5, 3, 7], [8, 2, 6], [1, 9, 18], [10, 15, 20]], [1, 2, 1, 2], 5)) === JSON.stringify(68));\n    console.assert(JSON.stringify(candidate([[10, 20, 30, 40, 50], [5, 15, 25, 35, 45], [1, 11, 21, 31, 41]], [4, 3, 2], 7)) === JSON.stringify(272));\n    console.assert(JSON.stringify(candidate([[90, 5, 10, 70], [20, 60, 40, 30], [80, 10, 50, 45]], [3, 3, 3], 5)) === JSON.stringify(350));\n    console.assert(JSON.stringify(candidate([[100000,100000,100000],[90000,90000,90000],[80000,80000,80000]], [3,3,3], 5)) === JSON.stringify(480000));\n    console.assert(JSON.stringify(candidate([[1,1,1,1,1],[1,1,1,1,1],[1,1,1,1,1]], [2,2,2], 5)) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate([[1, 1, 1, 1, 1], [1, 1, 1, 1, 1], [1, 1, 1, 1, 1]], [3, 3, 3], 8)) === JSON.stringify(8));\n    console.assert(JSON.stringify(candidate([[1,2,3],[4,5,6],[7,8,9],[10,11,12],[13,14,15]], [1,2,3,4,5], 15)) === JSON.stringify(Error: pop from empty list));\n    console.assert(JSON.stringify(candidate([[1, 2, 3, 4, 5], [6, 7, 8, 9, 10], [11, 12, 13, 14, 15]], [1, 3, 2], 6)) === JSON.stringify(61));\n    console.assert(JSON.stringify(candidate([[1,2,3,4,5,6,7,8,9,10],[11,12,13,14,15,16,17,18,19,20]], [5,5], 8)) === JSON.stringify(117));\n    console.assert(JSON.stringify(candidate([[9, 8, 7], [6, 5, 4], [3, 2, 1]], [2, 2, 2], 4)) === JSON.stringify(28));\n    console.assert(JSON.stringify(candidate([[5, 5, 5, 5, 5], [5, 5, 5, 5, 5], [5, 5, 5, 5, 5]], [2, 2, 2], 5)) === JSON.stringify(25));\n    console.assert(JSON.stringify(candidate([[1000, 2000, 3000], [4000, 5000, 6000], [7000, 8000, 9000]], [2, 2, 2], 4)) === JSON.stringify(28000));\n    console.assert(JSON.stringify(candidate([[9, 3, 5, 7], [1, 8, 6, 4], [2, 10, 12, 11]], [3, 2, 3], 5)) === JSON.stringify(50));\n    console.assert(JSON.stringify(candidate([[1,3,5,7],[9,11,13,15],[17,19,21,23]], [3,2,4], 7)) === JSON.stringify(115));\n    console.assert(JSON.stringify(candidate([[5, 3, 7], [8, 2, 6], [1, 9, 18], [12, 15, 17]], [1, 2, 3, 3], 7)) === JSON.stringify(86));\n    console.assert(JSON.stringify(candidate([[1, 3, 5, 7, 9], [2, 4, 6, 8, 10], [0, 1, 2, 3, 4]], [3, 3, 3], 7)) === JSON.stringify(49));\n    console.assert(JSON.stringify(candidate([[1, 1, 1, 1, 1], [2, 2, 2, 2, 2], [3, 3, 3, 3, 3]], [3, 3, 3], 5)) === JSON.stringify(13));\n    console.assert(JSON.stringify(candidate([[0,0,0,0],[0,0,0,0],[0,0,0,0]], [2,2,2], 5)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate([[50, 40, 30, 20, 10], [10, 20, 30, 40, 50], [1, 2, 3, 4, 5], [5, 4, 3, 2, 1]], [2, 3, 3, 2], 8)) === JSON.stringify(224));\n    console.assert(JSON.stringify(candidate([[1,1,1,1,1],[2,2,2,2,2],[3,3,3,3,3]], [5,5,5], 15)) === JSON.stringify(30));\n    console.assert(JSON.stringify(candidate([[9,5,3,10],[8,1,12,4],[7,6,2,11]], [3,2,3], 7)) === JSON.stringify(63));\n    console.assert(JSON.stringify(candidate([[10000,20000,30000],[15000,25000,35000],[5000,10000,15000]], [3,3,3], 9)) === JSON.stringify(165000));\n    console.assert(JSON.stringify(candidate([[1, 2, 3, 4, 5], [5, 4, 3, 2, 1], [1, 2, 3, 4, 5], [5, 4, 3, 2, 1]], [2, 2, 2, 2], 8)) === JSON.stringify(36));\n    console.assert(JSON.stringify(candidate([[1, 2, 3, 4, 5], [6, 7, 8, 9, 10], [11, 12, 13, 14, 15], [16, 17, 18, 19, 20]], [1, 2, 3, 4], 10)) === JSON.stringify(140));\n    console.assert(JSON.stringify(candidate([[15, 25, 35], [5, 10, 45], [40, 60, 70], [80, 90, 100]], [1, 2, 3, 3], 8)) === JSON.stringify(520));\n    console.assert(JSON.stringify(candidate([[5,6,7,8,9],[1,2,3,4,5],[9,8,7,6,5],[3,4,5,6,7]], [3,4,3,4], 10)) === JSON.stringify(71));\n    console.assert(JSON.stringify(candidate([[50,40,30,20,10],[15,25,35,45,55],[5,10,15,20,25],[5,10,15,20,25]], [5,5,4,3], 11)) === JSON.stringify(370));\n    console.assert(JSON.stringify(candidate([[10,20,30,40,50,60,70,80,90,100]], [10], 10)) === JSON.stringify(550));\n    console.assert(JSON.stringify(candidate([[0, 0, 0], [0, 0, 0], [0, 0, 0]], [3, 3, 3], 5)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate([[2,3,4,5],[6,7,8,9],[10,11,12,13],[14,15,16,17]], [4,4,4,4], 16)) === JSON.stringify(152));\n    console.assert(JSON.stringify(candidate([[1, 2], [3, 4], [5, 6], [7, 8], [9, 10]], [1, 1, 1, 1, 1], 5)) === JSON.stringify(30));\n    console.assert(JSON.stringify(candidate([[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]], [4, 4, 4], 6)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate([[5, 3, 8], [1, 4, 7], [6, 2, 9]], [1, 1, 1], 2)) === JSON.stringify(17));\n    console.assert(JSON.stringify(candidate([[10,20],[30,40],[50,60]], [1,1,1], 1)) === JSON.stringify(60));\n    console.assert(JSON.stringify(candidate([[100,50,25,12,6],[500,250,125,62,31],[1000,500,250,125,62],[5000,2500,1250,625,312]], [4,3,2,1], 9)) === JSON.stringify(7550));\n    console.assert(JSON.stringify(candidate([[100, 200, 300], [10, 20, 30], [5, 15, 25]], [2, 1, 2], 4)) === JSON.stringify(555));\n    console.assert(JSON.stringify(candidate([[10,20,30,40,50],[25,15,35,45,55],[1,2,3,4,5],[9,18,27,36,45]], [4,4,3,4], 12)) === JSON.stringify(426));\n    console.assert(JSON.stringify(candidate([[1, 2, 3, 4, 5], [10, 20, 30, 40, 50], [100, 200, 300, 400, 500]], [5, 5, 5], 10)) === JSON.stringify(1650));\n    console.assert(JSON.stringify(candidate([[1, 1, 1, 1, 1], [1, 1, 1, 1, 1], [1, 1, 1, 1, 1], [1, 1, 1, 1, 1]], [5, 5, 5, 5], 10)) === JSON.stringify(10));\n    console.assert(JSON.stringify(candidate([[1, 2, 3, 4, 5], [10, 20, 30, 40, 50], [100, 200, 300, 400, 500]], [1, 2, 3], 10)) === JSON.stringify(1295));\n    console.assert(JSON.stringify(candidate([[100,200],[150,50],[300,250]], [1,2], 4)) === JSON.stringify(400));\n    console.assert(JSON.stringify(candidate([[100, 200, 300], [10, 20, 30], [5, 15, 25], [2, 4, 6]], [2, 2, 2, 2], 6)) === JSON.stringify(590));\n    console.assert(JSON.stringify(candidate([[5, 3, 7], [8, 2, 6], [1, 9, 18], [10, 15, 20]], [0, 0, 0, 0], 0)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate([[100, 200, 300], [400, 500, 600], [700, 800, 900], [1000, 1100, 1200]], [2, 2, 3, 4], 8)) === JSON.stringify(Error: pop from empty list));\n    console.assert(JSON.stringify(candidate([[9, 1, 5, 7], [3, 8, 2, 6], [4, 0, 9, 1]], [2, 3, 2], 5)) === JSON.stringify(39));\n    console.assert(JSON.stringify(candidate([[0, 0, 0], [0, 0, 0], [0, 0, 0]], [1, 1, 1], 3)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate([[1, 2, 3], [4, 5, 6], [7, 8, 9], [10, 11, 12], [13, 14, 15]], [1, 1, 1, 1, 1], 5)) === JSON.stringify(45));\n    console.assert(JSON.stringify(candidate([[5, 3, 7, 9], [8, 2, 6, 4], [1, 9, 18, 27]], [2, 3, 2], 6)) === JSON.stringify(75));\n    console.assert(JSON.stringify(candidate([[5, 3, 7], [8, 2, 6], [1, 9, 18], [10, 12, 11]], [2, 2, 2, 2], 7)) === JSON.stringify(71));\n    console.assert(JSON.stringify(candidate([[1, 2, 3, 4], [4, 3, 2, 1], [5, 6, 7, 8], [8, 7, 6, 5]], [2, 2, 2, 2], 6)) === JSON.stringify(38));\n    console.assert(JSON.stringify(candidate([[100000,90000,80000],[70000,60000,50000],[40000,30000,20000]], [2,3,1], 4)) === JSON.stringify(320000));\n    console.assert(JSON.stringify(candidate([[5,8,12,3,7],[9,4,6,1,10],[2,15,11,13,14]], [5,5,5], 10)) === JSON.stringify(105));\n    console.assert(JSON.stringify(candidate([[1, 3, 5, 7, 9], [2, 4, 6, 8, 10], [11, 13, 15, 17, 19], [21, 23, 25, 27, 29]], [1, 2, 3, 4], 10)) === JSON.stringify(182));\n    console.assert(JSON.stringify(candidate([[100000, 100000], [100000, 100000], [100000, 100000]], [1, 1, 1], 3)) === JSON.stringify(300000));\n    console.assert(JSON.stringify(candidate([[1, 2], [3, 4], [5, 6], [7, 8], [9, 10]], [1, 1, 1, 1, 1], 3)) === JSON.stringify(24));\n    console.assert(JSON.stringify(candidate([[1, 2, 3, 4, 5], [6, 7, 8, 9, 10], [11, 12, 13, 14, 15]], [1, 2, 3], 6)) === JSON.stringify(66));\n    console.assert(JSON.stringify(candidate([[100000, 90000, 80000], [70000, 60000, 50000], [40000, 30000, 20000]], [2, 2, 3], 7)) === JSON.stringify(410000));\n    console.assert(JSON.stringify(candidate([[9, 8, 7, 6, 5], [4, 3, 2, 1, 0], [5, 6, 7, 8, 9]], [3, 2, 3], 6)) === JSON.stringify(48));\n    console.assert(JSON.stringify(candidate([[1, 1, 1, 1, 1], [2, 2, 2, 2, 2], [3, 3, 3, 3, 3], [4, 4, 4, 4, 4]], [1, 2, 3, 4], 10)) === JSON.stringify(30));\n    console.assert(JSON.stringify(candidate([[0, 0, 0], [0, 0, 0], [0, 0, 0]], [2, 2, 2], 5)) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate([[50, 25, 12, 6, 3], [200, 100, 50, 25, 12], [1, 2, 3, 4, 5]], [2, 3, 3], 11)) === JSON.stringify(437));\n    console.assert(JSON.stringify(candidate([[10, 20, 30, 40], [5, 15, 25, 35], [1, 9, 18, 27]], [2, 3, 4], 7)) === JSON.stringify(190));\n    console.assert(JSON.stringify(candidate([[100, 200, 300], [50, 150, 250], [10, 90, 180], [5, 45, 85]], [2, 1, 3, 2], 9)) === JSON.stringify(1160));\n}",
+    "golang": "func check(candidate func([]int, int) []int) {\n    assert reflect.DeepEqual(candidate([]int{{10,20,30},{5,15,25},{1,9,18}}, []int{2,1,2}, 5), 102)\n    assert reflect.DeepEqual(candidate([]int{{5,3,7},{8,2,6}}, []int{2,2}, 3), 21)\n    assert reflect.DeepEqual(candidate([]int{{1,2},{3,4}}, []int{1,2}, 2), 7)\n    assert reflect.DeepEqual(candidate([]int{{0,0,0},{0,0,0}}, []int{1,2}, 1), 0)\n    assert reflect.DeepEqual(candidate([]int{{1,2,3},{4,5,6},{7,8,9}}, []int{3,3,3}, 6), 39)\n    assert reflect.DeepEqual(candidate([]int{{1,1,1,1,1,1,1,1,1,1},{2,2,2,2,2,2,2,2,2,2},{3,3,3,3,3,3,3,3,3,3}}, []int{5,5,5}, 12), 27)\n    assert reflect.DeepEqual(candidate([]int{{1000, 900, 800, 700, 600}, {500, 400, 300, 200, 100}}, []int{3, 4}, 6), 3900)\n    assert reflect.DeepEqual(candidate([]int{{9, 8, 7, 6, 5}, {4, 3, 2, 1, 0}, {99, 88, 77, 66, 55}}, []int{3, 2, 4}, 12), 361)\n    assert reflect.DeepEqual(candidate([]int{{0, 0, 0, 0}, {1, 1, 1, 1}, {2, 2, 2, 2}, {3, 3, 3, 3}}, []int{0, 2, 2, 2}, 5), 11)\n    assert reflect.DeepEqual(candidate([]int{{1, 1, 1, 1, 1}, {2, 2, 2, 2, 2}, {3, 3, 3, 3, 3}}, []int{1, 2, 3}, 6), 14)\n    assert reflect.DeepEqual(candidate([]int{{100, 200}, {300, 400}, {500, 600}}, []int{1, 1, 1}, 3), 1200)\n    assert reflect.DeepEqual(candidate([]int{{100000, 90000, 80000, 70000}, {60000, 50000, 40000, 30000}}, []int{4, 4}, 3), 270000)\n    assert reflect.DeepEqual(candidate([]int{{1,1,1,1,1,1,1,1,1,1},{1,1,1,1,1,1,1,1,1,1},{1,1,1,1,1,1,1,1,1,1}}, []int{10,10,10}, 15), 15)\n    assert reflect.DeepEqual(candidate([]int{{5, 3, 7, 9, 11}, {8, 2, 6, 4, 10}, {12, 14, 16, 18, 20}}, []int{3, 2, 5}, 8), 110)\n    assert reflect.DeepEqual(candidate([]int{{9,8,7,6},{5,4,3,2},{1,0,9,8}}, []int{2,3,4}, 6), 43)\n    assert reflect.DeepEqual(candidate([]int{{0,0,0},{0,0,0},{0,0,0}}, []int{1,1,1}, 1), 0)\n    assert reflect.DeepEqual(candidate([]int{{5,2,9,1},{8,4,6,7},{3,10,12,11}}, []int{3,2,3}, 6), 57)\n    assert reflect.DeepEqual(candidate([]int{{0,0,0},{0,0,0},{0,0,0}}, []int{1,1,1}, 3), 0)\n    assert reflect.DeepEqual(candidate([]int{{10, 20, 30, 40, 50}, {60, 70, 80, 90, 100}, {110, 120, 130, 140, 150}}, []int{2, 3, 2}, 7), 650)\n    assert reflect.DeepEqual(candidate([]int{{100,200,300},{50,150,250},{10,90,180},{5,15,25}}, []int{1,2,3,1}, 8), 1005)\n    assert reflect.DeepEqual(candidate([]int{{5, 3, 7}, {8, 2, 6}, {1, 9, 18}, {21, 2, 10}, {3, 15, 12}}, []int{2, 2, 2, 2, 2}, 10), 111)\n    assert reflect.DeepEqual(candidate([]int{{9,8,7,6},{5,4,3,2},{1,0,0,0}}, []int{3,3,2}, 5), 33)\n    assert reflect.DeepEqual(candidate([]int{{100,200},{300,400},{500,600},{700,800}}, []int{1,2,2,1}, 5), 2600)\n    assert reflect.DeepEqual(candidate([]int{{10, 20, 30}, {30, 20, 10}, {10, 20, 30}}, []int{1, 1, 1}, 2), 60)\n    assert reflect.DeepEqual(candidate([]int{{10,20,30,40},{5,15,25,35},{1,9,18,27}}, []int{4,3,3}, 7), 195)\n    assert reflect.DeepEqual(candidate([]int{{50, 40, 30}, {20, 10, 0}, {60, 70, 80}, {90, 100, 110}}, []int{2, 2, 2, 2}, 7), 470)\n    assert reflect.DeepEqual(candidate([]int{{1,2,3,4,5},{6,7,8,9,10},{11,12,13,14,15}}, []int{5,3,1}, 8), 56)\n    assert reflect.DeepEqual(candidate([]int{{10000, 20000}, {30000, 40000}, {50000, 60000}}, []int{1, 1, 1}, 2), 100000)\n    assert reflect.DeepEqual(candidate([]int{{1, 1, 1, 1, 1}, {1, 1, 1, 1, 1}, {1, 1, 1, 1, 1}}, []int{5, 5, 5}, 15), 15)\n    assert reflect.DeepEqual(candidate([]int{{5, 3, 7}, {8, 2, 6}, {1, 9, 18}, {10, 15, 20}}, []int{1, 2, 1, 2}, 5), 68)\n    assert reflect.DeepEqual(candidate([]int{{10, 20, 30, 40, 50}, {5, 15, 25, 35, 45}, {1, 11, 21, 31, 41}}, []int{4, 3, 2}, 7), 272)\n    assert reflect.DeepEqual(candidate([]int{{90, 5, 10, 70}, {20, 60, 40, 30}, {80, 10, 50, 45}}, []int{3, 3, 3}, 5), 350)\n    assert reflect.DeepEqual(candidate([]int{{100000,100000,100000},{90000,90000,90000},{80000,80000,80000}}, []int{3,3,3}, 5), 480000)\n    assert reflect.DeepEqual(candidate([]int{{1,1,1,1,1},{1,1,1,1,1},{1,1,1,1,1}}, []int{2,2,2}, 5), 5)\n    assert reflect.DeepEqual(candidate([]int{{1, 1, 1, 1, 1}, {1, 1, 1, 1, 1}, {1, 1, 1, 1, 1}}, []int{3, 3, 3}, 8), 8)\n    assert reflect.DeepEqual(candidate([]int{{1,2,3},{4,5,6},{7,8,9},{10,11,12},{13,14,15}}, []int{1,2,3,4,5}, 15), Error: pop from empty list)\n    assert reflect.DeepEqual(candidate([]int{{1, 2, 3, 4, 5}, {6, 7, 8, 9, 10}, {11, 12, 13, 14, 15}}, []int{1, 3, 2}, 6), 61)\n    assert reflect.DeepEqual(candidate([]int{{1,2,3,4,5,6,7,8,9,10},{11,12,13,14,15,16,17,18,19,20}}, []int{5,5}, 8), 117)\n    assert reflect.DeepEqual(candidate([]int{{9, 8, 7}, {6, 5, 4}, {3, 2, 1}}, []int{2, 2, 2}, 4), 28)\n    assert reflect.DeepEqual(candidate([]int{{5, 5, 5, 5, 5}, {5, 5, 5, 5, 5}, {5, 5, 5, 5, 5}}, []int{2, 2, 2}, 5), 25)\n    assert reflect.DeepEqual(candidate([]int{{1000, 2000, 3000}, {4000, 5000, 6000}, {7000, 8000, 9000}}, []int{2, 2, 2}, 4), 28000)\n    assert reflect.DeepEqual(candidate([]int{{9, 3, 5, 7}, {1, 8, 6, 4}, {2, 10, 12, 11}}, []int{3, 2, 3}, 5), 50)\n    assert reflect.DeepEqual(candidate([]int{{1,3,5,7},{9,11,13,15},{17,19,21,23}}, []int{3,2,4}, 7), 115)\n    assert reflect.DeepEqual(candidate([]int{{5, 3, 7}, {8, 2, 6}, {1, 9, 18}, {12, 15, 17}}, []int{1, 2, 3, 3}, 7), 86)\n    assert reflect.DeepEqual(candidate([]int{{1, 3, 5, 7, 9}, {2, 4, 6, 8, 10}, {0, 1, 2, 3, 4}}, []int{3, 3, 3}, 7), 49)\n    assert reflect.DeepEqual(candidate([]int{{1, 1, 1, 1, 1}, {2, 2, 2, 2, 2}, {3, 3, 3, 3, 3}}, []int{3, 3, 3}, 5), 13)\n    assert reflect.DeepEqual(candidate([]int{{0,0,0,0},{0,0,0,0},{0,0,0,0}}, []int{2,2,2}, 5), 0)\n    assert reflect.DeepEqual(candidate([]int{{50, 40, 30, 20, 10}, {10, 20, 30, 40, 50}, {1, 2, 3, 4, 5}, {5, 4, 3, 2, 1}}, []int{2, 3, 3, 2}, 8), 224)\n    assert reflect.DeepEqual(candidate([]int{{1,1,1,1,1},{2,2,2,2,2},{3,3,3,3,3}}, []int{5,5,5}, 15), 30)\n    assert reflect.DeepEqual(candidate([]int{{9,5,3,10},{8,1,12,4},{7,6,2,11}}, []int{3,2,3}, 7), 63)\n    assert reflect.DeepEqual(candidate([]int{{10000,20000,30000},{15000,25000,35000},{5000,10000,15000}}, []int{3,3,3}, 9), 165000)\n    assert reflect.DeepEqual(candidate([]int{{1, 2, 3, 4, 5}, {5, 4, 3, 2, 1}, {1, 2, 3, 4, 5}, {5, 4, 3, 2, 1}}, []int{2, 2, 2, 2}, 8), 36)\n    assert reflect.DeepEqual(candidate([]int{{1, 2, 3, 4, 5}, {6, 7, 8, 9, 10}, {11, 12, 13, 14, 15}, {16, 17, 18, 19, 20}}, []int{1, 2, 3, 4}, 10), 140)\n    assert reflect.DeepEqual(candidate([]int{{15, 25, 35}, {5, 10, 45}, {40, 60, 70}, {80, 90, 100}}, []int{1, 2, 3, 3}, 8), 520)\n    assert reflect.DeepEqual(candidate([]int{{5,6,7,8,9},{1,2,3,4,5},{9,8,7,6,5},{3,4,5,6,7}}, []int{3,4,3,4}, 10), 71)\n    assert reflect.DeepEqual(candidate([]int{{50,40,30,20,10},{15,25,35,45,55},{5,10,15,20,25},{5,10,15,20,25}}, []int{5,5,4,3}, 11), 370)\n    assert reflect.DeepEqual(candidate([]int{{10,20,30,40,50,60,70,80,90,100}}, []int{10}, 10), 550)\n    assert reflect.DeepEqual(candidate([]int{{0, 0, 0}, {0, 0, 0}, {0, 0, 0}}, []int{3, 3, 3}, 5), 0)\n    assert reflect.DeepEqual(candidate([]int{{2,3,4,5},{6,7,8,9},{10,11,12,13},{14,15,16,17}}, []int{4,4,4,4}, 16), 152)\n    assert reflect.DeepEqual(candidate([]int{{1, 2}, {3, 4}, {5, 6}, {7, 8}, {9, 10}}, []int{1, 1, 1, 1, 1}, 5), 30)\n    assert reflect.DeepEqual(candidate([]int{{0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}}, []int{4, 4, 4}, 6), 0)\n    assert reflect.DeepEqual(candidate([]int{{5, 3, 8}, {1, 4, 7}, {6, 2, 9}}, []int{1, 1, 1}, 2), 17)\n    assert reflect.DeepEqual(candidate([]int{{10,20},{30,40},{50,60}}, []int{1,1,1}, 1), 60)\n    assert reflect.DeepEqual(candidate([]int{{100,50,25,12,6},{500,250,125,62,31},{1000,500,250,125,62},{5000,2500,1250,625,312}}, []int{4,3,2,1}, 9), 7550)\n    assert reflect.DeepEqual(candidate([]int{{100, 200, 300}, {10, 20, 30}, {5, 15, 25}}, []int{2, 1, 2}, 4), 555)\n    assert reflect.DeepEqual(candidate([]int{{10,20,30,40,50},{25,15,35,45,55},{1,2,3,4,5},{9,18,27,36,45}}, []int{4,4,3,4}, 12), 426)\n    assert reflect.DeepEqual(candidate([]int{{1, 2, 3, 4, 5}, {10, 20, 30, 40, 50}, {100, 200, 300, 400, 500}}, []int{5, 5, 5}, 10), 1650)\n    assert reflect.DeepEqual(candidate([]int{{1, 1, 1, 1, 1}, {1, 1, 1, 1, 1}, {1, 1, 1, 1, 1}, {1, 1, 1, 1, 1}}, []int{5, 5, 5, 5}, 10), 10)\n    assert reflect.DeepEqual(candidate([]int{{1, 2, 3, 4, 5}, {10, 20, 30, 40, 50}, {100, 200, 300, 400, 500}}, []int{1, 2, 3}, 10), 1295)\n    assert reflect.DeepEqual(candidate([]int{{100,200},{150,50},{300,250}}, []int{1,2}, 4), 400)\n    assert reflect.DeepEqual(candidate([]int{{100, 200, 300}, {10, 20, 30}, {5, 15, 25}, {2, 4, 6}}, []int{2, 2, 2, 2}, 6), 590)\n    assert reflect.DeepEqual(candidate([]int{{5, 3, 7}, {8, 2, 6}, {1, 9, 18}, {10, 15, 20}}, []int{0, 0, 0, 0}, 0), 0)\n    assert reflect.DeepEqual(candidate([]int{{100, 200, 300}, {400, 500, 600}, {700, 800, 900}, {1000, 1100, 1200}}, []int{2, 2, 3, 4}, 8), Error: pop from empty list)\n    assert reflect.DeepEqual(candidate([]int{{9, 1, 5, 7}, {3, 8, 2, 6}, {4, 0, 9, 1}}, []int{2, 3, 2}, 5), 39)\n    assert reflect.DeepEqual(candidate([]int{{0, 0, 0}, {0, 0, 0}, {0, 0, 0}}, []int{1, 1, 1}, 3), 0)\n    assert reflect.DeepEqual(candidate([]int{{1, 2, 3}, {4, 5, 6}, {7, 8, 9}, {10, 11, 12}, {13, 14, 15}}, []int{1, 1, 1, 1, 1}, 5), 45)\n    assert reflect.DeepEqual(candidate([]int{{5, 3, 7, 9}, {8, 2, 6, 4}, {1, 9, 18, 27}}, []int{2, 3, 2}, 6), 75)\n    assert reflect.DeepEqual(candidate([]int{{5, 3, 7}, {8, 2, 6}, {1, 9, 18}, {10, 12, 11}}, []int{2, 2, 2, 2}, 7), 71)\n    assert reflect.DeepEqual(candidate([]int{{1, 2, 3, 4}, {4, 3, 2, 1}, {5, 6, 7, 8}, {8, 7, 6, 5}}, []int{2, 2, 2, 2}, 6), 38)\n    assert reflect.DeepEqual(candidate([]int{{100000,90000,80000},{70000,60000,50000},{40000,30000,20000}}, []int{2,3,1}, 4), 320000)\n    assert reflect.DeepEqual(candidate([]int{{5,8,12,3,7},{9,4,6,1,10},{2,15,11,13,14}}, []int{5,5,5}, 10), 105)\n    assert reflect.DeepEqual(candidate([]int{{1, 3, 5, 7, 9}, {2, 4, 6, 8, 10}, {11, 13, 15, 17, 19}, {21, 23, 25, 27, 29}}, []int{1, 2, 3, 4}, 10), 182)\n    assert reflect.DeepEqual(candidate([]int{{100000, 100000}, {100000, 100000}, {100000, 100000}}, []int{1, 1, 1}, 3), 300000)\n    assert reflect.DeepEqual(candidate([]int{{1, 2}, {3, 4}, {5, 6}, {7, 8}, {9, 10}}, []int{1, 1, 1, 1, 1}, 3), 24)\n    assert reflect.DeepEqual(candidate([]int{{1, 2, 3, 4, 5}, {6, 7, 8, 9, 10}, {11, 12, 13, 14, 15}}, []int{1, 2, 3}, 6), 66)\n    assert reflect.DeepEqual(candidate([]int{{100000, 90000, 80000}, {70000, 60000, 50000}, {40000, 30000, 20000}}, []int{2, 2, 3}, 7), 410000)\n    assert reflect.DeepEqual(candidate([]int{{9, 8, 7, 6, 5}, {4, 3, 2, 1, 0}, {5, 6, 7, 8, 9}}, []int{3, 2, 3}, 6), 48)\n    assert reflect.DeepEqual(candidate([]int{{1, 1, 1, 1, 1}, {2, 2, 2, 2, 2}, {3, 3, 3, 3, 3}, {4, 4, 4, 4, 4}}, []int{1, 2, 3, 4}, 10), 30)\n    assert reflect.DeepEqual(candidate([]int{{0, 0, 0}, {0, 0, 0}, {0, 0, 0}}, []int{2, 2, 2}, 5), 0)\n    assert reflect.DeepEqual(candidate([]int{{50, 25, 12, 6, 3}, {200, 100, 50, 25, 12}, {1, 2, 3, 4, 5}}, []int{2, 3, 3}, 11), 437)\n    assert reflect.DeepEqual(candidate([]int{{10, 20, 30, 40}, {5, 15, 25, 35}, {1, 9, 18, 27}}, []int{2, 3, 4}, 7), 190)\n    assert reflect.DeepEqual(candidate([]int{{100, 200, 300}, {50, 150, 250}, {10, 90, 180}, {5, 45, 85}}, []int{2, 1, 3, 2}, 9), 1160)\n}",
+    "rust": "fn check(candidate: fn(Vec<i32>, i32) -> Vec<i32>) {\n    assert_eq!(candidate(vec![[10,20,30],[5,15,25],[1,9,18]], vec![2,1,2], 5), 102);\n    assert_eq!(candidate(vec![[5,3,7],[8,2,6]], vec![2,2], 3), 21);\n    assert_eq!(candidate(vec![[1,2],[3,4]], vec![1,2], 2), 7);\n    assert_eq!(candidate(vec![[0,0,0],[0,0,0]], vec![1,2], 1), 0);\n    assert_eq!(candidate(vec![[1,2,3],[4,5,6],[7,8,9]], vec![3,3,3], 6), 39);\n    assert_eq!(candidate(vec![[1,1,1,1,1,1,1,1,1,1],[2,2,2,2,2,2,2,2,2,2],[3,3,3,3,3,3,3,3,3,3]], vec![5,5,5], 12), 27);\n    assert_eq!(candidate(vec![[1000, 900, 800, 700, 600], [500, 400, 300, 200, 100]], vec![3, 4], 6), 3900);\n    assert_eq!(candidate(vec![[9, 8, 7, 6, 5], [4, 3, 2, 1, 0], [99, 88, 77, 66, 55]], vec![3, 2, 4], 12), 361);\n    assert_eq!(candidate(vec![[0, 0, 0, 0], [1, 1, 1, 1], [2, 2, 2, 2], [3, 3, 3, 3]], vec![0, 2, 2, 2], 5), 11);\n    assert_eq!(candidate(vec![[1, 1, 1, 1, 1], [2, 2, 2, 2, 2], [3, 3, 3, 3, 3]], vec![1, 2, 3], 6), 14);\n    assert_eq!(candidate(vec![[100, 200], [300, 400], [500, 600]], vec![1, 1, 1], 3), 1200);\n    assert_eq!(candidate(vec![[100000, 90000, 80000, 70000], [60000, 50000, 40000, 30000]], vec![4, 4], 3), 270000);\n    assert_eq!(candidate(vec![[1,1,1,1,1,1,1,1,1,1],[1,1,1,1,1,1,1,1,1,1],[1,1,1,1,1,1,1,1,1,1]], vec![10,10,10], 15), 15);\n    assert_eq!(candidate(vec![[5, 3, 7, 9, 11], [8, 2, 6, 4, 10], [12, 14, 16, 18, 20]], vec![3, 2, 5], 8), 110);\n    assert_eq!(candidate(vec![[9,8,7,6],[5,4,3,2],[1,0,9,8]], vec![2,3,4], 6), 43);\n    assert_eq!(candidate(vec![[0,0,0],[0,0,0],[0,0,0]], vec![1,1,1], 1), 0);\n    assert_eq!(candidate(vec![[5,2,9,1],[8,4,6,7],[3,10,12,11]], vec![3,2,3], 6), 57);\n    assert_eq!(candidate(vec![[0,0,0],[0,0,0],[0,0,0]], vec![1,1,1], 3), 0);\n    assert_eq!(candidate(vec![[10, 20, 30, 40, 50], [60, 70, 80, 90, 100], [110, 120, 130, 140, 150]], vec![2, 3, 2], 7), 650);\n    assert_eq!(candidate(vec![[100,200,300],[50,150,250],[10,90,180],[5,15,25]], vec![1,2,3,1], 8), 1005);\n    assert_eq!(candidate(vec![[5, 3, 7], [8, 2, 6], [1, 9, 18], [21, 2, 10], [3, 15, 12]], vec![2, 2, 2, 2, 2], 10), 111);\n    assert_eq!(candidate(vec![[9,8,7,6],[5,4,3,2],[1,0,0,0]], vec![3,3,2], 5), 33);\n    assert_eq!(candidate(vec![[100,200],[300,400],[500,600],[700,800]], vec![1,2,2,1], 5), 2600);\n    assert_eq!(candidate(vec![[10, 20, 30], [30, 20, 10], [10, 20, 30]], vec![1, 1, 1], 2), 60);\n    assert_eq!(candidate(vec![[10,20,30,40],[5,15,25,35],[1,9,18,27]], vec![4,3,3], 7), 195);\n    assert_eq!(candidate(vec![[50, 40, 30], [20, 10, 0], [60, 70, 80], [90, 100, 110]], vec![2, 2, 2, 2], 7), 470);\n    assert_eq!(candidate(vec![[1,2,3,4,5],[6,7,8,9,10],[11,12,13,14,15]], vec![5,3,1], 8), 56);\n    assert_eq!(candidate(vec![[10000, 20000], [30000, 40000], [50000, 60000]], vec![1, 1, 1], 2), 100000);\n    assert_eq!(candidate(vec![[1, 1, 1, 1, 1], [1, 1, 1, 1, 1], [1, 1, 1, 1, 1]], vec![5, 5, 5], 15), 15);\n    assert_eq!(candidate(vec![[5, 3, 7], [8, 2, 6], [1, 9, 18], [10, 15, 20]], vec![1, 2, 1, 2], 5), 68);\n    assert_eq!(candidate(vec![[10, 20, 30, 40, 50], [5, 15, 25, 35, 45], [1, 11, 21, 31, 41]], vec![4, 3, 2], 7), 272);\n    assert_eq!(candidate(vec![[90, 5, 10, 70], [20, 60, 40, 30], [80, 10, 50, 45]], vec![3, 3, 3], 5), 350);\n    assert_eq!(candidate(vec![[100000,100000,100000],[90000,90000,90000],[80000,80000,80000]], vec![3,3,3], 5), 480000);\n    assert_eq!(candidate(vec![[1,1,1,1,1],[1,1,1,1,1],[1,1,1,1,1]], vec![2,2,2], 5), 5);\n    assert_eq!(candidate(vec![[1, 1, 1, 1, 1], [1, 1, 1, 1, 1], [1, 1, 1, 1, 1]], vec![3, 3, 3], 8), 8);\n    assert_eq!(candidate(vec![[1,2,3],[4,5,6],[7,8,9],[10,11,12],[13,14,15]], vec![1,2,3,4,5], 15), Error: pop from empty list);\n    assert_eq!(candidate(vec![[1, 2, 3, 4, 5], [6, 7, 8, 9, 10], [11, 12, 13, 14, 15]], vec![1, 3, 2], 6), 61);\n    assert_eq!(candidate(vec![[1,2,3,4,5,6,7,8,9,10],[11,12,13,14,15,16,17,18,19,20]], vec![5,5], 8), 117);\n    assert_eq!(candidate(vec![[9, 8, 7], [6, 5, 4], [3, 2, 1]], vec![2, 2, 2], 4), 28);\n    assert_eq!(candidate(vec![[5, 5, 5, 5, 5], [5, 5, 5, 5, 5], [5, 5, 5, 5, 5]], vec![2, 2, 2], 5), 25);\n    assert_eq!(candidate(vec![[1000, 2000, 3000], [4000, 5000, 6000], [7000, 8000, 9000]], vec![2, 2, 2], 4), 28000);\n    assert_eq!(candidate(vec![[9, 3, 5, 7], [1, 8, 6, 4], [2, 10, 12, 11]], vec![3, 2, 3], 5), 50);\n    assert_eq!(candidate(vec![[1,3,5,7],[9,11,13,15],[17,19,21,23]], vec![3,2,4], 7), 115);\n    assert_eq!(candidate(vec![[5, 3, 7], [8, 2, 6], [1, 9, 18], [12, 15, 17]], vec![1, 2, 3, 3], 7), 86);\n    assert_eq!(candidate(vec![[1, 3, 5, 7, 9], [2, 4, 6, 8, 10], [0, 1, 2, 3, 4]], vec![3, 3, 3], 7), 49);\n    assert_eq!(candidate(vec![[1, 1, 1, 1, 1], [2, 2, 2, 2, 2], [3, 3, 3, 3, 3]], vec![3, 3, 3], 5), 13);\n    assert_eq!(candidate(vec![[0,0,0,0],[0,0,0,0],[0,0,0,0]], vec![2,2,2], 5), 0);\n    assert_eq!(candidate(vec![[50, 40, 30, 20, 10], [10, 20, 30, 40, 50], [1, 2, 3, 4, 5], [5, 4, 3, 2, 1]], vec![2, 3, 3, 2], 8), 224);\n    assert_eq!(candidate(vec![[1,1,1,1,1],[2,2,2,2,2],[3,3,3,3,3]], vec![5,5,5], 15), 30);\n    assert_eq!(candidate(vec![[9,5,3,10],[8,1,12,4],[7,6,2,11]], vec![3,2,3], 7), 63);\n    assert_eq!(candidate(vec![[10000,20000,30000],[15000,25000,35000],[5000,10000,15000]], vec![3,3,3], 9), 165000);\n    assert_eq!(candidate(vec![[1, 2, 3, 4, 5], [5, 4, 3, 2, 1], [1, 2, 3, 4, 5], [5, 4, 3, 2, 1]], vec![2, 2, 2, 2], 8), 36);\n    assert_eq!(candidate(vec![[1, 2, 3, 4, 5], [6, 7, 8, 9, 10], [11, 12, 13, 14, 15], [16, 17, 18, 19, 20]], vec![1, 2, 3, 4], 10), 140);\n    assert_eq!(candidate(vec![[15, 25, 35], [5, 10, 45], [40, 60, 70], [80, 90, 100]], vec![1, 2, 3, 3], 8), 520);\n    assert_eq!(candidate(vec![[5,6,7,8,9],[1,2,3,4,5],[9,8,7,6,5],[3,4,5,6,7]], vec![3,4,3,4], 10), 71);\n    assert_eq!(candidate(vec![[50,40,30,20,10],[15,25,35,45,55],[5,10,15,20,25],[5,10,15,20,25]], vec![5,5,4,3], 11), 370);\n    assert_eq!(candidate(vec![[10,20,30,40,50,60,70,80,90,100]], vec![10], 10), 550);\n    assert_eq!(candidate(vec![[0, 0, 0], [0, 0, 0], [0, 0, 0]], vec![3, 3, 3], 5), 0);\n    assert_eq!(candidate(vec![[2,3,4,5],[6,7,8,9],[10,11,12,13],[14,15,16,17]], vec![4,4,4,4], 16), 152);\n    assert_eq!(candidate(vec![[1, 2], [3, 4], [5, 6], [7, 8], [9, 10]], vec![1, 1, 1, 1, 1], 5), 30);\n    assert_eq!(candidate(vec![[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]], vec![4, 4, 4], 6), 0);\n    assert_eq!(candidate(vec![[5, 3, 8], [1, 4, 7], [6, 2, 9]], vec![1, 1, 1], 2), 17);\n    assert_eq!(candidate(vec![[10,20],[30,40],[50,60]], vec![1,1,1], 1), 60);\n    assert_eq!(candidate(vec![[100,50,25,12,6],[500,250,125,62,31],[1000,500,250,125,62],[5000,2500,1250,625,312]], vec![4,3,2,1], 9), 7550);\n    assert_eq!(candidate(vec![[100, 200, 300], [10, 20, 30], [5, 15, 25]], vec![2, 1, 2], 4), 555);\n    assert_eq!(candidate(vec![[10,20,30,40,50],[25,15,35,45,55],[1,2,3,4,5],[9,18,27,36,45]], vec![4,4,3,4], 12), 426);\n    assert_eq!(candidate(vec![[1, 2, 3, 4, 5], [10, 20, 30, 40, 50], [100, 200, 300, 400, 500]], vec![5, 5, 5], 10), 1650);\n    assert_eq!(candidate(vec![[1, 1, 1, 1, 1], [1, 1, 1, 1, 1], [1, 1, 1, 1, 1], [1, 1, 1, 1, 1]], vec![5, 5, 5, 5], 10), 10);\n    assert_eq!(candidate(vec![[1, 2, 3, 4, 5], [10, 20, 30, 40, 50], [100, 200, 300, 400, 500]], vec![1, 2, 3], 10), 1295);\n    assert_eq!(candidate(vec![[100,200],[150,50],[300,250]], vec![1,2], 4), 400);\n    assert_eq!(candidate(vec![[100, 200, 300], [10, 20, 30], [5, 15, 25], [2, 4, 6]], vec![2, 2, 2, 2], 6), 590);\n    assert_eq!(candidate(vec![[5, 3, 7], [8, 2, 6], [1, 9, 18], [10, 15, 20]], vec![0, 0, 0, 0], 0), 0);\n    assert_eq!(candidate(vec![[100, 200, 300], [400, 500, 600], [700, 800, 900], [1000, 1100, 1200]], vec![2, 2, 3, 4], 8), Error: pop from empty list);\n    assert_eq!(candidate(vec![[9, 1, 5, 7], [3, 8, 2, 6], [4, 0, 9, 1]], vec![2, 3, 2], 5), 39);\n    assert_eq!(candidate(vec![[0, 0, 0], [0, 0, 0], [0, 0, 0]], vec![1, 1, 1], 3), 0);\n    assert_eq!(candidate(vec![[1, 2, 3], [4, 5, 6], [7, 8, 9], [10, 11, 12], [13, 14, 15]], vec![1, 1, 1, 1, 1], 5), 45);\n    assert_eq!(candidate(vec![[5, 3, 7, 9], [8, 2, 6, 4], [1, 9, 18, 27]], vec![2, 3, 2], 6), 75);\n    assert_eq!(candidate(vec![[5, 3, 7], [8, 2, 6], [1, 9, 18], [10, 12, 11]], vec![2, 2, 2, 2], 7), 71);\n    assert_eq!(candidate(vec![[1, 2, 3, 4], [4, 3, 2, 1], [5, 6, 7, 8], [8, 7, 6, 5]], vec![2, 2, 2, 2], 6), 38);\n    assert_eq!(candidate(vec![[100000,90000,80000],[70000,60000,50000],[40000,30000,20000]], vec![2,3,1], 4), 320000);\n    assert_eq!(candidate(vec![[5,8,12,3,7],[9,4,6,1,10],[2,15,11,13,14]], vec![5,5,5], 10), 105);\n    assert_eq!(candidate(vec![[1, 3, 5, 7, 9], [2, 4, 6, 8, 10], [11, 13, 15, 17, 19], [21, 23, 25, 27, 29]], vec![1, 2, 3, 4], 10), 182);\n    assert_eq!(candidate(vec![[100000, 100000], [100000, 100000], [100000, 100000]], vec![1, 1, 1], 3), 300000);\n    assert_eq!(candidate(vec![[1, 2], [3, 4], [5, 6], [7, 8], [9, 10]], vec![1, 1, 1, 1, 1], 3), 24);\n    assert_eq!(candidate(vec![[1, 2, 3, 4, 5], [6, 7, 8, 9, 10], [11, 12, 13, 14, 15]], vec![1, 2, 3], 6), 66);\n    assert_eq!(candidate(vec![[100000, 90000, 80000], [70000, 60000, 50000], [40000, 30000, 20000]], vec![2, 2, 3], 7), 410000);\n    assert_eq!(candidate(vec![[9, 8, 7, 6, 5], [4, 3, 2, 1, 0], [5, 6, 7, 8, 9]], vec![3, 2, 3], 6), 48);\n    assert_eq!(candidate(vec![[1, 1, 1, 1, 1], [2, 2, 2, 2, 2], [3, 3, 3, 3, 3], [4, 4, 4, 4, 4]], vec![1, 2, 3, 4], 10), 30);\n    assert_eq!(candidate(vec![[0, 0, 0], [0, 0, 0], [0, 0, 0]], vec![2, 2, 2], 5), 0);\n    assert_eq!(candidate(vec![[50, 25, 12, 6, 3], [200, 100, 50, 25, 12], [1, 2, 3, 4, 5]], vec![2, 3, 3], 11), 437);\n    assert_eq!(candidate(vec![[10, 20, 30, 40], [5, 15, 25, 35], [1, 9, 18, 27]], vec![2, 3, 4], 7), 190);\n    assert_eq!(candidate(vec![[100, 200, 300], [50, 150, 250], [10, 90, 180], [5, 45, 85]], vec![2, 1, 3, 2], 9), 1160);\n}"
+  },
+  "test_cases": [
+    {
+      "input": "grid = [[10,20,30],[5,15,25],[1,9,18]], limits = [2,1,2], k = 5",
+      "output": "102"
+    },
+    {
+      "input": "grid = [[5,3,7],[8,2,6]], limits = [2,2], k = 3",
+      "output": "21"
+    },
+    {
+      "input": "grid = [[1,2],[3,4]], limits = [1,2], k = 2",
+      "output": "7"
+    },
+    {
+      "input": "grid = [[0,0,0],[0,0,0]], limits = [1,2], k = 1",
+      "output": "0"
+    },
+    {
+      "input": "grid = [[1,2,3],[4,5,6],[7,8,9]], limits = [3,3,3], k = 6",
+      "output": "39"
+    },
+    {
+      "input": "grid = [[1,1,1,1,1,1,1,1,1,1],[2,2,2,2,2,2,2,2,2,2],[3,3,3,3,3,3,3,3,3,3]], limits = [5,5,5], k = 12",
+      "output": "27"
+    },
+    {
+      "input": "grid = [[1000, 900, 800, 700, 600], [500, 400, 300, 200, 100]], limits = [3, 4], k = 6",
+      "output": "3900"
+    },
+    {
+      "input": "grid = [[9, 8, 7, 6, 5], [4, 3, 2, 1, 0], [99, 88, 77, 66, 55]], limits = [3, 2, 4], k = 12",
+      "output": "361"
+    },
+    {
+      "input": "grid = [[0, 0, 0, 0], [1, 1, 1, 1], [2, 2, 2, 2], [3, 3, 3, 3]], limits = [0, 2, 2, 2], k = 5",
+      "output": "11"
+    },
+    {
+      "input": "grid = [[1, 1, 1, 1, 1], [2, 2, 2, 2, 2], [3, 3, 3, 3, 3]], limits = [1, 2, 3], k = 6",
+      "output": "14"
+    },
+    {
+      "input": "grid = [[100, 200], [300, 400], [500, 600]], limits = [1, 1, 1], k = 3",
+      "output": "1200"
+    },
+    {
+      "input": "grid = [[100000, 90000, 80000, 70000], [60000, 50000, 40000, 30000]], limits = [4, 4], k = 3",
+      "output": "270000"
+    },
+    {
+      "input": "grid = [[1,1,1,1,1,1,1,1,1,1],[1,1,1,1,1,1,1,1,1,1],[1,1,1,1,1,1,1,1,1,1]], limits = [10,10,10], k = 15",
+      "output": "15"
+    },
+    {
+      "input": "grid = [[5, 3, 7, 9, 11], [8, 2, 6, 4, 10], [12, 14, 16, 18, 20]], limits = [3, 2, 5], k = 8",
+      "output": "110"
+    },
+    {
+      "input": "grid = [[9,8,7,6],[5,4,3,2],[1,0,9,8]], limits = [2,3,4], k = 6",
+      "output": "43"
+    },
+    {
+      "input": "grid = [[0,0,0],[0,0,0],[0,0,0]], limits = [1,1,1], k = 1",
+      "output": "0"
+    },
+    {
+      "input": "grid = [[5,2,9,1],[8,4,6,7],[3,10,12,11]], limits = [3,2,3], k = 6",
+      "output": "57"
+    },
+    {
+      "input": "grid = [[0,0,0],[0,0,0],[0,0,0]], limits = [1,1,1], k = 3",
+      "output": "0"
+    },
+    {
+      "input": "grid = [[10, 20, 30, 40, 50], [60, 70, 80, 90, 100], [110, 120, 130, 140, 150]], limits = [2, 3, 2], k = 7",
+      "output": "650"
+    },
+    {
+      "input": "grid = [[100,200,300],[50,150,250],[10,90,180],[5,15,25]], limits = [1,2,3,1], k = 8",
+      "output": "1005"
+    },
+    {
+      "input": "grid = [[5, 3, 7], [8, 2, 6], [1, 9, 18], [21, 2, 10], [3, 15, 12]], limits = [2, 2, 2, 2, 2], k = 10",
+      "output": "111"
+    },
+    {
+      "input": "grid = [[9,8,7,6],[5,4,3,2],[1,0,0,0]], limits = [3,3,2], k = 5",
+      "output": "33"
+    },
+    {
+      "input": "grid = [[100,200],[300,400],[500,600],[700,800]], limits = [1,2,2,1], k = 5",
+      "output": "2600"
+    },
+    {
+      "input": "grid = [[10, 20, 30], [30, 20, 10], [10, 20, 30]], limits = [1, 1, 1], k = 2",
+      "output": "60"
+    },
+    {
+      "input": "grid = [[10,20,30,40],[5,15,25,35],[1,9,18,27]], limits = [4,3,3], k = 7",
+      "output": "195"
+    },
+    {
+      "input": "grid = [[50, 40, 30], [20, 10, 0], [60, 70, 80], [90, 100, 110]], limits = [2, 2, 2, 2], k = 7",
+      "output": "470"
+    },
+    {
+      "input": "grid = [[1,2,3,4,5],[6,7,8,9,10],[11,12,13,14,15]], limits = [5,3,1], k = 8",
+      "output": "56"
+    },
+    {
+      "input": "grid = [[10000, 20000], [30000, 40000], [50000, 60000]], limits = [1, 1, 1], k = 2",
+      "output": "100000"
+    },
+    {
+      "input": "grid = [[1, 1, 1, 1, 1], [1, 1, 1, 1, 1], [1, 1, 1, 1, 1]], limits = [5, 5, 5], k = 15",
+      "output": "15"
+    },
+    {
+      "input": "grid = [[5, 3, 7], [8, 2, 6], [1, 9, 18], [10, 15, 20]], limits = [1, 2, 1, 2], k = 5",
+      "output": "68"
+    },
+    {
+      "input": "grid = [[10, 20, 30, 40, 50], [5, 15, 25, 35, 45], [1, 11, 21, 31, 41]], limits = [4, 3, 2], k = 7",
+      "output": "272"
+    },
+    {
+      "input": "grid = [[90, 5, 10, 70], [20, 60, 40, 30], [80, 10, 50, 45]], limits = [3, 3, 3], k = 5",
+      "output": "350"
+    },
+    {
+      "input": "grid = [[100000,100000,100000],[90000,90000,90000],[80000,80000,80000]], limits = [3,3,3], k = 5",
+      "output": "480000"
+    },
+    {
+      "input": "grid = [[1,1,1,1,1],[1,1,1,1,1],[1,1,1,1,1]], limits = [2,2,2], k = 5",
+      "output": "5"
+    },
+    {
+      "input": "grid = [[1, 1, 1, 1, 1], [1, 1, 1, 1, 1], [1, 1, 1, 1, 1]], limits = [3, 3, 3], k = 8",
+      "output": "8"
+    },
+    {
+      "input": "grid = [[1,2,3],[4,5,6],[7,8,9],[10,11,12],[13,14,15]], limits = [1,2,3,4,5], k = 15",
+      "output": "Error: pop from empty list"
+    },
+    {
+      "input": "grid = [[1, 2, 3, 4, 5], [6, 7, 8, 9, 10], [11, 12, 13, 14, 15]], limits = [1, 3, 2], k = 6",
+      "output": "61"
+    },
+    {
+      "input": "grid = [[1,2,3,4,5,6,7,8,9,10],[11,12,13,14,15,16,17,18,19,20]], limits = [5,5], k = 8",
+      "output": "117"
+    },
+    {
+      "input": "grid = [[9, 8, 7], [6, 5, 4], [3, 2, 1]], limits = [2, 2, 2], k = 4",
+      "output": "28"
+    },
+    {
+      "input": "grid = [[5, 5, 5, 5, 5], [5, 5, 5, 5, 5], [5, 5, 5, 5, 5]], limits = [2, 2, 2], k = 5",
+      "output": "25"
+    },
+    {
+      "input": "grid = [[1000, 2000, 3000], [4000, 5000, 6000], [7000, 8000, 9000]], limits = [2, 2, 2], k = 4",
+      "output": "28000"
+    },
+    {
+      "input": "grid = [[9, 3, 5, 7], [1, 8, 6, 4], [2, 10, 12, 11]], limits = [3, 2, 3], k = 5",
+      "output": "50"
+    },
+    {
+      "input": "grid = [[1,3,5,7],[9,11,13,15],[17,19,21,23]], limits = [3,2,4], k = 7",
+      "output": "115"
+    },
+    {
+      "input": "grid = [[5, 3, 7], [8, 2, 6], [1, 9, 18], [12, 15, 17]], limits = [1, 2, 3, 3], k = 7",
+      "output": "86"
+    },
+    {
+      "input": "grid = [[1, 3, 5, 7, 9], [2, 4, 6, 8, 10], [0, 1, 2, 3, 4]], limits = [3, 3, 3], k = 7",
+      "output": "49"
+    },
+    {
+      "input": "grid = [[1, 1, 1, 1, 1], [2, 2, 2, 2, 2], [3, 3, 3, 3, 3]], limits = [3, 3, 3], k = 5",
+      "output": "13"
+    },
+    {
+      "input": "grid = [[0,0,0,0],[0,0,0,0],[0,0,0,0]], limits = [2,2,2], k = 5",
+      "output": "0"
+    },
+    {
+      "input": "grid = [[50, 40, 30, 20, 10], [10, 20, 30, 40, 50], [1, 2, 3, 4, 5], [5, 4, 3, 2, 1]], limits = [2, 3, 3, 2], k = 8",
+      "output": "224"
+    },
+    {
+      "input": "grid = [[1,1,1,1,1],[2,2,2,2,2],[3,3,3,3,3]], limits = [5,5,5], k = 15",
+      "output": "30"
+    },
+    {
+      "input": "grid = [[9,5,3,10],[8,1,12,4],[7,6,2,11]], limits = [3,2,3], k = 7",
+      "output": "63"
+    },
+    {
+      "input": "grid = [[10000,20000,30000],[15000,25000,35000],[5000,10000,15000]], limits = [3,3,3], k = 9",
+      "output": "165000"
+    },
+    {
+      "input": "grid = [[1, 2, 3, 4, 5], [5, 4, 3, 2, 1], [1, 2, 3, 4, 5], [5, 4, 3, 2, 1]], limits = [2, 2, 2, 2], k = 8",
+      "output": "36"
+    },
+    {
+      "input": "grid = [[1, 2, 3, 4, 5], [6, 7, 8, 9, 10], [11, 12, 13, 14, 15], [16, 17, 18, 19, 20]], limits = [1, 2, 3, 4], k = 10",
+      "output": "140"
+    },
+    {
+      "input": "grid = [[15, 25, 35], [5, 10, 45], [40, 60, 70], [80, 90, 100]], limits = [1, 2, 3, 3], k = 8",
+      "output": "520"
+    },
+    {
+      "input": "grid = [[5,6,7,8,9],[1,2,3,4,5],[9,8,7,6,5],[3,4,5,6,7]], limits = [3,4,3,4], k = 10",
+      "output": "71"
+    },
+    {
+      "input": "grid = [[50,40,30,20,10],[15,25,35,45,55],[5,10,15,20,25],[5,10,15,20,25]], limits = [5,5,4,3], k = 11",
+      "output": "370"
+    },
+    {
+      "input": "grid = [[10,20,30,40,50,60,70,80,90,100]], limits = [10], k = 10",
+      "output": "550"
+    },
+    {
+      "input": "grid = [[0, 0, 0], [0, 0, 0], [0, 0, 0]], limits = [3, 3, 3], k = 5",
+      "output": "0"
+    },
+    {
+      "input": "grid = [[2,3,4,5],[6,7,8,9],[10,11,12,13],[14,15,16,17]], limits = [4,4,4,4], k = 16",
+      "output": "152"
+    },
+    {
+      "input": "grid = [[1, 2], [3, 4], [5, 6], [7, 8], [9, 10]], limits = [1, 1, 1, 1, 1], k = 5",
+      "output": "30"
+    },
+    {
+      "input": "grid = [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]], limits = [4, 4, 4], k = 6",
+      "output": "0"
+    },
+    {
+      "input": "grid = [[5, 3, 8], [1, 4, 7], [6, 2, 9]], limits = [1, 1, 1], k = 2",
+      "output": "17"
+    },
+    {
+      "input": "grid = [[10,20],[30,40],[50,60]], limits = [1,1,1], k = 1",
+      "output": "60"
+    },
+    {
+      "input": "grid = [[100,50,25,12,6],[500,250,125,62,31],[1000,500,250,125,62],[5000,2500,1250,625,312]], limits = [4,3,2,1], k = 9",
+      "output": "7550"
+    },
+    {
+      "input": "grid = [[100, 200, 300], [10, 20, 30], [5, 15, 25]], limits = [2, 1, 2], k = 4",
+      "output": "555"
+    },
+    {
+      "input": "grid = [[10,20,30,40,50],[25,15,35,45,55],[1,2,3,4,5],[9,18,27,36,45]], limits = [4,4,3,4], k = 12",
+      "output": "426"
+    },
+    {
+      "input": "grid = [[1, 2, 3, 4, 5], [10, 20, 30, 40, 50], [100, 200, 300, 400, 500]], limits = [5, 5, 5], k = 10",
+      "output": "1650"
+    },
+    {
+      "input": "grid = [[1, 1, 1, 1, 1], [1, 1, 1, 1, 1], [1, 1, 1, 1, 1], [1, 1, 1, 1, 1]], limits = [5, 5, 5, 5], k = 10",
+      "output": "10"
+    },
+    {
+      "input": "grid = [[1, 2, 3, 4, 5], [10, 20, 30, 40, 50], [100, 200, 300, 400, 500]], limits = [1, 2, 3], k = 10",
+      "output": "1295"
+    },
+    {
+      "input": "grid = [[100,200],[150,50],[300,250]], limits = [1,2], k = 4",
+      "output": "400"
+    },
+    {
+      "input": "grid = [[100, 200, 300], [10, 20, 30], [5, 15, 25], [2, 4, 6]], limits = [2, 2, 2, 2], k = 6",
+      "output": "590"
+    },
+    {
+      "input": "grid = [[5, 3, 7], [8, 2, 6], [1, 9, 18], [10, 15, 20]], limits = [0, 0, 0, 0], k = 0",
+      "output": "0"
+    },
+    {
+      "input": "grid = [[100, 200, 300], [400, 500, 600], [700, 800, 900], [1000, 1100, 1200]], limits = [2, 2, 3, 4], k = 8",
+      "output": "Error: pop from empty list"
+    },
+    {
+      "input": "grid = [[9, 1, 5, 7], [3, 8, 2, 6], [4, 0, 9, 1]], limits = [2, 3, 2], k = 5",
+      "output": "39"
+    },
+    {
+      "input": "grid = [[0, 0, 0], [0, 0, 0], [0, 0, 0]], limits = [1, 1, 1], k = 3",
+      "output": "0"
+    },
+    {
+      "input": "grid = [[1, 2, 3], [4, 5, 6], [7, 8, 9], [10, 11, 12], [13, 14, 15]], limits = [1, 1, 1, 1, 1], k = 5",
+      "output": "45"
+    },
+    {
+      "input": "grid = [[5, 3, 7, 9], [8, 2, 6, 4], [1, 9, 18, 27]], limits = [2, 3, 2], k = 6",
+      "output": "75"
+    },
+    {
+      "input": "grid = [[5, 3, 7], [8, 2, 6], [1, 9, 18], [10, 12, 11]], limits = [2, 2, 2, 2], k = 7",
+      "output": "71"
+    },
+    {
+      "input": "grid = [[1, 2, 3, 4], [4, 3, 2, 1], [5, 6, 7, 8], [8, 7, 6, 5]], limits = [2, 2, 2, 2], k = 6",
+      "output": "38"
+    },
+    {
+      "input": "grid = [[100000,90000,80000],[70000,60000,50000],[40000,30000,20000]], limits = [2,3,1], k = 4",
+      "output": "320000"
+    },
+    {
+      "input": "grid = [[5,8,12,3,7],[9,4,6,1,10],[2,15,11,13,14]], limits = [5,5,5], k = 10",
+      "output": "105"
+    },
+    {
+      "input": "grid = [[1, 3, 5, 7, 9], [2, 4, 6, 8, 10], [11, 13, 15, 17, 19], [21, 23, 25, 27, 29]], limits = [1, 2, 3, 4], k = 10",
+      "output": "182"
+    },
+    {
+      "input": "grid = [[100000, 100000], [100000, 100000], [100000, 100000]], limits = [1, 1, 1], k = 3",
+      "output": "300000"
+    },
+    {
+      "input": "grid = [[1, 2], [3, 4], [5, 6], [7, 8], [9, 10]], limits = [1, 1, 1, 1, 1], k = 3",
+      "output": "24"
+    },
+    {
+      "input": "grid = [[1, 2, 3, 4, 5], [6, 7, 8, 9, 10], [11, 12, 13, 14, 15]], limits = [1, 2, 3], k = 6",
+      "output": "66"
+    },
+    {
+      "input": "grid = [[100000, 90000, 80000], [70000, 60000, 50000], [40000, 30000, 20000]], limits = [2, 2, 3], k = 7",
+      "output": "410000"
+    },
+    {
+      "input": "grid = [[9, 8, 7, 6, 5], [4, 3, 2, 1, 0], [5, 6, 7, 8, 9]], limits = [3, 2, 3], k = 6",
+      "output": "48"
+    },
+    {
+      "input": "grid = [[1, 1, 1, 1, 1], [2, 2, 2, 2, 2], [3, 3, 3, 3, 3], [4, 4, 4, 4, 4]], limits = [1, 2, 3, 4], k = 10",
+      "output": "30"
+    },
+    {
+      "input": "grid = [[0, 0, 0], [0, 0, 0], [0, 0, 0]], limits = [2, 2, 2], k = 5",
+      "output": "0"
+    },
+    {
+      "input": "grid = [[50, 25, 12, 6, 3], [200, 100, 50, 25, 12], [1, 2, 3, 4, 5]], limits = [2, 3, 3], k = 11",
+      "output": "437"
+    },
+    {
+      "input": "grid = [[10, 20, 30, 40], [5, 15, 25, 35], [1, 9, 18, 27]], limits = [2, 3, 4], k = 7",
+      "output": "190"
+    },
+    {
+      "input": "grid = [[100, 200, 300], [50, 150, 250], [10, 90, 180], [5, 45, 85]], limits = [2, 1, 3, 2], k = 9",
+      "output": "1160"
+    }
+  ],
+  "types": {
+    "python3": {
+      "input": [
+        {
+          "grid": "List[List[int]]"
+        },
+        {
+          "limits": "List[int]"
+        },
+        {
+          "k": "int"
+        }
+      ],
+      "output": "int"
+    },
+    "cpp": {
+      "input": [
+        {
+          "grid": "vector<vector<int>>&"
+        },
+        {
+          "limits": "vector<int>&"
+        },
+        {
+          "k": "int"
+        }
+      ],
+      "output": "long long"
+    },
+    "java": {
+      "input": [
+        {
+          "grid": "int[][]"
+        },
+        {
+          "limits": "int[]"
+        },
+        {
+          "k": "int"
+        }
+      ],
+      "output": "long"
+    },
+    "javascript": {
+      "input": [
+        {
+          "grid": "number[][]"
+        },
+        {
+          "limits": "number[]"
+        },
+        {
+          "k": "number"
+        }
+      ],
+      "output": "number"
+    },
+    "typescript": {
+      "input": [
+        {
+          "grid": "number[][]"
+        },
+        {
+          "limits": "number[]"
+        },
+        {
+          "k": "number"
+        }
+      ],
+      "output": "number"
+    },
+    "golang": {
+      "input": [
+        {
+          "grid": "[][]int"
+        },
+        {
+          "limits": "[]int"
+        },
+        {
+          "k": "int"
+        }
+      ],
+      "output": "int64"
+    },
+    "rust": {
+      "input": [
+        {
+          "grid": "Vec<Vec<i32>>"
+        },
+        {
+          "limits": "Vec<i32>"
+        },
+        {
+          "k": "i32"
+        }
+      ],
+      "output": "i64"
+    }
+  },
+  "tags": [
+    "array",
+    "greedy",
+    "sorting",
+    "heap",
+    "matrix"
+  ]
+}

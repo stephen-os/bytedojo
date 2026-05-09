@@ -1,0 +1,547 @@
+{
+  "id": 2801,
+  "title": "Count Stepping Numbers in Range",
+  "slug": "count-stepping-numbers-in-range",
+  "difficulty": "Hard",
+  "description": "Given two positive integers low and high represented as strings, find the count of stepping numbers in the inclusive range [low, high].\nA stepping number is an integer such that all of its adjacent digits have an absolute difference of exactly 1.\nReturn an integer denoting the count of stepping numbers in the inclusive range [low, high].\nSince the answer may be very large, return it modulo 109 + 7.\nNote: A stepping number should not have a leading zero.\nExample 1:\nExample 2:\nConstraints:",
+  "examples": [
+    {
+      "example_num": 1,
+      "example_text": "Input: low = \"1\", high = \"11\"\nOutput: 10\nExplanation: The stepping numbers in the range [1,11] are 1, 2, 3, 4, 5, 6, 7, 8, 9 and 10. There are a total of 10 stepping numbers in the range. Hence, the output is 10.",
+      "images": []
+    },
+    {
+      "example_num": 2,
+      "example_text": "Input: low = \"90\", high = \"101\"\nOutput: 2\nExplanation: The stepping numbers in the range [90,101] are 98 and 101. There are a total of 2 stepping numbers in the range. Hence, the output is 2.",
+      "images": []
+    }
+  ],
+  "constraints": [
+    "1 <= int(low) <= int(high) < 10100",
+    "1 <= low.length, high.length <= 100",
+    "low and high consist of only digits.",
+    "low and high don't have any leading zeros."
+  ],
+  "hints": [
+    "Calculate the number of stepping numbers in the range [1, high] and subtract the number of stepping numbers in the range [1, low - 1].",
+    "The main problem is calculating the number of stepping numbers in the range [1, x].",
+    "First, calculate the number of stepping numbers shorter than x in length, which can be done using dynamic programming. (dp[i][j] is the number of i-digit stepping numbers ending with digit j).",
+    "Finally, calculate the number of stepping numbers that have the same length as x similarly. However, this time we need to maintain whether the prefix (in string) is smaller than or equal to x in the DP state."
+  ],
+  "code_snippets": {
+    "cpp": "class Solution {\npublic:\n    int countSteppingNumbers(string low, string high) {\n        \n    }\n};",
+    "java": "class Solution {\n    public int countSteppingNumbers(String low, String high) {\n        \n    }\n}",
+    "python3": "class Solution:\n    def countSteppingNumbers(self, low: str, high: str) -> int:\n        ",
+    "javascript": "/**\n * @param {string} low\n * @param {string} high\n * @return {number}\n */\nvar countSteppingNumbers = function(low, high) {\n    \n};",
+    "typescript": "function countSteppingNumbers(low: string, high: string): number {\n    \n};",
+    "golang": "func countSteppingNumbers(low string, high string) int {\n    \n}",
+    "rust": "impl Solution {\n    pub fn count_stepping_numbers(low: String, high: String) -> i32 {\n        \n    }\n}"
+  },
+  "entry_points": {
+    "python3": "Solution().countSteppingNumbers",
+    "cpp": "Solution().countSteppingNumbers",
+    "java": "new Solution().countSteppingNumbers",
+    "javascript": "countSteppingNumbers",
+    "typescript": "countSteppingNumbers",
+    "golang": "countSteppingNumbers",
+    "rust": "Solution::count_stepping_numbers"
+  },
+  "test_snippets": {
+    "python3": "def check(candidate):\n    assert candidate(low = \"123\", high = \"456\") == 13\n    assert candidate(low = \"5555555555\", high = \"6666666666\") == 436\n    assert candidate(low = \"1111111111\", high = \"2222222222\") == 307\n    assert candidate(low = \"1000000000\", high = \"1000000001\") == 0\n    assert candidate(low = \"10\", high = \"100\") == 17\n    assert candidate(low = \"9999999999\", high = \"9999999999\") == 0\n    assert candidate(low = \"1\", high = \"9876543210\") == 6111\n    assert candidate(low = \"1\", high = \"11\") == 10\n    assert candidate(low = \"9876543210\", high = \"9876543210\") == 1\n    assert candidate(low = \"90\", high = \"101\") == 2\n    assert candidate(low = \"10000000000000000000\", high = \"10000000000000000010\") == 0\n    assert candidate(low = \"12345678901234567890\", high = \"98765432109876543210\") == 1768804\n    assert candidate(low = \"12345678901234567890\", high = \"12345678901234567891\") == 0\n    assert candidate(low = \"999999999999999999\", high = \"1000000000000000000\") == 0\n    assert candidate(low = \"321098765432109876543210987\", high = \"432109876543210987654321098\") == 25767582\n    assert candidate(low = \"8888888888\", high = \"8888888899\") == 0\n    assert candidate(low = \"9999999999999999999\", high = \"10000000000000000000\") == 0\n    assert candidate(low = \"3333333333\", high = \"4444444444\") == 436\n    assert candidate(low = \"989898989898989898\", high = \"999999999999999999\") == 1\n    assert candidate(low = \"9\", high = \"9\") == 1\n    assert candidate(low = \"1234567890\", high = \"2345678901\") == 333\n    assert candidate(low = \"1\", high = \"2147483647\") == 3627\n    assert candidate(low = \"1010101010\", high = \"2020202020\") == 251\n    assert candidate(low = \"8888888888\", high = \"9999999999\") == 196\n    assert candidate(low = \"1\", high = \"12345678901234567890\") == 2358711\n    assert candidate(low = \"54321098765432109876543210\", high = \"65432109876543210987654321\") == 14851321\n    assert candidate(low = \"5\", high = \"5555555555\") == 4904\n    assert candidate(low = \"987654321\", high = \"9876543211\") == 2931\n    assert candidate(low = \"54321098765432109876\", high = \"65432109876543210987\") == 297140\n    assert candidate(low = \"5000000000\", high = \"5000000010\") == 0\n    assert candidate(low = \"500\", high = \"600\") == 4\n    assert candidate(low = \"5\", high = \"5\") == 1\n    assert candidate(low = \"12345678912345678912\", high = \"23456789123456789123\") == 226942\n    assert candidate(low = \"8888888888\", high = \"8989898989\") == 70\n    assert candidate(low = \"9876543210\", high = \"9876543219\") == 2\n    assert candidate(low = \"888888888\", high = \"999999999\") == 105\n    assert candidate(low = \"1000000000\", high = \"9999999999\") == 2986\n    assert candidate(low = \"8989898989\", high = \"9898989898\") == 127\n    assert candidate(low = \"1212121212\", high = \"2121212121\") == 202\n    assert candidate(low = \"987654321\", high = \"987654322\") == 1\n    assert candidate(low = \"10000000000000000000\", high = \"10000000000000000001\") == 0\n    assert candidate(low = \"54321\", high = \"65432\") == 17\n    assert candidate(low = \"8999999999999999999\", high = \"9000000000000000001\") == 0\n    assert candidate(low = \"1010101010\", high = \"1121212121\") == 70\n    assert candidate(low = \"1010101010\", high = \"9090909090\") == 2860\n    assert candidate(low = \"9999999999\", high = \"10000000000\") == 0\n    assert candidate(low = \"9999999990\", high = \"9999999999\") == 0\n    assert candidate(low = \"9876543210987654321\", high = \"9876543210987654322\") == 0\n    assert candidate(low = \"1\", high = \"9999999999\") == 6236\n    assert candidate(low = \"98765432109876543210\", high = \"98765432109876543211\") == 0\n    assert candidate(low = \"1234567890\", high = \"1234567899\") == 1\n    assert candidate(low = \"123\", high = \"45678901234567890123\") == 3157659\n    assert candidate(low = \"7777777777\", high = \"8888888888\") == 307\n    assert candidate(low = \"12121212121212121212\", high = \"13131313131313131313\") == 102885\n    assert candidate(low = \"321\", high = \"654\") == 13\n    assert candidate(low = \"9876543210123456789\", high = \"9876543210123456790\") == 1\n    assert candidate(low = \"1010101010\", high = \"1111111111\") == 70\n    assert candidate(low = \"98765432101234567890\", high = \"98765432101234567899\") == 1\n    assert candidate(low = \"4444444444\", high = \"5555555555\") == 456\n    assert candidate(low = \"200\", high = \"210\") == 1\n    assert candidate(low = \"1\", high = \"1234567890\") == 3500\n    assert candidate(low = \"987654321\", high = \"9876543210\") == 2931\n    assert candidate(low = \"9876543210\", high = \"10123456789\") == 252\n    assert candidate(low = \"100000000000000000000000000000000000000000000000000\", high = \"99999999999999999999999999999999999999999999999999\") == 0\n    assert candidate(low = \"99999999999999999999\", high = \"100000000000000000000\") == 0\n    assert candidate(low = \"1111111111111111111\", high = \"1212121212121212121\") == 8551\n    assert candidate(low = \"1111111111\", high = \"1111111111\") == 0\n    assert candidate(low = \"8989898989\", high = \"9090909090\") == 1\n    assert candidate(low = \"98765432101234567890\", high = \"98765432101234567891\") == 0\n    assert candidate(low = \"5432109876\", high = \"5432109877\") == 0\n    assert candidate(low = \"50505050505050505050\", high = \"60606060606060606060\") == 298777\n    assert candidate(low = \"11111111111111111111\", high = \"22222222222222222222\") == 204289\n    assert candidate(low = \"98765432101234567890\", high = \"98765432109876543210\") == 1\n    assert candidate(low = \"10000000000\", high = \"20000000000\") == 460\n    assert candidate(low = \"123\", high = \"135\") == 1\n    assert candidate(low = \"1000000000\", high = \"2000000000\") == 251\n    assert candidate(low = \"123456789\", high = \"987654321\") == 1362\n    assert candidate(low = \"98765432109876543210987654321\", high = \"98765432109876543210987654322\") == 0\n    assert candidate(low = \"98765\", high = \"98766\") == 1\n    assert candidate(low = \"123456789\", high = \"1234567891\") == 1681\n    assert candidate(low = \"987654321\", high = \"9876543219\") == 2932\n    assert candidate(low = \"987654321\", high = \"987654329\") == 2\n    assert candidate(low = \"543210\", high = \"6543210\") == 380\n    assert candidate(low = \"1234567890\", high = \"1234567891\") == 0\n    assert candidate(low = \"123\", high = \"321\") == 6\n    assert candidate(low = \"1010101010101010101\", high = \"1111111111111111111\") == 22950\n    assert candidate(low = \"8999999999\", high = \"9000000000\") == 0\n    assert candidate(low = \"555555555\", high = \"666666666\") == 228\n    assert candidate(low = \"10101010101010101010\", high = \"21212121212121212121\") == 195908\n    assert candidate(low = \"1\", high = \"10000000000000000000\") == 2194764\n    assert candidate(low = \"12345\", high = \"123456789012345\") == 90485\n    assert candidate(low = \"2222222222\", high = \"3333333333\") == 389\n    assert candidate(low = \"1\", high = \"99999999999999999999999999999999999999999999999999\") == 254219541\n    assert candidate(low = \"123454321\", high = \"123456789\") == 16\n    assert candidate(low = \"1010101010\", high = \"1010101011\") == 1\n    assert candidate(low = \"112233445566778899\", high = \"122334455667788990\") == 12190\n    assert candidate(low = \"100000000000000000000000000000000000000000000000000\", high = \"200000000000000000000000000000000000000000000000000\") == 251590529\n    assert candidate(low = \"1111111111\", high = \"9999999999\") == 2916\n    assert candidate(low = \"10101010101010101010\", high = \"20202020202020202020\") == 164407\n    assert candidate(low = \"123\", high = \"133\") == 1\n    assert candidate(low = \"10\", high = \"1111111111\") == 3311",
+    "cpp": "void check(Solution& solution) {\n    assert(solution.countSteppingNumbers(\"123\", \"456\") == vector<int>13);\n    assert(solution.countSteppingNumbers(\"5555555555\", \"6666666666\") == vector<int>436);\n    assert(solution.countSteppingNumbers(\"1111111111\", \"2222222222\") == vector<int>307);\n    assert(solution.countSteppingNumbers(\"1000000000\", \"1000000001\") == vector<int>0);\n    assert(solution.countSteppingNumbers(\"10\", \"100\") == vector<int>17);\n    assert(solution.countSteppingNumbers(\"9999999999\", \"9999999999\") == vector<int>0);\n    assert(solution.countSteppingNumbers(\"1\", \"9876543210\") == vector<int>6111);\n    assert(solution.countSteppingNumbers(\"1\", \"11\") == vector<int>10);\n    assert(solution.countSteppingNumbers(\"9876543210\", \"9876543210\") == vector<int>1);\n    assert(solution.countSteppingNumbers(\"90\", \"101\") == vector<int>2);\n    assert(solution.countSteppingNumbers(\"10000000000000000000\", \"10000000000000000010\") == vector<int>0);\n    assert(solution.countSteppingNumbers(\"12345678901234567890\", \"98765432109876543210\") == vector<int>1768804);\n    assert(solution.countSteppingNumbers(\"12345678901234567890\", \"12345678901234567891\") == vector<int>0);\n    assert(solution.countSteppingNumbers(\"999999999999999999\", \"1000000000000000000\") == vector<int>0);\n    assert(solution.countSteppingNumbers(\"321098765432109876543210987\", \"432109876543210987654321098\") == vector<int>25767582);\n    assert(solution.countSteppingNumbers(\"8888888888\", \"8888888899\") == vector<int>0);\n    assert(solution.countSteppingNumbers(\"9999999999999999999\", \"10000000000000000000\") == vector<int>0);\n    assert(solution.countSteppingNumbers(\"3333333333\", \"4444444444\") == vector<int>436);\n    assert(solution.countSteppingNumbers(\"989898989898989898\", \"999999999999999999\") == vector<int>1);\n    assert(solution.countSteppingNumbers(\"9\", \"9\") == vector<int>1);\n    assert(solution.countSteppingNumbers(\"1234567890\", \"2345678901\") == vector<int>333);\n    assert(solution.countSteppingNumbers(\"1\", \"2147483647\") == vector<int>3627);\n    assert(solution.countSteppingNumbers(\"1010101010\", \"2020202020\") == vector<int>251);\n    assert(solution.countSteppingNumbers(\"8888888888\", \"9999999999\") == vector<int>196);\n    assert(solution.countSteppingNumbers(\"1\", \"12345678901234567890\") == vector<int>2358711);\n    assert(solution.countSteppingNumbers(\"54321098765432109876543210\", \"65432109876543210987654321\") == vector<int>14851321);\n    assert(solution.countSteppingNumbers(\"5\", \"5555555555\") == vector<int>4904);\n    assert(solution.countSteppingNumbers(\"987654321\", \"9876543211\") == vector<int>2931);\n    assert(solution.countSteppingNumbers(\"54321098765432109876\", \"65432109876543210987\") == vector<int>297140);\n    assert(solution.countSteppingNumbers(\"5000000000\", \"5000000010\") == vector<int>0);\n    assert(solution.countSteppingNumbers(\"500\", \"600\") == vector<int>4);\n    assert(solution.countSteppingNumbers(\"5\", \"5\") == vector<int>1);\n    assert(solution.countSteppingNumbers(\"12345678912345678912\", \"23456789123456789123\") == vector<int>226942);\n    assert(solution.countSteppingNumbers(\"8888888888\", \"8989898989\") == vector<int>70);\n    assert(solution.countSteppingNumbers(\"9876543210\", \"9876543219\") == vector<int>2);\n    assert(solution.countSteppingNumbers(\"888888888\", \"999999999\") == vector<int>105);\n    assert(solution.countSteppingNumbers(\"1000000000\", \"9999999999\") == vector<int>2986);\n    assert(solution.countSteppingNumbers(\"8989898989\", \"9898989898\") == vector<int>127);\n    assert(solution.countSteppingNumbers(\"1212121212\", \"2121212121\") == vector<int>202);\n    assert(solution.countSteppingNumbers(\"987654321\", \"987654322\") == vector<int>1);\n    assert(solution.countSteppingNumbers(\"10000000000000000000\", \"10000000000000000001\") == vector<int>0);\n    assert(solution.countSteppingNumbers(\"54321\", \"65432\") == vector<int>17);\n    assert(solution.countSteppingNumbers(\"8999999999999999999\", \"9000000000000000001\") == vector<int>0);\n    assert(solution.countSteppingNumbers(\"1010101010\", \"1121212121\") == vector<int>70);\n    assert(solution.countSteppingNumbers(\"1010101010\", \"9090909090\") == vector<int>2860);\n    assert(solution.countSteppingNumbers(\"9999999999\", \"10000000000\") == vector<int>0);\n    assert(solution.countSteppingNumbers(\"9999999990\", \"9999999999\") == vector<int>0);\n    assert(solution.countSteppingNumbers(\"9876543210987654321\", \"9876543210987654322\") == vector<int>0);\n    assert(solution.countSteppingNumbers(\"1\", \"9999999999\") == vector<int>6236);\n    assert(solution.countSteppingNumbers(\"98765432109876543210\", \"98765432109876543211\") == vector<int>0);\n    assert(solution.countSteppingNumbers(\"1234567890\", \"1234567899\") == vector<int>1);\n    assert(solution.countSteppingNumbers(\"123\", \"45678901234567890123\") == vector<int>3157659);\n    assert(solution.countSteppingNumbers(\"7777777777\", \"8888888888\") == vector<int>307);\n    assert(solution.countSteppingNumbers(\"12121212121212121212\", \"13131313131313131313\") == vector<int>102885);\n    assert(solution.countSteppingNumbers(\"321\", \"654\") == vector<int>13);\n    assert(solution.countSteppingNumbers(\"9876543210123456789\", \"9876543210123456790\") == vector<int>1);\n    assert(solution.countSteppingNumbers(\"1010101010\", \"1111111111\") == vector<int>70);\n    assert(solution.countSteppingNumbers(\"98765432101234567890\", \"98765432101234567899\") == vector<int>1);\n    assert(solution.countSteppingNumbers(\"4444444444\", \"5555555555\") == vector<int>456);\n    assert(solution.countSteppingNumbers(\"200\", \"210\") == vector<int>1);\n    assert(solution.countSteppingNumbers(\"1\", \"1234567890\") == vector<int>3500);\n    assert(solution.countSteppingNumbers(\"987654321\", \"9876543210\") == vector<int>2931);\n    assert(solution.countSteppingNumbers(\"9876543210\", \"10123456789\") == vector<int>252);\n    assert(solution.countSteppingNumbers(\"100000000000000000000000000000000000000000000000000\", \"99999999999999999999999999999999999999999999999999\") == vector<int>0);\n    assert(solution.countSteppingNumbers(\"99999999999999999999\", \"100000000000000000000\") == vector<int>0);\n    assert(solution.countSteppingNumbers(\"1111111111111111111\", \"1212121212121212121\") == vector<int>8551);\n    assert(solution.countSteppingNumbers(\"1111111111\", \"1111111111\") == vector<int>0);\n    assert(solution.countSteppingNumbers(\"8989898989\", \"9090909090\") == vector<int>1);\n    assert(solution.countSteppingNumbers(\"98765432101234567890\", \"98765432101234567891\") == vector<int>0);\n    assert(solution.countSteppingNumbers(\"5432109876\", \"5432109877\") == vector<int>0);\n    assert(solution.countSteppingNumbers(\"50505050505050505050\", \"60606060606060606060\") == vector<int>298777);\n    assert(solution.countSteppingNumbers(\"11111111111111111111\", \"22222222222222222222\") == vector<int>204289);\n    assert(solution.countSteppingNumbers(\"98765432101234567890\", \"98765432109876543210\") == vector<int>1);\n    assert(solution.countSteppingNumbers(\"10000000000\", \"20000000000\") == vector<int>460);\n    assert(solution.countSteppingNumbers(\"123\", \"135\") == vector<int>1);\n    assert(solution.countSteppingNumbers(\"1000000000\", \"2000000000\") == vector<int>251);\n    assert(solution.countSteppingNumbers(\"123456789\", \"987654321\") == vector<int>1362);\n    assert(solution.countSteppingNumbers(\"98765432109876543210987654321\", \"98765432109876543210987654322\") == vector<int>0);\n    assert(solution.countSteppingNumbers(\"98765\", \"98766\") == vector<int>1);\n    assert(solution.countSteppingNumbers(\"123456789\", \"1234567891\") == vector<int>1681);\n    assert(solution.countSteppingNumbers(\"987654321\", \"9876543219\") == vector<int>2932);\n    assert(solution.countSteppingNumbers(\"987654321\", \"987654329\") == vector<int>2);\n    assert(solution.countSteppingNumbers(\"543210\", \"6543210\") == vector<int>380);\n    assert(solution.countSteppingNumbers(\"1234567890\", \"1234567891\") == vector<int>0);\n    assert(solution.countSteppingNumbers(\"123\", \"321\") == vector<int>6);\n    assert(solution.countSteppingNumbers(\"1010101010101010101\", \"1111111111111111111\") == vector<int>22950);\n    assert(solution.countSteppingNumbers(\"8999999999\", \"9000000000\") == vector<int>0);\n    assert(solution.countSteppingNumbers(\"555555555\", \"666666666\") == vector<int>228);\n    assert(solution.countSteppingNumbers(\"10101010101010101010\", \"21212121212121212121\") == vector<int>195908);\n    assert(solution.countSteppingNumbers(\"1\", \"10000000000000000000\") == vector<int>2194764);\n    assert(solution.countSteppingNumbers(\"12345\", \"123456789012345\") == vector<int>90485);\n    assert(solution.countSteppingNumbers(\"2222222222\", \"3333333333\") == vector<int>389);\n    assert(solution.countSteppingNumbers(\"1\", \"99999999999999999999999999999999999999999999999999\") == vector<int>254219541);\n    assert(solution.countSteppingNumbers(\"123454321\", \"123456789\") == vector<int>16);\n    assert(solution.countSteppingNumbers(\"1010101010\", \"1010101011\") == vector<int>1);\n    assert(solution.countSteppingNumbers(\"112233445566778899\", \"122334455667788990\") == vector<int>12190);\n    assert(solution.countSteppingNumbers(\"100000000000000000000000000000000000000000000000000\", \"200000000000000000000000000000000000000000000000000\") == vector<int>251590529);\n    assert(solution.countSteppingNumbers(\"1111111111\", \"9999999999\") == vector<int>2916);\n    assert(solution.countSteppingNumbers(\"10101010101010101010\", \"20202020202020202020\") == vector<int>164407);\n    assert(solution.countSteppingNumbers(\"123\", \"133\") == vector<int>1);\n    assert(solution.countSteppingNumbers(\"10\", \"1111111111\") == vector<int>3311);\n}",
+    "java": "public static void check(Solution solution) {\n    assert Arrays.equals(solution.countSteppingNumbers(\"123\", \"456\"), 13);\n    assert Arrays.equals(solution.countSteppingNumbers(\"5555555555\", \"6666666666\"), 436);\n    assert Arrays.equals(solution.countSteppingNumbers(\"1111111111\", \"2222222222\"), 307);\n    assert Arrays.equals(solution.countSteppingNumbers(\"1000000000\", \"1000000001\"), 0);\n    assert Arrays.equals(solution.countSteppingNumbers(\"10\", \"100\"), 17);\n    assert Arrays.equals(solution.countSteppingNumbers(\"9999999999\", \"9999999999\"), 0);\n    assert Arrays.equals(solution.countSteppingNumbers(\"1\", \"9876543210\"), 6111);\n    assert Arrays.equals(solution.countSteppingNumbers(\"1\", \"11\"), 10);\n    assert Arrays.equals(solution.countSteppingNumbers(\"9876543210\", \"9876543210\"), 1);\n    assert Arrays.equals(solution.countSteppingNumbers(\"90\", \"101\"), 2);\n    assert Arrays.equals(solution.countSteppingNumbers(\"10000000000000000000\", \"10000000000000000010\"), 0);\n    assert Arrays.equals(solution.countSteppingNumbers(\"12345678901234567890\", \"98765432109876543210\"), 1768804);\n    assert Arrays.equals(solution.countSteppingNumbers(\"12345678901234567890\", \"12345678901234567891\"), 0);\n    assert Arrays.equals(solution.countSteppingNumbers(\"999999999999999999\", \"1000000000000000000\"), 0);\n    assert Arrays.equals(solution.countSteppingNumbers(\"321098765432109876543210987\", \"432109876543210987654321098\"), 25767582);\n    assert Arrays.equals(solution.countSteppingNumbers(\"8888888888\", \"8888888899\"), 0);\n    assert Arrays.equals(solution.countSteppingNumbers(\"9999999999999999999\", \"10000000000000000000\"), 0);\n    assert Arrays.equals(solution.countSteppingNumbers(\"3333333333\", \"4444444444\"), 436);\n    assert Arrays.equals(solution.countSteppingNumbers(\"989898989898989898\", \"999999999999999999\"), 1);\n    assert Arrays.equals(solution.countSteppingNumbers(\"9\", \"9\"), 1);\n    assert Arrays.equals(solution.countSteppingNumbers(\"1234567890\", \"2345678901\"), 333);\n    assert Arrays.equals(solution.countSteppingNumbers(\"1\", \"2147483647\"), 3627);\n    assert Arrays.equals(solution.countSteppingNumbers(\"1010101010\", \"2020202020\"), 251);\n    assert Arrays.equals(solution.countSteppingNumbers(\"8888888888\", \"9999999999\"), 196);\n    assert Arrays.equals(solution.countSteppingNumbers(\"1\", \"12345678901234567890\"), 2358711);\n    assert Arrays.equals(solution.countSteppingNumbers(\"54321098765432109876543210\", \"65432109876543210987654321\"), 14851321);\n    assert Arrays.equals(solution.countSteppingNumbers(\"5\", \"5555555555\"), 4904);\n    assert Arrays.equals(solution.countSteppingNumbers(\"987654321\", \"9876543211\"), 2931);\n    assert Arrays.equals(solution.countSteppingNumbers(\"54321098765432109876\", \"65432109876543210987\"), 297140);\n    assert Arrays.equals(solution.countSteppingNumbers(\"5000000000\", \"5000000010\"), 0);\n    assert Arrays.equals(solution.countSteppingNumbers(\"500\", \"600\"), 4);\n    assert Arrays.equals(solution.countSteppingNumbers(\"5\", \"5\"), 1);\n    assert Arrays.equals(solution.countSteppingNumbers(\"12345678912345678912\", \"23456789123456789123\"), 226942);\n    assert Arrays.equals(solution.countSteppingNumbers(\"8888888888\", \"8989898989\"), 70);\n    assert Arrays.equals(solution.countSteppingNumbers(\"9876543210\", \"9876543219\"), 2);\n    assert Arrays.equals(solution.countSteppingNumbers(\"888888888\", \"999999999\"), 105);\n    assert Arrays.equals(solution.countSteppingNumbers(\"1000000000\", \"9999999999\"), 2986);\n    assert Arrays.equals(solution.countSteppingNumbers(\"8989898989\", \"9898989898\"), 127);\n    assert Arrays.equals(solution.countSteppingNumbers(\"1212121212\", \"2121212121\"), 202);\n    assert Arrays.equals(solution.countSteppingNumbers(\"987654321\", \"987654322\"), 1);\n    assert Arrays.equals(solution.countSteppingNumbers(\"10000000000000000000\", \"10000000000000000001\"), 0);\n    assert Arrays.equals(solution.countSteppingNumbers(\"54321\", \"65432\"), 17);\n    assert Arrays.equals(solution.countSteppingNumbers(\"8999999999999999999\", \"9000000000000000001\"), 0);\n    assert Arrays.equals(solution.countSteppingNumbers(\"1010101010\", \"1121212121\"), 70);\n    assert Arrays.equals(solution.countSteppingNumbers(\"1010101010\", \"9090909090\"), 2860);\n    assert Arrays.equals(solution.countSteppingNumbers(\"9999999999\", \"10000000000\"), 0);\n    assert Arrays.equals(solution.countSteppingNumbers(\"9999999990\", \"9999999999\"), 0);\n    assert Arrays.equals(solution.countSteppingNumbers(\"9876543210987654321\", \"9876543210987654322\"), 0);\n    assert Arrays.equals(solution.countSteppingNumbers(\"1\", \"9999999999\"), 6236);\n    assert Arrays.equals(solution.countSteppingNumbers(\"98765432109876543210\", \"98765432109876543211\"), 0);\n    assert Arrays.equals(solution.countSteppingNumbers(\"1234567890\", \"1234567899\"), 1);\n    assert Arrays.equals(solution.countSteppingNumbers(\"123\", \"45678901234567890123\"), 3157659);\n    assert Arrays.equals(solution.countSteppingNumbers(\"7777777777\", \"8888888888\"), 307);\n    assert Arrays.equals(solution.countSteppingNumbers(\"12121212121212121212\", \"13131313131313131313\"), 102885);\n    assert Arrays.equals(solution.countSteppingNumbers(\"321\", \"654\"), 13);\n    assert Arrays.equals(solution.countSteppingNumbers(\"9876543210123456789\", \"9876543210123456790\"), 1);\n    assert Arrays.equals(solution.countSteppingNumbers(\"1010101010\", \"1111111111\"), 70);\n    assert Arrays.equals(solution.countSteppingNumbers(\"98765432101234567890\", \"98765432101234567899\"), 1);\n    assert Arrays.equals(solution.countSteppingNumbers(\"4444444444\", \"5555555555\"), 456);\n    assert Arrays.equals(solution.countSteppingNumbers(\"200\", \"210\"), 1);\n    assert Arrays.equals(solution.countSteppingNumbers(\"1\", \"1234567890\"), 3500);\n    assert Arrays.equals(solution.countSteppingNumbers(\"987654321\", \"9876543210\"), 2931);\n    assert Arrays.equals(solution.countSteppingNumbers(\"9876543210\", \"10123456789\"), 252);\n    assert Arrays.equals(solution.countSteppingNumbers(\"100000000000000000000000000000000000000000000000000\", \"99999999999999999999999999999999999999999999999999\"), 0);\n    assert Arrays.equals(solution.countSteppingNumbers(\"99999999999999999999\", \"100000000000000000000\"), 0);\n    assert Arrays.equals(solution.countSteppingNumbers(\"1111111111111111111\", \"1212121212121212121\"), 8551);\n    assert Arrays.equals(solution.countSteppingNumbers(\"1111111111\", \"1111111111\"), 0);\n    assert Arrays.equals(solution.countSteppingNumbers(\"8989898989\", \"9090909090\"), 1);\n    assert Arrays.equals(solution.countSteppingNumbers(\"98765432101234567890\", \"98765432101234567891\"), 0);\n    assert Arrays.equals(solution.countSteppingNumbers(\"5432109876\", \"5432109877\"), 0);\n    assert Arrays.equals(solution.countSteppingNumbers(\"50505050505050505050\", \"60606060606060606060\"), 298777);\n    assert Arrays.equals(solution.countSteppingNumbers(\"11111111111111111111\", \"22222222222222222222\"), 204289);\n    assert Arrays.equals(solution.countSteppingNumbers(\"98765432101234567890\", \"98765432109876543210\"), 1);\n    assert Arrays.equals(solution.countSteppingNumbers(\"10000000000\", \"20000000000\"), 460);\n    assert Arrays.equals(solution.countSteppingNumbers(\"123\", \"135\"), 1);\n    assert Arrays.equals(solution.countSteppingNumbers(\"1000000000\", \"2000000000\"), 251);\n    assert Arrays.equals(solution.countSteppingNumbers(\"123456789\", \"987654321\"), 1362);\n    assert Arrays.equals(solution.countSteppingNumbers(\"98765432109876543210987654321\", \"98765432109876543210987654322\"), 0);\n    assert Arrays.equals(solution.countSteppingNumbers(\"98765\", \"98766\"), 1);\n    assert Arrays.equals(solution.countSteppingNumbers(\"123456789\", \"1234567891\"), 1681);\n    assert Arrays.equals(solution.countSteppingNumbers(\"987654321\", \"9876543219\"), 2932);\n    assert Arrays.equals(solution.countSteppingNumbers(\"987654321\", \"987654329\"), 2);\n    assert Arrays.equals(solution.countSteppingNumbers(\"543210\", \"6543210\"), 380);\n    assert Arrays.equals(solution.countSteppingNumbers(\"1234567890\", \"1234567891\"), 0);\n    assert Arrays.equals(solution.countSteppingNumbers(\"123\", \"321\"), 6);\n    assert Arrays.equals(solution.countSteppingNumbers(\"1010101010101010101\", \"1111111111111111111\"), 22950);\n    assert Arrays.equals(solution.countSteppingNumbers(\"8999999999\", \"9000000000\"), 0);\n    assert Arrays.equals(solution.countSteppingNumbers(\"555555555\", \"666666666\"), 228);\n    assert Arrays.equals(solution.countSteppingNumbers(\"10101010101010101010\", \"21212121212121212121\"), 195908);\n    assert Arrays.equals(solution.countSteppingNumbers(\"1\", \"10000000000000000000\"), 2194764);\n    assert Arrays.equals(solution.countSteppingNumbers(\"12345\", \"123456789012345\"), 90485);\n    assert Arrays.equals(solution.countSteppingNumbers(\"2222222222\", \"3333333333\"), 389);\n    assert Arrays.equals(solution.countSteppingNumbers(\"1\", \"99999999999999999999999999999999999999999999999999\"), 254219541);\n    assert Arrays.equals(solution.countSteppingNumbers(\"123454321\", \"123456789\"), 16);\n    assert Arrays.equals(solution.countSteppingNumbers(\"1010101010\", \"1010101011\"), 1);\n    assert Arrays.equals(solution.countSteppingNumbers(\"112233445566778899\", \"122334455667788990\"), 12190);\n    assert Arrays.equals(solution.countSteppingNumbers(\"100000000000000000000000000000000000000000000000000\", \"200000000000000000000000000000000000000000000000000\"), 251590529);\n    assert Arrays.equals(solution.countSteppingNumbers(\"1111111111\", \"9999999999\"), 2916);\n    assert Arrays.equals(solution.countSteppingNumbers(\"10101010101010101010\", \"20202020202020202020\"), 164407);\n    assert Arrays.equals(solution.countSteppingNumbers(\"123\", \"133\"), 1);\n    assert Arrays.equals(solution.countSteppingNumbers(\"10\", \"1111111111\"), 3311);\n}",
+    "javascript": "function check(candidate) {\n    console.assert(JSON.stringify(candidate(\"123\", \"456\")) === JSON.stringify(13));\n    console.assert(JSON.stringify(candidate(\"5555555555\", \"6666666666\")) === JSON.stringify(436));\n    console.assert(JSON.stringify(candidate(\"1111111111\", \"2222222222\")) === JSON.stringify(307));\n    console.assert(JSON.stringify(candidate(\"1000000000\", \"1000000001\")) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"10\", \"100\")) === JSON.stringify(17));\n    console.assert(JSON.stringify(candidate(\"9999999999\", \"9999999999\")) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"1\", \"9876543210\")) === JSON.stringify(6111));\n    console.assert(JSON.stringify(candidate(\"1\", \"11\")) === JSON.stringify(10));\n    console.assert(JSON.stringify(candidate(\"9876543210\", \"9876543210\")) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate(\"90\", \"101\")) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(\"10000000000000000000\", \"10000000000000000010\")) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"12345678901234567890\", \"98765432109876543210\")) === JSON.stringify(1768804));\n    console.assert(JSON.stringify(candidate(\"12345678901234567890\", \"12345678901234567891\")) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"999999999999999999\", \"1000000000000000000\")) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"321098765432109876543210987\", \"432109876543210987654321098\")) === JSON.stringify(25767582));\n    console.assert(JSON.stringify(candidate(\"8888888888\", \"8888888899\")) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"9999999999999999999\", \"10000000000000000000\")) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"3333333333\", \"4444444444\")) === JSON.stringify(436));\n    console.assert(JSON.stringify(candidate(\"989898989898989898\", \"999999999999999999\")) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate(\"9\", \"9\")) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate(\"1234567890\", \"2345678901\")) === JSON.stringify(333));\n    console.assert(JSON.stringify(candidate(\"1\", \"2147483647\")) === JSON.stringify(3627));\n    console.assert(JSON.stringify(candidate(\"1010101010\", \"2020202020\")) === JSON.stringify(251));\n    console.assert(JSON.stringify(candidate(\"8888888888\", \"9999999999\")) === JSON.stringify(196));\n    console.assert(JSON.stringify(candidate(\"1\", \"12345678901234567890\")) === JSON.stringify(2358711));\n    console.assert(JSON.stringify(candidate(\"54321098765432109876543210\", \"65432109876543210987654321\")) === JSON.stringify(14851321));\n    console.assert(JSON.stringify(candidate(\"5\", \"5555555555\")) === JSON.stringify(4904));\n    console.assert(JSON.stringify(candidate(\"987654321\", \"9876543211\")) === JSON.stringify(2931));\n    console.assert(JSON.stringify(candidate(\"54321098765432109876\", \"65432109876543210987\")) === JSON.stringify(297140));\n    console.assert(JSON.stringify(candidate(\"5000000000\", \"5000000010\")) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"500\", \"600\")) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate(\"5\", \"5\")) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate(\"12345678912345678912\", \"23456789123456789123\")) === JSON.stringify(226942));\n    console.assert(JSON.stringify(candidate(\"8888888888\", \"8989898989\")) === JSON.stringify(70));\n    console.assert(JSON.stringify(candidate(\"9876543210\", \"9876543219\")) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(\"888888888\", \"999999999\")) === JSON.stringify(105));\n    console.assert(JSON.stringify(candidate(\"1000000000\", \"9999999999\")) === JSON.stringify(2986));\n    console.assert(JSON.stringify(candidate(\"8989898989\", \"9898989898\")) === JSON.stringify(127));\n    console.assert(JSON.stringify(candidate(\"1212121212\", \"2121212121\")) === JSON.stringify(202));\n    console.assert(JSON.stringify(candidate(\"987654321\", \"987654322\")) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate(\"10000000000000000000\", \"10000000000000000001\")) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"54321\", \"65432\")) === JSON.stringify(17));\n    console.assert(JSON.stringify(candidate(\"8999999999999999999\", \"9000000000000000001\")) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"1010101010\", \"1121212121\")) === JSON.stringify(70));\n    console.assert(JSON.stringify(candidate(\"1010101010\", \"9090909090\")) === JSON.stringify(2860));\n    console.assert(JSON.stringify(candidate(\"9999999999\", \"10000000000\")) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"9999999990\", \"9999999999\")) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"9876543210987654321\", \"9876543210987654322\")) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"1\", \"9999999999\")) === JSON.stringify(6236));\n    console.assert(JSON.stringify(candidate(\"98765432109876543210\", \"98765432109876543211\")) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"1234567890\", \"1234567899\")) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate(\"123\", \"45678901234567890123\")) === JSON.stringify(3157659));\n    console.assert(JSON.stringify(candidate(\"7777777777\", \"8888888888\")) === JSON.stringify(307));\n    console.assert(JSON.stringify(candidate(\"12121212121212121212\", \"13131313131313131313\")) === JSON.stringify(102885));\n    console.assert(JSON.stringify(candidate(\"321\", \"654\")) === JSON.stringify(13));\n    console.assert(JSON.stringify(candidate(\"9876543210123456789\", \"9876543210123456790\")) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate(\"1010101010\", \"1111111111\")) === JSON.stringify(70));\n    console.assert(JSON.stringify(candidate(\"98765432101234567890\", \"98765432101234567899\")) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate(\"4444444444\", \"5555555555\")) === JSON.stringify(456));\n    console.assert(JSON.stringify(candidate(\"200\", \"210\")) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate(\"1\", \"1234567890\")) === JSON.stringify(3500));\n    console.assert(JSON.stringify(candidate(\"987654321\", \"9876543210\")) === JSON.stringify(2931));\n    console.assert(JSON.stringify(candidate(\"9876543210\", \"10123456789\")) === JSON.stringify(252));\n    console.assert(JSON.stringify(candidate(\"100000000000000000000000000000000000000000000000000\", \"99999999999999999999999999999999999999999999999999\")) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"99999999999999999999\", \"100000000000000000000\")) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"1111111111111111111\", \"1212121212121212121\")) === JSON.stringify(8551));\n    console.assert(JSON.stringify(candidate(\"1111111111\", \"1111111111\")) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"8989898989\", \"9090909090\")) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate(\"98765432101234567890\", \"98765432101234567891\")) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"5432109876\", \"5432109877\")) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"50505050505050505050\", \"60606060606060606060\")) === JSON.stringify(298777));\n    console.assert(JSON.stringify(candidate(\"11111111111111111111\", \"22222222222222222222\")) === JSON.stringify(204289));\n    console.assert(JSON.stringify(candidate(\"98765432101234567890\", \"98765432109876543210\")) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate(\"10000000000\", \"20000000000\")) === JSON.stringify(460));\n    console.assert(JSON.stringify(candidate(\"123\", \"135\")) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate(\"1000000000\", \"2000000000\")) === JSON.stringify(251));\n    console.assert(JSON.stringify(candidate(\"123456789\", \"987654321\")) === JSON.stringify(1362));\n    console.assert(JSON.stringify(candidate(\"98765432109876543210987654321\", \"98765432109876543210987654322\")) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"98765\", \"98766\")) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate(\"123456789\", \"1234567891\")) === JSON.stringify(1681));\n    console.assert(JSON.stringify(candidate(\"987654321\", \"9876543219\")) === JSON.stringify(2932));\n    console.assert(JSON.stringify(candidate(\"987654321\", \"987654329\")) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(\"543210\", \"6543210\")) === JSON.stringify(380));\n    console.assert(JSON.stringify(candidate(\"1234567890\", \"1234567891\")) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"123\", \"321\")) === JSON.stringify(6));\n    console.assert(JSON.stringify(candidate(\"1010101010101010101\", \"1111111111111111111\")) === JSON.stringify(22950));\n    console.assert(JSON.stringify(candidate(\"8999999999\", \"9000000000\")) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"555555555\", \"666666666\")) === JSON.stringify(228));\n    console.assert(JSON.stringify(candidate(\"10101010101010101010\", \"21212121212121212121\")) === JSON.stringify(195908));\n    console.assert(JSON.stringify(candidate(\"1\", \"10000000000000000000\")) === JSON.stringify(2194764));\n    console.assert(JSON.stringify(candidate(\"12345\", \"123456789012345\")) === JSON.stringify(90485));\n    console.assert(JSON.stringify(candidate(\"2222222222\", \"3333333333\")) === JSON.stringify(389));\n    console.assert(JSON.stringify(candidate(\"1\", \"99999999999999999999999999999999999999999999999999\")) === JSON.stringify(254219541));\n    console.assert(JSON.stringify(candidate(\"123454321\", \"123456789\")) === JSON.stringify(16));\n    console.assert(JSON.stringify(candidate(\"1010101010\", \"1010101011\")) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate(\"112233445566778899\", \"122334455667788990\")) === JSON.stringify(12190));\n    console.assert(JSON.stringify(candidate(\"100000000000000000000000000000000000000000000000000\", \"200000000000000000000000000000000000000000000000000\")) === JSON.stringify(251590529));\n    console.assert(JSON.stringify(candidate(\"1111111111\", \"9999999999\")) === JSON.stringify(2916));\n    console.assert(JSON.stringify(candidate(\"10101010101010101010\", \"20202020202020202020\")) === JSON.stringify(164407));\n    console.assert(JSON.stringify(candidate(\"123\", \"133\")) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate(\"10\", \"1111111111\")) === JSON.stringify(3311));\n}",
+    "typescript": "function check(candidate: Function): void {\n    console.assert(JSON.stringify(candidate(\"123\", \"456\")) === JSON.stringify(13));\n    console.assert(JSON.stringify(candidate(\"5555555555\", \"6666666666\")) === JSON.stringify(436));\n    console.assert(JSON.stringify(candidate(\"1111111111\", \"2222222222\")) === JSON.stringify(307));\n    console.assert(JSON.stringify(candidate(\"1000000000\", \"1000000001\")) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"10\", \"100\")) === JSON.stringify(17));\n    console.assert(JSON.stringify(candidate(\"9999999999\", \"9999999999\")) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"1\", \"9876543210\")) === JSON.stringify(6111));\n    console.assert(JSON.stringify(candidate(\"1\", \"11\")) === JSON.stringify(10));\n    console.assert(JSON.stringify(candidate(\"9876543210\", \"9876543210\")) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate(\"90\", \"101\")) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(\"10000000000000000000\", \"10000000000000000010\")) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"12345678901234567890\", \"98765432109876543210\")) === JSON.stringify(1768804));\n    console.assert(JSON.stringify(candidate(\"12345678901234567890\", \"12345678901234567891\")) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"999999999999999999\", \"1000000000000000000\")) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"321098765432109876543210987\", \"432109876543210987654321098\")) === JSON.stringify(25767582));\n    console.assert(JSON.stringify(candidate(\"8888888888\", \"8888888899\")) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"9999999999999999999\", \"10000000000000000000\")) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"3333333333\", \"4444444444\")) === JSON.stringify(436));\n    console.assert(JSON.stringify(candidate(\"989898989898989898\", \"999999999999999999\")) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate(\"9\", \"9\")) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate(\"1234567890\", \"2345678901\")) === JSON.stringify(333));\n    console.assert(JSON.stringify(candidate(\"1\", \"2147483647\")) === JSON.stringify(3627));\n    console.assert(JSON.stringify(candidate(\"1010101010\", \"2020202020\")) === JSON.stringify(251));\n    console.assert(JSON.stringify(candidate(\"8888888888\", \"9999999999\")) === JSON.stringify(196));\n    console.assert(JSON.stringify(candidate(\"1\", \"12345678901234567890\")) === JSON.stringify(2358711));\n    console.assert(JSON.stringify(candidate(\"54321098765432109876543210\", \"65432109876543210987654321\")) === JSON.stringify(14851321));\n    console.assert(JSON.stringify(candidate(\"5\", \"5555555555\")) === JSON.stringify(4904));\n    console.assert(JSON.stringify(candidate(\"987654321\", \"9876543211\")) === JSON.stringify(2931));\n    console.assert(JSON.stringify(candidate(\"54321098765432109876\", \"65432109876543210987\")) === JSON.stringify(297140));\n    console.assert(JSON.stringify(candidate(\"5000000000\", \"5000000010\")) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"500\", \"600\")) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate(\"5\", \"5\")) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate(\"12345678912345678912\", \"23456789123456789123\")) === JSON.stringify(226942));\n    console.assert(JSON.stringify(candidate(\"8888888888\", \"8989898989\")) === JSON.stringify(70));\n    console.assert(JSON.stringify(candidate(\"9876543210\", \"9876543219\")) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(\"888888888\", \"999999999\")) === JSON.stringify(105));\n    console.assert(JSON.stringify(candidate(\"1000000000\", \"9999999999\")) === JSON.stringify(2986));\n    console.assert(JSON.stringify(candidate(\"8989898989\", \"9898989898\")) === JSON.stringify(127));\n    console.assert(JSON.stringify(candidate(\"1212121212\", \"2121212121\")) === JSON.stringify(202));\n    console.assert(JSON.stringify(candidate(\"987654321\", \"987654322\")) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate(\"10000000000000000000\", \"10000000000000000001\")) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"54321\", \"65432\")) === JSON.stringify(17));\n    console.assert(JSON.stringify(candidate(\"8999999999999999999\", \"9000000000000000001\")) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"1010101010\", \"1121212121\")) === JSON.stringify(70));\n    console.assert(JSON.stringify(candidate(\"1010101010\", \"9090909090\")) === JSON.stringify(2860));\n    console.assert(JSON.stringify(candidate(\"9999999999\", \"10000000000\")) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"9999999990\", \"9999999999\")) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"9876543210987654321\", \"9876543210987654322\")) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"1\", \"9999999999\")) === JSON.stringify(6236));\n    console.assert(JSON.stringify(candidate(\"98765432109876543210\", \"98765432109876543211\")) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"1234567890\", \"1234567899\")) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate(\"123\", \"45678901234567890123\")) === JSON.stringify(3157659));\n    console.assert(JSON.stringify(candidate(\"7777777777\", \"8888888888\")) === JSON.stringify(307));\n    console.assert(JSON.stringify(candidate(\"12121212121212121212\", \"13131313131313131313\")) === JSON.stringify(102885));\n    console.assert(JSON.stringify(candidate(\"321\", \"654\")) === JSON.stringify(13));\n    console.assert(JSON.stringify(candidate(\"9876543210123456789\", \"9876543210123456790\")) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate(\"1010101010\", \"1111111111\")) === JSON.stringify(70));\n    console.assert(JSON.stringify(candidate(\"98765432101234567890\", \"98765432101234567899\")) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate(\"4444444444\", \"5555555555\")) === JSON.stringify(456));\n    console.assert(JSON.stringify(candidate(\"200\", \"210\")) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate(\"1\", \"1234567890\")) === JSON.stringify(3500));\n    console.assert(JSON.stringify(candidate(\"987654321\", \"9876543210\")) === JSON.stringify(2931));\n    console.assert(JSON.stringify(candidate(\"9876543210\", \"10123456789\")) === JSON.stringify(252));\n    console.assert(JSON.stringify(candidate(\"100000000000000000000000000000000000000000000000000\", \"99999999999999999999999999999999999999999999999999\")) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"99999999999999999999\", \"100000000000000000000\")) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"1111111111111111111\", \"1212121212121212121\")) === JSON.stringify(8551));\n    console.assert(JSON.stringify(candidate(\"1111111111\", \"1111111111\")) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"8989898989\", \"9090909090\")) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate(\"98765432101234567890\", \"98765432101234567891\")) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"5432109876\", \"5432109877\")) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"50505050505050505050\", \"60606060606060606060\")) === JSON.stringify(298777));\n    console.assert(JSON.stringify(candidate(\"11111111111111111111\", \"22222222222222222222\")) === JSON.stringify(204289));\n    console.assert(JSON.stringify(candidate(\"98765432101234567890\", \"98765432109876543210\")) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate(\"10000000000\", \"20000000000\")) === JSON.stringify(460));\n    console.assert(JSON.stringify(candidate(\"123\", \"135\")) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate(\"1000000000\", \"2000000000\")) === JSON.stringify(251));\n    console.assert(JSON.stringify(candidate(\"123456789\", \"987654321\")) === JSON.stringify(1362));\n    console.assert(JSON.stringify(candidate(\"98765432109876543210987654321\", \"98765432109876543210987654322\")) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"98765\", \"98766\")) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate(\"123456789\", \"1234567891\")) === JSON.stringify(1681));\n    console.assert(JSON.stringify(candidate(\"987654321\", \"9876543219\")) === JSON.stringify(2932));\n    console.assert(JSON.stringify(candidate(\"987654321\", \"987654329\")) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(\"543210\", \"6543210\")) === JSON.stringify(380));\n    console.assert(JSON.stringify(candidate(\"1234567890\", \"1234567891\")) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"123\", \"321\")) === JSON.stringify(6));\n    console.assert(JSON.stringify(candidate(\"1010101010101010101\", \"1111111111111111111\")) === JSON.stringify(22950));\n    console.assert(JSON.stringify(candidate(\"8999999999\", \"9000000000\")) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(\"555555555\", \"666666666\")) === JSON.stringify(228));\n    console.assert(JSON.stringify(candidate(\"10101010101010101010\", \"21212121212121212121\")) === JSON.stringify(195908));\n    console.assert(JSON.stringify(candidate(\"1\", \"10000000000000000000\")) === JSON.stringify(2194764));\n    console.assert(JSON.stringify(candidate(\"12345\", \"123456789012345\")) === JSON.stringify(90485));\n    console.assert(JSON.stringify(candidate(\"2222222222\", \"3333333333\")) === JSON.stringify(389));\n    console.assert(JSON.stringify(candidate(\"1\", \"99999999999999999999999999999999999999999999999999\")) === JSON.stringify(254219541));\n    console.assert(JSON.stringify(candidate(\"123454321\", \"123456789\")) === JSON.stringify(16));\n    console.assert(JSON.stringify(candidate(\"1010101010\", \"1010101011\")) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate(\"112233445566778899\", \"122334455667788990\")) === JSON.stringify(12190));\n    console.assert(JSON.stringify(candidate(\"100000000000000000000000000000000000000000000000000\", \"200000000000000000000000000000000000000000000000000\")) === JSON.stringify(251590529));\n    console.assert(JSON.stringify(candidate(\"1111111111\", \"9999999999\")) === JSON.stringify(2916));\n    console.assert(JSON.stringify(candidate(\"10101010101010101010\", \"20202020202020202020\")) === JSON.stringify(164407));\n    console.assert(JSON.stringify(candidate(\"123\", \"133\")) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate(\"10\", \"1111111111\")) === JSON.stringify(3311));\n}",
+    "golang": "func check(candidate func([]int, int) []int) {\n    assert reflect.DeepEqual(candidate(\"123\", \"456\"), 13)\n    assert reflect.DeepEqual(candidate(\"5555555555\", \"6666666666\"), 436)\n    assert reflect.DeepEqual(candidate(\"1111111111\", \"2222222222\"), 307)\n    assert reflect.DeepEqual(candidate(\"1000000000\", \"1000000001\"), 0)\n    assert reflect.DeepEqual(candidate(\"10\", \"100\"), 17)\n    assert reflect.DeepEqual(candidate(\"9999999999\", \"9999999999\"), 0)\n    assert reflect.DeepEqual(candidate(\"1\", \"9876543210\"), 6111)\n    assert reflect.DeepEqual(candidate(\"1\", \"11\"), 10)\n    assert reflect.DeepEqual(candidate(\"9876543210\", \"9876543210\"), 1)\n    assert reflect.DeepEqual(candidate(\"90\", \"101\"), 2)\n    assert reflect.DeepEqual(candidate(\"10000000000000000000\", \"10000000000000000010\"), 0)\n    assert reflect.DeepEqual(candidate(\"12345678901234567890\", \"98765432109876543210\"), 1768804)\n    assert reflect.DeepEqual(candidate(\"12345678901234567890\", \"12345678901234567891\"), 0)\n    assert reflect.DeepEqual(candidate(\"999999999999999999\", \"1000000000000000000\"), 0)\n    assert reflect.DeepEqual(candidate(\"321098765432109876543210987\", \"432109876543210987654321098\"), 25767582)\n    assert reflect.DeepEqual(candidate(\"8888888888\", \"8888888899\"), 0)\n    assert reflect.DeepEqual(candidate(\"9999999999999999999\", \"10000000000000000000\"), 0)\n    assert reflect.DeepEqual(candidate(\"3333333333\", \"4444444444\"), 436)\n    assert reflect.DeepEqual(candidate(\"989898989898989898\", \"999999999999999999\"), 1)\n    assert reflect.DeepEqual(candidate(\"9\", \"9\"), 1)\n    assert reflect.DeepEqual(candidate(\"1234567890\", \"2345678901\"), 333)\n    assert reflect.DeepEqual(candidate(\"1\", \"2147483647\"), 3627)\n    assert reflect.DeepEqual(candidate(\"1010101010\", \"2020202020\"), 251)\n    assert reflect.DeepEqual(candidate(\"8888888888\", \"9999999999\"), 196)\n    assert reflect.DeepEqual(candidate(\"1\", \"12345678901234567890\"), 2358711)\n    assert reflect.DeepEqual(candidate(\"54321098765432109876543210\", \"65432109876543210987654321\"), 14851321)\n    assert reflect.DeepEqual(candidate(\"5\", \"5555555555\"), 4904)\n    assert reflect.DeepEqual(candidate(\"987654321\", \"9876543211\"), 2931)\n    assert reflect.DeepEqual(candidate(\"54321098765432109876\", \"65432109876543210987\"), 297140)\n    assert reflect.DeepEqual(candidate(\"5000000000\", \"5000000010\"), 0)\n    assert reflect.DeepEqual(candidate(\"500\", \"600\"), 4)\n    assert reflect.DeepEqual(candidate(\"5\", \"5\"), 1)\n    assert reflect.DeepEqual(candidate(\"12345678912345678912\", \"23456789123456789123\"), 226942)\n    assert reflect.DeepEqual(candidate(\"8888888888\", \"8989898989\"), 70)\n    assert reflect.DeepEqual(candidate(\"9876543210\", \"9876543219\"), 2)\n    assert reflect.DeepEqual(candidate(\"888888888\", \"999999999\"), 105)\n    assert reflect.DeepEqual(candidate(\"1000000000\", \"9999999999\"), 2986)\n    assert reflect.DeepEqual(candidate(\"8989898989\", \"9898989898\"), 127)\n    assert reflect.DeepEqual(candidate(\"1212121212\", \"2121212121\"), 202)\n    assert reflect.DeepEqual(candidate(\"987654321\", \"987654322\"), 1)\n    assert reflect.DeepEqual(candidate(\"10000000000000000000\", \"10000000000000000001\"), 0)\n    assert reflect.DeepEqual(candidate(\"54321\", \"65432\"), 17)\n    assert reflect.DeepEqual(candidate(\"8999999999999999999\", \"9000000000000000001\"), 0)\n    assert reflect.DeepEqual(candidate(\"1010101010\", \"1121212121\"), 70)\n    assert reflect.DeepEqual(candidate(\"1010101010\", \"9090909090\"), 2860)\n    assert reflect.DeepEqual(candidate(\"9999999999\", \"10000000000\"), 0)\n    assert reflect.DeepEqual(candidate(\"9999999990\", \"9999999999\"), 0)\n    assert reflect.DeepEqual(candidate(\"9876543210987654321\", \"9876543210987654322\"), 0)\n    assert reflect.DeepEqual(candidate(\"1\", \"9999999999\"), 6236)\n    assert reflect.DeepEqual(candidate(\"98765432109876543210\", \"98765432109876543211\"), 0)\n    assert reflect.DeepEqual(candidate(\"1234567890\", \"1234567899\"), 1)\n    assert reflect.DeepEqual(candidate(\"123\", \"45678901234567890123\"), 3157659)\n    assert reflect.DeepEqual(candidate(\"7777777777\", \"8888888888\"), 307)\n    assert reflect.DeepEqual(candidate(\"12121212121212121212\", \"13131313131313131313\"), 102885)\n    assert reflect.DeepEqual(candidate(\"321\", \"654\"), 13)\n    assert reflect.DeepEqual(candidate(\"9876543210123456789\", \"9876543210123456790\"), 1)\n    assert reflect.DeepEqual(candidate(\"1010101010\", \"1111111111\"), 70)\n    assert reflect.DeepEqual(candidate(\"98765432101234567890\", \"98765432101234567899\"), 1)\n    assert reflect.DeepEqual(candidate(\"4444444444\", \"5555555555\"), 456)\n    assert reflect.DeepEqual(candidate(\"200\", \"210\"), 1)\n    assert reflect.DeepEqual(candidate(\"1\", \"1234567890\"), 3500)\n    assert reflect.DeepEqual(candidate(\"987654321\", \"9876543210\"), 2931)\n    assert reflect.DeepEqual(candidate(\"9876543210\", \"10123456789\"), 252)\n    assert reflect.DeepEqual(candidate(\"100000000000000000000000000000000000000000000000000\", \"99999999999999999999999999999999999999999999999999\"), 0)\n    assert reflect.DeepEqual(candidate(\"99999999999999999999\", \"100000000000000000000\"), 0)\n    assert reflect.DeepEqual(candidate(\"1111111111111111111\", \"1212121212121212121\"), 8551)\n    assert reflect.DeepEqual(candidate(\"1111111111\", \"1111111111\"), 0)\n    assert reflect.DeepEqual(candidate(\"8989898989\", \"9090909090\"), 1)\n    assert reflect.DeepEqual(candidate(\"98765432101234567890\", \"98765432101234567891\"), 0)\n    assert reflect.DeepEqual(candidate(\"5432109876\", \"5432109877\"), 0)\n    assert reflect.DeepEqual(candidate(\"50505050505050505050\", \"60606060606060606060\"), 298777)\n    assert reflect.DeepEqual(candidate(\"11111111111111111111\", \"22222222222222222222\"), 204289)\n    assert reflect.DeepEqual(candidate(\"98765432101234567890\", \"98765432109876543210\"), 1)\n    assert reflect.DeepEqual(candidate(\"10000000000\", \"20000000000\"), 460)\n    assert reflect.DeepEqual(candidate(\"123\", \"135\"), 1)\n    assert reflect.DeepEqual(candidate(\"1000000000\", \"2000000000\"), 251)\n    assert reflect.DeepEqual(candidate(\"123456789\", \"987654321\"), 1362)\n    assert reflect.DeepEqual(candidate(\"98765432109876543210987654321\", \"98765432109876543210987654322\"), 0)\n    assert reflect.DeepEqual(candidate(\"98765\", \"98766\"), 1)\n    assert reflect.DeepEqual(candidate(\"123456789\", \"1234567891\"), 1681)\n    assert reflect.DeepEqual(candidate(\"987654321\", \"9876543219\"), 2932)\n    assert reflect.DeepEqual(candidate(\"987654321\", \"987654329\"), 2)\n    assert reflect.DeepEqual(candidate(\"543210\", \"6543210\"), 380)\n    assert reflect.DeepEqual(candidate(\"1234567890\", \"1234567891\"), 0)\n    assert reflect.DeepEqual(candidate(\"123\", \"321\"), 6)\n    assert reflect.DeepEqual(candidate(\"1010101010101010101\", \"1111111111111111111\"), 22950)\n    assert reflect.DeepEqual(candidate(\"8999999999\", \"9000000000\"), 0)\n    assert reflect.DeepEqual(candidate(\"555555555\", \"666666666\"), 228)\n    assert reflect.DeepEqual(candidate(\"10101010101010101010\", \"21212121212121212121\"), 195908)\n    assert reflect.DeepEqual(candidate(\"1\", \"10000000000000000000\"), 2194764)\n    assert reflect.DeepEqual(candidate(\"12345\", \"123456789012345\"), 90485)\n    assert reflect.DeepEqual(candidate(\"2222222222\", \"3333333333\"), 389)\n    assert reflect.DeepEqual(candidate(\"1\", \"99999999999999999999999999999999999999999999999999\"), 254219541)\n    assert reflect.DeepEqual(candidate(\"123454321\", \"123456789\"), 16)\n    assert reflect.DeepEqual(candidate(\"1010101010\", \"1010101011\"), 1)\n    assert reflect.DeepEqual(candidate(\"112233445566778899\", \"122334455667788990\"), 12190)\n    assert reflect.DeepEqual(candidate(\"100000000000000000000000000000000000000000000000000\", \"200000000000000000000000000000000000000000000000000\"), 251590529)\n    assert reflect.DeepEqual(candidate(\"1111111111\", \"9999999999\"), 2916)\n    assert reflect.DeepEqual(candidate(\"10101010101010101010\", \"20202020202020202020\"), 164407)\n    assert reflect.DeepEqual(candidate(\"123\", \"133\"), 1)\n    assert reflect.DeepEqual(candidate(\"10\", \"1111111111\"), 3311)\n}",
+    "rust": "fn check(candidate: fn(Vec<i32>, i32) -> Vec<i32>) {\n    assert_eq!(candidate(\"123\", \"456\"), 13);\n    assert_eq!(candidate(\"5555555555\", \"6666666666\"), 436);\n    assert_eq!(candidate(\"1111111111\", \"2222222222\"), 307);\n    assert_eq!(candidate(\"1000000000\", \"1000000001\"), 0);\n    assert_eq!(candidate(\"10\", \"100\"), 17);\n    assert_eq!(candidate(\"9999999999\", \"9999999999\"), 0);\n    assert_eq!(candidate(\"1\", \"9876543210\"), 6111);\n    assert_eq!(candidate(\"1\", \"11\"), 10);\n    assert_eq!(candidate(\"9876543210\", \"9876543210\"), 1);\n    assert_eq!(candidate(\"90\", \"101\"), 2);\n    assert_eq!(candidate(\"10000000000000000000\", \"10000000000000000010\"), 0);\n    assert_eq!(candidate(\"12345678901234567890\", \"98765432109876543210\"), 1768804);\n    assert_eq!(candidate(\"12345678901234567890\", \"12345678901234567891\"), 0);\n    assert_eq!(candidate(\"999999999999999999\", \"1000000000000000000\"), 0);\n    assert_eq!(candidate(\"321098765432109876543210987\", \"432109876543210987654321098\"), 25767582);\n    assert_eq!(candidate(\"8888888888\", \"8888888899\"), 0);\n    assert_eq!(candidate(\"9999999999999999999\", \"10000000000000000000\"), 0);\n    assert_eq!(candidate(\"3333333333\", \"4444444444\"), 436);\n    assert_eq!(candidate(\"989898989898989898\", \"999999999999999999\"), 1);\n    assert_eq!(candidate(\"9\", \"9\"), 1);\n    assert_eq!(candidate(\"1234567890\", \"2345678901\"), 333);\n    assert_eq!(candidate(\"1\", \"2147483647\"), 3627);\n    assert_eq!(candidate(\"1010101010\", \"2020202020\"), 251);\n    assert_eq!(candidate(\"8888888888\", \"9999999999\"), 196);\n    assert_eq!(candidate(\"1\", \"12345678901234567890\"), 2358711);\n    assert_eq!(candidate(\"54321098765432109876543210\", \"65432109876543210987654321\"), 14851321);\n    assert_eq!(candidate(\"5\", \"5555555555\"), 4904);\n    assert_eq!(candidate(\"987654321\", \"9876543211\"), 2931);\n    assert_eq!(candidate(\"54321098765432109876\", \"65432109876543210987\"), 297140);\n    assert_eq!(candidate(\"5000000000\", \"5000000010\"), 0);\n    assert_eq!(candidate(\"500\", \"600\"), 4);\n    assert_eq!(candidate(\"5\", \"5\"), 1);\n    assert_eq!(candidate(\"12345678912345678912\", \"23456789123456789123\"), 226942);\n    assert_eq!(candidate(\"8888888888\", \"8989898989\"), 70);\n    assert_eq!(candidate(\"9876543210\", \"9876543219\"), 2);\n    assert_eq!(candidate(\"888888888\", \"999999999\"), 105);\n    assert_eq!(candidate(\"1000000000\", \"9999999999\"), 2986);\n    assert_eq!(candidate(\"8989898989\", \"9898989898\"), 127);\n    assert_eq!(candidate(\"1212121212\", \"2121212121\"), 202);\n    assert_eq!(candidate(\"987654321\", \"987654322\"), 1);\n    assert_eq!(candidate(\"10000000000000000000\", \"10000000000000000001\"), 0);\n    assert_eq!(candidate(\"54321\", \"65432\"), 17);\n    assert_eq!(candidate(\"8999999999999999999\", \"9000000000000000001\"), 0);\n    assert_eq!(candidate(\"1010101010\", \"1121212121\"), 70);\n    assert_eq!(candidate(\"1010101010\", \"9090909090\"), 2860);\n    assert_eq!(candidate(\"9999999999\", \"10000000000\"), 0);\n    assert_eq!(candidate(\"9999999990\", \"9999999999\"), 0);\n    assert_eq!(candidate(\"9876543210987654321\", \"9876543210987654322\"), 0);\n    assert_eq!(candidate(\"1\", \"9999999999\"), 6236);\n    assert_eq!(candidate(\"98765432109876543210\", \"98765432109876543211\"), 0);\n    assert_eq!(candidate(\"1234567890\", \"1234567899\"), 1);\n    assert_eq!(candidate(\"123\", \"45678901234567890123\"), 3157659);\n    assert_eq!(candidate(\"7777777777\", \"8888888888\"), 307);\n    assert_eq!(candidate(\"12121212121212121212\", \"13131313131313131313\"), 102885);\n    assert_eq!(candidate(\"321\", \"654\"), 13);\n    assert_eq!(candidate(\"9876543210123456789\", \"9876543210123456790\"), 1);\n    assert_eq!(candidate(\"1010101010\", \"1111111111\"), 70);\n    assert_eq!(candidate(\"98765432101234567890\", \"98765432101234567899\"), 1);\n    assert_eq!(candidate(\"4444444444\", \"5555555555\"), 456);\n    assert_eq!(candidate(\"200\", \"210\"), 1);\n    assert_eq!(candidate(\"1\", \"1234567890\"), 3500);\n    assert_eq!(candidate(\"987654321\", \"9876543210\"), 2931);\n    assert_eq!(candidate(\"9876543210\", \"10123456789\"), 252);\n    assert_eq!(candidate(\"100000000000000000000000000000000000000000000000000\", \"99999999999999999999999999999999999999999999999999\"), 0);\n    assert_eq!(candidate(\"99999999999999999999\", \"100000000000000000000\"), 0);\n    assert_eq!(candidate(\"1111111111111111111\", \"1212121212121212121\"), 8551);\n    assert_eq!(candidate(\"1111111111\", \"1111111111\"), 0);\n    assert_eq!(candidate(\"8989898989\", \"9090909090\"), 1);\n    assert_eq!(candidate(\"98765432101234567890\", \"98765432101234567891\"), 0);\n    assert_eq!(candidate(\"5432109876\", \"5432109877\"), 0);\n    assert_eq!(candidate(\"50505050505050505050\", \"60606060606060606060\"), 298777);\n    assert_eq!(candidate(\"11111111111111111111\", \"22222222222222222222\"), 204289);\n    assert_eq!(candidate(\"98765432101234567890\", \"98765432109876543210\"), 1);\n    assert_eq!(candidate(\"10000000000\", \"20000000000\"), 460);\n    assert_eq!(candidate(\"123\", \"135\"), 1);\n    assert_eq!(candidate(\"1000000000\", \"2000000000\"), 251);\n    assert_eq!(candidate(\"123456789\", \"987654321\"), 1362);\n    assert_eq!(candidate(\"98765432109876543210987654321\", \"98765432109876543210987654322\"), 0);\n    assert_eq!(candidate(\"98765\", \"98766\"), 1);\n    assert_eq!(candidate(\"123456789\", \"1234567891\"), 1681);\n    assert_eq!(candidate(\"987654321\", \"9876543219\"), 2932);\n    assert_eq!(candidate(\"987654321\", \"987654329\"), 2);\n    assert_eq!(candidate(\"543210\", \"6543210\"), 380);\n    assert_eq!(candidate(\"1234567890\", \"1234567891\"), 0);\n    assert_eq!(candidate(\"123\", \"321\"), 6);\n    assert_eq!(candidate(\"1010101010101010101\", \"1111111111111111111\"), 22950);\n    assert_eq!(candidate(\"8999999999\", \"9000000000\"), 0);\n    assert_eq!(candidate(\"555555555\", \"666666666\"), 228);\n    assert_eq!(candidate(\"10101010101010101010\", \"21212121212121212121\"), 195908);\n    assert_eq!(candidate(\"1\", \"10000000000000000000\"), 2194764);\n    assert_eq!(candidate(\"12345\", \"123456789012345\"), 90485);\n    assert_eq!(candidate(\"2222222222\", \"3333333333\"), 389);\n    assert_eq!(candidate(\"1\", \"99999999999999999999999999999999999999999999999999\"), 254219541);\n    assert_eq!(candidate(\"123454321\", \"123456789\"), 16);\n    assert_eq!(candidate(\"1010101010\", \"1010101011\"), 1);\n    assert_eq!(candidate(\"112233445566778899\", \"122334455667788990\"), 12190);\n    assert_eq!(candidate(\"100000000000000000000000000000000000000000000000000\", \"200000000000000000000000000000000000000000000000000\"), 251590529);\n    assert_eq!(candidate(\"1111111111\", \"9999999999\"), 2916);\n    assert_eq!(candidate(\"10101010101010101010\", \"20202020202020202020\"), 164407);\n    assert_eq!(candidate(\"123\", \"133\"), 1);\n    assert_eq!(candidate(\"10\", \"1111111111\"), 3311);\n}"
+  },
+  "test_cases": [
+    {
+      "input": "low = \"123\", high = \"456\"",
+      "output": "13"
+    },
+    {
+      "input": "low = \"5555555555\", high = \"6666666666\"",
+      "output": "436"
+    },
+    {
+      "input": "low = \"1111111111\", high = \"2222222222\"",
+      "output": "307"
+    },
+    {
+      "input": "low = \"1000000000\", high = \"1000000001\"",
+      "output": "0"
+    },
+    {
+      "input": "low = \"10\", high = \"100\"",
+      "output": "17"
+    },
+    {
+      "input": "low = \"9999999999\", high = \"9999999999\"",
+      "output": "0"
+    },
+    {
+      "input": "low = \"1\", high = \"9876543210\"",
+      "output": "6111"
+    },
+    {
+      "input": "low = \"1\", high = \"11\"",
+      "output": "10"
+    },
+    {
+      "input": "low = \"9876543210\", high = \"9876543210\"",
+      "output": "1"
+    },
+    {
+      "input": "low = \"90\", high = \"101\"",
+      "output": "2"
+    },
+    {
+      "input": "low = \"10000000000000000000\", high = \"10000000000000000010\"",
+      "output": "0"
+    },
+    {
+      "input": "low = \"12345678901234567890\", high = \"98765432109876543210\"",
+      "output": "1768804"
+    },
+    {
+      "input": "low = \"12345678901234567890\", high = \"12345678901234567891\"",
+      "output": "0"
+    },
+    {
+      "input": "low = \"999999999999999999\", high = \"1000000000000000000\"",
+      "output": "0"
+    },
+    {
+      "input": "low = \"321098765432109876543210987\", high = \"432109876543210987654321098\"",
+      "output": "25767582"
+    },
+    {
+      "input": "low = \"8888888888\", high = \"8888888899\"",
+      "output": "0"
+    },
+    {
+      "input": "low = \"9999999999999999999\", high = \"10000000000000000000\"",
+      "output": "0"
+    },
+    {
+      "input": "low = \"3333333333\", high = \"4444444444\"",
+      "output": "436"
+    },
+    {
+      "input": "low = \"989898989898989898\", high = \"999999999999999999\"",
+      "output": "1"
+    },
+    {
+      "input": "low = \"9\", high = \"9\"",
+      "output": "1"
+    },
+    {
+      "input": "low = \"1234567890\", high = \"2345678901\"",
+      "output": "333"
+    },
+    {
+      "input": "low = \"1\", high = \"2147483647\"",
+      "output": "3627"
+    },
+    {
+      "input": "low = \"1010101010\", high = \"2020202020\"",
+      "output": "251"
+    },
+    {
+      "input": "low = \"8888888888\", high = \"9999999999\"",
+      "output": "196"
+    },
+    {
+      "input": "low = \"1\", high = \"12345678901234567890\"",
+      "output": "2358711"
+    },
+    {
+      "input": "low = \"54321098765432109876543210\", high = \"65432109876543210987654321\"",
+      "output": "14851321"
+    },
+    {
+      "input": "low = \"5\", high = \"5555555555\"",
+      "output": "4904"
+    },
+    {
+      "input": "low = \"987654321\", high = \"9876543211\"",
+      "output": "2931"
+    },
+    {
+      "input": "low = \"54321098765432109876\", high = \"65432109876543210987\"",
+      "output": "297140"
+    },
+    {
+      "input": "low = \"5000000000\", high = \"5000000010\"",
+      "output": "0"
+    },
+    {
+      "input": "low = \"500\", high = \"600\"",
+      "output": "4"
+    },
+    {
+      "input": "low = \"5\", high = \"5\"",
+      "output": "1"
+    },
+    {
+      "input": "low = \"12345678912345678912\", high = \"23456789123456789123\"",
+      "output": "226942"
+    },
+    {
+      "input": "low = \"8888888888\", high = \"8989898989\"",
+      "output": "70"
+    },
+    {
+      "input": "low = \"9876543210\", high = \"9876543219\"",
+      "output": "2"
+    },
+    {
+      "input": "low = \"888888888\", high = \"999999999\"",
+      "output": "105"
+    },
+    {
+      "input": "low = \"1000000000\", high = \"9999999999\"",
+      "output": "2986"
+    },
+    {
+      "input": "low = \"8989898989\", high = \"9898989898\"",
+      "output": "127"
+    },
+    {
+      "input": "low = \"1212121212\", high = \"2121212121\"",
+      "output": "202"
+    },
+    {
+      "input": "low = \"987654321\", high = \"987654322\"",
+      "output": "1"
+    },
+    {
+      "input": "low = \"10000000000000000000\", high = \"10000000000000000001\"",
+      "output": "0"
+    },
+    {
+      "input": "low = \"54321\", high = \"65432\"",
+      "output": "17"
+    },
+    {
+      "input": "low = \"8999999999999999999\", high = \"9000000000000000001\"",
+      "output": "0"
+    },
+    {
+      "input": "low = \"1010101010\", high = \"1121212121\"",
+      "output": "70"
+    },
+    {
+      "input": "low = \"1010101010\", high = \"9090909090\"",
+      "output": "2860"
+    },
+    {
+      "input": "low = \"9999999999\", high = \"10000000000\"",
+      "output": "0"
+    },
+    {
+      "input": "low = \"9999999990\", high = \"9999999999\"",
+      "output": "0"
+    },
+    {
+      "input": "low = \"9876543210987654321\", high = \"9876543210987654322\"",
+      "output": "0"
+    },
+    {
+      "input": "low = \"1\", high = \"9999999999\"",
+      "output": "6236"
+    },
+    {
+      "input": "low = \"98765432109876543210\", high = \"98765432109876543211\"",
+      "output": "0"
+    },
+    {
+      "input": "low = \"1234567890\", high = \"1234567899\"",
+      "output": "1"
+    },
+    {
+      "input": "low = \"123\", high = \"45678901234567890123\"",
+      "output": "3157659"
+    },
+    {
+      "input": "low = \"7777777777\", high = \"8888888888\"",
+      "output": "307"
+    },
+    {
+      "input": "low = \"12121212121212121212\", high = \"13131313131313131313\"",
+      "output": "102885"
+    },
+    {
+      "input": "low = \"321\", high = \"654\"",
+      "output": "13"
+    },
+    {
+      "input": "low = \"9876543210123456789\", high = \"9876543210123456790\"",
+      "output": "1"
+    },
+    {
+      "input": "low = \"1010101010\", high = \"1111111111\"",
+      "output": "70"
+    },
+    {
+      "input": "low = \"98765432101234567890\", high = \"98765432101234567899\"",
+      "output": "1"
+    },
+    {
+      "input": "low = \"4444444444\", high = \"5555555555\"",
+      "output": "456"
+    },
+    {
+      "input": "low = \"200\", high = \"210\"",
+      "output": "1"
+    },
+    {
+      "input": "low = \"1\", high = \"1234567890\"",
+      "output": "3500"
+    },
+    {
+      "input": "low = \"987654321\", high = \"9876543210\"",
+      "output": "2931"
+    },
+    {
+      "input": "low = \"9876543210\", high = \"10123456789\"",
+      "output": "252"
+    },
+    {
+      "input": "low = \"100000000000000000000000000000000000000000000000000\", high = \"99999999999999999999999999999999999999999999999999\"",
+      "output": "0"
+    },
+    {
+      "input": "low = \"99999999999999999999\", high = \"100000000000000000000\"",
+      "output": "0"
+    },
+    {
+      "input": "low = \"1111111111111111111\", high = \"1212121212121212121\"",
+      "output": "8551"
+    },
+    {
+      "input": "low = \"1111111111\", high = \"1111111111\"",
+      "output": "0"
+    },
+    {
+      "input": "low = \"8989898989\", high = \"9090909090\"",
+      "output": "1"
+    },
+    {
+      "input": "low = \"98765432101234567890\", high = \"98765432101234567891\"",
+      "output": "0"
+    },
+    {
+      "input": "low = \"5432109876\", high = \"5432109877\"",
+      "output": "0"
+    },
+    {
+      "input": "low = \"50505050505050505050\", high = \"60606060606060606060\"",
+      "output": "298777"
+    },
+    {
+      "input": "low = \"11111111111111111111\", high = \"22222222222222222222\"",
+      "output": "204289"
+    },
+    {
+      "input": "low = \"98765432101234567890\", high = \"98765432109876543210\"",
+      "output": "1"
+    },
+    {
+      "input": "low = \"10000000000\", high = \"20000000000\"",
+      "output": "460"
+    },
+    {
+      "input": "low = \"123\", high = \"135\"",
+      "output": "1"
+    },
+    {
+      "input": "low = \"1000000000\", high = \"2000000000\"",
+      "output": "251"
+    },
+    {
+      "input": "low = \"123456789\", high = \"987654321\"",
+      "output": "1362"
+    },
+    {
+      "input": "low = \"98765432109876543210987654321\", high = \"98765432109876543210987654322\"",
+      "output": "0"
+    },
+    {
+      "input": "low = \"98765\", high = \"98766\"",
+      "output": "1"
+    },
+    {
+      "input": "low = \"123456789\", high = \"1234567891\"",
+      "output": "1681"
+    },
+    {
+      "input": "low = \"987654321\", high = \"9876543219\"",
+      "output": "2932"
+    },
+    {
+      "input": "low = \"987654321\", high = \"987654329\"",
+      "output": "2"
+    },
+    {
+      "input": "low = \"543210\", high = \"6543210\"",
+      "output": "380"
+    },
+    {
+      "input": "low = \"1234567890\", high = \"1234567891\"",
+      "output": "0"
+    },
+    {
+      "input": "low = \"123\", high = \"321\"",
+      "output": "6"
+    },
+    {
+      "input": "low = \"1010101010101010101\", high = \"1111111111111111111\"",
+      "output": "22950"
+    },
+    {
+      "input": "low = \"8999999999\", high = \"9000000000\"",
+      "output": "0"
+    },
+    {
+      "input": "low = \"555555555\", high = \"666666666\"",
+      "output": "228"
+    },
+    {
+      "input": "low = \"10101010101010101010\", high = \"21212121212121212121\"",
+      "output": "195908"
+    },
+    {
+      "input": "low = \"1\", high = \"10000000000000000000\"",
+      "output": "2194764"
+    },
+    {
+      "input": "low = \"12345\", high = \"123456789012345\"",
+      "output": "90485"
+    },
+    {
+      "input": "low = \"2222222222\", high = \"3333333333\"",
+      "output": "389"
+    },
+    {
+      "input": "low = \"1\", high = \"99999999999999999999999999999999999999999999999999\"",
+      "output": "254219541"
+    },
+    {
+      "input": "low = \"123454321\", high = \"123456789\"",
+      "output": "16"
+    },
+    {
+      "input": "low = \"1010101010\", high = \"1010101011\"",
+      "output": "1"
+    },
+    {
+      "input": "low = \"112233445566778899\", high = \"122334455667788990\"",
+      "output": "12190"
+    },
+    {
+      "input": "low = \"100000000000000000000000000000000000000000000000000\", high = \"200000000000000000000000000000000000000000000000000\"",
+      "output": "251590529"
+    },
+    {
+      "input": "low = \"1111111111\", high = \"9999999999\"",
+      "output": "2916"
+    },
+    {
+      "input": "low = \"10101010101010101010\", high = \"20202020202020202020\"",
+      "output": "164407"
+    },
+    {
+      "input": "low = \"123\", high = \"133\"",
+      "output": "1"
+    },
+    {
+      "input": "low = \"10\", high = \"1111111111\"",
+      "output": "3311"
+    }
+  ],
+  "types": {
+    "python3": {
+      "input": [
+        {
+          "low": "str"
+        },
+        {
+          "high": "str"
+        }
+      ],
+      "output": "int"
+    },
+    "cpp": {
+      "input": [
+        {
+          "low": "string"
+        },
+        {
+          "high": "string"
+        }
+      ],
+      "output": "int"
+    },
+    "java": {
+      "input": [
+        {
+          "low": "String"
+        },
+        {
+          "high": "String"
+        }
+      ],
+      "output": "int"
+    },
+    "javascript": {
+      "input": [
+        {
+          "low": "string"
+        },
+        {
+          "high": "string"
+        }
+      ],
+      "output": "number"
+    },
+    "typescript": {
+      "input": [
+        {
+          "low": "string"
+        },
+        {
+          "high": "string"
+        }
+      ],
+      "output": "number"
+    },
+    "golang": {
+      "input": [
+        {
+          "low": "string"
+        },
+        {
+          "high": "string"
+        }
+      ],
+      "output": "int"
+    },
+    "rust": {
+      "input": [
+        {
+          "low": "String"
+        },
+        {
+          "high": "String"
+        }
+      ],
+      "output": "i32"
+    }
+  },
+  "tags": [
+    "string",
+    "dynamic-programming"
+  ]
+}

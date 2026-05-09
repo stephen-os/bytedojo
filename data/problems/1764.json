@@ -1,0 +1,741 @@
+{
+  "id": 1764,
+  "title": "Form Array by Concatenating Subarrays of Another Array",
+  "slug": "form-array-by-concatenating-subarrays-of-another-array",
+  "difficulty": "Medium",
+  "description": "You are given a 2D integer array groups of length n. You are also given an integer array nums.\nYou are asked if you can choose n disjoint subarrays from the array nums such that the ith subarray is equal to groups[i] (0-indexed), and if i > 0, the (i-1)th subarray appears before the ith subarray in nums (i.e. the subarrays must be in the same order as groups).\nReturn true if you can do this task, and false otherwise.\nNote that the subarrays are disjoint if and only if there is no index k such that nums[k] belongs to more than one subarray. A subarray is a contiguous sequence of elements within an array.\nExample 1:\nExample 2:\nExample 3:\nConstraints:",
+  "examples": [
+    {
+      "example_num": 1,
+      "example_text": "Input: groups = [[1,-1,-1],[3,-2,0]], nums = [1,-1,0,1,-1,-1,3,-2,0]\nOutput: true\nExplanation: You can choose the 0th subarray as [1,-1,0,1,-1,-1,3,-2,0] and the 1st one as [1,-1,0,1,-1,-1,3,-2,0].\nThese subarrays are disjoint as they share no common nums[k] element.",
+      "images": []
+    },
+    {
+      "example_num": 2,
+      "example_text": "Input: groups = [[10,-2],[1,2,3,4]], nums = [1,2,3,4,10,-2]\nOutput: false\nExplanation: Note that choosing the subarrays [1,2,3,4,10,-2] and [1,2,3,4,10,-2] is incorrect because they are not in the same order as in groups.\n[10,-2] must come before [1,2,3,4].",
+      "images": []
+    },
+    {
+      "example_num": 3,
+      "example_text": "Input: groups = [[1,2,3],[3,4]], nums = [7,7,1,2,3,4,7,7]\nOutput: false\nExplanation: Note that choosing the subarrays [7,7,1,2,3,4,7,7] and [7,7,1,2,3,4,7,7] is invalid because they are not disjoint.\nThey share a common elements nums[4] (0-indexed).",
+      "images": []
+    }
+  ],
+  "constraints": [
+    "groups.length == n",
+    "1 <= n <= 103",
+    "1 <= groups[i].length, sum(groups[i].length) <= 103",
+    "1 <= nums.length <= 103",
+    "-107 <= groups[i][j], nums[k] <= 107"
+  ],
+  "hints": [
+    "When we use a subarray, the room for the next subarrays will be the suffix after the used subarray.",
+    "If we can match a group with multiple subarrays, we should choose the first one, as this will just leave the largest room for the next subarrays."
+  ],
+  "code_snippets": {
+    "cpp": "class Solution {\npublic:\n    bool canChoose(vector<vector<int>>& groups, vector<int>& nums) {\n        \n    }\n};",
+    "java": "class Solution {\n    public boolean canChoose(int[][] groups, int[] nums) {\n        \n    }\n}",
+    "python3": "class Solution:\n    def canChoose(self, groups: List[List[int]], nums: List[int]) -> bool:\n        ",
+    "javascript": "/**\n * @param {number[][]} groups\n * @param {number[]} nums\n * @return {boolean}\n */\nvar canChoose = function(groups, nums) {\n    \n};",
+    "typescript": "function canChoose(groups: number[][], nums: number[]): boolean {\n    \n};",
+    "golang": "func canChoose(groups [][]int, nums []int) bool {\n    \n}",
+    "rust": "impl Solution {\n    pub fn can_choose(groups: Vec<Vec<i32>>, nums: Vec<i32>) -> bool {\n        \n    }\n}"
+  },
+  "entry_points": {
+    "python3": "Solution().canChoose",
+    "cpp": "Solution().canChoose",
+    "java": "new Solution().canChoose",
+    "javascript": "canChoose",
+    "typescript": "canChoose",
+    "golang": "canChoose",
+    "rust": "Solution::can_choose"
+  },
+  "test_snippets": {
+    "python3": "def check(candidate):\n    assert candidate(groups = [[1,2,3]], nums = [1,2,3,1,2,3]) == True\n    assert candidate(groups = [[1,2],[3,4]], nums = [1,2,4,3]) == False\n    assert candidate(groups = [[5,5,5],[5]], nums = [5,5,5,5]) == True\n    assert candidate(groups = [[1,1,1],[1,1]], nums = [1,1,1,1]) == False\n    assert candidate(groups = [[1,2],[3,4]], nums = [1,2,3,4]) == True\n    assert candidate(groups = [[1,2],[2,1]], nums = [1,2,2,1]) == True\n    assert candidate(groups = [[-1,-2,-3],[-3,-2,-1]], nums = [-1,-2,-3,-3,-2,-1]) == True\n    assert candidate(groups = [[1,-1,-1],[3,-2,0]], nums = [1,-1,0,1,-1,-1,3,-2,0]) == True\n    assert candidate(groups = [[1,2,3],[1,2,3]], nums = [1,2,3,1,2,3]) == True\n    assert candidate(groups = [[1]], nums = [1]) == True\n    assert candidate(groups = [[1,2],[3,4]], nums = [1,2,5,3,4]) == True\n    assert candidate(groups = [[1],[2],[3]], nums = [3,2,1]) == False\n    assert candidate(groups = [[1,1,1,1],[1,1]], nums = [1,1,1,1]) == False\n    assert candidate(groups = [[1],[2],[3]], nums = [1,2,3]) == True\n    assert candidate(groups = [[1,2,3],[3,4]], nums = [7,7,1,2,3,4,7,7]) == False\n    assert candidate(groups = [[5,5]], nums = [5,5,5,5]) == True\n    assert candidate(groups = [[10,-2],[1,2,3,4]], nums = [1,2,3,4,10,-2]) == False\n    assert candidate(groups = [[1]], nums = [2]) == False\n    assert candidate(groups = [[1,2],[2,3]], nums = [1,2,2,3]) == True\n    assert candidate(groups = [[1,2],[3,4]], nums = [1,2,3,4,5,6]) == True\n    assert candidate(groups = [[1,2],[2,3],[3,4]], nums = [1,2,3,4]) == False\n    assert candidate(groups = [[1,2],[3,4],[5,6]], nums = [1,2,3,4,5,6]) == True\n    assert candidate(groups = [[100,200],[200,300],[300,400]], nums = [100,200,200,300,300,400]) == True\n    assert candidate(groups = [[100,200],[300,400],[500,600]], nums = [100,200,300,400,500,600,100,200]) == True\n    assert candidate(groups = [[0,0,0,0],[0]], nums = [0,0,0,0,0,0,0,0]) == True\n    assert candidate(groups = [[10,20,30],[30,40,50],[50,60,70]], nums = [10,20,30,40,50,60,70]) == False\n    assert candidate(groups = [[1,2,3],[4,5,6],[7,8,9],[1,2,3]], nums = [1,2,3,4,5,6,7,8,9,1,2,3]) == True\n    assert candidate(groups = [[1,2,3],[4,5,6],[7,8,9]], nums = [1,2,3,1,2,3,4,5,6,4,5,6,7,8,9,7,8,9]) == True\n    assert candidate(groups = [[9,8,7],[8,7,6],[7,6,5]], nums = [9,8,7,8,7,6,7,6,5]) == True\n    assert candidate(groups = [[1,1,1],[2,2,2],[3,3,3]], nums = [1,1,1,2,2,2,3,3,3,1,1,1,2,2,2,3,3,3]) == True\n    assert candidate(groups = [[1,2],[2,3],[3,4],[4,5],[5,6]], nums = [1,2,3,4,5,6,7]) == False\n    assert candidate(groups = [[1,1,1],[1,1,1]], nums = [1,1,1,1,1,1,1,1]) == True\n    assert candidate(groups = [[-1,-2,-3],[-3,-4,-5],[-5,-6,-7]], nums = [-1,-2,-3,-3,-4,-5,-5,-6,-7]) == True\n    assert candidate(groups = [[1, 1, 1], [1, 1], [1]], nums = [1, 1, 1, 1, 1]) == False\n    assert candidate(groups = [[0,1],[1,2],[2,3],[3,4]], nums = [0,1,1,2,2,3,3,4]) == True\n    assert candidate(groups = [[-1,-2,-3],[-4,-5],[-6,-7,-8,-9]], nums = [-1,-2,-3,0,-4,-5,1,-6,-7,-8,-9]) == True\n    assert candidate(groups = [[1,2,3],[3,4,5]], nums = [1,2,3,99,3,4,5]) == True\n    assert candidate(groups = [[1],[2],[3],[4],[5],[6],[7],[8],[9],[10]], nums = [1,2,3,4,5,6,7,8,9,10]) == True\n    assert candidate(groups = [[1,2,3],[4,5,6],[7,8,9]], nums = [9,8,7,6,5,4,3,2,1,1,2,3,4,5,6,7,8,9]) == True\n    assert candidate(groups = [[1,2],[2,3],[3,4],[4,5]], nums = [1,2,2,3,3,4,4,5,5]) == True\n    assert candidate(groups = [[1,2,3],[1,2,3],[1,2,3]], nums = [1,2,3,4,5,1,2,3,6,7,8,1,2,3]) == True\n    assert candidate(groups = [[-1,-2,-3],[-3,-2,-1],[0,0,0]], nums = [-1,-2,-3,0,0,0,-3,-2,-1]) == False\n    assert candidate(groups = [[1,2,3],[1,2,3,4],[4,5]], nums = [1,2,3,1,2,3,4,4,5]) == True\n    assert candidate(groups = [[1,2,3,4,5],[2,3,4],[3,4,5,6]], nums = [1,2,3,4,5,6,7,8,9]) == False\n    assert candidate(groups = [[1,2],[2,3],[3,4],[4,5]], nums = [1,2,2,3,3,4,4,5]) == True\n    assert candidate(groups = [[-1,-2,-3],[-4,-5,-6]], nums = [-1,-2,-3,-4,-5,-6,-1,-2,-3,-4,-5,-6]) == True\n    assert candidate(groups = [[1,2,3],[3,2,1],[2,1,3]], nums = [1,2,3,3,2,1,2,1,3]) == True\n    assert candidate(groups = [[1,2,3],[3,4,5],[5,6,7],[7,8,9]], nums = [1,2,3,3,4,5,5,6,7,7,8,9]) == True\n    assert candidate(groups = [[10,20,30],[40,50],[60,70,80]], nums = [5,10,20,30,15,40,50,25,60,70,80]) == True\n    assert candidate(groups = [[1,2],[3,4],[5,6],[7,8],[9,10]], nums = [1,2,3,4,5,6,7,8,9,10]) == True\n    assert candidate(groups = [[1, 2, 3], [4, 5, 6], [7, 8, 9]], nums = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]) == True\n    assert candidate(groups = [[1,1,1],[2,2,2],[3,3,3]], nums = [1,1,1,2,2,2,3,3,3]) == True\n    assert candidate(groups = [[1,2],[2,3],[3,4],[4,5]], nums = [1,2,2,3,3,4,99,4,5]) == True\n    assert candidate(groups = [[1,1,1,1],[2,2,2,2],[3,3,3,3]], nums = [1,1,1,1,2,2,2,2,3,3,3,3]) == True\n    assert candidate(groups = [[1, 2, 3], [3, 4, 5], [5, 6, 7]], nums = [1, 2, 3, 3, 4, 5, 5, 6, 7]) == True\n    assert candidate(groups = [[9,8,7],[6,5,4],[3,2,1]], nums = [9,8,7,6,5,4,3,2,1]) == True\n    assert candidate(groups = [[1,2],[2,3],[3,4],[4,5],[5,6],[6,7],[7,8],[8,9],[9,10]], nums = [1,2,3,4,5,6,7,8,9,10]) == False\n    assert candidate(groups = [[1,2,3],[2,3,4],[3,4,5]], nums = [1,2,3,2,3,4,3,4,5]) == True\n    assert candidate(groups = [[1],[2],[3],[4],[5],[6],[7],[8],[9],[10]], nums = [1,2,3,4,5,6,7,8,9,10,11]) == True\n    assert candidate(groups = [[1],[2],[3],[4],[5]], nums = [1,0,2,0,3,0,4,0,5]) == True\n    assert candidate(groups = [[1,2,3],[1,2],[1]], nums = [1,2,3,1,2,1]) == True\n    assert candidate(groups = [[1,2,3,4,5],[5,4,3,2,1]], nums = [1,2,3,4,5,5,4,3,2,1]) == True\n    assert candidate(groups = [[1,2],[2,3],[3,4]], nums = [1,2,3,4,5,3,4]) == False\n    assert candidate(groups = [[1,1,1],[2,2,2],[3,3,3],[1,1,1]], nums = [1,1,1,2,2,2,3,3,3,1,1,1]) == True\n    assert candidate(groups = [[1,1],[2,2],[1,1],[2,2]], nums = [1,1,2,2,1,1,2,2]) == True\n    assert candidate(groups = [[1,2,3],[1,2,3],[1,2,3]], nums = [1,2,3,1,2,3,1,2,3]) == True\n    assert candidate(groups = [[-10,-20,-30],[-40,-50,-60],[-70,-80,-90]], nums = [-10,-20,-30,-40,-50,-60,-70,-80,-90,-100]) == True\n    assert candidate(groups = [[1,2,3,4],[5,6,7],[8,9]], nums = [1,2,3,4,10,11,5,6,7,12,8,9]) == True\n    assert candidate(groups = [[1, 2], [2, 3], [3, 4], [4, 5]], nums = [1, 2, 3, 4, 5, 2, 3, 4, 5]) == False\n    assert candidate(groups = [[1,2,3,4,5],[5,6,7],[8,9]], nums = [1,2,3,4,5,5,6,7,8,9]) == True\n    assert candidate(groups = [[-1,-2,-3],[-3,-2,-1],[1,2,3]], nums = [-1,-2,-3,-3,-2,-1,1,2,3]) == True\n    assert candidate(groups = [[1,2,3,4,5],[5,6,7,8,9],[9,10,11,12,13]], nums = [1,2,3,4,5,5,6,7,8,9,9,10,11,12,13]) == True\n    assert candidate(groups = [[1,2],[2,3],[3,4],[4,5],[5,6]], nums = [1,2,2,3,3,4,4,5,5,6]) == True\n    assert candidate(groups = [[10,20,30],[40,50,60],[70,80,90]], nums = [10,20,30,40,50,60,70,80,90]) == True\n    assert candidate(groups = [[1,2,3],[3,4,5]], nums = [1,2,3,3,4,5]) == True\n    assert candidate(groups = [[1,2],[2,3],[3,4]], nums = [1,2,3,4,5]) == False\n    assert candidate(groups = [[-1,-2,-3],[-4,-5],[-6,-7,-8]], nums = [-1,-2,-3,0,-4,-5,0,-6,-7,-8]) == True\n    assert candidate(groups = [[1, 2, 3], [3, 4, 5], [5, 6, 7], [7, 8, 9]], nums = [1, 2, 3, 3, 4, 5, 5, 6, 7, 7, 8, 9]) == True\n    assert candidate(groups = [[10,20,30],[20,30,40],[30,40,50]], nums = [10,20,30,20,30,40,30,40,50]) == True\n    assert candidate(groups = [[1,2],[3,4],[5,6],[7,8]], nums = [1,2,3,4,5,6,7,8,9,10,11,12]) == True\n    assert candidate(groups = [[1,1,1],[1,1],[1]], nums = [1,1,1,1,1,1]) == True\n    assert candidate(groups = [[100,200],[200,300],[300,400],[400,500]], nums = [100,200,200,300,300,400,400,500]) == True\n    assert candidate(groups = [[1,2,3],[4,5,6],[1,2,3],[4,5,6]], nums = [1,2,3,4,5,6,1,2,3,4,5,6]) == True\n    assert candidate(groups = [[-1,-2,-3],[-2,-3,-4],[-3,-4,-5]], nums = [-1,-2,-3,-2,-3,-4,-3,-4,-5]) == True\n    assert candidate(groups = [[1, 2], [2, 3], [3, 4], [4, 5]], nums = [1, 2, 3, 4, 5]) == False\n    assert candidate(groups = [[1,2,3],[4,5,6],[7,8,9]], nums = [1,2,3,10,4,5,6,11,7,8,9]) == True\n    assert candidate(groups = [[1,2,3],[3,4,5],[5,6,7]], nums = [1,2,3,4,5,6,7]) == False\n    assert candidate(groups = [[100,200],[300,400,500],[600]], nums = [50,100,200,150,300,400,500,200,600]) == True\n    assert candidate(groups = [[1, 2, 3], [4, 5, 6], [7, 8, 9]], nums = [1, 1, 2, 3, 4, 5, 6, 7, 8, 9]) == True\n    assert candidate(groups = [[1,2],[2,3],[3,4]], nums = [1,2,2,3,3,4,4]) == True\n    assert candidate(groups = [[1,2],[3,4],[1,2]], nums = [1,2,3,4,1,2]) == True\n    assert candidate(groups = [[1,1,1,1],[1,1],[1]], nums = [1,1,1,1,1,1,1]) == True\n    assert candidate(groups = [[1,2,3],[1,2,3],[1,2,3]], nums = [1,2,3,1,2,3,1,2,3,1,2,3]) == True\n    assert candidate(groups = [[1,2,3,4,5,6,7,8,9,10]], nums = [1,2,3,4,5,6,7,8,9,10]) == True\n    assert candidate(groups = [[1,2,3],[1,2],[2,3]], nums = [1,2,3,1,2,2,3]) == True\n    assert candidate(groups = [[9,8,7],[6,5,4],[3,2,1]], nums = [9,8,7,0,6,5,4,0,3,2,1]) == True\n    assert candidate(groups = [[1,2,3],[3,4,5],[5,6,7]], nums = [1,2,3,3,4,5,5,6,7]) == True\n    assert candidate(groups = [[1,2,3],[4,5,6],[7,8,9]], nums = [1,2,3,9,8,7,4,5,6,1,2,3,4,5,6,7,8,9]) == True\n    assert candidate(groups = [[1,1,1],[1,1],[1]], nums = [1,1,1,1,1,1,1,1,1]) == True\n    assert candidate(groups = [[10,20,30],[40,50,60],[70,80,90]], nums = [10,20,30,40,50,60,70,80,90,100]) == True\n    assert candidate(groups = [[10000000],[9999999],[8888888],[7777777]], nums = [10000000,9999999,8888888,7777777]) == True\n    assert candidate(groups = [[10, 20, 30], [40, 50, 60], [70, 80, 90]], nums = [10, 20, 30, 40, 50, 60, 70, 80, 90]) == True\n    assert candidate(groups = [[-1,-2,-3],[-4,-5,-6],[-7,-8,-9]], nums = [-1,-2,-3,-4,-5,-6,-7,-8,-9]) == True\n    assert candidate(groups = [[1,2,3],[4,5,6],[7,8,9],[10,11,12]], nums = [1,2,3,4,5,6,7,8,9,10,11,12]) == True\n    assert candidate(groups = [[5,5,5,5],[5,5,5],[5,5],[5]], nums = [5,5,5,5,5,5,5,5,5,5]) == True\n    assert candidate(groups = [[1],[2],[3],[4],[5]], nums = [1,2,3,4,5]) == True\n    assert candidate(groups = [[-10,-20,-30],[-40,-50],[-60,-70,-80]], nums = [-10,-20,-30,-40,-50,-60,-70,-80]) == True\n    assert candidate(groups = [[1], [2], [3], [4], [5]], nums = [1, 2, 3, 4, 5]) == True\n    assert candidate(groups = [[1, 1, 1], [1, 1, 1], [1, 1, 1]], nums = [1, 1, 1, 1, 1, 1, 1]) == False\n    assert candidate(groups = [[1,2],[3,4,5,6],[7,8]], nums = [1,2,3,4,5,6,7,8]) == True\n    assert candidate(groups = [[1, 2, 3], [4, 5, 6], [7, 8, 9]], nums = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]) == True\n    assert candidate(groups = [[10,20,30,40],[50,60,70,80]], nums = [10,20,30,40,50,60,70,80,90]) == True\n    assert candidate(groups = [[1,2],[2,1],[1,2],[2,1]], nums = [1,2,2,1,1,2,2,1]) == True\n    assert candidate(groups = [[-10,-20,-30],[-30,-20,-10]], nums = [-10,-20,-30,-30,-20,-10]) == True\n    assert candidate(groups = [[1,2,3,4,5,6,7,8,9],[10,11,12,13,14,15,16,17,18]], nums = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18]) == True\n    assert candidate(groups = [[-1,0,1],[-2,0,2]], nums = [-1,0,1,-2,0,2,-1,0,1]) == True\n    assert candidate(groups = [[1,2,3],[4,5,6],[7,8,9]], nums = [1,2,3,4,5,6,7,8,9]) == True\n    assert candidate(groups = [[1,2,3],[3,4,5],[5,6,7]], nums = [99,1,2,3,99,3,4,5,99,5,6,7]) == True\n    assert candidate(groups = [[1,2,3],[4,5,6],[7,8,9]], nums = [1,2,3,1,2,3,4,5,6,7,8,9]) == True\n    assert candidate(groups = [[1,2,3],[4,5,6],[7,8,9]], nums = [1,2,3,4,5,6,7,8,9,10]) == True\n    assert candidate(groups = [[1, 2, 3], [3, 4, 5]], nums = [1, 2, 3, 3, 4, 5]) == True\n    assert candidate(groups = [[1, 2, 3], [1, 2, 3], [1, 2, 3]], nums = [1, 2, 3, 1, 2, 3, 1, 2, 3]) == True\n    assert candidate(groups = [[1,2,3],[3,2,1],[1,2,3]], nums = [1,2,3,3,2,1,1,2,3]) == True\n    assert candidate(groups = [[7,8,9],[1,2,3],[4,5,6]], nums = [7,8,9,1,2,3,4,5,6]) == True\n    assert candidate(groups = [[1, 2, 3], [4, 5, 6]], nums = [1, 2, 3, 0, 0, 4, 5, 6]) == True\n    assert candidate(groups = [[-1, -2, -3], [0, 1, 2], [-3, -2, -1]], nums = [-1, -2, -3, 0, 1, 2, -3, -2, -1]) == True\n    assert candidate(groups = [[1, 2, 3], [2, 3, 4]], nums = [1, 2, 3, 4]) == False\n    assert candidate(groups = [[9,8,7,6,5],[4,3,2,1],[0,-1,-2,-3,-4]], nums = [9,8,7,6,5,4,3,2,1,0,-1,-2,-3,-4]) == True\n    assert candidate(groups = [[100,200,300],[400,500],[600]], nums = [100,200,300,400,500,600]) == True\n    assert candidate(groups = [[1,2,3],[4,5,6],[7,8,9]], nums = [1,2,3,0,4,5,6,0,7,8,9]) == True\n    assert candidate(groups = [[1,2,3],[4,5,6]], nums = [1,2,3,99,4,5,6]) == True\n    assert candidate(groups = [[1,1,1,1],[1,1,1],[1,1],[1]], nums = [1,1,1,1,1,1,1,1]) == False\n    assert candidate(groups = [[1,2,3],[3,2,1]], nums = [1,2,3,3,2,1,1,2,3,3,2,1]) == True\n    assert candidate(groups = [[1,2,3,4],[5,6,7,8],[9,10,11,12]], nums = [0,1,2,3,4,0,5,6,7,8,0,9,10,11,12]) == True\n    assert candidate(groups = [[1,2,3,4,5],[6,7,8,9,10],[11,12,13,14,15]], nums = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]) == True\n    assert candidate(groups = [[1,2,3,4,5],[6,7,8,9,10]], nums = [1,2,3,4,5,11,12,6,7,8,9,10]) == True\n    assert candidate(groups = [[1,-1],[1,-1]], nums = [1,-1,1,-1,1,-1]) == True\n    assert candidate(groups = [[1,2,3,4,5,6,7,8,9],[2,3,4,5,6,7,8,9,10],[3,4,5,6,7,8,9,10,11]], nums = [1,2,3,4,5,6,7,8,9,2,3,4,5,6,7,8,9,10,3,4,5,6,7,8,9,10,11]) == True\n    assert candidate(groups = [[1,2],[2,3],[3,4],[4,5]], nums = [1,2,3,4,5]) == False\n    assert candidate(groups = [[1, 2, 3], [4, 5, 6]], nums = [1, 2, 3, 4, 5, 6, 1, 2, 3, 4, 5, 6]) == True\n    assert candidate(groups = [[1],[2],[3],[4],[5],[6]], nums = [1,2,3,4,5,6]) == True\n    assert candidate(groups = [[1,2,3],[4,5,6],[7,8,9]], nums = [0,1,2,3,0,4,5,6,0,7,8,9]) == True\n    assert candidate(groups = [[100,200,300],[400,500],[600,700,800,900]], nums = [100,200,300,400,500,600,700,800,900]) == True\n    assert candidate(groups = [[1,1],[1,1],[1,1]], nums = [1,1,1,1,1,1]) == True\n    assert candidate(groups = [[1,2,3],[4,5,6],[7,8,9]], nums = [7,8,9,1,2,3,4,5,6,7,8,9,1,2,3,4,5,6]) == True\n    assert candidate(groups = [[1,2,3,4,5],[6,7,8,9]], nums = [1,2,3,4,5,6,7,8,9,10]) == True\n    assert candidate(groups = [[1,2,3],[3,4,5],[5,6,7],[7,8,9]], nums = [1,2,3,4,5,6,7,8,9]) == False\n    assert candidate(groups = [[1,2,3,4],[5,6,7,8],[9,10,11,12]], nums = [1,2,3,4,5,6,7,8,9,10,11,12]) == True",
+    "cpp": "void check(Solution& solution) {\n    assert(solution.canChoose({{1,2,3}}, {1,2,3,1,2,3}) == vector<int>True);\n    assert(solution.canChoose({{1,2},{3,4}}, {1,2,4,3}) == vector<int>False);\n    assert(solution.canChoose({{5,5,5},{5}}, {5,5,5,5}) == vector<int>True);\n    assert(solution.canChoose({{1,1,1},{1,1}}, {1,1,1,1}) == vector<int>False);\n    assert(solution.canChoose({{1,2},{3,4}}, {1,2,3,4}) == vector<int>True);\n    assert(solution.canChoose({{1,2},{2,1}}, {1,2,2,1}) == vector<int>True);\n    assert(solution.canChoose({{-1,-2,-3},{-3,-2,-1}}, {-1,-2,-3,-3,-2,-1}) == vector<int>True);\n    assert(solution.canChoose({{1,-1,-1},{3,-2,0}}, {1,-1,0,1,-1,-1,3,-2,0}) == vector<int>True);\n    assert(solution.canChoose({{1,2,3},{1,2,3}}, {1,2,3,1,2,3}) == vector<int>True);\n    assert(solution.canChoose({{1}}, {1}) == vector<int>True);\n    assert(solution.canChoose({{1,2},{3,4}}, {1,2,5,3,4}) == vector<int>True);\n    assert(solution.canChoose({{1},{2},{3}}, {3,2,1}) == vector<int>False);\n    assert(solution.canChoose({{1,1,1,1},{1,1}}, {1,1,1,1}) == vector<int>False);\n    assert(solution.canChoose({{1},{2},{3}}, {1,2,3}) == vector<int>True);\n    assert(solution.canChoose({{1,2,3},{3,4}}, {7,7,1,2,3,4,7,7}) == vector<int>False);\n    assert(solution.canChoose({{5,5}}, {5,5,5,5}) == vector<int>True);\n    assert(solution.canChoose({{10,-2},{1,2,3,4}}, {1,2,3,4,10,-2}) == vector<int>False);\n    assert(solution.canChoose({{1}}, {2}) == vector<int>False);\n    assert(solution.canChoose({{1,2},{2,3}}, {1,2,2,3}) == vector<int>True);\n    assert(solution.canChoose({{1,2},{3,4}}, {1,2,3,4,5,6}) == vector<int>True);\n    assert(solution.canChoose({{1,2},{2,3},{3,4}}, {1,2,3,4}) == vector<int>False);\n    assert(solution.canChoose({{1,2},{3,4},{5,6}}, {1,2,3,4,5,6}) == vector<int>True);\n    assert(solution.canChoose({{100,200},{200,300},{300,400}}, {100,200,200,300,300,400}) == vector<int>True);\n    assert(solution.canChoose({{100,200},{300,400},{500,600}}, {100,200,300,400,500,600,100,200}) == vector<int>True);\n    assert(solution.canChoose({{0,0,0,0},{0}}, {0,0,0,0,0,0,0,0}) == vector<int>True);\n    assert(solution.canChoose({{10,20,30},{30,40,50},{50,60,70}}, {10,20,30,40,50,60,70}) == vector<int>False);\n    assert(solution.canChoose({{1,2,3},{4,5,6},{7,8,9},{1,2,3}}, {1,2,3,4,5,6,7,8,9,1,2,3}) == vector<int>True);\n    assert(solution.canChoose({{1,2,3},{4,5,6},{7,8,9}}, {1,2,3,1,2,3,4,5,6,4,5,6,7,8,9,7,8,9}) == vector<int>True);\n    assert(solution.canChoose({{9,8,7},{8,7,6},{7,6,5}}, {9,8,7,8,7,6,7,6,5}) == vector<int>True);\n    assert(solution.canChoose({{1,1,1},{2,2,2},{3,3,3}}, {1,1,1,2,2,2,3,3,3,1,1,1,2,2,2,3,3,3}) == vector<int>True);\n    assert(solution.canChoose({{1,2},{2,3},{3,4},{4,5},{5,6}}, {1,2,3,4,5,6,7}) == vector<int>False);\n    assert(solution.canChoose({{1,1,1},{1,1,1}}, {1,1,1,1,1,1,1,1}) == vector<int>True);\n    assert(solution.canChoose({{-1,-2,-3},{-3,-4,-5},{-5,-6,-7}}, {-1,-2,-3,-3,-4,-5,-5,-6,-7}) == vector<int>True);\n    assert(solution.canChoose({{1, 1, 1}, {1, 1}, {1}}, {1, 1, 1, 1, 1}) == vector<int>False);\n    assert(solution.canChoose({{0,1},{1,2},{2,3},{3,4}}, {0,1,1,2,2,3,3,4}) == vector<int>True);\n    assert(solution.canChoose({{-1,-2,-3},{-4,-5},{-6,-7,-8,-9}}, {-1,-2,-3,0,-4,-5,1,-6,-7,-8,-9}) == vector<int>True);\n    assert(solution.canChoose({{1,2,3},{3,4,5}}, {1,2,3,99,3,4,5}) == vector<int>True);\n    assert(solution.canChoose({{1},{2},{3},{4},{5},{6},{7},{8},{9},{10}}, {1,2,3,4,5,6,7,8,9,10}) == vector<int>True);\n    assert(solution.canChoose({{1,2,3},{4,5,6},{7,8,9}}, {9,8,7,6,5,4,3,2,1,1,2,3,4,5,6,7,8,9}) == vector<int>True);\n    assert(solution.canChoose({{1,2},{2,3},{3,4},{4,5}}, {1,2,2,3,3,4,4,5,5}) == vector<int>True);\n    assert(solution.canChoose({{1,2,3},{1,2,3},{1,2,3}}, {1,2,3,4,5,1,2,3,6,7,8,1,2,3}) == vector<int>True);\n    assert(solution.canChoose({{-1,-2,-3},{-3,-2,-1},{0,0,0}}, {-1,-2,-3,0,0,0,-3,-2,-1}) == vector<int>False);\n    assert(solution.canChoose({{1,2,3},{1,2,3,4},{4,5}}, {1,2,3,1,2,3,4,4,5}) == vector<int>True);\n    assert(solution.canChoose({{1,2,3,4,5},{2,3,4},{3,4,5,6}}, {1,2,3,4,5,6,7,8,9}) == vector<int>False);\n    assert(solution.canChoose({{1,2},{2,3},{3,4},{4,5}}, {1,2,2,3,3,4,4,5}) == vector<int>True);\n    assert(solution.canChoose({{-1,-2,-3},{-4,-5,-6}}, {-1,-2,-3,-4,-5,-6,-1,-2,-3,-4,-5,-6}) == vector<int>True);\n    assert(solution.canChoose({{1,2,3},{3,2,1},{2,1,3}}, {1,2,3,3,2,1,2,1,3}) == vector<int>True);\n    assert(solution.canChoose({{1,2,3},{3,4,5},{5,6,7},{7,8,9}}, {1,2,3,3,4,5,5,6,7,7,8,9}) == vector<int>True);\n    assert(solution.canChoose({{10,20,30},{40,50},{60,70,80}}, {5,10,20,30,15,40,50,25,60,70,80}) == vector<int>True);\n    assert(solution.canChoose({{1,2},{3,4},{5,6},{7,8},{9,10}}, {1,2,3,4,5,6,7,8,9,10}) == vector<int>True);\n    assert(solution.canChoose({{1, 2, 3}, {4, 5, 6}, {7, 8, 9}}, {0, 1, 2, 3, 4, 5, 6, 7, 8, 9}) == vector<int>True);\n    assert(solution.canChoose({{1,1,1},{2,2,2},{3,3,3}}, {1,1,1,2,2,2,3,3,3}) == vector<int>True);\n    assert(solution.canChoose({{1,2},{2,3},{3,4},{4,5}}, {1,2,2,3,3,4,99,4,5}) == vector<int>True);\n    assert(solution.canChoose({{1,1,1,1},{2,2,2,2},{3,3,3,3}}, {1,1,1,1,2,2,2,2,3,3,3,3}) == vector<int>True);\n    assert(solution.canChoose({{1, 2, 3}, {3, 4, 5}, {5, 6, 7}}, {1, 2, 3, 3, 4, 5, 5, 6, 7}) == vector<int>True);\n    assert(solution.canChoose({{9,8,7},{6,5,4},{3,2,1}}, {9,8,7,6,5,4,3,2,1}) == vector<int>True);\n    assert(solution.canChoose({{1,2},{2,3},{3,4},{4,5},{5,6},{6,7},{7,8},{8,9},{9,10}}, {1,2,3,4,5,6,7,8,9,10}) == vector<int>False);\n    assert(solution.canChoose({{1,2,3},{2,3,4},{3,4,5}}, {1,2,3,2,3,4,3,4,5}) == vector<int>True);\n    assert(solution.canChoose({{1},{2},{3},{4},{5},{6},{7},{8},{9},{10}}, {1,2,3,4,5,6,7,8,9,10,11}) == vector<int>True);\n    assert(solution.canChoose({{1},{2},{3},{4},{5}}, {1,0,2,0,3,0,4,0,5}) == vector<int>True);\n    assert(solution.canChoose({{1,2,3},{1,2},{1}}, {1,2,3,1,2,1}) == vector<int>True);\n    assert(solution.canChoose({{1,2,3,4,5},{5,4,3,2,1}}, {1,2,3,4,5,5,4,3,2,1}) == vector<int>True);\n    assert(solution.canChoose({{1,2},{2,3},{3,4}}, {1,2,3,4,5,3,4}) == vector<int>False);\n    assert(solution.canChoose({{1,1,1},{2,2,2},{3,3,3},{1,1,1}}, {1,1,1,2,2,2,3,3,3,1,1,1}) == vector<int>True);\n    assert(solution.canChoose({{1,1},{2,2},{1,1},{2,2}}, {1,1,2,2,1,1,2,2}) == vector<int>True);\n    assert(solution.canChoose({{1,2,3},{1,2,3},{1,2,3}}, {1,2,3,1,2,3,1,2,3}) == vector<int>True);\n    assert(solution.canChoose({{-10,-20,-30},{-40,-50,-60},{-70,-80,-90}}, {-10,-20,-30,-40,-50,-60,-70,-80,-90,-100}) == vector<int>True);\n    assert(solution.canChoose({{1,2,3,4},{5,6,7},{8,9}}, {1,2,3,4,10,11,5,6,7,12,8,9}) == vector<int>True);\n    assert(solution.canChoose({{1, 2}, {2, 3}, {3, 4}, {4, 5}}, {1, 2, 3, 4, 5, 2, 3, 4, 5}) == vector<int>False);\n    assert(solution.canChoose({{1,2,3,4,5},{5,6,7},{8,9}}, {1,2,3,4,5,5,6,7,8,9}) == vector<int>True);\n    assert(solution.canChoose({{-1,-2,-3},{-3,-2,-1},{1,2,3}}, {-1,-2,-3,-3,-2,-1,1,2,3}) == vector<int>True);\n    assert(solution.canChoose({{1,2,3,4,5},{5,6,7,8,9},{9,10,11,12,13}}, {1,2,3,4,5,5,6,7,8,9,9,10,11,12,13}) == vector<int>True);\n    assert(solution.canChoose({{1,2},{2,3},{3,4},{4,5},{5,6}}, {1,2,2,3,3,4,4,5,5,6}) == vector<int>True);\n    assert(solution.canChoose({{10,20,30},{40,50,60},{70,80,90}}, {10,20,30,40,50,60,70,80,90}) == vector<int>True);\n    assert(solution.canChoose({{1,2,3},{3,4,5}}, {1,2,3,3,4,5}) == vector<int>True);\n    assert(solution.canChoose({{1,2},{2,3},{3,4}}, {1,2,3,4,5}) == vector<int>False);\n    assert(solution.canChoose({{-1,-2,-3},{-4,-5},{-6,-7,-8}}, {-1,-2,-3,0,-4,-5,0,-6,-7,-8}) == vector<int>True);\n    assert(solution.canChoose({{1, 2, 3}, {3, 4, 5}, {5, 6, 7}, {7, 8, 9}}, {1, 2, 3, 3, 4, 5, 5, 6, 7, 7, 8, 9}) == vector<int>True);\n    assert(solution.canChoose({{10,20,30},{20,30,40},{30,40,50}}, {10,20,30,20,30,40,30,40,50}) == vector<int>True);\n    assert(solution.canChoose({{1,2},{3,4},{5,6},{7,8}}, {1,2,3,4,5,6,7,8,9,10,11,12}) == vector<int>True);\n    assert(solution.canChoose({{1,1,1},{1,1},{1}}, {1,1,1,1,1,1}) == vector<int>True);\n    assert(solution.canChoose({{100,200},{200,300},{300,400},{400,500}}, {100,200,200,300,300,400,400,500}) == vector<int>True);\n    assert(solution.canChoose({{1,2,3},{4,5,6},{1,2,3},{4,5,6}}, {1,2,3,4,5,6,1,2,3,4,5,6}) == vector<int>True);\n    assert(solution.canChoose({{-1,-2,-3},{-2,-3,-4},{-3,-4,-5}}, {-1,-2,-3,-2,-3,-4,-3,-4,-5}) == vector<int>True);\n    assert(solution.canChoose({{1, 2}, {2, 3}, {3, 4}, {4, 5}}, {1, 2, 3, 4, 5}) == vector<int>False);\n    assert(solution.canChoose({{1,2,3},{4,5,6},{7,8,9}}, {1,2,3,10,4,5,6,11,7,8,9}) == vector<int>True);\n    assert(solution.canChoose({{1,2,3},{3,4,5},{5,6,7}}, {1,2,3,4,5,6,7}) == vector<int>False);\n    assert(solution.canChoose({{100,200},{300,400,500},{600}}, {50,100,200,150,300,400,500,200,600}) == vector<int>True);\n    assert(solution.canChoose({{1, 2, 3}, {4, 5, 6}, {7, 8, 9}}, {1, 1, 2, 3, 4, 5, 6, 7, 8, 9}) == vector<int>True);\n    assert(solution.canChoose({{1,2},{2,3},{3,4}}, {1,2,2,3,3,4,4}) == vector<int>True);\n    assert(solution.canChoose({{1,2},{3,4},{1,2}}, {1,2,3,4,1,2}) == vector<int>True);\n    assert(solution.canChoose({{1,1,1,1},{1,1},{1}}, {1,1,1,1,1,1,1}) == vector<int>True);\n    assert(solution.canChoose({{1,2,3},{1,2,3},{1,2,3}}, {1,2,3,1,2,3,1,2,3,1,2,3}) == vector<int>True);\n    assert(solution.canChoose({{1,2,3,4,5,6,7,8,9,10}}, {1,2,3,4,5,6,7,8,9,10}) == vector<int>True);\n    assert(solution.canChoose({{1,2,3},{1,2},{2,3}}, {1,2,3,1,2,2,3}) == vector<int>True);\n    assert(solution.canChoose({{9,8,7},{6,5,4},{3,2,1}}, {9,8,7,0,6,5,4,0,3,2,1}) == vector<int>True);\n    assert(solution.canChoose({{1,2,3},{3,4,5},{5,6,7}}, {1,2,3,3,4,5,5,6,7}) == vector<int>True);\n    assert(solution.canChoose({{1,2,3},{4,5,6},{7,8,9}}, {1,2,3,9,8,7,4,5,6,1,2,3,4,5,6,7,8,9}) == vector<int>True);\n    assert(solution.canChoose({{1,1,1},{1,1},{1}}, {1,1,1,1,1,1,1,1,1}) == vector<int>True);\n    assert(solution.canChoose({{10,20,30},{40,50,60},{70,80,90}}, {10,20,30,40,50,60,70,80,90,100}) == vector<int>True);\n    assert(solution.canChoose({{10000000},{9999999},{8888888},{7777777}}, {10000000,9999999,8888888,7777777}) == vector<int>True);\n    assert(solution.canChoose({{10, 20, 30}, {40, 50, 60}, {70, 80, 90}}, {10, 20, 30, 40, 50, 60, 70, 80, 90}) == vector<int>True);\n    assert(solution.canChoose({{-1,-2,-3},{-4,-5,-6},{-7,-8,-9}}, {-1,-2,-3,-4,-5,-6,-7,-8,-9}) == vector<int>True);\n    assert(solution.canChoose({{1,2,3},{4,5,6},{7,8,9},{10,11,12}}, {1,2,3,4,5,6,7,8,9,10,11,12}) == vector<int>True);\n    assert(solution.canChoose({{5,5,5,5},{5,5,5},{5,5},{5}}, {5,5,5,5,5,5,5,5,5,5}) == vector<int>True);\n    assert(solution.canChoose({{1},{2},{3},{4},{5}}, {1,2,3,4,5}) == vector<int>True);\n    assert(solution.canChoose({{-10,-20,-30},{-40,-50},{-60,-70,-80}}, {-10,-20,-30,-40,-50,-60,-70,-80}) == vector<int>True);\n    assert(solution.canChoose({{1}, {2}, {3}, {4}, {5}}, {1, 2, 3, 4, 5}) == vector<int>True);\n    assert(solution.canChoose({{1, 1, 1}, {1, 1, 1}, {1, 1, 1}}, {1, 1, 1, 1, 1, 1, 1}) == vector<int>False);\n    assert(solution.canChoose({{1,2},{3,4,5,6},{7,8}}, {1,2,3,4,5,6,7,8}) == vector<int>True);\n    assert(solution.canChoose({{1, 2, 3}, {4, 5, 6}, {7, 8, 9}}, {1, 2, 3, 4, 5, 6, 7, 8, 9, 10}) == vector<int>True);\n    assert(solution.canChoose({{10,20,30,40},{50,60,70,80}}, {10,20,30,40,50,60,70,80,90}) == vector<int>True);\n    assert(solution.canChoose({{1,2},{2,1},{1,2},{2,1}}, {1,2,2,1,1,2,2,1}) == vector<int>True);\n    assert(solution.canChoose({{-10,-20,-30},{-30,-20,-10}}, {-10,-20,-30,-30,-20,-10}) == vector<int>True);\n    assert(solution.canChoose({{1,2,3,4,5,6,7,8,9},{10,11,12,13,14,15,16,17,18}}, {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18}) == vector<int>True);\n    assert(solution.canChoose({{-1,0,1},{-2,0,2}}, {-1,0,1,-2,0,2,-1,0,1}) == vector<int>True);\n    assert(solution.canChoose({{1,2,3},{4,5,6},{7,8,9}}, {1,2,3,4,5,6,7,8,9}) == vector<int>True);\n    assert(solution.canChoose({{1,2,3},{3,4,5},{5,6,7}}, {99,1,2,3,99,3,4,5,99,5,6,7}) == vector<int>True);\n    assert(solution.canChoose({{1,2,3},{4,5,6},{7,8,9}}, {1,2,3,1,2,3,4,5,6,7,8,9}) == vector<int>True);\n    assert(solution.canChoose({{1,2,3},{4,5,6},{7,8,9}}, {1,2,3,4,5,6,7,8,9,10}) == vector<int>True);\n    assert(solution.canChoose({{1, 2, 3}, {3, 4, 5}}, {1, 2, 3, 3, 4, 5}) == vector<int>True);\n    assert(solution.canChoose({{1, 2, 3}, {1, 2, 3}, {1, 2, 3}}, {1, 2, 3, 1, 2, 3, 1, 2, 3}) == vector<int>True);\n    assert(solution.canChoose({{1,2,3},{3,2,1},{1,2,3}}, {1,2,3,3,2,1,1,2,3}) == vector<int>True);\n    assert(solution.canChoose({{7,8,9},{1,2,3},{4,5,6}}, {7,8,9,1,2,3,4,5,6}) == vector<int>True);\n    assert(solution.canChoose({{1, 2, 3}, {4, 5, 6}}, {1, 2, 3, 0, 0, 4, 5, 6}) == vector<int>True);\n    assert(solution.canChoose({{-1, -2, -3}, {0, 1, 2}, {-3, -2, -1}}, {-1, -2, -3, 0, 1, 2, -3, -2, -1}) == vector<int>True);\n    assert(solution.canChoose({{1, 2, 3}, {2, 3, 4}}, {1, 2, 3, 4}) == vector<int>False);\n    assert(solution.canChoose({{9,8,7,6,5},{4,3,2,1},{0,-1,-2,-3,-4}}, {9,8,7,6,5,4,3,2,1,0,-1,-2,-3,-4}) == vector<int>True);\n    assert(solution.canChoose({{100,200,300},{400,500},{600}}, {100,200,300,400,500,600}) == vector<int>True);\n    assert(solution.canChoose({{1,2,3},{4,5,6},{7,8,9}}, {1,2,3,0,4,5,6,0,7,8,9}) == vector<int>True);\n    assert(solution.canChoose({{1,2,3},{4,5,6}}, {1,2,3,99,4,5,6}) == vector<int>True);\n    assert(solution.canChoose({{1,1,1,1},{1,1,1},{1,1},{1}}, {1,1,1,1,1,1,1,1}) == vector<int>False);\n    assert(solution.canChoose({{1,2,3},{3,2,1}}, {1,2,3,3,2,1,1,2,3,3,2,1}) == vector<int>True);\n    assert(solution.canChoose({{1,2,3,4},{5,6,7,8},{9,10,11,12}}, {0,1,2,3,4,0,5,6,7,8,0,9,10,11,12}) == vector<int>True);\n    assert(solution.canChoose({{1,2,3,4,5},{6,7,8,9,10},{11,12,13,14,15}}, {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15}) == vector<int>True);\n    assert(solution.canChoose({{1,2,3,4,5},{6,7,8,9,10}}, {1,2,3,4,5,11,12,6,7,8,9,10}) == vector<int>True);\n    assert(solution.canChoose({{1,-1},{1,-1}}, {1,-1,1,-1,1,-1}) == vector<int>True);\n    assert(solution.canChoose({{1,2,3,4,5,6,7,8,9},{2,3,4,5,6,7,8,9,10},{3,4,5,6,7,8,9,10,11}}, {1,2,3,4,5,6,7,8,9,2,3,4,5,6,7,8,9,10,3,4,5,6,7,8,9,10,11}) == vector<int>True);\n    assert(solution.canChoose({{1,2},{2,3},{3,4},{4,5}}, {1,2,3,4,5}) == vector<int>False);\n    assert(solution.canChoose({{1, 2, 3}, {4, 5, 6}}, {1, 2, 3, 4, 5, 6, 1, 2, 3, 4, 5, 6}) == vector<int>True);\n    assert(solution.canChoose({{1},{2},{3},{4},{5},{6}}, {1,2,3,4,5,6}) == vector<int>True);\n    assert(solution.canChoose({{1,2,3},{4,5,6},{7,8,9}}, {0,1,2,3,0,4,5,6,0,7,8,9}) == vector<int>True);\n    assert(solution.canChoose({{100,200,300},{400,500},{600,700,800,900}}, {100,200,300,400,500,600,700,800,900}) == vector<int>True);\n    assert(solution.canChoose({{1,1},{1,1},{1,1}}, {1,1,1,1,1,1}) == vector<int>True);\n    assert(solution.canChoose({{1,2,3},{4,5,6},{7,8,9}}, {7,8,9,1,2,3,4,5,6,7,8,9,1,2,3,4,5,6}) == vector<int>True);\n    assert(solution.canChoose({{1,2,3,4,5},{6,7,8,9}}, {1,2,3,4,5,6,7,8,9,10}) == vector<int>True);\n    assert(solution.canChoose({{1,2,3},{3,4,5},{5,6,7},{7,8,9}}, {1,2,3,4,5,6,7,8,9}) == vector<int>False);\n    assert(solution.canChoose({{1,2,3,4},{5,6,7,8},{9,10,11,12}}, {1,2,3,4,5,6,7,8,9,10,11,12}) == vector<int>True);\n}",
+    "java": "public static void check(Solution solution) {\n    assert Arrays.equals(solution.canChoose(new int[]{{1,2,3}}, new int[]{1,2,3,1,2,3}), True);\n    assert Arrays.equals(solution.canChoose(new int[]{{1,2},{3,4}}, new int[]{1,2,4,3}), False);\n    assert Arrays.equals(solution.canChoose(new int[]{{5,5,5},{5}}, new int[]{5,5,5,5}), True);\n    assert Arrays.equals(solution.canChoose(new int[]{{1,1,1},{1,1}}, new int[]{1,1,1,1}), False);\n    assert Arrays.equals(solution.canChoose(new int[]{{1,2},{3,4}}, new int[]{1,2,3,4}), True);\n    assert Arrays.equals(solution.canChoose(new int[]{{1,2},{2,1}}, new int[]{1,2,2,1}), True);\n    assert Arrays.equals(solution.canChoose(new int[]{{-1,-2,-3},{-3,-2,-1}}, new int[]{-1,-2,-3,-3,-2,-1}), True);\n    assert Arrays.equals(solution.canChoose(new int[]{{1,-1,-1},{3,-2,0}}, new int[]{1,-1,0,1,-1,-1,3,-2,0}), True);\n    assert Arrays.equals(solution.canChoose(new int[]{{1,2,3},{1,2,3}}, new int[]{1,2,3,1,2,3}), True);\n    assert Arrays.equals(solution.canChoose(new int[]{{1}}, new int[]{1}), True);\n    assert Arrays.equals(solution.canChoose(new int[]{{1,2},{3,4}}, new int[]{1,2,5,3,4}), True);\n    assert Arrays.equals(solution.canChoose(new int[]{{1},{2},{3}}, new int[]{3,2,1}), False);\n    assert Arrays.equals(solution.canChoose(new int[]{{1,1,1,1},{1,1}}, new int[]{1,1,1,1}), False);\n    assert Arrays.equals(solution.canChoose(new int[]{{1},{2},{3}}, new int[]{1,2,3}), True);\n    assert Arrays.equals(solution.canChoose(new int[]{{1,2,3},{3,4}}, new int[]{7,7,1,2,3,4,7,7}), False);\n    assert Arrays.equals(solution.canChoose(new int[]{{5,5}}, new int[]{5,5,5,5}), True);\n    assert Arrays.equals(solution.canChoose(new int[]{{10,-2},{1,2,3,4}}, new int[]{1,2,3,4,10,-2}), False);\n    assert Arrays.equals(solution.canChoose(new int[]{{1}}, new int[]{2}), False);\n    assert Arrays.equals(solution.canChoose(new int[]{{1,2},{2,3}}, new int[]{1,2,2,3}), True);\n    assert Arrays.equals(solution.canChoose(new int[]{{1,2},{3,4}}, new int[]{1,2,3,4,5,6}), True);\n    assert Arrays.equals(solution.canChoose(new int[]{{1,2},{2,3},{3,4}}, new int[]{1,2,3,4}), False);\n    assert Arrays.equals(solution.canChoose(new int[]{{1,2},{3,4},{5,6}}, new int[]{1,2,3,4,5,6}), True);\n    assert Arrays.equals(solution.canChoose(new int[]{{100,200},{200,300},{300,400}}, new int[]{100,200,200,300,300,400}), True);\n    assert Arrays.equals(solution.canChoose(new int[]{{100,200},{300,400},{500,600}}, new int[]{100,200,300,400,500,600,100,200}), True);\n    assert Arrays.equals(solution.canChoose(new int[]{{0,0,0,0},{0}}, new int[]{0,0,0,0,0,0,0,0}), True);\n    assert Arrays.equals(solution.canChoose(new int[]{{10,20,30},{30,40,50},{50,60,70}}, new int[]{10,20,30,40,50,60,70}), False);\n    assert Arrays.equals(solution.canChoose(new int[]{{1,2,3},{4,5,6},{7,8,9},{1,2,3}}, new int[]{1,2,3,4,5,6,7,8,9,1,2,3}), True);\n    assert Arrays.equals(solution.canChoose(new int[]{{1,2,3},{4,5,6},{7,8,9}}, new int[]{1,2,3,1,2,3,4,5,6,4,5,6,7,8,9,7,8,9}), True);\n    assert Arrays.equals(solution.canChoose(new int[]{{9,8,7},{8,7,6},{7,6,5}}, new int[]{9,8,7,8,7,6,7,6,5}), True);\n    assert Arrays.equals(solution.canChoose(new int[]{{1,1,1},{2,2,2},{3,3,3}}, new int[]{1,1,1,2,2,2,3,3,3,1,1,1,2,2,2,3,3,3}), True);\n    assert Arrays.equals(solution.canChoose(new int[]{{1,2},{2,3},{3,4},{4,5},{5,6}}, new int[]{1,2,3,4,5,6,7}), False);\n    assert Arrays.equals(solution.canChoose(new int[]{{1,1,1},{1,1,1}}, new int[]{1,1,1,1,1,1,1,1}), True);\n    assert Arrays.equals(solution.canChoose(new int[]{{-1,-2,-3},{-3,-4,-5},{-5,-6,-7}}, new int[]{-1,-2,-3,-3,-4,-5,-5,-6,-7}), True);\n    assert Arrays.equals(solution.canChoose(new int[]{{1, 1, 1}, {1, 1}, {1}}, new int[]{1, 1, 1, 1, 1}), False);\n    assert Arrays.equals(solution.canChoose(new int[]{{0,1},{1,2},{2,3},{3,4}}, new int[]{0,1,1,2,2,3,3,4}), True);\n    assert Arrays.equals(solution.canChoose(new int[]{{-1,-2,-3},{-4,-5},{-6,-7,-8,-9}}, new int[]{-1,-2,-3,0,-4,-5,1,-6,-7,-8,-9}), True);\n    assert Arrays.equals(solution.canChoose(new int[]{{1,2,3},{3,4,5}}, new int[]{1,2,3,99,3,4,5}), True);\n    assert Arrays.equals(solution.canChoose(new int[]{{1},{2},{3},{4},{5},{6},{7},{8},{9},{10}}, new int[]{1,2,3,4,5,6,7,8,9,10}), True);\n    assert Arrays.equals(solution.canChoose(new int[]{{1,2,3},{4,5,6},{7,8,9}}, new int[]{9,8,7,6,5,4,3,2,1,1,2,3,4,5,6,7,8,9}), True);\n    assert Arrays.equals(solution.canChoose(new int[]{{1,2},{2,3},{3,4},{4,5}}, new int[]{1,2,2,3,3,4,4,5,5}), True);\n    assert Arrays.equals(solution.canChoose(new int[]{{1,2,3},{1,2,3},{1,2,3}}, new int[]{1,2,3,4,5,1,2,3,6,7,8,1,2,3}), True);\n    assert Arrays.equals(solution.canChoose(new int[]{{-1,-2,-3},{-3,-2,-1},{0,0,0}}, new int[]{-1,-2,-3,0,0,0,-3,-2,-1}), False);\n    assert Arrays.equals(solution.canChoose(new int[]{{1,2,3},{1,2,3,4},{4,5}}, new int[]{1,2,3,1,2,3,4,4,5}), True);\n    assert Arrays.equals(solution.canChoose(new int[]{{1,2,3,4,5},{2,3,4},{3,4,5,6}}, new int[]{1,2,3,4,5,6,7,8,9}), False);\n    assert Arrays.equals(solution.canChoose(new int[]{{1,2},{2,3},{3,4},{4,5}}, new int[]{1,2,2,3,3,4,4,5}), True);\n    assert Arrays.equals(solution.canChoose(new int[]{{-1,-2,-3},{-4,-5,-6}}, new int[]{-1,-2,-3,-4,-5,-6,-1,-2,-3,-4,-5,-6}), True);\n    assert Arrays.equals(solution.canChoose(new int[]{{1,2,3},{3,2,1},{2,1,3}}, new int[]{1,2,3,3,2,1,2,1,3}), True);\n    assert Arrays.equals(solution.canChoose(new int[]{{1,2,3},{3,4,5},{5,6,7},{7,8,9}}, new int[]{1,2,3,3,4,5,5,6,7,7,8,9}), True);\n    assert Arrays.equals(solution.canChoose(new int[]{{10,20,30},{40,50},{60,70,80}}, new int[]{5,10,20,30,15,40,50,25,60,70,80}), True);\n    assert Arrays.equals(solution.canChoose(new int[]{{1,2},{3,4},{5,6},{7,8},{9,10}}, new int[]{1,2,3,4,5,6,7,8,9,10}), True);\n    assert Arrays.equals(solution.canChoose(new int[]{{1, 2, 3}, {4, 5, 6}, {7, 8, 9}}, new int[]{0, 1, 2, 3, 4, 5, 6, 7, 8, 9}), True);\n    assert Arrays.equals(solution.canChoose(new int[]{{1,1,1},{2,2,2},{3,3,3}}, new int[]{1,1,1,2,2,2,3,3,3}), True);\n    assert Arrays.equals(solution.canChoose(new int[]{{1,2},{2,3},{3,4},{4,5}}, new int[]{1,2,2,3,3,4,99,4,5}), True);\n    assert Arrays.equals(solution.canChoose(new int[]{{1,1,1,1},{2,2,2,2},{3,3,3,3}}, new int[]{1,1,1,1,2,2,2,2,3,3,3,3}), True);\n    assert Arrays.equals(solution.canChoose(new int[]{{1, 2, 3}, {3, 4, 5}, {5, 6, 7}}, new int[]{1, 2, 3, 3, 4, 5, 5, 6, 7}), True);\n    assert Arrays.equals(solution.canChoose(new int[]{{9,8,7},{6,5,4},{3,2,1}}, new int[]{9,8,7,6,5,4,3,2,1}), True);\n    assert Arrays.equals(solution.canChoose(new int[]{{1,2},{2,3},{3,4},{4,5},{5,6},{6,7},{7,8},{8,9},{9,10}}, new int[]{1,2,3,4,5,6,7,8,9,10}), False);\n    assert Arrays.equals(solution.canChoose(new int[]{{1,2,3},{2,3,4},{3,4,5}}, new int[]{1,2,3,2,3,4,3,4,5}), True);\n    assert Arrays.equals(solution.canChoose(new int[]{{1},{2},{3},{4},{5},{6},{7},{8},{9},{10}}, new int[]{1,2,3,4,5,6,7,8,9,10,11}), True);\n    assert Arrays.equals(solution.canChoose(new int[]{{1},{2},{3},{4},{5}}, new int[]{1,0,2,0,3,0,4,0,5}), True);\n    assert Arrays.equals(solution.canChoose(new int[]{{1,2,3},{1,2},{1}}, new int[]{1,2,3,1,2,1}), True);\n    assert Arrays.equals(solution.canChoose(new int[]{{1,2,3,4,5},{5,4,3,2,1}}, new int[]{1,2,3,4,5,5,4,3,2,1}), True);\n    assert Arrays.equals(solution.canChoose(new int[]{{1,2},{2,3},{3,4}}, new int[]{1,2,3,4,5,3,4}), False);\n    assert Arrays.equals(solution.canChoose(new int[]{{1,1,1},{2,2,2},{3,3,3},{1,1,1}}, new int[]{1,1,1,2,2,2,3,3,3,1,1,1}), True);\n    assert Arrays.equals(solution.canChoose(new int[]{{1,1},{2,2},{1,1},{2,2}}, new int[]{1,1,2,2,1,1,2,2}), True);\n    assert Arrays.equals(solution.canChoose(new int[]{{1,2,3},{1,2,3},{1,2,3}}, new int[]{1,2,3,1,2,3,1,2,3}), True);\n    assert Arrays.equals(solution.canChoose(new int[]{{-10,-20,-30},{-40,-50,-60},{-70,-80,-90}}, new int[]{-10,-20,-30,-40,-50,-60,-70,-80,-90,-100}), True);\n    assert Arrays.equals(solution.canChoose(new int[]{{1,2,3,4},{5,6,7},{8,9}}, new int[]{1,2,3,4,10,11,5,6,7,12,8,9}), True);\n    assert Arrays.equals(solution.canChoose(new int[]{{1, 2}, {2, 3}, {3, 4}, {4, 5}}, new int[]{1, 2, 3, 4, 5, 2, 3, 4, 5}), False);\n    assert Arrays.equals(solution.canChoose(new int[]{{1,2,3,4,5},{5,6,7},{8,9}}, new int[]{1,2,3,4,5,5,6,7,8,9}), True);\n    assert Arrays.equals(solution.canChoose(new int[]{{-1,-2,-3},{-3,-2,-1},{1,2,3}}, new int[]{-1,-2,-3,-3,-2,-1,1,2,3}), True);\n    assert Arrays.equals(solution.canChoose(new int[]{{1,2,3,4,5},{5,6,7,8,9},{9,10,11,12,13}}, new int[]{1,2,3,4,5,5,6,7,8,9,9,10,11,12,13}), True);\n    assert Arrays.equals(solution.canChoose(new int[]{{1,2},{2,3},{3,4},{4,5},{5,6}}, new int[]{1,2,2,3,3,4,4,5,5,6}), True);\n    assert Arrays.equals(solution.canChoose(new int[]{{10,20,30},{40,50,60},{70,80,90}}, new int[]{10,20,30,40,50,60,70,80,90}), True);\n    assert Arrays.equals(solution.canChoose(new int[]{{1,2,3},{3,4,5}}, new int[]{1,2,3,3,4,5}), True);\n    assert Arrays.equals(solution.canChoose(new int[]{{1,2},{2,3},{3,4}}, new int[]{1,2,3,4,5}), False);\n    assert Arrays.equals(solution.canChoose(new int[]{{-1,-2,-3},{-4,-5},{-6,-7,-8}}, new int[]{-1,-2,-3,0,-4,-5,0,-6,-7,-8}), True);\n    assert Arrays.equals(solution.canChoose(new int[]{{1, 2, 3}, {3, 4, 5}, {5, 6, 7}, {7, 8, 9}}, new int[]{1, 2, 3, 3, 4, 5, 5, 6, 7, 7, 8, 9}), True);\n    assert Arrays.equals(solution.canChoose(new int[]{{10,20,30},{20,30,40},{30,40,50}}, new int[]{10,20,30,20,30,40,30,40,50}), True);\n    assert Arrays.equals(solution.canChoose(new int[]{{1,2},{3,4},{5,6},{7,8}}, new int[]{1,2,3,4,5,6,7,8,9,10,11,12}), True);\n    assert Arrays.equals(solution.canChoose(new int[]{{1,1,1},{1,1},{1}}, new int[]{1,1,1,1,1,1}), True);\n    assert Arrays.equals(solution.canChoose(new int[]{{100,200},{200,300},{300,400},{400,500}}, new int[]{100,200,200,300,300,400,400,500}), True);\n    assert Arrays.equals(solution.canChoose(new int[]{{1,2,3},{4,5,6},{1,2,3},{4,5,6}}, new int[]{1,2,3,4,5,6,1,2,3,4,5,6}), True);\n    assert Arrays.equals(solution.canChoose(new int[]{{-1,-2,-3},{-2,-3,-4},{-3,-4,-5}}, new int[]{-1,-2,-3,-2,-3,-4,-3,-4,-5}), True);\n    assert Arrays.equals(solution.canChoose(new int[]{{1, 2}, {2, 3}, {3, 4}, {4, 5}}, new int[]{1, 2, 3, 4, 5}), False);\n    assert Arrays.equals(solution.canChoose(new int[]{{1,2,3},{4,5,6},{7,8,9}}, new int[]{1,2,3,10,4,5,6,11,7,8,9}), True);\n    assert Arrays.equals(solution.canChoose(new int[]{{1,2,3},{3,4,5},{5,6,7}}, new int[]{1,2,3,4,5,6,7}), False);\n    assert Arrays.equals(solution.canChoose(new int[]{{100,200},{300,400,500},{600}}, new int[]{50,100,200,150,300,400,500,200,600}), True);\n    assert Arrays.equals(solution.canChoose(new int[]{{1, 2, 3}, {4, 5, 6}, {7, 8, 9}}, new int[]{1, 1, 2, 3, 4, 5, 6, 7, 8, 9}), True);\n    assert Arrays.equals(solution.canChoose(new int[]{{1,2},{2,3},{3,4}}, new int[]{1,2,2,3,3,4,4}), True);\n    assert Arrays.equals(solution.canChoose(new int[]{{1,2},{3,4},{1,2}}, new int[]{1,2,3,4,1,2}), True);\n    assert Arrays.equals(solution.canChoose(new int[]{{1,1,1,1},{1,1},{1}}, new int[]{1,1,1,1,1,1,1}), True);\n    assert Arrays.equals(solution.canChoose(new int[]{{1,2,3},{1,2,3},{1,2,3}}, new int[]{1,2,3,1,2,3,1,2,3,1,2,3}), True);\n    assert Arrays.equals(solution.canChoose(new int[]{{1,2,3,4,5,6,7,8,9,10}}, new int[]{1,2,3,4,5,6,7,8,9,10}), True);\n    assert Arrays.equals(solution.canChoose(new int[]{{1,2,3},{1,2},{2,3}}, new int[]{1,2,3,1,2,2,3}), True);\n    assert Arrays.equals(solution.canChoose(new int[]{{9,8,7},{6,5,4},{3,2,1}}, new int[]{9,8,7,0,6,5,4,0,3,2,1}), True);\n    assert Arrays.equals(solution.canChoose(new int[]{{1,2,3},{3,4,5},{5,6,7}}, new int[]{1,2,3,3,4,5,5,6,7}), True);\n    assert Arrays.equals(solution.canChoose(new int[]{{1,2,3},{4,5,6},{7,8,9}}, new int[]{1,2,3,9,8,7,4,5,6,1,2,3,4,5,6,7,8,9}), True);\n    assert Arrays.equals(solution.canChoose(new int[]{{1,1,1},{1,1},{1}}, new int[]{1,1,1,1,1,1,1,1,1}), True);\n    assert Arrays.equals(solution.canChoose(new int[]{{10,20,30},{40,50,60},{70,80,90}}, new int[]{10,20,30,40,50,60,70,80,90,100}), True);\n    assert Arrays.equals(solution.canChoose(new int[]{{10000000},{9999999},{8888888},{7777777}}, new int[]{10000000,9999999,8888888,7777777}), True);\n    assert Arrays.equals(solution.canChoose(new int[]{{10, 20, 30}, {40, 50, 60}, {70, 80, 90}}, new int[]{10, 20, 30, 40, 50, 60, 70, 80, 90}), True);\n    assert Arrays.equals(solution.canChoose(new int[]{{-1,-2,-3},{-4,-5,-6},{-7,-8,-9}}, new int[]{-1,-2,-3,-4,-5,-6,-7,-8,-9}), True);\n    assert Arrays.equals(solution.canChoose(new int[]{{1,2,3},{4,5,6},{7,8,9},{10,11,12}}, new int[]{1,2,3,4,5,6,7,8,9,10,11,12}), True);\n    assert Arrays.equals(solution.canChoose(new int[]{{5,5,5,5},{5,5,5},{5,5},{5}}, new int[]{5,5,5,5,5,5,5,5,5,5}), True);\n    assert Arrays.equals(solution.canChoose(new int[]{{1},{2},{3},{4},{5}}, new int[]{1,2,3,4,5}), True);\n    assert Arrays.equals(solution.canChoose(new int[]{{-10,-20,-30},{-40,-50},{-60,-70,-80}}, new int[]{-10,-20,-30,-40,-50,-60,-70,-80}), True);\n    assert Arrays.equals(solution.canChoose(new int[]{{1}, {2}, {3}, {4}, {5}}, new int[]{1, 2, 3, 4, 5}), True);\n    assert Arrays.equals(solution.canChoose(new int[]{{1, 1, 1}, {1, 1, 1}, {1, 1, 1}}, new int[]{1, 1, 1, 1, 1, 1, 1}), False);\n    assert Arrays.equals(solution.canChoose(new int[]{{1,2},{3,4,5,6},{7,8}}, new int[]{1,2,3,4,5,6,7,8}), True);\n    assert Arrays.equals(solution.canChoose(new int[]{{1, 2, 3}, {4, 5, 6}, {7, 8, 9}}, new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}), True);\n    assert Arrays.equals(solution.canChoose(new int[]{{10,20,30,40},{50,60,70,80}}, new int[]{10,20,30,40,50,60,70,80,90}), True);\n    assert Arrays.equals(solution.canChoose(new int[]{{1,2},{2,1},{1,2},{2,1}}, new int[]{1,2,2,1,1,2,2,1}), True);\n    assert Arrays.equals(solution.canChoose(new int[]{{-10,-20,-30},{-30,-20,-10}}, new int[]{-10,-20,-30,-30,-20,-10}), True);\n    assert Arrays.equals(solution.canChoose(new int[]{{1,2,3,4,5,6,7,8,9},{10,11,12,13,14,15,16,17,18}}, new int[]{1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18}), True);\n    assert Arrays.equals(solution.canChoose(new int[]{{-1,0,1},{-2,0,2}}, new int[]{-1,0,1,-2,0,2,-1,0,1}), True);\n    assert Arrays.equals(solution.canChoose(new int[]{{1,2,3},{4,5,6},{7,8,9}}, new int[]{1,2,3,4,5,6,7,8,9}), True);\n    assert Arrays.equals(solution.canChoose(new int[]{{1,2,3},{3,4,5},{5,6,7}}, new int[]{99,1,2,3,99,3,4,5,99,5,6,7}), True);\n    assert Arrays.equals(solution.canChoose(new int[]{{1,2,3},{4,5,6},{7,8,9}}, new int[]{1,2,3,1,2,3,4,5,6,7,8,9}), True);\n    assert Arrays.equals(solution.canChoose(new int[]{{1,2,3},{4,5,6},{7,8,9}}, new int[]{1,2,3,4,5,6,7,8,9,10}), True);\n    assert Arrays.equals(solution.canChoose(new int[]{{1, 2, 3}, {3, 4, 5}}, new int[]{1, 2, 3, 3, 4, 5}), True);\n    assert Arrays.equals(solution.canChoose(new int[]{{1, 2, 3}, {1, 2, 3}, {1, 2, 3}}, new int[]{1, 2, 3, 1, 2, 3, 1, 2, 3}), True);\n    assert Arrays.equals(solution.canChoose(new int[]{{1,2,3},{3,2,1},{1,2,3}}, new int[]{1,2,3,3,2,1,1,2,3}), True);\n    assert Arrays.equals(solution.canChoose(new int[]{{7,8,9},{1,2,3},{4,5,6}}, new int[]{7,8,9,1,2,3,4,5,6}), True);\n    assert Arrays.equals(solution.canChoose(new int[]{{1, 2, 3}, {4, 5, 6}}, new int[]{1, 2, 3, 0, 0, 4, 5, 6}), True);\n    assert Arrays.equals(solution.canChoose(new int[]{{-1, -2, -3}, {0, 1, 2}, {-3, -2, -1}}, new int[]{-1, -2, -3, 0, 1, 2, -3, -2, -1}), True);\n    assert Arrays.equals(solution.canChoose(new int[]{{1, 2, 3}, {2, 3, 4}}, new int[]{1, 2, 3, 4}), False);\n    assert Arrays.equals(solution.canChoose(new int[]{{9,8,7,6,5},{4,3,2,1},{0,-1,-2,-3,-4}}, new int[]{9,8,7,6,5,4,3,2,1,0,-1,-2,-3,-4}), True);\n    assert Arrays.equals(solution.canChoose(new int[]{{100,200,300},{400,500},{600}}, new int[]{100,200,300,400,500,600}), True);\n    assert Arrays.equals(solution.canChoose(new int[]{{1,2,3},{4,5,6},{7,8,9}}, new int[]{1,2,3,0,4,5,6,0,7,8,9}), True);\n    assert Arrays.equals(solution.canChoose(new int[]{{1,2,3},{4,5,6}}, new int[]{1,2,3,99,4,5,6}), True);\n    assert Arrays.equals(solution.canChoose(new int[]{{1,1,1,1},{1,1,1},{1,1},{1}}, new int[]{1,1,1,1,1,1,1,1}), False);\n    assert Arrays.equals(solution.canChoose(new int[]{{1,2,3},{3,2,1}}, new int[]{1,2,3,3,2,1,1,2,3,3,2,1}), True);\n    assert Arrays.equals(solution.canChoose(new int[]{{1,2,3,4},{5,6,7,8},{9,10,11,12}}, new int[]{0,1,2,3,4,0,5,6,7,8,0,9,10,11,12}), True);\n    assert Arrays.equals(solution.canChoose(new int[]{{1,2,3,4,5},{6,7,8,9,10},{11,12,13,14,15}}, new int[]{1,2,3,4,5,6,7,8,9,10,11,12,13,14,15}), True);\n    assert Arrays.equals(solution.canChoose(new int[]{{1,2,3,4,5},{6,7,8,9,10}}, new int[]{1,2,3,4,5,11,12,6,7,8,9,10}), True);\n    assert Arrays.equals(solution.canChoose(new int[]{{1,-1},{1,-1}}, new int[]{1,-1,1,-1,1,-1}), True);\n    assert Arrays.equals(solution.canChoose(new int[]{{1,2,3,4,5,6,7,8,9},{2,3,4,5,6,7,8,9,10},{3,4,5,6,7,8,9,10,11}}, new int[]{1,2,3,4,5,6,7,8,9,2,3,4,5,6,7,8,9,10,3,4,5,6,7,8,9,10,11}), True);\n    assert Arrays.equals(solution.canChoose(new int[]{{1,2},{2,3},{3,4},{4,5}}, new int[]{1,2,3,4,5}), False);\n    assert Arrays.equals(solution.canChoose(new int[]{{1, 2, 3}, {4, 5, 6}}, new int[]{1, 2, 3, 4, 5, 6, 1, 2, 3, 4, 5, 6}), True);\n    assert Arrays.equals(solution.canChoose(new int[]{{1},{2},{3},{4},{5},{6}}, new int[]{1,2,3,4,5,6}), True);\n    assert Arrays.equals(solution.canChoose(new int[]{{1,2,3},{4,5,6},{7,8,9}}, new int[]{0,1,2,3,0,4,5,6,0,7,8,9}), True);\n    assert Arrays.equals(solution.canChoose(new int[]{{100,200,300},{400,500},{600,700,800,900}}, new int[]{100,200,300,400,500,600,700,800,900}), True);\n    assert Arrays.equals(solution.canChoose(new int[]{{1,1},{1,1},{1,1}}, new int[]{1,1,1,1,1,1}), True);\n    assert Arrays.equals(solution.canChoose(new int[]{{1,2,3},{4,5,6},{7,8,9}}, new int[]{7,8,9,1,2,3,4,5,6,7,8,9,1,2,3,4,5,6}), True);\n    assert Arrays.equals(solution.canChoose(new int[]{{1,2,3,4,5},{6,7,8,9}}, new int[]{1,2,3,4,5,6,7,8,9,10}), True);\n    assert Arrays.equals(solution.canChoose(new int[]{{1,2,3},{3,4,5},{5,6,7},{7,8,9}}, new int[]{1,2,3,4,5,6,7,8,9}), False);\n    assert Arrays.equals(solution.canChoose(new int[]{{1,2,3,4},{5,6,7,8},{9,10,11,12}}, new int[]{1,2,3,4,5,6,7,8,9,10,11,12}), True);\n}",
+    "javascript": "function check(candidate) {\n    console.assert(JSON.stringify(candidate([[1,2,3]], [1,2,3,1,2,3])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1,2],[3,4]], [1,2,4,3])) === JSON.stringify(False));\n    console.assert(JSON.stringify(candidate([[5,5,5],[5]], [5,5,5,5])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1,1,1],[1,1]], [1,1,1,1])) === JSON.stringify(False));\n    console.assert(JSON.stringify(candidate([[1,2],[3,4]], [1,2,3,4])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1,2],[2,1]], [1,2,2,1])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[-1,-2,-3],[-3,-2,-1]], [-1,-2,-3,-3,-2,-1])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1,-1,-1],[3,-2,0]], [1,-1,0,1,-1,-1,3,-2,0])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1,2,3],[1,2,3]], [1,2,3,1,2,3])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1]], [1])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1,2],[3,4]], [1,2,5,3,4])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1],[2],[3]], [3,2,1])) === JSON.stringify(False));\n    console.assert(JSON.stringify(candidate([[1,1,1,1],[1,1]], [1,1,1,1])) === JSON.stringify(False));\n    console.assert(JSON.stringify(candidate([[1],[2],[3]], [1,2,3])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1,2,3],[3,4]], [7,7,1,2,3,4,7,7])) === JSON.stringify(False));\n    console.assert(JSON.stringify(candidate([[5,5]], [5,5,5,5])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[10,-2],[1,2,3,4]], [1,2,3,4,10,-2])) === JSON.stringify(False));\n    console.assert(JSON.stringify(candidate([[1]], [2])) === JSON.stringify(False));\n    console.assert(JSON.stringify(candidate([[1,2],[2,3]], [1,2,2,3])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1,2],[3,4]], [1,2,3,4,5,6])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1,2],[2,3],[3,4]], [1,2,3,4])) === JSON.stringify(False));\n    console.assert(JSON.stringify(candidate([[1,2],[3,4],[5,6]], [1,2,3,4,5,6])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[100,200],[200,300],[300,400]], [100,200,200,300,300,400])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[100,200],[300,400],[500,600]], [100,200,300,400,500,600,100,200])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[0,0,0,0],[0]], [0,0,0,0,0,0,0,0])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[10,20,30],[30,40,50],[50,60,70]], [10,20,30,40,50,60,70])) === JSON.stringify(False));\n    console.assert(JSON.stringify(candidate([[1,2,3],[4,5,6],[7,8,9],[1,2,3]], [1,2,3,4,5,6,7,8,9,1,2,3])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1,2,3],[4,5,6],[7,8,9]], [1,2,3,1,2,3,4,5,6,4,5,6,7,8,9,7,8,9])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[9,8,7],[8,7,6],[7,6,5]], [9,8,7,8,7,6,7,6,5])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1,1,1],[2,2,2],[3,3,3]], [1,1,1,2,2,2,3,3,3,1,1,1,2,2,2,3,3,3])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1,2],[2,3],[3,4],[4,5],[5,6]], [1,2,3,4,5,6,7])) === JSON.stringify(False));\n    console.assert(JSON.stringify(candidate([[1,1,1],[1,1,1]], [1,1,1,1,1,1,1,1])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[-1,-2,-3],[-3,-4,-5],[-5,-6,-7]], [-1,-2,-3,-3,-4,-5,-5,-6,-7])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1, 1, 1], [1, 1], [1]], [1, 1, 1, 1, 1])) === JSON.stringify(False));\n    console.assert(JSON.stringify(candidate([[0,1],[1,2],[2,3],[3,4]], [0,1,1,2,2,3,3,4])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[-1,-2,-3],[-4,-5],[-6,-7,-8,-9]], [-1,-2,-3,0,-4,-5,1,-6,-7,-8,-9])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1,2,3],[3,4,5]], [1,2,3,99,3,4,5])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1],[2],[3],[4],[5],[6],[7],[8],[9],[10]], [1,2,3,4,5,6,7,8,9,10])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1,2,3],[4,5,6],[7,8,9]], [9,8,7,6,5,4,3,2,1,1,2,3,4,5,6,7,8,9])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1,2],[2,3],[3,4],[4,5]], [1,2,2,3,3,4,4,5,5])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1,2,3],[1,2,3],[1,2,3]], [1,2,3,4,5,1,2,3,6,7,8,1,2,3])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[-1,-2,-3],[-3,-2,-1],[0,0,0]], [-1,-2,-3,0,0,0,-3,-2,-1])) === JSON.stringify(False));\n    console.assert(JSON.stringify(candidate([[1,2,3],[1,2,3,4],[4,5]], [1,2,3,1,2,3,4,4,5])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1,2,3,4,5],[2,3,4],[3,4,5,6]], [1,2,3,4,5,6,7,8,9])) === JSON.stringify(False));\n    console.assert(JSON.stringify(candidate([[1,2],[2,3],[3,4],[4,5]], [1,2,2,3,3,4,4,5])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[-1,-2,-3],[-4,-5,-6]], [-1,-2,-3,-4,-5,-6,-1,-2,-3,-4,-5,-6])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1,2,3],[3,2,1],[2,1,3]], [1,2,3,3,2,1,2,1,3])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1,2,3],[3,4,5],[5,6,7],[7,8,9]], [1,2,3,3,4,5,5,6,7,7,8,9])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[10,20,30],[40,50],[60,70,80]], [5,10,20,30,15,40,50,25,60,70,80])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1,2],[3,4],[5,6],[7,8],[9,10]], [1,2,3,4,5,6,7,8,9,10])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1, 2, 3], [4, 5, 6], [7, 8, 9]], [0, 1, 2, 3, 4, 5, 6, 7, 8, 9])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1,1,1],[2,2,2],[3,3,3]], [1,1,1,2,2,2,3,3,3])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1,2],[2,3],[3,4],[4,5]], [1,2,2,3,3,4,99,4,5])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1,1,1,1],[2,2,2,2],[3,3,3,3]], [1,1,1,1,2,2,2,2,3,3,3,3])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1, 2, 3], [3, 4, 5], [5, 6, 7]], [1, 2, 3, 3, 4, 5, 5, 6, 7])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[9,8,7],[6,5,4],[3,2,1]], [9,8,7,6,5,4,3,2,1])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1,2],[2,3],[3,4],[4,5],[5,6],[6,7],[7,8],[8,9],[9,10]], [1,2,3,4,5,6,7,8,9,10])) === JSON.stringify(False));\n    console.assert(JSON.stringify(candidate([[1,2,3],[2,3,4],[3,4,5]], [1,2,3,2,3,4,3,4,5])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1],[2],[3],[4],[5],[6],[7],[8],[9],[10]], [1,2,3,4,5,6,7,8,9,10,11])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1],[2],[3],[4],[5]], [1,0,2,0,3,0,4,0,5])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1,2,3],[1,2],[1]], [1,2,3,1,2,1])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1,2,3,4,5],[5,4,3,2,1]], [1,2,3,4,5,5,4,3,2,1])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1,2],[2,3],[3,4]], [1,2,3,4,5,3,4])) === JSON.stringify(False));\n    console.assert(JSON.stringify(candidate([[1,1,1],[2,2,2],[3,3,3],[1,1,1]], [1,1,1,2,2,2,3,3,3,1,1,1])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1,1],[2,2],[1,1],[2,2]], [1,1,2,2,1,1,2,2])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1,2,3],[1,2,3],[1,2,3]], [1,2,3,1,2,3,1,2,3])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[-10,-20,-30],[-40,-50,-60],[-70,-80,-90]], [-10,-20,-30,-40,-50,-60,-70,-80,-90,-100])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1,2,3,4],[5,6,7],[8,9]], [1,2,3,4,10,11,5,6,7,12,8,9])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1, 2], [2, 3], [3, 4], [4, 5]], [1, 2, 3, 4, 5, 2, 3, 4, 5])) === JSON.stringify(False));\n    console.assert(JSON.stringify(candidate([[1,2,3,4,5],[5,6,7],[8,9]], [1,2,3,4,5,5,6,7,8,9])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[-1,-2,-3],[-3,-2,-1],[1,2,3]], [-1,-2,-3,-3,-2,-1,1,2,3])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1,2,3,4,5],[5,6,7,8,9],[9,10,11,12,13]], [1,2,3,4,5,5,6,7,8,9,9,10,11,12,13])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1,2],[2,3],[3,4],[4,5],[5,6]], [1,2,2,3,3,4,4,5,5,6])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[10,20,30],[40,50,60],[70,80,90]], [10,20,30,40,50,60,70,80,90])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1,2,3],[3,4,5]], [1,2,3,3,4,5])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1,2],[2,3],[3,4]], [1,2,3,4,5])) === JSON.stringify(False));\n    console.assert(JSON.stringify(candidate([[-1,-2,-3],[-4,-5],[-6,-7,-8]], [-1,-2,-3,0,-4,-5,0,-6,-7,-8])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1, 2, 3], [3, 4, 5], [5, 6, 7], [7, 8, 9]], [1, 2, 3, 3, 4, 5, 5, 6, 7, 7, 8, 9])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[10,20,30],[20,30,40],[30,40,50]], [10,20,30,20,30,40,30,40,50])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1,2],[3,4],[5,6],[7,8]], [1,2,3,4,5,6,7,8,9,10,11,12])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1,1,1],[1,1],[1]], [1,1,1,1,1,1])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[100,200],[200,300],[300,400],[400,500]], [100,200,200,300,300,400,400,500])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1,2,3],[4,5,6],[1,2,3],[4,5,6]], [1,2,3,4,5,6,1,2,3,4,5,6])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[-1,-2,-3],[-2,-3,-4],[-3,-4,-5]], [-1,-2,-3,-2,-3,-4,-3,-4,-5])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1, 2], [2, 3], [3, 4], [4, 5]], [1, 2, 3, 4, 5])) === JSON.stringify(False));\n    console.assert(JSON.stringify(candidate([[1,2,3],[4,5,6],[7,8,9]], [1,2,3,10,4,5,6,11,7,8,9])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1,2,3],[3,4,5],[5,6,7]], [1,2,3,4,5,6,7])) === JSON.stringify(False));\n    console.assert(JSON.stringify(candidate([[100,200],[300,400,500],[600]], [50,100,200,150,300,400,500,200,600])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1, 2, 3], [4, 5, 6], [7, 8, 9]], [1, 1, 2, 3, 4, 5, 6, 7, 8, 9])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1,2],[2,3],[3,4]], [1,2,2,3,3,4,4])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1,2],[3,4],[1,2]], [1,2,3,4,1,2])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1,1,1,1],[1,1],[1]], [1,1,1,1,1,1,1])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1,2,3],[1,2,3],[1,2,3]], [1,2,3,1,2,3,1,2,3,1,2,3])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1,2,3,4,5,6,7,8,9,10]], [1,2,3,4,5,6,7,8,9,10])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1,2,3],[1,2],[2,3]], [1,2,3,1,2,2,3])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[9,8,7],[6,5,4],[3,2,1]], [9,8,7,0,6,5,4,0,3,2,1])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1,2,3],[3,4,5],[5,6,7]], [1,2,3,3,4,5,5,6,7])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1,2,3],[4,5,6],[7,8,9]], [1,2,3,9,8,7,4,5,6,1,2,3,4,5,6,7,8,9])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1,1,1],[1,1],[1]], [1,1,1,1,1,1,1,1,1])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[10,20,30],[40,50,60],[70,80,90]], [10,20,30,40,50,60,70,80,90,100])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[10000000],[9999999],[8888888],[7777777]], [10000000,9999999,8888888,7777777])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[10, 20, 30], [40, 50, 60], [70, 80, 90]], [10, 20, 30, 40, 50, 60, 70, 80, 90])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[-1,-2,-3],[-4,-5,-6],[-7,-8,-9]], [-1,-2,-3,-4,-5,-6,-7,-8,-9])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1,2,3],[4,5,6],[7,8,9],[10,11,12]], [1,2,3,4,5,6,7,8,9,10,11,12])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[5,5,5,5],[5,5,5],[5,5],[5]], [5,5,5,5,5,5,5,5,5,5])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1],[2],[3],[4],[5]], [1,2,3,4,5])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[-10,-20,-30],[-40,-50],[-60,-70,-80]], [-10,-20,-30,-40,-50,-60,-70,-80])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1], [2], [3], [4], [5]], [1, 2, 3, 4, 5])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1, 1, 1], [1, 1, 1], [1, 1, 1]], [1, 1, 1, 1, 1, 1, 1])) === JSON.stringify(False));\n    console.assert(JSON.stringify(candidate([[1,2],[3,4,5,6],[7,8]], [1,2,3,4,5,6,7,8])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1, 2, 3], [4, 5, 6], [7, 8, 9]], [1, 2, 3, 4, 5, 6, 7, 8, 9, 10])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[10,20,30,40],[50,60,70,80]], [10,20,30,40,50,60,70,80,90])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1,2],[2,1],[1,2],[2,1]], [1,2,2,1,1,2,2,1])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[-10,-20,-30],[-30,-20,-10]], [-10,-20,-30,-30,-20,-10])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1,2,3,4,5,6,7,8,9],[10,11,12,13,14,15,16,17,18]], [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[-1,0,1],[-2,0,2]], [-1,0,1,-2,0,2,-1,0,1])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1,2,3],[4,5,6],[7,8,9]], [1,2,3,4,5,6,7,8,9])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1,2,3],[3,4,5],[5,6,7]], [99,1,2,3,99,3,4,5,99,5,6,7])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1,2,3],[4,5,6],[7,8,9]], [1,2,3,1,2,3,4,5,6,7,8,9])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1,2,3],[4,5,6],[7,8,9]], [1,2,3,4,5,6,7,8,9,10])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1, 2, 3], [3, 4, 5]], [1, 2, 3, 3, 4, 5])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1, 2, 3], [1, 2, 3], [1, 2, 3]], [1, 2, 3, 1, 2, 3, 1, 2, 3])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1,2,3],[3,2,1],[1,2,3]], [1,2,3,3,2,1,1,2,3])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[7,8,9],[1,2,3],[4,5,6]], [7,8,9,1,2,3,4,5,6])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1, 2, 3], [4, 5, 6]], [1, 2, 3, 0, 0, 4, 5, 6])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[-1, -2, -3], [0, 1, 2], [-3, -2, -1]], [-1, -2, -3, 0, 1, 2, -3, -2, -1])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1, 2, 3], [2, 3, 4]], [1, 2, 3, 4])) === JSON.stringify(False));\n    console.assert(JSON.stringify(candidate([[9,8,7,6,5],[4,3,2,1],[0,-1,-2,-3,-4]], [9,8,7,6,5,4,3,2,1,0,-1,-2,-3,-4])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[100,200,300],[400,500],[600]], [100,200,300,400,500,600])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1,2,3],[4,5,6],[7,8,9]], [1,2,3,0,4,5,6,0,7,8,9])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1,2,3],[4,5,6]], [1,2,3,99,4,5,6])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1,1,1,1],[1,1,1],[1,1],[1]], [1,1,1,1,1,1,1,1])) === JSON.stringify(False));\n    console.assert(JSON.stringify(candidate([[1,2,3],[3,2,1]], [1,2,3,3,2,1,1,2,3,3,2,1])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1,2,3,4],[5,6,7,8],[9,10,11,12]], [0,1,2,3,4,0,5,6,7,8,0,9,10,11,12])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1,2,3,4,5],[6,7,8,9,10],[11,12,13,14,15]], [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1,2,3,4,5],[6,7,8,9,10]], [1,2,3,4,5,11,12,6,7,8,9,10])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1,-1],[1,-1]], [1,-1,1,-1,1,-1])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1,2,3,4,5,6,7,8,9],[2,3,4,5,6,7,8,9,10],[3,4,5,6,7,8,9,10,11]], [1,2,3,4,5,6,7,8,9,2,3,4,5,6,7,8,9,10,3,4,5,6,7,8,9,10,11])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1,2],[2,3],[3,4],[4,5]], [1,2,3,4,5])) === JSON.stringify(False));\n    console.assert(JSON.stringify(candidate([[1, 2, 3], [4, 5, 6]], [1, 2, 3, 4, 5, 6, 1, 2, 3, 4, 5, 6])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1],[2],[3],[4],[5],[6]], [1,2,3,4,5,6])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1,2,3],[4,5,6],[7,8,9]], [0,1,2,3,0,4,5,6,0,7,8,9])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[100,200,300],[400,500],[600,700,800,900]], [100,200,300,400,500,600,700,800,900])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1,1],[1,1],[1,1]], [1,1,1,1,1,1])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1,2,3],[4,5,6],[7,8,9]], [7,8,9,1,2,3,4,5,6,7,8,9,1,2,3,4,5,6])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1,2,3,4,5],[6,7,8,9]], [1,2,3,4,5,6,7,8,9,10])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1,2,3],[3,4,5],[5,6,7],[7,8,9]], [1,2,3,4,5,6,7,8,9])) === JSON.stringify(False));\n    console.assert(JSON.stringify(candidate([[1,2,3,4],[5,6,7,8],[9,10,11,12]], [1,2,3,4,5,6,7,8,9,10,11,12])) === JSON.stringify(True));\n}",
+    "typescript": "function check(candidate: Function): void {\n    console.assert(JSON.stringify(candidate([[1,2,3]], [1,2,3,1,2,3])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1,2],[3,4]], [1,2,4,3])) === JSON.stringify(False));\n    console.assert(JSON.stringify(candidate([[5,5,5],[5]], [5,5,5,5])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1,1,1],[1,1]], [1,1,1,1])) === JSON.stringify(False));\n    console.assert(JSON.stringify(candidate([[1,2],[3,4]], [1,2,3,4])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1,2],[2,1]], [1,2,2,1])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[-1,-2,-3],[-3,-2,-1]], [-1,-2,-3,-3,-2,-1])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1,-1,-1],[3,-2,0]], [1,-1,0,1,-1,-1,3,-2,0])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1,2,3],[1,2,3]], [1,2,3,1,2,3])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1]], [1])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1,2],[3,4]], [1,2,5,3,4])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1],[2],[3]], [3,2,1])) === JSON.stringify(False));\n    console.assert(JSON.stringify(candidate([[1,1,1,1],[1,1]], [1,1,1,1])) === JSON.stringify(False));\n    console.assert(JSON.stringify(candidate([[1],[2],[3]], [1,2,3])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1,2,3],[3,4]], [7,7,1,2,3,4,7,7])) === JSON.stringify(False));\n    console.assert(JSON.stringify(candidate([[5,5]], [5,5,5,5])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[10,-2],[1,2,3,4]], [1,2,3,4,10,-2])) === JSON.stringify(False));\n    console.assert(JSON.stringify(candidate([[1]], [2])) === JSON.stringify(False));\n    console.assert(JSON.stringify(candidate([[1,2],[2,3]], [1,2,2,3])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1,2],[3,4]], [1,2,3,4,5,6])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1,2],[2,3],[3,4]], [1,2,3,4])) === JSON.stringify(False));\n    console.assert(JSON.stringify(candidate([[1,2],[3,4],[5,6]], [1,2,3,4,5,6])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[100,200],[200,300],[300,400]], [100,200,200,300,300,400])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[100,200],[300,400],[500,600]], [100,200,300,400,500,600,100,200])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[0,0,0,0],[0]], [0,0,0,0,0,0,0,0])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[10,20,30],[30,40,50],[50,60,70]], [10,20,30,40,50,60,70])) === JSON.stringify(False));\n    console.assert(JSON.stringify(candidate([[1,2,3],[4,5,6],[7,8,9],[1,2,3]], [1,2,3,4,5,6,7,8,9,1,2,3])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1,2,3],[4,5,6],[7,8,9]], [1,2,3,1,2,3,4,5,6,4,5,6,7,8,9,7,8,9])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[9,8,7],[8,7,6],[7,6,5]], [9,8,7,8,7,6,7,6,5])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1,1,1],[2,2,2],[3,3,3]], [1,1,1,2,2,2,3,3,3,1,1,1,2,2,2,3,3,3])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1,2],[2,3],[3,4],[4,5],[5,6]], [1,2,3,4,5,6,7])) === JSON.stringify(False));\n    console.assert(JSON.stringify(candidate([[1,1,1],[1,1,1]], [1,1,1,1,1,1,1,1])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[-1,-2,-3],[-3,-4,-5],[-5,-6,-7]], [-1,-2,-3,-3,-4,-5,-5,-6,-7])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1, 1, 1], [1, 1], [1]], [1, 1, 1, 1, 1])) === JSON.stringify(False));\n    console.assert(JSON.stringify(candidate([[0,1],[1,2],[2,3],[3,4]], [0,1,1,2,2,3,3,4])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[-1,-2,-3],[-4,-5],[-6,-7,-8,-9]], [-1,-2,-3,0,-4,-5,1,-6,-7,-8,-9])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1,2,3],[3,4,5]], [1,2,3,99,3,4,5])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1],[2],[3],[4],[5],[6],[7],[8],[9],[10]], [1,2,3,4,5,6,7,8,9,10])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1,2,3],[4,5,6],[7,8,9]], [9,8,7,6,5,4,3,2,1,1,2,3,4,5,6,7,8,9])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1,2],[2,3],[3,4],[4,5]], [1,2,2,3,3,4,4,5,5])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1,2,3],[1,2,3],[1,2,3]], [1,2,3,4,5,1,2,3,6,7,8,1,2,3])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[-1,-2,-3],[-3,-2,-1],[0,0,0]], [-1,-2,-3,0,0,0,-3,-2,-1])) === JSON.stringify(False));\n    console.assert(JSON.stringify(candidate([[1,2,3],[1,2,3,4],[4,5]], [1,2,3,1,2,3,4,4,5])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1,2,3,4,5],[2,3,4],[3,4,5,6]], [1,2,3,4,5,6,7,8,9])) === JSON.stringify(False));\n    console.assert(JSON.stringify(candidate([[1,2],[2,3],[3,4],[4,5]], [1,2,2,3,3,4,4,5])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[-1,-2,-3],[-4,-5,-6]], [-1,-2,-3,-4,-5,-6,-1,-2,-3,-4,-5,-6])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1,2,3],[3,2,1],[2,1,3]], [1,2,3,3,2,1,2,1,3])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1,2,3],[3,4,5],[5,6,7],[7,8,9]], [1,2,3,3,4,5,5,6,7,7,8,9])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[10,20,30],[40,50],[60,70,80]], [5,10,20,30,15,40,50,25,60,70,80])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1,2],[3,4],[5,6],[7,8],[9,10]], [1,2,3,4,5,6,7,8,9,10])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1, 2, 3], [4, 5, 6], [7, 8, 9]], [0, 1, 2, 3, 4, 5, 6, 7, 8, 9])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1,1,1],[2,2,2],[3,3,3]], [1,1,1,2,2,2,3,3,3])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1,2],[2,3],[3,4],[4,5]], [1,2,2,3,3,4,99,4,5])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1,1,1,1],[2,2,2,2],[3,3,3,3]], [1,1,1,1,2,2,2,2,3,3,3,3])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1, 2, 3], [3, 4, 5], [5, 6, 7]], [1, 2, 3, 3, 4, 5, 5, 6, 7])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[9,8,7],[6,5,4],[3,2,1]], [9,8,7,6,5,4,3,2,1])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1,2],[2,3],[3,4],[4,5],[5,6],[6,7],[7,8],[8,9],[9,10]], [1,2,3,4,5,6,7,8,9,10])) === JSON.stringify(False));\n    console.assert(JSON.stringify(candidate([[1,2,3],[2,3,4],[3,4,5]], [1,2,3,2,3,4,3,4,5])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1],[2],[3],[4],[5],[6],[7],[8],[9],[10]], [1,2,3,4,5,6,7,8,9,10,11])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1],[2],[3],[4],[5]], [1,0,2,0,3,0,4,0,5])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1,2,3],[1,2],[1]], [1,2,3,1,2,1])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1,2,3,4,5],[5,4,3,2,1]], [1,2,3,4,5,5,4,3,2,1])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1,2],[2,3],[3,4]], [1,2,3,4,5,3,4])) === JSON.stringify(False));\n    console.assert(JSON.stringify(candidate([[1,1,1],[2,2,2],[3,3,3],[1,1,1]], [1,1,1,2,2,2,3,3,3,1,1,1])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1,1],[2,2],[1,1],[2,2]], [1,1,2,2,1,1,2,2])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1,2,3],[1,2,3],[1,2,3]], [1,2,3,1,2,3,1,2,3])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[-10,-20,-30],[-40,-50,-60],[-70,-80,-90]], [-10,-20,-30,-40,-50,-60,-70,-80,-90,-100])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1,2,3,4],[5,6,7],[8,9]], [1,2,3,4,10,11,5,6,7,12,8,9])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1, 2], [2, 3], [3, 4], [4, 5]], [1, 2, 3, 4, 5, 2, 3, 4, 5])) === JSON.stringify(False));\n    console.assert(JSON.stringify(candidate([[1,2,3,4,5],[5,6,7],[8,9]], [1,2,3,4,5,5,6,7,8,9])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[-1,-2,-3],[-3,-2,-1],[1,2,3]], [-1,-2,-3,-3,-2,-1,1,2,3])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1,2,3,4,5],[5,6,7,8,9],[9,10,11,12,13]], [1,2,3,4,5,5,6,7,8,9,9,10,11,12,13])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1,2],[2,3],[3,4],[4,5],[5,6]], [1,2,2,3,3,4,4,5,5,6])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[10,20,30],[40,50,60],[70,80,90]], [10,20,30,40,50,60,70,80,90])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1,2,3],[3,4,5]], [1,2,3,3,4,5])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1,2],[2,3],[3,4]], [1,2,3,4,5])) === JSON.stringify(False));\n    console.assert(JSON.stringify(candidate([[-1,-2,-3],[-4,-5],[-6,-7,-8]], [-1,-2,-3,0,-4,-5,0,-6,-7,-8])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1, 2, 3], [3, 4, 5], [5, 6, 7], [7, 8, 9]], [1, 2, 3, 3, 4, 5, 5, 6, 7, 7, 8, 9])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[10,20,30],[20,30,40],[30,40,50]], [10,20,30,20,30,40,30,40,50])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1,2],[3,4],[5,6],[7,8]], [1,2,3,4,5,6,7,8,9,10,11,12])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1,1,1],[1,1],[1]], [1,1,1,1,1,1])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[100,200],[200,300],[300,400],[400,500]], [100,200,200,300,300,400,400,500])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1,2,3],[4,5,6],[1,2,3],[4,5,6]], [1,2,3,4,5,6,1,2,3,4,5,6])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[-1,-2,-3],[-2,-3,-4],[-3,-4,-5]], [-1,-2,-3,-2,-3,-4,-3,-4,-5])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1, 2], [2, 3], [3, 4], [4, 5]], [1, 2, 3, 4, 5])) === JSON.stringify(False));\n    console.assert(JSON.stringify(candidate([[1,2,3],[4,5,6],[7,8,9]], [1,2,3,10,4,5,6,11,7,8,9])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1,2,3],[3,4,5],[5,6,7]], [1,2,3,4,5,6,7])) === JSON.stringify(False));\n    console.assert(JSON.stringify(candidate([[100,200],[300,400,500],[600]], [50,100,200,150,300,400,500,200,600])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1, 2, 3], [4, 5, 6], [7, 8, 9]], [1, 1, 2, 3, 4, 5, 6, 7, 8, 9])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1,2],[2,3],[3,4]], [1,2,2,3,3,4,4])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1,2],[3,4],[1,2]], [1,2,3,4,1,2])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1,1,1,1],[1,1],[1]], [1,1,1,1,1,1,1])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1,2,3],[1,2,3],[1,2,3]], [1,2,3,1,2,3,1,2,3,1,2,3])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1,2,3,4,5,6,7,8,9,10]], [1,2,3,4,5,6,7,8,9,10])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1,2,3],[1,2],[2,3]], [1,2,3,1,2,2,3])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[9,8,7],[6,5,4],[3,2,1]], [9,8,7,0,6,5,4,0,3,2,1])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1,2,3],[3,4,5],[5,6,7]], [1,2,3,3,4,5,5,6,7])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1,2,3],[4,5,6],[7,8,9]], [1,2,3,9,8,7,4,5,6,1,2,3,4,5,6,7,8,9])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1,1,1],[1,1],[1]], [1,1,1,1,1,1,1,1,1])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[10,20,30],[40,50,60],[70,80,90]], [10,20,30,40,50,60,70,80,90,100])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[10000000],[9999999],[8888888],[7777777]], [10000000,9999999,8888888,7777777])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[10, 20, 30], [40, 50, 60], [70, 80, 90]], [10, 20, 30, 40, 50, 60, 70, 80, 90])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[-1,-2,-3],[-4,-5,-6],[-7,-8,-9]], [-1,-2,-3,-4,-5,-6,-7,-8,-9])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1,2,3],[4,5,6],[7,8,9],[10,11,12]], [1,2,3,4,5,6,7,8,9,10,11,12])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[5,5,5,5],[5,5,5],[5,5],[5]], [5,5,5,5,5,5,5,5,5,5])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1],[2],[3],[4],[5]], [1,2,3,4,5])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[-10,-20,-30],[-40,-50],[-60,-70,-80]], [-10,-20,-30,-40,-50,-60,-70,-80])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1], [2], [3], [4], [5]], [1, 2, 3, 4, 5])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1, 1, 1], [1, 1, 1], [1, 1, 1]], [1, 1, 1, 1, 1, 1, 1])) === JSON.stringify(False));\n    console.assert(JSON.stringify(candidate([[1,2],[3,4,5,6],[7,8]], [1,2,3,4,5,6,7,8])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1, 2, 3], [4, 5, 6], [7, 8, 9]], [1, 2, 3, 4, 5, 6, 7, 8, 9, 10])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[10,20,30,40],[50,60,70,80]], [10,20,30,40,50,60,70,80,90])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1,2],[2,1],[1,2],[2,1]], [1,2,2,1,1,2,2,1])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[-10,-20,-30],[-30,-20,-10]], [-10,-20,-30,-30,-20,-10])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1,2,3,4,5,6,7,8,9],[10,11,12,13,14,15,16,17,18]], [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[-1,0,1],[-2,0,2]], [-1,0,1,-2,0,2,-1,0,1])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1,2,3],[4,5,6],[7,8,9]], [1,2,3,4,5,6,7,8,9])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1,2,3],[3,4,5],[5,6,7]], [99,1,2,3,99,3,4,5,99,5,6,7])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1,2,3],[4,5,6],[7,8,9]], [1,2,3,1,2,3,4,5,6,7,8,9])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1,2,3],[4,5,6],[7,8,9]], [1,2,3,4,5,6,7,8,9,10])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1, 2, 3], [3, 4, 5]], [1, 2, 3, 3, 4, 5])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1, 2, 3], [1, 2, 3], [1, 2, 3]], [1, 2, 3, 1, 2, 3, 1, 2, 3])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1,2,3],[3,2,1],[1,2,3]], [1,2,3,3,2,1,1,2,3])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[7,8,9],[1,2,3],[4,5,6]], [7,8,9,1,2,3,4,5,6])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1, 2, 3], [4, 5, 6]], [1, 2, 3, 0, 0, 4, 5, 6])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[-1, -2, -3], [0, 1, 2], [-3, -2, -1]], [-1, -2, -3, 0, 1, 2, -3, -2, -1])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1, 2, 3], [2, 3, 4]], [1, 2, 3, 4])) === JSON.stringify(False));\n    console.assert(JSON.stringify(candidate([[9,8,7,6,5],[4,3,2,1],[0,-1,-2,-3,-4]], [9,8,7,6,5,4,3,2,1,0,-1,-2,-3,-4])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[100,200,300],[400,500],[600]], [100,200,300,400,500,600])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1,2,3],[4,5,6],[7,8,9]], [1,2,3,0,4,5,6,0,7,8,9])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1,2,3],[4,5,6]], [1,2,3,99,4,5,6])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1,1,1,1],[1,1,1],[1,1],[1]], [1,1,1,1,1,1,1,1])) === JSON.stringify(False));\n    console.assert(JSON.stringify(candidate([[1,2,3],[3,2,1]], [1,2,3,3,2,1,1,2,3,3,2,1])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1,2,3,4],[5,6,7,8],[9,10,11,12]], [0,1,2,3,4,0,5,6,7,8,0,9,10,11,12])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1,2,3,4,5],[6,7,8,9,10],[11,12,13,14,15]], [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1,2,3,4,5],[6,7,8,9,10]], [1,2,3,4,5,11,12,6,7,8,9,10])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1,-1],[1,-1]], [1,-1,1,-1,1,-1])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1,2,3,4,5,6,7,8,9],[2,3,4,5,6,7,8,9,10],[3,4,5,6,7,8,9,10,11]], [1,2,3,4,5,6,7,8,9,2,3,4,5,6,7,8,9,10,3,4,5,6,7,8,9,10,11])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1,2],[2,3],[3,4],[4,5]], [1,2,3,4,5])) === JSON.stringify(False));\n    console.assert(JSON.stringify(candidate([[1, 2, 3], [4, 5, 6]], [1, 2, 3, 4, 5, 6, 1, 2, 3, 4, 5, 6])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1],[2],[3],[4],[5],[6]], [1,2,3,4,5,6])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1,2,3],[4,5,6],[7,8,9]], [0,1,2,3,0,4,5,6,0,7,8,9])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[100,200,300],[400,500],[600,700,800,900]], [100,200,300,400,500,600,700,800,900])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1,1],[1,1],[1,1]], [1,1,1,1,1,1])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1,2,3],[4,5,6],[7,8,9]], [7,8,9,1,2,3,4,5,6,7,8,9,1,2,3,4,5,6])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1,2,3,4,5],[6,7,8,9]], [1,2,3,4,5,6,7,8,9,10])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([[1,2,3],[3,4,5],[5,6,7],[7,8,9]], [1,2,3,4,5,6,7,8,9])) === JSON.stringify(False));\n    console.assert(JSON.stringify(candidate([[1,2,3,4],[5,6,7,8],[9,10,11,12]], [1,2,3,4,5,6,7,8,9,10,11,12])) === JSON.stringify(True));\n}",
+    "golang": "func check(candidate func([]int, int) []int) {\n    assert reflect.DeepEqual(candidate([]int{{1,2,3}}, []int{1,2,3,1,2,3}), True)\n    assert reflect.DeepEqual(candidate([]int{{1,2},{3,4}}, []int{1,2,4,3}), False)\n    assert reflect.DeepEqual(candidate([]int{{5,5,5},{5}}, []int{5,5,5,5}), True)\n    assert reflect.DeepEqual(candidate([]int{{1,1,1},{1,1}}, []int{1,1,1,1}), False)\n    assert reflect.DeepEqual(candidate([]int{{1,2},{3,4}}, []int{1,2,3,4}), True)\n    assert reflect.DeepEqual(candidate([]int{{1,2},{2,1}}, []int{1,2,2,1}), True)\n    assert reflect.DeepEqual(candidate([]int{{-1,-2,-3},{-3,-2,-1}}, []int{-1,-2,-3,-3,-2,-1}), True)\n    assert reflect.DeepEqual(candidate([]int{{1,-1,-1},{3,-2,0}}, []int{1,-1,0,1,-1,-1,3,-2,0}), True)\n    assert reflect.DeepEqual(candidate([]int{{1,2,3},{1,2,3}}, []int{1,2,3,1,2,3}), True)\n    assert reflect.DeepEqual(candidate([]int{{1}}, []int{1}), True)\n    assert reflect.DeepEqual(candidate([]int{{1,2},{3,4}}, []int{1,2,5,3,4}), True)\n    assert reflect.DeepEqual(candidate([]int{{1},{2},{3}}, []int{3,2,1}), False)\n    assert reflect.DeepEqual(candidate([]int{{1,1,1,1},{1,1}}, []int{1,1,1,1}), False)\n    assert reflect.DeepEqual(candidate([]int{{1},{2},{3}}, []int{1,2,3}), True)\n    assert reflect.DeepEqual(candidate([]int{{1,2,3},{3,4}}, []int{7,7,1,2,3,4,7,7}), False)\n    assert reflect.DeepEqual(candidate([]int{{5,5}}, []int{5,5,5,5}), True)\n    assert reflect.DeepEqual(candidate([]int{{10,-2},{1,2,3,4}}, []int{1,2,3,4,10,-2}), False)\n    assert reflect.DeepEqual(candidate([]int{{1}}, []int{2}), False)\n    assert reflect.DeepEqual(candidate([]int{{1,2},{2,3}}, []int{1,2,2,3}), True)\n    assert reflect.DeepEqual(candidate([]int{{1,2},{3,4}}, []int{1,2,3,4,5,6}), True)\n    assert reflect.DeepEqual(candidate([]int{{1,2},{2,3},{3,4}}, []int{1,2,3,4}), False)\n    assert reflect.DeepEqual(candidate([]int{{1,2},{3,4},{5,6}}, []int{1,2,3,4,5,6}), True)\n    assert reflect.DeepEqual(candidate([]int{{100,200},{200,300},{300,400}}, []int{100,200,200,300,300,400}), True)\n    assert reflect.DeepEqual(candidate([]int{{100,200},{300,400},{500,600}}, []int{100,200,300,400,500,600,100,200}), True)\n    assert reflect.DeepEqual(candidate([]int{{0,0,0,0},{0}}, []int{0,0,0,0,0,0,0,0}), True)\n    assert reflect.DeepEqual(candidate([]int{{10,20,30},{30,40,50},{50,60,70}}, []int{10,20,30,40,50,60,70}), False)\n    assert reflect.DeepEqual(candidate([]int{{1,2,3},{4,5,6},{7,8,9},{1,2,3}}, []int{1,2,3,4,5,6,7,8,9,1,2,3}), True)\n    assert reflect.DeepEqual(candidate([]int{{1,2,3},{4,5,6},{7,8,9}}, []int{1,2,3,1,2,3,4,5,6,4,5,6,7,8,9,7,8,9}), True)\n    assert reflect.DeepEqual(candidate([]int{{9,8,7},{8,7,6},{7,6,5}}, []int{9,8,7,8,7,6,7,6,5}), True)\n    assert reflect.DeepEqual(candidate([]int{{1,1,1},{2,2,2},{3,3,3}}, []int{1,1,1,2,2,2,3,3,3,1,1,1,2,2,2,3,3,3}), True)\n    assert reflect.DeepEqual(candidate([]int{{1,2},{2,3},{3,4},{4,5},{5,6}}, []int{1,2,3,4,5,6,7}), False)\n    assert reflect.DeepEqual(candidate([]int{{1,1,1},{1,1,1}}, []int{1,1,1,1,1,1,1,1}), True)\n    assert reflect.DeepEqual(candidate([]int{{-1,-2,-3},{-3,-4,-5},{-5,-6,-7}}, []int{-1,-2,-3,-3,-4,-5,-5,-6,-7}), True)\n    assert reflect.DeepEqual(candidate([]int{{1, 1, 1}, {1, 1}, {1}}, []int{1, 1, 1, 1, 1}), False)\n    assert reflect.DeepEqual(candidate([]int{{0,1},{1,2},{2,3},{3,4}}, []int{0,1,1,2,2,3,3,4}), True)\n    assert reflect.DeepEqual(candidate([]int{{-1,-2,-3},{-4,-5},{-6,-7,-8,-9}}, []int{-1,-2,-3,0,-4,-5,1,-6,-7,-8,-9}), True)\n    assert reflect.DeepEqual(candidate([]int{{1,2,3},{3,4,5}}, []int{1,2,3,99,3,4,5}), True)\n    assert reflect.DeepEqual(candidate([]int{{1},{2},{3},{4},{5},{6},{7},{8},{9},{10}}, []int{1,2,3,4,5,6,7,8,9,10}), True)\n    assert reflect.DeepEqual(candidate([]int{{1,2,3},{4,5,6},{7,8,9}}, []int{9,8,7,6,5,4,3,2,1,1,2,3,4,5,6,7,8,9}), True)\n    assert reflect.DeepEqual(candidate([]int{{1,2},{2,3},{3,4},{4,5}}, []int{1,2,2,3,3,4,4,5,5}), True)\n    assert reflect.DeepEqual(candidate([]int{{1,2,3},{1,2,3},{1,2,3}}, []int{1,2,3,4,5,1,2,3,6,7,8,1,2,3}), True)\n    assert reflect.DeepEqual(candidate([]int{{-1,-2,-3},{-3,-2,-1},{0,0,0}}, []int{-1,-2,-3,0,0,0,-3,-2,-1}), False)\n    assert reflect.DeepEqual(candidate([]int{{1,2,3},{1,2,3,4},{4,5}}, []int{1,2,3,1,2,3,4,4,5}), True)\n    assert reflect.DeepEqual(candidate([]int{{1,2,3,4,5},{2,3,4},{3,4,5,6}}, []int{1,2,3,4,5,6,7,8,9}), False)\n    assert reflect.DeepEqual(candidate([]int{{1,2},{2,3},{3,4},{4,5}}, []int{1,2,2,3,3,4,4,5}), True)\n    assert reflect.DeepEqual(candidate([]int{{-1,-2,-3},{-4,-5,-6}}, []int{-1,-2,-3,-4,-5,-6,-1,-2,-3,-4,-5,-6}), True)\n    assert reflect.DeepEqual(candidate([]int{{1,2,3},{3,2,1},{2,1,3}}, []int{1,2,3,3,2,1,2,1,3}), True)\n    assert reflect.DeepEqual(candidate([]int{{1,2,3},{3,4,5},{5,6,7},{7,8,9}}, []int{1,2,3,3,4,5,5,6,7,7,8,9}), True)\n    assert reflect.DeepEqual(candidate([]int{{10,20,30},{40,50},{60,70,80}}, []int{5,10,20,30,15,40,50,25,60,70,80}), True)\n    assert reflect.DeepEqual(candidate([]int{{1,2},{3,4},{5,6},{7,8},{9,10}}, []int{1,2,3,4,5,6,7,8,9,10}), True)\n    assert reflect.DeepEqual(candidate([]int{{1, 2, 3}, {4, 5, 6}, {7, 8, 9}}, []int{0, 1, 2, 3, 4, 5, 6, 7, 8, 9}), True)\n    assert reflect.DeepEqual(candidate([]int{{1,1,1},{2,2,2},{3,3,3}}, []int{1,1,1,2,2,2,3,3,3}), True)\n    assert reflect.DeepEqual(candidate([]int{{1,2},{2,3},{3,4},{4,5}}, []int{1,2,2,3,3,4,99,4,5}), True)\n    assert reflect.DeepEqual(candidate([]int{{1,1,1,1},{2,2,2,2},{3,3,3,3}}, []int{1,1,1,1,2,2,2,2,3,3,3,3}), True)\n    assert reflect.DeepEqual(candidate([]int{{1, 2, 3}, {3, 4, 5}, {5, 6, 7}}, []int{1, 2, 3, 3, 4, 5, 5, 6, 7}), True)\n    assert reflect.DeepEqual(candidate([]int{{9,8,7},{6,5,4},{3,2,1}}, []int{9,8,7,6,5,4,3,2,1}), True)\n    assert reflect.DeepEqual(candidate([]int{{1,2},{2,3},{3,4},{4,5},{5,6},{6,7},{7,8},{8,9},{9,10}}, []int{1,2,3,4,5,6,7,8,9,10}), False)\n    assert reflect.DeepEqual(candidate([]int{{1,2,3},{2,3,4},{3,4,5}}, []int{1,2,3,2,3,4,3,4,5}), True)\n    assert reflect.DeepEqual(candidate([]int{{1},{2},{3},{4},{5},{6},{7},{8},{9},{10}}, []int{1,2,3,4,5,6,7,8,9,10,11}), True)\n    assert reflect.DeepEqual(candidate([]int{{1},{2},{3},{4},{5}}, []int{1,0,2,0,3,0,4,0,5}), True)\n    assert reflect.DeepEqual(candidate([]int{{1,2,3},{1,2},{1}}, []int{1,2,3,1,2,1}), True)\n    assert reflect.DeepEqual(candidate([]int{{1,2,3,4,5},{5,4,3,2,1}}, []int{1,2,3,4,5,5,4,3,2,1}), True)\n    assert reflect.DeepEqual(candidate([]int{{1,2},{2,3},{3,4}}, []int{1,2,3,4,5,3,4}), False)\n    assert reflect.DeepEqual(candidate([]int{{1,1,1},{2,2,2},{3,3,3},{1,1,1}}, []int{1,1,1,2,2,2,3,3,3,1,1,1}), True)\n    assert reflect.DeepEqual(candidate([]int{{1,1},{2,2},{1,1},{2,2}}, []int{1,1,2,2,1,1,2,2}), True)\n    assert reflect.DeepEqual(candidate([]int{{1,2,3},{1,2,3},{1,2,3}}, []int{1,2,3,1,2,3,1,2,3}), True)\n    assert reflect.DeepEqual(candidate([]int{{-10,-20,-30},{-40,-50,-60},{-70,-80,-90}}, []int{-10,-20,-30,-40,-50,-60,-70,-80,-90,-100}), True)\n    assert reflect.DeepEqual(candidate([]int{{1,2,3,4},{5,6,7},{8,9}}, []int{1,2,3,4,10,11,5,6,7,12,8,9}), True)\n    assert reflect.DeepEqual(candidate([]int{{1, 2}, {2, 3}, {3, 4}, {4, 5}}, []int{1, 2, 3, 4, 5, 2, 3, 4, 5}), False)\n    assert reflect.DeepEqual(candidate([]int{{1,2,3,4,5},{5,6,7},{8,9}}, []int{1,2,3,4,5,5,6,7,8,9}), True)\n    assert reflect.DeepEqual(candidate([]int{{-1,-2,-3},{-3,-2,-1},{1,2,3}}, []int{-1,-2,-3,-3,-2,-1,1,2,3}), True)\n    assert reflect.DeepEqual(candidate([]int{{1,2,3,4,5},{5,6,7,8,9},{9,10,11,12,13}}, []int{1,2,3,4,5,5,6,7,8,9,9,10,11,12,13}), True)\n    assert reflect.DeepEqual(candidate([]int{{1,2},{2,3},{3,4},{4,5},{5,6}}, []int{1,2,2,3,3,4,4,5,5,6}), True)\n    assert reflect.DeepEqual(candidate([]int{{10,20,30},{40,50,60},{70,80,90}}, []int{10,20,30,40,50,60,70,80,90}), True)\n    assert reflect.DeepEqual(candidate([]int{{1,2,3},{3,4,5}}, []int{1,2,3,3,4,5}), True)\n    assert reflect.DeepEqual(candidate([]int{{1,2},{2,3},{3,4}}, []int{1,2,3,4,5}), False)\n    assert reflect.DeepEqual(candidate([]int{{-1,-2,-3},{-4,-5},{-6,-7,-8}}, []int{-1,-2,-3,0,-4,-5,0,-6,-7,-8}), True)\n    assert reflect.DeepEqual(candidate([]int{{1, 2, 3}, {3, 4, 5}, {5, 6, 7}, {7, 8, 9}}, []int{1, 2, 3, 3, 4, 5, 5, 6, 7, 7, 8, 9}), True)\n    assert reflect.DeepEqual(candidate([]int{{10,20,30},{20,30,40},{30,40,50}}, []int{10,20,30,20,30,40,30,40,50}), True)\n    assert reflect.DeepEqual(candidate([]int{{1,2},{3,4},{5,6},{7,8}}, []int{1,2,3,4,5,6,7,8,9,10,11,12}), True)\n    assert reflect.DeepEqual(candidate([]int{{1,1,1},{1,1},{1}}, []int{1,1,1,1,1,1}), True)\n    assert reflect.DeepEqual(candidate([]int{{100,200},{200,300},{300,400},{400,500}}, []int{100,200,200,300,300,400,400,500}), True)\n    assert reflect.DeepEqual(candidate([]int{{1,2,3},{4,5,6},{1,2,3},{4,5,6}}, []int{1,2,3,4,5,6,1,2,3,4,5,6}), True)\n    assert reflect.DeepEqual(candidate([]int{{-1,-2,-3},{-2,-3,-4},{-3,-4,-5}}, []int{-1,-2,-3,-2,-3,-4,-3,-4,-5}), True)\n    assert reflect.DeepEqual(candidate([]int{{1, 2}, {2, 3}, {3, 4}, {4, 5}}, []int{1, 2, 3, 4, 5}), False)\n    assert reflect.DeepEqual(candidate([]int{{1,2,3},{4,5,6},{7,8,9}}, []int{1,2,3,10,4,5,6,11,7,8,9}), True)\n    assert reflect.DeepEqual(candidate([]int{{1,2,3},{3,4,5},{5,6,7}}, []int{1,2,3,4,5,6,7}), False)\n    assert reflect.DeepEqual(candidate([]int{{100,200},{300,400,500},{600}}, []int{50,100,200,150,300,400,500,200,600}), True)\n    assert reflect.DeepEqual(candidate([]int{{1, 2, 3}, {4, 5, 6}, {7, 8, 9}}, []int{1, 1, 2, 3, 4, 5, 6, 7, 8, 9}), True)\n    assert reflect.DeepEqual(candidate([]int{{1,2},{2,3},{3,4}}, []int{1,2,2,3,3,4,4}), True)\n    assert reflect.DeepEqual(candidate([]int{{1,2},{3,4},{1,2}}, []int{1,2,3,4,1,2}), True)\n    assert reflect.DeepEqual(candidate([]int{{1,1,1,1},{1,1},{1}}, []int{1,1,1,1,1,1,1}), True)\n    assert reflect.DeepEqual(candidate([]int{{1,2,3},{1,2,3},{1,2,3}}, []int{1,2,3,1,2,3,1,2,3,1,2,3}), True)\n    assert reflect.DeepEqual(candidate([]int{{1,2,3,4,5,6,7,8,9,10}}, []int{1,2,3,4,5,6,7,8,9,10}), True)\n    assert reflect.DeepEqual(candidate([]int{{1,2,3},{1,2},{2,3}}, []int{1,2,3,1,2,2,3}), True)\n    assert reflect.DeepEqual(candidate([]int{{9,8,7},{6,5,4},{3,2,1}}, []int{9,8,7,0,6,5,4,0,3,2,1}), True)\n    assert reflect.DeepEqual(candidate([]int{{1,2,3},{3,4,5},{5,6,7}}, []int{1,2,3,3,4,5,5,6,7}), True)\n    assert reflect.DeepEqual(candidate([]int{{1,2,3},{4,5,6},{7,8,9}}, []int{1,2,3,9,8,7,4,5,6,1,2,3,4,5,6,7,8,9}), True)\n    assert reflect.DeepEqual(candidate([]int{{1,1,1},{1,1},{1}}, []int{1,1,1,1,1,1,1,1,1}), True)\n    assert reflect.DeepEqual(candidate([]int{{10,20,30},{40,50,60},{70,80,90}}, []int{10,20,30,40,50,60,70,80,90,100}), True)\n    assert reflect.DeepEqual(candidate([]int{{10000000},{9999999},{8888888},{7777777}}, []int{10000000,9999999,8888888,7777777}), True)\n    assert reflect.DeepEqual(candidate([]int{{10, 20, 30}, {40, 50, 60}, {70, 80, 90}}, []int{10, 20, 30, 40, 50, 60, 70, 80, 90}), True)\n    assert reflect.DeepEqual(candidate([]int{{-1,-2,-3},{-4,-5,-6},{-7,-8,-9}}, []int{-1,-2,-3,-4,-5,-6,-7,-8,-9}), True)\n    assert reflect.DeepEqual(candidate([]int{{1,2,3},{4,5,6},{7,8,9},{10,11,12}}, []int{1,2,3,4,5,6,7,8,9,10,11,12}), True)\n    assert reflect.DeepEqual(candidate([]int{{5,5,5,5},{5,5,5},{5,5},{5}}, []int{5,5,5,5,5,5,5,5,5,5}), True)\n    assert reflect.DeepEqual(candidate([]int{{1},{2},{3},{4},{5}}, []int{1,2,3,4,5}), True)\n    assert reflect.DeepEqual(candidate([]int{{-10,-20,-30},{-40,-50},{-60,-70,-80}}, []int{-10,-20,-30,-40,-50,-60,-70,-80}), True)\n    assert reflect.DeepEqual(candidate([]int{{1}, {2}, {3}, {4}, {5}}, []int{1, 2, 3, 4, 5}), True)\n    assert reflect.DeepEqual(candidate([]int{{1, 1, 1}, {1, 1, 1}, {1, 1, 1}}, []int{1, 1, 1, 1, 1, 1, 1}), False)\n    assert reflect.DeepEqual(candidate([]int{{1,2},{3,4,5,6},{7,8}}, []int{1,2,3,4,5,6,7,8}), True)\n    assert reflect.DeepEqual(candidate([]int{{1, 2, 3}, {4, 5, 6}, {7, 8, 9}}, []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}), True)\n    assert reflect.DeepEqual(candidate([]int{{10,20,30,40},{50,60,70,80}}, []int{10,20,30,40,50,60,70,80,90}), True)\n    assert reflect.DeepEqual(candidate([]int{{1,2},{2,1},{1,2},{2,1}}, []int{1,2,2,1,1,2,2,1}), True)\n    assert reflect.DeepEqual(candidate([]int{{-10,-20,-30},{-30,-20,-10}}, []int{-10,-20,-30,-30,-20,-10}), True)\n    assert reflect.DeepEqual(candidate([]int{{1,2,3,4,5,6,7,8,9},{10,11,12,13,14,15,16,17,18}}, []int{1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18}), True)\n    assert reflect.DeepEqual(candidate([]int{{-1,0,1},{-2,0,2}}, []int{-1,0,1,-2,0,2,-1,0,1}), True)\n    assert reflect.DeepEqual(candidate([]int{{1,2,3},{4,5,6},{7,8,9}}, []int{1,2,3,4,5,6,7,8,9}), True)\n    assert reflect.DeepEqual(candidate([]int{{1,2,3},{3,4,5},{5,6,7}}, []int{99,1,2,3,99,3,4,5,99,5,6,7}), True)\n    assert reflect.DeepEqual(candidate([]int{{1,2,3},{4,5,6},{7,8,9}}, []int{1,2,3,1,2,3,4,5,6,7,8,9}), True)\n    assert reflect.DeepEqual(candidate([]int{{1,2,3},{4,5,6},{7,8,9}}, []int{1,2,3,4,5,6,7,8,9,10}), True)\n    assert reflect.DeepEqual(candidate([]int{{1, 2, 3}, {3, 4, 5}}, []int{1, 2, 3, 3, 4, 5}), True)\n    assert reflect.DeepEqual(candidate([]int{{1, 2, 3}, {1, 2, 3}, {1, 2, 3}}, []int{1, 2, 3, 1, 2, 3, 1, 2, 3}), True)\n    assert reflect.DeepEqual(candidate([]int{{1,2,3},{3,2,1},{1,2,3}}, []int{1,2,3,3,2,1,1,2,3}), True)\n    assert reflect.DeepEqual(candidate([]int{{7,8,9},{1,2,3},{4,5,6}}, []int{7,8,9,1,2,3,4,5,6}), True)\n    assert reflect.DeepEqual(candidate([]int{{1, 2, 3}, {4, 5, 6}}, []int{1, 2, 3, 0, 0, 4, 5, 6}), True)\n    assert reflect.DeepEqual(candidate([]int{{-1, -2, -3}, {0, 1, 2}, {-3, -2, -1}}, []int{-1, -2, -3, 0, 1, 2, -3, -2, -1}), True)\n    assert reflect.DeepEqual(candidate([]int{{1, 2, 3}, {2, 3, 4}}, []int{1, 2, 3, 4}), False)\n    assert reflect.DeepEqual(candidate([]int{{9,8,7,6,5},{4,3,2,1},{0,-1,-2,-3,-4}}, []int{9,8,7,6,5,4,3,2,1,0,-1,-2,-3,-4}), True)\n    assert reflect.DeepEqual(candidate([]int{{100,200,300},{400,500},{600}}, []int{100,200,300,400,500,600}), True)\n    assert reflect.DeepEqual(candidate([]int{{1,2,3},{4,5,6},{7,8,9}}, []int{1,2,3,0,4,5,6,0,7,8,9}), True)\n    assert reflect.DeepEqual(candidate([]int{{1,2,3},{4,5,6}}, []int{1,2,3,99,4,5,6}), True)\n    assert reflect.DeepEqual(candidate([]int{{1,1,1,1},{1,1,1},{1,1},{1}}, []int{1,1,1,1,1,1,1,1}), False)\n    assert reflect.DeepEqual(candidate([]int{{1,2,3},{3,2,1}}, []int{1,2,3,3,2,1,1,2,3,3,2,1}), True)\n    assert reflect.DeepEqual(candidate([]int{{1,2,3,4},{5,6,7,8},{9,10,11,12}}, []int{0,1,2,3,4,0,5,6,7,8,0,9,10,11,12}), True)\n    assert reflect.DeepEqual(candidate([]int{{1,2,3,4,5},{6,7,8,9,10},{11,12,13,14,15}}, []int{1,2,3,4,5,6,7,8,9,10,11,12,13,14,15}), True)\n    assert reflect.DeepEqual(candidate([]int{{1,2,3,4,5},{6,7,8,9,10}}, []int{1,2,3,4,5,11,12,6,7,8,9,10}), True)\n    assert reflect.DeepEqual(candidate([]int{{1,-1},{1,-1}}, []int{1,-1,1,-1,1,-1}), True)\n    assert reflect.DeepEqual(candidate([]int{{1,2,3,4,5,6,7,8,9},{2,3,4,5,6,7,8,9,10},{3,4,5,6,7,8,9,10,11}}, []int{1,2,3,4,5,6,7,8,9,2,3,4,5,6,7,8,9,10,3,4,5,6,7,8,9,10,11}), True)\n    assert reflect.DeepEqual(candidate([]int{{1,2},{2,3},{3,4},{4,5}}, []int{1,2,3,4,5}), False)\n    assert reflect.DeepEqual(candidate([]int{{1, 2, 3}, {4, 5, 6}}, []int{1, 2, 3, 4, 5, 6, 1, 2, 3, 4, 5, 6}), True)\n    assert reflect.DeepEqual(candidate([]int{{1},{2},{3},{4},{5},{6}}, []int{1,2,3,4,5,6}), True)\n    assert reflect.DeepEqual(candidate([]int{{1,2,3},{4,5,6},{7,8,9}}, []int{0,1,2,3,0,4,5,6,0,7,8,9}), True)\n    assert reflect.DeepEqual(candidate([]int{{100,200,300},{400,500},{600,700,800,900}}, []int{100,200,300,400,500,600,700,800,900}), True)\n    assert reflect.DeepEqual(candidate([]int{{1,1},{1,1},{1,1}}, []int{1,1,1,1,1,1}), True)\n    assert reflect.DeepEqual(candidate([]int{{1,2,3},{4,5,6},{7,8,9}}, []int{7,8,9,1,2,3,4,5,6,7,8,9,1,2,3,4,5,6}), True)\n    assert reflect.DeepEqual(candidate([]int{{1,2,3,4,5},{6,7,8,9}}, []int{1,2,3,4,5,6,7,8,9,10}), True)\n    assert reflect.DeepEqual(candidate([]int{{1,2,3},{3,4,5},{5,6,7},{7,8,9}}, []int{1,2,3,4,5,6,7,8,9}), False)\n    assert reflect.DeepEqual(candidate([]int{{1,2,3,4},{5,6,7,8},{9,10,11,12}}, []int{1,2,3,4,5,6,7,8,9,10,11,12}), True)\n}",
+    "rust": "fn check(candidate: fn(Vec<i32>, i32) -> Vec<i32>) {\n    assert_eq!(candidate(vec![[1,2,3]], vec![1,2,3,1,2,3]), True);\n    assert_eq!(candidate(vec![[1,2],[3,4]], vec![1,2,4,3]), False);\n    assert_eq!(candidate(vec![[5,5,5],[5]], vec![5,5,5,5]), True);\n    assert_eq!(candidate(vec![[1,1,1],[1,1]], vec![1,1,1,1]), False);\n    assert_eq!(candidate(vec![[1,2],[3,4]], vec![1,2,3,4]), True);\n    assert_eq!(candidate(vec![[1,2],[2,1]], vec![1,2,2,1]), True);\n    assert_eq!(candidate(vec![[-1,-2,-3],[-3,-2,-1]], vec![-1,-2,-3,-3,-2,-1]), True);\n    assert_eq!(candidate(vec![[1,-1,-1],[3,-2,0]], vec![1,-1,0,1,-1,-1,3,-2,0]), True);\n    assert_eq!(candidate(vec![[1,2,3],[1,2,3]], vec![1,2,3,1,2,3]), True);\n    assert_eq!(candidate(vec![[1]], vec![1]), True);\n    assert_eq!(candidate(vec![[1,2],[3,4]], vec![1,2,5,3,4]), True);\n    assert_eq!(candidate(vec![[1],[2],[3]], vec![3,2,1]), False);\n    assert_eq!(candidate(vec![[1,1,1,1],[1,1]], vec![1,1,1,1]), False);\n    assert_eq!(candidate(vec![[1],[2],[3]], vec![1,2,3]), True);\n    assert_eq!(candidate(vec![[1,2,3],[3,4]], vec![7,7,1,2,3,4,7,7]), False);\n    assert_eq!(candidate(vec![[5,5]], vec![5,5,5,5]), True);\n    assert_eq!(candidate(vec![[10,-2],[1,2,3,4]], vec![1,2,3,4,10,-2]), False);\n    assert_eq!(candidate(vec![[1]], vec![2]), False);\n    assert_eq!(candidate(vec![[1,2],[2,3]], vec![1,2,2,3]), True);\n    assert_eq!(candidate(vec![[1,2],[3,4]], vec![1,2,3,4,5,6]), True);\n    assert_eq!(candidate(vec![[1,2],[2,3],[3,4]], vec![1,2,3,4]), False);\n    assert_eq!(candidate(vec![[1,2],[3,4],[5,6]], vec![1,2,3,4,5,6]), True);\n    assert_eq!(candidate(vec![[100,200],[200,300],[300,400]], vec![100,200,200,300,300,400]), True);\n    assert_eq!(candidate(vec![[100,200],[300,400],[500,600]], vec![100,200,300,400,500,600,100,200]), True);\n    assert_eq!(candidate(vec![[0,0,0,0],[0]], vec![0,0,0,0,0,0,0,0]), True);\n    assert_eq!(candidate(vec![[10,20,30],[30,40,50],[50,60,70]], vec![10,20,30,40,50,60,70]), False);\n    assert_eq!(candidate(vec![[1,2,3],[4,5,6],[7,8,9],[1,2,3]], vec![1,2,3,4,5,6,7,8,9,1,2,3]), True);\n    assert_eq!(candidate(vec![[1,2,3],[4,5,6],[7,8,9]], vec![1,2,3,1,2,3,4,5,6,4,5,6,7,8,9,7,8,9]), True);\n    assert_eq!(candidate(vec![[9,8,7],[8,7,6],[7,6,5]], vec![9,8,7,8,7,6,7,6,5]), True);\n    assert_eq!(candidate(vec![[1,1,1],[2,2,2],[3,3,3]], vec![1,1,1,2,2,2,3,3,3,1,1,1,2,2,2,3,3,3]), True);\n    assert_eq!(candidate(vec![[1,2],[2,3],[3,4],[4,5],[5,6]], vec![1,2,3,4,5,6,7]), False);\n    assert_eq!(candidate(vec![[1,1,1],[1,1,1]], vec![1,1,1,1,1,1,1,1]), True);\n    assert_eq!(candidate(vec![[-1,-2,-3],[-3,-4,-5],[-5,-6,-7]], vec![-1,-2,-3,-3,-4,-5,-5,-6,-7]), True);\n    assert_eq!(candidate(vec![[1, 1, 1], [1, 1], [1]], vec![1, 1, 1, 1, 1]), False);\n    assert_eq!(candidate(vec![[0,1],[1,2],[2,3],[3,4]], vec![0,1,1,2,2,3,3,4]), True);\n    assert_eq!(candidate(vec![[-1,-2,-3],[-4,-5],[-6,-7,-8,-9]], vec![-1,-2,-3,0,-4,-5,1,-6,-7,-8,-9]), True);\n    assert_eq!(candidate(vec![[1,2,3],[3,4,5]], vec![1,2,3,99,3,4,5]), True);\n    assert_eq!(candidate(vec![[1],[2],[3],[4],[5],[6],[7],[8],[9],[10]], vec![1,2,3,4,5,6,7,8,9,10]), True);\n    assert_eq!(candidate(vec![[1,2,3],[4,5,6],[7,8,9]], vec![9,8,7,6,5,4,3,2,1,1,2,3,4,5,6,7,8,9]), True);\n    assert_eq!(candidate(vec![[1,2],[2,3],[3,4],[4,5]], vec![1,2,2,3,3,4,4,5,5]), True);\n    assert_eq!(candidate(vec![[1,2,3],[1,2,3],[1,2,3]], vec![1,2,3,4,5,1,2,3,6,7,8,1,2,3]), True);\n    assert_eq!(candidate(vec![[-1,-2,-3],[-3,-2,-1],[0,0,0]], vec![-1,-2,-3,0,0,0,-3,-2,-1]), False);\n    assert_eq!(candidate(vec![[1,2,3],[1,2,3,4],[4,5]], vec![1,2,3,1,2,3,4,4,5]), True);\n    assert_eq!(candidate(vec![[1,2,3,4,5],[2,3,4],[3,4,5,6]], vec![1,2,3,4,5,6,7,8,9]), False);\n    assert_eq!(candidate(vec![[1,2],[2,3],[3,4],[4,5]], vec![1,2,2,3,3,4,4,5]), True);\n    assert_eq!(candidate(vec![[-1,-2,-3],[-4,-5,-6]], vec![-1,-2,-3,-4,-5,-6,-1,-2,-3,-4,-5,-6]), True);\n    assert_eq!(candidate(vec![[1,2,3],[3,2,1],[2,1,3]], vec![1,2,3,3,2,1,2,1,3]), True);\n    assert_eq!(candidate(vec![[1,2,3],[3,4,5],[5,6,7],[7,8,9]], vec![1,2,3,3,4,5,5,6,7,7,8,9]), True);\n    assert_eq!(candidate(vec![[10,20,30],[40,50],[60,70,80]], vec![5,10,20,30,15,40,50,25,60,70,80]), True);\n    assert_eq!(candidate(vec![[1,2],[3,4],[5,6],[7,8],[9,10]], vec![1,2,3,4,5,6,7,8,9,10]), True);\n    assert_eq!(candidate(vec![[1, 2, 3], [4, 5, 6], [7, 8, 9]], vec![0, 1, 2, 3, 4, 5, 6, 7, 8, 9]), True);\n    assert_eq!(candidate(vec![[1,1,1],[2,2,2],[3,3,3]], vec![1,1,1,2,2,2,3,3,3]), True);\n    assert_eq!(candidate(vec![[1,2],[2,3],[3,4],[4,5]], vec![1,2,2,3,3,4,99,4,5]), True);\n    assert_eq!(candidate(vec![[1,1,1,1],[2,2,2,2],[3,3,3,3]], vec![1,1,1,1,2,2,2,2,3,3,3,3]), True);\n    assert_eq!(candidate(vec![[1, 2, 3], [3, 4, 5], [5, 6, 7]], vec![1, 2, 3, 3, 4, 5, 5, 6, 7]), True);\n    assert_eq!(candidate(vec![[9,8,7],[6,5,4],[3,2,1]], vec![9,8,7,6,5,4,3,2,1]), True);\n    assert_eq!(candidate(vec![[1,2],[2,3],[3,4],[4,5],[5,6],[6,7],[7,8],[8,9],[9,10]], vec![1,2,3,4,5,6,7,8,9,10]), False);\n    assert_eq!(candidate(vec![[1,2,3],[2,3,4],[3,4,5]], vec![1,2,3,2,3,4,3,4,5]), True);\n    assert_eq!(candidate(vec![[1],[2],[3],[4],[5],[6],[7],[8],[9],[10]], vec![1,2,3,4,5,6,7,8,9,10,11]), True);\n    assert_eq!(candidate(vec![[1],[2],[3],[4],[5]], vec![1,0,2,0,3,0,4,0,5]), True);\n    assert_eq!(candidate(vec![[1,2,3],[1,2],[1]], vec![1,2,3,1,2,1]), True);\n    assert_eq!(candidate(vec![[1,2,3,4,5],[5,4,3,2,1]], vec![1,2,3,4,5,5,4,3,2,1]), True);\n    assert_eq!(candidate(vec![[1,2],[2,3],[3,4]], vec![1,2,3,4,5,3,4]), False);\n    assert_eq!(candidate(vec![[1,1,1],[2,2,2],[3,3,3],[1,1,1]], vec![1,1,1,2,2,2,3,3,3,1,1,1]), True);\n    assert_eq!(candidate(vec![[1,1],[2,2],[1,1],[2,2]], vec![1,1,2,2,1,1,2,2]), True);\n    assert_eq!(candidate(vec![[1,2,3],[1,2,3],[1,2,3]], vec![1,2,3,1,2,3,1,2,3]), True);\n    assert_eq!(candidate(vec![[-10,-20,-30],[-40,-50,-60],[-70,-80,-90]], vec![-10,-20,-30,-40,-50,-60,-70,-80,-90,-100]), True);\n    assert_eq!(candidate(vec![[1,2,3,4],[5,6,7],[8,9]], vec![1,2,3,4,10,11,5,6,7,12,8,9]), True);\n    assert_eq!(candidate(vec![[1, 2], [2, 3], [3, 4], [4, 5]], vec![1, 2, 3, 4, 5, 2, 3, 4, 5]), False);\n    assert_eq!(candidate(vec![[1,2,3,4,5],[5,6,7],[8,9]], vec![1,2,3,4,5,5,6,7,8,9]), True);\n    assert_eq!(candidate(vec![[-1,-2,-3],[-3,-2,-1],[1,2,3]], vec![-1,-2,-3,-3,-2,-1,1,2,3]), True);\n    assert_eq!(candidate(vec![[1,2,3,4,5],[5,6,7,8,9],[9,10,11,12,13]], vec![1,2,3,4,5,5,6,7,8,9,9,10,11,12,13]), True);\n    assert_eq!(candidate(vec![[1,2],[2,3],[3,4],[4,5],[5,6]], vec![1,2,2,3,3,4,4,5,5,6]), True);\n    assert_eq!(candidate(vec![[10,20,30],[40,50,60],[70,80,90]], vec![10,20,30,40,50,60,70,80,90]), True);\n    assert_eq!(candidate(vec![[1,2,3],[3,4,5]], vec![1,2,3,3,4,5]), True);\n    assert_eq!(candidate(vec![[1,2],[2,3],[3,4]], vec![1,2,3,4,5]), False);\n    assert_eq!(candidate(vec![[-1,-2,-3],[-4,-5],[-6,-7,-8]], vec![-1,-2,-3,0,-4,-5,0,-6,-7,-8]), True);\n    assert_eq!(candidate(vec![[1, 2, 3], [3, 4, 5], [5, 6, 7], [7, 8, 9]], vec![1, 2, 3, 3, 4, 5, 5, 6, 7, 7, 8, 9]), True);\n    assert_eq!(candidate(vec![[10,20,30],[20,30,40],[30,40,50]], vec![10,20,30,20,30,40,30,40,50]), True);\n    assert_eq!(candidate(vec![[1,2],[3,4],[5,6],[7,8]], vec![1,2,3,4,5,6,7,8,9,10,11,12]), True);\n    assert_eq!(candidate(vec![[1,1,1],[1,1],[1]], vec![1,1,1,1,1,1]), True);\n    assert_eq!(candidate(vec![[100,200],[200,300],[300,400],[400,500]], vec![100,200,200,300,300,400,400,500]), True);\n    assert_eq!(candidate(vec![[1,2,3],[4,5,6],[1,2,3],[4,5,6]], vec![1,2,3,4,5,6,1,2,3,4,5,6]), True);\n    assert_eq!(candidate(vec![[-1,-2,-3],[-2,-3,-4],[-3,-4,-5]], vec![-1,-2,-3,-2,-3,-4,-3,-4,-5]), True);\n    assert_eq!(candidate(vec![[1, 2], [2, 3], [3, 4], [4, 5]], vec![1, 2, 3, 4, 5]), False);\n    assert_eq!(candidate(vec![[1,2,3],[4,5,6],[7,8,9]], vec![1,2,3,10,4,5,6,11,7,8,9]), True);\n    assert_eq!(candidate(vec![[1,2,3],[3,4,5],[5,6,7]], vec![1,2,3,4,5,6,7]), False);\n    assert_eq!(candidate(vec![[100,200],[300,400,500],[600]], vec![50,100,200,150,300,400,500,200,600]), True);\n    assert_eq!(candidate(vec![[1, 2, 3], [4, 5, 6], [7, 8, 9]], vec![1, 1, 2, 3, 4, 5, 6, 7, 8, 9]), True);\n    assert_eq!(candidate(vec![[1,2],[2,3],[3,4]], vec![1,2,2,3,3,4,4]), True);\n    assert_eq!(candidate(vec![[1,2],[3,4],[1,2]], vec![1,2,3,4,1,2]), True);\n    assert_eq!(candidate(vec![[1,1,1,1],[1,1],[1]], vec![1,1,1,1,1,1,1]), True);\n    assert_eq!(candidate(vec![[1,2,3],[1,2,3],[1,2,3]], vec![1,2,3,1,2,3,1,2,3,1,2,3]), True);\n    assert_eq!(candidate(vec![[1,2,3,4,5,6,7,8,9,10]], vec![1,2,3,4,5,6,7,8,9,10]), True);\n    assert_eq!(candidate(vec![[1,2,3],[1,2],[2,3]], vec![1,2,3,1,2,2,3]), True);\n    assert_eq!(candidate(vec![[9,8,7],[6,5,4],[3,2,1]], vec![9,8,7,0,6,5,4,0,3,2,1]), True);\n    assert_eq!(candidate(vec![[1,2,3],[3,4,5],[5,6,7]], vec![1,2,3,3,4,5,5,6,7]), True);\n    assert_eq!(candidate(vec![[1,2,3],[4,5,6],[7,8,9]], vec![1,2,3,9,8,7,4,5,6,1,2,3,4,5,6,7,8,9]), True);\n    assert_eq!(candidate(vec![[1,1,1],[1,1],[1]], vec![1,1,1,1,1,1,1,1,1]), True);\n    assert_eq!(candidate(vec![[10,20,30],[40,50,60],[70,80,90]], vec![10,20,30,40,50,60,70,80,90,100]), True);\n    assert_eq!(candidate(vec![[10000000],[9999999],[8888888],[7777777]], vec![10000000,9999999,8888888,7777777]), True);\n    assert_eq!(candidate(vec![[10, 20, 30], [40, 50, 60], [70, 80, 90]], vec![10, 20, 30, 40, 50, 60, 70, 80, 90]), True);\n    assert_eq!(candidate(vec![[-1,-2,-3],[-4,-5,-6],[-7,-8,-9]], vec![-1,-2,-3,-4,-5,-6,-7,-8,-9]), True);\n    assert_eq!(candidate(vec![[1,2,3],[4,5,6],[7,8,9],[10,11,12]], vec![1,2,3,4,5,6,7,8,9,10,11,12]), True);\n    assert_eq!(candidate(vec![[5,5,5,5],[5,5,5],[5,5],[5]], vec![5,5,5,5,5,5,5,5,5,5]), True);\n    assert_eq!(candidate(vec![[1],[2],[3],[4],[5]], vec![1,2,3,4,5]), True);\n    assert_eq!(candidate(vec![[-10,-20,-30],[-40,-50],[-60,-70,-80]], vec![-10,-20,-30,-40,-50,-60,-70,-80]), True);\n    assert_eq!(candidate(vec![[1], [2], [3], [4], [5]], vec![1, 2, 3, 4, 5]), True);\n    assert_eq!(candidate(vec![[1, 1, 1], [1, 1, 1], [1, 1, 1]], vec![1, 1, 1, 1, 1, 1, 1]), False);\n    assert_eq!(candidate(vec![[1,2],[3,4,5,6],[7,8]], vec![1,2,3,4,5,6,7,8]), True);\n    assert_eq!(candidate(vec![[1, 2, 3], [4, 5, 6], [7, 8, 9]], vec![1, 2, 3, 4, 5, 6, 7, 8, 9, 10]), True);\n    assert_eq!(candidate(vec![[10,20,30,40],[50,60,70,80]], vec![10,20,30,40,50,60,70,80,90]), True);\n    assert_eq!(candidate(vec![[1,2],[2,1],[1,2],[2,1]], vec![1,2,2,1,1,2,2,1]), True);\n    assert_eq!(candidate(vec![[-10,-20,-30],[-30,-20,-10]], vec![-10,-20,-30,-30,-20,-10]), True);\n    assert_eq!(candidate(vec![[1,2,3,4,5,6,7,8,9],[10,11,12,13,14,15,16,17,18]], vec![1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18]), True);\n    assert_eq!(candidate(vec![[-1,0,1],[-2,0,2]], vec![-1,0,1,-2,0,2,-1,0,1]), True);\n    assert_eq!(candidate(vec![[1,2,3],[4,5,6],[7,8,9]], vec![1,2,3,4,5,6,7,8,9]), True);\n    assert_eq!(candidate(vec![[1,2,3],[3,4,5],[5,6,7]], vec![99,1,2,3,99,3,4,5,99,5,6,7]), True);\n    assert_eq!(candidate(vec![[1,2,3],[4,5,6],[7,8,9]], vec![1,2,3,1,2,3,4,5,6,7,8,9]), True);\n    assert_eq!(candidate(vec![[1,2,3],[4,5,6],[7,8,9]], vec![1,2,3,4,5,6,7,8,9,10]), True);\n    assert_eq!(candidate(vec![[1, 2, 3], [3, 4, 5]], vec![1, 2, 3, 3, 4, 5]), True);\n    assert_eq!(candidate(vec![[1, 2, 3], [1, 2, 3], [1, 2, 3]], vec![1, 2, 3, 1, 2, 3, 1, 2, 3]), True);\n    assert_eq!(candidate(vec![[1,2,3],[3,2,1],[1,2,3]], vec![1,2,3,3,2,1,1,2,3]), True);\n    assert_eq!(candidate(vec![[7,8,9],[1,2,3],[4,5,6]], vec![7,8,9,1,2,3,4,5,6]), True);\n    assert_eq!(candidate(vec![[1, 2, 3], [4, 5, 6]], vec![1, 2, 3, 0, 0, 4, 5, 6]), True);\n    assert_eq!(candidate(vec![[-1, -2, -3], [0, 1, 2], [-3, -2, -1]], vec![-1, -2, -3, 0, 1, 2, -3, -2, -1]), True);\n    assert_eq!(candidate(vec![[1, 2, 3], [2, 3, 4]], vec![1, 2, 3, 4]), False);\n    assert_eq!(candidate(vec![[9,8,7,6,5],[4,3,2,1],[0,-1,-2,-3,-4]], vec![9,8,7,6,5,4,3,2,1,0,-1,-2,-3,-4]), True);\n    assert_eq!(candidate(vec![[100,200,300],[400,500],[600]], vec![100,200,300,400,500,600]), True);\n    assert_eq!(candidate(vec![[1,2,3],[4,5,6],[7,8,9]], vec![1,2,3,0,4,5,6,0,7,8,9]), True);\n    assert_eq!(candidate(vec![[1,2,3],[4,5,6]], vec![1,2,3,99,4,5,6]), True);\n    assert_eq!(candidate(vec![[1,1,1,1],[1,1,1],[1,1],[1]], vec![1,1,1,1,1,1,1,1]), False);\n    assert_eq!(candidate(vec![[1,2,3],[3,2,1]], vec![1,2,3,3,2,1,1,2,3,3,2,1]), True);\n    assert_eq!(candidate(vec![[1,2,3,4],[5,6,7,8],[9,10,11,12]], vec![0,1,2,3,4,0,5,6,7,8,0,9,10,11,12]), True);\n    assert_eq!(candidate(vec![[1,2,3,4,5],[6,7,8,9,10],[11,12,13,14,15]], vec![1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]), True);\n    assert_eq!(candidate(vec![[1,2,3,4,5],[6,7,8,9,10]], vec![1,2,3,4,5,11,12,6,7,8,9,10]), True);\n    assert_eq!(candidate(vec![[1,-1],[1,-1]], vec![1,-1,1,-1,1,-1]), True);\n    assert_eq!(candidate(vec![[1,2,3,4,5,6,7,8,9],[2,3,4,5,6,7,8,9,10],[3,4,5,6,7,8,9,10,11]], vec![1,2,3,4,5,6,7,8,9,2,3,4,5,6,7,8,9,10,3,4,5,6,7,8,9,10,11]), True);\n    assert_eq!(candidate(vec![[1,2],[2,3],[3,4],[4,5]], vec![1,2,3,4,5]), False);\n    assert_eq!(candidate(vec![[1, 2, 3], [4, 5, 6]], vec![1, 2, 3, 4, 5, 6, 1, 2, 3, 4, 5, 6]), True);\n    assert_eq!(candidate(vec![[1],[2],[3],[4],[5],[6]], vec![1,2,3,4,5,6]), True);\n    assert_eq!(candidate(vec![[1,2,3],[4,5,6],[7,8,9]], vec![0,1,2,3,0,4,5,6,0,7,8,9]), True);\n    assert_eq!(candidate(vec![[100,200,300],[400,500],[600,700,800,900]], vec![100,200,300,400,500,600,700,800,900]), True);\n    assert_eq!(candidate(vec![[1,1],[1,1],[1,1]], vec![1,1,1,1,1,1]), True);\n    assert_eq!(candidate(vec![[1,2,3],[4,5,6],[7,8,9]], vec![7,8,9,1,2,3,4,5,6,7,8,9,1,2,3,4,5,6]), True);\n    assert_eq!(candidate(vec![[1,2,3,4,5],[6,7,8,9]], vec![1,2,3,4,5,6,7,8,9,10]), True);\n    assert_eq!(candidate(vec![[1,2,3],[3,4,5],[5,6,7],[7,8,9]], vec![1,2,3,4,5,6,7,8,9]), False);\n    assert_eq!(candidate(vec![[1,2,3,4],[5,6,7,8],[9,10,11,12]], vec![1,2,3,4,5,6,7,8,9,10,11,12]), True);\n}"
+  },
+  "test_cases": [
+    {
+      "input": "groups = [[1,2,3]], nums = [1,2,3,1,2,3]",
+      "output": "True"
+    },
+    {
+      "input": "groups = [[1,2],[3,4]], nums = [1,2,4,3]",
+      "output": "False"
+    },
+    {
+      "input": "groups = [[5,5,5],[5]], nums = [5,5,5,5]",
+      "output": "True"
+    },
+    {
+      "input": "groups = [[1,1,1],[1,1]], nums = [1,1,1,1]",
+      "output": "False"
+    },
+    {
+      "input": "groups = [[1,2],[3,4]], nums = [1,2,3,4]",
+      "output": "True"
+    },
+    {
+      "input": "groups = [[1,2],[2,1]], nums = [1,2,2,1]",
+      "output": "True"
+    },
+    {
+      "input": "groups = [[-1,-2,-3],[-3,-2,-1]], nums = [-1,-2,-3,-3,-2,-1]",
+      "output": "True"
+    },
+    {
+      "input": "groups = [[1,-1,-1],[3,-2,0]], nums = [1,-1,0,1,-1,-1,3,-2,0]",
+      "output": "True"
+    },
+    {
+      "input": "groups = [[1,2,3],[1,2,3]], nums = [1,2,3,1,2,3]",
+      "output": "True"
+    },
+    {
+      "input": "groups = [[1]], nums = [1]",
+      "output": "True"
+    },
+    {
+      "input": "groups = [[1,2],[3,4]], nums = [1,2,5,3,4]",
+      "output": "True"
+    },
+    {
+      "input": "groups = [[1],[2],[3]], nums = [3,2,1]",
+      "output": "False"
+    },
+    {
+      "input": "groups = [[1,1,1,1],[1,1]], nums = [1,1,1,1]",
+      "output": "False"
+    },
+    {
+      "input": "groups = [[1],[2],[3]], nums = [1,2,3]",
+      "output": "True"
+    },
+    {
+      "input": "groups = [[1,2,3],[3,4]], nums = [7,7,1,2,3,4,7,7]",
+      "output": "False"
+    },
+    {
+      "input": "groups = [[5,5]], nums = [5,5,5,5]",
+      "output": "True"
+    },
+    {
+      "input": "groups = [[10,-2],[1,2,3,4]], nums = [1,2,3,4,10,-2]",
+      "output": "False"
+    },
+    {
+      "input": "groups = [[1]], nums = [2]",
+      "output": "False"
+    },
+    {
+      "input": "groups = [[1,2],[2,3]], nums = [1,2,2,3]",
+      "output": "True"
+    },
+    {
+      "input": "groups = [[1,2],[3,4]], nums = [1,2,3,4,5,6]",
+      "output": "True"
+    },
+    {
+      "input": "groups = [[1,2],[2,3],[3,4]], nums = [1,2,3,4]",
+      "output": "False"
+    },
+    {
+      "input": "groups = [[1,2],[3,4],[5,6]], nums = [1,2,3,4,5,6]",
+      "output": "True"
+    },
+    {
+      "input": "groups = [[100,200],[200,300],[300,400]], nums = [100,200,200,300,300,400]",
+      "output": "True"
+    },
+    {
+      "input": "groups = [[100,200],[300,400],[500,600]], nums = [100,200,300,400,500,600,100,200]",
+      "output": "True"
+    },
+    {
+      "input": "groups = [[0,0,0,0],[0]], nums = [0,0,0,0,0,0,0,0]",
+      "output": "True"
+    },
+    {
+      "input": "groups = [[10,20,30],[30,40,50],[50,60,70]], nums = [10,20,30,40,50,60,70]",
+      "output": "False"
+    },
+    {
+      "input": "groups = [[1,2,3],[4,5,6],[7,8,9],[1,2,3]], nums = [1,2,3,4,5,6,7,8,9,1,2,3]",
+      "output": "True"
+    },
+    {
+      "input": "groups = [[1,2,3],[4,5,6],[7,8,9]], nums = [1,2,3,1,2,3,4,5,6,4,5,6,7,8,9,7,8,9]",
+      "output": "True"
+    },
+    {
+      "input": "groups = [[9,8,7],[8,7,6],[7,6,5]], nums = [9,8,7,8,7,6,7,6,5]",
+      "output": "True"
+    },
+    {
+      "input": "groups = [[1,1,1],[2,2,2],[3,3,3]], nums = [1,1,1,2,2,2,3,3,3,1,1,1,2,2,2,3,3,3]",
+      "output": "True"
+    },
+    {
+      "input": "groups = [[1,2],[2,3],[3,4],[4,5],[5,6]], nums = [1,2,3,4,5,6,7]",
+      "output": "False"
+    },
+    {
+      "input": "groups = [[1,1,1],[1,1,1]], nums = [1,1,1,1,1,1,1,1]",
+      "output": "True"
+    },
+    {
+      "input": "groups = [[-1,-2,-3],[-3,-4,-5],[-5,-6,-7]], nums = [-1,-2,-3,-3,-4,-5,-5,-6,-7]",
+      "output": "True"
+    },
+    {
+      "input": "groups = [[1, 1, 1], [1, 1], [1]], nums = [1, 1, 1, 1, 1]",
+      "output": "False"
+    },
+    {
+      "input": "groups = [[0,1],[1,2],[2,3],[3,4]], nums = [0,1,1,2,2,3,3,4]",
+      "output": "True"
+    },
+    {
+      "input": "groups = [[-1,-2,-3],[-4,-5],[-6,-7,-8,-9]], nums = [-1,-2,-3,0,-4,-5,1,-6,-7,-8,-9]",
+      "output": "True"
+    },
+    {
+      "input": "groups = [[1,2,3],[3,4,5]], nums = [1,2,3,99,3,4,5]",
+      "output": "True"
+    },
+    {
+      "input": "groups = [[1],[2],[3],[4],[5],[6],[7],[8],[9],[10]], nums = [1,2,3,4,5,6,7,8,9,10]",
+      "output": "True"
+    },
+    {
+      "input": "groups = [[1,2,3],[4,5,6],[7,8,9]], nums = [9,8,7,6,5,4,3,2,1,1,2,3,4,5,6,7,8,9]",
+      "output": "True"
+    },
+    {
+      "input": "groups = [[1,2],[2,3],[3,4],[4,5]], nums = [1,2,2,3,3,4,4,5,5]",
+      "output": "True"
+    },
+    {
+      "input": "groups = [[1,2,3],[1,2,3],[1,2,3]], nums = [1,2,3,4,5,1,2,3,6,7,8,1,2,3]",
+      "output": "True"
+    },
+    {
+      "input": "groups = [[-1,-2,-3],[-3,-2,-1],[0,0,0]], nums = [-1,-2,-3,0,0,0,-3,-2,-1]",
+      "output": "False"
+    },
+    {
+      "input": "groups = [[1,2,3],[1,2,3,4],[4,5]], nums = [1,2,3,1,2,3,4,4,5]",
+      "output": "True"
+    },
+    {
+      "input": "groups = [[1,2,3,4,5],[2,3,4],[3,4,5,6]], nums = [1,2,3,4,5,6,7,8,9]",
+      "output": "False"
+    },
+    {
+      "input": "groups = [[1,2],[2,3],[3,4],[4,5]], nums = [1,2,2,3,3,4,4,5]",
+      "output": "True"
+    },
+    {
+      "input": "groups = [[-1,-2,-3],[-4,-5,-6]], nums = [-1,-2,-3,-4,-5,-6,-1,-2,-3,-4,-5,-6]",
+      "output": "True"
+    },
+    {
+      "input": "groups = [[1,2,3],[3,2,1],[2,1,3]], nums = [1,2,3,3,2,1,2,1,3]",
+      "output": "True"
+    },
+    {
+      "input": "groups = [[1,2,3],[3,4,5],[5,6,7],[7,8,9]], nums = [1,2,3,3,4,5,5,6,7,7,8,9]",
+      "output": "True"
+    },
+    {
+      "input": "groups = [[10,20,30],[40,50],[60,70,80]], nums = [5,10,20,30,15,40,50,25,60,70,80]",
+      "output": "True"
+    },
+    {
+      "input": "groups = [[1,2],[3,4],[5,6],[7,8],[9,10]], nums = [1,2,3,4,5,6,7,8,9,10]",
+      "output": "True"
+    },
+    {
+      "input": "groups = [[1, 2, 3], [4, 5, 6], [7, 8, 9]], nums = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]",
+      "output": "True"
+    },
+    {
+      "input": "groups = [[1,1,1],[2,2,2],[3,3,3]], nums = [1,1,1,2,2,2,3,3,3]",
+      "output": "True"
+    },
+    {
+      "input": "groups = [[1,2],[2,3],[3,4],[4,5]], nums = [1,2,2,3,3,4,99,4,5]",
+      "output": "True"
+    },
+    {
+      "input": "groups = [[1,1,1,1],[2,2,2,2],[3,3,3,3]], nums = [1,1,1,1,2,2,2,2,3,3,3,3]",
+      "output": "True"
+    },
+    {
+      "input": "groups = [[1, 2, 3], [3, 4, 5], [5, 6, 7]], nums = [1, 2, 3, 3, 4, 5, 5, 6, 7]",
+      "output": "True"
+    },
+    {
+      "input": "groups = [[9,8,7],[6,5,4],[3,2,1]], nums = [9,8,7,6,5,4,3,2,1]",
+      "output": "True"
+    },
+    {
+      "input": "groups = [[1,2],[2,3],[3,4],[4,5],[5,6],[6,7],[7,8],[8,9],[9,10]], nums = [1,2,3,4,5,6,7,8,9,10]",
+      "output": "False"
+    },
+    {
+      "input": "groups = [[1,2,3],[2,3,4],[3,4,5]], nums = [1,2,3,2,3,4,3,4,5]",
+      "output": "True"
+    },
+    {
+      "input": "groups = [[1],[2],[3],[4],[5],[6],[7],[8],[9],[10]], nums = [1,2,3,4,5,6,7,8,9,10,11]",
+      "output": "True"
+    },
+    {
+      "input": "groups = [[1],[2],[3],[4],[5]], nums = [1,0,2,0,3,0,4,0,5]",
+      "output": "True"
+    },
+    {
+      "input": "groups = [[1,2,3],[1,2],[1]], nums = [1,2,3,1,2,1]",
+      "output": "True"
+    },
+    {
+      "input": "groups = [[1,2,3,4,5],[5,4,3,2,1]], nums = [1,2,3,4,5,5,4,3,2,1]",
+      "output": "True"
+    },
+    {
+      "input": "groups = [[1,2],[2,3],[3,4]], nums = [1,2,3,4,5,3,4]",
+      "output": "False"
+    },
+    {
+      "input": "groups = [[1,1,1],[2,2,2],[3,3,3],[1,1,1]], nums = [1,1,1,2,2,2,3,3,3,1,1,1]",
+      "output": "True"
+    },
+    {
+      "input": "groups = [[1,1],[2,2],[1,1],[2,2]], nums = [1,1,2,2,1,1,2,2]",
+      "output": "True"
+    },
+    {
+      "input": "groups = [[1,2,3],[1,2,3],[1,2,3]], nums = [1,2,3,1,2,3,1,2,3]",
+      "output": "True"
+    },
+    {
+      "input": "groups = [[-10,-20,-30],[-40,-50,-60],[-70,-80,-90]], nums = [-10,-20,-30,-40,-50,-60,-70,-80,-90,-100]",
+      "output": "True"
+    },
+    {
+      "input": "groups = [[1,2,3,4],[5,6,7],[8,9]], nums = [1,2,3,4,10,11,5,6,7,12,8,9]",
+      "output": "True"
+    },
+    {
+      "input": "groups = [[1, 2], [2, 3], [3, 4], [4, 5]], nums = [1, 2, 3, 4, 5, 2, 3, 4, 5]",
+      "output": "False"
+    },
+    {
+      "input": "groups = [[1,2,3,4,5],[5,6,7],[8,9]], nums = [1,2,3,4,5,5,6,7,8,9]",
+      "output": "True"
+    },
+    {
+      "input": "groups = [[-1,-2,-3],[-3,-2,-1],[1,2,3]], nums = [-1,-2,-3,-3,-2,-1,1,2,3]",
+      "output": "True"
+    },
+    {
+      "input": "groups = [[1,2,3,4,5],[5,6,7,8,9],[9,10,11,12,13]], nums = [1,2,3,4,5,5,6,7,8,9,9,10,11,12,13]",
+      "output": "True"
+    },
+    {
+      "input": "groups = [[1,2],[2,3],[3,4],[4,5],[5,6]], nums = [1,2,2,3,3,4,4,5,5,6]",
+      "output": "True"
+    },
+    {
+      "input": "groups = [[10,20,30],[40,50,60],[70,80,90]], nums = [10,20,30,40,50,60,70,80,90]",
+      "output": "True"
+    },
+    {
+      "input": "groups = [[1,2,3],[3,4,5]], nums = [1,2,3,3,4,5]",
+      "output": "True"
+    },
+    {
+      "input": "groups = [[1,2],[2,3],[3,4]], nums = [1,2,3,4,5]",
+      "output": "False"
+    },
+    {
+      "input": "groups = [[-1,-2,-3],[-4,-5],[-6,-7,-8]], nums = [-1,-2,-3,0,-4,-5,0,-6,-7,-8]",
+      "output": "True"
+    },
+    {
+      "input": "groups = [[1, 2, 3], [3, 4, 5], [5, 6, 7], [7, 8, 9]], nums = [1, 2, 3, 3, 4, 5, 5, 6, 7, 7, 8, 9]",
+      "output": "True"
+    },
+    {
+      "input": "groups = [[10,20,30],[20,30,40],[30,40,50]], nums = [10,20,30,20,30,40,30,40,50]",
+      "output": "True"
+    },
+    {
+      "input": "groups = [[1,2],[3,4],[5,6],[7,8]], nums = [1,2,3,4,5,6,7,8,9,10,11,12]",
+      "output": "True"
+    },
+    {
+      "input": "groups = [[1,1,1],[1,1],[1]], nums = [1,1,1,1,1,1]",
+      "output": "True"
+    },
+    {
+      "input": "groups = [[100,200],[200,300],[300,400],[400,500]], nums = [100,200,200,300,300,400,400,500]",
+      "output": "True"
+    },
+    {
+      "input": "groups = [[1,2,3],[4,5,6],[1,2,3],[4,5,6]], nums = [1,2,3,4,5,6,1,2,3,4,5,6]",
+      "output": "True"
+    },
+    {
+      "input": "groups = [[-1,-2,-3],[-2,-3,-4],[-3,-4,-5]], nums = [-1,-2,-3,-2,-3,-4,-3,-4,-5]",
+      "output": "True"
+    },
+    {
+      "input": "groups = [[1, 2], [2, 3], [3, 4], [4, 5]], nums = [1, 2, 3, 4, 5]",
+      "output": "False"
+    },
+    {
+      "input": "groups = [[1,2,3],[4,5,6],[7,8,9]], nums = [1,2,3,10,4,5,6,11,7,8,9]",
+      "output": "True"
+    },
+    {
+      "input": "groups = [[1,2,3],[3,4,5],[5,6,7]], nums = [1,2,3,4,5,6,7]",
+      "output": "False"
+    },
+    {
+      "input": "groups = [[100,200],[300,400,500],[600]], nums = [50,100,200,150,300,400,500,200,600]",
+      "output": "True"
+    },
+    {
+      "input": "groups = [[1, 2, 3], [4, 5, 6], [7, 8, 9]], nums = [1, 1, 2, 3, 4, 5, 6, 7, 8, 9]",
+      "output": "True"
+    },
+    {
+      "input": "groups = [[1,2],[2,3],[3,4]], nums = [1,2,2,3,3,4,4]",
+      "output": "True"
+    },
+    {
+      "input": "groups = [[1,2],[3,4],[1,2]], nums = [1,2,3,4,1,2]",
+      "output": "True"
+    },
+    {
+      "input": "groups = [[1,1,1,1],[1,1],[1]], nums = [1,1,1,1,1,1,1]",
+      "output": "True"
+    },
+    {
+      "input": "groups = [[1,2,3],[1,2,3],[1,2,3]], nums = [1,2,3,1,2,3,1,2,3,1,2,3]",
+      "output": "True"
+    },
+    {
+      "input": "groups = [[1,2,3,4,5,6,7,8,9,10]], nums = [1,2,3,4,5,6,7,8,9,10]",
+      "output": "True"
+    },
+    {
+      "input": "groups = [[1,2,3],[1,2],[2,3]], nums = [1,2,3,1,2,2,3]",
+      "output": "True"
+    },
+    {
+      "input": "groups = [[9,8,7],[6,5,4],[3,2,1]], nums = [9,8,7,0,6,5,4,0,3,2,1]",
+      "output": "True"
+    },
+    {
+      "input": "groups = [[1,2,3],[3,4,5],[5,6,7]], nums = [1,2,3,3,4,5,5,6,7]",
+      "output": "True"
+    },
+    {
+      "input": "groups = [[1,2,3],[4,5,6],[7,8,9]], nums = [1,2,3,9,8,7,4,5,6,1,2,3,4,5,6,7,8,9]",
+      "output": "True"
+    },
+    {
+      "input": "groups = [[1,1,1],[1,1],[1]], nums = [1,1,1,1,1,1,1,1,1]",
+      "output": "True"
+    },
+    {
+      "input": "groups = [[10,20,30],[40,50,60],[70,80,90]], nums = [10,20,30,40,50,60,70,80,90,100]",
+      "output": "True"
+    },
+    {
+      "input": "groups = [[10000000],[9999999],[8888888],[7777777]], nums = [10000000,9999999,8888888,7777777]",
+      "output": "True"
+    },
+    {
+      "input": "groups = [[10, 20, 30], [40, 50, 60], [70, 80, 90]], nums = [10, 20, 30, 40, 50, 60, 70, 80, 90]",
+      "output": "True"
+    },
+    {
+      "input": "groups = [[-1,-2,-3],[-4,-5,-6],[-7,-8,-9]], nums = [-1,-2,-3,-4,-5,-6,-7,-8,-9]",
+      "output": "True"
+    },
+    {
+      "input": "groups = [[1,2,3],[4,5,6],[7,8,9],[10,11,12]], nums = [1,2,3,4,5,6,7,8,9,10,11,12]",
+      "output": "True"
+    },
+    {
+      "input": "groups = [[5,5,5,5],[5,5,5],[5,5],[5]], nums = [5,5,5,5,5,5,5,5,5,5]",
+      "output": "True"
+    },
+    {
+      "input": "groups = [[1],[2],[3],[4],[5]], nums = [1,2,3,4,5]",
+      "output": "True"
+    },
+    {
+      "input": "groups = [[-10,-20,-30],[-40,-50],[-60,-70,-80]], nums = [-10,-20,-30,-40,-50,-60,-70,-80]",
+      "output": "True"
+    },
+    {
+      "input": "groups = [[1], [2], [3], [4], [5]], nums = [1, 2, 3, 4, 5]",
+      "output": "True"
+    },
+    {
+      "input": "groups = [[1, 1, 1], [1, 1, 1], [1, 1, 1]], nums = [1, 1, 1, 1, 1, 1, 1]",
+      "output": "False"
+    },
+    {
+      "input": "groups = [[1,2],[3,4,5,6],[7,8]], nums = [1,2,3,4,5,6,7,8]",
+      "output": "True"
+    },
+    {
+      "input": "groups = [[1, 2, 3], [4, 5, 6], [7, 8, 9]], nums = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]",
+      "output": "True"
+    },
+    {
+      "input": "groups = [[10,20,30,40],[50,60,70,80]], nums = [10,20,30,40,50,60,70,80,90]",
+      "output": "True"
+    },
+    {
+      "input": "groups = [[1,2],[2,1],[1,2],[2,1]], nums = [1,2,2,1,1,2,2,1]",
+      "output": "True"
+    },
+    {
+      "input": "groups = [[-10,-20,-30],[-30,-20,-10]], nums = [-10,-20,-30,-30,-20,-10]",
+      "output": "True"
+    },
+    {
+      "input": "groups = [[1,2,3,4,5,6,7,8,9],[10,11,12,13,14,15,16,17,18]], nums = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18]",
+      "output": "True"
+    },
+    {
+      "input": "groups = [[-1,0,1],[-2,0,2]], nums = [-1,0,1,-2,0,2,-1,0,1]",
+      "output": "True"
+    },
+    {
+      "input": "groups = [[1,2,3],[4,5,6],[7,8,9]], nums = [1,2,3,4,5,6,7,8,9]",
+      "output": "True"
+    },
+    {
+      "input": "groups = [[1,2,3],[3,4,5],[5,6,7]], nums = [99,1,2,3,99,3,4,5,99,5,6,7]",
+      "output": "True"
+    },
+    {
+      "input": "groups = [[1,2,3],[4,5,6],[7,8,9]], nums = [1,2,3,1,2,3,4,5,6,7,8,9]",
+      "output": "True"
+    },
+    {
+      "input": "groups = [[1,2,3],[4,5,6],[7,8,9]], nums = [1,2,3,4,5,6,7,8,9,10]",
+      "output": "True"
+    },
+    {
+      "input": "groups = [[1, 2, 3], [3, 4, 5]], nums = [1, 2, 3, 3, 4, 5]",
+      "output": "True"
+    },
+    {
+      "input": "groups = [[1, 2, 3], [1, 2, 3], [1, 2, 3]], nums = [1, 2, 3, 1, 2, 3, 1, 2, 3]",
+      "output": "True"
+    },
+    {
+      "input": "groups = [[1,2,3],[3,2,1],[1,2,3]], nums = [1,2,3,3,2,1,1,2,3]",
+      "output": "True"
+    },
+    {
+      "input": "groups = [[7,8,9],[1,2,3],[4,5,6]], nums = [7,8,9,1,2,3,4,5,6]",
+      "output": "True"
+    },
+    {
+      "input": "groups = [[1, 2, 3], [4, 5, 6]], nums = [1, 2, 3, 0, 0, 4, 5, 6]",
+      "output": "True"
+    },
+    {
+      "input": "groups = [[-1, -2, -3], [0, 1, 2], [-3, -2, -1]], nums = [-1, -2, -3, 0, 1, 2, -3, -2, -1]",
+      "output": "True"
+    },
+    {
+      "input": "groups = [[1, 2, 3], [2, 3, 4]], nums = [1, 2, 3, 4]",
+      "output": "False"
+    },
+    {
+      "input": "groups = [[9,8,7,6,5],[4,3,2,1],[0,-1,-2,-3,-4]], nums = [9,8,7,6,5,4,3,2,1,0,-1,-2,-3,-4]",
+      "output": "True"
+    },
+    {
+      "input": "groups = [[100,200,300],[400,500],[600]], nums = [100,200,300,400,500,600]",
+      "output": "True"
+    },
+    {
+      "input": "groups = [[1,2,3],[4,5,6],[7,8,9]], nums = [1,2,3,0,4,5,6,0,7,8,9]",
+      "output": "True"
+    },
+    {
+      "input": "groups = [[1,2,3],[4,5,6]], nums = [1,2,3,99,4,5,6]",
+      "output": "True"
+    },
+    {
+      "input": "groups = [[1,1,1,1],[1,1,1],[1,1],[1]], nums = [1,1,1,1,1,1,1,1]",
+      "output": "False"
+    },
+    {
+      "input": "groups = [[1,2,3],[3,2,1]], nums = [1,2,3,3,2,1,1,2,3,3,2,1]",
+      "output": "True"
+    },
+    {
+      "input": "groups = [[1,2,3,4],[5,6,7,8],[9,10,11,12]], nums = [0,1,2,3,4,0,5,6,7,8,0,9,10,11,12]",
+      "output": "True"
+    },
+    {
+      "input": "groups = [[1,2,3,4,5],[6,7,8,9,10],[11,12,13,14,15]], nums = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]",
+      "output": "True"
+    },
+    {
+      "input": "groups = [[1,2,3,4,5],[6,7,8,9,10]], nums = [1,2,3,4,5,11,12,6,7,8,9,10]",
+      "output": "True"
+    },
+    {
+      "input": "groups = [[1,-1],[1,-1]], nums = [1,-1,1,-1,1,-1]",
+      "output": "True"
+    },
+    {
+      "input": "groups = [[1,2,3,4,5,6,7,8,9],[2,3,4,5,6,7,8,9,10],[3,4,5,6,7,8,9,10,11]], nums = [1,2,3,4,5,6,7,8,9,2,3,4,5,6,7,8,9,10,3,4,5,6,7,8,9,10,11]",
+      "output": "True"
+    },
+    {
+      "input": "groups = [[1,2],[2,3],[3,4],[4,5]], nums = [1,2,3,4,5]",
+      "output": "False"
+    },
+    {
+      "input": "groups = [[1, 2, 3], [4, 5, 6]], nums = [1, 2, 3, 4, 5, 6, 1, 2, 3, 4, 5, 6]",
+      "output": "True"
+    },
+    {
+      "input": "groups = [[1],[2],[3],[4],[5],[6]], nums = [1,2,3,4,5,6]",
+      "output": "True"
+    },
+    {
+      "input": "groups = [[1,2,3],[4,5,6],[7,8,9]], nums = [0,1,2,3,0,4,5,6,0,7,8,9]",
+      "output": "True"
+    },
+    {
+      "input": "groups = [[100,200,300],[400,500],[600,700,800,900]], nums = [100,200,300,400,500,600,700,800,900]",
+      "output": "True"
+    },
+    {
+      "input": "groups = [[1,1],[1,1],[1,1]], nums = [1,1,1,1,1,1]",
+      "output": "True"
+    },
+    {
+      "input": "groups = [[1,2,3],[4,5,6],[7,8,9]], nums = [7,8,9,1,2,3,4,5,6,7,8,9,1,2,3,4,5,6]",
+      "output": "True"
+    },
+    {
+      "input": "groups = [[1,2,3,4,5],[6,7,8,9]], nums = [1,2,3,4,5,6,7,8,9,10]",
+      "output": "True"
+    },
+    {
+      "input": "groups = [[1,2,3],[3,4,5],[5,6,7],[7,8,9]], nums = [1,2,3,4,5,6,7,8,9]",
+      "output": "False"
+    },
+    {
+      "input": "groups = [[1,2,3,4],[5,6,7,8],[9,10,11,12]], nums = [1,2,3,4,5,6,7,8,9,10,11,12]",
+      "output": "True"
+    }
+  ],
+  "types": {
+    "python3": {
+      "input": [
+        {
+          "groups": "List[List[int]]"
+        },
+        {
+          "nums": "List[int]"
+        }
+      ],
+      "output": "bool"
+    },
+    "cpp": {
+      "input": [
+        {
+          "groups": "vector<vector<int>>&"
+        },
+        {
+          "nums": "vector<int>&"
+        }
+      ],
+      "output": "bool"
+    },
+    "java": {
+      "input": [
+        {
+          "groups": "int[][]"
+        },
+        {
+          "nums": "int[]"
+        }
+      ],
+      "output": "boolean"
+    },
+    "javascript": {
+      "input": [
+        {
+          "groups": "number[][]"
+        },
+        {
+          "nums": "number[]"
+        }
+      ],
+      "output": "boolean"
+    },
+    "typescript": {
+      "input": [
+        {
+          "groups": "number[][]"
+        },
+        {
+          "nums": "number[]"
+        }
+      ],
+      "output": "boolean"
+    },
+    "golang": {
+      "input": [
+        {
+          "groups": "[][]int"
+        },
+        {
+          "nums": "[]int"
+        }
+      ],
+      "output": "bool"
+    },
+    "rust": {
+      "input": [
+        {
+          "groups": "Vec<Vec<i32>>"
+        },
+        {
+          "nums": "Vec<i32>"
+        }
+      ],
+      "output": "bool"
+    }
+  },
+  "tags": [
+    "array",
+    "two-pointers",
+    "greedy",
+    "string-matching"
+  ]
+}

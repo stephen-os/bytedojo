@@ -1,0 +1,530 @@
+{
+  "id": 1326,
+  "title": "Minimum Number of Taps to Open to Water a Garden",
+  "slug": "minimum-number-of-taps-to-open-to-water-a-garden",
+  "difficulty": "Hard",
+  "description": "There is a one-dimensional garden on the x-axis. The garden starts at the point 0 and ends at the point n. (i.e., the length of the garden is n).\nThere are n + 1 taps located at points [0, 1, ..., n] in the garden.\nGiven an integer n and an integer array ranges of length n + 1 where ranges[i] (0-indexed) means the i-th tap can water the area [i - ranges[i], i + ranges[i]] if it was open.\nReturn the minimum number of taps that should be open to water the whole garden, If the garden cannot be watered return -1.\nExample 1:\nExample 2:\nConstraints:",
+  "examples": [
+    {
+      "example_num": 1,
+      "example_text": "Input: n = 5, ranges = [3,4,1,1,0,0]\nOutput: 1\nExplanation: The tap at point 0 can cover the interval [-3,3]\nThe tap at point 1 can cover the interval [-3,5]\nThe tap at point 2 can cover the interval [1,3]\nThe tap at point 3 can cover the interval [2,4]\nThe tap at point 4 can cover the interval [4,4]\nThe tap at point 5 can cover the interval [5,5]\nOpening Only the second tap will water the whole garden [0,5]",
+      "images": [
+        "https://assets.leetcode.com/uploads/2020/01/16/1685_example_1.png"
+      ]
+    },
+    {
+      "example_num": 2,
+      "example_text": "Input: n = 3, ranges = [0,0,0,0]\nOutput: -1\nExplanation: Even if you activate all the four taps you cannot water the whole garden.",
+      "images": [
+        "https://assets.leetcode.com/uploads/2020/01/16/1685_example_1.png"
+      ]
+    }
+  ],
+  "constraints": [
+    "1 <= n <= 104",
+    "ranges.length == n + 1",
+    "0 <= ranges[i] <= 100"
+  ],
+  "hints": [
+    "Create intervals of the area covered by each tap, sort intervals by the left end.",
+    "We need to cover the interval [0, n]. we can start with the first interval and out of all intervals that intersect with it we choose the one that covers the farthest point to the right.",
+    "What if there is a gap between intervals that is not covered ? we should stop and return -1 as there is some interval that cannot be covered."
+  ],
+  "code_snippets": {
+    "cpp": "class Solution {\npublic:\n    int minTaps(int n, vector<int>& ranges) {\n        \n    }\n};",
+    "java": "class Solution {\n    public int minTaps(int n, int[] ranges) {\n        \n    }\n}",
+    "python3": "class Solution:\n    def minTaps(self, n: int, ranges: List[int]) -> int:\n        ",
+    "javascript": "/**\n * @param {number} n\n * @param {number[]} ranges\n * @return {number}\n */\nvar minTaps = function(n, ranges) {\n    \n};",
+    "typescript": "function minTaps(n: number, ranges: number[]): number {\n    \n};",
+    "golang": "func minTaps(n int, ranges []int) int {\n    \n}",
+    "rust": "impl Solution {\n    pub fn min_taps(n: i32, ranges: Vec<i32>) -> i32 {\n        \n    }\n}"
+  },
+  "entry_points": {
+    "python3": "Solution().minTaps",
+    "cpp": "Solution().minTaps",
+    "java": "new Solution().minTaps",
+    "javascript": "minTaps",
+    "typescript": "minTaps",
+    "golang": "minTaps",
+    "rust": "Solution::min_taps"
+  },
+  "test_snippets": {
+    "python3": "def check(candidate):\n    assert candidate(n = 10, ranges = [0,0,0,0,0,0,0,0,0,0,0]) == -1\n    assert candidate(n = 5, ranges = [3,4,1,1,0,0]) == 1\n    assert candidate(n = 8, ranges = [4,0,0,0,0,0,0,0,4]) == 2\n    assert candidate(n = 3, ranges = [0,0,0,0]) == -1\n    assert candidate(n = 2, ranges = [1,0,1]) == 2\n    assert candidate(n = 6, ranges = [1,2,3,4,5,6,7]) == 1\n    assert candidate(n = 8, ranges = [4,0,0,0,0,0,1,0,1]) == -1\n    assert candidate(n = 7, ranges = [1,2,1,0,2,1,0,1]) == 3\n    assert candidate(n = 10, ranges = [1,1,1,1,1,1,1,1,1,1]) == 5\n    assert candidate(n = 6, ranges = [1,2,1,0,2,1,0]) == 2\n    assert candidate(n = 1, ranges = [1,1]) == 1\n    assert candidate(n = 6, ranges = [1,2,2,1,0,1,0]) == 2\n    assert candidate(n = 20, ranges = [0,2,1,1,0,2,1,0,1,0,1,0,1,0,2,1,0,1,0,1,0]) == 8\n    assert candidate(n = 7, ranges = [1,2,2,2,2,2,2,2]) == 2\n    assert candidate(n = 12, ranges = [0,2,1,0,1,0,1,0,1,0,1,0,2]) == 6\n    assert candidate(n = 20, ranges = [1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,1]) == 6\n    assert candidate(n = 20, ranges = [5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]) == -1\n    assert candidate(n = 20, ranges = [4,0,0,0,0,1,0,2,0,0,0,1,2,0,1,0,0,1,0,1,0]) == -1\n    assert candidate(n = 10, ranges = [2,3,1,2,3,2,1,2,3,2,1]) == 3\n    assert candidate(n = 20, ranges = [5,4,3,2,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,5]) == -1\n    assert candidate(n = 15, ranges = [3,0,0,1,1,2,0,0,0,0,0,0,0,2,2,0]) == -1\n    assert candidate(n = 14, ranges = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]) == -1\n    assert candidate(n = 7, ranges = [3,2,2,3,2,2,1,1]) == 2\n    assert candidate(n = 10, ranges = [2,3,0,2,1,0,1,0,1,0,1]) == 5\n    assert candidate(n = 14, ranges = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,1]) == 1\n    assert candidate(n = 25, ranges = [4,2,1,1,0,0,0,0,0,3,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0]) == -1\n    assert candidate(n = 7, ranges = [0,1,0,0,1,0,1,0]) == -1\n    assert candidate(n = 12, ranges = [1,1,1,1,1,1,1,1,1,1,1,1,1]) == 6\n    assert candidate(n = 12, ranges = [3,3,3,3,3,3,3,3,3,3,3,3,3]) == 2\n    assert candidate(n = 15, ranges = [1,2,2,3,1,2,3,0,1,2,1,0,1,2,1,0]) == 4\n    assert candidate(n = 9, ranges = [0,0,2,0,0,0,2,0,0,2]) == 3\n    assert candidate(n = 11, ranges = [0,2,1,0,1,0,1,0,1,0,1,0]) == 5\n    assert candidate(n = 12, ranges = [4,1,0,0,0,0,0,0,0,0,0,0,4]) == -1\n    assert candidate(n = 12, ranges = [1,0,0,0,0,0,0,0,0,0,0,0,1]) == -1\n    assert candidate(n = 9, ranges = [0,1,0,1,0,1,0,1,0,1]) == 5\n    assert candidate(n = 10, ranges = [2,2,0,2,2,0,1,0,1,2,0]) == 4\n    assert candidate(n = 12, ranges = [2,2,2,2,2,2,2,2,2,2,2,2,2]) == 3\n    assert candidate(n = 10, ranges = [3,1,1,1,1,1,1,1,1,1,1]) == 5\n    assert candidate(n = 9, ranges = [0,0,1,0,0,0,0,0,1,1]) == -1\n    assert candidate(n = 25, ranges = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]) == -1\n    assert candidate(n = 8, ranges = [1,1,1,1,1,1,1,1,1]) == 4\n    assert candidate(n = 15, ranges = [3,1,4,2,1,0,1,0,0,2,3,0,1,0,1,0]) == 4\n    assert candidate(n = 8, ranges = [0,1,2,3,4,3,2,1,0]) == 1\n    assert candidate(n = 13, ranges = [3,3,3,3,3,3,3,3,3,3,3,3,3,3]) == 3\n    assert candidate(n = 12, ranges = [0,0,0,4,0,0,0,0,0,0,0,0,4]) == -1\n    assert candidate(n = 20, ranges = [3,1,0,0,0,0,0,2,2,1,0,1,0,0,0,1,0,0,0,1,0]) == -1\n    assert candidate(n = 7, ranges = [3,2,1,0,0,0,2,1]) == -1\n    assert candidate(n = 100, ranges = [50] + [0]*98 + [50]) == Error: Solution.minTaps() missing 1 required positional argument: 'ranges'\n    assert candidate(n = 7, ranges = [3,0,1,2,0,1,0,1]) == 4\n    assert candidate(n = 12, ranges = [0,1,2,3,4,5,6,5,4,3,2,1,0]) == 1\n    assert candidate(n = 20, ranges = [10,10,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]) == -1\n    assert candidate(n = 8, ranges = [0,1,0,0,0,2,1,0,1]) == -1\n    assert candidate(n = 15, ranges = [3,0,1,1,0,2,1,0,0,2,3,1,0,1,0,1]) == 5\n    assert candidate(n = 9, ranges = [1,0,0,0,0,0,0,0,0,1]) == -1\n    assert candidate(n = 15, ranges = [2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]) == 8\n    assert candidate(n = 12, ranges = [2,3,0,1,0,3,0,1,0,0,1,0,1]) == -1\n    assert candidate(n = 10, ranges = [3,1,2,1,3,2,1,1,2,3,1]) == 3\n    assert candidate(n = 12, ranges = [0,0,3,0,0,2,0,1,0,0,0,0,0]) == -1\n    assert candidate(n = 25, ranges = [0,5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]) == -1\n    assert candidate(n = 20, ranges = [10,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,10]) == 2\n    assert candidate(n = 11, ranges = [1,0,1,0,1,0,1,0,1,0,1,0]) == 6\n    assert candidate(n = 8, ranges = [3,0,2,1,1,0,2,1,1]) == 2\n    assert candidate(n = 50, ranges = [25] + [0]*48 + [25]) == Error: Solution.minTaps() missing 1 required positional argument: 'ranges'\n    assert candidate(n = 10, ranges = [2,3,1,1,0,2,1,0,1,2,1]) == 3\n    assert candidate(n = 18, ranges = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1]) == -1\n    assert candidate(n = 10, ranges = [1,2,3,4,5,4,3,2,1,0,1]) == 2\n    assert candidate(n = 8, ranges = [0,0,2,0,0,0,2,1,1]) == 2\n    assert candidate(n = 18, ranges = [5,0,3,0,0,0,0,2,1,0,1,0,1,0,1,0,0,0,4]) == 6\n    assert candidate(n = 14, ranges = [0,1,1,0,1,0,0,1,0,1,0,1,0,0,0]) == -1\n    assert candidate(n = 18, ranges = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0]) == Error: list index out of range\n    assert candidate(n = 10, ranges = [2,3,1,4,0,1,2,0,3,1,2]) == 2\n    assert candidate(n = 11, ranges = [0,0,1,0,0,0,0,0,0,0,0,1]) == -1\n    assert candidate(n = 8, ranges = [1,0,1,1,0,0,0,1,1]) == -1\n    assert candidate(n = 15, ranges = [3,0,0,0,3,2,0,1,0,0,2,0,0,0,1]) == -1\n    assert candidate(n = 10, ranges = [1,2,1,2,1,2,1,2,1,2,1]) == 3\n    assert candidate(n = 13, ranges = [0,0,0,0,0,0,0,0,0,0,0,0,0,0]) == -1\n    assert candidate(n = 9, ranges = [4,0,0,0,4,0,0,0,4,0]) == 2\n    assert candidate(n = 10, ranges = [2,3,1,4,0,0,2,0,1,0,1]) == 3\n    assert candidate(n = 15, ranges = [2,1,1,1,1,1,1,1,1,1,1,1,1,1,1]) == 8\n    assert candidate(n = 18, ranges = [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1]) == -1\n    assert candidate(n = 15, ranges = [3,0,1,1,0,0,0,1,2,1,0,1,1,0,0,3]) == -1\n    assert candidate(n = 14, ranges = [2,3,4,5,6,7,8,9,10,11,12,13,14,0,1]) == 1\n    assert candidate(n = 9, ranges = [0,2,1,3,1,2,0,1,0,2]) == 3\n    assert candidate(n = 14, ranges = [3,2,0,0,0,1,1,0,0,0,0,0,1,1,1]) == -1\n    assert candidate(n = 20, ranges = [5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,5]) == -1\n    assert candidate(n = 7, ranges = [3,2,0,0,1,0,1,1]) == 3\n    assert candidate(n = 12, ranges = [0,1,2,3,4,5,6,7,8,9,10,11,12]) == 1\n    assert candidate(n = 50, ranges = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,1,2,3,4,5,6,7,8,9,10,1,2,3,4,5,6,7,8,9,10,1,2,3,4,5]) == -1\n    assert candidate(n = 12, ranges = [0,1,0,0,0,0,1,0,0,0,0,0,1]) == -1\n    assert candidate(n = 15, ranges = [1,2,2,3,1,2,3,2,1,1,1,1,1,1,1]) == 5\n    assert candidate(n = 20, ranges = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]) == -1\n    assert candidate(n = 25, ranges = [5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5]) == 3\n    assert candidate(n = 20, ranges = [4,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]) == 9\n    assert candidate(n = 10, ranges = [2,3,1,0,0,1,2,1,0,2,0]) == 3\n    assert candidate(n = 20, ranges = [2,0,0,0,2,0,0,2,0,0,0,0,0,0,0,2,0,0,0,0]) == -1\n    assert candidate(n = 20, ranges = [5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5]) == 2",
+    "cpp": "void check(Solution& solution) {\n    assert(solution.minTaps(10, {0,0,0,0,0,0,0,0,0,0,0}) == vector<int>-1);\n    assert(solution.minTaps(5, {3,4,1,1,0,0}) == vector<int>1);\n    assert(solution.minTaps(8, {4,0,0,0,0,0,0,0,4}) == vector<int>2);\n    assert(solution.minTaps(3, {0,0,0,0}) == vector<int>-1);\n    assert(solution.minTaps(2, {1,0,1}) == vector<int>2);\n    assert(solution.minTaps(6, {1,2,3,4,5,6,7}) == vector<int>1);\n    assert(solution.minTaps(8, {4,0,0,0,0,0,1,0,1}) == vector<int>-1);\n    assert(solution.minTaps(7, {1,2,1,0,2,1,0,1}) == vector<int>3);\n    assert(solution.minTaps(10, {1,1,1,1,1,1,1,1,1,1}) == vector<int>5);\n    assert(solution.minTaps(6, {1,2,1,0,2,1,0}) == vector<int>2);\n    assert(solution.minTaps(1, {1,1}) == vector<int>1);\n    assert(solution.minTaps(6, {1,2,2,1,0,1,0}) == vector<int>2);\n    assert(solution.minTaps(20, {0,2,1,1,0,2,1,0,1,0,1,0,1,0,2,1,0,1,0,1,0}) == vector<int>8);\n    assert(solution.minTaps(7, {1,2,2,2,2,2,2,2}) == vector<int>2);\n    assert(solution.minTaps(12, {0,2,1,0,1,0,1,0,1,0,1,0,2}) == vector<int>6);\n    assert(solution.minTaps(20, {1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,1}) == vector<int>6);\n    assert(solution.minTaps(20, {5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}) == vector<int>-1);\n    assert(solution.minTaps(20, {4,0,0,0,0,1,0,2,0,0,0,1,2,0,1,0,0,1,0,1,0}) == vector<int>-1);\n    assert(solution.minTaps(10, {2,3,1,2,3,2,1,2,3,2,1}) == vector<int>3);\n    assert(solution.minTaps(20, {5,4,3,2,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,5}) == vector<int>-1);\n    assert(solution.minTaps(15, {3,0,0,1,1,2,0,0,0,0,0,0,0,2,2,0}) == vector<int>-1);\n    assert(solution.minTaps(14, {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}) == vector<int>-1);\n    assert(solution.minTaps(7, {3,2,2,3,2,2,1,1}) == vector<int>2);\n    assert(solution.minTaps(10, {2,3,0,2,1,0,1,0,1,0,1}) == vector<int>5);\n    assert(solution.minTaps(14, {1,2,3,4,5,6,7,8,9,10,11,12,13,14,1}) == vector<int>1);\n    assert(solution.minTaps(25, {4,2,1,1,0,0,0,0,0,3,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0}) == vector<int>-1);\n    assert(solution.minTaps(7, {0,1,0,0,1,0,1,0}) == vector<int>-1);\n    assert(solution.minTaps(12, {1,1,1,1,1,1,1,1,1,1,1,1,1}) == vector<int>6);\n    assert(solution.minTaps(12, {3,3,3,3,3,3,3,3,3,3,3,3,3}) == vector<int>2);\n    assert(solution.minTaps(15, {1,2,2,3,1,2,3,0,1,2,1,0,1,2,1,0}) == vector<int>4);\n    assert(solution.minTaps(9, {0,0,2,0,0,0,2,0,0,2}) == vector<int>3);\n    assert(solution.minTaps(11, {0,2,1,0,1,0,1,0,1,0,1,0}) == vector<int>5);\n    assert(solution.minTaps(12, {4,1,0,0,0,0,0,0,0,0,0,0,4}) == vector<int>-1);\n    assert(solution.minTaps(12, {1,0,0,0,0,0,0,0,0,0,0,0,1}) == vector<int>-1);\n    assert(solution.minTaps(9, {0,1,0,1,0,1,0,1,0,1}) == vector<int>5);\n    assert(solution.minTaps(10, {2,2,0,2,2,0,1,0,1,2,0}) == vector<int>4);\n    assert(solution.minTaps(12, {2,2,2,2,2,2,2,2,2,2,2,2,2}) == vector<int>3);\n    assert(solution.minTaps(10, {3,1,1,1,1,1,1,1,1,1,1}) == vector<int>5);\n    assert(solution.minTaps(9, {0,0,1,0,0,0,0,0,1,1}) == vector<int>-1);\n    assert(solution.minTaps(25, {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}) == vector<int>-1);\n    assert(solution.minTaps(8, {1,1,1,1,1,1,1,1,1}) == vector<int>4);\n    assert(solution.minTaps(15, {3,1,4,2,1,0,1,0,0,2,3,0,1,0,1,0}) == vector<int>4);\n    assert(solution.minTaps(8, {0,1,2,3,4,3,2,1,0}) == vector<int>1);\n    assert(solution.minTaps(13, {3,3,3,3,3,3,3,3,3,3,3,3,3,3}) == vector<int>3);\n    assert(solution.minTaps(12, {0,0,0,4,0,0,0,0,0,0,0,0,4}) == vector<int>-1);\n    assert(solution.minTaps(20, {3,1,0,0,0,0,0,2,2,1,0,1,0,0,0,1,0,0,0,1,0}) == vector<int>-1);\n    assert(solution.minTaps(7, {3,2,1,0,0,0,2,1}) == vector<int>-1);\n    assert(solution.minTaps(100, {50} + {0}*98 + {50}) == vector<int>Error: Solution.minTaps() missing 1 required positional argument: 'ranges');\n    assert(solution.minTaps(7, {3,0,1,2,0,1,0,1}) == vector<int>4);\n    assert(solution.minTaps(12, {0,1,2,3,4,5,6,5,4,3,2,1,0}) == vector<int>1);\n    assert(solution.minTaps(20, {10,10,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}) == vector<int>-1);\n    assert(solution.minTaps(8, {0,1,0,0,0,2,1,0,1}) == vector<int>-1);\n    assert(solution.minTaps(15, {3,0,1,1,0,2,1,0,0,2,3,1,0,1,0,1}) == vector<int>5);\n    assert(solution.minTaps(9, {1,0,0,0,0,0,0,0,0,1}) == vector<int>-1);\n    assert(solution.minTaps(15, {2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}) == vector<int>8);\n    assert(solution.minTaps(12, {2,3,0,1,0,3,0,1,0,0,1,0,1}) == vector<int>-1);\n    assert(solution.minTaps(10, {3,1,2,1,3,2,1,1,2,3,1}) == vector<int>3);\n    assert(solution.minTaps(12, {0,0,3,0,0,2,0,1,0,0,0,0,0}) == vector<int>-1);\n    assert(solution.minTaps(25, {0,5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}) == vector<int>-1);\n    assert(solution.minTaps(20, {10,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,10}) == vector<int>2);\n    assert(solution.minTaps(11, {1,0,1,0,1,0,1,0,1,0,1,0}) == vector<int>6);\n    assert(solution.minTaps(8, {3,0,2,1,1,0,2,1,1}) == vector<int>2);\n    assert(solution.minTaps(50, {25} + {0}*48 + {25}) == vector<int>Error: Solution.minTaps() missing 1 required positional argument: 'ranges');\n    assert(solution.minTaps(10, {2,3,1,1,0,2,1,0,1,2,1}) == vector<int>3);\n    assert(solution.minTaps(18, {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1}) == vector<int>-1);\n    assert(solution.minTaps(10, {1,2,3,4,5,4,3,2,1,0,1}) == vector<int>2);\n    assert(solution.minTaps(8, {0,0,2,0,0,0,2,1,1}) == vector<int>2);\n    assert(solution.minTaps(18, {5,0,3,0,0,0,0,2,1,0,1,0,1,0,1,0,0,0,4}) == vector<int>6);\n    assert(solution.minTaps(14, {0,1,1,0,1,0,0,1,0,1,0,1,0,0,0}) == vector<int>-1);\n    assert(solution.minTaps(18, {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0}) == vector<int>Error: list index out of range);\n    assert(solution.minTaps(10, {2,3,1,4,0,1,2,0,3,1,2}) == vector<int>2);\n    assert(solution.minTaps(11, {0,0,1,0,0,0,0,0,0,0,0,1}) == vector<int>-1);\n    assert(solution.minTaps(8, {1,0,1,1,0,0,0,1,1}) == vector<int>-1);\n    assert(solution.minTaps(15, {3,0,0,0,3,2,0,1,0,0,2,0,0,0,1}) == vector<int>-1);\n    assert(solution.minTaps(10, {1,2,1,2,1,2,1,2,1,2,1}) == vector<int>3);\n    assert(solution.minTaps(13, {0,0,0,0,0,0,0,0,0,0,0,0,0,0}) == vector<int>-1);\n    assert(solution.minTaps(9, {4,0,0,0,4,0,0,0,4,0}) == vector<int>2);\n    assert(solution.minTaps(10, {2,3,1,4,0,0,2,0,1,0,1}) == vector<int>3);\n    assert(solution.minTaps(15, {2,1,1,1,1,1,1,1,1,1,1,1,1,1,1}) == vector<int>8);\n    assert(solution.minTaps(18, {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1}) == vector<int>-1);\n    assert(solution.minTaps(15, {3,0,1,1,0,0,0,1,2,1,0,1,1,0,0,3}) == vector<int>-1);\n    assert(solution.minTaps(14, {2,3,4,5,6,7,8,9,10,11,12,13,14,0,1}) == vector<int>1);\n    assert(solution.minTaps(9, {0,2,1,3,1,2,0,1,0,2}) == vector<int>3);\n    assert(solution.minTaps(14, {3,2,0,0,0,1,1,0,0,0,0,0,1,1,1}) == vector<int>-1);\n    assert(solution.minTaps(20, {5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,5}) == vector<int>-1);\n    assert(solution.minTaps(7, {3,2,0,0,1,0,1,1}) == vector<int>3);\n    assert(solution.minTaps(12, {0,1,2,3,4,5,6,7,8,9,10,11,12}) == vector<int>1);\n    assert(solution.minTaps(50, {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,1,2,3,4,5,6,7,8,9,10,1,2,3,4,5,6,7,8,9,10,1,2,3,4,5}) == vector<int>-1);\n    assert(solution.minTaps(12, {0,1,0,0,0,0,1,0,0,0,0,0,1}) == vector<int>-1);\n    assert(solution.minTaps(15, {1,2,2,3,1,2,3,2,1,1,1,1,1,1,1}) == vector<int>5);\n    assert(solution.minTaps(20, {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}) == vector<int>-1);\n    assert(solution.minTaps(25, {5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5}) == vector<int>3);\n    assert(solution.minTaps(20, {4,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}) == vector<int>9);\n    assert(solution.minTaps(10, {2,3,1,0,0,1,2,1,0,2,0}) == vector<int>3);\n    assert(solution.minTaps(20, {2,0,0,0,2,0,0,2,0,0,0,0,0,0,0,2,0,0,0,0}) == vector<int>-1);\n    assert(solution.minTaps(20, {5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5}) == vector<int>2);\n}",
+    "java": "public static void check(Solution solution) {\n    assert Arrays.equals(solution.minTaps(10, new int[]{0,0,0,0,0,0,0,0,0,0,0}), -1);\n    assert Arrays.equals(solution.minTaps(5, new int[]{3,4,1,1,0,0}), 1);\n    assert Arrays.equals(solution.minTaps(8, new int[]{4,0,0,0,0,0,0,0,4}), 2);\n    assert Arrays.equals(solution.minTaps(3, new int[]{0,0,0,0}), -1);\n    assert Arrays.equals(solution.minTaps(2, new int[]{1,0,1}), 2);\n    assert Arrays.equals(solution.minTaps(6, new int[]{1,2,3,4,5,6,7}), 1);\n    assert Arrays.equals(solution.minTaps(8, new int[]{4,0,0,0,0,0,1,0,1}), -1);\n    assert Arrays.equals(solution.minTaps(7, new int[]{1,2,1,0,2,1,0,1}), 3);\n    assert Arrays.equals(solution.minTaps(10, new int[]{1,1,1,1,1,1,1,1,1,1}), 5);\n    assert Arrays.equals(solution.minTaps(6, new int[]{1,2,1,0,2,1,0}), 2);\n    assert Arrays.equals(solution.minTaps(1, new int[]{1,1}), 1);\n    assert Arrays.equals(solution.minTaps(6, new int[]{1,2,2,1,0,1,0}), 2);\n    assert Arrays.equals(solution.minTaps(20, new int[]{0,2,1,1,0,2,1,0,1,0,1,0,1,0,2,1,0,1,0,1,0}), 8);\n    assert Arrays.equals(solution.minTaps(7, new int[]{1,2,2,2,2,2,2,2}), 2);\n    assert Arrays.equals(solution.minTaps(12, new int[]{0,2,1,0,1,0,1,0,1,0,1,0,2}), 6);\n    assert Arrays.equals(solution.minTaps(20, new int[]{1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,1}), 6);\n    assert Arrays.equals(solution.minTaps(20, new int[]{5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}), -1);\n    assert Arrays.equals(solution.minTaps(20, new int[]{4,0,0,0,0,1,0,2,0,0,0,1,2,0,1,0,0,1,0,1,0}), -1);\n    assert Arrays.equals(solution.minTaps(10, new int[]{2,3,1,2,3,2,1,2,3,2,1}), 3);\n    assert Arrays.equals(solution.minTaps(20, new int[]{5,4,3,2,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,5}), -1);\n    assert Arrays.equals(solution.minTaps(15, new int[]{3,0,0,1,1,2,0,0,0,0,0,0,0,2,2,0}), -1);\n    assert Arrays.equals(solution.minTaps(14, new int[]{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}), -1);\n    assert Arrays.equals(solution.minTaps(7, new int[]{3,2,2,3,2,2,1,1}), 2);\n    assert Arrays.equals(solution.minTaps(10, new int[]{2,3,0,2,1,0,1,0,1,0,1}), 5);\n    assert Arrays.equals(solution.minTaps(14, new int[]{1,2,3,4,5,6,7,8,9,10,11,12,13,14,1}), 1);\n    assert Arrays.equals(solution.minTaps(25, new int[]{4,2,1,1,0,0,0,0,0,3,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0}), -1);\n    assert Arrays.equals(solution.minTaps(7, new int[]{0,1,0,0,1,0,1,0}), -1);\n    assert Arrays.equals(solution.minTaps(12, new int[]{1,1,1,1,1,1,1,1,1,1,1,1,1}), 6);\n    assert Arrays.equals(solution.minTaps(12, new int[]{3,3,3,3,3,3,3,3,3,3,3,3,3}), 2);\n    assert Arrays.equals(solution.minTaps(15, new int[]{1,2,2,3,1,2,3,0,1,2,1,0,1,2,1,0}), 4);\n    assert Arrays.equals(solution.minTaps(9, new int[]{0,0,2,0,0,0,2,0,0,2}), 3);\n    assert Arrays.equals(solution.minTaps(11, new int[]{0,2,1,0,1,0,1,0,1,0,1,0}), 5);\n    assert Arrays.equals(solution.minTaps(12, new int[]{4,1,0,0,0,0,0,0,0,0,0,0,4}), -1);\n    assert Arrays.equals(solution.minTaps(12, new int[]{1,0,0,0,0,0,0,0,0,0,0,0,1}), -1);\n    assert Arrays.equals(solution.minTaps(9, new int[]{0,1,0,1,0,1,0,1,0,1}), 5);\n    assert Arrays.equals(solution.minTaps(10, new int[]{2,2,0,2,2,0,1,0,1,2,0}), 4);\n    assert Arrays.equals(solution.minTaps(12, new int[]{2,2,2,2,2,2,2,2,2,2,2,2,2}), 3);\n    assert Arrays.equals(solution.minTaps(10, new int[]{3,1,1,1,1,1,1,1,1,1,1}), 5);\n    assert Arrays.equals(solution.minTaps(9, new int[]{0,0,1,0,0,0,0,0,1,1}), -1);\n    assert Arrays.equals(solution.minTaps(25, new int[]{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}), -1);\n    assert Arrays.equals(solution.minTaps(8, new int[]{1,1,1,1,1,1,1,1,1}), 4);\n    assert Arrays.equals(solution.minTaps(15, new int[]{3,1,4,2,1,0,1,0,0,2,3,0,1,0,1,0}), 4);\n    assert Arrays.equals(solution.minTaps(8, new int[]{0,1,2,3,4,3,2,1,0}), 1);\n    assert Arrays.equals(solution.minTaps(13, new int[]{3,3,3,3,3,3,3,3,3,3,3,3,3,3}), 3);\n    assert Arrays.equals(solution.minTaps(12, new int[]{0,0,0,4,0,0,0,0,0,0,0,0,4}), -1);\n    assert Arrays.equals(solution.minTaps(20, new int[]{3,1,0,0,0,0,0,2,2,1,0,1,0,0,0,1,0,0,0,1,0}), -1);\n    assert Arrays.equals(solution.minTaps(7, new int[]{3,2,1,0,0,0,2,1}), -1);\n    assert Arrays.equals(solution.minTaps(100, new int[]{50} + {0}*98 + {50}), Error: Solution.minTaps() missing 1 required positional argument: 'ranges');\n    assert Arrays.equals(solution.minTaps(7, new int[]{3,0,1,2,0,1,0,1}), 4);\n    assert Arrays.equals(solution.minTaps(12, new int[]{0,1,2,3,4,5,6,5,4,3,2,1,0}), 1);\n    assert Arrays.equals(solution.minTaps(20, new int[]{10,10,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}), -1);\n    assert Arrays.equals(solution.minTaps(8, new int[]{0,1,0,0,0,2,1,0,1}), -1);\n    assert Arrays.equals(solution.minTaps(15, new int[]{3,0,1,1,0,2,1,0,0,2,3,1,0,1,0,1}), 5);\n    assert Arrays.equals(solution.minTaps(9, new int[]{1,0,0,0,0,0,0,0,0,1}), -1);\n    assert Arrays.equals(solution.minTaps(15, new int[]{2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}), 8);\n    assert Arrays.equals(solution.minTaps(12, new int[]{2,3,0,1,0,3,0,1,0,0,1,0,1}), -1);\n    assert Arrays.equals(solution.minTaps(10, new int[]{3,1,2,1,3,2,1,1,2,3,1}), 3);\n    assert Arrays.equals(solution.minTaps(12, new int[]{0,0,3,0,0,2,0,1,0,0,0,0,0}), -1);\n    assert Arrays.equals(solution.minTaps(25, new int[]{0,5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}), -1);\n    assert Arrays.equals(solution.minTaps(20, new int[]{10,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,10}), 2);\n    assert Arrays.equals(solution.minTaps(11, new int[]{1,0,1,0,1,0,1,0,1,0,1,0}), 6);\n    assert Arrays.equals(solution.minTaps(8, new int[]{3,0,2,1,1,0,2,1,1}), 2);\n    assert Arrays.equals(solution.minTaps(50, new int[]{25} + {0}*48 + {25}), Error: Solution.minTaps() missing 1 required positional argument: 'ranges');\n    assert Arrays.equals(solution.minTaps(10, new int[]{2,3,1,1,0,2,1,0,1,2,1}), 3);\n    assert Arrays.equals(solution.minTaps(18, new int[]{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1}), -1);\n    assert Arrays.equals(solution.minTaps(10, new int[]{1,2,3,4,5,4,3,2,1,0,1}), 2);\n    assert Arrays.equals(solution.minTaps(8, new int[]{0,0,2,0,0,0,2,1,1}), 2);\n    assert Arrays.equals(solution.minTaps(18, new int[]{5,0,3,0,0,0,0,2,1,0,1,0,1,0,1,0,0,0,4}), 6);\n    assert Arrays.equals(solution.minTaps(14, new int[]{0,1,1,0,1,0,0,1,0,1,0,1,0,0,0}), -1);\n    assert Arrays.equals(solution.minTaps(18, new int[]{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0}), Error: list index out of range);\n    assert Arrays.equals(solution.minTaps(10, new int[]{2,3,1,4,0,1,2,0,3,1,2}), 2);\n    assert Arrays.equals(solution.minTaps(11, new int[]{0,0,1,0,0,0,0,0,0,0,0,1}), -1);\n    assert Arrays.equals(solution.minTaps(8, new int[]{1,0,1,1,0,0,0,1,1}), -1);\n    assert Arrays.equals(solution.minTaps(15, new int[]{3,0,0,0,3,2,0,1,0,0,2,0,0,0,1}), -1);\n    assert Arrays.equals(solution.minTaps(10, new int[]{1,2,1,2,1,2,1,2,1,2,1}), 3);\n    assert Arrays.equals(solution.minTaps(13, new int[]{0,0,0,0,0,0,0,0,0,0,0,0,0,0}), -1);\n    assert Arrays.equals(solution.minTaps(9, new int[]{4,0,0,0,4,0,0,0,4,0}), 2);\n    assert Arrays.equals(solution.minTaps(10, new int[]{2,3,1,4,0,0,2,0,1,0,1}), 3);\n    assert Arrays.equals(solution.minTaps(15, new int[]{2,1,1,1,1,1,1,1,1,1,1,1,1,1,1}), 8);\n    assert Arrays.equals(solution.minTaps(18, new int[]{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1}), -1);\n    assert Arrays.equals(solution.minTaps(15, new int[]{3,0,1,1,0,0,0,1,2,1,0,1,1,0,0,3}), -1);\n    assert Arrays.equals(solution.minTaps(14, new int[]{2,3,4,5,6,7,8,9,10,11,12,13,14,0,1}), 1);\n    assert Arrays.equals(solution.minTaps(9, new int[]{0,2,1,3,1,2,0,1,0,2}), 3);\n    assert Arrays.equals(solution.minTaps(14, new int[]{3,2,0,0,0,1,1,0,0,0,0,0,1,1,1}), -1);\n    assert Arrays.equals(solution.minTaps(20, new int[]{5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,5}), -1);\n    assert Arrays.equals(solution.minTaps(7, new int[]{3,2,0,0,1,0,1,1}), 3);\n    assert Arrays.equals(solution.minTaps(12, new int[]{0,1,2,3,4,5,6,7,8,9,10,11,12}), 1);\n    assert Arrays.equals(solution.minTaps(50, new int[]{1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,1,2,3,4,5,6,7,8,9,10,1,2,3,4,5,6,7,8,9,10,1,2,3,4,5}), -1);\n    assert Arrays.equals(solution.minTaps(12, new int[]{0,1,0,0,0,0,1,0,0,0,0,0,1}), -1);\n    assert Arrays.equals(solution.minTaps(15, new int[]{1,2,2,3,1,2,3,2,1,1,1,1,1,1,1}), 5);\n    assert Arrays.equals(solution.minTaps(20, new int[]{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}), -1);\n    assert Arrays.equals(solution.minTaps(25, new int[]{5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5}), 3);\n    assert Arrays.equals(solution.minTaps(20, new int[]{4,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}), 9);\n    assert Arrays.equals(solution.minTaps(10, new int[]{2,3,1,0,0,1,2,1,0,2,0}), 3);\n    assert Arrays.equals(solution.minTaps(20, new int[]{2,0,0,0,2,0,0,2,0,0,0,0,0,0,0,2,0,0,0,0}), -1);\n    assert Arrays.equals(solution.minTaps(20, new int[]{5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5}), 2);\n}",
+    "javascript": "function check(candidate) {\n    console.assert(JSON.stringify(candidate(10, [0,0,0,0,0,0,0,0,0,0,0])) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate(5, [3,4,1,1,0,0])) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate(8, [4,0,0,0,0,0,0,0,4])) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(3, [0,0,0,0])) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate(2, [1,0,1])) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(6, [1,2,3,4,5,6,7])) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate(8, [4,0,0,0,0,0,1,0,1])) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate(7, [1,2,1,0,2,1,0,1])) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate(10, [1,1,1,1,1,1,1,1,1,1])) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate(6, [1,2,1,0,2,1,0])) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(1, [1,1])) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate(6, [1,2,2,1,0,1,0])) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(20, [0,2,1,1,0,2,1,0,1,0,1,0,1,0,2,1,0,1,0,1,0])) === JSON.stringify(8));\n    console.assert(JSON.stringify(candidate(7, [1,2,2,2,2,2,2,2])) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(12, [0,2,1,0,1,0,1,0,1,0,1,0,2])) === JSON.stringify(6));\n    console.assert(JSON.stringify(candidate(20, [1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,1])) === JSON.stringify(6));\n    console.assert(JSON.stringify(candidate(20, [5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0])) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate(20, [4,0,0,0,0,1,0,2,0,0,0,1,2,0,1,0,0,1,0,1,0])) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate(10, [2,3,1,2,3,2,1,2,3,2,1])) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate(20, [5,4,3,2,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,5])) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate(15, [3,0,0,1,1,2,0,0,0,0,0,0,0,2,2,0])) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate(14, [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0])) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate(7, [3,2,2,3,2,2,1,1])) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(10, [2,3,0,2,1,0,1,0,1,0,1])) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate(14, [1,2,3,4,5,6,7,8,9,10,11,12,13,14,1])) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate(25, [4,2,1,1,0,0,0,0,0,3,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0])) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate(7, [0,1,0,0,1,0,1,0])) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate(12, [1,1,1,1,1,1,1,1,1,1,1,1,1])) === JSON.stringify(6));\n    console.assert(JSON.stringify(candidate(12, [3,3,3,3,3,3,3,3,3,3,3,3,3])) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(15, [1,2,2,3,1,2,3,0,1,2,1,0,1,2,1,0])) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate(9, [0,0,2,0,0,0,2,0,0,2])) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate(11, [0,2,1,0,1,0,1,0,1,0,1,0])) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate(12, [4,1,0,0,0,0,0,0,0,0,0,0,4])) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate(12, [1,0,0,0,0,0,0,0,0,0,0,0,1])) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate(9, [0,1,0,1,0,1,0,1,0,1])) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate(10, [2,2,0,2,2,0,1,0,1,2,0])) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate(12, [2,2,2,2,2,2,2,2,2,2,2,2,2])) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate(10, [3,1,1,1,1,1,1,1,1,1,1])) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate(9, [0,0,1,0,0,0,0,0,1,1])) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate(25, [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0])) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate(8, [1,1,1,1,1,1,1,1,1])) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate(15, [3,1,4,2,1,0,1,0,0,2,3,0,1,0,1,0])) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate(8, [0,1,2,3,4,3,2,1,0])) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate(13, [3,3,3,3,3,3,3,3,3,3,3,3,3,3])) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate(12, [0,0,0,4,0,0,0,0,0,0,0,0,4])) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate(20, [3,1,0,0,0,0,0,2,2,1,0,1,0,0,0,1,0,0,0,1,0])) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate(7, [3,2,1,0,0,0,2,1])) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate(100, [50] + [0]*98 + [50])) === JSON.stringify(Error: Solution.minTaps() missing 1 required positional argument: 'ranges'));\n    console.assert(JSON.stringify(candidate(7, [3,0,1,2,0,1,0,1])) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate(12, [0,1,2,3,4,5,6,5,4,3,2,1,0])) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate(20, [10,10,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0])) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate(8, [0,1,0,0,0,2,1,0,1])) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate(15, [3,0,1,1,0,2,1,0,0,2,3,1,0,1,0,1])) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate(9, [1,0,0,0,0,0,0,0,0,1])) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate(15, [2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1])) === JSON.stringify(8));\n    console.assert(JSON.stringify(candidate(12, [2,3,0,1,0,3,0,1,0,0,1,0,1])) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate(10, [3,1,2,1,3,2,1,1,2,3,1])) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate(12, [0,0,3,0,0,2,0,1,0,0,0,0,0])) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate(25, [0,5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0])) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate(20, [10,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,10])) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(11, [1,0,1,0,1,0,1,0,1,0,1,0])) === JSON.stringify(6));\n    console.assert(JSON.stringify(candidate(8, [3,0,2,1,1,0,2,1,1])) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(50, [25] + [0]*48 + [25])) === JSON.stringify(Error: Solution.minTaps() missing 1 required positional argument: 'ranges'));\n    console.assert(JSON.stringify(candidate(10, [2,3,1,1,0,2,1,0,1,2,1])) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate(18, [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1])) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate(10, [1,2,3,4,5,4,3,2,1,0,1])) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(8, [0,0,2,0,0,0,2,1,1])) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(18, [5,0,3,0,0,0,0,2,1,0,1,0,1,0,1,0,0,0,4])) === JSON.stringify(6));\n    console.assert(JSON.stringify(candidate(14, [0,1,1,0,1,0,0,1,0,1,0,1,0,0,0])) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate(18, [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0])) === JSON.stringify(Error: list index out of range));\n    console.assert(JSON.stringify(candidate(10, [2,3,1,4,0,1,2,0,3,1,2])) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(11, [0,0,1,0,0,0,0,0,0,0,0,1])) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate(8, [1,0,1,1,0,0,0,1,1])) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate(15, [3,0,0,0,3,2,0,1,0,0,2,0,0,0,1])) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate(10, [1,2,1,2,1,2,1,2,1,2,1])) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate(13, [0,0,0,0,0,0,0,0,0,0,0,0,0,0])) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate(9, [4,0,0,0,4,0,0,0,4,0])) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(10, [2,3,1,4,0,0,2,0,1,0,1])) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate(15, [2,1,1,1,1,1,1,1,1,1,1,1,1,1,1])) === JSON.stringify(8));\n    console.assert(JSON.stringify(candidate(18, [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1])) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate(15, [3,0,1,1,0,0,0,1,2,1,0,1,1,0,0,3])) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate(14, [2,3,4,5,6,7,8,9,10,11,12,13,14,0,1])) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate(9, [0,2,1,3,1,2,0,1,0,2])) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate(14, [3,2,0,0,0,1,1,0,0,0,0,0,1,1,1])) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate(20, [5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,5])) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate(7, [3,2,0,0,1,0,1,1])) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate(12, [0,1,2,3,4,5,6,7,8,9,10,11,12])) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate(50, [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,1,2,3,4,5,6,7,8,9,10,1,2,3,4,5,6,7,8,9,10,1,2,3,4,5])) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate(12, [0,1,0,0,0,0,1,0,0,0,0,0,1])) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate(15, [1,2,2,3,1,2,3,2,1,1,1,1,1,1,1])) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate(20, [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0])) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate(25, [5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5])) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate(20, [4,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1])) === JSON.stringify(9));\n    console.assert(JSON.stringify(candidate(10, [2,3,1,0,0,1,2,1,0,2,0])) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate(20, [2,0,0,0,2,0,0,2,0,0,0,0,0,0,0,2,0,0,0,0])) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate(20, [5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5])) === JSON.stringify(2));\n}",
+    "typescript": "function check(candidate: Function): void {\n    console.assert(JSON.stringify(candidate(10, [0,0,0,0,0,0,0,0,0,0,0])) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate(5, [3,4,1,1,0,0])) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate(8, [4,0,0,0,0,0,0,0,4])) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(3, [0,0,0,0])) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate(2, [1,0,1])) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(6, [1,2,3,4,5,6,7])) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate(8, [4,0,0,0,0,0,1,0,1])) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate(7, [1,2,1,0,2,1,0,1])) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate(10, [1,1,1,1,1,1,1,1,1,1])) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate(6, [1,2,1,0,2,1,0])) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(1, [1,1])) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate(6, [1,2,2,1,0,1,0])) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(20, [0,2,1,1,0,2,1,0,1,0,1,0,1,0,2,1,0,1,0,1,0])) === JSON.stringify(8));\n    console.assert(JSON.stringify(candidate(7, [1,2,2,2,2,2,2,2])) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(12, [0,2,1,0,1,0,1,0,1,0,1,0,2])) === JSON.stringify(6));\n    console.assert(JSON.stringify(candidate(20, [1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,1])) === JSON.stringify(6));\n    console.assert(JSON.stringify(candidate(20, [5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0])) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate(20, [4,0,0,0,0,1,0,2,0,0,0,1,2,0,1,0,0,1,0,1,0])) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate(10, [2,3,1,2,3,2,1,2,3,2,1])) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate(20, [5,4,3,2,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,5])) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate(15, [3,0,0,1,1,2,0,0,0,0,0,0,0,2,2,0])) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate(14, [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0])) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate(7, [3,2,2,3,2,2,1,1])) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(10, [2,3,0,2,1,0,1,0,1,0,1])) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate(14, [1,2,3,4,5,6,7,8,9,10,11,12,13,14,1])) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate(25, [4,2,1,1,0,0,0,0,0,3,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0])) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate(7, [0,1,0,0,1,0,1,0])) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate(12, [1,1,1,1,1,1,1,1,1,1,1,1,1])) === JSON.stringify(6));\n    console.assert(JSON.stringify(candidate(12, [3,3,3,3,3,3,3,3,3,3,3,3,3])) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(15, [1,2,2,3,1,2,3,0,1,2,1,0,1,2,1,0])) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate(9, [0,0,2,0,0,0,2,0,0,2])) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate(11, [0,2,1,0,1,0,1,0,1,0,1,0])) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate(12, [4,1,0,0,0,0,0,0,0,0,0,0,4])) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate(12, [1,0,0,0,0,0,0,0,0,0,0,0,1])) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate(9, [0,1,0,1,0,1,0,1,0,1])) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate(10, [2,2,0,2,2,0,1,0,1,2,0])) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate(12, [2,2,2,2,2,2,2,2,2,2,2,2,2])) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate(10, [3,1,1,1,1,1,1,1,1,1,1])) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate(9, [0,0,1,0,0,0,0,0,1,1])) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate(25, [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0])) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate(8, [1,1,1,1,1,1,1,1,1])) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate(15, [3,1,4,2,1,0,1,0,0,2,3,0,1,0,1,0])) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate(8, [0,1,2,3,4,3,2,1,0])) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate(13, [3,3,3,3,3,3,3,3,3,3,3,3,3,3])) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate(12, [0,0,0,4,0,0,0,0,0,0,0,0,4])) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate(20, [3,1,0,0,0,0,0,2,2,1,0,1,0,0,0,1,0,0,0,1,0])) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate(7, [3,2,1,0,0,0,2,1])) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate(100, [50] + [0]*98 + [50])) === JSON.stringify(Error: Solution.minTaps() missing 1 required positional argument: 'ranges'));\n    console.assert(JSON.stringify(candidate(7, [3,0,1,2,0,1,0,1])) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate(12, [0,1,2,3,4,5,6,5,4,3,2,1,0])) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate(20, [10,10,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0])) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate(8, [0,1,0,0,0,2,1,0,1])) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate(15, [3,0,1,1,0,2,1,0,0,2,3,1,0,1,0,1])) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate(9, [1,0,0,0,0,0,0,0,0,1])) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate(15, [2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1])) === JSON.stringify(8));\n    console.assert(JSON.stringify(candidate(12, [2,3,0,1,0,3,0,1,0,0,1,0,1])) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate(10, [3,1,2,1,3,2,1,1,2,3,1])) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate(12, [0,0,3,0,0,2,0,1,0,0,0,0,0])) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate(25, [0,5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0])) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate(20, [10,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,10])) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(11, [1,0,1,0,1,0,1,0,1,0,1,0])) === JSON.stringify(6));\n    console.assert(JSON.stringify(candidate(8, [3,0,2,1,1,0,2,1,1])) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(50, [25] + [0]*48 + [25])) === JSON.stringify(Error: Solution.minTaps() missing 1 required positional argument: 'ranges'));\n    console.assert(JSON.stringify(candidate(10, [2,3,1,1,0,2,1,0,1,2,1])) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate(18, [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1])) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate(10, [1,2,3,4,5,4,3,2,1,0,1])) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(8, [0,0,2,0,0,0,2,1,1])) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(18, [5,0,3,0,0,0,0,2,1,0,1,0,1,0,1,0,0,0,4])) === JSON.stringify(6));\n    console.assert(JSON.stringify(candidate(14, [0,1,1,0,1,0,0,1,0,1,0,1,0,0,0])) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate(18, [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0])) === JSON.stringify(Error: list index out of range));\n    console.assert(JSON.stringify(candidate(10, [2,3,1,4,0,1,2,0,3,1,2])) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(11, [0,0,1,0,0,0,0,0,0,0,0,1])) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate(8, [1,0,1,1,0,0,0,1,1])) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate(15, [3,0,0,0,3,2,0,1,0,0,2,0,0,0,1])) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate(10, [1,2,1,2,1,2,1,2,1,2,1])) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate(13, [0,0,0,0,0,0,0,0,0,0,0,0,0,0])) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate(9, [4,0,0,0,4,0,0,0,4,0])) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(10, [2,3,1,4,0,0,2,0,1,0,1])) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate(15, [2,1,1,1,1,1,1,1,1,1,1,1,1,1,1])) === JSON.stringify(8));\n    console.assert(JSON.stringify(candidate(18, [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1])) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate(15, [3,0,1,1,0,0,0,1,2,1,0,1,1,0,0,3])) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate(14, [2,3,4,5,6,7,8,9,10,11,12,13,14,0,1])) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate(9, [0,2,1,3,1,2,0,1,0,2])) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate(14, [3,2,0,0,0,1,1,0,0,0,0,0,1,1,1])) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate(20, [5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,5])) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate(7, [3,2,0,0,1,0,1,1])) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate(12, [0,1,2,3,4,5,6,7,8,9,10,11,12])) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate(50, [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,1,2,3,4,5,6,7,8,9,10,1,2,3,4,5,6,7,8,9,10,1,2,3,4,5])) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate(12, [0,1,0,0,0,0,1,0,0,0,0,0,1])) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate(15, [1,2,2,3,1,2,3,2,1,1,1,1,1,1,1])) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate(20, [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0])) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate(25, [5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5])) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate(20, [4,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1])) === JSON.stringify(9));\n    console.assert(JSON.stringify(candidate(10, [2,3,1,0,0,1,2,1,0,2,0])) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate(20, [2,0,0,0,2,0,0,2,0,0,0,0,0,0,0,2,0,0,0,0])) === JSON.stringify(-1));\n    console.assert(JSON.stringify(candidate(20, [5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5])) === JSON.stringify(2));\n}",
+    "golang": "func check(candidate func([]int, int) []int) {\n    assert reflect.DeepEqual(candidate(10, []int{0,0,0,0,0,0,0,0,0,0,0}), -1)\n    assert reflect.DeepEqual(candidate(5, []int{3,4,1,1,0,0}), 1)\n    assert reflect.DeepEqual(candidate(8, []int{4,0,0,0,0,0,0,0,4}), 2)\n    assert reflect.DeepEqual(candidate(3, []int{0,0,0,0}), -1)\n    assert reflect.DeepEqual(candidate(2, []int{1,0,1}), 2)\n    assert reflect.DeepEqual(candidate(6, []int{1,2,3,4,5,6,7}), 1)\n    assert reflect.DeepEqual(candidate(8, []int{4,0,0,0,0,0,1,0,1}), -1)\n    assert reflect.DeepEqual(candidate(7, []int{1,2,1,0,2,1,0,1}), 3)\n    assert reflect.DeepEqual(candidate(10, []int{1,1,1,1,1,1,1,1,1,1}), 5)\n    assert reflect.DeepEqual(candidate(6, []int{1,2,1,0,2,1,0}), 2)\n    assert reflect.DeepEqual(candidate(1, []int{1,1}), 1)\n    assert reflect.DeepEqual(candidate(6, []int{1,2,2,1,0,1,0}), 2)\n    assert reflect.DeepEqual(candidate(20, []int{0,2,1,1,0,2,1,0,1,0,1,0,1,0,2,1,0,1,0,1,0}), 8)\n    assert reflect.DeepEqual(candidate(7, []int{1,2,2,2,2,2,2,2}), 2)\n    assert reflect.DeepEqual(candidate(12, []int{0,2,1,0,1,0,1,0,1,0,1,0,2}), 6)\n    assert reflect.DeepEqual(candidate(20, []int{1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,1}), 6)\n    assert reflect.DeepEqual(candidate(20, []int{5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}), -1)\n    assert reflect.DeepEqual(candidate(20, []int{4,0,0,0,0,1,0,2,0,0,0,1,2,0,1,0,0,1,0,1,0}), -1)\n    assert reflect.DeepEqual(candidate(10, []int{2,3,1,2,3,2,1,2,3,2,1}), 3)\n    assert reflect.DeepEqual(candidate(20, []int{5,4,3,2,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,5}), -1)\n    assert reflect.DeepEqual(candidate(15, []int{3,0,0,1,1,2,0,0,0,0,0,0,0,2,2,0}), -1)\n    assert reflect.DeepEqual(candidate(14, []int{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}), -1)\n    assert reflect.DeepEqual(candidate(7, []int{3,2,2,3,2,2,1,1}), 2)\n    assert reflect.DeepEqual(candidate(10, []int{2,3,0,2,1,0,1,0,1,0,1}), 5)\n    assert reflect.DeepEqual(candidate(14, []int{1,2,3,4,5,6,7,8,9,10,11,12,13,14,1}), 1)\n    assert reflect.DeepEqual(candidate(25, []int{4,2,1,1,0,0,0,0,0,3,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0}), -1)\n    assert reflect.DeepEqual(candidate(7, []int{0,1,0,0,1,0,1,0}), -1)\n    assert reflect.DeepEqual(candidate(12, []int{1,1,1,1,1,1,1,1,1,1,1,1,1}), 6)\n    assert reflect.DeepEqual(candidate(12, []int{3,3,3,3,3,3,3,3,3,3,3,3,3}), 2)\n    assert reflect.DeepEqual(candidate(15, []int{1,2,2,3,1,2,3,0,1,2,1,0,1,2,1,0}), 4)\n    assert reflect.DeepEqual(candidate(9, []int{0,0,2,0,0,0,2,0,0,2}), 3)\n    assert reflect.DeepEqual(candidate(11, []int{0,2,1,0,1,0,1,0,1,0,1,0}), 5)\n    assert reflect.DeepEqual(candidate(12, []int{4,1,0,0,0,0,0,0,0,0,0,0,4}), -1)\n    assert reflect.DeepEqual(candidate(12, []int{1,0,0,0,0,0,0,0,0,0,0,0,1}), -1)\n    assert reflect.DeepEqual(candidate(9, []int{0,1,0,1,0,1,0,1,0,1}), 5)\n    assert reflect.DeepEqual(candidate(10, []int{2,2,0,2,2,0,1,0,1,2,0}), 4)\n    assert reflect.DeepEqual(candidate(12, []int{2,2,2,2,2,2,2,2,2,2,2,2,2}), 3)\n    assert reflect.DeepEqual(candidate(10, []int{3,1,1,1,1,1,1,1,1,1,1}), 5)\n    assert reflect.DeepEqual(candidate(9, []int{0,0,1,0,0,0,0,0,1,1}), -1)\n    assert reflect.DeepEqual(candidate(25, []int{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}), -1)\n    assert reflect.DeepEqual(candidate(8, []int{1,1,1,1,1,1,1,1,1}), 4)\n    assert reflect.DeepEqual(candidate(15, []int{3,1,4,2,1,0,1,0,0,2,3,0,1,0,1,0}), 4)\n    assert reflect.DeepEqual(candidate(8, []int{0,1,2,3,4,3,2,1,0}), 1)\n    assert reflect.DeepEqual(candidate(13, []int{3,3,3,3,3,3,3,3,3,3,3,3,3,3}), 3)\n    assert reflect.DeepEqual(candidate(12, []int{0,0,0,4,0,0,0,0,0,0,0,0,4}), -1)\n    assert reflect.DeepEqual(candidate(20, []int{3,1,0,0,0,0,0,2,2,1,0,1,0,0,0,1,0,0,0,1,0}), -1)\n    assert reflect.DeepEqual(candidate(7, []int{3,2,1,0,0,0,2,1}), -1)\n    assert reflect.DeepEqual(candidate(100, []int{50} + {0}*98 + {50}), Error: Solution.minTaps() missing 1 required positional argument: 'ranges')\n    assert reflect.DeepEqual(candidate(7, []int{3,0,1,2,0,1,0,1}), 4)\n    assert reflect.DeepEqual(candidate(12, []int{0,1,2,3,4,5,6,5,4,3,2,1,0}), 1)\n    assert reflect.DeepEqual(candidate(20, []int{10,10,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}), -1)\n    assert reflect.DeepEqual(candidate(8, []int{0,1,0,0,0,2,1,0,1}), -1)\n    assert reflect.DeepEqual(candidate(15, []int{3,0,1,1,0,2,1,0,0,2,3,1,0,1,0,1}), 5)\n    assert reflect.DeepEqual(candidate(9, []int{1,0,0,0,0,0,0,0,0,1}), -1)\n    assert reflect.DeepEqual(candidate(15, []int{2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}), 8)\n    assert reflect.DeepEqual(candidate(12, []int{2,3,0,1,0,3,0,1,0,0,1,0,1}), -1)\n    assert reflect.DeepEqual(candidate(10, []int{3,1,2,1,3,2,1,1,2,3,1}), 3)\n    assert reflect.DeepEqual(candidate(12, []int{0,0,3,0,0,2,0,1,0,0,0,0,0}), -1)\n    assert reflect.DeepEqual(candidate(25, []int{0,5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}), -1)\n    assert reflect.DeepEqual(candidate(20, []int{10,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,10}), 2)\n    assert reflect.DeepEqual(candidate(11, []int{1,0,1,0,1,0,1,0,1,0,1,0}), 6)\n    assert reflect.DeepEqual(candidate(8, []int{3,0,2,1,1,0,2,1,1}), 2)\n    assert reflect.DeepEqual(candidate(50, []int{25} + {0}*48 + {25}), Error: Solution.minTaps() missing 1 required positional argument: 'ranges')\n    assert reflect.DeepEqual(candidate(10, []int{2,3,1,1,0,2,1,0,1,2,1}), 3)\n    assert reflect.DeepEqual(candidate(18, []int{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1}), -1)\n    assert reflect.DeepEqual(candidate(10, []int{1,2,3,4,5,4,3,2,1,0,1}), 2)\n    assert reflect.DeepEqual(candidate(8, []int{0,0,2,0,0,0,2,1,1}), 2)\n    assert reflect.DeepEqual(candidate(18, []int{5,0,3,0,0,0,0,2,1,0,1,0,1,0,1,0,0,0,4}), 6)\n    assert reflect.DeepEqual(candidate(14, []int{0,1,1,0,1,0,0,1,0,1,0,1,0,0,0}), -1)\n    assert reflect.DeepEqual(candidate(18, []int{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0}), Error: list index out of range)\n    assert reflect.DeepEqual(candidate(10, []int{2,3,1,4,0,1,2,0,3,1,2}), 2)\n    assert reflect.DeepEqual(candidate(11, []int{0,0,1,0,0,0,0,0,0,0,0,1}), -1)\n    assert reflect.DeepEqual(candidate(8, []int{1,0,1,1,0,0,0,1,1}), -1)\n    assert reflect.DeepEqual(candidate(15, []int{3,0,0,0,3,2,0,1,0,0,2,0,0,0,1}), -1)\n    assert reflect.DeepEqual(candidate(10, []int{1,2,1,2,1,2,1,2,1,2,1}), 3)\n    assert reflect.DeepEqual(candidate(13, []int{0,0,0,0,0,0,0,0,0,0,0,0,0,0}), -1)\n    assert reflect.DeepEqual(candidate(9, []int{4,0,0,0,4,0,0,0,4,0}), 2)\n    assert reflect.DeepEqual(candidate(10, []int{2,3,1,4,0,0,2,0,1,0,1}), 3)\n    assert reflect.DeepEqual(candidate(15, []int{2,1,1,1,1,1,1,1,1,1,1,1,1,1,1}), 8)\n    assert reflect.DeepEqual(candidate(18, []int{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1}), -1)\n    assert reflect.DeepEqual(candidate(15, []int{3,0,1,1,0,0,0,1,2,1,0,1,1,0,0,3}), -1)\n    assert reflect.DeepEqual(candidate(14, []int{2,3,4,5,6,7,8,9,10,11,12,13,14,0,1}), 1)\n    assert reflect.DeepEqual(candidate(9, []int{0,2,1,3,1,2,0,1,0,2}), 3)\n    assert reflect.DeepEqual(candidate(14, []int{3,2,0,0,0,1,1,0,0,0,0,0,1,1,1}), -1)\n    assert reflect.DeepEqual(candidate(20, []int{5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,5}), -1)\n    assert reflect.DeepEqual(candidate(7, []int{3,2,0,0,1,0,1,1}), 3)\n    assert reflect.DeepEqual(candidate(12, []int{0,1,2,3,4,5,6,7,8,9,10,11,12}), 1)\n    assert reflect.DeepEqual(candidate(50, []int{1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,1,2,3,4,5,6,7,8,9,10,1,2,3,4,5,6,7,8,9,10,1,2,3,4,5}), -1)\n    assert reflect.DeepEqual(candidate(12, []int{0,1,0,0,0,0,1,0,0,0,0,0,1}), -1)\n    assert reflect.DeepEqual(candidate(15, []int{1,2,2,3,1,2,3,2,1,1,1,1,1,1,1}), 5)\n    assert reflect.DeepEqual(candidate(20, []int{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}), -1)\n    assert reflect.DeepEqual(candidate(25, []int{5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5}), 3)\n    assert reflect.DeepEqual(candidate(20, []int{4,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}), 9)\n    assert reflect.DeepEqual(candidate(10, []int{2,3,1,0,0,1,2,1,0,2,0}), 3)\n    assert reflect.DeepEqual(candidate(20, []int{2,0,0,0,2,0,0,2,0,0,0,0,0,0,0,2,0,0,0,0}), -1)\n    assert reflect.DeepEqual(candidate(20, []int{5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5}), 2)\n}",
+    "rust": "fn check(candidate: fn(Vec<i32>, i32) -> Vec<i32>) {\n    assert_eq!(candidate(10, vec![0,0,0,0,0,0,0,0,0,0,0]), -1);\n    assert_eq!(candidate(5, vec![3,4,1,1,0,0]), 1);\n    assert_eq!(candidate(8, vec![4,0,0,0,0,0,0,0,4]), 2);\n    assert_eq!(candidate(3, vec![0,0,0,0]), -1);\n    assert_eq!(candidate(2, vec![1,0,1]), 2);\n    assert_eq!(candidate(6, vec![1,2,3,4,5,6,7]), 1);\n    assert_eq!(candidate(8, vec![4,0,0,0,0,0,1,0,1]), -1);\n    assert_eq!(candidate(7, vec![1,2,1,0,2,1,0,1]), 3);\n    assert_eq!(candidate(10, vec![1,1,1,1,1,1,1,1,1,1]), 5);\n    assert_eq!(candidate(6, vec![1,2,1,0,2,1,0]), 2);\n    assert_eq!(candidate(1, vec![1,1]), 1);\n    assert_eq!(candidate(6, vec![1,2,2,1,0,1,0]), 2);\n    assert_eq!(candidate(20, vec![0,2,1,1,0,2,1,0,1,0,1,0,1,0,2,1,0,1,0,1,0]), 8);\n    assert_eq!(candidate(7, vec![1,2,2,2,2,2,2,2]), 2);\n    assert_eq!(candidate(12, vec![0,2,1,0,1,0,1,0,1,0,1,0,2]), 6);\n    assert_eq!(candidate(20, vec![1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,1]), 6);\n    assert_eq!(candidate(20, vec![5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]), -1);\n    assert_eq!(candidate(20, vec![4,0,0,0,0,1,0,2,0,0,0,1,2,0,1,0,0,1,0,1,0]), -1);\n    assert_eq!(candidate(10, vec![2,3,1,2,3,2,1,2,3,2,1]), 3);\n    assert_eq!(candidate(20, vec![5,4,3,2,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,5]), -1);\n    assert_eq!(candidate(15, vec![3,0,0,1,1,2,0,0,0,0,0,0,0,2,2,0]), -1);\n    assert_eq!(candidate(14, vec![0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]), -1);\n    assert_eq!(candidate(7, vec![3,2,2,3,2,2,1,1]), 2);\n    assert_eq!(candidate(10, vec![2,3,0,2,1,0,1,0,1,0,1]), 5);\n    assert_eq!(candidate(14, vec![1,2,3,4,5,6,7,8,9,10,11,12,13,14,1]), 1);\n    assert_eq!(candidate(25, vec![4,2,1,1,0,0,0,0,0,3,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0]), -1);\n    assert_eq!(candidate(7, vec![0,1,0,0,1,0,1,0]), -1);\n    assert_eq!(candidate(12, vec![1,1,1,1,1,1,1,1,1,1,1,1,1]), 6);\n    assert_eq!(candidate(12, vec![3,3,3,3,3,3,3,3,3,3,3,3,3]), 2);\n    assert_eq!(candidate(15, vec![1,2,2,3,1,2,3,0,1,2,1,0,1,2,1,0]), 4);\n    assert_eq!(candidate(9, vec![0,0,2,0,0,0,2,0,0,2]), 3);\n    assert_eq!(candidate(11, vec![0,2,1,0,1,0,1,0,1,0,1,0]), 5);\n    assert_eq!(candidate(12, vec![4,1,0,0,0,0,0,0,0,0,0,0,4]), -1);\n    assert_eq!(candidate(12, vec![1,0,0,0,0,0,0,0,0,0,0,0,1]), -1);\n    assert_eq!(candidate(9, vec![0,1,0,1,0,1,0,1,0,1]), 5);\n    assert_eq!(candidate(10, vec![2,2,0,2,2,0,1,0,1,2,0]), 4);\n    assert_eq!(candidate(12, vec![2,2,2,2,2,2,2,2,2,2,2,2,2]), 3);\n    assert_eq!(candidate(10, vec![3,1,1,1,1,1,1,1,1,1,1]), 5);\n    assert_eq!(candidate(9, vec![0,0,1,0,0,0,0,0,1,1]), -1);\n    assert_eq!(candidate(25, vec![0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]), -1);\n    assert_eq!(candidate(8, vec![1,1,1,1,1,1,1,1,1]), 4);\n    assert_eq!(candidate(15, vec![3,1,4,2,1,0,1,0,0,2,3,0,1,0,1,0]), 4);\n    assert_eq!(candidate(8, vec![0,1,2,3,4,3,2,1,0]), 1);\n    assert_eq!(candidate(13, vec![3,3,3,3,3,3,3,3,3,3,3,3,3,3]), 3);\n    assert_eq!(candidate(12, vec![0,0,0,4,0,0,0,0,0,0,0,0,4]), -1);\n    assert_eq!(candidate(20, vec![3,1,0,0,0,0,0,2,2,1,0,1,0,0,0,1,0,0,0,1,0]), -1);\n    assert_eq!(candidate(7, vec![3,2,1,0,0,0,2,1]), -1);\n    assert_eq!(candidate(100, vec![50] + [0]*98 + [50]), Error: Solution.minTaps() missing 1 required positional argument: 'ranges');\n    assert_eq!(candidate(7, vec![3,0,1,2,0,1,0,1]), 4);\n    assert_eq!(candidate(12, vec![0,1,2,3,4,5,6,5,4,3,2,1,0]), 1);\n    assert_eq!(candidate(20, vec![10,10,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]), -1);\n    assert_eq!(candidate(8, vec![0,1,0,0,0,2,1,0,1]), -1);\n    assert_eq!(candidate(15, vec![3,0,1,1,0,2,1,0,0,2,3,1,0,1,0,1]), 5);\n    assert_eq!(candidate(9, vec![1,0,0,0,0,0,0,0,0,1]), -1);\n    assert_eq!(candidate(15, vec![2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]), 8);\n    assert_eq!(candidate(12, vec![2,3,0,1,0,3,0,1,0,0,1,0,1]), -1);\n    assert_eq!(candidate(10, vec![3,1,2,1,3,2,1,1,2,3,1]), 3);\n    assert_eq!(candidate(12, vec![0,0,3,0,0,2,0,1,0,0,0,0,0]), -1);\n    assert_eq!(candidate(25, vec![0,5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]), -1);\n    assert_eq!(candidate(20, vec![10,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,10]), 2);\n    assert_eq!(candidate(11, vec![1,0,1,0,1,0,1,0,1,0,1,0]), 6);\n    assert_eq!(candidate(8, vec![3,0,2,1,1,0,2,1,1]), 2);\n    assert_eq!(candidate(50, vec![25] + [0]*48 + [25]), Error: Solution.minTaps() missing 1 required positional argument: 'ranges');\n    assert_eq!(candidate(10, vec![2,3,1,1,0,2,1,0,1,2,1]), 3);\n    assert_eq!(candidate(18, vec![0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1]), -1);\n    assert_eq!(candidate(10, vec![1,2,3,4,5,4,3,2,1,0,1]), 2);\n    assert_eq!(candidate(8, vec![0,0,2,0,0,0,2,1,1]), 2);\n    assert_eq!(candidate(18, vec![5,0,3,0,0,0,0,2,1,0,1,0,1,0,1,0,0,0,4]), 6);\n    assert_eq!(candidate(14, vec![0,1,1,0,1,0,0,1,0,1,0,1,0,0,0]), -1);\n    assert_eq!(candidate(18, vec![0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0]), Error: list index out of range);\n    assert_eq!(candidate(10, vec![2,3,1,4,0,1,2,0,3,1,2]), 2);\n    assert_eq!(candidate(11, vec![0,0,1,0,0,0,0,0,0,0,0,1]), -1);\n    assert_eq!(candidate(8, vec![1,0,1,1,0,0,0,1,1]), -1);\n    assert_eq!(candidate(15, vec![3,0,0,0,3,2,0,1,0,0,2,0,0,0,1]), -1);\n    assert_eq!(candidate(10, vec![1,2,1,2,1,2,1,2,1,2,1]), 3);\n    assert_eq!(candidate(13, vec![0,0,0,0,0,0,0,0,0,0,0,0,0,0]), -1);\n    assert_eq!(candidate(9, vec![4,0,0,0,4,0,0,0,4,0]), 2);\n    assert_eq!(candidate(10, vec![2,3,1,4,0,0,2,0,1,0,1]), 3);\n    assert_eq!(candidate(15, vec![2,1,1,1,1,1,1,1,1,1,1,1,1,1,1]), 8);\n    assert_eq!(candidate(18, vec![1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1]), -1);\n    assert_eq!(candidate(15, vec![3,0,1,1,0,0,0,1,2,1,0,1,1,0,0,3]), -1);\n    assert_eq!(candidate(14, vec![2,3,4,5,6,7,8,9,10,11,12,13,14,0,1]), 1);\n    assert_eq!(candidate(9, vec![0,2,1,3,1,2,0,1,0,2]), 3);\n    assert_eq!(candidate(14, vec![3,2,0,0,0,1,1,0,0,0,0,0,1,1,1]), -1);\n    assert_eq!(candidate(20, vec![5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,5]), -1);\n    assert_eq!(candidate(7, vec![3,2,0,0,1,0,1,1]), 3);\n    assert_eq!(candidate(12, vec![0,1,2,3,4,5,6,7,8,9,10,11,12]), 1);\n    assert_eq!(candidate(50, vec![1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,1,2,3,4,5,6,7,8,9,10,1,2,3,4,5,6,7,8,9,10,1,2,3,4,5]), -1);\n    assert_eq!(candidate(12, vec![0,1,0,0,0,0,1,0,0,0,0,0,1]), -1);\n    assert_eq!(candidate(15, vec![1,2,2,3,1,2,3,2,1,1,1,1,1,1,1]), 5);\n    assert_eq!(candidate(20, vec![0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]), -1);\n    assert_eq!(candidate(25, vec![5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5]), 3);\n    assert_eq!(candidate(20, vec![4,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]), 9);\n    assert_eq!(candidate(10, vec![2,3,1,0,0,1,2,1,0,2,0]), 3);\n    assert_eq!(candidate(20, vec![2,0,0,0,2,0,0,2,0,0,0,0,0,0,0,2,0,0,0,0]), -1);\n    assert_eq!(candidate(20, vec![5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5]), 2);\n}"
+  },
+  "test_cases": [
+    {
+      "input": "n = 10, ranges = [0,0,0,0,0,0,0,0,0,0,0]",
+      "output": "-1"
+    },
+    {
+      "input": "n = 5, ranges = [3,4,1,1,0,0]",
+      "output": "1"
+    },
+    {
+      "input": "n = 8, ranges = [4,0,0,0,0,0,0,0,4]",
+      "output": "2"
+    },
+    {
+      "input": "n = 3, ranges = [0,0,0,0]",
+      "output": "-1"
+    },
+    {
+      "input": "n = 2, ranges = [1,0,1]",
+      "output": "2"
+    },
+    {
+      "input": "n = 6, ranges = [1,2,3,4,5,6,7]",
+      "output": "1"
+    },
+    {
+      "input": "n = 8, ranges = [4,0,0,0,0,0,1,0,1]",
+      "output": "-1"
+    },
+    {
+      "input": "n = 7, ranges = [1,2,1,0,2,1,0,1]",
+      "output": "3"
+    },
+    {
+      "input": "n = 10, ranges = [1,1,1,1,1,1,1,1,1,1]",
+      "output": "5"
+    },
+    {
+      "input": "n = 6, ranges = [1,2,1,0,2,1,0]",
+      "output": "2"
+    },
+    {
+      "input": "n = 1, ranges = [1,1]",
+      "output": "1"
+    },
+    {
+      "input": "n = 6, ranges = [1,2,2,1,0,1,0]",
+      "output": "2"
+    },
+    {
+      "input": "n = 20, ranges = [0,2,1,1,0,2,1,0,1,0,1,0,1,0,2,1,0,1,0,1,0]",
+      "output": "8"
+    },
+    {
+      "input": "n = 7, ranges = [1,2,2,2,2,2,2,2]",
+      "output": "2"
+    },
+    {
+      "input": "n = 12, ranges = [0,2,1,0,1,0,1,0,1,0,1,0,2]",
+      "output": "6"
+    },
+    {
+      "input": "n = 20, ranges = [1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,1]",
+      "output": "6"
+    },
+    {
+      "input": "n = 20, ranges = [5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]",
+      "output": "-1"
+    },
+    {
+      "input": "n = 20, ranges = [4,0,0,0,0,1,0,2,0,0,0,1,2,0,1,0,0,1,0,1,0]",
+      "output": "-1"
+    },
+    {
+      "input": "n = 10, ranges = [2,3,1,2,3,2,1,2,3,2,1]",
+      "output": "3"
+    },
+    {
+      "input": "n = 20, ranges = [5,4,3,2,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,5]",
+      "output": "-1"
+    },
+    {
+      "input": "n = 15, ranges = [3,0,0,1,1,2,0,0,0,0,0,0,0,2,2,0]",
+      "output": "-1"
+    },
+    {
+      "input": "n = 14, ranges = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]",
+      "output": "-1"
+    },
+    {
+      "input": "n = 7, ranges = [3,2,2,3,2,2,1,1]",
+      "output": "2"
+    },
+    {
+      "input": "n = 10, ranges = [2,3,0,2,1,0,1,0,1,0,1]",
+      "output": "5"
+    },
+    {
+      "input": "n = 14, ranges = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,1]",
+      "output": "1"
+    },
+    {
+      "input": "n = 25, ranges = [4,2,1,1,0,0,0,0,0,3,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0]",
+      "output": "-1"
+    },
+    {
+      "input": "n = 7, ranges = [0,1,0,0,1,0,1,0]",
+      "output": "-1"
+    },
+    {
+      "input": "n = 12, ranges = [1,1,1,1,1,1,1,1,1,1,1,1,1]",
+      "output": "6"
+    },
+    {
+      "input": "n = 12, ranges = [3,3,3,3,3,3,3,3,3,3,3,3,3]",
+      "output": "2"
+    },
+    {
+      "input": "n = 15, ranges = [1,2,2,3,1,2,3,0,1,2,1,0,1,2,1,0]",
+      "output": "4"
+    },
+    {
+      "input": "n = 9, ranges = [0,0,2,0,0,0,2,0,0,2]",
+      "output": "3"
+    },
+    {
+      "input": "n = 11, ranges = [0,2,1,0,1,0,1,0,1,0,1,0]",
+      "output": "5"
+    },
+    {
+      "input": "n = 12, ranges = [4,1,0,0,0,0,0,0,0,0,0,0,4]",
+      "output": "-1"
+    },
+    {
+      "input": "n = 12, ranges = [1,0,0,0,0,0,0,0,0,0,0,0,1]",
+      "output": "-1"
+    },
+    {
+      "input": "n = 9, ranges = [0,1,0,1,0,1,0,1,0,1]",
+      "output": "5"
+    },
+    {
+      "input": "n = 10, ranges = [2,2,0,2,2,0,1,0,1,2,0]",
+      "output": "4"
+    },
+    {
+      "input": "n = 12, ranges = [2,2,2,2,2,2,2,2,2,2,2,2,2]",
+      "output": "3"
+    },
+    {
+      "input": "n = 10, ranges = [3,1,1,1,1,1,1,1,1,1,1]",
+      "output": "5"
+    },
+    {
+      "input": "n = 9, ranges = [0,0,1,0,0,0,0,0,1,1]",
+      "output": "-1"
+    },
+    {
+      "input": "n = 25, ranges = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]",
+      "output": "-1"
+    },
+    {
+      "input": "n = 8, ranges = [1,1,1,1,1,1,1,1,1]",
+      "output": "4"
+    },
+    {
+      "input": "n = 15, ranges = [3,1,4,2,1,0,1,0,0,2,3,0,1,0,1,0]",
+      "output": "4"
+    },
+    {
+      "input": "n = 8, ranges = [0,1,2,3,4,3,2,1,0]",
+      "output": "1"
+    },
+    {
+      "input": "n = 13, ranges = [3,3,3,3,3,3,3,3,3,3,3,3,3,3]",
+      "output": "3"
+    },
+    {
+      "input": "n = 12, ranges = [0,0,0,4,0,0,0,0,0,0,0,0,4]",
+      "output": "-1"
+    },
+    {
+      "input": "n = 20, ranges = [3,1,0,0,0,0,0,2,2,1,0,1,0,0,0,1,0,0,0,1,0]",
+      "output": "-1"
+    },
+    {
+      "input": "n = 7, ranges = [3,2,1,0,0,0,2,1]",
+      "output": "-1"
+    },
+    {
+      "input": "n = 100, ranges = [50] + [0]*98 + [50]",
+      "output": "Error: Solution.minTaps() missing 1 required positional argument: 'ranges'"
+    },
+    {
+      "input": "n = 7, ranges = [3,0,1,2,0,1,0,1]",
+      "output": "4"
+    },
+    {
+      "input": "n = 12, ranges = [0,1,2,3,4,5,6,5,4,3,2,1,0]",
+      "output": "1"
+    },
+    {
+      "input": "n = 20, ranges = [10,10,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]",
+      "output": "-1"
+    },
+    {
+      "input": "n = 8, ranges = [0,1,0,0,0,2,1,0,1]",
+      "output": "-1"
+    },
+    {
+      "input": "n = 15, ranges = [3,0,1,1,0,2,1,0,0,2,3,1,0,1,0,1]",
+      "output": "5"
+    },
+    {
+      "input": "n = 9, ranges = [1,0,0,0,0,0,0,0,0,1]",
+      "output": "-1"
+    },
+    {
+      "input": "n = 15, ranges = [2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]",
+      "output": "8"
+    },
+    {
+      "input": "n = 12, ranges = [2,3,0,1,0,3,0,1,0,0,1,0,1]",
+      "output": "-1"
+    },
+    {
+      "input": "n = 10, ranges = [3,1,2,1,3,2,1,1,2,3,1]",
+      "output": "3"
+    },
+    {
+      "input": "n = 12, ranges = [0,0,3,0,0,2,0,1,0,0,0,0,0]",
+      "output": "-1"
+    },
+    {
+      "input": "n = 25, ranges = [0,5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]",
+      "output": "-1"
+    },
+    {
+      "input": "n = 20, ranges = [10,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,10]",
+      "output": "2"
+    },
+    {
+      "input": "n = 11, ranges = [1,0,1,0,1,0,1,0,1,0,1,0]",
+      "output": "6"
+    },
+    {
+      "input": "n = 8, ranges = [3,0,2,1,1,0,2,1,1]",
+      "output": "2"
+    },
+    {
+      "input": "n = 50, ranges = [25] + [0]*48 + [25]",
+      "output": "Error: Solution.minTaps() missing 1 required positional argument: 'ranges'"
+    },
+    {
+      "input": "n = 10, ranges = [2,3,1,1,0,2,1,0,1,2,1]",
+      "output": "3"
+    },
+    {
+      "input": "n = 18, ranges = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1]",
+      "output": "-1"
+    },
+    {
+      "input": "n = 10, ranges = [1,2,3,4,5,4,3,2,1,0,1]",
+      "output": "2"
+    },
+    {
+      "input": "n = 8, ranges = [0,0,2,0,0,0,2,1,1]",
+      "output": "2"
+    },
+    {
+      "input": "n = 18, ranges = [5,0,3,0,0,0,0,2,1,0,1,0,1,0,1,0,0,0,4]",
+      "output": "6"
+    },
+    {
+      "input": "n = 14, ranges = [0,1,1,0,1,0,0,1,0,1,0,1,0,0,0]",
+      "output": "-1"
+    },
+    {
+      "input": "n = 18, ranges = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0]",
+      "output": "Error: list index out of range"
+    },
+    {
+      "input": "n = 10, ranges = [2,3,1,4,0,1,2,0,3,1,2]",
+      "output": "2"
+    },
+    {
+      "input": "n = 11, ranges = [0,0,1,0,0,0,0,0,0,0,0,1]",
+      "output": "-1"
+    },
+    {
+      "input": "n = 8, ranges = [1,0,1,1,0,0,0,1,1]",
+      "output": "-1"
+    },
+    {
+      "input": "n = 15, ranges = [3,0,0,0,3,2,0,1,0,0,2,0,0,0,1]",
+      "output": "-1"
+    },
+    {
+      "input": "n = 10, ranges = [1,2,1,2,1,2,1,2,1,2,1]",
+      "output": "3"
+    },
+    {
+      "input": "n = 13, ranges = [0,0,0,0,0,0,0,0,0,0,0,0,0,0]",
+      "output": "-1"
+    },
+    {
+      "input": "n = 9, ranges = [4,0,0,0,4,0,0,0,4,0]",
+      "output": "2"
+    },
+    {
+      "input": "n = 10, ranges = [2,3,1,4,0,0,2,0,1,0,1]",
+      "output": "3"
+    },
+    {
+      "input": "n = 15, ranges = [2,1,1,1,1,1,1,1,1,1,1,1,1,1,1]",
+      "output": "8"
+    },
+    {
+      "input": "n = 18, ranges = [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1]",
+      "output": "-1"
+    },
+    {
+      "input": "n = 15, ranges = [3,0,1,1,0,0,0,1,2,1,0,1,1,0,0,3]",
+      "output": "-1"
+    },
+    {
+      "input": "n = 14, ranges = [2,3,4,5,6,7,8,9,10,11,12,13,14,0,1]",
+      "output": "1"
+    },
+    {
+      "input": "n = 9, ranges = [0,2,1,3,1,2,0,1,0,2]",
+      "output": "3"
+    },
+    {
+      "input": "n = 14, ranges = [3,2,0,0,0,1,1,0,0,0,0,0,1,1,1]",
+      "output": "-1"
+    },
+    {
+      "input": "n = 20, ranges = [5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,5]",
+      "output": "-1"
+    },
+    {
+      "input": "n = 7, ranges = [3,2,0,0,1,0,1,1]",
+      "output": "3"
+    },
+    {
+      "input": "n = 12, ranges = [0,1,2,3,4,5,6,7,8,9,10,11,12]",
+      "output": "1"
+    },
+    {
+      "input": "n = 50, ranges = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,1,2,3,4,5,6,7,8,9,10,1,2,3,4,5,6,7,8,9,10,1,2,3,4,5]",
+      "output": "-1"
+    },
+    {
+      "input": "n = 12, ranges = [0,1,0,0,0,0,1,0,0,0,0,0,1]",
+      "output": "-1"
+    },
+    {
+      "input": "n = 15, ranges = [1,2,2,3,1,2,3,2,1,1,1,1,1,1,1]",
+      "output": "5"
+    },
+    {
+      "input": "n = 20, ranges = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]",
+      "output": "-1"
+    },
+    {
+      "input": "n = 25, ranges = [5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5]",
+      "output": "3"
+    },
+    {
+      "input": "n = 20, ranges = [4,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]",
+      "output": "9"
+    },
+    {
+      "input": "n = 10, ranges = [2,3,1,0,0,1,2,1,0,2,0]",
+      "output": "3"
+    },
+    {
+      "input": "n = 20, ranges = [2,0,0,0,2,0,0,2,0,0,0,0,0,0,0,2,0,0,0,0]",
+      "output": "-1"
+    },
+    {
+      "input": "n = 20, ranges = [5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5]",
+      "output": "2"
+    }
+  ],
+  "types": {
+    "python3": {
+      "input": [
+        {
+          "n": "int"
+        },
+        {
+          "ranges": "List[int]"
+        }
+      ],
+      "output": "int"
+    },
+    "cpp": {
+      "input": [
+        {
+          "n": "int"
+        },
+        {
+          "ranges": "vector<int>&"
+        }
+      ],
+      "output": "int"
+    },
+    "java": {
+      "input": [
+        {
+          "n": "int"
+        },
+        {
+          "ranges": "int[]"
+        }
+      ],
+      "output": "int"
+    },
+    "javascript": {
+      "input": [
+        {
+          "n": "number"
+        },
+        {
+          "ranges": "number[]"
+        }
+      ],
+      "output": "number"
+    },
+    "typescript": {
+      "input": [
+        {
+          "n": "number"
+        },
+        {
+          "ranges": "number[]"
+        }
+      ],
+      "output": "number"
+    },
+    "golang": {
+      "input": [
+        {
+          "n": "int"
+        },
+        {
+          "ranges": "[]int"
+        }
+      ],
+      "output": "int"
+    },
+    "rust": {
+      "input": [
+        {
+          "n": "i32"
+        },
+        {
+          "ranges": "Vec<i32>"
+        }
+      ],
+      "output": "i32"
+    }
+  },
+  "tags": [
+    "array",
+    "dynamic-programming",
+    "greedy"
+  ]
+}

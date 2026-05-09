@@ -1,0 +1,321 @@
+{
+  "id": 3016,
+  "title": "Minimum Number of Pushes to Type Word II",
+  "slug": "minimum-number-of-pushes-to-type-word-ii",
+  "difficulty": "Medium",
+  "description": "You are given a string word containing lowercase English letters.\nTelephone keypads have keys mapped with distinct collections of lowercase English letters, which can be used to form words by pushing them. For example, the key 2 is mapped with [\"a\",\"b\",\"c\"], we need to push the key one time to type \"a\", two times to type \"b\", and three times to type \"c\" .\nIt is allowed to remap the keys numbered 2 to 9 to distinct collections of letters. The keys can be remapped to any amount of letters, but each letter must be mapped to exactly one key. You need to find the minimum number of times the keys will be pushed to type the string word.\nReturn the minimum number of pushes needed to type word after remapping the keys.\nAn example mapping of letters to keys on a telephone keypad is given below. Note that 1, *, #, and 0 do not map to any letters.\nExample 1:\nExample 2:\nExample 3:\nConstraints:",
+  "examples": [
+    {
+      "example_num": 1,
+      "example_text": "Input: word = \"abcde\"\nOutput: 5\nExplanation: The remapped keypad given in the image provides the minimum cost.\n\"a\" -> one push on key 2\n\"b\" -> one push on key 3\n\"c\" -> one push on key 4\n\"d\" -> one push on key 5\n\"e\" -> one push on key 6\nTotal cost is 1 + 1 + 1 + 1 + 1 = 5.\nIt can be shown that no other mapping can provide a lower cost.",
+      "images": [
+        "https://assets.leetcode.com/uploads/2023/12/26/keypadv1e1.png"
+      ]
+    },
+    {
+      "example_num": 2,
+      "example_text": "Input: word = \"xyzxyzxyzxyz\"\nOutput: 12\nExplanation: The remapped keypad given in the image provides the minimum cost.\n\"x\" -> one push on key 2\n\"y\" -> one push on key 3\n\"z\" -> one push on key 4\nTotal cost is 1 * 4 + 1 * 4 + 1 * 4 = 12\nIt can be shown that no other mapping can provide a lower cost.\nNote that the key 9 is not mapped to any letter: it is not necessary to map letters to every key, but to map all the letters.",
+      "images": [
+        "https://assets.leetcode.com/uploads/2024/08/20/edited.png"
+      ]
+    },
+    {
+      "example_num": 3,
+      "example_text": "Input: word = \"aabbccddeeffgghhiiiiii\"\nOutput: 24\nExplanation: The remapped keypad given in the image provides the minimum cost.\n\"a\" -> one push on key 2\n\"b\" -> one push on key 3\n\"c\" -> one push on key 4\n\"d\" -> one push on key 5\n\"e\" -> one push on key 6\n\"f\" -> one push on key 7\n\"g\" -> one push on key 8\n\"h\" -> two pushes on key 9\n\"i\" -> one push on key 9\nTotal cost is 1 * 2 + 1 * 2 + 1 * 2 + 1 * 2 + 1 * 2 + 1 * 2 + 1 * 2 + 2 * 2 + 6 * 1 = 24.\nIt can be shown that no other mapping can provide a lower cost.",
+      "images": [
+        "https://assets.leetcode.com/uploads/2023/12/27/keypadv2.png"
+      ]
+    }
+  ],
+  "constraints": [
+    "1 <= word.length <= 105",
+    "word consists of lowercase English letters."
+  ],
+  "hints": [
+    "We have 8 keys in total. We can type 8 characters with one push each, 8 different characters with two pushes each, and so on.",
+    "The optimal way is to map letters to keys evenly.",
+    "Sort the letters by frequencies in the word in non-increasing order."
+  ],
+  "code_snippets": {
+    "cpp": "class Solution {\npublic:\n    int minimumPushes(string word) {\n        \n    }\n};",
+    "java": "class Solution {\n    public int minimumPushes(String word) {\n        \n    }\n}",
+    "python3": "class Solution:\n    def minimumPushes(self, word: str) -> int:\n        ",
+    "javascript": "/**\n * @param {string} word\n * @return {number}\n */\nvar minimumPushes = function(word) {\n    \n};",
+    "typescript": "function minimumPushes(word: string): number {\n    \n};",
+    "golang": "func minimumPushes(word string) int {\n    \n}",
+    "rust": "impl Solution {\n    pub fn minimum_pushes(word: String) -> i32 {\n        \n    }\n}"
+  },
+  "entry_points": {
+    "python3": "Solution().minimumPushes",
+    "cpp": "Solution().minimumPushes",
+    "java": "new Solution().minimumPushes",
+    "javascript": "minimumPushes",
+    "typescript": "minimumPushes",
+    "golang": "minimumPushes",
+    "rust": "Solution::minimum_pushes"
+  },
+  "test_snippets": {
+    "python3": "def check(candidate):\n    assert candidate(word = \"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\") == 52\n    assert candidate(word = \"abcde\") == 5\n    assert candidate(word = \"zyxwvutsrqponmlkjihgfedcba\") == 56\n    assert candidate(word = \"mississippi\") == 11\n    assert candidate(word = \"qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq\") == 52\n    assert candidate(word = \"aaaabbbbccccddddeeeeffffgggghhhhiiiiiiiiiijjjjjjjjjjkkkkkkkkkkkllllllllllllmmmmmmmmmmmmmmmnnnnnnnnnnnnnnnnoooooooppppppppppppppppqqqqqqqqqqqqqqqqrrrrrrrrrrrrrrrrrsssssssssssssssstttttttttttttttttuuuuuuuuuuuuuuuuuvvvvvvvvvvvvvvvvvwwwwwwwwwwwwwwwwwxxxxxxxxxyyyyyyyyyyyyyyyyyzzzzzzzzzzzzzzzzz\") == 499\n    assert candidate(word = \"hellohellohellohellohellohellohellohellohellohello\") == 50\n    assert candidate(word = \"abacabadabacabadabacabadabacabadabacabadabacabadabacabadabacabadabacabadabacabadabacabad\") == 88\n    assert candidate(word = \"xyzxyzxyzxyz\") == 12\n    assert candidate(word = \"abcdefghijklmnopqrstuvwxyz\") == 56\n    assert candidate(word = \"a\") == 1\n    assert candidate(word = \"aaabbbcccdddeeefffggghhhiiiijjjjkkkkllllmmmmnnnnooooppppqqqqrrrrssssttttuuuuvvvvwwwwxxxxyyyyzzzz\") == 198\n    assert candidate(word = \"ababababababababababababababababababababab\") == 42\n    assert candidate(word = \"aabbccddeeffgghhiiiiii\") == 24\n    assert candidate(word = \"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\") == 98\n    assert candidate(word = \"abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz\") == 168\n    assert candidate(word = \"abacabadabacabadabacabadabacabadabacabadabacabadabacabadabacabadabacabadabacabadabacabadabacabadabacabad\") == 104\n    assert candidate(word = \"ppppppppppppppppppppppppppppppppppppppppppppppppppppqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq\") == 104\n    assert candidate(word = \"mississippimississippimississippimississippi\") == 44\n    assert candidate(word = \"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\") == 162\n    assert candidate(word = \"loremipsumdolorsitametconsecteturadipiscingelitloremipsumdolorsitametconsecteturadipiscingelitloremipsumdolorsitametconsecteturadipiscingelit\") == 183\n    assert candidate(word = \"abcdefghijklmnopqrstuvwxyzzzzzzzzzzzzzzzzzzzzzzzz\") == 79\n    assert candidate(word = \"abcdefghijklmnopqrstuvwxyzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\") == 143\n    assert candidate(word = \"onelongwordwithoutrepetitionsonelongwordwithoutrepetitions\") == 70\n    assert candidate(word = \"thequickbrownfoxjumpsoverthelazydogthequickbrownfoxjumpsoverthelazydog\") == 130\n    assert candidate(word = \"uniquelettersabcdefghijklmnopqrstuvwxyzuniqueletters\") == 84\n    assert candidate(word = \"aaaaaaaaaabbbbbbbbccccccccddddddddeeeeeeeffffffffggggggghhhhhhhh\") == 64\n    assert candidate(word = \"nnnnneeeeffffddddeeeeffffddddddddddddeeeeeeeeeeeeeeeeffffffddddddddddddddeeeeeeeeeeeeeeeeffffffdddddddddddddeeeeeeeeeeeeee\") == 122\n    assert candidate(word = \"equalprobabilityabcdefghijklmnopqrstuvwxyz\") == 76\n    assert candidate(word = \"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzzzzzzzzzzzzzzzzzzzzzzzzzz\") == 136\n    assert candidate(word = \"ppppoooolllliiiihhhhggggffffeeeeeeeedddddccccbbbaaa\") == 65\n    assert candidate(word = \"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzzzz\") == 114\n    assert candidate(word = \"qwertyuiopasdfghjklzxcvbnmqwertyuiopasdfghjklzxcvbnm\") == 112\n    assert candidate(word = \"mnbvcxzvbnmzxcvbnmxcvbnmxcvbnmxcvbnmxcvbnmxcvbnmxcvbnmxcvbnmxcvbnmxcvbnmxcvbnmxcvbnmxcvbnmxcvbnmxcvbnm\") == 102\n    assert candidate(word = \"aaaabbbbccccddddeeeeffffgggghhhhiiiiijjjjkkkkllllmmmmnnnnooooppppqqqqrrrrssssttttuuuuvvvvwwwwxxxxyyyyzzzz\") == 225\n    assert candidate(word = \"repeatedrepeatedrepeatedrepeatedrepeatedrepeated\") == 48\n    assert candidate(word = \"aabbcdeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\") == 104\n    assert candidate(word = \"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\") == 112\n    assert candidate(word = \"frequencydistributionfrequencydistribution\") == 54\n    assert candidate(word = \"programmingproblemsolvingprogramming\") == 42\n    assert candidate(word = \"qwertyuiopqwertyuiopqwertyuiopqwertyuiopqwertyuiopqwertyuiopqwertyuiopqwertyuiopqwertyuiopqwertyuiopqwertyuiop\") == 132\n    assert candidate(word = \"abcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcd\") == 56\n    assert candidate(word = \"mississippiissippiissippi\") == 25\n    assert candidate(word = \"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\") == 170\n    assert candidate(word = \"abcdefghijklnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz\") == 108\n    assert candidate(word = \"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzzzzzzzzzz\") == 120\n    assert candidate(word = \"frequentfrequentfrequentfrequentfrequentfrequentfrequentfrequentfrequentfrequent\") == 80",
+    "cpp": "void check(Solution& solution) {\n    assert(solution.minimumPushes(\"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\") == vector<int>52);\n    assert(solution.minimumPushes(\"abcde\") == vector<int>5);\n    assert(solution.minimumPushes(\"zyxwvutsrqponmlkjihgfedcba\") == vector<int>56);\n    assert(solution.minimumPushes(\"mississippi\") == vector<int>11);\n    assert(solution.minimumPushes(\"qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq\") == vector<int>52);\n    assert(solution.minimumPushes(\"aaaabbbbccccddddeeeeffffgggghhhhiiiiiiiiiijjjjjjjjjjkkkkkkkkkkkllllllllllllmmmmmmmmmmmmmmmnnnnnnnnnnnnnnnnoooooooppppppppppppppppqqqqqqqqqqqqqqqqrrrrrrrrrrrrrrrrrsssssssssssssssstttttttttttttttttuuuuuuuuuuuuuuuuuvvvvvvvvvvvvvvvvvwwwwwwwwwwwwwwwwwxxxxxxxxxyyyyyyyyyyyyyyyyyzzzzzzzzzzzzzzzzz\") == vector<int>499);\n    assert(solution.minimumPushes(\"hellohellohellohellohellohellohellohellohellohello\") == vector<int>50);\n    assert(solution.minimumPushes(\"abacabadabacabadabacabadabacabadabacabadabacabadabacabadabacabadabacabadabacabadabacabad\") == vector<int>88);\n    assert(solution.minimumPushes(\"xyzxyzxyzxyz\") == vector<int>12);\n    assert(solution.minimumPushes(\"abcdefghijklmnopqrstuvwxyz\") == vector<int>56);\n    assert(solution.minimumPushes(\"a\") == vector<int>1);\n    assert(solution.minimumPushes(\"aaabbbcccdddeeefffggghhhiiiijjjjkkkkllllmmmmnnnnooooppppqqqqrrrrssssttttuuuuvvvvwwwwxxxxyyyyzzzz\") == vector<int>198);\n    assert(solution.minimumPushes(\"ababababababababababababababababababababab\") == vector<int>42);\n    assert(solution.minimumPushes(\"aabbccddeeffgghhiiiiii\") == vector<int>24);\n    assert(solution.minimumPushes(\"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\") == vector<int>98);\n    assert(solution.minimumPushes(\"abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz\") == vector<int>168);\n    assert(solution.minimumPushes(\"abacabadabacabadabacabadabacabadabacabadabacabadabacabadabacabadabacabadabacabadabacabadabacabadabacabad\") == vector<int>104);\n    assert(solution.minimumPushes(\"ppppppppppppppppppppppppppppppppppppppppppppppppppppqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq\") == vector<int>104);\n    assert(solution.minimumPushes(\"mississippimississippimississippimississippi\") == vector<int>44);\n    assert(solution.minimumPushes(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\") == vector<int>162);\n    assert(solution.minimumPushes(\"loremipsumdolorsitametconsecteturadipiscingelitloremipsumdolorsitametconsecteturadipiscingelitloremipsumdolorsitametconsecteturadipiscingelit\") == vector<int>183);\n    assert(solution.minimumPushes(\"abcdefghijklmnopqrstuvwxyzzzzzzzzzzzzzzzzzzzzzzzz\") == vector<int>79);\n    assert(solution.minimumPushes(\"abcdefghijklmnopqrstuvwxyzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\") == vector<int>143);\n    assert(solution.minimumPushes(\"onelongwordwithoutrepetitionsonelongwordwithoutrepetitions\") == vector<int>70);\n    assert(solution.minimumPushes(\"thequickbrownfoxjumpsoverthelazydogthequickbrownfoxjumpsoverthelazydog\") == vector<int>130);\n    assert(solution.minimumPushes(\"uniquelettersabcdefghijklmnopqrstuvwxyzuniqueletters\") == vector<int>84);\n    assert(solution.minimumPushes(\"aaaaaaaaaabbbbbbbbccccccccddddddddeeeeeeeffffffffggggggghhhhhhhh\") == vector<int>64);\n    assert(solution.minimumPushes(\"nnnnneeeeffffddddeeeeffffddddddddddddeeeeeeeeeeeeeeeeffffffddddddddddddddeeeeeeeeeeeeeeeeffffffdddddddddddddeeeeeeeeeeeeee\") == vector<int>122);\n    assert(solution.minimumPushes(\"equalprobabilityabcdefghijklmnopqrstuvwxyz\") == vector<int>76);\n    assert(solution.minimumPushes(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzzzzzzzzzzzzzzzzzzzzzzzzzz\") == vector<int>136);\n    assert(solution.minimumPushes(\"ppppoooolllliiiihhhhggggffffeeeeeeeedddddccccbbbaaa\") == vector<int>65);\n    assert(solution.minimumPushes(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzzzz\") == vector<int>114);\n    assert(solution.minimumPushes(\"qwertyuiopasdfghjklzxcvbnmqwertyuiopasdfghjklzxcvbnm\") == vector<int>112);\n    assert(solution.minimumPushes(\"mnbvcxzvbnmzxcvbnmxcvbnmxcvbnmxcvbnmxcvbnmxcvbnmxcvbnmxcvbnmxcvbnmxcvbnmxcvbnmxcvbnmxcvbnmxcvbnmxcvbnm\") == vector<int>102);\n    assert(solution.minimumPushes(\"aaaabbbbccccddddeeeeffffgggghhhhiiiiijjjjkkkkllllmmmmnnnnooooppppqqqqrrrrssssttttuuuuvvvvwwwwxxxxyyyyzzzz\") == vector<int>225);\n    assert(solution.minimumPushes(\"repeatedrepeatedrepeatedrepeatedrepeatedrepeated\") == vector<int>48);\n    assert(solution.minimumPushes(\"aabbcdeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\") == vector<int>104);\n    assert(solution.minimumPushes(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\") == vector<int>112);\n    assert(solution.minimumPushes(\"frequencydistributionfrequencydistribution\") == vector<int>54);\n    assert(solution.minimumPushes(\"programmingproblemsolvingprogramming\") == vector<int>42);\n    assert(solution.minimumPushes(\"qwertyuiopqwertyuiopqwertyuiopqwertyuiopqwertyuiopqwertyuiopqwertyuiopqwertyuiopqwertyuiopqwertyuiopqwertyuiop\") == vector<int>132);\n    assert(solution.minimumPushes(\"abcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcd\") == vector<int>56);\n    assert(solution.minimumPushes(\"mississippiissippiissippi\") == vector<int>25);\n    assert(solution.minimumPushes(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\") == vector<int>170);\n    assert(solution.minimumPushes(\"abcdefghijklnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz\") == vector<int>108);\n    assert(solution.minimumPushes(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzzzzzzzzzz\") == vector<int>120);\n    assert(solution.minimumPushes(\"frequentfrequentfrequentfrequentfrequentfrequentfrequentfrequentfrequentfrequent\") == vector<int>80);\n}",
+    "java": "public static void check(Solution solution) {\n    assert Arrays.equals(solution.minimumPushes(\"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\"), 52);\n    assert Arrays.equals(solution.minimumPushes(\"abcde\"), 5);\n    assert Arrays.equals(solution.minimumPushes(\"zyxwvutsrqponmlkjihgfedcba\"), 56);\n    assert Arrays.equals(solution.minimumPushes(\"mississippi\"), 11);\n    assert Arrays.equals(solution.minimumPushes(\"qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq\"), 52);\n    assert Arrays.equals(solution.minimumPushes(\"aaaabbbbccccddddeeeeffffgggghhhhiiiiiiiiiijjjjjjjjjjkkkkkkkkkkkllllllllllllmmmmmmmmmmmmmmmnnnnnnnnnnnnnnnnoooooooppppppppppppppppqqqqqqqqqqqqqqqqrrrrrrrrrrrrrrrrrsssssssssssssssstttttttttttttttttuuuuuuuuuuuuuuuuuvvvvvvvvvvvvvvvvvwwwwwwwwwwwwwwwwwxxxxxxxxxyyyyyyyyyyyyyyyyyzzzzzzzzzzzzzzzzz\"), 499);\n    assert Arrays.equals(solution.minimumPushes(\"hellohellohellohellohellohellohellohellohellohello\"), 50);\n    assert Arrays.equals(solution.minimumPushes(\"abacabadabacabadabacabadabacabadabacabadabacabadabacabadabacabadabacabadabacabadabacabad\"), 88);\n    assert Arrays.equals(solution.minimumPushes(\"xyzxyzxyzxyz\"), 12);\n    assert Arrays.equals(solution.minimumPushes(\"abcdefghijklmnopqrstuvwxyz\"), 56);\n    assert Arrays.equals(solution.minimumPushes(\"a\"), 1);\n    assert Arrays.equals(solution.minimumPushes(\"aaabbbcccdddeeefffggghhhiiiijjjjkkkkllllmmmmnnnnooooppppqqqqrrrrssssttttuuuuvvvvwwwwxxxxyyyyzzzz\"), 198);\n    assert Arrays.equals(solution.minimumPushes(\"ababababababababababababababababababababab\"), 42);\n    assert Arrays.equals(solution.minimumPushes(\"aabbccddeeffgghhiiiiii\"), 24);\n    assert Arrays.equals(solution.minimumPushes(\"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\"), 98);\n    assert Arrays.equals(solution.minimumPushes(\"abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz\"), 168);\n    assert Arrays.equals(solution.minimumPushes(\"abacabadabacabadabacabadabacabadabacabadabacabadabacabadabacabadabacabadabacabadabacabadabacabadabacabad\"), 104);\n    assert Arrays.equals(solution.minimumPushes(\"ppppppppppppppppppppppppppppppppppppppppppppppppppppqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq\"), 104);\n    assert Arrays.equals(solution.minimumPushes(\"mississippimississippimississippimississippi\"), 44);\n    assert Arrays.equals(solution.minimumPushes(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\"), 162);\n    assert Arrays.equals(solution.minimumPushes(\"loremipsumdolorsitametconsecteturadipiscingelitloremipsumdolorsitametconsecteturadipiscingelitloremipsumdolorsitametconsecteturadipiscingelit\"), 183);\n    assert Arrays.equals(solution.minimumPushes(\"abcdefghijklmnopqrstuvwxyzzzzzzzzzzzzzzzzzzzzzzzz\"), 79);\n    assert Arrays.equals(solution.minimumPushes(\"abcdefghijklmnopqrstuvwxyzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\"), 143);\n    assert Arrays.equals(solution.minimumPushes(\"onelongwordwithoutrepetitionsonelongwordwithoutrepetitions\"), 70);\n    assert Arrays.equals(solution.minimumPushes(\"thequickbrownfoxjumpsoverthelazydogthequickbrownfoxjumpsoverthelazydog\"), 130);\n    assert Arrays.equals(solution.minimumPushes(\"uniquelettersabcdefghijklmnopqrstuvwxyzuniqueletters\"), 84);\n    assert Arrays.equals(solution.minimumPushes(\"aaaaaaaaaabbbbbbbbccccccccddddddddeeeeeeeffffffffggggggghhhhhhhh\"), 64);\n    assert Arrays.equals(solution.minimumPushes(\"nnnnneeeeffffddddeeeeffffddddddddddddeeeeeeeeeeeeeeeeffffffddddddddddddddeeeeeeeeeeeeeeeeffffffdddddddddddddeeeeeeeeeeeeee\"), 122);\n    assert Arrays.equals(solution.minimumPushes(\"equalprobabilityabcdefghijklmnopqrstuvwxyz\"), 76);\n    assert Arrays.equals(solution.minimumPushes(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzzzzzzzzzzzzzzzzzzzzzzzzzz\"), 136);\n    assert Arrays.equals(solution.minimumPushes(\"ppppoooolllliiiihhhhggggffffeeeeeeeedddddccccbbbaaa\"), 65);\n    assert Arrays.equals(solution.minimumPushes(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzzzz\"), 114);\n    assert Arrays.equals(solution.minimumPushes(\"qwertyuiopasdfghjklzxcvbnmqwertyuiopasdfghjklzxcvbnm\"), 112);\n    assert Arrays.equals(solution.minimumPushes(\"mnbvcxzvbnmzxcvbnmxcvbnmxcvbnmxcvbnmxcvbnmxcvbnmxcvbnmxcvbnmxcvbnmxcvbnmxcvbnmxcvbnmxcvbnmxcvbnmxcvbnm\"), 102);\n    assert Arrays.equals(solution.minimumPushes(\"aaaabbbbccccddddeeeeffffgggghhhhiiiiijjjjkkkkllllmmmmnnnnooooppppqqqqrrrrssssttttuuuuvvvvwwwwxxxxyyyyzzzz\"), 225);\n    assert Arrays.equals(solution.minimumPushes(\"repeatedrepeatedrepeatedrepeatedrepeatedrepeated\"), 48);\n    assert Arrays.equals(solution.minimumPushes(\"aabbcdeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\"), 104);\n    assert Arrays.equals(solution.minimumPushes(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\"), 112);\n    assert Arrays.equals(solution.minimumPushes(\"frequencydistributionfrequencydistribution\"), 54);\n    assert Arrays.equals(solution.minimumPushes(\"programmingproblemsolvingprogramming\"), 42);\n    assert Arrays.equals(solution.minimumPushes(\"qwertyuiopqwertyuiopqwertyuiopqwertyuiopqwertyuiopqwertyuiopqwertyuiopqwertyuiopqwertyuiopqwertyuiopqwertyuiop\"), 132);\n    assert Arrays.equals(solution.minimumPushes(\"abcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcd\"), 56);\n    assert Arrays.equals(solution.minimumPushes(\"mississippiissippiissippi\"), 25);\n    assert Arrays.equals(solution.minimumPushes(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\"), 170);\n    assert Arrays.equals(solution.minimumPushes(\"abcdefghijklnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz\"), 108);\n    assert Arrays.equals(solution.minimumPushes(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzzzzzzzzzz\"), 120);\n    assert Arrays.equals(solution.minimumPushes(\"frequentfrequentfrequentfrequentfrequentfrequentfrequentfrequentfrequentfrequent\"), 80);\n}",
+    "javascript": "function check(candidate) {\n    console.assert(JSON.stringify(candidate(\"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\")) === JSON.stringify(52));\n    console.assert(JSON.stringify(candidate(\"abcde\")) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate(\"zyxwvutsrqponmlkjihgfedcba\")) === JSON.stringify(56));\n    console.assert(JSON.stringify(candidate(\"mississippi\")) === JSON.stringify(11));\n    console.assert(JSON.stringify(candidate(\"qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq\")) === JSON.stringify(52));\n    console.assert(JSON.stringify(candidate(\"aaaabbbbccccddddeeeeffffgggghhhhiiiiiiiiiijjjjjjjjjjkkkkkkkkkkkllllllllllllmmmmmmmmmmmmmmmnnnnnnnnnnnnnnnnoooooooppppppppppppppppqqqqqqqqqqqqqqqqrrrrrrrrrrrrrrrrrsssssssssssssssstttttttttttttttttuuuuuuuuuuuuuuuuuvvvvvvvvvvvvvvvvvwwwwwwwwwwwwwwwwwxxxxxxxxxyyyyyyyyyyyyyyyyyzzzzzzzzzzzzzzzzz\")) === JSON.stringify(499));\n    console.assert(JSON.stringify(candidate(\"hellohellohellohellohellohellohellohellohellohello\")) === JSON.stringify(50));\n    console.assert(JSON.stringify(candidate(\"abacabadabacabadabacabadabacabadabacabadabacabadabacabadabacabadabacabadabacabadabacabad\")) === JSON.stringify(88));\n    console.assert(JSON.stringify(candidate(\"xyzxyzxyzxyz\")) === JSON.stringify(12));\n    console.assert(JSON.stringify(candidate(\"abcdefghijklmnopqrstuvwxyz\")) === JSON.stringify(56));\n    console.assert(JSON.stringify(candidate(\"a\")) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate(\"aaabbbcccdddeeefffggghhhiiiijjjjkkkkllllmmmmnnnnooooppppqqqqrrrrssssttttuuuuvvvvwwwwxxxxyyyyzzzz\")) === JSON.stringify(198));\n    console.assert(JSON.stringify(candidate(\"ababababababababababababababababababababab\")) === JSON.stringify(42));\n    console.assert(JSON.stringify(candidate(\"aabbccddeeffgghhiiiiii\")) === JSON.stringify(24));\n    console.assert(JSON.stringify(candidate(\"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\")) === JSON.stringify(98));\n    console.assert(JSON.stringify(candidate(\"abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz\")) === JSON.stringify(168));\n    console.assert(JSON.stringify(candidate(\"abacabadabacabadabacabadabacabadabacabadabacabadabacabadabacabadabacabadabacabadabacabadabacabadabacabad\")) === JSON.stringify(104));\n    console.assert(JSON.stringify(candidate(\"ppppppppppppppppppppppppppppppppppppppppppppppppppppqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq\")) === JSON.stringify(104));\n    console.assert(JSON.stringify(candidate(\"mississippimississippimississippimississippi\")) === JSON.stringify(44));\n    console.assert(JSON.stringify(candidate(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\")) === JSON.stringify(162));\n    console.assert(JSON.stringify(candidate(\"loremipsumdolorsitametconsecteturadipiscingelitloremipsumdolorsitametconsecteturadipiscingelitloremipsumdolorsitametconsecteturadipiscingelit\")) === JSON.stringify(183));\n    console.assert(JSON.stringify(candidate(\"abcdefghijklmnopqrstuvwxyzzzzzzzzzzzzzzzzzzzzzzzz\")) === JSON.stringify(79));\n    console.assert(JSON.stringify(candidate(\"abcdefghijklmnopqrstuvwxyzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\")) === JSON.stringify(143));\n    console.assert(JSON.stringify(candidate(\"onelongwordwithoutrepetitionsonelongwordwithoutrepetitions\")) === JSON.stringify(70));\n    console.assert(JSON.stringify(candidate(\"thequickbrownfoxjumpsoverthelazydogthequickbrownfoxjumpsoverthelazydog\")) === JSON.stringify(130));\n    console.assert(JSON.stringify(candidate(\"uniquelettersabcdefghijklmnopqrstuvwxyzuniqueletters\")) === JSON.stringify(84));\n    console.assert(JSON.stringify(candidate(\"aaaaaaaaaabbbbbbbbccccccccddddddddeeeeeeeffffffffggggggghhhhhhhh\")) === JSON.stringify(64));\n    console.assert(JSON.stringify(candidate(\"nnnnneeeeffffddddeeeeffffddddddddddddeeeeeeeeeeeeeeeeffffffddddddddddddddeeeeeeeeeeeeeeeeffffffdddddddddddddeeeeeeeeeeeeee\")) === JSON.stringify(122));\n    console.assert(JSON.stringify(candidate(\"equalprobabilityabcdefghijklmnopqrstuvwxyz\")) === JSON.stringify(76));\n    console.assert(JSON.stringify(candidate(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzzzzzzzzzzzzzzzzzzzzzzzzzz\")) === JSON.stringify(136));\n    console.assert(JSON.stringify(candidate(\"ppppoooolllliiiihhhhggggffffeeeeeeeedddddccccbbbaaa\")) === JSON.stringify(65));\n    console.assert(JSON.stringify(candidate(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzzzz\")) === JSON.stringify(114));\n    console.assert(JSON.stringify(candidate(\"qwertyuiopasdfghjklzxcvbnmqwertyuiopasdfghjklzxcvbnm\")) === JSON.stringify(112));\n    console.assert(JSON.stringify(candidate(\"mnbvcxzvbnmzxcvbnmxcvbnmxcvbnmxcvbnmxcvbnmxcvbnmxcvbnmxcvbnmxcvbnmxcvbnmxcvbnmxcvbnmxcvbnmxcvbnmxcvbnm\")) === JSON.stringify(102));\n    console.assert(JSON.stringify(candidate(\"aaaabbbbccccddddeeeeffffgggghhhhiiiiijjjjkkkkllllmmmmnnnnooooppppqqqqrrrrssssttttuuuuvvvvwwwwxxxxyyyyzzzz\")) === JSON.stringify(225));\n    console.assert(JSON.stringify(candidate(\"repeatedrepeatedrepeatedrepeatedrepeatedrepeated\")) === JSON.stringify(48));\n    console.assert(JSON.stringify(candidate(\"aabbcdeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\")) === JSON.stringify(104));\n    console.assert(JSON.stringify(candidate(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\")) === JSON.stringify(112));\n    console.assert(JSON.stringify(candidate(\"frequencydistributionfrequencydistribution\")) === JSON.stringify(54));\n    console.assert(JSON.stringify(candidate(\"programmingproblemsolvingprogramming\")) === JSON.stringify(42));\n    console.assert(JSON.stringify(candidate(\"qwertyuiopqwertyuiopqwertyuiopqwertyuiopqwertyuiopqwertyuiopqwertyuiopqwertyuiopqwertyuiopqwertyuiopqwertyuiop\")) === JSON.stringify(132));\n    console.assert(JSON.stringify(candidate(\"abcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcd\")) === JSON.stringify(56));\n    console.assert(JSON.stringify(candidate(\"mississippiissippiissippi\")) === JSON.stringify(25));\n    console.assert(JSON.stringify(candidate(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\")) === JSON.stringify(170));\n    console.assert(JSON.stringify(candidate(\"abcdefghijklnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz\")) === JSON.stringify(108));\n    console.assert(JSON.stringify(candidate(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzzzzzzzzzz\")) === JSON.stringify(120));\n    console.assert(JSON.stringify(candidate(\"frequentfrequentfrequentfrequentfrequentfrequentfrequentfrequentfrequentfrequent\")) === JSON.stringify(80));\n}",
+    "typescript": "function check(candidate: Function): void {\n    console.assert(JSON.stringify(candidate(\"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\")) === JSON.stringify(52));\n    console.assert(JSON.stringify(candidate(\"abcde\")) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate(\"zyxwvutsrqponmlkjihgfedcba\")) === JSON.stringify(56));\n    console.assert(JSON.stringify(candidate(\"mississippi\")) === JSON.stringify(11));\n    console.assert(JSON.stringify(candidate(\"qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq\")) === JSON.stringify(52));\n    console.assert(JSON.stringify(candidate(\"aaaabbbbccccddddeeeeffffgggghhhhiiiiiiiiiijjjjjjjjjjkkkkkkkkkkkllllllllllllmmmmmmmmmmmmmmmnnnnnnnnnnnnnnnnoooooooppppppppppppppppqqqqqqqqqqqqqqqqrrrrrrrrrrrrrrrrrsssssssssssssssstttttttttttttttttuuuuuuuuuuuuuuuuuvvvvvvvvvvvvvvvvvwwwwwwwwwwwwwwwwwxxxxxxxxxyyyyyyyyyyyyyyyyyzzzzzzzzzzzzzzzzz\")) === JSON.stringify(499));\n    console.assert(JSON.stringify(candidate(\"hellohellohellohellohellohellohellohellohellohello\")) === JSON.stringify(50));\n    console.assert(JSON.stringify(candidate(\"abacabadabacabadabacabadabacabadabacabadabacabadabacabadabacabadabacabadabacabadabacabad\")) === JSON.stringify(88));\n    console.assert(JSON.stringify(candidate(\"xyzxyzxyzxyz\")) === JSON.stringify(12));\n    console.assert(JSON.stringify(candidate(\"abcdefghijklmnopqrstuvwxyz\")) === JSON.stringify(56));\n    console.assert(JSON.stringify(candidate(\"a\")) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate(\"aaabbbcccdddeeefffggghhhiiiijjjjkkkkllllmmmmnnnnooooppppqqqqrrrrssssttttuuuuvvvvwwwwxxxxyyyyzzzz\")) === JSON.stringify(198));\n    console.assert(JSON.stringify(candidate(\"ababababababababababababababababababababab\")) === JSON.stringify(42));\n    console.assert(JSON.stringify(candidate(\"aabbccddeeffgghhiiiiii\")) === JSON.stringify(24));\n    console.assert(JSON.stringify(candidate(\"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\")) === JSON.stringify(98));\n    console.assert(JSON.stringify(candidate(\"abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz\")) === JSON.stringify(168));\n    console.assert(JSON.stringify(candidate(\"abacabadabacabadabacabadabacabadabacabadabacabadabacabadabacabadabacabadabacabadabacabadabacabadabacabad\")) === JSON.stringify(104));\n    console.assert(JSON.stringify(candidate(\"ppppppppppppppppppppppppppppppppppppppppppppppppppppqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq\")) === JSON.stringify(104));\n    console.assert(JSON.stringify(candidate(\"mississippimississippimississippimississippi\")) === JSON.stringify(44));\n    console.assert(JSON.stringify(candidate(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\")) === JSON.stringify(162));\n    console.assert(JSON.stringify(candidate(\"loremipsumdolorsitametconsecteturadipiscingelitloremipsumdolorsitametconsecteturadipiscingelitloremipsumdolorsitametconsecteturadipiscingelit\")) === JSON.stringify(183));\n    console.assert(JSON.stringify(candidate(\"abcdefghijklmnopqrstuvwxyzzzzzzzzzzzzzzzzzzzzzzzz\")) === JSON.stringify(79));\n    console.assert(JSON.stringify(candidate(\"abcdefghijklmnopqrstuvwxyzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\")) === JSON.stringify(143));\n    console.assert(JSON.stringify(candidate(\"onelongwordwithoutrepetitionsonelongwordwithoutrepetitions\")) === JSON.stringify(70));\n    console.assert(JSON.stringify(candidate(\"thequickbrownfoxjumpsoverthelazydogthequickbrownfoxjumpsoverthelazydog\")) === JSON.stringify(130));\n    console.assert(JSON.stringify(candidate(\"uniquelettersabcdefghijklmnopqrstuvwxyzuniqueletters\")) === JSON.stringify(84));\n    console.assert(JSON.stringify(candidate(\"aaaaaaaaaabbbbbbbbccccccccddddddddeeeeeeeffffffffggggggghhhhhhhh\")) === JSON.stringify(64));\n    console.assert(JSON.stringify(candidate(\"nnnnneeeeffffddddeeeeffffddddddddddddeeeeeeeeeeeeeeeeffffffddddddddddddddeeeeeeeeeeeeeeeeffffffdddddddddddddeeeeeeeeeeeeee\")) === JSON.stringify(122));\n    console.assert(JSON.stringify(candidate(\"equalprobabilityabcdefghijklmnopqrstuvwxyz\")) === JSON.stringify(76));\n    console.assert(JSON.stringify(candidate(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzzzzzzzzzzzzzzzzzzzzzzzzzz\")) === JSON.stringify(136));\n    console.assert(JSON.stringify(candidate(\"ppppoooolllliiiihhhhggggffffeeeeeeeedddddccccbbbaaa\")) === JSON.stringify(65));\n    console.assert(JSON.stringify(candidate(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzzzz\")) === JSON.stringify(114));\n    console.assert(JSON.stringify(candidate(\"qwertyuiopasdfghjklzxcvbnmqwertyuiopasdfghjklzxcvbnm\")) === JSON.stringify(112));\n    console.assert(JSON.stringify(candidate(\"mnbvcxzvbnmzxcvbnmxcvbnmxcvbnmxcvbnmxcvbnmxcvbnmxcvbnmxcvbnmxcvbnmxcvbnmxcvbnmxcvbnmxcvbnmxcvbnmxcvbnm\")) === JSON.stringify(102));\n    console.assert(JSON.stringify(candidate(\"aaaabbbbccccddddeeeeffffgggghhhhiiiiijjjjkkkkllllmmmmnnnnooooppppqqqqrrrrssssttttuuuuvvvvwwwwxxxxyyyyzzzz\")) === JSON.stringify(225));\n    console.assert(JSON.stringify(candidate(\"repeatedrepeatedrepeatedrepeatedrepeatedrepeated\")) === JSON.stringify(48));\n    console.assert(JSON.stringify(candidate(\"aabbcdeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\")) === JSON.stringify(104));\n    console.assert(JSON.stringify(candidate(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\")) === JSON.stringify(112));\n    console.assert(JSON.stringify(candidate(\"frequencydistributionfrequencydistribution\")) === JSON.stringify(54));\n    console.assert(JSON.stringify(candidate(\"programmingproblemsolvingprogramming\")) === JSON.stringify(42));\n    console.assert(JSON.stringify(candidate(\"qwertyuiopqwertyuiopqwertyuiopqwertyuiopqwertyuiopqwertyuiopqwertyuiopqwertyuiopqwertyuiopqwertyuiopqwertyuiop\")) === JSON.stringify(132));\n    console.assert(JSON.stringify(candidate(\"abcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcd\")) === JSON.stringify(56));\n    console.assert(JSON.stringify(candidate(\"mississippiissippiissippi\")) === JSON.stringify(25));\n    console.assert(JSON.stringify(candidate(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\")) === JSON.stringify(170));\n    console.assert(JSON.stringify(candidate(\"abcdefghijklnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz\")) === JSON.stringify(108));\n    console.assert(JSON.stringify(candidate(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzzzzzzzzzz\")) === JSON.stringify(120));\n    console.assert(JSON.stringify(candidate(\"frequentfrequentfrequentfrequentfrequentfrequentfrequentfrequentfrequentfrequent\")) === JSON.stringify(80));\n}",
+    "golang": "func check(candidate func([]int, int) []int) {\n    assert reflect.DeepEqual(candidate(\"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\"), 52)\n    assert reflect.DeepEqual(candidate(\"abcde\"), 5)\n    assert reflect.DeepEqual(candidate(\"zyxwvutsrqponmlkjihgfedcba\"), 56)\n    assert reflect.DeepEqual(candidate(\"mississippi\"), 11)\n    assert reflect.DeepEqual(candidate(\"qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq\"), 52)\n    assert reflect.DeepEqual(candidate(\"aaaabbbbccccddddeeeeffffgggghhhhiiiiiiiiiijjjjjjjjjjkkkkkkkkkkkllllllllllllmmmmmmmmmmmmmmmnnnnnnnnnnnnnnnnoooooooppppppppppppppppqqqqqqqqqqqqqqqqrrrrrrrrrrrrrrrrrsssssssssssssssstttttttttttttttttuuuuuuuuuuuuuuuuuvvvvvvvvvvvvvvvvvwwwwwwwwwwwwwwwwwxxxxxxxxxyyyyyyyyyyyyyyyyyzzzzzzzzzzzzzzzzz\"), 499)\n    assert reflect.DeepEqual(candidate(\"hellohellohellohellohellohellohellohellohellohello\"), 50)\n    assert reflect.DeepEqual(candidate(\"abacabadabacabadabacabadabacabadabacabadabacabadabacabadabacabadabacabadabacabadabacabad\"), 88)\n    assert reflect.DeepEqual(candidate(\"xyzxyzxyzxyz\"), 12)\n    assert reflect.DeepEqual(candidate(\"abcdefghijklmnopqrstuvwxyz\"), 56)\n    assert reflect.DeepEqual(candidate(\"a\"), 1)\n    assert reflect.DeepEqual(candidate(\"aaabbbcccdddeeefffggghhhiiiijjjjkkkkllllmmmmnnnnooooppppqqqqrrrrssssttttuuuuvvvvwwwwxxxxyyyyzzzz\"), 198)\n    assert reflect.DeepEqual(candidate(\"ababababababababababababababababababababab\"), 42)\n    assert reflect.DeepEqual(candidate(\"aabbccddeeffgghhiiiiii\"), 24)\n    assert reflect.DeepEqual(candidate(\"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\"), 98)\n    assert reflect.DeepEqual(candidate(\"abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz\"), 168)\n    assert reflect.DeepEqual(candidate(\"abacabadabacabadabacabadabacabadabacabadabacabadabacabadabacabadabacabadabacabadabacabadabacabadabacabad\"), 104)\n    assert reflect.DeepEqual(candidate(\"ppppppppppppppppppppppppppppppppppppppppppppppppppppqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq\"), 104)\n    assert reflect.DeepEqual(candidate(\"mississippimississippimississippimississippi\"), 44)\n    assert reflect.DeepEqual(candidate(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\"), 162)\n    assert reflect.DeepEqual(candidate(\"loremipsumdolorsitametconsecteturadipiscingelitloremipsumdolorsitametconsecteturadipiscingelitloremipsumdolorsitametconsecteturadipiscingelit\"), 183)\n    assert reflect.DeepEqual(candidate(\"abcdefghijklmnopqrstuvwxyzzzzzzzzzzzzzzzzzzzzzzzz\"), 79)\n    assert reflect.DeepEqual(candidate(\"abcdefghijklmnopqrstuvwxyzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\"), 143)\n    assert reflect.DeepEqual(candidate(\"onelongwordwithoutrepetitionsonelongwordwithoutrepetitions\"), 70)\n    assert reflect.DeepEqual(candidate(\"thequickbrownfoxjumpsoverthelazydogthequickbrownfoxjumpsoverthelazydog\"), 130)\n    assert reflect.DeepEqual(candidate(\"uniquelettersabcdefghijklmnopqrstuvwxyzuniqueletters\"), 84)\n    assert reflect.DeepEqual(candidate(\"aaaaaaaaaabbbbbbbbccccccccddddddddeeeeeeeffffffffggggggghhhhhhhh\"), 64)\n    assert reflect.DeepEqual(candidate(\"nnnnneeeeffffddddeeeeffffddddddddddddeeeeeeeeeeeeeeeeffffffddddddddddddddeeeeeeeeeeeeeeeeffffffdddddddddddddeeeeeeeeeeeeee\"), 122)\n    assert reflect.DeepEqual(candidate(\"equalprobabilityabcdefghijklmnopqrstuvwxyz\"), 76)\n    assert reflect.DeepEqual(candidate(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzzzzzzzzzzzzzzzzzzzzzzzzzz\"), 136)\n    assert reflect.DeepEqual(candidate(\"ppppoooolllliiiihhhhggggffffeeeeeeeedddddccccbbbaaa\"), 65)\n    assert reflect.DeepEqual(candidate(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzzzz\"), 114)\n    assert reflect.DeepEqual(candidate(\"qwertyuiopasdfghjklzxcvbnmqwertyuiopasdfghjklzxcvbnm\"), 112)\n    assert reflect.DeepEqual(candidate(\"mnbvcxzvbnmzxcvbnmxcvbnmxcvbnmxcvbnmxcvbnmxcvbnmxcvbnmxcvbnmxcvbnmxcvbnmxcvbnmxcvbnmxcvbnmxcvbnmxcvbnm\"), 102)\n    assert reflect.DeepEqual(candidate(\"aaaabbbbccccddddeeeeffffgggghhhhiiiiijjjjkkkkllllmmmmnnnnooooppppqqqqrrrrssssttttuuuuvvvvwwwwxxxxyyyyzzzz\"), 225)\n    assert reflect.DeepEqual(candidate(\"repeatedrepeatedrepeatedrepeatedrepeatedrepeated\"), 48)\n    assert reflect.DeepEqual(candidate(\"aabbcdeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\"), 104)\n    assert reflect.DeepEqual(candidate(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\"), 112)\n    assert reflect.DeepEqual(candidate(\"frequencydistributionfrequencydistribution\"), 54)\n    assert reflect.DeepEqual(candidate(\"programmingproblemsolvingprogramming\"), 42)\n    assert reflect.DeepEqual(candidate(\"qwertyuiopqwertyuiopqwertyuiopqwertyuiopqwertyuiopqwertyuiopqwertyuiopqwertyuiopqwertyuiopqwertyuiopqwertyuiop\"), 132)\n    assert reflect.DeepEqual(candidate(\"abcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcd\"), 56)\n    assert reflect.DeepEqual(candidate(\"mississippiissippiissippi\"), 25)\n    assert reflect.DeepEqual(candidate(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\"), 170)\n    assert reflect.DeepEqual(candidate(\"abcdefghijklnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz\"), 108)\n    assert reflect.DeepEqual(candidate(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzzzzzzzzzz\"), 120)\n    assert reflect.DeepEqual(candidate(\"frequentfrequentfrequentfrequentfrequentfrequentfrequentfrequentfrequentfrequent\"), 80)\n}",
+    "rust": "fn check(candidate: fn(Vec<i32>, i32) -> Vec<i32>) {\n    assert_eq!(candidate(\"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\"), 52);\n    assert_eq!(candidate(\"abcde\"), 5);\n    assert_eq!(candidate(\"zyxwvutsrqponmlkjihgfedcba\"), 56);\n    assert_eq!(candidate(\"mississippi\"), 11);\n    assert_eq!(candidate(\"qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq\"), 52);\n    assert_eq!(candidate(\"aaaabbbbccccddddeeeeffffgggghhhhiiiiiiiiiijjjjjjjjjjkkkkkkkkkkkllllllllllllmmmmmmmmmmmmmmmnnnnnnnnnnnnnnnnoooooooppppppppppppppppqqqqqqqqqqqqqqqqrrrrrrrrrrrrrrrrrsssssssssssssssstttttttttttttttttuuuuuuuuuuuuuuuuuvvvvvvvvvvvvvvvvvwwwwwwwwwwwwwwwwwxxxxxxxxxyyyyyyyyyyyyyyyyyzzzzzzzzzzzzzzzzz\"), 499);\n    assert_eq!(candidate(\"hellohellohellohellohellohellohellohellohellohello\"), 50);\n    assert_eq!(candidate(\"abacabadabacabadabacabadabacabadabacabadabacabadabacabadabacabadabacabadabacabadabacabad\"), 88);\n    assert_eq!(candidate(\"xyzxyzxyzxyz\"), 12);\n    assert_eq!(candidate(\"abcdefghijklmnopqrstuvwxyz\"), 56);\n    assert_eq!(candidate(\"a\"), 1);\n    assert_eq!(candidate(\"aaabbbcccdddeeefffggghhhiiiijjjjkkkkllllmmmmnnnnooooppppqqqqrrrrssssttttuuuuvvvvwwwwxxxxyyyyzzzz\"), 198);\n    assert_eq!(candidate(\"ababababababababababababababababababababab\"), 42);\n    assert_eq!(candidate(\"aabbccddeeffgghhiiiiii\"), 24);\n    assert_eq!(candidate(\"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\"), 98);\n    assert_eq!(candidate(\"abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz\"), 168);\n    assert_eq!(candidate(\"abacabadabacabadabacabadabacabadabacabadabacabadabacabadabacabadabacabadabacabadabacabadabacabadabacabad\"), 104);\n    assert_eq!(candidate(\"ppppppppppppppppppppppppppppppppppppppppppppppppppppqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq\"), 104);\n    assert_eq!(candidate(\"mississippimississippimississippimississippi\"), 44);\n    assert_eq!(candidate(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\"), 162);\n    assert_eq!(candidate(\"loremipsumdolorsitametconsecteturadipiscingelitloremipsumdolorsitametconsecteturadipiscingelitloremipsumdolorsitametconsecteturadipiscingelit\"), 183);\n    assert_eq!(candidate(\"abcdefghijklmnopqrstuvwxyzzzzzzzzzzzzzzzzzzzzzzzz\"), 79);\n    assert_eq!(candidate(\"abcdefghijklmnopqrstuvwxyzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\"), 143);\n    assert_eq!(candidate(\"onelongwordwithoutrepetitionsonelongwordwithoutrepetitions\"), 70);\n    assert_eq!(candidate(\"thequickbrownfoxjumpsoverthelazydogthequickbrownfoxjumpsoverthelazydog\"), 130);\n    assert_eq!(candidate(\"uniquelettersabcdefghijklmnopqrstuvwxyzuniqueletters\"), 84);\n    assert_eq!(candidate(\"aaaaaaaaaabbbbbbbbccccccccddddddddeeeeeeeffffffffggggggghhhhhhhh\"), 64);\n    assert_eq!(candidate(\"nnnnneeeeffffddddeeeeffffddddddddddddeeeeeeeeeeeeeeeeffffffddddddddddddddeeeeeeeeeeeeeeeeffffffdddddddddddddeeeeeeeeeeeeee\"), 122);\n    assert_eq!(candidate(\"equalprobabilityabcdefghijklmnopqrstuvwxyz\"), 76);\n    assert_eq!(candidate(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzzzzzzzzzzzzzzzzzzzzzzzzzz\"), 136);\n    assert_eq!(candidate(\"ppppoooolllliiiihhhhggggffffeeeeeeeedddddccccbbbaaa\"), 65);\n    assert_eq!(candidate(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzzzz\"), 114);\n    assert_eq!(candidate(\"qwertyuiopasdfghjklzxcvbnmqwertyuiopasdfghjklzxcvbnm\"), 112);\n    assert_eq!(candidate(\"mnbvcxzvbnmzxcvbnmxcvbnmxcvbnmxcvbnmxcvbnmxcvbnmxcvbnmxcvbnmxcvbnmxcvbnmxcvbnmxcvbnmxcvbnmxcvbnmxcvbnm\"), 102);\n    assert_eq!(candidate(\"aaaabbbbccccddddeeeeffffgggghhhhiiiiijjjjkkkkllllmmmmnnnnooooppppqqqqrrrrssssttttuuuuvvvvwwwwxxxxyyyyzzzz\"), 225);\n    assert_eq!(candidate(\"repeatedrepeatedrepeatedrepeatedrepeatedrepeated\"), 48);\n    assert_eq!(candidate(\"aabbcdeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\"), 104);\n    assert_eq!(candidate(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\"), 112);\n    assert_eq!(candidate(\"frequencydistributionfrequencydistribution\"), 54);\n    assert_eq!(candidate(\"programmingproblemsolvingprogramming\"), 42);\n    assert_eq!(candidate(\"qwertyuiopqwertyuiopqwertyuiopqwertyuiopqwertyuiopqwertyuiopqwertyuiopqwertyuiopqwertyuiopqwertyuiopqwertyuiop\"), 132);\n    assert_eq!(candidate(\"abcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcd\"), 56);\n    assert_eq!(candidate(\"mississippiissippiissippi\"), 25);\n    assert_eq!(candidate(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\"), 170);\n    assert_eq!(candidate(\"abcdefghijklnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz\"), 108);\n    assert_eq!(candidate(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzzzzzzzzzz\"), 120);\n    assert_eq!(candidate(\"frequentfrequentfrequentfrequentfrequentfrequentfrequentfrequentfrequentfrequent\"), 80);\n}"
+  },
+  "test_cases": [
+    {
+      "input": "word = \"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\"",
+      "output": "52"
+    },
+    {
+      "input": "word = \"abcde\"",
+      "output": "5"
+    },
+    {
+      "input": "word = \"zyxwvutsrqponmlkjihgfedcba\"",
+      "output": "56"
+    },
+    {
+      "input": "word = \"mississippi\"",
+      "output": "11"
+    },
+    {
+      "input": "word = \"qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq\"",
+      "output": "52"
+    },
+    {
+      "input": "word = \"aaaabbbbccccddddeeeeffffgggghhhhiiiiiiiiiijjjjjjjjjjkkkkkkkkkkkllllllllllllmmmmmmmmmmmmmmmnnnnnnnnnnnnnnnnoooooooppppppppppppppppqqqqqqqqqqqqqqqqrrrrrrrrrrrrrrrrrsssssssssssssssstttttttttttttttttuuuuuuuuuuuuuuuuuvvvvvvvvvvvvvvvvvwwwwwwwwwwwwwwwwwxxxxxxxxxyyyyyyyyyyyyyyyyyzzzzzzzzzzzzzzzzz\"",
+      "output": "499"
+    },
+    {
+      "input": "word = \"hellohellohellohellohellohellohellohellohellohello\"",
+      "output": "50"
+    },
+    {
+      "input": "word = \"abacabadabacabadabacabadabacabadabacabadabacabadabacabadabacabadabacabadabacabadabacabad\"",
+      "output": "88"
+    },
+    {
+      "input": "word = \"xyzxyzxyzxyz\"",
+      "output": "12"
+    },
+    {
+      "input": "word = \"abcdefghijklmnopqrstuvwxyz\"",
+      "output": "56"
+    },
+    {
+      "input": "word = \"a\"",
+      "output": "1"
+    },
+    {
+      "input": "word = \"aaabbbcccdddeeefffggghhhiiiijjjjkkkkllllmmmmnnnnooooppppqqqqrrrrssssttttuuuuvvvvwwwwxxxxyyyyzzzz\"",
+      "output": "198"
+    },
+    {
+      "input": "word = \"ababababababababababababababababababababab\"",
+      "output": "42"
+    },
+    {
+      "input": "word = \"aabbccddeeffgghhiiiiii\"",
+      "output": "24"
+    },
+    {
+      "input": "word = \"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\"",
+      "output": "98"
+    },
+    {
+      "input": "word = \"abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz\"",
+      "output": "168"
+    },
+    {
+      "input": "word = \"abacabadabacabadabacabadabacabadabacabadabacabadabacabadabacabadabacabadabacabadabacabadabacabadabacabad\"",
+      "output": "104"
+    },
+    {
+      "input": "word = \"ppppppppppppppppppppppppppppppppppppppppppppppppppppqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq\"",
+      "output": "104"
+    },
+    {
+      "input": "word = \"mississippimississippimississippimississippi\"",
+      "output": "44"
+    },
+    {
+      "input": "word = \"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\"",
+      "output": "162"
+    },
+    {
+      "input": "word = \"loremipsumdolorsitametconsecteturadipiscingelitloremipsumdolorsitametconsecteturadipiscingelitloremipsumdolorsitametconsecteturadipiscingelit\"",
+      "output": "183"
+    },
+    {
+      "input": "word = \"abcdefghijklmnopqrstuvwxyzzzzzzzzzzzzzzzzzzzzzzzz\"",
+      "output": "79"
+    },
+    {
+      "input": "word = \"abcdefghijklmnopqrstuvwxyzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\"",
+      "output": "143"
+    },
+    {
+      "input": "word = \"onelongwordwithoutrepetitionsonelongwordwithoutrepetitions\"",
+      "output": "70"
+    },
+    {
+      "input": "word = \"thequickbrownfoxjumpsoverthelazydogthequickbrownfoxjumpsoverthelazydog\"",
+      "output": "130"
+    },
+    {
+      "input": "word = \"uniquelettersabcdefghijklmnopqrstuvwxyzuniqueletters\"",
+      "output": "84"
+    },
+    {
+      "input": "word = \"aaaaaaaaaabbbbbbbbccccccccddddddddeeeeeeeffffffffggggggghhhhhhhh\"",
+      "output": "64"
+    },
+    {
+      "input": "word = \"nnnnneeeeffffddddeeeeffffddddddddddddeeeeeeeeeeeeeeeeffffffddddddddddddddeeeeeeeeeeeeeeeeffffffdddddddddddddeeeeeeeeeeeeee\"",
+      "output": "122"
+    },
+    {
+      "input": "word = \"equalprobabilityabcdefghijklmnopqrstuvwxyz\"",
+      "output": "76"
+    },
+    {
+      "input": "word = \"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzzzzzzzzzzzzzzzzzzzzzzzzzz\"",
+      "output": "136"
+    },
+    {
+      "input": "word = \"ppppoooolllliiiihhhhggggffffeeeeeeeedddddccccbbbaaa\"",
+      "output": "65"
+    },
+    {
+      "input": "word = \"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzzzz\"",
+      "output": "114"
+    },
+    {
+      "input": "word = \"qwertyuiopasdfghjklzxcvbnmqwertyuiopasdfghjklzxcvbnm\"",
+      "output": "112"
+    },
+    {
+      "input": "word = \"mnbvcxzvbnmzxcvbnmxcvbnmxcvbnmxcvbnmxcvbnmxcvbnmxcvbnmxcvbnmxcvbnmxcvbnmxcvbnmxcvbnmxcvbnmxcvbnmxcvbnm\"",
+      "output": "102"
+    },
+    {
+      "input": "word = \"aaaabbbbccccddddeeeeffffgggghhhhiiiiijjjjkkkkllllmmmmnnnnooooppppqqqqrrrrssssttttuuuuvvvvwwwwxxxxyyyyzzzz\"",
+      "output": "225"
+    },
+    {
+      "input": "word = \"repeatedrepeatedrepeatedrepeatedrepeatedrepeated\"",
+      "output": "48"
+    },
+    {
+      "input": "word = \"aabbcdeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\"",
+      "output": "104"
+    },
+    {
+      "input": "word = \"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\"",
+      "output": "112"
+    },
+    {
+      "input": "word = \"frequencydistributionfrequencydistribution\"",
+      "output": "54"
+    },
+    {
+      "input": "word = \"programmingproblemsolvingprogramming\"",
+      "output": "42"
+    },
+    {
+      "input": "word = \"qwertyuiopqwertyuiopqwertyuiopqwertyuiopqwertyuiopqwertyuiopqwertyuiopqwertyuiopqwertyuiopqwertyuiopqwertyuiop\"",
+      "output": "132"
+    },
+    {
+      "input": "word = \"abcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcd\"",
+      "output": "56"
+    },
+    {
+      "input": "word = \"mississippiissippiissippi\"",
+      "output": "25"
+    },
+    {
+      "input": "word = \"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\"",
+      "output": "170"
+    },
+    {
+      "input": "word = \"abcdefghijklnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz\"",
+      "output": "108"
+    },
+    {
+      "input": "word = \"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzzzzzzzzzz\"",
+      "output": "120"
+    },
+    {
+      "input": "word = \"frequentfrequentfrequentfrequentfrequentfrequentfrequentfrequentfrequentfrequent\"",
+      "output": "80"
+    }
+  ],
+  "types": {
+    "python3": {
+      "input": [
+        {
+          "word": "str"
+        }
+      ],
+      "output": "int"
+    },
+    "cpp": {
+      "input": [
+        {
+          "word": "string"
+        }
+      ],
+      "output": "int"
+    },
+    "java": {
+      "input": [
+        {
+          "word": "String"
+        }
+      ],
+      "output": "int"
+    },
+    "javascript": {
+      "input": [
+        {
+          "word": "string"
+        }
+      ],
+      "output": "number"
+    },
+    "typescript": {
+      "input": [
+        {
+          "word": "string"
+        }
+      ],
+      "output": "number"
+    },
+    "golang": {
+      "input": [
+        {
+          "word": "string"
+        }
+      ],
+      "output": "int"
+    },
+    "rust": {
+      "input": [
+        {
+          "word": "String"
+        }
+      ],
+      "output": "i32"
+    }
+  },
+  "tags": [
+    "hash-table",
+    "string",
+    "greedy",
+    "sorting",
+    "counting"
+  ]
+}

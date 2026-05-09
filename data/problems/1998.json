@@ -1,0 +1,802 @@
+{
+  "id": 1998,
+  "title": "GCD Sort of an Array",
+  "slug": "gcd-sort-of-an-array",
+  "difficulty": "Hard",
+  "description": "You are given an integer array nums, and you can perform the following operation any number of times on nums:\nReturn true if it is possible to sort nums in non-decreasing order using the above swap method, or false otherwise.\nExample 1:\nExample 2:\nExample 3:\nConstraints:",
+  "examples": [
+    {
+      "example_num": 1,
+      "example_text": "Input: nums = [7,21,3]\nOutput: true\nExplanation: We can sort [7,21,3] by performing the following operations:\n- Swap 7 and 21 because gcd(7,21) = 7. nums = [21,7,3]\n- Swap 21 and 3 because gcd(21,3) = 3. nums = [3,7,21]",
+      "images": []
+    },
+    {
+      "example_num": 2,
+      "example_text": "Input: nums = [5,2,6,2]\nOutput: false\nExplanation: It is impossible to sort the array because 5 cannot be swapped with any other element.",
+      "images": []
+    },
+    {
+      "example_num": 3,
+      "example_text": "Input: nums = [10,5,9,3,15]\nOutput: true\nWe can sort [10,5,9,3,15] by performing the following operations:\n- Swap 10 and 15 because gcd(10,15) = 5. nums = [15,5,9,3,10]\n- Swap 15 and 3 because gcd(15,3) = 3. nums = [3,5,9,15,10]\n- Swap 10 and 15 because gcd(10,15) = 5. nums = [3,5,9,10,15]",
+      "images": []
+    }
+  ],
+  "constraints": [
+    "1 <= nums.length <= 3 * 104",
+    "2 <= nums[i] <= 105"
+  ],
+  "hints": [
+    "Can we build a graph with all the prime numbers and the original array?",
+    "We can use union-find to determine which indices are connected (i.e., which indices can be swapped)."
+  ],
+  "code_snippets": {
+    "cpp": "class Solution {\npublic:\n    bool gcdSort(vector<int>& nums) {\n        \n    }\n};",
+    "java": "class Solution {\n    public boolean gcdSort(int[] nums) {\n        \n    }\n}",
+    "python3": "class Solution:\n    def gcdSort(self, nums: List[int]) -> bool:\n        ",
+    "javascript": "/**\n * @param {number[]} nums\n * @return {boolean}\n */\nvar gcdSort = function(nums) {\n    \n};",
+    "typescript": "function gcdSort(nums: number[]): boolean {\n    \n};",
+    "golang": "func gcdSort(nums []int) bool {\n    \n}",
+    "rust": "impl Solution {\n    pub fn gcd_sort(nums: Vec<i32>) -> bool {\n        \n    }\n}"
+  },
+  "entry_points": {
+    "python3": "Solution().gcdSort",
+    "cpp": "Solution().gcdSort",
+    "java": "new Solution().gcdSort",
+    "javascript": "gcdSort",
+    "typescript": "gcdSort",
+    "golang": "gcdSort",
+    "rust": "Solution::gcd_sort"
+  },
+  "test_snippets": {
+    "python3": "def check(candidate):\n    assert candidate(nums = [12,15,18,20,25]) == True\n    assert candidate(nums = [7,21,3]) == True\n    assert candidate(nums = [8,4,12,6]) == True\n    assert candidate(nums = [2,3,5,7,11]) == True\n    assert candidate(nums = [2,4,6,8,10]) == True\n    assert candidate(nums = [1,2,3,4]) == True\n    assert candidate(nums = [18,9,27,3,6]) == True\n    assert candidate(nums = [3,9,6,18,27]) == True\n    assert candidate(nums = [1,2,3,4,5]) == True\n    assert candidate(nums = [37,49,111,143,169]) == True\n    assert candidate(nums = [100,200,400,800,1600]) == True\n    assert candidate(nums = [22,44,11,66,33]) == True\n    assert candidate(nums = [100,200,300,400,500]) == True\n    assert candidate(nums = [83,97,101,103,107]) == True\n    assert candidate(nums = [100000,99998,99999,99997,99996]) == False\n    assert candidate(nums = [10,5,9,3,15]) == True\n    assert candidate(nums = [105,70,30,210,42]) == True\n    assert candidate(nums = [30,42,70,105,35]) == True\n    assert candidate(nums = [5,2,6,2]) == False\n    assert candidate(nums = [56, 72, 88, 104, 120, 136, 152]) == True\n    assert candidate(nums = [121, 132, 143, 154, 165, 176, 187, 198, 209]) == True\n    assert candidate(nums = [48, 64, 80, 96, 112]) == True\n    assert candidate(nums = [17, 34, 51, 68, 85, 102, 119]) == True\n    assert candidate(nums = [210, 315, 420, 525, 630, 735]) == True\n    assert candidate(nums = [105, 45, 63, 21, 315]) == True\n    assert candidate(nums = [100, 50, 25, 125, 200, 150]) == True\n    assert candidate(nums = [91, 182, 273, 364, 455]) == True\n    assert candidate(nums = [121, 132, 143, 154, 165, 176]) == True\n    assert candidate(nums = [16, 32, 48, 64, 80, 96, 112, 128, 144]) == True\n    assert candidate(nums = [70, 35, 28, 56, 14, 18]) == True\n    assert candidate(nums = [14, 21, 28, 35, 42, 49, 56, 63, 70]) == True\n    assert candidate(nums = [32, 48, 64, 80, 96, 112]) == True\n    assert candidate(nums = [31, 62, 93, 124, 155, 186, 217, 248, 279, 310]) == True\n    assert candidate(nums = [30, 25, 20, 15, 10, 5]) == True\n    assert candidate(nums = [30, 45, 60, 75, 90, 105]) == True\n    assert candidate(nums = [44, 55, 66, 77, 88, 99, 110, 121]) == True\n    assert candidate(nums = [15, 20, 25, 30, 35]) == True\n    assert candidate(nums = [33, 66, 99, 132, 165]) == True\n    assert candidate(nums = [49, 14, 7, 98, 28]) == True\n    assert candidate(nums = [6, 8, 10, 12, 14, 16, 18, 20]) == True\n    assert candidate(nums = [21, 42, 63, 84, 105, 126, 147, 168, 189]) == True\n    assert candidate(nums = [49, 42, 28, 35, 70]) == True\n    assert candidate(nums = [123, 246, 369, 492, 615, 738, 861, 984]) == True\n    assert candidate(nums = [84, 126, 168, 210, 252, 294, 336, 378, 420]) == True\n    assert candidate(nums = [84, 28, 42, 70, 56]) == True\n    assert candidate(nums = [101, 202, 303, 404, 505, 606]) == True\n    assert candidate(nums = [56, 14, 28, 7, 98, 49]) == True\n    assert candidate(nums = [45, 30, 60, 90, 120, 150]) == True\n    assert candidate(nums = [100, 50, 75, 25, 150]) == True\n    assert candidate(nums = [15, 25, 35, 45, 55, 65]) == True\n    assert candidate(nums = [23, 46, 69, 92, 115, 138, 161, 184]) == True\n    assert candidate(nums = [121, 221, 143, 169, 13]) == True\n    assert candidate(nums = [100, 200, 300, 400, 500]) == True\n    assert candidate(nums = [462, 882, 924, 1092, 1260]) == True\n    assert candidate(nums = [360, 720, 1080, 1440, 1800, 2160]) == True\n    assert candidate(nums = [1000, 500, 250, 125, 625]) == True\n    assert candidate(nums = [48, 120, 180, 240, 300]) == True\n    assert candidate(nums = [16, 32, 48, 64, 80, 96, 112, 128, 144, 160, 176, 192, 208, 224, 240]) == True\n    assert candidate(nums = [210, 70, 35, 14, 105]) == True\n    assert candidate(nums = [1024, 2048, 512, 256, 128]) == True\n    assert candidate(nums = [56, 112, 168, 224, 280]) == True\n    assert candidate(nums = [100, 25, 50, 20, 40]) == True\n    assert candidate(nums = [24, 36, 48, 12, 60]) == True\n    assert candidate(nums = [99, 33, 66, 22, 11, 132]) == True\n    assert candidate(nums = [21, 42, 63, 84, 105]) == True\n    assert candidate(nums = [13, 26, 39, 52, 65, 78]) == True\n    assert candidate(nums = [30, 45, 60, 75, 90]) == True\n    assert candidate(nums = [77, 154, 231, 308, 385]) == True\n    assert candidate(nums = [91, 130, 169, 182, 273, 338]) == True\n    assert candidate(nums = [22, 15, 45, 33, 10, 55]) == True\n    assert candidate(nums = [18, 27, 36, 45, 54, 63, 72, 81, 90]) == True\n    assert candidate(nums = [111, 222, 333, 444, 555, 666, 777, 888, 999]) == True\n    assert candidate(nums = [171, 342, 513, 684, 855]) == True\n    assert candidate(nums = [33, 55, 66, 88, 110, 121, 132, 143]) == True\n    assert candidate(nums = [4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28]) == True\n    assert candidate(nums = [45, 90, 135, 180, 225]) == True\n    assert candidate(nums = [20, 40, 60, 80, 100, 120, 140, 160, 180]) == True\n    assert candidate(nums = [100, 50, 25, 20, 125]) == True\n    assert candidate(nums = [18, 24, 30, 36, 42]) == True\n    assert candidate(nums = [1000, 250, 500, 200, 750, 125, 375, 625, 875, 1250]) == True\n    assert candidate(nums = [102, 136, 170, 204, 238, 272, 306, 340, 374]) == True\n    assert candidate(nums = [19, 38, 57, 76, 95, 114, 133, 152, 171, 190]) == True\n    assert candidate(nums = [27, 54, 81, 108, 135, 162, 189, 216]) == True\n    assert candidate(nums = [119, 238, 357, 476, 595]) == True\n    assert candidate(nums = [81, 27, 54, 162, 324, 486]) == True\n    assert candidate(nums = [84, 12, 14, 21, 63]) == True\n    assert candidate(nums = [15, 30, 45, 60, 75, 90, 105]) == True\n    assert candidate(nums = [18, 27, 36, 45, 54, 63, 72, 81, 90, 99, 108]) == True\n    assert candidate(nums = [49, 63, 77, 91, 105, 119, 133, 147, 161, 175, 189, 203, 217]) == True\n    assert candidate(nums = [72, 108, 144, 180, 216, 252, 288, 324, 360, 396]) == True\n    assert candidate(nums = [225, 150, 100, 50, 25, 75]) == True\n    assert candidate(nums = [121, 110, 99, 88, 77, 66, 55, 44, 33, 22, 11]) == True\n    assert candidate(nums = [22, 44, 66, 88, 110, 132, 154, 176, 198]) == True\n    assert candidate(nums = [1000, 500, 250, 125, 2000]) == True\n    assert candidate(nums = [135, 90, 45, 60, 30]) == True\n    assert candidate(nums = [9, 18, 27, 36, 45, 54]) == True\n    assert candidate(nums = [17, 34, 51, 68, 85]) == True\n    assert candidate(nums = [105, 15, 35, 21, 63]) == True\n    assert candidate(nums = [81, 135, 207, 279, 351, 423]) == True\n    assert candidate(nums = [36, 48, 60, 72, 84, 96]) == True\n    assert candidate(nums = [180, 120, 90, 60, 45, 30, 20, 15, 10, 5]) == True\n    assert candidate(nums = [28, 14, 42, 70, 98]) == True\n    assert candidate(nums = [17, 19, 23, 29, 31, 37]) == True\n    assert candidate(nums = [81, 27, 54, 108, 162]) == True\n    assert candidate(nums = [121, 11, 22, 33, 44, 55]) == True\n    assert candidate(nums = [165, 330, 495, 660, 825]) == True\n    assert candidate(nums = [49, 98, 147, 196, 245]) == True\n    assert candidate(nums = [121, 44, 88, 22, 176]) == True\n    assert candidate(nums = [15, 25, 35, 45, 55, 65, 75, 85]) == True\n    assert candidate(nums = [100, 101, 102, 103, 104, 105]) == True\n    assert candidate(nums = [17, 19, 23, 29, 31]) == True\n    assert candidate(nums = [315, 105, 35, 7, 14, 21, 42, 63, 84]) == True\n    assert candidate(nums = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29]) == True\n    assert candidate(nums = [13, 26, 39, 52, 65]) == True\n    assert candidate(nums = [15, 25, 35, 45, 55]) == True\n    assert candidate(nums = [1001, 10010, 100100, 1001000, 10010000]) == Error: list index out of range\n    assert candidate(nums = [7, 49, 343, 2401, 16807]) == True\n    assert candidate(nums = [2, 4, 6, 8, 10, 12, 14, 16, 18, 20]) == True\n    assert candidate(nums = [19, 38, 57, 76, 95, 114, 133, 152]) == True\n    assert candidate(nums = [14, 21, 35, 49, 70]) == True\n    assert candidate(nums = [33, 66, 99, 132, 165, 198]) == True\n    assert candidate(nums = [18, 24, 30, 36, 42, 48]) == True\n    assert candidate(nums = [22, 44, 66, 88, 110]) == True\n    assert candidate(nums = [84, 56, 28, 14, 7, 49, 35]) == True\n    assert candidate(nums = [48, 64, 80, 96, 112, 128]) == True\n    assert candidate(nums = [1024, 2048, 4096, 8192, 16384, 32768]) == True\n    assert candidate(nums = [56, 63, 70, 77, 84, 91]) == True\n    assert candidate(nums = [99, 33, 66, 132, 264]) == True\n    assert candidate(nums = [100000, 50000, 25000, 12500, 6250]) == True\n    assert candidate(nums = [77, 91, 143, 1001, 1001, 143]) == True\n    assert candidate(nums = [100, 200, 300, 400, 500, 600, 700]) == True\n    assert candidate(nums = [77, 55, 99, 110, 132]) == True\n    assert candidate(nums = [30, 45, 60, 15, 90]) == True\n    assert candidate(nums = [72, 24, 16, 8, 40]) == True\n    assert candidate(nums = [42, 21, 7, 14, 28]) == True\n    assert candidate(nums = [77, 143, 169, 187, 209, 221, 247, 299, 323, 341]) == True\n    assert candidate(nums = [15, 20, 25, 30, 35, 40, 45, 50]) == True\n    assert candidate(nums = [121, 143, 169, 187, 209]) == True\n    assert candidate(nums = [14, 21, 28, 35, 42, 49, 56, 63]) == True\n    assert candidate(nums = [14, 21, 28, 35, 42, 49]) == True\n    assert candidate(nums = [49, 147, 245, 343, 441, 539]) == True\n    assert candidate(nums = [22, 15, 10, 18, 30]) == True\n    assert candidate(nums = [64, 32, 16, 8, 4, 2, 1]) == False\n    assert candidate(nums = [101, 103, 107, 109, 113, 127, 131, 137, 139, 149]) == True\n    assert candidate(nums = [9, 18, 27, 36, 45, 54, 63, 72, 81]) == True\n    assert candidate(nums = [16, 32, 64, 128, 256, 512, 1024]) == True\n    assert candidate(nums = [102, 204, 306, 408, 510]) == True\n    assert candidate(nums = [1000, 2000, 3000, 4000, 5000]) == True\n    assert candidate(nums = [60, 120, 180, 240, 300, 360]) == True\n    assert candidate(nums = [42, 28, 70, 14, 35]) == True\n    assert candidate(nums = [22, 33, 44, 55, 66]) == True\n    assert candidate(nums = [77, 49, 35, 21, 14, 7]) == True\n    assert candidate(nums = [23, 46, 69, 92, 115]) == True\n    assert candidate(nums = [16, 8, 4, 2, 1]) == False\n    assert candidate(nums = [101, 202, 303, 404, 505]) == True\n    assert candidate(nums = [102, 68, 34, 17, 51, 85]) == True\n    assert candidate(nums = [13, 26, 39, 52, 65, 78, 91, 104, 117]) == True\n    assert candidate(nums = [100, 105, 140, 210, 70]) == True\n    assert candidate(nums = [11, 22, 33, 44, 55, 66]) == True\n    assert candidate(nums = [17, 34, 51, 68, 85, 102, 119, 136, 153]) == True\n    assert candidate(nums = [256, 512, 1024, 2048, 4096, 8192, 16384]) == True\n    assert candidate(nums = [1000, 500, 250, 125, 2000, 10000, 2500]) == True\n    assert candidate(nums = [30, 45, 60, 75, 90, 105, 120]) == True\n    assert candidate(nums = [12, 18, 24, 30, 36, 42]) == True\n    assert candidate(nums = [25, 45, 65, 85, 105]) == True\n    assert candidate(nums = [100, 200, 150, 300, 250]) == True\n    assert candidate(nums = [14, 28, 42, 56, 70]) == True\n    assert candidate(nums = [81, 135, 225, 315, 405, 525, 675]) == True\n    assert candidate(nums = [121, 132, 220, 110, 55]) == True",
+    "cpp": "void check(Solution& solution) {\n    assert(solution.gcdSort({12,15,18,20,25}) == vector<int>True);\n    assert(solution.gcdSort({7,21,3}) == vector<int>True);\n    assert(solution.gcdSort({8,4,12,6}) == vector<int>True);\n    assert(solution.gcdSort({2,3,5,7,11}) == vector<int>True);\n    assert(solution.gcdSort({2,4,6,8,10}) == vector<int>True);\n    assert(solution.gcdSort({1,2,3,4}) == vector<int>True);\n    assert(solution.gcdSort({18,9,27,3,6}) == vector<int>True);\n    assert(solution.gcdSort({3,9,6,18,27}) == vector<int>True);\n    assert(solution.gcdSort({1,2,3,4,5}) == vector<int>True);\n    assert(solution.gcdSort({37,49,111,143,169}) == vector<int>True);\n    assert(solution.gcdSort({100,200,400,800,1600}) == vector<int>True);\n    assert(solution.gcdSort({22,44,11,66,33}) == vector<int>True);\n    assert(solution.gcdSort({100,200,300,400,500}) == vector<int>True);\n    assert(solution.gcdSort({83,97,101,103,107}) == vector<int>True);\n    assert(solution.gcdSort({100000,99998,99999,99997,99996}) == vector<int>False);\n    assert(solution.gcdSort({10,5,9,3,15}) == vector<int>True);\n    assert(solution.gcdSort({105,70,30,210,42}) == vector<int>True);\n    assert(solution.gcdSort({30,42,70,105,35}) == vector<int>True);\n    assert(solution.gcdSort({5,2,6,2}) == vector<int>False);\n    assert(solution.gcdSort({56, 72, 88, 104, 120, 136, 152}) == vector<int>True);\n    assert(solution.gcdSort({121, 132, 143, 154, 165, 176, 187, 198, 209}) == vector<int>True);\n    assert(solution.gcdSort({48, 64, 80, 96, 112}) == vector<int>True);\n    assert(solution.gcdSort({17, 34, 51, 68, 85, 102, 119}) == vector<int>True);\n    assert(solution.gcdSort({210, 315, 420, 525, 630, 735}) == vector<int>True);\n    assert(solution.gcdSort({105, 45, 63, 21, 315}) == vector<int>True);\n    assert(solution.gcdSort({100, 50, 25, 125, 200, 150}) == vector<int>True);\n    assert(solution.gcdSort({91, 182, 273, 364, 455}) == vector<int>True);\n    assert(solution.gcdSort({121, 132, 143, 154, 165, 176}) == vector<int>True);\n    assert(solution.gcdSort({16, 32, 48, 64, 80, 96, 112, 128, 144}) == vector<int>True);\n    assert(solution.gcdSort({70, 35, 28, 56, 14, 18}) == vector<int>True);\n    assert(solution.gcdSort({14, 21, 28, 35, 42, 49, 56, 63, 70}) == vector<int>True);\n    assert(solution.gcdSort({32, 48, 64, 80, 96, 112}) == vector<int>True);\n    assert(solution.gcdSort({31, 62, 93, 124, 155, 186, 217, 248, 279, 310}) == vector<int>True);\n    assert(solution.gcdSort({30, 25, 20, 15, 10, 5}) == vector<int>True);\n    assert(solution.gcdSort({30, 45, 60, 75, 90, 105}) == vector<int>True);\n    assert(solution.gcdSort({44, 55, 66, 77, 88, 99, 110, 121}) == vector<int>True);\n    assert(solution.gcdSort({15, 20, 25, 30, 35}) == vector<int>True);\n    assert(solution.gcdSort({33, 66, 99, 132, 165}) == vector<int>True);\n    assert(solution.gcdSort({49, 14, 7, 98, 28}) == vector<int>True);\n    assert(solution.gcdSort({6, 8, 10, 12, 14, 16, 18, 20}) == vector<int>True);\n    assert(solution.gcdSort({21, 42, 63, 84, 105, 126, 147, 168, 189}) == vector<int>True);\n    assert(solution.gcdSort({49, 42, 28, 35, 70}) == vector<int>True);\n    assert(solution.gcdSort({123, 246, 369, 492, 615, 738, 861, 984}) == vector<int>True);\n    assert(solution.gcdSort({84, 126, 168, 210, 252, 294, 336, 378, 420}) == vector<int>True);\n    assert(solution.gcdSort({84, 28, 42, 70, 56}) == vector<int>True);\n    assert(solution.gcdSort({101, 202, 303, 404, 505, 606}) == vector<int>True);\n    assert(solution.gcdSort({56, 14, 28, 7, 98, 49}) == vector<int>True);\n    assert(solution.gcdSort({45, 30, 60, 90, 120, 150}) == vector<int>True);\n    assert(solution.gcdSort({100, 50, 75, 25, 150}) == vector<int>True);\n    assert(solution.gcdSort({15, 25, 35, 45, 55, 65}) == vector<int>True);\n    assert(solution.gcdSort({23, 46, 69, 92, 115, 138, 161, 184}) == vector<int>True);\n    assert(solution.gcdSort({121, 221, 143, 169, 13}) == vector<int>True);\n    assert(solution.gcdSort({100, 200, 300, 400, 500}) == vector<int>True);\n    assert(solution.gcdSort({462, 882, 924, 1092, 1260}) == vector<int>True);\n    assert(solution.gcdSort({360, 720, 1080, 1440, 1800, 2160}) == vector<int>True);\n    assert(solution.gcdSort({1000, 500, 250, 125, 625}) == vector<int>True);\n    assert(solution.gcdSort({48, 120, 180, 240, 300}) == vector<int>True);\n    assert(solution.gcdSort({16, 32, 48, 64, 80, 96, 112, 128, 144, 160, 176, 192, 208, 224, 240}) == vector<int>True);\n    assert(solution.gcdSort({210, 70, 35, 14, 105}) == vector<int>True);\n    assert(solution.gcdSort({1024, 2048, 512, 256, 128}) == vector<int>True);\n    assert(solution.gcdSort({56, 112, 168, 224, 280}) == vector<int>True);\n    assert(solution.gcdSort({100, 25, 50, 20, 40}) == vector<int>True);\n    assert(solution.gcdSort({24, 36, 48, 12, 60}) == vector<int>True);\n    assert(solution.gcdSort({99, 33, 66, 22, 11, 132}) == vector<int>True);\n    assert(solution.gcdSort({21, 42, 63, 84, 105}) == vector<int>True);\n    assert(solution.gcdSort({13, 26, 39, 52, 65, 78}) == vector<int>True);\n    assert(solution.gcdSort({30, 45, 60, 75, 90}) == vector<int>True);\n    assert(solution.gcdSort({77, 154, 231, 308, 385}) == vector<int>True);\n    assert(solution.gcdSort({91, 130, 169, 182, 273, 338}) == vector<int>True);\n    assert(solution.gcdSort({22, 15, 45, 33, 10, 55}) == vector<int>True);\n    assert(solution.gcdSort({18, 27, 36, 45, 54, 63, 72, 81, 90}) == vector<int>True);\n    assert(solution.gcdSort({111, 222, 333, 444, 555, 666, 777, 888, 999}) == vector<int>True);\n    assert(solution.gcdSort({171, 342, 513, 684, 855}) == vector<int>True);\n    assert(solution.gcdSort({33, 55, 66, 88, 110, 121, 132, 143}) == vector<int>True);\n    assert(solution.gcdSort({4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28}) == vector<int>True);\n    assert(solution.gcdSort({45, 90, 135, 180, 225}) == vector<int>True);\n    assert(solution.gcdSort({20, 40, 60, 80, 100, 120, 140, 160, 180}) == vector<int>True);\n    assert(solution.gcdSort({100, 50, 25, 20, 125}) == vector<int>True);\n    assert(solution.gcdSort({18, 24, 30, 36, 42}) == vector<int>True);\n    assert(solution.gcdSort({1000, 250, 500, 200, 750, 125, 375, 625, 875, 1250}) == vector<int>True);\n    assert(solution.gcdSort({102, 136, 170, 204, 238, 272, 306, 340, 374}) == vector<int>True);\n    assert(solution.gcdSort({19, 38, 57, 76, 95, 114, 133, 152, 171, 190}) == vector<int>True);\n    assert(solution.gcdSort({27, 54, 81, 108, 135, 162, 189, 216}) == vector<int>True);\n    assert(solution.gcdSort({119, 238, 357, 476, 595}) == vector<int>True);\n    assert(solution.gcdSort({81, 27, 54, 162, 324, 486}) == vector<int>True);\n    assert(solution.gcdSort({84, 12, 14, 21, 63}) == vector<int>True);\n    assert(solution.gcdSort({15, 30, 45, 60, 75, 90, 105}) == vector<int>True);\n    assert(solution.gcdSort({18, 27, 36, 45, 54, 63, 72, 81, 90, 99, 108}) == vector<int>True);\n    assert(solution.gcdSort({49, 63, 77, 91, 105, 119, 133, 147, 161, 175, 189, 203, 217}) == vector<int>True);\n    assert(solution.gcdSort({72, 108, 144, 180, 216, 252, 288, 324, 360, 396}) == vector<int>True);\n    assert(solution.gcdSort({225, 150, 100, 50, 25, 75}) == vector<int>True);\n    assert(solution.gcdSort({121, 110, 99, 88, 77, 66, 55, 44, 33, 22, 11}) == vector<int>True);\n    assert(solution.gcdSort({22, 44, 66, 88, 110, 132, 154, 176, 198}) == vector<int>True);\n    assert(solution.gcdSort({1000, 500, 250, 125, 2000}) == vector<int>True);\n    assert(solution.gcdSort({135, 90, 45, 60, 30}) == vector<int>True);\n    assert(solution.gcdSort({9, 18, 27, 36, 45, 54}) == vector<int>True);\n    assert(solution.gcdSort({17, 34, 51, 68, 85}) == vector<int>True);\n    assert(solution.gcdSort({105, 15, 35, 21, 63}) == vector<int>True);\n    assert(solution.gcdSort({81, 135, 207, 279, 351, 423}) == vector<int>True);\n    assert(solution.gcdSort({36, 48, 60, 72, 84, 96}) == vector<int>True);\n    assert(solution.gcdSort({180, 120, 90, 60, 45, 30, 20, 15, 10, 5}) == vector<int>True);\n    assert(solution.gcdSort({28, 14, 42, 70, 98}) == vector<int>True);\n    assert(solution.gcdSort({17, 19, 23, 29, 31, 37}) == vector<int>True);\n    assert(solution.gcdSort({81, 27, 54, 108, 162}) == vector<int>True);\n    assert(solution.gcdSort({121, 11, 22, 33, 44, 55}) == vector<int>True);\n    assert(solution.gcdSort({165, 330, 495, 660, 825}) == vector<int>True);\n    assert(solution.gcdSort({49, 98, 147, 196, 245}) == vector<int>True);\n    assert(solution.gcdSort({121, 44, 88, 22, 176}) == vector<int>True);\n    assert(solution.gcdSort({15, 25, 35, 45, 55, 65, 75, 85}) == vector<int>True);\n    assert(solution.gcdSort({100, 101, 102, 103, 104, 105}) == vector<int>True);\n    assert(solution.gcdSort({17, 19, 23, 29, 31}) == vector<int>True);\n    assert(solution.gcdSort({315, 105, 35, 7, 14, 21, 42, 63, 84}) == vector<int>True);\n    assert(solution.gcdSort({2, 3, 5, 7, 11, 13, 17, 19, 23, 29}) == vector<int>True);\n    assert(solution.gcdSort({13, 26, 39, 52, 65}) == vector<int>True);\n    assert(solution.gcdSort({15, 25, 35, 45, 55}) == vector<int>True);\n    assert(solution.gcdSort({1001, 10010, 100100, 1001000, 10010000}) == vector<int>Error: list index out of range);\n    assert(solution.gcdSort({7, 49, 343, 2401, 16807}) == vector<int>True);\n    assert(solution.gcdSort({2, 4, 6, 8, 10, 12, 14, 16, 18, 20}) == vector<int>True);\n    assert(solution.gcdSort({19, 38, 57, 76, 95, 114, 133, 152}) == vector<int>True);\n    assert(solution.gcdSort({14, 21, 35, 49, 70}) == vector<int>True);\n    assert(solution.gcdSort({33, 66, 99, 132, 165, 198}) == vector<int>True);\n    assert(solution.gcdSort({18, 24, 30, 36, 42, 48}) == vector<int>True);\n    assert(solution.gcdSort({22, 44, 66, 88, 110}) == vector<int>True);\n    assert(solution.gcdSort({84, 56, 28, 14, 7, 49, 35}) == vector<int>True);\n    assert(solution.gcdSort({48, 64, 80, 96, 112, 128}) == vector<int>True);\n    assert(solution.gcdSort({1024, 2048, 4096, 8192, 16384, 32768}) == vector<int>True);\n    assert(solution.gcdSort({56, 63, 70, 77, 84, 91}) == vector<int>True);\n    assert(solution.gcdSort({99, 33, 66, 132, 264}) == vector<int>True);\n    assert(solution.gcdSort({100000, 50000, 25000, 12500, 6250}) == vector<int>True);\n    assert(solution.gcdSort({77, 91, 143, 1001, 1001, 143}) == vector<int>True);\n    assert(solution.gcdSort({100, 200, 300, 400, 500, 600, 700}) == vector<int>True);\n    assert(solution.gcdSort({77, 55, 99, 110, 132}) == vector<int>True);\n    assert(solution.gcdSort({30, 45, 60, 15, 90}) == vector<int>True);\n    assert(solution.gcdSort({72, 24, 16, 8, 40}) == vector<int>True);\n    assert(solution.gcdSort({42, 21, 7, 14, 28}) == vector<int>True);\n    assert(solution.gcdSort({77, 143, 169, 187, 209, 221, 247, 299, 323, 341}) == vector<int>True);\n    assert(solution.gcdSort({15, 20, 25, 30, 35, 40, 45, 50}) == vector<int>True);\n    assert(solution.gcdSort({121, 143, 169, 187, 209}) == vector<int>True);\n    assert(solution.gcdSort({14, 21, 28, 35, 42, 49, 56, 63}) == vector<int>True);\n    assert(solution.gcdSort({14, 21, 28, 35, 42, 49}) == vector<int>True);\n    assert(solution.gcdSort({49, 147, 245, 343, 441, 539}) == vector<int>True);\n    assert(solution.gcdSort({22, 15, 10, 18, 30}) == vector<int>True);\n    assert(solution.gcdSort({64, 32, 16, 8, 4, 2, 1}) == vector<int>False);\n    assert(solution.gcdSort({101, 103, 107, 109, 113, 127, 131, 137, 139, 149}) == vector<int>True);\n    assert(solution.gcdSort({9, 18, 27, 36, 45, 54, 63, 72, 81}) == vector<int>True);\n    assert(solution.gcdSort({16, 32, 64, 128, 256, 512, 1024}) == vector<int>True);\n    assert(solution.gcdSort({102, 204, 306, 408, 510}) == vector<int>True);\n    assert(solution.gcdSort({1000, 2000, 3000, 4000, 5000}) == vector<int>True);\n    assert(solution.gcdSort({60, 120, 180, 240, 300, 360}) == vector<int>True);\n    assert(solution.gcdSort({42, 28, 70, 14, 35}) == vector<int>True);\n    assert(solution.gcdSort({22, 33, 44, 55, 66}) == vector<int>True);\n    assert(solution.gcdSort({77, 49, 35, 21, 14, 7}) == vector<int>True);\n    assert(solution.gcdSort({23, 46, 69, 92, 115}) == vector<int>True);\n    assert(solution.gcdSort({16, 8, 4, 2, 1}) == vector<int>False);\n    assert(solution.gcdSort({101, 202, 303, 404, 505}) == vector<int>True);\n    assert(solution.gcdSort({102, 68, 34, 17, 51, 85}) == vector<int>True);\n    assert(solution.gcdSort({13, 26, 39, 52, 65, 78, 91, 104, 117}) == vector<int>True);\n    assert(solution.gcdSort({100, 105, 140, 210, 70}) == vector<int>True);\n    assert(solution.gcdSort({11, 22, 33, 44, 55, 66}) == vector<int>True);\n    assert(solution.gcdSort({17, 34, 51, 68, 85, 102, 119, 136, 153}) == vector<int>True);\n    assert(solution.gcdSort({256, 512, 1024, 2048, 4096, 8192, 16384}) == vector<int>True);\n    assert(solution.gcdSort({1000, 500, 250, 125, 2000, 10000, 2500}) == vector<int>True);\n    assert(solution.gcdSort({30, 45, 60, 75, 90, 105, 120}) == vector<int>True);\n    assert(solution.gcdSort({12, 18, 24, 30, 36, 42}) == vector<int>True);\n    assert(solution.gcdSort({25, 45, 65, 85, 105}) == vector<int>True);\n    assert(solution.gcdSort({100, 200, 150, 300, 250}) == vector<int>True);\n    assert(solution.gcdSort({14, 28, 42, 56, 70}) == vector<int>True);\n    assert(solution.gcdSort({81, 135, 225, 315, 405, 525, 675}) == vector<int>True);\n    assert(solution.gcdSort({121, 132, 220, 110, 55}) == vector<int>True);\n}",
+    "java": "public static void check(Solution solution) {\n    assert Arrays.equals(solution.gcdSort(new int[]{12,15,18,20,25}), True);\n    assert Arrays.equals(solution.gcdSort(new int[]{7,21,3}), True);\n    assert Arrays.equals(solution.gcdSort(new int[]{8,4,12,6}), True);\n    assert Arrays.equals(solution.gcdSort(new int[]{2,3,5,7,11}), True);\n    assert Arrays.equals(solution.gcdSort(new int[]{2,4,6,8,10}), True);\n    assert Arrays.equals(solution.gcdSort(new int[]{1,2,3,4}), True);\n    assert Arrays.equals(solution.gcdSort(new int[]{18,9,27,3,6}), True);\n    assert Arrays.equals(solution.gcdSort(new int[]{3,9,6,18,27}), True);\n    assert Arrays.equals(solution.gcdSort(new int[]{1,2,3,4,5}), True);\n    assert Arrays.equals(solution.gcdSort(new int[]{37,49,111,143,169}), True);\n    assert Arrays.equals(solution.gcdSort(new int[]{100,200,400,800,1600}), True);\n    assert Arrays.equals(solution.gcdSort(new int[]{22,44,11,66,33}), True);\n    assert Arrays.equals(solution.gcdSort(new int[]{100,200,300,400,500}), True);\n    assert Arrays.equals(solution.gcdSort(new int[]{83,97,101,103,107}), True);\n    assert Arrays.equals(solution.gcdSort(new int[]{100000,99998,99999,99997,99996}), False);\n    assert Arrays.equals(solution.gcdSort(new int[]{10,5,9,3,15}), True);\n    assert Arrays.equals(solution.gcdSort(new int[]{105,70,30,210,42}), True);\n    assert Arrays.equals(solution.gcdSort(new int[]{30,42,70,105,35}), True);\n    assert Arrays.equals(solution.gcdSort(new int[]{5,2,6,2}), False);\n    assert Arrays.equals(solution.gcdSort(new int[]{56, 72, 88, 104, 120, 136, 152}), True);\n    assert Arrays.equals(solution.gcdSort(new int[]{121, 132, 143, 154, 165, 176, 187, 198, 209}), True);\n    assert Arrays.equals(solution.gcdSort(new int[]{48, 64, 80, 96, 112}), True);\n    assert Arrays.equals(solution.gcdSort(new int[]{17, 34, 51, 68, 85, 102, 119}), True);\n    assert Arrays.equals(solution.gcdSort(new int[]{210, 315, 420, 525, 630, 735}), True);\n    assert Arrays.equals(solution.gcdSort(new int[]{105, 45, 63, 21, 315}), True);\n    assert Arrays.equals(solution.gcdSort(new int[]{100, 50, 25, 125, 200, 150}), True);\n    assert Arrays.equals(solution.gcdSort(new int[]{91, 182, 273, 364, 455}), True);\n    assert Arrays.equals(solution.gcdSort(new int[]{121, 132, 143, 154, 165, 176}), True);\n    assert Arrays.equals(solution.gcdSort(new int[]{16, 32, 48, 64, 80, 96, 112, 128, 144}), True);\n    assert Arrays.equals(solution.gcdSort(new int[]{70, 35, 28, 56, 14, 18}), True);\n    assert Arrays.equals(solution.gcdSort(new int[]{14, 21, 28, 35, 42, 49, 56, 63, 70}), True);\n    assert Arrays.equals(solution.gcdSort(new int[]{32, 48, 64, 80, 96, 112}), True);\n    assert Arrays.equals(solution.gcdSort(new int[]{31, 62, 93, 124, 155, 186, 217, 248, 279, 310}), True);\n    assert Arrays.equals(solution.gcdSort(new int[]{30, 25, 20, 15, 10, 5}), True);\n    assert Arrays.equals(solution.gcdSort(new int[]{30, 45, 60, 75, 90, 105}), True);\n    assert Arrays.equals(solution.gcdSort(new int[]{44, 55, 66, 77, 88, 99, 110, 121}), True);\n    assert Arrays.equals(solution.gcdSort(new int[]{15, 20, 25, 30, 35}), True);\n    assert Arrays.equals(solution.gcdSort(new int[]{33, 66, 99, 132, 165}), True);\n    assert Arrays.equals(solution.gcdSort(new int[]{49, 14, 7, 98, 28}), True);\n    assert Arrays.equals(solution.gcdSort(new int[]{6, 8, 10, 12, 14, 16, 18, 20}), True);\n    assert Arrays.equals(solution.gcdSort(new int[]{21, 42, 63, 84, 105, 126, 147, 168, 189}), True);\n    assert Arrays.equals(solution.gcdSort(new int[]{49, 42, 28, 35, 70}), True);\n    assert Arrays.equals(solution.gcdSort(new int[]{123, 246, 369, 492, 615, 738, 861, 984}), True);\n    assert Arrays.equals(solution.gcdSort(new int[]{84, 126, 168, 210, 252, 294, 336, 378, 420}), True);\n    assert Arrays.equals(solution.gcdSort(new int[]{84, 28, 42, 70, 56}), True);\n    assert Arrays.equals(solution.gcdSort(new int[]{101, 202, 303, 404, 505, 606}), True);\n    assert Arrays.equals(solution.gcdSort(new int[]{56, 14, 28, 7, 98, 49}), True);\n    assert Arrays.equals(solution.gcdSort(new int[]{45, 30, 60, 90, 120, 150}), True);\n    assert Arrays.equals(solution.gcdSort(new int[]{100, 50, 75, 25, 150}), True);\n    assert Arrays.equals(solution.gcdSort(new int[]{15, 25, 35, 45, 55, 65}), True);\n    assert Arrays.equals(solution.gcdSort(new int[]{23, 46, 69, 92, 115, 138, 161, 184}), True);\n    assert Arrays.equals(solution.gcdSort(new int[]{121, 221, 143, 169, 13}), True);\n    assert Arrays.equals(solution.gcdSort(new int[]{100, 200, 300, 400, 500}), True);\n    assert Arrays.equals(solution.gcdSort(new int[]{462, 882, 924, 1092, 1260}), True);\n    assert Arrays.equals(solution.gcdSort(new int[]{360, 720, 1080, 1440, 1800, 2160}), True);\n    assert Arrays.equals(solution.gcdSort(new int[]{1000, 500, 250, 125, 625}), True);\n    assert Arrays.equals(solution.gcdSort(new int[]{48, 120, 180, 240, 300}), True);\n    assert Arrays.equals(solution.gcdSort(new int[]{16, 32, 48, 64, 80, 96, 112, 128, 144, 160, 176, 192, 208, 224, 240}), True);\n    assert Arrays.equals(solution.gcdSort(new int[]{210, 70, 35, 14, 105}), True);\n    assert Arrays.equals(solution.gcdSort(new int[]{1024, 2048, 512, 256, 128}), True);\n    assert Arrays.equals(solution.gcdSort(new int[]{56, 112, 168, 224, 280}), True);\n    assert Arrays.equals(solution.gcdSort(new int[]{100, 25, 50, 20, 40}), True);\n    assert Arrays.equals(solution.gcdSort(new int[]{24, 36, 48, 12, 60}), True);\n    assert Arrays.equals(solution.gcdSort(new int[]{99, 33, 66, 22, 11, 132}), True);\n    assert Arrays.equals(solution.gcdSort(new int[]{21, 42, 63, 84, 105}), True);\n    assert Arrays.equals(solution.gcdSort(new int[]{13, 26, 39, 52, 65, 78}), True);\n    assert Arrays.equals(solution.gcdSort(new int[]{30, 45, 60, 75, 90}), True);\n    assert Arrays.equals(solution.gcdSort(new int[]{77, 154, 231, 308, 385}), True);\n    assert Arrays.equals(solution.gcdSort(new int[]{91, 130, 169, 182, 273, 338}), True);\n    assert Arrays.equals(solution.gcdSort(new int[]{22, 15, 45, 33, 10, 55}), True);\n    assert Arrays.equals(solution.gcdSort(new int[]{18, 27, 36, 45, 54, 63, 72, 81, 90}), True);\n    assert Arrays.equals(solution.gcdSort(new int[]{111, 222, 333, 444, 555, 666, 777, 888, 999}), True);\n    assert Arrays.equals(solution.gcdSort(new int[]{171, 342, 513, 684, 855}), True);\n    assert Arrays.equals(solution.gcdSort(new int[]{33, 55, 66, 88, 110, 121, 132, 143}), True);\n    assert Arrays.equals(solution.gcdSort(new int[]{4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28}), True);\n    assert Arrays.equals(solution.gcdSort(new int[]{45, 90, 135, 180, 225}), True);\n    assert Arrays.equals(solution.gcdSort(new int[]{20, 40, 60, 80, 100, 120, 140, 160, 180}), True);\n    assert Arrays.equals(solution.gcdSort(new int[]{100, 50, 25, 20, 125}), True);\n    assert Arrays.equals(solution.gcdSort(new int[]{18, 24, 30, 36, 42}), True);\n    assert Arrays.equals(solution.gcdSort(new int[]{1000, 250, 500, 200, 750, 125, 375, 625, 875, 1250}), True);\n    assert Arrays.equals(solution.gcdSort(new int[]{102, 136, 170, 204, 238, 272, 306, 340, 374}), True);\n    assert Arrays.equals(solution.gcdSort(new int[]{19, 38, 57, 76, 95, 114, 133, 152, 171, 190}), True);\n    assert Arrays.equals(solution.gcdSort(new int[]{27, 54, 81, 108, 135, 162, 189, 216}), True);\n    assert Arrays.equals(solution.gcdSort(new int[]{119, 238, 357, 476, 595}), True);\n    assert Arrays.equals(solution.gcdSort(new int[]{81, 27, 54, 162, 324, 486}), True);\n    assert Arrays.equals(solution.gcdSort(new int[]{84, 12, 14, 21, 63}), True);\n    assert Arrays.equals(solution.gcdSort(new int[]{15, 30, 45, 60, 75, 90, 105}), True);\n    assert Arrays.equals(solution.gcdSort(new int[]{18, 27, 36, 45, 54, 63, 72, 81, 90, 99, 108}), True);\n    assert Arrays.equals(solution.gcdSort(new int[]{49, 63, 77, 91, 105, 119, 133, 147, 161, 175, 189, 203, 217}), True);\n    assert Arrays.equals(solution.gcdSort(new int[]{72, 108, 144, 180, 216, 252, 288, 324, 360, 396}), True);\n    assert Arrays.equals(solution.gcdSort(new int[]{225, 150, 100, 50, 25, 75}), True);\n    assert Arrays.equals(solution.gcdSort(new int[]{121, 110, 99, 88, 77, 66, 55, 44, 33, 22, 11}), True);\n    assert Arrays.equals(solution.gcdSort(new int[]{22, 44, 66, 88, 110, 132, 154, 176, 198}), True);\n    assert Arrays.equals(solution.gcdSort(new int[]{1000, 500, 250, 125, 2000}), True);\n    assert Arrays.equals(solution.gcdSort(new int[]{135, 90, 45, 60, 30}), True);\n    assert Arrays.equals(solution.gcdSort(new int[]{9, 18, 27, 36, 45, 54}), True);\n    assert Arrays.equals(solution.gcdSort(new int[]{17, 34, 51, 68, 85}), True);\n    assert Arrays.equals(solution.gcdSort(new int[]{105, 15, 35, 21, 63}), True);\n    assert Arrays.equals(solution.gcdSort(new int[]{81, 135, 207, 279, 351, 423}), True);\n    assert Arrays.equals(solution.gcdSort(new int[]{36, 48, 60, 72, 84, 96}), True);\n    assert Arrays.equals(solution.gcdSort(new int[]{180, 120, 90, 60, 45, 30, 20, 15, 10, 5}), True);\n    assert Arrays.equals(solution.gcdSort(new int[]{28, 14, 42, 70, 98}), True);\n    assert Arrays.equals(solution.gcdSort(new int[]{17, 19, 23, 29, 31, 37}), True);\n    assert Arrays.equals(solution.gcdSort(new int[]{81, 27, 54, 108, 162}), True);\n    assert Arrays.equals(solution.gcdSort(new int[]{121, 11, 22, 33, 44, 55}), True);\n    assert Arrays.equals(solution.gcdSort(new int[]{165, 330, 495, 660, 825}), True);\n    assert Arrays.equals(solution.gcdSort(new int[]{49, 98, 147, 196, 245}), True);\n    assert Arrays.equals(solution.gcdSort(new int[]{121, 44, 88, 22, 176}), True);\n    assert Arrays.equals(solution.gcdSort(new int[]{15, 25, 35, 45, 55, 65, 75, 85}), True);\n    assert Arrays.equals(solution.gcdSort(new int[]{100, 101, 102, 103, 104, 105}), True);\n    assert Arrays.equals(solution.gcdSort(new int[]{17, 19, 23, 29, 31}), True);\n    assert Arrays.equals(solution.gcdSort(new int[]{315, 105, 35, 7, 14, 21, 42, 63, 84}), True);\n    assert Arrays.equals(solution.gcdSort(new int[]{2, 3, 5, 7, 11, 13, 17, 19, 23, 29}), True);\n    assert Arrays.equals(solution.gcdSort(new int[]{13, 26, 39, 52, 65}), True);\n    assert Arrays.equals(solution.gcdSort(new int[]{15, 25, 35, 45, 55}), True);\n    assert Arrays.equals(solution.gcdSort(new int[]{1001, 10010, 100100, 1001000, 10010000}), Error: list index out of range);\n    assert Arrays.equals(solution.gcdSort(new int[]{7, 49, 343, 2401, 16807}), True);\n    assert Arrays.equals(solution.gcdSort(new int[]{2, 4, 6, 8, 10, 12, 14, 16, 18, 20}), True);\n    assert Arrays.equals(solution.gcdSort(new int[]{19, 38, 57, 76, 95, 114, 133, 152}), True);\n    assert Arrays.equals(solution.gcdSort(new int[]{14, 21, 35, 49, 70}), True);\n    assert Arrays.equals(solution.gcdSort(new int[]{33, 66, 99, 132, 165, 198}), True);\n    assert Arrays.equals(solution.gcdSort(new int[]{18, 24, 30, 36, 42, 48}), True);\n    assert Arrays.equals(solution.gcdSort(new int[]{22, 44, 66, 88, 110}), True);\n    assert Arrays.equals(solution.gcdSort(new int[]{84, 56, 28, 14, 7, 49, 35}), True);\n    assert Arrays.equals(solution.gcdSort(new int[]{48, 64, 80, 96, 112, 128}), True);\n    assert Arrays.equals(solution.gcdSort(new int[]{1024, 2048, 4096, 8192, 16384, 32768}), True);\n    assert Arrays.equals(solution.gcdSort(new int[]{56, 63, 70, 77, 84, 91}), True);\n    assert Arrays.equals(solution.gcdSort(new int[]{99, 33, 66, 132, 264}), True);\n    assert Arrays.equals(solution.gcdSort(new int[]{100000, 50000, 25000, 12500, 6250}), True);\n    assert Arrays.equals(solution.gcdSort(new int[]{77, 91, 143, 1001, 1001, 143}), True);\n    assert Arrays.equals(solution.gcdSort(new int[]{100, 200, 300, 400, 500, 600, 700}), True);\n    assert Arrays.equals(solution.gcdSort(new int[]{77, 55, 99, 110, 132}), True);\n    assert Arrays.equals(solution.gcdSort(new int[]{30, 45, 60, 15, 90}), True);\n    assert Arrays.equals(solution.gcdSort(new int[]{72, 24, 16, 8, 40}), True);\n    assert Arrays.equals(solution.gcdSort(new int[]{42, 21, 7, 14, 28}), True);\n    assert Arrays.equals(solution.gcdSort(new int[]{77, 143, 169, 187, 209, 221, 247, 299, 323, 341}), True);\n    assert Arrays.equals(solution.gcdSort(new int[]{15, 20, 25, 30, 35, 40, 45, 50}), True);\n    assert Arrays.equals(solution.gcdSort(new int[]{121, 143, 169, 187, 209}), True);\n    assert Arrays.equals(solution.gcdSort(new int[]{14, 21, 28, 35, 42, 49, 56, 63}), True);\n    assert Arrays.equals(solution.gcdSort(new int[]{14, 21, 28, 35, 42, 49}), True);\n    assert Arrays.equals(solution.gcdSort(new int[]{49, 147, 245, 343, 441, 539}), True);\n    assert Arrays.equals(solution.gcdSort(new int[]{22, 15, 10, 18, 30}), True);\n    assert Arrays.equals(solution.gcdSort(new int[]{64, 32, 16, 8, 4, 2, 1}), False);\n    assert Arrays.equals(solution.gcdSort(new int[]{101, 103, 107, 109, 113, 127, 131, 137, 139, 149}), True);\n    assert Arrays.equals(solution.gcdSort(new int[]{9, 18, 27, 36, 45, 54, 63, 72, 81}), True);\n    assert Arrays.equals(solution.gcdSort(new int[]{16, 32, 64, 128, 256, 512, 1024}), True);\n    assert Arrays.equals(solution.gcdSort(new int[]{102, 204, 306, 408, 510}), True);\n    assert Arrays.equals(solution.gcdSort(new int[]{1000, 2000, 3000, 4000, 5000}), True);\n    assert Arrays.equals(solution.gcdSort(new int[]{60, 120, 180, 240, 300, 360}), True);\n    assert Arrays.equals(solution.gcdSort(new int[]{42, 28, 70, 14, 35}), True);\n    assert Arrays.equals(solution.gcdSort(new int[]{22, 33, 44, 55, 66}), True);\n    assert Arrays.equals(solution.gcdSort(new int[]{77, 49, 35, 21, 14, 7}), True);\n    assert Arrays.equals(solution.gcdSort(new int[]{23, 46, 69, 92, 115}), True);\n    assert Arrays.equals(solution.gcdSort(new int[]{16, 8, 4, 2, 1}), False);\n    assert Arrays.equals(solution.gcdSort(new int[]{101, 202, 303, 404, 505}), True);\n    assert Arrays.equals(solution.gcdSort(new int[]{102, 68, 34, 17, 51, 85}), True);\n    assert Arrays.equals(solution.gcdSort(new int[]{13, 26, 39, 52, 65, 78, 91, 104, 117}), True);\n    assert Arrays.equals(solution.gcdSort(new int[]{100, 105, 140, 210, 70}), True);\n    assert Arrays.equals(solution.gcdSort(new int[]{11, 22, 33, 44, 55, 66}), True);\n    assert Arrays.equals(solution.gcdSort(new int[]{17, 34, 51, 68, 85, 102, 119, 136, 153}), True);\n    assert Arrays.equals(solution.gcdSort(new int[]{256, 512, 1024, 2048, 4096, 8192, 16384}), True);\n    assert Arrays.equals(solution.gcdSort(new int[]{1000, 500, 250, 125, 2000, 10000, 2500}), True);\n    assert Arrays.equals(solution.gcdSort(new int[]{30, 45, 60, 75, 90, 105, 120}), True);\n    assert Arrays.equals(solution.gcdSort(new int[]{12, 18, 24, 30, 36, 42}), True);\n    assert Arrays.equals(solution.gcdSort(new int[]{25, 45, 65, 85, 105}), True);\n    assert Arrays.equals(solution.gcdSort(new int[]{100, 200, 150, 300, 250}), True);\n    assert Arrays.equals(solution.gcdSort(new int[]{14, 28, 42, 56, 70}), True);\n    assert Arrays.equals(solution.gcdSort(new int[]{81, 135, 225, 315, 405, 525, 675}), True);\n    assert Arrays.equals(solution.gcdSort(new int[]{121, 132, 220, 110, 55}), True);\n}",
+    "javascript": "function check(candidate) {\n    console.assert(JSON.stringify(candidate([12,15,18,20,25])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([7,21,3])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([8,4,12,6])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([2,3,5,7,11])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([2,4,6,8,10])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([1,2,3,4])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([18,9,27,3,6])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([3,9,6,18,27])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([1,2,3,4,5])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([37,49,111,143,169])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([100,200,400,800,1600])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([22,44,11,66,33])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([100,200,300,400,500])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([83,97,101,103,107])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([100000,99998,99999,99997,99996])) === JSON.stringify(False));\n    console.assert(JSON.stringify(candidate([10,5,9,3,15])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([105,70,30,210,42])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([30,42,70,105,35])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([5,2,6,2])) === JSON.stringify(False));\n    console.assert(JSON.stringify(candidate([56, 72, 88, 104, 120, 136, 152])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([121, 132, 143, 154, 165, 176, 187, 198, 209])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([48, 64, 80, 96, 112])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([17, 34, 51, 68, 85, 102, 119])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([210, 315, 420, 525, 630, 735])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([105, 45, 63, 21, 315])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([100, 50, 25, 125, 200, 150])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([91, 182, 273, 364, 455])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([121, 132, 143, 154, 165, 176])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([16, 32, 48, 64, 80, 96, 112, 128, 144])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([70, 35, 28, 56, 14, 18])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([14, 21, 28, 35, 42, 49, 56, 63, 70])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([32, 48, 64, 80, 96, 112])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([31, 62, 93, 124, 155, 186, 217, 248, 279, 310])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([30, 25, 20, 15, 10, 5])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([30, 45, 60, 75, 90, 105])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([44, 55, 66, 77, 88, 99, 110, 121])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([15, 20, 25, 30, 35])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([33, 66, 99, 132, 165])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([49, 14, 7, 98, 28])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([6, 8, 10, 12, 14, 16, 18, 20])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([21, 42, 63, 84, 105, 126, 147, 168, 189])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([49, 42, 28, 35, 70])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([123, 246, 369, 492, 615, 738, 861, 984])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([84, 126, 168, 210, 252, 294, 336, 378, 420])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([84, 28, 42, 70, 56])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([101, 202, 303, 404, 505, 606])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([56, 14, 28, 7, 98, 49])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([45, 30, 60, 90, 120, 150])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([100, 50, 75, 25, 150])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([15, 25, 35, 45, 55, 65])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([23, 46, 69, 92, 115, 138, 161, 184])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([121, 221, 143, 169, 13])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([100, 200, 300, 400, 500])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([462, 882, 924, 1092, 1260])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([360, 720, 1080, 1440, 1800, 2160])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([1000, 500, 250, 125, 625])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([48, 120, 180, 240, 300])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([16, 32, 48, 64, 80, 96, 112, 128, 144, 160, 176, 192, 208, 224, 240])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([210, 70, 35, 14, 105])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([1024, 2048, 512, 256, 128])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([56, 112, 168, 224, 280])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([100, 25, 50, 20, 40])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([24, 36, 48, 12, 60])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([99, 33, 66, 22, 11, 132])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([21, 42, 63, 84, 105])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([13, 26, 39, 52, 65, 78])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([30, 45, 60, 75, 90])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([77, 154, 231, 308, 385])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([91, 130, 169, 182, 273, 338])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([22, 15, 45, 33, 10, 55])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([18, 27, 36, 45, 54, 63, 72, 81, 90])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([111, 222, 333, 444, 555, 666, 777, 888, 999])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([171, 342, 513, 684, 855])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([33, 55, 66, 88, 110, 121, 132, 143])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([45, 90, 135, 180, 225])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([20, 40, 60, 80, 100, 120, 140, 160, 180])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([100, 50, 25, 20, 125])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([18, 24, 30, 36, 42])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([1000, 250, 500, 200, 750, 125, 375, 625, 875, 1250])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([102, 136, 170, 204, 238, 272, 306, 340, 374])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([19, 38, 57, 76, 95, 114, 133, 152, 171, 190])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([27, 54, 81, 108, 135, 162, 189, 216])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([119, 238, 357, 476, 595])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([81, 27, 54, 162, 324, 486])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([84, 12, 14, 21, 63])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([15, 30, 45, 60, 75, 90, 105])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([18, 27, 36, 45, 54, 63, 72, 81, 90, 99, 108])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([49, 63, 77, 91, 105, 119, 133, 147, 161, 175, 189, 203, 217])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([72, 108, 144, 180, 216, 252, 288, 324, 360, 396])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([225, 150, 100, 50, 25, 75])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([121, 110, 99, 88, 77, 66, 55, 44, 33, 22, 11])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([22, 44, 66, 88, 110, 132, 154, 176, 198])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([1000, 500, 250, 125, 2000])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([135, 90, 45, 60, 30])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([9, 18, 27, 36, 45, 54])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([17, 34, 51, 68, 85])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([105, 15, 35, 21, 63])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([81, 135, 207, 279, 351, 423])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([36, 48, 60, 72, 84, 96])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([180, 120, 90, 60, 45, 30, 20, 15, 10, 5])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([28, 14, 42, 70, 98])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([17, 19, 23, 29, 31, 37])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([81, 27, 54, 108, 162])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([121, 11, 22, 33, 44, 55])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([165, 330, 495, 660, 825])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([49, 98, 147, 196, 245])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([121, 44, 88, 22, 176])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([15, 25, 35, 45, 55, 65, 75, 85])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([100, 101, 102, 103, 104, 105])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([17, 19, 23, 29, 31])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([315, 105, 35, 7, 14, 21, 42, 63, 84])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([2, 3, 5, 7, 11, 13, 17, 19, 23, 29])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([13, 26, 39, 52, 65])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([15, 25, 35, 45, 55])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([1001, 10010, 100100, 1001000, 10010000])) === JSON.stringify(Error: list index out of range));\n    console.assert(JSON.stringify(candidate([7, 49, 343, 2401, 16807])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([2, 4, 6, 8, 10, 12, 14, 16, 18, 20])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([19, 38, 57, 76, 95, 114, 133, 152])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([14, 21, 35, 49, 70])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([33, 66, 99, 132, 165, 198])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([18, 24, 30, 36, 42, 48])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([22, 44, 66, 88, 110])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([84, 56, 28, 14, 7, 49, 35])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([48, 64, 80, 96, 112, 128])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([1024, 2048, 4096, 8192, 16384, 32768])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([56, 63, 70, 77, 84, 91])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([99, 33, 66, 132, 264])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([100000, 50000, 25000, 12500, 6250])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([77, 91, 143, 1001, 1001, 143])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([100, 200, 300, 400, 500, 600, 700])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([77, 55, 99, 110, 132])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([30, 45, 60, 15, 90])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([72, 24, 16, 8, 40])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([42, 21, 7, 14, 28])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([77, 143, 169, 187, 209, 221, 247, 299, 323, 341])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([15, 20, 25, 30, 35, 40, 45, 50])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([121, 143, 169, 187, 209])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([14, 21, 28, 35, 42, 49, 56, 63])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([14, 21, 28, 35, 42, 49])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([49, 147, 245, 343, 441, 539])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([22, 15, 10, 18, 30])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([64, 32, 16, 8, 4, 2, 1])) === JSON.stringify(False));\n    console.assert(JSON.stringify(candidate([101, 103, 107, 109, 113, 127, 131, 137, 139, 149])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([9, 18, 27, 36, 45, 54, 63, 72, 81])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([16, 32, 64, 128, 256, 512, 1024])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([102, 204, 306, 408, 510])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([1000, 2000, 3000, 4000, 5000])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([60, 120, 180, 240, 300, 360])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([42, 28, 70, 14, 35])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([22, 33, 44, 55, 66])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([77, 49, 35, 21, 14, 7])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([23, 46, 69, 92, 115])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([16, 8, 4, 2, 1])) === JSON.stringify(False));\n    console.assert(JSON.stringify(candidate([101, 202, 303, 404, 505])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([102, 68, 34, 17, 51, 85])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([13, 26, 39, 52, 65, 78, 91, 104, 117])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([100, 105, 140, 210, 70])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([11, 22, 33, 44, 55, 66])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([17, 34, 51, 68, 85, 102, 119, 136, 153])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([256, 512, 1024, 2048, 4096, 8192, 16384])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([1000, 500, 250, 125, 2000, 10000, 2500])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([30, 45, 60, 75, 90, 105, 120])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([12, 18, 24, 30, 36, 42])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([25, 45, 65, 85, 105])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([100, 200, 150, 300, 250])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([14, 28, 42, 56, 70])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([81, 135, 225, 315, 405, 525, 675])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([121, 132, 220, 110, 55])) === JSON.stringify(True));\n}",
+    "typescript": "function check(candidate: Function): void {\n    console.assert(JSON.stringify(candidate([12,15,18,20,25])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([7,21,3])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([8,4,12,6])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([2,3,5,7,11])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([2,4,6,8,10])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([1,2,3,4])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([18,9,27,3,6])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([3,9,6,18,27])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([1,2,3,4,5])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([37,49,111,143,169])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([100,200,400,800,1600])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([22,44,11,66,33])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([100,200,300,400,500])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([83,97,101,103,107])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([100000,99998,99999,99997,99996])) === JSON.stringify(False));\n    console.assert(JSON.stringify(candidate([10,5,9,3,15])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([105,70,30,210,42])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([30,42,70,105,35])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([5,2,6,2])) === JSON.stringify(False));\n    console.assert(JSON.stringify(candidate([56, 72, 88, 104, 120, 136, 152])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([121, 132, 143, 154, 165, 176, 187, 198, 209])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([48, 64, 80, 96, 112])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([17, 34, 51, 68, 85, 102, 119])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([210, 315, 420, 525, 630, 735])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([105, 45, 63, 21, 315])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([100, 50, 25, 125, 200, 150])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([91, 182, 273, 364, 455])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([121, 132, 143, 154, 165, 176])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([16, 32, 48, 64, 80, 96, 112, 128, 144])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([70, 35, 28, 56, 14, 18])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([14, 21, 28, 35, 42, 49, 56, 63, 70])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([32, 48, 64, 80, 96, 112])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([31, 62, 93, 124, 155, 186, 217, 248, 279, 310])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([30, 25, 20, 15, 10, 5])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([30, 45, 60, 75, 90, 105])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([44, 55, 66, 77, 88, 99, 110, 121])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([15, 20, 25, 30, 35])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([33, 66, 99, 132, 165])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([49, 14, 7, 98, 28])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([6, 8, 10, 12, 14, 16, 18, 20])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([21, 42, 63, 84, 105, 126, 147, 168, 189])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([49, 42, 28, 35, 70])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([123, 246, 369, 492, 615, 738, 861, 984])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([84, 126, 168, 210, 252, 294, 336, 378, 420])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([84, 28, 42, 70, 56])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([101, 202, 303, 404, 505, 606])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([56, 14, 28, 7, 98, 49])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([45, 30, 60, 90, 120, 150])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([100, 50, 75, 25, 150])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([15, 25, 35, 45, 55, 65])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([23, 46, 69, 92, 115, 138, 161, 184])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([121, 221, 143, 169, 13])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([100, 200, 300, 400, 500])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([462, 882, 924, 1092, 1260])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([360, 720, 1080, 1440, 1800, 2160])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([1000, 500, 250, 125, 625])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([48, 120, 180, 240, 300])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([16, 32, 48, 64, 80, 96, 112, 128, 144, 160, 176, 192, 208, 224, 240])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([210, 70, 35, 14, 105])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([1024, 2048, 512, 256, 128])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([56, 112, 168, 224, 280])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([100, 25, 50, 20, 40])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([24, 36, 48, 12, 60])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([99, 33, 66, 22, 11, 132])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([21, 42, 63, 84, 105])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([13, 26, 39, 52, 65, 78])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([30, 45, 60, 75, 90])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([77, 154, 231, 308, 385])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([91, 130, 169, 182, 273, 338])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([22, 15, 45, 33, 10, 55])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([18, 27, 36, 45, 54, 63, 72, 81, 90])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([111, 222, 333, 444, 555, 666, 777, 888, 999])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([171, 342, 513, 684, 855])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([33, 55, 66, 88, 110, 121, 132, 143])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([45, 90, 135, 180, 225])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([20, 40, 60, 80, 100, 120, 140, 160, 180])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([100, 50, 25, 20, 125])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([18, 24, 30, 36, 42])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([1000, 250, 500, 200, 750, 125, 375, 625, 875, 1250])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([102, 136, 170, 204, 238, 272, 306, 340, 374])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([19, 38, 57, 76, 95, 114, 133, 152, 171, 190])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([27, 54, 81, 108, 135, 162, 189, 216])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([119, 238, 357, 476, 595])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([81, 27, 54, 162, 324, 486])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([84, 12, 14, 21, 63])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([15, 30, 45, 60, 75, 90, 105])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([18, 27, 36, 45, 54, 63, 72, 81, 90, 99, 108])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([49, 63, 77, 91, 105, 119, 133, 147, 161, 175, 189, 203, 217])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([72, 108, 144, 180, 216, 252, 288, 324, 360, 396])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([225, 150, 100, 50, 25, 75])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([121, 110, 99, 88, 77, 66, 55, 44, 33, 22, 11])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([22, 44, 66, 88, 110, 132, 154, 176, 198])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([1000, 500, 250, 125, 2000])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([135, 90, 45, 60, 30])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([9, 18, 27, 36, 45, 54])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([17, 34, 51, 68, 85])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([105, 15, 35, 21, 63])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([81, 135, 207, 279, 351, 423])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([36, 48, 60, 72, 84, 96])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([180, 120, 90, 60, 45, 30, 20, 15, 10, 5])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([28, 14, 42, 70, 98])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([17, 19, 23, 29, 31, 37])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([81, 27, 54, 108, 162])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([121, 11, 22, 33, 44, 55])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([165, 330, 495, 660, 825])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([49, 98, 147, 196, 245])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([121, 44, 88, 22, 176])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([15, 25, 35, 45, 55, 65, 75, 85])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([100, 101, 102, 103, 104, 105])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([17, 19, 23, 29, 31])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([315, 105, 35, 7, 14, 21, 42, 63, 84])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([2, 3, 5, 7, 11, 13, 17, 19, 23, 29])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([13, 26, 39, 52, 65])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([15, 25, 35, 45, 55])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([1001, 10010, 100100, 1001000, 10010000])) === JSON.stringify(Error: list index out of range));\n    console.assert(JSON.stringify(candidate([7, 49, 343, 2401, 16807])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([2, 4, 6, 8, 10, 12, 14, 16, 18, 20])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([19, 38, 57, 76, 95, 114, 133, 152])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([14, 21, 35, 49, 70])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([33, 66, 99, 132, 165, 198])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([18, 24, 30, 36, 42, 48])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([22, 44, 66, 88, 110])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([84, 56, 28, 14, 7, 49, 35])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([48, 64, 80, 96, 112, 128])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([1024, 2048, 4096, 8192, 16384, 32768])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([56, 63, 70, 77, 84, 91])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([99, 33, 66, 132, 264])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([100000, 50000, 25000, 12500, 6250])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([77, 91, 143, 1001, 1001, 143])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([100, 200, 300, 400, 500, 600, 700])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([77, 55, 99, 110, 132])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([30, 45, 60, 15, 90])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([72, 24, 16, 8, 40])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([42, 21, 7, 14, 28])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([77, 143, 169, 187, 209, 221, 247, 299, 323, 341])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([15, 20, 25, 30, 35, 40, 45, 50])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([121, 143, 169, 187, 209])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([14, 21, 28, 35, 42, 49, 56, 63])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([14, 21, 28, 35, 42, 49])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([49, 147, 245, 343, 441, 539])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([22, 15, 10, 18, 30])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([64, 32, 16, 8, 4, 2, 1])) === JSON.stringify(False));\n    console.assert(JSON.stringify(candidate([101, 103, 107, 109, 113, 127, 131, 137, 139, 149])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([9, 18, 27, 36, 45, 54, 63, 72, 81])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([16, 32, 64, 128, 256, 512, 1024])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([102, 204, 306, 408, 510])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([1000, 2000, 3000, 4000, 5000])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([60, 120, 180, 240, 300, 360])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([42, 28, 70, 14, 35])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([22, 33, 44, 55, 66])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([77, 49, 35, 21, 14, 7])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([23, 46, 69, 92, 115])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([16, 8, 4, 2, 1])) === JSON.stringify(False));\n    console.assert(JSON.stringify(candidate([101, 202, 303, 404, 505])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([102, 68, 34, 17, 51, 85])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([13, 26, 39, 52, 65, 78, 91, 104, 117])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([100, 105, 140, 210, 70])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([11, 22, 33, 44, 55, 66])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([17, 34, 51, 68, 85, 102, 119, 136, 153])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([256, 512, 1024, 2048, 4096, 8192, 16384])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([1000, 500, 250, 125, 2000, 10000, 2500])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([30, 45, 60, 75, 90, 105, 120])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([12, 18, 24, 30, 36, 42])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([25, 45, 65, 85, 105])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([100, 200, 150, 300, 250])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([14, 28, 42, 56, 70])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([81, 135, 225, 315, 405, 525, 675])) === JSON.stringify(True));\n    console.assert(JSON.stringify(candidate([121, 132, 220, 110, 55])) === JSON.stringify(True));\n}",
+    "golang": "func check(candidate func([]int, int) []int) {\n    assert reflect.DeepEqual(candidate([]int{12,15,18,20,25}), True)\n    assert reflect.DeepEqual(candidate([]int{7,21,3}), True)\n    assert reflect.DeepEqual(candidate([]int{8,4,12,6}), True)\n    assert reflect.DeepEqual(candidate([]int{2,3,5,7,11}), True)\n    assert reflect.DeepEqual(candidate([]int{2,4,6,8,10}), True)\n    assert reflect.DeepEqual(candidate([]int{1,2,3,4}), True)\n    assert reflect.DeepEqual(candidate([]int{18,9,27,3,6}), True)\n    assert reflect.DeepEqual(candidate([]int{3,9,6,18,27}), True)\n    assert reflect.DeepEqual(candidate([]int{1,2,3,4,5}), True)\n    assert reflect.DeepEqual(candidate([]int{37,49,111,143,169}), True)\n    assert reflect.DeepEqual(candidate([]int{100,200,400,800,1600}), True)\n    assert reflect.DeepEqual(candidate([]int{22,44,11,66,33}), True)\n    assert reflect.DeepEqual(candidate([]int{100,200,300,400,500}), True)\n    assert reflect.DeepEqual(candidate([]int{83,97,101,103,107}), True)\n    assert reflect.DeepEqual(candidate([]int{100000,99998,99999,99997,99996}), False)\n    assert reflect.DeepEqual(candidate([]int{10,5,9,3,15}), True)\n    assert reflect.DeepEqual(candidate([]int{105,70,30,210,42}), True)\n    assert reflect.DeepEqual(candidate([]int{30,42,70,105,35}), True)\n    assert reflect.DeepEqual(candidate([]int{5,2,6,2}), False)\n    assert reflect.DeepEqual(candidate([]int{56, 72, 88, 104, 120, 136, 152}), True)\n    assert reflect.DeepEqual(candidate([]int{121, 132, 143, 154, 165, 176, 187, 198, 209}), True)\n    assert reflect.DeepEqual(candidate([]int{48, 64, 80, 96, 112}), True)\n    assert reflect.DeepEqual(candidate([]int{17, 34, 51, 68, 85, 102, 119}), True)\n    assert reflect.DeepEqual(candidate([]int{210, 315, 420, 525, 630, 735}), True)\n    assert reflect.DeepEqual(candidate([]int{105, 45, 63, 21, 315}), True)\n    assert reflect.DeepEqual(candidate([]int{100, 50, 25, 125, 200, 150}), True)\n    assert reflect.DeepEqual(candidate([]int{91, 182, 273, 364, 455}), True)\n    assert reflect.DeepEqual(candidate([]int{121, 132, 143, 154, 165, 176}), True)\n    assert reflect.DeepEqual(candidate([]int{16, 32, 48, 64, 80, 96, 112, 128, 144}), True)\n    assert reflect.DeepEqual(candidate([]int{70, 35, 28, 56, 14, 18}), True)\n    assert reflect.DeepEqual(candidate([]int{14, 21, 28, 35, 42, 49, 56, 63, 70}), True)\n    assert reflect.DeepEqual(candidate([]int{32, 48, 64, 80, 96, 112}), True)\n    assert reflect.DeepEqual(candidate([]int{31, 62, 93, 124, 155, 186, 217, 248, 279, 310}), True)\n    assert reflect.DeepEqual(candidate([]int{30, 25, 20, 15, 10, 5}), True)\n    assert reflect.DeepEqual(candidate([]int{30, 45, 60, 75, 90, 105}), True)\n    assert reflect.DeepEqual(candidate([]int{44, 55, 66, 77, 88, 99, 110, 121}), True)\n    assert reflect.DeepEqual(candidate([]int{15, 20, 25, 30, 35}), True)\n    assert reflect.DeepEqual(candidate([]int{33, 66, 99, 132, 165}), True)\n    assert reflect.DeepEqual(candidate([]int{49, 14, 7, 98, 28}), True)\n    assert reflect.DeepEqual(candidate([]int{6, 8, 10, 12, 14, 16, 18, 20}), True)\n    assert reflect.DeepEqual(candidate([]int{21, 42, 63, 84, 105, 126, 147, 168, 189}), True)\n    assert reflect.DeepEqual(candidate([]int{49, 42, 28, 35, 70}), True)\n    assert reflect.DeepEqual(candidate([]int{123, 246, 369, 492, 615, 738, 861, 984}), True)\n    assert reflect.DeepEqual(candidate([]int{84, 126, 168, 210, 252, 294, 336, 378, 420}), True)\n    assert reflect.DeepEqual(candidate([]int{84, 28, 42, 70, 56}), True)\n    assert reflect.DeepEqual(candidate([]int{101, 202, 303, 404, 505, 606}), True)\n    assert reflect.DeepEqual(candidate([]int{56, 14, 28, 7, 98, 49}), True)\n    assert reflect.DeepEqual(candidate([]int{45, 30, 60, 90, 120, 150}), True)\n    assert reflect.DeepEqual(candidate([]int{100, 50, 75, 25, 150}), True)\n    assert reflect.DeepEqual(candidate([]int{15, 25, 35, 45, 55, 65}), True)\n    assert reflect.DeepEqual(candidate([]int{23, 46, 69, 92, 115, 138, 161, 184}), True)\n    assert reflect.DeepEqual(candidate([]int{121, 221, 143, 169, 13}), True)\n    assert reflect.DeepEqual(candidate([]int{100, 200, 300, 400, 500}), True)\n    assert reflect.DeepEqual(candidate([]int{462, 882, 924, 1092, 1260}), True)\n    assert reflect.DeepEqual(candidate([]int{360, 720, 1080, 1440, 1800, 2160}), True)\n    assert reflect.DeepEqual(candidate([]int{1000, 500, 250, 125, 625}), True)\n    assert reflect.DeepEqual(candidate([]int{48, 120, 180, 240, 300}), True)\n    assert reflect.DeepEqual(candidate([]int{16, 32, 48, 64, 80, 96, 112, 128, 144, 160, 176, 192, 208, 224, 240}), True)\n    assert reflect.DeepEqual(candidate([]int{210, 70, 35, 14, 105}), True)\n    assert reflect.DeepEqual(candidate([]int{1024, 2048, 512, 256, 128}), True)\n    assert reflect.DeepEqual(candidate([]int{56, 112, 168, 224, 280}), True)\n    assert reflect.DeepEqual(candidate([]int{100, 25, 50, 20, 40}), True)\n    assert reflect.DeepEqual(candidate([]int{24, 36, 48, 12, 60}), True)\n    assert reflect.DeepEqual(candidate([]int{99, 33, 66, 22, 11, 132}), True)\n    assert reflect.DeepEqual(candidate([]int{21, 42, 63, 84, 105}), True)\n    assert reflect.DeepEqual(candidate([]int{13, 26, 39, 52, 65, 78}), True)\n    assert reflect.DeepEqual(candidate([]int{30, 45, 60, 75, 90}), True)\n    assert reflect.DeepEqual(candidate([]int{77, 154, 231, 308, 385}), True)\n    assert reflect.DeepEqual(candidate([]int{91, 130, 169, 182, 273, 338}), True)\n    assert reflect.DeepEqual(candidate([]int{22, 15, 45, 33, 10, 55}), True)\n    assert reflect.DeepEqual(candidate([]int{18, 27, 36, 45, 54, 63, 72, 81, 90}), True)\n    assert reflect.DeepEqual(candidate([]int{111, 222, 333, 444, 555, 666, 777, 888, 999}), True)\n    assert reflect.DeepEqual(candidate([]int{171, 342, 513, 684, 855}), True)\n    assert reflect.DeepEqual(candidate([]int{33, 55, 66, 88, 110, 121, 132, 143}), True)\n    assert reflect.DeepEqual(candidate([]int{4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28}), True)\n    assert reflect.DeepEqual(candidate([]int{45, 90, 135, 180, 225}), True)\n    assert reflect.DeepEqual(candidate([]int{20, 40, 60, 80, 100, 120, 140, 160, 180}), True)\n    assert reflect.DeepEqual(candidate([]int{100, 50, 25, 20, 125}), True)\n    assert reflect.DeepEqual(candidate([]int{18, 24, 30, 36, 42}), True)\n    assert reflect.DeepEqual(candidate([]int{1000, 250, 500, 200, 750, 125, 375, 625, 875, 1250}), True)\n    assert reflect.DeepEqual(candidate([]int{102, 136, 170, 204, 238, 272, 306, 340, 374}), True)\n    assert reflect.DeepEqual(candidate([]int{19, 38, 57, 76, 95, 114, 133, 152, 171, 190}), True)\n    assert reflect.DeepEqual(candidate([]int{27, 54, 81, 108, 135, 162, 189, 216}), True)\n    assert reflect.DeepEqual(candidate([]int{119, 238, 357, 476, 595}), True)\n    assert reflect.DeepEqual(candidate([]int{81, 27, 54, 162, 324, 486}), True)\n    assert reflect.DeepEqual(candidate([]int{84, 12, 14, 21, 63}), True)\n    assert reflect.DeepEqual(candidate([]int{15, 30, 45, 60, 75, 90, 105}), True)\n    assert reflect.DeepEqual(candidate([]int{18, 27, 36, 45, 54, 63, 72, 81, 90, 99, 108}), True)\n    assert reflect.DeepEqual(candidate([]int{49, 63, 77, 91, 105, 119, 133, 147, 161, 175, 189, 203, 217}), True)\n    assert reflect.DeepEqual(candidate([]int{72, 108, 144, 180, 216, 252, 288, 324, 360, 396}), True)\n    assert reflect.DeepEqual(candidate([]int{225, 150, 100, 50, 25, 75}), True)\n    assert reflect.DeepEqual(candidate([]int{121, 110, 99, 88, 77, 66, 55, 44, 33, 22, 11}), True)\n    assert reflect.DeepEqual(candidate([]int{22, 44, 66, 88, 110, 132, 154, 176, 198}), True)\n    assert reflect.DeepEqual(candidate([]int{1000, 500, 250, 125, 2000}), True)\n    assert reflect.DeepEqual(candidate([]int{135, 90, 45, 60, 30}), True)\n    assert reflect.DeepEqual(candidate([]int{9, 18, 27, 36, 45, 54}), True)\n    assert reflect.DeepEqual(candidate([]int{17, 34, 51, 68, 85}), True)\n    assert reflect.DeepEqual(candidate([]int{105, 15, 35, 21, 63}), True)\n    assert reflect.DeepEqual(candidate([]int{81, 135, 207, 279, 351, 423}), True)\n    assert reflect.DeepEqual(candidate([]int{36, 48, 60, 72, 84, 96}), True)\n    assert reflect.DeepEqual(candidate([]int{180, 120, 90, 60, 45, 30, 20, 15, 10, 5}), True)\n    assert reflect.DeepEqual(candidate([]int{28, 14, 42, 70, 98}), True)\n    assert reflect.DeepEqual(candidate([]int{17, 19, 23, 29, 31, 37}), True)\n    assert reflect.DeepEqual(candidate([]int{81, 27, 54, 108, 162}), True)\n    assert reflect.DeepEqual(candidate([]int{121, 11, 22, 33, 44, 55}), True)\n    assert reflect.DeepEqual(candidate([]int{165, 330, 495, 660, 825}), True)\n    assert reflect.DeepEqual(candidate([]int{49, 98, 147, 196, 245}), True)\n    assert reflect.DeepEqual(candidate([]int{121, 44, 88, 22, 176}), True)\n    assert reflect.DeepEqual(candidate([]int{15, 25, 35, 45, 55, 65, 75, 85}), True)\n    assert reflect.DeepEqual(candidate([]int{100, 101, 102, 103, 104, 105}), True)\n    assert reflect.DeepEqual(candidate([]int{17, 19, 23, 29, 31}), True)\n    assert reflect.DeepEqual(candidate([]int{315, 105, 35, 7, 14, 21, 42, 63, 84}), True)\n    assert reflect.DeepEqual(candidate([]int{2, 3, 5, 7, 11, 13, 17, 19, 23, 29}), True)\n    assert reflect.DeepEqual(candidate([]int{13, 26, 39, 52, 65}), True)\n    assert reflect.DeepEqual(candidate([]int{15, 25, 35, 45, 55}), True)\n    assert reflect.DeepEqual(candidate([]int{1001, 10010, 100100, 1001000, 10010000}), Error: list index out of range)\n    assert reflect.DeepEqual(candidate([]int{7, 49, 343, 2401, 16807}), True)\n    assert reflect.DeepEqual(candidate([]int{2, 4, 6, 8, 10, 12, 14, 16, 18, 20}), True)\n    assert reflect.DeepEqual(candidate([]int{19, 38, 57, 76, 95, 114, 133, 152}), True)\n    assert reflect.DeepEqual(candidate([]int{14, 21, 35, 49, 70}), True)\n    assert reflect.DeepEqual(candidate([]int{33, 66, 99, 132, 165, 198}), True)\n    assert reflect.DeepEqual(candidate([]int{18, 24, 30, 36, 42, 48}), True)\n    assert reflect.DeepEqual(candidate([]int{22, 44, 66, 88, 110}), True)\n    assert reflect.DeepEqual(candidate([]int{84, 56, 28, 14, 7, 49, 35}), True)\n    assert reflect.DeepEqual(candidate([]int{48, 64, 80, 96, 112, 128}), True)\n    assert reflect.DeepEqual(candidate([]int{1024, 2048, 4096, 8192, 16384, 32768}), True)\n    assert reflect.DeepEqual(candidate([]int{56, 63, 70, 77, 84, 91}), True)\n    assert reflect.DeepEqual(candidate([]int{99, 33, 66, 132, 264}), True)\n    assert reflect.DeepEqual(candidate([]int{100000, 50000, 25000, 12500, 6250}), True)\n    assert reflect.DeepEqual(candidate([]int{77, 91, 143, 1001, 1001, 143}), True)\n    assert reflect.DeepEqual(candidate([]int{100, 200, 300, 400, 500, 600, 700}), True)\n    assert reflect.DeepEqual(candidate([]int{77, 55, 99, 110, 132}), True)\n    assert reflect.DeepEqual(candidate([]int{30, 45, 60, 15, 90}), True)\n    assert reflect.DeepEqual(candidate([]int{72, 24, 16, 8, 40}), True)\n    assert reflect.DeepEqual(candidate([]int{42, 21, 7, 14, 28}), True)\n    assert reflect.DeepEqual(candidate([]int{77, 143, 169, 187, 209, 221, 247, 299, 323, 341}), True)\n    assert reflect.DeepEqual(candidate([]int{15, 20, 25, 30, 35, 40, 45, 50}), True)\n    assert reflect.DeepEqual(candidate([]int{121, 143, 169, 187, 209}), True)\n    assert reflect.DeepEqual(candidate([]int{14, 21, 28, 35, 42, 49, 56, 63}), True)\n    assert reflect.DeepEqual(candidate([]int{14, 21, 28, 35, 42, 49}), True)\n    assert reflect.DeepEqual(candidate([]int{49, 147, 245, 343, 441, 539}), True)\n    assert reflect.DeepEqual(candidate([]int{22, 15, 10, 18, 30}), True)\n    assert reflect.DeepEqual(candidate([]int{64, 32, 16, 8, 4, 2, 1}), False)\n    assert reflect.DeepEqual(candidate([]int{101, 103, 107, 109, 113, 127, 131, 137, 139, 149}), True)\n    assert reflect.DeepEqual(candidate([]int{9, 18, 27, 36, 45, 54, 63, 72, 81}), True)\n    assert reflect.DeepEqual(candidate([]int{16, 32, 64, 128, 256, 512, 1024}), True)\n    assert reflect.DeepEqual(candidate([]int{102, 204, 306, 408, 510}), True)\n    assert reflect.DeepEqual(candidate([]int{1000, 2000, 3000, 4000, 5000}), True)\n    assert reflect.DeepEqual(candidate([]int{60, 120, 180, 240, 300, 360}), True)\n    assert reflect.DeepEqual(candidate([]int{42, 28, 70, 14, 35}), True)\n    assert reflect.DeepEqual(candidate([]int{22, 33, 44, 55, 66}), True)\n    assert reflect.DeepEqual(candidate([]int{77, 49, 35, 21, 14, 7}), True)\n    assert reflect.DeepEqual(candidate([]int{23, 46, 69, 92, 115}), True)\n    assert reflect.DeepEqual(candidate([]int{16, 8, 4, 2, 1}), False)\n    assert reflect.DeepEqual(candidate([]int{101, 202, 303, 404, 505}), True)\n    assert reflect.DeepEqual(candidate([]int{102, 68, 34, 17, 51, 85}), True)\n    assert reflect.DeepEqual(candidate([]int{13, 26, 39, 52, 65, 78, 91, 104, 117}), True)\n    assert reflect.DeepEqual(candidate([]int{100, 105, 140, 210, 70}), True)\n    assert reflect.DeepEqual(candidate([]int{11, 22, 33, 44, 55, 66}), True)\n    assert reflect.DeepEqual(candidate([]int{17, 34, 51, 68, 85, 102, 119, 136, 153}), True)\n    assert reflect.DeepEqual(candidate([]int{256, 512, 1024, 2048, 4096, 8192, 16384}), True)\n    assert reflect.DeepEqual(candidate([]int{1000, 500, 250, 125, 2000, 10000, 2500}), True)\n    assert reflect.DeepEqual(candidate([]int{30, 45, 60, 75, 90, 105, 120}), True)\n    assert reflect.DeepEqual(candidate([]int{12, 18, 24, 30, 36, 42}), True)\n    assert reflect.DeepEqual(candidate([]int{25, 45, 65, 85, 105}), True)\n    assert reflect.DeepEqual(candidate([]int{100, 200, 150, 300, 250}), True)\n    assert reflect.DeepEqual(candidate([]int{14, 28, 42, 56, 70}), True)\n    assert reflect.DeepEqual(candidate([]int{81, 135, 225, 315, 405, 525, 675}), True)\n    assert reflect.DeepEqual(candidate([]int{121, 132, 220, 110, 55}), True)\n}",
+    "rust": "fn check(candidate: fn(Vec<i32>, i32) -> Vec<i32>) {\n    assert_eq!(candidate(vec![12,15,18,20,25]), True);\n    assert_eq!(candidate(vec![7,21,3]), True);\n    assert_eq!(candidate(vec![8,4,12,6]), True);\n    assert_eq!(candidate(vec![2,3,5,7,11]), True);\n    assert_eq!(candidate(vec![2,4,6,8,10]), True);\n    assert_eq!(candidate(vec![1,2,3,4]), True);\n    assert_eq!(candidate(vec![18,9,27,3,6]), True);\n    assert_eq!(candidate(vec![3,9,6,18,27]), True);\n    assert_eq!(candidate(vec![1,2,3,4,5]), True);\n    assert_eq!(candidate(vec![37,49,111,143,169]), True);\n    assert_eq!(candidate(vec![100,200,400,800,1600]), True);\n    assert_eq!(candidate(vec![22,44,11,66,33]), True);\n    assert_eq!(candidate(vec![100,200,300,400,500]), True);\n    assert_eq!(candidate(vec![83,97,101,103,107]), True);\n    assert_eq!(candidate(vec![100000,99998,99999,99997,99996]), False);\n    assert_eq!(candidate(vec![10,5,9,3,15]), True);\n    assert_eq!(candidate(vec![105,70,30,210,42]), True);\n    assert_eq!(candidate(vec![30,42,70,105,35]), True);\n    assert_eq!(candidate(vec![5,2,6,2]), False);\n    assert_eq!(candidate(vec![56, 72, 88, 104, 120, 136, 152]), True);\n    assert_eq!(candidate(vec![121, 132, 143, 154, 165, 176, 187, 198, 209]), True);\n    assert_eq!(candidate(vec![48, 64, 80, 96, 112]), True);\n    assert_eq!(candidate(vec![17, 34, 51, 68, 85, 102, 119]), True);\n    assert_eq!(candidate(vec![210, 315, 420, 525, 630, 735]), True);\n    assert_eq!(candidate(vec![105, 45, 63, 21, 315]), True);\n    assert_eq!(candidate(vec![100, 50, 25, 125, 200, 150]), True);\n    assert_eq!(candidate(vec![91, 182, 273, 364, 455]), True);\n    assert_eq!(candidate(vec![121, 132, 143, 154, 165, 176]), True);\n    assert_eq!(candidate(vec![16, 32, 48, 64, 80, 96, 112, 128, 144]), True);\n    assert_eq!(candidate(vec![70, 35, 28, 56, 14, 18]), True);\n    assert_eq!(candidate(vec![14, 21, 28, 35, 42, 49, 56, 63, 70]), True);\n    assert_eq!(candidate(vec![32, 48, 64, 80, 96, 112]), True);\n    assert_eq!(candidate(vec![31, 62, 93, 124, 155, 186, 217, 248, 279, 310]), True);\n    assert_eq!(candidate(vec![30, 25, 20, 15, 10, 5]), True);\n    assert_eq!(candidate(vec![30, 45, 60, 75, 90, 105]), True);\n    assert_eq!(candidate(vec![44, 55, 66, 77, 88, 99, 110, 121]), True);\n    assert_eq!(candidate(vec![15, 20, 25, 30, 35]), True);\n    assert_eq!(candidate(vec![33, 66, 99, 132, 165]), True);\n    assert_eq!(candidate(vec![49, 14, 7, 98, 28]), True);\n    assert_eq!(candidate(vec![6, 8, 10, 12, 14, 16, 18, 20]), True);\n    assert_eq!(candidate(vec![21, 42, 63, 84, 105, 126, 147, 168, 189]), True);\n    assert_eq!(candidate(vec![49, 42, 28, 35, 70]), True);\n    assert_eq!(candidate(vec![123, 246, 369, 492, 615, 738, 861, 984]), True);\n    assert_eq!(candidate(vec![84, 126, 168, 210, 252, 294, 336, 378, 420]), True);\n    assert_eq!(candidate(vec![84, 28, 42, 70, 56]), True);\n    assert_eq!(candidate(vec![101, 202, 303, 404, 505, 606]), True);\n    assert_eq!(candidate(vec![56, 14, 28, 7, 98, 49]), True);\n    assert_eq!(candidate(vec![45, 30, 60, 90, 120, 150]), True);\n    assert_eq!(candidate(vec![100, 50, 75, 25, 150]), True);\n    assert_eq!(candidate(vec![15, 25, 35, 45, 55, 65]), True);\n    assert_eq!(candidate(vec![23, 46, 69, 92, 115, 138, 161, 184]), True);\n    assert_eq!(candidate(vec![121, 221, 143, 169, 13]), True);\n    assert_eq!(candidate(vec![100, 200, 300, 400, 500]), True);\n    assert_eq!(candidate(vec![462, 882, 924, 1092, 1260]), True);\n    assert_eq!(candidate(vec![360, 720, 1080, 1440, 1800, 2160]), True);\n    assert_eq!(candidate(vec![1000, 500, 250, 125, 625]), True);\n    assert_eq!(candidate(vec![48, 120, 180, 240, 300]), True);\n    assert_eq!(candidate(vec![16, 32, 48, 64, 80, 96, 112, 128, 144, 160, 176, 192, 208, 224, 240]), True);\n    assert_eq!(candidate(vec![210, 70, 35, 14, 105]), True);\n    assert_eq!(candidate(vec![1024, 2048, 512, 256, 128]), True);\n    assert_eq!(candidate(vec![56, 112, 168, 224, 280]), True);\n    assert_eq!(candidate(vec![100, 25, 50, 20, 40]), True);\n    assert_eq!(candidate(vec![24, 36, 48, 12, 60]), True);\n    assert_eq!(candidate(vec![99, 33, 66, 22, 11, 132]), True);\n    assert_eq!(candidate(vec![21, 42, 63, 84, 105]), True);\n    assert_eq!(candidate(vec![13, 26, 39, 52, 65, 78]), True);\n    assert_eq!(candidate(vec![30, 45, 60, 75, 90]), True);\n    assert_eq!(candidate(vec![77, 154, 231, 308, 385]), True);\n    assert_eq!(candidate(vec![91, 130, 169, 182, 273, 338]), True);\n    assert_eq!(candidate(vec![22, 15, 45, 33, 10, 55]), True);\n    assert_eq!(candidate(vec![18, 27, 36, 45, 54, 63, 72, 81, 90]), True);\n    assert_eq!(candidate(vec![111, 222, 333, 444, 555, 666, 777, 888, 999]), True);\n    assert_eq!(candidate(vec![171, 342, 513, 684, 855]), True);\n    assert_eq!(candidate(vec![33, 55, 66, 88, 110, 121, 132, 143]), True);\n    assert_eq!(candidate(vec![4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28]), True);\n    assert_eq!(candidate(vec![45, 90, 135, 180, 225]), True);\n    assert_eq!(candidate(vec![20, 40, 60, 80, 100, 120, 140, 160, 180]), True);\n    assert_eq!(candidate(vec![100, 50, 25, 20, 125]), True);\n    assert_eq!(candidate(vec![18, 24, 30, 36, 42]), True);\n    assert_eq!(candidate(vec![1000, 250, 500, 200, 750, 125, 375, 625, 875, 1250]), True);\n    assert_eq!(candidate(vec![102, 136, 170, 204, 238, 272, 306, 340, 374]), True);\n    assert_eq!(candidate(vec![19, 38, 57, 76, 95, 114, 133, 152, 171, 190]), True);\n    assert_eq!(candidate(vec![27, 54, 81, 108, 135, 162, 189, 216]), True);\n    assert_eq!(candidate(vec![119, 238, 357, 476, 595]), True);\n    assert_eq!(candidate(vec![81, 27, 54, 162, 324, 486]), True);\n    assert_eq!(candidate(vec![84, 12, 14, 21, 63]), True);\n    assert_eq!(candidate(vec![15, 30, 45, 60, 75, 90, 105]), True);\n    assert_eq!(candidate(vec![18, 27, 36, 45, 54, 63, 72, 81, 90, 99, 108]), True);\n    assert_eq!(candidate(vec![49, 63, 77, 91, 105, 119, 133, 147, 161, 175, 189, 203, 217]), True);\n    assert_eq!(candidate(vec![72, 108, 144, 180, 216, 252, 288, 324, 360, 396]), True);\n    assert_eq!(candidate(vec![225, 150, 100, 50, 25, 75]), True);\n    assert_eq!(candidate(vec![121, 110, 99, 88, 77, 66, 55, 44, 33, 22, 11]), True);\n    assert_eq!(candidate(vec![22, 44, 66, 88, 110, 132, 154, 176, 198]), True);\n    assert_eq!(candidate(vec![1000, 500, 250, 125, 2000]), True);\n    assert_eq!(candidate(vec![135, 90, 45, 60, 30]), True);\n    assert_eq!(candidate(vec![9, 18, 27, 36, 45, 54]), True);\n    assert_eq!(candidate(vec![17, 34, 51, 68, 85]), True);\n    assert_eq!(candidate(vec![105, 15, 35, 21, 63]), True);\n    assert_eq!(candidate(vec![81, 135, 207, 279, 351, 423]), True);\n    assert_eq!(candidate(vec![36, 48, 60, 72, 84, 96]), True);\n    assert_eq!(candidate(vec![180, 120, 90, 60, 45, 30, 20, 15, 10, 5]), True);\n    assert_eq!(candidate(vec![28, 14, 42, 70, 98]), True);\n    assert_eq!(candidate(vec![17, 19, 23, 29, 31, 37]), True);\n    assert_eq!(candidate(vec![81, 27, 54, 108, 162]), True);\n    assert_eq!(candidate(vec![121, 11, 22, 33, 44, 55]), True);\n    assert_eq!(candidate(vec![165, 330, 495, 660, 825]), True);\n    assert_eq!(candidate(vec![49, 98, 147, 196, 245]), True);\n    assert_eq!(candidate(vec![121, 44, 88, 22, 176]), True);\n    assert_eq!(candidate(vec![15, 25, 35, 45, 55, 65, 75, 85]), True);\n    assert_eq!(candidate(vec![100, 101, 102, 103, 104, 105]), True);\n    assert_eq!(candidate(vec![17, 19, 23, 29, 31]), True);\n    assert_eq!(candidate(vec![315, 105, 35, 7, 14, 21, 42, 63, 84]), True);\n    assert_eq!(candidate(vec![2, 3, 5, 7, 11, 13, 17, 19, 23, 29]), True);\n    assert_eq!(candidate(vec![13, 26, 39, 52, 65]), True);\n    assert_eq!(candidate(vec![15, 25, 35, 45, 55]), True);\n    assert_eq!(candidate(vec![1001, 10010, 100100, 1001000, 10010000]), Error: list index out of range);\n    assert_eq!(candidate(vec![7, 49, 343, 2401, 16807]), True);\n    assert_eq!(candidate(vec![2, 4, 6, 8, 10, 12, 14, 16, 18, 20]), True);\n    assert_eq!(candidate(vec![19, 38, 57, 76, 95, 114, 133, 152]), True);\n    assert_eq!(candidate(vec![14, 21, 35, 49, 70]), True);\n    assert_eq!(candidate(vec![33, 66, 99, 132, 165, 198]), True);\n    assert_eq!(candidate(vec![18, 24, 30, 36, 42, 48]), True);\n    assert_eq!(candidate(vec![22, 44, 66, 88, 110]), True);\n    assert_eq!(candidate(vec![84, 56, 28, 14, 7, 49, 35]), True);\n    assert_eq!(candidate(vec![48, 64, 80, 96, 112, 128]), True);\n    assert_eq!(candidate(vec![1024, 2048, 4096, 8192, 16384, 32768]), True);\n    assert_eq!(candidate(vec![56, 63, 70, 77, 84, 91]), True);\n    assert_eq!(candidate(vec![99, 33, 66, 132, 264]), True);\n    assert_eq!(candidate(vec![100000, 50000, 25000, 12500, 6250]), True);\n    assert_eq!(candidate(vec![77, 91, 143, 1001, 1001, 143]), True);\n    assert_eq!(candidate(vec![100, 200, 300, 400, 500, 600, 700]), True);\n    assert_eq!(candidate(vec![77, 55, 99, 110, 132]), True);\n    assert_eq!(candidate(vec![30, 45, 60, 15, 90]), True);\n    assert_eq!(candidate(vec![72, 24, 16, 8, 40]), True);\n    assert_eq!(candidate(vec![42, 21, 7, 14, 28]), True);\n    assert_eq!(candidate(vec![77, 143, 169, 187, 209, 221, 247, 299, 323, 341]), True);\n    assert_eq!(candidate(vec![15, 20, 25, 30, 35, 40, 45, 50]), True);\n    assert_eq!(candidate(vec![121, 143, 169, 187, 209]), True);\n    assert_eq!(candidate(vec![14, 21, 28, 35, 42, 49, 56, 63]), True);\n    assert_eq!(candidate(vec![14, 21, 28, 35, 42, 49]), True);\n    assert_eq!(candidate(vec![49, 147, 245, 343, 441, 539]), True);\n    assert_eq!(candidate(vec![22, 15, 10, 18, 30]), True);\n    assert_eq!(candidate(vec![64, 32, 16, 8, 4, 2, 1]), False);\n    assert_eq!(candidate(vec![101, 103, 107, 109, 113, 127, 131, 137, 139, 149]), True);\n    assert_eq!(candidate(vec![9, 18, 27, 36, 45, 54, 63, 72, 81]), True);\n    assert_eq!(candidate(vec![16, 32, 64, 128, 256, 512, 1024]), True);\n    assert_eq!(candidate(vec![102, 204, 306, 408, 510]), True);\n    assert_eq!(candidate(vec![1000, 2000, 3000, 4000, 5000]), True);\n    assert_eq!(candidate(vec![60, 120, 180, 240, 300, 360]), True);\n    assert_eq!(candidate(vec![42, 28, 70, 14, 35]), True);\n    assert_eq!(candidate(vec![22, 33, 44, 55, 66]), True);\n    assert_eq!(candidate(vec![77, 49, 35, 21, 14, 7]), True);\n    assert_eq!(candidate(vec![23, 46, 69, 92, 115]), True);\n    assert_eq!(candidate(vec![16, 8, 4, 2, 1]), False);\n    assert_eq!(candidate(vec![101, 202, 303, 404, 505]), True);\n    assert_eq!(candidate(vec![102, 68, 34, 17, 51, 85]), True);\n    assert_eq!(candidate(vec![13, 26, 39, 52, 65, 78, 91, 104, 117]), True);\n    assert_eq!(candidate(vec![100, 105, 140, 210, 70]), True);\n    assert_eq!(candidate(vec![11, 22, 33, 44, 55, 66]), True);\n    assert_eq!(candidate(vec![17, 34, 51, 68, 85, 102, 119, 136, 153]), True);\n    assert_eq!(candidate(vec![256, 512, 1024, 2048, 4096, 8192, 16384]), True);\n    assert_eq!(candidate(vec![1000, 500, 250, 125, 2000, 10000, 2500]), True);\n    assert_eq!(candidate(vec![30, 45, 60, 75, 90, 105, 120]), True);\n    assert_eq!(candidate(vec![12, 18, 24, 30, 36, 42]), True);\n    assert_eq!(candidate(vec![25, 45, 65, 85, 105]), True);\n    assert_eq!(candidate(vec![100, 200, 150, 300, 250]), True);\n    assert_eq!(candidate(vec![14, 28, 42, 56, 70]), True);\n    assert_eq!(candidate(vec![81, 135, 225, 315, 405, 525, 675]), True);\n    assert_eq!(candidate(vec![121, 132, 220, 110, 55]), True);\n}"
+  },
+  "test_cases": [
+    {
+      "input": "nums = [12,15,18,20,25]",
+      "output": "True"
+    },
+    {
+      "input": "nums = [7,21,3]",
+      "output": "True"
+    },
+    {
+      "input": "nums = [8,4,12,6]",
+      "output": "True"
+    },
+    {
+      "input": "nums = [2,3,5,7,11]",
+      "output": "True"
+    },
+    {
+      "input": "nums = [2,4,6,8,10]",
+      "output": "True"
+    },
+    {
+      "input": "nums = [1,2,3,4]",
+      "output": "True"
+    },
+    {
+      "input": "nums = [18,9,27,3,6]",
+      "output": "True"
+    },
+    {
+      "input": "nums = [3,9,6,18,27]",
+      "output": "True"
+    },
+    {
+      "input": "nums = [1,2,3,4,5]",
+      "output": "True"
+    },
+    {
+      "input": "nums = [37,49,111,143,169]",
+      "output": "True"
+    },
+    {
+      "input": "nums = [100,200,400,800,1600]",
+      "output": "True"
+    },
+    {
+      "input": "nums = [22,44,11,66,33]",
+      "output": "True"
+    },
+    {
+      "input": "nums = [100,200,300,400,500]",
+      "output": "True"
+    },
+    {
+      "input": "nums = [83,97,101,103,107]",
+      "output": "True"
+    },
+    {
+      "input": "nums = [100000,99998,99999,99997,99996]",
+      "output": "False"
+    },
+    {
+      "input": "nums = [10,5,9,3,15]",
+      "output": "True"
+    },
+    {
+      "input": "nums = [105,70,30,210,42]",
+      "output": "True"
+    },
+    {
+      "input": "nums = [30,42,70,105,35]",
+      "output": "True"
+    },
+    {
+      "input": "nums = [5,2,6,2]",
+      "output": "False"
+    },
+    {
+      "input": "nums = [56, 72, 88, 104, 120, 136, 152]",
+      "output": "True"
+    },
+    {
+      "input": "nums = [121, 132, 143, 154, 165, 176, 187, 198, 209]",
+      "output": "True"
+    },
+    {
+      "input": "nums = [48, 64, 80, 96, 112]",
+      "output": "True"
+    },
+    {
+      "input": "nums = [17, 34, 51, 68, 85, 102, 119]",
+      "output": "True"
+    },
+    {
+      "input": "nums = [210, 315, 420, 525, 630, 735]",
+      "output": "True"
+    },
+    {
+      "input": "nums = [105, 45, 63, 21, 315]",
+      "output": "True"
+    },
+    {
+      "input": "nums = [100, 50, 25, 125, 200, 150]",
+      "output": "True"
+    },
+    {
+      "input": "nums = [91, 182, 273, 364, 455]",
+      "output": "True"
+    },
+    {
+      "input": "nums = [121, 132, 143, 154, 165, 176]",
+      "output": "True"
+    },
+    {
+      "input": "nums = [16, 32, 48, 64, 80, 96, 112, 128, 144]",
+      "output": "True"
+    },
+    {
+      "input": "nums = [70, 35, 28, 56, 14, 18]",
+      "output": "True"
+    },
+    {
+      "input": "nums = [14, 21, 28, 35, 42, 49, 56, 63, 70]",
+      "output": "True"
+    },
+    {
+      "input": "nums = [32, 48, 64, 80, 96, 112]",
+      "output": "True"
+    },
+    {
+      "input": "nums = [31, 62, 93, 124, 155, 186, 217, 248, 279, 310]",
+      "output": "True"
+    },
+    {
+      "input": "nums = [30, 25, 20, 15, 10, 5]",
+      "output": "True"
+    },
+    {
+      "input": "nums = [30, 45, 60, 75, 90, 105]",
+      "output": "True"
+    },
+    {
+      "input": "nums = [44, 55, 66, 77, 88, 99, 110, 121]",
+      "output": "True"
+    },
+    {
+      "input": "nums = [15, 20, 25, 30, 35]",
+      "output": "True"
+    },
+    {
+      "input": "nums = [33, 66, 99, 132, 165]",
+      "output": "True"
+    },
+    {
+      "input": "nums = [49, 14, 7, 98, 28]",
+      "output": "True"
+    },
+    {
+      "input": "nums = [6, 8, 10, 12, 14, 16, 18, 20]",
+      "output": "True"
+    },
+    {
+      "input": "nums = [21, 42, 63, 84, 105, 126, 147, 168, 189]",
+      "output": "True"
+    },
+    {
+      "input": "nums = [49, 42, 28, 35, 70]",
+      "output": "True"
+    },
+    {
+      "input": "nums = [123, 246, 369, 492, 615, 738, 861, 984]",
+      "output": "True"
+    },
+    {
+      "input": "nums = [84, 126, 168, 210, 252, 294, 336, 378, 420]",
+      "output": "True"
+    },
+    {
+      "input": "nums = [84, 28, 42, 70, 56]",
+      "output": "True"
+    },
+    {
+      "input": "nums = [101, 202, 303, 404, 505, 606]",
+      "output": "True"
+    },
+    {
+      "input": "nums = [56, 14, 28, 7, 98, 49]",
+      "output": "True"
+    },
+    {
+      "input": "nums = [45, 30, 60, 90, 120, 150]",
+      "output": "True"
+    },
+    {
+      "input": "nums = [100, 50, 75, 25, 150]",
+      "output": "True"
+    },
+    {
+      "input": "nums = [15, 25, 35, 45, 55, 65]",
+      "output": "True"
+    },
+    {
+      "input": "nums = [23, 46, 69, 92, 115, 138, 161, 184]",
+      "output": "True"
+    },
+    {
+      "input": "nums = [121, 221, 143, 169, 13]",
+      "output": "True"
+    },
+    {
+      "input": "nums = [100, 200, 300, 400, 500]",
+      "output": "True"
+    },
+    {
+      "input": "nums = [462, 882, 924, 1092, 1260]",
+      "output": "True"
+    },
+    {
+      "input": "nums = [360, 720, 1080, 1440, 1800, 2160]",
+      "output": "True"
+    },
+    {
+      "input": "nums = [1000, 500, 250, 125, 625]",
+      "output": "True"
+    },
+    {
+      "input": "nums = [48, 120, 180, 240, 300]",
+      "output": "True"
+    },
+    {
+      "input": "nums = [16, 32, 48, 64, 80, 96, 112, 128, 144, 160, 176, 192, 208, 224, 240]",
+      "output": "True"
+    },
+    {
+      "input": "nums = [210, 70, 35, 14, 105]",
+      "output": "True"
+    },
+    {
+      "input": "nums = [1024, 2048, 512, 256, 128]",
+      "output": "True"
+    },
+    {
+      "input": "nums = [56, 112, 168, 224, 280]",
+      "output": "True"
+    },
+    {
+      "input": "nums = [100, 25, 50, 20, 40]",
+      "output": "True"
+    },
+    {
+      "input": "nums = [24, 36, 48, 12, 60]",
+      "output": "True"
+    },
+    {
+      "input": "nums = [99, 33, 66, 22, 11, 132]",
+      "output": "True"
+    },
+    {
+      "input": "nums = [21, 42, 63, 84, 105]",
+      "output": "True"
+    },
+    {
+      "input": "nums = [13, 26, 39, 52, 65, 78]",
+      "output": "True"
+    },
+    {
+      "input": "nums = [30, 45, 60, 75, 90]",
+      "output": "True"
+    },
+    {
+      "input": "nums = [77, 154, 231, 308, 385]",
+      "output": "True"
+    },
+    {
+      "input": "nums = [91, 130, 169, 182, 273, 338]",
+      "output": "True"
+    },
+    {
+      "input": "nums = [22, 15, 45, 33, 10, 55]",
+      "output": "True"
+    },
+    {
+      "input": "nums = [18, 27, 36, 45, 54, 63, 72, 81, 90]",
+      "output": "True"
+    },
+    {
+      "input": "nums = [111, 222, 333, 444, 555, 666, 777, 888, 999]",
+      "output": "True"
+    },
+    {
+      "input": "nums = [171, 342, 513, 684, 855]",
+      "output": "True"
+    },
+    {
+      "input": "nums = [33, 55, 66, 88, 110, 121, 132, 143]",
+      "output": "True"
+    },
+    {
+      "input": "nums = [4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28]",
+      "output": "True"
+    },
+    {
+      "input": "nums = [45, 90, 135, 180, 225]",
+      "output": "True"
+    },
+    {
+      "input": "nums = [20, 40, 60, 80, 100, 120, 140, 160, 180]",
+      "output": "True"
+    },
+    {
+      "input": "nums = [100, 50, 25, 20, 125]",
+      "output": "True"
+    },
+    {
+      "input": "nums = [18, 24, 30, 36, 42]",
+      "output": "True"
+    },
+    {
+      "input": "nums = [1000, 250, 500, 200, 750, 125, 375, 625, 875, 1250]",
+      "output": "True"
+    },
+    {
+      "input": "nums = [102, 136, 170, 204, 238, 272, 306, 340, 374]",
+      "output": "True"
+    },
+    {
+      "input": "nums = [19, 38, 57, 76, 95, 114, 133, 152, 171, 190]",
+      "output": "True"
+    },
+    {
+      "input": "nums = [27, 54, 81, 108, 135, 162, 189, 216]",
+      "output": "True"
+    },
+    {
+      "input": "nums = [119, 238, 357, 476, 595]",
+      "output": "True"
+    },
+    {
+      "input": "nums = [81, 27, 54, 162, 324, 486]",
+      "output": "True"
+    },
+    {
+      "input": "nums = [84, 12, 14, 21, 63]",
+      "output": "True"
+    },
+    {
+      "input": "nums = [15, 30, 45, 60, 75, 90, 105]",
+      "output": "True"
+    },
+    {
+      "input": "nums = [18, 27, 36, 45, 54, 63, 72, 81, 90, 99, 108]",
+      "output": "True"
+    },
+    {
+      "input": "nums = [49, 63, 77, 91, 105, 119, 133, 147, 161, 175, 189, 203, 217]",
+      "output": "True"
+    },
+    {
+      "input": "nums = [72, 108, 144, 180, 216, 252, 288, 324, 360, 396]",
+      "output": "True"
+    },
+    {
+      "input": "nums = [225, 150, 100, 50, 25, 75]",
+      "output": "True"
+    },
+    {
+      "input": "nums = [121, 110, 99, 88, 77, 66, 55, 44, 33, 22, 11]",
+      "output": "True"
+    },
+    {
+      "input": "nums = [22, 44, 66, 88, 110, 132, 154, 176, 198]",
+      "output": "True"
+    },
+    {
+      "input": "nums = [1000, 500, 250, 125, 2000]",
+      "output": "True"
+    },
+    {
+      "input": "nums = [135, 90, 45, 60, 30]",
+      "output": "True"
+    },
+    {
+      "input": "nums = [9, 18, 27, 36, 45, 54]",
+      "output": "True"
+    },
+    {
+      "input": "nums = [17, 34, 51, 68, 85]",
+      "output": "True"
+    },
+    {
+      "input": "nums = [105, 15, 35, 21, 63]",
+      "output": "True"
+    },
+    {
+      "input": "nums = [81, 135, 207, 279, 351, 423]",
+      "output": "True"
+    },
+    {
+      "input": "nums = [36, 48, 60, 72, 84, 96]",
+      "output": "True"
+    },
+    {
+      "input": "nums = [180, 120, 90, 60, 45, 30, 20, 15, 10, 5]",
+      "output": "True"
+    },
+    {
+      "input": "nums = [28, 14, 42, 70, 98]",
+      "output": "True"
+    },
+    {
+      "input": "nums = [17, 19, 23, 29, 31, 37]",
+      "output": "True"
+    },
+    {
+      "input": "nums = [81, 27, 54, 108, 162]",
+      "output": "True"
+    },
+    {
+      "input": "nums = [121, 11, 22, 33, 44, 55]",
+      "output": "True"
+    },
+    {
+      "input": "nums = [165, 330, 495, 660, 825]",
+      "output": "True"
+    },
+    {
+      "input": "nums = [49, 98, 147, 196, 245]",
+      "output": "True"
+    },
+    {
+      "input": "nums = [121, 44, 88, 22, 176]",
+      "output": "True"
+    },
+    {
+      "input": "nums = [15, 25, 35, 45, 55, 65, 75, 85]",
+      "output": "True"
+    },
+    {
+      "input": "nums = [100, 101, 102, 103, 104, 105]",
+      "output": "True"
+    },
+    {
+      "input": "nums = [17, 19, 23, 29, 31]",
+      "output": "True"
+    },
+    {
+      "input": "nums = [315, 105, 35, 7, 14, 21, 42, 63, 84]",
+      "output": "True"
+    },
+    {
+      "input": "nums = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29]",
+      "output": "True"
+    },
+    {
+      "input": "nums = [13, 26, 39, 52, 65]",
+      "output": "True"
+    },
+    {
+      "input": "nums = [15, 25, 35, 45, 55]",
+      "output": "True"
+    },
+    {
+      "input": "nums = [1001, 10010, 100100, 1001000, 10010000]",
+      "output": "Error: list index out of range"
+    },
+    {
+      "input": "nums = [7, 49, 343, 2401, 16807]",
+      "output": "True"
+    },
+    {
+      "input": "nums = [2, 4, 6, 8, 10, 12, 14, 16, 18, 20]",
+      "output": "True"
+    },
+    {
+      "input": "nums = [19, 38, 57, 76, 95, 114, 133, 152]",
+      "output": "True"
+    },
+    {
+      "input": "nums = [14, 21, 35, 49, 70]",
+      "output": "True"
+    },
+    {
+      "input": "nums = [33, 66, 99, 132, 165, 198]",
+      "output": "True"
+    },
+    {
+      "input": "nums = [18, 24, 30, 36, 42, 48]",
+      "output": "True"
+    },
+    {
+      "input": "nums = [22, 44, 66, 88, 110]",
+      "output": "True"
+    },
+    {
+      "input": "nums = [84, 56, 28, 14, 7, 49, 35]",
+      "output": "True"
+    },
+    {
+      "input": "nums = [48, 64, 80, 96, 112, 128]",
+      "output": "True"
+    },
+    {
+      "input": "nums = [1024, 2048, 4096, 8192, 16384, 32768]",
+      "output": "True"
+    },
+    {
+      "input": "nums = [56, 63, 70, 77, 84, 91]",
+      "output": "True"
+    },
+    {
+      "input": "nums = [99, 33, 66, 132, 264]",
+      "output": "True"
+    },
+    {
+      "input": "nums = [100000, 50000, 25000, 12500, 6250]",
+      "output": "True"
+    },
+    {
+      "input": "nums = [77, 91, 143, 1001, 1001, 143]",
+      "output": "True"
+    },
+    {
+      "input": "nums = [100, 200, 300, 400, 500, 600, 700]",
+      "output": "True"
+    },
+    {
+      "input": "nums = [77, 55, 99, 110, 132]",
+      "output": "True"
+    },
+    {
+      "input": "nums = [30, 45, 60, 15, 90]",
+      "output": "True"
+    },
+    {
+      "input": "nums = [72, 24, 16, 8, 40]",
+      "output": "True"
+    },
+    {
+      "input": "nums = [42, 21, 7, 14, 28]",
+      "output": "True"
+    },
+    {
+      "input": "nums = [77, 143, 169, 187, 209, 221, 247, 299, 323, 341]",
+      "output": "True"
+    },
+    {
+      "input": "nums = [15, 20, 25, 30, 35, 40, 45, 50]",
+      "output": "True"
+    },
+    {
+      "input": "nums = [121, 143, 169, 187, 209]",
+      "output": "True"
+    },
+    {
+      "input": "nums = [14, 21, 28, 35, 42, 49, 56, 63]",
+      "output": "True"
+    },
+    {
+      "input": "nums = [14, 21, 28, 35, 42, 49]",
+      "output": "True"
+    },
+    {
+      "input": "nums = [49, 147, 245, 343, 441, 539]",
+      "output": "True"
+    },
+    {
+      "input": "nums = [22, 15, 10, 18, 30]",
+      "output": "True"
+    },
+    {
+      "input": "nums = [64, 32, 16, 8, 4, 2, 1]",
+      "output": "False"
+    },
+    {
+      "input": "nums = [101, 103, 107, 109, 113, 127, 131, 137, 139, 149]",
+      "output": "True"
+    },
+    {
+      "input": "nums = [9, 18, 27, 36, 45, 54, 63, 72, 81]",
+      "output": "True"
+    },
+    {
+      "input": "nums = [16, 32, 64, 128, 256, 512, 1024]",
+      "output": "True"
+    },
+    {
+      "input": "nums = [102, 204, 306, 408, 510]",
+      "output": "True"
+    },
+    {
+      "input": "nums = [1000, 2000, 3000, 4000, 5000]",
+      "output": "True"
+    },
+    {
+      "input": "nums = [60, 120, 180, 240, 300, 360]",
+      "output": "True"
+    },
+    {
+      "input": "nums = [42, 28, 70, 14, 35]",
+      "output": "True"
+    },
+    {
+      "input": "nums = [22, 33, 44, 55, 66]",
+      "output": "True"
+    },
+    {
+      "input": "nums = [77, 49, 35, 21, 14, 7]",
+      "output": "True"
+    },
+    {
+      "input": "nums = [23, 46, 69, 92, 115]",
+      "output": "True"
+    },
+    {
+      "input": "nums = [16, 8, 4, 2, 1]",
+      "output": "False"
+    },
+    {
+      "input": "nums = [101, 202, 303, 404, 505]",
+      "output": "True"
+    },
+    {
+      "input": "nums = [102, 68, 34, 17, 51, 85]",
+      "output": "True"
+    },
+    {
+      "input": "nums = [13, 26, 39, 52, 65, 78, 91, 104, 117]",
+      "output": "True"
+    },
+    {
+      "input": "nums = [100, 105, 140, 210, 70]",
+      "output": "True"
+    },
+    {
+      "input": "nums = [11, 22, 33, 44, 55, 66]",
+      "output": "True"
+    },
+    {
+      "input": "nums = [17, 34, 51, 68, 85, 102, 119, 136, 153]",
+      "output": "True"
+    },
+    {
+      "input": "nums = [256, 512, 1024, 2048, 4096, 8192, 16384]",
+      "output": "True"
+    },
+    {
+      "input": "nums = [1000, 500, 250, 125, 2000, 10000, 2500]",
+      "output": "True"
+    },
+    {
+      "input": "nums = [30, 45, 60, 75, 90, 105, 120]",
+      "output": "True"
+    },
+    {
+      "input": "nums = [12, 18, 24, 30, 36, 42]",
+      "output": "True"
+    },
+    {
+      "input": "nums = [25, 45, 65, 85, 105]",
+      "output": "True"
+    },
+    {
+      "input": "nums = [100, 200, 150, 300, 250]",
+      "output": "True"
+    },
+    {
+      "input": "nums = [14, 28, 42, 56, 70]",
+      "output": "True"
+    },
+    {
+      "input": "nums = [81, 135, 225, 315, 405, 525, 675]",
+      "output": "True"
+    },
+    {
+      "input": "nums = [121, 132, 220, 110, 55]",
+      "output": "True"
+    }
+  ],
+  "types": {
+    "python3": {
+      "input": [
+        {
+          "nums": "List[int]"
+        }
+      ],
+      "output": "bool"
+    },
+    "cpp": {
+      "input": [
+        {
+          "nums": "vector<int>&"
+        }
+      ],
+      "output": "bool"
+    },
+    "java": {
+      "input": [
+        {
+          "nums": "int[]"
+        }
+      ],
+      "output": "boolean"
+    },
+    "javascript": {
+      "input": [
+        {
+          "nums": "number[]"
+        }
+      ],
+      "output": "boolean"
+    },
+    "typescript": {
+      "input": [
+        {
+          "nums": "number[]"
+        }
+      ],
+      "output": "boolean"
+    },
+    "golang": {
+      "input": [
+        {
+          "nums": "[]int"
+        }
+      ],
+      "output": "bool"
+    },
+    "rust": {
+      "input": [
+        {
+          "nums": "Vec<i32>"
+        }
+      ],
+      "output": "bool"
+    }
+  },
+  "tags": [
+    "array",
+    "math",
+    "union-find",
+    "sorting",
+    "number-theory"
+  ]
+}

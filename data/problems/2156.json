@@ -1,0 +1,599 @@
+{
+  "id": 2156,
+  "title": "Find Substring With Given Hash Value",
+  "slug": "find-substring-with-given-hash-value",
+  "difficulty": "Hard",
+  "description": "The hash of a 0-indexed string s of length k, given integers p and m, is computed using the following function:\nWhere val(s[i]) represents the index of s[i] in the alphabet from val('a') = 1 to val('z') = 26.\nYou are given a string s and the integers power, modulo, k, and hashValue. Return sub, the first substring of s of length k such that hash(sub, power, modulo) == hashValue.\nThe test cases will be generated such that an answer always exists.\nA substring is a contiguous non-empty sequence of characters within a string.\nExample 1:\nExample 2:\nConstraints:",
+  "examples": [
+    {
+      "example_num": 1,
+      "example_text": "Input: s = \"leetcode\", power = 7, modulo = 20, k = 2, hashValue = 0\nOutput: \"ee\"\nExplanation: The hash of \"ee\" can be computed to be hash(\"ee\", 7, 20) = (5 * 1 + 5 * 7) mod 20 = 40 mod 20 = 0. \n\"ee\" is the first substring of length 2 with hashValue 0. Hence, we return \"ee\".",
+      "images": []
+    },
+    {
+      "example_num": 2,
+      "example_text": "Input: s = \"fbxzaad\", power = 31, modulo = 100, k = 3, hashValue = 32\nOutput: \"fbx\"\nExplanation: The hash of \"fbx\" can be computed to be hash(\"fbx\", 31, 100) = (6 * 1 + 2 * 31 + 24 * 312) mod 100 = 23132 mod 100 = 32. \nThe hash of \"bxz\" can be computed to be hash(\"bxz\", 31, 100) = (2 * 1 + 24 * 31 + 26 * 312) mod 100 = 25732 mod 100 = 32. \n\"fbx\" is the first substring of length 3 with hashValue 32. Hence, we return \"fbx\".\nNote that \"bxz\" also has a hash of 32 but it appears later than \"fbx\".",
+      "images": []
+    }
+  ],
+  "constraints": [
+    "1 <= k <= s.length <= 2 * 104",
+    "1 <= power, modulo <= 109",
+    "0 <= hashValue < modulo",
+    "s consists of lowercase English letters only.",
+    "The test cases are generated such that an answer always exists."
+  ],
+  "hints": [
+    "How can we update the hash value efficiently while iterating instead of recalculating it each time?",
+    "Use the rolling hash method."
+  ],
+  "code_snippets": {
+    "cpp": "class Solution {\npublic:\n    string subStrHash(string s, int power, int modulo, int k, int hashValue) {\n        \n    }\n};",
+    "java": "class Solution {\n    public String subStrHash(String s, int power, int modulo, int k, int hashValue) {\n        \n    }\n}",
+    "python3": "class Solution:\n    def subStrHash(self, s: str, power: int, modulo: int, k: int, hashValue: int) -> str:\n        ",
+    "javascript": "/**\n * @param {string} s\n * @param {number} power\n * @param {number} modulo\n * @param {number} k\n * @param {number} hashValue\n * @return {string}\n */\nvar subStrHash = function(s, power, modulo, k, hashValue) {\n    \n};",
+    "typescript": "function subStrHash(s: string, power: number, modulo: number, k: number, hashValue: number): string {\n    \n};",
+    "golang": "func subStrHash(s string, power int, modulo int, k int, hashValue int) string {\n    \n}",
+    "rust": "impl Solution {\n    pub fn sub_str_hash(s: String, power: i32, modulo: i32, k: i32, hash_value: i32) -> String {\n        \n    }\n}"
+  },
+  "entry_points": {
+    "python3": "Solution().subStrHash",
+    "cpp": "Solution().subStrHash",
+    "java": "new Solution().subStrHash",
+    "javascript": "subStrHash",
+    "typescript": "subStrHash",
+    "golang": "subStrHash",
+    "rust": "Solution::sub_str_hash"
+  },
+  "test_snippets": {
+    "python3": "def check(candidate):\n    assert candidate(s = \"zxcvbnm\", power = 10, modulo = 1000000007, k = 4, hashValue = 807311072) == vbnm\n    assert candidate(s = \"abracadabra\", power = 5, modulo = 11, k = 3, hashValue = 4) == dab\n    assert candidate(s = \"zzzzzzzzzz\", power = 29, modulo = 1000000007, k = 4, hashValue = 78608631) == zzzz\n    assert candidate(s = \"leetcode\", power = 7, modulo = 20, k = 2, hashValue = 0) == ee\n    assert candidate(s = \"fbxzaad\", power = 31, modulo = 100, k = 3, hashValue = 32) == fbx\n    assert candidate(s = \"abcdefghijklmnopqrstuvwxyz\", power = 26, modulo = 101, k = 5, hashValue = 53) == vwxyz\n    assert candidate(s = \"a\", power = 1, modulo = 1, k = 1, hashValue = 0) == a\n    assert candidate(s = \"zaz\", power = 26, modulo = 29, k = 2, hashValue = 27) == az\n    assert candidate(s = \"a\", power = 13, modulo = 97, k = 1, hashValue = 1) == a\n    assert candidate(s = \"abcdefghijklmnopqrstuvwxyz\", power = 13, modulo = 50, k = 5, hashValue = 37) == klmno\n    assert candidate(s = \"abcde\", power = 2, modulo = 11, k = 3, hashValue = 7) == cde\n    assert candidate(s = \"a\", power = 5, modulo = 13, k = 1, hashValue = 1) == a\n    assert candidate(s = \"mmcp\", power = 13, modulo = 457, k = 2, hashValue = 33) == cp\n    assert candidate(s = \"thisisaverylongstringthatweneedtofindasubstringwithagivenhashvalue\", power = 5, modulo = 1000000009, k = 12, hashValue = 543) == venhashvalue\n    assert candidate(s = \"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", power = 29, modulo = 101, k = 20, hashValue = 95) == zzzzzzzzzzzzzzzzzzzz\n    assert candidate(s = \"hellothereeveryone\", power = 37, modulo = 101, k = 6, hashValue = 74) == eryone\n    assert candidate(s = \"complexityisimportantinbigdatatechnology\", power = 19, modulo = 1000000009, k = 8, hashValue = 543210987) == chnology\n    assert candidate(s = \"zxcvbnmasdfghjklqwertyuiop\", power = 29, modulo = 1000000007, k = 6, hashValue = 563872) == tyuiop\n    assert candidate(s = \"abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz\", power = 19, modulo = 1000000007, k = 26, hashValue = 267973410) == abcdefghijklmnopqrstuvwxyz\n    assert candidate(s = \"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", power = 17, modulo = 1000000009, k = 7, hashValue = 123456789) == wxxyyzz\n    assert candidate(s = \"abababababababababababababababababababababababababab\", power = 5, modulo = 1000000003, k = 11, hashValue = 543210987) == bababababab\n    assert candidate(s = \"a\", power = 7, modulo = 13, k = 1, hashValue = 1) == a\n    assert candidate(s = \"mississippi\", power = 19, modulo = 1000000007, k = 4, hashValue = 683) == ippi\n    assert candidate(s = \"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", power = 11, modulo = 79, k = 20, hashValue = 10) == zzzzzzzzzzzzzzzzzzzz\n    assert candidate(s = \"abcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabc\", power = 19, modulo = 83, k = 15, hashValue = 28) == abcabcabcabcabc\n    assert candidate(s = \"lkjihgfedcbazyxwvutsrqponml\", power = 41, modulo = 1000000009, k = 14, hashValue = 102474831) == yxwvutsrqponml\n    assert candidate(s = \"ababababababababababababababababababababababababababababababab\", power = 11, modulo = 1000000007, k = 10, hashValue = 543210987) == ababababab\n    assert candidate(s = \"powerrangers\", power = 29, modulo = 97, k = 4, hashValue = 53) == gers\n    assert candidate(s = \"abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz\", power = 17, modulo = 53, k = 10, hashValue = 49) == qrstuvwxyz\n    assert candidate(s = \"abcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghij\", power = 2, modulo = 13, k = 8, hashValue = 7) == bcdefghi\n    assert candidate(s = \"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", power = 999999937, modulo = 1000000007, k = 10000, hashValue = 123456789) == Error: string index out of range\n    assert candidate(s = \"mmmmmmmmmabcdefghimnopqrstuvwxyz\", power = 37, modulo = 1000000007, k = 8, hashValue = 987654321) == stuvwxyz\n    assert candidate(s = \"thisisaverylongstringthatweneedtofindthesubstringwiththespecifiedhashvalue\", power = 13, modulo = 1000000007, k = 20, hashValue = 345234657) == hespecifiedhashvalue\n    assert candidate(s = \"thisisjustanexampleofalongsstringwithseveralhashvalues\", power = 3, modulo = 100, k = 4, hashValue = 15) == lues\n    assert candidate(s = \"qponmlkjihgfedcbaabcdefghijklmnopqrstuvwxyz\", power = 43, modulo = 1000000007, k = 22, hashValue = 872889924) == efghijklmnopqrstuvwxyz\n    assert candidate(s = \"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", power = 37, modulo = 100000007, k = 50, hashValue = 876543210) == bbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\n    assert candidate(s = \"abcdefghijklmnopqrstuvwxyzyxwvutsrqponmlkjihgfedcba\", power = 43, modulo = 1000000007, k = 25, hashValue = 54321) == yxwvutsrqponmlkjihgfedcba\n    assert candidate(s = \"xylophonepianoxylophonepianoxylophonepianoxyloph\", power = 23, modulo = 1000000009, k = 9, hashValue = 765432109) == anoxyloph\n    assert candidate(s = \"abcdefghijkabcdefghijkabcdefghijk\", power = 19, modulo = 1000000009, k = 11, hashValue = 123456789) == abcdefghijk\n    assert candidate(s = \"mississippiissi\", power = 5, modulo = 1000000007, k = 7, hashValue = 432109876) == ppiissi\n    assert candidate(s = \"bcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbc\", power = 17, modulo = 1000000007, k = 12, hashValue = 617980928) == bcbcbcbcbcbc\n    assert candidate(s = \"aquickbrownfoxjumpsoverthelazydog\", power = 37, modulo = 1000000007, k = 15, hashValue = 756839574) == soverthelazydog\n    assert candidate(s = \"mississippiisaverypopularstring\", power = 23, modulo = 107, k = 9, hashValue = 62) == larstring\n    assert candidate(s = \"abcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghij\", power = 29, modulo = 999983, k = 9, hashValue = 456789) == bcdefghij\n    assert candidate(s = \"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", power = 10, modulo = 10007, k = 10, hashValue = 7007) == zzzzzzzzzz\n    assert candidate(s = \"abacabadabacaba\", power = 10, modulo = 61, k = 5, hashValue = 31) == acaba\n    assert candidate(s = \"programmingisfun\", power = 5, modulo = 1000000009, k = 8, hashValue = 77777777) == ingisfun\n    assert candidate(s = \"thisisaverylongstringthatwillbeusedtohashandfindthesubstring\", power = 19, modulo = 1000003, k = 12, hashValue = 876543) == thesubstring\n    assert candidate(s = \"xyzabcxyz\", power = 17, modulo = 101, k = 4, hashValue = 70) == cxyz\n    assert candidate(s = \"aquickbrownfoxjumpsoverthelazydog\", power = 11, modulo = 997, k = 12, hashValue = 896) == erthelazydog\n    assert candidate(s = \"banana\", power = 5, modulo = 10007, k = 2, hashValue = 22) == na\n    assert candidate(s = \"abcdefghijklmnopqrstuvwxyzyxwvutsrqponmlkjihgfedcba\", power = 19, modulo = 47, k = 15, hashValue = 29) == onmlkjihgfedcba\n    assert candidate(s = \"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", power = 31, modulo = 1000000007, k = 5, hashValue = 35852459) == zzzzz\n    assert candidate(s = \"kjfslafjslkafjslkfjslkfjlskjflskjflskfjslkfjslkfjslk\", power = 11, modulo = 1000000001, k = 8, hashValue = 987654321) == slkfjslk\n    assert candidate(s = \"zyxwvutsrqponmlkjihgfedcba\", power = 13, modulo = 1000000007, k = 20, hashValue = 689648594) == tsrqponmlkjihgfedcba\n    assert candidate(s = \"abcdefghijklmnopqrstuvwxyzzzzzzzzzzzzzzzzzzzzzzzzzz\", power = 23, modulo = 999983, k = 15, hashValue = 123456) == zzzzzzzzzzzzzzz\n    assert candidate(s = \"quickbrownfoxjumpsoverthelazydog\", power = 41, modulo = 1000000009, k = 6, hashValue = 345678) == azydog\n    assert candidate(s = \"thisisaverylongstringthatcontainsmanywordsandcharactersforhashing\", power = 41, modulo = 1000000009, k = 18, hashValue = 897530987) == aractersforhashing\n    assert candidate(s = \"thepowerofhashing\", power = 17, modulo = 10007, k = 9, hashValue = 9999) == ofhashing\n    assert candidate(s = \"racecar\", power = 17, modulo = 1000000009, k = 3, hashValue = 113) == car\n    assert candidate(s = \"abcdefghijklmnopqrstuvwxyza\", power = 23, modulo = 1000000009, k = 21, hashValue = 850494334) == ghijklmnopqrstuvwxyza\n    assert candidate(s = \"racecarannakayak\", power = 37, modulo = 109, k = 7, hashValue = 87) == nakayak\n    assert candidate(s = \"rollinghashingisaveryefficientalgorithm\", power = 29, modulo = 1000000007, k = 10, hashValue = 987654321) == talgorithm\n    assert candidate(s = \"hashfunctionexample\", power = 31, modulo = 1000000007, k = 13, hashValue = 234567890) == nctionexample\n    assert candidate(s = \"abcdeabcdeabcdeabcdeabcdeabcdeabcdeabcde\", power = 7, modulo = 13, k = 5, hashValue = 5) == eabcd\n    assert candidate(s = \"abcdefghijabcdefghijabcdefghijabcdefghijabcdefghij\", power = 31, modulo = 1000000009, k = 10, hashValue = 109876543) == abcdefghij\n    assert candidate(s = \"abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz\", power = 27, modulo = 10007, k = 26, hashValue = 4750) == abcdefghijklmnopqrstuvwxyz\n    assert candidate(s = \"thisproblemisfunandchallengingandfunandchallenging\", power = 41, modulo = 1000000011, k = 14, hashValue = 543210987) == andchallenging\n    assert candidate(s = \"jqwertyuiopasdfghjklzxcvbnmnbvcxzlkjhgfdsapoiuytrewq\", power = 17, modulo = 1000000009, k = 15, hashValue = 765432109) == gfdsapoiuytrewq\n    assert candidate(s = \"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", power = 1000000007, modulo = 1000000009, k = 10, hashValue = 999999939) == zzzzzzzzzz\n    assert candidate(s = \"acacacacacacacacacacacacacacacacacacacacacacacacacacac\", power = 19, modulo = 1000000007, k = 12, hashValue = 876543210) == acacacacacac\n    assert candidate(s = \"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", power = 1000000007, modulo = 1000000009, k = 10000, hashValue = 123456789) == Error: string index out of range\n    assert candidate(s = \"loremipsumdolorsitametloremipsumdolorsitametlorem\", power = 43, modulo = 1000000017, k = 15, hashValue = 432109876) == lorsitametlorem\n    assert candidate(s = \"mnopqrstuvwxyzaabcdefghijklmnopqr\", power = 37, modulo = 1000000007, k = 25, hashValue = 519164833) == uvwxyzaabcdefghijklmnopqr\n    assert candidate(s = \"thesoundofsilencethesoundofsilencethesoundofsilence\", power = 37, modulo = 1000000013, k = 13, hashValue = 654321098) == oundofsilence\n    assert candidate(s = \"ababababababababababababababababababababababababab\", power = 23, modulo = 29, k = 7, hashValue = 17) == bababab\n    assert candidate(s = \"xyzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzxy\", power = 31, modulo = 1000000009, k = 15, hashValue = 987654321) == zzzzzzzzzzzzzxy\n    assert candidate(s = \"aaaaabbbbbccccdddddeeeeefffffggggghhhhiiiiijjjjjkkkkklllllmmmmmnnnnnooooo\", power = 11, modulo = 100000007, k = 13, hashValue = 111222) == mmmnnnnnooooo\n    assert candidate(s = \"thisisaverylongstringthatshouldworkwiththehashingfunctioncorrectly\", power = 13, modulo = 107, k = 25, hashValue = 67) == ehashingfunctioncorrectly\n    assert candidate(s = \"abcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcd\", power = 97, modulo = 10007, k = 6, hashValue = 10001) == cdabcd\n    assert candidate(s = \"abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz\", power = 17, modulo = 89, k = 10, hashValue = 67) == qrstuvwxyz\n    assert candidate(s = \"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", power = 7, modulo = 1000000009, k = 15, hashValue = 324434711) == sttuuvvwwxxyyzz\n    assert candidate(s = \"xyzzxyzzxyzzxyzzxyzzxyzzxyzzxyzzxyzzxyzzxyzzxyzzxyzz\", power = 11, modulo = 97, k = 6, hashValue = 76) == xyzzxy\n    assert candidate(s = \"abcdeabcdeabcdeabcdeabcdeabcdeabcdeabcdeabcdeabcdeabcdeabcde\", power = 5, modulo = 17, k = 14, hashValue = 11) == abcdeabcdeabcd\n    assert candidate(s = \"abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz\", power = 13, modulo = 101, k = 10, hashValue = 97) == qrstuvwxyz\n    assert candidate(s = \"abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz\", power = 13, modulo = 101, k = 10, hashValue = 60) == xyzabcdefg\n    assert candidate(s = \"hashingisawesome\", power = 37, modulo = 1000000007, k = 7, hashValue = 88888888) == awesome\n    assert candidate(s = \"abcdefghijklmnopqrstuvwxyz\", power = 23, modulo = 41, k = 7, hashValue = 35) == cdefghi\n    assert candidate(s = \"thefastbrownfoxjumpedoverthelazydog\", power = 43, modulo = 1000000007, k = 5, hashValue = 234567) == zydog\n    assert candidate(s = \"abcdefghijklmnopqrstuvwxyzyxwvutsrqponmlkjihgfedcba\", power = 26, modulo = 1000000009, k = 26, hashValue = 987654321) == zyxwvutsrqponmlkjihgfedcba\n    assert candidate(s = \"abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz\", power = 1000000007, modulo = 1000000009, k = 10, hashValue = 876543210) == qrstuvwxyz\n    assert candidate(s = \"abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz\", power = 31, modulo = 1000000007, k = 26, hashValue = 680151233) == abcdefghijklmnopqrstuvwxyz\n    assert candidate(s = \"onetwothreefourfivesixseveneightnineseveneightsixfiv foureventhreetwooneonetwothreefourfivesix\", power = 13, modulo = 103, k = 8, hashValue = 45) == veneight\n    assert candidate(s = \"abcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabc\", power = 5, modulo = 1000000009, k = 10, hashValue = 740006228) == cabcabcabc\n    assert candidate(s = \"aquickbrownfoxjumpsoverthelazydog\", power = 33, modulo = 1000000007, k = 4, hashValue = 123) == ydog\n    assert candidate(s = \"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", power = 5, modulo = 1000, k = 7, hashValue = 500) == wxxyyzz\n    assert candidate(s = \"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", power = 31, modulo = 1000000007, k = 15, hashValue = 123456789) == zzzzzzzzzzzzzzz\n    assert candidate(s = \"abcdefabcdefabcdefabcdefabcdefabcdefabcdefabcdefabcdefabcdef\", power = 41, modulo = 997, k = 12, hashValue = 500) == abcdefabcdef",
+    "cpp": "void check(Solution& solution) {\n    assert(solution.subStrHash(\"zxcvbnm\", 10, 1000000007, 4, 807311072) == vector<int>vbnm);\n    assert(solution.subStrHash(\"abracadabra\", 5, 11, 3, 4) == vector<int>dab);\n    assert(solution.subStrHash(\"zzzzzzzzzz\", 29, 1000000007, 4, 78608631) == vector<int>zzzz);\n    assert(solution.subStrHash(\"leetcode\", 7, 20, 2, 0) == vector<int>ee);\n    assert(solution.subStrHash(\"fbxzaad\", 31, 100, 3, 32) == vector<int>fbx);\n    assert(solution.subStrHash(\"abcdefghijklmnopqrstuvwxyz\", 26, 101, 5, 53) == vector<int>vwxyz);\n    assert(solution.subStrHash(\"a\", 1, 1, 1, 0) == vector<int>a);\n    assert(solution.subStrHash(\"zaz\", 26, 29, 2, 27) == vector<int>az);\n    assert(solution.subStrHash(\"a\", 13, 97, 1, 1) == vector<int>a);\n    assert(solution.subStrHash(\"abcdefghijklmnopqrstuvwxyz\", 13, 50, 5, 37) == vector<int>klmno);\n    assert(solution.subStrHash(\"abcde\", 2, 11, 3, 7) == vector<int>cde);\n    assert(solution.subStrHash(\"a\", 5, 13, 1, 1) == vector<int>a);\n    assert(solution.subStrHash(\"mmcp\", 13, 457, 2, 33) == vector<int>cp);\n    assert(solution.subStrHash(\"thisisaverylongstringthatweneedtofindasubstringwithagivenhashvalue\", 5, 1000000009, 12, 543) == vector<int>venhashvalue);\n    assert(solution.subStrHash(\"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", 29, 101, 20, 95) == vector<int>zzzzzzzzzzzzzzzzzzzz);\n    assert(solution.subStrHash(\"hellothereeveryone\", 37, 101, 6, 74) == vector<int>eryone);\n    assert(solution.subStrHash(\"complexityisimportantinbigdatatechnology\", 19, 1000000009, 8, 543210987) == vector<int>chnology);\n    assert(solution.subStrHash(\"zxcvbnmasdfghjklqwertyuiop\", 29, 1000000007, 6, 563872) == vector<int>tyuiop);\n    assert(solution.subStrHash(\"abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz\", 19, 1000000007, 26, 267973410) == vector<int>abcdefghijklmnopqrstuvwxyz);\n    assert(solution.subStrHash(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", 17, 1000000009, 7, 123456789) == vector<int>wxxyyzz);\n    assert(solution.subStrHash(\"abababababababababababababababababababababababababab\", 5, 1000000003, 11, 543210987) == vector<int>bababababab);\n    assert(solution.subStrHash(\"a\", 7, 13, 1, 1) == vector<int>a);\n    assert(solution.subStrHash(\"mississippi\", 19, 1000000007, 4, 683) == vector<int>ippi);\n    assert(solution.subStrHash(\"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", 11, 79, 20, 10) == vector<int>zzzzzzzzzzzzzzzzzzzz);\n    assert(solution.subStrHash(\"abcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabc\", 19, 83, 15, 28) == vector<int>abcabcabcabcabc);\n    assert(solution.subStrHash(\"lkjihgfedcbazyxwvutsrqponml\", 41, 1000000009, 14, 102474831) == vector<int>yxwvutsrqponml);\n    assert(solution.subStrHash(\"ababababababababababababababababababababababababababababababab\", 11, 1000000007, 10, 543210987) == vector<int>ababababab);\n    assert(solution.subStrHash(\"powerrangers\", 29, 97, 4, 53) == vector<int>gers);\n    assert(solution.subStrHash(\"abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz\", 17, 53, 10, 49) == vector<int>qrstuvwxyz);\n    assert(solution.subStrHash(\"abcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghij\", 2, 13, 8, 7) == vector<int>bcdefghi);\n    assert(solution.subStrHash(\"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", 999999937, 1000000007, 10000, 123456789) == vector<int>Error: string index out of range);\n    assert(solution.subStrHash(\"mmmmmmmmmabcdefghimnopqrstuvwxyz\", 37, 1000000007, 8, 987654321) == vector<int>stuvwxyz);\n    assert(solution.subStrHash(\"thisisaverylongstringthatweneedtofindthesubstringwiththespecifiedhashvalue\", 13, 1000000007, 20, 345234657) == vector<int>hespecifiedhashvalue);\n    assert(solution.subStrHash(\"thisisjustanexampleofalongsstringwithseveralhashvalues\", 3, 100, 4, 15) == vector<int>lues);\n    assert(solution.subStrHash(\"qponmlkjihgfedcbaabcdefghijklmnopqrstuvwxyz\", 43, 1000000007, 22, 872889924) == vector<int>efghijklmnopqrstuvwxyz);\n    assert(solution.subStrHash(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", 37, 100000007, 50, 876543210) == vector<int>bbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz);\n    assert(solution.subStrHash(\"abcdefghijklmnopqrstuvwxyzyxwvutsrqponmlkjihgfedcba\", 43, 1000000007, 25, 54321) == vector<int>yxwvutsrqponmlkjihgfedcba);\n    assert(solution.subStrHash(\"xylophonepianoxylophonepianoxylophonepianoxyloph\", 23, 1000000009, 9, 765432109) == vector<int>anoxyloph);\n    assert(solution.subStrHash(\"abcdefghijkabcdefghijkabcdefghijk\", 19, 1000000009, 11, 123456789) == vector<int>abcdefghijk);\n    assert(solution.subStrHash(\"mississippiissi\", 5, 1000000007, 7, 432109876) == vector<int>ppiissi);\n    assert(solution.subStrHash(\"bcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbc\", 17, 1000000007, 12, 617980928) == vector<int>bcbcbcbcbcbc);\n    assert(solution.subStrHash(\"aquickbrownfoxjumpsoverthelazydog\", 37, 1000000007, 15, 756839574) == vector<int>soverthelazydog);\n    assert(solution.subStrHash(\"mississippiisaverypopularstring\", 23, 107, 9, 62) == vector<int>larstring);\n    assert(solution.subStrHash(\"abcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghij\", 29, 999983, 9, 456789) == vector<int>bcdefghij);\n    assert(solution.subStrHash(\"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", 10, 10007, 10, 7007) == vector<int>zzzzzzzzzz);\n    assert(solution.subStrHash(\"abacabadabacaba\", 10, 61, 5, 31) == vector<int>acaba);\n    assert(solution.subStrHash(\"programmingisfun\", 5, 1000000009, 8, 77777777) == vector<int>ingisfun);\n    assert(solution.subStrHash(\"thisisaverylongstringthatwillbeusedtohashandfindthesubstring\", 19, 1000003, 12, 876543) == vector<int>thesubstring);\n    assert(solution.subStrHash(\"xyzabcxyz\", 17, 101, 4, 70) == vector<int>cxyz);\n    assert(solution.subStrHash(\"aquickbrownfoxjumpsoverthelazydog\", 11, 997, 12, 896) == vector<int>erthelazydog);\n    assert(solution.subStrHash(\"banana\", 5, 10007, 2, 22) == vector<int>na);\n    assert(solution.subStrHash(\"abcdefghijklmnopqrstuvwxyzyxwvutsrqponmlkjihgfedcba\", 19, 47, 15, 29) == vector<int>onmlkjihgfedcba);\n    assert(solution.subStrHash(\"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", 31, 1000000007, 5, 35852459) == vector<int>zzzzz);\n    assert(solution.subStrHash(\"kjfslafjslkafjslkfjslkfjlskjflskjflskfjslkfjslkfjslk\", 11, 1000000001, 8, 987654321) == vector<int>slkfjslk);\n    assert(solution.subStrHash(\"zyxwvutsrqponmlkjihgfedcba\", 13, 1000000007, 20, 689648594) == vector<int>tsrqponmlkjihgfedcba);\n    assert(solution.subStrHash(\"abcdefghijklmnopqrstuvwxyzzzzzzzzzzzzzzzzzzzzzzzzzz\", 23, 999983, 15, 123456) == vector<int>zzzzzzzzzzzzzzz);\n    assert(solution.subStrHash(\"quickbrownfoxjumpsoverthelazydog\", 41, 1000000009, 6, 345678) == vector<int>azydog);\n    assert(solution.subStrHash(\"thisisaverylongstringthatcontainsmanywordsandcharactersforhashing\", 41, 1000000009, 18, 897530987) == vector<int>aractersforhashing);\n    assert(solution.subStrHash(\"thepowerofhashing\", 17, 10007, 9, 9999) == vector<int>ofhashing);\n    assert(solution.subStrHash(\"racecar\", 17, 1000000009, 3, 113) == vector<int>car);\n    assert(solution.subStrHash(\"abcdefghijklmnopqrstuvwxyza\", 23, 1000000009, 21, 850494334) == vector<int>ghijklmnopqrstuvwxyza);\n    assert(solution.subStrHash(\"racecarannakayak\", 37, 109, 7, 87) == vector<int>nakayak);\n    assert(solution.subStrHash(\"rollinghashingisaveryefficientalgorithm\", 29, 1000000007, 10, 987654321) == vector<int>talgorithm);\n    assert(solution.subStrHash(\"hashfunctionexample\", 31, 1000000007, 13, 234567890) == vector<int>nctionexample);\n    assert(solution.subStrHash(\"abcdeabcdeabcdeabcdeabcdeabcdeabcdeabcde\", 7, 13, 5, 5) == vector<int>eabcd);\n    assert(solution.subStrHash(\"abcdefghijabcdefghijabcdefghijabcdefghijabcdefghij\", 31, 1000000009, 10, 109876543) == vector<int>abcdefghij);\n    assert(solution.subStrHash(\"abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz\", 27, 10007, 26, 4750) == vector<int>abcdefghijklmnopqrstuvwxyz);\n    assert(solution.subStrHash(\"thisproblemisfunandchallengingandfunandchallenging\", 41, 1000000011, 14, 543210987) == vector<int>andchallenging);\n    assert(solution.subStrHash(\"jqwertyuiopasdfghjklzxcvbnmnbvcxzlkjhgfdsapoiuytrewq\", 17, 1000000009, 15, 765432109) == vector<int>gfdsapoiuytrewq);\n    assert(solution.subStrHash(\"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", 1000000007, 1000000009, 10, 999999939) == vector<int>zzzzzzzzzz);\n    assert(solution.subStrHash(\"acacacacacacacacacacacacacacacacacacacacacacacacacacac\", 19, 1000000007, 12, 876543210) == vector<int>acacacacacac);\n    assert(solution.subStrHash(\"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", 1000000007, 1000000009, 10000, 123456789) == vector<int>Error: string index out of range);\n    assert(solution.subStrHash(\"loremipsumdolorsitametloremipsumdolorsitametlorem\", 43, 1000000017, 15, 432109876) == vector<int>lorsitametlorem);\n    assert(solution.subStrHash(\"mnopqrstuvwxyzaabcdefghijklmnopqr\", 37, 1000000007, 25, 519164833) == vector<int>uvwxyzaabcdefghijklmnopqr);\n    assert(solution.subStrHash(\"thesoundofsilencethesoundofsilencethesoundofsilence\", 37, 1000000013, 13, 654321098) == vector<int>oundofsilence);\n    assert(solution.subStrHash(\"ababababababababababababababababababababababababab\", 23, 29, 7, 17) == vector<int>bababab);\n    assert(solution.subStrHash(\"xyzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzxy\", 31, 1000000009, 15, 987654321) == vector<int>zzzzzzzzzzzzzxy);\n    assert(solution.subStrHash(\"aaaaabbbbbccccdddddeeeeefffffggggghhhhiiiiijjjjjkkkkklllllmmmmmnnnnnooooo\", 11, 100000007, 13, 111222) == vector<int>mmmnnnnnooooo);\n    assert(solution.subStrHash(\"thisisaverylongstringthatshouldworkwiththehashingfunctioncorrectly\", 13, 107, 25, 67) == vector<int>ehashingfunctioncorrectly);\n    assert(solution.subStrHash(\"abcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcd\", 97, 10007, 6, 10001) == vector<int>cdabcd);\n    assert(solution.subStrHash(\"abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz\", 17, 89, 10, 67) == vector<int>qrstuvwxyz);\n    assert(solution.subStrHash(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", 7, 1000000009, 15, 324434711) == vector<int>sttuuvvwwxxyyzz);\n    assert(solution.subStrHash(\"xyzzxyzzxyzzxyzzxyzzxyzzxyzzxyzzxyzzxyzzxyzzxyzzxyzz\", 11, 97, 6, 76) == vector<int>xyzzxy);\n    assert(solution.subStrHash(\"abcdeabcdeabcdeabcdeabcdeabcdeabcdeabcdeabcdeabcdeabcdeabcde\", 5, 17, 14, 11) == vector<int>abcdeabcdeabcd);\n    assert(solution.subStrHash(\"abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz\", 13, 101, 10, 97) == vector<int>qrstuvwxyz);\n    assert(solution.subStrHash(\"abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz\", 13, 101, 10, 60) == vector<int>xyzabcdefg);\n    assert(solution.subStrHash(\"hashingisawesome\", 37, 1000000007, 7, 88888888) == vector<int>awesome);\n    assert(solution.subStrHash(\"abcdefghijklmnopqrstuvwxyz\", 23, 41, 7, 35) == vector<int>cdefghi);\n    assert(solution.subStrHash(\"thefastbrownfoxjumpedoverthelazydog\", 43, 1000000007, 5, 234567) == vector<int>zydog);\n    assert(solution.subStrHash(\"abcdefghijklmnopqrstuvwxyzyxwvutsrqponmlkjihgfedcba\", 26, 1000000009, 26, 987654321) == vector<int>zyxwvutsrqponmlkjihgfedcba);\n    assert(solution.subStrHash(\"abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz\", 1000000007, 1000000009, 10, 876543210) == vector<int>qrstuvwxyz);\n    assert(solution.subStrHash(\"abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz\", 31, 1000000007, 26, 680151233) == vector<int>abcdefghijklmnopqrstuvwxyz);\n    assert(solution.subStrHash(\"onetwothreefourfivesixseveneightnineseveneightsixfiv foureventhreetwooneonetwothreefourfivesix\", 13, 103, 8, 45) == vector<int>veneight);\n    assert(solution.subStrHash(\"abcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabc\", 5, 1000000009, 10, 740006228) == vector<int>cabcabcabc);\n    assert(solution.subStrHash(\"aquickbrownfoxjumpsoverthelazydog\", 33, 1000000007, 4, 123) == vector<int>ydog);\n    assert(solution.subStrHash(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", 5, 1000, 7, 500) == vector<int>wxxyyzz);\n    assert(solution.subStrHash(\"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", 31, 1000000007, 15, 123456789) == vector<int>zzzzzzzzzzzzzzz);\n    assert(solution.subStrHash(\"abcdefabcdefabcdefabcdefabcdefabcdefabcdefabcdefabcdefabcdef\", 41, 997, 12, 500) == vector<int>abcdefabcdef);\n}",
+    "java": "public static void check(Solution solution) {\n    assert Arrays.equals(solution.subStrHash(\"zxcvbnm\", 10, 1000000007, 4, 807311072), vbnm);\n    assert Arrays.equals(solution.subStrHash(\"abracadabra\", 5, 11, 3, 4), dab);\n    assert Arrays.equals(solution.subStrHash(\"zzzzzzzzzz\", 29, 1000000007, 4, 78608631), zzzz);\n    assert Arrays.equals(solution.subStrHash(\"leetcode\", 7, 20, 2, 0), ee);\n    assert Arrays.equals(solution.subStrHash(\"fbxzaad\", 31, 100, 3, 32), fbx);\n    assert Arrays.equals(solution.subStrHash(\"abcdefghijklmnopqrstuvwxyz\", 26, 101, 5, 53), vwxyz);\n    assert Arrays.equals(solution.subStrHash(\"a\", 1, 1, 1, 0), a);\n    assert Arrays.equals(solution.subStrHash(\"zaz\", 26, 29, 2, 27), az);\n    assert Arrays.equals(solution.subStrHash(\"a\", 13, 97, 1, 1), a);\n    assert Arrays.equals(solution.subStrHash(\"abcdefghijklmnopqrstuvwxyz\", 13, 50, 5, 37), klmno);\n    assert Arrays.equals(solution.subStrHash(\"abcde\", 2, 11, 3, 7), cde);\n    assert Arrays.equals(solution.subStrHash(\"a\", 5, 13, 1, 1), a);\n    assert Arrays.equals(solution.subStrHash(\"mmcp\", 13, 457, 2, 33), cp);\n    assert Arrays.equals(solution.subStrHash(\"thisisaverylongstringthatweneedtofindasubstringwithagivenhashvalue\", 5, 1000000009, 12, 543), venhashvalue);\n    assert Arrays.equals(solution.subStrHash(\"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", 29, 101, 20, 95), zzzzzzzzzzzzzzzzzzzz);\n    assert Arrays.equals(solution.subStrHash(\"hellothereeveryone\", 37, 101, 6, 74), eryone);\n    assert Arrays.equals(solution.subStrHash(\"complexityisimportantinbigdatatechnology\", 19, 1000000009, 8, 543210987), chnology);\n    assert Arrays.equals(solution.subStrHash(\"zxcvbnmasdfghjklqwertyuiop\", 29, 1000000007, 6, 563872), tyuiop);\n    assert Arrays.equals(solution.subStrHash(\"abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz\", 19, 1000000007, 26, 267973410), abcdefghijklmnopqrstuvwxyz);\n    assert Arrays.equals(solution.subStrHash(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", 17, 1000000009, 7, 123456789), wxxyyzz);\n    assert Arrays.equals(solution.subStrHash(\"abababababababababababababababababababababababababab\", 5, 1000000003, 11, 543210987), bababababab);\n    assert Arrays.equals(solution.subStrHash(\"a\", 7, 13, 1, 1), a);\n    assert Arrays.equals(solution.subStrHash(\"mississippi\", 19, 1000000007, 4, 683), ippi);\n    assert Arrays.equals(solution.subStrHash(\"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", 11, 79, 20, 10), zzzzzzzzzzzzzzzzzzzz);\n    assert Arrays.equals(solution.subStrHash(\"abcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabc\", 19, 83, 15, 28), abcabcabcabcabc);\n    assert Arrays.equals(solution.subStrHash(\"lkjihgfedcbazyxwvutsrqponml\", 41, 1000000009, 14, 102474831), yxwvutsrqponml);\n    assert Arrays.equals(solution.subStrHash(\"ababababababababababababababababababababababababababababababab\", 11, 1000000007, 10, 543210987), ababababab);\n    assert Arrays.equals(solution.subStrHash(\"powerrangers\", 29, 97, 4, 53), gers);\n    assert Arrays.equals(solution.subStrHash(\"abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz\", 17, 53, 10, 49), qrstuvwxyz);\n    assert Arrays.equals(solution.subStrHash(\"abcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghij\", 2, 13, 8, 7), bcdefghi);\n    assert Arrays.equals(solution.subStrHash(\"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", 999999937, 1000000007, 10000, 123456789), Error: string index out of range);\n    assert Arrays.equals(solution.subStrHash(\"mmmmmmmmmabcdefghimnopqrstuvwxyz\", 37, 1000000007, 8, 987654321), stuvwxyz);\n    assert Arrays.equals(solution.subStrHash(\"thisisaverylongstringthatweneedtofindthesubstringwiththespecifiedhashvalue\", 13, 1000000007, 20, 345234657), hespecifiedhashvalue);\n    assert Arrays.equals(solution.subStrHash(\"thisisjustanexampleofalongsstringwithseveralhashvalues\", 3, 100, 4, 15), lues);\n    assert Arrays.equals(solution.subStrHash(\"qponmlkjihgfedcbaabcdefghijklmnopqrstuvwxyz\", 43, 1000000007, 22, 872889924), efghijklmnopqrstuvwxyz);\n    assert Arrays.equals(solution.subStrHash(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", 37, 100000007, 50, 876543210), bbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz);\n    assert Arrays.equals(solution.subStrHash(\"abcdefghijklmnopqrstuvwxyzyxwvutsrqponmlkjihgfedcba\", 43, 1000000007, 25, 54321), yxwvutsrqponmlkjihgfedcba);\n    assert Arrays.equals(solution.subStrHash(\"xylophonepianoxylophonepianoxylophonepianoxyloph\", 23, 1000000009, 9, 765432109), anoxyloph);\n    assert Arrays.equals(solution.subStrHash(\"abcdefghijkabcdefghijkabcdefghijk\", 19, 1000000009, 11, 123456789), abcdefghijk);\n    assert Arrays.equals(solution.subStrHash(\"mississippiissi\", 5, 1000000007, 7, 432109876), ppiissi);\n    assert Arrays.equals(solution.subStrHash(\"bcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbc\", 17, 1000000007, 12, 617980928), bcbcbcbcbcbc);\n    assert Arrays.equals(solution.subStrHash(\"aquickbrownfoxjumpsoverthelazydog\", 37, 1000000007, 15, 756839574), soverthelazydog);\n    assert Arrays.equals(solution.subStrHash(\"mississippiisaverypopularstring\", 23, 107, 9, 62), larstring);\n    assert Arrays.equals(solution.subStrHash(\"abcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghij\", 29, 999983, 9, 456789), bcdefghij);\n    assert Arrays.equals(solution.subStrHash(\"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", 10, 10007, 10, 7007), zzzzzzzzzz);\n    assert Arrays.equals(solution.subStrHash(\"abacabadabacaba\", 10, 61, 5, 31), acaba);\n    assert Arrays.equals(solution.subStrHash(\"programmingisfun\", 5, 1000000009, 8, 77777777), ingisfun);\n    assert Arrays.equals(solution.subStrHash(\"thisisaverylongstringthatwillbeusedtohashandfindthesubstring\", 19, 1000003, 12, 876543), thesubstring);\n    assert Arrays.equals(solution.subStrHash(\"xyzabcxyz\", 17, 101, 4, 70), cxyz);\n    assert Arrays.equals(solution.subStrHash(\"aquickbrownfoxjumpsoverthelazydog\", 11, 997, 12, 896), erthelazydog);\n    assert Arrays.equals(solution.subStrHash(\"banana\", 5, 10007, 2, 22), na);\n    assert Arrays.equals(solution.subStrHash(\"abcdefghijklmnopqrstuvwxyzyxwvutsrqponmlkjihgfedcba\", 19, 47, 15, 29), onmlkjihgfedcba);\n    assert Arrays.equals(solution.subStrHash(\"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", 31, 1000000007, 5, 35852459), zzzzz);\n    assert Arrays.equals(solution.subStrHash(\"kjfslafjslkafjslkfjslkfjlskjflskjflskfjslkfjslkfjslk\", 11, 1000000001, 8, 987654321), slkfjslk);\n    assert Arrays.equals(solution.subStrHash(\"zyxwvutsrqponmlkjihgfedcba\", 13, 1000000007, 20, 689648594), tsrqponmlkjihgfedcba);\n    assert Arrays.equals(solution.subStrHash(\"abcdefghijklmnopqrstuvwxyzzzzzzzzzzzzzzzzzzzzzzzzzz\", 23, 999983, 15, 123456), zzzzzzzzzzzzzzz);\n    assert Arrays.equals(solution.subStrHash(\"quickbrownfoxjumpsoverthelazydog\", 41, 1000000009, 6, 345678), azydog);\n    assert Arrays.equals(solution.subStrHash(\"thisisaverylongstringthatcontainsmanywordsandcharactersforhashing\", 41, 1000000009, 18, 897530987), aractersforhashing);\n    assert Arrays.equals(solution.subStrHash(\"thepowerofhashing\", 17, 10007, 9, 9999), ofhashing);\n    assert Arrays.equals(solution.subStrHash(\"racecar\", 17, 1000000009, 3, 113), car);\n    assert Arrays.equals(solution.subStrHash(\"abcdefghijklmnopqrstuvwxyza\", 23, 1000000009, 21, 850494334), ghijklmnopqrstuvwxyza);\n    assert Arrays.equals(solution.subStrHash(\"racecarannakayak\", 37, 109, 7, 87), nakayak);\n    assert Arrays.equals(solution.subStrHash(\"rollinghashingisaveryefficientalgorithm\", 29, 1000000007, 10, 987654321), talgorithm);\n    assert Arrays.equals(solution.subStrHash(\"hashfunctionexample\", 31, 1000000007, 13, 234567890), nctionexample);\n    assert Arrays.equals(solution.subStrHash(\"abcdeabcdeabcdeabcdeabcdeabcdeabcdeabcde\", 7, 13, 5, 5), eabcd);\n    assert Arrays.equals(solution.subStrHash(\"abcdefghijabcdefghijabcdefghijabcdefghijabcdefghij\", 31, 1000000009, 10, 109876543), abcdefghij);\n    assert Arrays.equals(solution.subStrHash(\"abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz\", 27, 10007, 26, 4750), abcdefghijklmnopqrstuvwxyz);\n    assert Arrays.equals(solution.subStrHash(\"thisproblemisfunandchallengingandfunandchallenging\", 41, 1000000011, 14, 543210987), andchallenging);\n    assert Arrays.equals(solution.subStrHash(\"jqwertyuiopasdfghjklzxcvbnmnbvcxzlkjhgfdsapoiuytrewq\", 17, 1000000009, 15, 765432109), gfdsapoiuytrewq);\n    assert Arrays.equals(solution.subStrHash(\"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", 1000000007, 1000000009, 10, 999999939), zzzzzzzzzz);\n    assert Arrays.equals(solution.subStrHash(\"acacacacacacacacacacacacacacacacacacacacacacacacacacac\", 19, 1000000007, 12, 876543210), acacacacacac);\n    assert Arrays.equals(solution.subStrHash(\"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", 1000000007, 1000000009, 10000, 123456789), Error: string index out of range);\n    assert Arrays.equals(solution.subStrHash(\"loremipsumdolorsitametloremipsumdolorsitametlorem\", 43, 1000000017, 15, 432109876), lorsitametlorem);\n    assert Arrays.equals(solution.subStrHash(\"mnopqrstuvwxyzaabcdefghijklmnopqr\", 37, 1000000007, 25, 519164833), uvwxyzaabcdefghijklmnopqr);\n    assert Arrays.equals(solution.subStrHash(\"thesoundofsilencethesoundofsilencethesoundofsilence\", 37, 1000000013, 13, 654321098), oundofsilence);\n    assert Arrays.equals(solution.subStrHash(\"ababababababababababababababababababababababababab\", 23, 29, 7, 17), bababab);\n    assert Arrays.equals(solution.subStrHash(\"xyzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzxy\", 31, 1000000009, 15, 987654321), zzzzzzzzzzzzzxy);\n    assert Arrays.equals(solution.subStrHash(\"aaaaabbbbbccccdddddeeeeefffffggggghhhhiiiiijjjjjkkkkklllllmmmmmnnnnnooooo\", 11, 100000007, 13, 111222), mmmnnnnnooooo);\n    assert Arrays.equals(solution.subStrHash(\"thisisaverylongstringthatshouldworkwiththehashingfunctioncorrectly\", 13, 107, 25, 67), ehashingfunctioncorrectly);\n    assert Arrays.equals(solution.subStrHash(\"abcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcd\", 97, 10007, 6, 10001), cdabcd);\n    assert Arrays.equals(solution.subStrHash(\"abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz\", 17, 89, 10, 67), qrstuvwxyz);\n    assert Arrays.equals(solution.subStrHash(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", 7, 1000000009, 15, 324434711), sttuuvvwwxxyyzz);\n    assert Arrays.equals(solution.subStrHash(\"xyzzxyzzxyzzxyzzxyzzxyzzxyzzxyzzxyzzxyzzxyzzxyzzxyzz\", 11, 97, 6, 76), xyzzxy);\n    assert Arrays.equals(solution.subStrHash(\"abcdeabcdeabcdeabcdeabcdeabcdeabcdeabcdeabcdeabcdeabcdeabcde\", 5, 17, 14, 11), abcdeabcdeabcd);\n    assert Arrays.equals(solution.subStrHash(\"abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz\", 13, 101, 10, 97), qrstuvwxyz);\n    assert Arrays.equals(solution.subStrHash(\"abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz\", 13, 101, 10, 60), xyzabcdefg);\n    assert Arrays.equals(solution.subStrHash(\"hashingisawesome\", 37, 1000000007, 7, 88888888), awesome);\n    assert Arrays.equals(solution.subStrHash(\"abcdefghijklmnopqrstuvwxyz\", 23, 41, 7, 35), cdefghi);\n    assert Arrays.equals(solution.subStrHash(\"thefastbrownfoxjumpedoverthelazydog\", 43, 1000000007, 5, 234567), zydog);\n    assert Arrays.equals(solution.subStrHash(\"abcdefghijklmnopqrstuvwxyzyxwvutsrqponmlkjihgfedcba\", 26, 1000000009, 26, 987654321), zyxwvutsrqponmlkjihgfedcba);\n    assert Arrays.equals(solution.subStrHash(\"abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz\", 1000000007, 1000000009, 10, 876543210), qrstuvwxyz);\n    assert Arrays.equals(solution.subStrHash(\"abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz\", 31, 1000000007, 26, 680151233), abcdefghijklmnopqrstuvwxyz);\n    assert Arrays.equals(solution.subStrHash(\"onetwothreefourfivesixseveneightnineseveneightsixfiv foureventhreetwooneonetwothreefourfivesix\", 13, 103, 8, 45), veneight);\n    assert Arrays.equals(solution.subStrHash(\"abcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabc\", 5, 1000000009, 10, 740006228), cabcabcabc);\n    assert Arrays.equals(solution.subStrHash(\"aquickbrownfoxjumpsoverthelazydog\", 33, 1000000007, 4, 123), ydog);\n    assert Arrays.equals(solution.subStrHash(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", 5, 1000, 7, 500), wxxyyzz);\n    assert Arrays.equals(solution.subStrHash(\"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", 31, 1000000007, 15, 123456789), zzzzzzzzzzzzzzz);\n    assert Arrays.equals(solution.subStrHash(\"abcdefabcdefabcdefabcdefabcdefabcdefabcdefabcdefabcdefabcdef\", 41, 997, 12, 500), abcdefabcdef);\n}",
+    "javascript": "function check(candidate) {\n    console.assert(JSON.stringify(candidate(\"zxcvbnm\", 10, 1000000007, 4, 807311072)) === JSON.stringify(vbnm));\n    console.assert(JSON.stringify(candidate(\"abracadabra\", 5, 11, 3, 4)) === JSON.stringify(dab));\n    console.assert(JSON.stringify(candidate(\"zzzzzzzzzz\", 29, 1000000007, 4, 78608631)) === JSON.stringify(zzzz));\n    console.assert(JSON.stringify(candidate(\"leetcode\", 7, 20, 2, 0)) === JSON.stringify(ee));\n    console.assert(JSON.stringify(candidate(\"fbxzaad\", 31, 100, 3, 32)) === JSON.stringify(fbx));\n    console.assert(JSON.stringify(candidate(\"abcdefghijklmnopqrstuvwxyz\", 26, 101, 5, 53)) === JSON.stringify(vwxyz));\n    console.assert(JSON.stringify(candidate(\"a\", 1, 1, 1, 0)) === JSON.stringify(a));\n    console.assert(JSON.stringify(candidate(\"zaz\", 26, 29, 2, 27)) === JSON.stringify(az));\n    console.assert(JSON.stringify(candidate(\"a\", 13, 97, 1, 1)) === JSON.stringify(a));\n    console.assert(JSON.stringify(candidate(\"abcdefghijklmnopqrstuvwxyz\", 13, 50, 5, 37)) === JSON.stringify(klmno));\n    console.assert(JSON.stringify(candidate(\"abcde\", 2, 11, 3, 7)) === JSON.stringify(cde));\n    console.assert(JSON.stringify(candidate(\"a\", 5, 13, 1, 1)) === JSON.stringify(a));\n    console.assert(JSON.stringify(candidate(\"mmcp\", 13, 457, 2, 33)) === JSON.stringify(cp));\n    console.assert(JSON.stringify(candidate(\"thisisaverylongstringthatweneedtofindasubstringwithagivenhashvalue\", 5, 1000000009, 12, 543)) === JSON.stringify(venhashvalue));\n    console.assert(JSON.stringify(candidate(\"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", 29, 101, 20, 95)) === JSON.stringify(zzzzzzzzzzzzzzzzzzzz));\n    console.assert(JSON.stringify(candidate(\"hellothereeveryone\", 37, 101, 6, 74)) === JSON.stringify(eryone));\n    console.assert(JSON.stringify(candidate(\"complexityisimportantinbigdatatechnology\", 19, 1000000009, 8, 543210987)) === JSON.stringify(chnology));\n    console.assert(JSON.stringify(candidate(\"zxcvbnmasdfghjklqwertyuiop\", 29, 1000000007, 6, 563872)) === JSON.stringify(tyuiop));\n    console.assert(JSON.stringify(candidate(\"abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz\", 19, 1000000007, 26, 267973410)) === JSON.stringify(abcdefghijklmnopqrstuvwxyz));\n    console.assert(JSON.stringify(candidate(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", 17, 1000000009, 7, 123456789)) === JSON.stringify(wxxyyzz));\n    console.assert(JSON.stringify(candidate(\"abababababababababababababababababababababababababab\", 5, 1000000003, 11, 543210987)) === JSON.stringify(bababababab));\n    console.assert(JSON.stringify(candidate(\"a\", 7, 13, 1, 1)) === JSON.stringify(a));\n    console.assert(JSON.stringify(candidate(\"mississippi\", 19, 1000000007, 4, 683)) === JSON.stringify(ippi));\n    console.assert(JSON.stringify(candidate(\"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", 11, 79, 20, 10)) === JSON.stringify(zzzzzzzzzzzzzzzzzzzz));\n    console.assert(JSON.stringify(candidate(\"abcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabc\", 19, 83, 15, 28)) === JSON.stringify(abcabcabcabcabc));\n    console.assert(JSON.stringify(candidate(\"lkjihgfedcbazyxwvutsrqponml\", 41, 1000000009, 14, 102474831)) === JSON.stringify(yxwvutsrqponml));\n    console.assert(JSON.stringify(candidate(\"ababababababababababababababababababababababababababababababab\", 11, 1000000007, 10, 543210987)) === JSON.stringify(ababababab));\n    console.assert(JSON.stringify(candidate(\"powerrangers\", 29, 97, 4, 53)) === JSON.stringify(gers));\n    console.assert(JSON.stringify(candidate(\"abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz\", 17, 53, 10, 49)) === JSON.stringify(qrstuvwxyz));\n    console.assert(JSON.stringify(candidate(\"abcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghij\", 2, 13, 8, 7)) === JSON.stringify(bcdefghi));\n    console.assert(JSON.stringify(candidate(\"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", 999999937, 1000000007, 10000, 123456789)) === JSON.stringify(Error: string index out of range));\n    console.assert(JSON.stringify(candidate(\"mmmmmmmmmabcdefghimnopqrstuvwxyz\", 37, 1000000007, 8, 987654321)) === JSON.stringify(stuvwxyz));\n    console.assert(JSON.stringify(candidate(\"thisisaverylongstringthatweneedtofindthesubstringwiththespecifiedhashvalue\", 13, 1000000007, 20, 345234657)) === JSON.stringify(hespecifiedhashvalue));\n    console.assert(JSON.stringify(candidate(\"thisisjustanexampleofalongsstringwithseveralhashvalues\", 3, 100, 4, 15)) === JSON.stringify(lues));\n    console.assert(JSON.stringify(candidate(\"qponmlkjihgfedcbaabcdefghijklmnopqrstuvwxyz\", 43, 1000000007, 22, 872889924)) === JSON.stringify(efghijklmnopqrstuvwxyz));\n    console.assert(JSON.stringify(candidate(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", 37, 100000007, 50, 876543210)) === JSON.stringify(bbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz));\n    console.assert(JSON.stringify(candidate(\"abcdefghijklmnopqrstuvwxyzyxwvutsrqponmlkjihgfedcba\", 43, 1000000007, 25, 54321)) === JSON.stringify(yxwvutsrqponmlkjihgfedcba));\n    console.assert(JSON.stringify(candidate(\"xylophonepianoxylophonepianoxylophonepianoxyloph\", 23, 1000000009, 9, 765432109)) === JSON.stringify(anoxyloph));\n    console.assert(JSON.stringify(candidate(\"abcdefghijkabcdefghijkabcdefghijk\", 19, 1000000009, 11, 123456789)) === JSON.stringify(abcdefghijk));\n    console.assert(JSON.stringify(candidate(\"mississippiissi\", 5, 1000000007, 7, 432109876)) === JSON.stringify(ppiissi));\n    console.assert(JSON.stringify(candidate(\"bcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbc\", 17, 1000000007, 12, 617980928)) === JSON.stringify(bcbcbcbcbcbc));\n    console.assert(JSON.stringify(candidate(\"aquickbrownfoxjumpsoverthelazydog\", 37, 1000000007, 15, 756839574)) === JSON.stringify(soverthelazydog));\n    console.assert(JSON.stringify(candidate(\"mississippiisaverypopularstring\", 23, 107, 9, 62)) === JSON.stringify(larstring));\n    console.assert(JSON.stringify(candidate(\"abcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghij\", 29, 999983, 9, 456789)) === JSON.stringify(bcdefghij));\n    console.assert(JSON.stringify(candidate(\"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", 10, 10007, 10, 7007)) === JSON.stringify(zzzzzzzzzz));\n    console.assert(JSON.stringify(candidate(\"abacabadabacaba\", 10, 61, 5, 31)) === JSON.stringify(acaba));\n    console.assert(JSON.stringify(candidate(\"programmingisfun\", 5, 1000000009, 8, 77777777)) === JSON.stringify(ingisfun));\n    console.assert(JSON.stringify(candidate(\"thisisaverylongstringthatwillbeusedtohashandfindthesubstring\", 19, 1000003, 12, 876543)) === JSON.stringify(thesubstring));\n    console.assert(JSON.stringify(candidate(\"xyzabcxyz\", 17, 101, 4, 70)) === JSON.stringify(cxyz));\n    console.assert(JSON.stringify(candidate(\"aquickbrownfoxjumpsoverthelazydog\", 11, 997, 12, 896)) === JSON.stringify(erthelazydog));\n    console.assert(JSON.stringify(candidate(\"banana\", 5, 10007, 2, 22)) === JSON.stringify(na));\n    console.assert(JSON.stringify(candidate(\"abcdefghijklmnopqrstuvwxyzyxwvutsrqponmlkjihgfedcba\", 19, 47, 15, 29)) === JSON.stringify(onmlkjihgfedcba));\n    console.assert(JSON.stringify(candidate(\"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", 31, 1000000007, 5, 35852459)) === JSON.stringify(zzzzz));\n    console.assert(JSON.stringify(candidate(\"kjfslafjslkafjslkfjslkfjlskjflskjflskfjslkfjslkfjslk\", 11, 1000000001, 8, 987654321)) === JSON.stringify(slkfjslk));\n    console.assert(JSON.stringify(candidate(\"zyxwvutsrqponmlkjihgfedcba\", 13, 1000000007, 20, 689648594)) === JSON.stringify(tsrqponmlkjihgfedcba));\n    console.assert(JSON.stringify(candidate(\"abcdefghijklmnopqrstuvwxyzzzzzzzzzzzzzzzzzzzzzzzzzz\", 23, 999983, 15, 123456)) === JSON.stringify(zzzzzzzzzzzzzzz));\n    console.assert(JSON.stringify(candidate(\"quickbrownfoxjumpsoverthelazydog\", 41, 1000000009, 6, 345678)) === JSON.stringify(azydog));\n    console.assert(JSON.stringify(candidate(\"thisisaverylongstringthatcontainsmanywordsandcharactersforhashing\", 41, 1000000009, 18, 897530987)) === JSON.stringify(aractersforhashing));\n    console.assert(JSON.stringify(candidate(\"thepowerofhashing\", 17, 10007, 9, 9999)) === JSON.stringify(ofhashing));\n    console.assert(JSON.stringify(candidate(\"racecar\", 17, 1000000009, 3, 113)) === JSON.stringify(car));\n    console.assert(JSON.stringify(candidate(\"abcdefghijklmnopqrstuvwxyza\", 23, 1000000009, 21, 850494334)) === JSON.stringify(ghijklmnopqrstuvwxyza));\n    console.assert(JSON.stringify(candidate(\"racecarannakayak\", 37, 109, 7, 87)) === JSON.stringify(nakayak));\n    console.assert(JSON.stringify(candidate(\"rollinghashingisaveryefficientalgorithm\", 29, 1000000007, 10, 987654321)) === JSON.stringify(talgorithm));\n    console.assert(JSON.stringify(candidate(\"hashfunctionexample\", 31, 1000000007, 13, 234567890)) === JSON.stringify(nctionexample));\n    console.assert(JSON.stringify(candidate(\"abcdeabcdeabcdeabcdeabcdeabcdeabcdeabcde\", 7, 13, 5, 5)) === JSON.stringify(eabcd));\n    console.assert(JSON.stringify(candidate(\"abcdefghijabcdefghijabcdefghijabcdefghijabcdefghij\", 31, 1000000009, 10, 109876543)) === JSON.stringify(abcdefghij));\n    console.assert(JSON.stringify(candidate(\"abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz\", 27, 10007, 26, 4750)) === JSON.stringify(abcdefghijklmnopqrstuvwxyz));\n    console.assert(JSON.stringify(candidate(\"thisproblemisfunandchallengingandfunandchallenging\", 41, 1000000011, 14, 543210987)) === JSON.stringify(andchallenging));\n    console.assert(JSON.stringify(candidate(\"jqwertyuiopasdfghjklzxcvbnmnbvcxzlkjhgfdsapoiuytrewq\", 17, 1000000009, 15, 765432109)) === JSON.stringify(gfdsapoiuytrewq));\n    console.assert(JSON.stringify(candidate(\"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", 1000000007, 1000000009, 10, 999999939)) === JSON.stringify(zzzzzzzzzz));\n    console.assert(JSON.stringify(candidate(\"acacacacacacacacacacacacacacacacacacacacacacacacacacac\", 19, 1000000007, 12, 876543210)) === JSON.stringify(acacacacacac));\n    console.assert(JSON.stringify(candidate(\"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", 1000000007, 1000000009, 10000, 123456789)) === JSON.stringify(Error: string index out of range));\n    console.assert(JSON.stringify(candidate(\"loremipsumdolorsitametloremipsumdolorsitametlorem\", 43, 1000000017, 15, 432109876)) === JSON.stringify(lorsitametlorem));\n    console.assert(JSON.stringify(candidate(\"mnopqrstuvwxyzaabcdefghijklmnopqr\", 37, 1000000007, 25, 519164833)) === JSON.stringify(uvwxyzaabcdefghijklmnopqr));\n    console.assert(JSON.stringify(candidate(\"thesoundofsilencethesoundofsilencethesoundofsilence\", 37, 1000000013, 13, 654321098)) === JSON.stringify(oundofsilence));\n    console.assert(JSON.stringify(candidate(\"ababababababababababababababababababababababababab\", 23, 29, 7, 17)) === JSON.stringify(bababab));\n    console.assert(JSON.stringify(candidate(\"xyzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzxy\", 31, 1000000009, 15, 987654321)) === JSON.stringify(zzzzzzzzzzzzzxy));\n    console.assert(JSON.stringify(candidate(\"aaaaabbbbbccccdddddeeeeefffffggggghhhhiiiiijjjjjkkkkklllllmmmmmnnnnnooooo\", 11, 100000007, 13, 111222)) === JSON.stringify(mmmnnnnnooooo));\n    console.assert(JSON.stringify(candidate(\"thisisaverylongstringthatshouldworkwiththehashingfunctioncorrectly\", 13, 107, 25, 67)) === JSON.stringify(ehashingfunctioncorrectly));\n    console.assert(JSON.stringify(candidate(\"abcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcd\", 97, 10007, 6, 10001)) === JSON.stringify(cdabcd));\n    console.assert(JSON.stringify(candidate(\"abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz\", 17, 89, 10, 67)) === JSON.stringify(qrstuvwxyz));\n    console.assert(JSON.stringify(candidate(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", 7, 1000000009, 15, 324434711)) === JSON.stringify(sttuuvvwwxxyyzz));\n    console.assert(JSON.stringify(candidate(\"xyzzxyzzxyzzxyzzxyzzxyzzxyzzxyzzxyzzxyzzxyzzxyzzxyzz\", 11, 97, 6, 76)) === JSON.stringify(xyzzxy));\n    console.assert(JSON.stringify(candidate(\"abcdeabcdeabcdeabcdeabcdeabcdeabcdeabcdeabcdeabcdeabcdeabcde\", 5, 17, 14, 11)) === JSON.stringify(abcdeabcdeabcd));\n    console.assert(JSON.stringify(candidate(\"abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz\", 13, 101, 10, 97)) === JSON.stringify(qrstuvwxyz));\n    console.assert(JSON.stringify(candidate(\"abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz\", 13, 101, 10, 60)) === JSON.stringify(xyzabcdefg));\n    console.assert(JSON.stringify(candidate(\"hashingisawesome\", 37, 1000000007, 7, 88888888)) === JSON.stringify(awesome));\n    console.assert(JSON.stringify(candidate(\"abcdefghijklmnopqrstuvwxyz\", 23, 41, 7, 35)) === JSON.stringify(cdefghi));\n    console.assert(JSON.stringify(candidate(\"thefastbrownfoxjumpedoverthelazydog\", 43, 1000000007, 5, 234567)) === JSON.stringify(zydog));\n    console.assert(JSON.stringify(candidate(\"abcdefghijklmnopqrstuvwxyzyxwvutsrqponmlkjihgfedcba\", 26, 1000000009, 26, 987654321)) === JSON.stringify(zyxwvutsrqponmlkjihgfedcba));\n    console.assert(JSON.stringify(candidate(\"abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz\", 1000000007, 1000000009, 10, 876543210)) === JSON.stringify(qrstuvwxyz));\n    console.assert(JSON.stringify(candidate(\"abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz\", 31, 1000000007, 26, 680151233)) === JSON.stringify(abcdefghijklmnopqrstuvwxyz));\n    console.assert(JSON.stringify(candidate(\"onetwothreefourfivesixseveneightnineseveneightsixfiv foureventhreetwooneonetwothreefourfivesix\", 13, 103, 8, 45)) === JSON.stringify(veneight));\n    console.assert(JSON.stringify(candidate(\"abcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabc\", 5, 1000000009, 10, 740006228)) === JSON.stringify(cabcabcabc));\n    console.assert(JSON.stringify(candidate(\"aquickbrownfoxjumpsoverthelazydog\", 33, 1000000007, 4, 123)) === JSON.stringify(ydog));\n    console.assert(JSON.stringify(candidate(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", 5, 1000, 7, 500)) === JSON.stringify(wxxyyzz));\n    console.assert(JSON.stringify(candidate(\"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", 31, 1000000007, 15, 123456789)) === JSON.stringify(zzzzzzzzzzzzzzz));\n    console.assert(JSON.stringify(candidate(\"abcdefabcdefabcdefabcdefabcdefabcdefabcdefabcdefabcdefabcdef\", 41, 997, 12, 500)) === JSON.stringify(abcdefabcdef));\n}",
+    "typescript": "function check(candidate: Function): void {\n    console.assert(JSON.stringify(candidate(\"zxcvbnm\", 10, 1000000007, 4, 807311072)) === JSON.stringify(vbnm));\n    console.assert(JSON.stringify(candidate(\"abracadabra\", 5, 11, 3, 4)) === JSON.stringify(dab));\n    console.assert(JSON.stringify(candidate(\"zzzzzzzzzz\", 29, 1000000007, 4, 78608631)) === JSON.stringify(zzzz));\n    console.assert(JSON.stringify(candidate(\"leetcode\", 7, 20, 2, 0)) === JSON.stringify(ee));\n    console.assert(JSON.stringify(candidate(\"fbxzaad\", 31, 100, 3, 32)) === JSON.stringify(fbx));\n    console.assert(JSON.stringify(candidate(\"abcdefghijklmnopqrstuvwxyz\", 26, 101, 5, 53)) === JSON.stringify(vwxyz));\n    console.assert(JSON.stringify(candidate(\"a\", 1, 1, 1, 0)) === JSON.stringify(a));\n    console.assert(JSON.stringify(candidate(\"zaz\", 26, 29, 2, 27)) === JSON.stringify(az));\n    console.assert(JSON.stringify(candidate(\"a\", 13, 97, 1, 1)) === JSON.stringify(a));\n    console.assert(JSON.stringify(candidate(\"abcdefghijklmnopqrstuvwxyz\", 13, 50, 5, 37)) === JSON.stringify(klmno));\n    console.assert(JSON.stringify(candidate(\"abcde\", 2, 11, 3, 7)) === JSON.stringify(cde));\n    console.assert(JSON.stringify(candidate(\"a\", 5, 13, 1, 1)) === JSON.stringify(a));\n    console.assert(JSON.stringify(candidate(\"mmcp\", 13, 457, 2, 33)) === JSON.stringify(cp));\n    console.assert(JSON.stringify(candidate(\"thisisaverylongstringthatweneedtofindasubstringwithagivenhashvalue\", 5, 1000000009, 12, 543)) === JSON.stringify(venhashvalue));\n    console.assert(JSON.stringify(candidate(\"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", 29, 101, 20, 95)) === JSON.stringify(zzzzzzzzzzzzzzzzzzzz));\n    console.assert(JSON.stringify(candidate(\"hellothereeveryone\", 37, 101, 6, 74)) === JSON.stringify(eryone));\n    console.assert(JSON.stringify(candidate(\"complexityisimportantinbigdatatechnology\", 19, 1000000009, 8, 543210987)) === JSON.stringify(chnology));\n    console.assert(JSON.stringify(candidate(\"zxcvbnmasdfghjklqwertyuiop\", 29, 1000000007, 6, 563872)) === JSON.stringify(tyuiop));\n    console.assert(JSON.stringify(candidate(\"abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz\", 19, 1000000007, 26, 267973410)) === JSON.stringify(abcdefghijklmnopqrstuvwxyz));\n    console.assert(JSON.stringify(candidate(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", 17, 1000000009, 7, 123456789)) === JSON.stringify(wxxyyzz));\n    console.assert(JSON.stringify(candidate(\"abababababababababababababababababababababababababab\", 5, 1000000003, 11, 543210987)) === JSON.stringify(bababababab));\n    console.assert(JSON.stringify(candidate(\"a\", 7, 13, 1, 1)) === JSON.stringify(a));\n    console.assert(JSON.stringify(candidate(\"mississippi\", 19, 1000000007, 4, 683)) === JSON.stringify(ippi));\n    console.assert(JSON.stringify(candidate(\"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", 11, 79, 20, 10)) === JSON.stringify(zzzzzzzzzzzzzzzzzzzz));\n    console.assert(JSON.stringify(candidate(\"abcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabc\", 19, 83, 15, 28)) === JSON.stringify(abcabcabcabcabc));\n    console.assert(JSON.stringify(candidate(\"lkjihgfedcbazyxwvutsrqponml\", 41, 1000000009, 14, 102474831)) === JSON.stringify(yxwvutsrqponml));\n    console.assert(JSON.stringify(candidate(\"ababababababababababababababababababababababababababababababab\", 11, 1000000007, 10, 543210987)) === JSON.stringify(ababababab));\n    console.assert(JSON.stringify(candidate(\"powerrangers\", 29, 97, 4, 53)) === JSON.stringify(gers));\n    console.assert(JSON.stringify(candidate(\"abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz\", 17, 53, 10, 49)) === JSON.stringify(qrstuvwxyz));\n    console.assert(JSON.stringify(candidate(\"abcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghij\", 2, 13, 8, 7)) === JSON.stringify(bcdefghi));\n    console.assert(JSON.stringify(candidate(\"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", 999999937, 1000000007, 10000, 123456789)) === JSON.stringify(Error: string index out of range));\n    console.assert(JSON.stringify(candidate(\"mmmmmmmmmabcdefghimnopqrstuvwxyz\", 37, 1000000007, 8, 987654321)) === JSON.stringify(stuvwxyz));\n    console.assert(JSON.stringify(candidate(\"thisisaverylongstringthatweneedtofindthesubstringwiththespecifiedhashvalue\", 13, 1000000007, 20, 345234657)) === JSON.stringify(hespecifiedhashvalue));\n    console.assert(JSON.stringify(candidate(\"thisisjustanexampleofalongsstringwithseveralhashvalues\", 3, 100, 4, 15)) === JSON.stringify(lues));\n    console.assert(JSON.stringify(candidate(\"qponmlkjihgfedcbaabcdefghijklmnopqrstuvwxyz\", 43, 1000000007, 22, 872889924)) === JSON.stringify(efghijklmnopqrstuvwxyz));\n    console.assert(JSON.stringify(candidate(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", 37, 100000007, 50, 876543210)) === JSON.stringify(bbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz));\n    console.assert(JSON.stringify(candidate(\"abcdefghijklmnopqrstuvwxyzyxwvutsrqponmlkjihgfedcba\", 43, 1000000007, 25, 54321)) === JSON.stringify(yxwvutsrqponmlkjihgfedcba));\n    console.assert(JSON.stringify(candidate(\"xylophonepianoxylophonepianoxylophonepianoxyloph\", 23, 1000000009, 9, 765432109)) === JSON.stringify(anoxyloph));\n    console.assert(JSON.stringify(candidate(\"abcdefghijkabcdefghijkabcdefghijk\", 19, 1000000009, 11, 123456789)) === JSON.stringify(abcdefghijk));\n    console.assert(JSON.stringify(candidate(\"mississippiissi\", 5, 1000000007, 7, 432109876)) === JSON.stringify(ppiissi));\n    console.assert(JSON.stringify(candidate(\"bcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbc\", 17, 1000000007, 12, 617980928)) === JSON.stringify(bcbcbcbcbcbc));\n    console.assert(JSON.stringify(candidate(\"aquickbrownfoxjumpsoverthelazydog\", 37, 1000000007, 15, 756839574)) === JSON.stringify(soverthelazydog));\n    console.assert(JSON.stringify(candidate(\"mississippiisaverypopularstring\", 23, 107, 9, 62)) === JSON.stringify(larstring));\n    console.assert(JSON.stringify(candidate(\"abcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghij\", 29, 999983, 9, 456789)) === JSON.stringify(bcdefghij));\n    console.assert(JSON.stringify(candidate(\"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", 10, 10007, 10, 7007)) === JSON.stringify(zzzzzzzzzz));\n    console.assert(JSON.stringify(candidate(\"abacabadabacaba\", 10, 61, 5, 31)) === JSON.stringify(acaba));\n    console.assert(JSON.stringify(candidate(\"programmingisfun\", 5, 1000000009, 8, 77777777)) === JSON.stringify(ingisfun));\n    console.assert(JSON.stringify(candidate(\"thisisaverylongstringthatwillbeusedtohashandfindthesubstring\", 19, 1000003, 12, 876543)) === JSON.stringify(thesubstring));\n    console.assert(JSON.stringify(candidate(\"xyzabcxyz\", 17, 101, 4, 70)) === JSON.stringify(cxyz));\n    console.assert(JSON.stringify(candidate(\"aquickbrownfoxjumpsoverthelazydog\", 11, 997, 12, 896)) === JSON.stringify(erthelazydog));\n    console.assert(JSON.stringify(candidate(\"banana\", 5, 10007, 2, 22)) === JSON.stringify(na));\n    console.assert(JSON.stringify(candidate(\"abcdefghijklmnopqrstuvwxyzyxwvutsrqponmlkjihgfedcba\", 19, 47, 15, 29)) === JSON.stringify(onmlkjihgfedcba));\n    console.assert(JSON.stringify(candidate(\"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", 31, 1000000007, 5, 35852459)) === JSON.stringify(zzzzz));\n    console.assert(JSON.stringify(candidate(\"kjfslafjslkafjslkfjslkfjlskjflskjflskfjslkfjslkfjslk\", 11, 1000000001, 8, 987654321)) === JSON.stringify(slkfjslk));\n    console.assert(JSON.stringify(candidate(\"zyxwvutsrqponmlkjihgfedcba\", 13, 1000000007, 20, 689648594)) === JSON.stringify(tsrqponmlkjihgfedcba));\n    console.assert(JSON.stringify(candidate(\"abcdefghijklmnopqrstuvwxyzzzzzzzzzzzzzzzzzzzzzzzzzz\", 23, 999983, 15, 123456)) === JSON.stringify(zzzzzzzzzzzzzzz));\n    console.assert(JSON.stringify(candidate(\"quickbrownfoxjumpsoverthelazydog\", 41, 1000000009, 6, 345678)) === JSON.stringify(azydog));\n    console.assert(JSON.stringify(candidate(\"thisisaverylongstringthatcontainsmanywordsandcharactersforhashing\", 41, 1000000009, 18, 897530987)) === JSON.stringify(aractersforhashing));\n    console.assert(JSON.stringify(candidate(\"thepowerofhashing\", 17, 10007, 9, 9999)) === JSON.stringify(ofhashing));\n    console.assert(JSON.stringify(candidate(\"racecar\", 17, 1000000009, 3, 113)) === JSON.stringify(car));\n    console.assert(JSON.stringify(candidate(\"abcdefghijklmnopqrstuvwxyza\", 23, 1000000009, 21, 850494334)) === JSON.stringify(ghijklmnopqrstuvwxyza));\n    console.assert(JSON.stringify(candidate(\"racecarannakayak\", 37, 109, 7, 87)) === JSON.stringify(nakayak));\n    console.assert(JSON.stringify(candidate(\"rollinghashingisaveryefficientalgorithm\", 29, 1000000007, 10, 987654321)) === JSON.stringify(talgorithm));\n    console.assert(JSON.stringify(candidate(\"hashfunctionexample\", 31, 1000000007, 13, 234567890)) === JSON.stringify(nctionexample));\n    console.assert(JSON.stringify(candidate(\"abcdeabcdeabcdeabcdeabcdeabcdeabcdeabcde\", 7, 13, 5, 5)) === JSON.stringify(eabcd));\n    console.assert(JSON.stringify(candidate(\"abcdefghijabcdefghijabcdefghijabcdefghijabcdefghij\", 31, 1000000009, 10, 109876543)) === JSON.stringify(abcdefghij));\n    console.assert(JSON.stringify(candidate(\"abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz\", 27, 10007, 26, 4750)) === JSON.stringify(abcdefghijklmnopqrstuvwxyz));\n    console.assert(JSON.stringify(candidate(\"thisproblemisfunandchallengingandfunandchallenging\", 41, 1000000011, 14, 543210987)) === JSON.stringify(andchallenging));\n    console.assert(JSON.stringify(candidate(\"jqwertyuiopasdfghjklzxcvbnmnbvcxzlkjhgfdsapoiuytrewq\", 17, 1000000009, 15, 765432109)) === JSON.stringify(gfdsapoiuytrewq));\n    console.assert(JSON.stringify(candidate(\"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", 1000000007, 1000000009, 10, 999999939)) === JSON.stringify(zzzzzzzzzz));\n    console.assert(JSON.stringify(candidate(\"acacacacacacacacacacacacacacacacacacacacacacacacacacac\", 19, 1000000007, 12, 876543210)) === JSON.stringify(acacacacacac));\n    console.assert(JSON.stringify(candidate(\"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", 1000000007, 1000000009, 10000, 123456789)) === JSON.stringify(Error: string index out of range));\n    console.assert(JSON.stringify(candidate(\"loremipsumdolorsitametloremipsumdolorsitametlorem\", 43, 1000000017, 15, 432109876)) === JSON.stringify(lorsitametlorem));\n    console.assert(JSON.stringify(candidate(\"mnopqrstuvwxyzaabcdefghijklmnopqr\", 37, 1000000007, 25, 519164833)) === JSON.stringify(uvwxyzaabcdefghijklmnopqr));\n    console.assert(JSON.stringify(candidate(\"thesoundofsilencethesoundofsilencethesoundofsilence\", 37, 1000000013, 13, 654321098)) === JSON.stringify(oundofsilence));\n    console.assert(JSON.stringify(candidate(\"ababababababababababababababababababababababababab\", 23, 29, 7, 17)) === JSON.stringify(bababab));\n    console.assert(JSON.stringify(candidate(\"xyzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzxy\", 31, 1000000009, 15, 987654321)) === JSON.stringify(zzzzzzzzzzzzzxy));\n    console.assert(JSON.stringify(candidate(\"aaaaabbbbbccccdddddeeeeefffffggggghhhhiiiiijjjjjkkkkklllllmmmmmnnnnnooooo\", 11, 100000007, 13, 111222)) === JSON.stringify(mmmnnnnnooooo));\n    console.assert(JSON.stringify(candidate(\"thisisaverylongstringthatshouldworkwiththehashingfunctioncorrectly\", 13, 107, 25, 67)) === JSON.stringify(ehashingfunctioncorrectly));\n    console.assert(JSON.stringify(candidate(\"abcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcd\", 97, 10007, 6, 10001)) === JSON.stringify(cdabcd));\n    console.assert(JSON.stringify(candidate(\"abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz\", 17, 89, 10, 67)) === JSON.stringify(qrstuvwxyz));\n    console.assert(JSON.stringify(candidate(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", 7, 1000000009, 15, 324434711)) === JSON.stringify(sttuuvvwwxxyyzz));\n    console.assert(JSON.stringify(candidate(\"xyzzxyzzxyzzxyzzxyzzxyzzxyzzxyzzxyzzxyzzxyzzxyzzxyzz\", 11, 97, 6, 76)) === JSON.stringify(xyzzxy));\n    console.assert(JSON.stringify(candidate(\"abcdeabcdeabcdeabcdeabcdeabcdeabcdeabcdeabcdeabcdeabcdeabcde\", 5, 17, 14, 11)) === JSON.stringify(abcdeabcdeabcd));\n    console.assert(JSON.stringify(candidate(\"abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz\", 13, 101, 10, 97)) === JSON.stringify(qrstuvwxyz));\n    console.assert(JSON.stringify(candidate(\"abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz\", 13, 101, 10, 60)) === JSON.stringify(xyzabcdefg));\n    console.assert(JSON.stringify(candidate(\"hashingisawesome\", 37, 1000000007, 7, 88888888)) === JSON.stringify(awesome));\n    console.assert(JSON.stringify(candidate(\"abcdefghijklmnopqrstuvwxyz\", 23, 41, 7, 35)) === JSON.stringify(cdefghi));\n    console.assert(JSON.stringify(candidate(\"thefastbrownfoxjumpedoverthelazydog\", 43, 1000000007, 5, 234567)) === JSON.stringify(zydog));\n    console.assert(JSON.stringify(candidate(\"abcdefghijklmnopqrstuvwxyzyxwvutsrqponmlkjihgfedcba\", 26, 1000000009, 26, 987654321)) === JSON.stringify(zyxwvutsrqponmlkjihgfedcba));\n    console.assert(JSON.stringify(candidate(\"abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz\", 1000000007, 1000000009, 10, 876543210)) === JSON.stringify(qrstuvwxyz));\n    console.assert(JSON.stringify(candidate(\"abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz\", 31, 1000000007, 26, 680151233)) === JSON.stringify(abcdefghijklmnopqrstuvwxyz));\n    console.assert(JSON.stringify(candidate(\"onetwothreefourfivesixseveneightnineseveneightsixfiv foureventhreetwooneonetwothreefourfivesix\", 13, 103, 8, 45)) === JSON.stringify(veneight));\n    console.assert(JSON.stringify(candidate(\"abcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabc\", 5, 1000000009, 10, 740006228)) === JSON.stringify(cabcabcabc));\n    console.assert(JSON.stringify(candidate(\"aquickbrownfoxjumpsoverthelazydog\", 33, 1000000007, 4, 123)) === JSON.stringify(ydog));\n    console.assert(JSON.stringify(candidate(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", 5, 1000, 7, 500)) === JSON.stringify(wxxyyzz));\n    console.assert(JSON.stringify(candidate(\"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", 31, 1000000007, 15, 123456789)) === JSON.stringify(zzzzzzzzzzzzzzz));\n    console.assert(JSON.stringify(candidate(\"abcdefabcdefabcdefabcdefabcdefabcdefabcdefabcdefabcdefabcdef\", 41, 997, 12, 500)) === JSON.stringify(abcdefabcdef));\n}",
+    "golang": "func check(candidate func([]int, int) []int) {\n    assert reflect.DeepEqual(candidate(\"zxcvbnm\", 10, 1000000007, 4, 807311072), vbnm)\n    assert reflect.DeepEqual(candidate(\"abracadabra\", 5, 11, 3, 4), dab)\n    assert reflect.DeepEqual(candidate(\"zzzzzzzzzz\", 29, 1000000007, 4, 78608631), zzzz)\n    assert reflect.DeepEqual(candidate(\"leetcode\", 7, 20, 2, 0), ee)\n    assert reflect.DeepEqual(candidate(\"fbxzaad\", 31, 100, 3, 32), fbx)\n    assert reflect.DeepEqual(candidate(\"abcdefghijklmnopqrstuvwxyz\", 26, 101, 5, 53), vwxyz)\n    assert reflect.DeepEqual(candidate(\"a\", 1, 1, 1, 0), a)\n    assert reflect.DeepEqual(candidate(\"zaz\", 26, 29, 2, 27), az)\n    assert reflect.DeepEqual(candidate(\"a\", 13, 97, 1, 1), a)\n    assert reflect.DeepEqual(candidate(\"abcdefghijklmnopqrstuvwxyz\", 13, 50, 5, 37), klmno)\n    assert reflect.DeepEqual(candidate(\"abcde\", 2, 11, 3, 7), cde)\n    assert reflect.DeepEqual(candidate(\"a\", 5, 13, 1, 1), a)\n    assert reflect.DeepEqual(candidate(\"mmcp\", 13, 457, 2, 33), cp)\n    assert reflect.DeepEqual(candidate(\"thisisaverylongstringthatweneedtofindasubstringwithagivenhashvalue\", 5, 1000000009, 12, 543), venhashvalue)\n    assert reflect.DeepEqual(candidate(\"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", 29, 101, 20, 95), zzzzzzzzzzzzzzzzzzzz)\n    assert reflect.DeepEqual(candidate(\"hellothereeveryone\", 37, 101, 6, 74), eryone)\n    assert reflect.DeepEqual(candidate(\"complexityisimportantinbigdatatechnology\", 19, 1000000009, 8, 543210987), chnology)\n    assert reflect.DeepEqual(candidate(\"zxcvbnmasdfghjklqwertyuiop\", 29, 1000000007, 6, 563872), tyuiop)\n    assert reflect.DeepEqual(candidate(\"abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz\", 19, 1000000007, 26, 267973410), abcdefghijklmnopqrstuvwxyz)\n    assert reflect.DeepEqual(candidate(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", 17, 1000000009, 7, 123456789), wxxyyzz)\n    assert reflect.DeepEqual(candidate(\"abababababababababababababababababababababababababab\", 5, 1000000003, 11, 543210987), bababababab)\n    assert reflect.DeepEqual(candidate(\"a\", 7, 13, 1, 1), a)\n    assert reflect.DeepEqual(candidate(\"mississippi\", 19, 1000000007, 4, 683), ippi)\n    assert reflect.DeepEqual(candidate(\"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", 11, 79, 20, 10), zzzzzzzzzzzzzzzzzzzz)\n    assert reflect.DeepEqual(candidate(\"abcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabc\", 19, 83, 15, 28), abcabcabcabcabc)\n    assert reflect.DeepEqual(candidate(\"lkjihgfedcbazyxwvutsrqponml\", 41, 1000000009, 14, 102474831), yxwvutsrqponml)\n    assert reflect.DeepEqual(candidate(\"ababababababababababababababababababababababababababababababab\", 11, 1000000007, 10, 543210987), ababababab)\n    assert reflect.DeepEqual(candidate(\"powerrangers\", 29, 97, 4, 53), gers)\n    assert reflect.DeepEqual(candidate(\"abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz\", 17, 53, 10, 49), qrstuvwxyz)\n    assert reflect.DeepEqual(candidate(\"abcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghij\", 2, 13, 8, 7), bcdefghi)\n    assert reflect.DeepEqual(candidate(\"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", 999999937, 1000000007, 10000, 123456789), Error: string index out of range)\n    assert reflect.DeepEqual(candidate(\"mmmmmmmmmabcdefghimnopqrstuvwxyz\", 37, 1000000007, 8, 987654321), stuvwxyz)\n    assert reflect.DeepEqual(candidate(\"thisisaverylongstringthatweneedtofindthesubstringwiththespecifiedhashvalue\", 13, 1000000007, 20, 345234657), hespecifiedhashvalue)\n    assert reflect.DeepEqual(candidate(\"thisisjustanexampleofalongsstringwithseveralhashvalues\", 3, 100, 4, 15), lues)\n    assert reflect.DeepEqual(candidate(\"qponmlkjihgfedcbaabcdefghijklmnopqrstuvwxyz\", 43, 1000000007, 22, 872889924), efghijklmnopqrstuvwxyz)\n    assert reflect.DeepEqual(candidate(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", 37, 100000007, 50, 876543210), bbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz)\n    assert reflect.DeepEqual(candidate(\"abcdefghijklmnopqrstuvwxyzyxwvutsrqponmlkjihgfedcba\", 43, 1000000007, 25, 54321), yxwvutsrqponmlkjihgfedcba)\n    assert reflect.DeepEqual(candidate(\"xylophonepianoxylophonepianoxylophonepianoxyloph\", 23, 1000000009, 9, 765432109), anoxyloph)\n    assert reflect.DeepEqual(candidate(\"abcdefghijkabcdefghijkabcdefghijk\", 19, 1000000009, 11, 123456789), abcdefghijk)\n    assert reflect.DeepEqual(candidate(\"mississippiissi\", 5, 1000000007, 7, 432109876), ppiissi)\n    assert reflect.DeepEqual(candidate(\"bcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbc\", 17, 1000000007, 12, 617980928), bcbcbcbcbcbc)\n    assert reflect.DeepEqual(candidate(\"aquickbrownfoxjumpsoverthelazydog\", 37, 1000000007, 15, 756839574), soverthelazydog)\n    assert reflect.DeepEqual(candidate(\"mississippiisaverypopularstring\", 23, 107, 9, 62), larstring)\n    assert reflect.DeepEqual(candidate(\"abcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghij\", 29, 999983, 9, 456789), bcdefghij)\n    assert reflect.DeepEqual(candidate(\"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", 10, 10007, 10, 7007), zzzzzzzzzz)\n    assert reflect.DeepEqual(candidate(\"abacabadabacaba\", 10, 61, 5, 31), acaba)\n    assert reflect.DeepEqual(candidate(\"programmingisfun\", 5, 1000000009, 8, 77777777), ingisfun)\n    assert reflect.DeepEqual(candidate(\"thisisaverylongstringthatwillbeusedtohashandfindthesubstring\", 19, 1000003, 12, 876543), thesubstring)\n    assert reflect.DeepEqual(candidate(\"xyzabcxyz\", 17, 101, 4, 70), cxyz)\n    assert reflect.DeepEqual(candidate(\"aquickbrownfoxjumpsoverthelazydog\", 11, 997, 12, 896), erthelazydog)\n    assert reflect.DeepEqual(candidate(\"banana\", 5, 10007, 2, 22), na)\n    assert reflect.DeepEqual(candidate(\"abcdefghijklmnopqrstuvwxyzyxwvutsrqponmlkjihgfedcba\", 19, 47, 15, 29), onmlkjihgfedcba)\n    assert reflect.DeepEqual(candidate(\"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", 31, 1000000007, 5, 35852459), zzzzz)\n    assert reflect.DeepEqual(candidate(\"kjfslafjslkafjslkfjslkfjlskjflskjflskfjslkfjslkfjslk\", 11, 1000000001, 8, 987654321), slkfjslk)\n    assert reflect.DeepEqual(candidate(\"zyxwvutsrqponmlkjihgfedcba\", 13, 1000000007, 20, 689648594), tsrqponmlkjihgfedcba)\n    assert reflect.DeepEqual(candidate(\"abcdefghijklmnopqrstuvwxyzzzzzzzzzzzzzzzzzzzzzzzzzz\", 23, 999983, 15, 123456), zzzzzzzzzzzzzzz)\n    assert reflect.DeepEqual(candidate(\"quickbrownfoxjumpsoverthelazydog\", 41, 1000000009, 6, 345678), azydog)\n    assert reflect.DeepEqual(candidate(\"thisisaverylongstringthatcontainsmanywordsandcharactersforhashing\", 41, 1000000009, 18, 897530987), aractersforhashing)\n    assert reflect.DeepEqual(candidate(\"thepowerofhashing\", 17, 10007, 9, 9999), ofhashing)\n    assert reflect.DeepEqual(candidate(\"racecar\", 17, 1000000009, 3, 113), car)\n    assert reflect.DeepEqual(candidate(\"abcdefghijklmnopqrstuvwxyza\", 23, 1000000009, 21, 850494334), ghijklmnopqrstuvwxyza)\n    assert reflect.DeepEqual(candidate(\"racecarannakayak\", 37, 109, 7, 87), nakayak)\n    assert reflect.DeepEqual(candidate(\"rollinghashingisaveryefficientalgorithm\", 29, 1000000007, 10, 987654321), talgorithm)\n    assert reflect.DeepEqual(candidate(\"hashfunctionexample\", 31, 1000000007, 13, 234567890), nctionexample)\n    assert reflect.DeepEqual(candidate(\"abcdeabcdeabcdeabcdeabcdeabcdeabcdeabcde\", 7, 13, 5, 5), eabcd)\n    assert reflect.DeepEqual(candidate(\"abcdefghijabcdefghijabcdefghijabcdefghijabcdefghij\", 31, 1000000009, 10, 109876543), abcdefghij)\n    assert reflect.DeepEqual(candidate(\"abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz\", 27, 10007, 26, 4750), abcdefghijklmnopqrstuvwxyz)\n    assert reflect.DeepEqual(candidate(\"thisproblemisfunandchallengingandfunandchallenging\", 41, 1000000011, 14, 543210987), andchallenging)\n    assert reflect.DeepEqual(candidate(\"jqwertyuiopasdfghjklzxcvbnmnbvcxzlkjhgfdsapoiuytrewq\", 17, 1000000009, 15, 765432109), gfdsapoiuytrewq)\n    assert reflect.DeepEqual(candidate(\"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", 1000000007, 1000000009, 10, 999999939), zzzzzzzzzz)\n    assert reflect.DeepEqual(candidate(\"acacacacacacacacacacacacacacacacacacacacacacacacacacac\", 19, 1000000007, 12, 876543210), acacacacacac)\n    assert reflect.DeepEqual(candidate(\"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", 1000000007, 1000000009, 10000, 123456789), Error: string index out of range)\n    assert reflect.DeepEqual(candidate(\"loremipsumdolorsitametloremipsumdolorsitametlorem\", 43, 1000000017, 15, 432109876), lorsitametlorem)\n    assert reflect.DeepEqual(candidate(\"mnopqrstuvwxyzaabcdefghijklmnopqr\", 37, 1000000007, 25, 519164833), uvwxyzaabcdefghijklmnopqr)\n    assert reflect.DeepEqual(candidate(\"thesoundofsilencethesoundofsilencethesoundofsilence\", 37, 1000000013, 13, 654321098), oundofsilence)\n    assert reflect.DeepEqual(candidate(\"ababababababababababababababababababababababababab\", 23, 29, 7, 17), bababab)\n    assert reflect.DeepEqual(candidate(\"xyzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzxy\", 31, 1000000009, 15, 987654321), zzzzzzzzzzzzzxy)\n    assert reflect.DeepEqual(candidate(\"aaaaabbbbbccccdddddeeeeefffffggggghhhhiiiiijjjjjkkkkklllllmmmmmnnnnnooooo\", 11, 100000007, 13, 111222), mmmnnnnnooooo)\n    assert reflect.DeepEqual(candidate(\"thisisaverylongstringthatshouldworkwiththehashingfunctioncorrectly\", 13, 107, 25, 67), ehashingfunctioncorrectly)\n    assert reflect.DeepEqual(candidate(\"abcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcd\", 97, 10007, 6, 10001), cdabcd)\n    assert reflect.DeepEqual(candidate(\"abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz\", 17, 89, 10, 67), qrstuvwxyz)\n    assert reflect.DeepEqual(candidate(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", 7, 1000000009, 15, 324434711), sttuuvvwwxxyyzz)\n    assert reflect.DeepEqual(candidate(\"xyzzxyzzxyzzxyzzxyzzxyzzxyzzxyzzxyzzxyzzxyzzxyzzxyzz\", 11, 97, 6, 76), xyzzxy)\n    assert reflect.DeepEqual(candidate(\"abcdeabcdeabcdeabcdeabcdeabcdeabcdeabcdeabcdeabcdeabcdeabcde\", 5, 17, 14, 11), abcdeabcdeabcd)\n    assert reflect.DeepEqual(candidate(\"abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz\", 13, 101, 10, 97), qrstuvwxyz)\n    assert reflect.DeepEqual(candidate(\"abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz\", 13, 101, 10, 60), xyzabcdefg)\n    assert reflect.DeepEqual(candidate(\"hashingisawesome\", 37, 1000000007, 7, 88888888), awesome)\n    assert reflect.DeepEqual(candidate(\"abcdefghijklmnopqrstuvwxyz\", 23, 41, 7, 35), cdefghi)\n    assert reflect.DeepEqual(candidate(\"thefastbrownfoxjumpedoverthelazydog\", 43, 1000000007, 5, 234567), zydog)\n    assert reflect.DeepEqual(candidate(\"abcdefghijklmnopqrstuvwxyzyxwvutsrqponmlkjihgfedcba\", 26, 1000000009, 26, 987654321), zyxwvutsrqponmlkjihgfedcba)\n    assert reflect.DeepEqual(candidate(\"abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz\", 1000000007, 1000000009, 10, 876543210), qrstuvwxyz)\n    assert reflect.DeepEqual(candidate(\"abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz\", 31, 1000000007, 26, 680151233), abcdefghijklmnopqrstuvwxyz)\n    assert reflect.DeepEqual(candidate(\"onetwothreefourfivesixseveneightnineseveneightsixfiv foureventhreetwooneonetwothreefourfivesix\", 13, 103, 8, 45), veneight)\n    assert reflect.DeepEqual(candidate(\"abcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabc\", 5, 1000000009, 10, 740006228), cabcabcabc)\n    assert reflect.DeepEqual(candidate(\"aquickbrownfoxjumpsoverthelazydog\", 33, 1000000007, 4, 123), ydog)\n    assert reflect.DeepEqual(candidate(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", 5, 1000, 7, 500), wxxyyzz)\n    assert reflect.DeepEqual(candidate(\"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", 31, 1000000007, 15, 123456789), zzzzzzzzzzzzzzz)\n    assert reflect.DeepEqual(candidate(\"abcdefabcdefabcdefabcdefabcdefabcdefabcdefabcdefabcdefabcdef\", 41, 997, 12, 500), abcdefabcdef)\n}",
+    "rust": "fn check(candidate: fn(Vec<i32>, i32) -> Vec<i32>) {\n    assert_eq!(candidate(\"zxcvbnm\", 10, 1000000007, 4, 807311072), vbnm);\n    assert_eq!(candidate(\"abracadabra\", 5, 11, 3, 4), dab);\n    assert_eq!(candidate(\"zzzzzzzzzz\", 29, 1000000007, 4, 78608631), zzzz);\n    assert_eq!(candidate(\"leetcode\", 7, 20, 2, 0), ee);\n    assert_eq!(candidate(\"fbxzaad\", 31, 100, 3, 32), fbx);\n    assert_eq!(candidate(\"abcdefghijklmnopqrstuvwxyz\", 26, 101, 5, 53), vwxyz);\n    assert_eq!(candidate(\"a\", 1, 1, 1, 0), a);\n    assert_eq!(candidate(\"zaz\", 26, 29, 2, 27), az);\n    assert_eq!(candidate(\"a\", 13, 97, 1, 1), a);\n    assert_eq!(candidate(\"abcdefghijklmnopqrstuvwxyz\", 13, 50, 5, 37), klmno);\n    assert_eq!(candidate(\"abcde\", 2, 11, 3, 7), cde);\n    assert_eq!(candidate(\"a\", 5, 13, 1, 1), a);\n    assert_eq!(candidate(\"mmcp\", 13, 457, 2, 33), cp);\n    assert_eq!(candidate(\"thisisaverylongstringthatweneedtofindasubstringwithagivenhashvalue\", 5, 1000000009, 12, 543), venhashvalue);\n    assert_eq!(candidate(\"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", 29, 101, 20, 95), zzzzzzzzzzzzzzzzzzzz);\n    assert_eq!(candidate(\"hellothereeveryone\", 37, 101, 6, 74), eryone);\n    assert_eq!(candidate(\"complexityisimportantinbigdatatechnology\", 19, 1000000009, 8, 543210987), chnology);\n    assert_eq!(candidate(\"zxcvbnmasdfghjklqwertyuiop\", 29, 1000000007, 6, 563872), tyuiop);\n    assert_eq!(candidate(\"abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz\", 19, 1000000007, 26, 267973410), abcdefghijklmnopqrstuvwxyz);\n    assert_eq!(candidate(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", 17, 1000000009, 7, 123456789), wxxyyzz);\n    assert_eq!(candidate(\"abababababababababababababababababababababababababab\", 5, 1000000003, 11, 543210987), bababababab);\n    assert_eq!(candidate(\"a\", 7, 13, 1, 1), a);\n    assert_eq!(candidate(\"mississippi\", 19, 1000000007, 4, 683), ippi);\n    assert_eq!(candidate(\"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", 11, 79, 20, 10), zzzzzzzzzzzzzzzzzzzz);\n    assert_eq!(candidate(\"abcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabc\", 19, 83, 15, 28), abcabcabcabcabc);\n    assert_eq!(candidate(\"lkjihgfedcbazyxwvutsrqponml\", 41, 1000000009, 14, 102474831), yxwvutsrqponml);\n    assert_eq!(candidate(\"ababababababababababababababababababababababababababababababab\", 11, 1000000007, 10, 543210987), ababababab);\n    assert_eq!(candidate(\"powerrangers\", 29, 97, 4, 53), gers);\n    assert_eq!(candidate(\"abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz\", 17, 53, 10, 49), qrstuvwxyz);\n    assert_eq!(candidate(\"abcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghij\", 2, 13, 8, 7), bcdefghi);\n    assert_eq!(candidate(\"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", 999999937, 1000000007, 10000, 123456789), Error: string index out of range);\n    assert_eq!(candidate(\"mmmmmmmmmabcdefghimnopqrstuvwxyz\", 37, 1000000007, 8, 987654321), stuvwxyz);\n    assert_eq!(candidate(\"thisisaverylongstringthatweneedtofindthesubstringwiththespecifiedhashvalue\", 13, 1000000007, 20, 345234657), hespecifiedhashvalue);\n    assert_eq!(candidate(\"thisisjustanexampleofalongsstringwithseveralhashvalues\", 3, 100, 4, 15), lues);\n    assert_eq!(candidate(\"qponmlkjihgfedcbaabcdefghijklmnopqrstuvwxyz\", 43, 1000000007, 22, 872889924), efghijklmnopqrstuvwxyz);\n    assert_eq!(candidate(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", 37, 100000007, 50, 876543210), bbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz);\n    assert_eq!(candidate(\"abcdefghijklmnopqrstuvwxyzyxwvutsrqponmlkjihgfedcba\", 43, 1000000007, 25, 54321), yxwvutsrqponmlkjihgfedcba);\n    assert_eq!(candidate(\"xylophonepianoxylophonepianoxylophonepianoxyloph\", 23, 1000000009, 9, 765432109), anoxyloph);\n    assert_eq!(candidate(\"abcdefghijkabcdefghijkabcdefghijk\", 19, 1000000009, 11, 123456789), abcdefghijk);\n    assert_eq!(candidate(\"mississippiissi\", 5, 1000000007, 7, 432109876), ppiissi);\n    assert_eq!(candidate(\"bcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbc\", 17, 1000000007, 12, 617980928), bcbcbcbcbcbc);\n    assert_eq!(candidate(\"aquickbrownfoxjumpsoverthelazydog\", 37, 1000000007, 15, 756839574), soverthelazydog);\n    assert_eq!(candidate(\"mississippiisaverypopularstring\", 23, 107, 9, 62), larstring);\n    assert_eq!(candidate(\"abcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghij\", 29, 999983, 9, 456789), bcdefghij);\n    assert_eq!(candidate(\"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", 10, 10007, 10, 7007), zzzzzzzzzz);\n    assert_eq!(candidate(\"abacabadabacaba\", 10, 61, 5, 31), acaba);\n    assert_eq!(candidate(\"programmingisfun\", 5, 1000000009, 8, 77777777), ingisfun);\n    assert_eq!(candidate(\"thisisaverylongstringthatwillbeusedtohashandfindthesubstring\", 19, 1000003, 12, 876543), thesubstring);\n    assert_eq!(candidate(\"xyzabcxyz\", 17, 101, 4, 70), cxyz);\n    assert_eq!(candidate(\"aquickbrownfoxjumpsoverthelazydog\", 11, 997, 12, 896), erthelazydog);\n    assert_eq!(candidate(\"banana\", 5, 10007, 2, 22), na);\n    assert_eq!(candidate(\"abcdefghijklmnopqrstuvwxyzyxwvutsrqponmlkjihgfedcba\", 19, 47, 15, 29), onmlkjihgfedcba);\n    assert_eq!(candidate(\"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", 31, 1000000007, 5, 35852459), zzzzz);\n    assert_eq!(candidate(\"kjfslafjslkafjslkfjslkfjlskjflskjflskfjslkfjslkfjslk\", 11, 1000000001, 8, 987654321), slkfjslk);\n    assert_eq!(candidate(\"zyxwvutsrqponmlkjihgfedcba\", 13, 1000000007, 20, 689648594), tsrqponmlkjihgfedcba);\n    assert_eq!(candidate(\"abcdefghijklmnopqrstuvwxyzzzzzzzzzzzzzzzzzzzzzzzzzz\", 23, 999983, 15, 123456), zzzzzzzzzzzzzzz);\n    assert_eq!(candidate(\"quickbrownfoxjumpsoverthelazydog\", 41, 1000000009, 6, 345678), azydog);\n    assert_eq!(candidate(\"thisisaverylongstringthatcontainsmanywordsandcharactersforhashing\", 41, 1000000009, 18, 897530987), aractersforhashing);\n    assert_eq!(candidate(\"thepowerofhashing\", 17, 10007, 9, 9999), ofhashing);\n    assert_eq!(candidate(\"racecar\", 17, 1000000009, 3, 113), car);\n    assert_eq!(candidate(\"abcdefghijklmnopqrstuvwxyza\", 23, 1000000009, 21, 850494334), ghijklmnopqrstuvwxyza);\n    assert_eq!(candidate(\"racecarannakayak\", 37, 109, 7, 87), nakayak);\n    assert_eq!(candidate(\"rollinghashingisaveryefficientalgorithm\", 29, 1000000007, 10, 987654321), talgorithm);\n    assert_eq!(candidate(\"hashfunctionexample\", 31, 1000000007, 13, 234567890), nctionexample);\n    assert_eq!(candidate(\"abcdeabcdeabcdeabcdeabcdeabcdeabcdeabcde\", 7, 13, 5, 5), eabcd);\n    assert_eq!(candidate(\"abcdefghijabcdefghijabcdefghijabcdefghijabcdefghij\", 31, 1000000009, 10, 109876543), abcdefghij);\n    assert_eq!(candidate(\"abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz\", 27, 10007, 26, 4750), abcdefghijklmnopqrstuvwxyz);\n    assert_eq!(candidate(\"thisproblemisfunandchallengingandfunandchallenging\", 41, 1000000011, 14, 543210987), andchallenging);\n    assert_eq!(candidate(\"jqwertyuiopasdfghjklzxcvbnmnbvcxzlkjhgfdsapoiuytrewq\", 17, 1000000009, 15, 765432109), gfdsapoiuytrewq);\n    assert_eq!(candidate(\"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", 1000000007, 1000000009, 10, 999999939), zzzzzzzzzz);\n    assert_eq!(candidate(\"acacacacacacacacacacacacacacacacacacacacacacacacacacac\", 19, 1000000007, 12, 876543210), acacacacacac);\n    assert_eq!(candidate(\"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", 1000000007, 1000000009, 10000, 123456789), Error: string index out of range);\n    assert_eq!(candidate(\"loremipsumdolorsitametloremipsumdolorsitametlorem\", 43, 1000000017, 15, 432109876), lorsitametlorem);\n    assert_eq!(candidate(\"mnopqrstuvwxyzaabcdefghijklmnopqr\", 37, 1000000007, 25, 519164833), uvwxyzaabcdefghijklmnopqr);\n    assert_eq!(candidate(\"thesoundofsilencethesoundofsilencethesoundofsilence\", 37, 1000000013, 13, 654321098), oundofsilence);\n    assert_eq!(candidate(\"ababababababababababababababababababababababababab\", 23, 29, 7, 17), bababab);\n    assert_eq!(candidate(\"xyzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzxy\", 31, 1000000009, 15, 987654321), zzzzzzzzzzzzzxy);\n    assert_eq!(candidate(\"aaaaabbbbbccccdddddeeeeefffffggggghhhhiiiiijjjjjkkkkklllllmmmmmnnnnnooooo\", 11, 100000007, 13, 111222), mmmnnnnnooooo);\n    assert_eq!(candidate(\"thisisaverylongstringthatshouldworkwiththehashingfunctioncorrectly\", 13, 107, 25, 67), ehashingfunctioncorrectly);\n    assert_eq!(candidate(\"abcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcd\", 97, 10007, 6, 10001), cdabcd);\n    assert_eq!(candidate(\"abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz\", 17, 89, 10, 67), qrstuvwxyz);\n    assert_eq!(candidate(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", 7, 1000000009, 15, 324434711), sttuuvvwwxxyyzz);\n    assert_eq!(candidate(\"xyzzxyzzxyzzxyzzxyzzxyzzxyzzxyzzxyzzxyzzxyzzxyzzxyzz\", 11, 97, 6, 76), xyzzxy);\n    assert_eq!(candidate(\"abcdeabcdeabcdeabcdeabcdeabcdeabcdeabcdeabcdeabcdeabcdeabcde\", 5, 17, 14, 11), abcdeabcdeabcd);\n    assert_eq!(candidate(\"abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz\", 13, 101, 10, 97), qrstuvwxyz);\n    assert_eq!(candidate(\"abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz\", 13, 101, 10, 60), xyzabcdefg);\n    assert_eq!(candidate(\"hashingisawesome\", 37, 1000000007, 7, 88888888), awesome);\n    assert_eq!(candidate(\"abcdefghijklmnopqrstuvwxyz\", 23, 41, 7, 35), cdefghi);\n    assert_eq!(candidate(\"thefastbrownfoxjumpedoverthelazydog\", 43, 1000000007, 5, 234567), zydog);\n    assert_eq!(candidate(\"abcdefghijklmnopqrstuvwxyzyxwvutsrqponmlkjihgfedcba\", 26, 1000000009, 26, 987654321), zyxwvutsrqponmlkjihgfedcba);\n    assert_eq!(candidate(\"abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz\", 1000000007, 1000000009, 10, 876543210), qrstuvwxyz);\n    assert_eq!(candidate(\"abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz\", 31, 1000000007, 26, 680151233), abcdefghijklmnopqrstuvwxyz);\n    assert_eq!(candidate(\"onetwothreefourfivesixseveneightnineseveneightsixfiv foureventhreetwooneonetwothreefourfivesix\", 13, 103, 8, 45), veneight);\n    assert_eq!(candidate(\"abcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabc\", 5, 1000000009, 10, 740006228), cabcabcabc);\n    assert_eq!(candidate(\"aquickbrownfoxjumpsoverthelazydog\", 33, 1000000007, 4, 123), ydog);\n    assert_eq!(candidate(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", 5, 1000, 7, 500), wxxyyzz);\n    assert_eq!(candidate(\"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", 31, 1000000007, 15, 123456789), zzzzzzzzzzzzzzz);\n    assert_eq!(candidate(\"abcdefabcdefabcdefabcdefabcdefabcdefabcdefabcdefabcdefabcdef\", 41, 997, 12, 500), abcdefabcdef);\n}"
+  },
+  "test_cases": [
+    {
+      "input": "s = \"zxcvbnm\", power = 10, modulo = 1000000007, k = 4, hashValue = 807311072",
+      "output": "vbnm"
+    },
+    {
+      "input": "s = \"abracadabra\", power = 5, modulo = 11, k = 3, hashValue = 4",
+      "output": "dab"
+    },
+    {
+      "input": "s = \"zzzzzzzzzz\", power = 29, modulo = 1000000007, k = 4, hashValue = 78608631",
+      "output": "zzzz"
+    },
+    {
+      "input": "s = \"leetcode\", power = 7, modulo = 20, k = 2, hashValue = 0",
+      "output": "ee"
+    },
+    {
+      "input": "s = \"fbxzaad\", power = 31, modulo = 100, k = 3, hashValue = 32",
+      "output": "fbx"
+    },
+    {
+      "input": "s = \"abcdefghijklmnopqrstuvwxyz\", power = 26, modulo = 101, k = 5, hashValue = 53",
+      "output": "vwxyz"
+    },
+    {
+      "input": "s = \"a\", power = 1, modulo = 1, k = 1, hashValue = 0",
+      "output": "a"
+    },
+    {
+      "input": "s = \"zaz\", power = 26, modulo = 29, k = 2, hashValue = 27",
+      "output": "az"
+    },
+    {
+      "input": "s = \"a\", power = 13, modulo = 97, k = 1, hashValue = 1",
+      "output": "a"
+    },
+    {
+      "input": "s = \"abcdefghijklmnopqrstuvwxyz\", power = 13, modulo = 50, k = 5, hashValue = 37",
+      "output": "klmno"
+    },
+    {
+      "input": "s = \"abcde\", power = 2, modulo = 11, k = 3, hashValue = 7",
+      "output": "cde"
+    },
+    {
+      "input": "s = \"a\", power = 5, modulo = 13, k = 1, hashValue = 1",
+      "output": "a"
+    },
+    {
+      "input": "s = \"mmcp\", power = 13, modulo = 457, k = 2, hashValue = 33",
+      "output": "cp"
+    },
+    {
+      "input": "s = \"thisisaverylongstringthatweneedtofindasubstringwithagivenhashvalue\", power = 5, modulo = 1000000009, k = 12, hashValue = 543",
+      "output": "venhashvalue"
+    },
+    {
+      "input": "s = \"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", power = 29, modulo = 101, k = 20, hashValue = 95",
+      "output": "zzzzzzzzzzzzzzzzzzzz"
+    },
+    {
+      "input": "s = \"hellothereeveryone\", power = 37, modulo = 101, k = 6, hashValue = 74",
+      "output": "eryone"
+    },
+    {
+      "input": "s = \"complexityisimportantinbigdatatechnology\", power = 19, modulo = 1000000009, k = 8, hashValue = 543210987",
+      "output": "chnology"
+    },
+    {
+      "input": "s = \"zxcvbnmasdfghjklqwertyuiop\", power = 29, modulo = 1000000007, k = 6, hashValue = 563872",
+      "output": "tyuiop"
+    },
+    {
+      "input": "s = \"abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz\", power = 19, modulo = 1000000007, k = 26, hashValue = 267973410",
+      "output": "abcdefghijklmnopqrstuvwxyz"
+    },
+    {
+      "input": "s = \"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", power = 17, modulo = 1000000009, k = 7, hashValue = 123456789",
+      "output": "wxxyyzz"
+    },
+    {
+      "input": "s = \"abababababababababababababababababababababababababab\", power = 5, modulo = 1000000003, k = 11, hashValue = 543210987",
+      "output": "bababababab"
+    },
+    {
+      "input": "s = \"a\", power = 7, modulo = 13, k = 1, hashValue = 1",
+      "output": "a"
+    },
+    {
+      "input": "s = \"mississippi\", power = 19, modulo = 1000000007, k = 4, hashValue = 683",
+      "output": "ippi"
+    },
+    {
+      "input": "s = \"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", power = 11, modulo = 79, k = 20, hashValue = 10",
+      "output": "zzzzzzzzzzzzzzzzzzzz"
+    },
+    {
+      "input": "s = \"abcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabc\", power = 19, modulo = 83, k = 15, hashValue = 28",
+      "output": "abcabcabcabcabc"
+    },
+    {
+      "input": "s = \"lkjihgfedcbazyxwvutsrqponml\", power = 41, modulo = 1000000009, k = 14, hashValue = 102474831",
+      "output": "yxwvutsrqponml"
+    },
+    {
+      "input": "s = \"ababababababababababababababababababababababababababababababab\", power = 11, modulo = 1000000007, k = 10, hashValue = 543210987",
+      "output": "ababababab"
+    },
+    {
+      "input": "s = \"powerrangers\", power = 29, modulo = 97, k = 4, hashValue = 53",
+      "output": "gers"
+    },
+    {
+      "input": "s = \"abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz\", power = 17, modulo = 53, k = 10, hashValue = 49",
+      "output": "qrstuvwxyz"
+    },
+    {
+      "input": "s = \"abcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghij\", power = 2, modulo = 13, k = 8, hashValue = 7",
+      "output": "bcdefghi"
+    },
+    {
+      "input": "s = \"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", power = 999999937, modulo = 1000000007, k = 10000, hashValue = 123456789",
+      "output": "Error: string index out of range"
+    },
+    {
+      "input": "s = \"mmmmmmmmmabcdefghimnopqrstuvwxyz\", power = 37, modulo = 1000000007, k = 8, hashValue = 987654321",
+      "output": "stuvwxyz"
+    },
+    {
+      "input": "s = \"thisisaverylongstringthatweneedtofindthesubstringwiththespecifiedhashvalue\", power = 13, modulo = 1000000007, k = 20, hashValue = 345234657",
+      "output": "hespecifiedhashvalue"
+    },
+    {
+      "input": "s = \"thisisjustanexampleofalongsstringwithseveralhashvalues\", power = 3, modulo = 100, k = 4, hashValue = 15",
+      "output": "lues"
+    },
+    {
+      "input": "s = \"qponmlkjihgfedcbaabcdefghijklmnopqrstuvwxyz\", power = 43, modulo = 1000000007, k = 22, hashValue = 872889924",
+      "output": "efghijklmnopqrstuvwxyz"
+    },
+    {
+      "input": "s = \"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", power = 37, modulo = 100000007, k = 50, hashValue = 876543210",
+      "output": "bbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz"
+    },
+    {
+      "input": "s = \"abcdefghijklmnopqrstuvwxyzyxwvutsrqponmlkjihgfedcba\", power = 43, modulo = 1000000007, k = 25, hashValue = 54321",
+      "output": "yxwvutsrqponmlkjihgfedcba"
+    },
+    {
+      "input": "s = \"xylophonepianoxylophonepianoxylophonepianoxyloph\", power = 23, modulo = 1000000009, k = 9, hashValue = 765432109",
+      "output": "anoxyloph"
+    },
+    {
+      "input": "s = \"abcdefghijkabcdefghijkabcdefghijk\", power = 19, modulo = 1000000009, k = 11, hashValue = 123456789",
+      "output": "abcdefghijk"
+    },
+    {
+      "input": "s = \"mississippiissi\", power = 5, modulo = 1000000007, k = 7, hashValue = 432109876",
+      "output": "ppiissi"
+    },
+    {
+      "input": "s = \"bcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbc\", power = 17, modulo = 1000000007, k = 12, hashValue = 617980928",
+      "output": "bcbcbcbcbcbc"
+    },
+    {
+      "input": "s = \"aquickbrownfoxjumpsoverthelazydog\", power = 37, modulo = 1000000007, k = 15, hashValue = 756839574",
+      "output": "soverthelazydog"
+    },
+    {
+      "input": "s = \"mississippiisaverypopularstring\", power = 23, modulo = 107, k = 9, hashValue = 62",
+      "output": "larstring"
+    },
+    {
+      "input": "s = \"abcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghij\", power = 29, modulo = 999983, k = 9, hashValue = 456789",
+      "output": "bcdefghij"
+    },
+    {
+      "input": "s = \"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", power = 10, modulo = 10007, k = 10, hashValue = 7007",
+      "output": "zzzzzzzzzz"
+    },
+    {
+      "input": "s = \"abacabadabacaba\", power = 10, modulo = 61, k = 5, hashValue = 31",
+      "output": "acaba"
+    },
+    {
+      "input": "s = \"programmingisfun\", power = 5, modulo = 1000000009, k = 8, hashValue = 77777777",
+      "output": "ingisfun"
+    },
+    {
+      "input": "s = \"thisisaverylongstringthatwillbeusedtohashandfindthesubstring\", power = 19, modulo = 1000003, k = 12, hashValue = 876543",
+      "output": "thesubstring"
+    },
+    {
+      "input": "s = \"xyzabcxyz\", power = 17, modulo = 101, k = 4, hashValue = 70",
+      "output": "cxyz"
+    },
+    {
+      "input": "s = \"aquickbrownfoxjumpsoverthelazydog\", power = 11, modulo = 997, k = 12, hashValue = 896",
+      "output": "erthelazydog"
+    },
+    {
+      "input": "s = \"banana\", power = 5, modulo = 10007, k = 2, hashValue = 22",
+      "output": "na"
+    },
+    {
+      "input": "s = \"abcdefghijklmnopqrstuvwxyzyxwvutsrqponmlkjihgfedcba\", power = 19, modulo = 47, k = 15, hashValue = 29",
+      "output": "onmlkjihgfedcba"
+    },
+    {
+      "input": "s = \"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", power = 31, modulo = 1000000007, k = 5, hashValue = 35852459",
+      "output": "zzzzz"
+    },
+    {
+      "input": "s = \"kjfslafjslkafjslkfjslkfjlskjflskjflskfjslkfjslkfjslk\", power = 11, modulo = 1000000001, k = 8, hashValue = 987654321",
+      "output": "slkfjslk"
+    },
+    {
+      "input": "s = \"zyxwvutsrqponmlkjihgfedcba\", power = 13, modulo = 1000000007, k = 20, hashValue = 689648594",
+      "output": "tsrqponmlkjihgfedcba"
+    },
+    {
+      "input": "s = \"abcdefghijklmnopqrstuvwxyzzzzzzzzzzzzzzzzzzzzzzzzzz\", power = 23, modulo = 999983, k = 15, hashValue = 123456",
+      "output": "zzzzzzzzzzzzzzz"
+    },
+    {
+      "input": "s = \"quickbrownfoxjumpsoverthelazydog\", power = 41, modulo = 1000000009, k = 6, hashValue = 345678",
+      "output": "azydog"
+    },
+    {
+      "input": "s = \"thisisaverylongstringthatcontainsmanywordsandcharactersforhashing\", power = 41, modulo = 1000000009, k = 18, hashValue = 897530987",
+      "output": "aractersforhashing"
+    },
+    {
+      "input": "s = \"thepowerofhashing\", power = 17, modulo = 10007, k = 9, hashValue = 9999",
+      "output": "ofhashing"
+    },
+    {
+      "input": "s = \"racecar\", power = 17, modulo = 1000000009, k = 3, hashValue = 113",
+      "output": "car"
+    },
+    {
+      "input": "s = \"abcdefghijklmnopqrstuvwxyza\", power = 23, modulo = 1000000009, k = 21, hashValue = 850494334",
+      "output": "ghijklmnopqrstuvwxyza"
+    },
+    {
+      "input": "s = \"racecarannakayak\", power = 37, modulo = 109, k = 7, hashValue = 87",
+      "output": "nakayak"
+    },
+    {
+      "input": "s = \"rollinghashingisaveryefficientalgorithm\", power = 29, modulo = 1000000007, k = 10, hashValue = 987654321",
+      "output": "talgorithm"
+    },
+    {
+      "input": "s = \"hashfunctionexample\", power = 31, modulo = 1000000007, k = 13, hashValue = 234567890",
+      "output": "nctionexample"
+    },
+    {
+      "input": "s = \"abcdeabcdeabcdeabcdeabcdeabcdeabcdeabcde\", power = 7, modulo = 13, k = 5, hashValue = 5",
+      "output": "eabcd"
+    },
+    {
+      "input": "s = \"abcdefghijabcdefghijabcdefghijabcdefghijabcdefghij\", power = 31, modulo = 1000000009, k = 10, hashValue = 109876543",
+      "output": "abcdefghij"
+    },
+    {
+      "input": "s = \"abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz\", power = 27, modulo = 10007, k = 26, hashValue = 4750",
+      "output": "abcdefghijklmnopqrstuvwxyz"
+    },
+    {
+      "input": "s = \"thisproblemisfunandchallengingandfunandchallenging\", power = 41, modulo = 1000000011, k = 14, hashValue = 543210987",
+      "output": "andchallenging"
+    },
+    {
+      "input": "s = \"jqwertyuiopasdfghjklzxcvbnmnbvcxzlkjhgfdsapoiuytrewq\", power = 17, modulo = 1000000009, k = 15, hashValue = 765432109",
+      "output": "gfdsapoiuytrewq"
+    },
+    {
+      "input": "s = \"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", power = 1000000007, modulo = 1000000009, k = 10, hashValue = 999999939",
+      "output": "zzzzzzzzzz"
+    },
+    {
+      "input": "s = \"acacacacacacacacacacacacacacacacacacacacacacacacacacac\", power = 19, modulo = 1000000007, k = 12, hashValue = 876543210",
+      "output": "acacacacacac"
+    },
+    {
+      "input": "s = \"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", power = 1000000007, modulo = 1000000009, k = 10000, hashValue = 123456789",
+      "output": "Error: string index out of range"
+    },
+    {
+      "input": "s = \"loremipsumdolorsitametloremipsumdolorsitametlorem\", power = 43, modulo = 1000000017, k = 15, hashValue = 432109876",
+      "output": "lorsitametlorem"
+    },
+    {
+      "input": "s = \"mnopqrstuvwxyzaabcdefghijklmnopqr\", power = 37, modulo = 1000000007, k = 25, hashValue = 519164833",
+      "output": "uvwxyzaabcdefghijklmnopqr"
+    },
+    {
+      "input": "s = \"thesoundofsilencethesoundofsilencethesoundofsilence\", power = 37, modulo = 1000000013, k = 13, hashValue = 654321098",
+      "output": "oundofsilence"
+    },
+    {
+      "input": "s = \"ababababababababababababababababababababababababab\", power = 23, modulo = 29, k = 7, hashValue = 17",
+      "output": "bababab"
+    },
+    {
+      "input": "s = \"xyzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzxy\", power = 31, modulo = 1000000009, k = 15, hashValue = 987654321",
+      "output": "zzzzzzzzzzzzzxy"
+    },
+    {
+      "input": "s = \"aaaaabbbbbccccdddddeeeeefffffggggghhhhiiiiijjjjjkkkkklllllmmmmmnnnnnooooo\", power = 11, modulo = 100000007, k = 13, hashValue = 111222",
+      "output": "mmmnnnnnooooo"
+    },
+    {
+      "input": "s = \"thisisaverylongstringthatshouldworkwiththehashingfunctioncorrectly\", power = 13, modulo = 107, k = 25, hashValue = 67",
+      "output": "ehashingfunctioncorrectly"
+    },
+    {
+      "input": "s = \"abcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcd\", power = 97, modulo = 10007, k = 6, hashValue = 10001",
+      "output": "cdabcd"
+    },
+    {
+      "input": "s = \"abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz\", power = 17, modulo = 89, k = 10, hashValue = 67",
+      "output": "qrstuvwxyz"
+    },
+    {
+      "input": "s = \"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", power = 7, modulo = 1000000009, k = 15, hashValue = 324434711",
+      "output": "sttuuvvwwxxyyzz"
+    },
+    {
+      "input": "s = \"xyzzxyzzxyzzxyzzxyzzxyzzxyzzxyzzxyzzxyzzxyzzxyzzxyzz\", power = 11, modulo = 97, k = 6, hashValue = 76",
+      "output": "xyzzxy"
+    },
+    {
+      "input": "s = \"abcdeabcdeabcdeabcdeabcdeabcdeabcdeabcdeabcdeabcdeabcdeabcde\", power = 5, modulo = 17, k = 14, hashValue = 11",
+      "output": "abcdeabcdeabcd"
+    },
+    {
+      "input": "s = \"abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz\", power = 13, modulo = 101, k = 10, hashValue = 97",
+      "output": "qrstuvwxyz"
+    },
+    {
+      "input": "s = \"abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz\", power = 13, modulo = 101, k = 10, hashValue = 60",
+      "output": "xyzabcdefg"
+    },
+    {
+      "input": "s = \"hashingisawesome\", power = 37, modulo = 1000000007, k = 7, hashValue = 88888888",
+      "output": "awesome"
+    },
+    {
+      "input": "s = \"abcdefghijklmnopqrstuvwxyz\", power = 23, modulo = 41, k = 7, hashValue = 35",
+      "output": "cdefghi"
+    },
+    {
+      "input": "s = \"thefastbrownfoxjumpedoverthelazydog\", power = 43, modulo = 1000000007, k = 5, hashValue = 234567",
+      "output": "zydog"
+    },
+    {
+      "input": "s = \"abcdefghijklmnopqrstuvwxyzyxwvutsrqponmlkjihgfedcba\", power = 26, modulo = 1000000009, k = 26, hashValue = 987654321",
+      "output": "zyxwvutsrqponmlkjihgfedcba"
+    },
+    {
+      "input": "s = \"abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz\", power = 1000000007, modulo = 1000000009, k = 10, hashValue = 876543210",
+      "output": "qrstuvwxyz"
+    },
+    {
+      "input": "s = \"abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz\", power = 31, modulo = 1000000007, k = 26, hashValue = 680151233",
+      "output": "abcdefghijklmnopqrstuvwxyz"
+    },
+    {
+      "input": "s = \"onetwothreefourfivesixseveneightnineseveneightsixfiv foureventhreetwooneonetwothreefourfivesix\", power = 13, modulo = 103, k = 8, hashValue = 45",
+      "output": "veneight"
+    },
+    {
+      "input": "s = \"abcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabc\", power = 5, modulo = 1000000009, k = 10, hashValue = 740006228",
+      "output": "cabcabcabc"
+    },
+    {
+      "input": "s = \"aquickbrownfoxjumpsoverthelazydog\", power = 33, modulo = 1000000007, k = 4, hashValue = 123",
+      "output": "ydog"
+    },
+    {
+      "input": "s = \"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", power = 5, modulo = 1000, k = 7, hashValue = 500",
+      "output": "wxxyyzz"
+    },
+    {
+      "input": "s = \"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", power = 31, modulo = 1000000007, k = 15, hashValue = 123456789",
+      "output": "zzzzzzzzzzzzzzz"
+    },
+    {
+      "input": "s = \"abcdefabcdefabcdefabcdefabcdefabcdefabcdefabcdefabcdefabcdef\", power = 41, modulo = 997, k = 12, hashValue = 500",
+      "output": "abcdefabcdef"
+    }
+  ],
+  "types": {
+    "python3": {
+      "input": [
+        {
+          "s": "str"
+        },
+        {
+          "power": "int"
+        },
+        {
+          "modulo": "int"
+        },
+        {
+          "k": "int"
+        },
+        {
+          "hashValue": "int"
+        }
+      ],
+      "output": "str"
+    },
+    "cpp": {
+      "input": [
+        {
+          "s": "string"
+        },
+        {
+          "power": "int"
+        },
+        {
+          "modulo": "int"
+        },
+        {
+          "k": "int"
+        },
+        {
+          "hashValue": "int"
+        }
+      ],
+      "output": "string"
+    },
+    "java": {
+      "input": [
+        {
+          "s": "String"
+        },
+        {
+          "power": "int"
+        },
+        {
+          "modulo": "int"
+        },
+        {
+          "k": "int"
+        },
+        {
+          "hashValue": "int"
+        }
+      ],
+      "output": "String"
+    },
+    "javascript": {
+      "input": [
+        {
+          "s": "string"
+        },
+        {
+          "power": "number"
+        },
+        {
+          "modulo": "number"
+        },
+        {
+          "k": "number"
+        },
+        {
+          "hashValue": "number"
+        }
+      ],
+      "output": "string"
+    },
+    "typescript": {
+      "input": [
+        {
+          "s": "string"
+        },
+        {
+          "power": "number"
+        },
+        {
+          "modulo": "number"
+        },
+        {
+          "k": "number"
+        },
+        {
+          "hashValue": "number"
+        }
+      ],
+      "output": "string"
+    },
+    "golang": {
+      "input": [
+        {
+          "s": "string"
+        },
+        {
+          "power": "int"
+        },
+        {
+          "modulo": "int"
+        },
+        {
+          "k": "int"
+        },
+        {
+          "hashValue": "int"
+        }
+      ],
+      "output": "string"
+    },
+    "rust": {
+      "input": [
+        {
+          "s": "String"
+        },
+        {
+          "power": "i32"
+        },
+        {
+          "modulo": "i32"
+        },
+        {
+          "k": "i32"
+        },
+        {
+          "hash_value": "i32"
+        }
+      ],
+      "output": "String"
+    }
+  },
+  "tags": [
+    "string",
+    "sliding-window",
+    "rolling-hash",
+    "hash-function"
+  ]
+}

@@ -1,0 +1,585 @@
+{
+  "id": 1997,
+  "title": "First Day Where You Have Been in All the Rooms",
+  "slug": "first-day-where-you-have-been-in-all-the-rooms",
+  "difficulty": "Medium",
+  "description": "There are n rooms you need to visit, labeled from 0 to n - 1. Each day is labeled, starting from 0. You will go in and visit one room a day.\nInitially on day 0, you visit room 0. The order you visit the rooms for the coming days is determined by the following rules and a given 0-indexed array nextVisit of length n:\nReturn the label of the first day where you have been in all the rooms. It can be shown that such a day exists. Since the answer may be very large, return it modulo 109 + 7.\nExample 1:\nExample 2:\nExample 3:\nConstraints:",
+  "examples": [
+    {
+      "example_num": 1,
+      "example_text": "Input: nextVisit = [0,0]\nOutput: 2\nExplanation:\n- On day 0, you visit room 0. The total times you have been in room 0 is 1, which is odd.\n  On the next day you will visit room nextVisit[0] = 0\n- On day 1, you visit room 0, The total times you have been in room 0 is 2, which is even.\n  On the next day you will visit room (0 + 1) mod 2 = 1\n- On day 2, you visit room 1. This is the first day where you have been in all the rooms.",
+      "images": []
+    },
+    {
+      "example_num": 2,
+      "example_text": "Input: nextVisit = [0,0,2]\nOutput: 6\nExplanation:\nYour room visiting order for each day is: [0,0,1,0,0,1,2,...].\nDay 6 is the first day where you have been in all the rooms.",
+      "images": []
+    },
+    {
+      "example_num": 3,
+      "example_text": "Input: nextVisit = [0,1,2,0]\nOutput: 6\nExplanation:\nYour room visiting order for each day is: [0,0,1,1,2,2,3,...].\nDay 6 is the first day where you have been in all the rooms.",
+      "images": []
+    }
+  ],
+  "constraints": [
+    "n == nextVisit.length",
+    "2 <= n <= 105",
+    "0 <= nextVisit[i] <= i"
+  ],
+  "hints": [
+    "The only way to get to room i+1 is when you are visiting room i and room i has been visited an even number of times.",
+    "After visiting room i an odd number of times, you are required to visit room nextVisit[i] where nextVisit[i] <= i. It takes a fixed amount of days for you to come back from room nextVisit[i] to room i. Then, you have visited room i even number of times.nextVisit[i]",
+    "Can you use Dynamic Programming to avoid recomputing the number of days it takes to visit room i from room nextVisit[i]?"
+  ],
+  "code_snippets": {
+    "cpp": "class Solution {\npublic:\n    int firstDayBeenInAllRooms(vector<int>& nextVisit) {\n        \n    }\n};",
+    "java": "class Solution {\n    public int firstDayBeenInAllRooms(int[] nextVisit) {\n        \n    }\n}",
+    "python3": "class Solution:\n    def firstDayBeenInAllRooms(self, nextVisit: List[int]) -> int:\n        ",
+    "javascript": "/**\n * @param {number[]} nextVisit\n * @return {number}\n */\nvar firstDayBeenInAllRooms = function(nextVisit) {\n    \n};",
+    "typescript": "function firstDayBeenInAllRooms(nextVisit: number[]): number {\n    \n};",
+    "golang": "func firstDayBeenInAllRooms(nextVisit []int) int {\n    \n}",
+    "rust": "impl Solution {\n    pub fn first_day_been_in_all_rooms(next_visit: Vec<i32>) -> i32 {\n        \n    }\n}"
+  },
+  "entry_points": {
+    "python3": "Solution().firstDayBeenInAllRooms",
+    "cpp": "Solution().firstDayBeenInAllRooms",
+    "java": "new Solution().firstDayBeenInAllRooms",
+    "javascript": "firstDayBeenInAllRooms",
+    "typescript": "firstDayBeenInAllRooms",
+    "golang": "firstDayBeenInAllRooms",
+    "rust": "Solution::first_day_been_in_all_rooms"
+  },
+  "test_snippets": {
+    "python3": "def check(candidate):\n    assert candidate(nextVisit = [0,0,2]) == 6\n    assert candidate(nextVisit = [0,1,2,3,4,5]) == 10\n    assert candidate(nextVisit = [0,2,1,0,1,2]) == 52\n    assert candidate(nextVisit = [0,1,1,1,1]) == 16\n    assert candidate(nextVisit = [0,0,0,0,0,0,0,0,0,0]) == 1022\n    assert candidate(nextVisit = [0,1,0,1,0,1]) == 42\n    assert candidate(nextVisit = [9,8,7,6,5,4,3,2,1,0]) == 712\n    assert candidate(nextVisit = [0,1,2,3,2,1,0,1,2,3]) == 230\n    assert candidate(nextVisit = [0,1,0,2]) == 10\n    assert candidate(nextVisit = [0,1,2,0]) == 6\n    assert candidate(nextVisit = [0,1,1,1,1,1]) == 32\n    assert candidate(nextVisit = [0,1,1,0,1,1,0]) == 72\n    assert candidate(nextVisit = [0,1,0,2,1]) == 18\n    assert candidate(nextVisit = [0,1,0,1,0,1,0,1,0,1]) == 682\n    assert candidate(nextVisit = [0,1,2,3,4,0]) == 10\n    assert candidate(nextVisit = [0,2,2,2,2,2]) == 20\n    assert candidate(nextVisit = [0,1,2,3,4,5,6,7,8,9]) == 18\n    assert candidate(nextVisit = [0,2,1,0]) == 12\n    assert candidate(nextVisit = [0,1,1,0,1,2]) == 36\n    assert candidate(nextVisit = [0,1,1,0]) == 8\n    assert candidate(nextVisit = [0,2,1,0,1]) == 26\n    assert candidate(nextVisit = [0,0]) == 2\n    assert candidate(nextVisit = [0,1,2,3,4,5,6,7,8,9,0,1,2,3,4]) == 328\n    assert candidate(nextVisit = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,0,0,0,0,0]) == 670\n    assert candidate(nextVisit = [0,2,1,3,2,4,3,5,4,6]) == 192\n    assert candidate(nextVisit = [0,2,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0]) == 579139391\n    assert candidate(nextVisit = [0,1,0,3,2,5,4,7,6,9]) == 58\n    assert candidate(nextVisit = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]) == 1022\n    assert candidate(nextVisit = [0,0,2,1,4,3,5,6,7,8,9]) == 98\n    assert candidate(nextVisit = [0,0,2,0,0,2,0,0,2,0,0,2,0,0,2,0,0,2,0,0]) == 599186\n    assert candidate(nextVisit = [0,1,1,2,2,2,3,3,3,3]) == 358\n    assert candidate(nextVisit = [0, 0, 2, 2, 4, 4, 6, 6, 8, 8, 10, 10, 12, 12, 14, 14, 16, 16, 18, 18]) == 56\n    assert candidate(nextVisit = [0,1,0,3,2,1,0,5,4,3,2,1,0,7,6,5,4,3,2,1,0,9,8,7,6,5,4,3,2,1,0]) == 633246732\n    assert candidate(nextVisit = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19]) == 38\n    assert candidate(nextVisit = [0,2,1,2,3,4,5,4,3,2]) == 178\n    assert candidate(nextVisit = [0,2,1,3,1,2,4,2,1,3,1,2,4,2,1,3,1,2,4,2,1,3,1,2,4,2,1,3,1,2,4,2,1,3,1,2,4]) == 449162187\n    assert candidate(nextVisit = [0,0,1,2,3,4,5,6,7,8,9]) == 110\n    assert candidate(nextVisit = [0, 2, 0, 2, 0, 2, 0, 2, 0, 2, 0, 2, 0, 2, 0, 2, 0, 2, 0, 2]) == 786434\n    assert candidate(nextVisit = [0,1,2,3,4,5,6,7,8,9,8,7,6,5,4,3,2,1,0]) == 2044\n    assert candidate(nextVisit = [0,1,0,3,2,1,4,5,2,3,6,7,8,9]) == 3802\n    assert candidate(nextVisit = [0, 2, 1, 0, 4, 3, 2, 1, 0]) == 176\n    assert candidate(nextVisit = [0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]) == 524288\n    assert candidate(nextVisit = [9,0,1,2,3,4,5,6,7,8]) == 90\n    assert candidate(nextVisit = [0,2,4,6,8,10,12,14,16,18,1,3,5,7,9,11,13,15,17,19]) == 562740\n    assert candidate(nextVisit = [0,2,1,0,3,2,1,0,4,3,2,1,0]) == 4912\n    assert candidate(nextVisit = [0,3,5,3,4,2,1,0,7,6,5,4,3,2,1,0]) == 11288\n    assert candidate(nextVisit = [0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 19]) == 262148\n    assert candidate(nextVisit = [0,2,1,0,3,2,1,0,4,3,2,1,0,5,4,3,2,1,0,6,5,4,3,2,1,0]) == 40131408\n    assert candidate(nextVisit = [0,1,0,2,1,0,3,2,1,0,4,3,2,1,0,5,4,3,2,1,0,6,5,4,3,2,1,0,7,6,5,4,3,2,1,0]) == 13851577\n    assert candidate(nextVisit = [0, 2, 1, 3, 1, 2, 5, 4, 3, 4, 5, 4, 3, 2, 1, 0, 1, 2, 3, 4]) == 269566\n    assert candidate(nextVisit = [0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0]) == 461127067\n    assert candidate(nextVisit = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]) == 1048574\n    assert candidate(nextVisit = [0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1]) == 44739242\n    assert candidate(nextVisit = [0,1,0,2,1,0,3,2,1,0]) == 556\n    assert candidate(nextVisit = [0, 3, 2, 1, 0, 5, 4, 3, 2, 1, 0, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0]) == 594736\n    assert candidate(nextVisit = [20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0]) == 701096\n    assert candidate(nextVisit = [0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1]) == 786430\n    assert candidate(nextVisit = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]) == 1048574\n    assert candidate(nextVisit = [0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1]) == 699050\n    assert candidate(nextVisit = [0,1,2,3,2,1,2,3,4,3,4,5,6,5,6,7,8,7,8,9]) == 198234\n    assert candidate(nextVisit = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9]) == 10258\n    assert candidate(nextVisit = [9, 8, 7, 6, 5, 4, 3, 2, 1, 0]) == 712\n    assert candidate(nextVisit = [0,2,2,2,2,2,2,2,2,2]) == 260\n    assert candidate(nextVisit = [0, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0, 11, 12, 13, 14, 15, 16, 17, 18, 19]) == 28010\n    assert candidate(nextVisit = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 1, 3, 5, 7, 9, 11, 13, 15, 17, 19]) == 41964584\n    assert candidate(nextVisit = [0,1,1,2,2,3,3,4,4,5]) == 308\n    assert candidate(nextVisit = [0,1,2,3,4,5,4,3,2,1,0,1,2,3,4,5,4,3,2,1]) == 63550\n    assert candidate(nextVisit = [0, 1, 1, 3, 2, 2, 5]) == 34\n    assert candidate(nextVisit = [20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1]) == 311766262\n    assert candidate(nextVisit = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20]) == 38954\n    assert candidate(nextVisit = [0,1,2,3,4,5,6,7,8,0]) == 18\n    assert candidate(nextVisit = [0,5,3,1,2,4,6,8,10,0]) == Error: list index out of range\n    assert candidate(nextVisit = [0,1,0,2,3,2,5,4]) == 82\n    assert candidate(nextVisit = [0,2,1,0,3,2,4,3,5,4,6,5,7,6,8,7,9,8,10,9]) == 438546\n    assert candidate(nextVisit = [0,1,2,3,2,3,4,3,4,5]) == 154\n    assert candidate(nextVisit = [5,4,3,2,1,0]) == 48\n    assert candidate(nextVisit = [0, 1, 0, 3, 0, 1, 0, 5, 0, 1, 0, 3, 0, 1, 0, 7, 0, 1, 0, 3, 0, 1]) == 1543578\n    assert candidate(nextVisit = [0,1,2,3,4,3,2,3,4,5]) == 106\n    assert candidate(nextVisit = [20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]) == 717916156\n    assert candidate(nextVisit = [0,1,2,0,1,2,0,1,2,0,1,2,0,1,2,0,1,2,0,1,2,0,1,2,0,1,2]) == 57521884\n    assert candidate(nextVisit = [0,1,2,3,4,5,6,7,8,9,0,1,2,3,4,5,6,7,8,9]) == 10258\n    assert candidate(nextVisit = [0, 1, 2, 0, 4, 0, 6, 0, 8, 0, 10, 0, 12, 0, 14, 0, 16, 0, 18, 0, 20]) == 5114\n    assert candidate(nextVisit = [0,1,2,0,1,2,0,1,2,0]) == 438\n    assert candidate(nextVisit = [0,1,2,3,4,3,2,1,0,1,2,3,4,3,2,1,0,1,2,3]) == 123366\n    assert candidate(nextVisit = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]) == 20126903\n    assert candidate(nextVisit = [5,0,4,1,3,2,0,1,2,3,4,5,0,1,2,3,4,5,0,1,2,3,4,5,0,1,2,3,4,5,0,1,2,3,4,5,0,1,2,3,4,5,0,1,2,3,4,5,0,1,2,3,4,5,0,1,2,3,4,5,0,1,2,3,4,5,0,1,2,3,4,5]) == 514496163\n    assert candidate(nextVisit = [0,0,0,1,0,0,2,0,0,3,0,0,4,0,0,5,0,0,6,0,0,7,0,0,8,0,0,9,0,0,10]) == 943314207\n    assert candidate(nextVisit = [0, 1, 2, 3, 2, 1, 0, 1, 2, 3, 4, 5, 4, 3, 2, 1, 0, 1, 2, 3]) == 229862\n    assert candidate(nextVisit = [0,9,8,7,6,5,4,3,2,1,0,9,8,7,6,5,4,3,2,1]) == 317428\n    assert candidate(nextVisit = [0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 0, 2, 4, 6, 8, 10, 12, 14, 16]) == Error: list index out of range\n    assert candidate(nextVisit = [0,2,1,0,3,4,5]) == 60\n    assert candidate(nextVisit = [10,0,1,2,3,4,5,6,7,8,9,0,1,2,3,4,5,6,7,8,9]) == 66670\n    assert candidate(nextVisit = [0,2,1,2,0,0,0,3,4,2,5]) == 1312\n    assert candidate(nextVisit = [0, 2, 4, 6, 8, 0, 2, 4, 6, 8]) == 812\n    assert candidate(nextVisit = [0, 1, 0, 3, 2, 1, 0, 7, 6, 5, 4, 3, 2, 1, 0, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0]) == 89816588\n    assert candidate(nextVisit = [0,2,1,0,3,2,1]) == 80\n    assert candidate(nextVisit = [0,2,1,4,3,6,5,8,7,10,9,12,11,14,13,16,15,18,17,20,19,22,21,24,23,25]) == 2657202\n    assert candidate(nextVisit = [0,3,1,0,2,0,3,1,0,2,0,3,1,0,2,0,3,1,0,2,0,3,1,0,2,0,3,1,0,2,0]) == 558657481\n    assert candidate(nextVisit = [0,5,2,4,3,1,6,8,7,9,10,11,12,13,14,15,16,17,18,19]) == 212\n    assert candidate(nextVisit = [0,2,1,2,3,2,1,2,3,4]) == 430\n    assert candidate(nextVisit = [0,1,0,2,0,3,0,4,0,5,0,6,0,7,0,8,0,9,0,10,0,11,0,12,0,13,0,14,0,15,0,16,0,17,0,18,0,19,0,20,0,21,0,22,0,23,0,24,0]) == 855298880\n    assert candidate(nextVisit = [0,2,4,6,8,0,2,4,6,8]) == 812\n    assert candidate(nextVisit = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]) == 40\n    assert candidate(nextVisit = [0,2,4,6,8,10,12,14,16,18,0]) == Error: list index out of range\n    assert candidate(nextVisit = [0,2,1,0,3,2,5,4,7,6,9,8]) == 788\n    assert candidate(nextVisit = [0,2,4,6,8,10,0,2,4,6]) == Error: list index out of range\n    assert candidate(nextVisit = [0, 1, 1, 1, 1, 1, 1, 1, 1, 1]) == 512\n    assert candidate(nextVisit = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]) == 640520038\n    assert candidate(nextVisit = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]) == 147483632\n    assert candidate(nextVisit = [0,1,2,0,3,2,5,6,7,8,9,10,0]) == 220\n    assert candidate(nextVisit = [0,0,1,1,2,2,3,3,4,4]) == 590\n    assert candidate(nextVisit = [0,3,2,0,4,5,6,7,8,9,10,11,12,13,14]) == 38\n    assert candidate(nextVisit = [0,3,5,7,9,11,13,15,17,19,21,23,25,27,29,31,33,35,37,39,41,43,45,47,49,51,53,55,57,59]) == Error: list index out of range\n    assert candidate(nextVisit = [0,1,1,1,1,1,1,1,1,1]) == 512\n    assert candidate(nextVisit = [0,1,0,1,2,3,4,5,6,7]) == 334",
+    "cpp": "void check(Solution& solution) {\n    assert(solution.firstDayBeenInAllRooms({0,0,2}) == vector<int>6);\n    assert(solution.firstDayBeenInAllRooms({0,1,2,3,4,5}) == vector<int>10);\n    assert(solution.firstDayBeenInAllRooms({0,2,1,0,1,2}) == vector<int>52);\n    assert(solution.firstDayBeenInAllRooms({0,1,1,1,1}) == vector<int>16);\n    assert(solution.firstDayBeenInAllRooms({0,0,0,0,0,0,0,0,0,0}) == vector<int>1022);\n    assert(solution.firstDayBeenInAllRooms({0,1,0,1,0,1}) == vector<int>42);\n    assert(solution.firstDayBeenInAllRooms({9,8,7,6,5,4,3,2,1,0}) == vector<int>712);\n    assert(solution.firstDayBeenInAllRooms({0,1,2,3,2,1,0,1,2,3}) == vector<int>230);\n    assert(solution.firstDayBeenInAllRooms({0,1,0,2}) == vector<int>10);\n    assert(solution.firstDayBeenInAllRooms({0,1,2,0}) == vector<int>6);\n    assert(solution.firstDayBeenInAllRooms({0,1,1,1,1,1}) == vector<int>32);\n    assert(solution.firstDayBeenInAllRooms({0,1,1,0,1,1,0}) == vector<int>72);\n    assert(solution.firstDayBeenInAllRooms({0,1,0,2,1}) == vector<int>18);\n    assert(solution.firstDayBeenInAllRooms({0,1,0,1,0,1,0,1,0,1}) == vector<int>682);\n    assert(solution.firstDayBeenInAllRooms({0,1,2,3,4,0}) == vector<int>10);\n    assert(solution.firstDayBeenInAllRooms({0,2,2,2,2,2}) == vector<int>20);\n    assert(solution.firstDayBeenInAllRooms({0,1,2,3,4,5,6,7,8,9}) == vector<int>18);\n    assert(solution.firstDayBeenInAllRooms({0,2,1,0}) == vector<int>12);\n    assert(solution.firstDayBeenInAllRooms({0,1,1,0,1,2}) == vector<int>36);\n    assert(solution.firstDayBeenInAllRooms({0,1,1,0}) == vector<int>8);\n    assert(solution.firstDayBeenInAllRooms({0,2,1,0,1}) == vector<int>26);\n    assert(solution.firstDayBeenInAllRooms({0,0}) == vector<int>2);\n    assert(solution.firstDayBeenInAllRooms({0,1,2,3,4,5,6,7,8,9,0,1,2,3,4}) == vector<int>328);\n    assert(solution.firstDayBeenInAllRooms({0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,0,0,0,0,0}) == vector<int>670);\n    assert(solution.firstDayBeenInAllRooms({0,2,1,3,2,4,3,5,4,6}) == vector<int>192);\n    assert(solution.firstDayBeenInAllRooms({0,2,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0}) == vector<int>579139391);\n    assert(solution.firstDayBeenInAllRooms({0,1,0,3,2,5,4,7,6,9}) == vector<int>58);\n    assert(solution.firstDayBeenInAllRooms({0, 0, 0, 0, 0, 0, 0, 0, 0, 0}) == vector<int>1022);\n    assert(solution.firstDayBeenInAllRooms({0,0,2,1,4,3,5,6,7,8,9}) == vector<int>98);\n    assert(solution.firstDayBeenInAllRooms({0,0,2,0,0,2,0,0,2,0,0,2,0,0,2,0,0,2,0,0}) == vector<int>599186);\n    assert(solution.firstDayBeenInAllRooms({0,1,1,2,2,2,3,3,3,3}) == vector<int>358);\n    assert(solution.firstDayBeenInAllRooms({0, 0, 2, 2, 4, 4, 6, 6, 8, 8, 10, 10, 12, 12, 14, 14, 16, 16, 18, 18}) == vector<int>56);\n    assert(solution.firstDayBeenInAllRooms({0,1,0,3,2,1,0,5,4,3,2,1,0,7,6,5,4,3,2,1,0,9,8,7,6,5,4,3,2,1,0}) == vector<int>633246732);\n    assert(solution.firstDayBeenInAllRooms({0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19}) == vector<int>38);\n    assert(solution.firstDayBeenInAllRooms({0,2,1,2,3,4,5,4,3,2}) == vector<int>178);\n    assert(solution.firstDayBeenInAllRooms({0,2,1,3,1,2,4,2,1,3,1,2,4,2,1,3,1,2,4,2,1,3,1,2,4,2,1,3,1,2,4,2,1,3,1,2,4}) == vector<int>449162187);\n    assert(solution.firstDayBeenInAllRooms({0,0,1,2,3,4,5,6,7,8,9}) == vector<int>110);\n    assert(solution.firstDayBeenInAllRooms({0, 2, 0, 2, 0, 2, 0, 2, 0, 2, 0, 2, 0, 2, 0, 2, 0, 2, 0, 2}) == vector<int>786434);\n    assert(solution.firstDayBeenInAllRooms({0,1,2,3,4,5,6,7,8,9,8,7,6,5,4,3,2,1,0}) == vector<int>2044);\n    assert(solution.firstDayBeenInAllRooms({0,1,0,3,2,1,4,5,2,3,6,7,8,9}) == vector<int>3802);\n    assert(solution.firstDayBeenInAllRooms({0, 2, 1, 0, 4, 3, 2, 1, 0}) == vector<int>176);\n    assert(solution.firstDayBeenInAllRooms({0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}) == vector<int>524288);\n    assert(solution.firstDayBeenInAllRooms({9,0,1,2,3,4,5,6,7,8}) == vector<int>90);\n    assert(solution.firstDayBeenInAllRooms({0,2,4,6,8,10,12,14,16,18,1,3,5,7,9,11,13,15,17,19}) == vector<int>562740);\n    assert(solution.firstDayBeenInAllRooms({0,2,1,0,3,2,1,0,4,3,2,1,0}) == vector<int>4912);\n    assert(solution.firstDayBeenInAllRooms({0,3,5,3,4,2,1,0,7,6,5,4,3,2,1,0}) == vector<int>11288);\n    assert(solution.firstDayBeenInAllRooms({0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 19}) == vector<int>262148);\n    assert(solution.firstDayBeenInAllRooms({0,2,1,0,3,2,1,0,4,3,2,1,0,5,4,3,2,1,0,6,5,4,3,2,1,0}) == vector<int>40131408);\n    assert(solution.firstDayBeenInAllRooms({0,1,0,2,1,0,3,2,1,0,4,3,2,1,0,5,4,3,2,1,0,6,5,4,3,2,1,0,7,6,5,4,3,2,1,0}) == vector<int>13851577);\n    assert(solution.firstDayBeenInAllRooms({0, 2, 1, 3, 1, 2, 5, 4, 3, 4, 5, 4, 3, 2, 1, 0, 1, 2, 3, 4}) == vector<int>269566);\n    assert(solution.firstDayBeenInAllRooms({0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0}) == vector<int>461127067);\n    assert(solution.firstDayBeenInAllRooms({0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}) == vector<int>1048574);\n    assert(solution.firstDayBeenInAllRooms({0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1}) == vector<int>44739242);\n    assert(solution.firstDayBeenInAllRooms({0,1,0,2,1,0,3,2,1,0}) == vector<int>556);\n    assert(solution.firstDayBeenInAllRooms({0, 3, 2, 1, 0, 5, 4, 3, 2, 1, 0, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0}) == vector<int>594736);\n    assert(solution.firstDayBeenInAllRooms({20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0}) == vector<int>701096);\n    assert(solution.firstDayBeenInAllRooms({0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1}) == vector<int>786430);\n    assert(solution.firstDayBeenInAllRooms({0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}) == vector<int>1048574);\n    assert(solution.firstDayBeenInAllRooms({0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1}) == vector<int>699050);\n    assert(solution.firstDayBeenInAllRooms({0,1,2,3,2,1,2,3,4,3,4,5,6,5,6,7,8,7,8,9}) == vector<int>198234);\n    assert(solution.firstDayBeenInAllRooms({0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9}) == vector<int>10258);\n    assert(solution.firstDayBeenInAllRooms({9, 8, 7, 6, 5, 4, 3, 2, 1, 0}) == vector<int>712);\n    assert(solution.firstDayBeenInAllRooms({0,2,2,2,2,2,2,2,2,2}) == vector<int>260);\n    assert(solution.firstDayBeenInAllRooms({0, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0, 11, 12, 13, 14, 15, 16, 17, 18, 19}) == vector<int>28010);\n    assert(solution.firstDayBeenInAllRooms({0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 1, 3, 5, 7, 9, 11, 13, 15, 17, 19}) == vector<int>41964584);\n    assert(solution.firstDayBeenInAllRooms({0,1,1,2,2,3,3,4,4,5}) == vector<int>308);\n    assert(solution.firstDayBeenInAllRooms({0,1,2,3,4,5,4,3,2,1,0,1,2,3,4,5,4,3,2,1}) == vector<int>63550);\n    assert(solution.firstDayBeenInAllRooms({0, 1, 1, 3, 2, 2, 5}) == vector<int>34);\n    assert(solution.firstDayBeenInAllRooms({20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1}) == vector<int>311766262);\n    assert(solution.firstDayBeenInAllRooms({0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20}) == vector<int>38954);\n    assert(solution.firstDayBeenInAllRooms({0,1,2,3,4,5,6,7,8,0}) == vector<int>18);\n    assert(solution.firstDayBeenInAllRooms({0,5,3,1,2,4,6,8,10,0}) == vector<int>Error: list index out of range);\n    assert(solution.firstDayBeenInAllRooms({0,1,0,2,3,2,5,4}) == vector<int>82);\n    assert(solution.firstDayBeenInAllRooms({0,2,1,0,3,2,4,3,5,4,6,5,7,6,8,7,9,8,10,9}) == vector<int>438546);\n    assert(solution.firstDayBeenInAllRooms({0,1,2,3,2,3,4,3,4,5}) == vector<int>154);\n    assert(solution.firstDayBeenInAllRooms({5,4,3,2,1,0}) == vector<int>48);\n    assert(solution.firstDayBeenInAllRooms({0, 1, 0, 3, 0, 1, 0, 5, 0, 1, 0, 3, 0, 1, 0, 7, 0, 1, 0, 3, 0, 1}) == vector<int>1543578);\n    assert(solution.firstDayBeenInAllRooms({0,1,2,3,4,3,2,3,4,5}) == vector<int>106);\n    assert(solution.firstDayBeenInAllRooms({20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10}) == vector<int>717916156);\n    assert(solution.firstDayBeenInAllRooms({0,1,2,0,1,2,0,1,2,0,1,2,0,1,2,0,1,2,0,1,2,0,1,2,0,1,2}) == vector<int>57521884);\n    assert(solution.firstDayBeenInAllRooms({0,1,2,3,4,5,6,7,8,9,0,1,2,3,4,5,6,7,8,9}) == vector<int>10258);\n    assert(solution.firstDayBeenInAllRooms({0, 1, 2, 0, 4, 0, 6, 0, 8, 0, 10, 0, 12, 0, 14, 0, 16, 0, 18, 0, 20}) == vector<int>5114);\n    assert(solution.firstDayBeenInAllRooms({0,1,2,0,1,2,0,1,2,0}) == vector<int>438);\n    assert(solution.firstDayBeenInAllRooms({0,1,2,3,4,3,2,1,0,1,2,3,4,3,2,1,0,1,2,3}) == vector<int>123366);\n    assert(solution.firstDayBeenInAllRooms({0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20}) == vector<int>20126903);\n    assert(solution.firstDayBeenInAllRooms({5,0,4,1,3,2,0,1,2,3,4,5,0,1,2,3,4,5,0,1,2,3,4,5,0,1,2,3,4,5,0,1,2,3,4,5,0,1,2,3,4,5,0,1,2,3,4,5,0,1,2,3,4,5,0,1,2,3,4,5,0,1,2,3,4,5,0,1,2,3,4,5}) == vector<int>514496163);\n    assert(solution.firstDayBeenInAllRooms({0,0,0,1,0,0,2,0,0,3,0,0,4,0,0,5,0,0,6,0,0,7,0,0,8,0,0,9,0,0,10}) == vector<int>943314207);\n    assert(solution.firstDayBeenInAllRooms({0, 1, 2, 3, 2, 1, 0, 1, 2, 3, 4, 5, 4, 3, 2, 1, 0, 1, 2, 3}) == vector<int>229862);\n    assert(solution.firstDayBeenInAllRooms({0,9,8,7,6,5,4,3,2,1,0,9,8,7,6,5,4,3,2,1}) == vector<int>317428);\n    assert(solution.firstDayBeenInAllRooms({0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 0, 2, 4, 6, 8, 10, 12, 14, 16}) == vector<int>Error: list index out of range);\n    assert(solution.firstDayBeenInAllRooms({0,2,1,0,3,4,5}) == vector<int>60);\n    assert(solution.firstDayBeenInAllRooms({10,0,1,2,3,4,5,6,7,8,9,0,1,2,3,4,5,6,7,8,9}) == vector<int>66670);\n    assert(solution.firstDayBeenInAllRooms({0,2,1,2,0,0,0,3,4,2,5}) == vector<int>1312);\n    assert(solution.firstDayBeenInAllRooms({0, 2, 4, 6, 8, 0, 2, 4, 6, 8}) == vector<int>812);\n    assert(solution.firstDayBeenInAllRooms({0, 1, 0, 3, 2, 1, 0, 7, 6, 5, 4, 3, 2, 1, 0, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0}) == vector<int>89816588);\n    assert(solution.firstDayBeenInAllRooms({0,2,1,0,3,2,1}) == vector<int>80);\n    assert(solution.firstDayBeenInAllRooms({0,2,1,4,3,6,5,8,7,10,9,12,11,14,13,16,15,18,17,20,19,22,21,24,23,25}) == vector<int>2657202);\n    assert(solution.firstDayBeenInAllRooms({0,3,1,0,2,0,3,1,0,2,0,3,1,0,2,0,3,1,0,2,0,3,1,0,2,0,3,1,0,2,0}) == vector<int>558657481);\n    assert(solution.firstDayBeenInAllRooms({0,5,2,4,3,1,6,8,7,9,10,11,12,13,14,15,16,17,18,19}) == vector<int>212);\n    assert(solution.firstDayBeenInAllRooms({0,2,1,2,3,2,1,2,3,4}) == vector<int>430);\n    assert(solution.firstDayBeenInAllRooms({0,1,0,2,0,3,0,4,0,5,0,6,0,7,0,8,0,9,0,10,0,11,0,12,0,13,0,14,0,15,0,16,0,17,0,18,0,19,0,20,0,21,0,22,0,23,0,24,0}) == vector<int>855298880);\n    assert(solution.firstDayBeenInAllRooms({0,2,4,6,8,0,2,4,6,8}) == vector<int>812);\n    assert(solution.firstDayBeenInAllRooms({0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20}) == vector<int>40);\n    assert(solution.firstDayBeenInAllRooms({0,2,4,6,8,10,12,14,16,18,0}) == vector<int>Error: list index out of range);\n    assert(solution.firstDayBeenInAllRooms({0,2,1,0,3,2,5,4,7,6,9,8}) == vector<int>788);\n    assert(solution.firstDayBeenInAllRooms({0,2,4,6,8,10,0,2,4,6}) == vector<int>Error: list index out of range);\n    assert(solution.firstDayBeenInAllRooms({0, 1, 1, 1, 1, 1, 1, 1, 1, 1}) == vector<int>512);\n    assert(solution.firstDayBeenInAllRooms({0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}) == vector<int>640520038);\n    assert(solution.firstDayBeenInAllRooms({0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}) == vector<int>147483632);\n    assert(solution.firstDayBeenInAllRooms({0,1,2,0,3,2,5,6,7,8,9,10,0}) == vector<int>220);\n    assert(solution.firstDayBeenInAllRooms({0,0,1,1,2,2,3,3,4,4}) == vector<int>590);\n    assert(solution.firstDayBeenInAllRooms({0,3,2,0,4,5,6,7,8,9,10,11,12,13,14}) == vector<int>38);\n    assert(solution.firstDayBeenInAllRooms({0,3,5,7,9,11,13,15,17,19,21,23,25,27,29,31,33,35,37,39,41,43,45,47,49,51,53,55,57,59}) == vector<int>Error: list index out of range);\n    assert(solution.firstDayBeenInAllRooms({0,1,1,1,1,1,1,1,1,1}) == vector<int>512);\n    assert(solution.firstDayBeenInAllRooms({0,1,0,1,2,3,4,5,6,7}) == vector<int>334);\n}",
+    "java": "public static void check(Solution solution) {\n    assert Arrays.equals(solution.firstDayBeenInAllRooms(new int[]{0,0,2}), 6);\n    assert Arrays.equals(solution.firstDayBeenInAllRooms(new int[]{0,1,2,3,4,5}), 10);\n    assert Arrays.equals(solution.firstDayBeenInAllRooms(new int[]{0,2,1,0,1,2}), 52);\n    assert Arrays.equals(solution.firstDayBeenInAllRooms(new int[]{0,1,1,1,1}), 16);\n    assert Arrays.equals(solution.firstDayBeenInAllRooms(new int[]{0,0,0,0,0,0,0,0,0,0}), 1022);\n    assert Arrays.equals(solution.firstDayBeenInAllRooms(new int[]{0,1,0,1,0,1}), 42);\n    assert Arrays.equals(solution.firstDayBeenInAllRooms(new int[]{9,8,7,6,5,4,3,2,1,0}), 712);\n    assert Arrays.equals(solution.firstDayBeenInAllRooms(new int[]{0,1,2,3,2,1,0,1,2,3}), 230);\n    assert Arrays.equals(solution.firstDayBeenInAllRooms(new int[]{0,1,0,2}), 10);\n    assert Arrays.equals(solution.firstDayBeenInAllRooms(new int[]{0,1,2,0}), 6);\n    assert Arrays.equals(solution.firstDayBeenInAllRooms(new int[]{0,1,1,1,1,1}), 32);\n    assert Arrays.equals(solution.firstDayBeenInAllRooms(new int[]{0,1,1,0,1,1,0}), 72);\n    assert Arrays.equals(solution.firstDayBeenInAllRooms(new int[]{0,1,0,2,1}), 18);\n    assert Arrays.equals(solution.firstDayBeenInAllRooms(new int[]{0,1,0,1,0,1,0,1,0,1}), 682);\n    assert Arrays.equals(solution.firstDayBeenInAllRooms(new int[]{0,1,2,3,4,0}), 10);\n    assert Arrays.equals(solution.firstDayBeenInAllRooms(new int[]{0,2,2,2,2,2}), 20);\n    assert Arrays.equals(solution.firstDayBeenInAllRooms(new int[]{0,1,2,3,4,5,6,7,8,9}), 18);\n    assert Arrays.equals(solution.firstDayBeenInAllRooms(new int[]{0,2,1,0}), 12);\n    assert Arrays.equals(solution.firstDayBeenInAllRooms(new int[]{0,1,1,0,1,2}), 36);\n    assert Arrays.equals(solution.firstDayBeenInAllRooms(new int[]{0,1,1,0}), 8);\n    assert Arrays.equals(solution.firstDayBeenInAllRooms(new int[]{0,2,1,0,1}), 26);\n    assert Arrays.equals(solution.firstDayBeenInAllRooms(new int[]{0,0}), 2);\n    assert Arrays.equals(solution.firstDayBeenInAllRooms(new int[]{0,1,2,3,4,5,6,7,8,9,0,1,2,3,4}), 328);\n    assert Arrays.equals(solution.firstDayBeenInAllRooms(new int[]{0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,0,0,0,0,0}), 670);\n    assert Arrays.equals(solution.firstDayBeenInAllRooms(new int[]{0,2,1,3,2,4,3,5,4,6}), 192);\n    assert Arrays.equals(solution.firstDayBeenInAllRooms(new int[]{0,2,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0}), 579139391);\n    assert Arrays.equals(solution.firstDayBeenInAllRooms(new int[]{0,1,0,3,2,5,4,7,6,9}), 58);\n    assert Arrays.equals(solution.firstDayBeenInAllRooms(new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0}), 1022);\n    assert Arrays.equals(solution.firstDayBeenInAllRooms(new int[]{0,0,2,1,4,3,5,6,7,8,9}), 98);\n    assert Arrays.equals(solution.firstDayBeenInAllRooms(new int[]{0,0,2,0,0,2,0,0,2,0,0,2,0,0,2,0,0,2,0,0}), 599186);\n    assert Arrays.equals(solution.firstDayBeenInAllRooms(new int[]{0,1,1,2,2,2,3,3,3,3}), 358);\n    assert Arrays.equals(solution.firstDayBeenInAllRooms(new int[]{0, 0, 2, 2, 4, 4, 6, 6, 8, 8, 10, 10, 12, 12, 14, 14, 16, 16, 18, 18}), 56);\n    assert Arrays.equals(solution.firstDayBeenInAllRooms(new int[]{0,1,0,3,2,1,0,5,4,3,2,1,0,7,6,5,4,3,2,1,0,9,8,7,6,5,4,3,2,1,0}), 633246732);\n    assert Arrays.equals(solution.firstDayBeenInAllRooms(new int[]{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19}), 38);\n    assert Arrays.equals(solution.firstDayBeenInAllRooms(new int[]{0,2,1,2,3,4,5,4,3,2}), 178);\n    assert Arrays.equals(solution.firstDayBeenInAllRooms(new int[]{0,2,1,3,1,2,4,2,1,3,1,2,4,2,1,3,1,2,4,2,1,3,1,2,4,2,1,3,1,2,4,2,1,3,1,2,4}), 449162187);\n    assert Arrays.equals(solution.firstDayBeenInAllRooms(new int[]{0,0,1,2,3,4,5,6,7,8,9}), 110);\n    assert Arrays.equals(solution.firstDayBeenInAllRooms(new int[]{0, 2, 0, 2, 0, 2, 0, 2, 0, 2, 0, 2, 0, 2, 0, 2, 0, 2, 0, 2}), 786434);\n    assert Arrays.equals(solution.firstDayBeenInAllRooms(new int[]{0,1,2,3,4,5,6,7,8,9,8,7,6,5,4,3,2,1,0}), 2044);\n    assert Arrays.equals(solution.firstDayBeenInAllRooms(new int[]{0,1,0,3,2,1,4,5,2,3,6,7,8,9}), 3802);\n    assert Arrays.equals(solution.firstDayBeenInAllRooms(new int[]{0, 2, 1, 0, 4, 3, 2, 1, 0}), 176);\n    assert Arrays.equals(solution.firstDayBeenInAllRooms(new int[]{0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}), 524288);\n    assert Arrays.equals(solution.firstDayBeenInAllRooms(new int[]{9,0,1,2,3,4,5,6,7,8}), 90);\n    assert Arrays.equals(solution.firstDayBeenInAllRooms(new int[]{0,2,4,6,8,10,12,14,16,18,1,3,5,7,9,11,13,15,17,19}), 562740);\n    assert Arrays.equals(solution.firstDayBeenInAllRooms(new int[]{0,2,1,0,3,2,1,0,4,3,2,1,0}), 4912);\n    assert Arrays.equals(solution.firstDayBeenInAllRooms(new int[]{0,3,5,3,4,2,1,0,7,6,5,4,3,2,1,0}), 11288);\n    assert Arrays.equals(solution.firstDayBeenInAllRooms(new int[]{0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 19}), 262148);\n    assert Arrays.equals(solution.firstDayBeenInAllRooms(new int[]{0,2,1,0,3,2,1,0,4,3,2,1,0,5,4,3,2,1,0,6,5,4,3,2,1,0}), 40131408);\n    assert Arrays.equals(solution.firstDayBeenInAllRooms(new int[]{0,1,0,2,1,0,3,2,1,0,4,3,2,1,0,5,4,3,2,1,0,6,5,4,3,2,1,0,7,6,5,4,3,2,1,0}), 13851577);\n    assert Arrays.equals(solution.firstDayBeenInAllRooms(new int[]{0, 2, 1, 3, 1, 2, 5, 4, 3, 4, 5, 4, 3, 2, 1, 0, 1, 2, 3, 4}), 269566);\n    assert Arrays.equals(solution.firstDayBeenInAllRooms(new int[]{0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0}), 461127067);\n    assert Arrays.equals(solution.firstDayBeenInAllRooms(new int[]{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}), 1048574);\n    assert Arrays.equals(solution.firstDayBeenInAllRooms(new int[]{0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1}), 44739242);\n    assert Arrays.equals(solution.firstDayBeenInAllRooms(new int[]{0,1,0,2,1,0,3,2,1,0}), 556);\n    assert Arrays.equals(solution.firstDayBeenInAllRooms(new int[]{0, 3, 2, 1, 0, 5, 4, 3, 2, 1, 0, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0}), 594736);\n    assert Arrays.equals(solution.firstDayBeenInAllRooms(new int[]{20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0}), 701096);\n    assert Arrays.equals(solution.firstDayBeenInAllRooms(new int[]{0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1}), 786430);\n    assert Arrays.equals(solution.firstDayBeenInAllRooms(new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}), 1048574);\n    assert Arrays.equals(solution.firstDayBeenInAllRooms(new int[]{0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1}), 699050);\n    assert Arrays.equals(solution.firstDayBeenInAllRooms(new int[]{0,1,2,3,2,1,2,3,4,3,4,5,6,5,6,7,8,7,8,9}), 198234);\n    assert Arrays.equals(solution.firstDayBeenInAllRooms(new int[]{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9}), 10258);\n    assert Arrays.equals(solution.firstDayBeenInAllRooms(new int[]{9, 8, 7, 6, 5, 4, 3, 2, 1, 0}), 712);\n    assert Arrays.equals(solution.firstDayBeenInAllRooms(new int[]{0,2,2,2,2,2,2,2,2,2}), 260);\n    assert Arrays.equals(solution.firstDayBeenInAllRooms(new int[]{0, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0, 11, 12, 13, 14, 15, 16, 17, 18, 19}), 28010);\n    assert Arrays.equals(solution.firstDayBeenInAllRooms(new int[]{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 1, 3, 5, 7, 9, 11, 13, 15, 17, 19}), 41964584);\n    assert Arrays.equals(solution.firstDayBeenInAllRooms(new int[]{0,1,1,2,2,3,3,4,4,5}), 308);\n    assert Arrays.equals(solution.firstDayBeenInAllRooms(new int[]{0,1,2,3,4,5,4,3,2,1,0,1,2,3,4,5,4,3,2,1}), 63550);\n    assert Arrays.equals(solution.firstDayBeenInAllRooms(new int[]{0, 1, 1, 3, 2, 2, 5}), 34);\n    assert Arrays.equals(solution.firstDayBeenInAllRooms(new int[]{20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1}), 311766262);\n    assert Arrays.equals(solution.firstDayBeenInAllRooms(new int[]{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20}), 38954);\n    assert Arrays.equals(solution.firstDayBeenInAllRooms(new int[]{0,1,2,3,4,5,6,7,8,0}), 18);\n    assert Arrays.equals(solution.firstDayBeenInAllRooms(new int[]{0,5,3,1,2,4,6,8,10,0}), Error: list index out of range);\n    assert Arrays.equals(solution.firstDayBeenInAllRooms(new int[]{0,1,0,2,3,2,5,4}), 82);\n    assert Arrays.equals(solution.firstDayBeenInAllRooms(new int[]{0,2,1,0,3,2,4,3,5,4,6,5,7,6,8,7,9,8,10,9}), 438546);\n    assert Arrays.equals(solution.firstDayBeenInAllRooms(new int[]{0,1,2,3,2,3,4,3,4,5}), 154);\n    assert Arrays.equals(solution.firstDayBeenInAllRooms(new int[]{5,4,3,2,1,0}), 48);\n    assert Arrays.equals(solution.firstDayBeenInAllRooms(new int[]{0, 1, 0, 3, 0, 1, 0, 5, 0, 1, 0, 3, 0, 1, 0, 7, 0, 1, 0, 3, 0, 1}), 1543578);\n    assert Arrays.equals(solution.firstDayBeenInAllRooms(new int[]{0,1,2,3,4,3,2,3,4,5}), 106);\n    assert Arrays.equals(solution.firstDayBeenInAllRooms(new int[]{20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10}), 717916156);\n    assert Arrays.equals(solution.firstDayBeenInAllRooms(new int[]{0,1,2,0,1,2,0,1,2,0,1,2,0,1,2,0,1,2,0,1,2,0,1,2,0,1,2}), 57521884);\n    assert Arrays.equals(solution.firstDayBeenInAllRooms(new int[]{0,1,2,3,4,5,6,7,8,9,0,1,2,3,4,5,6,7,8,9}), 10258);\n    assert Arrays.equals(solution.firstDayBeenInAllRooms(new int[]{0, 1, 2, 0, 4, 0, 6, 0, 8, 0, 10, 0, 12, 0, 14, 0, 16, 0, 18, 0, 20}), 5114);\n    assert Arrays.equals(solution.firstDayBeenInAllRooms(new int[]{0,1,2,0,1,2,0,1,2,0}), 438);\n    assert Arrays.equals(solution.firstDayBeenInAllRooms(new int[]{0,1,2,3,4,3,2,1,0,1,2,3,4,3,2,1,0,1,2,3}), 123366);\n    assert Arrays.equals(solution.firstDayBeenInAllRooms(new int[]{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20}), 20126903);\n    assert Arrays.equals(solution.firstDayBeenInAllRooms(new int[]{5,0,4,1,3,2,0,1,2,3,4,5,0,1,2,3,4,5,0,1,2,3,4,5,0,1,2,3,4,5,0,1,2,3,4,5,0,1,2,3,4,5,0,1,2,3,4,5,0,1,2,3,4,5,0,1,2,3,4,5,0,1,2,3,4,5,0,1,2,3,4,5}), 514496163);\n    assert Arrays.equals(solution.firstDayBeenInAllRooms(new int[]{0,0,0,1,0,0,2,0,0,3,0,0,4,0,0,5,0,0,6,0,0,7,0,0,8,0,0,9,0,0,10}), 943314207);\n    assert Arrays.equals(solution.firstDayBeenInAllRooms(new int[]{0, 1, 2, 3, 2, 1, 0, 1, 2, 3, 4, 5, 4, 3, 2, 1, 0, 1, 2, 3}), 229862);\n    assert Arrays.equals(solution.firstDayBeenInAllRooms(new int[]{0,9,8,7,6,5,4,3,2,1,0,9,8,7,6,5,4,3,2,1}), 317428);\n    assert Arrays.equals(solution.firstDayBeenInAllRooms(new int[]{0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 0, 2, 4, 6, 8, 10, 12, 14, 16}), Error: list index out of range);\n    assert Arrays.equals(solution.firstDayBeenInAllRooms(new int[]{0,2,1,0,3,4,5}), 60);\n    assert Arrays.equals(solution.firstDayBeenInAllRooms(new int[]{10,0,1,2,3,4,5,6,7,8,9,0,1,2,3,4,5,6,7,8,9}), 66670);\n    assert Arrays.equals(solution.firstDayBeenInAllRooms(new int[]{0,2,1,2,0,0,0,3,4,2,5}), 1312);\n    assert Arrays.equals(solution.firstDayBeenInAllRooms(new int[]{0, 2, 4, 6, 8, 0, 2, 4, 6, 8}), 812);\n    assert Arrays.equals(solution.firstDayBeenInAllRooms(new int[]{0, 1, 0, 3, 2, 1, 0, 7, 6, 5, 4, 3, 2, 1, 0, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0}), 89816588);\n    assert Arrays.equals(solution.firstDayBeenInAllRooms(new int[]{0,2,1,0,3,2,1}), 80);\n    assert Arrays.equals(solution.firstDayBeenInAllRooms(new int[]{0,2,1,4,3,6,5,8,7,10,9,12,11,14,13,16,15,18,17,20,19,22,21,24,23,25}), 2657202);\n    assert Arrays.equals(solution.firstDayBeenInAllRooms(new int[]{0,3,1,0,2,0,3,1,0,2,0,3,1,0,2,0,3,1,0,2,0,3,1,0,2,0,3,1,0,2,0}), 558657481);\n    assert Arrays.equals(solution.firstDayBeenInAllRooms(new int[]{0,5,2,4,3,1,6,8,7,9,10,11,12,13,14,15,16,17,18,19}), 212);\n    assert Arrays.equals(solution.firstDayBeenInAllRooms(new int[]{0,2,1,2,3,2,1,2,3,4}), 430);\n    assert Arrays.equals(solution.firstDayBeenInAllRooms(new int[]{0,1,0,2,0,3,0,4,0,5,0,6,0,7,0,8,0,9,0,10,0,11,0,12,0,13,0,14,0,15,0,16,0,17,0,18,0,19,0,20,0,21,0,22,0,23,0,24,0}), 855298880);\n    assert Arrays.equals(solution.firstDayBeenInAllRooms(new int[]{0,2,4,6,8,0,2,4,6,8}), 812);\n    assert Arrays.equals(solution.firstDayBeenInAllRooms(new int[]{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20}), 40);\n    assert Arrays.equals(solution.firstDayBeenInAllRooms(new int[]{0,2,4,6,8,10,12,14,16,18,0}), Error: list index out of range);\n    assert Arrays.equals(solution.firstDayBeenInAllRooms(new int[]{0,2,1,0,3,2,5,4,7,6,9,8}), 788);\n    assert Arrays.equals(solution.firstDayBeenInAllRooms(new int[]{0,2,4,6,8,10,0,2,4,6}), Error: list index out of range);\n    assert Arrays.equals(solution.firstDayBeenInAllRooms(new int[]{0, 1, 1, 1, 1, 1, 1, 1, 1, 1}), 512);\n    assert Arrays.equals(solution.firstDayBeenInAllRooms(new int[]{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}), 640520038);\n    assert Arrays.equals(solution.firstDayBeenInAllRooms(new int[]{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}), 147483632);\n    assert Arrays.equals(solution.firstDayBeenInAllRooms(new int[]{0,1,2,0,3,2,5,6,7,8,9,10,0}), 220);\n    assert Arrays.equals(solution.firstDayBeenInAllRooms(new int[]{0,0,1,1,2,2,3,3,4,4}), 590);\n    assert Arrays.equals(solution.firstDayBeenInAllRooms(new int[]{0,3,2,0,4,5,6,7,8,9,10,11,12,13,14}), 38);\n    assert Arrays.equals(solution.firstDayBeenInAllRooms(new int[]{0,3,5,7,9,11,13,15,17,19,21,23,25,27,29,31,33,35,37,39,41,43,45,47,49,51,53,55,57,59}), Error: list index out of range);\n    assert Arrays.equals(solution.firstDayBeenInAllRooms(new int[]{0,1,1,1,1,1,1,1,1,1}), 512);\n    assert Arrays.equals(solution.firstDayBeenInAllRooms(new int[]{0,1,0,1,2,3,4,5,6,7}), 334);\n}",
+    "javascript": "function check(candidate) {\n    console.assert(JSON.stringify(candidate([0,0,2])) === JSON.stringify(6));\n    console.assert(JSON.stringify(candidate([0,1,2,3,4,5])) === JSON.stringify(10));\n    console.assert(JSON.stringify(candidate([0,2,1,0,1,2])) === JSON.stringify(52));\n    console.assert(JSON.stringify(candidate([0,1,1,1,1])) === JSON.stringify(16));\n    console.assert(JSON.stringify(candidate([0,0,0,0,0,0,0,0,0,0])) === JSON.stringify(1022));\n    console.assert(JSON.stringify(candidate([0,1,0,1,0,1])) === JSON.stringify(42));\n    console.assert(JSON.stringify(candidate([9,8,7,6,5,4,3,2,1,0])) === JSON.stringify(712));\n    console.assert(JSON.stringify(candidate([0,1,2,3,2,1,0,1,2,3])) === JSON.stringify(230));\n    console.assert(JSON.stringify(candidate([0,1,0,2])) === JSON.stringify(10));\n    console.assert(JSON.stringify(candidate([0,1,2,0])) === JSON.stringify(6));\n    console.assert(JSON.stringify(candidate([0,1,1,1,1,1])) === JSON.stringify(32));\n    console.assert(JSON.stringify(candidate([0,1,1,0,1,1,0])) === JSON.stringify(72));\n    console.assert(JSON.stringify(candidate([0,1,0,2,1])) === JSON.stringify(18));\n    console.assert(JSON.stringify(candidate([0,1,0,1,0,1,0,1,0,1])) === JSON.stringify(682));\n    console.assert(JSON.stringify(candidate([0,1,2,3,4,0])) === JSON.stringify(10));\n    console.assert(JSON.stringify(candidate([0,2,2,2,2,2])) === JSON.stringify(20));\n    console.assert(JSON.stringify(candidate([0,1,2,3,4,5,6,7,8,9])) === JSON.stringify(18));\n    console.assert(JSON.stringify(candidate([0,2,1,0])) === JSON.stringify(12));\n    console.assert(JSON.stringify(candidate([0,1,1,0,1,2])) === JSON.stringify(36));\n    console.assert(JSON.stringify(candidate([0,1,1,0])) === JSON.stringify(8));\n    console.assert(JSON.stringify(candidate([0,2,1,0,1])) === JSON.stringify(26));\n    console.assert(JSON.stringify(candidate([0,0])) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate([0,1,2,3,4,5,6,7,8,9,0,1,2,3,4])) === JSON.stringify(328));\n    console.assert(JSON.stringify(candidate([0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,0,0,0,0,0])) === JSON.stringify(670));\n    console.assert(JSON.stringify(candidate([0,2,1,3,2,4,3,5,4,6])) === JSON.stringify(192));\n    console.assert(JSON.stringify(candidate([0,2,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0])) === JSON.stringify(579139391));\n    console.assert(JSON.stringify(candidate([0,1,0,3,2,5,4,7,6,9])) === JSON.stringify(58));\n    console.assert(JSON.stringify(candidate([0, 0, 0, 0, 0, 0, 0, 0, 0, 0])) === JSON.stringify(1022));\n    console.assert(JSON.stringify(candidate([0,0,2,1,4,3,5,6,7,8,9])) === JSON.stringify(98));\n    console.assert(JSON.stringify(candidate([0,0,2,0,0,2,0,0,2,0,0,2,0,0,2,0,0,2,0,0])) === JSON.stringify(599186));\n    console.assert(JSON.stringify(candidate([0,1,1,2,2,2,3,3,3,3])) === JSON.stringify(358));\n    console.assert(JSON.stringify(candidate([0, 0, 2, 2, 4, 4, 6, 6, 8, 8, 10, 10, 12, 12, 14, 14, 16, 16, 18, 18])) === JSON.stringify(56));\n    console.assert(JSON.stringify(candidate([0,1,0,3,2,1,0,5,4,3,2,1,0,7,6,5,4,3,2,1,0,9,8,7,6,5,4,3,2,1,0])) === JSON.stringify(633246732));\n    console.assert(JSON.stringify(candidate([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19])) === JSON.stringify(38));\n    console.assert(JSON.stringify(candidate([0,2,1,2,3,4,5,4,3,2])) === JSON.stringify(178));\n    console.assert(JSON.stringify(candidate([0,2,1,3,1,2,4,2,1,3,1,2,4,2,1,3,1,2,4,2,1,3,1,2,4,2,1,3,1,2,4,2,1,3,1,2,4])) === JSON.stringify(449162187));\n    console.assert(JSON.stringify(candidate([0,0,1,2,3,4,5,6,7,8,9])) === JSON.stringify(110));\n    console.assert(JSON.stringify(candidate([0, 2, 0, 2, 0, 2, 0, 2, 0, 2, 0, 2, 0, 2, 0, 2, 0, 2, 0, 2])) === JSON.stringify(786434));\n    console.assert(JSON.stringify(candidate([0,1,2,3,4,5,6,7,8,9,8,7,6,5,4,3,2,1,0])) === JSON.stringify(2044));\n    console.assert(JSON.stringify(candidate([0,1,0,3,2,1,4,5,2,3,6,7,8,9])) === JSON.stringify(3802));\n    console.assert(JSON.stringify(candidate([0, 2, 1, 0, 4, 3, 2, 1, 0])) === JSON.stringify(176));\n    console.assert(JSON.stringify(candidate([0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1])) === JSON.stringify(524288));\n    console.assert(JSON.stringify(candidate([9,0,1,2,3,4,5,6,7,8])) === JSON.stringify(90));\n    console.assert(JSON.stringify(candidate([0,2,4,6,8,10,12,14,16,18,1,3,5,7,9,11,13,15,17,19])) === JSON.stringify(562740));\n    console.assert(JSON.stringify(candidate([0,2,1,0,3,2,1,0,4,3,2,1,0])) === JSON.stringify(4912));\n    console.assert(JSON.stringify(candidate([0,3,5,3,4,2,1,0,7,6,5,4,3,2,1,0])) === JSON.stringify(11288));\n    console.assert(JSON.stringify(candidate([0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 19])) === JSON.stringify(262148));\n    console.assert(JSON.stringify(candidate([0,2,1,0,3,2,1,0,4,3,2,1,0,5,4,3,2,1,0,6,5,4,3,2,1,0])) === JSON.stringify(40131408));\n    console.assert(JSON.stringify(candidate([0,1,0,2,1,0,3,2,1,0,4,3,2,1,0,5,4,3,2,1,0,6,5,4,3,2,1,0,7,6,5,4,3,2,1,0])) === JSON.stringify(13851577));\n    console.assert(JSON.stringify(candidate([0, 2, 1, 3, 1, 2, 5, 4, 3, 4, 5, 4, 3, 2, 1, 0, 1, 2, 3, 4])) === JSON.stringify(269566));\n    console.assert(JSON.stringify(candidate([0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0])) === JSON.stringify(461127067));\n    console.assert(JSON.stringify(candidate([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0])) === JSON.stringify(1048574));\n    console.assert(JSON.stringify(candidate([0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1])) === JSON.stringify(44739242));\n    console.assert(JSON.stringify(candidate([0,1,0,2,1,0,3,2,1,0])) === JSON.stringify(556));\n    console.assert(JSON.stringify(candidate([0, 3, 2, 1, 0, 5, 4, 3, 2, 1, 0, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0])) === JSON.stringify(594736));\n    console.assert(JSON.stringify(candidate([20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0])) === JSON.stringify(701096));\n    console.assert(JSON.stringify(candidate([0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1])) === JSON.stringify(786430));\n    console.assert(JSON.stringify(candidate([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])) === JSON.stringify(1048574));\n    console.assert(JSON.stringify(candidate([0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1])) === JSON.stringify(699050));\n    console.assert(JSON.stringify(candidate([0,1,2,3,2,1,2,3,4,3,4,5,6,5,6,7,8,7,8,9])) === JSON.stringify(198234));\n    console.assert(JSON.stringify(candidate([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9])) === JSON.stringify(10258));\n    console.assert(JSON.stringify(candidate([9, 8, 7, 6, 5, 4, 3, 2, 1, 0])) === JSON.stringify(712));\n    console.assert(JSON.stringify(candidate([0,2,2,2,2,2,2,2,2,2])) === JSON.stringify(260));\n    console.assert(JSON.stringify(candidate([0, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0, 11, 12, 13, 14, 15, 16, 17, 18, 19])) === JSON.stringify(28010));\n    console.assert(JSON.stringify(candidate([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 1, 3, 5, 7, 9, 11, 13, 15, 17, 19])) === JSON.stringify(41964584));\n    console.assert(JSON.stringify(candidate([0,1,1,2,2,3,3,4,4,5])) === JSON.stringify(308));\n    console.assert(JSON.stringify(candidate([0,1,2,3,4,5,4,3,2,1,0,1,2,3,4,5,4,3,2,1])) === JSON.stringify(63550));\n    console.assert(JSON.stringify(candidate([0, 1, 1, 3, 2, 2, 5])) === JSON.stringify(34));\n    console.assert(JSON.stringify(candidate([20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1])) === JSON.stringify(311766262));\n    console.assert(JSON.stringify(candidate([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20])) === JSON.stringify(38954));\n    console.assert(JSON.stringify(candidate([0,1,2,3,4,5,6,7,8,0])) === JSON.stringify(18));\n    console.assert(JSON.stringify(candidate([0,5,3,1,2,4,6,8,10,0])) === JSON.stringify(Error: list index out of range));\n    console.assert(JSON.stringify(candidate([0,1,0,2,3,2,5,4])) === JSON.stringify(82));\n    console.assert(JSON.stringify(candidate([0,2,1,0,3,2,4,3,5,4,6,5,7,6,8,7,9,8,10,9])) === JSON.stringify(438546));\n    console.assert(JSON.stringify(candidate([0,1,2,3,2,3,4,3,4,5])) === JSON.stringify(154));\n    console.assert(JSON.stringify(candidate([5,4,3,2,1,0])) === JSON.stringify(48));\n    console.assert(JSON.stringify(candidate([0, 1, 0, 3, 0, 1, 0, 5, 0, 1, 0, 3, 0, 1, 0, 7, 0, 1, 0, 3, 0, 1])) === JSON.stringify(1543578));\n    console.assert(JSON.stringify(candidate([0,1,2,3,4,3,2,3,4,5])) === JSON.stringify(106));\n    console.assert(JSON.stringify(candidate([20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10])) === JSON.stringify(717916156));\n    console.assert(JSON.stringify(candidate([0,1,2,0,1,2,0,1,2,0,1,2,0,1,2,0,1,2,0,1,2,0,1,2,0,1,2])) === JSON.stringify(57521884));\n    console.assert(JSON.stringify(candidate([0,1,2,3,4,5,6,7,8,9,0,1,2,3,4,5,6,7,8,9])) === JSON.stringify(10258));\n    console.assert(JSON.stringify(candidate([0, 1, 2, 0, 4, 0, 6, 0, 8, 0, 10, 0, 12, 0, 14, 0, 16, 0, 18, 0, 20])) === JSON.stringify(5114));\n    console.assert(JSON.stringify(candidate([0,1,2,0,1,2,0,1,2,0])) === JSON.stringify(438));\n    console.assert(JSON.stringify(candidate([0,1,2,3,4,3,2,1,0,1,2,3,4,3,2,1,0,1,2,3])) === JSON.stringify(123366));\n    console.assert(JSON.stringify(candidate([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20])) === JSON.stringify(20126903));\n    console.assert(JSON.stringify(candidate([5,0,4,1,3,2,0,1,2,3,4,5,0,1,2,3,4,5,0,1,2,3,4,5,0,1,2,3,4,5,0,1,2,3,4,5,0,1,2,3,4,5,0,1,2,3,4,5,0,1,2,3,4,5,0,1,2,3,4,5,0,1,2,3,4,5,0,1,2,3,4,5])) === JSON.stringify(514496163));\n    console.assert(JSON.stringify(candidate([0,0,0,1,0,0,2,0,0,3,0,0,4,0,0,5,0,0,6,0,0,7,0,0,8,0,0,9,0,0,10])) === JSON.stringify(943314207));\n    console.assert(JSON.stringify(candidate([0, 1, 2, 3, 2, 1, 0, 1, 2, 3, 4, 5, 4, 3, 2, 1, 0, 1, 2, 3])) === JSON.stringify(229862));\n    console.assert(JSON.stringify(candidate([0,9,8,7,6,5,4,3,2,1,0,9,8,7,6,5,4,3,2,1])) === JSON.stringify(317428));\n    console.assert(JSON.stringify(candidate([0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 0, 2, 4, 6, 8, 10, 12, 14, 16])) === JSON.stringify(Error: list index out of range));\n    console.assert(JSON.stringify(candidate([0,2,1,0,3,4,5])) === JSON.stringify(60));\n    console.assert(JSON.stringify(candidate([10,0,1,2,3,4,5,6,7,8,9,0,1,2,3,4,5,6,7,8,9])) === JSON.stringify(66670));\n    console.assert(JSON.stringify(candidate([0,2,1,2,0,0,0,3,4,2,5])) === JSON.stringify(1312));\n    console.assert(JSON.stringify(candidate([0, 2, 4, 6, 8, 0, 2, 4, 6, 8])) === JSON.stringify(812));\n    console.assert(JSON.stringify(candidate([0, 1, 0, 3, 2, 1, 0, 7, 6, 5, 4, 3, 2, 1, 0, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0])) === JSON.stringify(89816588));\n    console.assert(JSON.stringify(candidate([0,2,1,0,3,2,1])) === JSON.stringify(80));\n    console.assert(JSON.stringify(candidate([0,2,1,4,3,6,5,8,7,10,9,12,11,14,13,16,15,18,17,20,19,22,21,24,23,25])) === JSON.stringify(2657202));\n    console.assert(JSON.stringify(candidate([0,3,1,0,2,0,3,1,0,2,0,3,1,0,2,0,3,1,0,2,0,3,1,0,2,0,3,1,0,2,0])) === JSON.stringify(558657481));\n    console.assert(JSON.stringify(candidate([0,5,2,4,3,1,6,8,7,9,10,11,12,13,14,15,16,17,18,19])) === JSON.stringify(212));\n    console.assert(JSON.stringify(candidate([0,2,1,2,3,2,1,2,3,4])) === JSON.stringify(430));\n    console.assert(JSON.stringify(candidate([0,1,0,2,0,3,0,4,0,5,0,6,0,7,0,8,0,9,0,10,0,11,0,12,0,13,0,14,0,15,0,16,0,17,0,18,0,19,0,20,0,21,0,22,0,23,0,24,0])) === JSON.stringify(855298880));\n    console.assert(JSON.stringify(candidate([0,2,4,6,8,0,2,4,6,8])) === JSON.stringify(812));\n    console.assert(JSON.stringify(candidate([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20])) === JSON.stringify(40));\n    console.assert(JSON.stringify(candidate([0,2,4,6,8,10,12,14,16,18,0])) === JSON.stringify(Error: list index out of range));\n    console.assert(JSON.stringify(candidate([0,2,1,0,3,2,5,4,7,6,9,8])) === JSON.stringify(788));\n    console.assert(JSON.stringify(candidate([0,2,4,6,8,10,0,2,4,6])) === JSON.stringify(Error: list index out of range));\n    console.assert(JSON.stringify(candidate([0, 1, 1, 1, 1, 1, 1, 1, 1, 1])) === JSON.stringify(512));\n    console.assert(JSON.stringify(candidate([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0])) === JSON.stringify(640520038));\n    console.assert(JSON.stringify(candidate([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0])) === JSON.stringify(147483632));\n    console.assert(JSON.stringify(candidate([0,1,2,0,3,2,5,6,7,8,9,10,0])) === JSON.stringify(220));\n    console.assert(JSON.stringify(candidate([0,0,1,1,2,2,3,3,4,4])) === JSON.stringify(590));\n    console.assert(JSON.stringify(candidate([0,3,2,0,4,5,6,7,8,9,10,11,12,13,14])) === JSON.stringify(38));\n    console.assert(JSON.stringify(candidate([0,3,5,7,9,11,13,15,17,19,21,23,25,27,29,31,33,35,37,39,41,43,45,47,49,51,53,55,57,59])) === JSON.stringify(Error: list index out of range));\n    console.assert(JSON.stringify(candidate([0,1,1,1,1,1,1,1,1,1])) === JSON.stringify(512));\n    console.assert(JSON.stringify(candidate([0,1,0,1,2,3,4,5,6,7])) === JSON.stringify(334));\n}",
+    "typescript": "function check(candidate: Function): void {\n    console.assert(JSON.stringify(candidate([0,0,2])) === JSON.stringify(6));\n    console.assert(JSON.stringify(candidate([0,1,2,3,4,5])) === JSON.stringify(10));\n    console.assert(JSON.stringify(candidate([0,2,1,0,1,2])) === JSON.stringify(52));\n    console.assert(JSON.stringify(candidate([0,1,1,1,1])) === JSON.stringify(16));\n    console.assert(JSON.stringify(candidate([0,0,0,0,0,0,0,0,0,0])) === JSON.stringify(1022));\n    console.assert(JSON.stringify(candidate([0,1,0,1,0,1])) === JSON.stringify(42));\n    console.assert(JSON.stringify(candidate([9,8,7,6,5,4,3,2,1,0])) === JSON.stringify(712));\n    console.assert(JSON.stringify(candidate([0,1,2,3,2,1,0,1,2,3])) === JSON.stringify(230));\n    console.assert(JSON.stringify(candidate([0,1,0,2])) === JSON.stringify(10));\n    console.assert(JSON.stringify(candidate([0,1,2,0])) === JSON.stringify(6));\n    console.assert(JSON.stringify(candidate([0,1,1,1,1,1])) === JSON.stringify(32));\n    console.assert(JSON.stringify(candidate([0,1,1,0,1,1,0])) === JSON.stringify(72));\n    console.assert(JSON.stringify(candidate([0,1,0,2,1])) === JSON.stringify(18));\n    console.assert(JSON.stringify(candidate([0,1,0,1,0,1,0,1,0,1])) === JSON.stringify(682));\n    console.assert(JSON.stringify(candidate([0,1,2,3,4,0])) === JSON.stringify(10));\n    console.assert(JSON.stringify(candidate([0,2,2,2,2,2])) === JSON.stringify(20));\n    console.assert(JSON.stringify(candidate([0,1,2,3,4,5,6,7,8,9])) === JSON.stringify(18));\n    console.assert(JSON.stringify(candidate([0,2,1,0])) === JSON.stringify(12));\n    console.assert(JSON.stringify(candidate([0,1,1,0,1,2])) === JSON.stringify(36));\n    console.assert(JSON.stringify(candidate([0,1,1,0])) === JSON.stringify(8));\n    console.assert(JSON.stringify(candidate([0,2,1,0,1])) === JSON.stringify(26));\n    console.assert(JSON.stringify(candidate([0,0])) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate([0,1,2,3,4,5,6,7,8,9,0,1,2,3,4])) === JSON.stringify(328));\n    console.assert(JSON.stringify(candidate([0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,0,0,0,0,0])) === JSON.stringify(670));\n    console.assert(JSON.stringify(candidate([0,2,1,3,2,4,3,5,4,6])) === JSON.stringify(192));\n    console.assert(JSON.stringify(candidate([0,2,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0])) === JSON.stringify(579139391));\n    console.assert(JSON.stringify(candidate([0,1,0,3,2,5,4,7,6,9])) === JSON.stringify(58));\n    console.assert(JSON.stringify(candidate([0, 0, 0, 0, 0, 0, 0, 0, 0, 0])) === JSON.stringify(1022));\n    console.assert(JSON.stringify(candidate([0,0,2,1,4,3,5,6,7,8,9])) === JSON.stringify(98));\n    console.assert(JSON.stringify(candidate([0,0,2,0,0,2,0,0,2,0,0,2,0,0,2,0,0,2,0,0])) === JSON.stringify(599186));\n    console.assert(JSON.stringify(candidate([0,1,1,2,2,2,3,3,3,3])) === JSON.stringify(358));\n    console.assert(JSON.stringify(candidate([0, 0, 2, 2, 4, 4, 6, 6, 8, 8, 10, 10, 12, 12, 14, 14, 16, 16, 18, 18])) === JSON.stringify(56));\n    console.assert(JSON.stringify(candidate([0,1,0,3,2,1,0,5,4,3,2,1,0,7,6,5,4,3,2,1,0,9,8,7,6,5,4,3,2,1,0])) === JSON.stringify(633246732));\n    console.assert(JSON.stringify(candidate([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19])) === JSON.stringify(38));\n    console.assert(JSON.stringify(candidate([0,2,1,2,3,4,5,4,3,2])) === JSON.stringify(178));\n    console.assert(JSON.stringify(candidate([0,2,1,3,1,2,4,2,1,3,1,2,4,2,1,3,1,2,4,2,1,3,1,2,4,2,1,3,1,2,4,2,1,3,1,2,4])) === JSON.stringify(449162187));\n    console.assert(JSON.stringify(candidate([0,0,1,2,3,4,5,6,7,8,9])) === JSON.stringify(110));\n    console.assert(JSON.stringify(candidate([0, 2, 0, 2, 0, 2, 0, 2, 0, 2, 0, 2, 0, 2, 0, 2, 0, 2, 0, 2])) === JSON.stringify(786434));\n    console.assert(JSON.stringify(candidate([0,1,2,3,4,5,6,7,8,9,8,7,6,5,4,3,2,1,0])) === JSON.stringify(2044));\n    console.assert(JSON.stringify(candidate([0,1,0,3,2,1,4,5,2,3,6,7,8,9])) === JSON.stringify(3802));\n    console.assert(JSON.stringify(candidate([0, 2, 1, 0, 4, 3, 2, 1, 0])) === JSON.stringify(176));\n    console.assert(JSON.stringify(candidate([0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1])) === JSON.stringify(524288));\n    console.assert(JSON.stringify(candidate([9,0,1,2,3,4,5,6,7,8])) === JSON.stringify(90));\n    console.assert(JSON.stringify(candidate([0,2,4,6,8,10,12,14,16,18,1,3,5,7,9,11,13,15,17,19])) === JSON.stringify(562740));\n    console.assert(JSON.stringify(candidate([0,2,1,0,3,2,1,0,4,3,2,1,0])) === JSON.stringify(4912));\n    console.assert(JSON.stringify(candidate([0,3,5,3,4,2,1,0,7,6,5,4,3,2,1,0])) === JSON.stringify(11288));\n    console.assert(JSON.stringify(candidate([0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 19])) === JSON.stringify(262148));\n    console.assert(JSON.stringify(candidate([0,2,1,0,3,2,1,0,4,3,2,1,0,5,4,3,2,1,0,6,5,4,3,2,1,0])) === JSON.stringify(40131408));\n    console.assert(JSON.stringify(candidate([0,1,0,2,1,0,3,2,1,0,4,3,2,1,0,5,4,3,2,1,0,6,5,4,3,2,1,0,7,6,5,4,3,2,1,0])) === JSON.stringify(13851577));\n    console.assert(JSON.stringify(candidate([0, 2, 1, 3, 1, 2, 5, 4, 3, 4, 5, 4, 3, 2, 1, 0, 1, 2, 3, 4])) === JSON.stringify(269566));\n    console.assert(JSON.stringify(candidate([0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0])) === JSON.stringify(461127067));\n    console.assert(JSON.stringify(candidate([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0])) === JSON.stringify(1048574));\n    console.assert(JSON.stringify(candidate([0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1])) === JSON.stringify(44739242));\n    console.assert(JSON.stringify(candidate([0,1,0,2,1,0,3,2,1,0])) === JSON.stringify(556));\n    console.assert(JSON.stringify(candidate([0, 3, 2, 1, 0, 5, 4, 3, 2, 1, 0, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0])) === JSON.stringify(594736));\n    console.assert(JSON.stringify(candidate([20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0])) === JSON.stringify(701096));\n    console.assert(JSON.stringify(candidate([0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1])) === JSON.stringify(786430));\n    console.assert(JSON.stringify(candidate([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])) === JSON.stringify(1048574));\n    console.assert(JSON.stringify(candidate([0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1])) === JSON.stringify(699050));\n    console.assert(JSON.stringify(candidate([0,1,2,3,2,1,2,3,4,3,4,5,6,5,6,7,8,7,8,9])) === JSON.stringify(198234));\n    console.assert(JSON.stringify(candidate([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9])) === JSON.stringify(10258));\n    console.assert(JSON.stringify(candidate([9, 8, 7, 6, 5, 4, 3, 2, 1, 0])) === JSON.stringify(712));\n    console.assert(JSON.stringify(candidate([0,2,2,2,2,2,2,2,2,2])) === JSON.stringify(260));\n    console.assert(JSON.stringify(candidate([0, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0, 11, 12, 13, 14, 15, 16, 17, 18, 19])) === JSON.stringify(28010));\n    console.assert(JSON.stringify(candidate([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 1, 3, 5, 7, 9, 11, 13, 15, 17, 19])) === JSON.stringify(41964584));\n    console.assert(JSON.stringify(candidate([0,1,1,2,2,3,3,4,4,5])) === JSON.stringify(308));\n    console.assert(JSON.stringify(candidate([0,1,2,3,4,5,4,3,2,1,0,1,2,3,4,5,4,3,2,1])) === JSON.stringify(63550));\n    console.assert(JSON.stringify(candidate([0, 1, 1, 3, 2, 2, 5])) === JSON.stringify(34));\n    console.assert(JSON.stringify(candidate([20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1])) === JSON.stringify(311766262));\n    console.assert(JSON.stringify(candidate([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20])) === JSON.stringify(38954));\n    console.assert(JSON.stringify(candidate([0,1,2,3,4,5,6,7,8,0])) === JSON.stringify(18));\n    console.assert(JSON.stringify(candidate([0,5,3,1,2,4,6,8,10,0])) === JSON.stringify(Error: list index out of range));\n    console.assert(JSON.stringify(candidate([0,1,0,2,3,2,5,4])) === JSON.stringify(82));\n    console.assert(JSON.stringify(candidate([0,2,1,0,3,2,4,3,5,4,6,5,7,6,8,7,9,8,10,9])) === JSON.stringify(438546));\n    console.assert(JSON.stringify(candidate([0,1,2,3,2,3,4,3,4,5])) === JSON.stringify(154));\n    console.assert(JSON.stringify(candidate([5,4,3,2,1,0])) === JSON.stringify(48));\n    console.assert(JSON.stringify(candidate([0, 1, 0, 3, 0, 1, 0, 5, 0, 1, 0, 3, 0, 1, 0, 7, 0, 1, 0, 3, 0, 1])) === JSON.stringify(1543578));\n    console.assert(JSON.stringify(candidate([0,1,2,3,4,3,2,3,4,5])) === JSON.stringify(106));\n    console.assert(JSON.stringify(candidate([20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10])) === JSON.stringify(717916156));\n    console.assert(JSON.stringify(candidate([0,1,2,0,1,2,0,1,2,0,1,2,0,1,2,0,1,2,0,1,2,0,1,2,0,1,2])) === JSON.stringify(57521884));\n    console.assert(JSON.stringify(candidate([0,1,2,3,4,5,6,7,8,9,0,1,2,3,4,5,6,7,8,9])) === JSON.stringify(10258));\n    console.assert(JSON.stringify(candidate([0, 1, 2, 0, 4, 0, 6, 0, 8, 0, 10, 0, 12, 0, 14, 0, 16, 0, 18, 0, 20])) === JSON.stringify(5114));\n    console.assert(JSON.stringify(candidate([0,1,2,0,1,2,0,1,2,0])) === JSON.stringify(438));\n    console.assert(JSON.stringify(candidate([0,1,2,3,4,3,2,1,0,1,2,3,4,3,2,1,0,1,2,3])) === JSON.stringify(123366));\n    console.assert(JSON.stringify(candidate([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20])) === JSON.stringify(20126903));\n    console.assert(JSON.stringify(candidate([5,0,4,1,3,2,0,1,2,3,4,5,0,1,2,3,4,5,0,1,2,3,4,5,0,1,2,3,4,5,0,1,2,3,4,5,0,1,2,3,4,5,0,1,2,3,4,5,0,1,2,3,4,5,0,1,2,3,4,5,0,1,2,3,4,5,0,1,2,3,4,5])) === JSON.stringify(514496163));\n    console.assert(JSON.stringify(candidate([0,0,0,1,0,0,2,0,0,3,0,0,4,0,0,5,0,0,6,0,0,7,0,0,8,0,0,9,0,0,10])) === JSON.stringify(943314207));\n    console.assert(JSON.stringify(candidate([0, 1, 2, 3, 2, 1, 0, 1, 2, 3, 4, 5, 4, 3, 2, 1, 0, 1, 2, 3])) === JSON.stringify(229862));\n    console.assert(JSON.stringify(candidate([0,9,8,7,6,5,4,3,2,1,0,9,8,7,6,5,4,3,2,1])) === JSON.stringify(317428));\n    console.assert(JSON.stringify(candidate([0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 0, 2, 4, 6, 8, 10, 12, 14, 16])) === JSON.stringify(Error: list index out of range));\n    console.assert(JSON.stringify(candidate([0,2,1,0,3,4,5])) === JSON.stringify(60));\n    console.assert(JSON.stringify(candidate([10,0,1,2,3,4,5,6,7,8,9,0,1,2,3,4,5,6,7,8,9])) === JSON.stringify(66670));\n    console.assert(JSON.stringify(candidate([0,2,1,2,0,0,0,3,4,2,5])) === JSON.stringify(1312));\n    console.assert(JSON.stringify(candidate([0, 2, 4, 6, 8, 0, 2, 4, 6, 8])) === JSON.stringify(812));\n    console.assert(JSON.stringify(candidate([0, 1, 0, 3, 2, 1, 0, 7, 6, 5, 4, 3, 2, 1, 0, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0])) === JSON.stringify(89816588));\n    console.assert(JSON.stringify(candidate([0,2,1,0,3,2,1])) === JSON.stringify(80));\n    console.assert(JSON.stringify(candidate([0,2,1,4,3,6,5,8,7,10,9,12,11,14,13,16,15,18,17,20,19,22,21,24,23,25])) === JSON.stringify(2657202));\n    console.assert(JSON.stringify(candidate([0,3,1,0,2,0,3,1,0,2,0,3,1,0,2,0,3,1,0,2,0,3,1,0,2,0,3,1,0,2,0])) === JSON.stringify(558657481));\n    console.assert(JSON.stringify(candidate([0,5,2,4,3,1,6,8,7,9,10,11,12,13,14,15,16,17,18,19])) === JSON.stringify(212));\n    console.assert(JSON.stringify(candidate([0,2,1,2,3,2,1,2,3,4])) === JSON.stringify(430));\n    console.assert(JSON.stringify(candidate([0,1,0,2,0,3,0,4,0,5,0,6,0,7,0,8,0,9,0,10,0,11,0,12,0,13,0,14,0,15,0,16,0,17,0,18,0,19,0,20,0,21,0,22,0,23,0,24,0])) === JSON.stringify(855298880));\n    console.assert(JSON.stringify(candidate([0,2,4,6,8,0,2,4,6,8])) === JSON.stringify(812));\n    console.assert(JSON.stringify(candidate([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20])) === JSON.stringify(40));\n    console.assert(JSON.stringify(candidate([0,2,4,6,8,10,12,14,16,18,0])) === JSON.stringify(Error: list index out of range));\n    console.assert(JSON.stringify(candidate([0,2,1,0,3,2,5,4,7,6,9,8])) === JSON.stringify(788));\n    console.assert(JSON.stringify(candidate([0,2,4,6,8,10,0,2,4,6])) === JSON.stringify(Error: list index out of range));\n    console.assert(JSON.stringify(candidate([0, 1, 1, 1, 1, 1, 1, 1, 1, 1])) === JSON.stringify(512));\n    console.assert(JSON.stringify(candidate([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0])) === JSON.stringify(640520038));\n    console.assert(JSON.stringify(candidate([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0])) === JSON.stringify(147483632));\n    console.assert(JSON.stringify(candidate([0,1,2,0,3,2,5,6,7,8,9,10,0])) === JSON.stringify(220));\n    console.assert(JSON.stringify(candidate([0,0,1,1,2,2,3,3,4,4])) === JSON.stringify(590));\n    console.assert(JSON.stringify(candidate([0,3,2,0,4,5,6,7,8,9,10,11,12,13,14])) === JSON.stringify(38));\n    console.assert(JSON.stringify(candidate([0,3,5,7,9,11,13,15,17,19,21,23,25,27,29,31,33,35,37,39,41,43,45,47,49,51,53,55,57,59])) === JSON.stringify(Error: list index out of range));\n    console.assert(JSON.stringify(candidate([0,1,1,1,1,1,1,1,1,1])) === JSON.stringify(512));\n    console.assert(JSON.stringify(candidate([0,1,0,1,2,3,4,5,6,7])) === JSON.stringify(334));\n}",
+    "golang": "func check(candidate func([]int, int) []int) {\n    assert reflect.DeepEqual(candidate([]int{0,0,2}), 6)\n    assert reflect.DeepEqual(candidate([]int{0,1,2,3,4,5}), 10)\n    assert reflect.DeepEqual(candidate([]int{0,2,1,0,1,2}), 52)\n    assert reflect.DeepEqual(candidate([]int{0,1,1,1,1}), 16)\n    assert reflect.DeepEqual(candidate([]int{0,0,0,0,0,0,0,0,0,0}), 1022)\n    assert reflect.DeepEqual(candidate([]int{0,1,0,1,0,1}), 42)\n    assert reflect.DeepEqual(candidate([]int{9,8,7,6,5,4,3,2,1,0}), 712)\n    assert reflect.DeepEqual(candidate([]int{0,1,2,3,2,1,0,1,2,3}), 230)\n    assert reflect.DeepEqual(candidate([]int{0,1,0,2}), 10)\n    assert reflect.DeepEqual(candidate([]int{0,1,2,0}), 6)\n    assert reflect.DeepEqual(candidate([]int{0,1,1,1,1,1}), 32)\n    assert reflect.DeepEqual(candidate([]int{0,1,1,0,1,1,0}), 72)\n    assert reflect.DeepEqual(candidate([]int{0,1,0,2,1}), 18)\n    assert reflect.DeepEqual(candidate([]int{0,1,0,1,0,1,0,1,0,1}), 682)\n    assert reflect.DeepEqual(candidate([]int{0,1,2,3,4,0}), 10)\n    assert reflect.DeepEqual(candidate([]int{0,2,2,2,2,2}), 20)\n    assert reflect.DeepEqual(candidate([]int{0,1,2,3,4,5,6,7,8,9}), 18)\n    assert reflect.DeepEqual(candidate([]int{0,2,1,0}), 12)\n    assert reflect.DeepEqual(candidate([]int{0,1,1,0,1,2}), 36)\n    assert reflect.DeepEqual(candidate([]int{0,1,1,0}), 8)\n    assert reflect.DeepEqual(candidate([]int{0,2,1,0,1}), 26)\n    assert reflect.DeepEqual(candidate([]int{0,0}), 2)\n    assert reflect.DeepEqual(candidate([]int{0,1,2,3,4,5,6,7,8,9,0,1,2,3,4}), 328)\n    assert reflect.DeepEqual(candidate([]int{0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,0,0,0,0,0}), 670)\n    assert reflect.DeepEqual(candidate([]int{0,2,1,3,2,4,3,5,4,6}), 192)\n    assert reflect.DeepEqual(candidate([]int{0,2,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0}), 579139391)\n    assert reflect.DeepEqual(candidate([]int{0,1,0,3,2,5,4,7,6,9}), 58)\n    assert reflect.DeepEqual(candidate([]int{0, 0, 0, 0, 0, 0, 0, 0, 0, 0}), 1022)\n    assert reflect.DeepEqual(candidate([]int{0,0,2,1,4,3,5,6,7,8,9}), 98)\n    assert reflect.DeepEqual(candidate([]int{0,0,2,0,0,2,0,0,2,0,0,2,0,0,2,0,0,2,0,0}), 599186)\n    assert reflect.DeepEqual(candidate([]int{0,1,1,2,2,2,3,3,3,3}), 358)\n    assert reflect.DeepEqual(candidate([]int{0, 0, 2, 2, 4, 4, 6, 6, 8, 8, 10, 10, 12, 12, 14, 14, 16, 16, 18, 18}), 56)\n    assert reflect.DeepEqual(candidate([]int{0,1,0,3,2,1,0,5,4,3,2,1,0,7,6,5,4,3,2,1,0,9,8,7,6,5,4,3,2,1,0}), 633246732)\n    assert reflect.DeepEqual(candidate([]int{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19}), 38)\n    assert reflect.DeepEqual(candidate([]int{0,2,1,2,3,4,5,4,3,2}), 178)\n    assert reflect.DeepEqual(candidate([]int{0,2,1,3,1,2,4,2,1,3,1,2,4,2,1,3,1,2,4,2,1,3,1,2,4,2,1,3,1,2,4,2,1,3,1,2,4}), 449162187)\n    assert reflect.DeepEqual(candidate([]int{0,0,1,2,3,4,5,6,7,8,9}), 110)\n    assert reflect.DeepEqual(candidate([]int{0, 2, 0, 2, 0, 2, 0, 2, 0, 2, 0, 2, 0, 2, 0, 2, 0, 2, 0, 2}), 786434)\n    assert reflect.DeepEqual(candidate([]int{0,1,2,3,4,5,6,7,8,9,8,7,6,5,4,3,2,1,0}), 2044)\n    assert reflect.DeepEqual(candidate([]int{0,1,0,3,2,1,4,5,2,3,6,7,8,9}), 3802)\n    assert reflect.DeepEqual(candidate([]int{0, 2, 1, 0, 4, 3, 2, 1, 0}), 176)\n    assert reflect.DeepEqual(candidate([]int{0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}), 524288)\n    assert reflect.DeepEqual(candidate([]int{9,0,1,2,3,4,5,6,7,8}), 90)\n    assert reflect.DeepEqual(candidate([]int{0,2,4,6,8,10,12,14,16,18,1,3,5,7,9,11,13,15,17,19}), 562740)\n    assert reflect.DeepEqual(candidate([]int{0,2,1,0,3,2,1,0,4,3,2,1,0}), 4912)\n    assert reflect.DeepEqual(candidate([]int{0,3,5,3,4,2,1,0,7,6,5,4,3,2,1,0}), 11288)\n    assert reflect.DeepEqual(candidate([]int{0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 19}), 262148)\n    assert reflect.DeepEqual(candidate([]int{0,2,1,0,3,2,1,0,4,3,2,1,0,5,4,3,2,1,0,6,5,4,3,2,1,0}), 40131408)\n    assert reflect.DeepEqual(candidate([]int{0,1,0,2,1,0,3,2,1,0,4,3,2,1,0,5,4,3,2,1,0,6,5,4,3,2,1,0,7,6,5,4,3,2,1,0}), 13851577)\n    assert reflect.DeepEqual(candidate([]int{0, 2, 1, 3, 1, 2, 5, 4, 3, 4, 5, 4, 3, 2, 1, 0, 1, 2, 3, 4}), 269566)\n    assert reflect.DeepEqual(candidate([]int{0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0}), 461127067)\n    assert reflect.DeepEqual(candidate([]int{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}), 1048574)\n    assert reflect.DeepEqual(candidate([]int{0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1}), 44739242)\n    assert reflect.DeepEqual(candidate([]int{0,1,0,2,1,0,3,2,1,0}), 556)\n    assert reflect.DeepEqual(candidate([]int{0, 3, 2, 1, 0, 5, 4, 3, 2, 1, 0, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0}), 594736)\n    assert reflect.DeepEqual(candidate([]int{20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0}), 701096)\n    assert reflect.DeepEqual(candidate([]int{0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1}), 786430)\n    assert reflect.DeepEqual(candidate([]int{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}), 1048574)\n    assert reflect.DeepEqual(candidate([]int{0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1}), 699050)\n    assert reflect.DeepEqual(candidate([]int{0,1,2,3,2,1,2,3,4,3,4,5,6,5,6,7,8,7,8,9}), 198234)\n    assert reflect.DeepEqual(candidate([]int{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9}), 10258)\n    assert reflect.DeepEqual(candidate([]int{9, 8, 7, 6, 5, 4, 3, 2, 1, 0}), 712)\n    assert reflect.DeepEqual(candidate([]int{0,2,2,2,2,2,2,2,2,2}), 260)\n    assert reflect.DeepEqual(candidate([]int{0, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0, 11, 12, 13, 14, 15, 16, 17, 18, 19}), 28010)\n    assert reflect.DeepEqual(candidate([]int{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 1, 3, 5, 7, 9, 11, 13, 15, 17, 19}), 41964584)\n    assert reflect.DeepEqual(candidate([]int{0,1,1,2,2,3,3,4,4,5}), 308)\n    assert reflect.DeepEqual(candidate([]int{0,1,2,3,4,5,4,3,2,1,0,1,2,3,4,5,4,3,2,1}), 63550)\n    assert reflect.DeepEqual(candidate([]int{0, 1, 1, 3, 2, 2, 5}), 34)\n    assert reflect.DeepEqual(candidate([]int{20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1}), 311766262)\n    assert reflect.DeepEqual(candidate([]int{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20}), 38954)\n    assert reflect.DeepEqual(candidate([]int{0,1,2,3,4,5,6,7,8,0}), 18)\n    assert reflect.DeepEqual(candidate([]int{0,5,3,1,2,4,6,8,10,0}), Error: list index out of range)\n    assert reflect.DeepEqual(candidate([]int{0,1,0,2,3,2,5,4}), 82)\n    assert reflect.DeepEqual(candidate([]int{0,2,1,0,3,2,4,3,5,4,6,5,7,6,8,7,9,8,10,9}), 438546)\n    assert reflect.DeepEqual(candidate([]int{0,1,2,3,2,3,4,3,4,5}), 154)\n    assert reflect.DeepEqual(candidate([]int{5,4,3,2,1,0}), 48)\n    assert reflect.DeepEqual(candidate([]int{0, 1, 0, 3, 0, 1, 0, 5, 0, 1, 0, 3, 0, 1, 0, 7, 0, 1, 0, 3, 0, 1}), 1543578)\n    assert reflect.DeepEqual(candidate([]int{0,1,2,3,4,3,2,3,4,5}), 106)\n    assert reflect.DeepEqual(candidate([]int{20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10}), 717916156)\n    assert reflect.DeepEqual(candidate([]int{0,1,2,0,1,2,0,1,2,0,1,2,0,1,2,0,1,2,0,1,2,0,1,2,0,1,2}), 57521884)\n    assert reflect.DeepEqual(candidate([]int{0,1,2,3,4,5,6,7,8,9,0,1,2,3,4,5,6,7,8,9}), 10258)\n    assert reflect.DeepEqual(candidate([]int{0, 1, 2, 0, 4, 0, 6, 0, 8, 0, 10, 0, 12, 0, 14, 0, 16, 0, 18, 0, 20}), 5114)\n    assert reflect.DeepEqual(candidate([]int{0,1,2,0,1,2,0,1,2,0}), 438)\n    assert reflect.DeepEqual(candidate([]int{0,1,2,3,4,3,2,1,0,1,2,3,4,3,2,1,0,1,2,3}), 123366)\n    assert reflect.DeepEqual(candidate([]int{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20}), 20126903)\n    assert reflect.DeepEqual(candidate([]int{5,0,4,1,3,2,0,1,2,3,4,5,0,1,2,3,4,5,0,1,2,3,4,5,0,1,2,3,4,5,0,1,2,3,4,5,0,1,2,3,4,5,0,1,2,3,4,5,0,1,2,3,4,5,0,1,2,3,4,5,0,1,2,3,4,5,0,1,2,3,4,5}), 514496163)\n    assert reflect.DeepEqual(candidate([]int{0,0,0,1,0,0,2,0,0,3,0,0,4,0,0,5,0,0,6,0,0,7,0,0,8,0,0,9,0,0,10}), 943314207)\n    assert reflect.DeepEqual(candidate([]int{0, 1, 2, 3, 2, 1, 0, 1, 2, 3, 4, 5, 4, 3, 2, 1, 0, 1, 2, 3}), 229862)\n    assert reflect.DeepEqual(candidate([]int{0,9,8,7,6,5,4,3,2,1,0,9,8,7,6,5,4,3,2,1}), 317428)\n    assert reflect.DeepEqual(candidate([]int{0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 0, 2, 4, 6, 8, 10, 12, 14, 16}), Error: list index out of range)\n    assert reflect.DeepEqual(candidate([]int{0,2,1,0,3,4,5}), 60)\n    assert reflect.DeepEqual(candidate([]int{10,0,1,2,3,4,5,6,7,8,9,0,1,2,3,4,5,6,7,8,9}), 66670)\n    assert reflect.DeepEqual(candidate([]int{0,2,1,2,0,0,0,3,4,2,5}), 1312)\n    assert reflect.DeepEqual(candidate([]int{0, 2, 4, 6, 8, 0, 2, 4, 6, 8}), 812)\n    assert reflect.DeepEqual(candidate([]int{0, 1, 0, 3, 2, 1, 0, 7, 6, 5, 4, 3, 2, 1, 0, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0}), 89816588)\n    assert reflect.DeepEqual(candidate([]int{0,2,1,0,3,2,1}), 80)\n    assert reflect.DeepEqual(candidate([]int{0,2,1,4,3,6,5,8,7,10,9,12,11,14,13,16,15,18,17,20,19,22,21,24,23,25}), 2657202)\n    assert reflect.DeepEqual(candidate([]int{0,3,1,0,2,0,3,1,0,2,0,3,1,0,2,0,3,1,0,2,0,3,1,0,2,0,3,1,0,2,0}), 558657481)\n    assert reflect.DeepEqual(candidate([]int{0,5,2,4,3,1,6,8,7,9,10,11,12,13,14,15,16,17,18,19}), 212)\n    assert reflect.DeepEqual(candidate([]int{0,2,1,2,3,2,1,2,3,4}), 430)\n    assert reflect.DeepEqual(candidate([]int{0,1,0,2,0,3,0,4,0,5,0,6,0,7,0,8,0,9,0,10,0,11,0,12,0,13,0,14,0,15,0,16,0,17,0,18,0,19,0,20,0,21,0,22,0,23,0,24,0}), 855298880)\n    assert reflect.DeepEqual(candidate([]int{0,2,4,6,8,0,2,4,6,8}), 812)\n    assert reflect.DeepEqual(candidate([]int{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20}), 40)\n    assert reflect.DeepEqual(candidate([]int{0,2,4,6,8,10,12,14,16,18,0}), Error: list index out of range)\n    assert reflect.DeepEqual(candidate([]int{0,2,1,0,3,2,5,4,7,6,9,8}), 788)\n    assert reflect.DeepEqual(candidate([]int{0,2,4,6,8,10,0,2,4,6}), Error: list index out of range)\n    assert reflect.DeepEqual(candidate([]int{0, 1, 1, 1, 1, 1, 1, 1, 1, 1}), 512)\n    assert reflect.DeepEqual(candidate([]int{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}), 640520038)\n    assert reflect.DeepEqual(candidate([]int{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}), 147483632)\n    assert reflect.DeepEqual(candidate([]int{0,1,2,0,3,2,5,6,7,8,9,10,0}), 220)\n    assert reflect.DeepEqual(candidate([]int{0,0,1,1,2,2,3,3,4,4}), 590)\n    assert reflect.DeepEqual(candidate([]int{0,3,2,0,4,5,6,7,8,9,10,11,12,13,14}), 38)\n    assert reflect.DeepEqual(candidate([]int{0,3,5,7,9,11,13,15,17,19,21,23,25,27,29,31,33,35,37,39,41,43,45,47,49,51,53,55,57,59}), Error: list index out of range)\n    assert reflect.DeepEqual(candidate([]int{0,1,1,1,1,1,1,1,1,1}), 512)\n    assert reflect.DeepEqual(candidate([]int{0,1,0,1,2,3,4,5,6,7}), 334)\n}",
+    "rust": "fn check(candidate: fn(Vec<i32>, i32) -> Vec<i32>) {\n    assert_eq!(candidate(vec![0,0,2]), 6);\n    assert_eq!(candidate(vec![0,1,2,3,4,5]), 10);\n    assert_eq!(candidate(vec![0,2,1,0,1,2]), 52);\n    assert_eq!(candidate(vec![0,1,1,1,1]), 16);\n    assert_eq!(candidate(vec![0,0,0,0,0,0,0,0,0,0]), 1022);\n    assert_eq!(candidate(vec![0,1,0,1,0,1]), 42);\n    assert_eq!(candidate(vec![9,8,7,6,5,4,3,2,1,0]), 712);\n    assert_eq!(candidate(vec![0,1,2,3,2,1,0,1,2,3]), 230);\n    assert_eq!(candidate(vec![0,1,0,2]), 10);\n    assert_eq!(candidate(vec![0,1,2,0]), 6);\n    assert_eq!(candidate(vec![0,1,1,1,1,1]), 32);\n    assert_eq!(candidate(vec![0,1,1,0,1,1,0]), 72);\n    assert_eq!(candidate(vec![0,1,0,2,1]), 18);\n    assert_eq!(candidate(vec![0,1,0,1,0,1,0,1,0,1]), 682);\n    assert_eq!(candidate(vec![0,1,2,3,4,0]), 10);\n    assert_eq!(candidate(vec![0,2,2,2,2,2]), 20);\n    assert_eq!(candidate(vec![0,1,2,3,4,5,6,7,8,9]), 18);\n    assert_eq!(candidate(vec![0,2,1,0]), 12);\n    assert_eq!(candidate(vec![0,1,1,0,1,2]), 36);\n    assert_eq!(candidate(vec![0,1,1,0]), 8);\n    assert_eq!(candidate(vec![0,2,1,0,1]), 26);\n    assert_eq!(candidate(vec![0,0]), 2);\n    assert_eq!(candidate(vec![0,1,2,3,4,5,6,7,8,9,0,1,2,3,4]), 328);\n    assert_eq!(candidate(vec![0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,0,0,0,0,0]), 670);\n    assert_eq!(candidate(vec![0,2,1,3,2,4,3,5,4,6]), 192);\n    assert_eq!(candidate(vec![0,2,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0]), 579139391);\n    assert_eq!(candidate(vec![0,1,0,3,2,5,4,7,6,9]), 58);\n    assert_eq!(candidate(vec![0, 0, 0, 0, 0, 0, 0, 0, 0, 0]), 1022);\n    assert_eq!(candidate(vec![0,0,2,1,4,3,5,6,7,8,9]), 98);\n    assert_eq!(candidate(vec![0,0,2,0,0,2,0,0,2,0,0,2,0,0,2,0,0,2,0,0]), 599186);\n    assert_eq!(candidate(vec![0,1,1,2,2,2,3,3,3,3]), 358);\n    assert_eq!(candidate(vec![0, 0, 2, 2, 4, 4, 6, 6, 8, 8, 10, 10, 12, 12, 14, 14, 16, 16, 18, 18]), 56);\n    assert_eq!(candidate(vec![0,1,0,3,2,1,0,5,4,3,2,1,0,7,6,5,4,3,2,1,0,9,8,7,6,5,4,3,2,1,0]), 633246732);\n    assert_eq!(candidate(vec![0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19]), 38);\n    assert_eq!(candidate(vec![0,2,1,2,3,4,5,4,3,2]), 178);\n    assert_eq!(candidate(vec![0,2,1,3,1,2,4,2,1,3,1,2,4,2,1,3,1,2,4,2,1,3,1,2,4,2,1,3,1,2,4,2,1,3,1,2,4]), 449162187);\n    assert_eq!(candidate(vec![0,0,1,2,3,4,5,6,7,8,9]), 110);\n    assert_eq!(candidate(vec![0, 2, 0, 2, 0, 2, 0, 2, 0, 2, 0, 2, 0, 2, 0, 2, 0, 2, 0, 2]), 786434);\n    assert_eq!(candidate(vec![0,1,2,3,4,5,6,7,8,9,8,7,6,5,4,3,2,1,0]), 2044);\n    assert_eq!(candidate(vec![0,1,0,3,2,1,4,5,2,3,6,7,8,9]), 3802);\n    assert_eq!(candidate(vec![0, 2, 1, 0, 4, 3, 2, 1, 0]), 176);\n    assert_eq!(candidate(vec![0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]), 524288);\n    assert_eq!(candidate(vec![9,0,1,2,3,4,5,6,7,8]), 90);\n    assert_eq!(candidate(vec![0,2,4,6,8,10,12,14,16,18,1,3,5,7,9,11,13,15,17,19]), 562740);\n    assert_eq!(candidate(vec![0,2,1,0,3,2,1,0,4,3,2,1,0]), 4912);\n    assert_eq!(candidate(vec![0,3,5,3,4,2,1,0,7,6,5,4,3,2,1,0]), 11288);\n    assert_eq!(candidate(vec![0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 19]), 262148);\n    assert_eq!(candidate(vec![0,2,1,0,3,2,1,0,4,3,2,1,0,5,4,3,2,1,0,6,5,4,3,2,1,0]), 40131408);\n    assert_eq!(candidate(vec![0,1,0,2,1,0,3,2,1,0,4,3,2,1,0,5,4,3,2,1,0,6,5,4,3,2,1,0,7,6,5,4,3,2,1,0]), 13851577);\n    assert_eq!(candidate(vec![0, 2, 1, 3, 1, 2, 5, 4, 3, 4, 5, 4, 3, 2, 1, 0, 1, 2, 3, 4]), 269566);\n    assert_eq!(candidate(vec![0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0]), 461127067);\n    assert_eq!(candidate(vec![0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]), 1048574);\n    assert_eq!(candidate(vec![0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1]), 44739242);\n    assert_eq!(candidate(vec![0,1,0,2,1,0,3,2,1,0]), 556);\n    assert_eq!(candidate(vec![0, 3, 2, 1, 0, 5, 4, 3, 2, 1, 0, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0]), 594736);\n    assert_eq!(candidate(vec![20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0]), 701096);\n    assert_eq!(candidate(vec![0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1]), 786430);\n    assert_eq!(candidate(vec![0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]), 1048574);\n    assert_eq!(candidate(vec![0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1]), 699050);\n    assert_eq!(candidate(vec![0,1,2,3,2,1,2,3,4,3,4,5,6,5,6,7,8,7,8,9]), 198234);\n    assert_eq!(candidate(vec![0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9]), 10258);\n    assert_eq!(candidate(vec![9, 8, 7, 6, 5, 4, 3, 2, 1, 0]), 712);\n    assert_eq!(candidate(vec![0,2,2,2,2,2,2,2,2,2]), 260);\n    assert_eq!(candidate(vec![0, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0, 11, 12, 13, 14, 15, 16, 17, 18, 19]), 28010);\n    assert_eq!(candidate(vec![0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 1, 3, 5, 7, 9, 11, 13, 15, 17, 19]), 41964584);\n    assert_eq!(candidate(vec![0,1,1,2,2,3,3,4,4,5]), 308);\n    assert_eq!(candidate(vec![0,1,2,3,4,5,4,3,2,1,0,1,2,3,4,5,4,3,2,1]), 63550);\n    assert_eq!(candidate(vec![0, 1, 1, 3, 2, 2, 5]), 34);\n    assert_eq!(candidate(vec![20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1]), 311766262);\n    assert_eq!(candidate(vec![0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20]), 38954);\n    assert_eq!(candidate(vec![0,1,2,3,4,5,6,7,8,0]), 18);\n    assert_eq!(candidate(vec![0,5,3,1,2,4,6,8,10,0]), Error: list index out of range);\n    assert_eq!(candidate(vec![0,1,0,2,3,2,5,4]), 82);\n    assert_eq!(candidate(vec![0,2,1,0,3,2,4,3,5,4,6,5,7,6,8,7,9,8,10,9]), 438546);\n    assert_eq!(candidate(vec![0,1,2,3,2,3,4,3,4,5]), 154);\n    assert_eq!(candidate(vec![5,4,3,2,1,0]), 48);\n    assert_eq!(candidate(vec![0, 1, 0, 3, 0, 1, 0, 5, 0, 1, 0, 3, 0, 1, 0, 7, 0, 1, 0, 3, 0, 1]), 1543578);\n    assert_eq!(candidate(vec![0,1,2,3,4,3,2,3,4,5]), 106);\n    assert_eq!(candidate(vec![20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]), 717916156);\n    assert_eq!(candidate(vec![0,1,2,0,1,2,0,1,2,0,1,2,0,1,2,0,1,2,0,1,2,0,1,2,0,1,2]), 57521884);\n    assert_eq!(candidate(vec![0,1,2,3,4,5,6,7,8,9,0,1,2,3,4,5,6,7,8,9]), 10258);\n    assert_eq!(candidate(vec![0, 1, 2, 0, 4, 0, 6, 0, 8, 0, 10, 0, 12, 0, 14, 0, 16, 0, 18, 0, 20]), 5114);\n    assert_eq!(candidate(vec![0,1,2,0,1,2,0,1,2,0]), 438);\n    assert_eq!(candidate(vec![0,1,2,3,4,3,2,1,0,1,2,3,4,3,2,1,0,1,2,3]), 123366);\n    assert_eq!(candidate(vec![0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]), 20126903);\n    assert_eq!(candidate(vec![5,0,4,1,3,2,0,1,2,3,4,5,0,1,2,3,4,5,0,1,2,3,4,5,0,1,2,3,4,5,0,1,2,3,4,5,0,1,2,3,4,5,0,1,2,3,4,5,0,1,2,3,4,5,0,1,2,3,4,5,0,1,2,3,4,5,0,1,2,3,4,5]), 514496163);\n    assert_eq!(candidate(vec![0,0,0,1,0,0,2,0,0,3,0,0,4,0,0,5,0,0,6,0,0,7,0,0,8,0,0,9,0,0,10]), 943314207);\n    assert_eq!(candidate(vec![0, 1, 2, 3, 2, 1, 0, 1, 2, 3, 4, 5, 4, 3, 2, 1, 0, 1, 2, 3]), 229862);\n    assert_eq!(candidate(vec![0,9,8,7,6,5,4,3,2,1,0,9,8,7,6,5,4,3,2,1]), 317428);\n    assert_eq!(candidate(vec![0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 0, 2, 4, 6, 8, 10, 12, 14, 16]), Error: list index out of range);\n    assert_eq!(candidate(vec![0,2,1,0,3,4,5]), 60);\n    assert_eq!(candidate(vec![10,0,1,2,3,4,5,6,7,8,9,0,1,2,3,4,5,6,7,8,9]), 66670);\n    assert_eq!(candidate(vec![0,2,1,2,0,0,0,3,4,2,5]), 1312);\n    assert_eq!(candidate(vec![0, 2, 4, 6, 8, 0, 2, 4, 6, 8]), 812);\n    assert_eq!(candidate(vec![0, 1, 0, 3, 2, 1, 0, 7, 6, 5, 4, 3, 2, 1, 0, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0]), 89816588);\n    assert_eq!(candidate(vec![0,2,1,0,3,2,1]), 80);\n    assert_eq!(candidate(vec![0,2,1,4,3,6,5,8,7,10,9,12,11,14,13,16,15,18,17,20,19,22,21,24,23,25]), 2657202);\n    assert_eq!(candidate(vec![0,3,1,0,2,0,3,1,0,2,0,3,1,0,2,0,3,1,0,2,0,3,1,0,2,0,3,1,0,2,0]), 558657481);\n    assert_eq!(candidate(vec![0,5,2,4,3,1,6,8,7,9,10,11,12,13,14,15,16,17,18,19]), 212);\n    assert_eq!(candidate(vec![0,2,1,2,3,2,1,2,3,4]), 430);\n    assert_eq!(candidate(vec![0,1,0,2,0,3,0,4,0,5,0,6,0,7,0,8,0,9,0,10,0,11,0,12,0,13,0,14,0,15,0,16,0,17,0,18,0,19,0,20,0,21,0,22,0,23,0,24,0]), 855298880);\n    assert_eq!(candidate(vec![0,2,4,6,8,0,2,4,6,8]), 812);\n    assert_eq!(candidate(vec![0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]), 40);\n    assert_eq!(candidate(vec![0,2,4,6,8,10,12,14,16,18,0]), Error: list index out of range);\n    assert_eq!(candidate(vec![0,2,1,0,3,2,5,4,7,6,9,8]), 788);\n    assert_eq!(candidate(vec![0,2,4,6,8,10,0,2,4,6]), Error: list index out of range);\n    assert_eq!(candidate(vec![0, 1, 1, 1, 1, 1, 1, 1, 1, 1]), 512);\n    assert_eq!(candidate(vec![0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]), 640520038);\n    assert_eq!(candidate(vec![0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]), 147483632);\n    assert_eq!(candidate(vec![0,1,2,0,3,2,5,6,7,8,9,10,0]), 220);\n    assert_eq!(candidate(vec![0,0,1,1,2,2,3,3,4,4]), 590);\n    assert_eq!(candidate(vec![0,3,2,0,4,5,6,7,8,9,10,11,12,13,14]), 38);\n    assert_eq!(candidate(vec![0,3,5,7,9,11,13,15,17,19,21,23,25,27,29,31,33,35,37,39,41,43,45,47,49,51,53,55,57,59]), Error: list index out of range);\n    assert_eq!(candidate(vec![0,1,1,1,1,1,1,1,1,1]), 512);\n    assert_eq!(candidate(vec![0,1,0,1,2,3,4,5,6,7]), 334);\n}"
+  },
+  "test_cases": [
+    {
+      "input": "nextVisit = [0,0,2]",
+      "output": "6"
+    },
+    {
+      "input": "nextVisit = [0,1,2,3,4,5]",
+      "output": "10"
+    },
+    {
+      "input": "nextVisit = [0,2,1,0,1,2]",
+      "output": "52"
+    },
+    {
+      "input": "nextVisit = [0,1,1,1,1]",
+      "output": "16"
+    },
+    {
+      "input": "nextVisit = [0,0,0,0,0,0,0,0,0,0]",
+      "output": "1022"
+    },
+    {
+      "input": "nextVisit = [0,1,0,1,0,1]",
+      "output": "42"
+    },
+    {
+      "input": "nextVisit = [9,8,7,6,5,4,3,2,1,0]",
+      "output": "712"
+    },
+    {
+      "input": "nextVisit = [0,1,2,3,2,1,0,1,2,3]",
+      "output": "230"
+    },
+    {
+      "input": "nextVisit = [0,1,0,2]",
+      "output": "10"
+    },
+    {
+      "input": "nextVisit = [0,1,2,0]",
+      "output": "6"
+    },
+    {
+      "input": "nextVisit = [0,1,1,1,1,1]",
+      "output": "32"
+    },
+    {
+      "input": "nextVisit = [0,1,1,0,1,1,0]",
+      "output": "72"
+    },
+    {
+      "input": "nextVisit = [0,1,0,2,1]",
+      "output": "18"
+    },
+    {
+      "input": "nextVisit = [0,1,0,1,0,1,0,1,0,1]",
+      "output": "682"
+    },
+    {
+      "input": "nextVisit = [0,1,2,3,4,0]",
+      "output": "10"
+    },
+    {
+      "input": "nextVisit = [0,2,2,2,2,2]",
+      "output": "20"
+    },
+    {
+      "input": "nextVisit = [0,1,2,3,4,5,6,7,8,9]",
+      "output": "18"
+    },
+    {
+      "input": "nextVisit = [0,2,1,0]",
+      "output": "12"
+    },
+    {
+      "input": "nextVisit = [0,1,1,0,1,2]",
+      "output": "36"
+    },
+    {
+      "input": "nextVisit = [0,1,1,0]",
+      "output": "8"
+    },
+    {
+      "input": "nextVisit = [0,2,1,0,1]",
+      "output": "26"
+    },
+    {
+      "input": "nextVisit = [0,0]",
+      "output": "2"
+    },
+    {
+      "input": "nextVisit = [0,1,2,3,4,5,6,7,8,9,0,1,2,3,4]",
+      "output": "328"
+    },
+    {
+      "input": "nextVisit = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,0,0,0,0,0]",
+      "output": "670"
+    },
+    {
+      "input": "nextVisit = [0,2,1,3,2,4,3,5,4,6]",
+      "output": "192"
+    },
+    {
+      "input": "nextVisit = [0,2,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0]",
+      "output": "579139391"
+    },
+    {
+      "input": "nextVisit = [0,1,0,3,2,5,4,7,6,9]",
+      "output": "58"
+    },
+    {
+      "input": "nextVisit = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]",
+      "output": "1022"
+    },
+    {
+      "input": "nextVisit = [0,0,2,1,4,3,5,6,7,8,9]",
+      "output": "98"
+    },
+    {
+      "input": "nextVisit = [0,0,2,0,0,2,0,0,2,0,0,2,0,0,2,0,0,2,0,0]",
+      "output": "599186"
+    },
+    {
+      "input": "nextVisit = [0,1,1,2,2,2,3,3,3,3]",
+      "output": "358"
+    },
+    {
+      "input": "nextVisit = [0, 0, 2, 2, 4, 4, 6, 6, 8, 8, 10, 10, 12, 12, 14, 14, 16, 16, 18, 18]",
+      "output": "56"
+    },
+    {
+      "input": "nextVisit = [0,1,0,3,2,1,0,5,4,3,2,1,0,7,6,5,4,3,2,1,0,9,8,7,6,5,4,3,2,1,0]",
+      "output": "633246732"
+    },
+    {
+      "input": "nextVisit = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19]",
+      "output": "38"
+    },
+    {
+      "input": "nextVisit = [0,2,1,2,3,4,5,4,3,2]",
+      "output": "178"
+    },
+    {
+      "input": "nextVisit = [0,2,1,3,1,2,4,2,1,3,1,2,4,2,1,3,1,2,4,2,1,3,1,2,4,2,1,3,1,2,4,2,1,3,1,2,4]",
+      "output": "449162187"
+    },
+    {
+      "input": "nextVisit = [0,0,1,2,3,4,5,6,7,8,9]",
+      "output": "110"
+    },
+    {
+      "input": "nextVisit = [0, 2, 0, 2, 0, 2, 0, 2, 0, 2, 0, 2, 0, 2, 0, 2, 0, 2, 0, 2]",
+      "output": "786434"
+    },
+    {
+      "input": "nextVisit = [0,1,2,3,4,5,6,7,8,9,8,7,6,5,4,3,2,1,0]",
+      "output": "2044"
+    },
+    {
+      "input": "nextVisit = [0,1,0,3,2,1,4,5,2,3,6,7,8,9]",
+      "output": "3802"
+    },
+    {
+      "input": "nextVisit = [0, 2, 1, 0, 4, 3, 2, 1, 0]",
+      "output": "176"
+    },
+    {
+      "input": "nextVisit = [0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]",
+      "output": "524288"
+    },
+    {
+      "input": "nextVisit = [9,0,1,2,3,4,5,6,7,8]",
+      "output": "90"
+    },
+    {
+      "input": "nextVisit = [0,2,4,6,8,10,12,14,16,18,1,3,5,7,9,11,13,15,17,19]",
+      "output": "562740"
+    },
+    {
+      "input": "nextVisit = [0,2,1,0,3,2,1,0,4,3,2,1,0]",
+      "output": "4912"
+    },
+    {
+      "input": "nextVisit = [0,3,5,3,4,2,1,0,7,6,5,4,3,2,1,0]",
+      "output": "11288"
+    },
+    {
+      "input": "nextVisit = [0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 19]",
+      "output": "262148"
+    },
+    {
+      "input": "nextVisit = [0,2,1,0,3,2,1,0,4,3,2,1,0,5,4,3,2,1,0,6,5,4,3,2,1,0]",
+      "output": "40131408"
+    },
+    {
+      "input": "nextVisit = [0,1,0,2,1,0,3,2,1,0,4,3,2,1,0,5,4,3,2,1,0,6,5,4,3,2,1,0,7,6,5,4,3,2,1,0]",
+      "output": "13851577"
+    },
+    {
+      "input": "nextVisit = [0, 2, 1, 3, 1, 2, 5, 4, 3, 4, 5, 4, 3, 2, 1, 0, 1, 2, 3, 4]",
+      "output": "269566"
+    },
+    {
+      "input": "nextVisit = [0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0]",
+      "output": "461127067"
+    },
+    {
+      "input": "nextVisit = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]",
+      "output": "1048574"
+    },
+    {
+      "input": "nextVisit = [0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1]",
+      "output": "44739242"
+    },
+    {
+      "input": "nextVisit = [0,1,0,2,1,0,3,2,1,0]",
+      "output": "556"
+    },
+    {
+      "input": "nextVisit = [0, 3, 2, 1, 0, 5, 4, 3, 2, 1, 0, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0]",
+      "output": "594736"
+    },
+    {
+      "input": "nextVisit = [20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0]",
+      "output": "701096"
+    },
+    {
+      "input": "nextVisit = [0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1]",
+      "output": "786430"
+    },
+    {
+      "input": "nextVisit = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]",
+      "output": "1048574"
+    },
+    {
+      "input": "nextVisit = [0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1]",
+      "output": "699050"
+    },
+    {
+      "input": "nextVisit = [0,1,2,3,2,1,2,3,4,3,4,5,6,5,6,7,8,7,8,9]",
+      "output": "198234"
+    },
+    {
+      "input": "nextVisit = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9]",
+      "output": "10258"
+    },
+    {
+      "input": "nextVisit = [9, 8, 7, 6, 5, 4, 3, 2, 1, 0]",
+      "output": "712"
+    },
+    {
+      "input": "nextVisit = [0,2,2,2,2,2,2,2,2,2]",
+      "output": "260"
+    },
+    {
+      "input": "nextVisit = [0, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0, 11, 12, 13, 14, 15, 16, 17, 18, 19]",
+      "output": "28010"
+    },
+    {
+      "input": "nextVisit = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 1, 3, 5, 7, 9, 11, 13, 15, 17, 19]",
+      "output": "41964584"
+    },
+    {
+      "input": "nextVisit = [0,1,1,2,2,3,3,4,4,5]",
+      "output": "308"
+    },
+    {
+      "input": "nextVisit = [0,1,2,3,4,5,4,3,2,1,0,1,2,3,4,5,4,3,2,1]",
+      "output": "63550"
+    },
+    {
+      "input": "nextVisit = [0, 1, 1, 3, 2, 2, 5]",
+      "output": "34"
+    },
+    {
+      "input": "nextVisit = [20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1]",
+      "output": "311766262"
+    },
+    {
+      "input": "nextVisit = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20]",
+      "output": "38954"
+    },
+    {
+      "input": "nextVisit = [0,1,2,3,4,5,6,7,8,0]",
+      "output": "18"
+    },
+    {
+      "input": "nextVisit = [0,5,3,1,2,4,6,8,10,0]",
+      "output": "Error: list index out of range"
+    },
+    {
+      "input": "nextVisit = [0,1,0,2,3,2,5,4]",
+      "output": "82"
+    },
+    {
+      "input": "nextVisit = [0,2,1,0,3,2,4,3,5,4,6,5,7,6,8,7,9,8,10,9]",
+      "output": "438546"
+    },
+    {
+      "input": "nextVisit = [0,1,2,3,2,3,4,3,4,5]",
+      "output": "154"
+    },
+    {
+      "input": "nextVisit = [5,4,3,2,1,0]",
+      "output": "48"
+    },
+    {
+      "input": "nextVisit = [0, 1, 0, 3, 0, 1, 0, 5, 0, 1, 0, 3, 0, 1, 0, 7, 0, 1, 0, 3, 0, 1]",
+      "output": "1543578"
+    },
+    {
+      "input": "nextVisit = [0,1,2,3,4,3,2,3,4,5]",
+      "output": "106"
+    },
+    {
+      "input": "nextVisit = [20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]",
+      "output": "717916156"
+    },
+    {
+      "input": "nextVisit = [0,1,2,0,1,2,0,1,2,0,1,2,0,1,2,0,1,2,0,1,2,0,1,2,0,1,2]",
+      "output": "57521884"
+    },
+    {
+      "input": "nextVisit = [0,1,2,3,4,5,6,7,8,9,0,1,2,3,4,5,6,7,8,9]",
+      "output": "10258"
+    },
+    {
+      "input": "nextVisit = [0, 1, 2, 0, 4, 0, 6, 0, 8, 0, 10, 0, 12, 0, 14, 0, 16, 0, 18, 0, 20]",
+      "output": "5114"
+    },
+    {
+      "input": "nextVisit = [0,1,2,0,1,2,0,1,2,0]",
+      "output": "438"
+    },
+    {
+      "input": "nextVisit = [0,1,2,3,4,3,2,1,0,1,2,3,4,3,2,1,0,1,2,3]",
+      "output": "123366"
+    },
+    {
+      "input": "nextVisit = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]",
+      "output": "20126903"
+    },
+    {
+      "input": "nextVisit = [5,0,4,1,3,2,0,1,2,3,4,5,0,1,2,3,4,5,0,1,2,3,4,5,0,1,2,3,4,5,0,1,2,3,4,5,0,1,2,3,4,5,0,1,2,3,4,5,0,1,2,3,4,5,0,1,2,3,4,5,0,1,2,3,4,5,0,1,2,3,4,5]",
+      "output": "514496163"
+    },
+    {
+      "input": "nextVisit = [0,0,0,1,0,0,2,0,0,3,0,0,4,0,0,5,0,0,6,0,0,7,0,0,8,0,0,9,0,0,10]",
+      "output": "943314207"
+    },
+    {
+      "input": "nextVisit = [0, 1, 2, 3, 2, 1, 0, 1, 2, 3, 4, 5, 4, 3, 2, 1, 0, 1, 2, 3]",
+      "output": "229862"
+    },
+    {
+      "input": "nextVisit = [0,9,8,7,6,5,4,3,2,1,0,9,8,7,6,5,4,3,2,1]",
+      "output": "317428"
+    },
+    {
+      "input": "nextVisit = [0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 0, 2, 4, 6, 8, 10, 12, 14, 16]",
+      "output": "Error: list index out of range"
+    },
+    {
+      "input": "nextVisit = [0,2,1,0,3,4,5]",
+      "output": "60"
+    },
+    {
+      "input": "nextVisit = [10,0,1,2,3,4,5,6,7,8,9,0,1,2,3,4,5,6,7,8,9]",
+      "output": "66670"
+    },
+    {
+      "input": "nextVisit = [0,2,1,2,0,0,0,3,4,2,5]",
+      "output": "1312"
+    },
+    {
+      "input": "nextVisit = [0, 2, 4, 6, 8, 0, 2, 4, 6, 8]",
+      "output": "812"
+    },
+    {
+      "input": "nextVisit = [0, 1, 0, 3, 2, 1, 0, 7, 6, 5, 4, 3, 2, 1, 0, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0]",
+      "output": "89816588"
+    },
+    {
+      "input": "nextVisit = [0,2,1,0,3,2,1]",
+      "output": "80"
+    },
+    {
+      "input": "nextVisit = [0,2,1,4,3,6,5,8,7,10,9,12,11,14,13,16,15,18,17,20,19,22,21,24,23,25]",
+      "output": "2657202"
+    },
+    {
+      "input": "nextVisit = [0,3,1,0,2,0,3,1,0,2,0,3,1,0,2,0,3,1,0,2,0,3,1,0,2,0,3,1,0,2,0]",
+      "output": "558657481"
+    },
+    {
+      "input": "nextVisit = [0,5,2,4,3,1,6,8,7,9,10,11,12,13,14,15,16,17,18,19]",
+      "output": "212"
+    },
+    {
+      "input": "nextVisit = [0,2,1,2,3,2,1,2,3,4]",
+      "output": "430"
+    },
+    {
+      "input": "nextVisit = [0,1,0,2,0,3,0,4,0,5,0,6,0,7,0,8,0,9,0,10,0,11,0,12,0,13,0,14,0,15,0,16,0,17,0,18,0,19,0,20,0,21,0,22,0,23,0,24,0]",
+      "output": "855298880"
+    },
+    {
+      "input": "nextVisit = [0,2,4,6,8,0,2,4,6,8]",
+      "output": "812"
+    },
+    {
+      "input": "nextVisit = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]",
+      "output": "40"
+    },
+    {
+      "input": "nextVisit = [0,2,4,6,8,10,12,14,16,18,0]",
+      "output": "Error: list index out of range"
+    },
+    {
+      "input": "nextVisit = [0,2,1,0,3,2,5,4,7,6,9,8]",
+      "output": "788"
+    },
+    {
+      "input": "nextVisit = [0,2,4,6,8,10,0,2,4,6]",
+      "output": "Error: list index out of range"
+    },
+    {
+      "input": "nextVisit = [0, 1, 1, 1, 1, 1, 1, 1, 1, 1]",
+      "output": "512"
+    },
+    {
+      "input": "nextVisit = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]",
+      "output": "640520038"
+    },
+    {
+      "input": "nextVisit = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]",
+      "output": "147483632"
+    },
+    {
+      "input": "nextVisit = [0,1,2,0,3,2,5,6,7,8,9,10,0]",
+      "output": "220"
+    },
+    {
+      "input": "nextVisit = [0,0,1,1,2,2,3,3,4,4]",
+      "output": "590"
+    },
+    {
+      "input": "nextVisit = [0,3,2,0,4,5,6,7,8,9,10,11,12,13,14]",
+      "output": "38"
+    },
+    {
+      "input": "nextVisit = [0,3,5,7,9,11,13,15,17,19,21,23,25,27,29,31,33,35,37,39,41,43,45,47,49,51,53,55,57,59]",
+      "output": "Error: list index out of range"
+    },
+    {
+      "input": "nextVisit = [0,1,1,1,1,1,1,1,1,1]",
+      "output": "512"
+    },
+    {
+      "input": "nextVisit = [0,1,0,1,2,3,4,5,6,7]",
+      "output": "334"
+    }
+  ],
+  "types": {
+    "python3": {
+      "input": [
+        {
+          "nextVisit": "List[int]"
+        }
+      ],
+      "output": "int"
+    },
+    "cpp": {
+      "input": [
+        {
+          "nextVisit": "vector<int>&"
+        }
+      ],
+      "output": "int"
+    },
+    "java": {
+      "input": [
+        {
+          "nextVisit": "int[]"
+        }
+      ],
+      "output": "int"
+    },
+    "javascript": {
+      "input": [
+        {
+          "nextVisit": "number[]"
+        }
+      ],
+      "output": "number"
+    },
+    "typescript": {
+      "input": [
+        {
+          "nextVisit": "number[]"
+        }
+      ],
+      "output": "number"
+    },
+    "golang": {
+      "input": [
+        {
+          "nextVisit": "[]int"
+        }
+      ],
+      "output": "int"
+    },
+    "rust": {
+      "input": [
+        {
+          "next_visit": "Vec<i32>"
+        }
+      ],
+      "output": "i32"
+    }
+  },
+  "tags": [
+    "array",
+    "dynamic-programming"
+  ]
+}

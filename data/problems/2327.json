@@ -1,0 +1,546 @@
+{
+  "id": 2327,
+  "title": "Number of People Aware of a Secret",
+  "slug": "number-of-people-aware-of-a-secret",
+  "difficulty": "Medium",
+  "description": "On day 1, one person discovers a secret.\nYou are given an integer delay, which means that each person will share the secret with a new person every day, starting from delay days after discovering the secret. You are also given an integer forget, which means that each person will forget the secret forget days after discovering it. A person cannot share the secret on the same day they forgot it, or on any day afterwards.\nGiven an integer n, return the number of people who know the secret at the end of day n. Since the answer may be very large, return it modulo 109 + 7.\nExample 1:\nExample 2:\nConstraints:",
+  "examples": [
+    {
+      "example_num": 1,
+      "example_text": "Input: n = 6, delay = 2, forget = 4\nOutput: 5\nExplanation:\nDay 1: Suppose the first person is named A. (1 person)\nDay 2: A is the only person who knows the secret. (1 person)\nDay 3: A shares the secret with a new person, B. (2 people)\nDay 4: A shares the secret with a new person, C. (3 people)\nDay 5: A forgets the secret, and B shares the secret with a new person, D. (3 people)\nDay 6: B shares the secret with E, and C shares the secret with F. (5 people)",
+      "images": []
+    },
+    {
+      "example_num": 2,
+      "example_text": "Input: n = 4, delay = 1, forget = 3\nOutput: 6\nExplanation:\nDay 1: The first person is named A. (1 person)\nDay 2: A shares the secret with B. (2 people)\nDay 3: A and B share the secret with 2 new people, C and D. (4 people)\nDay 4: A forgets the secret. B, C, and D share the secret with 3 new people. (6 people)",
+      "images": []
+    }
+  ],
+  "constraints": [
+    "2 <= n <= 1000",
+    "1 <= delay < forget <= n"
+  ],
+  "hints": [
+    "Let dp[i][j] be the number of people who have known the secret for exactly j + 1 days, at day i.",
+    "If j > 0, dp[i][j] = dp[i – 1][j – 1].",
+    "dp[i][0] = sum(dp[i – 1][j]) for j in [delay – 1, forget – 2]."
+  ],
+  "code_snippets": {
+    "cpp": "class Solution {\npublic:\n    int peopleAwareOfSecret(int n, int delay, int forget) {\n        \n    }\n};",
+    "java": "class Solution {\n    public int peopleAwareOfSecret(int n, int delay, int forget) {\n        \n    }\n}",
+    "python3": "class Solution:\n    def peopleAwareOfSecret(self, n: int, delay: int, forget: int) -> int:\n        ",
+    "javascript": "/**\n * @param {number} n\n * @param {number} delay\n * @param {number} forget\n * @return {number}\n */\nvar peopleAwareOfSecret = function(n, delay, forget) {\n    \n};",
+    "typescript": "function peopleAwareOfSecret(n: number, delay: number, forget: number): number {\n    \n};",
+    "golang": "func peopleAwareOfSecret(n int, delay int, forget int) int {\n    \n}",
+    "rust": "impl Solution {\n    pub fn people_aware_of_secret(n: i32, delay: i32, forget: i32) -> i32 {\n        \n    }\n}"
+  },
+  "entry_points": {
+    "python3": "Solution().peopleAwareOfSecret",
+    "cpp": "Solution().peopleAwareOfSecret",
+    "java": "new Solution().peopleAwareOfSecret",
+    "javascript": "peopleAwareOfSecret",
+    "typescript": "peopleAwareOfSecret",
+    "golang": "peopleAwareOfSecret",
+    "rust": "Solution::people_aware_of_secret"
+  },
+  "test_snippets": {
+    "python3": "def check(candidate):\n    assert candidate(n = 8, delay = 3, forget = 6) == 6\n    assert candidate(n = 500, delay = 100, forget = 400) == 5820125\n    assert candidate(n = 4, delay = 1, forget = 3) == 6\n    assert candidate(n = 1000, delay = 5, forget = 10) == 743819361\n    assert candidate(n = 1000, delay = 1, forget = 999) == 344211603\n    assert candidate(n = 10, delay = 2, forget = 5) == 30\n    assert candidate(n = 10, delay = 3, forget = 5) == 5\n    assert candidate(n = 15, delay = 4, forget = 7) == 19\n    assert candidate(n = 6, delay = 2, forget = 4) == 5\n    assert candidate(n = 5, delay = 1, forget = 4) == 14\n    assert candidate(n = 7, delay = 2, forget = 3) == 2\n    assert candidate(n = 100, delay = 10, forget = 50) == 22517820\n    assert candidate(n = 200, delay = 50, forget = 150) == 27250\n    assert candidate(n = 900, delay = 300, forget = 650) == 45500\n    assert candidate(n = 550, delay = 150, forget = 450) == 203375\n    assert candidate(n = 950, delay = 400, forget = 700) == 11625\n    assert candidate(n = 800, delay = 150, forget = 600) == 79177860\n    assert candidate(n = 900, delay = 150, forget = 300) == 935294905\n    assert candidate(n = 1000, delay = 1, forget = 10) == 694661098\n    assert candidate(n = 700, delay = 110, forget = 550) == 887595495\n    assert candidate(n = 600, delay = 250, forget = 550) == 5350\n    assert candidate(n = 500, delay = 100, forget = 200) == 5264525\n    assert candidate(n = 200, delay = 2, forget = 199) == 349361643\n    assert candidate(n = 1000, delay = 1, forget = 500) == 28219034\n    assert candidate(n = 1000, delay = 1, forget = 2) == 2\n    assert candidate(n = 750, delay = 250, forget = 500) == 31625\n    assert candidate(n = 999, delay = 50, forget = 400) == 112339611\n    assert candidate(n = 950, delay = 300, forget = 600) == 81225\n    assert candidate(n = 750, delay = 200, forget = 600) == 635625\n    assert candidate(n = 900, delay = 200, forget = 500) == 9051525\n    assert candidate(n = 600, delay = 125, forget = 500) == 6406900\n    assert candidate(n = 800, delay = 200, forget = 300) == 843250\n    assert candidate(n = 550, delay = 110, forget = 440) == 8292625\n    assert candidate(n = 700, delay = 150, forget = 450) == 7127075\n    assert candidate(n = 500, delay = 5, forget = 100) == 121345145\n    assert candidate(n = 750, delay = 120, forget = 450) == 913950185\n    assert candidate(n = 300, delay = 60, forget = 280) == 907415\n    assert candidate(n = 500, delay = 150, forget = 400) == 42450\n    assert candidate(n = 600, delay = 50, forget = 550) == 979826832\n    assert candidate(n = 750, delay = 125, forget = 550) == 450909175\n    assert candidate(n = 550, delay = 70, forget = 400) == 326052608\n    assert candidate(n = 800, delay = 400, forget = 750) == 350\n    assert candidate(n = 120, delay = 20, forget = 100) == 207054\n    assert candidate(n = 400, delay = 30, forget = 150) == 689207212\n    assert candidate(n = 800, delay = 100, forget = 600) == 153808266\n    assert candidate(n = 600, delay = 200, forget = 300) == 10000\n    assert candidate(n = 900, delay = 300, forget = 600) == 45450\n    assert candidate(n = 950, delay = 150, forget = 850) == 488545869\n    assert candidate(n = 600, delay = 250, forget = 400) == 5200\n    assert candidate(n = 650, delay = 130, forget = 520) == 15497300\n    assert candidate(n = 700, delay = 350, forget = 560) == 210\n    assert candidate(n = 950, delay = 140, forget = 650) == 285835661\n    assert candidate(n = 850, delay = 300, forget = 500) == 28975\n    assert candidate(n = 650, delay = 90, forget = 500) == 926898505\n    assert candidate(n = 550, delay = 250, forget = 450) == 1475\n    assert candidate(n = 800, delay = 200, forget = 500) == 1423700\n    assert candidate(n = 750, delay = 250, forget = 550) == 31675\n    assert candidate(n = 550, delay = 80, forget = 450) == 2109288\n    assert candidate(n = 500, delay = 200, forget = 400) == 5250\n    assert candidate(n = 1000, delay = 50, forget = 900) == 770071855\n    assert candidate(n = 750, delay = 120, forget = 500) == 914080410\n    assert candidate(n = 600, delay = 150, forget = 450) == 619250\n    assert candidate(n = 999, delay = 300, forget = 750) == 246900\n    assert candidate(n = 1000, delay = 50, forget = 950) == 770074505\n    assert candidate(n = 950, delay = 190, forget = 760) == 65412725\n    assert candidate(n = 1000, delay = 10, forget = 500) == 104566774\n    assert candidate(n = 600, delay = 120, forget = 480) == 11476850\n    assert candidate(n = 1000, delay = 400, forget = 700) == 20400\n    assert candidate(n = 900, delay = 100, forget = 800) == 892948851\n    assert candidate(n = 500, delay = 50, forget = 450) == 344465040\n    assert candidate(n = 200, delay = 40, forget = 150) == 219220\n    assert candidate(n = 300, delay = 50, forget = 250) == 8177885\n    assert candidate(n = 1000, delay = 500, forget = 900) == 400\n    assert candidate(n = 600, delay = 100, forget = 500) == 165273270\n    assert candidate(n = 750, delay = 200, forget = 500) == 632925\n    assert candidate(n = 850, delay = 130, forget = 550) == 523316449\n    assert candidate(n = 450, delay = 90, forget = 360) == 3944850\n    assert candidate(n = 1000, delay = 150, forget = 700) == 188312873\n    assert candidate(n = 1000, delay = 999, forget = 1000) == 2\n    assert candidate(n = 400, delay = 10, forget = 350) == 610381426\n    assert candidate(n = 800, delay = 150, forget = 350) == 77362035\n    assert candidate(n = 700, delay = 190, forget = 560) == 426390\n    assert candidate(n = 550, delay = 220, forget = 330) == 6215\n    assert candidate(n = 900, delay = 250, forget = 600) == 651750\n    assert candidate(n = 700, delay = 70, forget = 630) == 66046770\n    assert candidate(n = 950, delay = 400, forget = 850) == 11775\n    assert candidate(n = 750, delay = 150, forget = 600) == 26594875\n    assert candidate(n = 400, delay = 100, forget = 350) == 192050\n    assert candidate(n = 300, delay = 10, forget = 299) == 236977941\n    assert candidate(n = 800, delay = 200, forget = 600) == 1434000\n    assert candidate(n = 900, delay = 200, forget = 700) == 9092125\n    assert candidate(n = 700, delay = 100, forget = 500) == 766847687\n    assert candidate(n = 650, delay = 175, forget = 525) == 378875\n    assert candidate(n = 600, delay = 80, forget = 400) == 816019201\n    assert candidate(n = 1000, delay = 500, forget = 999) == 499\n    assert candidate(n = 300, delay = 100, forget = 200) == 5150",
+    "cpp": "void check(Solution& solution) {\n    assert(solution.peopleAwareOfSecret(8, 3, 6) == vector<int>6);\n    assert(solution.peopleAwareOfSecret(500, 100, 400) == vector<int>5820125);\n    assert(solution.peopleAwareOfSecret(4, 1, 3) == vector<int>6);\n    assert(solution.peopleAwareOfSecret(1000, 5, 10) == vector<int>743819361);\n    assert(solution.peopleAwareOfSecret(1000, 1, 999) == vector<int>344211603);\n    assert(solution.peopleAwareOfSecret(10, 2, 5) == vector<int>30);\n    assert(solution.peopleAwareOfSecret(10, 3, 5) == vector<int>5);\n    assert(solution.peopleAwareOfSecret(15, 4, 7) == vector<int>19);\n    assert(solution.peopleAwareOfSecret(6, 2, 4) == vector<int>5);\n    assert(solution.peopleAwareOfSecret(5, 1, 4) == vector<int>14);\n    assert(solution.peopleAwareOfSecret(7, 2, 3) == vector<int>2);\n    assert(solution.peopleAwareOfSecret(100, 10, 50) == vector<int>22517820);\n    assert(solution.peopleAwareOfSecret(200, 50, 150) == vector<int>27250);\n    assert(solution.peopleAwareOfSecret(900, 300, 650) == vector<int>45500);\n    assert(solution.peopleAwareOfSecret(550, 150, 450) == vector<int>203375);\n    assert(solution.peopleAwareOfSecret(950, 400, 700) == vector<int>11625);\n    assert(solution.peopleAwareOfSecret(800, 150, 600) == vector<int>79177860);\n    assert(solution.peopleAwareOfSecret(900, 150, 300) == vector<int>935294905);\n    assert(solution.peopleAwareOfSecret(1000, 1, 10) == vector<int>694661098);\n    assert(solution.peopleAwareOfSecret(700, 110, 550) == vector<int>887595495);\n    assert(solution.peopleAwareOfSecret(600, 250, 550) == vector<int>5350);\n    assert(solution.peopleAwareOfSecret(500, 100, 200) == vector<int>5264525);\n    assert(solution.peopleAwareOfSecret(200, 2, 199) == vector<int>349361643);\n    assert(solution.peopleAwareOfSecret(1000, 1, 500) == vector<int>28219034);\n    assert(solution.peopleAwareOfSecret(1000, 1, 2) == vector<int>2);\n    assert(solution.peopleAwareOfSecret(750, 250, 500) == vector<int>31625);\n    assert(solution.peopleAwareOfSecret(999, 50, 400) == vector<int>112339611);\n    assert(solution.peopleAwareOfSecret(950, 300, 600) == vector<int>81225);\n    assert(solution.peopleAwareOfSecret(750, 200, 600) == vector<int>635625);\n    assert(solution.peopleAwareOfSecret(900, 200, 500) == vector<int>9051525);\n    assert(solution.peopleAwareOfSecret(600, 125, 500) == vector<int>6406900);\n    assert(solution.peopleAwareOfSecret(800, 200, 300) == vector<int>843250);\n    assert(solution.peopleAwareOfSecret(550, 110, 440) == vector<int>8292625);\n    assert(solution.peopleAwareOfSecret(700, 150, 450) == vector<int>7127075);\n    assert(solution.peopleAwareOfSecret(500, 5, 100) == vector<int>121345145);\n    assert(solution.peopleAwareOfSecret(750, 120, 450) == vector<int>913950185);\n    assert(solution.peopleAwareOfSecret(300, 60, 280) == vector<int>907415);\n    assert(solution.peopleAwareOfSecret(500, 150, 400) == vector<int>42450);\n    assert(solution.peopleAwareOfSecret(600, 50, 550) == vector<int>979826832);\n    assert(solution.peopleAwareOfSecret(750, 125, 550) == vector<int>450909175);\n    assert(solution.peopleAwareOfSecret(550, 70, 400) == vector<int>326052608);\n    assert(solution.peopleAwareOfSecret(800, 400, 750) == vector<int>350);\n    assert(solution.peopleAwareOfSecret(120, 20, 100) == vector<int>207054);\n    assert(solution.peopleAwareOfSecret(400, 30, 150) == vector<int>689207212);\n    assert(solution.peopleAwareOfSecret(800, 100, 600) == vector<int>153808266);\n    assert(solution.peopleAwareOfSecret(600, 200, 300) == vector<int>10000);\n    assert(solution.peopleAwareOfSecret(900, 300, 600) == vector<int>45450);\n    assert(solution.peopleAwareOfSecret(950, 150, 850) == vector<int>488545869);\n    assert(solution.peopleAwareOfSecret(600, 250, 400) == vector<int>5200);\n    assert(solution.peopleAwareOfSecret(650, 130, 520) == vector<int>15497300);\n    assert(solution.peopleAwareOfSecret(700, 350, 560) == vector<int>210);\n    assert(solution.peopleAwareOfSecret(950, 140, 650) == vector<int>285835661);\n    assert(solution.peopleAwareOfSecret(850, 300, 500) == vector<int>28975);\n    assert(solution.peopleAwareOfSecret(650, 90, 500) == vector<int>926898505);\n    assert(solution.peopleAwareOfSecret(550, 250, 450) == vector<int>1475);\n    assert(solution.peopleAwareOfSecret(800, 200, 500) == vector<int>1423700);\n    assert(solution.peopleAwareOfSecret(750, 250, 550) == vector<int>31675);\n    assert(solution.peopleAwareOfSecret(550, 80, 450) == vector<int>2109288);\n    assert(solution.peopleAwareOfSecret(500, 200, 400) == vector<int>5250);\n    assert(solution.peopleAwareOfSecret(1000, 50, 900) == vector<int>770071855);\n    assert(solution.peopleAwareOfSecret(750, 120, 500) == vector<int>914080410);\n    assert(solution.peopleAwareOfSecret(600, 150, 450) == vector<int>619250);\n    assert(solution.peopleAwareOfSecret(999, 300, 750) == vector<int>246900);\n    assert(solution.peopleAwareOfSecret(1000, 50, 950) == vector<int>770074505);\n    assert(solution.peopleAwareOfSecret(950, 190, 760) == vector<int>65412725);\n    assert(solution.peopleAwareOfSecret(1000, 10, 500) == vector<int>104566774);\n    assert(solution.peopleAwareOfSecret(600, 120, 480) == vector<int>11476850);\n    assert(solution.peopleAwareOfSecret(1000, 400, 700) == vector<int>20400);\n    assert(solution.peopleAwareOfSecret(900, 100, 800) == vector<int>892948851);\n    assert(solution.peopleAwareOfSecret(500, 50, 450) == vector<int>344465040);\n    assert(solution.peopleAwareOfSecret(200, 40, 150) == vector<int>219220);\n    assert(solution.peopleAwareOfSecret(300, 50, 250) == vector<int>8177885);\n    assert(solution.peopleAwareOfSecret(1000, 500, 900) == vector<int>400);\n    assert(solution.peopleAwareOfSecret(600, 100, 500) == vector<int>165273270);\n    assert(solution.peopleAwareOfSecret(750, 200, 500) == vector<int>632925);\n    assert(solution.peopleAwareOfSecret(850, 130, 550) == vector<int>523316449);\n    assert(solution.peopleAwareOfSecret(450, 90, 360) == vector<int>3944850);\n    assert(solution.peopleAwareOfSecret(1000, 150, 700) == vector<int>188312873);\n    assert(solution.peopleAwareOfSecret(1000, 999, 1000) == vector<int>2);\n    assert(solution.peopleAwareOfSecret(400, 10, 350) == vector<int>610381426);\n    assert(solution.peopleAwareOfSecret(800, 150, 350) == vector<int>77362035);\n    assert(solution.peopleAwareOfSecret(700, 190, 560) == vector<int>426390);\n    assert(solution.peopleAwareOfSecret(550, 220, 330) == vector<int>6215);\n    assert(solution.peopleAwareOfSecret(900, 250, 600) == vector<int>651750);\n    assert(solution.peopleAwareOfSecret(700, 70, 630) == vector<int>66046770);\n    assert(solution.peopleAwareOfSecret(950, 400, 850) == vector<int>11775);\n    assert(solution.peopleAwareOfSecret(750, 150, 600) == vector<int>26594875);\n    assert(solution.peopleAwareOfSecret(400, 100, 350) == vector<int>192050);\n    assert(solution.peopleAwareOfSecret(300, 10, 299) == vector<int>236977941);\n    assert(solution.peopleAwareOfSecret(800, 200, 600) == vector<int>1434000);\n    assert(solution.peopleAwareOfSecret(900, 200, 700) == vector<int>9092125);\n    assert(solution.peopleAwareOfSecret(700, 100, 500) == vector<int>766847687);\n    assert(solution.peopleAwareOfSecret(650, 175, 525) == vector<int>378875);\n    assert(solution.peopleAwareOfSecret(600, 80, 400) == vector<int>816019201);\n    assert(solution.peopleAwareOfSecret(1000, 500, 999) == vector<int>499);\n    assert(solution.peopleAwareOfSecret(300, 100, 200) == vector<int>5150);\n}",
+    "java": "public static void check(Solution solution) {\n    assert Arrays.equals(solution.peopleAwareOfSecret(8, 3, 6), 6);\n    assert Arrays.equals(solution.peopleAwareOfSecret(500, 100, 400), 5820125);\n    assert Arrays.equals(solution.peopleAwareOfSecret(4, 1, 3), 6);\n    assert Arrays.equals(solution.peopleAwareOfSecret(1000, 5, 10), 743819361);\n    assert Arrays.equals(solution.peopleAwareOfSecret(1000, 1, 999), 344211603);\n    assert Arrays.equals(solution.peopleAwareOfSecret(10, 2, 5), 30);\n    assert Arrays.equals(solution.peopleAwareOfSecret(10, 3, 5), 5);\n    assert Arrays.equals(solution.peopleAwareOfSecret(15, 4, 7), 19);\n    assert Arrays.equals(solution.peopleAwareOfSecret(6, 2, 4), 5);\n    assert Arrays.equals(solution.peopleAwareOfSecret(5, 1, 4), 14);\n    assert Arrays.equals(solution.peopleAwareOfSecret(7, 2, 3), 2);\n    assert Arrays.equals(solution.peopleAwareOfSecret(100, 10, 50), 22517820);\n    assert Arrays.equals(solution.peopleAwareOfSecret(200, 50, 150), 27250);\n    assert Arrays.equals(solution.peopleAwareOfSecret(900, 300, 650), 45500);\n    assert Arrays.equals(solution.peopleAwareOfSecret(550, 150, 450), 203375);\n    assert Arrays.equals(solution.peopleAwareOfSecret(950, 400, 700), 11625);\n    assert Arrays.equals(solution.peopleAwareOfSecret(800, 150, 600), 79177860);\n    assert Arrays.equals(solution.peopleAwareOfSecret(900, 150, 300), 935294905);\n    assert Arrays.equals(solution.peopleAwareOfSecret(1000, 1, 10), 694661098);\n    assert Arrays.equals(solution.peopleAwareOfSecret(700, 110, 550), 887595495);\n    assert Arrays.equals(solution.peopleAwareOfSecret(600, 250, 550), 5350);\n    assert Arrays.equals(solution.peopleAwareOfSecret(500, 100, 200), 5264525);\n    assert Arrays.equals(solution.peopleAwareOfSecret(200, 2, 199), 349361643);\n    assert Arrays.equals(solution.peopleAwareOfSecret(1000, 1, 500), 28219034);\n    assert Arrays.equals(solution.peopleAwareOfSecret(1000, 1, 2), 2);\n    assert Arrays.equals(solution.peopleAwareOfSecret(750, 250, 500), 31625);\n    assert Arrays.equals(solution.peopleAwareOfSecret(999, 50, 400), 112339611);\n    assert Arrays.equals(solution.peopleAwareOfSecret(950, 300, 600), 81225);\n    assert Arrays.equals(solution.peopleAwareOfSecret(750, 200, 600), 635625);\n    assert Arrays.equals(solution.peopleAwareOfSecret(900, 200, 500), 9051525);\n    assert Arrays.equals(solution.peopleAwareOfSecret(600, 125, 500), 6406900);\n    assert Arrays.equals(solution.peopleAwareOfSecret(800, 200, 300), 843250);\n    assert Arrays.equals(solution.peopleAwareOfSecret(550, 110, 440), 8292625);\n    assert Arrays.equals(solution.peopleAwareOfSecret(700, 150, 450), 7127075);\n    assert Arrays.equals(solution.peopleAwareOfSecret(500, 5, 100), 121345145);\n    assert Arrays.equals(solution.peopleAwareOfSecret(750, 120, 450), 913950185);\n    assert Arrays.equals(solution.peopleAwareOfSecret(300, 60, 280), 907415);\n    assert Arrays.equals(solution.peopleAwareOfSecret(500, 150, 400), 42450);\n    assert Arrays.equals(solution.peopleAwareOfSecret(600, 50, 550), 979826832);\n    assert Arrays.equals(solution.peopleAwareOfSecret(750, 125, 550), 450909175);\n    assert Arrays.equals(solution.peopleAwareOfSecret(550, 70, 400), 326052608);\n    assert Arrays.equals(solution.peopleAwareOfSecret(800, 400, 750), 350);\n    assert Arrays.equals(solution.peopleAwareOfSecret(120, 20, 100), 207054);\n    assert Arrays.equals(solution.peopleAwareOfSecret(400, 30, 150), 689207212);\n    assert Arrays.equals(solution.peopleAwareOfSecret(800, 100, 600), 153808266);\n    assert Arrays.equals(solution.peopleAwareOfSecret(600, 200, 300), 10000);\n    assert Arrays.equals(solution.peopleAwareOfSecret(900, 300, 600), 45450);\n    assert Arrays.equals(solution.peopleAwareOfSecret(950, 150, 850), 488545869);\n    assert Arrays.equals(solution.peopleAwareOfSecret(600, 250, 400), 5200);\n    assert Arrays.equals(solution.peopleAwareOfSecret(650, 130, 520), 15497300);\n    assert Arrays.equals(solution.peopleAwareOfSecret(700, 350, 560), 210);\n    assert Arrays.equals(solution.peopleAwareOfSecret(950, 140, 650), 285835661);\n    assert Arrays.equals(solution.peopleAwareOfSecret(850, 300, 500), 28975);\n    assert Arrays.equals(solution.peopleAwareOfSecret(650, 90, 500), 926898505);\n    assert Arrays.equals(solution.peopleAwareOfSecret(550, 250, 450), 1475);\n    assert Arrays.equals(solution.peopleAwareOfSecret(800, 200, 500), 1423700);\n    assert Arrays.equals(solution.peopleAwareOfSecret(750, 250, 550), 31675);\n    assert Arrays.equals(solution.peopleAwareOfSecret(550, 80, 450), 2109288);\n    assert Arrays.equals(solution.peopleAwareOfSecret(500, 200, 400), 5250);\n    assert Arrays.equals(solution.peopleAwareOfSecret(1000, 50, 900), 770071855);\n    assert Arrays.equals(solution.peopleAwareOfSecret(750, 120, 500), 914080410);\n    assert Arrays.equals(solution.peopleAwareOfSecret(600, 150, 450), 619250);\n    assert Arrays.equals(solution.peopleAwareOfSecret(999, 300, 750), 246900);\n    assert Arrays.equals(solution.peopleAwareOfSecret(1000, 50, 950), 770074505);\n    assert Arrays.equals(solution.peopleAwareOfSecret(950, 190, 760), 65412725);\n    assert Arrays.equals(solution.peopleAwareOfSecret(1000, 10, 500), 104566774);\n    assert Arrays.equals(solution.peopleAwareOfSecret(600, 120, 480), 11476850);\n    assert Arrays.equals(solution.peopleAwareOfSecret(1000, 400, 700), 20400);\n    assert Arrays.equals(solution.peopleAwareOfSecret(900, 100, 800), 892948851);\n    assert Arrays.equals(solution.peopleAwareOfSecret(500, 50, 450), 344465040);\n    assert Arrays.equals(solution.peopleAwareOfSecret(200, 40, 150), 219220);\n    assert Arrays.equals(solution.peopleAwareOfSecret(300, 50, 250), 8177885);\n    assert Arrays.equals(solution.peopleAwareOfSecret(1000, 500, 900), 400);\n    assert Arrays.equals(solution.peopleAwareOfSecret(600, 100, 500), 165273270);\n    assert Arrays.equals(solution.peopleAwareOfSecret(750, 200, 500), 632925);\n    assert Arrays.equals(solution.peopleAwareOfSecret(850, 130, 550), 523316449);\n    assert Arrays.equals(solution.peopleAwareOfSecret(450, 90, 360), 3944850);\n    assert Arrays.equals(solution.peopleAwareOfSecret(1000, 150, 700), 188312873);\n    assert Arrays.equals(solution.peopleAwareOfSecret(1000, 999, 1000), 2);\n    assert Arrays.equals(solution.peopleAwareOfSecret(400, 10, 350), 610381426);\n    assert Arrays.equals(solution.peopleAwareOfSecret(800, 150, 350), 77362035);\n    assert Arrays.equals(solution.peopleAwareOfSecret(700, 190, 560), 426390);\n    assert Arrays.equals(solution.peopleAwareOfSecret(550, 220, 330), 6215);\n    assert Arrays.equals(solution.peopleAwareOfSecret(900, 250, 600), 651750);\n    assert Arrays.equals(solution.peopleAwareOfSecret(700, 70, 630), 66046770);\n    assert Arrays.equals(solution.peopleAwareOfSecret(950, 400, 850), 11775);\n    assert Arrays.equals(solution.peopleAwareOfSecret(750, 150, 600), 26594875);\n    assert Arrays.equals(solution.peopleAwareOfSecret(400, 100, 350), 192050);\n    assert Arrays.equals(solution.peopleAwareOfSecret(300, 10, 299), 236977941);\n    assert Arrays.equals(solution.peopleAwareOfSecret(800, 200, 600), 1434000);\n    assert Arrays.equals(solution.peopleAwareOfSecret(900, 200, 700), 9092125);\n    assert Arrays.equals(solution.peopleAwareOfSecret(700, 100, 500), 766847687);\n    assert Arrays.equals(solution.peopleAwareOfSecret(650, 175, 525), 378875);\n    assert Arrays.equals(solution.peopleAwareOfSecret(600, 80, 400), 816019201);\n    assert Arrays.equals(solution.peopleAwareOfSecret(1000, 500, 999), 499);\n    assert Arrays.equals(solution.peopleAwareOfSecret(300, 100, 200), 5150);\n}",
+    "javascript": "function check(candidate) {\n    console.assert(JSON.stringify(candidate(8, 3, 6)) === JSON.stringify(6));\n    console.assert(JSON.stringify(candidate(500, 100, 400)) === JSON.stringify(5820125));\n    console.assert(JSON.stringify(candidate(4, 1, 3)) === JSON.stringify(6));\n    console.assert(JSON.stringify(candidate(1000, 5, 10)) === JSON.stringify(743819361));\n    console.assert(JSON.stringify(candidate(1000, 1, 999)) === JSON.stringify(344211603));\n    console.assert(JSON.stringify(candidate(10, 2, 5)) === JSON.stringify(30));\n    console.assert(JSON.stringify(candidate(10, 3, 5)) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate(15, 4, 7)) === JSON.stringify(19));\n    console.assert(JSON.stringify(candidate(6, 2, 4)) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate(5, 1, 4)) === JSON.stringify(14));\n    console.assert(JSON.stringify(candidate(7, 2, 3)) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(100, 10, 50)) === JSON.stringify(22517820));\n    console.assert(JSON.stringify(candidate(200, 50, 150)) === JSON.stringify(27250));\n    console.assert(JSON.stringify(candidate(900, 300, 650)) === JSON.stringify(45500));\n    console.assert(JSON.stringify(candidate(550, 150, 450)) === JSON.stringify(203375));\n    console.assert(JSON.stringify(candidate(950, 400, 700)) === JSON.stringify(11625));\n    console.assert(JSON.stringify(candidate(800, 150, 600)) === JSON.stringify(79177860));\n    console.assert(JSON.stringify(candidate(900, 150, 300)) === JSON.stringify(935294905));\n    console.assert(JSON.stringify(candidate(1000, 1, 10)) === JSON.stringify(694661098));\n    console.assert(JSON.stringify(candidate(700, 110, 550)) === JSON.stringify(887595495));\n    console.assert(JSON.stringify(candidate(600, 250, 550)) === JSON.stringify(5350));\n    console.assert(JSON.stringify(candidate(500, 100, 200)) === JSON.stringify(5264525));\n    console.assert(JSON.stringify(candidate(200, 2, 199)) === JSON.stringify(349361643));\n    console.assert(JSON.stringify(candidate(1000, 1, 500)) === JSON.stringify(28219034));\n    console.assert(JSON.stringify(candidate(1000, 1, 2)) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(750, 250, 500)) === JSON.stringify(31625));\n    console.assert(JSON.stringify(candidate(999, 50, 400)) === JSON.stringify(112339611));\n    console.assert(JSON.stringify(candidate(950, 300, 600)) === JSON.stringify(81225));\n    console.assert(JSON.stringify(candidate(750, 200, 600)) === JSON.stringify(635625));\n    console.assert(JSON.stringify(candidate(900, 200, 500)) === JSON.stringify(9051525));\n    console.assert(JSON.stringify(candidate(600, 125, 500)) === JSON.stringify(6406900));\n    console.assert(JSON.stringify(candidate(800, 200, 300)) === JSON.stringify(843250));\n    console.assert(JSON.stringify(candidate(550, 110, 440)) === JSON.stringify(8292625));\n    console.assert(JSON.stringify(candidate(700, 150, 450)) === JSON.stringify(7127075));\n    console.assert(JSON.stringify(candidate(500, 5, 100)) === JSON.stringify(121345145));\n    console.assert(JSON.stringify(candidate(750, 120, 450)) === JSON.stringify(913950185));\n    console.assert(JSON.stringify(candidate(300, 60, 280)) === JSON.stringify(907415));\n    console.assert(JSON.stringify(candidate(500, 150, 400)) === JSON.stringify(42450));\n    console.assert(JSON.stringify(candidate(600, 50, 550)) === JSON.stringify(979826832));\n    console.assert(JSON.stringify(candidate(750, 125, 550)) === JSON.stringify(450909175));\n    console.assert(JSON.stringify(candidate(550, 70, 400)) === JSON.stringify(326052608));\n    console.assert(JSON.stringify(candidate(800, 400, 750)) === JSON.stringify(350));\n    console.assert(JSON.stringify(candidate(120, 20, 100)) === JSON.stringify(207054));\n    console.assert(JSON.stringify(candidate(400, 30, 150)) === JSON.stringify(689207212));\n    console.assert(JSON.stringify(candidate(800, 100, 600)) === JSON.stringify(153808266));\n    console.assert(JSON.stringify(candidate(600, 200, 300)) === JSON.stringify(10000));\n    console.assert(JSON.stringify(candidate(900, 300, 600)) === JSON.stringify(45450));\n    console.assert(JSON.stringify(candidate(950, 150, 850)) === JSON.stringify(488545869));\n    console.assert(JSON.stringify(candidate(600, 250, 400)) === JSON.stringify(5200));\n    console.assert(JSON.stringify(candidate(650, 130, 520)) === JSON.stringify(15497300));\n    console.assert(JSON.stringify(candidate(700, 350, 560)) === JSON.stringify(210));\n    console.assert(JSON.stringify(candidate(950, 140, 650)) === JSON.stringify(285835661));\n    console.assert(JSON.stringify(candidate(850, 300, 500)) === JSON.stringify(28975));\n    console.assert(JSON.stringify(candidate(650, 90, 500)) === JSON.stringify(926898505));\n    console.assert(JSON.stringify(candidate(550, 250, 450)) === JSON.stringify(1475));\n    console.assert(JSON.stringify(candidate(800, 200, 500)) === JSON.stringify(1423700));\n    console.assert(JSON.stringify(candidate(750, 250, 550)) === JSON.stringify(31675));\n    console.assert(JSON.stringify(candidate(550, 80, 450)) === JSON.stringify(2109288));\n    console.assert(JSON.stringify(candidate(500, 200, 400)) === JSON.stringify(5250));\n    console.assert(JSON.stringify(candidate(1000, 50, 900)) === JSON.stringify(770071855));\n    console.assert(JSON.stringify(candidate(750, 120, 500)) === JSON.stringify(914080410));\n    console.assert(JSON.stringify(candidate(600, 150, 450)) === JSON.stringify(619250));\n    console.assert(JSON.stringify(candidate(999, 300, 750)) === JSON.stringify(246900));\n    console.assert(JSON.stringify(candidate(1000, 50, 950)) === JSON.stringify(770074505));\n    console.assert(JSON.stringify(candidate(950, 190, 760)) === JSON.stringify(65412725));\n    console.assert(JSON.stringify(candidate(1000, 10, 500)) === JSON.stringify(104566774));\n    console.assert(JSON.stringify(candidate(600, 120, 480)) === JSON.stringify(11476850));\n    console.assert(JSON.stringify(candidate(1000, 400, 700)) === JSON.stringify(20400));\n    console.assert(JSON.stringify(candidate(900, 100, 800)) === JSON.stringify(892948851));\n    console.assert(JSON.stringify(candidate(500, 50, 450)) === JSON.stringify(344465040));\n    console.assert(JSON.stringify(candidate(200, 40, 150)) === JSON.stringify(219220));\n    console.assert(JSON.stringify(candidate(300, 50, 250)) === JSON.stringify(8177885));\n    console.assert(JSON.stringify(candidate(1000, 500, 900)) === JSON.stringify(400));\n    console.assert(JSON.stringify(candidate(600, 100, 500)) === JSON.stringify(165273270));\n    console.assert(JSON.stringify(candidate(750, 200, 500)) === JSON.stringify(632925));\n    console.assert(JSON.stringify(candidate(850, 130, 550)) === JSON.stringify(523316449));\n    console.assert(JSON.stringify(candidate(450, 90, 360)) === JSON.stringify(3944850));\n    console.assert(JSON.stringify(candidate(1000, 150, 700)) === JSON.stringify(188312873));\n    console.assert(JSON.stringify(candidate(1000, 999, 1000)) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(400, 10, 350)) === JSON.stringify(610381426));\n    console.assert(JSON.stringify(candidate(800, 150, 350)) === JSON.stringify(77362035));\n    console.assert(JSON.stringify(candidate(700, 190, 560)) === JSON.stringify(426390));\n    console.assert(JSON.stringify(candidate(550, 220, 330)) === JSON.stringify(6215));\n    console.assert(JSON.stringify(candidate(900, 250, 600)) === JSON.stringify(651750));\n    console.assert(JSON.stringify(candidate(700, 70, 630)) === JSON.stringify(66046770));\n    console.assert(JSON.stringify(candidate(950, 400, 850)) === JSON.stringify(11775));\n    console.assert(JSON.stringify(candidate(750, 150, 600)) === JSON.stringify(26594875));\n    console.assert(JSON.stringify(candidate(400, 100, 350)) === JSON.stringify(192050));\n    console.assert(JSON.stringify(candidate(300, 10, 299)) === JSON.stringify(236977941));\n    console.assert(JSON.stringify(candidate(800, 200, 600)) === JSON.stringify(1434000));\n    console.assert(JSON.stringify(candidate(900, 200, 700)) === JSON.stringify(9092125));\n    console.assert(JSON.stringify(candidate(700, 100, 500)) === JSON.stringify(766847687));\n    console.assert(JSON.stringify(candidate(650, 175, 525)) === JSON.stringify(378875));\n    console.assert(JSON.stringify(candidate(600, 80, 400)) === JSON.stringify(816019201));\n    console.assert(JSON.stringify(candidate(1000, 500, 999)) === JSON.stringify(499));\n    console.assert(JSON.stringify(candidate(300, 100, 200)) === JSON.stringify(5150));\n}",
+    "typescript": "function check(candidate: Function): void {\n    console.assert(JSON.stringify(candidate(8, 3, 6)) === JSON.stringify(6));\n    console.assert(JSON.stringify(candidate(500, 100, 400)) === JSON.stringify(5820125));\n    console.assert(JSON.stringify(candidate(4, 1, 3)) === JSON.stringify(6));\n    console.assert(JSON.stringify(candidate(1000, 5, 10)) === JSON.stringify(743819361));\n    console.assert(JSON.stringify(candidate(1000, 1, 999)) === JSON.stringify(344211603));\n    console.assert(JSON.stringify(candidate(10, 2, 5)) === JSON.stringify(30));\n    console.assert(JSON.stringify(candidate(10, 3, 5)) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate(15, 4, 7)) === JSON.stringify(19));\n    console.assert(JSON.stringify(candidate(6, 2, 4)) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate(5, 1, 4)) === JSON.stringify(14));\n    console.assert(JSON.stringify(candidate(7, 2, 3)) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(100, 10, 50)) === JSON.stringify(22517820));\n    console.assert(JSON.stringify(candidate(200, 50, 150)) === JSON.stringify(27250));\n    console.assert(JSON.stringify(candidate(900, 300, 650)) === JSON.stringify(45500));\n    console.assert(JSON.stringify(candidate(550, 150, 450)) === JSON.stringify(203375));\n    console.assert(JSON.stringify(candidate(950, 400, 700)) === JSON.stringify(11625));\n    console.assert(JSON.stringify(candidate(800, 150, 600)) === JSON.stringify(79177860));\n    console.assert(JSON.stringify(candidate(900, 150, 300)) === JSON.stringify(935294905));\n    console.assert(JSON.stringify(candidate(1000, 1, 10)) === JSON.stringify(694661098));\n    console.assert(JSON.stringify(candidate(700, 110, 550)) === JSON.stringify(887595495));\n    console.assert(JSON.stringify(candidate(600, 250, 550)) === JSON.stringify(5350));\n    console.assert(JSON.stringify(candidate(500, 100, 200)) === JSON.stringify(5264525));\n    console.assert(JSON.stringify(candidate(200, 2, 199)) === JSON.stringify(349361643));\n    console.assert(JSON.stringify(candidate(1000, 1, 500)) === JSON.stringify(28219034));\n    console.assert(JSON.stringify(candidate(1000, 1, 2)) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(750, 250, 500)) === JSON.stringify(31625));\n    console.assert(JSON.stringify(candidate(999, 50, 400)) === JSON.stringify(112339611));\n    console.assert(JSON.stringify(candidate(950, 300, 600)) === JSON.stringify(81225));\n    console.assert(JSON.stringify(candidate(750, 200, 600)) === JSON.stringify(635625));\n    console.assert(JSON.stringify(candidate(900, 200, 500)) === JSON.stringify(9051525));\n    console.assert(JSON.stringify(candidate(600, 125, 500)) === JSON.stringify(6406900));\n    console.assert(JSON.stringify(candidate(800, 200, 300)) === JSON.stringify(843250));\n    console.assert(JSON.stringify(candidate(550, 110, 440)) === JSON.stringify(8292625));\n    console.assert(JSON.stringify(candidate(700, 150, 450)) === JSON.stringify(7127075));\n    console.assert(JSON.stringify(candidate(500, 5, 100)) === JSON.stringify(121345145));\n    console.assert(JSON.stringify(candidate(750, 120, 450)) === JSON.stringify(913950185));\n    console.assert(JSON.stringify(candidate(300, 60, 280)) === JSON.stringify(907415));\n    console.assert(JSON.stringify(candidate(500, 150, 400)) === JSON.stringify(42450));\n    console.assert(JSON.stringify(candidate(600, 50, 550)) === JSON.stringify(979826832));\n    console.assert(JSON.stringify(candidate(750, 125, 550)) === JSON.stringify(450909175));\n    console.assert(JSON.stringify(candidate(550, 70, 400)) === JSON.stringify(326052608));\n    console.assert(JSON.stringify(candidate(800, 400, 750)) === JSON.stringify(350));\n    console.assert(JSON.stringify(candidate(120, 20, 100)) === JSON.stringify(207054));\n    console.assert(JSON.stringify(candidate(400, 30, 150)) === JSON.stringify(689207212));\n    console.assert(JSON.stringify(candidate(800, 100, 600)) === JSON.stringify(153808266));\n    console.assert(JSON.stringify(candidate(600, 200, 300)) === JSON.stringify(10000));\n    console.assert(JSON.stringify(candidate(900, 300, 600)) === JSON.stringify(45450));\n    console.assert(JSON.stringify(candidate(950, 150, 850)) === JSON.stringify(488545869));\n    console.assert(JSON.stringify(candidate(600, 250, 400)) === JSON.stringify(5200));\n    console.assert(JSON.stringify(candidate(650, 130, 520)) === JSON.stringify(15497300));\n    console.assert(JSON.stringify(candidate(700, 350, 560)) === JSON.stringify(210));\n    console.assert(JSON.stringify(candidate(950, 140, 650)) === JSON.stringify(285835661));\n    console.assert(JSON.stringify(candidate(850, 300, 500)) === JSON.stringify(28975));\n    console.assert(JSON.stringify(candidate(650, 90, 500)) === JSON.stringify(926898505));\n    console.assert(JSON.stringify(candidate(550, 250, 450)) === JSON.stringify(1475));\n    console.assert(JSON.stringify(candidate(800, 200, 500)) === JSON.stringify(1423700));\n    console.assert(JSON.stringify(candidate(750, 250, 550)) === JSON.stringify(31675));\n    console.assert(JSON.stringify(candidate(550, 80, 450)) === JSON.stringify(2109288));\n    console.assert(JSON.stringify(candidate(500, 200, 400)) === JSON.stringify(5250));\n    console.assert(JSON.stringify(candidate(1000, 50, 900)) === JSON.stringify(770071855));\n    console.assert(JSON.stringify(candidate(750, 120, 500)) === JSON.stringify(914080410));\n    console.assert(JSON.stringify(candidate(600, 150, 450)) === JSON.stringify(619250));\n    console.assert(JSON.stringify(candidate(999, 300, 750)) === JSON.stringify(246900));\n    console.assert(JSON.stringify(candidate(1000, 50, 950)) === JSON.stringify(770074505));\n    console.assert(JSON.stringify(candidate(950, 190, 760)) === JSON.stringify(65412725));\n    console.assert(JSON.stringify(candidate(1000, 10, 500)) === JSON.stringify(104566774));\n    console.assert(JSON.stringify(candidate(600, 120, 480)) === JSON.stringify(11476850));\n    console.assert(JSON.stringify(candidate(1000, 400, 700)) === JSON.stringify(20400));\n    console.assert(JSON.stringify(candidate(900, 100, 800)) === JSON.stringify(892948851));\n    console.assert(JSON.stringify(candidate(500, 50, 450)) === JSON.stringify(344465040));\n    console.assert(JSON.stringify(candidate(200, 40, 150)) === JSON.stringify(219220));\n    console.assert(JSON.stringify(candidate(300, 50, 250)) === JSON.stringify(8177885));\n    console.assert(JSON.stringify(candidate(1000, 500, 900)) === JSON.stringify(400));\n    console.assert(JSON.stringify(candidate(600, 100, 500)) === JSON.stringify(165273270));\n    console.assert(JSON.stringify(candidate(750, 200, 500)) === JSON.stringify(632925));\n    console.assert(JSON.stringify(candidate(850, 130, 550)) === JSON.stringify(523316449));\n    console.assert(JSON.stringify(candidate(450, 90, 360)) === JSON.stringify(3944850));\n    console.assert(JSON.stringify(candidate(1000, 150, 700)) === JSON.stringify(188312873));\n    console.assert(JSON.stringify(candidate(1000, 999, 1000)) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(400, 10, 350)) === JSON.stringify(610381426));\n    console.assert(JSON.stringify(candidate(800, 150, 350)) === JSON.stringify(77362035));\n    console.assert(JSON.stringify(candidate(700, 190, 560)) === JSON.stringify(426390));\n    console.assert(JSON.stringify(candidate(550, 220, 330)) === JSON.stringify(6215));\n    console.assert(JSON.stringify(candidate(900, 250, 600)) === JSON.stringify(651750));\n    console.assert(JSON.stringify(candidate(700, 70, 630)) === JSON.stringify(66046770));\n    console.assert(JSON.stringify(candidate(950, 400, 850)) === JSON.stringify(11775));\n    console.assert(JSON.stringify(candidate(750, 150, 600)) === JSON.stringify(26594875));\n    console.assert(JSON.stringify(candidate(400, 100, 350)) === JSON.stringify(192050));\n    console.assert(JSON.stringify(candidate(300, 10, 299)) === JSON.stringify(236977941));\n    console.assert(JSON.stringify(candidate(800, 200, 600)) === JSON.stringify(1434000));\n    console.assert(JSON.stringify(candidate(900, 200, 700)) === JSON.stringify(9092125));\n    console.assert(JSON.stringify(candidate(700, 100, 500)) === JSON.stringify(766847687));\n    console.assert(JSON.stringify(candidate(650, 175, 525)) === JSON.stringify(378875));\n    console.assert(JSON.stringify(candidate(600, 80, 400)) === JSON.stringify(816019201));\n    console.assert(JSON.stringify(candidate(1000, 500, 999)) === JSON.stringify(499));\n    console.assert(JSON.stringify(candidate(300, 100, 200)) === JSON.stringify(5150));\n}",
+    "golang": "func check(candidate func([]int, int) []int) {\n    assert reflect.DeepEqual(candidate(8, 3, 6), 6)\n    assert reflect.DeepEqual(candidate(500, 100, 400), 5820125)\n    assert reflect.DeepEqual(candidate(4, 1, 3), 6)\n    assert reflect.DeepEqual(candidate(1000, 5, 10), 743819361)\n    assert reflect.DeepEqual(candidate(1000, 1, 999), 344211603)\n    assert reflect.DeepEqual(candidate(10, 2, 5), 30)\n    assert reflect.DeepEqual(candidate(10, 3, 5), 5)\n    assert reflect.DeepEqual(candidate(15, 4, 7), 19)\n    assert reflect.DeepEqual(candidate(6, 2, 4), 5)\n    assert reflect.DeepEqual(candidate(5, 1, 4), 14)\n    assert reflect.DeepEqual(candidate(7, 2, 3), 2)\n    assert reflect.DeepEqual(candidate(100, 10, 50), 22517820)\n    assert reflect.DeepEqual(candidate(200, 50, 150), 27250)\n    assert reflect.DeepEqual(candidate(900, 300, 650), 45500)\n    assert reflect.DeepEqual(candidate(550, 150, 450), 203375)\n    assert reflect.DeepEqual(candidate(950, 400, 700), 11625)\n    assert reflect.DeepEqual(candidate(800, 150, 600), 79177860)\n    assert reflect.DeepEqual(candidate(900, 150, 300), 935294905)\n    assert reflect.DeepEqual(candidate(1000, 1, 10), 694661098)\n    assert reflect.DeepEqual(candidate(700, 110, 550), 887595495)\n    assert reflect.DeepEqual(candidate(600, 250, 550), 5350)\n    assert reflect.DeepEqual(candidate(500, 100, 200), 5264525)\n    assert reflect.DeepEqual(candidate(200, 2, 199), 349361643)\n    assert reflect.DeepEqual(candidate(1000, 1, 500), 28219034)\n    assert reflect.DeepEqual(candidate(1000, 1, 2), 2)\n    assert reflect.DeepEqual(candidate(750, 250, 500), 31625)\n    assert reflect.DeepEqual(candidate(999, 50, 400), 112339611)\n    assert reflect.DeepEqual(candidate(950, 300, 600), 81225)\n    assert reflect.DeepEqual(candidate(750, 200, 600), 635625)\n    assert reflect.DeepEqual(candidate(900, 200, 500), 9051525)\n    assert reflect.DeepEqual(candidate(600, 125, 500), 6406900)\n    assert reflect.DeepEqual(candidate(800, 200, 300), 843250)\n    assert reflect.DeepEqual(candidate(550, 110, 440), 8292625)\n    assert reflect.DeepEqual(candidate(700, 150, 450), 7127075)\n    assert reflect.DeepEqual(candidate(500, 5, 100), 121345145)\n    assert reflect.DeepEqual(candidate(750, 120, 450), 913950185)\n    assert reflect.DeepEqual(candidate(300, 60, 280), 907415)\n    assert reflect.DeepEqual(candidate(500, 150, 400), 42450)\n    assert reflect.DeepEqual(candidate(600, 50, 550), 979826832)\n    assert reflect.DeepEqual(candidate(750, 125, 550), 450909175)\n    assert reflect.DeepEqual(candidate(550, 70, 400), 326052608)\n    assert reflect.DeepEqual(candidate(800, 400, 750), 350)\n    assert reflect.DeepEqual(candidate(120, 20, 100), 207054)\n    assert reflect.DeepEqual(candidate(400, 30, 150), 689207212)\n    assert reflect.DeepEqual(candidate(800, 100, 600), 153808266)\n    assert reflect.DeepEqual(candidate(600, 200, 300), 10000)\n    assert reflect.DeepEqual(candidate(900, 300, 600), 45450)\n    assert reflect.DeepEqual(candidate(950, 150, 850), 488545869)\n    assert reflect.DeepEqual(candidate(600, 250, 400), 5200)\n    assert reflect.DeepEqual(candidate(650, 130, 520), 15497300)\n    assert reflect.DeepEqual(candidate(700, 350, 560), 210)\n    assert reflect.DeepEqual(candidate(950, 140, 650), 285835661)\n    assert reflect.DeepEqual(candidate(850, 300, 500), 28975)\n    assert reflect.DeepEqual(candidate(650, 90, 500), 926898505)\n    assert reflect.DeepEqual(candidate(550, 250, 450), 1475)\n    assert reflect.DeepEqual(candidate(800, 200, 500), 1423700)\n    assert reflect.DeepEqual(candidate(750, 250, 550), 31675)\n    assert reflect.DeepEqual(candidate(550, 80, 450), 2109288)\n    assert reflect.DeepEqual(candidate(500, 200, 400), 5250)\n    assert reflect.DeepEqual(candidate(1000, 50, 900), 770071855)\n    assert reflect.DeepEqual(candidate(750, 120, 500), 914080410)\n    assert reflect.DeepEqual(candidate(600, 150, 450), 619250)\n    assert reflect.DeepEqual(candidate(999, 300, 750), 246900)\n    assert reflect.DeepEqual(candidate(1000, 50, 950), 770074505)\n    assert reflect.DeepEqual(candidate(950, 190, 760), 65412725)\n    assert reflect.DeepEqual(candidate(1000, 10, 500), 104566774)\n    assert reflect.DeepEqual(candidate(600, 120, 480), 11476850)\n    assert reflect.DeepEqual(candidate(1000, 400, 700), 20400)\n    assert reflect.DeepEqual(candidate(900, 100, 800), 892948851)\n    assert reflect.DeepEqual(candidate(500, 50, 450), 344465040)\n    assert reflect.DeepEqual(candidate(200, 40, 150), 219220)\n    assert reflect.DeepEqual(candidate(300, 50, 250), 8177885)\n    assert reflect.DeepEqual(candidate(1000, 500, 900), 400)\n    assert reflect.DeepEqual(candidate(600, 100, 500), 165273270)\n    assert reflect.DeepEqual(candidate(750, 200, 500), 632925)\n    assert reflect.DeepEqual(candidate(850, 130, 550), 523316449)\n    assert reflect.DeepEqual(candidate(450, 90, 360), 3944850)\n    assert reflect.DeepEqual(candidate(1000, 150, 700), 188312873)\n    assert reflect.DeepEqual(candidate(1000, 999, 1000), 2)\n    assert reflect.DeepEqual(candidate(400, 10, 350), 610381426)\n    assert reflect.DeepEqual(candidate(800, 150, 350), 77362035)\n    assert reflect.DeepEqual(candidate(700, 190, 560), 426390)\n    assert reflect.DeepEqual(candidate(550, 220, 330), 6215)\n    assert reflect.DeepEqual(candidate(900, 250, 600), 651750)\n    assert reflect.DeepEqual(candidate(700, 70, 630), 66046770)\n    assert reflect.DeepEqual(candidate(950, 400, 850), 11775)\n    assert reflect.DeepEqual(candidate(750, 150, 600), 26594875)\n    assert reflect.DeepEqual(candidate(400, 100, 350), 192050)\n    assert reflect.DeepEqual(candidate(300, 10, 299), 236977941)\n    assert reflect.DeepEqual(candidate(800, 200, 600), 1434000)\n    assert reflect.DeepEqual(candidate(900, 200, 700), 9092125)\n    assert reflect.DeepEqual(candidate(700, 100, 500), 766847687)\n    assert reflect.DeepEqual(candidate(650, 175, 525), 378875)\n    assert reflect.DeepEqual(candidate(600, 80, 400), 816019201)\n    assert reflect.DeepEqual(candidate(1000, 500, 999), 499)\n    assert reflect.DeepEqual(candidate(300, 100, 200), 5150)\n}",
+    "rust": "fn check(candidate: fn(Vec<i32>, i32) -> Vec<i32>) {\n    assert_eq!(candidate(8, 3, 6), 6);\n    assert_eq!(candidate(500, 100, 400), 5820125);\n    assert_eq!(candidate(4, 1, 3), 6);\n    assert_eq!(candidate(1000, 5, 10), 743819361);\n    assert_eq!(candidate(1000, 1, 999), 344211603);\n    assert_eq!(candidate(10, 2, 5), 30);\n    assert_eq!(candidate(10, 3, 5), 5);\n    assert_eq!(candidate(15, 4, 7), 19);\n    assert_eq!(candidate(6, 2, 4), 5);\n    assert_eq!(candidate(5, 1, 4), 14);\n    assert_eq!(candidate(7, 2, 3), 2);\n    assert_eq!(candidate(100, 10, 50), 22517820);\n    assert_eq!(candidate(200, 50, 150), 27250);\n    assert_eq!(candidate(900, 300, 650), 45500);\n    assert_eq!(candidate(550, 150, 450), 203375);\n    assert_eq!(candidate(950, 400, 700), 11625);\n    assert_eq!(candidate(800, 150, 600), 79177860);\n    assert_eq!(candidate(900, 150, 300), 935294905);\n    assert_eq!(candidate(1000, 1, 10), 694661098);\n    assert_eq!(candidate(700, 110, 550), 887595495);\n    assert_eq!(candidate(600, 250, 550), 5350);\n    assert_eq!(candidate(500, 100, 200), 5264525);\n    assert_eq!(candidate(200, 2, 199), 349361643);\n    assert_eq!(candidate(1000, 1, 500), 28219034);\n    assert_eq!(candidate(1000, 1, 2), 2);\n    assert_eq!(candidate(750, 250, 500), 31625);\n    assert_eq!(candidate(999, 50, 400), 112339611);\n    assert_eq!(candidate(950, 300, 600), 81225);\n    assert_eq!(candidate(750, 200, 600), 635625);\n    assert_eq!(candidate(900, 200, 500), 9051525);\n    assert_eq!(candidate(600, 125, 500), 6406900);\n    assert_eq!(candidate(800, 200, 300), 843250);\n    assert_eq!(candidate(550, 110, 440), 8292625);\n    assert_eq!(candidate(700, 150, 450), 7127075);\n    assert_eq!(candidate(500, 5, 100), 121345145);\n    assert_eq!(candidate(750, 120, 450), 913950185);\n    assert_eq!(candidate(300, 60, 280), 907415);\n    assert_eq!(candidate(500, 150, 400), 42450);\n    assert_eq!(candidate(600, 50, 550), 979826832);\n    assert_eq!(candidate(750, 125, 550), 450909175);\n    assert_eq!(candidate(550, 70, 400), 326052608);\n    assert_eq!(candidate(800, 400, 750), 350);\n    assert_eq!(candidate(120, 20, 100), 207054);\n    assert_eq!(candidate(400, 30, 150), 689207212);\n    assert_eq!(candidate(800, 100, 600), 153808266);\n    assert_eq!(candidate(600, 200, 300), 10000);\n    assert_eq!(candidate(900, 300, 600), 45450);\n    assert_eq!(candidate(950, 150, 850), 488545869);\n    assert_eq!(candidate(600, 250, 400), 5200);\n    assert_eq!(candidate(650, 130, 520), 15497300);\n    assert_eq!(candidate(700, 350, 560), 210);\n    assert_eq!(candidate(950, 140, 650), 285835661);\n    assert_eq!(candidate(850, 300, 500), 28975);\n    assert_eq!(candidate(650, 90, 500), 926898505);\n    assert_eq!(candidate(550, 250, 450), 1475);\n    assert_eq!(candidate(800, 200, 500), 1423700);\n    assert_eq!(candidate(750, 250, 550), 31675);\n    assert_eq!(candidate(550, 80, 450), 2109288);\n    assert_eq!(candidate(500, 200, 400), 5250);\n    assert_eq!(candidate(1000, 50, 900), 770071855);\n    assert_eq!(candidate(750, 120, 500), 914080410);\n    assert_eq!(candidate(600, 150, 450), 619250);\n    assert_eq!(candidate(999, 300, 750), 246900);\n    assert_eq!(candidate(1000, 50, 950), 770074505);\n    assert_eq!(candidate(950, 190, 760), 65412725);\n    assert_eq!(candidate(1000, 10, 500), 104566774);\n    assert_eq!(candidate(600, 120, 480), 11476850);\n    assert_eq!(candidate(1000, 400, 700), 20400);\n    assert_eq!(candidate(900, 100, 800), 892948851);\n    assert_eq!(candidate(500, 50, 450), 344465040);\n    assert_eq!(candidate(200, 40, 150), 219220);\n    assert_eq!(candidate(300, 50, 250), 8177885);\n    assert_eq!(candidate(1000, 500, 900), 400);\n    assert_eq!(candidate(600, 100, 500), 165273270);\n    assert_eq!(candidate(750, 200, 500), 632925);\n    assert_eq!(candidate(850, 130, 550), 523316449);\n    assert_eq!(candidate(450, 90, 360), 3944850);\n    assert_eq!(candidate(1000, 150, 700), 188312873);\n    assert_eq!(candidate(1000, 999, 1000), 2);\n    assert_eq!(candidate(400, 10, 350), 610381426);\n    assert_eq!(candidate(800, 150, 350), 77362035);\n    assert_eq!(candidate(700, 190, 560), 426390);\n    assert_eq!(candidate(550, 220, 330), 6215);\n    assert_eq!(candidate(900, 250, 600), 651750);\n    assert_eq!(candidate(700, 70, 630), 66046770);\n    assert_eq!(candidate(950, 400, 850), 11775);\n    assert_eq!(candidate(750, 150, 600), 26594875);\n    assert_eq!(candidate(400, 100, 350), 192050);\n    assert_eq!(candidate(300, 10, 299), 236977941);\n    assert_eq!(candidate(800, 200, 600), 1434000);\n    assert_eq!(candidate(900, 200, 700), 9092125);\n    assert_eq!(candidate(700, 100, 500), 766847687);\n    assert_eq!(candidate(650, 175, 525), 378875);\n    assert_eq!(candidate(600, 80, 400), 816019201);\n    assert_eq!(candidate(1000, 500, 999), 499);\n    assert_eq!(candidate(300, 100, 200), 5150);\n}"
+  },
+  "test_cases": [
+    {
+      "input": "n = 8, delay = 3, forget = 6",
+      "output": "6"
+    },
+    {
+      "input": "n = 500, delay = 100, forget = 400",
+      "output": "5820125"
+    },
+    {
+      "input": "n = 4, delay = 1, forget = 3",
+      "output": "6"
+    },
+    {
+      "input": "n = 1000, delay = 5, forget = 10",
+      "output": "743819361"
+    },
+    {
+      "input": "n = 1000, delay = 1, forget = 999",
+      "output": "344211603"
+    },
+    {
+      "input": "n = 10, delay = 2, forget = 5",
+      "output": "30"
+    },
+    {
+      "input": "n = 10, delay = 3, forget = 5",
+      "output": "5"
+    },
+    {
+      "input": "n = 15, delay = 4, forget = 7",
+      "output": "19"
+    },
+    {
+      "input": "n = 6, delay = 2, forget = 4",
+      "output": "5"
+    },
+    {
+      "input": "n = 5, delay = 1, forget = 4",
+      "output": "14"
+    },
+    {
+      "input": "n = 7, delay = 2, forget = 3",
+      "output": "2"
+    },
+    {
+      "input": "n = 100, delay = 10, forget = 50",
+      "output": "22517820"
+    },
+    {
+      "input": "n = 200, delay = 50, forget = 150",
+      "output": "27250"
+    },
+    {
+      "input": "n = 900, delay = 300, forget = 650",
+      "output": "45500"
+    },
+    {
+      "input": "n = 550, delay = 150, forget = 450",
+      "output": "203375"
+    },
+    {
+      "input": "n = 950, delay = 400, forget = 700",
+      "output": "11625"
+    },
+    {
+      "input": "n = 800, delay = 150, forget = 600",
+      "output": "79177860"
+    },
+    {
+      "input": "n = 900, delay = 150, forget = 300",
+      "output": "935294905"
+    },
+    {
+      "input": "n = 1000, delay = 1, forget = 10",
+      "output": "694661098"
+    },
+    {
+      "input": "n = 700, delay = 110, forget = 550",
+      "output": "887595495"
+    },
+    {
+      "input": "n = 600, delay = 250, forget = 550",
+      "output": "5350"
+    },
+    {
+      "input": "n = 500, delay = 100, forget = 200",
+      "output": "5264525"
+    },
+    {
+      "input": "n = 200, delay = 2, forget = 199",
+      "output": "349361643"
+    },
+    {
+      "input": "n = 1000, delay = 1, forget = 500",
+      "output": "28219034"
+    },
+    {
+      "input": "n = 1000, delay = 1, forget = 2",
+      "output": "2"
+    },
+    {
+      "input": "n = 750, delay = 250, forget = 500",
+      "output": "31625"
+    },
+    {
+      "input": "n = 999, delay = 50, forget = 400",
+      "output": "112339611"
+    },
+    {
+      "input": "n = 950, delay = 300, forget = 600",
+      "output": "81225"
+    },
+    {
+      "input": "n = 750, delay = 200, forget = 600",
+      "output": "635625"
+    },
+    {
+      "input": "n = 900, delay = 200, forget = 500",
+      "output": "9051525"
+    },
+    {
+      "input": "n = 600, delay = 125, forget = 500",
+      "output": "6406900"
+    },
+    {
+      "input": "n = 800, delay = 200, forget = 300",
+      "output": "843250"
+    },
+    {
+      "input": "n = 550, delay = 110, forget = 440",
+      "output": "8292625"
+    },
+    {
+      "input": "n = 700, delay = 150, forget = 450",
+      "output": "7127075"
+    },
+    {
+      "input": "n = 500, delay = 5, forget = 100",
+      "output": "121345145"
+    },
+    {
+      "input": "n = 750, delay = 120, forget = 450",
+      "output": "913950185"
+    },
+    {
+      "input": "n = 300, delay = 60, forget = 280",
+      "output": "907415"
+    },
+    {
+      "input": "n = 500, delay = 150, forget = 400",
+      "output": "42450"
+    },
+    {
+      "input": "n = 600, delay = 50, forget = 550",
+      "output": "979826832"
+    },
+    {
+      "input": "n = 750, delay = 125, forget = 550",
+      "output": "450909175"
+    },
+    {
+      "input": "n = 550, delay = 70, forget = 400",
+      "output": "326052608"
+    },
+    {
+      "input": "n = 800, delay = 400, forget = 750",
+      "output": "350"
+    },
+    {
+      "input": "n = 120, delay = 20, forget = 100",
+      "output": "207054"
+    },
+    {
+      "input": "n = 400, delay = 30, forget = 150",
+      "output": "689207212"
+    },
+    {
+      "input": "n = 800, delay = 100, forget = 600",
+      "output": "153808266"
+    },
+    {
+      "input": "n = 600, delay = 200, forget = 300",
+      "output": "10000"
+    },
+    {
+      "input": "n = 900, delay = 300, forget = 600",
+      "output": "45450"
+    },
+    {
+      "input": "n = 950, delay = 150, forget = 850",
+      "output": "488545869"
+    },
+    {
+      "input": "n = 600, delay = 250, forget = 400",
+      "output": "5200"
+    },
+    {
+      "input": "n = 650, delay = 130, forget = 520",
+      "output": "15497300"
+    },
+    {
+      "input": "n = 700, delay = 350, forget = 560",
+      "output": "210"
+    },
+    {
+      "input": "n = 950, delay = 140, forget = 650",
+      "output": "285835661"
+    },
+    {
+      "input": "n = 850, delay = 300, forget = 500",
+      "output": "28975"
+    },
+    {
+      "input": "n = 650, delay = 90, forget = 500",
+      "output": "926898505"
+    },
+    {
+      "input": "n = 550, delay = 250, forget = 450",
+      "output": "1475"
+    },
+    {
+      "input": "n = 800, delay = 200, forget = 500",
+      "output": "1423700"
+    },
+    {
+      "input": "n = 750, delay = 250, forget = 550",
+      "output": "31675"
+    },
+    {
+      "input": "n = 550, delay = 80, forget = 450",
+      "output": "2109288"
+    },
+    {
+      "input": "n = 500, delay = 200, forget = 400",
+      "output": "5250"
+    },
+    {
+      "input": "n = 1000, delay = 50, forget = 900",
+      "output": "770071855"
+    },
+    {
+      "input": "n = 750, delay = 120, forget = 500",
+      "output": "914080410"
+    },
+    {
+      "input": "n = 600, delay = 150, forget = 450",
+      "output": "619250"
+    },
+    {
+      "input": "n = 999, delay = 300, forget = 750",
+      "output": "246900"
+    },
+    {
+      "input": "n = 1000, delay = 50, forget = 950",
+      "output": "770074505"
+    },
+    {
+      "input": "n = 950, delay = 190, forget = 760",
+      "output": "65412725"
+    },
+    {
+      "input": "n = 1000, delay = 10, forget = 500",
+      "output": "104566774"
+    },
+    {
+      "input": "n = 600, delay = 120, forget = 480",
+      "output": "11476850"
+    },
+    {
+      "input": "n = 1000, delay = 400, forget = 700",
+      "output": "20400"
+    },
+    {
+      "input": "n = 900, delay = 100, forget = 800",
+      "output": "892948851"
+    },
+    {
+      "input": "n = 500, delay = 50, forget = 450",
+      "output": "344465040"
+    },
+    {
+      "input": "n = 200, delay = 40, forget = 150",
+      "output": "219220"
+    },
+    {
+      "input": "n = 300, delay = 50, forget = 250",
+      "output": "8177885"
+    },
+    {
+      "input": "n = 1000, delay = 500, forget = 900",
+      "output": "400"
+    },
+    {
+      "input": "n = 600, delay = 100, forget = 500",
+      "output": "165273270"
+    },
+    {
+      "input": "n = 750, delay = 200, forget = 500",
+      "output": "632925"
+    },
+    {
+      "input": "n = 850, delay = 130, forget = 550",
+      "output": "523316449"
+    },
+    {
+      "input": "n = 450, delay = 90, forget = 360",
+      "output": "3944850"
+    },
+    {
+      "input": "n = 1000, delay = 150, forget = 700",
+      "output": "188312873"
+    },
+    {
+      "input": "n = 1000, delay = 999, forget = 1000",
+      "output": "2"
+    },
+    {
+      "input": "n = 400, delay = 10, forget = 350",
+      "output": "610381426"
+    },
+    {
+      "input": "n = 800, delay = 150, forget = 350",
+      "output": "77362035"
+    },
+    {
+      "input": "n = 700, delay = 190, forget = 560",
+      "output": "426390"
+    },
+    {
+      "input": "n = 550, delay = 220, forget = 330",
+      "output": "6215"
+    },
+    {
+      "input": "n = 900, delay = 250, forget = 600",
+      "output": "651750"
+    },
+    {
+      "input": "n = 700, delay = 70, forget = 630",
+      "output": "66046770"
+    },
+    {
+      "input": "n = 950, delay = 400, forget = 850",
+      "output": "11775"
+    },
+    {
+      "input": "n = 750, delay = 150, forget = 600",
+      "output": "26594875"
+    },
+    {
+      "input": "n = 400, delay = 100, forget = 350",
+      "output": "192050"
+    },
+    {
+      "input": "n = 300, delay = 10, forget = 299",
+      "output": "236977941"
+    },
+    {
+      "input": "n = 800, delay = 200, forget = 600",
+      "output": "1434000"
+    },
+    {
+      "input": "n = 900, delay = 200, forget = 700",
+      "output": "9092125"
+    },
+    {
+      "input": "n = 700, delay = 100, forget = 500",
+      "output": "766847687"
+    },
+    {
+      "input": "n = 650, delay = 175, forget = 525",
+      "output": "378875"
+    },
+    {
+      "input": "n = 600, delay = 80, forget = 400",
+      "output": "816019201"
+    },
+    {
+      "input": "n = 1000, delay = 500, forget = 999",
+      "output": "499"
+    },
+    {
+      "input": "n = 300, delay = 100, forget = 200",
+      "output": "5150"
+    }
+  ],
+  "types": {
+    "python3": {
+      "input": [
+        {
+          "n": "int"
+        },
+        {
+          "delay": "int"
+        },
+        {
+          "forget": "int"
+        }
+      ],
+      "output": "int"
+    },
+    "cpp": {
+      "input": [
+        {
+          "n": "int"
+        },
+        {
+          "delay": "int"
+        },
+        {
+          "forget": "int"
+        }
+      ],
+      "output": "int"
+    },
+    "java": {
+      "input": [
+        {
+          "n": "int"
+        },
+        {
+          "delay": "int"
+        },
+        {
+          "forget": "int"
+        }
+      ],
+      "output": "int"
+    },
+    "javascript": {
+      "input": [
+        {
+          "n": "number"
+        },
+        {
+          "delay": "number"
+        },
+        {
+          "forget": "number"
+        }
+      ],
+      "output": "number"
+    },
+    "typescript": {
+      "input": [
+        {
+          "n": "number"
+        },
+        {
+          "delay": "number"
+        },
+        {
+          "forget": "number"
+        }
+      ],
+      "output": "number"
+    },
+    "golang": {
+      "input": [
+        {
+          "n": "int"
+        },
+        {
+          "delay": "int"
+        },
+        {
+          "forget": "int"
+        }
+      ],
+      "output": "int"
+    },
+    "rust": {
+      "input": [
+        {
+          "n": "i32"
+        },
+        {
+          "delay": "i32"
+        },
+        {
+          "forget": "i32"
+        }
+      ],
+      "output": "i32"
+    }
+  },
+  "tags": [
+    "dynamic-programming",
+    "queue",
+    "simulation"
+  ]
+}

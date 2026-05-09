@@ -1,0 +1,554 @@
+{
+  "id": 2663,
+  "title": "Lexicographically Smallest Beautiful String",
+  "slug": "lexicographically-smallest-beautiful-string",
+  "difficulty": "Hard",
+  "description": "A string is beautiful if:\nYou are given a beautiful string s of length n and a positive integer k.\nReturn the lexicographically smallest string of length n, which is larger than s and is beautiful. If there is no such string, return an empty string.\nA string a is lexicographically larger than a string b (of the same length) if in the first position where a and b differ, a has a character strictly larger than the corresponding character in b.\nExample 1:\nExample 2:\nConstraints:",
+  "examples": [
+    {
+      "example_num": 1,
+      "example_text": "Input: s = \"abcz\", k = 26\nOutput: \"abda\"\nExplanation: The string \"abda\" is beautiful and lexicographically larger than the string \"abcz\".\nIt can be proven that there is no string that is lexicographically larger than the string \"abcz\", beautiful, and lexicographically smaller than the string \"abda\".",
+      "images": []
+    },
+    {
+      "example_num": 2,
+      "example_text": "Input: s = \"dc\", k = 4\nOutput: \"\"\nExplanation: It can be proven that there is no string that is lexicographically larger than the string \"dc\" and is beautiful.",
+      "images": []
+    }
+  ],
+  "constraints": [
+    "1 <= n == s.length <= 105",
+    "4 <= k <= 26",
+    "s is a beautiful string."
+  ],
+  "hints": [
+    "If the string does not contain any palindromic substrings of lengths 2 and 3, then the string does not contain any palindromic substrings at all.",
+    "Iterate from right to left and if it is possible to increase character at index i without creating any palindromic substrings of lengths 2 and 3, then increase it.",
+    "After increasing the character at index i, set every character after index i equal to character a. With this, we will ensure that we have created a lexicographically larger string than s, which does not contain any palindromes before index i and is lexicographically the smallest.",
+    "Finally, we are just left with a case to fix palindromic substrings, which come after index i. This can be done with a similar method mentioned in the second hint."
+  ],
+  "code_snippets": {
+    "cpp": "class Solution {\npublic:\n    string smallestBeautifulString(string s, int k) {\n        \n    }\n};",
+    "java": "class Solution {\n    public String smallestBeautifulString(String s, int k) {\n        \n    }\n}",
+    "python3": "class Solution:\n    def smallestBeautifulString(self, s: str, k: int) -> str:\n        ",
+    "javascript": "/**\n * @param {string} s\n * @param {number} k\n * @return {string}\n */\nvar smallestBeautifulString = function(s, k) {\n    \n};",
+    "typescript": "function smallestBeautifulString(s: string, k: number): string {\n    \n};",
+    "golang": "func smallestBeautifulString(s string, k int) string {\n    \n}",
+    "rust": "impl Solution {\n    pub fn smallest_beautiful_string(s: String, k: i32) -> String {\n        \n    }\n}"
+  },
+  "entry_points": {
+    "python3": "Solution().smallestBeautifulString",
+    "cpp": "Solution().smallestBeautifulString",
+    "java": "new Solution().smallestBeautifulString",
+    "javascript": "smallestBeautifulString",
+    "typescript": "smallestBeautifulString",
+    "golang": "smallestBeautifulString",
+    "rust": "Solution::smallest_beautiful_string"
+  },
+  "test_snippets": {
+    "python3": "def check(candidate):\n    assert candidate(s = \"abcd\", k = 5) == abce\n    assert candidate(s = \"aabbcc\", k = 6) == aabbcd\n    assert candidate(s = \"zyx\", k = 26) == None\n    assert candidate(s = \"abcz\", k = 26) == abda\n    assert candidate(s = \"aaa\", k = 4) == aab\n    assert candidate(s = \"dc\", k = 4) == None\n    assert candidate(s = \"aab\", k = 3) == aac\n    assert candidate(s = \"abcd\", k = 4) == abda\n    assert candidate(s = \"xyz\", k = 26) == xza\n    assert candidate(s = \"zyx\", k = 3) == None\n    assert candidate(s = \"aabb\", k = 4) == aabc\n    assert candidate(s = \"azzzz\", k = 26) == bacba\n    assert candidate(s = \"abcabcabcabc\", k = 3) == acbacbacbacb\n    assert candidate(s = \"abcabca\", k = 26) == abcabcd\n    assert candidate(s = \"aabababa\", k = 6) == aabababc\n    assert candidate(s = \"zzzzz\", k = 26) == None\n    assert candidate(s = \"abcabcabcabc\", k = 26) == abcabcabcabd\n    assert candidate(s = \"zyxzyxzyxzyx\", k = 26) == None\n    assert candidate(s = \"wxyz\", k = 26) == wxza\n    assert candidate(s = \"zzzzzzzzzz\", k = 26) == None\n    assert candidate(s = \"mnopqrstuvw\", k = 21) == mnopqrsuabc\n    assert candidate(s = \"zyxwvutsr\", k = 19) == None\n    assert candidate(s = \"abcdefg\", k = 7) == abcdega\n    assert candidate(s = \"abcdefghijklmnop\", k = 26) == abcdefghijklmnoq\n    assert candidate(s = \"mnopqr\", k = 18) == mnopra\n    assert candidate(s = \"lkjihgf\", k = 12) == lkjihgi\n    assert candidate(s = \"abcabc\", k = 3) == acbacb\n    assert candidate(s = \"abcdefghij\", k = 10) == abcdefghja\n    assert candidate(s = \"aabccba\", k = 15) == aabccbd\n    assert candidate(s = \"mnbvcxzlkjhgfdsapoiuytrewq\", k = 26) == mnbvcxzlkjhgfdsapoiuytrewr\n    assert candidate(s = \"ababababababab\", k = 3) == ababababababac\n    assert candidate(s = \"abcabcabcabcabc\", k = 3) == acbacbacbacbacb\n    assert candidate(s = \"abcdefghijklmnopqrstuvwxyza\", k = 26) == abcdefghijklmnopqrstuvwxyzb\n    assert candidate(s = \"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", k = 20) == aabbccddeeffgghhiijjkkllmmnnooppqqrrstabcabcabcabcab\n    assert candidate(s = \"abcdefghijklmnopqrstuv\", k = 21) == abcdefghijklmnopqrsuab\n    assert candidate(s = \"zzzzzz\", k = 4) == None\n    assert candidate(s = \"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", k = 26) == aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyzab\n    assert candidate(s = \"abcdabcd\", k = 4) == abcdabda\n    assert candidate(s = \"zzzzzzzzzzzzzzzzzzzzzzzz\", k = 26) == None\n    assert candidate(s = \"abcaabcd\", k = 26) == abcaabce\n    assert candidate(s = \"mnopqrlmno\", k = 14) == mnopqrlnab\n    assert candidate(s = \"abcdcba\", k = 10) == abcdcbd\n    assert candidate(s = \"abcdefghijklmnopqrstuvwxzz\", k = 26) == abcdefghijklmnopqrstuvwyab\n    assert candidate(s = \"abcdefghijk\", k = 12) == abcdefghijl\n    assert candidate(s = \"abcdefghijk\", k = 11) == abcdefghika\n    assert candidate(s = \"abba\", k = 26) == abbc\n    assert candidate(s = \"abababababab\", k = 26) == abababababac\n    assert candidate(s = \"aaaabbbbccccdddd\", k = 26) == aaaabbbbccccddde\n    assert candidate(s = \"abcabcabc\", k = 3) == acbacbacb\n    assert candidate(s = \"abcdcba\", k = 26) == abcdcbd\n    assert candidate(s = \"abcdexyz\", k = 26) == abcdexza\n    assert candidate(s = \"pqrs\", k = 18) == prab\n    assert candidate(s = \"qwertyuiopasdfghjklzxcvbnm\", k = 26) == qwertyuiopasdfghjklzxcvbno\n    assert candidate(s = \"xyzabc\", k = 26) == xyzabd\n    assert candidate(s = \"abacabadabacaba\", k = 26) == abacabadabacabc\n    assert candidate(s = \"aabbccdd\", k = 6) == aabbccde\n    assert candidate(s = \"zzzz\", k = 4) == None\n    assert candidate(s = \"aabbaabbaabb\", k = 6) == aabbaabbaabc\n    assert candidate(s = \"abcde\", k = 5) == abcea\n    assert candidate(s = \"mnopqrstuvw\", k = 22) == mnopqrstvab\n    assert candidate(s = \"abcdexyzabcd\", k = 26) == abcdexyzabce\n    assert candidate(s = \"abacabacabacaba\", k = 3) == abacabacabacabc\n    assert candidate(s = \"abacabadabc\", k = 26) == abacabadabd\n    assert candidate(s = \"xyzxyzxyzxyz\", k = 26) == xzabcabcabca\n    assert candidate(s = \"abcbabcba\", k = 3) == abcbacbac\n    assert candidate(s = \"abcdefghij\", k = 26) == abcdefghik\n    assert candidate(s = \"abac\", k = 4) == abad\n    assert candidate(s = \"abcabcabc\", k = 26) == abcabcabd\n    assert candidate(s = \"abcba\", k = 3) == acbac\n    assert candidate(s = \"abcdefghi\", k = 10) == abcdefghj\n    assert candidate(s = \"aabbaa\", k = 6) == aabbac\n    assert candidate(s = \"abcdefghi\", k = 9) == abcdefgia\n    assert candidate(s = \"zyxcba\", k = 6) == zyxcbd\n    assert candidate(s = \"mnopqrstuvwxyzz\", k = 26) == mnopqrstuvwxzab\n    assert candidate(s = \"zzzzzzzzz\", k = 26) == None\n    assert candidate(s = \"aabbccddeeffgg\", k = 6) == aabbccddefabca\n    assert candidate(s = \"abacabadabacaba\", k = 15) == abacabadabacabc\n    assert candidate(s = \"abcdefghijklmnopqrstuvwxy\", k = 26) == abcdefghijklmnopqrstuvwxz\n    assert candidate(s = \"abcdabc\", k = 26) == abcdabd\n    assert candidate(s = \"fedcba\", k = 6) == fedcbd\n    assert candidate(s = \"aabbccddeeffgg\", k = 10) == aabbccddeeffgh\n    assert candidate(s = \"mnopqrstu\", k = 20) == mnopqrtab\n    assert candidate(s = \"abcdefg\", k = 8) == abcdefh\n    assert candidate(s = \"abababababab\", k = 2) == baababababab\n    assert candidate(s = \"abcddcba\", k = 20) == abcddcbd\n    assert candidate(s = \"abacaba\", k = 7) == abacabc\n    assert candidate(s = \"abacabadabacaba\", k = 3) == abacabadabacabc\n    assert candidate(s = \"abcdefghijklmnop\", k = 20) == abcdefghijklmnoq\n    assert candidate(s = \"aabababacababaca\", k = 26) == aabababacababacb\n    assert candidate(s = \"zzyyxxwwvvuuttssrrqqppoonnmmllkkjjiihhaaggeeffddccbb\", k = 26) == zzyyxxwwvvuuttssrrqqppoonnmmllkkjjiihhaaggeeffddccbd\n    assert candidate(s = \"abacabad\", k = 4) == abacabca\n    assert candidate(s = \"acb\", k = 3) == bac\n    assert candidate(s = \"zyxzyxzyx\", k = 26) == None\n    assert candidate(s = \"aabbccddeeff\", k = 26) == aabbccddeefg\n    assert candidate(s = \"abcbac\", k = 26) == abcbad\n    assert candidate(s = \"abcdefghijklmnop\", k = 16) == abcdefghijklmnpa\n    assert candidate(s = \"abcabcabcabc\", k = 6) == abcabcabcabd\n    assert candidate(s = \"abacaba\", k = 26) == abacabc\n    assert candidate(s = \"abacbacbac\", k = 5) == abacbacbad\n    assert candidate(s = \"abcdcba\", k = 5) == abcdcbd\n    assert candidate(s = \"abcdefgabcdefg\", k = 26) == abcdefgabcdefh\n    assert candidate(s = \"abcdabcdabcd\", k = 4) == abcdabcdabda\n    assert candidate(s = \"zyxwvutsrqponmlkjihgfedcba\", k = 26) == zyxwvutsrqponmlkjihgfedcbd",
+    "cpp": "void check(Solution& solution) {\n    assert(solution.smallestBeautifulString(\"abcd\", 5) == vector<int>abce);\n    assert(solution.smallestBeautifulString(\"aabbcc\", 6) == vector<int>aabbcd);\n    assert(solution.smallestBeautifulString(\"zyx\", 26) == vector<int>nullptr);\n    assert(solution.smallestBeautifulString(\"abcz\", 26) == vector<int>abda);\n    assert(solution.smallestBeautifulString(\"aaa\", 4) == vector<int>aab);\n    assert(solution.smallestBeautifulString(\"dc\", 4) == vector<int>nullptr);\n    assert(solution.smallestBeautifulString(\"aab\", 3) == vector<int>aac);\n    assert(solution.smallestBeautifulString(\"abcd\", 4) == vector<int>abda);\n    assert(solution.smallestBeautifulString(\"xyz\", 26) == vector<int>xza);\n    assert(solution.smallestBeautifulString(\"zyx\", 3) == vector<int>nullptr);\n    assert(solution.smallestBeautifulString(\"aabb\", 4) == vector<int>aabc);\n    assert(solution.smallestBeautifulString(\"azzzz\", 26) == vector<int>bacba);\n    assert(solution.smallestBeautifulString(\"abcabcabcabc\", 3) == vector<int>acbacbacbacb);\n    assert(solution.smallestBeautifulString(\"abcabca\", 26) == vector<int>abcabcd);\n    assert(solution.smallestBeautifulString(\"aabababa\", 6) == vector<int>aabababc);\n    assert(solution.smallestBeautifulString(\"zzzzz\", 26) == vector<int>nullptr);\n    assert(solution.smallestBeautifulString(\"abcabcabcabc\", 26) == vector<int>abcabcabcabd);\n    assert(solution.smallestBeautifulString(\"zyxzyxzyxzyx\", 26) == vector<int>nullptr);\n    assert(solution.smallestBeautifulString(\"wxyz\", 26) == vector<int>wxza);\n    assert(solution.smallestBeautifulString(\"zzzzzzzzzz\", 26) == vector<int>nullptr);\n    assert(solution.smallestBeautifulString(\"mnopqrstuvw\", 21) == vector<int>mnopqrsuabc);\n    assert(solution.smallestBeautifulString(\"zyxwvutsr\", 19) == vector<int>nullptr);\n    assert(solution.smallestBeautifulString(\"abcdefg\", 7) == vector<int>abcdega);\n    assert(solution.smallestBeautifulString(\"abcdefghijklmnop\", 26) == vector<int>abcdefghijklmnoq);\n    assert(solution.smallestBeautifulString(\"mnopqr\", 18) == vector<int>mnopra);\n    assert(solution.smallestBeautifulString(\"lkjihgf\", 12) == vector<int>lkjihgi);\n    assert(solution.smallestBeautifulString(\"abcabc\", 3) == vector<int>acbacb);\n    assert(solution.smallestBeautifulString(\"abcdefghij\", 10) == vector<int>abcdefghja);\n    assert(solution.smallestBeautifulString(\"aabccba\", 15) == vector<int>aabccbd);\n    assert(solution.smallestBeautifulString(\"mnbvcxzlkjhgfdsapoiuytrewq\", 26) == vector<int>mnbvcxzlkjhgfdsapoiuytrewr);\n    assert(solution.smallestBeautifulString(\"ababababababab\", 3) == vector<int>ababababababac);\n    assert(solution.smallestBeautifulString(\"abcabcabcabcabc\", 3) == vector<int>acbacbacbacbacb);\n    assert(solution.smallestBeautifulString(\"abcdefghijklmnopqrstuvwxyza\", 26) == vector<int>abcdefghijklmnopqrstuvwxyzb);\n    assert(solution.smallestBeautifulString(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", 20) == vector<int>aabbccddeeffgghhiijjkkllmmnnooppqqrrstabcabcabcabcab);\n    assert(solution.smallestBeautifulString(\"abcdefghijklmnopqrstuv\", 21) == vector<int>abcdefghijklmnopqrsuab);\n    assert(solution.smallestBeautifulString(\"zzzzzz\", 4) == vector<int>nullptr);\n    assert(solution.smallestBeautifulString(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", 26) == vector<int>aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyzab);\n    assert(solution.smallestBeautifulString(\"abcdabcd\", 4) == vector<int>abcdabda);\n    assert(solution.smallestBeautifulString(\"zzzzzzzzzzzzzzzzzzzzzzzz\", 26) == vector<int>nullptr);\n    assert(solution.smallestBeautifulString(\"abcaabcd\", 26) == vector<int>abcaabce);\n    assert(solution.smallestBeautifulString(\"mnopqrlmno\", 14) == vector<int>mnopqrlnab);\n    assert(solution.smallestBeautifulString(\"abcdcba\", 10) == vector<int>abcdcbd);\n    assert(solution.smallestBeautifulString(\"abcdefghijklmnopqrstuvwxzz\", 26) == vector<int>abcdefghijklmnopqrstuvwyab);\n    assert(solution.smallestBeautifulString(\"abcdefghijk\", 12) == vector<int>abcdefghijl);\n    assert(solution.smallestBeautifulString(\"abcdefghijk\", 11) == vector<int>abcdefghika);\n    assert(solution.smallestBeautifulString(\"abba\", 26) == vector<int>abbc);\n    assert(solution.smallestBeautifulString(\"abababababab\", 26) == vector<int>abababababac);\n    assert(solution.smallestBeautifulString(\"aaaabbbbccccdddd\", 26) == vector<int>aaaabbbbccccddde);\n    assert(solution.smallestBeautifulString(\"abcabcabc\", 3) == vector<int>acbacbacb);\n    assert(solution.smallestBeautifulString(\"abcdcba\", 26) == vector<int>abcdcbd);\n    assert(solution.smallestBeautifulString(\"abcdexyz\", 26) == vector<int>abcdexza);\n    assert(solution.smallestBeautifulString(\"pqrs\", 18) == vector<int>prab);\n    assert(solution.smallestBeautifulString(\"qwertyuiopasdfghjklzxcvbnm\", 26) == vector<int>qwertyuiopasdfghjklzxcvbno);\n    assert(solution.smallestBeautifulString(\"xyzabc\", 26) == vector<int>xyzabd);\n    assert(solution.smallestBeautifulString(\"abacabadabacaba\", 26) == vector<int>abacabadabacabc);\n    assert(solution.smallestBeautifulString(\"aabbccdd\", 6) == vector<int>aabbccde);\n    assert(solution.smallestBeautifulString(\"zzzz\", 4) == vector<int>nullptr);\n    assert(solution.smallestBeautifulString(\"aabbaabbaabb\", 6) == vector<int>aabbaabbaabc);\n    assert(solution.smallestBeautifulString(\"abcde\", 5) == vector<int>abcea);\n    assert(solution.smallestBeautifulString(\"mnopqrstuvw\", 22) == vector<int>mnopqrstvab);\n    assert(solution.smallestBeautifulString(\"abcdexyzabcd\", 26) == vector<int>abcdexyzabce);\n    assert(solution.smallestBeautifulString(\"abacabacabacaba\", 3) == vector<int>abacabacabacabc);\n    assert(solution.smallestBeautifulString(\"abacabadabc\", 26) == vector<int>abacabadabd);\n    assert(solution.smallestBeautifulString(\"xyzxyzxyzxyz\", 26) == vector<int>xzabcabcabca);\n    assert(solution.smallestBeautifulString(\"abcbabcba\", 3) == vector<int>abcbacbac);\n    assert(solution.smallestBeautifulString(\"abcdefghij\", 26) == vector<int>abcdefghik);\n    assert(solution.smallestBeautifulString(\"abac\", 4) == vector<int>abad);\n    assert(solution.smallestBeautifulString(\"abcabcabc\", 26) == vector<int>abcabcabd);\n    assert(solution.smallestBeautifulString(\"abcba\", 3) == vector<int>acbac);\n    assert(solution.smallestBeautifulString(\"abcdefghi\", 10) == vector<int>abcdefghj);\n    assert(solution.smallestBeautifulString(\"aabbaa\", 6) == vector<int>aabbac);\n    assert(solution.smallestBeautifulString(\"abcdefghi\", 9) == vector<int>abcdefgia);\n    assert(solution.smallestBeautifulString(\"zyxcba\", 6) == vector<int>zyxcbd);\n    assert(solution.smallestBeautifulString(\"mnopqrstuvwxyzz\", 26) == vector<int>mnopqrstuvwxzab);\n    assert(solution.smallestBeautifulString(\"zzzzzzzzz\", 26) == vector<int>nullptr);\n    assert(solution.smallestBeautifulString(\"aabbccddeeffgg\", 6) == vector<int>aabbccddefabca);\n    assert(solution.smallestBeautifulString(\"abacabadabacaba\", 15) == vector<int>abacabadabacabc);\n    assert(solution.smallestBeautifulString(\"abcdefghijklmnopqrstuvwxy\", 26) == vector<int>abcdefghijklmnopqrstuvwxz);\n    assert(solution.smallestBeautifulString(\"abcdabc\", 26) == vector<int>abcdabd);\n    assert(solution.smallestBeautifulString(\"fedcba\", 6) == vector<int>fedcbd);\n    assert(solution.smallestBeautifulString(\"aabbccddeeffgg\", 10) == vector<int>aabbccddeeffgh);\n    assert(solution.smallestBeautifulString(\"mnopqrstu\", 20) == vector<int>mnopqrtab);\n    assert(solution.smallestBeautifulString(\"abcdefg\", 8) == vector<int>abcdefh);\n    assert(solution.smallestBeautifulString(\"abababababab\", 2) == vector<int>baababababab);\n    assert(solution.smallestBeautifulString(\"abcddcba\", 20) == vector<int>abcddcbd);\n    assert(solution.smallestBeautifulString(\"abacaba\", 7) == vector<int>abacabc);\n    assert(solution.smallestBeautifulString(\"abacabadabacaba\", 3) == vector<int>abacabadabacabc);\n    assert(solution.smallestBeautifulString(\"abcdefghijklmnop\", 20) == vector<int>abcdefghijklmnoq);\n    assert(solution.smallestBeautifulString(\"aabababacababaca\", 26) == vector<int>aabababacababacb);\n    assert(solution.smallestBeautifulString(\"zzyyxxwwvvuuttssrrqqppoonnmmllkkjjiihhaaggeeffddccbb\", 26) == vector<int>zzyyxxwwvvuuttssrrqqppoonnmmllkkjjiihhaaggeeffddccbd);\n    assert(solution.smallestBeautifulString(\"abacabad\", 4) == vector<int>abacabca);\n    assert(solution.smallestBeautifulString(\"acb\", 3) == vector<int>bac);\n    assert(solution.smallestBeautifulString(\"zyxzyxzyx\", 26) == vector<int>nullptr);\n    assert(solution.smallestBeautifulString(\"aabbccddeeff\", 26) == vector<int>aabbccddeefg);\n    assert(solution.smallestBeautifulString(\"abcbac\", 26) == vector<int>abcbad);\n    assert(solution.smallestBeautifulString(\"abcdefghijklmnop\", 16) == vector<int>abcdefghijklmnpa);\n    assert(solution.smallestBeautifulString(\"abcabcabcabc\", 6) == vector<int>abcabcabcabd);\n    assert(solution.smallestBeautifulString(\"abacaba\", 26) == vector<int>abacabc);\n    assert(solution.smallestBeautifulString(\"abacbacbac\", 5) == vector<int>abacbacbad);\n    assert(solution.smallestBeautifulString(\"abcdcba\", 5) == vector<int>abcdcbd);\n    assert(solution.smallestBeautifulString(\"abcdefgabcdefg\", 26) == vector<int>abcdefgabcdefh);\n    assert(solution.smallestBeautifulString(\"abcdabcdabcd\", 4) == vector<int>abcdabcdabda);\n    assert(solution.smallestBeautifulString(\"zyxwvutsrqponmlkjihgfedcba\", 26) == vector<int>zyxwvutsrqponmlkjihgfedcbd);\n}",
+    "java": "public static void check(Solution solution) {\n    assert Arrays.equals(solution.smallestBeautifulString(\"abcd\", 5), abce);\n    assert Arrays.equals(solution.smallestBeautifulString(\"aabbcc\", 6), aabbcd);\n    assert Arrays.equals(solution.smallestBeautifulString(\"zyx\", 26), null);\n    assert Arrays.equals(solution.smallestBeautifulString(\"abcz\", 26), abda);\n    assert Arrays.equals(solution.smallestBeautifulString(\"aaa\", 4), aab);\n    assert Arrays.equals(solution.smallestBeautifulString(\"dc\", 4), null);\n    assert Arrays.equals(solution.smallestBeautifulString(\"aab\", 3), aac);\n    assert Arrays.equals(solution.smallestBeautifulString(\"abcd\", 4), abda);\n    assert Arrays.equals(solution.smallestBeautifulString(\"xyz\", 26), xza);\n    assert Arrays.equals(solution.smallestBeautifulString(\"zyx\", 3), null);\n    assert Arrays.equals(solution.smallestBeautifulString(\"aabb\", 4), aabc);\n    assert Arrays.equals(solution.smallestBeautifulString(\"azzzz\", 26), bacba);\n    assert Arrays.equals(solution.smallestBeautifulString(\"abcabcabcabc\", 3), acbacbacbacb);\n    assert Arrays.equals(solution.smallestBeautifulString(\"abcabca\", 26), abcabcd);\n    assert Arrays.equals(solution.smallestBeautifulString(\"aabababa\", 6), aabababc);\n    assert Arrays.equals(solution.smallestBeautifulString(\"zzzzz\", 26), null);\n    assert Arrays.equals(solution.smallestBeautifulString(\"abcabcabcabc\", 26), abcabcabcabd);\n    assert Arrays.equals(solution.smallestBeautifulString(\"zyxzyxzyxzyx\", 26), null);\n    assert Arrays.equals(solution.smallestBeautifulString(\"wxyz\", 26), wxza);\n    assert Arrays.equals(solution.smallestBeautifulString(\"zzzzzzzzzz\", 26), null);\n    assert Arrays.equals(solution.smallestBeautifulString(\"mnopqrstuvw\", 21), mnopqrsuabc);\n    assert Arrays.equals(solution.smallestBeautifulString(\"zyxwvutsr\", 19), null);\n    assert Arrays.equals(solution.smallestBeautifulString(\"abcdefg\", 7), abcdega);\n    assert Arrays.equals(solution.smallestBeautifulString(\"abcdefghijklmnop\", 26), abcdefghijklmnoq);\n    assert Arrays.equals(solution.smallestBeautifulString(\"mnopqr\", 18), mnopra);\n    assert Arrays.equals(solution.smallestBeautifulString(\"lkjihgf\", 12), lkjihgi);\n    assert Arrays.equals(solution.smallestBeautifulString(\"abcabc\", 3), acbacb);\n    assert Arrays.equals(solution.smallestBeautifulString(\"abcdefghij\", 10), abcdefghja);\n    assert Arrays.equals(solution.smallestBeautifulString(\"aabccba\", 15), aabccbd);\n    assert Arrays.equals(solution.smallestBeautifulString(\"mnbvcxzlkjhgfdsapoiuytrewq\", 26), mnbvcxzlkjhgfdsapoiuytrewr);\n    assert Arrays.equals(solution.smallestBeautifulString(\"ababababababab\", 3), ababababababac);\n    assert Arrays.equals(solution.smallestBeautifulString(\"abcabcabcabcabc\", 3), acbacbacbacbacb);\n    assert Arrays.equals(solution.smallestBeautifulString(\"abcdefghijklmnopqrstuvwxyza\", 26), abcdefghijklmnopqrstuvwxyzb);\n    assert Arrays.equals(solution.smallestBeautifulString(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", 20), aabbccddeeffgghhiijjkkllmmnnooppqqrrstabcabcabcabcab);\n    assert Arrays.equals(solution.smallestBeautifulString(\"abcdefghijklmnopqrstuv\", 21), abcdefghijklmnopqrsuab);\n    assert Arrays.equals(solution.smallestBeautifulString(\"zzzzzz\", 4), null);\n    assert Arrays.equals(solution.smallestBeautifulString(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", 26), aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyzab);\n    assert Arrays.equals(solution.smallestBeautifulString(\"abcdabcd\", 4), abcdabda);\n    assert Arrays.equals(solution.smallestBeautifulString(\"zzzzzzzzzzzzzzzzzzzzzzzz\", 26), null);\n    assert Arrays.equals(solution.smallestBeautifulString(\"abcaabcd\", 26), abcaabce);\n    assert Arrays.equals(solution.smallestBeautifulString(\"mnopqrlmno\", 14), mnopqrlnab);\n    assert Arrays.equals(solution.smallestBeautifulString(\"abcdcba\", 10), abcdcbd);\n    assert Arrays.equals(solution.smallestBeautifulString(\"abcdefghijklmnopqrstuvwxzz\", 26), abcdefghijklmnopqrstuvwyab);\n    assert Arrays.equals(solution.smallestBeautifulString(\"abcdefghijk\", 12), abcdefghijl);\n    assert Arrays.equals(solution.smallestBeautifulString(\"abcdefghijk\", 11), abcdefghika);\n    assert Arrays.equals(solution.smallestBeautifulString(\"abba\", 26), abbc);\n    assert Arrays.equals(solution.smallestBeautifulString(\"abababababab\", 26), abababababac);\n    assert Arrays.equals(solution.smallestBeautifulString(\"aaaabbbbccccdddd\", 26), aaaabbbbccccddde);\n    assert Arrays.equals(solution.smallestBeautifulString(\"abcabcabc\", 3), acbacbacb);\n    assert Arrays.equals(solution.smallestBeautifulString(\"abcdcba\", 26), abcdcbd);\n    assert Arrays.equals(solution.smallestBeautifulString(\"abcdexyz\", 26), abcdexza);\n    assert Arrays.equals(solution.smallestBeautifulString(\"pqrs\", 18), prab);\n    assert Arrays.equals(solution.smallestBeautifulString(\"qwertyuiopasdfghjklzxcvbnm\", 26), qwertyuiopasdfghjklzxcvbno);\n    assert Arrays.equals(solution.smallestBeautifulString(\"xyzabc\", 26), xyzabd);\n    assert Arrays.equals(solution.smallestBeautifulString(\"abacabadabacaba\", 26), abacabadabacabc);\n    assert Arrays.equals(solution.smallestBeautifulString(\"aabbccdd\", 6), aabbccde);\n    assert Arrays.equals(solution.smallestBeautifulString(\"zzzz\", 4), null);\n    assert Arrays.equals(solution.smallestBeautifulString(\"aabbaabbaabb\", 6), aabbaabbaabc);\n    assert Arrays.equals(solution.smallestBeautifulString(\"abcde\", 5), abcea);\n    assert Arrays.equals(solution.smallestBeautifulString(\"mnopqrstuvw\", 22), mnopqrstvab);\n    assert Arrays.equals(solution.smallestBeautifulString(\"abcdexyzabcd\", 26), abcdexyzabce);\n    assert Arrays.equals(solution.smallestBeautifulString(\"abacabacabacaba\", 3), abacabacabacabc);\n    assert Arrays.equals(solution.smallestBeautifulString(\"abacabadabc\", 26), abacabadabd);\n    assert Arrays.equals(solution.smallestBeautifulString(\"xyzxyzxyzxyz\", 26), xzabcabcabca);\n    assert Arrays.equals(solution.smallestBeautifulString(\"abcbabcba\", 3), abcbacbac);\n    assert Arrays.equals(solution.smallestBeautifulString(\"abcdefghij\", 26), abcdefghik);\n    assert Arrays.equals(solution.smallestBeautifulString(\"abac\", 4), abad);\n    assert Arrays.equals(solution.smallestBeautifulString(\"abcabcabc\", 26), abcabcabd);\n    assert Arrays.equals(solution.smallestBeautifulString(\"abcba\", 3), acbac);\n    assert Arrays.equals(solution.smallestBeautifulString(\"abcdefghi\", 10), abcdefghj);\n    assert Arrays.equals(solution.smallestBeautifulString(\"aabbaa\", 6), aabbac);\n    assert Arrays.equals(solution.smallestBeautifulString(\"abcdefghi\", 9), abcdefgia);\n    assert Arrays.equals(solution.smallestBeautifulString(\"zyxcba\", 6), zyxcbd);\n    assert Arrays.equals(solution.smallestBeautifulString(\"mnopqrstuvwxyzz\", 26), mnopqrstuvwxzab);\n    assert Arrays.equals(solution.smallestBeautifulString(\"zzzzzzzzz\", 26), null);\n    assert Arrays.equals(solution.smallestBeautifulString(\"aabbccddeeffgg\", 6), aabbccddefabca);\n    assert Arrays.equals(solution.smallestBeautifulString(\"abacabadabacaba\", 15), abacabadabacabc);\n    assert Arrays.equals(solution.smallestBeautifulString(\"abcdefghijklmnopqrstuvwxy\", 26), abcdefghijklmnopqrstuvwxz);\n    assert Arrays.equals(solution.smallestBeautifulString(\"abcdabc\", 26), abcdabd);\n    assert Arrays.equals(solution.smallestBeautifulString(\"fedcba\", 6), fedcbd);\n    assert Arrays.equals(solution.smallestBeautifulString(\"aabbccddeeffgg\", 10), aabbccddeeffgh);\n    assert Arrays.equals(solution.smallestBeautifulString(\"mnopqrstu\", 20), mnopqrtab);\n    assert Arrays.equals(solution.smallestBeautifulString(\"abcdefg\", 8), abcdefh);\n    assert Arrays.equals(solution.smallestBeautifulString(\"abababababab\", 2), baababababab);\n    assert Arrays.equals(solution.smallestBeautifulString(\"abcddcba\", 20), abcddcbd);\n    assert Arrays.equals(solution.smallestBeautifulString(\"abacaba\", 7), abacabc);\n    assert Arrays.equals(solution.smallestBeautifulString(\"abacabadabacaba\", 3), abacabadabacabc);\n    assert Arrays.equals(solution.smallestBeautifulString(\"abcdefghijklmnop\", 20), abcdefghijklmnoq);\n    assert Arrays.equals(solution.smallestBeautifulString(\"aabababacababaca\", 26), aabababacababacb);\n    assert Arrays.equals(solution.smallestBeautifulString(\"zzyyxxwwvvuuttssrrqqppoonnmmllkkjjiihhaaggeeffddccbb\", 26), zzyyxxwwvvuuttssrrqqppoonnmmllkkjjiihhaaggeeffddccbd);\n    assert Arrays.equals(solution.smallestBeautifulString(\"abacabad\", 4), abacabca);\n    assert Arrays.equals(solution.smallestBeautifulString(\"acb\", 3), bac);\n    assert Arrays.equals(solution.smallestBeautifulString(\"zyxzyxzyx\", 26), null);\n    assert Arrays.equals(solution.smallestBeautifulString(\"aabbccddeeff\", 26), aabbccddeefg);\n    assert Arrays.equals(solution.smallestBeautifulString(\"abcbac\", 26), abcbad);\n    assert Arrays.equals(solution.smallestBeautifulString(\"abcdefghijklmnop\", 16), abcdefghijklmnpa);\n    assert Arrays.equals(solution.smallestBeautifulString(\"abcabcabcabc\", 6), abcabcabcabd);\n    assert Arrays.equals(solution.smallestBeautifulString(\"abacaba\", 26), abacabc);\n    assert Arrays.equals(solution.smallestBeautifulString(\"abacbacbac\", 5), abacbacbad);\n    assert Arrays.equals(solution.smallestBeautifulString(\"abcdcba\", 5), abcdcbd);\n    assert Arrays.equals(solution.smallestBeautifulString(\"abcdefgabcdefg\", 26), abcdefgabcdefh);\n    assert Arrays.equals(solution.smallestBeautifulString(\"abcdabcdabcd\", 4), abcdabcdabda);\n    assert Arrays.equals(solution.smallestBeautifulString(\"zyxwvutsrqponmlkjihgfedcba\", 26), zyxwvutsrqponmlkjihgfedcbd);\n}",
+    "javascript": "function check(candidate) {\n    console.assert(JSON.stringify(candidate(\"abcd\", 5)) === JSON.stringify(abce));\n    console.assert(JSON.stringify(candidate(\"aabbcc\", 6)) === JSON.stringify(aabbcd));\n    console.assert(JSON.stringify(candidate(\"zyx\", 26)) === JSON.stringify(null));\n    console.assert(JSON.stringify(candidate(\"abcz\", 26)) === JSON.stringify(abda));\n    console.assert(JSON.stringify(candidate(\"aaa\", 4)) === JSON.stringify(aab));\n    console.assert(JSON.stringify(candidate(\"dc\", 4)) === JSON.stringify(null));\n    console.assert(JSON.stringify(candidate(\"aab\", 3)) === JSON.stringify(aac));\n    console.assert(JSON.stringify(candidate(\"abcd\", 4)) === JSON.stringify(abda));\n    console.assert(JSON.stringify(candidate(\"xyz\", 26)) === JSON.stringify(xza));\n    console.assert(JSON.stringify(candidate(\"zyx\", 3)) === JSON.stringify(null));\n    console.assert(JSON.stringify(candidate(\"aabb\", 4)) === JSON.stringify(aabc));\n    console.assert(JSON.stringify(candidate(\"azzzz\", 26)) === JSON.stringify(bacba));\n    console.assert(JSON.stringify(candidate(\"abcabcabcabc\", 3)) === JSON.stringify(acbacbacbacb));\n    console.assert(JSON.stringify(candidate(\"abcabca\", 26)) === JSON.stringify(abcabcd));\n    console.assert(JSON.stringify(candidate(\"aabababa\", 6)) === JSON.stringify(aabababc));\n    console.assert(JSON.stringify(candidate(\"zzzzz\", 26)) === JSON.stringify(null));\n    console.assert(JSON.stringify(candidate(\"abcabcabcabc\", 26)) === JSON.stringify(abcabcabcabd));\n    console.assert(JSON.stringify(candidate(\"zyxzyxzyxzyx\", 26)) === JSON.stringify(null));\n    console.assert(JSON.stringify(candidate(\"wxyz\", 26)) === JSON.stringify(wxza));\n    console.assert(JSON.stringify(candidate(\"zzzzzzzzzz\", 26)) === JSON.stringify(null));\n    console.assert(JSON.stringify(candidate(\"mnopqrstuvw\", 21)) === JSON.stringify(mnopqrsuabc));\n    console.assert(JSON.stringify(candidate(\"zyxwvutsr\", 19)) === JSON.stringify(null));\n    console.assert(JSON.stringify(candidate(\"abcdefg\", 7)) === JSON.stringify(abcdega));\n    console.assert(JSON.stringify(candidate(\"abcdefghijklmnop\", 26)) === JSON.stringify(abcdefghijklmnoq));\n    console.assert(JSON.stringify(candidate(\"mnopqr\", 18)) === JSON.stringify(mnopra));\n    console.assert(JSON.stringify(candidate(\"lkjihgf\", 12)) === JSON.stringify(lkjihgi));\n    console.assert(JSON.stringify(candidate(\"abcabc\", 3)) === JSON.stringify(acbacb));\n    console.assert(JSON.stringify(candidate(\"abcdefghij\", 10)) === JSON.stringify(abcdefghja));\n    console.assert(JSON.stringify(candidate(\"aabccba\", 15)) === JSON.stringify(aabccbd));\n    console.assert(JSON.stringify(candidate(\"mnbvcxzlkjhgfdsapoiuytrewq\", 26)) === JSON.stringify(mnbvcxzlkjhgfdsapoiuytrewr));\n    console.assert(JSON.stringify(candidate(\"ababababababab\", 3)) === JSON.stringify(ababababababac));\n    console.assert(JSON.stringify(candidate(\"abcabcabcabcabc\", 3)) === JSON.stringify(acbacbacbacbacb));\n    console.assert(JSON.stringify(candidate(\"abcdefghijklmnopqrstuvwxyza\", 26)) === JSON.stringify(abcdefghijklmnopqrstuvwxyzb));\n    console.assert(JSON.stringify(candidate(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", 20)) === JSON.stringify(aabbccddeeffgghhiijjkkllmmnnooppqqrrstabcabcabcabcab));\n    console.assert(JSON.stringify(candidate(\"abcdefghijklmnopqrstuv\", 21)) === JSON.stringify(abcdefghijklmnopqrsuab));\n    console.assert(JSON.stringify(candidate(\"zzzzzz\", 4)) === JSON.stringify(null));\n    console.assert(JSON.stringify(candidate(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", 26)) === JSON.stringify(aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyzab));\n    console.assert(JSON.stringify(candidate(\"abcdabcd\", 4)) === JSON.stringify(abcdabda));\n    console.assert(JSON.stringify(candidate(\"zzzzzzzzzzzzzzzzzzzzzzzz\", 26)) === JSON.stringify(null));\n    console.assert(JSON.stringify(candidate(\"abcaabcd\", 26)) === JSON.stringify(abcaabce));\n    console.assert(JSON.stringify(candidate(\"mnopqrlmno\", 14)) === JSON.stringify(mnopqrlnab));\n    console.assert(JSON.stringify(candidate(\"abcdcba\", 10)) === JSON.stringify(abcdcbd));\n    console.assert(JSON.stringify(candidate(\"abcdefghijklmnopqrstuvwxzz\", 26)) === JSON.stringify(abcdefghijklmnopqrstuvwyab));\n    console.assert(JSON.stringify(candidate(\"abcdefghijk\", 12)) === JSON.stringify(abcdefghijl));\n    console.assert(JSON.stringify(candidate(\"abcdefghijk\", 11)) === JSON.stringify(abcdefghika));\n    console.assert(JSON.stringify(candidate(\"abba\", 26)) === JSON.stringify(abbc));\n    console.assert(JSON.stringify(candidate(\"abababababab\", 26)) === JSON.stringify(abababababac));\n    console.assert(JSON.stringify(candidate(\"aaaabbbbccccdddd\", 26)) === JSON.stringify(aaaabbbbccccddde));\n    console.assert(JSON.stringify(candidate(\"abcabcabc\", 3)) === JSON.stringify(acbacbacb));\n    console.assert(JSON.stringify(candidate(\"abcdcba\", 26)) === JSON.stringify(abcdcbd));\n    console.assert(JSON.stringify(candidate(\"abcdexyz\", 26)) === JSON.stringify(abcdexza));\n    console.assert(JSON.stringify(candidate(\"pqrs\", 18)) === JSON.stringify(prab));\n    console.assert(JSON.stringify(candidate(\"qwertyuiopasdfghjklzxcvbnm\", 26)) === JSON.stringify(qwertyuiopasdfghjklzxcvbno));\n    console.assert(JSON.stringify(candidate(\"xyzabc\", 26)) === JSON.stringify(xyzabd));\n    console.assert(JSON.stringify(candidate(\"abacabadabacaba\", 26)) === JSON.stringify(abacabadabacabc));\n    console.assert(JSON.stringify(candidate(\"aabbccdd\", 6)) === JSON.stringify(aabbccde));\n    console.assert(JSON.stringify(candidate(\"zzzz\", 4)) === JSON.stringify(null));\n    console.assert(JSON.stringify(candidate(\"aabbaabbaabb\", 6)) === JSON.stringify(aabbaabbaabc));\n    console.assert(JSON.stringify(candidate(\"abcde\", 5)) === JSON.stringify(abcea));\n    console.assert(JSON.stringify(candidate(\"mnopqrstuvw\", 22)) === JSON.stringify(mnopqrstvab));\n    console.assert(JSON.stringify(candidate(\"abcdexyzabcd\", 26)) === JSON.stringify(abcdexyzabce));\n    console.assert(JSON.stringify(candidate(\"abacabacabacaba\", 3)) === JSON.stringify(abacabacabacabc));\n    console.assert(JSON.stringify(candidate(\"abacabadabc\", 26)) === JSON.stringify(abacabadabd));\n    console.assert(JSON.stringify(candidate(\"xyzxyzxyzxyz\", 26)) === JSON.stringify(xzabcabcabca));\n    console.assert(JSON.stringify(candidate(\"abcbabcba\", 3)) === JSON.stringify(abcbacbac));\n    console.assert(JSON.stringify(candidate(\"abcdefghij\", 26)) === JSON.stringify(abcdefghik));\n    console.assert(JSON.stringify(candidate(\"abac\", 4)) === JSON.stringify(abad));\n    console.assert(JSON.stringify(candidate(\"abcabcabc\", 26)) === JSON.stringify(abcabcabd));\n    console.assert(JSON.stringify(candidate(\"abcba\", 3)) === JSON.stringify(acbac));\n    console.assert(JSON.stringify(candidate(\"abcdefghi\", 10)) === JSON.stringify(abcdefghj));\n    console.assert(JSON.stringify(candidate(\"aabbaa\", 6)) === JSON.stringify(aabbac));\n    console.assert(JSON.stringify(candidate(\"abcdefghi\", 9)) === JSON.stringify(abcdefgia));\n    console.assert(JSON.stringify(candidate(\"zyxcba\", 6)) === JSON.stringify(zyxcbd));\n    console.assert(JSON.stringify(candidate(\"mnopqrstuvwxyzz\", 26)) === JSON.stringify(mnopqrstuvwxzab));\n    console.assert(JSON.stringify(candidate(\"zzzzzzzzz\", 26)) === JSON.stringify(null));\n    console.assert(JSON.stringify(candidate(\"aabbccddeeffgg\", 6)) === JSON.stringify(aabbccddefabca));\n    console.assert(JSON.stringify(candidate(\"abacabadabacaba\", 15)) === JSON.stringify(abacabadabacabc));\n    console.assert(JSON.stringify(candidate(\"abcdefghijklmnopqrstuvwxy\", 26)) === JSON.stringify(abcdefghijklmnopqrstuvwxz));\n    console.assert(JSON.stringify(candidate(\"abcdabc\", 26)) === JSON.stringify(abcdabd));\n    console.assert(JSON.stringify(candidate(\"fedcba\", 6)) === JSON.stringify(fedcbd));\n    console.assert(JSON.stringify(candidate(\"aabbccddeeffgg\", 10)) === JSON.stringify(aabbccddeeffgh));\n    console.assert(JSON.stringify(candidate(\"mnopqrstu\", 20)) === JSON.stringify(mnopqrtab));\n    console.assert(JSON.stringify(candidate(\"abcdefg\", 8)) === JSON.stringify(abcdefh));\n    console.assert(JSON.stringify(candidate(\"abababababab\", 2)) === JSON.stringify(baababababab));\n    console.assert(JSON.stringify(candidate(\"abcddcba\", 20)) === JSON.stringify(abcddcbd));\n    console.assert(JSON.stringify(candidate(\"abacaba\", 7)) === JSON.stringify(abacabc));\n    console.assert(JSON.stringify(candidate(\"abacabadabacaba\", 3)) === JSON.stringify(abacabadabacabc));\n    console.assert(JSON.stringify(candidate(\"abcdefghijklmnop\", 20)) === JSON.stringify(abcdefghijklmnoq));\n    console.assert(JSON.stringify(candidate(\"aabababacababaca\", 26)) === JSON.stringify(aabababacababacb));\n    console.assert(JSON.stringify(candidate(\"zzyyxxwwvvuuttssrrqqppoonnmmllkkjjiihhaaggeeffddccbb\", 26)) === JSON.stringify(zzyyxxwwvvuuttssrrqqppoonnmmllkkjjiihhaaggeeffddccbd));\n    console.assert(JSON.stringify(candidate(\"abacabad\", 4)) === JSON.stringify(abacabca));\n    console.assert(JSON.stringify(candidate(\"acb\", 3)) === JSON.stringify(bac));\n    console.assert(JSON.stringify(candidate(\"zyxzyxzyx\", 26)) === JSON.stringify(null));\n    console.assert(JSON.stringify(candidate(\"aabbccddeeff\", 26)) === JSON.stringify(aabbccddeefg));\n    console.assert(JSON.stringify(candidate(\"abcbac\", 26)) === JSON.stringify(abcbad));\n    console.assert(JSON.stringify(candidate(\"abcdefghijklmnop\", 16)) === JSON.stringify(abcdefghijklmnpa));\n    console.assert(JSON.stringify(candidate(\"abcabcabcabc\", 6)) === JSON.stringify(abcabcabcabd));\n    console.assert(JSON.stringify(candidate(\"abacaba\", 26)) === JSON.stringify(abacabc));\n    console.assert(JSON.stringify(candidate(\"abacbacbac\", 5)) === JSON.stringify(abacbacbad));\n    console.assert(JSON.stringify(candidate(\"abcdcba\", 5)) === JSON.stringify(abcdcbd));\n    console.assert(JSON.stringify(candidate(\"abcdefgabcdefg\", 26)) === JSON.stringify(abcdefgabcdefh));\n    console.assert(JSON.stringify(candidate(\"abcdabcdabcd\", 4)) === JSON.stringify(abcdabcdabda));\n    console.assert(JSON.stringify(candidate(\"zyxwvutsrqponmlkjihgfedcba\", 26)) === JSON.stringify(zyxwvutsrqponmlkjihgfedcbd));\n}",
+    "typescript": "function check(candidate: Function): void {\n    console.assert(JSON.stringify(candidate(\"abcd\", 5)) === JSON.stringify(abce));\n    console.assert(JSON.stringify(candidate(\"aabbcc\", 6)) === JSON.stringify(aabbcd));\n    console.assert(JSON.stringify(candidate(\"zyx\", 26)) === JSON.stringify(null));\n    console.assert(JSON.stringify(candidate(\"abcz\", 26)) === JSON.stringify(abda));\n    console.assert(JSON.stringify(candidate(\"aaa\", 4)) === JSON.stringify(aab));\n    console.assert(JSON.stringify(candidate(\"dc\", 4)) === JSON.stringify(null));\n    console.assert(JSON.stringify(candidate(\"aab\", 3)) === JSON.stringify(aac));\n    console.assert(JSON.stringify(candidate(\"abcd\", 4)) === JSON.stringify(abda));\n    console.assert(JSON.stringify(candidate(\"xyz\", 26)) === JSON.stringify(xza));\n    console.assert(JSON.stringify(candidate(\"zyx\", 3)) === JSON.stringify(null));\n    console.assert(JSON.stringify(candidate(\"aabb\", 4)) === JSON.stringify(aabc));\n    console.assert(JSON.stringify(candidate(\"azzzz\", 26)) === JSON.stringify(bacba));\n    console.assert(JSON.stringify(candidate(\"abcabcabcabc\", 3)) === JSON.stringify(acbacbacbacb));\n    console.assert(JSON.stringify(candidate(\"abcabca\", 26)) === JSON.stringify(abcabcd));\n    console.assert(JSON.stringify(candidate(\"aabababa\", 6)) === JSON.stringify(aabababc));\n    console.assert(JSON.stringify(candidate(\"zzzzz\", 26)) === JSON.stringify(null));\n    console.assert(JSON.stringify(candidate(\"abcabcabcabc\", 26)) === JSON.stringify(abcabcabcabd));\n    console.assert(JSON.stringify(candidate(\"zyxzyxzyxzyx\", 26)) === JSON.stringify(null));\n    console.assert(JSON.stringify(candidate(\"wxyz\", 26)) === JSON.stringify(wxza));\n    console.assert(JSON.stringify(candidate(\"zzzzzzzzzz\", 26)) === JSON.stringify(null));\n    console.assert(JSON.stringify(candidate(\"mnopqrstuvw\", 21)) === JSON.stringify(mnopqrsuabc));\n    console.assert(JSON.stringify(candidate(\"zyxwvutsr\", 19)) === JSON.stringify(null));\n    console.assert(JSON.stringify(candidate(\"abcdefg\", 7)) === JSON.stringify(abcdega));\n    console.assert(JSON.stringify(candidate(\"abcdefghijklmnop\", 26)) === JSON.stringify(abcdefghijklmnoq));\n    console.assert(JSON.stringify(candidate(\"mnopqr\", 18)) === JSON.stringify(mnopra));\n    console.assert(JSON.stringify(candidate(\"lkjihgf\", 12)) === JSON.stringify(lkjihgi));\n    console.assert(JSON.stringify(candidate(\"abcabc\", 3)) === JSON.stringify(acbacb));\n    console.assert(JSON.stringify(candidate(\"abcdefghij\", 10)) === JSON.stringify(abcdefghja));\n    console.assert(JSON.stringify(candidate(\"aabccba\", 15)) === JSON.stringify(aabccbd));\n    console.assert(JSON.stringify(candidate(\"mnbvcxzlkjhgfdsapoiuytrewq\", 26)) === JSON.stringify(mnbvcxzlkjhgfdsapoiuytrewr));\n    console.assert(JSON.stringify(candidate(\"ababababababab\", 3)) === JSON.stringify(ababababababac));\n    console.assert(JSON.stringify(candidate(\"abcabcabcabcabc\", 3)) === JSON.stringify(acbacbacbacbacb));\n    console.assert(JSON.stringify(candidate(\"abcdefghijklmnopqrstuvwxyza\", 26)) === JSON.stringify(abcdefghijklmnopqrstuvwxyzb));\n    console.assert(JSON.stringify(candidate(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", 20)) === JSON.stringify(aabbccddeeffgghhiijjkkllmmnnooppqqrrstabcabcabcabcab));\n    console.assert(JSON.stringify(candidate(\"abcdefghijklmnopqrstuv\", 21)) === JSON.stringify(abcdefghijklmnopqrsuab));\n    console.assert(JSON.stringify(candidate(\"zzzzzz\", 4)) === JSON.stringify(null));\n    console.assert(JSON.stringify(candidate(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", 26)) === JSON.stringify(aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyzab));\n    console.assert(JSON.stringify(candidate(\"abcdabcd\", 4)) === JSON.stringify(abcdabda));\n    console.assert(JSON.stringify(candidate(\"zzzzzzzzzzzzzzzzzzzzzzzz\", 26)) === JSON.stringify(null));\n    console.assert(JSON.stringify(candidate(\"abcaabcd\", 26)) === JSON.stringify(abcaabce));\n    console.assert(JSON.stringify(candidate(\"mnopqrlmno\", 14)) === JSON.stringify(mnopqrlnab));\n    console.assert(JSON.stringify(candidate(\"abcdcba\", 10)) === JSON.stringify(abcdcbd));\n    console.assert(JSON.stringify(candidate(\"abcdefghijklmnopqrstuvwxzz\", 26)) === JSON.stringify(abcdefghijklmnopqrstuvwyab));\n    console.assert(JSON.stringify(candidate(\"abcdefghijk\", 12)) === JSON.stringify(abcdefghijl));\n    console.assert(JSON.stringify(candidate(\"abcdefghijk\", 11)) === JSON.stringify(abcdefghika));\n    console.assert(JSON.stringify(candidate(\"abba\", 26)) === JSON.stringify(abbc));\n    console.assert(JSON.stringify(candidate(\"abababababab\", 26)) === JSON.stringify(abababababac));\n    console.assert(JSON.stringify(candidate(\"aaaabbbbccccdddd\", 26)) === JSON.stringify(aaaabbbbccccddde));\n    console.assert(JSON.stringify(candidate(\"abcabcabc\", 3)) === JSON.stringify(acbacbacb));\n    console.assert(JSON.stringify(candidate(\"abcdcba\", 26)) === JSON.stringify(abcdcbd));\n    console.assert(JSON.stringify(candidate(\"abcdexyz\", 26)) === JSON.stringify(abcdexza));\n    console.assert(JSON.stringify(candidate(\"pqrs\", 18)) === JSON.stringify(prab));\n    console.assert(JSON.stringify(candidate(\"qwertyuiopasdfghjklzxcvbnm\", 26)) === JSON.stringify(qwertyuiopasdfghjklzxcvbno));\n    console.assert(JSON.stringify(candidate(\"xyzabc\", 26)) === JSON.stringify(xyzabd));\n    console.assert(JSON.stringify(candidate(\"abacabadabacaba\", 26)) === JSON.stringify(abacabadabacabc));\n    console.assert(JSON.stringify(candidate(\"aabbccdd\", 6)) === JSON.stringify(aabbccde));\n    console.assert(JSON.stringify(candidate(\"zzzz\", 4)) === JSON.stringify(null));\n    console.assert(JSON.stringify(candidate(\"aabbaabbaabb\", 6)) === JSON.stringify(aabbaabbaabc));\n    console.assert(JSON.stringify(candidate(\"abcde\", 5)) === JSON.stringify(abcea));\n    console.assert(JSON.stringify(candidate(\"mnopqrstuvw\", 22)) === JSON.stringify(mnopqrstvab));\n    console.assert(JSON.stringify(candidate(\"abcdexyzabcd\", 26)) === JSON.stringify(abcdexyzabce));\n    console.assert(JSON.stringify(candidate(\"abacabacabacaba\", 3)) === JSON.stringify(abacabacabacabc));\n    console.assert(JSON.stringify(candidate(\"abacabadabc\", 26)) === JSON.stringify(abacabadabd));\n    console.assert(JSON.stringify(candidate(\"xyzxyzxyzxyz\", 26)) === JSON.stringify(xzabcabcabca));\n    console.assert(JSON.stringify(candidate(\"abcbabcba\", 3)) === JSON.stringify(abcbacbac));\n    console.assert(JSON.stringify(candidate(\"abcdefghij\", 26)) === JSON.stringify(abcdefghik));\n    console.assert(JSON.stringify(candidate(\"abac\", 4)) === JSON.stringify(abad));\n    console.assert(JSON.stringify(candidate(\"abcabcabc\", 26)) === JSON.stringify(abcabcabd));\n    console.assert(JSON.stringify(candidate(\"abcba\", 3)) === JSON.stringify(acbac));\n    console.assert(JSON.stringify(candidate(\"abcdefghi\", 10)) === JSON.stringify(abcdefghj));\n    console.assert(JSON.stringify(candidate(\"aabbaa\", 6)) === JSON.stringify(aabbac));\n    console.assert(JSON.stringify(candidate(\"abcdefghi\", 9)) === JSON.stringify(abcdefgia));\n    console.assert(JSON.stringify(candidate(\"zyxcba\", 6)) === JSON.stringify(zyxcbd));\n    console.assert(JSON.stringify(candidate(\"mnopqrstuvwxyzz\", 26)) === JSON.stringify(mnopqrstuvwxzab));\n    console.assert(JSON.stringify(candidate(\"zzzzzzzzz\", 26)) === JSON.stringify(null));\n    console.assert(JSON.stringify(candidate(\"aabbccddeeffgg\", 6)) === JSON.stringify(aabbccddefabca));\n    console.assert(JSON.stringify(candidate(\"abacabadabacaba\", 15)) === JSON.stringify(abacabadabacabc));\n    console.assert(JSON.stringify(candidate(\"abcdefghijklmnopqrstuvwxy\", 26)) === JSON.stringify(abcdefghijklmnopqrstuvwxz));\n    console.assert(JSON.stringify(candidate(\"abcdabc\", 26)) === JSON.stringify(abcdabd));\n    console.assert(JSON.stringify(candidate(\"fedcba\", 6)) === JSON.stringify(fedcbd));\n    console.assert(JSON.stringify(candidate(\"aabbccddeeffgg\", 10)) === JSON.stringify(aabbccddeeffgh));\n    console.assert(JSON.stringify(candidate(\"mnopqrstu\", 20)) === JSON.stringify(mnopqrtab));\n    console.assert(JSON.stringify(candidate(\"abcdefg\", 8)) === JSON.stringify(abcdefh));\n    console.assert(JSON.stringify(candidate(\"abababababab\", 2)) === JSON.stringify(baababababab));\n    console.assert(JSON.stringify(candidate(\"abcddcba\", 20)) === JSON.stringify(abcddcbd));\n    console.assert(JSON.stringify(candidate(\"abacaba\", 7)) === JSON.stringify(abacabc));\n    console.assert(JSON.stringify(candidate(\"abacabadabacaba\", 3)) === JSON.stringify(abacabadabacabc));\n    console.assert(JSON.stringify(candidate(\"abcdefghijklmnop\", 20)) === JSON.stringify(abcdefghijklmnoq));\n    console.assert(JSON.stringify(candidate(\"aabababacababaca\", 26)) === JSON.stringify(aabababacababacb));\n    console.assert(JSON.stringify(candidate(\"zzyyxxwwvvuuttssrrqqppoonnmmllkkjjiihhaaggeeffddccbb\", 26)) === JSON.stringify(zzyyxxwwvvuuttssrrqqppoonnmmllkkjjiihhaaggeeffddccbd));\n    console.assert(JSON.stringify(candidate(\"abacabad\", 4)) === JSON.stringify(abacabca));\n    console.assert(JSON.stringify(candidate(\"acb\", 3)) === JSON.stringify(bac));\n    console.assert(JSON.stringify(candidate(\"zyxzyxzyx\", 26)) === JSON.stringify(null));\n    console.assert(JSON.stringify(candidate(\"aabbccddeeff\", 26)) === JSON.stringify(aabbccddeefg));\n    console.assert(JSON.stringify(candidate(\"abcbac\", 26)) === JSON.stringify(abcbad));\n    console.assert(JSON.stringify(candidate(\"abcdefghijklmnop\", 16)) === JSON.stringify(abcdefghijklmnpa));\n    console.assert(JSON.stringify(candidate(\"abcabcabcabc\", 6)) === JSON.stringify(abcabcabcabd));\n    console.assert(JSON.stringify(candidate(\"abacaba\", 26)) === JSON.stringify(abacabc));\n    console.assert(JSON.stringify(candidate(\"abacbacbac\", 5)) === JSON.stringify(abacbacbad));\n    console.assert(JSON.stringify(candidate(\"abcdcba\", 5)) === JSON.stringify(abcdcbd));\n    console.assert(JSON.stringify(candidate(\"abcdefgabcdefg\", 26)) === JSON.stringify(abcdefgabcdefh));\n    console.assert(JSON.stringify(candidate(\"abcdabcdabcd\", 4)) === JSON.stringify(abcdabcdabda));\n    console.assert(JSON.stringify(candidate(\"zyxwvutsrqponmlkjihgfedcba\", 26)) === JSON.stringify(zyxwvutsrqponmlkjihgfedcbd));\n}",
+    "golang": "func check(candidate func([]int, int) []int) {\n    assert reflect.DeepEqual(candidate(\"abcd\", 5), abce)\n    assert reflect.DeepEqual(candidate(\"aabbcc\", 6), aabbcd)\n    assert reflect.DeepEqual(candidate(\"zyx\", 26), nil)\n    assert reflect.DeepEqual(candidate(\"abcz\", 26), abda)\n    assert reflect.DeepEqual(candidate(\"aaa\", 4), aab)\n    assert reflect.DeepEqual(candidate(\"dc\", 4), nil)\n    assert reflect.DeepEqual(candidate(\"aab\", 3), aac)\n    assert reflect.DeepEqual(candidate(\"abcd\", 4), abda)\n    assert reflect.DeepEqual(candidate(\"xyz\", 26), xza)\n    assert reflect.DeepEqual(candidate(\"zyx\", 3), nil)\n    assert reflect.DeepEqual(candidate(\"aabb\", 4), aabc)\n    assert reflect.DeepEqual(candidate(\"azzzz\", 26), bacba)\n    assert reflect.DeepEqual(candidate(\"abcabcabcabc\", 3), acbacbacbacb)\n    assert reflect.DeepEqual(candidate(\"abcabca\", 26), abcabcd)\n    assert reflect.DeepEqual(candidate(\"aabababa\", 6), aabababc)\n    assert reflect.DeepEqual(candidate(\"zzzzz\", 26), nil)\n    assert reflect.DeepEqual(candidate(\"abcabcabcabc\", 26), abcabcabcabd)\n    assert reflect.DeepEqual(candidate(\"zyxzyxzyxzyx\", 26), nil)\n    assert reflect.DeepEqual(candidate(\"wxyz\", 26), wxza)\n    assert reflect.DeepEqual(candidate(\"zzzzzzzzzz\", 26), nil)\n    assert reflect.DeepEqual(candidate(\"mnopqrstuvw\", 21), mnopqrsuabc)\n    assert reflect.DeepEqual(candidate(\"zyxwvutsr\", 19), nil)\n    assert reflect.DeepEqual(candidate(\"abcdefg\", 7), abcdega)\n    assert reflect.DeepEqual(candidate(\"abcdefghijklmnop\", 26), abcdefghijklmnoq)\n    assert reflect.DeepEqual(candidate(\"mnopqr\", 18), mnopra)\n    assert reflect.DeepEqual(candidate(\"lkjihgf\", 12), lkjihgi)\n    assert reflect.DeepEqual(candidate(\"abcabc\", 3), acbacb)\n    assert reflect.DeepEqual(candidate(\"abcdefghij\", 10), abcdefghja)\n    assert reflect.DeepEqual(candidate(\"aabccba\", 15), aabccbd)\n    assert reflect.DeepEqual(candidate(\"mnbvcxzlkjhgfdsapoiuytrewq\", 26), mnbvcxzlkjhgfdsapoiuytrewr)\n    assert reflect.DeepEqual(candidate(\"ababababababab\", 3), ababababababac)\n    assert reflect.DeepEqual(candidate(\"abcabcabcabcabc\", 3), acbacbacbacbacb)\n    assert reflect.DeepEqual(candidate(\"abcdefghijklmnopqrstuvwxyza\", 26), abcdefghijklmnopqrstuvwxyzb)\n    assert reflect.DeepEqual(candidate(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", 20), aabbccddeeffgghhiijjkkllmmnnooppqqrrstabcabcabcabcab)\n    assert reflect.DeepEqual(candidate(\"abcdefghijklmnopqrstuv\", 21), abcdefghijklmnopqrsuab)\n    assert reflect.DeepEqual(candidate(\"zzzzzz\", 4), nil)\n    assert reflect.DeepEqual(candidate(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", 26), aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyzab)\n    assert reflect.DeepEqual(candidate(\"abcdabcd\", 4), abcdabda)\n    assert reflect.DeepEqual(candidate(\"zzzzzzzzzzzzzzzzzzzzzzzz\", 26), nil)\n    assert reflect.DeepEqual(candidate(\"abcaabcd\", 26), abcaabce)\n    assert reflect.DeepEqual(candidate(\"mnopqrlmno\", 14), mnopqrlnab)\n    assert reflect.DeepEqual(candidate(\"abcdcba\", 10), abcdcbd)\n    assert reflect.DeepEqual(candidate(\"abcdefghijklmnopqrstuvwxzz\", 26), abcdefghijklmnopqrstuvwyab)\n    assert reflect.DeepEqual(candidate(\"abcdefghijk\", 12), abcdefghijl)\n    assert reflect.DeepEqual(candidate(\"abcdefghijk\", 11), abcdefghika)\n    assert reflect.DeepEqual(candidate(\"abba\", 26), abbc)\n    assert reflect.DeepEqual(candidate(\"abababababab\", 26), abababababac)\n    assert reflect.DeepEqual(candidate(\"aaaabbbbccccdddd\", 26), aaaabbbbccccddde)\n    assert reflect.DeepEqual(candidate(\"abcabcabc\", 3), acbacbacb)\n    assert reflect.DeepEqual(candidate(\"abcdcba\", 26), abcdcbd)\n    assert reflect.DeepEqual(candidate(\"abcdexyz\", 26), abcdexza)\n    assert reflect.DeepEqual(candidate(\"pqrs\", 18), prab)\n    assert reflect.DeepEqual(candidate(\"qwertyuiopasdfghjklzxcvbnm\", 26), qwertyuiopasdfghjklzxcvbno)\n    assert reflect.DeepEqual(candidate(\"xyzabc\", 26), xyzabd)\n    assert reflect.DeepEqual(candidate(\"abacabadabacaba\", 26), abacabadabacabc)\n    assert reflect.DeepEqual(candidate(\"aabbccdd\", 6), aabbccde)\n    assert reflect.DeepEqual(candidate(\"zzzz\", 4), nil)\n    assert reflect.DeepEqual(candidate(\"aabbaabbaabb\", 6), aabbaabbaabc)\n    assert reflect.DeepEqual(candidate(\"abcde\", 5), abcea)\n    assert reflect.DeepEqual(candidate(\"mnopqrstuvw\", 22), mnopqrstvab)\n    assert reflect.DeepEqual(candidate(\"abcdexyzabcd\", 26), abcdexyzabce)\n    assert reflect.DeepEqual(candidate(\"abacabacabacaba\", 3), abacabacabacabc)\n    assert reflect.DeepEqual(candidate(\"abacabadabc\", 26), abacabadabd)\n    assert reflect.DeepEqual(candidate(\"xyzxyzxyzxyz\", 26), xzabcabcabca)\n    assert reflect.DeepEqual(candidate(\"abcbabcba\", 3), abcbacbac)\n    assert reflect.DeepEqual(candidate(\"abcdefghij\", 26), abcdefghik)\n    assert reflect.DeepEqual(candidate(\"abac\", 4), abad)\n    assert reflect.DeepEqual(candidate(\"abcabcabc\", 26), abcabcabd)\n    assert reflect.DeepEqual(candidate(\"abcba\", 3), acbac)\n    assert reflect.DeepEqual(candidate(\"abcdefghi\", 10), abcdefghj)\n    assert reflect.DeepEqual(candidate(\"aabbaa\", 6), aabbac)\n    assert reflect.DeepEqual(candidate(\"abcdefghi\", 9), abcdefgia)\n    assert reflect.DeepEqual(candidate(\"zyxcba\", 6), zyxcbd)\n    assert reflect.DeepEqual(candidate(\"mnopqrstuvwxyzz\", 26), mnopqrstuvwxzab)\n    assert reflect.DeepEqual(candidate(\"zzzzzzzzz\", 26), nil)\n    assert reflect.DeepEqual(candidate(\"aabbccddeeffgg\", 6), aabbccddefabca)\n    assert reflect.DeepEqual(candidate(\"abacabadabacaba\", 15), abacabadabacabc)\n    assert reflect.DeepEqual(candidate(\"abcdefghijklmnopqrstuvwxy\", 26), abcdefghijklmnopqrstuvwxz)\n    assert reflect.DeepEqual(candidate(\"abcdabc\", 26), abcdabd)\n    assert reflect.DeepEqual(candidate(\"fedcba\", 6), fedcbd)\n    assert reflect.DeepEqual(candidate(\"aabbccddeeffgg\", 10), aabbccddeeffgh)\n    assert reflect.DeepEqual(candidate(\"mnopqrstu\", 20), mnopqrtab)\n    assert reflect.DeepEqual(candidate(\"abcdefg\", 8), abcdefh)\n    assert reflect.DeepEqual(candidate(\"abababababab\", 2), baababababab)\n    assert reflect.DeepEqual(candidate(\"abcddcba\", 20), abcddcbd)\n    assert reflect.DeepEqual(candidate(\"abacaba\", 7), abacabc)\n    assert reflect.DeepEqual(candidate(\"abacabadabacaba\", 3), abacabadabacabc)\n    assert reflect.DeepEqual(candidate(\"abcdefghijklmnop\", 20), abcdefghijklmnoq)\n    assert reflect.DeepEqual(candidate(\"aabababacababaca\", 26), aabababacababacb)\n    assert reflect.DeepEqual(candidate(\"zzyyxxwwvvuuttssrrqqppoonnmmllkkjjiihhaaggeeffddccbb\", 26), zzyyxxwwvvuuttssrrqqppoonnmmllkkjjiihhaaggeeffddccbd)\n    assert reflect.DeepEqual(candidate(\"abacabad\", 4), abacabca)\n    assert reflect.DeepEqual(candidate(\"acb\", 3), bac)\n    assert reflect.DeepEqual(candidate(\"zyxzyxzyx\", 26), nil)\n    assert reflect.DeepEqual(candidate(\"aabbccddeeff\", 26), aabbccddeefg)\n    assert reflect.DeepEqual(candidate(\"abcbac\", 26), abcbad)\n    assert reflect.DeepEqual(candidate(\"abcdefghijklmnop\", 16), abcdefghijklmnpa)\n    assert reflect.DeepEqual(candidate(\"abcabcabcabc\", 6), abcabcabcabd)\n    assert reflect.DeepEqual(candidate(\"abacaba\", 26), abacabc)\n    assert reflect.DeepEqual(candidate(\"abacbacbac\", 5), abacbacbad)\n    assert reflect.DeepEqual(candidate(\"abcdcba\", 5), abcdcbd)\n    assert reflect.DeepEqual(candidate(\"abcdefgabcdefg\", 26), abcdefgabcdefh)\n    assert reflect.DeepEqual(candidate(\"abcdabcdabcd\", 4), abcdabcdabda)\n    assert reflect.DeepEqual(candidate(\"zyxwvutsrqponmlkjihgfedcba\", 26), zyxwvutsrqponmlkjihgfedcbd)\n}",
+    "rust": "fn check(candidate: fn(Vec<i32>, i32) -> Vec<i32>) {\n    assert_eq!(candidate(\"abcd\", 5), abce);\n    assert_eq!(candidate(\"aabbcc\", 6), aabbcd);\n    assert_eq!(candidate(\"zyx\", 26), None);\n    assert_eq!(candidate(\"abcz\", 26), abda);\n    assert_eq!(candidate(\"aaa\", 4), aab);\n    assert_eq!(candidate(\"dc\", 4), None);\n    assert_eq!(candidate(\"aab\", 3), aac);\n    assert_eq!(candidate(\"abcd\", 4), abda);\n    assert_eq!(candidate(\"xyz\", 26), xza);\n    assert_eq!(candidate(\"zyx\", 3), None);\n    assert_eq!(candidate(\"aabb\", 4), aabc);\n    assert_eq!(candidate(\"azzzz\", 26), bacba);\n    assert_eq!(candidate(\"abcabcabcabc\", 3), acbacbacbacb);\n    assert_eq!(candidate(\"abcabca\", 26), abcabcd);\n    assert_eq!(candidate(\"aabababa\", 6), aabababc);\n    assert_eq!(candidate(\"zzzzz\", 26), None);\n    assert_eq!(candidate(\"abcabcabcabc\", 26), abcabcabcabd);\n    assert_eq!(candidate(\"zyxzyxzyxzyx\", 26), None);\n    assert_eq!(candidate(\"wxyz\", 26), wxza);\n    assert_eq!(candidate(\"zzzzzzzzzz\", 26), None);\n    assert_eq!(candidate(\"mnopqrstuvw\", 21), mnopqrsuabc);\n    assert_eq!(candidate(\"zyxwvutsr\", 19), None);\n    assert_eq!(candidate(\"abcdefg\", 7), abcdega);\n    assert_eq!(candidate(\"abcdefghijklmnop\", 26), abcdefghijklmnoq);\n    assert_eq!(candidate(\"mnopqr\", 18), mnopra);\n    assert_eq!(candidate(\"lkjihgf\", 12), lkjihgi);\n    assert_eq!(candidate(\"abcabc\", 3), acbacb);\n    assert_eq!(candidate(\"abcdefghij\", 10), abcdefghja);\n    assert_eq!(candidate(\"aabccba\", 15), aabccbd);\n    assert_eq!(candidate(\"mnbvcxzlkjhgfdsapoiuytrewq\", 26), mnbvcxzlkjhgfdsapoiuytrewr);\n    assert_eq!(candidate(\"ababababababab\", 3), ababababababac);\n    assert_eq!(candidate(\"abcabcabcabcabc\", 3), acbacbacbacbacb);\n    assert_eq!(candidate(\"abcdefghijklmnopqrstuvwxyza\", 26), abcdefghijklmnopqrstuvwxyzb);\n    assert_eq!(candidate(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", 20), aabbccddeeffgghhiijjkkllmmnnooppqqrrstabcabcabcabcab);\n    assert_eq!(candidate(\"abcdefghijklmnopqrstuv\", 21), abcdefghijklmnopqrsuab);\n    assert_eq!(candidate(\"zzzzzz\", 4), None);\n    assert_eq!(candidate(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", 26), aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyzab);\n    assert_eq!(candidate(\"abcdabcd\", 4), abcdabda);\n    assert_eq!(candidate(\"zzzzzzzzzzzzzzzzzzzzzzzz\", 26), None);\n    assert_eq!(candidate(\"abcaabcd\", 26), abcaabce);\n    assert_eq!(candidate(\"mnopqrlmno\", 14), mnopqrlnab);\n    assert_eq!(candidate(\"abcdcba\", 10), abcdcbd);\n    assert_eq!(candidate(\"abcdefghijklmnopqrstuvwxzz\", 26), abcdefghijklmnopqrstuvwyab);\n    assert_eq!(candidate(\"abcdefghijk\", 12), abcdefghijl);\n    assert_eq!(candidate(\"abcdefghijk\", 11), abcdefghika);\n    assert_eq!(candidate(\"abba\", 26), abbc);\n    assert_eq!(candidate(\"abababababab\", 26), abababababac);\n    assert_eq!(candidate(\"aaaabbbbccccdddd\", 26), aaaabbbbccccddde);\n    assert_eq!(candidate(\"abcabcabc\", 3), acbacbacb);\n    assert_eq!(candidate(\"abcdcba\", 26), abcdcbd);\n    assert_eq!(candidate(\"abcdexyz\", 26), abcdexza);\n    assert_eq!(candidate(\"pqrs\", 18), prab);\n    assert_eq!(candidate(\"qwertyuiopasdfghjklzxcvbnm\", 26), qwertyuiopasdfghjklzxcvbno);\n    assert_eq!(candidate(\"xyzabc\", 26), xyzabd);\n    assert_eq!(candidate(\"abacabadabacaba\", 26), abacabadabacabc);\n    assert_eq!(candidate(\"aabbccdd\", 6), aabbccde);\n    assert_eq!(candidate(\"zzzz\", 4), None);\n    assert_eq!(candidate(\"aabbaabbaabb\", 6), aabbaabbaabc);\n    assert_eq!(candidate(\"abcde\", 5), abcea);\n    assert_eq!(candidate(\"mnopqrstuvw\", 22), mnopqrstvab);\n    assert_eq!(candidate(\"abcdexyzabcd\", 26), abcdexyzabce);\n    assert_eq!(candidate(\"abacabacabacaba\", 3), abacabacabacabc);\n    assert_eq!(candidate(\"abacabadabc\", 26), abacabadabd);\n    assert_eq!(candidate(\"xyzxyzxyzxyz\", 26), xzabcabcabca);\n    assert_eq!(candidate(\"abcbabcba\", 3), abcbacbac);\n    assert_eq!(candidate(\"abcdefghij\", 26), abcdefghik);\n    assert_eq!(candidate(\"abac\", 4), abad);\n    assert_eq!(candidate(\"abcabcabc\", 26), abcabcabd);\n    assert_eq!(candidate(\"abcba\", 3), acbac);\n    assert_eq!(candidate(\"abcdefghi\", 10), abcdefghj);\n    assert_eq!(candidate(\"aabbaa\", 6), aabbac);\n    assert_eq!(candidate(\"abcdefghi\", 9), abcdefgia);\n    assert_eq!(candidate(\"zyxcba\", 6), zyxcbd);\n    assert_eq!(candidate(\"mnopqrstuvwxyzz\", 26), mnopqrstuvwxzab);\n    assert_eq!(candidate(\"zzzzzzzzz\", 26), None);\n    assert_eq!(candidate(\"aabbccddeeffgg\", 6), aabbccddefabca);\n    assert_eq!(candidate(\"abacabadabacaba\", 15), abacabadabacabc);\n    assert_eq!(candidate(\"abcdefghijklmnopqrstuvwxy\", 26), abcdefghijklmnopqrstuvwxz);\n    assert_eq!(candidate(\"abcdabc\", 26), abcdabd);\n    assert_eq!(candidate(\"fedcba\", 6), fedcbd);\n    assert_eq!(candidate(\"aabbccddeeffgg\", 10), aabbccddeeffgh);\n    assert_eq!(candidate(\"mnopqrstu\", 20), mnopqrtab);\n    assert_eq!(candidate(\"abcdefg\", 8), abcdefh);\n    assert_eq!(candidate(\"abababababab\", 2), baababababab);\n    assert_eq!(candidate(\"abcddcba\", 20), abcddcbd);\n    assert_eq!(candidate(\"abacaba\", 7), abacabc);\n    assert_eq!(candidate(\"abacabadabacaba\", 3), abacabadabacabc);\n    assert_eq!(candidate(\"abcdefghijklmnop\", 20), abcdefghijklmnoq);\n    assert_eq!(candidate(\"aabababacababaca\", 26), aabababacababacb);\n    assert_eq!(candidate(\"zzyyxxwwvvuuttssrrqqppoonnmmllkkjjiihhaaggeeffddccbb\", 26), zzyyxxwwvvuuttssrrqqppoonnmmllkkjjiihhaaggeeffddccbd);\n    assert_eq!(candidate(\"abacabad\", 4), abacabca);\n    assert_eq!(candidate(\"acb\", 3), bac);\n    assert_eq!(candidate(\"zyxzyxzyx\", 26), None);\n    assert_eq!(candidate(\"aabbccddeeff\", 26), aabbccddeefg);\n    assert_eq!(candidate(\"abcbac\", 26), abcbad);\n    assert_eq!(candidate(\"abcdefghijklmnop\", 16), abcdefghijklmnpa);\n    assert_eq!(candidate(\"abcabcabcabc\", 6), abcabcabcabd);\n    assert_eq!(candidate(\"abacaba\", 26), abacabc);\n    assert_eq!(candidate(\"abacbacbac\", 5), abacbacbad);\n    assert_eq!(candidate(\"abcdcba\", 5), abcdcbd);\n    assert_eq!(candidate(\"abcdefgabcdefg\", 26), abcdefgabcdefh);\n    assert_eq!(candidate(\"abcdabcdabcd\", 4), abcdabcdabda);\n    assert_eq!(candidate(\"zyxwvutsrqponmlkjihgfedcba\", 26), zyxwvutsrqponmlkjihgfedcbd);\n}"
+  },
+  "test_cases": [
+    {
+      "input": "s = \"abcd\", k = 5",
+      "output": "abce"
+    },
+    {
+      "input": "s = \"aabbcc\", k = 6",
+      "output": "aabbcd"
+    },
+    {
+      "input": "s = \"zyx\", k = 26",
+      "output": ""
+    },
+    {
+      "input": "s = \"abcz\", k = 26",
+      "output": "abda"
+    },
+    {
+      "input": "s = \"aaa\", k = 4",
+      "output": "aab"
+    },
+    {
+      "input": "s = \"dc\", k = 4",
+      "output": ""
+    },
+    {
+      "input": "s = \"aab\", k = 3",
+      "output": "aac"
+    },
+    {
+      "input": "s = \"abcd\", k = 4",
+      "output": "abda"
+    },
+    {
+      "input": "s = \"xyz\", k = 26",
+      "output": "xza"
+    },
+    {
+      "input": "s = \"zyx\", k = 3",
+      "output": ""
+    },
+    {
+      "input": "s = \"aabb\", k = 4",
+      "output": "aabc"
+    },
+    {
+      "input": "s = \"azzzz\", k = 26",
+      "output": "bacba"
+    },
+    {
+      "input": "s = \"abcabcabcabc\", k = 3",
+      "output": "acbacbacbacb"
+    },
+    {
+      "input": "s = \"abcabca\", k = 26",
+      "output": "abcabcd"
+    },
+    {
+      "input": "s = \"aabababa\", k = 6",
+      "output": "aabababc"
+    },
+    {
+      "input": "s = \"zzzzz\", k = 26",
+      "output": ""
+    },
+    {
+      "input": "s = \"abcabcabcabc\", k = 26",
+      "output": "abcabcabcabd"
+    },
+    {
+      "input": "s = \"zyxzyxzyxzyx\", k = 26",
+      "output": ""
+    },
+    {
+      "input": "s = \"wxyz\", k = 26",
+      "output": "wxza"
+    },
+    {
+      "input": "s = \"zzzzzzzzzz\", k = 26",
+      "output": ""
+    },
+    {
+      "input": "s = \"mnopqrstuvw\", k = 21",
+      "output": "mnopqrsuabc"
+    },
+    {
+      "input": "s = \"zyxwvutsr\", k = 19",
+      "output": ""
+    },
+    {
+      "input": "s = \"abcdefg\", k = 7",
+      "output": "abcdega"
+    },
+    {
+      "input": "s = \"abcdefghijklmnop\", k = 26",
+      "output": "abcdefghijklmnoq"
+    },
+    {
+      "input": "s = \"mnopqr\", k = 18",
+      "output": "mnopra"
+    },
+    {
+      "input": "s = \"lkjihgf\", k = 12",
+      "output": "lkjihgi"
+    },
+    {
+      "input": "s = \"abcabc\", k = 3",
+      "output": "acbacb"
+    },
+    {
+      "input": "s = \"abcdefghij\", k = 10",
+      "output": "abcdefghja"
+    },
+    {
+      "input": "s = \"aabccba\", k = 15",
+      "output": "aabccbd"
+    },
+    {
+      "input": "s = \"mnbvcxzlkjhgfdsapoiuytrewq\", k = 26",
+      "output": "mnbvcxzlkjhgfdsapoiuytrewr"
+    },
+    {
+      "input": "s = \"ababababababab\", k = 3",
+      "output": "ababababababac"
+    },
+    {
+      "input": "s = \"abcabcabcabcabc\", k = 3",
+      "output": "acbacbacbacbacb"
+    },
+    {
+      "input": "s = \"abcdefghijklmnopqrstuvwxyza\", k = 26",
+      "output": "abcdefghijklmnopqrstuvwxyzb"
+    },
+    {
+      "input": "s = \"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", k = 20",
+      "output": "aabbccddeeffgghhiijjkkllmmnnooppqqrrstabcabcabcabcab"
+    },
+    {
+      "input": "s = \"abcdefghijklmnopqrstuv\", k = 21",
+      "output": "abcdefghijklmnopqrsuab"
+    },
+    {
+      "input": "s = \"zzzzzz\", k = 4",
+      "output": ""
+    },
+    {
+      "input": "s = \"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", k = 26",
+      "output": "aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyzab"
+    },
+    {
+      "input": "s = \"abcdabcd\", k = 4",
+      "output": "abcdabda"
+    },
+    {
+      "input": "s = \"zzzzzzzzzzzzzzzzzzzzzzzz\", k = 26",
+      "output": ""
+    },
+    {
+      "input": "s = \"abcaabcd\", k = 26",
+      "output": "abcaabce"
+    },
+    {
+      "input": "s = \"mnopqrlmno\", k = 14",
+      "output": "mnopqrlnab"
+    },
+    {
+      "input": "s = \"abcdcba\", k = 10",
+      "output": "abcdcbd"
+    },
+    {
+      "input": "s = \"abcdefghijklmnopqrstuvwxzz\", k = 26",
+      "output": "abcdefghijklmnopqrstuvwyab"
+    },
+    {
+      "input": "s = \"abcdefghijk\", k = 12",
+      "output": "abcdefghijl"
+    },
+    {
+      "input": "s = \"abcdefghijk\", k = 11",
+      "output": "abcdefghika"
+    },
+    {
+      "input": "s = \"abba\", k = 26",
+      "output": "abbc"
+    },
+    {
+      "input": "s = \"abababababab\", k = 26",
+      "output": "abababababac"
+    },
+    {
+      "input": "s = \"aaaabbbbccccdddd\", k = 26",
+      "output": "aaaabbbbccccddde"
+    },
+    {
+      "input": "s = \"abcabcabc\", k = 3",
+      "output": "acbacbacb"
+    },
+    {
+      "input": "s = \"abcdcba\", k = 26",
+      "output": "abcdcbd"
+    },
+    {
+      "input": "s = \"abcdexyz\", k = 26",
+      "output": "abcdexza"
+    },
+    {
+      "input": "s = \"pqrs\", k = 18",
+      "output": "prab"
+    },
+    {
+      "input": "s = \"qwertyuiopasdfghjklzxcvbnm\", k = 26",
+      "output": "qwertyuiopasdfghjklzxcvbno"
+    },
+    {
+      "input": "s = \"xyzabc\", k = 26",
+      "output": "xyzabd"
+    },
+    {
+      "input": "s = \"abacabadabacaba\", k = 26",
+      "output": "abacabadabacabc"
+    },
+    {
+      "input": "s = \"aabbccdd\", k = 6",
+      "output": "aabbccde"
+    },
+    {
+      "input": "s = \"zzzz\", k = 4",
+      "output": ""
+    },
+    {
+      "input": "s = \"aabbaabbaabb\", k = 6",
+      "output": "aabbaabbaabc"
+    },
+    {
+      "input": "s = \"abcde\", k = 5",
+      "output": "abcea"
+    },
+    {
+      "input": "s = \"mnopqrstuvw\", k = 22",
+      "output": "mnopqrstvab"
+    },
+    {
+      "input": "s = \"abcdexyzabcd\", k = 26",
+      "output": "abcdexyzabce"
+    },
+    {
+      "input": "s = \"abacabacabacaba\", k = 3",
+      "output": "abacabacabacabc"
+    },
+    {
+      "input": "s = \"abacabadabc\", k = 26",
+      "output": "abacabadabd"
+    },
+    {
+      "input": "s = \"xyzxyzxyzxyz\", k = 26",
+      "output": "xzabcabcabca"
+    },
+    {
+      "input": "s = \"abcbabcba\", k = 3",
+      "output": "abcbacbac"
+    },
+    {
+      "input": "s = \"abcdefghij\", k = 26",
+      "output": "abcdefghik"
+    },
+    {
+      "input": "s = \"abac\", k = 4",
+      "output": "abad"
+    },
+    {
+      "input": "s = \"abcabcabc\", k = 26",
+      "output": "abcabcabd"
+    },
+    {
+      "input": "s = \"abcba\", k = 3",
+      "output": "acbac"
+    },
+    {
+      "input": "s = \"abcdefghi\", k = 10",
+      "output": "abcdefghj"
+    },
+    {
+      "input": "s = \"aabbaa\", k = 6",
+      "output": "aabbac"
+    },
+    {
+      "input": "s = \"abcdefghi\", k = 9",
+      "output": "abcdefgia"
+    },
+    {
+      "input": "s = \"zyxcba\", k = 6",
+      "output": "zyxcbd"
+    },
+    {
+      "input": "s = \"mnopqrstuvwxyzz\", k = 26",
+      "output": "mnopqrstuvwxzab"
+    },
+    {
+      "input": "s = \"zzzzzzzzz\", k = 26",
+      "output": ""
+    },
+    {
+      "input": "s = \"aabbccddeeffgg\", k = 6",
+      "output": "aabbccddefabca"
+    },
+    {
+      "input": "s = \"abacabadabacaba\", k = 15",
+      "output": "abacabadabacabc"
+    },
+    {
+      "input": "s = \"abcdefghijklmnopqrstuvwxy\", k = 26",
+      "output": "abcdefghijklmnopqrstuvwxz"
+    },
+    {
+      "input": "s = \"abcdabc\", k = 26",
+      "output": "abcdabd"
+    },
+    {
+      "input": "s = \"fedcba\", k = 6",
+      "output": "fedcbd"
+    },
+    {
+      "input": "s = \"aabbccddeeffgg\", k = 10",
+      "output": "aabbccddeeffgh"
+    },
+    {
+      "input": "s = \"mnopqrstu\", k = 20",
+      "output": "mnopqrtab"
+    },
+    {
+      "input": "s = \"abcdefg\", k = 8",
+      "output": "abcdefh"
+    },
+    {
+      "input": "s = \"abababababab\", k = 2",
+      "output": "baababababab"
+    },
+    {
+      "input": "s = \"abcddcba\", k = 20",
+      "output": "abcddcbd"
+    },
+    {
+      "input": "s = \"abacaba\", k = 7",
+      "output": "abacabc"
+    },
+    {
+      "input": "s = \"abacabadabacaba\", k = 3",
+      "output": "abacabadabacabc"
+    },
+    {
+      "input": "s = \"abcdefghijklmnop\", k = 20",
+      "output": "abcdefghijklmnoq"
+    },
+    {
+      "input": "s = \"aabababacababaca\", k = 26",
+      "output": "aabababacababacb"
+    },
+    {
+      "input": "s = \"zzyyxxwwvvuuttssrrqqppoonnmmllkkjjiihhaaggeeffddccbb\", k = 26",
+      "output": "zzyyxxwwvvuuttssrrqqppoonnmmllkkjjiihhaaggeeffddccbd"
+    },
+    {
+      "input": "s = \"abacabad\", k = 4",
+      "output": "abacabca"
+    },
+    {
+      "input": "s = \"acb\", k = 3",
+      "output": "bac"
+    },
+    {
+      "input": "s = \"zyxzyxzyx\", k = 26",
+      "output": ""
+    },
+    {
+      "input": "s = \"aabbccddeeff\", k = 26",
+      "output": "aabbccddeefg"
+    },
+    {
+      "input": "s = \"abcbac\", k = 26",
+      "output": "abcbad"
+    },
+    {
+      "input": "s = \"abcdefghijklmnop\", k = 16",
+      "output": "abcdefghijklmnpa"
+    },
+    {
+      "input": "s = \"abcabcabcabc\", k = 6",
+      "output": "abcabcabcabd"
+    },
+    {
+      "input": "s = \"abacaba\", k = 26",
+      "output": "abacabc"
+    },
+    {
+      "input": "s = \"abacbacbac\", k = 5",
+      "output": "abacbacbad"
+    },
+    {
+      "input": "s = \"abcdcba\", k = 5",
+      "output": "abcdcbd"
+    },
+    {
+      "input": "s = \"abcdefgabcdefg\", k = 26",
+      "output": "abcdefgabcdefh"
+    },
+    {
+      "input": "s = \"abcdabcdabcd\", k = 4",
+      "output": "abcdabcdabda"
+    },
+    {
+      "input": "s = \"zyxwvutsrqponmlkjihgfedcba\", k = 26",
+      "output": "zyxwvutsrqponmlkjihgfedcbd"
+    }
+  ],
+  "types": {
+    "python3": {
+      "input": [
+        {
+          "s": "str"
+        },
+        {
+          "k": "int"
+        }
+      ],
+      "output": "str"
+    },
+    "cpp": {
+      "input": [
+        {
+          "s": "string"
+        },
+        {
+          "k": "int"
+        }
+      ],
+      "output": "string"
+    },
+    "java": {
+      "input": [
+        {
+          "s": "String"
+        },
+        {
+          "k": "int"
+        }
+      ],
+      "output": "String"
+    },
+    "javascript": {
+      "input": [
+        {
+          "s": "string"
+        },
+        {
+          "k": "number"
+        }
+      ],
+      "output": "string"
+    },
+    "typescript": {
+      "input": [
+        {
+          "s": "string"
+        },
+        {
+          "k": "number"
+        }
+      ],
+      "output": "string"
+    },
+    "golang": {
+      "input": [
+        {
+          "s": "string"
+        },
+        {
+          "k": "int"
+        }
+      ],
+      "output": "string"
+    },
+    "rust": {
+      "input": [
+        {
+          "s": "String"
+        },
+        {
+          "k": "i32"
+        }
+      ],
+      "output": "String"
+    }
+  },
+  "tags": [
+    "string",
+    "greedy"
+  ]
+}

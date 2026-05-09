@@ -1,0 +1,485 @@
+{
+  "id": 1504,
+  "title": "Count Submatrices With All Ones",
+  "slug": "count-submatrices-with-all-ones",
+  "difficulty": "Medium",
+  "description": "Given an m x n binary matrix mat, return the number of submatrices that have all ones.\nExample 1:\nExample 2:\nConstraints:",
+  "examples": [
+    {
+      "example_num": 1,
+      "example_text": "Input: mat = [[1,0,1],[1,1,0],[1,1,0]]\nOutput: 13\nExplanation: \nThere are 6 rectangles of side 1x1.\nThere are 2 rectangles of side 1x2.\nThere are 3 rectangles of side 2x1.\nThere is 1 rectangle of side 2x2. \nThere is 1 rectangle of side 3x1.\nTotal number of rectangles = 6 + 2 + 3 + 1 + 1 = 13.",
+      "images": [
+        "https://assets.leetcode.com/uploads/2021/10/27/ones1-grid.jpg"
+      ]
+    },
+    {
+      "example_num": 2,
+      "example_text": "Input: mat = [[0,1,1,0],[0,1,1,1],[1,1,1,0]]\nOutput: 24\nExplanation: \nThere are 8 rectangles of side 1x1.\nThere are 5 rectangles of side 1x2.\nThere are 2 rectangles of side 1x3. \nThere are 4 rectangles of side 2x1.\nThere are 2 rectangles of side 2x2. \nThere are 2 rectangles of side 3x1. \nThere is 1 rectangle of side 3x2. \nTotal number of rectangles = 8 + 5 + 2 + 4 + 2 + 2 + 1 = 24.",
+      "images": [
+        "https://assets.leetcode.com/uploads/2021/10/27/ones2-grid.jpg"
+      ]
+    }
+  ],
+  "constraints": [
+    "1 <= m, n <= 150",
+    "mat[i][j] is either 0 or 1."
+  ],
+  "hints": [
+    "For each row i, create an array nums where:  if mat[i][j] == 0 then nums[j] = 0 else nums[j] = nums[j-1] +1.",
+    "In the row i, number of rectangles between column j and k(inclusive) and ends in row i, is equal to SUM(min(nums[j, .. idx])) where idx go from j to k.  Expected solution is O(n^3)."
+  ],
+  "code_snippets": {
+    "cpp": "class Solution {\npublic:\n    int numSubmat(vector<vector<int>>& mat) {\n        \n    }\n};",
+    "java": "class Solution {\n    public int numSubmat(int[][] mat) {\n        \n    }\n}",
+    "python3": "class Solution:\n    def numSubmat(self, mat: List[List[int]]) -> int:\n        ",
+    "javascript": "/**\n * @param {number[][]} mat\n * @return {number}\n */\nvar numSubmat = function(mat) {\n    \n};",
+    "typescript": "function numSubmat(mat: number[][]): number {\n    \n};",
+    "golang": "func numSubmat(mat [][]int) int {\n    \n}",
+    "rust": "impl Solution {\n    pub fn num_submat(mat: Vec<Vec<i32>>) -> i32 {\n        \n    }\n}"
+  },
+  "entry_points": {
+    "python3": "Solution().numSubmat",
+    "cpp": "Solution().numSubmat",
+    "java": "new Solution().numSubmat",
+    "javascript": "numSubmat",
+    "typescript": "numSubmat",
+    "golang": "numSubmat",
+    "rust": "Solution::num_submat"
+  },
+  "test_snippets": {
+    "python3": "def check(candidate):\n    assert candidate(mat = [[0,0],[0,0]]) == 0\n    assert candidate(mat = [[1,0,1],[1,1,0],[1,1,0]]) == 13\n    assert candidate(mat = [[1,0],[0,1]]) == 2\n    assert candidate(mat = [[1,1,1,1],[1,1,1,1],[1,1,1,1]]) == 60\n    assert candidate(mat = [[0,0,0],[0,0,0]]) == 0\n    assert candidate(mat = [[0,0,0,0],[0,0,0,0],[0,0,0,0]]) == 0\n    assert candidate(mat = [[1,1,1],[1,1,1],[1,1,1]]) == 36\n    assert candidate(mat = [[0,1,1,0],[0,1,1,1],[1,1,1,0]]) == 24\n    assert candidate(mat = [[1,1],[1,1]]) == 9\n    assert candidate(mat = [[0,0,0],[0,0,0],[0,0,0]]) == 0\n    assert candidate(mat = [[1,1,0,1],[0,1,1,0],[1,0,1,1],[1,1,1,1]]) == 28\n    assert candidate(mat = [[0,1,1,1,0],[1,1,1,1,1],[1,1,1,1,1],[0,1,1,1,0],[1,0,0,0,1]]) == 89\n    assert candidate(mat = [[1,1,1,1],[1,0,0,1],[1,0,0,1],[1,1,1,1]]) == 36\n    assert candidate(mat = [[0,1,0,1,0,1],[1,0,1,0,1,0],[0,1,0,1,0,1],[1,0,1,0,1,0],[0,1,0,1,0,1]]) == 15\n    assert candidate(mat = [[1,0,1,0,1],[0,1,1,1,0],[1,1,0,1,1],[0,1,1,1,0],[1,0,1,0,1]]) == 32\n    assert candidate(mat = [[0,0,1,0,0],[0,0,1,0,0],[1,1,1,1,1],[0,0,1,0,0],[0,0,1,0,0]]) == 29\n    assert candidate(mat = [[1,1,1,1,1,1],[1,1,1,1,1,1],[0,0,0,0,0,0],[1,1,1,1,1,1],[1,1,1,1,1,1]]) == 126\n    assert candidate(mat = [[0,1,1,1],[1,1,1,1],[1,1,1,1],[1,1,1,0]]) == 69\n    assert candidate(mat = [[1,0,1,0,1,0,1],[0,1,0,1,0,1,0],[1,0,1,0,1,0,1],[0,1,0,1,0,1,0],[1,0,1,0,1,0,1]]) == 18\n    assert candidate(mat = [[1,1,1,0,0,0],[1,1,0,1,1,0],[1,0,0,0,0,1],[1,1,1,0,0,0],[0,0,0,1,1,1],[0,0,1,1,1,0]]) == 43\n    assert candidate(mat = [[1,0,1,1],[1,1,1,1],[0,1,1,0],[1,0,1,0],[0,1,1,1]]) == 40\n    assert candidate(mat = [[1,1,1,0,1],[1,1,0,1,1],[0,1,1,1,0],[1,1,1,1,1],[0,1,0,1,0]]) == 59\n    assert candidate(mat = [[1,1,0,1],[1,1,1,0],[0,1,1,1],[1,0,1,1]]) == 31\n    assert candidate(mat = [[1,1,0,1,0,1],[1,1,1,1,1,1],[0,1,0,1,0,1],[1,1,1,1,1,1],[0,1,0,1,0,1]]) == 85\n    assert candidate(mat = [[1,0,1,0,1],[1,1,1,1,1],[0,1,0,1,0],[1,1,1,1,1],[1,0,1,0,1]]) == 50\n    assert candidate(mat = [[1,0,0,0,1,0,0,0,1],[0,1,0,1,0,1,0,1,0],[0,0,1,0,0,0,1,0,0],[1,0,0,0,1,0,0,0,1],[0,1,0,1,0,1,0,1,0],[0,0,1,0,0,0,1,0,0]]) == 18\n    assert candidate(mat = [[1,1,0,1,1],[1,0,1,1,1],[0,1,1,1,0],[1,1,1,0,1],[1,0,1,1,1]]) == 50\n    assert candidate(mat = [[0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0]]) == 0\n    assert candidate(mat = [[1,1,1,1,1,1,1],[1,1,1,1,1,1,1],[1,1,1,1,1,1,1],[1,1,1,1,1,1,1],[1,1,1,1,1,1,1]]) == 420\n    assert candidate(mat = [[1,0,1,0,1],[0,1,1,1,0],[1,1,1,0,1],[0,1,0,1,0],[1,0,1,0,1]]) == 28\n    assert candidate(mat = [[1,0,0,0,1],[0,1,1,1,0],[0,1,1,1,0],[0,0,1,0,0],[1,0,0,0,1]]) == 25\n    assert candidate(mat = [[1,1,1,1,1,1],[1,1,1,0,1,1],[1,0,1,1,1,0],[1,1,1,1,1,1],[1,0,1,0,1,1]]) == 105\n    assert candidate(mat = [[1,0,1,0,1],[0,1,0,1,0],[1,0,1,0,1],[0,1,0,1,0],[1,0,1,0,1]]) == 13\n    assert candidate(mat = [[1,1,1,1,0,1],[0,1,1,1,1,1],[1,1,0,1,1,1],[1,1,1,1,0,1],[0,1,1,1,1,1]]) == 105\n    assert candidate(mat = [[1,1,0,0],[1,1,1,1],[0,0,1,0],[1,1,1,1]]) == 30\n    assert candidate(mat = [[1,1,0,1],[1,1,1,1],[0,1,1,1],[1,0,1,0]]) == 36\n    assert candidate(mat = [[1,0,1],[1,1,1],[0,1,1],[1,1,1],[1,0,1]]) == 37\n    assert candidate(mat = [[1,1,0,0,1,1],[0,1,1,1,1,0],[1,1,1,1,1,1],[0,0,1,1,0,0]]) == 60\n    assert candidate(mat = [[1,1,1,0,0],[1,1,1,0,0],[0,0,0,1,1],[0,0,0,1,1],[1,1,1,1,1]]) == 48\n    assert candidate(mat = [[1,1,1,1,1,1,1],[1,0,0,0,0,0,1],[1,0,1,1,1,0,1],[1,0,1,0,1,0,1],[1,0,1,1,1,0,1],[1,0,0,0,0,0,1],[1,1,1,1,1,1,1]]) == 128\n    assert candidate(mat = [[1,1,1,1,1,1,1,1,1],[1,1,1,1,1,1,1,1,1],[0,0,0,0,0,0,0,0,0],[1,1,1,1,1,1,1,1,1],[1,1,1,1,1,1,1,1,1]]) == 270\n    assert candidate(mat = [[1,1,1,1,1,1],[1,0,0,1,0,1],[1,0,1,1,1,1],[1,1,1,1,0,1],[1,0,1,1,1,1],[1,1,1,1,1,1]]) == 141\n    assert candidate(mat = [[1,1,1,1,1,1],[1,1,1,1,1,1],[1,1,0,0,0,0],[1,1,0,0,0,0],[0,0,0,0,1,1],[0,0,0,0,1,1]]) == 93\n    assert candidate(mat = [[1,1,1,1,0],[1,1,1,1,0],[1,1,0,0,1],[0,1,0,1,1],[1,1,1,1,1]]) == 71\n    assert candidate(mat = [[1,0,1,0,1,0,1],[0,1,0,1,0,1,0],[1,0,1,0,1,0,1],[0,1,0,1,0,1,0],[1,0,1,0,1,0,1],[0,1,0,1,0,1,0]]) == 21\n    assert candidate(mat = [[1,1,1,1,1],[0,1,1,1,1],[1,1,1,1,1],[1,1,1,1,0],[1,1,0,0,1]]) == 114\n    assert candidate(mat = [[1,1,1,0],[0,1,1,1],[1,1,1,1],[0,1,0,1]]) == 41\n    assert candidate(mat = [[1,0,1,1],[1,1,1,0],[1,1,0,1],[0,1,1,1]]) == 29\n    assert candidate(mat = [[1,1,1,1,1,1,1,1,1],[1,0,0,0,0,0,0,0,1],[1,0,1,1,1,1,1,0,1],[1,0,1,0,0,0,1,0,1],[1,0,1,0,1,0,1,0,1],[1,0,1,0,0,0,1,0,1],[1,0,1,1,1,1,1,0,1],[1,0,0,0,0,0,0,0,1],[1,1,1,1,1,1,1,1,1]]) == 233\n    assert candidate(mat = [[1,0,1,0,1],[0,1,1,1,0],[1,1,1,1,1],[0,1,1,0,1]]) == 44\n    assert candidate(mat = [[1,0,0,0,1],[0,1,0,1,0],[0,0,1,0,0],[0,1,0,1,0],[1,0,0,0,1]]) == 9\n    assert candidate(mat = [[1,1,1,1],[1,0,0,1],[1,1,1,1],[0,1,1,0]]) == 34\n    assert candidate(mat = [[1,0,1,0,1],[1,1,0,1,1],[0,1,1,0,1],[1,0,1,0,1],[1,1,0,1,1]]) == 36\n    assert candidate(mat = [[1,1,0,0,1,1],[0,0,1,1,0,0],[1,1,0,0,1,1],[0,0,1,1,0,0]]) == 18\n    assert candidate(mat = [[1,1,1,1,1],[1,0,0,0,1],[1,0,1,0,1],[1,0,0,0,1],[1,1,1,1,1]]) == 57\n    assert candidate(mat = [[1,1,0,0,1,1],[0,1,1,1,0,0],[1,1,1,1,1,1],[0,0,0,1,1,1],[1,1,1,1,1,0]]) == 76\n    assert candidate(mat = [[1,1,0,1,1],[1,0,0,0,1],[1,1,1,1,1],[0,1,1,1,1]]) == 51\n    assert candidate(mat = [[1,1,1],[0,0,0],[1,1,1],[0,0,0],[1,1,1],[0,0,0]]) == 18\n    assert candidate(mat = [[1,1,1,1,1,1,1],[1,1,1,1,1,1,1],[1,1,1,1,1,1,1],[0,0,0,0,0,0,0],[1,1,1,1,1,1,1]]) == 196\n    assert candidate(mat = [[1,1,1,1,1,1],[1,1,1,1,1,1],[1,1,1,1,1,1],[1,1,1,1,1,1]]) == 210\n    assert candidate(mat = [[1,1,0,1],[0,1,1,0],[1,0,1,1],[0,1,0,1],[1,1,1,0]]) == 23\n    assert candidate(mat = [[1,1,0,1,0],[1,1,1,1,1],[0,1,1,1,0],[1,0,1,0,1],[1,1,1,1,1]]) == 62\n    assert candidate(mat = [[0,0,1,0,0],[0,1,1,1,0],[1,1,1,1,1],[0,1,1,1,0],[0,0,1,0,0]]) == 54\n    assert candidate(mat = [[1,1,1,1,1,1,1,1],[1,1,1,1,1,1,1,1],[1,1,1,1,1,1,1,1],[1,1,1,1,1,1,1,1],[1,1,1,1,1,1,1,1]]) == 540\n    assert candidate(mat = [[1,1,0,0],[1,1,0,0],[0,0,1,1],[1,1,1,1]]) == 25\n    assert candidate(mat = [[0,1,1,0,0,1,1,0,0,1],[1,1,1,0,0,1,1,1,0,0],[0,1,1,0,0,1,1,0,0,1],[1,1,1,0,0,1,1,1,0,0]]) == 74\n    assert candidate(mat = [[1,1,1,1,1,1,1],[1,1,0,0,0,0,1],[1,1,0,1,1,0,1],[1,0,1,1,1,1,0],[1,1,0,0,0,0,1],[1,1,1,1,1,1,1]]) == 112\n    assert candidate(mat = [[1,1,1,1,1,1],[1,1,1,1,1,1],[1,1,1,1,1,1],[1,1,1,1,1,1],[1,1,1,1,1,1]]) == 315\n    assert candidate(mat = [[1,0,1,0,1],[0,1,0,1,0],[1,0,1,0,1],[0,1,0,1,0]]) == 10\n    assert candidate(mat = [[1,1,1,0,1,1],[1,0,1,1,1,0],[1,1,0,1,1,1],[0,1,1,1,1,0]]) == 52\n    assert candidate(mat = [[1,1,1,1,1],[1,0,0,0,1],[1,0,0,0,1],[1,0,0,0,1],[1,1,1,1,1]]) == 56\n    assert candidate(mat = [[1,0,1,0,1],[1,1,1,1,1],[0,1,1,1,0],[1,1,1,1,1],[1,0,1,0,1]]) == 71\n    assert candidate(mat = [[1,1,1,1,1,1],[1,0,1,0,1,0],[1,1,1,1,1,1],[0,1,0,1,0,1],[1,1,1,1,1,1]]) == 87\n    assert candidate(mat = [[1,1,1,1,1,1],[1,0,0,0,0,1],[1,0,1,1,0,1],[1,0,1,1,0,1],[1,0,0,0,0,1],[1,1,1,1,1,1]]) == 89\n    assert candidate(mat = [[1,0,1,0,1],[1,1,1,0,0],[0,1,1,1,1],[1,1,1,1,0]]) == 45\n    assert candidate(mat = [[1,0,0,1,0,0,1],[0,1,1,0,1,1,0],[0,1,1,0,1,1,0],[1,0,0,1,0,0,1],[0,1,1,0,1,1,0]]) == 30\n    assert candidate(mat = [[1,1,1,0,0,1],[1,1,1,1,0,0],[0,0,1,1,1,1],[1,0,0,1,1,1]]) == 51\n    assert candidate(mat = [[0,1,0,1,0,1,0],[1,0,1,0,1,0,1],[0,1,0,1,0,1,0],[1,0,1,0,1,0,1]]) == 14\n    assert candidate(mat = [[1,1,0,0,1,1],[1,1,0,0,1,1],[0,0,1,1,0,0],[0,0,1,1,0,0],[1,1,0,0,1,1],[1,1,0,0,1,1]]) == 45\n    assert candidate(mat = [[1,1,1,0,0],[1,1,1,1,0],[0,1,1,1,1],[0,0,1,1,1],[1,1,1,0,0]]) == 67\n    assert candidate(mat = [[0,1,1,0,1],[1,1,1,1,1],[1,0,1,0,1],[1,1,1,1,1],[0,1,1,0,1]]) == 68\n    assert candidate(mat = [[1,1,1,1,1,1,1,1,1,1],[0,0,0,0,0,0,0,0,0,0],[1,1,1,1,1,1,1,1,1,1],[0,0,0,0,0,0,0,0,0,0]]) == 110\n    assert candidate(mat = [[1,1,1,1,1],[0,0,0,0,0],[1,1,1,1,1],[0,0,0,0,0],[1,1,1,1,1]]) == 45\n    assert candidate(mat = [[1,1,1,1,0],[1,1,1,1,1],[1,1,0,1,1],[1,0,1,1,1],[0,1,1,1,1]]) == 91\n    assert candidate(mat = [[1,0,1,1],[1,1,0,1],[1,1,1,0],[1,0,1,1]]) == 28\n    assert candidate(mat = [[1,1,0,1],[1,1,1,1],[0,1,1,1],[1,1,1,1]]) == 56\n    assert candidate(mat = [[0,1,1,0,1],[1,1,1,1,1],[1,0,0,1,1],[0,1,1,1,0],[1,1,0,1,1]]) == 50\n    assert candidate(mat = [[1,0,1,1,1],[1,1,1,0,1],[1,0,1,1,1],[1,1,1,1,1]]) == 58\n    assert candidate(mat = [[1,1,1,1,1],[1,1,1,1,1],[1,0,1,0,1],[1,1,1,1,1],[1,1,1,1,1]]) == 117\n    assert candidate(mat = [[1,1,1,1,0,0,1,1],[1,1,0,0,0,1,1,1],[0,0,0,0,0,0,0,0],[1,1,1,1,0,0,1,1],[1,1,0,0,0,1,1,1]]) == 56",
+    "cpp": "void check(Solution& solution) {\n    assert(solution.numSubmat({{0,0},{0,0}}) == vector<int>0);\n    assert(solution.numSubmat({{1,0,1},{1,1,0},{1,1,0}}) == vector<int>13);\n    assert(solution.numSubmat({{1,0},{0,1}}) == vector<int>2);\n    assert(solution.numSubmat({{1,1,1,1},{1,1,1,1},{1,1,1,1}}) == vector<int>60);\n    assert(solution.numSubmat({{0,0,0},{0,0,0}}) == vector<int>0);\n    assert(solution.numSubmat({{0,0,0,0},{0,0,0,0},{0,0,0,0}}) == vector<int>0);\n    assert(solution.numSubmat({{1,1,1},{1,1,1},{1,1,1}}) == vector<int>36);\n    assert(solution.numSubmat({{0,1,1,0},{0,1,1,1},{1,1,1,0}}) == vector<int>24);\n    assert(solution.numSubmat({{1,1},{1,1}}) == vector<int>9);\n    assert(solution.numSubmat({{0,0,0},{0,0,0},{0,0,0}}) == vector<int>0);\n    assert(solution.numSubmat({{1,1,0,1},{0,1,1,0},{1,0,1,1},{1,1,1,1}}) == vector<int>28);\n    assert(solution.numSubmat({{0,1,1,1,0},{1,1,1,1,1},{1,1,1,1,1},{0,1,1,1,0},{1,0,0,0,1}}) == vector<int>89);\n    assert(solution.numSubmat({{1,1,1,1},{1,0,0,1},{1,0,0,1},{1,1,1,1}}) == vector<int>36);\n    assert(solution.numSubmat({{0,1,0,1,0,1},{1,0,1,0,1,0},{0,1,0,1,0,1},{1,0,1,0,1,0},{0,1,0,1,0,1}}) == vector<int>15);\n    assert(solution.numSubmat({{1,0,1,0,1},{0,1,1,1,0},{1,1,0,1,1},{0,1,1,1,0},{1,0,1,0,1}}) == vector<int>32);\n    assert(solution.numSubmat({{0,0,1,0,0},{0,0,1,0,0},{1,1,1,1,1},{0,0,1,0,0},{0,0,1,0,0}}) == vector<int>29);\n    assert(solution.numSubmat({{1,1,1,1,1,1},{1,1,1,1,1,1},{0,0,0,0,0,0},{1,1,1,1,1,1},{1,1,1,1,1,1}}) == vector<int>126);\n    assert(solution.numSubmat({{0,1,1,1},{1,1,1,1},{1,1,1,1},{1,1,1,0}}) == vector<int>69);\n    assert(solution.numSubmat({{1,0,1,0,1,0,1},{0,1,0,1,0,1,0},{1,0,1,0,1,0,1},{0,1,0,1,0,1,0},{1,0,1,0,1,0,1}}) == vector<int>18);\n    assert(solution.numSubmat({{1,1,1,0,0,0},{1,1,0,1,1,0},{1,0,0,0,0,1},{1,1,1,0,0,0},{0,0,0,1,1,1},{0,0,1,1,1,0}}) == vector<int>43);\n    assert(solution.numSubmat({{1,0,1,1},{1,1,1,1},{0,1,1,0},{1,0,1,0},{0,1,1,1}}) == vector<int>40);\n    assert(solution.numSubmat({{1,1,1,0,1},{1,1,0,1,1},{0,1,1,1,0},{1,1,1,1,1},{0,1,0,1,0}}) == vector<int>59);\n    assert(solution.numSubmat({{1,1,0,1},{1,1,1,0},{0,1,1,1},{1,0,1,1}}) == vector<int>31);\n    assert(solution.numSubmat({{1,1,0,1,0,1},{1,1,1,1,1,1},{0,1,0,1,0,1},{1,1,1,1,1,1},{0,1,0,1,0,1}}) == vector<int>85);\n    assert(solution.numSubmat({{1,0,1,0,1},{1,1,1,1,1},{0,1,0,1,0},{1,1,1,1,1},{1,0,1,0,1}}) == vector<int>50);\n    assert(solution.numSubmat({{1,0,0,0,1,0,0,0,1},{0,1,0,1,0,1,0,1,0},{0,0,1,0,0,0,1,0,0},{1,0,0,0,1,0,0,0,1},{0,1,0,1,0,1,0,1,0},{0,0,1,0,0,0,1,0,0}}) == vector<int>18);\n    assert(solution.numSubmat({{1,1,0,1,1},{1,0,1,1,1},{0,1,1,1,0},{1,1,1,0,1},{1,0,1,1,1}}) == vector<int>50);\n    assert(solution.numSubmat({{0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0}}) == vector<int>0);\n    assert(solution.numSubmat({{1,1,1,1,1,1,1},{1,1,1,1,1,1,1},{1,1,1,1,1,1,1},{1,1,1,1,1,1,1},{1,1,1,1,1,1,1}}) == vector<int>420);\n    assert(solution.numSubmat({{1,0,1,0,1},{0,1,1,1,0},{1,1,1,0,1},{0,1,0,1,0},{1,0,1,0,1}}) == vector<int>28);\n    assert(solution.numSubmat({{1,0,0,0,1},{0,1,1,1,0},{0,1,1,1,0},{0,0,1,0,0},{1,0,0,0,1}}) == vector<int>25);\n    assert(solution.numSubmat({{1,1,1,1,1,1},{1,1,1,0,1,1},{1,0,1,1,1,0},{1,1,1,1,1,1},{1,0,1,0,1,1}}) == vector<int>105);\n    assert(solution.numSubmat({{1,0,1,0,1},{0,1,0,1,0},{1,0,1,0,1},{0,1,0,1,0},{1,0,1,0,1}}) == vector<int>13);\n    assert(solution.numSubmat({{1,1,1,1,0,1},{0,1,1,1,1,1},{1,1,0,1,1,1},{1,1,1,1,0,1},{0,1,1,1,1,1}}) == vector<int>105);\n    assert(solution.numSubmat({{1,1,0,0},{1,1,1,1},{0,0,1,0},{1,1,1,1}}) == vector<int>30);\n    assert(solution.numSubmat({{1,1,0,1},{1,1,1,1},{0,1,1,1},{1,0,1,0}}) == vector<int>36);\n    assert(solution.numSubmat({{1,0,1},{1,1,1},{0,1,1},{1,1,1},{1,0,1}}) == vector<int>37);\n    assert(solution.numSubmat({{1,1,0,0,1,1},{0,1,1,1,1,0},{1,1,1,1,1,1},{0,0,1,1,0,0}}) == vector<int>60);\n    assert(solution.numSubmat({{1,1,1,0,0},{1,1,1,0,0},{0,0,0,1,1},{0,0,0,1,1},{1,1,1,1,1}}) == vector<int>48);\n    assert(solution.numSubmat({{1,1,1,1,1,1,1},{1,0,0,0,0,0,1},{1,0,1,1,1,0,1},{1,0,1,0,1,0,1},{1,0,1,1,1,0,1},{1,0,0,0,0,0,1},{1,1,1,1,1,1,1}}) == vector<int>128);\n    assert(solution.numSubmat({{1,1,1,1,1,1,1,1,1},{1,1,1,1,1,1,1,1,1},{0,0,0,0,0,0,0,0,0},{1,1,1,1,1,1,1,1,1},{1,1,1,1,1,1,1,1,1}}) == vector<int>270);\n    assert(solution.numSubmat({{1,1,1,1,1,1},{1,0,0,1,0,1},{1,0,1,1,1,1},{1,1,1,1,0,1},{1,0,1,1,1,1},{1,1,1,1,1,1}}) == vector<int>141);\n    assert(solution.numSubmat({{1,1,1,1,1,1},{1,1,1,1,1,1},{1,1,0,0,0,0},{1,1,0,0,0,0},{0,0,0,0,1,1},{0,0,0,0,1,1}}) == vector<int>93);\n    assert(solution.numSubmat({{1,1,1,1,0},{1,1,1,1,0},{1,1,0,0,1},{0,1,0,1,1},{1,1,1,1,1}}) == vector<int>71);\n    assert(solution.numSubmat({{1,0,1,0,1,0,1},{0,1,0,1,0,1,0},{1,0,1,0,1,0,1},{0,1,0,1,0,1,0},{1,0,1,0,1,0,1},{0,1,0,1,0,1,0}}) == vector<int>21);\n    assert(solution.numSubmat({{1,1,1,1,1},{0,1,1,1,1},{1,1,1,1,1},{1,1,1,1,0},{1,1,0,0,1}}) == vector<int>114);\n    assert(solution.numSubmat({{1,1,1,0},{0,1,1,1},{1,1,1,1},{0,1,0,1}}) == vector<int>41);\n    assert(solution.numSubmat({{1,0,1,1},{1,1,1,0},{1,1,0,1},{0,1,1,1}}) == vector<int>29);\n    assert(solution.numSubmat({{1,1,1,1,1,1,1,1,1},{1,0,0,0,0,0,0,0,1},{1,0,1,1,1,1,1,0,1},{1,0,1,0,0,0,1,0,1},{1,0,1,0,1,0,1,0,1},{1,0,1,0,0,0,1,0,1},{1,0,1,1,1,1,1,0,1},{1,0,0,0,0,0,0,0,1},{1,1,1,1,1,1,1,1,1}}) == vector<int>233);\n    assert(solution.numSubmat({{1,0,1,0,1},{0,1,1,1,0},{1,1,1,1,1},{0,1,1,0,1}}) == vector<int>44);\n    assert(solution.numSubmat({{1,0,0,0,1},{0,1,0,1,0},{0,0,1,0,0},{0,1,0,1,0},{1,0,0,0,1}}) == vector<int>9);\n    assert(solution.numSubmat({{1,1,1,1},{1,0,0,1},{1,1,1,1},{0,1,1,0}}) == vector<int>34);\n    assert(solution.numSubmat({{1,0,1,0,1},{1,1,0,1,1},{0,1,1,0,1},{1,0,1,0,1},{1,1,0,1,1}}) == vector<int>36);\n    assert(solution.numSubmat({{1,1,0,0,1,1},{0,0,1,1,0,0},{1,1,0,0,1,1},{0,0,1,1,0,0}}) == vector<int>18);\n    assert(solution.numSubmat({{1,1,1,1,1},{1,0,0,0,1},{1,0,1,0,1},{1,0,0,0,1},{1,1,1,1,1}}) == vector<int>57);\n    assert(solution.numSubmat({{1,1,0,0,1,1},{0,1,1,1,0,0},{1,1,1,1,1,1},{0,0,0,1,1,1},{1,1,1,1,1,0}}) == vector<int>76);\n    assert(solution.numSubmat({{1,1,0,1,1},{1,0,0,0,1},{1,1,1,1,1},{0,1,1,1,1}}) == vector<int>51);\n    assert(solution.numSubmat({{1,1,1},{0,0,0},{1,1,1},{0,0,0},{1,1,1},{0,0,0}}) == vector<int>18);\n    assert(solution.numSubmat({{1,1,1,1,1,1,1},{1,1,1,1,1,1,1},{1,1,1,1,1,1,1},{0,0,0,0,0,0,0},{1,1,1,1,1,1,1}}) == vector<int>196);\n    assert(solution.numSubmat({{1,1,1,1,1,1},{1,1,1,1,1,1},{1,1,1,1,1,1},{1,1,1,1,1,1}}) == vector<int>210);\n    assert(solution.numSubmat({{1,1,0,1},{0,1,1,0},{1,0,1,1},{0,1,0,1},{1,1,1,0}}) == vector<int>23);\n    assert(solution.numSubmat({{1,1,0,1,0},{1,1,1,1,1},{0,1,1,1,0},{1,0,1,0,1},{1,1,1,1,1}}) == vector<int>62);\n    assert(solution.numSubmat({{0,0,1,0,0},{0,1,1,1,0},{1,1,1,1,1},{0,1,1,1,0},{0,0,1,0,0}}) == vector<int>54);\n    assert(solution.numSubmat({{1,1,1,1,1,1,1,1},{1,1,1,1,1,1,1,1},{1,1,1,1,1,1,1,1},{1,1,1,1,1,1,1,1},{1,1,1,1,1,1,1,1}}) == vector<int>540);\n    assert(solution.numSubmat({{1,1,0,0},{1,1,0,0},{0,0,1,1},{1,1,1,1}}) == vector<int>25);\n    assert(solution.numSubmat({{0,1,1,0,0,1,1,0,0,1},{1,1,1,0,0,1,1,1,0,0},{0,1,1,0,0,1,1,0,0,1},{1,1,1,0,0,1,1,1,0,0}}) == vector<int>74);\n    assert(solution.numSubmat({{1,1,1,1,1,1,1},{1,1,0,0,0,0,1},{1,1,0,1,1,0,1},{1,0,1,1,1,1,0},{1,1,0,0,0,0,1},{1,1,1,1,1,1,1}}) == vector<int>112);\n    assert(solution.numSubmat({{1,1,1,1,1,1},{1,1,1,1,1,1},{1,1,1,1,1,1},{1,1,1,1,1,1},{1,1,1,1,1,1}}) == vector<int>315);\n    assert(solution.numSubmat({{1,0,1,0,1},{0,1,0,1,0},{1,0,1,0,1},{0,1,0,1,0}}) == vector<int>10);\n    assert(solution.numSubmat({{1,1,1,0,1,1},{1,0,1,1,1,0},{1,1,0,1,1,1},{0,1,1,1,1,0}}) == vector<int>52);\n    assert(solution.numSubmat({{1,1,1,1,1},{1,0,0,0,1},{1,0,0,0,1},{1,0,0,0,1},{1,1,1,1,1}}) == vector<int>56);\n    assert(solution.numSubmat({{1,0,1,0,1},{1,1,1,1,1},{0,1,1,1,0},{1,1,1,1,1},{1,0,1,0,1}}) == vector<int>71);\n    assert(solution.numSubmat({{1,1,1,1,1,1},{1,0,1,0,1,0},{1,1,1,1,1,1},{0,1,0,1,0,1},{1,1,1,1,1,1}}) == vector<int>87);\n    assert(solution.numSubmat({{1,1,1,1,1,1},{1,0,0,0,0,1},{1,0,1,1,0,1},{1,0,1,1,0,1},{1,0,0,0,0,1},{1,1,1,1,1,1}}) == vector<int>89);\n    assert(solution.numSubmat({{1,0,1,0,1},{1,1,1,0,0},{0,1,1,1,1},{1,1,1,1,0}}) == vector<int>45);\n    assert(solution.numSubmat({{1,0,0,1,0,0,1},{0,1,1,0,1,1,0},{0,1,1,0,1,1,0},{1,0,0,1,0,0,1},{0,1,1,0,1,1,0}}) == vector<int>30);\n    assert(solution.numSubmat({{1,1,1,0,0,1},{1,1,1,1,0,0},{0,0,1,1,1,1},{1,0,0,1,1,1}}) == vector<int>51);\n    assert(solution.numSubmat({{0,1,0,1,0,1,0},{1,0,1,0,1,0,1},{0,1,0,1,0,1,0},{1,0,1,0,1,0,1}}) == vector<int>14);\n    assert(solution.numSubmat({{1,1,0,0,1,1},{1,1,0,0,1,1},{0,0,1,1,0,0},{0,0,1,1,0,0},{1,1,0,0,1,1},{1,1,0,0,1,1}}) == vector<int>45);\n    assert(solution.numSubmat({{1,1,1,0,0},{1,1,1,1,0},{0,1,1,1,1},{0,0,1,1,1},{1,1,1,0,0}}) == vector<int>67);\n    assert(solution.numSubmat({{0,1,1,0,1},{1,1,1,1,1},{1,0,1,0,1},{1,1,1,1,1},{0,1,1,0,1}}) == vector<int>68);\n    assert(solution.numSubmat({{1,1,1,1,1,1,1,1,1,1},{0,0,0,0,0,0,0,0,0,0},{1,1,1,1,1,1,1,1,1,1},{0,0,0,0,0,0,0,0,0,0}}) == vector<int>110);\n    assert(solution.numSubmat({{1,1,1,1,1},{0,0,0,0,0},{1,1,1,1,1},{0,0,0,0,0},{1,1,1,1,1}}) == vector<int>45);\n    assert(solution.numSubmat({{1,1,1,1,0},{1,1,1,1,1},{1,1,0,1,1},{1,0,1,1,1},{0,1,1,1,1}}) == vector<int>91);\n    assert(solution.numSubmat({{1,0,1,1},{1,1,0,1},{1,1,1,0},{1,0,1,1}}) == vector<int>28);\n    assert(solution.numSubmat({{1,1,0,1},{1,1,1,1},{0,1,1,1},{1,1,1,1}}) == vector<int>56);\n    assert(solution.numSubmat({{0,1,1,0,1},{1,1,1,1,1},{1,0,0,1,1},{0,1,1,1,0},{1,1,0,1,1}}) == vector<int>50);\n    assert(solution.numSubmat({{1,0,1,1,1},{1,1,1,0,1},{1,0,1,1,1},{1,1,1,1,1}}) == vector<int>58);\n    assert(solution.numSubmat({{1,1,1,1,1},{1,1,1,1,1},{1,0,1,0,1},{1,1,1,1,1},{1,1,1,1,1}}) == vector<int>117);\n    assert(solution.numSubmat({{1,1,1,1,0,0,1,1},{1,1,0,0,0,1,1,1},{0,0,0,0,0,0,0,0},{1,1,1,1,0,0,1,1},{1,1,0,0,0,1,1,1}}) == vector<int>56);\n}",
+    "java": "public static void check(Solution solution) {\n    assert Arrays.equals(solution.numSubmat(new int[]{{0,0},{0,0}}), 0);\n    assert Arrays.equals(solution.numSubmat(new int[]{{1,0,1},{1,1,0},{1,1,0}}), 13);\n    assert Arrays.equals(solution.numSubmat(new int[]{{1,0},{0,1}}), 2);\n    assert Arrays.equals(solution.numSubmat(new int[]{{1,1,1,1},{1,1,1,1},{1,1,1,1}}), 60);\n    assert Arrays.equals(solution.numSubmat(new int[]{{0,0,0},{0,0,0}}), 0);\n    assert Arrays.equals(solution.numSubmat(new int[]{{0,0,0,0},{0,0,0,0},{0,0,0,0}}), 0);\n    assert Arrays.equals(solution.numSubmat(new int[]{{1,1,1},{1,1,1},{1,1,1}}), 36);\n    assert Arrays.equals(solution.numSubmat(new int[]{{0,1,1,0},{0,1,1,1},{1,1,1,0}}), 24);\n    assert Arrays.equals(solution.numSubmat(new int[]{{1,1},{1,1}}), 9);\n    assert Arrays.equals(solution.numSubmat(new int[]{{0,0,0},{0,0,0},{0,0,0}}), 0);\n    assert Arrays.equals(solution.numSubmat(new int[]{{1,1,0,1},{0,1,1,0},{1,0,1,1},{1,1,1,1}}), 28);\n    assert Arrays.equals(solution.numSubmat(new int[]{{0,1,1,1,0},{1,1,1,1,1},{1,1,1,1,1},{0,1,1,1,0},{1,0,0,0,1}}), 89);\n    assert Arrays.equals(solution.numSubmat(new int[]{{1,1,1,1},{1,0,0,1},{1,0,0,1},{1,1,1,1}}), 36);\n    assert Arrays.equals(solution.numSubmat(new int[]{{0,1,0,1,0,1},{1,0,1,0,1,0},{0,1,0,1,0,1},{1,0,1,0,1,0},{0,1,0,1,0,1}}), 15);\n    assert Arrays.equals(solution.numSubmat(new int[]{{1,0,1,0,1},{0,1,1,1,0},{1,1,0,1,1},{0,1,1,1,0},{1,0,1,0,1}}), 32);\n    assert Arrays.equals(solution.numSubmat(new int[]{{0,0,1,0,0},{0,0,1,0,0},{1,1,1,1,1},{0,0,1,0,0},{0,0,1,0,0}}), 29);\n    assert Arrays.equals(solution.numSubmat(new int[]{{1,1,1,1,1,1},{1,1,1,1,1,1},{0,0,0,0,0,0},{1,1,1,1,1,1},{1,1,1,1,1,1}}), 126);\n    assert Arrays.equals(solution.numSubmat(new int[]{{0,1,1,1},{1,1,1,1},{1,1,1,1},{1,1,1,0}}), 69);\n    assert Arrays.equals(solution.numSubmat(new int[]{{1,0,1,0,1,0,1},{0,1,0,1,0,1,0},{1,0,1,0,1,0,1},{0,1,0,1,0,1,0},{1,0,1,0,1,0,1}}), 18);\n    assert Arrays.equals(solution.numSubmat(new int[]{{1,1,1,0,0,0},{1,1,0,1,1,0},{1,0,0,0,0,1},{1,1,1,0,0,0},{0,0,0,1,1,1},{0,0,1,1,1,0}}), 43);\n    assert Arrays.equals(solution.numSubmat(new int[]{{1,0,1,1},{1,1,1,1},{0,1,1,0},{1,0,1,0},{0,1,1,1}}), 40);\n    assert Arrays.equals(solution.numSubmat(new int[]{{1,1,1,0,1},{1,1,0,1,1},{0,1,1,1,0},{1,1,1,1,1},{0,1,0,1,0}}), 59);\n    assert Arrays.equals(solution.numSubmat(new int[]{{1,1,0,1},{1,1,1,0},{0,1,1,1},{1,0,1,1}}), 31);\n    assert Arrays.equals(solution.numSubmat(new int[]{{1,1,0,1,0,1},{1,1,1,1,1,1},{0,1,0,1,0,1},{1,1,1,1,1,1},{0,1,0,1,0,1}}), 85);\n    assert Arrays.equals(solution.numSubmat(new int[]{{1,0,1,0,1},{1,1,1,1,1},{0,1,0,1,0},{1,1,1,1,1},{1,0,1,0,1}}), 50);\n    assert Arrays.equals(solution.numSubmat(new int[]{{1,0,0,0,1,0,0,0,1},{0,1,0,1,0,1,0,1,0},{0,0,1,0,0,0,1,0,0},{1,0,0,0,1,0,0,0,1},{0,1,0,1,0,1,0,1,0},{0,0,1,0,0,0,1,0,0}}), 18);\n    assert Arrays.equals(solution.numSubmat(new int[]{{1,1,0,1,1},{1,0,1,1,1},{0,1,1,1,0},{1,1,1,0,1},{1,0,1,1,1}}), 50);\n    assert Arrays.equals(solution.numSubmat(new int[]{{0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0}}), 0);\n    assert Arrays.equals(solution.numSubmat(new int[]{{1,1,1,1,1,1,1},{1,1,1,1,1,1,1},{1,1,1,1,1,1,1},{1,1,1,1,1,1,1},{1,1,1,1,1,1,1}}), 420);\n    assert Arrays.equals(solution.numSubmat(new int[]{{1,0,1,0,1},{0,1,1,1,0},{1,1,1,0,1},{0,1,0,1,0},{1,0,1,0,1}}), 28);\n    assert Arrays.equals(solution.numSubmat(new int[]{{1,0,0,0,1},{0,1,1,1,0},{0,1,1,1,0},{0,0,1,0,0},{1,0,0,0,1}}), 25);\n    assert Arrays.equals(solution.numSubmat(new int[]{{1,1,1,1,1,1},{1,1,1,0,1,1},{1,0,1,1,1,0},{1,1,1,1,1,1},{1,0,1,0,1,1}}), 105);\n    assert Arrays.equals(solution.numSubmat(new int[]{{1,0,1,0,1},{0,1,0,1,0},{1,0,1,0,1},{0,1,0,1,0},{1,0,1,0,1}}), 13);\n    assert Arrays.equals(solution.numSubmat(new int[]{{1,1,1,1,0,1},{0,1,1,1,1,1},{1,1,0,1,1,1},{1,1,1,1,0,1},{0,1,1,1,1,1}}), 105);\n    assert Arrays.equals(solution.numSubmat(new int[]{{1,1,0,0},{1,1,1,1},{0,0,1,0},{1,1,1,1}}), 30);\n    assert Arrays.equals(solution.numSubmat(new int[]{{1,1,0,1},{1,1,1,1},{0,1,1,1},{1,0,1,0}}), 36);\n    assert Arrays.equals(solution.numSubmat(new int[]{{1,0,1},{1,1,1},{0,1,1},{1,1,1},{1,0,1}}), 37);\n    assert Arrays.equals(solution.numSubmat(new int[]{{1,1,0,0,1,1},{0,1,1,1,1,0},{1,1,1,1,1,1},{0,0,1,1,0,0}}), 60);\n    assert Arrays.equals(solution.numSubmat(new int[]{{1,1,1,0,0},{1,1,1,0,0},{0,0,0,1,1},{0,0,0,1,1},{1,1,1,1,1}}), 48);\n    assert Arrays.equals(solution.numSubmat(new int[]{{1,1,1,1,1,1,1},{1,0,0,0,0,0,1},{1,0,1,1,1,0,1},{1,0,1,0,1,0,1},{1,0,1,1,1,0,1},{1,0,0,0,0,0,1},{1,1,1,1,1,1,1}}), 128);\n    assert Arrays.equals(solution.numSubmat(new int[]{{1,1,1,1,1,1,1,1,1},{1,1,1,1,1,1,1,1,1},{0,0,0,0,0,0,0,0,0},{1,1,1,1,1,1,1,1,1},{1,1,1,1,1,1,1,1,1}}), 270);\n    assert Arrays.equals(solution.numSubmat(new int[]{{1,1,1,1,1,1},{1,0,0,1,0,1},{1,0,1,1,1,1},{1,1,1,1,0,1},{1,0,1,1,1,1},{1,1,1,1,1,1}}), 141);\n    assert Arrays.equals(solution.numSubmat(new int[]{{1,1,1,1,1,1},{1,1,1,1,1,1},{1,1,0,0,0,0},{1,1,0,0,0,0},{0,0,0,0,1,1},{0,0,0,0,1,1}}), 93);\n    assert Arrays.equals(solution.numSubmat(new int[]{{1,1,1,1,0},{1,1,1,1,0},{1,1,0,0,1},{0,1,0,1,1},{1,1,1,1,1}}), 71);\n    assert Arrays.equals(solution.numSubmat(new int[]{{1,0,1,0,1,0,1},{0,1,0,1,0,1,0},{1,0,1,0,1,0,1},{0,1,0,1,0,1,0},{1,0,1,0,1,0,1},{0,1,0,1,0,1,0}}), 21);\n    assert Arrays.equals(solution.numSubmat(new int[]{{1,1,1,1,1},{0,1,1,1,1},{1,1,1,1,1},{1,1,1,1,0},{1,1,0,0,1}}), 114);\n    assert Arrays.equals(solution.numSubmat(new int[]{{1,1,1,0},{0,1,1,1},{1,1,1,1},{0,1,0,1}}), 41);\n    assert Arrays.equals(solution.numSubmat(new int[]{{1,0,1,1},{1,1,1,0},{1,1,0,1},{0,1,1,1}}), 29);\n    assert Arrays.equals(solution.numSubmat(new int[]{{1,1,1,1,1,1,1,1,1},{1,0,0,0,0,0,0,0,1},{1,0,1,1,1,1,1,0,1},{1,0,1,0,0,0,1,0,1},{1,0,1,0,1,0,1,0,1},{1,0,1,0,0,0,1,0,1},{1,0,1,1,1,1,1,0,1},{1,0,0,0,0,0,0,0,1},{1,1,1,1,1,1,1,1,1}}), 233);\n    assert Arrays.equals(solution.numSubmat(new int[]{{1,0,1,0,1},{0,1,1,1,0},{1,1,1,1,1},{0,1,1,0,1}}), 44);\n    assert Arrays.equals(solution.numSubmat(new int[]{{1,0,0,0,1},{0,1,0,1,0},{0,0,1,0,0},{0,1,0,1,0},{1,0,0,0,1}}), 9);\n    assert Arrays.equals(solution.numSubmat(new int[]{{1,1,1,1},{1,0,0,1},{1,1,1,1},{0,1,1,0}}), 34);\n    assert Arrays.equals(solution.numSubmat(new int[]{{1,0,1,0,1},{1,1,0,1,1},{0,1,1,0,1},{1,0,1,0,1},{1,1,0,1,1}}), 36);\n    assert Arrays.equals(solution.numSubmat(new int[]{{1,1,0,0,1,1},{0,0,1,1,0,0},{1,1,0,0,1,1},{0,0,1,1,0,0}}), 18);\n    assert Arrays.equals(solution.numSubmat(new int[]{{1,1,1,1,1},{1,0,0,0,1},{1,0,1,0,1},{1,0,0,0,1},{1,1,1,1,1}}), 57);\n    assert Arrays.equals(solution.numSubmat(new int[]{{1,1,0,0,1,1},{0,1,1,1,0,0},{1,1,1,1,1,1},{0,0,0,1,1,1},{1,1,1,1,1,0}}), 76);\n    assert Arrays.equals(solution.numSubmat(new int[]{{1,1,0,1,1},{1,0,0,0,1},{1,1,1,1,1},{0,1,1,1,1}}), 51);\n    assert Arrays.equals(solution.numSubmat(new int[]{{1,1,1},{0,0,0},{1,1,1},{0,0,0},{1,1,1},{0,0,0}}), 18);\n    assert Arrays.equals(solution.numSubmat(new int[]{{1,1,1,1,1,1,1},{1,1,1,1,1,1,1},{1,1,1,1,1,1,1},{0,0,0,0,0,0,0},{1,1,1,1,1,1,1}}), 196);\n    assert Arrays.equals(solution.numSubmat(new int[]{{1,1,1,1,1,1},{1,1,1,1,1,1},{1,1,1,1,1,1},{1,1,1,1,1,1}}), 210);\n    assert Arrays.equals(solution.numSubmat(new int[]{{1,1,0,1},{0,1,1,0},{1,0,1,1},{0,1,0,1},{1,1,1,0}}), 23);\n    assert Arrays.equals(solution.numSubmat(new int[]{{1,1,0,1,0},{1,1,1,1,1},{0,1,1,1,0},{1,0,1,0,1},{1,1,1,1,1}}), 62);\n    assert Arrays.equals(solution.numSubmat(new int[]{{0,0,1,0,0},{0,1,1,1,0},{1,1,1,1,1},{0,1,1,1,0},{0,0,1,0,0}}), 54);\n    assert Arrays.equals(solution.numSubmat(new int[]{{1,1,1,1,1,1,1,1},{1,1,1,1,1,1,1,1},{1,1,1,1,1,1,1,1},{1,1,1,1,1,1,1,1},{1,1,1,1,1,1,1,1}}), 540);\n    assert Arrays.equals(solution.numSubmat(new int[]{{1,1,0,0},{1,1,0,0},{0,0,1,1},{1,1,1,1}}), 25);\n    assert Arrays.equals(solution.numSubmat(new int[]{{0,1,1,0,0,1,1,0,0,1},{1,1,1,0,0,1,1,1,0,0},{0,1,1,0,0,1,1,0,0,1},{1,1,1,0,0,1,1,1,0,0}}), 74);\n    assert Arrays.equals(solution.numSubmat(new int[]{{1,1,1,1,1,1,1},{1,1,0,0,0,0,1},{1,1,0,1,1,0,1},{1,0,1,1,1,1,0},{1,1,0,0,0,0,1},{1,1,1,1,1,1,1}}), 112);\n    assert Arrays.equals(solution.numSubmat(new int[]{{1,1,1,1,1,1},{1,1,1,1,1,1},{1,1,1,1,1,1},{1,1,1,1,1,1},{1,1,1,1,1,1}}), 315);\n    assert Arrays.equals(solution.numSubmat(new int[]{{1,0,1,0,1},{0,1,0,1,0},{1,0,1,0,1},{0,1,0,1,0}}), 10);\n    assert Arrays.equals(solution.numSubmat(new int[]{{1,1,1,0,1,1},{1,0,1,1,1,0},{1,1,0,1,1,1},{0,1,1,1,1,0}}), 52);\n    assert Arrays.equals(solution.numSubmat(new int[]{{1,1,1,1,1},{1,0,0,0,1},{1,0,0,0,1},{1,0,0,0,1},{1,1,1,1,1}}), 56);\n    assert Arrays.equals(solution.numSubmat(new int[]{{1,0,1,0,1},{1,1,1,1,1},{0,1,1,1,0},{1,1,1,1,1},{1,0,1,0,1}}), 71);\n    assert Arrays.equals(solution.numSubmat(new int[]{{1,1,1,1,1,1},{1,0,1,0,1,0},{1,1,1,1,1,1},{0,1,0,1,0,1},{1,1,1,1,1,1}}), 87);\n    assert Arrays.equals(solution.numSubmat(new int[]{{1,1,1,1,1,1},{1,0,0,0,0,1},{1,0,1,1,0,1},{1,0,1,1,0,1},{1,0,0,0,0,1},{1,1,1,1,1,1}}), 89);\n    assert Arrays.equals(solution.numSubmat(new int[]{{1,0,1,0,1},{1,1,1,0,0},{0,1,1,1,1},{1,1,1,1,0}}), 45);\n    assert Arrays.equals(solution.numSubmat(new int[]{{1,0,0,1,0,0,1},{0,1,1,0,1,1,0},{0,1,1,0,1,1,0},{1,0,0,1,0,0,1},{0,1,1,0,1,1,0}}), 30);\n    assert Arrays.equals(solution.numSubmat(new int[]{{1,1,1,0,0,1},{1,1,1,1,0,0},{0,0,1,1,1,1},{1,0,0,1,1,1}}), 51);\n    assert Arrays.equals(solution.numSubmat(new int[]{{0,1,0,1,0,1,0},{1,0,1,0,1,0,1},{0,1,0,1,0,1,0},{1,0,1,0,1,0,1}}), 14);\n    assert Arrays.equals(solution.numSubmat(new int[]{{1,1,0,0,1,1},{1,1,0,0,1,1},{0,0,1,1,0,0},{0,0,1,1,0,0},{1,1,0,0,1,1},{1,1,0,0,1,1}}), 45);\n    assert Arrays.equals(solution.numSubmat(new int[]{{1,1,1,0,0},{1,1,1,1,0},{0,1,1,1,1},{0,0,1,1,1},{1,1,1,0,0}}), 67);\n    assert Arrays.equals(solution.numSubmat(new int[]{{0,1,1,0,1},{1,1,1,1,1},{1,0,1,0,1},{1,1,1,1,1},{0,1,1,0,1}}), 68);\n    assert Arrays.equals(solution.numSubmat(new int[]{{1,1,1,1,1,1,1,1,1,1},{0,0,0,0,0,0,0,0,0,0},{1,1,1,1,1,1,1,1,1,1},{0,0,0,0,0,0,0,0,0,0}}), 110);\n    assert Arrays.equals(solution.numSubmat(new int[]{{1,1,1,1,1},{0,0,0,0,0},{1,1,1,1,1},{0,0,0,0,0},{1,1,1,1,1}}), 45);\n    assert Arrays.equals(solution.numSubmat(new int[]{{1,1,1,1,0},{1,1,1,1,1},{1,1,0,1,1},{1,0,1,1,1},{0,1,1,1,1}}), 91);\n    assert Arrays.equals(solution.numSubmat(new int[]{{1,0,1,1},{1,1,0,1},{1,1,1,0},{1,0,1,1}}), 28);\n    assert Arrays.equals(solution.numSubmat(new int[]{{1,1,0,1},{1,1,1,1},{0,1,1,1},{1,1,1,1}}), 56);\n    assert Arrays.equals(solution.numSubmat(new int[]{{0,1,1,0,1},{1,1,1,1,1},{1,0,0,1,1},{0,1,1,1,0},{1,1,0,1,1}}), 50);\n    assert Arrays.equals(solution.numSubmat(new int[]{{1,0,1,1,1},{1,1,1,0,1},{1,0,1,1,1},{1,1,1,1,1}}), 58);\n    assert Arrays.equals(solution.numSubmat(new int[]{{1,1,1,1,1},{1,1,1,1,1},{1,0,1,0,1},{1,1,1,1,1},{1,1,1,1,1}}), 117);\n    assert Arrays.equals(solution.numSubmat(new int[]{{1,1,1,1,0,0,1,1},{1,1,0,0,0,1,1,1},{0,0,0,0,0,0,0,0},{1,1,1,1,0,0,1,1},{1,1,0,0,0,1,1,1}}), 56);\n}",
+    "javascript": "function check(candidate) {\n    console.assert(JSON.stringify(candidate([[0,0],[0,0]])) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate([[1,0,1],[1,1,0],[1,1,0]])) === JSON.stringify(13));\n    console.assert(JSON.stringify(candidate([[1,0],[0,1]])) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate([[1,1,1,1],[1,1,1,1],[1,1,1,1]])) === JSON.stringify(60));\n    console.assert(JSON.stringify(candidate([[0,0,0],[0,0,0]])) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate([[0,0,0,0],[0,0,0,0],[0,0,0,0]])) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate([[1,1,1],[1,1,1],[1,1,1]])) === JSON.stringify(36));\n    console.assert(JSON.stringify(candidate([[0,1,1,0],[0,1,1,1],[1,1,1,0]])) === JSON.stringify(24));\n    console.assert(JSON.stringify(candidate([[1,1],[1,1]])) === JSON.stringify(9));\n    console.assert(JSON.stringify(candidate([[0,0,0],[0,0,0],[0,0,0]])) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate([[1,1,0,1],[0,1,1,0],[1,0,1,1],[1,1,1,1]])) === JSON.stringify(28));\n    console.assert(JSON.stringify(candidate([[0,1,1,1,0],[1,1,1,1,1],[1,1,1,1,1],[0,1,1,1,0],[1,0,0,0,1]])) === JSON.stringify(89));\n    console.assert(JSON.stringify(candidate([[1,1,1,1],[1,0,0,1],[1,0,0,1],[1,1,1,1]])) === JSON.stringify(36));\n    console.assert(JSON.stringify(candidate([[0,1,0,1,0,1],[1,0,1,0,1,0],[0,1,0,1,0,1],[1,0,1,0,1,0],[0,1,0,1,0,1]])) === JSON.stringify(15));\n    console.assert(JSON.stringify(candidate([[1,0,1,0,1],[0,1,1,1,0],[1,1,0,1,1],[0,1,1,1,0],[1,0,1,0,1]])) === JSON.stringify(32));\n    console.assert(JSON.stringify(candidate([[0,0,1,0,0],[0,0,1,0,0],[1,1,1,1,1],[0,0,1,0,0],[0,0,1,0,0]])) === JSON.stringify(29));\n    console.assert(JSON.stringify(candidate([[1,1,1,1,1,1],[1,1,1,1,1,1],[0,0,0,0,0,0],[1,1,1,1,1,1],[1,1,1,1,1,1]])) === JSON.stringify(126));\n    console.assert(JSON.stringify(candidate([[0,1,1,1],[1,1,1,1],[1,1,1,1],[1,1,1,0]])) === JSON.stringify(69));\n    console.assert(JSON.stringify(candidate([[1,0,1,0,1,0,1],[0,1,0,1,0,1,0],[1,0,1,0,1,0,1],[0,1,0,1,0,1,0],[1,0,1,0,1,0,1]])) === JSON.stringify(18));\n    console.assert(JSON.stringify(candidate([[1,1,1,0,0,0],[1,1,0,1,1,0],[1,0,0,0,0,1],[1,1,1,0,0,0],[0,0,0,1,1,1],[0,0,1,1,1,0]])) === JSON.stringify(43));\n    console.assert(JSON.stringify(candidate([[1,0,1,1],[1,1,1,1],[0,1,1,0],[1,0,1,0],[0,1,1,1]])) === JSON.stringify(40));\n    console.assert(JSON.stringify(candidate([[1,1,1,0,1],[1,1,0,1,1],[0,1,1,1,0],[1,1,1,1,1],[0,1,0,1,0]])) === JSON.stringify(59));\n    console.assert(JSON.stringify(candidate([[1,1,0,1],[1,1,1,0],[0,1,1,1],[1,0,1,1]])) === JSON.stringify(31));\n    console.assert(JSON.stringify(candidate([[1,1,0,1,0,1],[1,1,1,1,1,1],[0,1,0,1,0,1],[1,1,1,1,1,1],[0,1,0,1,0,1]])) === JSON.stringify(85));\n    console.assert(JSON.stringify(candidate([[1,0,1,0,1],[1,1,1,1,1],[0,1,0,1,0],[1,1,1,1,1],[1,0,1,0,1]])) === JSON.stringify(50));\n    console.assert(JSON.stringify(candidate([[1,0,0,0,1,0,0,0,1],[0,1,0,1,0,1,0,1,0],[0,0,1,0,0,0,1,0,0],[1,0,0,0,1,0,0,0,1],[0,1,0,1,0,1,0,1,0],[0,0,1,0,0,0,1,0,0]])) === JSON.stringify(18));\n    console.assert(JSON.stringify(candidate([[1,1,0,1,1],[1,0,1,1,1],[0,1,1,1,0],[1,1,1,0,1],[1,0,1,1,1]])) === JSON.stringify(50));\n    console.assert(JSON.stringify(candidate([[0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0]])) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate([[1,1,1,1,1,1,1],[1,1,1,1,1,1,1],[1,1,1,1,1,1,1],[1,1,1,1,1,1,1],[1,1,1,1,1,1,1]])) === JSON.stringify(420));\n    console.assert(JSON.stringify(candidate([[1,0,1,0,1],[0,1,1,1,0],[1,1,1,0,1],[0,1,0,1,0],[1,0,1,0,1]])) === JSON.stringify(28));\n    console.assert(JSON.stringify(candidate([[1,0,0,0,1],[0,1,1,1,0],[0,1,1,1,0],[0,0,1,0,0],[1,0,0,0,1]])) === JSON.stringify(25));\n    console.assert(JSON.stringify(candidate([[1,1,1,1,1,1],[1,1,1,0,1,1],[1,0,1,1,1,0],[1,1,1,1,1,1],[1,0,1,0,1,1]])) === JSON.stringify(105));\n    console.assert(JSON.stringify(candidate([[1,0,1,0,1],[0,1,0,1,0],[1,0,1,0,1],[0,1,0,1,0],[1,0,1,0,1]])) === JSON.stringify(13));\n    console.assert(JSON.stringify(candidate([[1,1,1,1,0,1],[0,1,1,1,1,1],[1,1,0,1,1,1],[1,1,1,1,0,1],[0,1,1,1,1,1]])) === JSON.stringify(105));\n    console.assert(JSON.stringify(candidate([[1,1,0,0],[1,1,1,1],[0,0,1,0],[1,1,1,1]])) === JSON.stringify(30));\n    console.assert(JSON.stringify(candidate([[1,1,0,1],[1,1,1,1],[0,1,1,1],[1,0,1,0]])) === JSON.stringify(36));\n    console.assert(JSON.stringify(candidate([[1,0,1],[1,1,1],[0,1,1],[1,1,1],[1,0,1]])) === JSON.stringify(37));\n    console.assert(JSON.stringify(candidate([[1,1,0,0,1,1],[0,1,1,1,1,0],[1,1,1,1,1,1],[0,0,1,1,0,0]])) === JSON.stringify(60));\n    console.assert(JSON.stringify(candidate([[1,1,1,0,0],[1,1,1,0,0],[0,0,0,1,1],[0,0,0,1,1],[1,1,1,1,1]])) === JSON.stringify(48));\n    console.assert(JSON.stringify(candidate([[1,1,1,1,1,1,1],[1,0,0,0,0,0,1],[1,0,1,1,1,0,1],[1,0,1,0,1,0,1],[1,0,1,1,1,0,1],[1,0,0,0,0,0,1],[1,1,1,1,1,1,1]])) === JSON.stringify(128));\n    console.assert(JSON.stringify(candidate([[1,1,1,1,1,1,1,1,1],[1,1,1,1,1,1,1,1,1],[0,0,0,0,0,0,0,0,0],[1,1,1,1,1,1,1,1,1],[1,1,1,1,1,1,1,1,1]])) === JSON.stringify(270));\n    console.assert(JSON.stringify(candidate([[1,1,1,1,1,1],[1,0,0,1,0,1],[1,0,1,1,1,1],[1,1,1,1,0,1],[1,0,1,1,1,1],[1,1,1,1,1,1]])) === JSON.stringify(141));\n    console.assert(JSON.stringify(candidate([[1,1,1,1,1,1],[1,1,1,1,1,1],[1,1,0,0,0,0],[1,1,0,0,0,0],[0,0,0,0,1,1],[0,0,0,0,1,1]])) === JSON.stringify(93));\n    console.assert(JSON.stringify(candidate([[1,1,1,1,0],[1,1,1,1,0],[1,1,0,0,1],[0,1,0,1,1],[1,1,1,1,1]])) === JSON.stringify(71));\n    console.assert(JSON.stringify(candidate([[1,0,1,0,1,0,1],[0,1,0,1,0,1,0],[1,0,1,0,1,0,1],[0,1,0,1,0,1,0],[1,0,1,0,1,0,1],[0,1,0,1,0,1,0]])) === JSON.stringify(21));\n    console.assert(JSON.stringify(candidate([[1,1,1,1,1],[0,1,1,1,1],[1,1,1,1,1],[1,1,1,1,0],[1,1,0,0,1]])) === JSON.stringify(114));\n    console.assert(JSON.stringify(candidate([[1,1,1,0],[0,1,1,1],[1,1,1,1],[0,1,0,1]])) === JSON.stringify(41));\n    console.assert(JSON.stringify(candidate([[1,0,1,1],[1,1,1,0],[1,1,0,1],[0,1,1,1]])) === JSON.stringify(29));\n    console.assert(JSON.stringify(candidate([[1,1,1,1,1,1,1,1,1],[1,0,0,0,0,0,0,0,1],[1,0,1,1,1,1,1,0,1],[1,0,1,0,0,0,1,0,1],[1,0,1,0,1,0,1,0,1],[1,0,1,0,0,0,1,0,1],[1,0,1,1,1,1,1,0,1],[1,0,0,0,0,0,0,0,1],[1,1,1,1,1,1,1,1,1]])) === JSON.stringify(233));\n    console.assert(JSON.stringify(candidate([[1,0,1,0,1],[0,1,1,1,0],[1,1,1,1,1],[0,1,1,0,1]])) === JSON.stringify(44));\n    console.assert(JSON.stringify(candidate([[1,0,0,0,1],[0,1,0,1,0],[0,0,1,0,0],[0,1,0,1,0],[1,0,0,0,1]])) === JSON.stringify(9));\n    console.assert(JSON.stringify(candidate([[1,1,1,1],[1,0,0,1],[1,1,1,1],[0,1,1,0]])) === JSON.stringify(34));\n    console.assert(JSON.stringify(candidate([[1,0,1,0,1],[1,1,0,1,1],[0,1,1,0,1],[1,0,1,0,1],[1,1,0,1,1]])) === JSON.stringify(36));\n    console.assert(JSON.stringify(candidate([[1,1,0,0,1,1],[0,0,1,1,0,0],[1,1,0,0,1,1],[0,0,1,1,0,0]])) === JSON.stringify(18));\n    console.assert(JSON.stringify(candidate([[1,1,1,1,1],[1,0,0,0,1],[1,0,1,0,1],[1,0,0,0,1],[1,1,1,1,1]])) === JSON.stringify(57));\n    console.assert(JSON.stringify(candidate([[1,1,0,0,1,1],[0,1,1,1,0,0],[1,1,1,1,1,1],[0,0,0,1,1,1],[1,1,1,1,1,0]])) === JSON.stringify(76));\n    console.assert(JSON.stringify(candidate([[1,1,0,1,1],[1,0,0,0,1],[1,1,1,1,1],[0,1,1,1,1]])) === JSON.stringify(51));\n    console.assert(JSON.stringify(candidate([[1,1,1],[0,0,0],[1,1,1],[0,0,0],[1,1,1],[0,0,0]])) === JSON.stringify(18));\n    console.assert(JSON.stringify(candidate([[1,1,1,1,1,1,1],[1,1,1,1,1,1,1],[1,1,1,1,1,1,1],[0,0,0,0,0,0,0],[1,1,1,1,1,1,1]])) === JSON.stringify(196));\n    console.assert(JSON.stringify(candidate([[1,1,1,1,1,1],[1,1,1,1,1,1],[1,1,1,1,1,1],[1,1,1,1,1,1]])) === JSON.stringify(210));\n    console.assert(JSON.stringify(candidate([[1,1,0,1],[0,1,1,0],[1,0,1,1],[0,1,0,1],[1,1,1,0]])) === JSON.stringify(23));\n    console.assert(JSON.stringify(candidate([[1,1,0,1,0],[1,1,1,1,1],[0,1,1,1,0],[1,0,1,0,1],[1,1,1,1,1]])) === JSON.stringify(62));\n    console.assert(JSON.stringify(candidate([[0,0,1,0,0],[0,1,1,1,0],[1,1,1,1,1],[0,1,1,1,0],[0,0,1,0,0]])) === JSON.stringify(54));\n    console.assert(JSON.stringify(candidate([[1,1,1,1,1,1,1,1],[1,1,1,1,1,1,1,1],[1,1,1,1,1,1,1,1],[1,1,1,1,1,1,1,1],[1,1,1,1,1,1,1,1]])) === JSON.stringify(540));\n    console.assert(JSON.stringify(candidate([[1,1,0,0],[1,1,0,0],[0,0,1,1],[1,1,1,1]])) === JSON.stringify(25));\n    console.assert(JSON.stringify(candidate([[0,1,1,0,0,1,1,0,0,1],[1,1,1,0,0,1,1,1,0,0],[0,1,1,0,0,1,1,0,0,1],[1,1,1,0,0,1,1,1,0,0]])) === JSON.stringify(74));\n    console.assert(JSON.stringify(candidate([[1,1,1,1,1,1,1],[1,1,0,0,0,0,1],[1,1,0,1,1,0,1],[1,0,1,1,1,1,0],[1,1,0,0,0,0,1],[1,1,1,1,1,1,1]])) === JSON.stringify(112));\n    console.assert(JSON.stringify(candidate([[1,1,1,1,1,1],[1,1,1,1,1,1],[1,1,1,1,1,1],[1,1,1,1,1,1],[1,1,1,1,1,1]])) === JSON.stringify(315));\n    console.assert(JSON.stringify(candidate([[1,0,1,0,1],[0,1,0,1,0],[1,0,1,0,1],[0,1,0,1,0]])) === JSON.stringify(10));\n    console.assert(JSON.stringify(candidate([[1,1,1,0,1,1],[1,0,1,1,1,0],[1,1,0,1,1,1],[0,1,1,1,1,0]])) === JSON.stringify(52));\n    console.assert(JSON.stringify(candidate([[1,1,1,1,1],[1,0,0,0,1],[1,0,0,0,1],[1,0,0,0,1],[1,1,1,1,1]])) === JSON.stringify(56));\n    console.assert(JSON.stringify(candidate([[1,0,1,0,1],[1,1,1,1,1],[0,1,1,1,0],[1,1,1,1,1],[1,0,1,0,1]])) === JSON.stringify(71));\n    console.assert(JSON.stringify(candidate([[1,1,1,1,1,1],[1,0,1,0,1,0],[1,1,1,1,1,1],[0,1,0,1,0,1],[1,1,1,1,1,1]])) === JSON.stringify(87));\n    console.assert(JSON.stringify(candidate([[1,1,1,1,1,1],[1,0,0,0,0,1],[1,0,1,1,0,1],[1,0,1,1,0,1],[1,0,0,0,0,1],[1,1,1,1,1,1]])) === JSON.stringify(89));\n    console.assert(JSON.stringify(candidate([[1,0,1,0,1],[1,1,1,0,0],[0,1,1,1,1],[1,1,1,1,0]])) === JSON.stringify(45));\n    console.assert(JSON.stringify(candidate([[1,0,0,1,0,0,1],[0,1,1,0,1,1,0],[0,1,1,0,1,1,0],[1,0,0,1,0,0,1],[0,1,1,0,1,1,0]])) === JSON.stringify(30));\n    console.assert(JSON.stringify(candidate([[1,1,1,0,0,1],[1,1,1,1,0,0],[0,0,1,1,1,1],[1,0,0,1,1,1]])) === JSON.stringify(51));\n    console.assert(JSON.stringify(candidate([[0,1,0,1,0,1,0],[1,0,1,0,1,0,1],[0,1,0,1,0,1,0],[1,0,1,0,1,0,1]])) === JSON.stringify(14));\n    console.assert(JSON.stringify(candidate([[1,1,0,0,1,1],[1,1,0,0,1,1],[0,0,1,1,0,0],[0,0,1,1,0,0],[1,1,0,0,1,1],[1,1,0,0,1,1]])) === JSON.stringify(45));\n    console.assert(JSON.stringify(candidate([[1,1,1,0,0],[1,1,1,1,0],[0,1,1,1,1],[0,0,1,1,1],[1,1,1,0,0]])) === JSON.stringify(67));\n    console.assert(JSON.stringify(candidate([[0,1,1,0,1],[1,1,1,1,1],[1,0,1,0,1],[1,1,1,1,1],[0,1,1,0,1]])) === JSON.stringify(68));\n    console.assert(JSON.stringify(candidate([[1,1,1,1,1,1,1,1,1,1],[0,0,0,0,0,0,0,0,0,0],[1,1,1,1,1,1,1,1,1,1],[0,0,0,0,0,0,0,0,0,0]])) === JSON.stringify(110));\n    console.assert(JSON.stringify(candidate([[1,1,1,1,1],[0,0,0,0,0],[1,1,1,1,1],[0,0,0,0,0],[1,1,1,1,1]])) === JSON.stringify(45));\n    console.assert(JSON.stringify(candidate([[1,1,1,1,0],[1,1,1,1,1],[1,1,0,1,1],[1,0,1,1,1],[0,1,1,1,1]])) === JSON.stringify(91));\n    console.assert(JSON.stringify(candidate([[1,0,1,1],[1,1,0,1],[1,1,1,0],[1,0,1,1]])) === JSON.stringify(28));\n    console.assert(JSON.stringify(candidate([[1,1,0,1],[1,1,1,1],[0,1,1,1],[1,1,1,1]])) === JSON.stringify(56));\n    console.assert(JSON.stringify(candidate([[0,1,1,0,1],[1,1,1,1,1],[1,0,0,1,1],[0,1,1,1,0],[1,1,0,1,1]])) === JSON.stringify(50));\n    console.assert(JSON.stringify(candidate([[1,0,1,1,1],[1,1,1,0,1],[1,0,1,1,1],[1,1,1,1,1]])) === JSON.stringify(58));\n    console.assert(JSON.stringify(candidate([[1,1,1,1,1],[1,1,1,1,1],[1,0,1,0,1],[1,1,1,1,1],[1,1,1,1,1]])) === JSON.stringify(117));\n    console.assert(JSON.stringify(candidate([[1,1,1,1,0,0,1,1],[1,1,0,0,0,1,1,1],[0,0,0,0,0,0,0,0],[1,1,1,1,0,0,1,1],[1,1,0,0,0,1,1,1]])) === JSON.stringify(56));\n}",
+    "typescript": "function check(candidate: Function): void {\n    console.assert(JSON.stringify(candidate([[0,0],[0,0]])) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate([[1,0,1],[1,1,0],[1,1,0]])) === JSON.stringify(13));\n    console.assert(JSON.stringify(candidate([[1,0],[0,1]])) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate([[1,1,1,1],[1,1,1,1],[1,1,1,1]])) === JSON.stringify(60));\n    console.assert(JSON.stringify(candidate([[0,0,0],[0,0,0]])) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate([[0,0,0,0],[0,0,0,0],[0,0,0,0]])) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate([[1,1,1],[1,1,1],[1,1,1]])) === JSON.stringify(36));\n    console.assert(JSON.stringify(candidate([[0,1,1,0],[0,1,1,1],[1,1,1,0]])) === JSON.stringify(24));\n    console.assert(JSON.stringify(candidate([[1,1],[1,1]])) === JSON.stringify(9));\n    console.assert(JSON.stringify(candidate([[0,0,0],[0,0,0],[0,0,0]])) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate([[1,1,0,1],[0,1,1,0],[1,0,1,1],[1,1,1,1]])) === JSON.stringify(28));\n    console.assert(JSON.stringify(candidate([[0,1,1,1,0],[1,1,1,1,1],[1,1,1,1,1],[0,1,1,1,0],[1,0,0,0,1]])) === JSON.stringify(89));\n    console.assert(JSON.stringify(candidate([[1,1,1,1],[1,0,0,1],[1,0,0,1],[1,1,1,1]])) === JSON.stringify(36));\n    console.assert(JSON.stringify(candidate([[0,1,0,1,0,1],[1,0,1,0,1,0],[0,1,0,1,0,1],[1,0,1,0,1,0],[0,1,0,1,0,1]])) === JSON.stringify(15));\n    console.assert(JSON.stringify(candidate([[1,0,1,0,1],[0,1,1,1,0],[1,1,0,1,1],[0,1,1,1,0],[1,0,1,0,1]])) === JSON.stringify(32));\n    console.assert(JSON.stringify(candidate([[0,0,1,0,0],[0,0,1,0,0],[1,1,1,1,1],[0,0,1,0,0],[0,0,1,0,0]])) === JSON.stringify(29));\n    console.assert(JSON.stringify(candidate([[1,1,1,1,1,1],[1,1,1,1,1,1],[0,0,0,0,0,0],[1,1,1,1,1,1],[1,1,1,1,1,1]])) === JSON.stringify(126));\n    console.assert(JSON.stringify(candidate([[0,1,1,1],[1,1,1,1],[1,1,1,1],[1,1,1,0]])) === JSON.stringify(69));\n    console.assert(JSON.stringify(candidate([[1,0,1,0,1,0,1],[0,1,0,1,0,1,0],[1,0,1,0,1,0,1],[0,1,0,1,0,1,0],[1,0,1,0,1,0,1]])) === JSON.stringify(18));\n    console.assert(JSON.stringify(candidate([[1,1,1,0,0,0],[1,1,0,1,1,0],[1,0,0,0,0,1],[1,1,1,0,0,0],[0,0,0,1,1,1],[0,0,1,1,1,0]])) === JSON.stringify(43));\n    console.assert(JSON.stringify(candidate([[1,0,1,1],[1,1,1,1],[0,1,1,0],[1,0,1,0],[0,1,1,1]])) === JSON.stringify(40));\n    console.assert(JSON.stringify(candidate([[1,1,1,0,1],[1,1,0,1,1],[0,1,1,1,0],[1,1,1,1,1],[0,1,0,1,0]])) === JSON.stringify(59));\n    console.assert(JSON.stringify(candidate([[1,1,0,1],[1,1,1,0],[0,1,1,1],[1,0,1,1]])) === JSON.stringify(31));\n    console.assert(JSON.stringify(candidate([[1,1,0,1,0,1],[1,1,1,1,1,1],[0,1,0,1,0,1],[1,1,1,1,1,1],[0,1,0,1,0,1]])) === JSON.stringify(85));\n    console.assert(JSON.stringify(candidate([[1,0,1,0,1],[1,1,1,1,1],[0,1,0,1,0],[1,1,1,1,1],[1,0,1,0,1]])) === JSON.stringify(50));\n    console.assert(JSON.stringify(candidate([[1,0,0,0,1,0,0,0,1],[0,1,0,1,0,1,0,1,0],[0,0,1,0,0,0,1,0,0],[1,0,0,0,1,0,0,0,1],[0,1,0,1,0,1,0,1,0],[0,0,1,0,0,0,1,0,0]])) === JSON.stringify(18));\n    console.assert(JSON.stringify(candidate([[1,1,0,1,1],[1,0,1,1,1],[0,1,1,1,0],[1,1,1,0,1],[1,0,1,1,1]])) === JSON.stringify(50));\n    console.assert(JSON.stringify(candidate([[0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0]])) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate([[1,1,1,1,1,1,1],[1,1,1,1,1,1,1],[1,1,1,1,1,1,1],[1,1,1,1,1,1,1],[1,1,1,1,1,1,1]])) === JSON.stringify(420));\n    console.assert(JSON.stringify(candidate([[1,0,1,0,1],[0,1,1,1,0],[1,1,1,0,1],[0,1,0,1,0],[1,0,1,0,1]])) === JSON.stringify(28));\n    console.assert(JSON.stringify(candidate([[1,0,0,0,1],[0,1,1,1,0],[0,1,1,1,0],[0,0,1,0,0],[1,0,0,0,1]])) === JSON.stringify(25));\n    console.assert(JSON.stringify(candidate([[1,1,1,1,1,1],[1,1,1,0,1,1],[1,0,1,1,1,0],[1,1,1,1,1,1],[1,0,1,0,1,1]])) === JSON.stringify(105));\n    console.assert(JSON.stringify(candidate([[1,0,1,0,1],[0,1,0,1,0],[1,0,1,0,1],[0,1,0,1,0],[1,0,1,0,1]])) === JSON.stringify(13));\n    console.assert(JSON.stringify(candidate([[1,1,1,1,0,1],[0,1,1,1,1,1],[1,1,0,1,1,1],[1,1,1,1,0,1],[0,1,1,1,1,1]])) === JSON.stringify(105));\n    console.assert(JSON.stringify(candidate([[1,1,0,0],[1,1,1,1],[0,0,1,0],[1,1,1,1]])) === JSON.stringify(30));\n    console.assert(JSON.stringify(candidate([[1,1,0,1],[1,1,1,1],[0,1,1,1],[1,0,1,0]])) === JSON.stringify(36));\n    console.assert(JSON.stringify(candidate([[1,0,1],[1,1,1],[0,1,1],[1,1,1],[1,0,1]])) === JSON.stringify(37));\n    console.assert(JSON.stringify(candidate([[1,1,0,0,1,1],[0,1,1,1,1,0],[1,1,1,1,1,1],[0,0,1,1,0,0]])) === JSON.stringify(60));\n    console.assert(JSON.stringify(candidate([[1,1,1,0,0],[1,1,1,0,0],[0,0,0,1,1],[0,0,0,1,1],[1,1,1,1,1]])) === JSON.stringify(48));\n    console.assert(JSON.stringify(candidate([[1,1,1,1,1,1,1],[1,0,0,0,0,0,1],[1,0,1,1,1,0,1],[1,0,1,0,1,0,1],[1,0,1,1,1,0,1],[1,0,0,0,0,0,1],[1,1,1,1,1,1,1]])) === JSON.stringify(128));\n    console.assert(JSON.stringify(candidate([[1,1,1,1,1,1,1,1,1],[1,1,1,1,1,1,1,1,1],[0,0,0,0,0,0,0,0,0],[1,1,1,1,1,1,1,1,1],[1,1,1,1,1,1,1,1,1]])) === JSON.stringify(270));\n    console.assert(JSON.stringify(candidate([[1,1,1,1,1,1],[1,0,0,1,0,1],[1,0,1,1,1,1],[1,1,1,1,0,1],[1,0,1,1,1,1],[1,1,1,1,1,1]])) === JSON.stringify(141));\n    console.assert(JSON.stringify(candidate([[1,1,1,1,1,1],[1,1,1,1,1,1],[1,1,0,0,0,0],[1,1,0,0,0,0],[0,0,0,0,1,1],[0,0,0,0,1,1]])) === JSON.stringify(93));\n    console.assert(JSON.stringify(candidate([[1,1,1,1,0],[1,1,1,1,0],[1,1,0,0,1],[0,1,0,1,1],[1,1,1,1,1]])) === JSON.stringify(71));\n    console.assert(JSON.stringify(candidate([[1,0,1,0,1,0,1],[0,1,0,1,0,1,0],[1,0,1,0,1,0,1],[0,1,0,1,0,1,0],[1,0,1,0,1,0,1],[0,1,0,1,0,1,0]])) === JSON.stringify(21));\n    console.assert(JSON.stringify(candidate([[1,1,1,1,1],[0,1,1,1,1],[1,1,1,1,1],[1,1,1,1,0],[1,1,0,0,1]])) === JSON.stringify(114));\n    console.assert(JSON.stringify(candidate([[1,1,1,0],[0,1,1,1],[1,1,1,1],[0,1,0,1]])) === JSON.stringify(41));\n    console.assert(JSON.stringify(candidate([[1,0,1,1],[1,1,1,0],[1,1,0,1],[0,1,1,1]])) === JSON.stringify(29));\n    console.assert(JSON.stringify(candidate([[1,1,1,1,1,1,1,1,1],[1,0,0,0,0,0,0,0,1],[1,0,1,1,1,1,1,0,1],[1,0,1,0,0,0,1,0,1],[1,0,1,0,1,0,1,0,1],[1,0,1,0,0,0,1,0,1],[1,0,1,1,1,1,1,0,1],[1,0,0,0,0,0,0,0,1],[1,1,1,1,1,1,1,1,1]])) === JSON.stringify(233));\n    console.assert(JSON.stringify(candidate([[1,0,1,0,1],[0,1,1,1,0],[1,1,1,1,1],[0,1,1,0,1]])) === JSON.stringify(44));\n    console.assert(JSON.stringify(candidate([[1,0,0,0,1],[0,1,0,1,0],[0,0,1,0,0],[0,1,0,1,0],[1,0,0,0,1]])) === JSON.stringify(9));\n    console.assert(JSON.stringify(candidate([[1,1,1,1],[1,0,0,1],[1,1,1,1],[0,1,1,0]])) === JSON.stringify(34));\n    console.assert(JSON.stringify(candidate([[1,0,1,0,1],[1,1,0,1,1],[0,1,1,0,1],[1,0,1,0,1],[1,1,0,1,1]])) === JSON.stringify(36));\n    console.assert(JSON.stringify(candidate([[1,1,0,0,1,1],[0,0,1,1,0,0],[1,1,0,0,1,1],[0,0,1,1,0,0]])) === JSON.stringify(18));\n    console.assert(JSON.stringify(candidate([[1,1,1,1,1],[1,0,0,0,1],[1,0,1,0,1],[1,0,0,0,1],[1,1,1,1,1]])) === JSON.stringify(57));\n    console.assert(JSON.stringify(candidate([[1,1,0,0,1,1],[0,1,1,1,0,0],[1,1,1,1,1,1],[0,0,0,1,1,1],[1,1,1,1,1,0]])) === JSON.stringify(76));\n    console.assert(JSON.stringify(candidate([[1,1,0,1,1],[1,0,0,0,1],[1,1,1,1,1],[0,1,1,1,1]])) === JSON.stringify(51));\n    console.assert(JSON.stringify(candidate([[1,1,1],[0,0,0],[1,1,1],[0,0,0],[1,1,1],[0,0,0]])) === JSON.stringify(18));\n    console.assert(JSON.stringify(candidate([[1,1,1,1,1,1,1],[1,1,1,1,1,1,1],[1,1,1,1,1,1,1],[0,0,0,0,0,0,0],[1,1,1,1,1,1,1]])) === JSON.stringify(196));\n    console.assert(JSON.stringify(candidate([[1,1,1,1,1,1],[1,1,1,1,1,1],[1,1,1,1,1,1],[1,1,1,1,1,1]])) === JSON.stringify(210));\n    console.assert(JSON.stringify(candidate([[1,1,0,1],[0,1,1,0],[1,0,1,1],[0,1,0,1],[1,1,1,0]])) === JSON.stringify(23));\n    console.assert(JSON.stringify(candidate([[1,1,0,1,0],[1,1,1,1,1],[0,1,1,1,0],[1,0,1,0,1],[1,1,1,1,1]])) === JSON.stringify(62));\n    console.assert(JSON.stringify(candidate([[0,0,1,0,0],[0,1,1,1,0],[1,1,1,1,1],[0,1,1,1,0],[0,0,1,0,0]])) === JSON.stringify(54));\n    console.assert(JSON.stringify(candidate([[1,1,1,1,1,1,1,1],[1,1,1,1,1,1,1,1],[1,1,1,1,1,1,1,1],[1,1,1,1,1,1,1,1],[1,1,1,1,1,1,1,1]])) === JSON.stringify(540));\n    console.assert(JSON.stringify(candidate([[1,1,0,0],[1,1,0,0],[0,0,1,1],[1,1,1,1]])) === JSON.stringify(25));\n    console.assert(JSON.stringify(candidate([[0,1,1,0,0,1,1,0,0,1],[1,1,1,0,0,1,1,1,0,0],[0,1,1,0,0,1,1,0,0,1],[1,1,1,0,0,1,1,1,0,0]])) === JSON.stringify(74));\n    console.assert(JSON.stringify(candidate([[1,1,1,1,1,1,1],[1,1,0,0,0,0,1],[1,1,0,1,1,0,1],[1,0,1,1,1,1,0],[1,1,0,0,0,0,1],[1,1,1,1,1,1,1]])) === JSON.stringify(112));\n    console.assert(JSON.stringify(candidate([[1,1,1,1,1,1],[1,1,1,1,1,1],[1,1,1,1,1,1],[1,1,1,1,1,1],[1,1,1,1,1,1]])) === JSON.stringify(315));\n    console.assert(JSON.stringify(candidate([[1,0,1,0,1],[0,1,0,1,0],[1,0,1,0,1],[0,1,0,1,0]])) === JSON.stringify(10));\n    console.assert(JSON.stringify(candidate([[1,1,1,0,1,1],[1,0,1,1,1,0],[1,1,0,1,1,1],[0,1,1,1,1,0]])) === JSON.stringify(52));\n    console.assert(JSON.stringify(candidate([[1,1,1,1,1],[1,0,0,0,1],[1,0,0,0,1],[1,0,0,0,1],[1,1,1,1,1]])) === JSON.stringify(56));\n    console.assert(JSON.stringify(candidate([[1,0,1,0,1],[1,1,1,1,1],[0,1,1,1,0],[1,1,1,1,1],[1,0,1,0,1]])) === JSON.stringify(71));\n    console.assert(JSON.stringify(candidate([[1,1,1,1,1,1],[1,0,1,0,1,0],[1,1,1,1,1,1],[0,1,0,1,0,1],[1,1,1,1,1,1]])) === JSON.stringify(87));\n    console.assert(JSON.stringify(candidate([[1,1,1,1,1,1],[1,0,0,0,0,1],[1,0,1,1,0,1],[1,0,1,1,0,1],[1,0,0,0,0,1],[1,1,1,1,1,1]])) === JSON.stringify(89));\n    console.assert(JSON.stringify(candidate([[1,0,1,0,1],[1,1,1,0,0],[0,1,1,1,1],[1,1,1,1,0]])) === JSON.stringify(45));\n    console.assert(JSON.stringify(candidate([[1,0,0,1,0,0,1],[0,1,1,0,1,1,0],[0,1,1,0,1,1,0],[1,0,0,1,0,0,1],[0,1,1,0,1,1,0]])) === JSON.stringify(30));\n    console.assert(JSON.stringify(candidate([[1,1,1,0,0,1],[1,1,1,1,0,0],[0,0,1,1,1,1],[1,0,0,1,1,1]])) === JSON.stringify(51));\n    console.assert(JSON.stringify(candidate([[0,1,0,1,0,1,0],[1,0,1,0,1,0,1],[0,1,0,1,0,1,0],[1,0,1,0,1,0,1]])) === JSON.stringify(14));\n    console.assert(JSON.stringify(candidate([[1,1,0,0,1,1],[1,1,0,0,1,1],[0,0,1,1,0,0],[0,0,1,1,0,0],[1,1,0,0,1,1],[1,1,0,0,1,1]])) === JSON.stringify(45));\n    console.assert(JSON.stringify(candidate([[1,1,1,0,0],[1,1,1,1,0],[0,1,1,1,1],[0,0,1,1,1],[1,1,1,0,0]])) === JSON.stringify(67));\n    console.assert(JSON.stringify(candidate([[0,1,1,0,1],[1,1,1,1,1],[1,0,1,0,1],[1,1,1,1,1],[0,1,1,0,1]])) === JSON.stringify(68));\n    console.assert(JSON.stringify(candidate([[1,1,1,1,1,1,1,1,1,1],[0,0,0,0,0,0,0,0,0,0],[1,1,1,1,1,1,1,1,1,1],[0,0,0,0,0,0,0,0,0,0]])) === JSON.stringify(110));\n    console.assert(JSON.stringify(candidate([[1,1,1,1,1],[0,0,0,0,0],[1,1,1,1,1],[0,0,0,0,0],[1,1,1,1,1]])) === JSON.stringify(45));\n    console.assert(JSON.stringify(candidate([[1,1,1,1,0],[1,1,1,1,1],[1,1,0,1,1],[1,0,1,1,1],[0,1,1,1,1]])) === JSON.stringify(91));\n    console.assert(JSON.stringify(candidate([[1,0,1,1],[1,1,0,1],[1,1,1,0],[1,0,1,1]])) === JSON.stringify(28));\n    console.assert(JSON.stringify(candidate([[1,1,0,1],[1,1,1,1],[0,1,1,1],[1,1,1,1]])) === JSON.stringify(56));\n    console.assert(JSON.stringify(candidate([[0,1,1,0,1],[1,1,1,1,1],[1,0,0,1,1],[0,1,1,1,0],[1,1,0,1,1]])) === JSON.stringify(50));\n    console.assert(JSON.stringify(candidate([[1,0,1,1,1],[1,1,1,0,1],[1,0,1,1,1],[1,1,1,1,1]])) === JSON.stringify(58));\n    console.assert(JSON.stringify(candidate([[1,1,1,1,1],[1,1,1,1,1],[1,0,1,0,1],[1,1,1,1,1],[1,1,1,1,1]])) === JSON.stringify(117));\n    console.assert(JSON.stringify(candidate([[1,1,1,1,0,0,1,1],[1,1,0,0,0,1,1,1],[0,0,0,0,0,0,0,0],[1,1,1,1,0,0,1,1],[1,1,0,0,0,1,1,1]])) === JSON.stringify(56));\n}",
+    "golang": "func check(candidate func([]int, int) []int) {\n    assert reflect.DeepEqual(candidate([]int{{0,0},{0,0}}), 0)\n    assert reflect.DeepEqual(candidate([]int{{1,0,1},{1,1,0},{1,1,0}}), 13)\n    assert reflect.DeepEqual(candidate([]int{{1,0},{0,1}}), 2)\n    assert reflect.DeepEqual(candidate([]int{{1,1,1,1},{1,1,1,1},{1,1,1,1}}), 60)\n    assert reflect.DeepEqual(candidate([]int{{0,0,0},{0,0,0}}), 0)\n    assert reflect.DeepEqual(candidate([]int{{0,0,0,0},{0,0,0,0},{0,0,0,0}}), 0)\n    assert reflect.DeepEqual(candidate([]int{{1,1,1},{1,1,1},{1,1,1}}), 36)\n    assert reflect.DeepEqual(candidate([]int{{0,1,1,0},{0,1,1,1},{1,1,1,0}}), 24)\n    assert reflect.DeepEqual(candidate([]int{{1,1},{1,1}}), 9)\n    assert reflect.DeepEqual(candidate([]int{{0,0,0},{0,0,0},{0,0,0}}), 0)\n    assert reflect.DeepEqual(candidate([]int{{1,1,0,1},{0,1,1,0},{1,0,1,1},{1,1,1,1}}), 28)\n    assert reflect.DeepEqual(candidate([]int{{0,1,1,1,0},{1,1,1,1,1},{1,1,1,1,1},{0,1,1,1,0},{1,0,0,0,1}}), 89)\n    assert reflect.DeepEqual(candidate([]int{{1,1,1,1},{1,0,0,1},{1,0,0,1},{1,1,1,1}}), 36)\n    assert reflect.DeepEqual(candidate([]int{{0,1,0,1,0,1},{1,0,1,0,1,0},{0,1,0,1,0,1},{1,0,1,0,1,0},{0,1,0,1,0,1}}), 15)\n    assert reflect.DeepEqual(candidate([]int{{1,0,1,0,1},{0,1,1,1,0},{1,1,0,1,1},{0,1,1,1,0},{1,0,1,0,1}}), 32)\n    assert reflect.DeepEqual(candidate([]int{{0,0,1,0,0},{0,0,1,0,0},{1,1,1,1,1},{0,0,1,0,0},{0,0,1,0,0}}), 29)\n    assert reflect.DeepEqual(candidate([]int{{1,1,1,1,1,1},{1,1,1,1,1,1},{0,0,0,0,0,0},{1,1,1,1,1,1},{1,1,1,1,1,1}}), 126)\n    assert reflect.DeepEqual(candidate([]int{{0,1,1,1},{1,1,1,1},{1,1,1,1},{1,1,1,0}}), 69)\n    assert reflect.DeepEqual(candidate([]int{{1,0,1,0,1,0,1},{0,1,0,1,0,1,0},{1,0,1,0,1,0,1},{0,1,0,1,0,1,0},{1,0,1,0,1,0,1}}), 18)\n    assert reflect.DeepEqual(candidate([]int{{1,1,1,0,0,0},{1,1,0,1,1,0},{1,0,0,0,0,1},{1,1,1,0,0,0},{0,0,0,1,1,1},{0,0,1,1,1,0}}), 43)\n    assert reflect.DeepEqual(candidate([]int{{1,0,1,1},{1,1,1,1},{0,1,1,0},{1,0,1,0},{0,1,1,1}}), 40)\n    assert reflect.DeepEqual(candidate([]int{{1,1,1,0,1},{1,1,0,1,1},{0,1,1,1,0},{1,1,1,1,1},{0,1,0,1,0}}), 59)\n    assert reflect.DeepEqual(candidate([]int{{1,1,0,1},{1,1,1,0},{0,1,1,1},{1,0,1,1}}), 31)\n    assert reflect.DeepEqual(candidate([]int{{1,1,0,1,0,1},{1,1,1,1,1,1},{0,1,0,1,0,1},{1,1,1,1,1,1},{0,1,0,1,0,1}}), 85)\n    assert reflect.DeepEqual(candidate([]int{{1,0,1,0,1},{1,1,1,1,1},{0,1,0,1,0},{1,1,1,1,1},{1,0,1,0,1}}), 50)\n    assert reflect.DeepEqual(candidate([]int{{1,0,0,0,1,0,0,0,1},{0,1,0,1,0,1,0,1,0},{0,0,1,0,0,0,1,0,0},{1,0,0,0,1,0,0,0,1},{0,1,0,1,0,1,0,1,0},{0,0,1,0,0,0,1,0,0}}), 18)\n    assert reflect.DeepEqual(candidate([]int{{1,1,0,1,1},{1,0,1,1,1},{0,1,1,1,0},{1,1,1,0,1},{1,0,1,1,1}}), 50)\n    assert reflect.DeepEqual(candidate([]int{{0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0}}), 0)\n    assert reflect.DeepEqual(candidate([]int{{1,1,1,1,1,1,1},{1,1,1,1,1,1,1},{1,1,1,1,1,1,1},{1,1,1,1,1,1,1},{1,1,1,1,1,1,1}}), 420)\n    assert reflect.DeepEqual(candidate([]int{{1,0,1,0,1},{0,1,1,1,0},{1,1,1,0,1},{0,1,0,1,0},{1,0,1,0,1}}), 28)\n    assert reflect.DeepEqual(candidate([]int{{1,0,0,0,1},{0,1,1,1,0},{0,1,1,1,0},{0,0,1,0,0},{1,0,0,0,1}}), 25)\n    assert reflect.DeepEqual(candidate([]int{{1,1,1,1,1,1},{1,1,1,0,1,1},{1,0,1,1,1,0},{1,1,1,1,1,1},{1,0,1,0,1,1}}), 105)\n    assert reflect.DeepEqual(candidate([]int{{1,0,1,0,1},{0,1,0,1,0},{1,0,1,0,1},{0,1,0,1,0},{1,0,1,0,1}}), 13)\n    assert reflect.DeepEqual(candidate([]int{{1,1,1,1,0,1},{0,1,1,1,1,1},{1,1,0,1,1,1},{1,1,1,1,0,1},{0,1,1,1,1,1}}), 105)\n    assert reflect.DeepEqual(candidate([]int{{1,1,0,0},{1,1,1,1},{0,0,1,0},{1,1,1,1}}), 30)\n    assert reflect.DeepEqual(candidate([]int{{1,1,0,1},{1,1,1,1},{0,1,1,1},{1,0,1,0}}), 36)\n    assert reflect.DeepEqual(candidate([]int{{1,0,1},{1,1,1},{0,1,1},{1,1,1},{1,0,1}}), 37)\n    assert reflect.DeepEqual(candidate([]int{{1,1,0,0,1,1},{0,1,1,1,1,0},{1,1,1,1,1,1},{0,0,1,1,0,0}}), 60)\n    assert reflect.DeepEqual(candidate([]int{{1,1,1,0,0},{1,1,1,0,0},{0,0,0,1,1},{0,0,0,1,1},{1,1,1,1,1}}), 48)\n    assert reflect.DeepEqual(candidate([]int{{1,1,1,1,1,1,1},{1,0,0,0,0,0,1},{1,0,1,1,1,0,1},{1,0,1,0,1,0,1},{1,0,1,1,1,0,1},{1,0,0,0,0,0,1},{1,1,1,1,1,1,1}}), 128)\n    assert reflect.DeepEqual(candidate([]int{{1,1,1,1,1,1,1,1,1},{1,1,1,1,1,1,1,1,1},{0,0,0,0,0,0,0,0,0},{1,1,1,1,1,1,1,1,1},{1,1,1,1,1,1,1,1,1}}), 270)\n    assert reflect.DeepEqual(candidate([]int{{1,1,1,1,1,1},{1,0,0,1,0,1},{1,0,1,1,1,1},{1,1,1,1,0,1},{1,0,1,1,1,1},{1,1,1,1,1,1}}), 141)\n    assert reflect.DeepEqual(candidate([]int{{1,1,1,1,1,1},{1,1,1,1,1,1},{1,1,0,0,0,0},{1,1,0,0,0,0},{0,0,0,0,1,1},{0,0,0,0,1,1}}), 93)\n    assert reflect.DeepEqual(candidate([]int{{1,1,1,1,0},{1,1,1,1,0},{1,1,0,0,1},{0,1,0,1,1},{1,1,1,1,1}}), 71)\n    assert reflect.DeepEqual(candidate([]int{{1,0,1,0,1,0,1},{0,1,0,1,0,1,0},{1,0,1,0,1,0,1},{0,1,0,1,0,1,0},{1,0,1,0,1,0,1},{0,1,0,1,0,1,0}}), 21)\n    assert reflect.DeepEqual(candidate([]int{{1,1,1,1,1},{0,1,1,1,1},{1,1,1,1,1},{1,1,1,1,0},{1,1,0,0,1}}), 114)\n    assert reflect.DeepEqual(candidate([]int{{1,1,1,0},{0,1,1,1},{1,1,1,1},{0,1,0,1}}), 41)\n    assert reflect.DeepEqual(candidate([]int{{1,0,1,1},{1,1,1,0},{1,1,0,1},{0,1,1,1}}), 29)\n    assert reflect.DeepEqual(candidate([]int{{1,1,1,1,1,1,1,1,1},{1,0,0,0,0,0,0,0,1},{1,0,1,1,1,1,1,0,1},{1,0,1,0,0,0,1,0,1},{1,0,1,0,1,0,1,0,1},{1,0,1,0,0,0,1,0,1},{1,0,1,1,1,1,1,0,1},{1,0,0,0,0,0,0,0,1},{1,1,1,1,1,1,1,1,1}}), 233)\n    assert reflect.DeepEqual(candidate([]int{{1,0,1,0,1},{0,1,1,1,0},{1,1,1,1,1},{0,1,1,0,1}}), 44)\n    assert reflect.DeepEqual(candidate([]int{{1,0,0,0,1},{0,1,0,1,0},{0,0,1,0,0},{0,1,0,1,0},{1,0,0,0,1}}), 9)\n    assert reflect.DeepEqual(candidate([]int{{1,1,1,1},{1,0,0,1},{1,1,1,1},{0,1,1,0}}), 34)\n    assert reflect.DeepEqual(candidate([]int{{1,0,1,0,1},{1,1,0,1,1},{0,1,1,0,1},{1,0,1,0,1},{1,1,0,1,1}}), 36)\n    assert reflect.DeepEqual(candidate([]int{{1,1,0,0,1,1},{0,0,1,1,0,0},{1,1,0,0,1,1},{0,0,1,1,0,0}}), 18)\n    assert reflect.DeepEqual(candidate([]int{{1,1,1,1,1},{1,0,0,0,1},{1,0,1,0,1},{1,0,0,0,1},{1,1,1,1,1}}), 57)\n    assert reflect.DeepEqual(candidate([]int{{1,1,0,0,1,1},{0,1,1,1,0,0},{1,1,1,1,1,1},{0,0,0,1,1,1},{1,1,1,1,1,0}}), 76)\n    assert reflect.DeepEqual(candidate([]int{{1,1,0,1,1},{1,0,0,0,1},{1,1,1,1,1},{0,1,1,1,1}}), 51)\n    assert reflect.DeepEqual(candidate([]int{{1,1,1},{0,0,0},{1,1,1},{0,0,0},{1,1,1},{0,0,0}}), 18)\n    assert reflect.DeepEqual(candidate([]int{{1,1,1,1,1,1,1},{1,1,1,1,1,1,1},{1,1,1,1,1,1,1},{0,0,0,0,0,0,0},{1,1,1,1,1,1,1}}), 196)\n    assert reflect.DeepEqual(candidate([]int{{1,1,1,1,1,1},{1,1,1,1,1,1},{1,1,1,1,1,1},{1,1,1,1,1,1}}), 210)\n    assert reflect.DeepEqual(candidate([]int{{1,1,0,1},{0,1,1,0},{1,0,1,1},{0,1,0,1},{1,1,1,0}}), 23)\n    assert reflect.DeepEqual(candidate([]int{{1,1,0,1,0},{1,1,1,1,1},{0,1,1,1,0},{1,0,1,0,1},{1,1,1,1,1}}), 62)\n    assert reflect.DeepEqual(candidate([]int{{0,0,1,0,0},{0,1,1,1,0},{1,1,1,1,1},{0,1,1,1,0},{0,0,1,0,0}}), 54)\n    assert reflect.DeepEqual(candidate([]int{{1,1,1,1,1,1,1,1},{1,1,1,1,1,1,1,1},{1,1,1,1,1,1,1,1},{1,1,1,1,1,1,1,1},{1,1,1,1,1,1,1,1}}), 540)\n    assert reflect.DeepEqual(candidate([]int{{1,1,0,0},{1,1,0,0},{0,0,1,1},{1,1,1,1}}), 25)\n    assert reflect.DeepEqual(candidate([]int{{0,1,1,0,0,1,1,0,0,1},{1,1,1,0,0,1,1,1,0,0},{0,1,1,0,0,1,1,0,0,1},{1,1,1,0,0,1,1,1,0,0}}), 74)\n    assert reflect.DeepEqual(candidate([]int{{1,1,1,1,1,1,1},{1,1,0,0,0,0,1},{1,1,0,1,1,0,1},{1,0,1,1,1,1,0},{1,1,0,0,0,0,1},{1,1,1,1,1,1,1}}), 112)\n    assert reflect.DeepEqual(candidate([]int{{1,1,1,1,1,1},{1,1,1,1,1,1},{1,1,1,1,1,1},{1,1,1,1,1,1},{1,1,1,1,1,1}}), 315)\n    assert reflect.DeepEqual(candidate([]int{{1,0,1,0,1},{0,1,0,1,0},{1,0,1,0,1},{0,1,0,1,0}}), 10)\n    assert reflect.DeepEqual(candidate([]int{{1,1,1,0,1,1},{1,0,1,1,1,0},{1,1,0,1,1,1},{0,1,1,1,1,0}}), 52)\n    assert reflect.DeepEqual(candidate([]int{{1,1,1,1,1},{1,0,0,0,1},{1,0,0,0,1},{1,0,0,0,1},{1,1,1,1,1}}), 56)\n    assert reflect.DeepEqual(candidate([]int{{1,0,1,0,1},{1,1,1,1,1},{0,1,1,1,0},{1,1,1,1,1},{1,0,1,0,1}}), 71)\n    assert reflect.DeepEqual(candidate([]int{{1,1,1,1,1,1},{1,0,1,0,1,0},{1,1,1,1,1,1},{0,1,0,1,0,1},{1,1,1,1,1,1}}), 87)\n    assert reflect.DeepEqual(candidate([]int{{1,1,1,1,1,1},{1,0,0,0,0,1},{1,0,1,1,0,1},{1,0,1,1,0,1},{1,0,0,0,0,1},{1,1,1,1,1,1}}), 89)\n    assert reflect.DeepEqual(candidate([]int{{1,0,1,0,1},{1,1,1,0,0},{0,1,1,1,1},{1,1,1,1,0}}), 45)\n    assert reflect.DeepEqual(candidate([]int{{1,0,0,1,0,0,1},{0,1,1,0,1,1,0},{0,1,1,0,1,1,0},{1,0,0,1,0,0,1},{0,1,1,0,1,1,0}}), 30)\n    assert reflect.DeepEqual(candidate([]int{{1,1,1,0,0,1},{1,1,1,1,0,0},{0,0,1,1,1,1},{1,0,0,1,1,1}}), 51)\n    assert reflect.DeepEqual(candidate([]int{{0,1,0,1,0,1,0},{1,0,1,0,1,0,1},{0,1,0,1,0,1,0},{1,0,1,0,1,0,1}}), 14)\n    assert reflect.DeepEqual(candidate([]int{{1,1,0,0,1,1},{1,1,0,0,1,1},{0,0,1,1,0,0},{0,0,1,1,0,0},{1,1,0,0,1,1},{1,1,0,0,1,1}}), 45)\n    assert reflect.DeepEqual(candidate([]int{{1,1,1,0,0},{1,1,1,1,0},{0,1,1,1,1},{0,0,1,1,1},{1,1,1,0,0}}), 67)\n    assert reflect.DeepEqual(candidate([]int{{0,1,1,0,1},{1,1,1,1,1},{1,0,1,0,1},{1,1,1,1,1},{0,1,1,0,1}}), 68)\n    assert reflect.DeepEqual(candidate([]int{{1,1,1,1,1,1,1,1,1,1},{0,0,0,0,0,0,0,0,0,0},{1,1,1,1,1,1,1,1,1,1},{0,0,0,0,0,0,0,0,0,0}}), 110)\n    assert reflect.DeepEqual(candidate([]int{{1,1,1,1,1},{0,0,0,0,0},{1,1,1,1,1},{0,0,0,0,0},{1,1,1,1,1}}), 45)\n    assert reflect.DeepEqual(candidate([]int{{1,1,1,1,0},{1,1,1,1,1},{1,1,0,1,1},{1,0,1,1,1},{0,1,1,1,1}}), 91)\n    assert reflect.DeepEqual(candidate([]int{{1,0,1,1},{1,1,0,1},{1,1,1,0},{1,0,1,1}}), 28)\n    assert reflect.DeepEqual(candidate([]int{{1,1,0,1},{1,1,1,1},{0,1,1,1},{1,1,1,1}}), 56)\n    assert reflect.DeepEqual(candidate([]int{{0,1,1,0,1},{1,1,1,1,1},{1,0,0,1,1},{0,1,1,1,0},{1,1,0,1,1}}), 50)\n    assert reflect.DeepEqual(candidate([]int{{1,0,1,1,1},{1,1,1,0,1},{1,0,1,1,1},{1,1,1,1,1}}), 58)\n    assert reflect.DeepEqual(candidate([]int{{1,1,1,1,1},{1,1,1,1,1},{1,0,1,0,1},{1,1,1,1,1},{1,1,1,1,1}}), 117)\n    assert reflect.DeepEqual(candidate([]int{{1,1,1,1,0,0,1,1},{1,1,0,0,0,1,1,1},{0,0,0,0,0,0,0,0},{1,1,1,1,0,0,1,1},{1,1,0,0,0,1,1,1}}), 56)\n}",
+    "rust": "fn check(candidate: fn(Vec<i32>, i32) -> Vec<i32>) {\n    assert_eq!(candidate(vec![[0,0],[0,0]]), 0);\n    assert_eq!(candidate(vec![[1,0,1],[1,1,0],[1,1,0]]), 13);\n    assert_eq!(candidate(vec![[1,0],[0,1]]), 2);\n    assert_eq!(candidate(vec![[1,1,1,1],[1,1,1,1],[1,1,1,1]]), 60);\n    assert_eq!(candidate(vec![[0,0,0],[0,0,0]]), 0);\n    assert_eq!(candidate(vec![[0,0,0,0],[0,0,0,0],[0,0,0,0]]), 0);\n    assert_eq!(candidate(vec![[1,1,1],[1,1,1],[1,1,1]]), 36);\n    assert_eq!(candidate(vec![[0,1,1,0],[0,1,1,1],[1,1,1,0]]), 24);\n    assert_eq!(candidate(vec![[1,1],[1,1]]), 9);\n    assert_eq!(candidate(vec![[0,0,0],[0,0,0],[0,0,0]]), 0);\n    assert_eq!(candidate(vec![[1,1,0,1],[0,1,1,0],[1,0,1,1],[1,1,1,1]]), 28);\n    assert_eq!(candidate(vec![[0,1,1,1,0],[1,1,1,1,1],[1,1,1,1,1],[0,1,1,1,0],[1,0,0,0,1]]), 89);\n    assert_eq!(candidate(vec![[1,1,1,1],[1,0,0,1],[1,0,0,1],[1,1,1,1]]), 36);\n    assert_eq!(candidate(vec![[0,1,0,1,0,1],[1,0,1,0,1,0],[0,1,0,1,0,1],[1,0,1,0,1,0],[0,1,0,1,0,1]]), 15);\n    assert_eq!(candidate(vec![[1,0,1,0,1],[0,1,1,1,0],[1,1,0,1,1],[0,1,1,1,0],[1,0,1,0,1]]), 32);\n    assert_eq!(candidate(vec![[0,0,1,0,0],[0,0,1,0,0],[1,1,1,1,1],[0,0,1,0,0],[0,0,1,0,0]]), 29);\n    assert_eq!(candidate(vec![[1,1,1,1,1,1],[1,1,1,1,1,1],[0,0,0,0,0,0],[1,1,1,1,1,1],[1,1,1,1,1,1]]), 126);\n    assert_eq!(candidate(vec![[0,1,1,1],[1,1,1,1],[1,1,1,1],[1,1,1,0]]), 69);\n    assert_eq!(candidate(vec![[1,0,1,0,1,0,1],[0,1,0,1,0,1,0],[1,0,1,0,1,0,1],[0,1,0,1,0,1,0],[1,0,1,0,1,0,1]]), 18);\n    assert_eq!(candidate(vec![[1,1,1,0,0,0],[1,1,0,1,1,0],[1,0,0,0,0,1],[1,1,1,0,0,0],[0,0,0,1,1,1],[0,0,1,1,1,0]]), 43);\n    assert_eq!(candidate(vec![[1,0,1,1],[1,1,1,1],[0,1,1,0],[1,0,1,0],[0,1,1,1]]), 40);\n    assert_eq!(candidate(vec![[1,1,1,0,1],[1,1,0,1,1],[0,1,1,1,0],[1,1,1,1,1],[0,1,0,1,0]]), 59);\n    assert_eq!(candidate(vec![[1,1,0,1],[1,1,1,0],[0,1,1,1],[1,0,1,1]]), 31);\n    assert_eq!(candidate(vec![[1,1,0,1,0,1],[1,1,1,1,1,1],[0,1,0,1,0,1],[1,1,1,1,1,1],[0,1,0,1,0,1]]), 85);\n    assert_eq!(candidate(vec![[1,0,1,0,1],[1,1,1,1,1],[0,1,0,1,0],[1,1,1,1,1],[1,0,1,0,1]]), 50);\n    assert_eq!(candidate(vec![[1,0,0,0,1,0,0,0,1],[0,1,0,1,0,1,0,1,0],[0,0,1,0,0,0,1,0,0],[1,0,0,0,1,0,0,0,1],[0,1,0,1,0,1,0,1,0],[0,0,1,0,0,0,1,0,0]]), 18);\n    assert_eq!(candidate(vec![[1,1,0,1,1],[1,0,1,1,1],[0,1,1,1,0],[1,1,1,0,1],[1,0,1,1,1]]), 50);\n    assert_eq!(candidate(vec![[0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0]]), 0);\n    assert_eq!(candidate(vec![[1,1,1,1,1,1,1],[1,1,1,1,1,1,1],[1,1,1,1,1,1,1],[1,1,1,1,1,1,1],[1,1,1,1,1,1,1]]), 420);\n    assert_eq!(candidate(vec![[1,0,1,0,1],[0,1,1,1,0],[1,1,1,0,1],[0,1,0,1,0],[1,0,1,0,1]]), 28);\n    assert_eq!(candidate(vec![[1,0,0,0,1],[0,1,1,1,0],[0,1,1,1,0],[0,0,1,0,0],[1,0,0,0,1]]), 25);\n    assert_eq!(candidate(vec![[1,1,1,1,1,1],[1,1,1,0,1,1],[1,0,1,1,1,0],[1,1,1,1,1,1],[1,0,1,0,1,1]]), 105);\n    assert_eq!(candidate(vec![[1,0,1,0,1],[0,1,0,1,0],[1,0,1,0,1],[0,1,0,1,0],[1,0,1,0,1]]), 13);\n    assert_eq!(candidate(vec![[1,1,1,1,0,1],[0,1,1,1,1,1],[1,1,0,1,1,1],[1,1,1,1,0,1],[0,1,1,1,1,1]]), 105);\n    assert_eq!(candidate(vec![[1,1,0,0],[1,1,1,1],[0,0,1,0],[1,1,1,1]]), 30);\n    assert_eq!(candidate(vec![[1,1,0,1],[1,1,1,1],[0,1,1,1],[1,0,1,0]]), 36);\n    assert_eq!(candidate(vec![[1,0,1],[1,1,1],[0,1,1],[1,1,1],[1,0,1]]), 37);\n    assert_eq!(candidate(vec![[1,1,0,0,1,1],[0,1,1,1,1,0],[1,1,1,1,1,1],[0,0,1,1,0,0]]), 60);\n    assert_eq!(candidate(vec![[1,1,1,0,0],[1,1,1,0,0],[0,0,0,1,1],[0,0,0,1,1],[1,1,1,1,1]]), 48);\n    assert_eq!(candidate(vec![[1,1,1,1,1,1,1],[1,0,0,0,0,0,1],[1,0,1,1,1,0,1],[1,0,1,0,1,0,1],[1,0,1,1,1,0,1],[1,0,0,0,0,0,1],[1,1,1,1,1,1,1]]), 128);\n    assert_eq!(candidate(vec![[1,1,1,1,1,1,1,1,1],[1,1,1,1,1,1,1,1,1],[0,0,0,0,0,0,0,0,0],[1,1,1,1,1,1,1,1,1],[1,1,1,1,1,1,1,1,1]]), 270);\n    assert_eq!(candidate(vec![[1,1,1,1,1,1],[1,0,0,1,0,1],[1,0,1,1,1,1],[1,1,1,1,0,1],[1,0,1,1,1,1],[1,1,1,1,1,1]]), 141);\n    assert_eq!(candidate(vec![[1,1,1,1,1,1],[1,1,1,1,1,1],[1,1,0,0,0,0],[1,1,0,0,0,0],[0,0,0,0,1,1],[0,0,0,0,1,1]]), 93);\n    assert_eq!(candidate(vec![[1,1,1,1,0],[1,1,1,1,0],[1,1,0,0,1],[0,1,0,1,1],[1,1,1,1,1]]), 71);\n    assert_eq!(candidate(vec![[1,0,1,0,1,0,1],[0,1,0,1,0,1,0],[1,0,1,0,1,0,1],[0,1,0,1,0,1,0],[1,0,1,0,1,0,1],[0,1,0,1,0,1,0]]), 21);\n    assert_eq!(candidate(vec![[1,1,1,1,1],[0,1,1,1,1],[1,1,1,1,1],[1,1,1,1,0],[1,1,0,0,1]]), 114);\n    assert_eq!(candidate(vec![[1,1,1,0],[0,1,1,1],[1,1,1,1],[0,1,0,1]]), 41);\n    assert_eq!(candidate(vec![[1,0,1,1],[1,1,1,0],[1,1,0,1],[0,1,1,1]]), 29);\n    assert_eq!(candidate(vec![[1,1,1,1,1,1,1,1,1],[1,0,0,0,0,0,0,0,1],[1,0,1,1,1,1,1,0,1],[1,0,1,0,0,0,1,0,1],[1,0,1,0,1,0,1,0,1],[1,0,1,0,0,0,1,0,1],[1,0,1,1,1,1,1,0,1],[1,0,0,0,0,0,0,0,1],[1,1,1,1,1,1,1,1,1]]), 233);\n    assert_eq!(candidate(vec![[1,0,1,0,1],[0,1,1,1,0],[1,1,1,1,1],[0,1,1,0,1]]), 44);\n    assert_eq!(candidate(vec![[1,0,0,0,1],[0,1,0,1,0],[0,0,1,0,0],[0,1,0,1,0],[1,0,0,0,1]]), 9);\n    assert_eq!(candidate(vec![[1,1,1,1],[1,0,0,1],[1,1,1,1],[0,1,1,0]]), 34);\n    assert_eq!(candidate(vec![[1,0,1,0,1],[1,1,0,1,1],[0,1,1,0,1],[1,0,1,0,1],[1,1,0,1,1]]), 36);\n    assert_eq!(candidate(vec![[1,1,0,0,1,1],[0,0,1,1,0,0],[1,1,0,0,1,1],[0,0,1,1,0,0]]), 18);\n    assert_eq!(candidate(vec![[1,1,1,1,1],[1,0,0,0,1],[1,0,1,0,1],[1,0,0,0,1],[1,1,1,1,1]]), 57);\n    assert_eq!(candidate(vec![[1,1,0,0,1,1],[0,1,1,1,0,0],[1,1,1,1,1,1],[0,0,0,1,1,1],[1,1,1,1,1,0]]), 76);\n    assert_eq!(candidate(vec![[1,1,0,1,1],[1,0,0,0,1],[1,1,1,1,1],[0,1,1,1,1]]), 51);\n    assert_eq!(candidate(vec![[1,1,1],[0,0,0],[1,1,1],[0,0,0],[1,1,1],[0,0,0]]), 18);\n    assert_eq!(candidate(vec![[1,1,1,1,1,1,1],[1,1,1,1,1,1,1],[1,1,1,1,1,1,1],[0,0,0,0,0,0,0],[1,1,1,1,1,1,1]]), 196);\n    assert_eq!(candidate(vec![[1,1,1,1,1,1],[1,1,1,1,1,1],[1,1,1,1,1,1],[1,1,1,1,1,1]]), 210);\n    assert_eq!(candidate(vec![[1,1,0,1],[0,1,1,0],[1,0,1,1],[0,1,0,1],[1,1,1,0]]), 23);\n    assert_eq!(candidate(vec![[1,1,0,1,0],[1,1,1,1,1],[0,1,1,1,0],[1,0,1,0,1],[1,1,1,1,1]]), 62);\n    assert_eq!(candidate(vec![[0,0,1,0,0],[0,1,1,1,0],[1,1,1,1,1],[0,1,1,1,0],[0,0,1,0,0]]), 54);\n    assert_eq!(candidate(vec![[1,1,1,1,1,1,1,1],[1,1,1,1,1,1,1,1],[1,1,1,1,1,1,1,1],[1,1,1,1,1,1,1,1],[1,1,1,1,1,1,1,1]]), 540);\n    assert_eq!(candidate(vec![[1,1,0,0],[1,1,0,0],[0,0,1,1],[1,1,1,1]]), 25);\n    assert_eq!(candidate(vec![[0,1,1,0,0,1,1,0,0,1],[1,1,1,0,0,1,1,1,0,0],[0,1,1,0,0,1,1,0,0,1],[1,1,1,0,0,1,1,1,0,0]]), 74);\n    assert_eq!(candidate(vec![[1,1,1,1,1,1,1],[1,1,0,0,0,0,1],[1,1,0,1,1,0,1],[1,0,1,1,1,1,0],[1,1,0,0,0,0,1],[1,1,1,1,1,1,1]]), 112);\n    assert_eq!(candidate(vec![[1,1,1,1,1,1],[1,1,1,1,1,1],[1,1,1,1,1,1],[1,1,1,1,1,1],[1,1,1,1,1,1]]), 315);\n    assert_eq!(candidate(vec![[1,0,1,0,1],[0,1,0,1,0],[1,0,1,0,1],[0,1,0,1,0]]), 10);\n    assert_eq!(candidate(vec![[1,1,1,0,1,1],[1,0,1,1,1,0],[1,1,0,1,1,1],[0,1,1,1,1,0]]), 52);\n    assert_eq!(candidate(vec![[1,1,1,1,1],[1,0,0,0,1],[1,0,0,0,1],[1,0,0,0,1],[1,1,1,1,1]]), 56);\n    assert_eq!(candidate(vec![[1,0,1,0,1],[1,1,1,1,1],[0,1,1,1,0],[1,1,1,1,1],[1,0,1,0,1]]), 71);\n    assert_eq!(candidate(vec![[1,1,1,1,1,1],[1,0,1,0,1,0],[1,1,1,1,1,1],[0,1,0,1,0,1],[1,1,1,1,1,1]]), 87);\n    assert_eq!(candidate(vec![[1,1,1,1,1,1],[1,0,0,0,0,1],[1,0,1,1,0,1],[1,0,1,1,0,1],[1,0,0,0,0,1],[1,1,1,1,1,1]]), 89);\n    assert_eq!(candidate(vec![[1,0,1,0,1],[1,1,1,0,0],[0,1,1,1,1],[1,1,1,1,0]]), 45);\n    assert_eq!(candidate(vec![[1,0,0,1,0,0,1],[0,1,1,0,1,1,0],[0,1,1,0,1,1,0],[1,0,0,1,0,0,1],[0,1,1,0,1,1,0]]), 30);\n    assert_eq!(candidate(vec![[1,1,1,0,0,1],[1,1,1,1,0,0],[0,0,1,1,1,1],[1,0,0,1,1,1]]), 51);\n    assert_eq!(candidate(vec![[0,1,0,1,0,1,0],[1,0,1,0,1,0,1],[0,1,0,1,0,1,0],[1,0,1,0,1,0,1]]), 14);\n    assert_eq!(candidate(vec![[1,1,0,0,1,1],[1,1,0,0,1,1],[0,0,1,1,0,0],[0,0,1,1,0,0],[1,1,0,0,1,1],[1,1,0,0,1,1]]), 45);\n    assert_eq!(candidate(vec![[1,1,1,0,0],[1,1,1,1,0],[0,1,1,1,1],[0,0,1,1,1],[1,1,1,0,0]]), 67);\n    assert_eq!(candidate(vec![[0,1,1,0,1],[1,1,1,1,1],[1,0,1,0,1],[1,1,1,1,1],[0,1,1,0,1]]), 68);\n    assert_eq!(candidate(vec![[1,1,1,1,1,1,1,1,1,1],[0,0,0,0,0,0,0,0,0,0],[1,1,1,1,1,1,1,1,1,1],[0,0,0,0,0,0,0,0,0,0]]), 110);\n    assert_eq!(candidate(vec![[1,1,1,1,1],[0,0,0,0,0],[1,1,1,1,1],[0,0,0,0,0],[1,1,1,1,1]]), 45);\n    assert_eq!(candidate(vec![[1,1,1,1,0],[1,1,1,1,1],[1,1,0,1,1],[1,0,1,1,1],[0,1,1,1,1]]), 91);\n    assert_eq!(candidate(vec![[1,0,1,1],[1,1,0,1],[1,1,1,0],[1,0,1,1]]), 28);\n    assert_eq!(candidate(vec![[1,1,0,1],[1,1,1,1],[0,1,1,1],[1,1,1,1]]), 56);\n    assert_eq!(candidate(vec![[0,1,1,0,1],[1,1,1,1,1],[1,0,0,1,1],[0,1,1,1,0],[1,1,0,1,1]]), 50);\n    assert_eq!(candidate(vec![[1,0,1,1,1],[1,1,1,0,1],[1,0,1,1,1],[1,1,1,1,1]]), 58);\n    assert_eq!(candidate(vec![[1,1,1,1,1],[1,1,1,1,1],[1,0,1,0,1],[1,1,1,1,1],[1,1,1,1,1]]), 117);\n    assert_eq!(candidate(vec![[1,1,1,1,0,0,1,1],[1,1,0,0,0,1,1,1],[0,0,0,0,0,0,0,0],[1,1,1,1,0,0,1,1],[1,1,0,0,0,1,1,1]]), 56);\n}"
+  },
+  "test_cases": [
+    {
+      "input": "mat = [[0,0],[0,0]]",
+      "output": "0"
+    },
+    {
+      "input": "mat = [[1,0,1],[1,1,0],[1,1,0]]",
+      "output": "13"
+    },
+    {
+      "input": "mat = [[1,0],[0,1]]",
+      "output": "2"
+    },
+    {
+      "input": "mat = [[1,1,1,1],[1,1,1,1],[1,1,1,1]]",
+      "output": "60"
+    },
+    {
+      "input": "mat = [[0,0,0],[0,0,0]]",
+      "output": "0"
+    },
+    {
+      "input": "mat = [[0,0,0,0],[0,0,0,0],[0,0,0,0]]",
+      "output": "0"
+    },
+    {
+      "input": "mat = [[1,1,1],[1,1,1],[1,1,1]]",
+      "output": "36"
+    },
+    {
+      "input": "mat = [[0,1,1,0],[0,1,1,1],[1,1,1,0]]",
+      "output": "24"
+    },
+    {
+      "input": "mat = [[1,1],[1,1]]",
+      "output": "9"
+    },
+    {
+      "input": "mat = [[0,0,0],[0,0,0],[0,0,0]]",
+      "output": "0"
+    },
+    {
+      "input": "mat = [[1,1,0,1],[0,1,1,0],[1,0,1,1],[1,1,1,1]]",
+      "output": "28"
+    },
+    {
+      "input": "mat = [[0,1,1,1,0],[1,1,1,1,1],[1,1,1,1,1],[0,1,1,1,0],[1,0,0,0,1]]",
+      "output": "89"
+    },
+    {
+      "input": "mat = [[1,1,1,1],[1,0,0,1],[1,0,0,1],[1,1,1,1]]",
+      "output": "36"
+    },
+    {
+      "input": "mat = [[0,1,0,1,0,1],[1,0,1,0,1,0],[0,1,0,1,0,1],[1,0,1,0,1,0],[0,1,0,1,0,1]]",
+      "output": "15"
+    },
+    {
+      "input": "mat = [[1,0,1,0,1],[0,1,1,1,0],[1,1,0,1,1],[0,1,1,1,0],[1,0,1,0,1]]",
+      "output": "32"
+    },
+    {
+      "input": "mat = [[0,0,1,0,0],[0,0,1,0,0],[1,1,1,1,1],[0,0,1,0,0],[0,0,1,0,0]]",
+      "output": "29"
+    },
+    {
+      "input": "mat = [[1,1,1,1,1,1],[1,1,1,1,1,1],[0,0,0,0,0,0],[1,1,1,1,1,1],[1,1,1,1,1,1]]",
+      "output": "126"
+    },
+    {
+      "input": "mat = [[0,1,1,1],[1,1,1,1],[1,1,1,1],[1,1,1,0]]",
+      "output": "69"
+    },
+    {
+      "input": "mat = [[1,0,1,0,1,0,1],[0,1,0,1,0,1,0],[1,0,1,0,1,0,1],[0,1,0,1,0,1,0],[1,0,1,0,1,0,1]]",
+      "output": "18"
+    },
+    {
+      "input": "mat = [[1,1,1,0,0,0],[1,1,0,1,1,0],[1,0,0,0,0,1],[1,1,1,0,0,0],[0,0,0,1,1,1],[0,0,1,1,1,0]]",
+      "output": "43"
+    },
+    {
+      "input": "mat = [[1,0,1,1],[1,1,1,1],[0,1,1,0],[1,0,1,0],[0,1,1,1]]",
+      "output": "40"
+    },
+    {
+      "input": "mat = [[1,1,1,0,1],[1,1,0,1,1],[0,1,1,1,0],[1,1,1,1,1],[0,1,0,1,0]]",
+      "output": "59"
+    },
+    {
+      "input": "mat = [[1,1,0,1],[1,1,1,0],[0,1,1,1],[1,0,1,1]]",
+      "output": "31"
+    },
+    {
+      "input": "mat = [[1,1,0,1,0,1],[1,1,1,1,1,1],[0,1,0,1,0,1],[1,1,1,1,1,1],[0,1,0,1,0,1]]",
+      "output": "85"
+    },
+    {
+      "input": "mat = [[1,0,1,0,1],[1,1,1,1,1],[0,1,0,1,0],[1,1,1,1,1],[1,0,1,0,1]]",
+      "output": "50"
+    },
+    {
+      "input": "mat = [[1,0,0,0,1,0,0,0,1],[0,1,0,1,0,1,0,1,0],[0,0,1,0,0,0,1,0,0],[1,0,0,0,1,0,0,0,1],[0,1,0,1,0,1,0,1,0],[0,0,1,0,0,0,1,0,0]]",
+      "output": "18"
+    },
+    {
+      "input": "mat = [[1,1,0,1,1],[1,0,1,1,1],[0,1,1,1,0],[1,1,1,0,1],[1,0,1,1,1]]",
+      "output": "50"
+    },
+    {
+      "input": "mat = [[0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0]]",
+      "output": "0"
+    },
+    {
+      "input": "mat = [[1,1,1,1,1,1,1],[1,1,1,1,1,1,1],[1,1,1,1,1,1,1],[1,1,1,1,1,1,1],[1,1,1,1,1,1,1]]",
+      "output": "420"
+    },
+    {
+      "input": "mat = [[1,0,1,0,1],[0,1,1,1,0],[1,1,1,0,1],[0,1,0,1,0],[1,0,1,0,1]]",
+      "output": "28"
+    },
+    {
+      "input": "mat = [[1,0,0,0,1],[0,1,1,1,0],[0,1,1,1,0],[0,0,1,0,0],[1,0,0,0,1]]",
+      "output": "25"
+    },
+    {
+      "input": "mat = [[1,1,1,1,1,1],[1,1,1,0,1,1],[1,0,1,1,1,0],[1,1,1,1,1,1],[1,0,1,0,1,1]]",
+      "output": "105"
+    },
+    {
+      "input": "mat = [[1,0,1,0,1],[0,1,0,1,0],[1,0,1,0,1],[0,1,0,1,0],[1,0,1,0,1]]",
+      "output": "13"
+    },
+    {
+      "input": "mat = [[1,1,1,1,0,1],[0,1,1,1,1,1],[1,1,0,1,1,1],[1,1,1,1,0,1],[0,1,1,1,1,1]]",
+      "output": "105"
+    },
+    {
+      "input": "mat = [[1,1,0,0],[1,1,1,1],[0,0,1,0],[1,1,1,1]]",
+      "output": "30"
+    },
+    {
+      "input": "mat = [[1,1,0,1],[1,1,1,1],[0,1,1,1],[1,0,1,0]]",
+      "output": "36"
+    },
+    {
+      "input": "mat = [[1,0,1],[1,1,1],[0,1,1],[1,1,1],[1,0,1]]",
+      "output": "37"
+    },
+    {
+      "input": "mat = [[1,1,0,0,1,1],[0,1,1,1,1,0],[1,1,1,1,1,1],[0,0,1,1,0,0]]",
+      "output": "60"
+    },
+    {
+      "input": "mat = [[1,1,1,0,0],[1,1,1,0,0],[0,0,0,1,1],[0,0,0,1,1],[1,1,1,1,1]]",
+      "output": "48"
+    },
+    {
+      "input": "mat = [[1,1,1,1,1,1,1],[1,0,0,0,0,0,1],[1,0,1,1,1,0,1],[1,0,1,0,1,0,1],[1,0,1,1,1,0,1],[1,0,0,0,0,0,1],[1,1,1,1,1,1,1]]",
+      "output": "128"
+    },
+    {
+      "input": "mat = [[1,1,1,1,1,1,1,1,1],[1,1,1,1,1,1,1,1,1],[0,0,0,0,0,0,0,0,0],[1,1,1,1,1,1,1,1,1],[1,1,1,1,1,1,1,1,1]]",
+      "output": "270"
+    },
+    {
+      "input": "mat = [[1,1,1,1,1,1],[1,0,0,1,0,1],[1,0,1,1,1,1],[1,1,1,1,0,1],[1,0,1,1,1,1],[1,1,1,1,1,1]]",
+      "output": "141"
+    },
+    {
+      "input": "mat = [[1,1,1,1,1,1],[1,1,1,1,1,1],[1,1,0,0,0,0],[1,1,0,0,0,0],[0,0,0,0,1,1],[0,0,0,0,1,1]]",
+      "output": "93"
+    },
+    {
+      "input": "mat = [[1,1,1,1,0],[1,1,1,1,0],[1,1,0,0,1],[0,1,0,1,1],[1,1,1,1,1]]",
+      "output": "71"
+    },
+    {
+      "input": "mat = [[1,0,1,0,1,0,1],[0,1,0,1,0,1,0],[1,0,1,0,1,0,1],[0,1,0,1,0,1,0],[1,0,1,0,1,0,1],[0,1,0,1,0,1,0]]",
+      "output": "21"
+    },
+    {
+      "input": "mat = [[1,1,1,1,1],[0,1,1,1,1],[1,1,1,1,1],[1,1,1,1,0],[1,1,0,0,1]]",
+      "output": "114"
+    },
+    {
+      "input": "mat = [[1,1,1,0],[0,1,1,1],[1,1,1,1],[0,1,0,1]]",
+      "output": "41"
+    },
+    {
+      "input": "mat = [[1,0,1,1],[1,1,1,0],[1,1,0,1],[0,1,1,1]]",
+      "output": "29"
+    },
+    {
+      "input": "mat = [[1,1,1,1,1,1,1,1,1],[1,0,0,0,0,0,0,0,1],[1,0,1,1,1,1,1,0,1],[1,0,1,0,0,0,1,0,1],[1,0,1,0,1,0,1,0,1],[1,0,1,0,0,0,1,0,1],[1,0,1,1,1,1,1,0,1],[1,0,0,0,0,0,0,0,1],[1,1,1,1,1,1,1,1,1]]",
+      "output": "233"
+    },
+    {
+      "input": "mat = [[1,0,1,0,1],[0,1,1,1,0],[1,1,1,1,1],[0,1,1,0,1]]",
+      "output": "44"
+    },
+    {
+      "input": "mat = [[1,0,0,0,1],[0,1,0,1,0],[0,0,1,0,0],[0,1,0,1,0],[1,0,0,0,1]]",
+      "output": "9"
+    },
+    {
+      "input": "mat = [[1,1,1,1],[1,0,0,1],[1,1,1,1],[0,1,1,0]]",
+      "output": "34"
+    },
+    {
+      "input": "mat = [[1,0,1,0,1],[1,1,0,1,1],[0,1,1,0,1],[1,0,1,0,1],[1,1,0,1,1]]",
+      "output": "36"
+    },
+    {
+      "input": "mat = [[1,1,0,0,1,1],[0,0,1,1,0,0],[1,1,0,0,1,1],[0,0,1,1,0,0]]",
+      "output": "18"
+    },
+    {
+      "input": "mat = [[1,1,1,1,1],[1,0,0,0,1],[1,0,1,0,1],[1,0,0,0,1],[1,1,1,1,1]]",
+      "output": "57"
+    },
+    {
+      "input": "mat = [[1,1,0,0,1,1],[0,1,1,1,0,0],[1,1,1,1,1,1],[0,0,0,1,1,1],[1,1,1,1,1,0]]",
+      "output": "76"
+    },
+    {
+      "input": "mat = [[1,1,0,1,1],[1,0,0,0,1],[1,1,1,1,1],[0,1,1,1,1]]",
+      "output": "51"
+    },
+    {
+      "input": "mat = [[1,1,1],[0,0,0],[1,1,1],[0,0,0],[1,1,1],[0,0,0]]",
+      "output": "18"
+    },
+    {
+      "input": "mat = [[1,1,1,1,1,1,1],[1,1,1,1,1,1,1],[1,1,1,1,1,1,1],[0,0,0,0,0,0,0],[1,1,1,1,1,1,1]]",
+      "output": "196"
+    },
+    {
+      "input": "mat = [[1,1,1,1,1,1],[1,1,1,1,1,1],[1,1,1,1,1,1],[1,1,1,1,1,1]]",
+      "output": "210"
+    },
+    {
+      "input": "mat = [[1,1,0,1],[0,1,1,0],[1,0,1,1],[0,1,0,1],[1,1,1,0]]",
+      "output": "23"
+    },
+    {
+      "input": "mat = [[1,1,0,1,0],[1,1,1,1,1],[0,1,1,1,0],[1,0,1,0,1],[1,1,1,1,1]]",
+      "output": "62"
+    },
+    {
+      "input": "mat = [[0,0,1,0,0],[0,1,1,1,0],[1,1,1,1,1],[0,1,1,1,0],[0,0,1,0,0]]",
+      "output": "54"
+    },
+    {
+      "input": "mat = [[1,1,1,1,1,1,1,1],[1,1,1,1,1,1,1,1],[1,1,1,1,1,1,1,1],[1,1,1,1,1,1,1,1],[1,1,1,1,1,1,1,1]]",
+      "output": "540"
+    },
+    {
+      "input": "mat = [[1,1,0,0],[1,1,0,0],[0,0,1,1],[1,1,1,1]]",
+      "output": "25"
+    },
+    {
+      "input": "mat = [[0,1,1,0,0,1,1,0,0,1],[1,1,1,0,0,1,1,1,0,0],[0,1,1,0,0,1,1,0,0,1],[1,1,1,0,0,1,1,1,0,0]]",
+      "output": "74"
+    },
+    {
+      "input": "mat = [[1,1,1,1,1,1,1],[1,1,0,0,0,0,1],[1,1,0,1,1,0,1],[1,0,1,1,1,1,0],[1,1,0,0,0,0,1],[1,1,1,1,1,1,1]]",
+      "output": "112"
+    },
+    {
+      "input": "mat = [[1,1,1,1,1,1],[1,1,1,1,1,1],[1,1,1,1,1,1],[1,1,1,1,1,1],[1,1,1,1,1,1]]",
+      "output": "315"
+    },
+    {
+      "input": "mat = [[1,0,1,0,1],[0,1,0,1,0],[1,0,1,0,1],[0,1,0,1,0]]",
+      "output": "10"
+    },
+    {
+      "input": "mat = [[1,1,1,0,1,1],[1,0,1,1,1,0],[1,1,0,1,1,1],[0,1,1,1,1,0]]",
+      "output": "52"
+    },
+    {
+      "input": "mat = [[1,1,1,1,1],[1,0,0,0,1],[1,0,0,0,1],[1,0,0,0,1],[1,1,1,1,1]]",
+      "output": "56"
+    },
+    {
+      "input": "mat = [[1,0,1,0,1],[1,1,1,1,1],[0,1,1,1,0],[1,1,1,1,1],[1,0,1,0,1]]",
+      "output": "71"
+    },
+    {
+      "input": "mat = [[1,1,1,1,1,1],[1,0,1,0,1,0],[1,1,1,1,1,1],[0,1,0,1,0,1],[1,1,1,1,1,1]]",
+      "output": "87"
+    },
+    {
+      "input": "mat = [[1,1,1,1,1,1],[1,0,0,0,0,1],[1,0,1,1,0,1],[1,0,1,1,0,1],[1,0,0,0,0,1],[1,1,1,1,1,1]]",
+      "output": "89"
+    },
+    {
+      "input": "mat = [[1,0,1,0,1],[1,1,1,0,0],[0,1,1,1,1],[1,1,1,1,0]]",
+      "output": "45"
+    },
+    {
+      "input": "mat = [[1,0,0,1,0,0,1],[0,1,1,0,1,1,0],[0,1,1,0,1,1,0],[1,0,0,1,0,0,1],[0,1,1,0,1,1,0]]",
+      "output": "30"
+    },
+    {
+      "input": "mat = [[1,1,1,0,0,1],[1,1,1,1,0,0],[0,0,1,1,1,1],[1,0,0,1,1,1]]",
+      "output": "51"
+    },
+    {
+      "input": "mat = [[0,1,0,1,0,1,0],[1,0,1,0,1,0,1],[0,1,0,1,0,1,0],[1,0,1,0,1,0,1]]",
+      "output": "14"
+    },
+    {
+      "input": "mat = [[1,1,0,0,1,1],[1,1,0,0,1,1],[0,0,1,1,0,0],[0,0,1,1,0,0],[1,1,0,0,1,1],[1,1,0,0,1,1]]",
+      "output": "45"
+    },
+    {
+      "input": "mat = [[1,1,1,0,0],[1,1,1,1,0],[0,1,1,1,1],[0,0,1,1,1],[1,1,1,0,0]]",
+      "output": "67"
+    },
+    {
+      "input": "mat = [[0,1,1,0,1],[1,1,1,1,1],[1,0,1,0,1],[1,1,1,1,1],[0,1,1,0,1]]",
+      "output": "68"
+    },
+    {
+      "input": "mat = [[1,1,1,1,1,1,1,1,1,1],[0,0,0,0,0,0,0,0,0,0],[1,1,1,1,1,1,1,1,1,1],[0,0,0,0,0,0,0,0,0,0]]",
+      "output": "110"
+    },
+    {
+      "input": "mat = [[1,1,1,1,1],[0,0,0,0,0],[1,1,1,1,1],[0,0,0,0,0],[1,1,1,1,1]]",
+      "output": "45"
+    },
+    {
+      "input": "mat = [[1,1,1,1,0],[1,1,1,1,1],[1,1,0,1,1],[1,0,1,1,1],[0,1,1,1,1]]",
+      "output": "91"
+    },
+    {
+      "input": "mat = [[1,0,1,1],[1,1,0,1],[1,1,1,0],[1,0,1,1]]",
+      "output": "28"
+    },
+    {
+      "input": "mat = [[1,1,0,1],[1,1,1,1],[0,1,1,1],[1,1,1,1]]",
+      "output": "56"
+    },
+    {
+      "input": "mat = [[0,1,1,0,1],[1,1,1,1,1],[1,0,0,1,1],[0,1,1,1,0],[1,1,0,1,1]]",
+      "output": "50"
+    },
+    {
+      "input": "mat = [[1,0,1,1,1],[1,1,1,0,1],[1,0,1,1,1],[1,1,1,1,1]]",
+      "output": "58"
+    },
+    {
+      "input": "mat = [[1,1,1,1,1],[1,1,1,1,1],[1,0,1,0,1],[1,1,1,1,1],[1,1,1,1,1]]",
+      "output": "117"
+    },
+    {
+      "input": "mat = [[1,1,1,1,0,0,1,1],[1,1,0,0,0,1,1,1],[0,0,0,0,0,0,0,0],[1,1,1,1,0,0,1,1],[1,1,0,0,0,1,1,1]]",
+      "output": "56"
+    }
+  ],
+  "types": {
+    "python3": {
+      "input": [
+        {
+          "mat": "List[List[int]]"
+        }
+      ],
+      "output": "int"
+    },
+    "cpp": {
+      "input": [
+        {
+          "mat": "vector<vector<int>>&"
+        }
+      ],
+      "output": "int"
+    },
+    "java": {
+      "input": [
+        {
+          "mat": "int[][]"
+        }
+      ],
+      "output": "int"
+    },
+    "javascript": {
+      "input": [
+        {
+          "mat": "number[][]"
+        }
+      ],
+      "output": "number"
+    },
+    "typescript": {
+      "input": [
+        {
+          "mat": "number[][]"
+        }
+      ],
+      "output": "number"
+    },
+    "golang": {
+      "input": [
+        {
+          "mat": "[][]int"
+        }
+      ],
+      "output": "int"
+    },
+    "rust": {
+      "input": [
+        {
+          "mat": "Vec<Vec<i32>>"
+        }
+      ],
+      "output": "i32"
+    }
+  },
+  "tags": [
+    "array",
+    "dynamic-programming",
+    "stack",
+    "matrix",
+    "monotonic-stack"
+  ]
+}

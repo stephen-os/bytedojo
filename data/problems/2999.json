@@ -1,0 +1,779 @@
+{
+  "id": 2999,
+  "title": "Count the Number of Powerful Integers",
+  "slug": "count-the-number-of-powerful-integers",
+  "difficulty": "Hard",
+  "description": "You are given three integers start, finish, and limit. You are also given a 0-indexed string s representing a positive integer.\nA positive integer x is called powerful if it ends with s (in other words, s is a suffix of x) and each digit in x is at most limit.\nReturn the total number of powerful integers in the range [start..finish].\nA string x is a suffix of a string y if and only if x is a substring of y that starts from some index (including 0) in y and extends to the index y.length - 1. For example, 25 is a suffix of 5125 whereas 512 is not.\nExample 1:\nExample 2:\nExample 3:\nConstraints:",
+  "examples": [
+    {
+      "example_num": 1,
+      "example_text": "Input: start = 1, finish = 6000, limit = 4, s = \"124\"\nOutput: 5\nExplanation: The powerful integers in the range [1..6000] are 124, 1124, 2124, 3124, and, 4124. All these integers have each digit <= 4, and \"124\" as a suffix. Note that 5124 is not a powerful integer because the first digit is 5 which is greater than 4.\nIt can be shown that there are only 5 powerful integers in this range.",
+      "images": []
+    },
+    {
+      "example_num": 2,
+      "example_text": "Input: start = 15, finish = 215, limit = 6, s = \"10\"\nOutput: 2\nExplanation: The powerful integers in the range [15..215] are 110 and 210. All these integers have each digit <= 6, and \"10\" as a suffix.\nIt can be shown that there are only 2 powerful integers in this range.",
+      "images": []
+    },
+    {
+      "example_num": 3,
+      "example_text": "Input: start = 1000, finish = 2000, limit = 4, s = \"3000\"\nOutput: 0\nExplanation: All integers in the range [1000..2000] are smaller than 3000, hence \"3000\" cannot be a suffix of any integer in this range.",
+      "images": []
+    }
+  ],
+  "constraints": [
+    "1 <= start <= finish <= 1015",
+    "1 <= limit <= 9",
+    "1 <= s.length <= floor(log10(finish)) + 1",
+    "s only consists of numeric digits which are at most limit.",
+    "s does not have leading zeros."
+  ],
+  "hints": [
+    "We can use digit DP to count powerful integers in the range <code>[1, x]</code>.",
+    "Let <code>dp[i][j]</code> be the number of integers that have <code>i</code> digits (with allowed leading 0s) and <code>j</code> refers to the comparison between the current number and the prefix of <code>x</code>, <code>j == 0</code> if the i-digit number formed currently is identical to the leftmost <code>i</code> digits of <code>x</code>, else if <code>j ==1</code> it means the i-digit number is smaller than the leftmost <code>i</code> digits of <code>x</code>.",
+    "The answer is <code>count[finish] - count[start - 1]</code>, where <code>count[i]</code> refers to the number of powerful integers in the range <code>[1..i]</code>."
+  ],
+  "code_snippets": {
+    "cpp": "class Solution {\npublic:\n    long long numberOfPowerfulInt(long long start, long long finish, int limit, string s) {\n        \n    }\n};",
+    "java": "class Solution {\n    public long numberOfPowerfulInt(long start, long finish, int limit, String s) {\n        \n    }\n}",
+    "python3": "class Solution:\n    def numberOfPowerfulInt(self, start: int, finish: int, limit: int, s: str) -> int:\n        ",
+    "javascript": "/**\n * @param {number} start\n * @param {number} finish\n * @param {number} limit\n * @param {string} s\n * @return {number}\n */\nvar numberOfPowerfulInt = function(start, finish, limit, s) {\n    \n};",
+    "typescript": "function numberOfPowerfulInt(start: number, finish: number, limit: number, s: string): number {\n    \n};",
+    "golang": "func numberOfPowerfulInt(start int64, finish int64, limit int, s string) int64 {\n    \n}",
+    "rust": "impl Solution {\n    pub fn number_of_powerful_int(start: i64, finish: i64, limit: i32, s: String) -> i64 {\n        \n    }\n}"
+  },
+  "entry_points": {
+    "python3": "Solution().numberOfPowerfulInt",
+    "cpp": "Solution().numberOfPowerfulInt",
+    "java": "new Solution().numberOfPowerfulInt",
+    "javascript": "numberOfPowerfulInt",
+    "typescript": "numberOfPowerfulInt",
+    "golang": "numberOfPowerfulInt",
+    "rust": "Solution::number_of_powerful_int"
+  },
+  "test_snippets": {
+    "python3": "def check(candidate):\n    assert candidate(start = 100, finish = 1000, limit = 1, s = \"00\") == 2\n    assert candidate(start = 1111, finish = 2222, limit = 2, s = \"11\") == 5\n    assert candidate(start = 500, finish = 5000, limit = 7, s = \"50\") == 35\n    assert candidate(start = 10000, finish = 99999, limit = 8, s = \"8888\") == 8\n    assert candidate(start = 1, finish = 6000, limit = 4, s = \"124\") == 5\n    assert candidate(start = 111, finish = 999, limit = 9, s = \"11\") == 9\n    assert candidate(start = 1234, finish = 98765, limit = 8, s = \"4321\") == 9\n    assert candidate(start = 100, finish = 1000, limit = 5, s = \"00\") == 6\n    assert candidate(start = 1234, finish = 98765, limit = 9, s = \"567\") == 98\n    assert candidate(start = 5, finish = 55, limit = 5, s = \"5\") == 6\n    assert candidate(start = 1, finish = 1000000000000000, limit = 9, s = \"999\") == 1000000000000\n    assert candidate(start = 500, finish = 1500, limit = 5, s = \"50\") == 6\n    assert candidate(start = 1, finish = 999999999999999, limit = 9, s = \"999\") == 1000000000000\n    assert candidate(start = 5, finish = 500, limit = 3, s = \"1\") == 15\n    assert candidate(start = 100, finish = 1000, limit = 7, s = \"00\") == 8\n    assert candidate(start = 15, finish = 215, limit = 6, s = \"10\") == 2\n    assert candidate(start = 123, finish = 456, limit = 5, s = \"34\") == 4\n    assert candidate(start = 1000, finish = 2000, limit = 4, s = \"3000\") == 0\n    assert candidate(start = 5, finish = 5, limit = 5, s = \"5\") == 1\n    assert candidate(start = 1, finish = 10, limit = 1, s = \"1\") == 1\n    assert candidate(start = 200, finish = 800, limit = 2, s = \"2\") == 3\n    assert candidate(start = 1234, finish = 4321, limit = 7, s = \"34\") == 25\n    assert candidate(start = 10, finish = 100, limit = 1, s = \"0\") == 2\n    assert candidate(start = 1234, finish = 123456, limit = 7, s = \"34\") == 659\n    assert candidate(start = 1, finish = 1000000000000000, limit = 1, s = \"1\") == 16384\n    assert candidate(start = 10, finish = 100, limit = 3, s = \"0\") == 4\n    assert candidate(start = 10, finish = 100, limit = 3, s = \"1\") == 3\n    assert candidate(start = 100, finish = 200, limit = 2, s = \"00\") == 2\n    assert candidate(start = 10000, finish = 100000, limit = 1, s = \"0000\") == 2\n    assert candidate(start = 999, finish = 9999, limit = 9, s = \"999\") == 10\n    assert candidate(start = 10, finish = 100, limit = 3, s = \"2\") == 3\n    assert candidate(start = 500, finish = 5000, limit = 5, s = \"50\") == 25\n    assert candidate(start = 1000000000000000, finish = 2000000000000000, limit = 5, s = \"54321\") == 60466176\n    assert candidate(start = 123456789, finish = 987654321, limit = 8, s = \"123\") == 456707\n    assert candidate(start = 1000000000000, finish = 10000000000000, limit = 6, s = \"6666\") == 34588806\n    assert candidate(start = 1000000000, finish = 1000000000, limit = 9, s = \"0\") == 1\n    assert candidate(start = 123, finish = 321, limit = 1, s = \"1\") == 0\n    assert candidate(start = 1, finish = 1000000000000000, limit = 7, s = \"777777777777777\") == 1\n    assert candidate(start = 10000000000, finish = 99999999999, limit = 4, s = \"44444\") == 12500\n    assert candidate(start = 500000000, finish = 5000000000, limit = 4, s = \"444444\") == 500\n    assert candidate(start = 1234567890, finish = 2345678901, limit = 7, s = \"789\") == 299592\n    assert candidate(start = 555555555555555, finish = 666666666666666, limit = 5, s = \"555\") == 1\n    assert candidate(start = 1000000000, finish = 9000000000, limit = 4, s = \"4444\") == 12500\n    assert candidate(start = 1111111111, finish = 2222222222, limit = 2, s = \"222\") == 1094\n    assert candidate(start = 123456789, finish = 987654321, limit = 8, s = \"876\") == 456708\n    assert candidate(start = 123456789, finish = 9876543210, limit = 8, s = \"8765\") == 523138\n    assert candidate(start = 111111111111111, finish = 222222222222222, limit = 2, s = \"2222222222\") == 122\n    assert candidate(start = 100000000000000, finish = 200000000000000, limit = 6, s = \"666666\") == 5764801\n    assert candidate(start = 5000, finish = 50000, limit = 5, s = \"25\") == 150\n    assert candidate(start = 1000000000, finish = 2000000000, limit = 9, s = \"999999\") == 1000\n    assert candidate(start = 123456789, finish = 123456789, limit = 9, s = \"999\") == 0\n    assert candidate(start = 1234567890123456789, finish = 9876543210987654321, limit = 8, s = \"890\") == 1592439230847996\n    assert candidate(start = 123456789, finish = 987654321, limit = 4, s = \"789\") == 10750\n    assert candidate(start = 1000000000, finish = 2000000000, limit = 6, s = \"12345\") == 2401\n    assert candidate(start = 123456789, finish = 9876543210, limit = 4, s = \"4321\") == 14650\n    assert candidate(start = 123, finish = 456789, limit = 6, s = \"678\") == 238\n    assert candidate(start = 500000000, finish = 600000000, limit = 4, s = \"40000\") == 0\n    assert candidate(start = 1000000000000000, finish = 2000000000000000, limit = 5, s = \"555555555555555\") == 1\n    assert candidate(start = 1000000000, finish = 1500000000, limit = 3, s = \"321\") == 4096\n    assert candidate(start = 100000000, finish = 200000000, limit = 9, s = \"90000000\") == 1\n    assert candidate(start = 10000, finish = 999999999, limit = 5, s = \"5555\") == 7775\n    assert candidate(start = 1000000000, finish = 10000000000, limit = 6, s = \"6000000\") == 294\n    assert candidate(start = 123456789, finish = 987654321, limit = 8, s = \"456\") == 456707\n    assert candidate(start = 100000, finish = 9999999999, limit = 5, s = \"2500\") == 46650\n    assert candidate(start = 100, finish = 999, limit = 1, s = \"1\") == 2\n    assert candidate(start = 1000000000, finish = 2000000000, limit = 3, s = \"123\") == 4096\n    assert candidate(start = 1000000000, finish = 9999999999, limit = 5, s = \"4444\") == 38880\n    assert candidate(start = 1, finish = 1000000000000, limit = 1, s = \"1\") == 2048\n    assert candidate(start = 1, finish = 10000000000, limit = 2, s = \"12\") == 6561\n    assert candidate(start = 99999999, finish = 1000000000, limit = 9, s = \"999\") == 900001\n    assert candidate(start = 1000000, finish = 10000000, limit = 3, s = \"333\") == 192\n    assert candidate(start = 1000000000000, finish = 9999999999999, limit = 8, s = \"8888\") == 344373768\n    assert candidate(start = 100000, finish = 999999, limit = 5, s = \"2500\") == 30\n    assert candidate(start = 10000, finish = 15000, limit = 3, s = \"3000\") == 1\n    assert candidate(start = 500000000, finish = 800000000, limit = 6, s = \"567\") == 33614\n    assert candidate(start = 111111111, finish = 222222222, limit = 2, s = \"222\") == 365\n    assert candidate(start = 100000, finish = 999999, limit = 4, s = \"4444\") == 20\n    assert candidate(start = 123456789012345, finish = 987654321098765, limit = 7, s = \"789\") == 57499975680\n    assert candidate(start = 1111, finish = 2222, limit = 1, s = \"11\") == 1\n    assert candidate(start = 100000000000, finish = 900000000000, limit = 3, s = \"333\") == 196608\n    assert candidate(start = 111111111111111, finish = 222222222222222, limit = 2, s = \"21\") == 797162\n    assert candidate(start = 100000000000000, finish = 200000000000000, limit = 1, s = \"1\") == 8192\n    assert candidate(start = 500000000000000, finish = 600000000000000, limit = 5, s = \"500\") == 362797056\n    assert candidate(start = 10000000000000, finish = 50000000000000, limit = 4, s = \"4444444\") == 62500\n    assert candidate(start = 5000000, finish = 5500000, limit = 5, s = \"5000\") == 30\n    assert candidate(start = 987654321, finish = 987654321987654321, limit = 9, s = \"987654321\") == 987654322\n    assert candidate(start = 1000000000000000, finish = 9999999999999999, limit = 5, s = \"55555\") == 302330880\n    assert candidate(start = 123456789012345, finish = 234567890123456, limit = 2, s = \"222\") == 177147\n    assert candidate(start = 100000000000000, finish = 200000000000000, limit = 7, s = \"7654321\") == 2097152\n    assert candidate(start = 987654321098765, finish = 9876543210987654, limit = 9, s = \"987654321\") == 8888889\n    assert candidate(start = 123123123, finish = 987987987, limit = 8, s = \"876\") == 456981\n    assert candidate(start = 222222222222222, finish = 333333333333333, limit = 3, s = \"3333333333\") == 342\n    assert candidate(start = 1234567890, finish = 1234567890123456789, limit = 6, s = \"67890\") == 131875584409\n    assert candidate(start = 1000000000, finish = 9000000000, limit = 6, s = \"666\") == 705894\n    assert candidate(start = 100000000000000, finish = 300000000000000, limit = 5, s = \"55555555555555\") == 2\n    assert candidate(start = 10000, finish = 99999, limit = 2, s = \"22\") == 18\n    assert candidate(start = 1000000000, finish = 10000000000, limit = 1, s = \"1\") == 256\n    assert candidate(start = 10000, finish = 20000, limit = 3, s = \"111\") == 4\n    assert candidate(start = 1000000000000, finish = 1000000000000, limit = 9, s = \"999999999999\") == 0\n    assert candidate(start = 50000, finish = 150000, limit = 5, s = \"2500\") == 6\n    assert candidate(start = 1000000000000000, finish = 1000000000000000, limit = 9, s = \"999999999999999\") == 0\n    assert candidate(start = 123456789, finish = 2100000000, limit = 6, s = \"6789\") == 32748\n    assert candidate(start = 1000000000000, finish = 9999999999999, limit = 2, s = \"21\") == 118098\n    assert candidate(start = 123456789012345, finish = 987654321098765, limit = 7, s = \"765\") == 57499975680\n    assert candidate(start = 123456789012345, finish = 987654321098765, limit = 6, s = \"654321\") == 32507139\n    assert candidate(start = 100000000000000, finish = 200000000000000, limit = 3, s = \"100\") == 4194304\n    assert candidate(start = 50000, finish = 60000, limit = 5, s = \"500\") == 6\n    assert candidate(start = 1000000000000000, finish = 1500000000000000, limit = 6, s = \"666666666666666\") == 0\n    assert candidate(start = 123456789123, finish = 987654321987, limit = 9, s = \"987\") == 864197533\n    assert candidate(start = 123456789012, finish = 987654321012, limit = 5, s = \"5555\") == 1276560\n    assert candidate(start = 500, finish = 5000, limit = 3, s = \"300\") == 3\n    assert candidate(start = 12345, finish = 67890, limit = 7, s = \"789\") == 46\n    assert candidate(start = 5000000000, finish = 5000000000000000, limit = 5, s = \"5000\") == 1813946400\n    assert candidate(start = 555555555, finish = 666666666, limit = 9, s = \"555\") == 111112\n    assert candidate(start = 1000000, finish = 2000000, limit = 2, s = \"222\") == 27\n    assert candidate(start = 9000000000, finish = 9999999999, limit = 9, s = \"9999\") == 100000\n    assert candidate(start = 1234567890, finish = 1234567890123, limit = 6, s = \"6789\") == 7823592\n    assert candidate(start = 1111, finish = 3333, limit = 1, s = \"11\") == 1\n    assert candidate(start = 123456789012345, finish = 987654321098765, limit = 7, s = \"7654321\") == 14038080\n    assert candidate(start = 1000000000000000, finish = 9999999999999999, limit = 7, s = \"777777777777777\") == 7\n    assert candidate(start = 5000, finish = 15000, limit = 3, s = \"300\") == 4\n    assert candidate(start = 1, finish = 1000000000000000, limit = 4, s = \"444444444444444\") == 1\n    assert candidate(start = 100000, finish = 500000, limit = 7, s = \"7777\") == 32\n    assert candidate(start = 100000000000000, finish = 200000000000000, limit = 8, s = \"8888888888\") == 6561\n    assert candidate(start = 5000, finish = 80000, limit = 5, s = \"250\") == 31\n    assert candidate(start = 5000000000, finish = 6000000000, limit = 6, s = \"5555\") == 16807\n    assert candidate(start = 123456789, finish = 987654321, limit = 6, s = \"666\") == 94773\n    assert candidate(start = 1000000, finish = 2000000, limit = 2, s = \"200\") == 27\n    assert candidate(start = 987654321098765, finish = 9876543210987654, limit = 9, s = \"9876543210\") == 888889\n    assert candidate(start = 500, finish = 2500, limit = 4, s = \"444\") == 2\n    assert candidate(start = 100000000000000, finish = 1000000000000000, limit = 4, s = \"43210\") == 7812500\n    assert candidate(start = 123456789012345, finish = 123456789012345, limit = 9, s = \"123456789\") == 0\n    assert candidate(start = 1000000000000, finish = 4000000000000, limit = 3, s = \"333333333333\") == 3\n    assert candidate(start = 5000000, finish = 6000000, limit = 4, s = \"4000\") == 0\n    assert candidate(start = 111111111111111, finish = 222222222222222, limit = 1, s = \"1\") == 1\n    assert candidate(start = 1234567890, finish = 1234567890000000000, limit = 4, s = \"43210\") == 1904295900\n    assert candidate(start = 1000000000000000, finish = 2000000000000000, limit = 9, s = \"999999999999999\") == 1\n    assert candidate(start = 100000000, finish = 600000000, limit = 2, s = \"222222222\") == 1\n    assert candidate(start = 500000000000, finish = 5000000000000, limit = 7, s = \"777\") == 587202560\n    assert candidate(start = 10000000000, finish = 50000000000, limit = 4, s = \"4444444444\") == 4\n    assert candidate(start = 10000000000, finish = 11000000000, limit = 3, s = \"3000\") == 1024\n    assert candidate(start = 123456789, finish = 987654321, limit = 4, s = \"3456\") == 2150\n    assert candidate(start = 1000000000000000, finish = 1000000000000000, limit = 9, s = \"1\") == 0\n    assert candidate(start = 111111111111111, finish = 999999999999999, limit = 9, s = \"999999999999999\") == 1\n    assert candidate(start = 111111111, finish = 222222222, limit = 2, s = \"123\") == 365\n    assert candidate(start = 123456789012345, finish = 987654321098765, limit = 7, s = \"765432\") == 112304640\n    assert candidate(start = 222222222222222, finish = 333333333333333, limit = 3, s = \"333\") == 5592406",
+    "cpp": "void check(Solution& solution) {\n    assert(solution.numberOfPowerfulInt(100, 1000, 1, \"00\") == vector<int>2);\n    assert(solution.numberOfPowerfulInt(1111, 2222, 2, \"11\") == vector<int>5);\n    assert(solution.numberOfPowerfulInt(500, 5000, 7, \"50\") == vector<int>35);\n    assert(solution.numberOfPowerfulInt(10000, 99999, 8, \"8888\") == vector<int>8);\n    assert(solution.numberOfPowerfulInt(1, 6000, 4, \"124\") == vector<int>5);\n    assert(solution.numberOfPowerfulInt(111, 999, 9, \"11\") == vector<int>9);\n    assert(solution.numberOfPowerfulInt(1234, 98765, 8, \"4321\") == vector<int>9);\n    assert(solution.numberOfPowerfulInt(100, 1000, 5, \"00\") == vector<int>6);\n    assert(solution.numberOfPowerfulInt(1234, 98765, 9, \"567\") == vector<int>98);\n    assert(solution.numberOfPowerfulInt(5, 55, 5, \"5\") == vector<int>6);\n    assert(solution.numberOfPowerfulInt(1, 1000000000000000, 9, \"999\") == vector<int>1000000000000);\n    assert(solution.numberOfPowerfulInt(500, 1500, 5, \"50\") == vector<int>6);\n    assert(solution.numberOfPowerfulInt(1, 999999999999999, 9, \"999\") == vector<int>1000000000000);\n    assert(solution.numberOfPowerfulInt(5, 500, 3, \"1\") == vector<int>15);\n    assert(solution.numberOfPowerfulInt(100, 1000, 7, \"00\") == vector<int>8);\n    assert(solution.numberOfPowerfulInt(15, 215, 6, \"10\") == vector<int>2);\n    assert(solution.numberOfPowerfulInt(123, 456, 5, \"34\") == vector<int>4);\n    assert(solution.numberOfPowerfulInt(1000, 2000, 4, \"3000\") == vector<int>0);\n    assert(solution.numberOfPowerfulInt(5, 5, 5, \"5\") == vector<int>1);\n    assert(solution.numberOfPowerfulInt(1, 10, 1, \"1\") == vector<int>1);\n    assert(solution.numberOfPowerfulInt(200, 800, 2, \"2\") == vector<int>3);\n    assert(solution.numberOfPowerfulInt(1234, 4321, 7, \"34\") == vector<int>25);\n    assert(solution.numberOfPowerfulInt(10, 100, 1, \"0\") == vector<int>2);\n    assert(solution.numberOfPowerfulInt(1234, 123456, 7, \"34\") == vector<int>659);\n    assert(solution.numberOfPowerfulInt(1, 1000000000000000, 1, \"1\") == vector<int>16384);\n    assert(solution.numberOfPowerfulInt(10, 100, 3, \"0\") == vector<int>4);\n    assert(solution.numberOfPowerfulInt(10, 100, 3, \"1\") == vector<int>3);\n    assert(solution.numberOfPowerfulInt(100, 200, 2, \"00\") == vector<int>2);\n    assert(solution.numberOfPowerfulInt(10000, 100000, 1, \"0000\") == vector<int>2);\n    assert(solution.numberOfPowerfulInt(999, 9999, 9, \"999\") == vector<int>10);\n    assert(solution.numberOfPowerfulInt(10, 100, 3, \"2\") == vector<int>3);\n    assert(solution.numberOfPowerfulInt(500, 5000, 5, \"50\") == vector<int>25);\n    assert(solution.numberOfPowerfulInt(1000000000000000, 2000000000000000, 5, \"54321\") == vector<int>60466176);\n    assert(solution.numberOfPowerfulInt(123456789, 987654321, 8, \"123\") == vector<int>456707);\n    assert(solution.numberOfPowerfulInt(1000000000000, 10000000000000, 6, \"6666\") == vector<int>34588806);\n    assert(solution.numberOfPowerfulInt(1000000000, 1000000000, 9, \"0\") == vector<int>1);\n    assert(solution.numberOfPowerfulInt(123, 321, 1, \"1\") == vector<int>0);\n    assert(solution.numberOfPowerfulInt(1, 1000000000000000, 7, \"777777777777777\") == vector<int>1);\n    assert(solution.numberOfPowerfulInt(10000000000, 99999999999, 4, \"44444\") == vector<int>12500);\n    assert(solution.numberOfPowerfulInt(500000000, 5000000000, 4, \"444444\") == vector<int>500);\n    assert(solution.numberOfPowerfulInt(1234567890, 2345678901, 7, \"789\") == vector<int>299592);\n    assert(solution.numberOfPowerfulInt(555555555555555, 666666666666666, 5, \"555\") == vector<int>1);\n    assert(solution.numberOfPowerfulInt(1000000000, 9000000000, 4, \"4444\") == vector<int>12500);\n    assert(solution.numberOfPowerfulInt(1111111111, 2222222222, 2, \"222\") == vector<int>1094);\n    assert(solution.numberOfPowerfulInt(123456789, 987654321, 8, \"876\") == vector<int>456708);\n    assert(solution.numberOfPowerfulInt(123456789, 9876543210, 8, \"8765\") == vector<int>523138);\n    assert(solution.numberOfPowerfulInt(111111111111111, 222222222222222, 2, \"2222222222\") == vector<int>122);\n    assert(solution.numberOfPowerfulInt(100000000000000, 200000000000000, 6, \"666666\") == vector<int>5764801);\n    assert(solution.numberOfPowerfulInt(5000, 50000, 5, \"25\") == vector<int>150);\n    assert(solution.numberOfPowerfulInt(1000000000, 2000000000, 9, \"999999\") == vector<int>1000);\n    assert(solution.numberOfPowerfulInt(123456789, 123456789, 9, \"999\") == vector<int>0);\n    assert(solution.numberOfPowerfulInt(1234567890123456789, 9876543210987654321, 8, \"890\") == vector<int>1592439230847996);\n    assert(solution.numberOfPowerfulInt(123456789, 987654321, 4, \"789\") == vector<int>10750);\n    assert(solution.numberOfPowerfulInt(1000000000, 2000000000, 6, \"12345\") == vector<int>2401);\n    assert(solution.numberOfPowerfulInt(123456789, 9876543210, 4, \"4321\") == vector<int>14650);\n    assert(solution.numberOfPowerfulInt(123, 456789, 6, \"678\") == vector<int>238);\n    assert(solution.numberOfPowerfulInt(500000000, 600000000, 4, \"40000\") == vector<int>0);\n    assert(solution.numberOfPowerfulInt(1000000000000000, 2000000000000000, 5, \"555555555555555\") == vector<int>1);\n    assert(solution.numberOfPowerfulInt(1000000000, 1500000000, 3, \"321\") == vector<int>4096);\n    assert(solution.numberOfPowerfulInt(100000000, 200000000, 9, \"90000000\") == vector<int>1);\n    assert(solution.numberOfPowerfulInt(10000, 999999999, 5, \"5555\") == vector<int>7775);\n    assert(solution.numberOfPowerfulInt(1000000000, 10000000000, 6, \"6000000\") == vector<int>294);\n    assert(solution.numberOfPowerfulInt(123456789, 987654321, 8, \"456\") == vector<int>456707);\n    assert(solution.numberOfPowerfulInt(100000, 9999999999, 5, \"2500\") == vector<int>46650);\n    assert(solution.numberOfPowerfulInt(100, 999, 1, \"1\") == vector<int>2);\n    assert(solution.numberOfPowerfulInt(1000000000, 2000000000, 3, \"123\") == vector<int>4096);\n    assert(solution.numberOfPowerfulInt(1000000000, 9999999999, 5, \"4444\") == vector<int>38880);\n    assert(solution.numberOfPowerfulInt(1, 1000000000000, 1, \"1\") == vector<int>2048);\n    assert(solution.numberOfPowerfulInt(1, 10000000000, 2, \"12\") == vector<int>6561);\n    assert(solution.numberOfPowerfulInt(99999999, 1000000000, 9, \"999\") == vector<int>900001);\n    assert(solution.numberOfPowerfulInt(1000000, 10000000, 3, \"333\") == vector<int>192);\n    assert(solution.numberOfPowerfulInt(1000000000000, 9999999999999, 8, \"8888\") == vector<int>344373768);\n    assert(solution.numberOfPowerfulInt(100000, 999999, 5, \"2500\") == vector<int>30);\n    assert(solution.numberOfPowerfulInt(10000, 15000, 3, \"3000\") == vector<int>1);\n    assert(solution.numberOfPowerfulInt(500000000, 800000000, 6, \"567\") == vector<int>33614);\n    assert(solution.numberOfPowerfulInt(111111111, 222222222, 2, \"222\") == vector<int>365);\n    assert(solution.numberOfPowerfulInt(100000, 999999, 4, \"4444\") == vector<int>20);\n    assert(solution.numberOfPowerfulInt(123456789012345, 987654321098765, 7, \"789\") == vector<int>57499975680);\n    assert(solution.numberOfPowerfulInt(1111, 2222, 1, \"11\") == vector<int>1);\n    assert(solution.numberOfPowerfulInt(100000000000, 900000000000, 3, \"333\") == vector<int>196608);\n    assert(solution.numberOfPowerfulInt(111111111111111, 222222222222222, 2, \"21\") == vector<int>797162);\n    assert(solution.numberOfPowerfulInt(100000000000000, 200000000000000, 1, \"1\") == vector<int>8192);\n    assert(solution.numberOfPowerfulInt(500000000000000, 600000000000000, 5, \"500\") == vector<int>362797056);\n    assert(solution.numberOfPowerfulInt(10000000000000, 50000000000000, 4, \"4444444\") == vector<int>62500);\n    assert(solution.numberOfPowerfulInt(5000000, 5500000, 5, \"5000\") == vector<int>30);\n    assert(solution.numberOfPowerfulInt(987654321, 987654321987654321, 9, \"987654321\") == vector<int>987654322);\n    assert(solution.numberOfPowerfulInt(1000000000000000, 9999999999999999, 5, \"55555\") == vector<int>302330880);\n    assert(solution.numberOfPowerfulInt(123456789012345, 234567890123456, 2, \"222\") == vector<int>177147);\n    assert(solution.numberOfPowerfulInt(100000000000000, 200000000000000, 7, \"7654321\") == vector<int>2097152);\n    assert(solution.numberOfPowerfulInt(987654321098765, 9876543210987654, 9, \"987654321\") == vector<int>8888889);\n    assert(solution.numberOfPowerfulInt(123123123, 987987987, 8, \"876\") == vector<int>456981);\n    assert(solution.numberOfPowerfulInt(222222222222222, 333333333333333, 3, \"3333333333\") == vector<int>342);\n    assert(solution.numberOfPowerfulInt(1234567890, 1234567890123456789, 6, \"67890\") == vector<int>131875584409);\n    assert(solution.numberOfPowerfulInt(1000000000, 9000000000, 6, \"666\") == vector<int>705894);\n    assert(solution.numberOfPowerfulInt(100000000000000, 300000000000000, 5, \"55555555555555\") == vector<int>2);\n    assert(solution.numberOfPowerfulInt(10000, 99999, 2, \"22\") == vector<int>18);\n    assert(solution.numberOfPowerfulInt(1000000000, 10000000000, 1, \"1\") == vector<int>256);\n    assert(solution.numberOfPowerfulInt(10000, 20000, 3, \"111\") == vector<int>4);\n    assert(solution.numberOfPowerfulInt(1000000000000, 1000000000000, 9, \"999999999999\") == vector<int>0);\n    assert(solution.numberOfPowerfulInt(50000, 150000, 5, \"2500\") == vector<int>6);\n    assert(solution.numberOfPowerfulInt(1000000000000000, 1000000000000000, 9, \"999999999999999\") == vector<int>0);\n    assert(solution.numberOfPowerfulInt(123456789, 2100000000, 6, \"6789\") == vector<int>32748);\n    assert(solution.numberOfPowerfulInt(1000000000000, 9999999999999, 2, \"21\") == vector<int>118098);\n    assert(solution.numberOfPowerfulInt(123456789012345, 987654321098765, 7, \"765\") == vector<int>57499975680);\n    assert(solution.numberOfPowerfulInt(123456789012345, 987654321098765, 6, \"654321\") == vector<int>32507139);\n    assert(solution.numberOfPowerfulInt(100000000000000, 200000000000000, 3, \"100\") == vector<int>4194304);\n    assert(solution.numberOfPowerfulInt(50000, 60000, 5, \"500\") == vector<int>6);\n    assert(solution.numberOfPowerfulInt(1000000000000000, 1500000000000000, 6, \"666666666666666\") == vector<int>0);\n    assert(solution.numberOfPowerfulInt(123456789123, 987654321987, 9, \"987\") == vector<int>864197533);\n    assert(solution.numberOfPowerfulInt(123456789012, 987654321012, 5, \"5555\") == vector<int>1276560);\n    assert(solution.numberOfPowerfulInt(500, 5000, 3, \"300\") == vector<int>3);\n    assert(solution.numberOfPowerfulInt(12345, 67890, 7, \"789\") == vector<int>46);\n    assert(solution.numberOfPowerfulInt(5000000000, 5000000000000000, 5, \"5000\") == vector<int>1813946400);\n    assert(solution.numberOfPowerfulInt(555555555, 666666666, 9, \"555\") == vector<int>111112);\n    assert(solution.numberOfPowerfulInt(1000000, 2000000, 2, \"222\") == vector<int>27);\n    assert(solution.numberOfPowerfulInt(9000000000, 9999999999, 9, \"9999\") == vector<int>100000);\n    assert(solution.numberOfPowerfulInt(1234567890, 1234567890123, 6, \"6789\") == vector<int>7823592);\n    assert(solution.numberOfPowerfulInt(1111, 3333, 1, \"11\") == vector<int>1);\n    assert(solution.numberOfPowerfulInt(123456789012345, 987654321098765, 7, \"7654321\") == vector<int>14038080);\n    assert(solution.numberOfPowerfulInt(1000000000000000, 9999999999999999, 7, \"777777777777777\") == vector<int>7);\n    assert(solution.numberOfPowerfulInt(5000, 15000, 3, \"300\") == vector<int>4);\n    assert(solution.numberOfPowerfulInt(1, 1000000000000000, 4, \"444444444444444\") == vector<int>1);\n    assert(solution.numberOfPowerfulInt(100000, 500000, 7, \"7777\") == vector<int>32);\n    assert(solution.numberOfPowerfulInt(100000000000000, 200000000000000, 8, \"8888888888\") == vector<int>6561);\n    assert(solution.numberOfPowerfulInt(5000, 80000, 5, \"250\") == vector<int>31);\n    assert(solution.numberOfPowerfulInt(5000000000, 6000000000, 6, \"5555\") == vector<int>16807);\n    assert(solution.numberOfPowerfulInt(123456789, 987654321, 6, \"666\") == vector<int>94773);\n    assert(solution.numberOfPowerfulInt(1000000, 2000000, 2, \"200\") == vector<int>27);\n    assert(solution.numberOfPowerfulInt(987654321098765, 9876543210987654, 9, \"9876543210\") == vector<int>888889);\n    assert(solution.numberOfPowerfulInt(500, 2500, 4, \"444\") == vector<int>2);\n    assert(solution.numberOfPowerfulInt(100000000000000, 1000000000000000, 4, \"43210\") == vector<int>7812500);\n    assert(solution.numberOfPowerfulInt(123456789012345, 123456789012345, 9, \"123456789\") == vector<int>0);\n    assert(solution.numberOfPowerfulInt(1000000000000, 4000000000000, 3, \"333333333333\") == vector<int>3);\n    assert(solution.numberOfPowerfulInt(5000000, 6000000, 4, \"4000\") == vector<int>0);\n    assert(solution.numberOfPowerfulInt(111111111111111, 222222222222222, 1, \"1\") == vector<int>1);\n    assert(solution.numberOfPowerfulInt(1234567890, 1234567890000000000, 4, \"43210\") == vector<int>1904295900);\n    assert(solution.numberOfPowerfulInt(1000000000000000, 2000000000000000, 9, \"999999999999999\") == vector<int>1);\n    assert(solution.numberOfPowerfulInt(100000000, 600000000, 2, \"222222222\") == vector<int>1);\n    assert(solution.numberOfPowerfulInt(500000000000, 5000000000000, 7, \"777\") == vector<int>587202560);\n    assert(solution.numberOfPowerfulInt(10000000000, 50000000000, 4, \"4444444444\") == vector<int>4);\n    assert(solution.numberOfPowerfulInt(10000000000, 11000000000, 3, \"3000\") == vector<int>1024);\n    assert(solution.numberOfPowerfulInt(123456789, 987654321, 4, \"3456\") == vector<int>2150);\n    assert(solution.numberOfPowerfulInt(1000000000000000, 1000000000000000, 9, \"1\") == vector<int>0);\n    assert(solution.numberOfPowerfulInt(111111111111111, 999999999999999, 9, \"999999999999999\") == vector<int>1);\n    assert(solution.numberOfPowerfulInt(111111111, 222222222, 2, \"123\") == vector<int>365);\n    assert(solution.numberOfPowerfulInt(123456789012345, 987654321098765, 7, \"765432\") == vector<int>112304640);\n    assert(solution.numberOfPowerfulInt(222222222222222, 333333333333333, 3, \"333\") == vector<int>5592406);\n}",
+    "java": "public static void check(Solution solution) {\n    assert Arrays.equals(solution.numberOfPowerfulInt(100, 1000, 1, \"00\"), 2);\n    assert Arrays.equals(solution.numberOfPowerfulInt(1111, 2222, 2, \"11\"), 5);\n    assert Arrays.equals(solution.numberOfPowerfulInt(500, 5000, 7, \"50\"), 35);\n    assert Arrays.equals(solution.numberOfPowerfulInt(10000, 99999, 8, \"8888\"), 8);\n    assert Arrays.equals(solution.numberOfPowerfulInt(1, 6000, 4, \"124\"), 5);\n    assert Arrays.equals(solution.numberOfPowerfulInt(111, 999, 9, \"11\"), 9);\n    assert Arrays.equals(solution.numberOfPowerfulInt(1234, 98765, 8, \"4321\"), 9);\n    assert Arrays.equals(solution.numberOfPowerfulInt(100, 1000, 5, \"00\"), 6);\n    assert Arrays.equals(solution.numberOfPowerfulInt(1234, 98765, 9, \"567\"), 98);\n    assert Arrays.equals(solution.numberOfPowerfulInt(5, 55, 5, \"5\"), 6);\n    assert Arrays.equals(solution.numberOfPowerfulInt(1, 1000000000000000, 9, \"999\"), 1000000000000);\n    assert Arrays.equals(solution.numberOfPowerfulInt(500, 1500, 5, \"50\"), 6);\n    assert Arrays.equals(solution.numberOfPowerfulInt(1, 999999999999999, 9, \"999\"), 1000000000000);\n    assert Arrays.equals(solution.numberOfPowerfulInt(5, 500, 3, \"1\"), 15);\n    assert Arrays.equals(solution.numberOfPowerfulInt(100, 1000, 7, \"00\"), 8);\n    assert Arrays.equals(solution.numberOfPowerfulInt(15, 215, 6, \"10\"), 2);\n    assert Arrays.equals(solution.numberOfPowerfulInt(123, 456, 5, \"34\"), 4);\n    assert Arrays.equals(solution.numberOfPowerfulInt(1000, 2000, 4, \"3000\"), 0);\n    assert Arrays.equals(solution.numberOfPowerfulInt(5, 5, 5, \"5\"), 1);\n    assert Arrays.equals(solution.numberOfPowerfulInt(1, 10, 1, \"1\"), 1);\n    assert Arrays.equals(solution.numberOfPowerfulInt(200, 800, 2, \"2\"), 3);\n    assert Arrays.equals(solution.numberOfPowerfulInt(1234, 4321, 7, \"34\"), 25);\n    assert Arrays.equals(solution.numberOfPowerfulInt(10, 100, 1, \"0\"), 2);\n    assert Arrays.equals(solution.numberOfPowerfulInt(1234, 123456, 7, \"34\"), 659);\n    assert Arrays.equals(solution.numberOfPowerfulInt(1, 1000000000000000, 1, \"1\"), 16384);\n    assert Arrays.equals(solution.numberOfPowerfulInt(10, 100, 3, \"0\"), 4);\n    assert Arrays.equals(solution.numberOfPowerfulInt(10, 100, 3, \"1\"), 3);\n    assert Arrays.equals(solution.numberOfPowerfulInt(100, 200, 2, \"00\"), 2);\n    assert Arrays.equals(solution.numberOfPowerfulInt(10000, 100000, 1, \"0000\"), 2);\n    assert Arrays.equals(solution.numberOfPowerfulInt(999, 9999, 9, \"999\"), 10);\n    assert Arrays.equals(solution.numberOfPowerfulInt(10, 100, 3, \"2\"), 3);\n    assert Arrays.equals(solution.numberOfPowerfulInt(500, 5000, 5, \"50\"), 25);\n    assert Arrays.equals(solution.numberOfPowerfulInt(1000000000000000, 2000000000000000, 5, \"54321\"), 60466176);\n    assert Arrays.equals(solution.numberOfPowerfulInt(123456789, 987654321, 8, \"123\"), 456707);\n    assert Arrays.equals(solution.numberOfPowerfulInt(1000000000000, 10000000000000, 6, \"6666\"), 34588806);\n    assert Arrays.equals(solution.numberOfPowerfulInt(1000000000, 1000000000, 9, \"0\"), 1);\n    assert Arrays.equals(solution.numberOfPowerfulInt(123, 321, 1, \"1\"), 0);\n    assert Arrays.equals(solution.numberOfPowerfulInt(1, 1000000000000000, 7, \"777777777777777\"), 1);\n    assert Arrays.equals(solution.numberOfPowerfulInt(10000000000, 99999999999, 4, \"44444\"), 12500);\n    assert Arrays.equals(solution.numberOfPowerfulInt(500000000, 5000000000, 4, \"444444\"), 500);\n    assert Arrays.equals(solution.numberOfPowerfulInt(1234567890, 2345678901, 7, \"789\"), 299592);\n    assert Arrays.equals(solution.numberOfPowerfulInt(555555555555555, 666666666666666, 5, \"555\"), 1);\n    assert Arrays.equals(solution.numberOfPowerfulInt(1000000000, 9000000000, 4, \"4444\"), 12500);\n    assert Arrays.equals(solution.numberOfPowerfulInt(1111111111, 2222222222, 2, \"222\"), 1094);\n    assert Arrays.equals(solution.numberOfPowerfulInt(123456789, 987654321, 8, \"876\"), 456708);\n    assert Arrays.equals(solution.numberOfPowerfulInt(123456789, 9876543210, 8, \"8765\"), 523138);\n    assert Arrays.equals(solution.numberOfPowerfulInt(111111111111111, 222222222222222, 2, \"2222222222\"), 122);\n    assert Arrays.equals(solution.numberOfPowerfulInt(100000000000000, 200000000000000, 6, \"666666\"), 5764801);\n    assert Arrays.equals(solution.numberOfPowerfulInt(5000, 50000, 5, \"25\"), 150);\n    assert Arrays.equals(solution.numberOfPowerfulInt(1000000000, 2000000000, 9, \"999999\"), 1000);\n    assert Arrays.equals(solution.numberOfPowerfulInt(123456789, 123456789, 9, \"999\"), 0);\n    assert Arrays.equals(solution.numberOfPowerfulInt(1234567890123456789, 9876543210987654321, 8, \"890\"), 1592439230847996);\n    assert Arrays.equals(solution.numberOfPowerfulInt(123456789, 987654321, 4, \"789\"), 10750);\n    assert Arrays.equals(solution.numberOfPowerfulInt(1000000000, 2000000000, 6, \"12345\"), 2401);\n    assert Arrays.equals(solution.numberOfPowerfulInt(123456789, 9876543210, 4, \"4321\"), 14650);\n    assert Arrays.equals(solution.numberOfPowerfulInt(123, 456789, 6, \"678\"), 238);\n    assert Arrays.equals(solution.numberOfPowerfulInt(500000000, 600000000, 4, \"40000\"), 0);\n    assert Arrays.equals(solution.numberOfPowerfulInt(1000000000000000, 2000000000000000, 5, \"555555555555555\"), 1);\n    assert Arrays.equals(solution.numberOfPowerfulInt(1000000000, 1500000000, 3, \"321\"), 4096);\n    assert Arrays.equals(solution.numberOfPowerfulInt(100000000, 200000000, 9, \"90000000\"), 1);\n    assert Arrays.equals(solution.numberOfPowerfulInt(10000, 999999999, 5, \"5555\"), 7775);\n    assert Arrays.equals(solution.numberOfPowerfulInt(1000000000, 10000000000, 6, \"6000000\"), 294);\n    assert Arrays.equals(solution.numberOfPowerfulInt(123456789, 987654321, 8, \"456\"), 456707);\n    assert Arrays.equals(solution.numberOfPowerfulInt(100000, 9999999999, 5, \"2500\"), 46650);\n    assert Arrays.equals(solution.numberOfPowerfulInt(100, 999, 1, \"1\"), 2);\n    assert Arrays.equals(solution.numberOfPowerfulInt(1000000000, 2000000000, 3, \"123\"), 4096);\n    assert Arrays.equals(solution.numberOfPowerfulInt(1000000000, 9999999999, 5, \"4444\"), 38880);\n    assert Arrays.equals(solution.numberOfPowerfulInt(1, 1000000000000, 1, \"1\"), 2048);\n    assert Arrays.equals(solution.numberOfPowerfulInt(1, 10000000000, 2, \"12\"), 6561);\n    assert Arrays.equals(solution.numberOfPowerfulInt(99999999, 1000000000, 9, \"999\"), 900001);\n    assert Arrays.equals(solution.numberOfPowerfulInt(1000000, 10000000, 3, \"333\"), 192);\n    assert Arrays.equals(solution.numberOfPowerfulInt(1000000000000, 9999999999999, 8, \"8888\"), 344373768);\n    assert Arrays.equals(solution.numberOfPowerfulInt(100000, 999999, 5, \"2500\"), 30);\n    assert Arrays.equals(solution.numberOfPowerfulInt(10000, 15000, 3, \"3000\"), 1);\n    assert Arrays.equals(solution.numberOfPowerfulInt(500000000, 800000000, 6, \"567\"), 33614);\n    assert Arrays.equals(solution.numberOfPowerfulInt(111111111, 222222222, 2, \"222\"), 365);\n    assert Arrays.equals(solution.numberOfPowerfulInt(100000, 999999, 4, \"4444\"), 20);\n    assert Arrays.equals(solution.numberOfPowerfulInt(123456789012345, 987654321098765, 7, \"789\"), 57499975680);\n    assert Arrays.equals(solution.numberOfPowerfulInt(1111, 2222, 1, \"11\"), 1);\n    assert Arrays.equals(solution.numberOfPowerfulInt(100000000000, 900000000000, 3, \"333\"), 196608);\n    assert Arrays.equals(solution.numberOfPowerfulInt(111111111111111, 222222222222222, 2, \"21\"), 797162);\n    assert Arrays.equals(solution.numberOfPowerfulInt(100000000000000, 200000000000000, 1, \"1\"), 8192);\n    assert Arrays.equals(solution.numberOfPowerfulInt(500000000000000, 600000000000000, 5, \"500\"), 362797056);\n    assert Arrays.equals(solution.numberOfPowerfulInt(10000000000000, 50000000000000, 4, \"4444444\"), 62500);\n    assert Arrays.equals(solution.numberOfPowerfulInt(5000000, 5500000, 5, \"5000\"), 30);\n    assert Arrays.equals(solution.numberOfPowerfulInt(987654321, 987654321987654321, 9, \"987654321\"), 987654322);\n    assert Arrays.equals(solution.numberOfPowerfulInt(1000000000000000, 9999999999999999, 5, \"55555\"), 302330880);\n    assert Arrays.equals(solution.numberOfPowerfulInt(123456789012345, 234567890123456, 2, \"222\"), 177147);\n    assert Arrays.equals(solution.numberOfPowerfulInt(100000000000000, 200000000000000, 7, \"7654321\"), 2097152);\n    assert Arrays.equals(solution.numberOfPowerfulInt(987654321098765, 9876543210987654, 9, \"987654321\"), 8888889);\n    assert Arrays.equals(solution.numberOfPowerfulInt(123123123, 987987987, 8, \"876\"), 456981);\n    assert Arrays.equals(solution.numberOfPowerfulInt(222222222222222, 333333333333333, 3, \"3333333333\"), 342);\n    assert Arrays.equals(solution.numberOfPowerfulInt(1234567890, 1234567890123456789, 6, \"67890\"), 131875584409);\n    assert Arrays.equals(solution.numberOfPowerfulInt(1000000000, 9000000000, 6, \"666\"), 705894);\n    assert Arrays.equals(solution.numberOfPowerfulInt(100000000000000, 300000000000000, 5, \"55555555555555\"), 2);\n    assert Arrays.equals(solution.numberOfPowerfulInt(10000, 99999, 2, \"22\"), 18);\n    assert Arrays.equals(solution.numberOfPowerfulInt(1000000000, 10000000000, 1, \"1\"), 256);\n    assert Arrays.equals(solution.numberOfPowerfulInt(10000, 20000, 3, \"111\"), 4);\n    assert Arrays.equals(solution.numberOfPowerfulInt(1000000000000, 1000000000000, 9, \"999999999999\"), 0);\n    assert Arrays.equals(solution.numberOfPowerfulInt(50000, 150000, 5, \"2500\"), 6);\n    assert Arrays.equals(solution.numberOfPowerfulInt(1000000000000000, 1000000000000000, 9, \"999999999999999\"), 0);\n    assert Arrays.equals(solution.numberOfPowerfulInt(123456789, 2100000000, 6, \"6789\"), 32748);\n    assert Arrays.equals(solution.numberOfPowerfulInt(1000000000000, 9999999999999, 2, \"21\"), 118098);\n    assert Arrays.equals(solution.numberOfPowerfulInt(123456789012345, 987654321098765, 7, \"765\"), 57499975680);\n    assert Arrays.equals(solution.numberOfPowerfulInt(123456789012345, 987654321098765, 6, \"654321\"), 32507139);\n    assert Arrays.equals(solution.numberOfPowerfulInt(100000000000000, 200000000000000, 3, \"100\"), 4194304);\n    assert Arrays.equals(solution.numberOfPowerfulInt(50000, 60000, 5, \"500\"), 6);\n    assert Arrays.equals(solution.numberOfPowerfulInt(1000000000000000, 1500000000000000, 6, \"666666666666666\"), 0);\n    assert Arrays.equals(solution.numberOfPowerfulInt(123456789123, 987654321987, 9, \"987\"), 864197533);\n    assert Arrays.equals(solution.numberOfPowerfulInt(123456789012, 987654321012, 5, \"5555\"), 1276560);\n    assert Arrays.equals(solution.numberOfPowerfulInt(500, 5000, 3, \"300\"), 3);\n    assert Arrays.equals(solution.numberOfPowerfulInt(12345, 67890, 7, \"789\"), 46);\n    assert Arrays.equals(solution.numberOfPowerfulInt(5000000000, 5000000000000000, 5, \"5000\"), 1813946400);\n    assert Arrays.equals(solution.numberOfPowerfulInt(555555555, 666666666, 9, \"555\"), 111112);\n    assert Arrays.equals(solution.numberOfPowerfulInt(1000000, 2000000, 2, \"222\"), 27);\n    assert Arrays.equals(solution.numberOfPowerfulInt(9000000000, 9999999999, 9, \"9999\"), 100000);\n    assert Arrays.equals(solution.numberOfPowerfulInt(1234567890, 1234567890123, 6, \"6789\"), 7823592);\n    assert Arrays.equals(solution.numberOfPowerfulInt(1111, 3333, 1, \"11\"), 1);\n    assert Arrays.equals(solution.numberOfPowerfulInt(123456789012345, 987654321098765, 7, \"7654321\"), 14038080);\n    assert Arrays.equals(solution.numberOfPowerfulInt(1000000000000000, 9999999999999999, 7, \"777777777777777\"), 7);\n    assert Arrays.equals(solution.numberOfPowerfulInt(5000, 15000, 3, \"300\"), 4);\n    assert Arrays.equals(solution.numberOfPowerfulInt(1, 1000000000000000, 4, \"444444444444444\"), 1);\n    assert Arrays.equals(solution.numberOfPowerfulInt(100000, 500000, 7, \"7777\"), 32);\n    assert Arrays.equals(solution.numberOfPowerfulInt(100000000000000, 200000000000000, 8, \"8888888888\"), 6561);\n    assert Arrays.equals(solution.numberOfPowerfulInt(5000, 80000, 5, \"250\"), 31);\n    assert Arrays.equals(solution.numberOfPowerfulInt(5000000000, 6000000000, 6, \"5555\"), 16807);\n    assert Arrays.equals(solution.numberOfPowerfulInt(123456789, 987654321, 6, \"666\"), 94773);\n    assert Arrays.equals(solution.numberOfPowerfulInt(1000000, 2000000, 2, \"200\"), 27);\n    assert Arrays.equals(solution.numberOfPowerfulInt(987654321098765, 9876543210987654, 9, \"9876543210\"), 888889);\n    assert Arrays.equals(solution.numberOfPowerfulInt(500, 2500, 4, \"444\"), 2);\n    assert Arrays.equals(solution.numberOfPowerfulInt(100000000000000, 1000000000000000, 4, \"43210\"), 7812500);\n    assert Arrays.equals(solution.numberOfPowerfulInt(123456789012345, 123456789012345, 9, \"123456789\"), 0);\n    assert Arrays.equals(solution.numberOfPowerfulInt(1000000000000, 4000000000000, 3, \"333333333333\"), 3);\n    assert Arrays.equals(solution.numberOfPowerfulInt(5000000, 6000000, 4, \"4000\"), 0);\n    assert Arrays.equals(solution.numberOfPowerfulInt(111111111111111, 222222222222222, 1, \"1\"), 1);\n    assert Arrays.equals(solution.numberOfPowerfulInt(1234567890, 1234567890000000000, 4, \"43210\"), 1904295900);\n    assert Arrays.equals(solution.numberOfPowerfulInt(1000000000000000, 2000000000000000, 9, \"999999999999999\"), 1);\n    assert Arrays.equals(solution.numberOfPowerfulInt(100000000, 600000000, 2, \"222222222\"), 1);\n    assert Arrays.equals(solution.numberOfPowerfulInt(500000000000, 5000000000000, 7, \"777\"), 587202560);\n    assert Arrays.equals(solution.numberOfPowerfulInt(10000000000, 50000000000, 4, \"4444444444\"), 4);\n    assert Arrays.equals(solution.numberOfPowerfulInt(10000000000, 11000000000, 3, \"3000\"), 1024);\n    assert Arrays.equals(solution.numberOfPowerfulInt(123456789, 987654321, 4, \"3456\"), 2150);\n    assert Arrays.equals(solution.numberOfPowerfulInt(1000000000000000, 1000000000000000, 9, \"1\"), 0);\n    assert Arrays.equals(solution.numberOfPowerfulInt(111111111111111, 999999999999999, 9, \"999999999999999\"), 1);\n    assert Arrays.equals(solution.numberOfPowerfulInt(111111111, 222222222, 2, \"123\"), 365);\n    assert Arrays.equals(solution.numberOfPowerfulInt(123456789012345, 987654321098765, 7, \"765432\"), 112304640);\n    assert Arrays.equals(solution.numberOfPowerfulInt(222222222222222, 333333333333333, 3, \"333\"), 5592406);\n}",
+    "javascript": "function check(candidate) {\n    console.assert(JSON.stringify(candidate(100, 1000, 1, \"00\")) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(1111, 2222, 2, \"11\")) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate(500, 5000, 7, \"50\")) === JSON.stringify(35));\n    console.assert(JSON.stringify(candidate(10000, 99999, 8, \"8888\")) === JSON.stringify(8));\n    console.assert(JSON.stringify(candidate(1, 6000, 4, \"124\")) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate(111, 999, 9, \"11\")) === JSON.stringify(9));\n    console.assert(JSON.stringify(candidate(1234, 98765, 8, \"4321\")) === JSON.stringify(9));\n    console.assert(JSON.stringify(candidate(100, 1000, 5, \"00\")) === JSON.stringify(6));\n    console.assert(JSON.stringify(candidate(1234, 98765, 9, \"567\")) === JSON.stringify(98));\n    console.assert(JSON.stringify(candidate(5, 55, 5, \"5\")) === JSON.stringify(6));\n    console.assert(JSON.stringify(candidate(1, 1000000000000000, 9, \"999\")) === JSON.stringify(1000000000000));\n    console.assert(JSON.stringify(candidate(500, 1500, 5, \"50\")) === JSON.stringify(6));\n    console.assert(JSON.stringify(candidate(1, 999999999999999, 9, \"999\")) === JSON.stringify(1000000000000));\n    console.assert(JSON.stringify(candidate(5, 500, 3, \"1\")) === JSON.stringify(15));\n    console.assert(JSON.stringify(candidate(100, 1000, 7, \"00\")) === JSON.stringify(8));\n    console.assert(JSON.stringify(candidate(15, 215, 6, \"10\")) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(123, 456, 5, \"34\")) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate(1000, 2000, 4, \"3000\")) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(5, 5, 5, \"5\")) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate(1, 10, 1, \"1\")) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate(200, 800, 2, \"2\")) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate(1234, 4321, 7, \"34\")) === JSON.stringify(25));\n    console.assert(JSON.stringify(candidate(10, 100, 1, \"0\")) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(1234, 123456, 7, \"34\")) === JSON.stringify(659));\n    console.assert(JSON.stringify(candidate(1, 1000000000000000, 1, \"1\")) === JSON.stringify(16384));\n    console.assert(JSON.stringify(candidate(10, 100, 3, \"0\")) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate(10, 100, 3, \"1\")) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate(100, 200, 2, \"00\")) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(10000, 100000, 1, \"0000\")) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(999, 9999, 9, \"999\")) === JSON.stringify(10));\n    console.assert(JSON.stringify(candidate(10, 100, 3, \"2\")) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate(500, 5000, 5, \"50\")) === JSON.stringify(25));\n    console.assert(JSON.stringify(candidate(1000000000000000, 2000000000000000, 5, \"54321\")) === JSON.stringify(60466176));\n    console.assert(JSON.stringify(candidate(123456789, 987654321, 8, \"123\")) === JSON.stringify(456707));\n    console.assert(JSON.stringify(candidate(1000000000000, 10000000000000, 6, \"6666\")) === JSON.stringify(34588806));\n    console.assert(JSON.stringify(candidate(1000000000, 1000000000, 9, \"0\")) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate(123, 321, 1, \"1\")) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(1, 1000000000000000, 7, \"777777777777777\")) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate(10000000000, 99999999999, 4, \"44444\")) === JSON.stringify(12500));\n    console.assert(JSON.stringify(candidate(500000000, 5000000000, 4, \"444444\")) === JSON.stringify(500));\n    console.assert(JSON.stringify(candidate(1234567890, 2345678901, 7, \"789\")) === JSON.stringify(299592));\n    console.assert(JSON.stringify(candidate(555555555555555, 666666666666666, 5, \"555\")) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate(1000000000, 9000000000, 4, \"4444\")) === JSON.stringify(12500));\n    console.assert(JSON.stringify(candidate(1111111111, 2222222222, 2, \"222\")) === JSON.stringify(1094));\n    console.assert(JSON.stringify(candidate(123456789, 987654321, 8, \"876\")) === JSON.stringify(456708));\n    console.assert(JSON.stringify(candidate(123456789, 9876543210, 8, \"8765\")) === JSON.stringify(523138));\n    console.assert(JSON.stringify(candidate(111111111111111, 222222222222222, 2, \"2222222222\")) === JSON.stringify(122));\n    console.assert(JSON.stringify(candidate(100000000000000, 200000000000000, 6, \"666666\")) === JSON.stringify(5764801));\n    console.assert(JSON.stringify(candidate(5000, 50000, 5, \"25\")) === JSON.stringify(150));\n    console.assert(JSON.stringify(candidate(1000000000, 2000000000, 9, \"999999\")) === JSON.stringify(1000));\n    console.assert(JSON.stringify(candidate(123456789, 123456789, 9, \"999\")) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(1234567890123456789, 9876543210987654321, 8, \"890\")) === JSON.stringify(1592439230847996));\n    console.assert(JSON.stringify(candidate(123456789, 987654321, 4, \"789\")) === JSON.stringify(10750));\n    console.assert(JSON.stringify(candidate(1000000000, 2000000000, 6, \"12345\")) === JSON.stringify(2401));\n    console.assert(JSON.stringify(candidate(123456789, 9876543210, 4, \"4321\")) === JSON.stringify(14650));\n    console.assert(JSON.stringify(candidate(123, 456789, 6, \"678\")) === JSON.stringify(238));\n    console.assert(JSON.stringify(candidate(500000000, 600000000, 4, \"40000\")) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(1000000000000000, 2000000000000000, 5, \"555555555555555\")) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate(1000000000, 1500000000, 3, \"321\")) === JSON.stringify(4096));\n    console.assert(JSON.stringify(candidate(100000000, 200000000, 9, \"90000000\")) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate(10000, 999999999, 5, \"5555\")) === JSON.stringify(7775));\n    console.assert(JSON.stringify(candidate(1000000000, 10000000000, 6, \"6000000\")) === JSON.stringify(294));\n    console.assert(JSON.stringify(candidate(123456789, 987654321, 8, \"456\")) === JSON.stringify(456707));\n    console.assert(JSON.stringify(candidate(100000, 9999999999, 5, \"2500\")) === JSON.stringify(46650));\n    console.assert(JSON.stringify(candidate(100, 999, 1, \"1\")) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(1000000000, 2000000000, 3, \"123\")) === JSON.stringify(4096));\n    console.assert(JSON.stringify(candidate(1000000000, 9999999999, 5, \"4444\")) === JSON.stringify(38880));\n    console.assert(JSON.stringify(candidate(1, 1000000000000, 1, \"1\")) === JSON.stringify(2048));\n    console.assert(JSON.stringify(candidate(1, 10000000000, 2, \"12\")) === JSON.stringify(6561));\n    console.assert(JSON.stringify(candidate(99999999, 1000000000, 9, \"999\")) === JSON.stringify(900001));\n    console.assert(JSON.stringify(candidate(1000000, 10000000, 3, \"333\")) === JSON.stringify(192));\n    console.assert(JSON.stringify(candidate(1000000000000, 9999999999999, 8, \"8888\")) === JSON.stringify(344373768));\n    console.assert(JSON.stringify(candidate(100000, 999999, 5, \"2500\")) === JSON.stringify(30));\n    console.assert(JSON.stringify(candidate(10000, 15000, 3, \"3000\")) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate(500000000, 800000000, 6, \"567\")) === JSON.stringify(33614));\n    console.assert(JSON.stringify(candidate(111111111, 222222222, 2, \"222\")) === JSON.stringify(365));\n    console.assert(JSON.stringify(candidate(100000, 999999, 4, \"4444\")) === JSON.stringify(20));\n    console.assert(JSON.stringify(candidate(123456789012345, 987654321098765, 7, \"789\")) === JSON.stringify(57499975680));\n    console.assert(JSON.stringify(candidate(1111, 2222, 1, \"11\")) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate(100000000000, 900000000000, 3, \"333\")) === JSON.stringify(196608));\n    console.assert(JSON.stringify(candidate(111111111111111, 222222222222222, 2, \"21\")) === JSON.stringify(797162));\n    console.assert(JSON.stringify(candidate(100000000000000, 200000000000000, 1, \"1\")) === JSON.stringify(8192));\n    console.assert(JSON.stringify(candidate(500000000000000, 600000000000000, 5, \"500\")) === JSON.stringify(362797056));\n    console.assert(JSON.stringify(candidate(10000000000000, 50000000000000, 4, \"4444444\")) === JSON.stringify(62500));\n    console.assert(JSON.stringify(candidate(5000000, 5500000, 5, \"5000\")) === JSON.stringify(30));\n    console.assert(JSON.stringify(candidate(987654321, 987654321987654321, 9, \"987654321\")) === JSON.stringify(987654322));\n    console.assert(JSON.stringify(candidate(1000000000000000, 9999999999999999, 5, \"55555\")) === JSON.stringify(302330880));\n    console.assert(JSON.stringify(candidate(123456789012345, 234567890123456, 2, \"222\")) === JSON.stringify(177147));\n    console.assert(JSON.stringify(candidate(100000000000000, 200000000000000, 7, \"7654321\")) === JSON.stringify(2097152));\n    console.assert(JSON.stringify(candidate(987654321098765, 9876543210987654, 9, \"987654321\")) === JSON.stringify(8888889));\n    console.assert(JSON.stringify(candidate(123123123, 987987987, 8, \"876\")) === JSON.stringify(456981));\n    console.assert(JSON.stringify(candidate(222222222222222, 333333333333333, 3, \"3333333333\")) === JSON.stringify(342));\n    console.assert(JSON.stringify(candidate(1234567890, 1234567890123456789, 6, \"67890\")) === JSON.stringify(131875584409));\n    console.assert(JSON.stringify(candidate(1000000000, 9000000000, 6, \"666\")) === JSON.stringify(705894));\n    console.assert(JSON.stringify(candidate(100000000000000, 300000000000000, 5, \"55555555555555\")) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(10000, 99999, 2, \"22\")) === JSON.stringify(18));\n    console.assert(JSON.stringify(candidate(1000000000, 10000000000, 1, \"1\")) === JSON.stringify(256));\n    console.assert(JSON.stringify(candidate(10000, 20000, 3, \"111\")) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate(1000000000000, 1000000000000, 9, \"999999999999\")) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(50000, 150000, 5, \"2500\")) === JSON.stringify(6));\n    console.assert(JSON.stringify(candidate(1000000000000000, 1000000000000000, 9, \"999999999999999\")) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(123456789, 2100000000, 6, \"6789\")) === JSON.stringify(32748));\n    console.assert(JSON.stringify(candidate(1000000000000, 9999999999999, 2, \"21\")) === JSON.stringify(118098));\n    console.assert(JSON.stringify(candidate(123456789012345, 987654321098765, 7, \"765\")) === JSON.stringify(57499975680));\n    console.assert(JSON.stringify(candidate(123456789012345, 987654321098765, 6, \"654321\")) === JSON.stringify(32507139));\n    console.assert(JSON.stringify(candidate(100000000000000, 200000000000000, 3, \"100\")) === JSON.stringify(4194304));\n    console.assert(JSON.stringify(candidate(50000, 60000, 5, \"500\")) === JSON.stringify(6));\n    console.assert(JSON.stringify(candidate(1000000000000000, 1500000000000000, 6, \"666666666666666\")) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(123456789123, 987654321987, 9, \"987\")) === JSON.stringify(864197533));\n    console.assert(JSON.stringify(candidate(123456789012, 987654321012, 5, \"5555\")) === JSON.stringify(1276560));\n    console.assert(JSON.stringify(candidate(500, 5000, 3, \"300\")) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate(12345, 67890, 7, \"789\")) === JSON.stringify(46));\n    console.assert(JSON.stringify(candidate(5000000000, 5000000000000000, 5, \"5000\")) === JSON.stringify(1813946400));\n    console.assert(JSON.stringify(candidate(555555555, 666666666, 9, \"555\")) === JSON.stringify(111112));\n    console.assert(JSON.stringify(candidate(1000000, 2000000, 2, \"222\")) === JSON.stringify(27));\n    console.assert(JSON.stringify(candidate(9000000000, 9999999999, 9, \"9999\")) === JSON.stringify(100000));\n    console.assert(JSON.stringify(candidate(1234567890, 1234567890123, 6, \"6789\")) === JSON.stringify(7823592));\n    console.assert(JSON.stringify(candidate(1111, 3333, 1, \"11\")) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate(123456789012345, 987654321098765, 7, \"7654321\")) === JSON.stringify(14038080));\n    console.assert(JSON.stringify(candidate(1000000000000000, 9999999999999999, 7, \"777777777777777\")) === JSON.stringify(7));\n    console.assert(JSON.stringify(candidate(5000, 15000, 3, \"300\")) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate(1, 1000000000000000, 4, \"444444444444444\")) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate(100000, 500000, 7, \"7777\")) === JSON.stringify(32));\n    console.assert(JSON.stringify(candidate(100000000000000, 200000000000000, 8, \"8888888888\")) === JSON.stringify(6561));\n    console.assert(JSON.stringify(candidate(5000, 80000, 5, \"250\")) === JSON.stringify(31));\n    console.assert(JSON.stringify(candidate(5000000000, 6000000000, 6, \"5555\")) === JSON.stringify(16807));\n    console.assert(JSON.stringify(candidate(123456789, 987654321, 6, \"666\")) === JSON.stringify(94773));\n    console.assert(JSON.stringify(candidate(1000000, 2000000, 2, \"200\")) === JSON.stringify(27));\n    console.assert(JSON.stringify(candidate(987654321098765, 9876543210987654, 9, \"9876543210\")) === JSON.stringify(888889));\n    console.assert(JSON.stringify(candidate(500, 2500, 4, \"444\")) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(100000000000000, 1000000000000000, 4, \"43210\")) === JSON.stringify(7812500));\n    console.assert(JSON.stringify(candidate(123456789012345, 123456789012345, 9, \"123456789\")) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(1000000000000, 4000000000000, 3, \"333333333333\")) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate(5000000, 6000000, 4, \"4000\")) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(111111111111111, 222222222222222, 1, \"1\")) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate(1234567890, 1234567890000000000, 4, \"43210\")) === JSON.stringify(1904295900));\n    console.assert(JSON.stringify(candidate(1000000000000000, 2000000000000000, 9, \"999999999999999\")) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate(100000000, 600000000, 2, \"222222222\")) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate(500000000000, 5000000000000, 7, \"777\")) === JSON.stringify(587202560));\n    console.assert(JSON.stringify(candidate(10000000000, 50000000000, 4, \"4444444444\")) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate(10000000000, 11000000000, 3, \"3000\")) === JSON.stringify(1024));\n    console.assert(JSON.stringify(candidate(123456789, 987654321, 4, \"3456\")) === JSON.stringify(2150));\n    console.assert(JSON.stringify(candidate(1000000000000000, 1000000000000000, 9, \"1\")) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(111111111111111, 999999999999999, 9, \"999999999999999\")) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate(111111111, 222222222, 2, \"123\")) === JSON.stringify(365));\n    console.assert(JSON.stringify(candidate(123456789012345, 987654321098765, 7, \"765432\")) === JSON.stringify(112304640));\n    console.assert(JSON.stringify(candidate(222222222222222, 333333333333333, 3, \"333\")) === JSON.stringify(5592406));\n}",
+    "typescript": "function check(candidate: Function): void {\n    console.assert(JSON.stringify(candidate(100, 1000, 1, \"00\")) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(1111, 2222, 2, \"11\")) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate(500, 5000, 7, \"50\")) === JSON.stringify(35));\n    console.assert(JSON.stringify(candidate(10000, 99999, 8, \"8888\")) === JSON.stringify(8));\n    console.assert(JSON.stringify(candidate(1, 6000, 4, \"124\")) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate(111, 999, 9, \"11\")) === JSON.stringify(9));\n    console.assert(JSON.stringify(candidate(1234, 98765, 8, \"4321\")) === JSON.stringify(9));\n    console.assert(JSON.stringify(candidate(100, 1000, 5, \"00\")) === JSON.stringify(6));\n    console.assert(JSON.stringify(candidate(1234, 98765, 9, \"567\")) === JSON.stringify(98));\n    console.assert(JSON.stringify(candidate(5, 55, 5, \"5\")) === JSON.stringify(6));\n    console.assert(JSON.stringify(candidate(1, 1000000000000000, 9, \"999\")) === JSON.stringify(1000000000000));\n    console.assert(JSON.stringify(candidate(500, 1500, 5, \"50\")) === JSON.stringify(6));\n    console.assert(JSON.stringify(candidate(1, 999999999999999, 9, \"999\")) === JSON.stringify(1000000000000));\n    console.assert(JSON.stringify(candidate(5, 500, 3, \"1\")) === JSON.stringify(15));\n    console.assert(JSON.stringify(candidate(100, 1000, 7, \"00\")) === JSON.stringify(8));\n    console.assert(JSON.stringify(candidate(15, 215, 6, \"10\")) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(123, 456, 5, \"34\")) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate(1000, 2000, 4, \"3000\")) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(5, 5, 5, \"5\")) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate(1, 10, 1, \"1\")) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate(200, 800, 2, \"2\")) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate(1234, 4321, 7, \"34\")) === JSON.stringify(25));\n    console.assert(JSON.stringify(candidate(10, 100, 1, \"0\")) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(1234, 123456, 7, \"34\")) === JSON.stringify(659));\n    console.assert(JSON.stringify(candidate(1, 1000000000000000, 1, \"1\")) === JSON.stringify(16384));\n    console.assert(JSON.stringify(candidate(10, 100, 3, \"0\")) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate(10, 100, 3, \"1\")) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate(100, 200, 2, \"00\")) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(10000, 100000, 1, \"0000\")) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(999, 9999, 9, \"999\")) === JSON.stringify(10));\n    console.assert(JSON.stringify(candidate(10, 100, 3, \"2\")) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate(500, 5000, 5, \"50\")) === JSON.stringify(25));\n    console.assert(JSON.stringify(candidate(1000000000000000, 2000000000000000, 5, \"54321\")) === JSON.stringify(60466176));\n    console.assert(JSON.stringify(candidate(123456789, 987654321, 8, \"123\")) === JSON.stringify(456707));\n    console.assert(JSON.stringify(candidate(1000000000000, 10000000000000, 6, \"6666\")) === JSON.stringify(34588806));\n    console.assert(JSON.stringify(candidate(1000000000, 1000000000, 9, \"0\")) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate(123, 321, 1, \"1\")) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(1, 1000000000000000, 7, \"777777777777777\")) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate(10000000000, 99999999999, 4, \"44444\")) === JSON.stringify(12500));\n    console.assert(JSON.stringify(candidate(500000000, 5000000000, 4, \"444444\")) === JSON.stringify(500));\n    console.assert(JSON.stringify(candidate(1234567890, 2345678901, 7, \"789\")) === JSON.stringify(299592));\n    console.assert(JSON.stringify(candidate(555555555555555, 666666666666666, 5, \"555\")) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate(1000000000, 9000000000, 4, \"4444\")) === JSON.stringify(12500));\n    console.assert(JSON.stringify(candidate(1111111111, 2222222222, 2, \"222\")) === JSON.stringify(1094));\n    console.assert(JSON.stringify(candidate(123456789, 987654321, 8, \"876\")) === JSON.stringify(456708));\n    console.assert(JSON.stringify(candidate(123456789, 9876543210, 8, \"8765\")) === JSON.stringify(523138));\n    console.assert(JSON.stringify(candidate(111111111111111, 222222222222222, 2, \"2222222222\")) === JSON.stringify(122));\n    console.assert(JSON.stringify(candidate(100000000000000, 200000000000000, 6, \"666666\")) === JSON.stringify(5764801));\n    console.assert(JSON.stringify(candidate(5000, 50000, 5, \"25\")) === JSON.stringify(150));\n    console.assert(JSON.stringify(candidate(1000000000, 2000000000, 9, \"999999\")) === JSON.stringify(1000));\n    console.assert(JSON.stringify(candidate(123456789, 123456789, 9, \"999\")) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(1234567890123456789, 9876543210987654321, 8, \"890\")) === JSON.stringify(1592439230847996));\n    console.assert(JSON.stringify(candidate(123456789, 987654321, 4, \"789\")) === JSON.stringify(10750));\n    console.assert(JSON.stringify(candidate(1000000000, 2000000000, 6, \"12345\")) === JSON.stringify(2401));\n    console.assert(JSON.stringify(candidate(123456789, 9876543210, 4, \"4321\")) === JSON.stringify(14650));\n    console.assert(JSON.stringify(candidate(123, 456789, 6, \"678\")) === JSON.stringify(238));\n    console.assert(JSON.stringify(candidate(500000000, 600000000, 4, \"40000\")) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(1000000000000000, 2000000000000000, 5, \"555555555555555\")) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate(1000000000, 1500000000, 3, \"321\")) === JSON.stringify(4096));\n    console.assert(JSON.stringify(candidate(100000000, 200000000, 9, \"90000000\")) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate(10000, 999999999, 5, \"5555\")) === JSON.stringify(7775));\n    console.assert(JSON.stringify(candidate(1000000000, 10000000000, 6, \"6000000\")) === JSON.stringify(294));\n    console.assert(JSON.stringify(candidate(123456789, 987654321, 8, \"456\")) === JSON.stringify(456707));\n    console.assert(JSON.stringify(candidate(100000, 9999999999, 5, \"2500\")) === JSON.stringify(46650));\n    console.assert(JSON.stringify(candidate(100, 999, 1, \"1\")) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(1000000000, 2000000000, 3, \"123\")) === JSON.stringify(4096));\n    console.assert(JSON.stringify(candidate(1000000000, 9999999999, 5, \"4444\")) === JSON.stringify(38880));\n    console.assert(JSON.stringify(candidate(1, 1000000000000, 1, \"1\")) === JSON.stringify(2048));\n    console.assert(JSON.stringify(candidate(1, 10000000000, 2, \"12\")) === JSON.stringify(6561));\n    console.assert(JSON.stringify(candidate(99999999, 1000000000, 9, \"999\")) === JSON.stringify(900001));\n    console.assert(JSON.stringify(candidate(1000000, 10000000, 3, \"333\")) === JSON.stringify(192));\n    console.assert(JSON.stringify(candidate(1000000000000, 9999999999999, 8, \"8888\")) === JSON.stringify(344373768));\n    console.assert(JSON.stringify(candidate(100000, 999999, 5, \"2500\")) === JSON.stringify(30));\n    console.assert(JSON.stringify(candidate(10000, 15000, 3, \"3000\")) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate(500000000, 800000000, 6, \"567\")) === JSON.stringify(33614));\n    console.assert(JSON.stringify(candidate(111111111, 222222222, 2, \"222\")) === JSON.stringify(365));\n    console.assert(JSON.stringify(candidate(100000, 999999, 4, \"4444\")) === JSON.stringify(20));\n    console.assert(JSON.stringify(candidate(123456789012345, 987654321098765, 7, \"789\")) === JSON.stringify(57499975680));\n    console.assert(JSON.stringify(candidate(1111, 2222, 1, \"11\")) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate(100000000000, 900000000000, 3, \"333\")) === JSON.stringify(196608));\n    console.assert(JSON.stringify(candidate(111111111111111, 222222222222222, 2, \"21\")) === JSON.stringify(797162));\n    console.assert(JSON.stringify(candidate(100000000000000, 200000000000000, 1, \"1\")) === JSON.stringify(8192));\n    console.assert(JSON.stringify(candidate(500000000000000, 600000000000000, 5, \"500\")) === JSON.stringify(362797056));\n    console.assert(JSON.stringify(candidate(10000000000000, 50000000000000, 4, \"4444444\")) === JSON.stringify(62500));\n    console.assert(JSON.stringify(candidate(5000000, 5500000, 5, \"5000\")) === JSON.stringify(30));\n    console.assert(JSON.stringify(candidate(987654321, 987654321987654321, 9, \"987654321\")) === JSON.stringify(987654322));\n    console.assert(JSON.stringify(candidate(1000000000000000, 9999999999999999, 5, \"55555\")) === JSON.stringify(302330880));\n    console.assert(JSON.stringify(candidate(123456789012345, 234567890123456, 2, \"222\")) === JSON.stringify(177147));\n    console.assert(JSON.stringify(candidate(100000000000000, 200000000000000, 7, \"7654321\")) === JSON.stringify(2097152));\n    console.assert(JSON.stringify(candidate(987654321098765, 9876543210987654, 9, \"987654321\")) === JSON.stringify(8888889));\n    console.assert(JSON.stringify(candidate(123123123, 987987987, 8, \"876\")) === JSON.stringify(456981));\n    console.assert(JSON.stringify(candidate(222222222222222, 333333333333333, 3, \"3333333333\")) === JSON.stringify(342));\n    console.assert(JSON.stringify(candidate(1234567890, 1234567890123456789, 6, \"67890\")) === JSON.stringify(131875584409));\n    console.assert(JSON.stringify(candidate(1000000000, 9000000000, 6, \"666\")) === JSON.stringify(705894));\n    console.assert(JSON.stringify(candidate(100000000000000, 300000000000000, 5, \"55555555555555\")) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(10000, 99999, 2, \"22\")) === JSON.stringify(18));\n    console.assert(JSON.stringify(candidate(1000000000, 10000000000, 1, \"1\")) === JSON.stringify(256));\n    console.assert(JSON.stringify(candidate(10000, 20000, 3, \"111\")) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate(1000000000000, 1000000000000, 9, \"999999999999\")) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(50000, 150000, 5, \"2500\")) === JSON.stringify(6));\n    console.assert(JSON.stringify(candidate(1000000000000000, 1000000000000000, 9, \"999999999999999\")) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(123456789, 2100000000, 6, \"6789\")) === JSON.stringify(32748));\n    console.assert(JSON.stringify(candidate(1000000000000, 9999999999999, 2, \"21\")) === JSON.stringify(118098));\n    console.assert(JSON.stringify(candidate(123456789012345, 987654321098765, 7, \"765\")) === JSON.stringify(57499975680));\n    console.assert(JSON.stringify(candidate(123456789012345, 987654321098765, 6, \"654321\")) === JSON.stringify(32507139));\n    console.assert(JSON.stringify(candidate(100000000000000, 200000000000000, 3, \"100\")) === JSON.stringify(4194304));\n    console.assert(JSON.stringify(candidate(50000, 60000, 5, \"500\")) === JSON.stringify(6));\n    console.assert(JSON.stringify(candidate(1000000000000000, 1500000000000000, 6, \"666666666666666\")) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(123456789123, 987654321987, 9, \"987\")) === JSON.stringify(864197533));\n    console.assert(JSON.stringify(candidate(123456789012, 987654321012, 5, \"5555\")) === JSON.stringify(1276560));\n    console.assert(JSON.stringify(candidate(500, 5000, 3, \"300\")) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate(12345, 67890, 7, \"789\")) === JSON.stringify(46));\n    console.assert(JSON.stringify(candidate(5000000000, 5000000000000000, 5, \"5000\")) === JSON.stringify(1813946400));\n    console.assert(JSON.stringify(candidate(555555555, 666666666, 9, \"555\")) === JSON.stringify(111112));\n    console.assert(JSON.stringify(candidate(1000000, 2000000, 2, \"222\")) === JSON.stringify(27));\n    console.assert(JSON.stringify(candidate(9000000000, 9999999999, 9, \"9999\")) === JSON.stringify(100000));\n    console.assert(JSON.stringify(candidate(1234567890, 1234567890123, 6, \"6789\")) === JSON.stringify(7823592));\n    console.assert(JSON.stringify(candidate(1111, 3333, 1, \"11\")) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate(123456789012345, 987654321098765, 7, \"7654321\")) === JSON.stringify(14038080));\n    console.assert(JSON.stringify(candidate(1000000000000000, 9999999999999999, 7, \"777777777777777\")) === JSON.stringify(7));\n    console.assert(JSON.stringify(candidate(5000, 15000, 3, \"300\")) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate(1, 1000000000000000, 4, \"444444444444444\")) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate(100000, 500000, 7, \"7777\")) === JSON.stringify(32));\n    console.assert(JSON.stringify(candidate(100000000000000, 200000000000000, 8, \"8888888888\")) === JSON.stringify(6561));\n    console.assert(JSON.stringify(candidate(5000, 80000, 5, \"250\")) === JSON.stringify(31));\n    console.assert(JSON.stringify(candidate(5000000000, 6000000000, 6, \"5555\")) === JSON.stringify(16807));\n    console.assert(JSON.stringify(candidate(123456789, 987654321, 6, \"666\")) === JSON.stringify(94773));\n    console.assert(JSON.stringify(candidate(1000000, 2000000, 2, \"200\")) === JSON.stringify(27));\n    console.assert(JSON.stringify(candidate(987654321098765, 9876543210987654, 9, \"9876543210\")) === JSON.stringify(888889));\n    console.assert(JSON.stringify(candidate(500, 2500, 4, \"444\")) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(100000000000000, 1000000000000000, 4, \"43210\")) === JSON.stringify(7812500));\n    console.assert(JSON.stringify(candidate(123456789012345, 123456789012345, 9, \"123456789\")) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(1000000000000, 4000000000000, 3, \"333333333333\")) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate(5000000, 6000000, 4, \"4000\")) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(111111111111111, 222222222222222, 1, \"1\")) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate(1234567890, 1234567890000000000, 4, \"43210\")) === JSON.stringify(1904295900));\n    console.assert(JSON.stringify(candidate(1000000000000000, 2000000000000000, 9, \"999999999999999\")) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate(100000000, 600000000, 2, \"222222222\")) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate(500000000000, 5000000000000, 7, \"777\")) === JSON.stringify(587202560));\n    console.assert(JSON.stringify(candidate(10000000000, 50000000000, 4, \"4444444444\")) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate(10000000000, 11000000000, 3, \"3000\")) === JSON.stringify(1024));\n    console.assert(JSON.stringify(candidate(123456789, 987654321, 4, \"3456\")) === JSON.stringify(2150));\n    console.assert(JSON.stringify(candidate(1000000000000000, 1000000000000000, 9, \"1\")) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(111111111111111, 999999999999999, 9, \"999999999999999\")) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate(111111111, 222222222, 2, \"123\")) === JSON.stringify(365));\n    console.assert(JSON.stringify(candidate(123456789012345, 987654321098765, 7, \"765432\")) === JSON.stringify(112304640));\n    console.assert(JSON.stringify(candidate(222222222222222, 333333333333333, 3, \"333\")) === JSON.stringify(5592406));\n}",
+    "golang": "func check(candidate func([]int, int) []int) {\n    assert reflect.DeepEqual(candidate(100, 1000, 1, \"00\"), 2)\n    assert reflect.DeepEqual(candidate(1111, 2222, 2, \"11\"), 5)\n    assert reflect.DeepEqual(candidate(500, 5000, 7, \"50\"), 35)\n    assert reflect.DeepEqual(candidate(10000, 99999, 8, \"8888\"), 8)\n    assert reflect.DeepEqual(candidate(1, 6000, 4, \"124\"), 5)\n    assert reflect.DeepEqual(candidate(111, 999, 9, \"11\"), 9)\n    assert reflect.DeepEqual(candidate(1234, 98765, 8, \"4321\"), 9)\n    assert reflect.DeepEqual(candidate(100, 1000, 5, \"00\"), 6)\n    assert reflect.DeepEqual(candidate(1234, 98765, 9, \"567\"), 98)\n    assert reflect.DeepEqual(candidate(5, 55, 5, \"5\"), 6)\n    assert reflect.DeepEqual(candidate(1, 1000000000000000, 9, \"999\"), 1000000000000)\n    assert reflect.DeepEqual(candidate(500, 1500, 5, \"50\"), 6)\n    assert reflect.DeepEqual(candidate(1, 999999999999999, 9, \"999\"), 1000000000000)\n    assert reflect.DeepEqual(candidate(5, 500, 3, \"1\"), 15)\n    assert reflect.DeepEqual(candidate(100, 1000, 7, \"00\"), 8)\n    assert reflect.DeepEqual(candidate(15, 215, 6, \"10\"), 2)\n    assert reflect.DeepEqual(candidate(123, 456, 5, \"34\"), 4)\n    assert reflect.DeepEqual(candidate(1000, 2000, 4, \"3000\"), 0)\n    assert reflect.DeepEqual(candidate(5, 5, 5, \"5\"), 1)\n    assert reflect.DeepEqual(candidate(1, 10, 1, \"1\"), 1)\n    assert reflect.DeepEqual(candidate(200, 800, 2, \"2\"), 3)\n    assert reflect.DeepEqual(candidate(1234, 4321, 7, \"34\"), 25)\n    assert reflect.DeepEqual(candidate(10, 100, 1, \"0\"), 2)\n    assert reflect.DeepEqual(candidate(1234, 123456, 7, \"34\"), 659)\n    assert reflect.DeepEqual(candidate(1, 1000000000000000, 1, \"1\"), 16384)\n    assert reflect.DeepEqual(candidate(10, 100, 3, \"0\"), 4)\n    assert reflect.DeepEqual(candidate(10, 100, 3, \"1\"), 3)\n    assert reflect.DeepEqual(candidate(100, 200, 2, \"00\"), 2)\n    assert reflect.DeepEqual(candidate(10000, 100000, 1, \"0000\"), 2)\n    assert reflect.DeepEqual(candidate(999, 9999, 9, \"999\"), 10)\n    assert reflect.DeepEqual(candidate(10, 100, 3, \"2\"), 3)\n    assert reflect.DeepEqual(candidate(500, 5000, 5, \"50\"), 25)\n    assert reflect.DeepEqual(candidate(1000000000000000, 2000000000000000, 5, \"54321\"), 60466176)\n    assert reflect.DeepEqual(candidate(123456789, 987654321, 8, \"123\"), 456707)\n    assert reflect.DeepEqual(candidate(1000000000000, 10000000000000, 6, \"6666\"), 34588806)\n    assert reflect.DeepEqual(candidate(1000000000, 1000000000, 9, \"0\"), 1)\n    assert reflect.DeepEqual(candidate(123, 321, 1, \"1\"), 0)\n    assert reflect.DeepEqual(candidate(1, 1000000000000000, 7, \"777777777777777\"), 1)\n    assert reflect.DeepEqual(candidate(10000000000, 99999999999, 4, \"44444\"), 12500)\n    assert reflect.DeepEqual(candidate(500000000, 5000000000, 4, \"444444\"), 500)\n    assert reflect.DeepEqual(candidate(1234567890, 2345678901, 7, \"789\"), 299592)\n    assert reflect.DeepEqual(candidate(555555555555555, 666666666666666, 5, \"555\"), 1)\n    assert reflect.DeepEqual(candidate(1000000000, 9000000000, 4, \"4444\"), 12500)\n    assert reflect.DeepEqual(candidate(1111111111, 2222222222, 2, \"222\"), 1094)\n    assert reflect.DeepEqual(candidate(123456789, 987654321, 8, \"876\"), 456708)\n    assert reflect.DeepEqual(candidate(123456789, 9876543210, 8, \"8765\"), 523138)\n    assert reflect.DeepEqual(candidate(111111111111111, 222222222222222, 2, \"2222222222\"), 122)\n    assert reflect.DeepEqual(candidate(100000000000000, 200000000000000, 6, \"666666\"), 5764801)\n    assert reflect.DeepEqual(candidate(5000, 50000, 5, \"25\"), 150)\n    assert reflect.DeepEqual(candidate(1000000000, 2000000000, 9, \"999999\"), 1000)\n    assert reflect.DeepEqual(candidate(123456789, 123456789, 9, \"999\"), 0)\n    assert reflect.DeepEqual(candidate(1234567890123456789, 9876543210987654321, 8, \"890\"), 1592439230847996)\n    assert reflect.DeepEqual(candidate(123456789, 987654321, 4, \"789\"), 10750)\n    assert reflect.DeepEqual(candidate(1000000000, 2000000000, 6, \"12345\"), 2401)\n    assert reflect.DeepEqual(candidate(123456789, 9876543210, 4, \"4321\"), 14650)\n    assert reflect.DeepEqual(candidate(123, 456789, 6, \"678\"), 238)\n    assert reflect.DeepEqual(candidate(500000000, 600000000, 4, \"40000\"), 0)\n    assert reflect.DeepEqual(candidate(1000000000000000, 2000000000000000, 5, \"555555555555555\"), 1)\n    assert reflect.DeepEqual(candidate(1000000000, 1500000000, 3, \"321\"), 4096)\n    assert reflect.DeepEqual(candidate(100000000, 200000000, 9, \"90000000\"), 1)\n    assert reflect.DeepEqual(candidate(10000, 999999999, 5, \"5555\"), 7775)\n    assert reflect.DeepEqual(candidate(1000000000, 10000000000, 6, \"6000000\"), 294)\n    assert reflect.DeepEqual(candidate(123456789, 987654321, 8, \"456\"), 456707)\n    assert reflect.DeepEqual(candidate(100000, 9999999999, 5, \"2500\"), 46650)\n    assert reflect.DeepEqual(candidate(100, 999, 1, \"1\"), 2)\n    assert reflect.DeepEqual(candidate(1000000000, 2000000000, 3, \"123\"), 4096)\n    assert reflect.DeepEqual(candidate(1000000000, 9999999999, 5, \"4444\"), 38880)\n    assert reflect.DeepEqual(candidate(1, 1000000000000, 1, \"1\"), 2048)\n    assert reflect.DeepEqual(candidate(1, 10000000000, 2, \"12\"), 6561)\n    assert reflect.DeepEqual(candidate(99999999, 1000000000, 9, \"999\"), 900001)\n    assert reflect.DeepEqual(candidate(1000000, 10000000, 3, \"333\"), 192)\n    assert reflect.DeepEqual(candidate(1000000000000, 9999999999999, 8, \"8888\"), 344373768)\n    assert reflect.DeepEqual(candidate(100000, 999999, 5, \"2500\"), 30)\n    assert reflect.DeepEqual(candidate(10000, 15000, 3, \"3000\"), 1)\n    assert reflect.DeepEqual(candidate(500000000, 800000000, 6, \"567\"), 33614)\n    assert reflect.DeepEqual(candidate(111111111, 222222222, 2, \"222\"), 365)\n    assert reflect.DeepEqual(candidate(100000, 999999, 4, \"4444\"), 20)\n    assert reflect.DeepEqual(candidate(123456789012345, 987654321098765, 7, \"789\"), 57499975680)\n    assert reflect.DeepEqual(candidate(1111, 2222, 1, \"11\"), 1)\n    assert reflect.DeepEqual(candidate(100000000000, 900000000000, 3, \"333\"), 196608)\n    assert reflect.DeepEqual(candidate(111111111111111, 222222222222222, 2, \"21\"), 797162)\n    assert reflect.DeepEqual(candidate(100000000000000, 200000000000000, 1, \"1\"), 8192)\n    assert reflect.DeepEqual(candidate(500000000000000, 600000000000000, 5, \"500\"), 362797056)\n    assert reflect.DeepEqual(candidate(10000000000000, 50000000000000, 4, \"4444444\"), 62500)\n    assert reflect.DeepEqual(candidate(5000000, 5500000, 5, \"5000\"), 30)\n    assert reflect.DeepEqual(candidate(987654321, 987654321987654321, 9, \"987654321\"), 987654322)\n    assert reflect.DeepEqual(candidate(1000000000000000, 9999999999999999, 5, \"55555\"), 302330880)\n    assert reflect.DeepEqual(candidate(123456789012345, 234567890123456, 2, \"222\"), 177147)\n    assert reflect.DeepEqual(candidate(100000000000000, 200000000000000, 7, \"7654321\"), 2097152)\n    assert reflect.DeepEqual(candidate(987654321098765, 9876543210987654, 9, \"987654321\"), 8888889)\n    assert reflect.DeepEqual(candidate(123123123, 987987987, 8, \"876\"), 456981)\n    assert reflect.DeepEqual(candidate(222222222222222, 333333333333333, 3, \"3333333333\"), 342)\n    assert reflect.DeepEqual(candidate(1234567890, 1234567890123456789, 6, \"67890\"), 131875584409)\n    assert reflect.DeepEqual(candidate(1000000000, 9000000000, 6, \"666\"), 705894)\n    assert reflect.DeepEqual(candidate(100000000000000, 300000000000000, 5, \"55555555555555\"), 2)\n    assert reflect.DeepEqual(candidate(10000, 99999, 2, \"22\"), 18)\n    assert reflect.DeepEqual(candidate(1000000000, 10000000000, 1, \"1\"), 256)\n    assert reflect.DeepEqual(candidate(10000, 20000, 3, \"111\"), 4)\n    assert reflect.DeepEqual(candidate(1000000000000, 1000000000000, 9, \"999999999999\"), 0)\n    assert reflect.DeepEqual(candidate(50000, 150000, 5, \"2500\"), 6)\n    assert reflect.DeepEqual(candidate(1000000000000000, 1000000000000000, 9, \"999999999999999\"), 0)\n    assert reflect.DeepEqual(candidate(123456789, 2100000000, 6, \"6789\"), 32748)\n    assert reflect.DeepEqual(candidate(1000000000000, 9999999999999, 2, \"21\"), 118098)\n    assert reflect.DeepEqual(candidate(123456789012345, 987654321098765, 7, \"765\"), 57499975680)\n    assert reflect.DeepEqual(candidate(123456789012345, 987654321098765, 6, \"654321\"), 32507139)\n    assert reflect.DeepEqual(candidate(100000000000000, 200000000000000, 3, \"100\"), 4194304)\n    assert reflect.DeepEqual(candidate(50000, 60000, 5, \"500\"), 6)\n    assert reflect.DeepEqual(candidate(1000000000000000, 1500000000000000, 6, \"666666666666666\"), 0)\n    assert reflect.DeepEqual(candidate(123456789123, 987654321987, 9, \"987\"), 864197533)\n    assert reflect.DeepEqual(candidate(123456789012, 987654321012, 5, \"5555\"), 1276560)\n    assert reflect.DeepEqual(candidate(500, 5000, 3, \"300\"), 3)\n    assert reflect.DeepEqual(candidate(12345, 67890, 7, \"789\"), 46)\n    assert reflect.DeepEqual(candidate(5000000000, 5000000000000000, 5, \"5000\"), 1813946400)\n    assert reflect.DeepEqual(candidate(555555555, 666666666, 9, \"555\"), 111112)\n    assert reflect.DeepEqual(candidate(1000000, 2000000, 2, \"222\"), 27)\n    assert reflect.DeepEqual(candidate(9000000000, 9999999999, 9, \"9999\"), 100000)\n    assert reflect.DeepEqual(candidate(1234567890, 1234567890123, 6, \"6789\"), 7823592)\n    assert reflect.DeepEqual(candidate(1111, 3333, 1, \"11\"), 1)\n    assert reflect.DeepEqual(candidate(123456789012345, 987654321098765, 7, \"7654321\"), 14038080)\n    assert reflect.DeepEqual(candidate(1000000000000000, 9999999999999999, 7, \"777777777777777\"), 7)\n    assert reflect.DeepEqual(candidate(5000, 15000, 3, \"300\"), 4)\n    assert reflect.DeepEqual(candidate(1, 1000000000000000, 4, \"444444444444444\"), 1)\n    assert reflect.DeepEqual(candidate(100000, 500000, 7, \"7777\"), 32)\n    assert reflect.DeepEqual(candidate(100000000000000, 200000000000000, 8, \"8888888888\"), 6561)\n    assert reflect.DeepEqual(candidate(5000, 80000, 5, \"250\"), 31)\n    assert reflect.DeepEqual(candidate(5000000000, 6000000000, 6, \"5555\"), 16807)\n    assert reflect.DeepEqual(candidate(123456789, 987654321, 6, \"666\"), 94773)\n    assert reflect.DeepEqual(candidate(1000000, 2000000, 2, \"200\"), 27)\n    assert reflect.DeepEqual(candidate(987654321098765, 9876543210987654, 9, \"9876543210\"), 888889)\n    assert reflect.DeepEqual(candidate(500, 2500, 4, \"444\"), 2)\n    assert reflect.DeepEqual(candidate(100000000000000, 1000000000000000, 4, \"43210\"), 7812500)\n    assert reflect.DeepEqual(candidate(123456789012345, 123456789012345, 9, \"123456789\"), 0)\n    assert reflect.DeepEqual(candidate(1000000000000, 4000000000000, 3, \"333333333333\"), 3)\n    assert reflect.DeepEqual(candidate(5000000, 6000000, 4, \"4000\"), 0)\n    assert reflect.DeepEqual(candidate(111111111111111, 222222222222222, 1, \"1\"), 1)\n    assert reflect.DeepEqual(candidate(1234567890, 1234567890000000000, 4, \"43210\"), 1904295900)\n    assert reflect.DeepEqual(candidate(1000000000000000, 2000000000000000, 9, \"999999999999999\"), 1)\n    assert reflect.DeepEqual(candidate(100000000, 600000000, 2, \"222222222\"), 1)\n    assert reflect.DeepEqual(candidate(500000000000, 5000000000000, 7, \"777\"), 587202560)\n    assert reflect.DeepEqual(candidate(10000000000, 50000000000, 4, \"4444444444\"), 4)\n    assert reflect.DeepEqual(candidate(10000000000, 11000000000, 3, \"3000\"), 1024)\n    assert reflect.DeepEqual(candidate(123456789, 987654321, 4, \"3456\"), 2150)\n    assert reflect.DeepEqual(candidate(1000000000000000, 1000000000000000, 9, \"1\"), 0)\n    assert reflect.DeepEqual(candidate(111111111111111, 999999999999999, 9, \"999999999999999\"), 1)\n    assert reflect.DeepEqual(candidate(111111111, 222222222, 2, \"123\"), 365)\n    assert reflect.DeepEqual(candidate(123456789012345, 987654321098765, 7, \"765432\"), 112304640)\n    assert reflect.DeepEqual(candidate(222222222222222, 333333333333333, 3, \"333\"), 5592406)\n}",
+    "rust": "fn check(candidate: fn(Vec<i32>, i32) -> Vec<i32>) {\n    assert_eq!(candidate(100, 1000, 1, \"00\"), 2);\n    assert_eq!(candidate(1111, 2222, 2, \"11\"), 5);\n    assert_eq!(candidate(500, 5000, 7, \"50\"), 35);\n    assert_eq!(candidate(10000, 99999, 8, \"8888\"), 8);\n    assert_eq!(candidate(1, 6000, 4, \"124\"), 5);\n    assert_eq!(candidate(111, 999, 9, \"11\"), 9);\n    assert_eq!(candidate(1234, 98765, 8, \"4321\"), 9);\n    assert_eq!(candidate(100, 1000, 5, \"00\"), 6);\n    assert_eq!(candidate(1234, 98765, 9, \"567\"), 98);\n    assert_eq!(candidate(5, 55, 5, \"5\"), 6);\n    assert_eq!(candidate(1, 1000000000000000, 9, \"999\"), 1000000000000);\n    assert_eq!(candidate(500, 1500, 5, \"50\"), 6);\n    assert_eq!(candidate(1, 999999999999999, 9, \"999\"), 1000000000000);\n    assert_eq!(candidate(5, 500, 3, \"1\"), 15);\n    assert_eq!(candidate(100, 1000, 7, \"00\"), 8);\n    assert_eq!(candidate(15, 215, 6, \"10\"), 2);\n    assert_eq!(candidate(123, 456, 5, \"34\"), 4);\n    assert_eq!(candidate(1000, 2000, 4, \"3000\"), 0);\n    assert_eq!(candidate(5, 5, 5, \"5\"), 1);\n    assert_eq!(candidate(1, 10, 1, \"1\"), 1);\n    assert_eq!(candidate(200, 800, 2, \"2\"), 3);\n    assert_eq!(candidate(1234, 4321, 7, \"34\"), 25);\n    assert_eq!(candidate(10, 100, 1, \"0\"), 2);\n    assert_eq!(candidate(1234, 123456, 7, \"34\"), 659);\n    assert_eq!(candidate(1, 1000000000000000, 1, \"1\"), 16384);\n    assert_eq!(candidate(10, 100, 3, \"0\"), 4);\n    assert_eq!(candidate(10, 100, 3, \"1\"), 3);\n    assert_eq!(candidate(100, 200, 2, \"00\"), 2);\n    assert_eq!(candidate(10000, 100000, 1, \"0000\"), 2);\n    assert_eq!(candidate(999, 9999, 9, \"999\"), 10);\n    assert_eq!(candidate(10, 100, 3, \"2\"), 3);\n    assert_eq!(candidate(500, 5000, 5, \"50\"), 25);\n    assert_eq!(candidate(1000000000000000, 2000000000000000, 5, \"54321\"), 60466176);\n    assert_eq!(candidate(123456789, 987654321, 8, \"123\"), 456707);\n    assert_eq!(candidate(1000000000000, 10000000000000, 6, \"6666\"), 34588806);\n    assert_eq!(candidate(1000000000, 1000000000, 9, \"0\"), 1);\n    assert_eq!(candidate(123, 321, 1, \"1\"), 0);\n    assert_eq!(candidate(1, 1000000000000000, 7, \"777777777777777\"), 1);\n    assert_eq!(candidate(10000000000, 99999999999, 4, \"44444\"), 12500);\n    assert_eq!(candidate(500000000, 5000000000, 4, \"444444\"), 500);\n    assert_eq!(candidate(1234567890, 2345678901, 7, \"789\"), 299592);\n    assert_eq!(candidate(555555555555555, 666666666666666, 5, \"555\"), 1);\n    assert_eq!(candidate(1000000000, 9000000000, 4, \"4444\"), 12500);\n    assert_eq!(candidate(1111111111, 2222222222, 2, \"222\"), 1094);\n    assert_eq!(candidate(123456789, 987654321, 8, \"876\"), 456708);\n    assert_eq!(candidate(123456789, 9876543210, 8, \"8765\"), 523138);\n    assert_eq!(candidate(111111111111111, 222222222222222, 2, \"2222222222\"), 122);\n    assert_eq!(candidate(100000000000000, 200000000000000, 6, \"666666\"), 5764801);\n    assert_eq!(candidate(5000, 50000, 5, \"25\"), 150);\n    assert_eq!(candidate(1000000000, 2000000000, 9, \"999999\"), 1000);\n    assert_eq!(candidate(123456789, 123456789, 9, \"999\"), 0);\n    assert_eq!(candidate(1234567890123456789, 9876543210987654321, 8, \"890\"), 1592439230847996);\n    assert_eq!(candidate(123456789, 987654321, 4, \"789\"), 10750);\n    assert_eq!(candidate(1000000000, 2000000000, 6, \"12345\"), 2401);\n    assert_eq!(candidate(123456789, 9876543210, 4, \"4321\"), 14650);\n    assert_eq!(candidate(123, 456789, 6, \"678\"), 238);\n    assert_eq!(candidate(500000000, 600000000, 4, \"40000\"), 0);\n    assert_eq!(candidate(1000000000000000, 2000000000000000, 5, \"555555555555555\"), 1);\n    assert_eq!(candidate(1000000000, 1500000000, 3, \"321\"), 4096);\n    assert_eq!(candidate(100000000, 200000000, 9, \"90000000\"), 1);\n    assert_eq!(candidate(10000, 999999999, 5, \"5555\"), 7775);\n    assert_eq!(candidate(1000000000, 10000000000, 6, \"6000000\"), 294);\n    assert_eq!(candidate(123456789, 987654321, 8, \"456\"), 456707);\n    assert_eq!(candidate(100000, 9999999999, 5, \"2500\"), 46650);\n    assert_eq!(candidate(100, 999, 1, \"1\"), 2);\n    assert_eq!(candidate(1000000000, 2000000000, 3, \"123\"), 4096);\n    assert_eq!(candidate(1000000000, 9999999999, 5, \"4444\"), 38880);\n    assert_eq!(candidate(1, 1000000000000, 1, \"1\"), 2048);\n    assert_eq!(candidate(1, 10000000000, 2, \"12\"), 6561);\n    assert_eq!(candidate(99999999, 1000000000, 9, \"999\"), 900001);\n    assert_eq!(candidate(1000000, 10000000, 3, \"333\"), 192);\n    assert_eq!(candidate(1000000000000, 9999999999999, 8, \"8888\"), 344373768);\n    assert_eq!(candidate(100000, 999999, 5, \"2500\"), 30);\n    assert_eq!(candidate(10000, 15000, 3, \"3000\"), 1);\n    assert_eq!(candidate(500000000, 800000000, 6, \"567\"), 33614);\n    assert_eq!(candidate(111111111, 222222222, 2, \"222\"), 365);\n    assert_eq!(candidate(100000, 999999, 4, \"4444\"), 20);\n    assert_eq!(candidate(123456789012345, 987654321098765, 7, \"789\"), 57499975680);\n    assert_eq!(candidate(1111, 2222, 1, \"11\"), 1);\n    assert_eq!(candidate(100000000000, 900000000000, 3, \"333\"), 196608);\n    assert_eq!(candidate(111111111111111, 222222222222222, 2, \"21\"), 797162);\n    assert_eq!(candidate(100000000000000, 200000000000000, 1, \"1\"), 8192);\n    assert_eq!(candidate(500000000000000, 600000000000000, 5, \"500\"), 362797056);\n    assert_eq!(candidate(10000000000000, 50000000000000, 4, \"4444444\"), 62500);\n    assert_eq!(candidate(5000000, 5500000, 5, \"5000\"), 30);\n    assert_eq!(candidate(987654321, 987654321987654321, 9, \"987654321\"), 987654322);\n    assert_eq!(candidate(1000000000000000, 9999999999999999, 5, \"55555\"), 302330880);\n    assert_eq!(candidate(123456789012345, 234567890123456, 2, \"222\"), 177147);\n    assert_eq!(candidate(100000000000000, 200000000000000, 7, \"7654321\"), 2097152);\n    assert_eq!(candidate(987654321098765, 9876543210987654, 9, \"987654321\"), 8888889);\n    assert_eq!(candidate(123123123, 987987987, 8, \"876\"), 456981);\n    assert_eq!(candidate(222222222222222, 333333333333333, 3, \"3333333333\"), 342);\n    assert_eq!(candidate(1234567890, 1234567890123456789, 6, \"67890\"), 131875584409);\n    assert_eq!(candidate(1000000000, 9000000000, 6, \"666\"), 705894);\n    assert_eq!(candidate(100000000000000, 300000000000000, 5, \"55555555555555\"), 2);\n    assert_eq!(candidate(10000, 99999, 2, \"22\"), 18);\n    assert_eq!(candidate(1000000000, 10000000000, 1, \"1\"), 256);\n    assert_eq!(candidate(10000, 20000, 3, \"111\"), 4);\n    assert_eq!(candidate(1000000000000, 1000000000000, 9, \"999999999999\"), 0);\n    assert_eq!(candidate(50000, 150000, 5, \"2500\"), 6);\n    assert_eq!(candidate(1000000000000000, 1000000000000000, 9, \"999999999999999\"), 0);\n    assert_eq!(candidate(123456789, 2100000000, 6, \"6789\"), 32748);\n    assert_eq!(candidate(1000000000000, 9999999999999, 2, \"21\"), 118098);\n    assert_eq!(candidate(123456789012345, 987654321098765, 7, \"765\"), 57499975680);\n    assert_eq!(candidate(123456789012345, 987654321098765, 6, \"654321\"), 32507139);\n    assert_eq!(candidate(100000000000000, 200000000000000, 3, \"100\"), 4194304);\n    assert_eq!(candidate(50000, 60000, 5, \"500\"), 6);\n    assert_eq!(candidate(1000000000000000, 1500000000000000, 6, \"666666666666666\"), 0);\n    assert_eq!(candidate(123456789123, 987654321987, 9, \"987\"), 864197533);\n    assert_eq!(candidate(123456789012, 987654321012, 5, \"5555\"), 1276560);\n    assert_eq!(candidate(500, 5000, 3, \"300\"), 3);\n    assert_eq!(candidate(12345, 67890, 7, \"789\"), 46);\n    assert_eq!(candidate(5000000000, 5000000000000000, 5, \"5000\"), 1813946400);\n    assert_eq!(candidate(555555555, 666666666, 9, \"555\"), 111112);\n    assert_eq!(candidate(1000000, 2000000, 2, \"222\"), 27);\n    assert_eq!(candidate(9000000000, 9999999999, 9, \"9999\"), 100000);\n    assert_eq!(candidate(1234567890, 1234567890123, 6, \"6789\"), 7823592);\n    assert_eq!(candidate(1111, 3333, 1, \"11\"), 1);\n    assert_eq!(candidate(123456789012345, 987654321098765, 7, \"7654321\"), 14038080);\n    assert_eq!(candidate(1000000000000000, 9999999999999999, 7, \"777777777777777\"), 7);\n    assert_eq!(candidate(5000, 15000, 3, \"300\"), 4);\n    assert_eq!(candidate(1, 1000000000000000, 4, \"444444444444444\"), 1);\n    assert_eq!(candidate(100000, 500000, 7, \"7777\"), 32);\n    assert_eq!(candidate(100000000000000, 200000000000000, 8, \"8888888888\"), 6561);\n    assert_eq!(candidate(5000, 80000, 5, \"250\"), 31);\n    assert_eq!(candidate(5000000000, 6000000000, 6, \"5555\"), 16807);\n    assert_eq!(candidate(123456789, 987654321, 6, \"666\"), 94773);\n    assert_eq!(candidate(1000000, 2000000, 2, \"200\"), 27);\n    assert_eq!(candidate(987654321098765, 9876543210987654, 9, \"9876543210\"), 888889);\n    assert_eq!(candidate(500, 2500, 4, \"444\"), 2);\n    assert_eq!(candidate(100000000000000, 1000000000000000, 4, \"43210\"), 7812500);\n    assert_eq!(candidate(123456789012345, 123456789012345, 9, \"123456789\"), 0);\n    assert_eq!(candidate(1000000000000, 4000000000000, 3, \"333333333333\"), 3);\n    assert_eq!(candidate(5000000, 6000000, 4, \"4000\"), 0);\n    assert_eq!(candidate(111111111111111, 222222222222222, 1, \"1\"), 1);\n    assert_eq!(candidate(1234567890, 1234567890000000000, 4, \"43210\"), 1904295900);\n    assert_eq!(candidate(1000000000000000, 2000000000000000, 9, \"999999999999999\"), 1);\n    assert_eq!(candidate(100000000, 600000000, 2, \"222222222\"), 1);\n    assert_eq!(candidate(500000000000, 5000000000000, 7, \"777\"), 587202560);\n    assert_eq!(candidate(10000000000, 50000000000, 4, \"4444444444\"), 4);\n    assert_eq!(candidate(10000000000, 11000000000, 3, \"3000\"), 1024);\n    assert_eq!(candidate(123456789, 987654321, 4, \"3456\"), 2150);\n    assert_eq!(candidate(1000000000000000, 1000000000000000, 9, \"1\"), 0);\n    assert_eq!(candidate(111111111111111, 999999999999999, 9, \"999999999999999\"), 1);\n    assert_eq!(candidate(111111111, 222222222, 2, \"123\"), 365);\n    assert_eq!(candidate(123456789012345, 987654321098765, 7, \"765432\"), 112304640);\n    assert_eq!(candidate(222222222222222, 333333333333333, 3, \"333\"), 5592406);\n}"
+  },
+  "test_cases": [
+    {
+      "input": "start = 100, finish = 1000, limit = 1, s = \"00\"",
+      "output": "2"
+    },
+    {
+      "input": "start = 1111, finish = 2222, limit = 2, s = \"11\"",
+      "output": "5"
+    },
+    {
+      "input": "start = 500, finish = 5000, limit = 7, s = \"50\"",
+      "output": "35"
+    },
+    {
+      "input": "start = 10000, finish = 99999, limit = 8, s = \"8888\"",
+      "output": "8"
+    },
+    {
+      "input": "start = 1, finish = 6000, limit = 4, s = \"124\"",
+      "output": "5"
+    },
+    {
+      "input": "start = 111, finish = 999, limit = 9, s = \"11\"",
+      "output": "9"
+    },
+    {
+      "input": "start = 1234, finish = 98765, limit = 8, s = \"4321\"",
+      "output": "9"
+    },
+    {
+      "input": "start = 100, finish = 1000, limit = 5, s = \"00\"",
+      "output": "6"
+    },
+    {
+      "input": "start = 1234, finish = 98765, limit = 9, s = \"567\"",
+      "output": "98"
+    },
+    {
+      "input": "start = 5, finish = 55, limit = 5, s = \"5\"",
+      "output": "6"
+    },
+    {
+      "input": "start = 1, finish = 1000000000000000, limit = 9, s = \"999\"",
+      "output": "1000000000000"
+    },
+    {
+      "input": "start = 500, finish = 1500, limit = 5, s = \"50\"",
+      "output": "6"
+    },
+    {
+      "input": "start = 1, finish = 999999999999999, limit = 9, s = \"999\"",
+      "output": "1000000000000"
+    },
+    {
+      "input": "start = 5, finish = 500, limit = 3, s = \"1\"",
+      "output": "15"
+    },
+    {
+      "input": "start = 100, finish = 1000, limit = 7, s = \"00\"",
+      "output": "8"
+    },
+    {
+      "input": "start = 15, finish = 215, limit = 6, s = \"10\"",
+      "output": "2"
+    },
+    {
+      "input": "start = 123, finish = 456, limit = 5, s = \"34\"",
+      "output": "4"
+    },
+    {
+      "input": "start = 1000, finish = 2000, limit = 4, s = \"3000\"",
+      "output": "0"
+    },
+    {
+      "input": "start = 5, finish = 5, limit = 5, s = \"5\"",
+      "output": "1"
+    },
+    {
+      "input": "start = 1, finish = 10, limit = 1, s = \"1\"",
+      "output": "1"
+    },
+    {
+      "input": "start = 200, finish = 800, limit = 2, s = \"2\"",
+      "output": "3"
+    },
+    {
+      "input": "start = 1234, finish = 4321, limit = 7, s = \"34\"",
+      "output": "25"
+    },
+    {
+      "input": "start = 10, finish = 100, limit = 1, s = \"0\"",
+      "output": "2"
+    },
+    {
+      "input": "start = 1234, finish = 123456, limit = 7, s = \"34\"",
+      "output": "659"
+    },
+    {
+      "input": "start = 1, finish = 1000000000000000, limit = 1, s = \"1\"",
+      "output": "16384"
+    },
+    {
+      "input": "start = 10, finish = 100, limit = 3, s = \"0\"",
+      "output": "4"
+    },
+    {
+      "input": "start = 10, finish = 100, limit = 3, s = \"1\"",
+      "output": "3"
+    },
+    {
+      "input": "start = 100, finish = 200, limit = 2, s = \"00\"",
+      "output": "2"
+    },
+    {
+      "input": "start = 10000, finish = 100000, limit = 1, s = \"0000\"",
+      "output": "2"
+    },
+    {
+      "input": "start = 999, finish = 9999, limit = 9, s = \"999\"",
+      "output": "10"
+    },
+    {
+      "input": "start = 10, finish = 100, limit = 3, s = \"2\"",
+      "output": "3"
+    },
+    {
+      "input": "start = 500, finish = 5000, limit = 5, s = \"50\"",
+      "output": "25"
+    },
+    {
+      "input": "start = 1000000000000000, finish = 2000000000000000, limit = 5, s = \"54321\"",
+      "output": "60466176"
+    },
+    {
+      "input": "start = 123456789, finish = 987654321, limit = 8, s = \"123\"",
+      "output": "456707"
+    },
+    {
+      "input": "start = 1000000000000, finish = 10000000000000, limit = 6, s = \"6666\"",
+      "output": "34588806"
+    },
+    {
+      "input": "start = 1000000000, finish = 1000000000, limit = 9, s = \"0\"",
+      "output": "1"
+    },
+    {
+      "input": "start = 123, finish = 321, limit = 1, s = \"1\"",
+      "output": "0"
+    },
+    {
+      "input": "start = 1, finish = 1000000000000000, limit = 7, s = \"777777777777777\"",
+      "output": "1"
+    },
+    {
+      "input": "start = 10000000000, finish = 99999999999, limit = 4, s = \"44444\"",
+      "output": "12500"
+    },
+    {
+      "input": "start = 500000000, finish = 5000000000, limit = 4, s = \"444444\"",
+      "output": "500"
+    },
+    {
+      "input": "start = 1234567890, finish = 2345678901, limit = 7, s = \"789\"",
+      "output": "299592"
+    },
+    {
+      "input": "start = 555555555555555, finish = 666666666666666, limit = 5, s = \"555\"",
+      "output": "1"
+    },
+    {
+      "input": "start = 1000000000, finish = 9000000000, limit = 4, s = \"4444\"",
+      "output": "12500"
+    },
+    {
+      "input": "start = 1111111111, finish = 2222222222, limit = 2, s = \"222\"",
+      "output": "1094"
+    },
+    {
+      "input": "start = 123456789, finish = 987654321, limit = 8, s = \"876\"",
+      "output": "456708"
+    },
+    {
+      "input": "start = 123456789, finish = 9876543210, limit = 8, s = \"8765\"",
+      "output": "523138"
+    },
+    {
+      "input": "start = 111111111111111, finish = 222222222222222, limit = 2, s = \"2222222222\"",
+      "output": "122"
+    },
+    {
+      "input": "start = 100000000000000, finish = 200000000000000, limit = 6, s = \"666666\"",
+      "output": "5764801"
+    },
+    {
+      "input": "start = 5000, finish = 50000, limit = 5, s = \"25\"",
+      "output": "150"
+    },
+    {
+      "input": "start = 1000000000, finish = 2000000000, limit = 9, s = \"999999\"",
+      "output": "1000"
+    },
+    {
+      "input": "start = 123456789, finish = 123456789, limit = 9, s = \"999\"",
+      "output": "0"
+    },
+    {
+      "input": "start = 1234567890123456789, finish = 9876543210987654321, limit = 8, s = \"890\"",
+      "output": "1592439230847996"
+    },
+    {
+      "input": "start = 123456789, finish = 987654321, limit = 4, s = \"789\"",
+      "output": "10750"
+    },
+    {
+      "input": "start = 1000000000, finish = 2000000000, limit = 6, s = \"12345\"",
+      "output": "2401"
+    },
+    {
+      "input": "start = 123456789, finish = 9876543210, limit = 4, s = \"4321\"",
+      "output": "14650"
+    },
+    {
+      "input": "start = 123, finish = 456789, limit = 6, s = \"678\"",
+      "output": "238"
+    },
+    {
+      "input": "start = 500000000, finish = 600000000, limit = 4, s = \"40000\"",
+      "output": "0"
+    },
+    {
+      "input": "start = 1000000000000000, finish = 2000000000000000, limit = 5, s = \"555555555555555\"",
+      "output": "1"
+    },
+    {
+      "input": "start = 1000000000, finish = 1500000000, limit = 3, s = \"321\"",
+      "output": "4096"
+    },
+    {
+      "input": "start = 100000000, finish = 200000000, limit = 9, s = \"90000000\"",
+      "output": "1"
+    },
+    {
+      "input": "start = 10000, finish = 999999999, limit = 5, s = \"5555\"",
+      "output": "7775"
+    },
+    {
+      "input": "start = 1000000000, finish = 10000000000, limit = 6, s = \"6000000\"",
+      "output": "294"
+    },
+    {
+      "input": "start = 123456789, finish = 987654321, limit = 8, s = \"456\"",
+      "output": "456707"
+    },
+    {
+      "input": "start = 100000, finish = 9999999999, limit = 5, s = \"2500\"",
+      "output": "46650"
+    },
+    {
+      "input": "start = 100, finish = 999, limit = 1, s = \"1\"",
+      "output": "2"
+    },
+    {
+      "input": "start = 1000000000, finish = 2000000000, limit = 3, s = \"123\"",
+      "output": "4096"
+    },
+    {
+      "input": "start = 1000000000, finish = 9999999999, limit = 5, s = \"4444\"",
+      "output": "38880"
+    },
+    {
+      "input": "start = 1, finish = 1000000000000, limit = 1, s = \"1\"",
+      "output": "2048"
+    },
+    {
+      "input": "start = 1, finish = 10000000000, limit = 2, s = \"12\"",
+      "output": "6561"
+    },
+    {
+      "input": "start = 99999999, finish = 1000000000, limit = 9, s = \"999\"",
+      "output": "900001"
+    },
+    {
+      "input": "start = 1000000, finish = 10000000, limit = 3, s = \"333\"",
+      "output": "192"
+    },
+    {
+      "input": "start = 1000000000000, finish = 9999999999999, limit = 8, s = \"8888\"",
+      "output": "344373768"
+    },
+    {
+      "input": "start = 100000, finish = 999999, limit = 5, s = \"2500\"",
+      "output": "30"
+    },
+    {
+      "input": "start = 10000, finish = 15000, limit = 3, s = \"3000\"",
+      "output": "1"
+    },
+    {
+      "input": "start = 500000000, finish = 800000000, limit = 6, s = \"567\"",
+      "output": "33614"
+    },
+    {
+      "input": "start = 111111111, finish = 222222222, limit = 2, s = \"222\"",
+      "output": "365"
+    },
+    {
+      "input": "start = 100000, finish = 999999, limit = 4, s = \"4444\"",
+      "output": "20"
+    },
+    {
+      "input": "start = 123456789012345, finish = 987654321098765, limit = 7, s = \"789\"",
+      "output": "57499975680"
+    },
+    {
+      "input": "start = 1111, finish = 2222, limit = 1, s = \"11\"",
+      "output": "1"
+    },
+    {
+      "input": "start = 100000000000, finish = 900000000000, limit = 3, s = \"333\"",
+      "output": "196608"
+    },
+    {
+      "input": "start = 111111111111111, finish = 222222222222222, limit = 2, s = \"21\"",
+      "output": "797162"
+    },
+    {
+      "input": "start = 100000000000000, finish = 200000000000000, limit = 1, s = \"1\"",
+      "output": "8192"
+    },
+    {
+      "input": "start = 500000000000000, finish = 600000000000000, limit = 5, s = \"500\"",
+      "output": "362797056"
+    },
+    {
+      "input": "start = 10000000000000, finish = 50000000000000, limit = 4, s = \"4444444\"",
+      "output": "62500"
+    },
+    {
+      "input": "start = 5000000, finish = 5500000, limit = 5, s = \"5000\"",
+      "output": "30"
+    },
+    {
+      "input": "start = 987654321, finish = 987654321987654321, limit = 9, s = \"987654321\"",
+      "output": "987654322"
+    },
+    {
+      "input": "start = 1000000000000000, finish = 9999999999999999, limit = 5, s = \"55555\"",
+      "output": "302330880"
+    },
+    {
+      "input": "start = 123456789012345, finish = 234567890123456, limit = 2, s = \"222\"",
+      "output": "177147"
+    },
+    {
+      "input": "start = 100000000000000, finish = 200000000000000, limit = 7, s = \"7654321\"",
+      "output": "2097152"
+    },
+    {
+      "input": "start = 987654321098765, finish = 9876543210987654, limit = 9, s = \"987654321\"",
+      "output": "8888889"
+    },
+    {
+      "input": "start = 123123123, finish = 987987987, limit = 8, s = \"876\"",
+      "output": "456981"
+    },
+    {
+      "input": "start = 222222222222222, finish = 333333333333333, limit = 3, s = \"3333333333\"",
+      "output": "342"
+    },
+    {
+      "input": "start = 1234567890, finish = 1234567890123456789, limit = 6, s = \"67890\"",
+      "output": "131875584409"
+    },
+    {
+      "input": "start = 1000000000, finish = 9000000000, limit = 6, s = \"666\"",
+      "output": "705894"
+    },
+    {
+      "input": "start = 100000000000000, finish = 300000000000000, limit = 5, s = \"55555555555555\"",
+      "output": "2"
+    },
+    {
+      "input": "start = 10000, finish = 99999, limit = 2, s = \"22\"",
+      "output": "18"
+    },
+    {
+      "input": "start = 1000000000, finish = 10000000000, limit = 1, s = \"1\"",
+      "output": "256"
+    },
+    {
+      "input": "start = 10000, finish = 20000, limit = 3, s = \"111\"",
+      "output": "4"
+    },
+    {
+      "input": "start = 1000000000000, finish = 1000000000000, limit = 9, s = \"999999999999\"",
+      "output": "0"
+    },
+    {
+      "input": "start = 50000, finish = 150000, limit = 5, s = \"2500\"",
+      "output": "6"
+    },
+    {
+      "input": "start = 1000000000000000, finish = 1000000000000000, limit = 9, s = \"999999999999999\"",
+      "output": "0"
+    },
+    {
+      "input": "start = 123456789, finish = 2100000000, limit = 6, s = \"6789\"",
+      "output": "32748"
+    },
+    {
+      "input": "start = 1000000000000, finish = 9999999999999, limit = 2, s = \"21\"",
+      "output": "118098"
+    },
+    {
+      "input": "start = 123456789012345, finish = 987654321098765, limit = 7, s = \"765\"",
+      "output": "57499975680"
+    },
+    {
+      "input": "start = 123456789012345, finish = 987654321098765, limit = 6, s = \"654321\"",
+      "output": "32507139"
+    },
+    {
+      "input": "start = 100000000000000, finish = 200000000000000, limit = 3, s = \"100\"",
+      "output": "4194304"
+    },
+    {
+      "input": "start = 50000, finish = 60000, limit = 5, s = \"500\"",
+      "output": "6"
+    },
+    {
+      "input": "start = 1000000000000000, finish = 1500000000000000, limit = 6, s = \"666666666666666\"",
+      "output": "0"
+    },
+    {
+      "input": "start = 123456789123, finish = 987654321987, limit = 9, s = \"987\"",
+      "output": "864197533"
+    },
+    {
+      "input": "start = 123456789012, finish = 987654321012, limit = 5, s = \"5555\"",
+      "output": "1276560"
+    },
+    {
+      "input": "start = 500, finish = 5000, limit = 3, s = \"300\"",
+      "output": "3"
+    },
+    {
+      "input": "start = 12345, finish = 67890, limit = 7, s = \"789\"",
+      "output": "46"
+    },
+    {
+      "input": "start = 5000000000, finish = 5000000000000000, limit = 5, s = \"5000\"",
+      "output": "1813946400"
+    },
+    {
+      "input": "start = 555555555, finish = 666666666, limit = 9, s = \"555\"",
+      "output": "111112"
+    },
+    {
+      "input": "start = 1000000, finish = 2000000, limit = 2, s = \"222\"",
+      "output": "27"
+    },
+    {
+      "input": "start = 9000000000, finish = 9999999999, limit = 9, s = \"9999\"",
+      "output": "100000"
+    },
+    {
+      "input": "start = 1234567890, finish = 1234567890123, limit = 6, s = \"6789\"",
+      "output": "7823592"
+    },
+    {
+      "input": "start = 1111, finish = 3333, limit = 1, s = \"11\"",
+      "output": "1"
+    },
+    {
+      "input": "start = 123456789012345, finish = 987654321098765, limit = 7, s = \"7654321\"",
+      "output": "14038080"
+    },
+    {
+      "input": "start = 1000000000000000, finish = 9999999999999999, limit = 7, s = \"777777777777777\"",
+      "output": "7"
+    },
+    {
+      "input": "start = 5000, finish = 15000, limit = 3, s = \"300\"",
+      "output": "4"
+    },
+    {
+      "input": "start = 1, finish = 1000000000000000, limit = 4, s = \"444444444444444\"",
+      "output": "1"
+    },
+    {
+      "input": "start = 100000, finish = 500000, limit = 7, s = \"7777\"",
+      "output": "32"
+    },
+    {
+      "input": "start = 100000000000000, finish = 200000000000000, limit = 8, s = \"8888888888\"",
+      "output": "6561"
+    },
+    {
+      "input": "start = 5000, finish = 80000, limit = 5, s = \"250\"",
+      "output": "31"
+    },
+    {
+      "input": "start = 5000000000, finish = 6000000000, limit = 6, s = \"5555\"",
+      "output": "16807"
+    },
+    {
+      "input": "start = 123456789, finish = 987654321, limit = 6, s = \"666\"",
+      "output": "94773"
+    },
+    {
+      "input": "start = 1000000, finish = 2000000, limit = 2, s = \"200\"",
+      "output": "27"
+    },
+    {
+      "input": "start = 987654321098765, finish = 9876543210987654, limit = 9, s = \"9876543210\"",
+      "output": "888889"
+    },
+    {
+      "input": "start = 500, finish = 2500, limit = 4, s = \"444\"",
+      "output": "2"
+    },
+    {
+      "input": "start = 100000000000000, finish = 1000000000000000, limit = 4, s = \"43210\"",
+      "output": "7812500"
+    },
+    {
+      "input": "start = 123456789012345, finish = 123456789012345, limit = 9, s = \"123456789\"",
+      "output": "0"
+    },
+    {
+      "input": "start = 1000000000000, finish = 4000000000000, limit = 3, s = \"333333333333\"",
+      "output": "3"
+    },
+    {
+      "input": "start = 5000000, finish = 6000000, limit = 4, s = \"4000\"",
+      "output": "0"
+    },
+    {
+      "input": "start = 111111111111111, finish = 222222222222222, limit = 1, s = \"1\"",
+      "output": "1"
+    },
+    {
+      "input": "start = 1234567890, finish = 1234567890000000000, limit = 4, s = \"43210\"",
+      "output": "1904295900"
+    },
+    {
+      "input": "start = 1000000000000000, finish = 2000000000000000, limit = 9, s = \"999999999999999\"",
+      "output": "1"
+    },
+    {
+      "input": "start = 100000000, finish = 600000000, limit = 2, s = \"222222222\"",
+      "output": "1"
+    },
+    {
+      "input": "start = 500000000000, finish = 5000000000000, limit = 7, s = \"777\"",
+      "output": "587202560"
+    },
+    {
+      "input": "start = 10000000000, finish = 50000000000, limit = 4, s = \"4444444444\"",
+      "output": "4"
+    },
+    {
+      "input": "start = 10000000000, finish = 11000000000, limit = 3, s = \"3000\"",
+      "output": "1024"
+    },
+    {
+      "input": "start = 123456789, finish = 987654321, limit = 4, s = \"3456\"",
+      "output": "2150"
+    },
+    {
+      "input": "start = 1000000000000000, finish = 1000000000000000, limit = 9, s = \"1\"",
+      "output": "0"
+    },
+    {
+      "input": "start = 111111111111111, finish = 999999999999999, limit = 9, s = \"999999999999999\"",
+      "output": "1"
+    },
+    {
+      "input": "start = 111111111, finish = 222222222, limit = 2, s = \"123\"",
+      "output": "365"
+    },
+    {
+      "input": "start = 123456789012345, finish = 987654321098765, limit = 7, s = \"765432\"",
+      "output": "112304640"
+    },
+    {
+      "input": "start = 222222222222222, finish = 333333333333333, limit = 3, s = \"333\"",
+      "output": "5592406"
+    }
+  ],
+  "types": {
+    "python3": {
+      "input": [
+        {
+          "start": "int"
+        },
+        {
+          "finish": "int"
+        },
+        {
+          "limit": "int"
+        },
+        {
+          "s": "str"
+        }
+      ],
+      "output": "int"
+    },
+    "cpp": {
+      "input": [
+        {
+          "long": "long"
+        },
+        {
+          "long": "long"
+        },
+        {
+          "limit": "int"
+        },
+        {
+          "s": "string"
+        }
+      ],
+      "output": "long long"
+    },
+    "java": {
+      "input": [
+        {
+          "start": "long"
+        },
+        {
+          "finish": "long"
+        },
+        {
+          "limit": "int"
+        },
+        {
+          "s": "String"
+        }
+      ],
+      "output": "long"
+    },
+    "javascript": {
+      "input": [
+        {
+          "start": "number"
+        },
+        {
+          "finish": "number"
+        },
+        {
+          "limit": "number"
+        },
+        {
+          "s": "string"
+        }
+      ],
+      "output": "number"
+    },
+    "typescript": {
+      "input": [
+        {
+          "start": "number"
+        },
+        {
+          "finish": "number"
+        },
+        {
+          "limit": "number"
+        },
+        {
+          "s": "string"
+        }
+      ],
+      "output": "number"
+    },
+    "golang": {
+      "input": [
+        {
+          "start": "int64"
+        },
+        {
+          "finish": "int64"
+        },
+        {
+          "limit": "int"
+        },
+        {
+          "s": "string"
+        }
+      ],
+      "output": "int64"
+    },
+    "rust": {
+      "input": [
+        {
+          "start": "i64"
+        },
+        {
+          "finish": "i64"
+        },
+        {
+          "limit": "i32"
+        },
+        {
+          "s": "String"
+        }
+      ],
+      "output": "i64"
+    }
+  },
+  "tags": [
+    "math",
+    "string",
+    "dynamic-programming"
+  ]
+}

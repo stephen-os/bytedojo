@@ -1,0 +1,517 @@
+{
+  "id": 1124,
+  "title": "Longest Well-Performing Interval",
+  "slug": "longest-well-performing-interval",
+  "difficulty": "Medium",
+  "description": "We are given hours, a list of the number of hours worked per day for a given employee.\nA day is considered to be a tiring day if and only if the number of hours worked is (strictly) greater than 8.\nA well-performing interval is an interval of days for which the number of tiring days is strictly larger than the number of non-tiring days.\nReturn the length of the longest well-performing interval.\nExample 1:\nExample 2:\nConstraints:",
+  "examples": [
+    {
+      "example_num": 1,
+      "example_text": "Input: hours = [9,9,6,0,6,6,9]\nOutput: 3\nExplanation: The longest well-performing interval is [9,9,6].",
+      "images": []
+    },
+    {
+      "example_num": 2,
+      "example_text": "Input: hours = [6,6,6]\nOutput: 0",
+      "images": []
+    }
+  ],
+  "constraints": [
+    "1 <= hours.length <= 104",
+    "0 <= hours[i] <= 16"
+  ],
+  "hints": [
+    "Make a new array A of +1/-1s corresponding to if hours[i] is > 8 or not. The goal is to find the longest subarray with positive sum.",
+    "Using prefix sums (PrefixSum[i+1] = A[0] + A[1] + ... + A[i]), you need to find for each j, the smallest i < j with PrefixSum[i] + 1 == PrefixSum[j]."
+  ],
+  "code_snippets": {
+    "cpp": "class Solution {\npublic:\n    int longestWPI(vector<int>& hours) {\n        \n    }\n};",
+    "java": "class Solution {\n    public int longestWPI(int[] hours) {\n        \n    }\n}",
+    "python3": "class Solution:\n    def longestWPI(self, hours: List[int]) -> int:\n        ",
+    "javascript": "/**\n * @param {number[]} hours\n * @return {number}\n */\nvar longestWPI = function(hours) {\n    \n};",
+    "typescript": "function longestWPI(hours: number[]): number {\n    \n};",
+    "golang": "func longestWPI(hours []int) int {\n    \n}",
+    "rust": "impl Solution {\n    pub fn longest_wpi(hours: Vec<i32>) -> i32 {\n        \n    }\n}"
+  },
+  "entry_points": {
+    "python3": "Solution().longestWPI",
+    "cpp": "Solution().longestWPI",
+    "java": "new Solution().longestWPI",
+    "javascript": "longestWPI",
+    "typescript": "longestWPI",
+    "golang": "longestWPI",
+    "rust": "Solution::longest_wpi"
+  },
+  "test_snippets": {
+    "python3": "def check(candidate):\n    assert candidate(hours = [9,7,9,7,9,7,9,7]) == 7\n    assert candidate(hours = [8,9,9,10]) == 4\n    assert candidate(hours = [9,9,9,9,9,9,9]) == 7\n    assert candidate(hours = [9,8,7,6,5,4,3,2,1]) == 1\n    assert candidate(hours = [8,9,8,9,8,9,8,9,8,9]) == 9\n    assert candidate(hours = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]) == 0\n    assert candidate(hours = [10,9,8,7,6,5,4,3,2,1]) == 3\n    assert candidate(hours = [1,2,3,4,5,6,7,8,9,10]) == 3\n    assert candidate(hours = [16,16,16,16]) == 4\n    assert candidate(hours = [12,13,14,15,16,0,0,0,0,0]) == 9\n    assert candidate(hours = [0,0,0,0,0,0,0,0,0,0,8,9]) == 1\n    assert candidate(hours = [5,5,5,5,5,5,5,5]) == 0\n    assert candidate(hours = [8,9,9,2,5]) == 3\n    assert candidate(hours = [12,8,9,9,9,10,8,8,9,10,12]) == 11\n    assert candidate(hours = [10,10,10,10,10,10,10,10]) == 8\n    assert candidate(hours = [9,9,6,0,6,6,9]) == 3\n    assert candidate(hours = [0,0,0,0,0,0,0,0,0,0]) == 0\n    assert candidate(hours = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16]) == 15\n    assert candidate(hours = [10,10,10,10]) == 4\n    assert candidate(hours = [6,6,6]) == 0\n    assert candidate(hours = [8,8,8,8,8,8,8,8]) == 0\n    assert candidate(hours = [7,7,7,9,9,9]) == 5\n    assert candidate(hours = [8,9,9,2,1,0,7]) == 3\n    assert candidate(hours = [10,8,10,8,10,8,10,8,10,8]) == 9\n    assert candidate(hours = [9,9,9,9,9,9,9,9,9,9]) == 10\n    assert candidate(hours = [6,9,6,9,6,9,6,9]) == 7\n    assert candidate(hours = [8,9,7,8,6,4,9,8,9,8]) == 3\n    assert candidate(hours = [7,7,7,7,7,7,7]) == 0\n    assert candidate(hours = [16,0,16,0,16,0,16,0,16,0,16,0,16,0,16,0,16,0,16,0,16,0,16,0,16,0]) == 25\n    assert candidate(hours = [8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9]) == 27\n    assert candidate(hours = [10,9,8,7,6,5,4,3,2,1,16,15,14,13,12,11,10,9,8,7]) == 19\n    assert candidate(hours = [9,6,9,6,9,6,9,6,9,6,9,6,9,6,9,6,9,6,9,6,9,6,9,6,9,6,9,6,9,6,9,6]) == 31\n    assert candidate(hours = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9,1,9,1,9,1,9,1,9,1,9,1,9,1,9,1]) == 15\n    assert candidate(hours = [9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9]) == 32\n    assert candidate(hours = [8,8,8,8,8,8,8,8,8,9,9,9,9,9,9,9,9,9]) == 17\n    assert candidate(hours = [6,7,8,9,10,11,12,13,14,15,16,0,1,2,3,4,5]) == 15\n    assert candidate(hours = [9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8]) == 101\n    assert candidate(hours = [10,7,9,6,11,4,5,12,3,14,1,2,8,9,15,0,1,6,7,10]) == 5\n    assert candidate(hours = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9,9,9,9,9,9,9,9,9,9,9,9,9,9]) == 27\n    assert candidate(hours = [10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10]) == 48\n    assert candidate(hours = [8,8,8,8,8,8,8,8,8,8,9,9,9,9,9,9,9,9,9,9]) == 19\n    assert candidate(hours = [10,9,8,7,6,5,4,3,2,1,0,16,15,14,13,12]) == 9\n    assert candidate(hours = [9,1,9,1,9,1,9,1,9,1,9,1,9,1,9,1,9,1,9,1,9,1]) == 21\n    assert candidate(hours = [8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 9]) == 1\n    assert candidate(hours = [16,15,14,13,12,11,10,9,8,7,6,5,4,3,2,1,0,0,0,0]) == 15\n    assert candidate(hours = [8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9]) == 15\n    assert candidate(hours = [9,8,7,6,5,4,3,2,1,0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16]) == 15\n    assert candidate(hours = [16,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,1,2,3]) == 17\n    assert candidate(hours = [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,9]) == 1\n    assert candidate(hours = [9, 8, 9, 8, 9, 8, 9, 8, 9, 8, 9, 8, 9, 8, 9, 8, 9, 8, 9, 8, 9, 8, 9, 8, 9, 8, 9]) == 27\n    assert candidate(hours = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,15,14,13,12]) == 20\n    assert candidate(hours = [9,8,7,6,5,4,3,2,1,0,16,15,14,13,12,11,10,9,8,7]) == 15\n    assert candidate(hours = [9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 8]) == 21\n    assert candidate(hours = [16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1]) == 15\n    assert candidate(hours = [9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9]) == 33\n    assert candidate(hours = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,16,15,14,13,12,11,10,9,8,7,6,5,4,3,2,1]) == 31\n    assert candidate(hours = [9, 10, 11, 12, 13, 14, 15, 16, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]) == 20\n    assert candidate(hours = [8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 10]) == 1\n    assert candidate(hours = [9,6,9,6,9,6,9,6,9,6,9,6,9,6,9,6]) == 15\n    assert candidate(hours = [8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,9]) == 1\n    assert candidate(hours = [9,1,9,1,9,1,9,1,9,1,9,1,9,1,9,1,9,1,9,1]) == 19\n    assert candidate(hours = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16]) == 31\n    assert candidate(hours = [6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 10]) == 1\n    assert candidate(hours = [6,7,8,9,10,11,12,13,14,15,16]) == 11\n    assert candidate(hours = [9,8,7,6,5,4,3,2,1,16,15,14,13,12,11,10,9,8,7,6,5,4,3,2,1,16,15,14,13,12,11,10,9,8,7,6,5,4,3,2,1,16,15,14,13,12,11,10,9,8,7,6,5,4,3,2,1,16,15,14,13,12,11,10,9,8,7,6,5,4,3,2,1]) == 65\n    assert candidate(hours = [10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10]) == 20\n    assert candidate(hours = [5,6,7,8,9,10,11,12,13,14,15,16,1,2,3,4,5,6,7,8]) == 15\n    assert candidate(hours = [10, 1, 8, 12, 8, 9, 5, 6, 7, 10, 3, 11, 4, 8, 10]) == 3\n    assert candidate(hours = [8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8]) == 51\n    assert candidate(hours = [12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 1]) == 25\n    assert candidate(hours = [16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16]) == 32\n    assert candidate(hours = [8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9]) == 19\n    assert candidate(hours = [9, 6, 9, 6, 9, 6, 9, 6, 9, 6, 9, 6, 9, 6, 9, 6, 9, 6, 9, 6]) == 19\n    assert candidate(hours = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,1,2,3,4]) == 15\n    assert candidate(hours = [16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]) == 31\n    assert candidate(hours = [9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9]) == 20\n    assert candidate(hours = [10, 8, 10, 8, 10, 8, 10, 8, 10, 8, 10, 8, 10, 8, 10, 8, 10, 8, 10, 8]) == 19\n    assert candidate(hours = [1,9,2,8,3,7,4,6,5,10,9,8,7,6,5,4,3,2,1,0,16,15,14,13,12,11]) == 11\n    assert candidate(hours = [6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6]) == 0\n    assert candidate(hours = [1,8,1,8,1,8,1,8,1,8,1,8,1,8,1,8,1,8,1,8,1,8,1,8,1,8,1,8,1,8,1,8]) == 0\n    assert candidate(hours = [8,8,8,8,8,9,9,9,9,9,8,8,8,8,8,9,9,9,9,9]) == 19\n    assert candidate(hours = [9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9]) == 20\n    assert candidate(hours = [8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9]) == 19\n    assert candidate(hours = [6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 1, 2, 3, 4, 5]) == 15\n    assert candidate(hours = [9, 6, 7, 8, 5, 10, 11, 12, 13, 14, 15, 16, 1, 2, 3, 4, 0, 8, 8, 9]) == 15\n    assert candidate(hours = [9,10,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9]) == 20\n    assert candidate(hours = [9,8,9,8,9,8,9,8,9,8]) == 9\n    assert candidate(hours = [10,10,10,10,10,10,10,10,10,10,1,2,3,4,5,6,7,8,9]) == 19\n    assert candidate(hours = [9, 7, 8, 6, 5, 4, 3, 2, 1, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6]) == 17\n    assert candidate(hours = [10, 5, 8, 10, 4, 6, 9, 11, 7, 3, 12, 8, 10, 9, 11, 13, 14, 6, 7, 8]) == 19\n    assert candidate(hours = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1]) == 29\n    assert candidate(hours = [16,15,14,13,12,11,10,9,8,7,6]) == 11\n    assert candidate(hours = [8, 9, 9, 10, 8, 8, 8, 8, 8, 9, 9, 10, 11, 12, 7, 6, 5, 4, 3, 2]) == 15\n    assert candidate(hours = [6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,9,9]) == 3\n    assert candidate(hours = [9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8]) == 51\n    assert candidate(hours = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,1,2,3,4,5]) == 15\n    assert candidate(hours = [9,0,9,0,9,0,9,0,9,0,9,0,9,0,9,0,9,0,9,0,9,0,9,0,9,0,9,0,9,0,9,0,9,0]) == 33\n    assert candidate(hours = [6,9,6,9,6,9,6,9,6,9,6,9,6,9,6,9,6,9,6,9,6,9]) == 21\n    assert candidate(hours = [9,8,7,6,5,4,3,2,1,0,9,8,7,6,5,4,3,2,1,0]) == 1",
+    "cpp": "void check(Solution& solution) {\n    assert(solution.longestWPI({9,7,9,7,9,7,9,7}) == vector<int>7);\n    assert(solution.longestWPI({8,9,9,10}) == vector<int>4);\n    assert(solution.longestWPI({9,9,9,9,9,9,9}) == vector<int>7);\n    assert(solution.longestWPI({9,8,7,6,5,4,3,2,1}) == vector<int>1);\n    assert(solution.longestWPI({8,9,8,9,8,9,8,9,8,9}) == vector<int>9);\n    assert(solution.longestWPI({0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}) == vector<int>0);\n    assert(solution.longestWPI({10,9,8,7,6,5,4,3,2,1}) == vector<int>3);\n    assert(solution.longestWPI({1,2,3,4,5,6,7,8,9,10}) == vector<int>3);\n    assert(solution.longestWPI({16,16,16,16}) == vector<int>4);\n    assert(solution.longestWPI({12,13,14,15,16,0,0,0,0,0}) == vector<int>9);\n    assert(solution.longestWPI({0,0,0,0,0,0,0,0,0,0,8,9}) == vector<int>1);\n    assert(solution.longestWPI({5,5,5,5,5,5,5,5}) == vector<int>0);\n    assert(solution.longestWPI({8,9,9,2,5}) == vector<int>3);\n    assert(solution.longestWPI({12,8,9,9,9,10,8,8,9,10,12}) == vector<int>11);\n    assert(solution.longestWPI({10,10,10,10,10,10,10,10}) == vector<int>8);\n    assert(solution.longestWPI({9,9,6,0,6,6,9}) == vector<int>3);\n    assert(solution.longestWPI({0,0,0,0,0,0,0,0,0,0}) == vector<int>0);\n    assert(solution.longestWPI({1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16}) == vector<int>15);\n    assert(solution.longestWPI({10,10,10,10}) == vector<int>4);\n    assert(solution.longestWPI({6,6,6}) == vector<int>0);\n    assert(solution.longestWPI({8,8,8,8,8,8,8,8}) == vector<int>0);\n    assert(solution.longestWPI({7,7,7,9,9,9}) == vector<int>5);\n    assert(solution.longestWPI({8,9,9,2,1,0,7}) == vector<int>3);\n    assert(solution.longestWPI({10,8,10,8,10,8,10,8,10,8}) == vector<int>9);\n    assert(solution.longestWPI({9,9,9,9,9,9,9,9,9,9}) == vector<int>10);\n    assert(solution.longestWPI({6,9,6,9,6,9,6,9}) == vector<int>7);\n    assert(solution.longestWPI({8,9,7,8,6,4,9,8,9,8}) == vector<int>3);\n    assert(solution.longestWPI({7,7,7,7,7,7,7}) == vector<int>0);\n    assert(solution.longestWPI({16,0,16,0,16,0,16,0,16,0,16,0,16,0,16,0,16,0,16,0,16,0,16,0,16,0}) == vector<int>25);\n    assert(solution.longestWPI({8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9}) == vector<int>27);\n    assert(solution.longestWPI({10,9,8,7,6,5,4,3,2,1,16,15,14,13,12,11,10,9,8,7}) == vector<int>19);\n    assert(solution.longestWPI({9,6,9,6,9,6,9,6,9,6,9,6,9,6,9,6,9,6,9,6,9,6,9,6,9,6,9,6,9,6,9,6}) == vector<int>31);\n    assert(solution.longestWPI({0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9,1,9,1,9,1,9,1,9,1,9,1,9,1,9,1}) == vector<int>15);\n    assert(solution.longestWPI({9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9}) == vector<int>32);\n    assert(solution.longestWPI({8,8,8,8,8,8,8,8,8,9,9,9,9,9,9,9,9,9}) == vector<int>17);\n    assert(solution.longestWPI({6,7,8,9,10,11,12,13,14,15,16,0,1,2,3,4,5}) == vector<int>15);\n    assert(solution.longestWPI({9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8}) == vector<int>101);\n    assert(solution.longestWPI({10,7,9,6,11,4,5,12,3,14,1,2,8,9,15,0,1,6,7,10}) == vector<int>5);\n    assert(solution.longestWPI({0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9,9,9,9,9,9,9,9,9,9,9,9,9,9}) == vector<int>27);\n    assert(solution.longestWPI({10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10}) == vector<int>48);\n    assert(solution.longestWPI({8,8,8,8,8,8,8,8,8,8,9,9,9,9,9,9,9,9,9,9}) == vector<int>19);\n    assert(solution.longestWPI({10,9,8,7,6,5,4,3,2,1,0,16,15,14,13,12}) == vector<int>9);\n    assert(solution.longestWPI({9,1,9,1,9,1,9,1,9,1,9,1,9,1,9,1,9,1,9,1,9,1}) == vector<int>21);\n    assert(solution.longestWPI({8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 9}) == vector<int>1);\n    assert(solution.longestWPI({16,15,14,13,12,11,10,9,8,7,6,5,4,3,2,1,0,0,0,0}) == vector<int>15);\n    assert(solution.longestWPI({8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9}) == vector<int>15);\n    assert(solution.longestWPI({9,8,7,6,5,4,3,2,1,0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16}) == vector<int>15);\n    assert(solution.longestWPI({16,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,1,2,3}) == vector<int>17);\n    assert(solution.longestWPI({1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,9}) == vector<int>1);\n    assert(solution.longestWPI({9, 8, 9, 8, 9, 8, 9, 8, 9, 8, 9, 8, 9, 8, 9, 8, 9, 8, 9, 8, 9, 8, 9, 8, 9, 8, 9}) == vector<int>27);\n    assert(solution.longestWPI({1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,15,14,13,12}) == vector<int>20);\n    assert(solution.longestWPI({9,8,7,6,5,4,3,2,1,0,16,15,14,13,12,11,10,9,8,7}) == vector<int>15);\n    assert(solution.longestWPI({9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 8}) == vector<int>21);\n    assert(solution.longestWPI({16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1}) == vector<int>15);\n    assert(solution.longestWPI({9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9}) == vector<int>33);\n    assert(solution.longestWPI({1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,16,15,14,13,12,11,10,9,8,7,6,5,4,3,2,1}) == vector<int>31);\n    assert(solution.longestWPI({9, 10, 11, 12, 13, 14, 15, 16, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12}) == vector<int>20);\n    assert(solution.longestWPI({8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 10}) == vector<int>1);\n    assert(solution.longestWPI({9,6,9,6,9,6,9,6,9,6,9,6,9,6,9,6}) == vector<int>15);\n    assert(solution.longestWPI({8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,9}) == vector<int>1);\n    assert(solution.longestWPI({9,1,9,1,9,1,9,1,9,1,9,1,9,1,9,1,9,1,9,1}) == vector<int>19);\n    assert(solution.longestWPI({1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16}) == vector<int>31);\n    assert(solution.longestWPI({6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 10}) == vector<int>1);\n    assert(solution.longestWPI({6,7,8,9,10,11,12,13,14,15,16}) == vector<int>11);\n    assert(solution.longestWPI({9,8,7,6,5,4,3,2,1,16,15,14,13,12,11,10,9,8,7,6,5,4,3,2,1,16,15,14,13,12,11,10,9,8,7,6,5,4,3,2,1,16,15,14,13,12,11,10,9,8,7,6,5,4,3,2,1,16,15,14,13,12,11,10,9,8,7,6,5,4,3,2,1}) == vector<int>65);\n    assert(solution.longestWPI({10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10}) == vector<int>20);\n    assert(solution.longestWPI({5,6,7,8,9,10,11,12,13,14,15,16,1,2,3,4,5,6,7,8}) == vector<int>15);\n    assert(solution.longestWPI({10, 1, 8, 12, 8, 9, 5, 6, 7, 10, 3, 11, 4, 8, 10}) == vector<int>3);\n    assert(solution.longestWPI({8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8}) == vector<int>51);\n    assert(solution.longestWPI({12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 1}) == vector<int>25);\n    assert(solution.longestWPI({16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16}) == vector<int>32);\n    assert(solution.longestWPI({8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9}) == vector<int>19);\n    assert(solution.longestWPI({9, 6, 9, 6, 9, 6, 9, 6, 9, 6, 9, 6, 9, 6, 9, 6, 9, 6, 9, 6}) == vector<int>19);\n    assert(solution.longestWPI({1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,1,2,3,4}) == vector<int>15);\n    assert(solution.longestWPI({16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16}) == vector<int>31);\n    assert(solution.longestWPI({9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9}) == vector<int>20);\n    assert(solution.longestWPI({10, 8, 10, 8, 10, 8, 10, 8, 10, 8, 10, 8, 10, 8, 10, 8, 10, 8, 10, 8}) == vector<int>19);\n    assert(solution.longestWPI({1,9,2,8,3,7,4,6,5,10,9,8,7,6,5,4,3,2,1,0,16,15,14,13,12,11}) == vector<int>11);\n    assert(solution.longestWPI({6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6}) == vector<int>0);\n    assert(solution.longestWPI({1,8,1,8,1,8,1,8,1,8,1,8,1,8,1,8,1,8,1,8,1,8,1,8,1,8,1,8,1,8,1,8}) == vector<int>0);\n    assert(solution.longestWPI({8,8,8,8,8,9,9,9,9,9,8,8,8,8,8,9,9,9,9,9}) == vector<int>19);\n    assert(solution.longestWPI({9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9}) == vector<int>20);\n    assert(solution.longestWPI({8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9}) == vector<int>19);\n    assert(solution.longestWPI({6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 1, 2, 3, 4, 5}) == vector<int>15);\n    assert(solution.longestWPI({9, 6, 7, 8, 5, 10, 11, 12, 13, 14, 15, 16, 1, 2, 3, 4, 0, 8, 8, 9}) == vector<int>15);\n    assert(solution.longestWPI({9,10,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9}) == vector<int>20);\n    assert(solution.longestWPI({9,8,9,8,9,8,9,8,9,8}) == vector<int>9);\n    assert(solution.longestWPI({10,10,10,10,10,10,10,10,10,10,1,2,3,4,5,6,7,8,9}) == vector<int>19);\n    assert(solution.longestWPI({9, 7, 8, 6, 5, 4, 3, 2, 1, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6}) == vector<int>17);\n    assert(solution.longestWPI({10, 5, 8, 10, 4, 6, 9, 11, 7, 3, 12, 8, 10, 9, 11, 13, 14, 6, 7, 8}) == vector<int>19);\n    assert(solution.longestWPI({1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1}) == vector<int>29);\n    assert(solution.longestWPI({16,15,14,13,12,11,10,9,8,7,6}) == vector<int>11);\n    assert(solution.longestWPI({8, 9, 9, 10, 8, 8, 8, 8, 8, 9, 9, 10, 11, 12, 7, 6, 5, 4, 3, 2}) == vector<int>15);\n    assert(solution.longestWPI({6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,9,9}) == vector<int>3);\n    assert(solution.longestWPI({9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8}) == vector<int>51);\n    assert(solution.longestWPI({1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,1,2,3,4,5}) == vector<int>15);\n    assert(solution.longestWPI({9,0,9,0,9,0,9,0,9,0,9,0,9,0,9,0,9,0,9,0,9,0,9,0,9,0,9,0,9,0,9,0,9,0}) == vector<int>33);\n    assert(solution.longestWPI({6,9,6,9,6,9,6,9,6,9,6,9,6,9,6,9,6,9,6,9,6,9}) == vector<int>21);\n    assert(solution.longestWPI({9,8,7,6,5,4,3,2,1,0,9,8,7,6,5,4,3,2,1,0}) == vector<int>1);\n}",
+    "java": "public static void check(Solution solution) {\n    assert Arrays.equals(solution.longestWPI(new int[]{9,7,9,7,9,7,9,7}), 7);\n    assert Arrays.equals(solution.longestWPI(new int[]{8,9,9,10}), 4);\n    assert Arrays.equals(solution.longestWPI(new int[]{9,9,9,9,9,9,9}), 7);\n    assert Arrays.equals(solution.longestWPI(new int[]{9,8,7,6,5,4,3,2,1}), 1);\n    assert Arrays.equals(solution.longestWPI(new int[]{8,9,8,9,8,9,8,9,8,9}), 9);\n    assert Arrays.equals(solution.longestWPI(new int[]{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}), 0);\n    assert Arrays.equals(solution.longestWPI(new int[]{10,9,8,7,6,5,4,3,2,1}), 3);\n    assert Arrays.equals(solution.longestWPI(new int[]{1,2,3,4,5,6,7,8,9,10}), 3);\n    assert Arrays.equals(solution.longestWPI(new int[]{16,16,16,16}), 4);\n    assert Arrays.equals(solution.longestWPI(new int[]{12,13,14,15,16,0,0,0,0,0}), 9);\n    assert Arrays.equals(solution.longestWPI(new int[]{0,0,0,0,0,0,0,0,0,0,8,9}), 1);\n    assert Arrays.equals(solution.longestWPI(new int[]{5,5,5,5,5,5,5,5}), 0);\n    assert Arrays.equals(solution.longestWPI(new int[]{8,9,9,2,5}), 3);\n    assert Arrays.equals(solution.longestWPI(new int[]{12,8,9,9,9,10,8,8,9,10,12}), 11);\n    assert Arrays.equals(solution.longestWPI(new int[]{10,10,10,10,10,10,10,10}), 8);\n    assert Arrays.equals(solution.longestWPI(new int[]{9,9,6,0,6,6,9}), 3);\n    assert Arrays.equals(solution.longestWPI(new int[]{0,0,0,0,0,0,0,0,0,0}), 0);\n    assert Arrays.equals(solution.longestWPI(new int[]{1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16}), 15);\n    assert Arrays.equals(solution.longestWPI(new int[]{10,10,10,10}), 4);\n    assert Arrays.equals(solution.longestWPI(new int[]{6,6,6}), 0);\n    assert Arrays.equals(solution.longestWPI(new int[]{8,8,8,8,8,8,8,8}), 0);\n    assert Arrays.equals(solution.longestWPI(new int[]{7,7,7,9,9,9}), 5);\n    assert Arrays.equals(solution.longestWPI(new int[]{8,9,9,2,1,0,7}), 3);\n    assert Arrays.equals(solution.longestWPI(new int[]{10,8,10,8,10,8,10,8,10,8}), 9);\n    assert Arrays.equals(solution.longestWPI(new int[]{9,9,9,9,9,9,9,9,9,9}), 10);\n    assert Arrays.equals(solution.longestWPI(new int[]{6,9,6,9,6,9,6,9}), 7);\n    assert Arrays.equals(solution.longestWPI(new int[]{8,9,7,8,6,4,9,8,9,8}), 3);\n    assert Arrays.equals(solution.longestWPI(new int[]{7,7,7,7,7,7,7}), 0);\n    assert Arrays.equals(solution.longestWPI(new int[]{16,0,16,0,16,0,16,0,16,0,16,0,16,0,16,0,16,0,16,0,16,0,16,0,16,0}), 25);\n    assert Arrays.equals(solution.longestWPI(new int[]{8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9}), 27);\n    assert Arrays.equals(solution.longestWPI(new int[]{10,9,8,7,6,5,4,3,2,1,16,15,14,13,12,11,10,9,8,7}), 19);\n    assert Arrays.equals(solution.longestWPI(new int[]{9,6,9,6,9,6,9,6,9,6,9,6,9,6,9,6,9,6,9,6,9,6,9,6,9,6,9,6,9,6,9,6}), 31);\n    assert Arrays.equals(solution.longestWPI(new int[]{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9,1,9,1,9,1,9,1,9,1,9,1,9,1,9,1}), 15);\n    assert Arrays.equals(solution.longestWPI(new int[]{9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9}), 32);\n    assert Arrays.equals(solution.longestWPI(new int[]{8,8,8,8,8,8,8,8,8,9,9,9,9,9,9,9,9,9}), 17);\n    assert Arrays.equals(solution.longestWPI(new int[]{6,7,8,9,10,11,12,13,14,15,16,0,1,2,3,4,5}), 15);\n    assert Arrays.equals(solution.longestWPI(new int[]{9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8}), 101);\n    assert Arrays.equals(solution.longestWPI(new int[]{10,7,9,6,11,4,5,12,3,14,1,2,8,9,15,0,1,6,7,10}), 5);\n    assert Arrays.equals(solution.longestWPI(new int[]{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9,9,9,9,9,9,9,9,9,9,9,9,9,9}), 27);\n    assert Arrays.equals(solution.longestWPI(new int[]{10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10}), 48);\n    assert Arrays.equals(solution.longestWPI(new int[]{8,8,8,8,8,8,8,8,8,8,9,9,9,9,9,9,9,9,9,9}), 19);\n    assert Arrays.equals(solution.longestWPI(new int[]{10,9,8,7,6,5,4,3,2,1,0,16,15,14,13,12}), 9);\n    assert Arrays.equals(solution.longestWPI(new int[]{9,1,9,1,9,1,9,1,9,1,9,1,9,1,9,1,9,1,9,1,9,1}), 21);\n    assert Arrays.equals(solution.longestWPI(new int[]{8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 9}), 1);\n    assert Arrays.equals(solution.longestWPI(new int[]{16,15,14,13,12,11,10,9,8,7,6,5,4,3,2,1,0,0,0,0}), 15);\n    assert Arrays.equals(solution.longestWPI(new int[]{8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9}), 15);\n    assert Arrays.equals(solution.longestWPI(new int[]{9,8,7,6,5,4,3,2,1,0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16}), 15);\n    assert Arrays.equals(solution.longestWPI(new int[]{16,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,1,2,3}), 17);\n    assert Arrays.equals(solution.longestWPI(new int[]{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,9}), 1);\n    assert Arrays.equals(solution.longestWPI(new int[]{9, 8, 9, 8, 9, 8, 9, 8, 9, 8, 9, 8, 9, 8, 9, 8, 9, 8, 9, 8, 9, 8, 9, 8, 9, 8, 9}), 27);\n    assert Arrays.equals(solution.longestWPI(new int[]{1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,15,14,13,12}), 20);\n    assert Arrays.equals(solution.longestWPI(new int[]{9,8,7,6,5,4,3,2,1,0,16,15,14,13,12,11,10,9,8,7}), 15);\n    assert Arrays.equals(solution.longestWPI(new int[]{9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 8}), 21);\n    assert Arrays.equals(solution.longestWPI(new int[]{16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1}), 15);\n    assert Arrays.equals(solution.longestWPI(new int[]{9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9}), 33);\n    assert Arrays.equals(solution.longestWPI(new int[]{1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,16,15,14,13,12,11,10,9,8,7,6,5,4,3,2,1}), 31);\n    assert Arrays.equals(solution.longestWPI(new int[]{9, 10, 11, 12, 13, 14, 15, 16, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12}), 20);\n    assert Arrays.equals(solution.longestWPI(new int[]{8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 10}), 1);\n    assert Arrays.equals(solution.longestWPI(new int[]{9,6,9,6,9,6,9,6,9,6,9,6,9,6,9,6}), 15);\n    assert Arrays.equals(solution.longestWPI(new int[]{8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,9}), 1);\n    assert Arrays.equals(solution.longestWPI(new int[]{9,1,9,1,9,1,9,1,9,1,9,1,9,1,9,1,9,1,9,1}), 19);\n    assert Arrays.equals(solution.longestWPI(new int[]{1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16}), 31);\n    assert Arrays.equals(solution.longestWPI(new int[]{6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 10}), 1);\n    assert Arrays.equals(solution.longestWPI(new int[]{6,7,8,9,10,11,12,13,14,15,16}), 11);\n    assert Arrays.equals(solution.longestWPI(new int[]{9,8,7,6,5,4,3,2,1,16,15,14,13,12,11,10,9,8,7,6,5,4,3,2,1,16,15,14,13,12,11,10,9,8,7,6,5,4,3,2,1,16,15,14,13,12,11,10,9,8,7,6,5,4,3,2,1,16,15,14,13,12,11,10,9,8,7,6,5,4,3,2,1}), 65);\n    assert Arrays.equals(solution.longestWPI(new int[]{10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10}), 20);\n    assert Arrays.equals(solution.longestWPI(new int[]{5,6,7,8,9,10,11,12,13,14,15,16,1,2,3,4,5,6,7,8}), 15);\n    assert Arrays.equals(solution.longestWPI(new int[]{10, 1, 8, 12, 8, 9, 5, 6, 7, 10, 3, 11, 4, 8, 10}), 3);\n    assert Arrays.equals(solution.longestWPI(new int[]{8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8}), 51);\n    assert Arrays.equals(solution.longestWPI(new int[]{12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 1}), 25);\n    assert Arrays.equals(solution.longestWPI(new int[]{16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16}), 32);\n    assert Arrays.equals(solution.longestWPI(new int[]{8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9}), 19);\n    assert Arrays.equals(solution.longestWPI(new int[]{9, 6, 9, 6, 9, 6, 9, 6, 9, 6, 9, 6, 9, 6, 9, 6, 9, 6, 9, 6}), 19);\n    assert Arrays.equals(solution.longestWPI(new int[]{1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,1,2,3,4}), 15);\n    assert Arrays.equals(solution.longestWPI(new int[]{16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16}), 31);\n    assert Arrays.equals(solution.longestWPI(new int[]{9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9}), 20);\n    assert Arrays.equals(solution.longestWPI(new int[]{10, 8, 10, 8, 10, 8, 10, 8, 10, 8, 10, 8, 10, 8, 10, 8, 10, 8, 10, 8}), 19);\n    assert Arrays.equals(solution.longestWPI(new int[]{1,9,2,8,3,7,4,6,5,10,9,8,7,6,5,4,3,2,1,0,16,15,14,13,12,11}), 11);\n    assert Arrays.equals(solution.longestWPI(new int[]{6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6}), 0);\n    assert Arrays.equals(solution.longestWPI(new int[]{1,8,1,8,1,8,1,8,1,8,1,8,1,8,1,8,1,8,1,8,1,8,1,8,1,8,1,8,1,8,1,8}), 0);\n    assert Arrays.equals(solution.longestWPI(new int[]{8,8,8,8,8,9,9,9,9,9,8,8,8,8,8,9,9,9,9,9}), 19);\n    assert Arrays.equals(solution.longestWPI(new int[]{9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9}), 20);\n    assert Arrays.equals(solution.longestWPI(new int[]{8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9}), 19);\n    assert Arrays.equals(solution.longestWPI(new int[]{6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 1, 2, 3, 4, 5}), 15);\n    assert Arrays.equals(solution.longestWPI(new int[]{9, 6, 7, 8, 5, 10, 11, 12, 13, 14, 15, 16, 1, 2, 3, 4, 0, 8, 8, 9}), 15);\n    assert Arrays.equals(solution.longestWPI(new int[]{9,10,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9}), 20);\n    assert Arrays.equals(solution.longestWPI(new int[]{9,8,9,8,9,8,9,8,9,8}), 9);\n    assert Arrays.equals(solution.longestWPI(new int[]{10,10,10,10,10,10,10,10,10,10,1,2,3,4,5,6,7,8,9}), 19);\n    assert Arrays.equals(solution.longestWPI(new int[]{9, 7, 8, 6, 5, 4, 3, 2, 1, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6}), 17);\n    assert Arrays.equals(solution.longestWPI(new int[]{10, 5, 8, 10, 4, 6, 9, 11, 7, 3, 12, 8, 10, 9, 11, 13, 14, 6, 7, 8}), 19);\n    assert Arrays.equals(solution.longestWPI(new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1}), 29);\n    assert Arrays.equals(solution.longestWPI(new int[]{16,15,14,13,12,11,10,9,8,7,6}), 11);\n    assert Arrays.equals(solution.longestWPI(new int[]{8, 9, 9, 10, 8, 8, 8, 8, 8, 9, 9, 10, 11, 12, 7, 6, 5, 4, 3, 2}), 15);\n    assert Arrays.equals(solution.longestWPI(new int[]{6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,9,9}), 3);\n    assert Arrays.equals(solution.longestWPI(new int[]{9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8}), 51);\n    assert Arrays.equals(solution.longestWPI(new int[]{1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,1,2,3,4,5}), 15);\n    assert Arrays.equals(solution.longestWPI(new int[]{9,0,9,0,9,0,9,0,9,0,9,0,9,0,9,0,9,0,9,0,9,0,9,0,9,0,9,0,9,0,9,0,9,0}), 33);\n    assert Arrays.equals(solution.longestWPI(new int[]{6,9,6,9,6,9,6,9,6,9,6,9,6,9,6,9,6,9,6,9,6,9}), 21);\n    assert Arrays.equals(solution.longestWPI(new int[]{9,8,7,6,5,4,3,2,1,0,9,8,7,6,5,4,3,2,1,0}), 1);\n}",
+    "javascript": "function check(candidate) {\n    console.assert(JSON.stringify(candidate([9,7,9,7,9,7,9,7])) === JSON.stringify(7));\n    console.assert(JSON.stringify(candidate([8,9,9,10])) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate([9,9,9,9,9,9,9])) === JSON.stringify(7));\n    console.assert(JSON.stringify(candidate([9,8,7,6,5,4,3,2,1])) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate([8,9,8,9,8,9,8,9,8,9])) === JSON.stringify(9));\n    console.assert(JSON.stringify(candidate([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0])) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate([10,9,8,7,6,5,4,3,2,1])) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate([1,2,3,4,5,6,7,8,9,10])) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate([16,16,16,16])) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate([12,13,14,15,16,0,0,0,0,0])) === JSON.stringify(9));\n    console.assert(JSON.stringify(candidate([0,0,0,0,0,0,0,0,0,0,8,9])) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate([5,5,5,5,5,5,5,5])) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate([8,9,9,2,5])) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate([12,8,9,9,9,10,8,8,9,10,12])) === JSON.stringify(11));\n    console.assert(JSON.stringify(candidate([10,10,10,10,10,10,10,10])) === JSON.stringify(8));\n    console.assert(JSON.stringify(candidate([9,9,6,0,6,6,9])) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate([0,0,0,0,0,0,0,0,0,0])) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16])) === JSON.stringify(15));\n    console.assert(JSON.stringify(candidate([10,10,10,10])) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate([6,6,6])) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate([8,8,8,8,8,8,8,8])) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate([7,7,7,9,9,9])) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate([8,9,9,2,1,0,7])) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate([10,8,10,8,10,8,10,8,10,8])) === JSON.stringify(9));\n    console.assert(JSON.stringify(candidate([9,9,9,9,9,9,9,9,9,9])) === JSON.stringify(10));\n    console.assert(JSON.stringify(candidate([6,9,6,9,6,9,6,9])) === JSON.stringify(7));\n    console.assert(JSON.stringify(candidate([8,9,7,8,6,4,9,8,9,8])) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate([7,7,7,7,7,7,7])) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate([16,0,16,0,16,0,16,0,16,0,16,0,16,0,16,0,16,0,16,0,16,0,16,0,16,0])) === JSON.stringify(25));\n    console.assert(JSON.stringify(candidate([8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9])) === JSON.stringify(27));\n    console.assert(JSON.stringify(candidate([10,9,8,7,6,5,4,3,2,1,16,15,14,13,12,11,10,9,8,7])) === JSON.stringify(19));\n    console.assert(JSON.stringify(candidate([9,6,9,6,9,6,9,6,9,6,9,6,9,6,9,6,9,6,9,6,9,6,9,6,9,6,9,6,9,6,9,6])) === JSON.stringify(31));\n    console.assert(JSON.stringify(candidate([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9,1,9,1,9,1,9,1,9,1,9,1,9,1,9,1])) === JSON.stringify(15));\n    console.assert(JSON.stringify(candidate([9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9])) === JSON.stringify(32));\n    console.assert(JSON.stringify(candidate([8,8,8,8,8,8,8,8,8,9,9,9,9,9,9,9,9,9])) === JSON.stringify(17));\n    console.assert(JSON.stringify(candidate([6,7,8,9,10,11,12,13,14,15,16,0,1,2,3,4,5])) === JSON.stringify(15));\n    console.assert(JSON.stringify(candidate([9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8])) === JSON.stringify(101));\n    console.assert(JSON.stringify(candidate([10,7,9,6,11,4,5,12,3,14,1,2,8,9,15,0,1,6,7,10])) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9,9,9,9,9,9,9,9,9,9,9,9,9,9])) === JSON.stringify(27));\n    console.assert(JSON.stringify(candidate([10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10])) === JSON.stringify(48));\n    console.assert(JSON.stringify(candidate([8,8,8,8,8,8,8,8,8,8,9,9,9,9,9,9,9,9,9,9])) === JSON.stringify(19));\n    console.assert(JSON.stringify(candidate([10,9,8,7,6,5,4,3,2,1,0,16,15,14,13,12])) === JSON.stringify(9));\n    console.assert(JSON.stringify(candidate([9,1,9,1,9,1,9,1,9,1,9,1,9,1,9,1,9,1,9,1,9,1])) === JSON.stringify(21));\n    console.assert(JSON.stringify(candidate([8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 9])) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate([16,15,14,13,12,11,10,9,8,7,6,5,4,3,2,1,0,0,0,0])) === JSON.stringify(15));\n    console.assert(JSON.stringify(candidate([8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9])) === JSON.stringify(15));\n    console.assert(JSON.stringify(candidate([9,8,7,6,5,4,3,2,1,0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16])) === JSON.stringify(15));\n    console.assert(JSON.stringify(candidate([16,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,1,2,3])) === JSON.stringify(17));\n    console.assert(JSON.stringify(candidate([1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,9])) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate([9, 8, 9, 8, 9, 8, 9, 8, 9, 8, 9, 8, 9, 8, 9, 8, 9, 8, 9, 8, 9, 8, 9, 8, 9, 8, 9])) === JSON.stringify(27));\n    console.assert(JSON.stringify(candidate([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,15,14,13,12])) === JSON.stringify(20));\n    console.assert(JSON.stringify(candidate([9,8,7,6,5,4,3,2,1,0,16,15,14,13,12,11,10,9,8,7])) === JSON.stringify(15));\n    console.assert(JSON.stringify(candidate([9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 8])) === JSON.stringify(21));\n    console.assert(JSON.stringify(candidate([16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1])) === JSON.stringify(15));\n    console.assert(JSON.stringify(candidate([9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9])) === JSON.stringify(33));\n    console.assert(JSON.stringify(candidate([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,16,15,14,13,12,11,10,9,8,7,6,5,4,3,2,1])) === JSON.stringify(31));\n    console.assert(JSON.stringify(candidate([9, 10, 11, 12, 13, 14, 15, 16, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12])) === JSON.stringify(20));\n    console.assert(JSON.stringify(candidate([8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 10])) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate([9,6,9,6,9,6,9,6,9,6,9,6,9,6,9,6])) === JSON.stringify(15));\n    console.assert(JSON.stringify(candidate([8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,9])) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate([9,1,9,1,9,1,9,1,9,1,9,1,9,1,9,1,9,1,9,1])) === JSON.stringify(19));\n    console.assert(JSON.stringify(candidate([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16])) === JSON.stringify(31));\n    console.assert(JSON.stringify(candidate([6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 10])) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate([6,7,8,9,10,11,12,13,14,15,16])) === JSON.stringify(11));\n    console.assert(JSON.stringify(candidate([9,8,7,6,5,4,3,2,1,16,15,14,13,12,11,10,9,8,7,6,5,4,3,2,1,16,15,14,13,12,11,10,9,8,7,6,5,4,3,2,1,16,15,14,13,12,11,10,9,8,7,6,5,4,3,2,1,16,15,14,13,12,11,10,9,8,7,6,5,4,3,2,1])) === JSON.stringify(65));\n    console.assert(JSON.stringify(candidate([10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10])) === JSON.stringify(20));\n    console.assert(JSON.stringify(candidate([5,6,7,8,9,10,11,12,13,14,15,16,1,2,3,4,5,6,7,8])) === JSON.stringify(15));\n    console.assert(JSON.stringify(candidate([10, 1, 8, 12, 8, 9, 5, 6, 7, 10, 3, 11, 4, 8, 10])) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate([8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8])) === JSON.stringify(51));\n    console.assert(JSON.stringify(candidate([12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 1])) === JSON.stringify(25));\n    console.assert(JSON.stringify(candidate([16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16])) === JSON.stringify(32));\n    console.assert(JSON.stringify(candidate([8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9])) === JSON.stringify(19));\n    console.assert(JSON.stringify(candidate([9, 6, 9, 6, 9, 6, 9, 6, 9, 6, 9, 6, 9, 6, 9, 6, 9, 6, 9, 6])) === JSON.stringify(19));\n    console.assert(JSON.stringify(candidate([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,1,2,3,4])) === JSON.stringify(15));\n    console.assert(JSON.stringify(candidate([16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16])) === JSON.stringify(31));\n    console.assert(JSON.stringify(candidate([9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9])) === JSON.stringify(20));\n    console.assert(JSON.stringify(candidate([10, 8, 10, 8, 10, 8, 10, 8, 10, 8, 10, 8, 10, 8, 10, 8, 10, 8, 10, 8])) === JSON.stringify(19));\n    console.assert(JSON.stringify(candidate([1,9,2,8,3,7,4,6,5,10,9,8,7,6,5,4,3,2,1,0,16,15,14,13,12,11])) === JSON.stringify(11));\n    console.assert(JSON.stringify(candidate([6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6])) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate([1,8,1,8,1,8,1,8,1,8,1,8,1,8,1,8,1,8,1,8,1,8,1,8,1,8,1,8,1,8,1,8])) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate([8,8,8,8,8,9,9,9,9,9,8,8,8,8,8,9,9,9,9,9])) === JSON.stringify(19));\n    console.assert(JSON.stringify(candidate([9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9])) === JSON.stringify(20));\n    console.assert(JSON.stringify(candidate([8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9])) === JSON.stringify(19));\n    console.assert(JSON.stringify(candidate([6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 1, 2, 3, 4, 5])) === JSON.stringify(15));\n    console.assert(JSON.stringify(candidate([9, 6, 7, 8, 5, 10, 11, 12, 13, 14, 15, 16, 1, 2, 3, 4, 0, 8, 8, 9])) === JSON.stringify(15));\n    console.assert(JSON.stringify(candidate([9,10,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9])) === JSON.stringify(20));\n    console.assert(JSON.stringify(candidate([9,8,9,8,9,8,9,8,9,8])) === JSON.stringify(9));\n    console.assert(JSON.stringify(candidate([10,10,10,10,10,10,10,10,10,10,1,2,3,4,5,6,7,8,9])) === JSON.stringify(19));\n    console.assert(JSON.stringify(candidate([9, 7, 8, 6, 5, 4, 3, 2, 1, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6])) === JSON.stringify(17));\n    console.assert(JSON.stringify(candidate([10, 5, 8, 10, 4, 6, 9, 11, 7, 3, 12, 8, 10, 9, 11, 13, 14, 6, 7, 8])) === JSON.stringify(19));\n    console.assert(JSON.stringify(candidate([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1])) === JSON.stringify(29));\n    console.assert(JSON.stringify(candidate([16,15,14,13,12,11,10,9,8,7,6])) === JSON.stringify(11));\n    console.assert(JSON.stringify(candidate([8, 9, 9, 10, 8, 8, 8, 8, 8, 9, 9, 10, 11, 12, 7, 6, 5, 4, 3, 2])) === JSON.stringify(15));\n    console.assert(JSON.stringify(candidate([6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,9,9])) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate([9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8])) === JSON.stringify(51));\n    console.assert(JSON.stringify(candidate([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,1,2,3,4,5])) === JSON.stringify(15));\n    console.assert(JSON.stringify(candidate([9,0,9,0,9,0,9,0,9,0,9,0,9,0,9,0,9,0,9,0,9,0,9,0,9,0,9,0,9,0,9,0,9,0])) === JSON.stringify(33));\n    console.assert(JSON.stringify(candidate([6,9,6,9,6,9,6,9,6,9,6,9,6,9,6,9,6,9,6,9,6,9])) === JSON.stringify(21));\n    console.assert(JSON.stringify(candidate([9,8,7,6,5,4,3,2,1,0,9,8,7,6,5,4,3,2,1,0])) === JSON.stringify(1));\n}",
+    "typescript": "function check(candidate: Function): void {\n    console.assert(JSON.stringify(candidate([9,7,9,7,9,7,9,7])) === JSON.stringify(7));\n    console.assert(JSON.stringify(candidate([8,9,9,10])) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate([9,9,9,9,9,9,9])) === JSON.stringify(7));\n    console.assert(JSON.stringify(candidate([9,8,7,6,5,4,3,2,1])) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate([8,9,8,9,8,9,8,9,8,9])) === JSON.stringify(9));\n    console.assert(JSON.stringify(candidate([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0])) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate([10,9,8,7,6,5,4,3,2,1])) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate([1,2,3,4,5,6,7,8,9,10])) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate([16,16,16,16])) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate([12,13,14,15,16,0,0,0,0,0])) === JSON.stringify(9));\n    console.assert(JSON.stringify(candidate([0,0,0,0,0,0,0,0,0,0,8,9])) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate([5,5,5,5,5,5,5,5])) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate([8,9,9,2,5])) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate([12,8,9,9,9,10,8,8,9,10,12])) === JSON.stringify(11));\n    console.assert(JSON.stringify(candidate([10,10,10,10,10,10,10,10])) === JSON.stringify(8));\n    console.assert(JSON.stringify(candidate([9,9,6,0,6,6,9])) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate([0,0,0,0,0,0,0,0,0,0])) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16])) === JSON.stringify(15));\n    console.assert(JSON.stringify(candidate([10,10,10,10])) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate([6,6,6])) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate([8,8,8,8,8,8,8,8])) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate([7,7,7,9,9,9])) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate([8,9,9,2,1,0,7])) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate([10,8,10,8,10,8,10,8,10,8])) === JSON.stringify(9));\n    console.assert(JSON.stringify(candidate([9,9,9,9,9,9,9,9,9,9])) === JSON.stringify(10));\n    console.assert(JSON.stringify(candidate([6,9,6,9,6,9,6,9])) === JSON.stringify(7));\n    console.assert(JSON.stringify(candidate([8,9,7,8,6,4,9,8,9,8])) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate([7,7,7,7,7,7,7])) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate([16,0,16,0,16,0,16,0,16,0,16,0,16,0,16,0,16,0,16,0,16,0,16,0,16,0])) === JSON.stringify(25));\n    console.assert(JSON.stringify(candidate([8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9])) === JSON.stringify(27));\n    console.assert(JSON.stringify(candidate([10,9,8,7,6,5,4,3,2,1,16,15,14,13,12,11,10,9,8,7])) === JSON.stringify(19));\n    console.assert(JSON.stringify(candidate([9,6,9,6,9,6,9,6,9,6,9,6,9,6,9,6,9,6,9,6,9,6,9,6,9,6,9,6,9,6,9,6])) === JSON.stringify(31));\n    console.assert(JSON.stringify(candidate([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9,1,9,1,9,1,9,1,9,1,9,1,9,1,9,1])) === JSON.stringify(15));\n    console.assert(JSON.stringify(candidate([9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9])) === JSON.stringify(32));\n    console.assert(JSON.stringify(candidate([8,8,8,8,8,8,8,8,8,9,9,9,9,9,9,9,9,9])) === JSON.stringify(17));\n    console.assert(JSON.stringify(candidate([6,7,8,9,10,11,12,13,14,15,16,0,1,2,3,4,5])) === JSON.stringify(15));\n    console.assert(JSON.stringify(candidate([9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8])) === JSON.stringify(101));\n    console.assert(JSON.stringify(candidate([10,7,9,6,11,4,5,12,3,14,1,2,8,9,15,0,1,6,7,10])) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9,9,9,9,9,9,9,9,9,9,9,9,9,9])) === JSON.stringify(27));\n    console.assert(JSON.stringify(candidate([10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10])) === JSON.stringify(48));\n    console.assert(JSON.stringify(candidate([8,8,8,8,8,8,8,8,8,8,9,9,9,9,9,9,9,9,9,9])) === JSON.stringify(19));\n    console.assert(JSON.stringify(candidate([10,9,8,7,6,5,4,3,2,1,0,16,15,14,13,12])) === JSON.stringify(9));\n    console.assert(JSON.stringify(candidate([9,1,9,1,9,1,9,1,9,1,9,1,9,1,9,1,9,1,9,1,9,1])) === JSON.stringify(21));\n    console.assert(JSON.stringify(candidate([8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 9])) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate([16,15,14,13,12,11,10,9,8,7,6,5,4,3,2,1,0,0,0,0])) === JSON.stringify(15));\n    console.assert(JSON.stringify(candidate([8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9])) === JSON.stringify(15));\n    console.assert(JSON.stringify(candidate([9,8,7,6,5,4,3,2,1,0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16])) === JSON.stringify(15));\n    console.assert(JSON.stringify(candidate([16,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,1,2,3])) === JSON.stringify(17));\n    console.assert(JSON.stringify(candidate([1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,9])) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate([9, 8, 9, 8, 9, 8, 9, 8, 9, 8, 9, 8, 9, 8, 9, 8, 9, 8, 9, 8, 9, 8, 9, 8, 9, 8, 9])) === JSON.stringify(27));\n    console.assert(JSON.stringify(candidate([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,15,14,13,12])) === JSON.stringify(20));\n    console.assert(JSON.stringify(candidate([9,8,7,6,5,4,3,2,1,0,16,15,14,13,12,11,10,9,8,7])) === JSON.stringify(15));\n    console.assert(JSON.stringify(candidate([9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 8])) === JSON.stringify(21));\n    console.assert(JSON.stringify(candidate([16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1])) === JSON.stringify(15));\n    console.assert(JSON.stringify(candidate([9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9])) === JSON.stringify(33));\n    console.assert(JSON.stringify(candidate([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,16,15,14,13,12,11,10,9,8,7,6,5,4,3,2,1])) === JSON.stringify(31));\n    console.assert(JSON.stringify(candidate([9, 10, 11, 12, 13, 14, 15, 16, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12])) === JSON.stringify(20));\n    console.assert(JSON.stringify(candidate([8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 10])) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate([9,6,9,6,9,6,9,6,9,6,9,6,9,6,9,6])) === JSON.stringify(15));\n    console.assert(JSON.stringify(candidate([8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,9])) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate([9,1,9,1,9,1,9,1,9,1,9,1,9,1,9,1,9,1,9,1])) === JSON.stringify(19));\n    console.assert(JSON.stringify(candidate([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16])) === JSON.stringify(31));\n    console.assert(JSON.stringify(candidate([6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 10])) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate([6,7,8,9,10,11,12,13,14,15,16])) === JSON.stringify(11));\n    console.assert(JSON.stringify(candidate([9,8,7,6,5,4,3,2,1,16,15,14,13,12,11,10,9,8,7,6,5,4,3,2,1,16,15,14,13,12,11,10,9,8,7,6,5,4,3,2,1,16,15,14,13,12,11,10,9,8,7,6,5,4,3,2,1,16,15,14,13,12,11,10,9,8,7,6,5,4,3,2,1])) === JSON.stringify(65));\n    console.assert(JSON.stringify(candidate([10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10])) === JSON.stringify(20));\n    console.assert(JSON.stringify(candidate([5,6,7,8,9,10,11,12,13,14,15,16,1,2,3,4,5,6,7,8])) === JSON.stringify(15));\n    console.assert(JSON.stringify(candidate([10, 1, 8, 12, 8, 9, 5, 6, 7, 10, 3, 11, 4, 8, 10])) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate([8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8])) === JSON.stringify(51));\n    console.assert(JSON.stringify(candidate([12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 1])) === JSON.stringify(25));\n    console.assert(JSON.stringify(candidate([16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16])) === JSON.stringify(32));\n    console.assert(JSON.stringify(candidate([8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9])) === JSON.stringify(19));\n    console.assert(JSON.stringify(candidate([9, 6, 9, 6, 9, 6, 9, 6, 9, 6, 9, 6, 9, 6, 9, 6, 9, 6, 9, 6])) === JSON.stringify(19));\n    console.assert(JSON.stringify(candidate([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,1,2,3,4])) === JSON.stringify(15));\n    console.assert(JSON.stringify(candidate([16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16])) === JSON.stringify(31));\n    console.assert(JSON.stringify(candidate([9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9])) === JSON.stringify(20));\n    console.assert(JSON.stringify(candidate([10, 8, 10, 8, 10, 8, 10, 8, 10, 8, 10, 8, 10, 8, 10, 8, 10, 8, 10, 8])) === JSON.stringify(19));\n    console.assert(JSON.stringify(candidate([1,9,2,8,3,7,4,6,5,10,9,8,7,6,5,4,3,2,1,0,16,15,14,13,12,11])) === JSON.stringify(11));\n    console.assert(JSON.stringify(candidate([6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6])) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate([1,8,1,8,1,8,1,8,1,8,1,8,1,8,1,8,1,8,1,8,1,8,1,8,1,8,1,8,1,8,1,8])) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate([8,8,8,8,8,9,9,9,9,9,8,8,8,8,8,9,9,9,9,9])) === JSON.stringify(19));\n    console.assert(JSON.stringify(candidate([9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9])) === JSON.stringify(20));\n    console.assert(JSON.stringify(candidate([8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9])) === JSON.stringify(19));\n    console.assert(JSON.stringify(candidate([6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 1, 2, 3, 4, 5])) === JSON.stringify(15));\n    console.assert(JSON.stringify(candidate([9, 6, 7, 8, 5, 10, 11, 12, 13, 14, 15, 16, 1, 2, 3, 4, 0, 8, 8, 9])) === JSON.stringify(15));\n    console.assert(JSON.stringify(candidate([9,10,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9])) === JSON.stringify(20));\n    console.assert(JSON.stringify(candidate([9,8,9,8,9,8,9,8,9,8])) === JSON.stringify(9));\n    console.assert(JSON.stringify(candidate([10,10,10,10,10,10,10,10,10,10,1,2,3,4,5,6,7,8,9])) === JSON.stringify(19));\n    console.assert(JSON.stringify(candidate([9, 7, 8, 6, 5, 4, 3, 2, 1, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6])) === JSON.stringify(17));\n    console.assert(JSON.stringify(candidate([10, 5, 8, 10, 4, 6, 9, 11, 7, 3, 12, 8, 10, 9, 11, 13, 14, 6, 7, 8])) === JSON.stringify(19));\n    console.assert(JSON.stringify(candidate([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1])) === JSON.stringify(29));\n    console.assert(JSON.stringify(candidate([16,15,14,13,12,11,10,9,8,7,6])) === JSON.stringify(11));\n    console.assert(JSON.stringify(candidate([8, 9, 9, 10, 8, 8, 8, 8, 8, 9, 9, 10, 11, 12, 7, 6, 5, 4, 3, 2])) === JSON.stringify(15));\n    console.assert(JSON.stringify(candidate([6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,9,9])) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate([9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8])) === JSON.stringify(51));\n    console.assert(JSON.stringify(candidate([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,1,2,3,4,5])) === JSON.stringify(15));\n    console.assert(JSON.stringify(candidate([9,0,9,0,9,0,9,0,9,0,9,0,9,0,9,0,9,0,9,0,9,0,9,0,9,0,9,0,9,0,9,0,9,0])) === JSON.stringify(33));\n    console.assert(JSON.stringify(candidate([6,9,6,9,6,9,6,9,6,9,6,9,6,9,6,9,6,9,6,9,6,9])) === JSON.stringify(21));\n    console.assert(JSON.stringify(candidate([9,8,7,6,5,4,3,2,1,0,9,8,7,6,5,4,3,2,1,0])) === JSON.stringify(1));\n}",
+    "golang": "func check(candidate func([]int, int) []int) {\n    assert reflect.DeepEqual(candidate([]int{9,7,9,7,9,7,9,7}), 7)\n    assert reflect.DeepEqual(candidate([]int{8,9,9,10}), 4)\n    assert reflect.DeepEqual(candidate([]int{9,9,9,9,9,9,9}), 7)\n    assert reflect.DeepEqual(candidate([]int{9,8,7,6,5,4,3,2,1}), 1)\n    assert reflect.DeepEqual(candidate([]int{8,9,8,9,8,9,8,9,8,9}), 9)\n    assert reflect.DeepEqual(candidate([]int{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}), 0)\n    assert reflect.DeepEqual(candidate([]int{10,9,8,7,6,5,4,3,2,1}), 3)\n    assert reflect.DeepEqual(candidate([]int{1,2,3,4,5,6,7,8,9,10}), 3)\n    assert reflect.DeepEqual(candidate([]int{16,16,16,16}), 4)\n    assert reflect.DeepEqual(candidate([]int{12,13,14,15,16,0,0,0,0,0}), 9)\n    assert reflect.DeepEqual(candidate([]int{0,0,0,0,0,0,0,0,0,0,8,9}), 1)\n    assert reflect.DeepEqual(candidate([]int{5,5,5,5,5,5,5,5}), 0)\n    assert reflect.DeepEqual(candidate([]int{8,9,9,2,5}), 3)\n    assert reflect.DeepEqual(candidate([]int{12,8,9,9,9,10,8,8,9,10,12}), 11)\n    assert reflect.DeepEqual(candidate([]int{10,10,10,10,10,10,10,10}), 8)\n    assert reflect.DeepEqual(candidate([]int{9,9,6,0,6,6,9}), 3)\n    assert reflect.DeepEqual(candidate([]int{0,0,0,0,0,0,0,0,0,0}), 0)\n    assert reflect.DeepEqual(candidate([]int{1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16}), 15)\n    assert reflect.DeepEqual(candidate([]int{10,10,10,10}), 4)\n    assert reflect.DeepEqual(candidate([]int{6,6,6}), 0)\n    assert reflect.DeepEqual(candidate([]int{8,8,8,8,8,8,8,8}), 0)\n    assert reflect.DeepEqual(candidate([]int{7,7,7,9,9,9}), 5)\n    assert reflect.DeepEqual(candidate([]int{8,9,9,2,1,0,7}), 3)\n    assert reflect.DeepEqual(candidate([]int{10,8,10,8,10,8,10,8,10,8}), 9)\n    assert reflect.DeepEqual(candidate([]int{9,9,9,9,9,9,9,9,9,9}), 10)\n    assert reflect.DeepEqual(candidate([]int{6,9,6,9,6,9,6,9}), 7)\n    assert reflect.DeepEqual(candidate([]int{8,9,7,8,6,4,9,8,9,8}), 3)\n    assert reflect.DeepEqual(candidate([]int{7,7,7,7,7,7,7}), 0)\n    assert reflect.DeepEqual(candidate([]int{16,0,16,0,16,0,16,0,16,0,16,0,16,0,16,0,16,0,16,0,16,0,16,0,16,0}), 25)\n    assert reflect.DeepEqual(candidate([]int{8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9}), 27)\n    assert reflect.DeepEqual(candidate([]int{10,9,8,7,6,5,4,3,2,1,16,15,14,13,12,11,10,9,8,7}), 19)\n    assert reflect.DeepEqual(candidate([]int{9,6,9,6,9,6,9,6,9,6,9,6,9,6,9,6,9,6,9,6,9,6,9,6,9,6,9,6,9,6,9,6}), 31)\n    assert reflect.DeepEqual(candidate([]int{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9,1,9,1,9,1,9,1,9,1,9,1,9,1,9,1}), 15)\n    assert reflect.DeepEqual(candidate([]int{9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9}), 32)\n    assert reflect.DeepEqual(candidate([]int{8,8,8,8,8,8,8,8,8,9,9,9,9,9,9,9,9,9}), 17)\n    assert reflect.DeepEqual(candidate([]int{6,7,8,9,10,11,12,13,14,15,16,0,1,2,3,4,5}), 15)\n    assert reflect.DeepEqual(candidate([]int{9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8}), 101)\n    assert reflect.DeepEqual(candidate([]int{10,7,9,6,11,4,5,12,3,14,1,2,8,9,15,0,1,6,7,10}), 5)\n    assert reflect.DeepEqual(candidate([]int{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9,9,9,9,9,9,9,9,9,9,9,9,9,9}), 27)\n    assert reflect.DeepEqual(candidate([]int{10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10}), 48)\n    assert reflect.DeepEqual(candidate([]int{8,8,8,8,8,8,8,8,8,8,9,9,9,9,9,9,9,9,9,9}), 19)\n    assert reflect.DeepEqual(candidate([]int{10,9,8,7,6,5,4,3,2,1,0,16,15,14,13,12}), 9)\n    assert reflect.DeepEqual(candidate([]int{9,1,9,1,9,1,9,1,9,1,9,1,9,1,9,1,9,1,9,1,9,1}), 21)\n    assert reflect.DeepEqual(candidate([]int{8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 9}), 1)\n    assert reflect.DeepEqual(candidate([]int{16,15,14,13,12,11,10,9,8,7,6,5,4,3,2,1,0,0,0,0}), 15)\n    assert reflect.DeepEqual(candidate([]int{8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9}), 15)\n    assert reflect.DeepEqual(candidate([]int{9,8,7,6,5,4,3,2,1,0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16}), 15)\n    assert reflect.DeepEqual(candidate([]int{16,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,1,2,3}), 17)\n    assert reflect.DeepEqual(candidate([]int{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,9}), 1)\n    assert reflect.DeepEqual(candidate([]int{9, 8, 9, 8, 9, 8, 9, 8, 9, 8, 9, 8, 9, 8, 9, 8, 9, 8, 9, 8, 9, 8, 9, 8, 9, 8, 9}), 27)\n    assert reflect.DeepEqual(candidate([]int{1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,15,14,13,12}), 20)\n    assert reflect.DeepEqual(candidate([]int{9,8,7,6,5,4,3,2,1,0,16,15,14,13,12,11,10,9,8,7}), 15)\n    assert reflect.DeepEqual(candidate([]int{9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 8}), 21)\n    assert reflect.DeepEqual(candidate([]int{16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1}), 15)\n    assert reflect.DeepEqual(candidate([]int{9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9}), 33)\n    assert reflect.DeepEqual(candidate([]int{1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,16,15,14,13,12,11,10,9,8,7,6,5,4,3,2,1}), 31)\n    assert reflect.DeepEqual(candidate([]int{9, 10, 11, 12, 13, 14, 15, 16, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12}), 20)\n    assert reflect.DeepEqual(candidate([]int{8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 10}), 1)\n    assert reflect.DeepEqual(candidate([]int{9,6,9,6,9,6,9,6,9,6,9,6,9,6,9,6}), 15)\n    assert reflect.DeepEqual(candidate([]int{8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,9}), 1)\n    assert reflect.DeepEqual(candidate([]int{9,1,9,1,9,1,9,1,9,1,9,1,9,1,9,1,9,1,9,1}), 19)\n    assert reflect.DeepEqual(candidate([]int{1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16}), 31)\n    assert reflect.DeepEqual(candidate([]int{6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 10}), 1)\n    assert reflect.DeepEqual(candidate([]int{6,7,8,9,10,11,12,13,14,15,16}), 11)\n    assert reflect.DeepEqual(candidate([]int{9,8,7,6,5,4,3,2,1,16,15,14,13,12,11,10,9,8,7,6,5,4,3,2,1,16,15,14,13,12,11,10,9,8,7,6,5,4,3,2,1,16,15,14,13,12,11,10,9,8,7,6,5,4,3,2,1,16,15,14,13,12,11,10,9,8,7,6,5,4,3,2,1}), 65)\n    assert reflect.DeepEqual(candidate([]int{10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10}), 20)\n    assert reflect.DeepEqual(candidate([]int{5,6,7,8,9,10,11,12,13,14,15,16,1,2,3,4,5,6,7,8}), 15)\n    assert reflect.DeepEqual(candidate([]int{10, 1, 8, 12, 8, 9, 5, 6, 7, 10, 3, 11, 4, 8, 10}), 3)\n    assert reflect.DeepEqual(candidate([]int{8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8}), 51)\n    assert reflect.DeepEqual(candidate([]int{12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 1}), 25)\n    assert reflect.DeepEqual(candidate([]int{16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16}), 32)\n    assert reflect.DeepEqual(candidate([]int{8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9}), 19)\n    assert reflect.DeepEqual(candidate([]int{9, 6, 9, 6, 9, 6, 9, 6, 9, 6, 9, 6, 9, 6, 9, 6, 9, 6, 9, 6}), 19)\n    assert reflect.DeepEqual(candidate([]int{1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,1,2,3,4}), 15)\n    assert reflect.DeepEqual(candidate([]int{16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16}), 31)\n    assert reflect.DeepEqual(candidate([]int{9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9}), 20)\n    assert reflect.DeepEqual(candidate([]int{10, 8, 10, 8, 10, 8, 10, 8, 10, 8, 10, 8, 10, 8, 10, 8, 10, 8, 10, 8}), 19)\n    assert reflect.DeepEqual(candidate([]int{1,9,2,8,3,7,4,6,5,10,9,8,7,6,5,4,3,2,1,0,16,15,14,13,12,11}), 11)\n    assert reflect.DeepEqual(candidate([]int{6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6}), 0)\n    assert reflect.DeepEqual(candidate([]int{1,8,1,8,1,8,1,8,1,8,1,8,1,8,1,8,1,8,1,8,1,8,1,8,1,8,1,8,1,8,1,8}), 0)\n    assert reflect.DeepEqual(candidate([]int{8,8,8,8,8,9,9,9,9,9,8,8,8,8,8,9,9,9,9,9}), 19)\n    assert reflect.DeepEqual(candidate([]int{9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9}), 20)\n    assert reflect.DeepEqual(candidate([]int{8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9}), 19)\n    assert reflect.DeepEqual(candidate([]int{6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 1, 2, 3, 4, 5}), 15)\n    assert reflect.DeepEqual(candidate([]int{9, 6, 7, 8, 5, 10, 11, 12, 13, 14, 15, 16, 1, 2, 3, 4, 0, 8, 8, 9}), 15)\n    assert reflect.DeepEqual(candidate([]int{9,10,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9}), 20)\n    assert reflect.DeepEqual(candidate([]int{9,8,9,8,9,8,9,8,9,8}), 9)\n    assert reflect.DeepEqual(candidate([]int{10,10,10,10,10,10,10,10,10,10,1,2,3,4,5,6,7,8,9}), 19)\n    assert reflect.DeepEqual(candidate([]int{9, 7, 8, 6, 5, 4, 3, 2, 1, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6}), 17)\n    assert reflect.DeepEqual(candidate([]int{10, 5, 8, 10, 4, 6, 9, 11, 7, 3, 12, 8, 10, 9, 11, 13, 14, 6, 7, 8}), 19)\n    assert reflect.DeepEqual(candidate([]int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1}), 29)\n    assert reflect.DeepEqual(candidate([]int{16,15,14,13,12,11,10,9,8,7,6}), 11)\n    assert reflect.DeepEqual(candidate([]int{8, 9, 9, 10, 8, 8, 8, 8, 8, 9, 9, 10, 11, 12, 7, 6, 5, 4, 3, 2}), 15)\n    assert reflect.DeepEqual(candidate([]int{6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,9,9}), 3)\n    assert reflect.DeepEqual(candidate([]int{9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8}), 51)\n    assert reflect.DeepEqual(candidate([]int{1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,1,2,3,4,5}), 15)\n    assert reflect.DeepEqual(candidate([]int{9,0,9,0,9,0,9,0,9,0,9,0,9,0,9,0,9,0,9,0,9,0,9,0,9,0,9,0,9,0,9,0,9,0}), 33)\n    assert reflect.DeepEqual(candidate([]int{6,9,6,9,6,9,6,9,6,9,6,9,6,9,6,9,6,9,6,9,6,9}), 21)\n    assert reflect.DeepEqual(candidate([]int{9,8,7,6,5,4,3,2,1,0,9,8,7,6,5,4,3,2,1,0}), 1)\n}",
+    "rust": "fn check(candidate: fn(Vec<i32>, i32) -> Vec<i32>) {\n    assert_eq!(candidate(vec![9,7,9,7,9,7,9,7]), 7);\n    assert_eq!(candidate(vec![8,9,9,10]), 4);\n    assert_eq!(candidate(vec![9,9,9,9,9,9,9]), 7);\n    assert_eq!(candidate(vec![9,8,7,6,5,4,3,2,1]), 1);\n    assert_eq!(candidate(vec![8,9,8,9,8,9,8,9,8,9]), 9);\n    assert_eq!(candidate(vec![0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]), 0);\n    assert_eq!(candidate(vec![10,9,8,7,6,5,4,3,2,1]), 3);\n    assert_eq!(candidate(vec![1,2,3,4,5,6,7,8,9,10]), 3);\n    assert_eq!(candidate(vec![16,16,16,16]), 4);\n    assert_eq!(candidate(vec![12,13,14,15,16,0,0,0,0,0]), 9);\n    assert_eq!(candidate(vec![0,0,0,0,0,0,0,0,0,0,8,9]), 1);\n    assert_eq!(candidate(vec![5,5,5,5,5,5,5,5]), 0);\n    assert_eq!(candidate(vec![8,9,9,2,5]), 3);\n    assert_eq!(candidate(vec![12,8,9,9,9,10,8,8,9,10,12]), 11);\n    assert_eq!(candidate(vec![10,10,10,10,10,10,10,10]), 8);\n    assert_eq!(candidate(vec![9,9,6,0,6,6,9]), 3);\n    assert_eq!(candidate(vec![0,0,0,0,0,0,0,0,0,0]), 0);\n    assert_eq!(candidate(vec![1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16]), 15);\n    assert_eq!(candidate(vec![10,10,10,10]), 4);\n    assert_eq!(candidate(vec![6,6,6]), 0);\n    assert_eq!(candidate(vec![8,8,8,8,8,8,8,8]), 0);\n    assert_eq!(candidate(vec![7,7,7,9,9,9]), 5);\n    assert_eq!(candidate(vec![8,9,9,2,1,0,7]), 3);\n    assert_eq!(candidate(vec![10,8,10,8,10,8,10,8,10,8]), 9);\n    assert_eq!(candidate(vec![9,9,9,9,9,9,9,9,9,9]), 10);\n    assert_eq!(candidate(vec![6,9,6,9,6,9,6,9]), 7);\n    assert_eq!(candidate(vec![8,9,7,8,6,4,9,8,9,8]), 3);\n    assert_eq!(candidate(vec![7,7,7,7,7,7,7]), 0);\n    assert_eq!(candidate(vec![16,0,16,0,16,0,16,0,16,0,16,0,16,0,16,0,16,0,16,0,16,0,16,0,16,0]), 25);\n    assert_eq!(candidate(vec![8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9]), 27);\n    assert_eq!(candidate(vec![10,9,8,7,6,5,4,3,2,1,16,15,14,13,12,11,10,9,8,7]), 19);\n    assert_eq!(candidate(vec![9,6,9,6,9,6,9,6,9,6,9,6,9,6,9,6,9,6,9,6,9,6,9,6,9,6,9,6,9,6,9,6]), 31);\n    assert_eq!(candidate(vec![0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9,1,9,1,9,1,9,1,9,1,9,1,9,1,9,1]), 15);\n    assert_eq!(candidate(vec![9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9]), 32);\n    assert_eq!(candidate(vec![8,8,8,8,8,8,8,8,8,9,9,9,9,9,9,9,9,9]), 17);\n    assert_eq!(candidate(vec![6,7,8,9,10,11,12,13,14,15,16,0,1,2,3,4,5]), 15);\n    assert_eq!(candidate(vec![9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8]), 101);\n    assert_eq!(candidate(vec![10,7,9,6,11,4,5,12,3,14,1,2,8,9,15,0,1,6,7,10]), 5);\n    assert_eq!(candidate(vec![0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9,9,9,9,9,9,9,9,9,9,9,9,9,9]), 27);\n    assert_eq!(candidate(vec![10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10]), 48);\n    assert_eq!(candidate(vec![8,8,8,8,8,8,8,8,8,8,9,9,9,9,9,9,9,9,9,9]), 19);\n    assert_eq!(candidate(vec![10,9,8,7,6,5,4,3,2,1,0,16,15,14,13,12]), 9);\n    assert_eq!(candidate(vec![9,1,9,1,9,1,9,1,9,1,9,1,9,1,9,1,9,1,9,1,9,1]), 21);\n    assert_eq!(candidate(vec![8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 9]), 1);\n    assert_eq!(candidate(vec![16,15,14,13,12,11,10,9,8,7,6,5,4,3,2,1,0,0,0,0]), 15);\n    assert_eq!(candidate(vec![8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9]), 15);\n    assert_eq!(candidate(vec![9,8,7,6,5,4,3,2,1,0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16]), 15);\n    assert_eq!(candidate(vec![16,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,1,2,3]), 17);\n    assert_eq!(candidate(vec![1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,9]), 1);\n    assert_eq!(candidate(vec![9, 8, 9, 8, 9, 8, 9, 8, 9, 8, 9, 8, 9, 8, 9, 8, 9, 8, 9, 8, 9, 8, 9, 8, 9, 8, 9]), 27);\n    assert_eq!(candidate(vec![1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,15,14,13,12]), 20);\n    assert_eq!(candidate(vec![9,8,7,6,5,4,3,2,1,0,16,15,14,13,12,11,10,9,8,7]), 15);\n    assert_eq!(candidate(vec![9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 8]), 21);\n    assert_eq!(candidate(vec![16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1]), 15);\n    assert_eq!(candidate(vec![9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9]), 33);\n    assert_eq!(candidate(vec![1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,16,15,14,13,12,11,10,9,8,7,6,5,4,3,2,1]), 31);\n    assert_eq!(candidate(vec![9, 10, 11, 12, 13, 14, 15, 16, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]), 20);\n    assert_eq!(candidate(vec![8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 10]), 1);\n    assert_eq!(candidate(vec![9,6,9,6,9,6,9,6,9,6,9,6,9,6,9,6]), 15);\n    assert_eq!(candidate(vec![8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,9]), 1);\n    assert_eq!(candidate(vec![9,1,9,1,9,1,9,1,9,1,9,1,9,1,9,1,9,1,9,1]), 19);\n    assert_eq!(candidate(vec![1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16]), 31);\n    assert_eq!(candidate(vec![6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 10]), 1);\n    assert_eq!(candidate(vec![6,7,8,9,10,11,12,13,14,15,16]), 11);\n    assert_eq!(candidate(vec![9,8,7,6,5,4,3,2,1,16,15,14,13,12,11,10,9,8,7,6,5,4,3,2,1,16,15,14,13,12,11,10,9,8,7,6,5,4,3,2,1,16,15,14,13,12,11,10,9,8,7,6,5,4,3,2,1,16,15,14,13,12,11,10,9,8,7,6,5,4,3,2,1]), 65);\n    assert_eq!(candidate(vec![10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10]), 20);\n    assert_eq!(candidate(vec![5,6,7,8,9,10,11,12,13,14,15,16,1,2,3,4,5,6,7,8]), 15);\n    assert_eq!(candidate(vec![10, 1, 8, 12, 8, 9, 5, 6, 7, 10, 3, 11, 4, 8, 10]), 3);\n    assert_eq!(candidate(vec![8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8]), 51);\n    assert_eq!(candidate(vec![12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 1]), 25);\n    assert_eq!(candidate(vec![16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16]), 32);\n    assert_eq!(candidate(vec![8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9]), 19);\n    assert_eq!(candidate(vec![9, 6, 9, 6, 9, 6, 9, 6, 9, 6, 9, 6, 9, 6, 9, 6, 9, 6, 9, 6]), 19);\n    assert_eq!(candidate(vec![1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,1,2,3,4]), 15);\n    assert_eq!(candidate(vec![16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]), 31);\n    assert_eq!(candidate(vec![9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9]), 20);\n    assert_eq!(candidate(vec![10, 8, 10, 8, 10, 8, 10, 8, 10, 8, 10, 8, 10, 8, 10, 8, 10, 8, 10, 8]), 19);\n    assert_eq!(candidate(vec![1,9,2,8,3,7,4,6,5,10,9,8,7,6,5,4,3,2,1,0,16,15,14,13,12,11]), 11);\n    assert_eq!(candidate(vec![6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6]), 0);\n    assert_eq!(candidate(vec![1,8,1,8,1,8,1,8,1,8,1,8,1,8,1,8,1,8,1,8,1,8,1,8,1,8,1,8,1,8,1,8]), 0);\n    assert_eq!(candidate(vec![8,8,8,8,8,9,9,9,9,9,8,8,8,8,8,9,9,9,9,9]), 19);\n    assert_eq!(candidate(vec![9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9]), 20);\n    assert_eq!(candidate(vec![8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9]), 19);\n    assert_eq!(candidate(vec![6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 1, 2, 3, 4, 5]), 15);\n    assert_eq!(candidate(vec![9, 6, 7, 8, 5, 10, 11, 12, 13, 14, 15, 16, 1, 2, 3, 4, 0, 8, 8, 9]), 15);\n    assert_eq!(candidate(vec![9,10,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9]), 20);\n    assert_eq!(candidate(vec![9,8,9,8,9,8,9,8,9,8]), 9);\n    assert_eq!(candidate(vec![10,10,10,10,10,10,10,10,10,10,1,2,3,4,5,6,7,8,9]), 19);\n    assert_eq!(candidate(vec![9, 7, 8, 6, 5, 4, 3, 2, 1, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6]), 17);\n    assert_eq!(candidate(vec![10, 5, 8, 10, 4, 6, 9, 11, 7, 3, 12, 8, 10, 9, 11, 13, 14, 6, 7, 8]), 19);\n    assert_eq!(candidate(vec![1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1]), 29);\n    assert_eq!(candidate(vec![16,15,14,13,12,11,10,9,8,7,6]), 11);\n    assert_eq!(candidate(vec![8, 9, 9, 10, 8, 8, 8, 8, 8, 9, 9, 10, 11, 12, 7, 6, 5, 4, 3, 2]), 15);\n    assert_eq!(candidate(vec![6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,9,9]), 3);\n    assert_eq!(candidate(vec![9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8]), 51);\n    assert_eq!(candidate(vec![1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,1,2,3,4,5]), 15);\n    assert_eq!(candidate(vec![9,0,9,0,9,0,9,0,9,0,9,0,9,0,9,0,9,0,9,0,9,0,9,0,9,0,9,0,9,0,9,0,9,0]), 33);\n    assert_eq!(candidate(vec![6,9,6,9,6,9,6,9,6,9,6,9,6,9,6,9,6,9,6,9,6,9]), 21);\n    assert_eq!(candidate(vec![9,8,7,6,5,4,3,2,1,0,9,8,7,6,5,4,3,2,1,0]), 1);\n}"
+  },
+  "test_cases": [
+    {
+      "input": "hours = [9,7,9,7,9,7,9,7]",
+      "output": "7"
+    },
+    {
+      "input": "hours = [8,9,9,10]",
+      "output": "4"
+    },
+    {
+      "input": "hours = [9,9,9,9,9,9,9]",
+      "output": "7"
+    },
+    {
+      "input": "hours = [9,8,7,6,5,4,3,2,1]",
+      "output": "1"
+    },
+    {
+      "input": "hours = [8,9,8,9,8,9,8,9,8,9]",
+      "output": "9"
+    },
+    {
+      "input": "hours = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]",
+      "output": "0"
+    },
+    {
+      "input": "hours = [10,9,8,7,6,5,4,3,2,1]",
+      "output": "3"
+    },
+    {
+      "input": "hours = [1,2,3,4,5,6,7,8,9,10]",
+      "output": "3"
+    },
+    {
+      "input": "hours = [16,16,16,16]",
+      "output": "4"
+    },
+    {
+      "input": "hours = [12,13,14,15,16,0,0,0,0,0]",
+      "output": "9"
+    },
+    {
+      "input": "hours = [0,0,0,0,0,0,0,0,0,0,8,9]",
+      "output": "1"
+    },
+    {
+      "input": "hours = [5,5,5,5,5,5,5,5]",
+      "output": "0"
+    },
+    {
+      "input": "hours = [8,9,9,2,5]",
+      "output": "3"
+    },
+    {
+      "input": "hours = [12,8,9,9,9,10,8,8,9,10,12]",
+      "output": "11"
+    },
+    {
+      "input": "hours = [10,10,10,10,10,10,10,10]",
+      "output": "8"
+    },
+    {
+      "input": "hours = [9,9,6,0,6,6,9]",
+      "output": "3"
+    },
+    {
+      "input": "hours = [0,0,0,0,0,0,0,0,0,0]",
+      "output": "0"
+    },
+    {
+      "input": "hours = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16]",
+      "output": "15"
+    },
+    {
+      "input": "hours = [10,10,10,10]",
+      "output": "4"
+    },
+    {
+      "input": "hours = [6,6,6]",
+      "output": "0"
+    },
+    {
+      "input": "hours = [8,8,8,8,8,8,8,8]",
+      "output": "0"
+    },
+    {
+      "input": "hours = [7,7,7,9,9,9]",
+      "output": "5"
+    },
+    {
+      "input": "hours = [8,9,9,2,1,0,7]",
+      "output": "3"
+    },
+    {
+      "input": "hours = [10,8,10,8,10,8,10,8,10,8]",
+      "output": "9"
+    },
+    {
+      "input": "hours = [9,9,9,9,9,9,9,9,9,9]",
+      "output": "10"
+    },
+    {
+      "input": "hours = [6,9,6,9,6,9,6,9]",
+      "output": "7"
+    },
+    {
+      "input": "hours = [8,9,7,8,6,4,9,8,9,8]",
+      "output": "3"
+    },
+    {
+      "input": "hours = [7,7,7,7,7,7,7]",
+      "output": "0"
+    },
+    {
+      "input": "hours = [16,0,16,0,16,0,16,0,16,0,16,0,16,0,16,0,16,0,16,0,16,0,16,0,16,0]",
+      "output": "25"
+    },
+    {
+      "input": "hours = [8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9]",
+      "output": "27"
+    },
+    {
+      "input": "hours = [10,9,8,7,6,5,4,3,2,1,16,15,14,13,12,11,10,9,8,7]",
+      "output": "19"
+    },
+    {
+      "input": "hours = [9,6,9,6,9,6,9,6,9,6,9,6,9,6,9,6,9,6,9,6,9,6,9,6,9,6,9,6,9,6,9,6]",
+      "output": "31"
+    },
+    {
+      "input": "hours = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9,1,9,1,9,1,9,1,9,1,9,1,9,1,9,1]",
+      "output": "15"
+    },
+    {
+      "input": "hours = [9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9]",
+      "output": "32"
+    },
+    {
+      "input": "hours = [8,8,8,8,8,8,8,8,8,9,9,9,9,9,9,9,9,9]",
+      "output": "17"
+    },
+    {
+      "input": "hours = [6,7,8,9,10,11,12,13,14,15,16,0,1,2,3,4,5]",
+      "output": "15"
+    },
+    {
+      "input": "hours = [9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8]",
+      "output": "101"
+    },
+    {
+      "input": "hours = [10,7,9,6,11,4,5,12,3,14,1,2,8,9,15,0,1,6,7,10]",
+      "output": "5"
+    },
+    {
+      "input": "hours = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9,9,9,9,9,9,9,9,9,9,9,9,9,9]",
+      "output": "27"
+    },
+    {
+      "input": "hours = [10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10]",
+      "output": "48"
+    },
+    {
+      "input": "hours = [8,8,8,8,8,8,8,8,8,8,9,9,9,9,9,9,9,9,9,9]",
+      "output": "19"
+    },
+    {
+      "input": "hours = [10,9,8,7,6,5,4,3,2,1,0,16,15,14,13,12]",
+      "output": "9"
+    },
+    {
+      "input": "hours = [9,1,9,1,9,1,9,1,9,1,9,1,9,1,9,1,9,1,9,1,9,1]",
+      "output": "21"
+    },
+    {
+      "input": "hours = [8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 9]",
+      "output": "1"
+    },
+    {
+      "input": "hours = [16,15,14,13,12,11,10,9,8,7,6,5,4,3,2,1,0,0,0,0]",
+      "output": "15"
+    },
+    {
+      "input": "hours = [8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9]",
+      "output": "15"
+    },
+    {
+      "input": "hours = [9,8,7,6,5,4,3,2,1,0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16]",
+      "output": "15"
+    },
+    {
+      "input": "hours = [16,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,1,2,3]",
+      "output": "17"
+    },
+    {
+      "input": "hours = [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,9]",
+      "output": "1"
+    },
+    {
+      "input": "hours = [9, 8, 9, 8, 9, 8, 9, 8, 9, 8, 9, 8, 9, 8, 9, 8, 9, 8, 9, 8, 9, 8, 9, 8, 9, 8, 9]",
+      "output": "27"
+    },
+    {
+      "input": "hours = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,15,14,13,12]",
+      "output": "20"
+    },
+    {
+      "input": "hours = [9,8,7,6,5,4,3,2,1,0,16,15,14,13,12,11,10,9,8,7]",
+      "output": "15"
+    },
+    {
+      "input": "hours = [9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 8]",
+      "output": "21"
+    },
+    {
+      "input": "hours = [16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1]",
+      "output": "15"
+    },
+    {
+      "input": "hours = [9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9]",
+      "output": "33"
+    },
+    {
+      "input": "hours = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,16,15,14,13,12,11,10,9,8,7,6,5,4,3,2,1]",
+      "output": "31"
+    },
+    {
+      "input": "hours = [9, 10, 11, 12, 13, 14, 15, 16, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]",
+      "output": "20"
+    },
+    {
+      "input": "hours = [8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 10]",
+      "output": "1"
+    },
+    {
+      "input": "hours = [9,6,9,6,9,6,9,6,9,6,9,6,9,6,9,6]",
+      "output": "15"
+    },
+    {
+      "input": "hours = [8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,9]",
+      "output": "1"
+    },
+    {
+      "input": "hours = [9,1,9,1,9,1,9,1,9,1,9,1,9,1,9,1,9,1,9,1]",
+      "output": "19"
+    },
+    {
+      "input": "hours = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16]",
+      "output": "31"
+    },
+    {
+      "input": "hours = [6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 10]",
+      "output": "1"
+    },
+    {
+      "input": "hours = [6,7,8,9,10,11,12,13,14,15,16]",
+      "output": "11"
+    },
+    {
+      "input": "hours = [9,8,7,6,5,4,3,2,1,16,15,14,13,12,11,10,9,8,7,6,5,4,3,2,1,16,15,14,13,12,11,10,9,8,7,6,5,4,3,2,1,16,15,14,13,12,11,10,9,8,7,6,5,4,3,2,1,16,15,14,13,12,11,10,9,8,7,6,5,4,3,2,1]",
+      "output": "65"
+    },
+    {
+      "input": "hours = [10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10]",
+      "output": "20"
+    },
+    {
+      "input": "hours = [5,6,7,8,9,10,11,12,13,14,15,16,1,2,3,4,5,6,7,8]",
+      "output": "15"
+    },
+    {
+      "input": "hours = [10, 1, 8, 12, 8, 9, 5, 6, 7, 10, 3, 11, 4, 8, 10]",
+      "output": "3"
+    },
+    {
+      "input": "hours = [8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8]",
+      "output": "51"
+    },
+    {
+      "input": "hours = [12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 1]",
+      "output": "25"
+    },
+    {
+      "input": "hours = [16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16]",
+      "output": "32"
+    },
+    {
+      "input": "hours = [8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9]",
+      "output": "19"
+    },
+    {
+      "input": "hours = [9, 6, 9, 6, 9, 6, 9, 6, 9, 6, 9, 6, 9, 6, 9, 6, 9, 6, 9, 6]",
+      "output": "19"
+    },
+    {
+      "input": "hours = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,1,2,3,4]",
+      "output": "15"
+    },
+    {
+      "input": "hours = [16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]",
+      "output": "31"
+    },
+    {
+      "input": "hours = [9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9]",
+      "output": "20"
+    },
+    {
+      "input": "hours = [10, 8, 10, 8, 10, 8, 10, 8, 10, 8, 10, 8, 10, 8, 10, 8, 10, 8, 10, 8]",
+      "output": "19"
+    },
+    {
+      "input": "hours = [1,9,2,8,3,7,4,6,5,10,9,8,7,6,5,4,3,2,1,0,16,15,14,13,12,11]",
+      "output": "11"
+    },
+    {
+      "input": "hours = [6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6]",
+      "output": "0"
+    },
+    {
+      "input": "hours = [1,8,1,8,1,8,1,8,1,8,1,8,1,8,1,8,1,8,1,8,1,8,1,8,1,8,1,8,1,8,1,8]",
+      "output": "0"
+    },
+    {
+      "input": "hours = [8,8,8,8,8,9,9,9,9,9,8,8,8,8,8,9,9,9,9,9]",
+      "output": "19"
+    },
+    {
+      "input": "hours = [9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9]",
+      "output": "20"
+    },
+    {
+      "input": "hours = [8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9]",
+      "output": "19"
+    },
+    {
+      "input": "hours = [6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 1, 2, 3, 4, 5]",
+      "output": "15"
+    },
+    {
+      "input": "hours = [9, 6, 7, 8, 5, 10, 11, 12, 13, 14, 15, 16, 1, 2, 3, 4, 0, 8, 8, 9]",
+      "output": "15"
+    },
+    {
+      "input": "hours = [9,10,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9]",
+      "output": "20"
+    },
+    {
+      "input": "hours = [9,8,9,8,9,8,9,8,9,8]",
+      "output": "9"
+    },
+    {
+      "input": "hours = [10,10,10,10,10,10,10,10,10,10,1,2,3,4,5,6,7,8,9]",
+      "output": "19"
+    },
+    {
+      "input": "hours = [9, 7, 8, 6, 5, 4, 3, 2, 1, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6]",
+      "output": "17"
+    },
+    {
+      "input": "hours = [10, 5, 8, 10, 4, 6, 9, 11, 7, 3, 12, 8, 10, 9, 11, 13, 14, 6, 7, 8]",
+      "output": "19"
+    },
+    {
+      "input": "hours = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1]",
+      "output": "29"
+    },
+    {
+      "input": "hours = [16,15,14,13,12,11,10,9,8,7,6]",
+      "output": "11"
+    },
+    {
+      "input": "hours = [8, 9, 9, 10, 8, 8, 8, 8, 8, 9, 9, 10, 11, 12, 7, 6, 5, 4, 3, 2]",
+      "output": "15"
+    },
+    {
+      "input": "hours = [6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,9,9]",
+      "output": "3"
+    },
+    {
+      "input": "hours = [9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8,9,8]",
+      "output": "51"
+    },
+    {
+      "input": "hours = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,1,2,3,4,5]",
+      "output": "15"
+    },
+    {
+      "input": "hours = [9,0,9,0,9,0,9,0,9,0,9,0,9,0,9,0,9,0,9,0,9,0,9,0,9,0,9,0,9,0,9,0,9,0]",
+      "output": "33"
+    },
+    {
+      "input": "hours = [6,9,6,9,6,9,6,9,6,9,6,9,6,9,6,9,6,9,6,9,6,9]",
+      "output": "21"
+    },
+    {
+      "input": "hours = [9,8,7,6,5,4,3,2,1,0,9,8,7,6,5,4,3,2,1,0]",
+      "output": "1"
+    }
+  ],
+  "types": {
+    "python3": {
+      "input": [
+        {
+          "hours": "List[int]"
+        }
+      ],
+      "output": "int"
+    },
+    "cpp": {
+      "input": [
+        {
+          "hours": "vector<int>&"
+        }
+      ],
+      "output": "int"
+    },
+    "java": {
+      "input": [
+        {
+          "hours": "int[]"
+        }
+      ],
+      "output": "int"
+    },
+    "javascript": {
+      "input": [
+        {
+          "hours": "number[]"
+        }
+      ],
+      "output": "number"
+    },
+    "typescript": {
+      "input": [
+        {
+          "hours": "number[]"
+        }
+      ],
+      "output": "number"
+    },
+    "golang": {
+      "input": [
+        {
+          "hours": "[]int"
+        }
+      ],
+      "output": "int"
+    },
+    "rust": {
+      "input": [
+        {
+          "hours": "Vec<i32>"
+        }
+      ],
+      "output": "i32"
+    }
+  },
+  "tags": [
+    "array",
+    "hash-table",
+    "stack",
+    "monotonic-stack",
+    "prefix-sum"
+  ]
+}

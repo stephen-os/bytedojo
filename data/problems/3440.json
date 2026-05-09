@@ -1,0 +1,647 @@
+{
+  "id": 3440,
+  "title": "Reschedule Meetings for Maximum Free Time II",
+  "slug": "reschedule-meetings-for-maximum-free-time-ii",
+  "difficulty": "Medium",
+  "description": "You are given an integer eventTime denoting the duration of an event. You are also given two integer arrays startTime and endTime, each of length n.\nThese represent the start and end times of n non-overlapping meetings that occur during the event between time t = 0 and time t = eventTime, where the ith meeting occurs during the time [startTime[i], endTime[i]].\nYou can reschedule at most one meeting by moving its start time while maintaining the same duration, such that the meetings remain non-overlapping, to maximize the longest continuous period of free time during the event.\nReturn the maximum amount of free time possible after rearranging the meetings.\nNote that the meetings can not be rescheduled to a time outside the event and they should remain non-overlapping.\nNote: In this version, it is valid for the relative ordering of the meetings to change after rescheduling one meeting.\nExample 1:\nExample 2:\nExample 3:\nExample 4:\nConstraints:",
+  "examples": [
+    {
+      "example_num": 1,
+      "example_text": "Input: eventTime = 5, startTime = [1,3], endTime = [2,5]\nOutput: 2\nExplanation:\n\nReschedule the meeting at [1, 2] to [2, 3] , leaving no meetings during the time [0, 2] .",
+      "images": [
+        "https://assets.leetcode.com/uploads/2024/12/22/example0_rescheduled.png"
+      ]
+    },
+    {
+      "example_num": 2,
+      "example_text": "Input: eventTime = 10, startTime = [0,7,9], endTime = [1,8,10]\nOutput: 7\nExplanation:\n\nReschedule the meeting at [0, 1] to [8, 9] , leaving no meetings during the time [0, 7] .",
+      "images": [
+        "https://assets.leetcode.com/uploads/2024/12/22/rescheduled_example0.png"
+      ]
+    },
+    {
+      "example_num": 3,
+      "example_text": "Input: eventTime = 10, startTime = [0,3,7,9], endTime = [1,4,8,10]\nOutput: 6\nExplanation:\n\nReschedule the meeting at [3, 4] to [8, 9] , leaving no meetings during the time [1, 7] .",
+      "images": [
+        "https://assets.leetcode.com/uploads/2025/01/28/image3.png"
+      ]
+    },
+    {
+      "example_num": 4,
+      "example_text": "Input: eventTime = 5, startTime = [0,1,2,3,4], endTime = [1,2,3,4,5]\nOutput: 0\nExplanation:\nThere is no time during the event not occupied by meetings.",
+      "images": []
+    }
+  ],
+  "constraints": [
+    "1 <= eventTime <= 109",
+    "n == startTime.length == endTime.length",
+    "2 <= n <= 105",
+    "0 <= startTime[i] < endTime[i] <= eventTime",
+    "endTime[i] <= startTime[i + 1] where i lies in the range [0, n - 2]."
+  ],
+  "hints": [
+    "If we reschedule a meeting earlier or later, we need to find a gap of length at least <code>endTime[i] - startTime[i]</code>. Try maintaining the gaps in some sorted data structure."
+  ],
+  "code_snippets": {
+    "cpp": "class Solution {\npublic:\n    int maxFreeTime(int eventTime, vector<int>& startTime, vector<int>& endTime) {\n        \n    }\n};",
+    "java": "class Solution {\n    public int maxFreeTime(int eventTime, int[] startTime, int[] endTime) {\n        \n    }\n}",
+    "python3": "class Solution:\n    def maxFreeTime(self, eventTime: int, startTime: List[int], endTime: List[int]) -> int:\n        ",
+    "javascript": "/**\n * @param {number} eventTime\n * @param {number[]} startTime\n * @param {number[]} endTime\n * @return {number}\n */\nvar maxFreeTime = function(eventTime, startTime, endTime) {\n    \n};",
+    "typescript": "function maxFreeTime(eventTime: number, startTime: number[], endTime: number[]): number {\n    \n};",
+    "golang": "func maxFreeTime(eventTime int, startTime []int, endTime []int) int {\n    \n}",
+    "rust": "impl Solution {\n    pub fn max_free_time(event_time: i32, start_time: Vec<i32>, end_time: Vec<i32>) -> i32 {\n        \n    }\n}"
+  },
+  "entry_points": {
+    "python3": "Solution().maxFreeTime",
+    "cpp": "Solution().maxFreeTime",
+    "java": "new Solution().maxFreeTime",
+    "javascript": "maxFreeTime",
+    "typescript": "maxFreeTime",
+    "golang": "maxFreeTime",
+    "rust": "Solution::max_free_time"
+  },
+  "test_snippets": {
+    "python3": "def check(candidate):\n    assert candidate() == Error: Solution.maxFreeTime() missing 3 required positional arguments: 'eventTime', 'startTime', and 'endTime'\n    assert candidate() == Error: Solution.maxFreeTime() missing 3 required positional arguments: 'eventTime', 'startTime', and 'endTime'\n    assert candidate() == Error: Solution.maxFreeTime() missing 3 required positional arguments: 'eventTime', 'startTime', and 'endTime'\n    assert candidate(eventTime = 50, startTime = [0, 5, 10, 15, 20], endTime = [3, 8, 13, 18, 23]) == 29\n    assert candidate(eventTime = 50, startTime = [5,15,25,35], endTime = [10,20,30,40]) == 20\n    assert candidate(eventTime = 20, startTime = [0, 5, 10, 15], endTime = [3, 8, 13, 18]) == 4\n    assert candidate(eventTime = 100, startTime = [10,30,50], endTime = [20,40,60]) == 60\n    assert candidate(eventTime = 20, startTime = [1,5,10,15], endTime = [3,8,13,18]) == 5\n    assert candidate(eventTime = 1000, startTime = [500,600,700,800], endTime = [550,650,750,850]) == 600\n    assert candidate(eventTime = 100, startTime = [5,25,45,65,85], endTime = [15,35,55,75,95]) == 30\n    assert candidate(eventTime = 20, startTime = [0,5,10], endTime = [3,8,15]) == 7\n    assert candidate(eventTime = 1000, startTime = [100,300,500,700], endTime = [200,400,600,800]) == 400\n    assert candidate(eventTime = 100, startTime = [10,30,50,70,90], endTime = [20,40,60,80,100]) == 30\n    assert candidate(eventTime = 15, startTime = [1,4,8,12], endTime = [3,7,11,15]) == 2\n    assert candidate(eventTime = 20, startTime = [0,5,10,15], endTime = [2,7,12,17]) == 8\n    assert candidate(eventTime = 20, startTime = [2,5,10], endTime = [4,8,15]) == 7\n    assert candidate(eventTime = 12, startTime = [1, 4, 7], endTime = [3, 6, 9]) == 4\n    assert candidate(eventTime = 1000, startTime = [100,300,500,700,900], endTime = [200,400,600,800,1000]) == 300\n    assert candidate(eventTime = 30, startTime = [0,10,20], endTime = [5,15,25]) == 15\n    assert candidate(eventTime = 20, startTime = [2,5,11,15], endTime = [3,7,14,20]) == 8\n    assert candidate(eventTime = 50, startTime = [5,15,25,35,45], endTime = [10,20,30,40,50]) == 15\n    assert candidate(eventTime = 25, startTime = [3,9,15,21], endTime = [6,12,18,24]) == 9\n    assert candidate(eventTime = 20, startTime = [1,6,12,15], endTime = [4,8,14,20]) == 7\n    assert candidate(eventTime = 15, startTime = [1,6,11], endTime = [4,9,14]) == 4\n    assert candidate(eventTime = 10, startTime = [0, 3, 7, 9], endTime = [1, 4, 8, 10]) == 6\n    assert candidate(eventTime = 50, startTime = [0,15,30], endTime = [10,25,40]) == 20\n    assert candidate(eventTime = 20, startTime = [0, 5, 10, 15], endTime = [2, 8, 13, 20]) == 7\n    assert candidate(eventTime = 100, startTime = [10,20,30,40,50], endTime = [20,30,40,50,60]) == 50\n    assert candidate(eventTime = 100, startTime = [0,20,40,60,80], endTime = [10,30,50,70,90]) == 30\n    assert candidate(eventTime = 10, startTime = [0,3,6,9], endTime = [2,5,8,10]) == 2\n    assert candidate(eventTime = 50, startTime = [10,20,30,40], endTime = [15,25,35,45]) == 20\n    assert candidate(eventTime = 30, startTime = [5,15,25], endTime = [10,20,27]) == 15\n    assert candidate(eventTime = 8, startTime = [0,2,5], endTime = [1,4,7]) == 2\n    assert candidate(eventTime = 30, startTime = [0,10,20], endTime = [5,15,30]) == 10\n    assert candidate(eventTime = 5, startTime = [0, 1, 2, 3, 4], endTime = [1, 2, 3, 4, 5]) == 0\n    assert candidate(eventTime = 12, startTime = [0,3,6,9], endTime = [2,5,8,12]) == 2\n    assert candidate(eventTime = 100, startTime = [10,20,30,40,50], endTime = [15,25,35,45,55]) == 55\n    assert candidate(eventTime = 100, startTime = [0, 20, 40, 60, 80], endTime = [10, 30, 50, 70, 90]) == 30\n    assert candidate(eventTime = 1000000, startTime = [0,100000,200000,300000,400000], endTime = [50000,150000,250000,350000,450000]) == 650000\n    assert candidate(eventTime = 8, startTime = [1,3,5], endTime = [2,4,6]) == 4\n    assert candidate(eventTime = 15, startTime = [0,2,5,9,12], endTime = [1,4,6,10,15]) == 6\n    assert candidate(eventTime = 10, startTime = [0,2,4,6], endTime = [1,3,5,7]) == 5\n    assert candidate(eventTime = 20, startTime = [1,5,10,15], endTime = [3,7,12,18]) == 8\n    assert candidate(eventTime = 10, startTime = [0,2,4,6,8], endTime = [1,3,5,7,10]) == 3\n    assert candidate(eventTime = 25, startTime = [0,5,15,20], endTime = [3,10,20,25]) == 7\n    assert candidate(eventTime = 25, startTime = [1,6,11,16,21], endTime = [3,8,13,18,23]) == 8\n    assert candidate(eventTime = 25, startTime = [0,15,20], endTime = [5,20,25]) == 10\n    assert candidate(eventTime = 25, startTime = [1,6,11,16], endTime = [4,9,14,19]) == 8\n    assert candidate(eventTime = 20, startTime = [0,5,10,15], endTime = [4,9,14,19]) == 2\n    assert candidate(eventTime = 15, startTime = [2,6,10], endTime = [4,8,12]) == 7\n    assert candidate(eventTime = 10, startTime = [0,7,9], endTime = [1,8,10]) == 7\n    assert candidate(eventTime = 1000000000, startTime = [0,100000000], endTime = [100000000,200000000]) == 800000000\n    assert candidate(eventTime = 15, startTime = [0,4,8,12], endTime = [2,6,10,14]) == 6\n    assert candidate(eventTime = 25, startTime = [2,6,10,14,18], endTime = [4,8,12,16,20]) == 9\n    assert candidate(eventTime = 15, startTime = [3,8,11], endTime = [5,10,13]) == 8\n    assert candidate(eventTime = 50, startTime = [3,15,30,45], endTime = [10,25,40,50]) == 10\n    assert candidate(eventTime = 20, startTime = [1, 5, 10, 15], endTime = [3, 7, 13, 19]) == 7\n    assert candidate(eventTime = 100, startTime = [0, 10, 20, 30, 40], endTime = [5, 25, 35, 50, 60]) == 30\n    assert candidate(eventTime = 20, startTime = [2,5,9,15], endTime = [3,6,10,20]) == 9\n    assert candidate(eventTime = 15, startTime = [1,6,9,12], endTime = [2,8,11,15]) == 6\n    assert candidate(eventTime = 100, startTime = [0,20,40,60,80], endTime = [10,30,50,70,100]) == 30\n    assert candidate(eventTime = 8, startTime = [0,1,2,3], endTime = [2,3,4,5]) == 2\n    assert candidate(eventTime = 20, startTime = [1,6,11,16], endTime = [5,10,15,20]) == 2\n    assert candidate(eventTime = 100, startTime = [5,15,30,45,60], endTime = [10,20,40,55,70]) == 45\n    assert candidate(eventTime = 100, startTime = [0,10,20,30,40,50,60,70,80,90], endTime = [5,15,25,35,45,55,65,75,85,95]) == 15\n    assert candidate(eventTime = 15, startTime = [2, 6, 9, 11], endTime = [4, 7, 10, 13]) == 6\n    assert candidate(eventTime = 7, startTime = [0,2,4], endTime = [1,3,5]) == 4\n    assert candidate(eventTime = 7, startTime = [0, 2, 4], endTime = [1, 3, 5]) == 4\n    assert candidate(eventTime = 9, startTime = [1,4,7], endTime = [2,5,8]) == 5\n    assert candidate(eventTime = 18, startTime = [0,3,6,9,12], endTime = [2,5,8,11,15]) == 4\n    assert candidate(eventTime = 20, startTime = [1,6,11,16], endTime = [3,8,13,18]) == 8\n    assert candidate(eventTime = 25, startTime = [0,10,20], endTime = [5,15,25]) == 10\n    assert candidate(eventTime = 15, startTime = [0, 5, 10], endTime = [2, 8, 12]) == 8\n    assert candidate(eventTime = 12, startTime = [0,3,6,9], endTime = [2,5,8,11]) == 2\n    assert candidate(eventTime = 7, startTime = [1, 2], endTime = [3, 4]) == 2\n    assert candidate(eventTime = 15, startTime = [2,5,8,11], endTime = [4,7,10,13]) == 5\n    assert candidate(eventTime = 20, startTime = [1,5,10,15], endTime = [2,6,11,20]) == 9\n    assert candidate(eventTime = 100, startTime = [10, 30, 50, 70], endTime = [20, 40, 60, 80]) == 40\n    assert candidate(eventTime = 20, startTime = [1,6,10,15], endTime = [3,9,14,17]) == 7\n    assert candidate(eventTime = 10, startTime = [0, 7, 9], endTime = [1, 8, 10]) == 7\n    assert candidate(eventTime = 30, startTime = [3,9,15,21,27], endTime = [6,12,18,24,30]) == 9\n    assert candidate(eventTime = 15, startTime = [2,5,9,12], endTime = [4,7,11,14]) == 5\n    assert candidate(eventTime = 20, startTime = [0, 10, 15], endTime = [5, 15, 20]) == 5\n    assert candidate(eventTime = 1000000, startTime = [100000, 300000, 500000, 700000], endTime = [200000, 400000, 600000, 800000]) == 400000\n    assert candidate(eventTime = 8, startTime = [1, 4, 6], endTime = [2, 5, 8]) == 4\n    assert candidate(eventTime = 100, startTime = [0,20,50,80], endTime = [10,30,60,90]) == 50\n    assert candidate(eventTime = 10000, startTime = [0,1000,2000,3000,4000,5000], endTime = [500,1500,2500,3500,4500,5500]) == 5500\n    assert candidate(eventTime = 25, startTime = [3,8,13,18], endTime = [5,10,15,20]) == 10\n    assert candidate(eventTime = 100, startTime = [5,15,25,35,45,55,65,75,85,95], endTime = [10,20,30,40,50,60,70,80,90,100]) == 15\n    assert candidate(eventTime = 12, startTime = [0, 3, 8, 10], endTime = [2, 6, 10, 12]) == 3\n    assert candidate(eventTime = 5, startTime = [1, 3], endTime = [2, 5]) == 2\n    assert candidate(eventTime = 1000, startTime = [0,100,200,300,400,500,600,700,800,900], endTime = [100,200,300,400,500,600,700,800,900,1000]) == 0\n    assert candidate(eventTime = 20, startTime = [0,5,10,15], endTime = [2,6,12,16]) == 9\n    assert candidate(eventTime = 50, startTime = [0,25,30], endTime = [10,35,40]) == 25\n    assert candidate(eventTime = 50, startTime = [5, 15, 25, 35], endTime = [10, 20, 30, 45]) == 15\n    assert candidate(eventTime = 10, startTime = [0,3,7,9], endTime = [1,4,8,10]) == 6\n    assert candidate(eventTime = 100, startTime = [0,50,75], endTime = [25,75,100]) == 25\n    assert candidate(eventTime = 15, startTime = [1,6,11], endTime = [3,8,13]) == 8\n    assert candidate(eventTime = 100, startTime = [0,10,20,30,40], endTime = [5,15,25,35,45]) == 65\n    assert candidate(eventTime = 15, startTime = [2,6,10], endTime = [5,9,13]) == 3\n    assert candidate(eventTime = 15, startTime = [0,6,10], endTime = [3,9,12]) == 7\n    assert candidate(eventTime = 1000, startTime = [100, 300, 500, 700], endTime = [200, 400, 600, 800]) == 400\n    assert candidate(eventTime = 25, startTime = [1,6,11,16], endTime = [3,8,13,18]) == 12\n    assert candidate(eventTime = 1000000, startTime = [100000,200000,300000,400000], endTime = [150000,250000,350000,450000]) == 650000\n    assert candidate(eventTime = 15, startTime = [0,5,10], endTime = [3,9,13]) == 3\n    assert candidate(eventTime = 5, startTime = [1,3], endTime = [2,5]) == 2\n    assert candidate(eventTime = 25, startTime = [2,7,13], endTime = [5,11,18]) == 9\n    assert candidate(eventTime = 50, startTime = [0,10,20,30,40], endTime = [5,15,25,35,45]) == 15\n    assert candidate(eventTime = 100, startTime = [5,20,40,60,80], endTime = [10,30,50,70,90]) == 30\n    assert candidate(eventTime = 30, startTime = [0,6,12,18,24], endTime = [4,10,16,22,30]) == 4\n    assert candidate(eventTime = 20, startTime = [1,5,9,13,17], endTime = [3,7,11,15,19]) == 6\n    assert candidate(eventTime = 20, startTime = [2, 5, 10, 15], endTime = [4, 8, 12, 18]) == 7\n    assert candidate(eventTime = 100, startTime = [0,25,50,75], endTime = [20,45,70,95]) == 10\n    assert candidate(eventTime = 20, startTime = [0,10,15,18], endTime = [5,12,17,20]) == 8\n    assert candidate(eventTime = 25, startTime = [0, 5, 10, 15, 20], endTime = [3, 8, 13, 18, 23]) == 4\n    assert candidate(eventTime = 5, startTime = [0,1,2,3,4], endTime = [1,2,3,4,5]) == 0\n    assert candidate(eventTime = 10, startTime = [1,2,3,4], endTime = [2,3,4,5]) == 6",
+    "cpp": "void check(Solution& solution) {\n    assert(solution.maxFreeTime() == vector<int>Error: Solution.maxFreeTime() missing 3 required positional arguments: 'eventTime', 'startTime', and 'endTime');\n    assert(solution.maxFreeTime() == vector<int>Error: Solution.maxFreeTime() missing 3 required positional arguments: 'eventTime', 'startTime', and 'endTime');\n    assert(solution.maxFreeTime() == vector<int>Error: Solution.maxFreeTime() missing 3 required positional arguments: 'eventTime', 'startTime', and 'endTime');\n    assert(solution.maxFreeTime(50, {0, 5, 10, 15, 20}, {3, 8, 13, 18, 23}) == vector<int>29);\n    assert(solution.maxFreeTime(50, {5,15,25,35}, {10,20,30,40}) == vector<int>20);\n    assert(solution.maxFreeTime(20, {0, 5, 10, 15}, {3, 8, 13, 18}) == vector<int>4);\n    assert(solution.maxFreeTime(100, {10,30,50}, {20,40,60}) == vector<int>60);\n    assert(solution.maxFreeTime(20, {1,5,10,15}, {3,8,13,18}) == vector<int>5);\n    assert(solution.maxFreeTime(1000, {500,600,700,800}, {550,650,750,850}) == vector<int>600);\n    assert(solution.maxFreeTime(100, {5,25,45,65,85}, {15,35,55,75,95}) == vector<int>30);\n    assert(solution.maxFreeTime(20, {0,5,10}, {3,8,15}) == vector<int>7);\n    assert(solution.maxFreeTime(1000, {100,300,500,700}, {200,400,600,800}) == vector<int>400);\n    assert(solution.maxFreeTime(100, {10,30,50,70,90}, {20,40,60,80,100}) == vector<int>30);\n    assert(solution.maxFreeTime(15, {1,4,8,12}, {3,7,11,15}) == vector<int>2);\n    assert(solution.maxFreeTime(20, {0,5,10,15}, {2,7,12,17}) == vector<int>8);\n    assert(solution.maxFreeTime(20, {2,5,10}, {4,8,15}) == vector<int>7);\n    assert(solution.maxFreeTime(12, {1, 4, 7}, {3, 6, 9}) == vector<int>4);\n    assert(solution.maxFreeTime(1000, {100,300,500,700,900}, {200,400,600,800,1000}) == vector<int>300);\n    assert(solution.maxFreeTime(30, {0,10,20}, {5,15,25}) == vector<int>15);\n    assert(solution.maxFreeTime(20, {2,5,11,15}, {3,7,14,20}) == vector<int>8);\n    assert(solution.maxFreeTime(50, {5,15,25,35,45}, {10,20,30,40,50}) == vector<int>15);\n    assert(solution.maxFreeTime(25, {3,9,15,21}, {6,12,18,24}) == vector<int>9);\n    assert(solution.maxFreeTime(20, {1,6,12,15}, {4,8,14,20}) == vector<int>7);\n    assert(solution.maxFreeTime(15, {1,6,11}, {4,9,14}) == vector<int>4);\n    assert(solution.maxFreeTime(10, {0, 3, 7, 9}, {1, 4, 8, 10}) == vector<int>6);\n    assert(solution.maxFreeTime(50, {0,15,30}, {10,25,40}) == vector<int>20);\n    assert(solution.maxFreeTime(20, {0, 5, 10, 15}, {2, 8, 13, 20}) == vector<int>7);\n    assert(solution.maxFreeTime(100, {10,20,30,40,50}, {20,30,40,50,60}) == vector<int>50);\n    assert(solution.maxFreeTime(100, {0,20,40,60,80}, {10,30,50,70,90}) == vector<int>30);\n    assert(solution.maxFreeTime(10, {0,3,6,9}, {2,5,8,10}) == vector<int>2);\n    assert(solution.maxFreeTime(50, {10,20,30,40}, {15,25,35,45}) == vector<int>20);\n    assert(solution.maxFreeTime(30, {5,15,25}, {10,20,27}) == vector<int>15);\n    assert(solution.maxFreeTime(8, {0,2,5}, {1,4,7}) == vector<int>2);\n    assert(solution.maxFreeTime(30, {0,10,20}, {5,15,30}) == vector<int>10);\n    assert(solution.maxFreeTime(5, {0, 1, 2, 3, 4}, {1, 2, 3, 4, 5}) == vector<int>0);\n    assert(solution.maxFreeTime(12, {0,3,6,9}, {2,5,8,12}) == vector<int>2);\n    assert(solution.maxFreeTime(100, {10,20,30,40,50}, {15,25,35,45,55}) == vector<int>55);\n    assert(solution.maxFreeTime(100, {0, 20, 40, 60, 80}, {10, 30, 50, 70, 90}) == vector<int>30);\n    assert(solution.maxFreeTime(1000000, {0,100000,200000,300000,400000}, {50000,150000,250000,350000,450000}) == vector<int>650000);\n    assert(solution.maxFreeTime(8, {1,3,5}, {2,4,6}) == vector<int>4);\n    assert(solution.maxFreeTime(15, {0,2,5,9,12}, {1,4,6,10,15}) == vector<int>6);\n    assert(solution.maxFreeTime(10, {0,2,4,6}, {1,3,5,7}) == vector<int>5);\n    assert(solution.maxFreeTime(20, {1,5,10,15}, {3,7,12,18}) == vector<int>8);\n    assert(solution.maxFreeTime(10, {0,2,4,6,8}, {1,3,5,7,10}) == vector<int>3);\n    assert(solution.maxFreeTime(25, {0,5,15,20}, {3,10,20,25}) == vector<int>7);\n    assert(solution.maxFreeTime(25, {1,6,11,16,21}, {3,8,13,18,23}) == vector<int>8);\n    assert(solution.maxFreeTime(25, {0,15,20}, {5,20,25}) == vector<int>10);\n    assert(solution.maxFreeTime(25, {1,6,11,16}, {4,9,14,19}) == vector<int>8);\n    assert(solution.maxFreeTime(20, {0,5,10,15}, {4,9,14,19}) == vector<int>2);\n    assert(solution.maxFreeTime(15, {2,6,10}, {4,8,12}) == vector<int>7);\n    assert(solution.maxFreeTime(10, {0,7,9}, {1,8,10}) == vector<int>7);\n    assert(solution.maxFreeTime(1000000000, {0,100000000}, {100000000,200000000}) == vector<int>800000000);\n    assert(solution.maxFreeTime(15, {0,4,8,12}, {2,6,10,14}) == vector<int>6);\n    assert(solution.maxFreeTime(25, {2,6,10,14,18}, {4,8,12,16,20}) == vector<int>9);\n    assert(solution.maxFreeTime(15, {3,8,11}, {5,10,13}) == vector<int>8);\n    assert(solution.maxFreeTime(50, {3,15,30,45}, {10,25,40,50}) == vector<int>10);\n    assert(solution.maxFreeTime(20, {1, 5, 10, 15}, {3, 7, 13, 19}) == vector<int>7);\n    assert(solution.maxFreeTime(100, {0, 10, 20, 30, 40}, {5, 25, 35, 50, 60}) == vector<int>30);\n    assert(solution.maxFreeTime(20, {2,5,9,15}, {3,6,10,20}) == vector<int>9);\n    assert(solution.maxFreeTime(15, {1,6,9,12}, {2,8,11,15}) == vector<int>6);\n    assert(solution.maxFreeTime(100, {0,20,40,60,80}, {10,30,50,70,100}) == vector<int>30);\n    assert(solution.maxFreeTime(8, {0,1,2,3}, {2,3,4,5}) == vector<int>2);\n    assert(solution.maxFreeTime(20, {1,6,11,16}, {5,10,15,20}) == vector<int>2);\n    assert(solution.maxFreeTime(100, {5,15,30,45,60}, {10,20,40,55,70}) == vector<int>45);\n    assert(solution.maxFreeTime(100, {0,10,20,30,40,50,60,70,80,90}, {5,15,25,35,45,55,65,75,85,95}) == vector<int>15);\n    assert(solution.maxFreeTime(15, {2, 6, 9, 11}, {4, 7, 10, 13}) == vector<int>6);\n    assert(solution.maxFreeTime(7, {0,2,4}, {1,3,5}) == vector<int>4);\n    assert(solution.maxFreeTime(7, {0, 2, 4}, {1, 3, 5}) == vector<int>4);\n    assert(solution.maxFreeTime(9, {1,4,7}, {2,5,8}) == vector<int>5);\n    assert(solution.maxFreeTime(18, {0,3,6,9,12}, {2,5,8,11,15}) == vector<int>4);\n    assert(solution.maxFreeTime(20, {1,6,11,16}, {3,8,13,18}) == vector<int>8);\n    assert(solution.maxFreeTime(25, {0,10,20}, {5,15,25}) == vector<int>10);\n    assert(solution.maxFreeTime(15, {0, 5, 10}, {2, 8, 12}) == vector<int>8);\n    assert(solution.maxFreeTime(12, {0,3,6,9}, {2,5,8,11}) == vector<int>2);\n    assert(solution.maxFreeTime(7, {1, 2}, {3, 4}) == vector<int>2);\n    assert(solution.maxFreeTime(15, {2,5,8,11}, {4,7,10,13}) == vector<int>5);\n    assert(solution.maxFreeTime(20, {1,5,10,15}, {2,6,11,20}) == vector<int>9);\n    assert(solution.maxFreeTime(100, {10, 30, 50, 70}, {20, 40, 60, 80}) == vector<int>40);\n    assert(solution.maxFreeTime(20, {1,6,10,15}, {3,9,14,17}) == vector<int>7);\n    assert(solution.maxFreeTime(10, {0, 7, 9}, {1, 8, 10}) == vector<int>7);\n    assert(solution.maxFreeTime(30, {3,9,15,21,27}, {6,12,18,24,30}) == vector<int>9);\n    assert(solution.maxFreeTime(15, {2,5,9,12}, {4,7,11,14}) == vector<int>5);\n    assert(solution.maxFreeTime(20, {0, 10, 15}, {5, 15, 20}) == vector<int>5);\n    assert(solution.maxFreeTime(1000000, {100000, 300000, 500000, 700000}, {200000, 400000, 600000, 800000}) == vector<int>400000);\n    assert(solution.maxFreeTime(8, {1, 4, 6}, {2, 5, 8}) == vector<int>4);\n    assert(solution.maxFreeTime(100, {0,20,50,80}, {10,30,60,90}) == vector<int>50);\n    assert(solution.maxFreeTime(10000, {0,1000,2000,3000,4000,5000}, {500,1500,2500,3500,4500,5500}) == vector<int>5500);\n    assert(solution.maxFreeTime(25, {3,8,13,18}, {5,10,15,20}) == vector<int>10);\n    assert(solution.maxFreeTime(100, {5,15,25,35,45,55,65,75,85,95}, {10,20,30,40,50,60,70,80,90,100}) == vector<int>15);\n    assert(solution.maxFreeTime(12, {0, 3, 8, 10}, {2, 6, 10, 12}) == vector<int>3);\n    assert(solution.maxFreeTime(5, {1, 3}, {2, 5}) == vector<int>2);\n    assert(solution.maxFreeTime(1000, {0,100,200,300,400,500,600,700,800,900}, {100,200,300,400,500,600,700,800,900,1000}) == vector<int>0);\n    assert(solution.maxFreeTime(20, {0,5,10,15}, {2,6,12,16}) == vector<int>9);\n    assert(solution.maxFreeTime(50, {0,25,30}, {10,35,40}) == vector<int>25);\n    assert(solution.maxFreeTime(50, {5, 15, 25, 35}, {10, 20, 30, 45}) == vector<int>15);\n    assert(solution.maxFreeTime(10, {0,3,7,9}, {1,4,8,10}) == vector<int>6);\n    assert(solution.maxFreeTime(100, {0,50,75}, {25,75,100}) == vector<int>25);\n    assert(solution.maxFreeTime(15, {1,6,11}, {3,8,13}) == vector<int>8);\n    assert(solution.maxFreeTime(100, {0,10,20,30,40}, {5,15,25,35,45}) == vector<int>65);\n    assert(solution.maxFreeTime(15, {2,6,10}, {5,9,13}) == vector<int>3);\n    assert(solution.maxFreeTime(15, {0,6,10}, {3,9,12}) == vector<int>7);\n    assert(solution.maxFreeTime(1000, {100, 300, 500, 700}, {200, 400, 600, 800}) == vector<int>400);\n    assert(solution.maxFreeTime(25, {1,6,11,16}, {3,8,13,18}) == vector<int>12);\n    assert(solution.maxFreeTime(1000000, {100000,200000,300000,400000}, {150000,250000,350000,450000}) == vector<int>650000);\n    assert(solution.maxFreeTime(15, {0,5,10}, {3,9,13}) == vector<int>3);\n    assert(solution.maxFreeTime(5, {1,3}, {2,5}) == vector<int>2);\n    assert(solution.maxFreeTime(25, {2,7,13}, {5,11,18}) == vector<int>9);\n    assert(solution.maxFreeTime(50, {0,10,20,30,40}, {5,15,25,35,45}) == vector<int>15);\n    assert(solution.maxFreeTime(100, {5,20,40,60,80}, {10,30,50,70,90}) == vector<int>30);\n    assert(solution.maxFreeTime(30, {0,6,12,18,24}, {4,10,16,22,30}) == vector<int>4);\n    assert(solution.maxFreeTime(20, {1,5,9,13,17}, {3,7,11,15,19}) == vector<int>6);\n    assert(solution.maxFreeTime(20, {2, 5, 10, 15}, {4, 8, 12, 18}) == vector<int>7);\n    assert(solution.maxFreeTime(100, {0,25,50,75}, {20,45,70,95}) == vector<int>10);\n    assert(solution.maxFreeTime(20, {0,10,15,18}, {5,12,17,20}) == vector<int>8);\n    assert(solution.maxFreeTime(25, {0, 5, 10, 15, 20}, {3, 8, 13, 18, 23}) == vector<int>4);\n    assert(solution.maxFreeTime(5, {0,1,2,3,4}, {1,2,3,4,5}) == vector<int>0);\n    assert(solution.maxFreeTime(10, {1,2,3,4}, {2,3,4,5}) == vector<int>6);\n}",
+    "java": "public static void check(Solution solution) {\n    assert Arrays.equals(solution.maxFreeTime(), Error: Solution.maxFreeTime() missing 3 required positional arguments: 'eventTime', 'startTime', and 'endTime');\n    assert Arrays.equals(solution.maxFreeTime(), Error: Solution.maxFreeTime() missing 3 required positional arguments: 'eventTime', 'startTime', and 'endTime');\n    assert Arrays.equals(solution.maxFreeTime(), Error: Solution.maxFreeTime() missing 3 required positional arguments: 'eventTime', 'startTime', and 'endTime');\n    assert Arrays.equals(solution.maxFreeTime(50, new int[]{0, 5, 10, 15, 20}, new int[]{3, 8, 13, 18, 23}), 29);\n    assert Arrays.equals(solution.maxFreeTime(50, new int[]{5,15,25,35}, new int[]{10,20,30,40}), 20);\n    assert Arrays.equals(solution.maxFreeTime(20, new int[]{0, 5, 10, 15}, new int[]{3, 8, 13, 18}), 4);\n    assert Arrays.equals(solution.maxFreeTime(100, new int[]{10,30,50}, new int[]{20,40,60}), 60);\n    assert Arrays.equals(solution.maxFreeTime(20, new int[]{1,5,10,15}, new int[]{3,8,13,18}), 5);\n    assert Arrays.equals(solution.maxFreeTime(1000, new int[]{500,600,700,800}, new int[]{550,650,750,850}), 600);\n    assert Arrays.equals(solution.maxFreeTime(100, new int[]{5,25,45,65,85}, new int[]{15,35,55,75,95}), 30);\n    assert Arrays.equals(solution.maxFreeTime(20, new int[]{0,5,10}, new int[]{3,8,15}), 7);\n    assert Arrays.equals(solution.maxFreeTime(1000, new int[]{100,300,500,700}, new int[]{200,400,600,800}), 400);\n    assert Arrays.equals(solution.maxFreeTime(100, new int[]{10,30,50,70,90}, new int[]{20,40,60,80,100}), 30);\n    assert Arrays.equals(solution.maxFreeTime(15, new int[]{1,4,8,12}, new int[]{3,7,11,15}), 2);\n    assert Arrays.equals(solution.maxFreeTime(20, new int[]{0,5,10,15}, new int[]{2,7,12,17}), 8);\n    assert Arrays.equals(solution.maxFreeTime(20, new int[]{2,5,10}, new int[]{4,8,15}), 7);\n    assert Arrays.equals(solution.maxFreeTime(12, new int[]{1, 4, 7}, new int[]{3, 6, 9}), 4);\n    assert Arrays.equals(solution.maxFreeTime(1000, new int[]{100,300,500,700,900}, new int[]{200,400,600,800,1000}), 300);\n    assert Arrays.equals(solution.maxFreeTime(30, new int[]{0,10,20}, new int[]{5,15,25}), 15);\n    assert Arrays.equals(solution.maxFreeTime(20, new int[]{2,5,11,15}, new int[]{3,7,14,20}), 8);\n    assert Arrays.equals(solution.maxFreeTime(50, new int[]{5,15,25,35,45}, new int[]{10,20,30,40,50}), 15);\n    assert Arrays.equals(solution.maxFreeTime(25, new int[]{3,9,15,21}, new int[]{6,12,18,24}), 9);\n    assert Arrays.equals(solution.maxFreeTime(20, new int[]{1,6,12,15}, new int[]{4,8,14,20}), 7);\n    assert Arrays.equals(solution.maxFreeTime(15, new int[]{1,6,11}, new int[]{4,9,14}), 4);\n    assert Arrays.equals(solution.maxFreeTime(10, new int[]{0, 3, 7, 9}, new int[]{1, 4, 8, 10}), 6);\n    assert Arrays.equals(solution.maxFreeTime(50, new int[]{0,15,30}, new int[]{10,25,40}), 20);\n    assert Arrays.equals(solution.maxFreeTime(20, new int[]{0, 5, 10, 15}, new int[]{2, 8, 13, 20}), 7);\n    assert Arrays.equals(solution.maxFreeTime(100, new int[]{10,20,30,40,50}, new int[]{20,30,40,50,60}), 50);\n    assert Arrays.equals(solution.maxFreeTime(100, new int[]{0,20,40,60,80}, new int[]{10,30,50,70,90}), 30);\n    assert Arrays.equals(solution.maxFreeTime(10, new int[]{0,3,6,9}, new int[]{2,5,8,10}), 2);\n    assert Arrays.equals(solution.maxFreeTime(50, new int[]{10,20,30,40}, new int[]{15,25,35,45}), 20);\n    assert Arrays.equals(solution.maxFreeTime(30, new int[]{5,15,25}, new int[]{10,20,27}), 15);\n    assert Arrays.equals(solution.maxFreeTime(8, new int[]{0,2,5}, new int[]{1,4,7}), 2);\n    assert Arrays.equals(solution.maxFreeTime(30, new int[]{0,10,20}, new int[]{5,15,30}), 10);\n    assert Arrays.equals(solution.maxFreeTime(5, new int[]{0, 1, 2, 3, 4}, new int[]{1, 2, 3, 4, 5}), 0);\n    assert Arrays.equals(solution.maxFreeTime(12, new int[]{0,3,6,9}, new int[]{2,5,8,12}), 2);\n    assert Arrays.equals(solution.maxFreeTime(100, new int[]{10,20,30,40,50}, new int[]{15,25,35,45,55}), 55);\n    assert Arrays.equals(solution.maxFreeTime(100, new int[]{0, 20, 40, 60, 80}, new int[]{10, 30, 50, 70, 90}), 30);\n    assert Arrays.equals(solution.maxFreeTime(1000000, new int[]{0,100000,200000,300000,400000}, new int[]{50000,150000,250000,350000,450000}), 650000);\n    assert Arrays.equals(solution.maxFreeTime(8, new int[]{1,3,5}, new int[]{2,4,6}), 4);\n    assert Arrays.equals(solution.maxFreeTime(15, new int[]{0,2,5,9,12}, new int[]{1,4,6,10,15}), 6);\n    assert Arrays.equals(solution.maxFreeTime(10, new int[]{0,2,4,6}, new int[]{1,3,5,7}), 5);\n    assert Arrays.equals(solution.maxFreeTime(20, new int[]{1,5,10,15}, new int[]{3,7,12,18}), 8);\n    assert Arrays.equals(solution.maxFreeTime(10, new int[]{0,2,4,6,8}, new int[]{1,3,5,7,10}), 3);\n    assert Arrays.equals(solution.maxFreeTime(25, new int[]{0,5,15,20}, new int[]{3,10,20,25}), 7);\n    assert Arrays.equals(solution.maxFreeTime(25, new int[]{1,6,11,16,21}, new int[]{3,8,13,18,23}), 8);\n    assert Arrays.equals(solution.maxFreeTime(25, new int[]{0,15,20}, new int[]{5,20,25}), 10);\n    assert Arrays.equals(solution.maxFreeTime(25, new int[]{1,6,11,16}, new int[]{4,9,14,19}), 8);\n    assert Arrays.equals(solution.maxFreeTime(20, new int[]{0,5,10,15}, new int[]{4,9,14,19}), 2);\n    assert Arrays.equals(solution.maxFreeTime(15, new int[]{2,6,10}, new int[]{4,8,12}), 7);\n    assert Arrays.equals(solution.maxFreeTime(10, new int[]{0,7,9}, new int[]{1,8,10}), 7);\n    assert Arrays.equals(solution.maxFreeTime(1000000000, new int[]{0,100000000}, new int[]{100000000,200000000}), 800000000);\n    assert Arrays.equals(solution.maxFreeTime(15, new int[]{0,4,8,12}, new int[]{2,6,10,14}), 6);\n    assert Arrays.equals(solution.maxFreeTime(25, new int[]{2,6,10,14,18}, new int[]{4,8,12,16,20}), 9);\n    assert Arrays.equals(solution.maxFreeTime(15, new int[]{3,8,11}, new int[]{5,10,13}), 8);\n    assert Arrays.equals(solution.maxFreeTime(50, new int[]{3,15,30,45}, new int[]{10,25,40,50}), 10);\n    assert Arrays.equals(solution.maxFreeTime(20, new int[]{1, 5, 10, 15}, new int[]{3, 7, 13, 19}), 7);\n    assert Arrays.equals(solution.maxFreeTime(100, new int[]{0, 10, 20, 30, 40}, new int[]{5, 25, 35, 50, 60}), 30);\n    assert Arrays.equals(solution.maxFreeTime(20, new int[]{2,5,9,15}, new int[]{3,6,10,20}), 9);\n    assert Arrays.equals(solution.maxFreeTime(15, new int[]{1,6,9,12}, new int[]{2,8,11,15}), 6);\n    assert Arrays.equals(solution.maxFreeTime(100, new int[]{0,20,40,60,80}, new int[]{10,30,50,70,100}), 30);\n    assert Arrays.equals(solution.maxFreeTime(8, new int[]{0,1,2,3}, new int[]{2,3,4,5}), 2);\n    assert Arrays.equals(solution.maxFreeTime(20, new int[]{1,6,11,16}, new int[]{5,10,15,20}), 2);\n    assert Arrays.equals(solution.maxFreeTime(100, new int[]{5,15,30,45,60}, new int[]{10,20,40,55,70}), 45);\n    assert Arrays.equals(solution.maxFreeTime(100, new int[]{0,10,20,30,40,50,60,70,80,90}, new int[]{5,15,25,35,45,55,65,75,85,95}), 15);\n    assert Arrays.equals(solution.maxFreeTime(15, new int[]{2, 6, 9, 11}, new int[]{4, 7, 10, 13}), 6);\n    assert Arrays.equals(solution.maxFreeTime(7, new int[]{0,2,4}, new int[]{1,3,5}), 4);\n    assert Arrays.equals(solution.maxFreeTime(7, new int[]{0, 2, 4}, new int[]{1, 3, 5}), 4);\n    assert Arrays.equals(solution.maxFreeTime(9, new int[]{1,4,7}, new int[]{2,5,8}), 5);\n    assert Arrays.equals(solution.maxFreeTime(18, new int[]{0,3,6,9,12}, new int[]{2,5,8,11,15}), 4);\n    assert Arrays.equals(solution.maxFreeTime(20, new int[]{1,6,11,16}, new int[]{3,8,13,18}), 8);\n    assert Arrays.equals(solution.maxFreeTime(25, new int[]{0,10,20}, new int[]{5,15,25}), 10);\n    assert Arrays.equals(solution.maxFreeTime(15, new int[]{0, 5, 10}, new int[]{2, 8, 12}), 8);\n    assert Arrays.equals(solution.maxFreeTime(12, new int[]{0,3,6,9}, new int[]{2,5,8,11}), 2);\n    assert Arrays.equals(solution.maxFreeTime(7, new int[]{1, 2}, new int[]{3, 4}), 2);\n    assert Arrays.equals(solution.maxFreeTime(15, new int[]{2,5,8,11}, new int[]{4,7,10,13}), 5);\n    assert Arrays.equals(solution.maxFreeTime(20, new int[]{1,5,10,15}, new int[]{2,6,11,20}), 9);\n    assert Arrays.equals(solution.maxFreeTime(100, new int[]{10, 30, 50, 70}, new int[]{20, 40, 60, 80}), 40);\n    assert Arrays.equals(solution.maxFreeTime(20, new int[]{1,6,10,15}, new int[]{3,9,14,17}), 7);\n    assert Arrays.equals(solution.maxFreeTime(10, new int[]{0, 7, 9}, new int[]{1, 8, 10}), 7);\n    assert Arrays.equals(solution.maxFreeTime(30, new int[]{3,9,15,21,27}, new int[]{6,12,18,24,30}), 9);\n    assert Arrays.equals(solution.maxFreeTime(15, new int[]{2,5,9,12}, new int[]{4,7,11,14}), 5);\n    assert Arrays.equals(solution.maxFreeTime(20, new int[]{0, 10, 15}, new int[]{5, 15, 20}), 5);\n    assert Arrays.equals(solution.maxFreeTime(1000000, new int[]{100000, 300000, 500000, 700000}, new int[]{200000, 400000, 600000, 800000}), 400000);\n    assert Arrays.equals(solution.maxFreeTime(8, new int[]{1, 4, 6}, new int[]{2, 5, 8}), 4);\n    assert Arrays.equals(solution.maxFreeTime(100, new int[]{0,20,50,80}, new int[]{10,30,60,90}), 50);\n    assert Arrays.equals(solution.maxFreeTime(10000, new int[]{0,1000,2000,3000,4000,5000}, new int[]{500,1500,2500,3500,4500,5500}), 5500);\n    assert Arrays.equals(solution.maxFreeTime(25, new int[]{3,8,13,18}, new int[]{5,10,15,20}), 10);\n    assert Arrays.equals(solution.maxFreeTime(100, new int[]{5,15,25,35,45,55,65,75,85,95}, new int[]{10,20,30,40,50,60,70,80,90,100}), 15);\n    assert Arrays.equals(solution.maxFreeTime(12, new int[]{0, 3, 8, 10}, new int[]{2, 6, 10, 12}), 3);\n    assert Arrays.equals(solution.maxFreeTime(5, new int[]{1, 3}, new int[]{2, 5}), 2);\n    assert Arrays.equals(solution.maxFreeTime(1000, new int[]{0,100,200,300,400,500,600,700,800,900}, new int[]{100,200,300,400,500,600,700,800,900,1000}), 0);\n    assert Arrays.equals(solution.maxFreeTime(20, new int[]{0,5,10,15}, new int[]{2,6,12,16}), 9);\n    assert Arrays.equals(solution.maxFreeTime(50, new int[]{0,25,30}, new int[]{10,35,40}), 25);\n    assert Arrays.equals(solution.maxFreeTime(50, new int[]{5, 15, 25, 35}, new int[]{10, 20, 30, 45}), 15);\n    assert Arrays.equals(solution.maxFreeTime(10, new int[]{0,3,7,9}, new int[]{1,4,8,10}), 6);\n    assert Arrays.equals(solution.maxFreeTime(100, new int[]{0,50,75}, new int[]{25,75,100}), 25);\n    assert Arrays.equals(solution.maxFreeTime(15, new int[]{1,6,11}, new int[]{3,8,13}), 8);\n    assert Arrays.equals(solution.maxFreeTime(100, new int[]{0,10,20,30,40}, new int[]{5,15,25,35,45}), 65);\n    assert Arrays.equals(solution.maxFreeTime(15, new int[]{2,6,10}, new int[]{5,9,13}), 3);\n    assert Arrays.equals(solution.maxFreeTime(15, new int[]{0,6,10}, new int[]{3,9,12}), 7);\n    assert Arrays.equals(solution.maxFreeTime(1000, new int[]{100, 300, 500, 700}, new int[]{200, 400, 600, 800}), 400);\n    assert Arrays.equals(solution.maxFreeTime(25, new int[]{1,6,11,16}, new int[]{3,8,13,18}), 12);\n    assert Arrays.equals(solution.maxFreeTime(1000000, new int[]{100000,200000,300000,400000}, new int[]{150000,250000,350000,450000}), 650000);\n    assert Arrays.equals(solution.maxFreeTime(15, new int[]{0,5,10}, new int[]{3,9,13}), 3);\n    assert Arrays.equals(solution.maxFreeTime(5, new int[]{1,3}, new int[]{2,5}), 2);\n    assert Arrays.equals(solution.maxFreeTime(25, new int[]{2,7,13}, new int[]{5,11,18}), 9);\n    assert Arrays.equals(solution.maxFreeTime(50, new int[]{0,10,20,30,40}, new int[]{5,15,25,35,45}), 15);\n    assert Arrays.equals(solution.maxFreeTime(100, new int[]{5,20,40,60,80}, new int[]{10,30,50,70,90}), 30);\n    assert Arrays.equals(solution.maxFreeTime(30, new int[]{0,6,12,18,24}, new int[]{4,10,16,22,30}), 4);\n    assert Arrays.equals(solution.maxFreeTime(20, new int[]{1,5,9,13,17}, new int[]{3,7,11,15,19}), 6);\n    assert Arrays.equals(solution.maxFreeTime(20, new int[]{2, 5, 10, 15}, new int[]{4, 8, 12, 18}), 7);\n    assert Arrays.equals(solution.maxFreeTime(100, new int[]{0,25,50,75}, new int[]{20,45,70,95}), 10);\n    assert Arrays.equals(solution.maxFreeTime(20, new int[]{0,10,15,18}, new int[]{5,12,17,20}), 8);\n    assert Arrays.equals(solution.maxFreeTime(25, new int[]{0, 5, 10, 15, 20}, new int[]{3, 8, 13, 18, 23}), 4);\n    assert Arrays.equals(solution.maxFreeTime(5, new int[]{0,1,2,3,4}, new int[]{1,2,3,4,5}), 0);\n    assert Arrays.equals(solution.maxFreeTime(10, new int[]{1,2,3,4}, new int[]{2,3,4,5}), 6);\n}",
+    "javascript": "function check(candidate) {\n    console.assert(JSON.stringify(candidate()) === JSON.stringify(Error: Solution.maxFreeTime() missing 3 required positional arguments: 'eventTime', 'startTime', and 'endTime'));\n    console.assert(JSON.stringify(candidate()) === JSON.stringify(Error: Solution.maxFreeTime() missing 3 required positional arguments: 'eventTime', 'startTime', and 'endTime'));\n    console.assert(JSON.stringify(candidate()) === JSON.stringify(Error: Solution.maxFreeTime() missing 3 required positional arguments: 'eventTime', 'startTime', and 'endTime'));\n    console.assert(JSON.stringify(candidate(50, [0, 5, 10, 15, 20], [3, 8, 13, 18, 23])) === JSON.stringify(29));\n    console.assert(JSON.stringify(candidate(50, [5,15,25,35], [10,20,30,40])) === JSON.stringify(20));\n    console.assert(JSON.stringify(candidate(20, [0, 5, 10, 15], [3, 8, 13, 18])) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate(100, [10,30,50], [20,40,60])) === JSON.stringify(60));\n    console.assert(JSON.stringify(candidate(20, [1,5,10,15], [3,8,13,18])) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate(1000, [500,600,700,800], [550,650,750,850])) === JSON.stringify(600));\n    console.assert(JSON.stringify(candidate(100, [5,25,45,65,85], [15,35,55,75,95])) === JSON.stringify(30));\n    console.assert(JSON.stringify(candidate(20, [0,5,10], [3,8,15])) === JSON.stringify(7));\n    console.assert(JSON.stringify(candidate(1000, [100,300,500,700], [200,400,600,800])) === JSON.stringify(400));\n    console.assert(JSON.stringify(candidate(100, [10,30,50,70,90], [20,40,60,80,100])) === JSON.stringify(30));\n    console.assert(JSON.stringify(candidate(15, [1,4,8,12], [3,7,11,15])) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(20, [0,5,10,15], [2,7,12,17])) === JSON.stringify(8));\n    console.assert(JSON.stringify(candidate(20, [2,5,10], [4,8,15])) === JSON.stringify(7));\n    console.assert(JSON.stringify(candidate(12, [1, 4, 7], [3, 6, 9])) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate(1000, [100,300,500,700,900], [200,400,600,800,1000])) === JSON.stringify(300));\n    console.assert(JSON.stringify(candidate(30, [0,10,20], [5,15,25])) === JSON.stringify(15));\n    console.assert(JSON.stringify(candidate(20, [2,5,11,15], [3,7,14,20])) === JSON.stringify(8));\n    console.assert(JSON.stringify(candidate(50, [5,15,25,35,45], [10,20,30,40,50])) === JSON.stringify(15));\n    console.assert(JSON.stringify(candidate(25, [3,9,15,21], [6,12,18,24])) === JSON.stringify(9));\n    console.assert(JSON.stringify(candidate(20, [1,6,12,15], [4,8,14,20])) === JSON.stringify(7));\n    console.assert(JSON.stringify(candidate(15, [1,6,11], [4,9,14])) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate(10, [0, 3, 7, 9], [1, 4, 8, 10])) === JSON.stringify(6));\n    console.assert(JSON.stringify(candidate(50, [0,15,30], [10,25,40])) === JSON.stringify(20));\n    console.assert(JSON.stringify(candidate(20, [0, 5, 10, 15], [2, 8, 13, 20])) === JSON.stringify(7));\n    console.assert(JSON.stringify(candidate(100, [10,20,30,40,50], [20,30,40,50,60])) === JSON.stringify(50));\n    console.assert(JSON.stringify(candidate(100, [0,20,40,60,80], [10,30,50,70,90])) === JSON.stringify(30));\n    console.assert(JSON.stringify(candidate(10, [0,3,6,9], [2,5,8,10])) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(50, [10,20,30,40], [15,25,35,45])) === JSON.stringify(20));\n    console.assert(JSON.stringify(candidate(30, [5,15,25], [10,20,27])) === JSON.stringify(15));\n    console.assert(JSON.stringify(candidate(8, [0,2,5], [1,4,7])) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(30, [0,10,20], [5,15,30])) === JSON.stringify(10));\n    console.assert(JSON.stringify(candidate(5, [0, 1, 2, 3, 4], [1, 2, 3, 4, 5])) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(12, [0,3,6,9], [2,5,8,12])) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(100, [10,20,30,40,50], [15,25,35,45,55])) === JSON.stringify(55));\n    console.assert(JSON.stringify(candidate(100, [0, 20, 40, 60, 80], [10, 30, 50, 70, 90])) === JSON.stringify(30));\n    console.assert(JSON.stringify(candidate(1000000, [0,100000,200000,300000,400000], [50000,150000,250000,350000,450000])) === JSON.stringify(650000));\n    console.assert(JSON.stringify(candidate(8, [1,3,5], [2,4,6])) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate(15, [0,2,5,9,12], [1,4,6,10,15])) === JSON.stringify(6));\n    console.assert(JSON.stringify(candidate(10, [0,2,4,6], [1,3,5,7])) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate(20, [1,5,10,15], [3,7,12,18])) === JSON.stringify(8));\n    console.assert(JSON.stringify(candidate(10, [0,2,4,6,8], [1,3,5,7,10])) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate(25, [0,5,15,20], [3,10,20,25])) === JSON.stringify(7));\n    console.assert(JSON.stringify(candidate(25, [1,6,11,16,21], [3,8,13,18,23])) === JSON.stringify(8));\n    console.assert(JSON.stringify(candidate(25, [0,15,20], [5,20,25])) === JSON.stringify(10));\n    console.assert(JSON.stringify(candidate(25, [1,6,11,16], [4,9,14,19])) === JSON.stringify(8));\n    console.assert(JSON.stringify(candidate(20, [0,5,10,15], [4,9,14,19])) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(15, [2,6,10], [4,8,12])) === JSON.stringify(7));\n    console.assert(JSON.stringify(candidate(10, [0,7,9], [1,8,10])) === JSON.stringify(7));\n    console.assert(JSON.stringify(candidate(1000000000, [0,100000000], [100000000,200000000])) === JSON.stringify(800000000));\n    console.assert(JSON.stringify(candidate(15, [0,4,8,12], [2,6,10,14])) === JSON.stringify(6));\n    console.assert(JSON.stringify(candidate(25, [2,6,10,14,18], [4,8,12,16,20])) === JSON.stringify(9));\n    console.assert(JSON.stringify(candidate(15, [3,8,11], [5,10,13])) === JSON.stringify(8));\n    console.assert(JSON.stringify(candidate(50, [3,15,30,45], [10,25,40,50])) === JSON.stringify(10));\n    console.assert(JSON.stringify(candidate(20, [1, 5, 10, 15], [3, 7, 13, 19])) === JSON.stringify(7));\n    console.assert(JSON.stringify(candidate(100, [0, 10, 20, 30, 40], [5, 25, 35, 50, 60])) === JSON.stringify(30));\n    console.assert(JSON.stringify(candidate(20, [2,5,9,15], [3,6,10,20])) === JSON.stringify(9));\n    console.assert(JSON.stringify(candidate(15, [1,6,9,12], [2,8,11,15])) === JSON.stringify(6));\n    console.assert(JSON.stringify(candidate(100, [0,20,40,60,80], [10,30,50,70,100])) === JSON.stringify(30));\n    console.assert(JSON.stringify(candidate(8, [0,1,2,3], [2,3,4,5])) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(20, [1,6,11,16], [5,10,15,20])) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(100, [5,15,30,45,60], [10,20,40,55,70])) === JSON.stringify(45));\n    console.assert(JSON.stringify(candidate(100, [0,10,20,30,40,50,60,70,80,90], [5,15,25,35,45,55,65,75,85,95])) === JSON.stringify(15));\n    console.assert(JSON.stringify(candidate(15, [2, 6, 9, 11], [4, 7, 10, 13])) === JSON.stringify(6));\n    console.assert(JSON.stringify(candidate(7, [0,2,4], [1,3,5])) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate(7, [0, 2, 4], [1, 3, 5])) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate(9, [1,4,7], [2,5,8])) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate(18, [0,3,6,9,12], [2,5,8,11,15])) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate(20, [1,6,11,16], [3,8,13,18])) === JSON.stringify(8));\n    console.assert(JSON.stringify(candidate(25, [0,10,20], [5,15,25])) === JSON.stringify(10));\n    console.assert(JSON.stringify(candidate(15, [0, 5, 10], [2, 8, 12])) === JSON.stringify(8));\n    console.assert(JSON.stringify(candidate(12, [0,3,6,9], [2,5,8,11])) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(7, [1, 2], [3, 4])) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(15, [2,5,8,11], [4,7,10,13])) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate(20, [1,5,10,15], [2,6,11,20])) === JSON.stringify(9));\n    console.assert(JSON.stringify(candidate(100, [10, 30, 50, 70], [20, 40, 60, 80])) === JSON.stringify(40));\n    console.assert(JSON.stringify(candidate(20, [1,6,10,15], [3,9,14,17])) === JSON.stringify(7));\n    console.assert(JSON.stringify(candidate(10, [0, 7, 9], [1, 8, 10])) === JSON.stringify(7));\n    console.assert(JSON.stringify(candidate(30, [3,9,15,21,27], [6,12,18,24,30])) === JSON.stringify(9));\n    console.assert(JSON.stringify(candidate(15, [2,5,9,12], [4,7,11,14])) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate(20, [0, 10, 15], [5, 15, 20])) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate(1000000, [100000, 300000, 500000, 700000], [200000, 400000, 600000, 800000])) === JSON.stringify(400000));\n    console.assert(JSON.stringify(candidate(8, [1, 4, 6], [2, 5, 8])) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate(100, [0,20,50,80], [10,30,60,90])) === JSON.stringify(50));\n    console.assert(JSON.stringify(candidate(10000, [0,1000,2000,3000,4000,5000], [500,1500,2500,3500,4500,5500])) === JSON.stringify(5500));\n    console.assert(JSON.stringify(candidate(25, [3,8,13,18], [5,10,15,20])) === JSON.stringify(10));\n    console.assert(JSON.stringify(candidate(100, [5,15,25,35,45,55,65,75,85,95], [10,20,30,40,50,60,70,80,90,100])) === JSON.stringify(15));\n    console.assert(JSON.stringify(candidate(12, [0, 3, 8, 10], [2, 6, 10, 12])) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate(5, [1, 3], [2, 5])) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(1000, [0,100,200,300,400,500,600,700,800,900], [100,200,300,400,500,600,700,800,900,1000])) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(20, [0,5,10,15], [2,6,12,16])) === JSON.stringify(9));\n    console.assert(JSON.stringify(candidate(50, [0,25,30], [10,35,40])) === JSON.stringify(25));\n    console.assert(JSON.stringify(candidate(50, [5, 15, 25, 35], [10, 20, 30, 45])) === JSON.stringify(15));\n    console.assert(JSON.stringify(candidate(10, [0,3,7,9], [1,4,8,10])) === JSON.stringify(6));\n    console.assert(JSON.stringify(candidate(100, [0,50,75], [25,75,100])) === JSON.stringify(25));\n    console.assert(JSON.stringify(candidate(15, [1,6,11], [3,8,13])) === JSON.stringify(8));\n    console.assert(JSON.stringify(candidate(100, [0,10,20,30,40], [5,15,25,35,45])) === JSON.stringify(65));\n    console.assert(JSON.stringify(candidate(15, [2,6,10], [5,9,13])) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate(15, [0,6,10], [3,9,12])) === JSON.stringify(7));\n    console.assert(JSON.stringify(candidate(1000, [100, 300, 500, 700], [200, 400, 600, 800])) === JSON.stringify(400));\n    console.assert(JSON.stringify(candidate(25, [1,6,11,16], [3,8,13,18])) === JSON.stringify(12));\n    console.assert(JSON.stringify(candidate(1000000, [100000,200000,300000,400000], [150000,250000,350000,450000])) === JSON.stringify(650000));\n    console.assert(JSON.stringify(candidate(15, [0,5,10], [3,9,13])) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate(5, [1,3], [2,5])) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(25, [2,7,13], [5,11,18])) === JSON.stringify(9));\n    console.assert(JSON.stringify(candidate(50, [0,10,20,30,40], [5,15,25,35,45])) === JSON.stringify(15));\n    console.assert(JSON.stringify(candidate(100, [5,20,40,60,80], [10,30,50,70,90])) === JSON.stringify(30));\n    console.assert(JSON.stringify(candidate(30, [0,6,12,18,24], [4,10,16,22,30])) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate(20, [1,5,9,13,17], [3,7,11,15,19])) === JSON.stringify(6));\n    console.assert(JSON.stringify(candidate(20, [2, 5, 10, 15], [4, 8, 12, 18])) === JSON.stringify(7));\n    console.assert(JSON.stringify(candidate(100, [0,25,50,75], [20,45,70,95])) === JSON.stringify(10));\n    console.assert(JSON.stringify(candidate(20, [0,10,15,18], [5,12,17,20])) === JSON.stringify(8));\n    console.assert(JSON.stringify(candidate(25, [0, 5, 10, 15, 20], [3, 8, 13, 18, 23])) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate(5, [0,1,2,3,4], [1,2,3,4,5])) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(10, [1,2,3,4], [2,3,4,5])) === JSON.stringify(6));\n}",
+    "typescript": "function check(candidate: Function): void {\n    console.assert(JSON.stringify(candidate()) === JSON.stringify(Error: Solution.maxFreeTime() missing 3 required positional arguments: 'eventTime', 'startTime', and 'endTime'));\n    console.assert(JSON.stringify(candidate()) === JSON.stringify(Error: Solution.maxFreeTime() missing 3 required positional arguments: 'eventTime', 'startTime', and 'endTime'));\n    console.assert(JSON.stringify(candidate()) === JSON.stringify(Error: Solution.maxFreeTime() missing 3 required positional arguments: 'eventTime', 'startTime', and 'endTime'));\n    console.assert(JSON.stringify(candidate(50, [0, 5, 10, 15, 20], [3, 8, 13, 18, 23])) === JSON.stringify(29));\n    console.assert(JSON.stringify(candidate(50, [5,15,25,35], [10,20,30,40])) === JSON.stringify(20));\n    console.assert(JSON.stringify(candidate(20, [0, 5, 10, 15], [3, 8, 13, 18])) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate(100, [10,30,50], [20,40,60])) === JSON.stringify(60));\n    console.assert(JSON.stringify(candidate(20, [1,5,10,15], [3,8,13,18])) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate(1000, [500,600,700,800], [550,650,750,850])) === JSON.stringify(600));\n    console.assert(JSON.stringify(candidate(100, [5,25,45,65,85], [15,35,55,75,95])) === JSON.stringify(30));\n    console.assert(JSON.stringify(candidate(20, [0,5,10], [3,8,15])) === JSON.stringify(7));\n    console.assert(JSON.stringify(candidate(1000, [100,300,500,700], [200,400,600,800])) === JSON.stringify(400));\n    console.assert(JSON.stringify(candidate(100, [10,30,50,70,90], [20,40,60,80,100])) === JSON.stringify(30));\n    console.assert(JSON.stringify(candidate(15, [1,4,8,12], [3,7,11,15])) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(20, [0,5,10,15], [2,7,12,17])) === JSON.stringify(8));\n    console.assert(JSON.stringify(candidate(20, [2,5,10], [4,8,15])) === JSON.stringify(7));\n    console.assert(JSON.stringify(candidate(12, [1, 4, 7], [3, 6, 9])) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate(1000, [100,300,500,700,900], [200,400,600,800,1000])) === JSON.stringify(300));\n    console.assert(JSON.stringify(candidate(30, [0,10,20], [5,15,25])) === JSON.stringify(15));\n    console.assert(JSON.stringify(candidate(20, [2,5,11,15], [3,7,14,20])) === JSON.stringify(8));\n    console.assert(JSON.stringify(candidate(50, [5,15,25,35,45], [10,20,30,40,50])) === JSON.stringify(15));\n    console.assert(JSON.stringify(candidate(25, [3,9,15,21], [6,12,18,24])) === JSON.stringify(9));\n    console.assert(JSON.stringify(candidate(20, [1,6,12,15], [4,8,14,20])) === JSON.stringify(7));\n    console.assert(JSON.stringify(candidate(15, [1,6,11], [4,9,14])) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate(10, [0, 3, 7, 9], [1, 4, 8, 10])) === JSON.stringify(6));\n    console.assert(JSON.stringify(candidate(50, [0,15,30], [10,25,40])) === JSON.stringify(20));\n    console.assert(JSON.stringify(candidate(20, [0, 5, 10, 15], [2, 8, 13, 20])) === JSON.stringify(7));\n    console.assert(JSON.stringify(candidate(100, [10,20,30,40,50], [20,30,40,50,60])) === JSON.stringify(50));\n    console.assert(JSON.stringify(candidate(100, [0,20,40,60,80], [10,30,50,70,90])) === JSON.stringify(30));\n    console.assert(JSON.stringify(candidate(10, [0,3,6,9], [2,5,8,10])) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(50, [10,20,30,40], [15,25,35,45])) === JSON.stringify(20));\n    console.assert(JSON.stringify(candidate(30, [5,15,25], [10,20,27])) === JSON.stringify(15));\n    console.assert(JSON.stringify(candidate(8, [0,2,5], [1,4,7])) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(30, [0,10,20], [5,15,30])) === JSON.stringify(10));\n    console.assert(JSON.stringify(candidate(5, [0, 1, 2, 3, 4], [1, 2, 3, 4, 5])) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(12, [0,3,6,9], [2,5,8,12])) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(100, [10,20,30,40,50], [15,25,35,45,55])) === JSON.stringify(55));\n    console.assert(JSON.stringify(candidate(100, [0, 20, 40, 60, 80], [10, 30, 50, 70, 90])) === JSON.stringify(30));\n    console.assert(JSON.stringify(candidate(1000000, [0,100000,200000,300000,400000], [50000,150000,250000,350000,450000])) === JSON.stringify(650000));\n    console.assert(JSON.stringify(candidate(8, [1,3,5], [2,4,6])) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate(15, [0,2,5,9,12], [1,4,6,10,15])) === JSON.stringify(6));\n    console.assert(JSON.stringify(candidate(10, [0,2,4,6], [1,3,5,7])) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate(20, [1,5,10,15], [3,7,12,18])) === JSON.stringify(8));\n    console.assert(JSON.stringify(candidate(10, [0,2,4,6,8], [1,3,5,7,10])) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate(25, [0,5,15,20], [3,10,20,25])) === JSON.stringify(7));\n    console.assert(JSON.stringify(candidate(25, [1,6,11,16,21], [3,8,13,18,23])) === JSON.stringify(8));\n    console.assert(JSON.stringify(candidate(25, [0,15,20], [5,20,25])) === JSON.stringify(10));\n    console.assert(JSON.stringify(candidate(25, [1,6,11,16], [4,9,14,19])) === JSON.stringify(8));\n    console.assert(JSON.stringify(candidate(20, [0,5,10,15], [4,9,14,19])) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(15, [2,6,10], [4,8,12])) === JSON.stringify(7));\n    console.assert(JSON.stringify(candidate(10, [0,7,9], [1,8,10])) === JSON.stringify(7));\n    console.assert(JSON.stringify(candidate(1000000000, [0,100000000], [100000000,200000000])) === JSON.stringify(800000000));\n    console.assert(JSON.stringify(candidate(15, [0,4,8,12], [2,6,10,14])) === JSON.stringify(6));\n    console.assert(JSON.stringify(candidate(25, [2,6,10,14,18], [4,8,12,16,20])) === JSON.stringify(9));\n    console.assert(JSON.stringify(candidate(15, [3,8,11], [5,10,13])) === JSON.stringify(8));\n    console.assert(JSON.stringify(candidate(50, [3,15,30,45], [10,25,40,50])) === JSON.stringify(10));\n    console.assert(JSON.stringify(candidate(20, [1, 5, 10, 15], [3, 7, 13, 19])) === JSON.stringify(7));\n    console.assert(JSON.stringify(candidate(100, [0, 10, 20, 30, 40], [5, 25, 35, 50, 60])) === JSON.stringify(30));\n    console.assert(JSON.stringify(candidate(20, [2,5,9,15], [3,6,10,20])) === JSON.stringify(9));\n    console.assert(JSON.stringify(candidate(15, [1,6,9,12], [2,8,11,15])) === JSON.stringify(6));\n    console.assert(JSON.stringify(candidate(100, [0,20,40,60,80], [10,30,50,70,100])) === JSON.stringify(30));\n    console.assert(JSON.stringify(candidate(8, [0,1,2,3], [2,3,4,5])) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(20, [1,6,11,16], [5,10,15,20])) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(100, [5,15,30,45,60], [10,20,40,55,70])) === JSON.stringify(45));\n    console.assert(JSON.stringify(candidate(100, [0,10,20,30,40,50,60,70,80,90], [5,15,25,35,45,55,65,75,85,95])) === JSON.stringify(15));\n    console.assert(JSON.stringify(candidate(15, [2, 6, 9, 11], [4, 7, 10, 13])) === JSON.stringify(6));\n    console.assert(JSON.stringify(candidate(7, [0,2,4], [1,3,5])) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate(7, [0, 2, 4], [1, 3, 5])) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate(9, [1,4,7], [2,5,8])) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate(18, [0,3,6,9,12], [2,5,8,11,15])) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate(20, [1,6,11,16], [3,8,13,18])) === JSON.stringify(8));\n    console.assert(JSON.stringify(candidate(25, [0,10,20], [5,15,25])) === JSON.stringify(10));\n    console.assert(JSON.stringify(candidate(15, [0, 5, 10], [2, 8, 12])) === JSON.stringify(8));\n    console.assert(JSON.stringify(candidate(12, [0,3,6,9], [2,5,8,11])) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(7, [1, 2], [3, 4])) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(15, [2,5,8,11], [4,7,10,13])) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate(20, [1,5,10,15], [2,6,11,20])) === JSON.stringify(9));\n    console.assert(JSON.stringify(candidate(100, [10, 30, 50, 70], [20, 40, 60, 80])) === JSON.stringify(40));\n    console.assert(JSON.stringify(candidate(20, [1,6,10,15], [3,9,14,17])) === JSON.stringify(7));\n    console.assert(JSON.stringify(candidate(10, [0, 7, 9], [1, 8, 10])) === JSON.stringify(7));\n    console.assert(JSON.stringify(candidate(30, [3,9,15,21,27], [6,12,18,24,30])) === JSON.stringify(9));\n    console.assert(JSON.stringify(candidate(15, [2,5,9,12], [4,7,11,14])) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate(20, [0, 10, 15], [5, 15, 20])) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate(1000000, [100000, 300000, 500000, 700000], [200000, 400000, 600000, 800000])) === JSON.stringify(400000));\n    console.assert(JSON.stringify(candidate(8, [1, 4, 6], [2, 5, 8])) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate(100, [0,20,50,80], [10,30,60,90])) === JSON.stringify(50));\n    console.assert(JSON.stringify(candidate(10000, [0,1000,2000,3000,4000,5000], [500,1500,2500,3500,4500,5500])) === JSON.stringify(5500));\n    console.assert(JSON.stringify(candidate(25, [3,8,13,18], [5,10,15,20])) === JSON.stringify(10));\n    console.assert(JSON.stringify(candidate(100, [5,15,25,35,45,55,65,75,85,95], [10,20,30,40,50,60,70,80,90,100])) === JSON.stringify(15));\n    console.assert(JSON.stringify(candidate(12, [0, 3, 8, 10], [2, 6, 10, 12])) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate(5, [1, 3], [2, 5])) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(1000, [0,100,200,300,400,500,600,700,800,900], [100,200,300,400,500,600,700,800,900,1000])) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(20, [0,5,10,15], [2,6,12,16])) === JSON.stringify(9));\n    console.assert(JSON.stringify(candidate(50, [0,25,30], [10,35,40])) === JSON.stringify(25));\n    console.assert(JSON.stringify(candidate(50, [5, 15, 25, 35], [10, 20, 30, 45])) === JSON.stringify(15));\n    console.assert(JSON.stringify(candidate(10, [0,3,7,9], [1,4,8,10])) === JSON.stringify(6));\n    console.assert(JSON.stringify(candidate(100, [0,50,75], [25,75,100])) === JSON.stringify(25));\n    console.assert(JSON.stringify(candidate(15, [1,6,11], [3,8,13])) === JSON.stringify(8));\n    console.assert(JSON.stringify(candidate(100, [0,10,20,30,40], [5,15,25,35,45])) === JSON.stringify(65));\n    console.assert(JSON.stringify(candidate(15, [2,6,10], [5,9,13])) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate(15, [0,6,10], [3,9,12])) === JSON.stringify(7));\n    console.assert(JSON.stringify(candidate(1000, [100, 300, 500, 700], [200, 400, 600, 800])) === JSON.stringify(400));\n    console.assert(JSON.stringify(candidate(25, [1,6,11,16], [3,8,13,18])) === JSON.stringify(12));\n    console.assert(JSON.stringify(candidate(1000000, [100000,200000,300000,400000], [150000,250000,350000,450000])) === JSON.stringify(650000));\n    console.assert(JSON.stringify(candidate(15, [0,5,10], [3,9,13])) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate(5, [1,3], [2,5])) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(25, [2,7,13], [5,11,18])) === JSON.stringify(9));\n    console.assert(JSON.stringify(candidate(50, [0,10,20,30,40], [5,15,25,35,45])) === JSON.stringify(15));\n    console.assert(JSON.stringify(candidate(100, [5,20,40,60,80], [10,30,50,70,90])) === JSON.stringify(30));\n    console.assert(JSON.stringify(candidate(30, [0,6,12,18,24], [4,10,16,22,30])) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate(20, [1,5,9,13,17], [3,7,11,15,19])) === JSON.stringify(6));\n    console.assert(JSON.stringify(candidate(20, [2, 5, 10, 15], [4, 8, 12, 18])) === JSON.stringify(7));\n    console.assert(JSON.stringify(candidate(100, [0,25,50,75], [20,45,70,95])) === JSON.stringify(10));\n    console.assert(JSON.stringify(candidate(20, [0,10,15,18], [5,12,17,20])) === JSON.stringify(8));\n    console.assert(JSON.stringify(candidate(25, [0, 5, 10, 15, 20], [3, 8, 13, 18, 23])) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate(5, [0,1,2,3,4], [1,2,3,4,5])) === JSON.stringify(0));\n    console.assert(JSON.stringify(candidate(10, [1,2,3,4], [2,3,4,5])) === JSON.stringify(6));\n}",
+    "golang": "func check(candidate func([]int, int) []int) {\n    assert reflect.DeepEqual(candidate(), Error: Solution.maxFreeTime() missing 3 required positional arguments: 'eventTime', 'startTime', and 'endTime')\n    assert reflect.DeepEqual(candidate(), Error: Solution.maxFreeTime() missing 3 required positional arguments: 'eventTime', 'startTime', and 'endTime')\n    assert reflect.DeepEqual(candidate(), Error: Solution.maxFreeTime() missing 3 required positional arguments: 'eventTime', 'startTime', and 'endTime')\n    assert reflect.DeepEqual(candidate(50, []int{0, 5, 10, 15, 20}, []int{3, 8, 13, 18, 23}), 29)\n    assert reflect.DeepEqual(candidate(50, []int{5,15,25,35}, []int{10,20,30,40}), 20)\n    assert reflect.DeepEqual(candidate(20, []int{0, 5, 10, 15}, []int{3, 8, 13, 18}), 4)\n    assert reflect.DeepEqual(candidate(100, []int{10,30,50}, []int{20,40,60}), 60)\n    assert reflect.DeepEqual(candidate(20, []int{1,5,10,15}, []int{3,8,13,18}), 5)\n    assert reflect.DeepEqual(candidate(1000, []int{500,600,700,800}, []int{550,650,750,850}), 600)\n    assert reflect.DeepEqual(candidate(100, []int{5,25,45,65,85}, []int{15,35,55,75,95}), 30)\n    assert reflect.DeepEqual(candidate(20, []int{0,5,10}, []int{3,8,15}), 7)\n    assert reflect.DeepEqual(candidate(1000, []int{100,300,500,700}, []int{200,400,600,800}), 400)\n    assert reflect.DeepEqual(candidate(100, []int{10,30,50,70,90}, []int{20,40,60,80,100}), 30)\n    assert reflect.DeepEqual(candidate(15, []int{1,4,8,12}, []int{3,7,11,15}), 2)\n    assert reflect.DeepEqual(candidate(20, []int{0,5,10,15}, []int{2,7,12,17}), 8)\n    assert reflect.DeepEqual(candidate(20, []int{2,5,10}, []int{4,8,15}), 7)\n    assert reflect.DeepEqual(candidate(12, []int{1, 4, 7}, []int{3, 6, 9}), 4)\n    assert reflect.DeepEqual(candidate(1000, []int{100,300,500,700,900}, []int{200,400,600,800,1000}), 300)\n    assert reflect.DeepEqual(candidate(30, []int{0,10,20}, []int{5,15,25}), 15)\n    assert reflect.DeepEqual(candidate(20, []int{2,5,11,15}, []int{3,7,14,20}), 8)\n    assert reflect.DeepEqual(candidate(50, []int{5,15,25,35,45}, []int{10,20,30,40,50}), 15)\n    assert reflect.DeepEqual(candidate(25, []int{3,9,15,21}, []int{6,12,18,24}), 9)\n    assert reflect.DeepEqual(candidate(20, []int{1,6,12,15}, []int{4,8,14,20}), 7)\n    assert reflect.DeepEqual(candidate(15, []int{1,6,11}, []int{4,9,14}), 4)\n    assert reflect.DeepEqual(candidate(10, []int{0, 3, 7, 9}, []int{1, 4, 8, 10}), 6)\n    assert reflect.DeepEqual(candidate(50, []int{0,15,30}, []int{10,25,40}), 20)\n    assert reflect.DeepEqual(candidate(20, []int{0, 5, 10, 15}, []int{2, 8, 13, 20}), 7)\n    assert reflect.DeepEqual(candidate(100, []int{10,20,30,40,50}, []int{20,30,40,50,60}), 50)\n    assert reflect.DeepEqual(candidate(100, []int{0,20,40,60,80}, []int{10,30,50,70,90}), 30)\n    assert reflect.DeepEqual(candidate(10, []int{0,3,6,9}, []int{2,5,8,10}), 2)\n    assert reflect.DeepEqual(candidate(50, []int{10,20,30,40}, []int{15,25,35,45}), 20)\n    assert reflect.DeepEqual(candidate(30, []int{5,15,25}, []int{10,20,27}), 15)\n    assert reflect.DeepEqual(candidate(8, []int{0,2,5}, []int{1,4,7}), 2)\n    assert reflect.DeepEqual(candidate(30, []int{0,10,20}, []int{5,15,30}), 10)\n    assert reflect.DeepEqual(candidate(5, []int{0, 1, 2, 3, 4}, []int{1, 2, 3, 4, 5}), 0)\n    assert reflect.DeepEqual(candidate(12, []int{0,3,6,9}, []int{2,5,8,12}), 2)\n    assert reflect.DeepEqual(candidate(100, []int{10,20,30,40,50}, []int{15,25,35,45,55}), 55)\n    assert reflect.DeepEqual(candidate(100, []int{0, 20, 40, 60, 80}, []int{10, 30, 50, 70, 90}), 30)\n    assert reflect.DeepEqual(candidate(1000000, []int{0,100000,200000,300000,400000}, []int{50000,150000,250000,350000,450000}), 650000)\n    assert reflect.DeepEqual(candidate(8, []int{1,3,5}, []int{2,4,6}), 4)\n    assert reflect.DeepEqual(candidate(15, []int{0,2,5,9,12}, []int{1,4,6,10,15}), 6)\n    assert reflect.DeepEqual(candidate(10, []int{0,2,4,6}, []int{1,3,5,7}), 5)\n    assert reflect.DeepEqual(candidate(20, []int{1,5,10,15}, []int{3,7,12,18}), 8)\n    assert reflect.DeepEqual(candidate(10, []int{0,2,4,6,8}, []int{1,3,5,7,10}), 3)\n    assert reflect.DeepEqual(candidate(25, []int{0,5,15,20}, []int{3,10,20,25}), 7)\n    assert reflect.DeepEqual(candidate(25, []int{1,6,11,16,21}, []int{3,8,13,18,23}), 8)\n    assert reflect.DeepEqual(candidate(25, []int{0,15,20}, []int{5,20,25}), 10)\n    assert reflect.DeepEqual(candidate(25, []int{1,6,11,16}, []int{4,9,14,19}), 8)\n    assert reflect.DeepEqual(candidate(20, []int{0,5,10,15}, []int{4,9,14,19}), 2)\n    assert reflect.DeepEqual(candidate(15, []int{2,6,10}, []int{4,8,12}), 7)\n    assert reflect.DeepEqual(candidate(10, []int{0,7,9}, []int{1,8,10}), 7)\n    assert reflect.DeepEqual(candidate(1000000000, []int{0,100000000}, []int{100000000,200000000}), 800000000)\n    assert reflect.DeepEqual(candidate(15, []int{0,4,8,12}, []int{2,6,10,14}), 6)\n    assert reflect.DeepEqual(candidate(25, []int{2,6,10,14,18}, []int{4,8,12,16,20}), 9)\n    assert reflect.DeepEqual(candidate(15, []int{3,8,11}, []int{5,10,13}), 8)\n    assert reflect.DeepEqual(candidate(50, []int{3,15,30,45}, []int{10,25,40,50}), 10)\n    assert reflect.DeepEqual(candidate(20, []int{1, 5, 10, 15}, []int{3, 7, 13, 19}), 7)\n    assert reflect.DeepEqual(candidate(100, []int{0, 10, 20, 30, 40}, []int{5, 25, 35, 50, 60}), 30)\n    assert reflect.DeepEqual(candidate(20, []int{2,5,9,15}, []int{3,6,10,20}), 9)\n    assert reflect.DeepEqual(candidate(15, []int{1,6,9,12}, []int{2,8,11,15}), 6)\n    assert reflect.DeepEqual(candidate(100, []int{0,20,40,60,80}, []int{10,30,50,70,100}), 30)\n    assert reflect.DeepEqual(candidate(8, []int{0,1,2,3}, []int{2,3,4,5}), 2)\n    assert reflect.DeepEqual(candidate(20, []int{1,6,11,16}, []int{5,10,15,20}), 2)\n    assert reflect.DeepEqual(candidate(100, []int{5,15,30,45,60}, []int{10,20,40,55,70}), 45)\n    assert reflect.DeepEqual(candidate(100, []int{0,10,20,30,40,50,60,70,80,90}, []int{5,15,25,35,45,55,65,75,85,95}), 15)\n    assert reflect.DeepEqual(candidate(15, []int{2, 6, 9, 11}, []int{4, 7, 10, 13}), 6)\n    assert reflect.DeepEqual(candidate(7, []int{0,2,4}, []int{1,3,5}), 4)\n    assert reflect.DeepEqual(candidate(7, []int{0, 2, 4}, []int{1, 3, 5}), 4)\n    assert reflect.DeepEqual(candidate(9, []int{1,4,7}, []int{2,5,8}), 5)\n    assert reflect.DeepEqual(candidate(18, []int{0,3,6,9,12}, []int{2,5,8,11,15}), 4)\n    assert reflect.DeepEqual(candidate(20, []int{1,6,11,16}, []int{3,8,13,18}), 8)\n    assert reflect.DeepEqual(candidate(25, []int{0,10,20}, []int{5,15,25}), 10)\n    assert reflect.DeepEqual(candidate(15, []int{0, 5, 10}, []int{2, 8, 12}), 8)\n    assert reflect.DeepEqual(candidate(12, []int{0,3,6,9}, []int{2,5,8,11}), 2)\n    assert reflect.DeepEqual(candidate(7, []int{1, 2}, []int{3, 4}), 2)\n    assert reflect.DeepEqual(candidate(15, []int{2,5,8,11}, []int{4,7,10,13}), 5)\n    assert reflect.DeepEqual(candidate(20, []int{1,5,10,15}, []int{2,6,11,20}), 9)\n    assert reflect.DeepEqual(candidate(100, []int{10, 30, 50, 70}, []int{20, 40, 60, 80}), 40)\n    assert reflect.DeepEqual(candidate(20, []int{1,6,10,15}, []int{3,9,14,17}), 7)\n    assert reflect.DeepEqual(candidate(10, []int{0, 7, 9}, []int{1, 8, 10}), 7)\n    assert reflect.DeepEqual(candidate(30, []int{3,9,15,21,27}, []int{6,12,18,24,30}), 9)\n    assert reflect.DeepEqual(candidate(15, []int{2,5,9,12}, []int{4,7,11,14}), 5)\n    assert reflect.DeepEqual(candidate(20, []int{0, 10, 15}, []int{5, 15, 20}), 5)\n    assert reflect.DeepEqual(candidate(1000000, []int{100000, 300000, 500000, 700000}, []int{200000, 400000, 600000, 800000}), 400000)\n    assert reflect.DeepEqual(candidate(8, []int{1, 4, 6}, []int{2, 5, 8}), 4)\n    assert reflect.DeepEqual(candidate(100, []int{0,20,50,80}, []int{10,30,60,90}), 50)\n    assert reflect.DeepEqual(candidate(10000, []int{0,1000,2000,3000,4000,5000}, []int{500,1500,2500,3500,4500,5500}), 5500)\n    assert reflect.DeepEqual(candidate(25, []int{3,8,13,18}, []int{5,10,15,20}), 10)\n    assert reflect.DeepEqual(candidate(100, []int{5,15,25,35,45,55,65,75,85,95}, []int{10,20,30,40,50,60,70,80,90,100}), 15)\n    assert reflect.DeepEqual(candidate(12, []int{0, 3, 8, 10}, []int{2, 6, 10, 12}), 3)\n    assert reflect.DeepEqual(candidate(5, []int{1, 3}, []int{2, 5}), 2)\n    assert reflect.DeepEqual(candidate(1000, []int{0,100,200,300,400,500,600,700,800,900}, []int{100,200,300,400,500,600,700,800,900,1000}), 0)\n    assert reflect.DeepEqual(candidate(20, []int{0,5,10,15}, []int{2,6,12,16}), 9)\n    assert reflect.DeepEqual(candidate(50, []int{0,25,30}, []int{10,35,40}), 25)\n    assert reflect.DeepEqual(candidate(50, []int{5, 15, 25, 35}, []int{10, 20, 30, 45}), 15)\n    assert reflect.DeepEqual(candidate(10, []int{0,3,7,9}, []int{1,4,8,10}), 6)\n    assert reflect.DeepEqual(candidate(100, []int{0,50,75}, []int{25,75,100}), 25)\n    assert reflect.DeepEqual(candidate(15, []int{1,6,11}, []int{3,8,13}), 8)\n    assert reflect.DeepEqual(candidate(100, []int{0,10,20,30,40}, []int{5,15,25,35,45}), 65)\n    assert reflect.DeepEqual(candidate(15, []int{2,6,10}, []int{5,9,13}), 3)\n    assert reflect.DeepEqual(candidate(15, []int{0,6,10}, []int{3,9,12}), 7)\n    assert reflect.DeepEqual(candidate(1000, []int{100, 300, 500, 700}, []int{200, 400, 600, 800}), 400)\n    assert reflect.DeepEqual(candidate(25, []int{1,6,11,16}, []int{3,8,13,18}), 12)\n    assert reflect.DeepEqual(candidate(1000000, []int{100000,200000,300000,400000}, []int{150000,250000,350000,450000}), 650000)\n    assert reflect.DeepEqual(candidate(15, []int{0,5,10}, []int{3,9,13}), 3)\n    assert reflect.DeepEqual(candidate(5, []int{1,3}, []int{2,5}), 2)\n    assert reflect.DeepEqual(candidate(25, []int{2,7,13}, []int{5,11,18}), 9)\n    assert reflect.DeepEqual(candidate(50, []int{0,10,20,30,40}, []int{5,15,25,35,45}), 15)\n    assert reflect.DeepEqual(candidate(100, []int{5,20,40,60,80}, []int{10,30,50,70,90}), 30)\n    assert reflect.DeepEqual(candidate(30, []int{0,6,12,18,24}, []int{4,10,16,22,30}), 4)\n    assert reflect.DeepEqual(candidate(20, []int{1,5,9,13,17}, []int{3,7,11,15,19}), 6)\n    assert reflect.DeepEqual(candidate(20, []int{2, 5, 10, 15}, []int{4, 8, 12, 18}), 7)\n    assert reflect.DeepEqual(candidate(100, []int{0,25,50,75}, []int{20,45,70,95}), 10)\n    assert reflect.DeepEqual(candidate(20, []int{0,10,15,18}, []int{5,12,17,20}), 8)\n    assert reflect.DeepEqual(candidate(25, []int{0, 5, 10, 15, 20}, []int{3, 8, 13, 18, 23}), 4)\n    assert reflect.DeepEqual(candidate(5, []int{0,1,2,3,4}, []int{1,2,3,4,5}), 0)\n    assert reflect.DeepEqual(candidate(10, []int{1,2,3,4}, []int{2,3,4,5}), 6)\n}",
+    "rust": "fn check(candidate: fn(Vec<i32>, i32) -> Vec<i32>) {\n    assert_eq!(candidate(), Error: Solution.maxFreeTime() missing 3 required positional arguments: 'eventTime', 'startTime', and 'endTime');\n    assert_eq!(candidate(), Error: Solution.maxFreeTime() missing 3 required positional arguments: 'eventTime', 'startTime', and 'endTime');\n    assert_eq!(candidate(), Error: Solution.maxFreeTime() missing 3 required positional arguments: 'eventTime', 'startTime', and 'endTime');\n    assert_eq!(candidate(50, vec![0, 5, 10, 15, 20], vec![3, 8, 13, 18, 23]), 29);\n    assert_eq!(candidate(50, vec![5,15,25,35], vec![10,20,30,40]), 20);\n    assert_eq!(candidate(20, vec![0, 5, 10, 15], vec![3, 8, 13, 18]), 4);\n    assert_eq!(candidate(100, vec![10,30,50], vec![20,40,60]), 60);\n    assert_eq!(candidate(20, vec![1,5,10,15], vec![3,8,13,18]), 5);\n    assert_eq!(candidate(1000, vec![500,600,700,800], vec![550,650,750,850]), 600);\n    assert_eq!(candidate(100, vec![5,25,45,65,85], vec![15,35,55,75,95]), 30);\n    assert_eq!(candidate(20, vec![0,5,10], vec![3,8,15]), 7);\n    assert_eq!(candidate(1000, vec![100,300,500,700], vec![200,400,600,800]), 400);\n    assert_eq!(candidate(100, vec![10,30,50,70,90], vec![20,40,60,80,100]), 30);\n    assert_eq!(candidate(15, vec![1,4,8,12], vec![3,7,11,15]), 2);\n    assert_eq!(candidate(20, vec![0,5,10,15], vec![2,7,12,17]), 8);\n    assert_eq!(candidate(20, vec![2,5,10], vec![4,8,15]), 7);\n    assert_eq!(candidate(12, vec![1, 4, 7], vec![3, 6, 9]), 4);\n    assert_eq!(candidate(1000, vec![100,300,500,700,900], vec![200,400,600,800,1000]), 300);\n    assert_eq!(candidate(30, vec![0,10,20], vec![5,15,25]), 15);\n    assert_eq!(candidate(20, vec![2,5,11,15], vec![3,7,14,20]), 8);\n    assert_eq!(candidate(50, vec![5,15,25,35,45], vec![10,20,30,40,50]), 15);\n    assert_eq!(candidate(25, vec![3,9,15,21], vec![6,12,18,24]), 9);\n    assert_eq!(candidate(20, vec![1,6,12,15], vec![4,8,14,20]), 7);\n    assert_eq!(candidate(15, vec![1,6,11], vec![4,9,14]), 4);\n    assert_eq!(candidate(10, vec![0, 3, 7, 9], vec![1, 4, 8, 10]), 6);\n    assert_eq!(candidate(50, vec![0,15,30], vec![10,25,40]), 20);\n    assert_eq!(candidate(20, vec![0, 5, 10, 15], vec![2, 8, 13, 20]), 7);\n    assert_eq!(candidate(100, vec![10,20,30,40,50], vec![20,30,40,50,60]), 50);\n    assert_eq!(candidate(100, vec![0,20,40,60,80], vec![10,30,50,70,90]), 30);\n    assert_eq!(candidate(10, vec![0,3,6,9], vec![2,5,8,10]), 2);\n    assert_eq!(candidate(50, vec![10,20,30,40], vec![15,25,35,45]), 20);\n    assert_eq!(candidate(30, vec![5,15,25], vec![10,20,27]), 15);\n    assert_eq!(candidate(8, vec![0,2,5], vec![1,4,7]), 2);\n    assert_eq!(candidate(30, vec![0,10,20], vec![5,15,30]), 10);\n    assert_eq!(candidate(5, vec![0, 1, 2, 3, 4], vec![1, 2, 3, 4, 5]), 0);\n    assert_eq!(candidate(12, vec![0,3,6,9], vec![2,5,8,12]), 2);\n    assert_eq!(candidate(100, vec![10,20,30,40,50], vec![15,25,35,45,55]), 55);\n    assert_eq!(candidate(100, vec![0, 20, 40, 60, 80], vec![10, 30, 50, 70, 90]), 30);\n    assert_eq!(candidate(1000000, vec![0,100000,200000,300000,400000], vec![50000,150000,250000,350000,450000]), 650000);\n    assert_eq!(candidate(8, vec![1,3,5], vec![2,4,6]), 4);\n    assert_eq!(candidate(15, vec![0,2,5,9,12], vec![1,4,6,10,15]), 6);\n    assert_eq!(candidate(10, vec![0,2,4,6], vec![1,3,5,7]), 5);\n    assert_eq!(candidate(20, vec![1,5,10,15], vec![3,7,12,18]), 8);\n    assert_eq!(candidate(10, vec![0,2,4,6,8], vec![1,3,5,7,10]), 3);\n    assert_eq!(candidate(25, vec![0,5,15,20], vec![3,10,20,25]), 7);\n    assert_eq!(candidate(25, vec![1,6,11,16,21], vec![3,8,13,18,23]), 8);\n    assert_eq!(candidate(25, vec![0,15,20], vec![5,20,25]), 10);\n    assert_eq!(candidate(25, vec![1,6,11,16], vec![4,9,14,19]), 8);\n    assert_eq!(candidate(20, vec![0,5,10,15], vec![4,9,14,19]), 2);\n    assert_eq!(candidate(15, vec![2,6,10], vec![4,8,12]), 7);\n    assert_eq!(candidate(10, vec![0,7,9], vec![1,8,10]), 7);\n    assert_eq!(candidate(1000000000, vec![0,100000000], vec![100000000,200000000]), 800000000);\n    assert_eq!(candidate(15, vec![0,4,8,12], vec![2,6,10,14]), 6);\n    assert_eq!(candidate(25, vec![2,6,10,14,18], vec![4,8,12,16,20]), 9);\n    assert_eq!(candidate(15, vec![3,8,11], vec![5,10,13]), 8);\n    assert_eq!(candidate(50, vec![3,15,30,45], vec![10,25,40,50]), 10);\n    assert_eq!(candidate(20, vec![1, 5, 10, 15], vec![3, 7, 13, 19]), 7);\n    assert_eq!(candidate(100, vec![0, 10, 20, 30, 40], vec![5, 25, 35, 50, 60]), 30);\n    assert_eq!(candidate(20, vec![2,5,9,15], vec![3,6,10,20]), 9);\n    assert_eq!(candidate(15, vec![1,6,9,12], vec![2,8,11,15]), 6);\n    assert_eq!(candidate(100, vec![0,20,40,60,80], vec![10,30,50,70,100]), 30);\n    assert_eq!(candidate(8, vec![0,1,2,3], vec![2,3,4,5]), 2);\n    assert_eq!(candidate(20, vec![1,6,11,16], vec![5,10,15,20]), 2);\n    assert_eq!(candidate(100, vec![5,15,30,45,60], vec![10,20,40,55,70]), 45);\n    assert_eq!(candidate(100, vec![0,10,20,30,40,50,60,70,80,90], vec![5,15,25,35,45,55,65,75,85,95]), 15);\n    assert_eq!(candidate(15, vec![2, 6, 9, 11], vec![4, 7, 10, 13]), 6);\n    assert_eq!(candidate(7, vec![0,2,4], vec![1,3,5]), 4);\n    assert_eq!(candidate(7, vec![0, 2, 4], vec![1, 3, 5]), 4);\n    assert_eq!(candidate(9, vec![1,4,7], vec![2,5,8]), 5);\n    assert_eq!(candidate(18, vec![0,3,6,9,12], vec![2,5,8,11,15]), 4);\n    assert_eq!(candidate(20, vec![1,6,11,16], vec![3,8,13,18]), 8);\n    assert_eq!(candidate(25, vec![0,10,20], vec![5,15,25]), 10);\n    assert_eq!(candidate(15, vec![0, 5, 10], vec![2, 8, 12]), 8);\n    assert_eq!(candidate(12, vec![0,3,6,9], vec![2,5,8,11]), 2);\n    assert_eq!(candidate(7, vec![1, 2], vec![3, 4]), 2);\n    assert_eq!(candidate(15, vec![2,5,8,11], vec![4,7,10,13]), 5);\n    assert_eq!(candidate(20, vec![1,5,10,15], vec![2,6,11,20]), 9);\n    assert_eq!(candidate(100, vec![10, 30, 50, 70], vec![20, 40, 60, 80]), 40);\n    assert_eq!(candidate(20, vec![1,6,10,15], vec![3,9,14,17]), 7);\n    assert_eq!(candidate(10, vec![0, 7, 9], vec![1, 8, 10]), 7);\n    assert_eq!(candidate(30, vec![3,9,15,21,27], vec![6,12,18,24,30]), 9);\n    assert_eq!(candidate(15, vec![2,5,9,12], vec![4,7,11,14]), 5);\n    assert_eq!(candidate(20, vec![0, 10, 15], vec![5, 15, 20]), 5);\n    assert_eq!(candidate(1000000, vec![100000, 300000, 500000, 700000], vec![200000, 400000, 600000, 800000]), 400000);\n    assert_eq!(candidate(8, vec![1, 4, 6], vec![2, 5, 8]), 4);\n    assert_eq!(candidate(100, vec![0,20,50,80], vec![10,30,60,90]), 50);\n    assert_eq!(candidate(10000, vec![0,1000,2000,3000,4000,5000], vec![500,1500,2500,3500,4500,5500]), 5500);\n    assert_eq!(candidate(25, vec![3,8,13,18], vec![5,10,15,20]), 10);\n    assert_eq!(candidate(100, vec![5,15,25,35,45,55,65,75,85,95], vec![10,20,30,40,50,60,70,80,90,100]), 15);\n    assert_eq!(candidate(12, vec![0, 3, 8, 10], vec![2, 6, 10, 12]), 3);\n    assert_eq!(candidate(5, vec![1, 3], vec![2, 5]), 2);\n    assert_eq!(candidate(1000, vec![0,100,200,300,400,500,600,700,800,900], vec![100,200,300,400,500,600,700,800,900,1000]), 0);\n    assert_eq!(candidate(20, vec![0,5,10,15], vec![2,6,12,16]), 9);\n    assert_eq!(candidate(50, vec![0,25,30], vec![10,35,40]), 25);\n    assert_eq!(candidate(50, vec![5, 15, 25, 35], vec![10, 20, 30, 45]), 15);\n    assert_eq!(candidate(10, vec![0,3,7,9], vec![1,4,8,10]), 6);\n    assert_eq!(candidate(100, vec![0,50,75], vec![25,75,100]), 25);\n    assert_eq!(candidate(15, vec![1,6,11], vec![3,8,13]), 8);\n    assert_eq!(candidate(100, vec![0,10,20,30,40], vec![5,15,25,35,45]), 65);\n    assert_eq!(candidate(15, vec![2,6,10], vec![5,9,13]), 3);\n    assert_eq!(candidate(15, vec![0,6,10], vec![3,9,12]), 7);\n    assert_eq!(candidate(1000, vec![100, 300, 500, 700], vec![200, 400, 600, 800]), 400);\n    assert_eq!(candidate(25, vec![1,6,11,16], vec![3,8,13,18]), 12);\n    assert_eq!(candidate(1000000, vec![100000,200000,300000,400000], vec![150000,250000,350000,450000]), 650000);\n    assert_eq!(candidate(15, vec![0,5,10], vec![3,9,13]), 3);\n    assert_eq!(candidate(5, vec![1,3], vec![2,5]), 2);\n    assert_eq!(candidate(25, vec![2,7,13], vec![5,11,18]), 9);\n    assert_eq!(candidate(50, vec![0,10,20,30,40], vec![5,15,25,35,45]), 15);\n    assert_eq!(candidate(100, vec![5,20,40,60,80], vec![10,30,50,70,90]), 30);\n    assert_eq!(candidate(30, vec![0,6,12,18,24], vec![4,10,16,22,30]), 4);\n    assert_eq!(candidate(20, vec![1,5,9,13,17], vec![3,7,11,15,19]), 6);\n    assert_eq!(candidate(20, vec![2, 5, 10, 15], vec![4, 8, 12, 18]), 7);\n    assert_eq!(candidate(100, vec![0,25,50,75], vec![20,45,70,95]), 10);\n    assert_eq!(candidate(20, vec![0,10,15,18], vec![5,12,17,20]), 8);\n    assert_eq!(candidate(25, vec![0, 5, 10, 15, 20], vec![3, 8, 13, 18, 23]), 4);\n    assert_eq!(candidate(5, vec![0,1,2,3,4], vec![1,2,3,4,5]), 0);\n    assert_eq!(candidate(10, vec![1,2,3,4], vec![2,3,4,5]), 6);\n}"
+  },
+  "test_cases": [
+    {
+      "input": "eventTime",
+      "output": "Error: Solution.maxFreeTime() missing 3 required positional arguments: 'eventTime', 'startTime', and 'endTime'"
+    },
+    {
+      "input": "endTime",
+      "output": "Error: Solution.maxFreeTime() missing 3 required positional arguments: 'eventTime', 'startTime', and 'endTime'"
+    },
+    {
+      "input": "startTime",
+      "output": "Error: Solution.maxFreeTime() missing 3 required positional arguments: 'eventTime', 'startTime', and 'endTime'"
+    },
+    {
+      "input": "eventTime = 50, startTime = [0, 5, 10, 15, 20], endTime = [3, 8, 13, 18, 23]",
+      "output": "29"
+    },
+    {
+      "input": "eventTime = 50, startTime = [5,15,25,35], endTime = [10,20,30,40]",
+      "output": "20"
+    },
+    {
+      "input": "eventTime = 20, startTime = [0, 5, 10, 15], endTime = [3, 8, 13, 18]",
+      "output": "4"
+    },
+    {
+      "input": "eventTime = 100, startTime = [10,30,50], endTime = [20,40,60]",
+      "output": "60"
+    },
+    {
+      "input": "eventTime = 20, startTime = [1,5,10,15], endTime = [3,8,13,18]",
+      "output": "5"
+    },
+    {
+      "input": "eventTime = 1000, startTime = [500,600,700,800], endTime = [550,650,750,850]",
+      "output": "600"
+    },
+    {
+      "input": "eventTime = 100, startTime = [5,25,45,65,85], endTime = [15,35,55,75,95]",
+      "output": "30"
+    },
+    {
+      "input": "eventTime = 20, startTime = [0,5,10], endTime = [3,8,15]",
+      "output": "7"
+    },
+    {
+      "input": "eventTime = 1000, startTime = [100,300,500,700], endTime = [200,400,600,800]",
+      "output": "400"
+    },
+    {
+      "input": "eventTime = 100, startTime = [10,30,50,70,90], endTime = [20,40,60,80,100]",
+      "output": "30"
+    },
+    {
+      "input": "eventTime = 15, startTime = [1,4,8,12], endTime = [3,7,11,15]",
+      "output": "2"
+    },
+    {
+      "input": "eventTime = 20, startTime = [0,5,10,15], endTime = [2,7,12,17]",
+      "output": "8"
+    },
+    {
+      "input": "eventTime = 20, startTime = [2,5,10], endTime = [4,8,15]",
+      "output": "7"
+    },
+    {
+      "input": "eventTime = 12, startTime = [1, 4, 7], endTime = [3, 6, 9]",
+      "output": "4"
+    },
+    {
+      "input": "eventTime = 1000, startTime = [100,300,500,700,900], endTime = [200,400,600,800,1000]",
+      "output": "300"
+    },
+    {
+      "input": "eventTime = 30, startTime = [0,10,20], endTime = [5,15,25]",
+      "output": "15"
+    },
+    {
+      "input": "eventTime = 20, startTime = [2,5,11,15], endTime = [3,7,14,20]",
+      "output": "8"
+    },
+    {
+      "input": "eventTime = 50, startTime = [5,15,25,35,45], endTime = [10,20,30,40,50]",
+      "output": "15"
+    },
+    {
+      "input": "eventTime = 25, startTime = [3,9,15,21], endTime = [6,12,18,24]",
+      "output": "9"
+    },
+    {
+      "input": "eventTime = 20, startTime = [1,6,12,15], endTime = [4,8,14,20]",
+      "output": "7"
+    },
+    {
+      "input": "eventTime = 15, startTime = [1,6,11], endTime = [4,9,14]",
+      "output": "4"
+    },
+    {
+      "input": "eventTime = 10, startTime = [0, 3, 7, 9], endTime = [1, 4, 8, 10]",
+      "output": "6"
+    },
+    {
+      "input": "eventTime = 50, startTime = [0,15,30], endTime = [10,25,40]",
+      "output": "20"
+    },
+    {
+      "input": "eventTime = 20, startTime = [0, 5, 10, 15], endTime = [2, 8, 13, 20]",
+      "output": "7"
+    },
+    {
+      "input": "eventTime = 100, startTime = [10,20,30,40,50], endTime = [20,30,40,50,60]",
+      "output": "50"
+    },
+    {
+      "input": "eventTime = 100, startTime = [0,20,40,60,80], endTime = [10,30,50,70,90]",
+      "output": "30"
+    },
+    {
+      "input": "eventTime = 10, startTime = [0,3,6,9], endTime = [2,5,8,10]",
+      "output": "2"
+    },
+    {
+      "input": "eventTime = 50, startTime = [10,20,30,40], endTime = [15,25,35,45]",
+      "output": "20"
+    },
+    {
+      "input": "eventTime = 30, startTime = [5,15,25], endTime = [10,20,27]",
+      "output": "15"
+    },
+    {
+      "input": "eventTime = 8, startTime = [0,2,5], endTime = [1,4,7]",
+      "output": "2"
+    },
+    {
+      "input": "eventTime = 30, startTime = [0,10,20], endTime = [5,15,30]",
+      "output": "10"
+    },
+    {
+      "input": "eventTime = 5, startTime = [0, 1, 2, 3, 4], endTime = [1, 2, 3, 4, 5]",
+      "output": "0"
+    },
+    {
+      "input": "eventTime = 12, startTime = [0,3,6,9], endTime = [2,5,8,12]",
+      "output": "2"
+    },
+    {
+      "input": "eventTime = 100, startTime = [10,20,30,40,50], endTime = [15,25,35,45,55]",
+      "output": "55"
+    },
+    {
+      "input": "eventTime = 100, startTime = [0, 20, 40, 60, 80], endTime = [10, 30, 50, 70, 90]",
+      "output": "30"
+    },
+    {
+      "input": "eventTime = 1000000, startTime = [0,100000,200000,300000,400000], endTime = [50000,150000,250000,350000,450000]",
+      "output": "650000"
+    },
+    {
+      "input": "eventTime = 8, startTime = [1,3,5], endTime = [2,4,6]",
+      "output": "4"
+    },
+    {
+      "input": "eventTime = 15, startTime = [0,2,5,9,12], endTime = [1,4,6,10,15]",
+      "output": "6"
+    },
+    {
+      "input": "eventTime = 10, startTime = [0,2,4,6], endTime = [1,3,5,7]",
+      "output": "5"
+    },
+    {
+      "input": "eventTime = 20, startTime = [1,5,10,15], endTime = [3,7,12,18]",
+      "output": "8"
+    },
+    {
+      "input": "eventTime = 10, startTime = [0,2,4,6,8], endTime = [1,3,5,7,10]",
+      "output": "3"
+    },
+    {
+      "input": "eventTime = 25, startTime = [0,5,15,20], endTime = [3,10,20,25]",
+      "output": "7"
+    },
+    {
+      "input": "eventTime = 25, startTime = [1,6,11,16,21], endTime = [3,8,13,18,23]",
+      "output": "8"
+    },
+    {
+      "input": "eventTime = 25, startTime = [0,15,20], endTime = [5,20,25]",
+      "output": "10"
+    },
+    {
+      "input": "eventTime = 25, startTime = [1,6,11,16], endTime = [4,9,14,19]",
+      "output": "8"
+    },
+    {
+      "input": "eventTime = 20, startTime = [0,5,10,15], endTime = [4,9,14,19]",
+      "output": "2"
+    },
+    {
+      "input": "eventTime = 15, startTime = [2,6,10], endTime = [4,8,12]",
+      "output": "7"
+    },
+    {
+      "input": "eventTime = 10, startTime = [0,7,9], endTime = [1,8,10]",
+      "output": "7"
+    },
+    {
+      "input": "eventTime = 1000000000, startTime = [0,100000000], endTime = [100000000,200000000]",
+      "output": "800000000"
+    },
+    {
+      "input": "eventTime = 15, startTime = [0,4,8,12], endTime = [2,6,10,14]",
+      "output": "6"
+    },
+    {
+      "input": "eventTime = 25, startTime = [2,6,10,14,18], endTime = [4,8,12,16,20]",
+      "output": "9"
+    },
+    {
+      "input": "eventTime = 15, startTime = [3,8,11], endTime = [5,10,13]",
+      "output": "8"
+    },
+    {
+      "input": "eventTime = 50, startTime = [3,15,30,45], endTime = [10,25,40,50]",
+      "output": "10"
+    },
+    {
+      "input": "eventTime = 20, startTime = [1, 5, 10, 15], endTime = [3, 7, 13, 19]",
+      "output": "7"
+    },
+    {
+      "input": "eventTime = 100, startTime = [0, 10, 20, 30, 40], endTime = [5, 25, 35, 50, 60]",
+      "output": "30"
+    },
+    {
+      "input": "eventTime = 20, startTime = [2,5,9,15], endTime = [3,6,10,20]",
+      "output": "9"
+    },
+    {
+      "input": "eventTime = 15, startTime = [1,6,9,12], endTime = [2,8,11,15]",
+      "output": "6"
+    },
+    {
+      "input": "eventTime = 100, startTime = [0,20,40,60,80], endTime = [10,30,50,70,100]",
+      "output": "30"
+    },
+    {
+      "input": "eventTime = 8, startTime = [0,1,2,3], endTime = [2,3,4,5]",
+      "output": "2"
+    },
+    {
+      "input": "eventTime = 20, startTime = [1,6,11,16], endTime = [5,10,15,20]",
+      "output": "2"
+    },
+    {
+      "input": "eventTime = 100, startTime = [5,15,30,45,60], endTime = [10,20,40,55,70]",
+      "output": "45"
+    },
+    {
+      "input": "eventTime = 100, startTime = [0,10,20,30,40,50,60,70,80,90], endTime = [5,15,25,35,45,55,65,75,85,95]",
+      "output": "15"
+    },
+    {
+      "input": "eventTime = 15, startTime = [2, 6, 9, 11], endTime = [4, 7, 10, 13]",
+      "output": "6"
+    },
+    {
+      "input": "eventTime = 7, startTime = [0,2,4], endTime = [1,3,5]",
+      "output": "4"
+    },
+    {
+      "input": "eventTime = 7, startTime = [0, 2, 4], endTime = [1, 3, 5]",
+      "output": "4"
+    },
+    {
+      "input": "eventTime = 9, startTime = [1,4,7], endTime = [2,5,8]",
+      "output": "5"
+    },
+    {
+      "input": "eventTime = 18, startTime = [0,3,6,9,12], endTime = [2,5,8,11,15]",
+      "output": "4"
+    },
+    {
+      "input": "eventTime = 20, startTime = [1,6,11,16], endTime = [3,8,13,18]",
+      "output": "8"
+    },
+    {
+      "input": "eventTime = 25, startTime = [0,10,20], endTime = [5,15,25]",
+      "output": "10"
+    },
+    {
+      "input": "eventTime = 15, startTime = [0, 5, 10], endTime = [2, 8, 12]",
+      "output": "8"
+    },
+    {
+      "input": "eventTime = 12, startTime = [0,3,6,9], endTime = [2,5,8,11]",
+      "output": "2"
+    },
+    {
+      "input": "eventTime = 7, startTime = [1, 2], endTime = [3, 4]",
+      "output": "2"
+    },
+    {
+      "input": "eventTime = 15, startTime = [2,5,8,11], endTime = [4,7,10,13]",
+      "output": "5"
+    },
+    {
+      "input": "eventTime = 20, startTime = [1,5,10,15], endTime = [2,6,11,20]",
+      "output": "9"
+    },
+    {
+      "input": "eventTime = 100, startTime = [10, 30, 50, 70], endTime = [20, 40, 60, 80]",
+      "output": "40"
+    },
+    {
+      "input": "eventTime = 20, startTime = [1,6,10,15], endTime = [3,9,14,17]",
+      "output": "7"
+    },
+    {
+      "input": "eventTime = 10, startTime = [0, 7, 9], endTime = [1, 8, 10]",
+      "output": "7"
+    },
+    {
+      "input": "eventTime = 30, startTime = [3,9,15,21,27], endTime = [6,12,18,24,30]",
+      "output": "9"
+    },
+    {
+      "input": "eventTime = 15, startTime = [2,5,9,12], endTime = [4,7,11,14]",
+      "output": "5"
+    },
+    {
+      "input": "eventTime = 20, startTime = [0, 10, 15], endTime = [5, 15, 20]",
+      "output": "5"
+    },
+    {
+      "input": "eventTime = 1000000, startTime = [100000, 300000, 500000, 700000], endTime = [200000, 400000, 600000, 800000]",
+      "output": "400000"
+    },
+    {
+      "input": "eventTime = 8, startTime = [1, 4, 6], endTime = [2, 5, 8]",
+      "output": "4"
+    },
+    {
+      "input": "eventTime = 100, startTime = [0,20,50,80], endTime = [10,30,60,90]",
+      "output": "50"
+    },
+    {
+      "input": "eventTime = 10000, startTime = [0,1000,2000,3000,4000,5000], endTime = [500,1500,2500,3500,4500,5500]",
+      "output": "5500"
+    },
+    {
+      "input": "eventTime = 25, startTime = [3,8,13,18], endTime = [5,10,15,20]",
+      "output": "10"
+    },
+    {
+      "input": "eventTime = 100, startTime = [5,15,25,35,45,55,65,75,85,95], endTime = [10,20,30,40,50,60,70,80,90,100]",
+      "output": "15"
+    },
+    {
+      "input": "eventTime = 12, startTime = [0, 3, 8, 10], endTime = [2, 6, 10, 12]",
+      "output": "3"
+    },
+    {
+      "input": "eventTime = 5, startTime = [1, 3], endTime = [2, 5]",
+      "output": "2"
+    },
+    {
+      "input": "eventTime = 1000, startTime = [0,100,200,300,400,500,600,700,800,900], endTime = [100,200,300,400,500,600,700,800,900,1000]",
+      "output": "0"
+    },
+    {
+      "input": "eventTime = 20, startTime = [0,5,10,15], endTime = [2,6,12,16]",
+      "output": "9"
+    },
+    {
+      "input": "eventTime = 50, startTime = [0,25,30], endTime = [10,35,40]",
+      "output": "25"
+    },
+    {
+      "input": "eventTime = 50, startTime = [5, 15, 25, 35], endTime = [10, 20, 30, 45]",
+      "output": "15"
+    },
+    {
+      "input": "eventTime = 10, startTime = [0,3,7,9], endTime = [1,4,8,10]",
+      "output": "6"
+    },
+    {
+      "input": "eventTime = 100, startTime = [0,50,75], endTime = [25,75,100]",
+      "output": "25"
+    },
+    {
+      "input": "eventTime = 15, startTime = [1,6,11], endTime = [3,8,13]",
+      "output": "8"
+    },
+    {
+      "input": "eventTime = 100, startTime = [0,10,20,30,40], endTime = [5,15,25,35,45]",
+      "output": "65"
+    },
+    {
+      "input": "eventTime = 15, startTime = [2,6,10], endTime = [5,9,13]",
+      "output": "3"
+    },
+    {
+      "input": "eventTime = 15, startTime = [0,6,10], endTime = [3,9,12]",
+      "output": "7"
+    },
+    {
+      "input": "eventTime = 1000, startTime = [100, 300, 500, 700], endTime = [200, 400, 600, 800]",
+      "output": "400"
+    },
+    {
+      "input": "eventTime = 25, startTime = [1,6,11,16], endTime = [3,8,13,18]",
+      "output": "12"
+    },
+    {
+      "input": "eventTime = 1000000, startTime = [100000,200000,300000,400000], endTime = [150000,250000,350000,450000]",
+      "output": "650000"
+    },
+    {
+      "input": "eventTime = 15, startTime = [0,5,10], endTime = [3,9,13]",
+      "output": "3"
+    },
+    {
+      "input": "eventTime = 5, startTime = [1,3], endTime = [2,5]",
+      "output": "2"
+    },
+    {
+      "input": "eventTime = 25, startTime = [2,7,13], endTime = [5,11,18]",
+      "output": "9"
+    },
+    {
+      "input": "eventTime = 50, startTime = [0,10,20,30,40], endTime = [5,15,25,35,45]",
+      "output": "15"
+    },
+    {
+      "input": "eventTime = 100, startTime = [5,20,40,60,80], endTime = [10,30,50,70,90]",
+      "output": "30"
+    },
+    {
+      "input": "eventTime = 30, startTime = [0,6,12,18,24], endTime = [4,10,16,22,30]",
+      "output": "4"
+    },
+    {
+      "input": "eventTime = 20, startTime = [1,5,9,13,17], endTime = [3,7,11,15,19]",
+      "output": "6"
+    },
+    {
+      "input": "eventTime = 20, startTime = [2, 5, 10, 15], endTime = [4, 8, 12, 18]",
+      "output": "7"
+    },
+    {
+      "input": "eventTime = 100, startTime = [0,25,50,75], endTime = [20,45,70,95]",
+      "output": "10"
+    },
+    {
+      "input": "eventTime = 20, startTime = [0,10,15,18], endTime = [5,12,17,20]",
+      "output": "8"
+    },
+    {
+      "input": "eventTime = 25, startTime = [0, 5, 10, 15, 20], endTime = [3, 8, 13, 18, 23]",
+      "output": "4"
+    },
+    {
+      "input": "eventTime = 5, startTime = [0,1,2,3,4], endTime = [1,2,3,4,5]",
+      "output": "0"
+    },
+    {
+      "input": "eventTime = 10, startTime = [1,2,3,4], endTime = [2,3,4,5]",
+      "output": "6"
+    }
+  ],
+  "types": {
+    "python3": {
+      "input": [
+        {
+          "eventTime": "int"
+        },
+        {
+          "startTime": "List[int]"
+        },
+        {
+          "endTime": "List[int]"
+        }
+      ],
+      "output": "int"
+    },
+    "cpp": {
+      "input": [
+        {
+          "eventTime": "int"
+        },
+        {
+          "startTime": "vector<int>&"
+        },
+        {
+          "endTime": "vector<int>&"
+        }
+      ],
+      "output": "int"
+    },
+    "java": {
+      "input": [
+        {
+          "eventTime": "int"
+        },
+        {
+          "startTime": "int[]"
+        },
+        {
+          "endTime": "int[]"
+        }
+      ],
+      "output": "int"
+    },
+    "javascript": {
+      "input": [
+        {
+          "eventTime": "number"
+        },
+        {
+          "startTime": "number[]"
+        },
+        {
+          "endTime": "number[]"
+        }
+      ],
+      "output": "number"
+    },
+    "typescript": {
+      "input": [
+        {
+          "eventTime": "number"
+        },
+        {
+          "startTime": "number[]"
+        },
+        {
+          "endTime": "number[]"
+        }
+      ],
+      "output": "number"
+    },
+    "golang": {
+      "input": [
+        {
+          "eventTime": "int"
+        },
+        {
+          "startTime": "[]int"
+        },
+        {
+          "endTime": "[]int"
+        }
+      ],
+      "output": "int"
+    },
+    "rust": {
+      "input": [
+        {
+          "event_time": "i32"
+        },
+        {
+          "start_time": "Vec<i32>"
+        },
+        {
+          "end_time": "Vec<i32>"
+        }
+      ],
+      "output": "i32"
+    }
+  },
+  "tags": [
+    "array",
+    "greedy",
+    "enumeration"
+  ]
+}

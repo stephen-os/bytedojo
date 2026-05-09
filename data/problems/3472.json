@@ -1,0 +1,753 @@
+{
+  "id": 3472,
+  "title": "Longest Palindromic Subsequence After at Most K Operations",
+  "slug": "longest-palindromic-subsequence-after-at-most-k-operations",
+  "difficulty": "Medium",
+  "description": "You are given a string s and an integer k.\nIn one operation, you can replace the character at any position with the next or previous letter in the alphabet (wrapping around so that 'a' is after 'z'). For example, replacing 'a' with the next letter results in 'b', and replacing 'a' with the previous letter results in 'z'. Similarly, replacing 'z' with the next letter results in 'a', and replacing 'z' with the previous letter results in 'y'.\nReturn the length of the longest palindromic subsequence of s that can be obtained after performing at most k operations.\nExample 1:\nExample 2:\nConstraints:",
+  "examples": [
+    {
+      "example_num": 1,
+      "example_text": "Input: s = \"abced\", k = 2\nOutput: 3\nExplanation:\nThe subsequence \"ccc\" forms a palindrome of length 3, which is the maximum.",
+      "images": []
+    },
+    {
+      "example_num": 2,
+      "example_text": "Input: s = \" aaazzz \", k = 4\nOutput: 6\nExplanation:\nThe entire string forms a palindrome of length 6.",
+      "images": []
+    }
+  ],
+  "constraints": [
+    "1 <= s.length <= 200",
+    "1 <= k <= 200",
+    "s consists of only lowercase English letters."
+  ],
+  "hints": [
+    "Use dynamic programming.",
+    "<code>dp[i][j][k]</code> is the length of the longest palindromic subsequence in substring <code>[i..j]</code> with cost at most <code>k</code>.",
+    "<code>dp[i][j][k] = max(dp[i + 1][j][k], dp[i][j - 1][k], dp[i + 1][j - 1][k - dist(s[i], s[j])] + 2)</code>, where <code>dist(x, y)</code> is the minimum cyclic distance between <code>x</code> and <code>y</code>."
+  ],
+  "code_snippets": {
+    "cpp": "class Solution {\npublic:\n    int longestPalindromicSubsequence(string s, int k) {\n        \n    }\n};",
+    "java": "class Solution {\n    public int longestPalindromicSubsequence(String s, int k) {\n        \n    }\n}",
+    "python3": "class Solution:\n    def longestPalindromicSubsequence(self, s: str, k: int) -> int:\n        ",
+    "javascript": "/**\n * @param {string} s\n * @param {number} k\n * @return {number}\n */\nvar longestPalindromicSubsequence = function(s, k) {\n    \n};",
+    "typescript": "function longestPalindromicSubsequence(s: string, k: number): number {\n    \n};",
+    "golang": "func longestPalindromicSubsequence(s string, k int) int {\n    \n}",
+    "rust": "impl Solution {\n    pub fn longest_palindromic_subsequence(s: String, k: i32) -> i32 {\n        \n    }\n}"
+  },
+  "entry_points": {
+    "python3": "Solution().longestPalindromicSubsequence",
+    "cpp": "Solution().longestPalindromicSubsequence",
+    "java": "new Solution().longestPalindromicSubsequence",
+    "javascript": "longestPalindromicSubsequence",
+    "typescript": "longestPalindromicSubsequence",
+    "golang": "longestPalindromicSubsequence",
+    "rust": "Solution::longest_palindromic_subsequence"
+  },
+  "test_snippets": {
+    "python3": "def check(candidate):\n    assert candidate(s = \"zxy\", k = 1) == 3\n    assert candidate(s = \"a\", k = 5) == 1\n    assert candidate(s = \"abced\", k = 2) == 3\n    assert candidate(s = \"abcdefghijklmnopqrstuvwxyz\", k = 25) == 14\n    assert candidate(s = \"zzzzz\", k = 1) == 5\n    assert candidate(s = \"abcdeedcba\", k = 5) == 10\n    assert candidate(s = \"zzzzz\", k = 10) == 5\n    assert candidate(s = \"abcba\", k = 0) == 5\n    assert candidate(s = \"aaazzz\", k = 4) == 6\n    assert candidate(s = \"abcdef\", k = 3) == 3\n    assert candidate(s = \"adadd\", k = 2) == 3\n    assert candidate(s = \"mamad\", k = 3) == 3\n    assert candidate(s = \"zyxwvutsrqponmlkjihgfedcba\", k = 200) == 26\n    assert candidate(s = \"xyz\", k = 1) == 2\n    assert candidate(s = \"abba\", k = 1) == 4\n    assert candidate(s = \"abcdedcba\", k = 0) == 9\n    assert candidate(s = \"aabaa\", k = 2) == 5\n    assert candidate(s = \"mnopqr\", k = 10) == 6\n    assert candidate(s = \"a\", k = 0) == 1\n    assert candidate(s = \"abcdefg\", k = 3) == 3\n    assert candidate(s = \"abcdabcdabcd\", k = 6) == 11\n    assert candidate(s = \"a\", k = 1) == 1\n    assert candidate(s = \"abcdedcba\", k = 5) == 9\n    assert candidate(s = \"zzzzzzzzzz\", k = 0) == 10\n    assert candidate(s = \"zzzzzzzzzzzzzzzzzzzz\", k = 100) == 20\n    assert candidate(s = \"racecar\", k = 10) == 7\n    assert candidate(s = \"zzyzxzyzxzyzxzyzxzyz\", k = 30) == 20\n    assert candidate(s = \"abcdefghijklmnopqrstuvwxyzz\", k = 50) == 20\n    assert candidate(s = \"aaaabbbb\", k = 5) == 8\n    assert candidate(s = \"abcabcabcabcabcabcabcabcabcabc\", k = 25) == 30\n    assert candidate(s = \"aaaaabbbbbcccc\", k = 5) == 10\n    assert candidate(s = \"aaaaabbbbbaaaa\", k = 50) == 14\n    assert candidate(s = \"aaaaabbbbbaaaaa\", k = 10) == 15\n    assert candidate(s = \"abcdefghijklmnopqrstuvwxyzyxwvutsrqponmlkjihgfedcba\", k = 180) == 51\n    assert candidate(s = \"level\", k = 5) == 5\n    assert candidate(s = \"racecar\", k = 5) == 7\n    assert candidate(s = \"abcdefgabcdefgabcdefgabcdefg\", k = 10) == 17\n    assert candidate(s = \"abcdedcba\", k = 1) == 9\n    assert candidate(s = \"qwertyuioplkjhgfdsazxcvbnmqwertyuioplkjhgfdsazxcvb\", k = 100) == 47\n    assert candidate(s = \"abxyzabcxyzabcxyz\", k = 25) == 17\n    assert candidate(s = \"level\", k = 1) == 5\n    assert candidate(s = \"abcba\", k = 1) == 5\n    assert candidate(s = \"ababababababababababababababababababab\", k = 75) == 38\n    assert candidate(s = \"abcdefgxyzzyxgfedcba\", k = 15) == 20\n    assert candidate(s = \"refer\", k = 0) == 5\n    assert candidate(s = \"aabbccddeeffggzzzyyxxwwvvuuttsrqponmlkjihgfedcba\", k = 100) == 47\n    assert candidate(s = \"palindrome\", k = 15) == 9\n    assert candidate(s = \"amanaplanacanalpanama\", k = 100) == 21\n    assert candidate(s = \"qwertyuiopasdfghjklzxcvbnm\", k = 50) == 23\n    assert candidate(s = \"aaaabbbbcccc\", k = 15) == 12\n    assert candidate(s = \"mnonmonmomnonmonmonmomnonm\", k = 15) == 26\n    assert candidate(s = \"mississippi\", k = 7) == 10\n    assert candidate(s = \"banana\", k = 10) == 5\n    assert candidate(s = \"aabacbebebe\", k = 5) == 8\n    assert candidate(s = \"madamimadam\", k = 10) == 11\n    assert candidate(s = \"abcdexyzabcdexyzabcdexyz\", k = 50) == 24\n    assert candidate(s = \"mississippi\", k = 10) == 10\n    assert candidate(s = \"deified\", k = 4) == 7\n    assert candidate(s = \"abcdedcba\", k = 2) == 9\n    assert candidate(s = \"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", k = 50) == 28\n    assert candidate(s = \"abcdedcba\", k = 3) == 9\n    assert candidate(s = \"mnopqrstuvwxyzyxwvutsrqponmlkjihgfedcbazyxwvutsrqponmlkjihgfedcba\", k = 200) == 60\n    assert candidate(s = \"aabbccabcabcabcabcabc\", k = 50) == 21\n    assert candidate(s = \"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", k = 1) == 50\n    assert candidate(s = \"abcdeedcba\", k = 0) == 10\n    assert candidate(s = \"abbaacddcabb\", k = 4) == 11\n    assert candidate(s = \"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", k = 200) == 52\n    assert candidate(s = \"zzzyzzyzzyzzyzzyzzyz\", k = 200) == 20\n    assert candidate(s = \"mississippi\", k = 5) == 9\n    assert candidate(s = \"level\", k = 2) == 5\n    assert candidate(s = \"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", k = 0) == 32\n    assert candidate(s = \"ababbabbbabaaa\", k = 15) == 14\n    assert candidate(s = \"rotor\", k = 15) == 5\n    assert candidate(s = \"noon\", k = 1) == 4\n    assert candidate(s = \"noonhighnoon\", k = 5) == 12\n    assert candidate(s = \"abcdbca\", k = 2) == 7\n    assert candidate(s = \"abcdxyzabcdxyzabcdxyz\", k = 30) == 21\n    assert candidate(s = \"banana\", k = 3) == 5\n    assert candidate(s = \"qwertyuiopasdfghjklzxcvbnmnbvcxzlkjhgfdsapoiuytrewq\", k = 50) == 51\n    assert candidate(s = \"abacbacbacbacbacbacbacbacbacbacbacbacbacbacbacbacb\", k = 20) == 50\n    assert candidate(s = \"abacaba\", k = 3) == 7\n    assert candidate(s = \"mamamamamamamamamamamamamamamamama\", k = 50) == 33\n    assert candidate(s = \"racecar\", k = 2) == 7\n    assert candidate(s = \"noon\", k = 2) == 4\n    assert candidate(s = \"abcdefghijklmnopqrstuvwxyzyxwvutsrqponmlkjihgfedcba\", k = 250) == 51\n    assert candidate(s = \"abcdefg\", k = 6) == 5\n    assert candidate(s = \"zyzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", k = 300) == 84\n    assert candidate(s = \"madam\", k = 1) == 5\n    assert candidate(s = \"zyxzyxzyxzyxzyxzyxzyxzyxzyxzyxzyxzyxzyxzyxzyxzyxzyxzyxzyx\", k = 100) == 57\n    assert candidate(s = \"zyxzyxzyxzyxzyxzyxzyxzyxzyxzyxzyxzyxzyx\", k = 200) == 39\n    assert candidate(s = \"rotor\", k = 0) == 5\n    assert candidate(s = \"abcdefgzyxwvutsrqponmlkjihgfedcba\", k = 50) == 29\n    assert candidate(s = \"abcdefghzyxwvutsrqponmlkjihgfedcba\", k = 150) == 34\n    assert candidate(s = \"qwertyuiopasdfghjklzxcvbnmqwertyuiopasdfghjklzxcvbnm\", k = 100) == 47\n    assert candidate(s = \"abcdefghizyxwvutsrqponmlkjihgfedcba\", k = 100) == 35\n    assert candidate(s = \"deified\", k = 2) == 7\n    assert candidate(s = \"aaaabbbbccccdddd\", k = 10) == 13\n    assert candidate(s = \"madam\", k = 2) == 5\n    assert candidate(s = \"rotor\", k = 3) == 5\n    assert candidate(s = \"abcdefgihgfedcb\", k = 15) == 15\n    assert candidate(s = \"abcdefghihgfedcba\", k = 10) == 17\n    assert candidate(s = \"pqrstuvwxyzabcdefghijklmno\", k = 50) == 20\n    assert candidate(s = \"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\", k = 0) == 30\n    assert candidate(s = \"abcdefghijklmnopqrstuvwxyz\", k = 10) == 9\n    assert candidate(s = \"abcdefghijklmnopqrstuvwxzy\", k = 100) == 26\n    assert candidate(s = \"zzzzzzzzzzzzzzzzzzzz\", k = 10) == 20\n    assert candidate(s = \"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", k = 150) == 49\n    assert candidate(s = \"abcabcabcabcabcabcabcabcabcabc\", k = 100) == 30\n    assert candidate(s = \"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", k = 5) == 52\n    assert candidate(s = \"reviled\", k = 7) == 5\n    assert candidate(s = \"abccba\", k = 0) == 6\n    assert candidate(s = \"zyxzyxzyxzyxzyxzyxzyx\", k = 100) == 21\n    assert candidate(s = \"pneumonoultramicroscopicsilicovolcanoconiosis\", k = 50) == 37\n    assert candidate(s = \"mnopqrstuvwxyz\", k = 10) == 6\n    assert candidate(s = \"step on no pets\", k = 10) == 15\n    assert candidate(s = \"zyxzyxzyxzyxzyxzyxzyxzyxzyxzyxzyxzyxzyxzyx\", k = 100) == 42\n    assert candidate(s = \"abababababababababababababababab\", k = 50) == 32\n    assert candidate(s = \"abcdefghijklmnopqrstuvwxyz\", k = 50) == 20\n    assert candidate(s = \"mississippi\", k = 3) == 9\n    assert candidate(s = \"abacabadabacaba\", k = 5) == 15\n    assert candidate(s = \"mnopqrstuvwxyzzyxwvutsrqponmlk\", k = 80) == 30\n    assert candidate(s = \"abcdezyxwvutsrqponmlkjihgf\", k = 50) == 20\n    assert candidate(s = \"abacabadabacaba\", k = 10) == 15\n    assert candidate(s = \"abcabcabc\", k = 4) == 8\n    assert candidate(s = \"abababababababababab\", k = 10) == 20\n    assert candidate(s = \"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", k = 100) == 40\n    assert candidate(s = \"abcabcabcabcabcabcabc\", k = 20) == 21\n    assert candidate(s = \"qwertyuiopasdfghjklzxcvbnm\", k = 25) == 18\n    assert candidate(s = \"aaaaabbbbb\", k = 10) == 10\n    assert candidate(s = \"zabacabadabacaba\", k = 10) == 15\n    assert candidate(s = \"abcdefedcbaabcdefedcbaabcdefedcba\", k = 60) == 33\n    assert candidate(s = \"mnopqrstuvwxyzyxwvutsrqponmlkjihgfedcba\", k = 150) == 36\n    assert candidate(s = \"abcdxyzzyxcba\", k = 10) == 13\n    assert candidate(s = \"abcdefghijklmnopqrstuvwxyzyxwvutsrqponmlkjihgfedcba\", k = 100) == 51\n    assert candidate(s = \"kayak\", k = 20) == 5\n    assert candidate(s = \"abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz\", k = 100) == 40\n    assert candidate(s = \"abcdzdcba\", k = 3) == 9\n    assert candidate(s = \"aababaaa\", k = 2) == 8\n    assert candidate(s = \"deed\", k = 3) == 4\n    assert candidate(s = \"ababababababababababababababababababababababababababab\", k = 100) == 54\n    assert candidate(s = \"abcdefghijkmlkjihgfedcba\", k = 50) == 24\n    assert candidate(s = \"abcdeedcba\", k = 3) == 10\n    assert candidate(s = \"abcdefg\", k = 10) == 6\n    assert candidate(s = \"mnopqrstuvwxyzyxwvutsrqponmlkjihgfedcba\", k = 50) == 30\n    assert candidate(s = \"racecar\", k = 0) == 7\n    assert candidate(s = \"zyxwvutsrqponmlkjihgfedcba\", k = 150) == 26\n    assert candidate(s = \"abcdefghijklmnopqrstuvwxyzyxwvutsrqponmlkjihgfedcba\", k = 50) == 51\n    assert candidate(s = \"abcdefghijabcdefghij\", k = 15) == 13\n    assert candidate(s = \"abacabadabacabadabacaba\", k = 20) == 23\n    assert candidate(s = \"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\", k = 5) == 52\n    assert candidate(s = \"abcdabcdabcdabcd\", k = 20) == 16\n    assert candidate(s = \"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", k = 180) == 52\n    assert candidate(s = \"abcdefghijjihgfedcba\", k = 5) == 20",
+    "cpp": "void check(Solution& solution) {\n    assert(solution.longestPalindromicSubsequence(\"zxy\", 1) == vector<int>3);\n    assert(solution.longestPalindromicSubsequence(\"a\", 5) == vector<int>1);\n    assert(solution.longestPalindromicSubsequence(\"abced\", 2) == vector<int>3);\n    assert(solution.longestPalindromicSubsequence(\"abcdefghijklmnopqrstuvwxyz\", 25) == vector<int>14);\n    assert(solution.longestPalindromicSubsequence(\"zzzzz\", 1) == vector<int>5);\n    assert(solution.longestPalindromicSubsequence(\"abcdeedcba\", 5) == vector<int>10);\n    assert(solution.longestPalindromicSubsequence(\"zzzzz\", 10) == vector<int>5);\n    assert(solution.longestPalindromicSubsequence(\"abcba\", 0) == vector<int>5);\n    assert(solution.longestPalindromicSubsequence(\"aaazzz\", 4) == vector<int>6);\n    assert(solution.longestPalindromicSubsequence(\"abcdef\", 3) == vector<int>3);\n    assert(solution.longestPalindromicSubsequence(\"adadd\", 2) == vector<int>3);\n    assert(solution.longestPalindromicSubsequence(\"mamad\", 3) == vector<int>3);\n    assert(solution.longestPalindromicSubsequence(\"zyxwvutsrqponmlkjihgfedcba\", 200) == vector<int>26);\n    assert(solution.longestPalindromicSubsequence(\"xyz\", 1) == vector<int>2);\n    assert(solution.longestPalindromicSubsequence(\"abba\", 1) == vector<int>4);\n    assert(solution.longestPalindromicSubsequence(\"abcdedcba\", 0) == vector<int>9);\n    assert(solution.longestPalindromicSubsequence(\"aabaa\", 2) == vector<int>5);\n    assert(solution.longestPalindromicSubsequence(\"mnopqr\", 10) == vector<int>6);\n    assert(solution.longestPalindromicSubsequence(\"a\", 0) == vector<int>1);\n    assert(solution.longestPalindromicSubsequence(\"abcdefg\", 3) == vector<int>3);\n    assert(solution.longestPalindromicSubsequence(\"abcdabcdabcd\", 6) == vector<int>11);\n    assert(solution.longestPalindromicSubsequence(\"a\", 1) == vector<int>1);\n    assert(solution.longestPalindromicSubsequence(\"abcdedcba\", 5) == vector<int>9);\n    assert(solution.longestPalindromicSubsequence(\"zzzzzzzzzz\", 0) == vector<int>10);\n    assert(solution.longestPalindromicSubsequence(\"zzzzzzzzzzzzzzzzzzzz\", 100) == vector<int>20);\n    assert(solution.longestPalindromicSubsequence(\"racecar\", 10) == vector<int>7);\n    assert(solution.longestPalindromicSubsequence(\"zzyzxzyzxzyzxzyzxzyz\", 30) == vector<int>20);\n    assert(solution.longestPalindromicSubsequence(\"abcdefghijklmnopqrstuvwxyzz\", 50) == vector<int>20);\n    assert(solution.longestPalindromicSubsequence(\"aaaabbbb\", 5) == vector<int>8);\n    assert(solution.longestPalindromicSubsequence(\"abcabcabcabcabcabcabcabcabcabc\", 25) == vector<int>30);\n    assert(solution.longestPalindromicSubsequence(\"aaaaabbbbbcccc\", 5) == vector<int>10);\n    assert(solution.longestPalindromicSubsequence(\"aaaaabbbbbaaaa\", 50) == vector<int>14);\n    assert(solution.longestPalindromicSubsequence(\"aaaaabbbbbaaaaa\", 10) == vector<int>15);\n    assert(solution.longestPalindromicSubsequence(\"abcdefghijklmnopqrstuvwxyzyxwvutsrqponmlkjihgfedcba\", 180) == vector<int>51);\n    assert(solution.longestPalindromicSubsequence(\"level\", 5) == vector<int>5);\n    assert(solution.longestPalindromicSubsequence(\"racecar\", 5) == vector<int>7);\n    assert(solution.longestPalindromicSubsequence(\"abcdefgabcdefgabcdefgabcdefg\", 10) == vector<int>17);\n    assert(solution.longestPalindromicSubsequence(\"abcdedcba\", 1) == vector<int>9);\n    assert(solution.longestPalindromicSubsequence(\"qwertyuioplkjhgfdsazxcvbnmqwertyuioplkjhgfdsazxcvb\", 100) == vector<int>47);\n    assert(solution.longestPalindromicSubsequence(\"abxyzabcxyzabcxyz\", 25) == vector<int>17);\n    assert(solution.longestPalindromicSubsequence(\"level\", 1) == vector<int>5);\n    assert(solution.longestPalindromicSubsequence(\"abcba\", 1) == vector<int>5);\n    assert(solution.longestPalindromicSubsequence(\"ababababababababababababababababababab\", 75) == vector<int>38);\n    assert(solution.longestPalindromicSubsequence(\"abcdefgxyzzyxgfedcba\", 15) == vector<int>20);\n    assert(solution.longestPalindromicSubsequence(\"refer\", 0) == vector<int>5);\n    assert(solution.longestPalindromicSubsequence(\"aabbccddeeffggzzzyyxxwwvvuuttsrqponmlkjihgfedcba\", 100) == vector<int>47);\n    assert(solution.longestPalindromicSubsequence(\"palindrome\", 15) == vector<int>9);\n    assert(solution.longestPalindromicSubsequence(\"amanaplanacanalpanama\", 100) == vector<int>21);\n    assert(solution.longestPalindromicSubsequence(\"qwertyuiopasdfghjklzxcvbnm\", 50) == vector<int>23);\n    assert(solution.longestPalindromicSubsequence(\"aaaabbbbcccc\", 15) == vector<int>12);\n    assert(solution.longestPalindromicSubsequence(\"mnonmonmomnonmonmonmomnonm\", 15) == vector<int>26);\n    assert(solution.longestPalindromicSubsequence(\"mississippi\", 7) == vector<int>10);\n    assert(solution.longestPalindromicSubsequence(\"banana\", 10) == vector<int>5);\n    assert(solution.longestPalindromicSubsequence(\"aabacbebebe\", 5) == vector<int>8);\n    assert(solution.longestPalindromicSubsequence(\"madamimadam\", 10) == vector<int>11);\n    assert(solution.longestPalindromicSubsequence(\"abcdexyzabcdexyzabcdexyz\", 50) == vector<int>24);\n    assert(solution.longestPalindromicSubsequence(\"mississippi\", 10) == vector<int>10);\n    assert(solution.longestPalindromicSubsequence(\"deified\", 4) == vector<int>7);\n    assert(solution.longestPalindromicSubsequence(\"abcdedcba\", 2) == vector<int>9);\n    assert(solution.longestPalindromicSubsequence(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", 50) == vector<int>28);\n    assert(solution.longestPalindromicSubsequence(\"abcdedcba\", 3) == vector<int>9);\n    assert(solution.longestPalindromicSubsequence(\"mnopqrstuvwxyzyxwvutsrqponmlkjihgfedcbazyxwvutsrqponmlkjihgfedcba\", 200) == vector<int>60);\n    assert(solution.longestPalindromicSubsequence(\"aabbccabcabcabcabcabc\", 50) == vector<int>21);\n    assert(solution.longestPalindromicSubsequence(\"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", 1) == vector<int>50);\n    assert(solution.longestPalindromicSubsequence(\"abcdeedcba\", 0) == vector<int>10);\n    assert(solution.longestPalindromicSubsequence(\"abbaacddcabb\", 4) == vector<int>11);\n    assert(solution.longestPalindromicSubsequence(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", 200) == vector<int>52);\n    assert(solution.longestPalindromicSubsequence(\"zzzyzzyzzyzzyzzyzzyz\", 200) == vector<int>20);\n    assert(solution.longestPalindromicSubsequence(\"mississippi\", 5) == vector<int>9);\n    assert(solution.longestPalindromicSubsequence(\"level\", 2) == vector<int>5);\n    assert(solution.longestPalindromicSubsequence(\"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", 0) == vector<int>32);\n    assert(solution.longestPalindromicSubsequence(\"ababbabbbabaaa\", 15) == vector<int>14);\n    assert(solution.longestPalindromicSubsequence(\"rotor\", 15) == vector<int>5);\n    assert(solution.longestPalindromicSubsequence(\"noon\", 1) == vector<int>4);\n    assert(solution.longestPalindromicSubsequence(\"noonhighnoon\", 5) == vector<int>12);\n    assert(solution.longestPalindromicSubsequence(\"abcdbca\", 2) == vector<int>7);\n    assert(solution.longestPalindromicSubsequence(\"abcdxyzabcdxyzabcdxyz\", 30) == vector<int>21);\n    assert(solution.longestPalindromicSubsequence(\"banana\", 3) == vector<int>5);\n    assert(solution.longestPalindromicSubsequence(\"qwertyuiopasdfghjklzxcvbnmnbvcxzlkjhgfdsapoiuytrewq\", 50) == vector<int>51);\n    assert(solution.longestPalindromicSubsequence(\"abacbacbacbacbacbacbacbacbacbacbacbacbacbacbacbacb\", 20) == vector<int>50);\n    assert(solution.longestPalindromicSubsequence(\"abacaba\", 3) == vector<int>7);\n    assert(solution.longestPalindromicSubsequence(\"mamamamamamamamamamamamamamamamama\", 50) == vector<int>33);\n    assert(solution.longestPalindromicSubsequence(\"racecar\", 2) == vector<int>7);\n    assert(solution.longestPalindromicSubsequence(\"noon\", 2) == vector<int>4);\n    assert(solution.longestPalindromicSubsequence(\"abcdefghijklmnopqrstuvwxyzyxwvutsrqponmlkjihgfedcba\", 250) == vector<int>51);\n    assert(solution.longestPalindromicSubsequence(\"abcdefg\", 6) == vector<int>5);\n    assert(solution.longestPalindromicSubsequence(\"zyzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", 300) == vector<int>84);\n    assert(solution.longestPalindromicSubsequence(\"madam\", 1) == vector<int>5);\n    assert(solution.longestPalindromicSubsequence(\"zyxzyxzyxzyxzyxzyxzyxzyxzyxzyxzyxzyxzyxzyxzyxzyxzyxzyxzyx\", 100) == vector<int>57);\n    assert(solution.longestPalindromicSubsequence(\"zyxzyxzyxzyxzyxzyxzyxzyxzyxzyxzyxzyxzyx\", 200) == vector<int>39);\n    assert(solution.longestPalindromicSubsequence(\"rotor\", 0) == vector<int>5);\n    assert(solution.longestPalindromicSubsequence(\"abcdefgzyxwvutsrqponmlkjihgfedcba\", 50) == vector<int>29);\n    assert(solution.longestPalindromicSubsequence(\"abcdefghzyxwvutsrqponmlkjihgfedcba\", 150) == vector<int>34);\n    assert(solution.longestPalindromicSubsequence(\"qwertyuiopasdfghjklzxcvbnmqwertyuiopasdfghjklzxcvbnm\", 100) == vector<int>47);\n    assert(solution.longestPalindromicSubsequence(\"abcdefghizyxwvutsrqponmlkjihgfedcba\", 100) == vector<int>35);\n    assert(solution.longestPalindromicSubsequence(\"deified\", 2) == vector<int>7);\n    assert(solution.longestPalindromicSubsequence(\"aaaabbbbccccdddd\", 10) == vector<int>13);\n    assert(solution.longestPalindromicSubsequence(\"madam\", 2) == vector<int>5);\n    assert(solution.longestPalindromicSubsequence(\"rotor\", 3) == vector<int>5);\n    assert(solution.longestPalindromicSubsequence(\"abcdefgihgfedcb\", 15) == vector<int>15);\n    assert(solution.longestPalindromicSubsequence(\"abcdefghihgfedcba\", 10) == vector<int>17);\n    assert(solution.longestPalindromicSubsequence(\"pqrstuvwxyzabcdefghijklmno\", 50) == vector<int>20);\n    assert(solution.longestPalindromicSubsequence(\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\", 0) == vector<int>30);\n    assert(solution.longestPalindromicSubsequence(\"abcdefghijklmnopqrstuvwxyz\", 10) == vector<int>9);\n    assert(solution.longestPalindromicSubsequence(\"abcdefghijklmnopqrstuvwxzy\", 100) == vector<int>26);\n    assert(solution.longestPalindromicSubsequence(\"zzzzzzzzzzzzzzzzzzzz\", 10) == vector<int>20);\n    assert(solution.longestPalindromicSubsequence(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", 150) == vector<int>49);\n    assert(solution.longestPalindromicSubsequence(\"abcabcabcabcabcabcabcabcabcabc\", 100) == vector<int>30);\n    assert(solution.longestPalindromicSubsequence(\"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", 5) == vector<int>52);\n    assert(solution.longestPalindromicSubsequence(\"reviled\", 7) == vector<int>5);\n    assert(solution.longestPalindromicSubsequence(\"abccba\", 0) == vector<int>6);\n    assert(solution.longestPalindromicSubsequence(\"zyxzyxzyxzyxzyxzyxzyx\", 100) == vector<int>21);\n    assert(solution.longestPalindromicSubsequence(\"pneumonoultramicroscopicsilicovolcanoconiosis\", 50) == vector<int>37);\n    assert(solution.longestPalindromicSubsequence(\"mnopqrstuvwxyz\", 10) == vector<int>6);\n    assert(solution.longestPalindromicSubsequence(\"step on no pets\", 10) == vector<int>15);\n    assert(solution.longestPalindromicSubsequence(\"zyxzyxzyxzyxzyxzyxzyxzyxzyxzyxzyxzyxzyxzyx\", 100) == vector<int>42);\n    assert(solution.longestPalindromicSubsequence(\"abababababababababababababababab\", 50) == vector<int>32);\n    assert(solution.longestPalindromicSubsequence(\"abcdefghijklmnopqrstuvwxyz\", 50) == vector<int>20);\n    assert(solution.longestPalindromicSubsequence(\"mississippi\", 3) == vector<int>9);\n    assert(solution.longestPalindromicSubsequence(\"abacabadabacaba\", 5) == vector<int>15);\n    assert(solution.longestPalindromicSubsequence(\"mnopqrstuvwxyzzyxwvutsrqponmlk\", 80) == vector<int>30);\n    assert(solution.longestPalindromicSubsequence(\"abcdezyxwvutsrqponmlkjihgf\", 50) == vector<int>20);\n    assert(solution.longestPalindromicSubsequence(\"abacabadabacaba\", 10) == vector<int>15);\n    assert(solution.longestPalindromicSubsequence(\"abcabcabc\", 4) == vector<int>8);\n    assert(solution.longestPalindromicSubsequence(\"abababababababababab\", 10) == vector<int>20);\n    assert(solution.longestPalindromicSubsequence(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", 100) == vector<int>40);\n    assert(solution.longestPalindromicSubsequence(\"abcabcabcabcabcabcabc\", 20) == vector<int>21);\n    assert(solution.longestPalindromicSubsequence(\"qwertyuiopasdfghjklzxcvbnm\", 25) == vector<int>18);\n    assert(solution.longestPalindromicSubsequence(\"aaaaabbbbb\", 10) == vector<int>10);\n    assert(solution.longestPalindromicSubsequence(\"zabacabadabacaba\", 10) == vector<int>15);\n    assert(solution.longestPalindromicSubsequence(\"abcdefedcbaabcdefedcbaabcdefedcba\", 60) == vector<int>33);\n    assert(solution.longestPalindromicSubsequence(\"mnopqrstuvwxyzyxwvutsrqponmlkjihgfedcba\", 150) == vector<int>36);\n    assert(solution.longestPalindromicSubsequence(\"abcdxyzzyxcba\", 10) == vector<int>13);\n    assert(solution.longestPalindromicSubsequence(\"abcdefghijklmnopqrstuvwxyzyxwvutsrqponmlkjihgfedcba\", 100) == vector<int>51);\n    assert(solution.longestPalindromicSubsequence(\"kayak\", 20) == vector<int>5);\n    assert(solution.longestPalindromicSubsequence(\"abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz\", 100) == vector<int>40);\n    assert(solution.longestPalindromicSubsequence(\"abcdzdcba\", 3) == vector<int>9);\n    assert(solution.longestPalindromicSubsequence(\"aababaaa\", 2) == vector<int>8);\n    assert(solution.longestPalindromicSubsequence(\"deed\", 3) == vector<int>4);\n    assert(solution.longestPalindromicSubsequence(\"ababababababababababababababababababababababababababab\", 100) == vector<int>54);\n    assert(solution.longestPalindromicSubsequence(\"abcdefghijkmlkjihgfedcba\", 50) == vector<int>24);\n    assert(solution.longestPalindromicSubsequence(\"abcdeedcba\", 3) == vector<int>10);\n    assert(solution.longestPalindromicSubsequence(\"abcdefg\", 10) == vector<int>6);\n    assert(solution.longestPalindromicSubsequence(\"mnopqrstuvwxyzyxwvutsrqponmlkjihgfedcba\", 50) == vector<int>30);\n    assert(solution.longestPalindromicSubsequence(\"racecar\", 0) == vector<int>7);\n    assert(solution.longestPalindromicSubsequence(\"zyxwvutsrqponmlkjihgfedcba\", 150) == vector<int>26);\n    assert(solution.longestPalindromicSubsequence(\"abcdefghijklmnopqrstuvwxyzyxwvutsrqponmlkjihgfedcba\", 50) == vector<int>51);\n    assert(solution.longestPalindromicSubsequence(\"abcdefghijabcdefghij\", 15) == vector<int>13);\n    assert(solution.longestPalindromicSubsequence(\"abacabadabacabadabacaba\", 20) == vector<int>23);\n    assert(solution.longestPalindromicSubsequence(\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\", 5) == vector<int>52);\n    assert(solution.longestPalindromicSubsequence(\"abcdabcdabcdabcd\", 20) == vector<int>16);\n    assert(solution.longestPalindromicSubsequence(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", 180) == vector<int>52);\n    assert(solution.longestPalindromicSubsequence(\"abcdefghijjihgfedcba\", 5) == vector<int>20);\n}",
+    "java": "public static void check(Solution solution) {\n    assert Arrays.equals(solution.longestPalindromicSubsequence(\"zxy\", 1), 3);\n    assert Arrays.equals(solution.longestPalindromicSubsequence(\"a\", 5), 1);\n    assert Arrays.equals(solution.longestPalindromicSubsequence(\"abced\", 2), 3);\n    assert Arrays.equals(solution.longestPalindromicSubsequence(\"abcdefghijklmnopqrstuvwxyz\", 25), 14);\n    assert Arrays.equals(solution.longestPalindromicSubsequence(\"zzzzz\", 1), 5);\n    assert Arrays.equals(solution.longestPalindromicSubsequence(\"abcdeedcba\", 5), 10);\n    assert Arrays.equals(solution.longestPalindromicSubsequence(\"zzzzz\", 10), 5);\n    assert Arrays.equals(solution.longestPalindromicSubsequence(\"abcba\", 0), 5);\n    assert Arrays.equals(solution.longestPalindromicSubsequence(\"aaazzz\", 4), 6);\n    assert Arrays.equals(solution.longestPalindromicSubsequence(\"abcdef\", 3), 3);\n    assert Arrays.equals(solution.longestPalindromicSubsequence(\"adadd\", 2), 3);\n    assert Arrays.equals(solution.longestPalindromicSubsequence(\"mamad\", 3), 3);\n    assert Arrays.equals(solution.longestPalindromicSubsequence(\"zyxwvutsrqponmlkjihgfedcba\", 200), 26);\n    assert Arrays.equals(solution.longestPalindromicSubsequence(\"xyz\", 1), 2);\n    assert Arrays.equals(solution.longestPalindromicSubsequence(\"abba\", 1), 4);\n    assert Arrays.equals(solution.longestPalindromicSubsequence(\"abcdedcba\", 0), 9);\n    assert Arrays.equals(solution.longestPalindromicSubsequence(\"aabaa\", 2), 5);\n    assert Arrays.equals(solution.longestPalindromicSubsequence(\"mnopqr\", 10), 6);\n    assert Arrays.equals(solution.longestPalindromicSubsequence(\"a\", 0), 1);\n    assert Arrays.equals(solution.longestPalindromicSubsequence(\"abcdefg\", 3), 3);\n    assert Arrays.equals(solution.longestPalindromicSubsequence(\"abcdabcdabcd\", 6), 11);\n    assert Arrays.equals(solution.longestPalindromicSubsequence(\"a\", 1), 1);\n    assert Arrays.equals(solution.longestPalindromicSubsequence(\"abcdedcba\", 5), 9);\n    assert Arrays.equals(solution.longestPalindromicSubsequence(\"zzzzzzzzzz\", 0), 10);\n    assert Arrays.equals(solution.longestPalindromicSubsequence(\"zzzzzzzzzzzzzzzzzzzz\", 100), 20);\n    assert Arrays.equals(solution.longestPalindromicSubsequence(\"racecar\", 10), 7);\n    assert Arrays.equals(solution.longestPalindromicSubsequence(\"zzyzxzyzxzyzxzyzxzyz\", 30), 20);\n    assert Arrays.equals(solution.longestPalindromicSubsequence(\"abcdefghijklmnopqrstuvwxyzz\", 50), 20);\n    assert Arrays.equals(solution.longestPalindromicSubsequence(\"aaaabbbb\", 5), 8);\n    assert Arrays.equals(solution.longestPalindromicSubsequence(\"abcabcabcabcabcabcabcabcabcabc\", 25), 30);\n    assert Arrays.equals(solution.longestPalindromicSubsequence(\"aaaaabbbbbcccc\", 5), 10);\n    assert Arrays.equals(solution.longestPalindromicSubsequence(\"aaaaabbbbbaaaa\", 50), 14);\n    assert Arrays.equals(solution.longestPalindromicSubsequence(\"aaaaabbbbbaaaaa\", 10), 15);\n    assert Arrays.equals(solution.longestPalindromicSubsequence(\"abcdefghijklmnopqrstuvwxyzyxwvutsrqponmlkjihgfedcba\", 180), 51);\n    assert Arrays.equals(solution.longestPalindromicSubsequence(\"level\", 5), 5);\n    assert Arrays.equals(solution.longestPalindromicSubsequence(\"racecar\", 5), 7);\n    assert Arrays.equals(solution.longestPalindromicSubsequence(\"abcdefgabcdefgabcdefgabcdefg\", 10), 17);\n    assert Arrays.equals(solution.longestPalindromicSubsequence(\"abcdedcba\", 1), 9);\n    assert Arrays.equals(solution.longestPalindromicSubsequence(\"qwertyuioplkjhgfdsazxcvbnmqwertyuioplkjhgfdsazxcvb\", 100), 47);\n    assert Arrays.equals(solution.longestPalindromicSubsequence(\"abxyzabcxyzabcxyz\", 25), 17);\n    assert Arrays.equals(solution.longestPalindromicSubsequence(\"level\", 1), 5);\n    assert Arrays.equals(solution.longestPalindromicSubsequence(\"abcba\", 1), 5);\n    assert Arrays.equals(solution.longestPalindromicSubsequence(\"ababababababababababababababababababab\", 75), 38);\n    assert Arrays.equals(solution.longestPalindromicSubsequence(\"abcdefgxyzzyxgfedcba\", 15), 20);\n    assert Arrays.equals(solution.longestPalindromicSubsequence(\"refer\", 0), 5);\n    assert Arrays.equals(solution.longestPalindromicSubsequence(\"aabbccddeeffggzzzyyxxwwvvuuttsrqponmlkjihgfedcba\", 100), 47);\n    assert Arrays.equals(solution.longestPalindromicSubsequence(\"palindrome\", 15), 9);\n    assert Arrays.equals(solution.longestPalindromicSubsequence(\"amanaplanacanalpanama\", 100), 21);\n    assert Arrays.equals(solution.longestPalindromicSubsequence(\"qwertyuiopasdfghjklzxcvbnm\", 50), 23);\n    assert Arrays.equals(solution.longestPalindromicSubsequence(\"aaaabbbbcccc\", 15), 12);\n    assert Arrays.equals(solution.longestPalindromicSubsequence(\"mnonmonmomnonmonmonmomnonm\", 15), 26);\n    assert Arrays.equals(solution.longestPalindromicSubsequence(\"mississippi\", 7), 10);\n    assert Arrays.equals(solution.longestPalindromicSubsequence(\"banana\", 10), 5);\n    assert Arrays.equals(solution.longestPalindromicSubsequence(\"aabacbebebe\", 5), 8);\n    assert Arrays.equals(solution.longestPalindromicSubsequence(\"madamimadam\", 10), 11);\n    assert Arrays.equals(solution.longestPalindromicSubsequence(\"abcdexyzabcdexyzabcdexyz\", 50), 24);\n    assert Arrays.equals(solution.longestPalindromicSubsequence(\"mississippi\", 10), 10);\n    assert Arrays.equals(solution.longestPalindromicSubsequence(\"deified\", 4), 7);\n    assert Arrays.equals(solution.longestPalindromicSubsequence(\"abcdedcba\", 2), 9);\n    assert Arrays.equals(solution.longestPalindromicSubsequence(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", 50), 28);\n    assert Arrays.equals(solution.longestPalindromicSubsequence(\"abcdedcba\", 3), 9);\n    assert Arrays.equals(solution.longestPalindromicSubsequence(\"mnopqrstuvwxyzyxwvutsrqponmlkjihgfedcbazyxwvutsrqponmlkjihgfedcba\", 200), 60);\n    assert Arrays.equals(solution.longestPalindromicSubsequence(\"aabbccabcabcabcabcabc\", 50), 21);\n    assert Arrays.equals(solution.longestPalindromicSubsequence(\"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", 1), 50);\n    assert Arrays.equals(solution.longestPalindromicSubsequence(\"abcdeedcba\", 0), 10);\n    assert Arrays.equals(solution.longestPalindromicSubsequence(\"abbaacddcabb\", 4), 11);\n    assert Arrays.equals(solution.longestPalindromicSubsequence(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", 200), 52);\n    assert Arrays.equals(solution.longestPalindromicSubsequence(\"zzzyzzyzzyzzyzzyzzyz\", 200), 20);\n    assert Arrays.equals(solution.longestPalindromicSubsequence(\"mississippi\", 5), 9);\n    assert Arrays.equals(solution.longestPalindromicSubsequence(\"level\", 2), 5);\n    assert Arrays.equals(solution.longestPalindromicSubsequence(\"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", 0), 32);\n    assert Arrays.equals(solution.longestPalindromicSubsequence(\"ababbabbbabaaa\", 15), 14);\n    assert Arrays.equals(solution.longestPalindromicSubsequence(\"rotor\", 15), 5);\n    assert Arrays.equals(solution.longestPalindromicSubsequence(\"noon\", 1), 4);\n    assert Arrays.equals(solution.longestPalindromicSubsequence(\"noonhighnoon\", 5), 12);\n    assert Arrays.equals(solution.longestPalindromicSubsequence(\"abcdbca\", 2), 7);\n    assert Arrays.equals(solution.longestPalindromicSubsequence(\"abcdxyzabcdxyzabcdxyz\", 30), 21);\n    assert Arrays.equals(solution.longestPalindromicSubsequence(\"banana\", 3), 5);\n    assert Arrays.equals(solution.longestPalindromicSubsequence(\"qwertyuiopasdfghjklzxcvbnmnbvcxzlkjhgfdsapoiuytrewq\", 50), 51);\n    assert Arrays.equals(solution.longestPalindromicSubsequence(\"abacbacbacbacbacbacbacbacbacbacbacbacbacbacbacbacb\", 20), 50);\n    assert Arrays.equals(solution.longestPalindromicSubsequence(\"abacaba\", 3), 7);\n    assert Arrays.equals(solution.longestPalindromicSubsequence(\"mamamamamamamamamamamamamamamamama\", 50), 33);\n    assert Arrays.equals(solution.longestPalindromicSubsequence(\"racecar\", 2), 7);\n    assert Arrays.equals(solution.longestPalindromicSubsequence(\"noon\", 2), 4);\n    assert Arrays.equals(solution.longestPalindromicSubsequence(\"abcdefghijklmnopqrstuvwxyzyxwvutsrqponmlkjihgfedcba\", 250), 51);\n    assert Arrays.equals(solution.longestPalindromicSubsequence(\"abcdefg\", 6), 5);\n    assert Arrays.equals(solution.longestPalindromicSubsequence(\"zyzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", 300), 84);\n    assert Arrays.equals(solution.longestPalindromicSubsequence(\"madam\", 1), 5);\n    assert Arrays.equals(solution.longestPalindromicSubsequence(\"zyxzyxzyxzyxzyxzyxzyxzyxzyxzyxzyxzyxzyxzyxzyxzyxzyxzyxzyx\", 100), 57);\n    assert Arrays.equals(solution.longestPalindromicSubsequence(\"zyxzyxzyxzyxzyxzyxzyxzyxzyxzyxzyxzyxzyx\", 200), 39);\n    assert Arrays.equals(solution.longestPalindromicSubsequence(\"rotor\", 0), 5);\n    assert Arrays.equals(solution.longestPalindromicSubsequence(\"abcdefgzyxwvutsrqponmlkjihgfedcba\", 50), 29);\n    assert Arrays.equals(solution.longestPalindromicSubsequence(\"abcdefghzyxwvutsrqponmlkjihgfedcba\", 150), 34);\n    assert Arrays.equals(solution.longestPalindromicSubsequence(\"qwertyuiopasdfghjklzxcvbnmqwertyuiopasdfghjklzxcvbnm\", 100), 47);\n    assert Arrays.equals(solution.longestPalindromicSubsequence(\"abcdefghizyxwvutsrqponmlkjihgfedcba\", 100), 35);\n    assert Arrays.equals(solution.longestPalindromicSubsequence(\"deified\", 2), 7);\n    assert Arrays.equals(solution.longestPalindromicSubsequence(\"aaaabbbbccccdddd\", 10), 13);\n    assert Arrays.equals(solution.longestPalindromicSubsequence(\"madam\", 2), 5);\n    assert Arrays.equals(solution.longestPalindromicSubsequence(\"rotor\", 3), 5);\n    assert Arrays.equals(solution.longestPalindromicSubsequence(\"abcdefgihgfedcb\", 15), 15);\n    assert Arrays.equals(solution.longestPalindromicSubsequence(\"abcdefghihgfedcba\", 10), 17);\n    assert Arrays.equals(solution.longestPalindromicSubsequence(\"pqrstuvwxyzabcdefghijklmno\", 50), 20);\n    assert Arrays.equals(solution.longestPalindromicSubsequence(\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\", 0), 30);\n    assert Arrays.equals(solution.longestPalindromicSubsequence(\"abcdefghijklmnopqrstuvwxyz\", 10), 9);\n    assert Arrays.equals(solution.longestPalindromicSubsequence(\"abcdefghijklmnopqrstuvwxzy\", 100), 26);\n    assert Arrays.equals(solution.longestPalindromicSubsequence(\"zzzzzzzzzzzzzzzzzzzz\", 10), 20);\n    assert Arrays.equals(solution.longestPalindromicSubsequence(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", 150), 49);\n    assert Arrays.equals(solution.longestPalindromicSubsequence(\"abcabcabcabcabcabcabcabcabcabc\", 100), 30);\n    assert Arrays.equals(solution.longestPalindromicSubsequence(\"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", 5), 52);\n    assert Arrays.equals(solution.longestPalindromicSubsequence(\"reviled\", 7), 5);\n    assert Arrays.equals(solution.longestPalindromicSubsequence(\"abccba\", 0), 6);\n    assert Arrays.equals(solution.longestPalindromicSubsequence(\"zyxzyxzyxzyxzyxzyxzyx\", 100), 21);\n    assert Arrays.equals(solution.longestPalindromicSubsequence(\"pneumonoultramicroscopicsilicovolcanoconiosis\", 50), 37);\n    assert Arrays.equals(solution.longestPalindromicSubsequence(\"mnopqrstuvwxyz\", 10), 6);\n    assert Arrays.equals(solution.longestPalindromicSubsequence(\"step on no pets\", 10), 15);\n    assert Arrays.equals(solution.longestPalindromicSubsequence(\"zyxzyxzyxzyxzyxzyxzyxzyxzyxzyxzyxzyxzyxzyx\", 100), 42);\n    assert Arrays.equals(solution.longestPalindromicSubsequence(\"abababababababababababababababab\", 50), 32);\n    assert Arrays.equals(solution.longestPalindromicSubsequence(\"abcdefghijklmnopqrstuvwxyz\", 50), 20);\n    assert Arrays.equals(solution.longestPalindromicSubsequence(\"mississippi\", 3), 9);\n    assert Arrays.equals(solution.longestPalindromicSubsequence(\"abacabadabacaba\", 5), 15);\n    assert Arrays.equals(solution.longestPalindromicSubsequence(\"mnopqrstuvwxyzzyxwvutsrqponmlk\", 80), 30);\n    assert Arrays.equals(solution.longestPalindromicSubsequence(\"abcdezyxwvutsrqponmlkjihgf\", 50), 20);\n    assert Arrays.equals(solution.longestPalindromicSubsequence(\"abacabadabacaba\", 10), 15);\n    assert Arrays.equals(solution.longestPalindromicSubsequence(\"abcabcabc\", 4), 8);\n    assert Arrays.equals(solution.longestPalindromicSubsequence(\"abababababababababab\", 10), 20);\n    assert Arrays.equals(solution.longestPalindromicSubsequence(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", 100), 40);\n    assert Arrays.equals(solution.longestPalindromicSubsequence(\"abcabcabcabcabcabcabc\", 20), 21);\n    assert Arrays.equals(solution.longestPalindromicSubsequence(\"qwertyuiopasdfghjklzxcvbnm\", 25), 18);\n    assert Arrays.equals(solution.longestPalindromicSubsequence(\"aaaaabbbbb\", 10), 10);\n    assert Arrays.equals(solution.longestPalindromicSubsequence(\"zabacabadabacaba\", 10), 15);\n    assert Arrays.equals(solution.longestPalindromicSubsequence(\"abcdefedcbaabcdefedcbaabcdefedcba\", 60), 33);\n    assert Arrays.equals(solution.longestPalindromicSubsequence(\"mnopqrstuvwxyzyxwvutsrqponmlkjihgfedcba\", 150), 36);\n    assert Arrays.equals(solution.longestPalindromicSubsequence(\"abcdxyzzyxcba\", 10), 13);\n    assert Arrays.equals(solution.longestPalindromicSubsequence(\"abcdefghijklmnopqrstuvwxyzyxwvutsrqponmlkjihgfedcba\", 100), 51);\n    assert Arrays.equals(solution.longestPalindromicSubsequence(\"kayak\", 20), 5);\n    assert Arrays.equals(solution.longestPalindromicSubsequence(\"abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz\", 100), 40);\n    assert Arrays.equals(solution.longestPalindromicSubsequence(\"abcdzdcba\", 3), 9);\n    assert Arrays.equals(solution.longestPalindromicSubsequence(\"aababaaa\", 2), 8);\n    assert Arrays.equals(solution.longestPalindromicSubsequence(\"deed\", 3), 4);\n    assert Arrays.equals(solution.longestPalindromicSubsequence(\"ababababababababababababababababababababababababababab\", 100), 54);\n    assert Arrays.equals(solution.longestPalindromicSubsequence(\"abcdefghijkmlkjihgfedcba\", 50), 24);\n    assert Arrays.equals(solution.longestPalindromicSubsequence(\"abcdeedcba\", 3), 10);\n    assert Arrays.equals(solution.longestPalindromicSubsequence(\"abcdefg\", 10), 6);\n    assert Arrays.equals(solution.longestPalindromicSubsequence(\"mnopqrstuvwxyzyxwvutsrqponmlkjihgfedcba\", 50), 30);\n    assert Arrays.equals(solution.longestPalindromicSubsequence(\"racecar\", 0), 7);\n    assert Arrays.equals(solution.longestPalindromicSubsequence(\"zyxwvutsrqponmlkjihgfedcba\", 150), 26);\n    assert Arrays.equals(solution.longestPalindromicSubsequence(\"abcdefghijklmnopqrstuvwxyzyxwvutsrqponmlkjihgfedcba\", 50), 51);\n    assert Arrays.equals(solution.longestPalindromicSubsequence(\"abcdefghijabcdefghij\", 15), 13);\n    assert Arrays.equals(solution.longestPalindromicSubsequence(\"abacabadabacabadabacaba\", 20), 23);\n    assert Arrays.equals(solution.longestPalindromicSubsequence(\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\", 5), 52);\n    assert Arrays.equals(solution.longestPalindromicSubsequence(\"abcdabcdabcdabcd\", 20), 16);\n    assert Arrays.equals(solution.longestPalindromicSubsequence(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", 180), 52);\n    assert Arrays.equals(solution.longestPalindromicSubsequence(\"abcdefghijjihgfedcba\", 5), 20);\n}",
+    "javascript": "function check(candidate) {\n    console.assert(JSON.stringify(candidate(\"zxy\", 1)) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate(\"a\", 5)) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate(\"abced\", 2)) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate(\"abcdefghijklmnopqrstuvwxyz\", 25)) === JSON.stringify(14));\n    console.assert(JSON.stringify(candidate(\"zzzzz\", 1)) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate(\"abcdeedcba\", 5)) === JSON.stringify(10));\n    console.assert(JSON.stringify(candidate(\"zzzzz\", 10)) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate(\"abcba\", 0)) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate(\"aaazzz\", 4)) === JSON.stringify(6));\n    console.assert(JSON.stringify(candidate(\"abcdef\", 3)) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate(\"adadd\", 2)) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate(\"mamad\", 3)) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate(\"zyxwvutsrqponmlkjihgfedcba\", 200)) === JSON.stringify(26));\n    console.assert(JSON.stringify(candidate(\"xyz\", 1)) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(\"abba\", 1)) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate(\"abcdedcba\", 0)) === JSON.stringify(9));\n    console.assert(JSON.stringify(candidate(\"aabaa\", 2)) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate(\"mnopqr\", 10)) === JSON.stringify(6));\n    console.assert(JSON.stringify(candidate(\"a\", 0)) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate(\"abcdefg\", 3)) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate(\"abcdabcdabcd\", 6)) === JSON.stringify(11));\n    console.assert(JSON.stringify(candidate(\"a\", 1)) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate(\"abcdedcba\", 5)) === JSON.stringify(9));\n    console.assert(JSON.stringify(candidate(\"zzzzzzzzzz\", 0)) === JSON.stringify(10));\n    console.assert(JSON.stringify(candidate(\"zzzzzzzzzzzzzzzzzzzz\", 100)) === JSON.stringify(20));\n    console.assert(JSON.stringify(candidate(\"racecar\", 10)) === JSON.stringify(7));\n    console.assert(JSON.stringify(candidate(\"zzyzxzyzxzyzxzyzxzyz\", 30)) === JSON.stringify(20));\n    console.assert(JSON.stringify(candidate(\"abcdefghijklmnopqrstuvwxyzz\", 50)) === JSON.stringify(20));\n    console.assert(JSON.stringify(candidate(\"aaaabbbb\", 5)) === JSON.stringify(8));\n    console.assert(JSON.stringify(candidate(\"abcabcabcabcabcabcabcabcabcabc\", 25)) === JSON.stringify(30));\n    console.assert(JSON.stringify(candidate(\"aaaaabbbbbcccc\", 5)) === JSON.stringify(10));\n    console.assert(JSON.stringify(candidate(\"aaaaabbbbbaaaa\", 50)) === JSON.stringify(14));\n    console.assert(JSON.stringify(candidate(\"aaaaabbbbbaaaaa\", 10)) === JSON.stringify(15));\n    console.assert(JSON.stringify(candidate(\"abcdefghijklmnopqrstuvwxyzyxwvutsrqponmlkjihgfedcba\", 180)) === JSON.stringify(51));\n    console.assert(JSON.stringify(candidate(\"level\", 5)) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate(\"racecar\", 5)) === JSON.stringify(7));\n    console.assert(JSON.stringify(candidate(\"abcdefgabcdefgabcdefgabcdefg\", 10)) === JSON.stringify(17));\n    console.assert(JSON.stringify(candidate(\"abcdedcba\", 1)) === JSON.stringify(9));\n    console.assert(JSON.stringify(candidate(\"qwertyuioplkjhgfdsazxcvbnmqwertyuioplkjhgfdsazxcvb\", 100)) === JSON.stringify(47));\n    console.assert(JSON.stringify(candidate(\"abxyzabcxyzabcxyz\", 25)) === JSON.stringify(17));\n    console.assert(JSON.stringify(candidate(\"level\", 1)) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate(\"abcba\", 1)) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate(\"ababababababababababababababababababab\", 75)) === JSON.stringify(38));\n    console.assert(JSON.stringify(candidate(\"abcdefgxyzzyxgfedcba\", 15)) === JSON.stringify(20));\n    console.assert(JSON.stringify(candidate(\"refer\", 0)) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate(\"aabbccddeeffggzzzyyxxwwvvuuttsrqponmlkjihgfedcba\", 100)) === JSON.stringify(47));\n    console.assert(JSON.stringify(candidate(\"palindrome\", 15)) === JSON.stringify(9));\n    console.assert(JSON.stringify(candidate(\"amanaplanacanalpanama\", 100)) === JSON.stringify(21));\n    console.assert(JSON.stringify(candidate(\"qwertyuiopasdfghjklzxcvbnm\", 50)) === JSON.stringify(23));\n    console.assert(JSON.stringify(candidate(\"aaaabbbbcccc\", 15)) === JSON.stringify(12));\n    console.assert(JSON.stringify(candidate(\"mnonmonmomnonmonmonmomnonm\", 15)) === JSON.stringify(26));\n    console.assert(JSON.stringify(candidate(\"mississippi\", 7)) === JSON.stringify(10));\n    console.assert(JSON.stringify(candidate(\"banana\", 10)) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate(\"aabacbebebe\", 5)) === JSON.stringify(8));\n    console.assert(JSON.stringify(candidate(\"madamimadam\", 10)) === JSON.stringify(11));\n    console.assert(JSON.stringify(candidate(\"abcdexyzabcdexyzabcdexyz\", 50)) === JSON.stringify(24));\n    console.assert(JSON.stringify(candidate(\"mississippi\", 10)) === JSON.stringify(10));\n    console.assert(JSON.stringify(candidate(\"deified\", 4)) === JSON.stringify(7));\n    console.assert(JSON.stringify(candidate(\"abcdedcba\", 2)) === JSON.stringify(9));\n    console.assert(JSON.stringify(candidate(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", 50)) === JSON.stringify(28));\n    console.assert(JSON.stringify(candidate(\"abcdedcba\", 3)) === JSON.stringify(9));\n    console.assert(JSON.stringify(candidate(\"mnopqrstuvwxyzyxwvutsrqponmlkjihgfedcbazyxwvutsrqponmlkjihgfedcba\", 200)) === JSON.stringify(60));\n    console.assert(JSON.stringify(candidate(\"aabbccabcabcabcabcabc\", 50)) === JSON.stringify(21));\n    console.assert(JSON.stringify(candidate(\"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", 1)) === JSON.stringify(50));\n    console.assert(JSON.stringify(candidate(\"abcdeedcba\", 0)) === JSON.stringify(10));\n    console.assert(JSON.stringify(candidate(\"abbaacddcabb\", 4)) === JSON.stringify(11));\n    console.assert(JSON.stringify(candidate(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", 200)) === JSON.stringify(52));\n    console.assert(JSON.stringify(candidate(\"zzzyzzyzzyzzyzzyzzyz\", 200)) === JSON.stringify(20));\n    console.assert(JSON.stringify(candidate(\"mississippi\", 5)) === JSON.stringify(9));\n    console.assert(JSON.stringify(candidate(\"level\", 2)) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate(\"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", 0)) === JSON.stringify(32));\n    console.assert(JSON.stringify(candidate(\"ababbabbbabaaa\", 15)) === JSON.stringify(14));\n    console.assert(JSON.stringify(candidate(\"rotor\", 15)) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate(\"noon\", 1)) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate(\"noonhighnoon\", 5)) === JSON.stringify(12));\n    console.assert(JSON.stringify(candidate(\"abcdbca\", 2)) === JSON.stringify(7));\n    console.assert(JSON.stringify(candidate(\"abcdxyzabcdxyzabcdxyz\", 30)) === JSON.stringify(21));\n    console.assert(JSON.stringify(candidate(\"banana\", 3)) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate(\"qwertyuiopasdfghjklzxcvbnmnbvcxzlkjhgfdsapoiuytrewq\", 50)) === JSON.stringify(51));\n    console.assert(JSON.stringify(candidate(\"abacbacbacbacbacbacbacbacbacbacbacbacbacbacbacbacb\", 20)) === JSON.stringify(50));\n    console.assert(JSON.stringify(candidate(\"abacaba\", 3)) === JSON.stringify(7));\n    console.assert(JSON.stringify(candidate(\"mamamamamamamamamamamamamamamamama\", 50)) === JSON.stringify(33));\n    console.assert(JSON.stringify(candidate(\"racecar\", 2)) === JSON.stringify(7));\n    console.assert(JSON.stringify(candidate(\"noon\", 2)) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate(\"abcdefghijklmnopqrstuvwxyzyxwvutsrqponmlkjihgfedcba\", 250)) === JSON.stringify(51));\n    console.assert(JSON.stringify(candidate(\"abcdefg\", 6)) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate(\"zyzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", 300)) === JSON.stringify(84));\n    console.assert(JSON.stringify(candidate(\"madam\", 1)) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate(\"zyxzyxzyxzyxzyxzyxzyxzyxzyxzyxzyxzyxzyxzyxzyxzyxzyxzyxzyx\", 100)) === JSON.stringify(57));\n    console.assert(JSON.stringify(candidate(\"zyxzyxzyxzyxzyxzyxzyxzyxzyxzyxzyxzyxzyx\", 200)) === JSON.stringify(39));\n    console.assert(JSON.stringify(candidate(\"rotor\", 0)) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate(\"abcdefgzyxwvutsrqponmlkjihgfedcba\", 50)) === JSON.stringify(29));\n    console.assert(JSON.stringify(candidate(\"abcdefghzyxwvutsrqponmlkjihgfedcba\", 150)) === JSON.stringify(34));\n    console.assert(JSON.stringify(candidate(\"qwertyuiopasdfghjklzxcvbnmqwertyuiopasdfghjklzxcvbnm\", 100)) === JSON.stringify(47));\n    console.assert(JSON.stringify(candidate(\"abcdefghizyxwvutsrqponmlkjihgfedcba\", 100)) === JSON.stringify(35));\n    console.assert(JSON.stringify(candidate(\"deified\", 2)) === JSON.stringify(7));\n    console.assert(JSON.stringify(candidate(\"aaaabbbbccccdddd\", 10)) === JSON.stringify(13));\n    console.assert(JSON.stringify(candidate(\"madam\", 2)) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate(\"rotor\", 3)) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate(\"abcdefgihgfedcb\", 15)) === JSON.stringify(15));\n    console.assert(JSON.stringify(candidate(\"abcdefghihgfedcba\", 10)) === JSON.stringify(17));\n    console.assert(JSON.stringify(candidate(\"pqrstuvwxyzabcdefghijklmno\", 50)) === JSON.stringify(20));\n    console.assert(JSON.stringify(candidate(\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\", 0)) === JSON.stringify(30));\n    console.assert(JSON.stringify(candidate(\"abcdefghijklmnopqrstuvwxyz\", 10)) === JSON.stringify(9));\n    console.assert(JSON.stringify(candidate(\"abcdefghijklmnopqrstuvwxzy\", 100)) === JSON.stringify(26));\n    console.assert(JSON.stringify(candidate(\"zzzzzzzzzzzzzzzzzzzz\", 10)) === JSON.stringify(20));\n    console.assert(JSON.stringify(candidate(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", 150)) === JSON.stringify(49));\n    console.assert(JSON.stringify(candidate(\"abcabcabcabcabcabcabcabcabcabc\", 100)) === JSON.stringify(30));\n    console.assert(JSON.stringify(candidate(\"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", 5)) === JSON.stringify(52));\n    console.assert(JSON.stringify(candidate(\"reviled\", 7)) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate(\"abccba\", 0)) === JSON.stringify(6));\n    console.assert(JSON.stringify(candidate(\"zyxzyxzyxzyxzyxzyxzyx\", 100)) === JSON.stringify(21));\n    console.assert(JSON.stringify(candidate(\"pneumonoultramicroscopicsilicovolcanoconiosis\", 50)) === JSON.stringify(37));\n    console.assert(JSON.stringify(candidate(\"mnopqrstuvwxyz\", 10)) === JSON.stringify(6));\n    console.assert(JSON.stringify(candidate(\"step on no pets\", 10)) === JSON.stringify(15));\n    console.assert(JSON.stringify(candidate(\"zyxzyxzyxzyxzyxzyxzyxzyxzyxzyxzyxzyxzyxzyx\", 100)) === JSON.stringify(42));\n    console.assert(JSON.stringify(candidate(\"abababababababababababababababab\", 50)) === JSON.stringify(32));\n    console.assert(JSON.stringify(candidate(\"abcdefghijklmnopqrstuvwxyz\", 50)) === JSON.stringify(20));\n    console.assert(JSON.stringify(candidate(\"mississippi\", 3)) === JSON.stringify(9));\n    console.assert(JSON.stringify(candidate(\"abacabadabacaba\", 5)) === JSON.stringify(15));\n    console.assert(JSON.stringify(candidate(\"mnopqrstuvwxyzzyxwvutsrqponmlk\", 80)) === JSON.stringify(30));\n    console.assert(JSON.stringify(candidate(\"abcdezyxwvutsrqponmlkjihgf\", 50)) === JSON.stringify(20));\n    console.assert(JSON.stringify(candidate(\"abacabadabacaba\", 10)) === JSON.stringify(15));\n    console.assert(JSON.stringify(candidate(\"abcabcabc\", 4)) === JSON.stringify(8));\n    console.assert(JSON.stringify(candidate(\"abababababababababab\", 10)) === JSON.stringify(20));\n    console.assert(JSON.stringify(candidate(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", 100)) === JSON.stringify(40));\n    console.assert(JSON.stringify(candidate(\"abcabcabcabcabcabcabc\", 20)) === JSON.stringify(21));\n    console.assert(JSON.stringify(candidate(\"qwertyuiopasdfghjklzxcvbnm\", 25)) === JSON.stringify(18));\n    console.assert(JSON.stringify(candidate(\"aaaaabbbbb\", 10)) === JSON.stringify(10));\n    console.assert(JSON.stringify(candidate(\"zabacabadabacaba\", 10)) === JSON.stringify(15));\n    console.assert(JSON.stringify(candidate(\"abcdefedcbaabcdefedcbaabcdefedcba\", 60)) === JSON.stringify(33));\n    console.assert(JSON.stringify(candidate(\"mnopqrstuvwxyzyxwvutsrqponmlkjihgfedcba\", 150)) === JSON.stringify(36));\n    console.assert(JSON.stringify(candidate(\"abcdxyzzyxcba\", 10)) === JSON.stringify(13));\n    console.assert(JSON.stringify(candidate(\"abcdefghijklmnopqrstuvwxyzyxwvutsrqponmlkjihgfedcba\", 100)) === JSON.stringify(51));\n    console.assert(JSON.stringify(candidate(\"kayak\", 20)) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate(\"abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz\", 100)) === JSON.stringify(40));\n    console.assert(JSON.stringify(candidate(\"abcdzdcba\", 3)) === JSON.stringify(9));\n    console.assert(JSON.stringify(candidate(\"aababaaa\", 2)) === JSON.stringify(8));\n    console.assert(JSON.stringify(candidate(\"deed\", 3)) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate(\"ababababababababababababababababababababababababababab\", 100)) === JSON.stringify(54));\n    console.assert(JSON.stringify(candidate(\"abcdefghijkmlkjihgfedcba\", 50)) === JSON.stringify(24));\n    console.assert(JSON.stringify(candidate(\"abcdeedcba\", 3)) === JSON.stringify(10));\n    console.assert(JSON.stringify(candidate(\"abcdefg\", 10)) === JSON.stringify(6));\n    console.assert(JSON.stringify(candidate(\"mnopqrstuvwxyzyxwvutsrqponmlkjihgfedcba\", 50)) === JSON.stringify(30));\n    console.assert(JSON.stringify(candidate(\"racecar\", 0)) === JSON.stringify(7));\n    console.assert(JSON.stringify(candidate(\"zyxwvutsrqponmlkjihgfedcba\", 150)) === JSON.stringify(26));\n    console.assert(JSON.stringify(candidate(\"abcdefghijklmnopqrstuvwxyzyxwvutsrqponmlkjihgfedcba\", 50)) === JSON.stringify(51));\n    console.assert(JSON.stringify(candidate(\"abcdefghijabcdefghij\", 15)) === JSON.stringify(13));\n    console.assert(JSON.stringify(candidate(\"abacabadabacabadabacaba\", 20)) === JSON.stringify(23));\n    console.assert(JSON.stringify(candidate(\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\", 5)) === JSON.stringify(52));\n    console.assert(JSON.stringify(candidate(\"abcdabcdabcdabcd\", 20)) === JSON.stringify(16));\n    console.assert(JSON.stringify(candidate(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", 180)) === JSON.stringify(52));\n    console.assert(JSON.stringify(candidate(\"abcdefghijjihgfedcba\", 5)) === JSON.stringify(20));\n}",
+    "typescript": "function check(candidate: Function): void {\n    console.assert(JSON.stringify(candidate(\"zxy\", 1)) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate(\"a\", 5)) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate(\"abced\", 2)) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate(\"abcdefghijklmnopqrstuvwxyz\", 25)) === JSON.stringify(14));\n    console.assert(JSON.stringify(candidate(\"zzzzz\", 1)) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate(\"abcdeedcba\", 5)) === JSON.stringify(10));\n    console.assert(JSON.stringify(candidate(\"zzzzz\", 10)) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate(\"abcba\", 0)) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate(\"aaazzz\", 4)) === JSON.stringify(6));\n    console.assert(JSON.stringify(candidate(\"abcdef\", 3)) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate(\"adadd\", 2)) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate(\"mamad\", 3)) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate(\"zyxwvutsrqponmlkjihgfedcba\", 200)) === JSON.stringify(26));\n    console.assert(JSON.stringify(candidate(\"xyz\", 1)) === JSON.stringify(2));\n    console.assert(JSON.stringify(candidate(\"abba\", 1)) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate(\"abcdedcba\", 0)) === JSON.stringify(9));\n    console.assert(JSON.stringify(candidate(\"aabaa\", 2)) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate(\"mnopqr\", 10)) === JSON.stringify(6));\n    console.assert(JSON.stringify(candidate(\"a\", 0)) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate(\"abcdefg\", 3)) === JSON.stringify(3));\n    console.assert(JSON.stringify(candidate(\"abcdabcdabcd\", 6)) === JSON.stringify(11));\n    console.assert(JSON.stringify(candidate(\"a\", 1)) === JSON.stringify(1));\n    console.assert(JSON.stringify(candidate(\"abcdedcba\", 5)) === JSON.stringify(9));\n    console.assert(JSON.stringify(candidate(\"zzzzzzzzzz\", 0)) === JSON.stringify(10));\n    console.assert(JSON.stringify(candidate(\"zzzzzzzzzzzzzzzzzzzz\", 100)) === JSON.stringify(20));\n    console.assert(JSON.stringify(candidate(\"racecar\", 10)) === JSON.stringify(7));\n    console.assert(JSON.stringify(candidate(\"zzyzxzyzxzyzxzyzxzyz\", 30)) === JSON.stringify(20));\n    console.assert(JSON.stringify(candidate(\"abcdefghijklmnopqrstuvwxyzz\", 50)) === JSON.stringify(20));\n    console.assert(JSON.stringify(candidate(\"aaaabbbb\", 5)) === JSON.stringify(8));\n    console.assert(JSON.stringify(candidate(\"abcabcabcabcabcabcabcabcabcabc\", 25)) === JSON.stringify(30));\n    console.assert(JSON.stringify(candidate(\"aaaaabbbbbcccc\", 5)) === JSON.stringify(10));\n    console.assert(JSON.stringify(candidate(\"aaaaabbbbbaaaa\", 50)) === JSON.stringify(14));\n    console.assert(JSON.stringify(candidate(\"aaaaabbbbbaaaaa\", 10)) === JSON.stringify(15));\n    console.assert(JSON.stringify(candidate(\"abcdefghijklmnopqrstuvwxyzyxwvutsrqponmlkjihgfedcba\", 180)) === JSON.stringify(51));\n    console.assert(JSON.stringify(candidate(\"level\", 5)) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate(\"racecar\", 5)) === JSON.stringify(7));\n    console.assert(JSON.stringify(candidate(\"abcdefgabcdefgabcdefgabcdefg\", 10)) === JSON.stringify(17));\n    console.assert(JSON.stringify(candidate(\"abcdedcba\", 1)) === JSON.stringify(9));\n    console.assert(JSON.stringify(candidate(\"qwertyuioplkjhgfdsazxcvbnmqwertyuioplkjhgfdsazxcvb\", 100)) === JSON.stringify(47));\n    console.assert(JSON.stringify(candidate(\"abxyzabcxyzabcxyz\", 25)) === JSON.stringify(17));\n    console.assert(JSON.stringify(candidate(\"level\", 1)) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate(\"abcba\", 1)) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate(\"ababababababababababababababababababab\", 75)) === JSON.stringify(38));\n    console.assert(JSON.stringify(candidate(\"abcdefgxyzzyxgfedcba\", 15)) === JSON.stringify(20));\n    console.assert(JSON.stringify(candidate(\"refer\", 0)) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate(\"aabbccddeeffggzzzyyxxwwvvuuttsrqponmlkjihgfedcba\", 100)) === JSON.stringify(47));\n    console.assert(JSON.stringify(candidate(\"palindrome\", 15)) === JSON.stringify(9));\n    console.assert(JSON.stringify(candidate(\"amanaplanacanalpanama\", 100)) === JSON.stringify(21));\n    console.assert(JSON.stringify(candidate(\"qwertyuiopasdfghjklzxcvbnm\", 50)) === JSON.stringify(23));\n    console.assert(JSON.stringify(candidate(\"aaaabbbbcccc\", 15)) === JSON.stringify(12));\n    console.assert(JSON.stringify(candidate(\"mnonmonmomnonmonmonmomnonm\", 15)) === JSON.stringify(26));\n    console.assert(JSON.stringify(candidate(\"mississippi\", 7)) === JSON.stringify(10));\n    console.assert(JSON.stringify(candidate(\"banana\", 10)) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate(\"aabacbebebe\", 5)) === JSON.stringify(8));\n    console.assert(JSON.stringify(candidate(\"madamimadam\", 10)) === JSON.stringify(11));\n    console.assert(JSON.stringify(candidate(\"abcdexyzabcdexyzabcdexyz\", 50)) === JSON.stringify(24));\n    console.assert(JSON.stringify(candidate(\"mississippi\", 10)) === JSON.stringify(10));\n    console.assert(JSON.stringify(candidate(\"deified\", 4)) === JSON.stringify(7));\n    console.assert(JSON.stringify(candidate(\"abcdedcba\", 2)) === JSON.stringify(9));\n    console.assert(JSON.stringify(candidate(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", 50)) === JSON.stringify(28));\n    console.assert(JSON.stringify(candidate(\"abcdedcba\", 3)) === JSON.stringify(9));\n    console.assert(JSON.stringify(candidate(\"mnopqrstuvwxyzyxwvutsrqponmlkjihgfedcbazyxwvutsrqponmlkjihgfedcba\", 200)) === JSON.stringify(60));\n    console.assert(JSON.stringify(candidate(\"aabbccabcabcabcabcabc\", 50)) === JSON.stringify(21));\n    console.assert(JSON.stringify(candidate(\"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", 1)) === JSON.stringify(50));\n    console.assert(JSON.stringify(candidate(\"abcdeedcba\", 0)) === JSON.stringify(10));\n    console.assert(JSON.stringify(candidate(\"abbaacddcabb\", 4)) === JSON.stringify(11));\n    console.assert(JSON.stringify(candidate(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", 200)) === JSON.stringify(52));\n    console.assert(JSON.stringify(candidate(\"zzzyzzyzzyzzyzzyzzyz\", 200)) === JSON.stringify(20));\n    console.assert(JSON.stringify(candidate(\"mississippi\", 5)) === JSON.stringify(9));\n    console.assert(JSON.stringify(candidate(\"level\", 2)) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate(\"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", 0)) === JSON.stringify(32));\n    console.assert(JSON.stringify(candidate(\"ababbabbbabaaa\", 15)) === JSON.stringify(14));\n    console.assert(JSON.stringify(candidate(\"rotor\", 15)) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate(\"noon\", 1)) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate(\"noonhighnoon\", 5)) === JSON.stringify(12));\n    console.assert(JSON.stringify(candidate(\"abcdbca\", 2)) === JSON.stringify(7));\n    console.assert(JSON.stringify(candidate(\"abcdxyzabcdxyzabcdxyz\", 30)) === JSON.stringify(21));\n    console.assert(JSON.stringify(candidate(\"banana\", 3)) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate(\"qwertyuiopasdfghjklzxcvbnmnbvcxzlkjhgfdsapoiuytrewq\", 50)) === JSON.stringify(51));\n    console.assert(JSON.stringify(candidate(\"abacbacbacbacbacbacbacbacbacbacbacbacbacbacbacbacb\", 20)) === JSON.stringify(50));\n    console.assert(JSON.stringify(candidate(\"abacaba\", 3)) === JSON.stringify(7));\n    console.assert(JSON.stringify(candidate(\"mamamamamamamamamamamamamamamamama\", 50)) === JSON.stringify(33));\n    console.assert(JSON.stringify(candidate(\"racecar\", 2)) === JSON.stringify(7));\n    console.assert(JSON.stringify(candidate(\"noon\", 2)) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate(\"abcdefghijklmnopqrstuvwxyzyxwvutsrqponmlkjihgfedcba\", 250)) === JSON.stringify(51));\n    console.assert(JSON.stringify(candidate(\"abcdefg\", 6)) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate(\"zyzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", 300)) === JSON.stringify(84));\n    console.assert(JSON.stringify(candidate(\"madam\", 1)) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate(\"zyxzyxzyxzyxzyxzyxzyxzyxzyxzyxzyxzyxzyxzyxzyxzyxzyxzyxzyx\", 100)) === JSON.stringify(57));\n    console.assert(JSON.stringify(candidate(\"zyxzyxzyxzyxzyxzyxzyxzyxzyxzyxzyxzyxzyx\", 200)) === JSON.stringify(39));\n    console.assert(JSON.stringify(candidate(\"rotor\", 0)) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate(\"abcdefgzyxwvutsrqponmlkjihgfedcba\", 50)) === JSON.stringify(29));\n    console.assert(JSON.stringify(candidate(\"abcdefghzyxwvutsrqponmlkjihgfedcba\", 150)) === JSON.stringify(34));\n    console.assert(JSON.stringify(candidate(\"qwertyuiopasdfghjklzxcvbnmqwertyuiopasdfghjklzxcvbnm\", 100)) === JSON.stringify(47));\n    console.assert(JSON.stringify(candidate(\"abcdefghizyxwvutsrqponmlkjihgfedcba\", 100)) === JSON.stringify(35));\n    console.assert(JSON.stringify(candidate(\"deified\", 2)) === JSON.stringify(7));\n    console.assert(JSON.stringify(candidate(\"aaaabbbbccccdddd\", 10)) === JSON.stringify(13));\n    console.assert(JSON.stringify(candidate(\"madam\", 2)) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate(\"rotor\", 3)) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate(\"abcdefgihgfedcb\", 15)) === JSON.stringify(15));\n    console.assert(JSON.stringify(candidate(\"abcdefghihgfedcba\", 10)) === JSON.stringify(17));\n    console.assert(JSON.stringify(candidate(\"pqrstuvwxyzabcdefghijklmno\", 50)) === JSON.stringify(20));\n    console.assert(JSON.stringify(candidate(\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\", 0)) === JSON.stringify(30));\n    console.assert(JSON.stringify(candidate(\"abcdefghijklmnopqrstuvwxyz\", 10)) === JSON.stringify(9));\n    console.assert(JSON.stringify(candidate(\"abcdefghijklmnopqrstuvwxzy\", 100)) === JSON.stringify(26));\n    console.assert(JSON.stringify(candidate(\"zzzzzzzzzzzzzzzzzzzz\", 10)) === JSON.stringify(20));\n    console.assert(JSON.stringify(candidate(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", 150)) === JSON.stringify(49));\n    console.assert(JSON.stringify(candidate(\"abcabcabcabcabcabcabcabcabcabc\", 100)) === JSON.stringify(30));\n    console.assert(JSON.stringify(candidate(\"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", 5)) === JSON.stringify(52));\n    console.assert(JSON.stringify(candidate(\"reviled\", 7)) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate(\"abccba\", 0)) === JSON.stringify(6));\n    console.assert(JSON.stringify(candidate(\"zyxzyxzyxzyxzyxzyxzyx\", 100)) === JSON.stringify(21));\n    console.assert(JSON.stringify(candidate(\"pneumonoultramicroscopicsilicovolcanoconiosis\", 50)) === JSON.stringify(37));\n    console.assert(JSON.stringify(candidate(\"mnopqrstuvwxyz\", 10)) === JSON.stringify(6));\n    console.assert(JSON.stringify(candidate(\"step on no pets\", 10)) === JSON.stringify(15));\n    console.assert(JSON.stringify(candidate(\"zyxzyxzyxzyxzyxzyxzyxzyxzyxzyxzyxzyxzyxzyx\", 100)) === JSON.stringify(42));\n    console.assert(JSON.stringify(candidate(\"abababababababababababababababab\", 50)) === JSON.stringify(32));\n    console.assert(JSON.stringify(candidate(\"abcdefghijklmnopqrstuvwxyz\", 50)) === JSON.stringify(20));\n    console.assert(JSON.stringify(candidate(\"mississippi\", 3)) === JSON.stringify(9));\n    console.assert(JSON.stringify(candidate(\"abacabadabacaba\", 5)) === JSON.stringify(15));\n    console.assert(JSON.stringify(candidate(\"mnopqrstuvwxyzzyxwvutsrqponmlk\", 80)) === JSON.stringify(30));\n    console.assert(JSON.stringify(candidate(\"abcdezyxwvutsrqponmlkjihgf\", 50)) === JSON.stringify(20));\n    console.assert(JSON.stringify(candidate(\"abacabadabacaba\", 10)) === JSON.stringify(15));\n    console.assert(JSON.stringify(candidate(\"abcabcabc\", 4)) === JSON.stringify(8));\n    console.assert(JSON.stringify(candidate(\"abababababababababab\", 10)) === JSON.stringify(20));\n    console.assert(JSON.stringify(candidate(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", 100)) === JSON.stringify(40));\n    console.assert(JSON.stringify(candidate(\"abcabcabcabcabcabcabc\", 20)) === JSON.stringify(21));\n    console.assert(JSON.stringify(candidate(\"qwertyuiopasdfghjklzxcvbnm\", 25)) === JSON.stringify(18));\n    console.assert(JSON.stringify(candidate(\"aaaaabbbbb\", 10)) === JSON.stringify(10));\n    console.assert(JSON.stringify(candidate(\"zabacabadabacaba\", 10)) === JSON.stringify(15));\n    console.assert(JSON.stringify(candidate(\"abcdefedcbaabcdefedcbaabcdefedcba\", 60)) === JSON.stringify(33));\n    console.assert(JSON.stringify(candidate(\"mnopqrstuvwxyzyxwvutsrqponmlkjihgfedcba\", 150)) === JSON.stringify(36));\n    console.assert(JSON.stringify(candidate(\"abcdxyzzyxcba\", 10)) === JSON.stringify(13));\n    console.assert(JSON.stringify(candidate(\"abcdefghijklmnopqrstuvwxyzyxwvutsrqponmlkjihgfedcba\", 100)) === JSON.stringify(51));\n    console.assert(JSON.stringify(candidate(\"kayak\", 20)) === JSON.stringify(5));\n    console.assert(JSON.stringify(candidate(\"abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz\", 100)) === JSON.stringify(40));\n    console.assert(JSON.stringify(candidate(\"abcdzdcba\", 3)) === JSON.stringify(9));\n    console.assert(JSON.stringify(candidate(\"aababaaa\", 2)) === JSON.stringify(8));\n    console.assert(JSON.stringify(candidate(\"deed\", 3)) === JSON.stringify(4));\n    console.assert(JSON.stringify(candidate(\"ababababababababababababababababababababababababababab\", 100)) === JSON.stringify(54));\n    console.assert(JSON.stringify(candidate(\"abcdefghijkmlkjihgfedcba\", 50)) === JSON.stringify(24));\n    console.assert(JSON.stringify(candidate(\"abcdeedcba\", 3)) === JSON.stringify(10));\n    console.assert(JSON.stringify(candidate(\"abcdefg\", 10)) === JSON.stringify(6));\n    console.assert(JSON.stringify(candidate(\"mnopqrstuvwxyzyxwvutsrqponmlkjihgfedcba\", 50)) === JSON.stringify(30));\n    console.assert(JSON.stringify(candidate(\"racecar\", 0)) === JSON.stringify(7));\n    console.assert(JSON.stringify(candidate(\"zyxwvutsrqponmlkjihgfedcba\", 150)) === JSON.stringify(26));\n    console.assert(JSON.stringify(candidate(\"abcdefghijklmnopqrstuvwxyzyxwvutsrqponmlkjihgfedcba\", 50)) === JSON.stringify(51));\n    console.assert(JSON.stringify(candidate(\"abcdefghijabcdefghij\", 15)) === JSON.stringify(13));\n    console.assert(JSON.stringify(candidate(\"abacabadabacabadabacaba\", 20)) === JSON.stringify(23));\n    console.assert(JSON.stringify(candidate(\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\", 5)) === JSON.stringify(52));\n    console.assert(JSON.stringify(candidate(\"abcdabcdabcdabcd\", 20)) === JSON.stringify(16));\n    console.assert(JSON.stringify(candidate(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", 180)) === JSON.stringify(52));\n    console.assert(JSON.stringify(candidate(\"abcdefghijjihgfedcba\", 5)) === JSON.stringify(20));\n}",
+    "golang": "func check(candidate func([]int, int) []int) {\n    assert reflect.DeepEqual(candidate(\"zxy\", 1), 3)\n    assert reflect.DeepEqual(candidate(\"a\", 5), 1)\n    assert reflect.DeepEqual(candidate(\"abced\", 2), 3)\n    assert reflect.DeepEqual(candidate(\"abcdefghijklmnopqrstuvwxyz\", 25), 14)\n    assert reflect.DeepEqual(candidate(\"zzzzz\", 1), 5)\n    assert reflect.DeepEqual(candidate(\"abcdeedcba\", 5), 10)\n    assert reflect.DeepEqual(candidate(\"zzzzz\", 10), 5)\n    assert reflect.DeepEqual(candidate(\"abcba\", 0), 5)\n    assert reflect.DeepEqual(candidate(\"aaazzz\", 4), 6)\n    assert reflect.DeepEqual(candidate(\"abcdef\", 3), 3)\n    assert reflect.DeepEqual(candidate(\"adadd\", 2), 3)\n    assert reflect.DeepEqual(candidate(\"mamad\", 3), 3)\n    assert reflect.DeepEqual(candidate(\"zyxwvutsrqponmlkjihgfedcba\", 200), 26)\n    assert reflect.DeepEqual(candidate(\"xyz\", 1), 2)\n    assert reflect.DeepEqual(candidate(\"abba\", 1), 4)\n    assert reflect.DeepEqual(candidate(\"abcdedcba\", 0), 9)\n    assert reflect.DeepEqual(candidate(\"aabaa\", 2), 5)\n    assert reflect.DeepEqual(candidate(\"mnopqr\", 10), 6)\n    assert reflect.DeepEqual(candidate(\"a\", 0), 1)\n    assert reflect.DeepEqual(candidate(\"abcdefg\", 3), 3)\n    assert reflect.DeepEqual(candidate(\"abcdabcdabcd\", 6), 11)\n    assert reflect.DeepEqual(candidate(\"a\", 1), 1)\n    assert reflect.DeepEqual(candidate(\"abcdedcba\", 5), 9)\n    assert reflect.DeepEqual(candidate(\"zzzzzzzzzz\", 0), 10)\n    assert reflect.DeepEqual(candidate(\"zzzzzzzzzzzzzzzzzzzz\", 100), 20)\n    assert reflect.DeepEqual(candidate(\"racecar\", 10), 7)\n    assert reflect.DeepEqual(candidate(\"zzyzxzyzxzyzxzyzxzyz\", 30), 20)\n    assert reflect.DeepEqual(candidate(\"abcdefghijklmnopqrstuvwxyzz\", 50), 20)\n    assert reflect.DeepEqual(candidate(\"aaaabbbb\", 5), 8)\n    assert reflect.DeepEqual(candidate(\"abcabcabcabcabcabcabcabcabcabc\", 25), 30)\n    assert reflect.DeepEqual(candidate(\"aaaaabbbbbcccc\", 5), 10)\n    assert reflect.DeepEqual(candidate(\"aaaaabbbbbaaaa\", 50), 14)\n    assert reflect.DeepEqual(candidate(\"aaaaabbbbbaaaaa\", 10), 15)\n    assert reflect.DeepEqual(candidate(\"abcdefghijklmnopqrstuvwxyzyxwvutsrqponmlkjihgfedcba\", 180), 51)\n    assert reflect.DeepEqual(candidate(\"level\", 5), 5)\n    assert reflect.DeepEqual(candidate(\"racecar\", 5), 7)\n    assert reflect.DeepEqual(candidate(\"abcdefgabcdefgabcdefgabcdefg\", 10), 17)\n    assert reflect.DeepEqual(candidate(\"abcdedcba\", 1), 9)\n    assert reflect.DeepEqual(candidate(\"qwertyuioplkjhgfdsazxcvbnmqwertyuioplkjhgfdsazxcvb\", 100), 47)\n    assert reflect.DeepEqual(candidate(\"abxyzabcxyzabcxyz\", 25), 17)\n    assert reflect.DeepEqual(candidate(\"level\", 1), 5)\n    assert reflect.DeepEqual(candidate(\"abcba\", 1), 5)\n    assert reflect.DeepEqual(candidate(\"ababababababababababababababababababab\", 75), 38)\n    assert reflect.DeepEqual(candidate(\"abcdefgxyzzyxgfedcba\", 15), 20)\n    assert reflect.DeepEqual(candidate(\"refer\", 0), 5)\n    assert reflect.DeepEqual(candidate(\"aabbccddeeffggzzzyyxxwwvvuuttsrqponmlkjihgfedcba\", 100), 47)\n    assert reflect.DeepEqual(candidate(\"palindrome\", 15), 9)\n    assert reflect.DeepEqual(candidate(\"amanaplanacanalpanama\", 100), 21)\n    assert reflect.DeepEqual(candidate(\"qwertyuiopasdfghjklzxcvbnm\", 50), 23)\n    assert reflect.DeepEqual(candidate(\"aaaabbbbcccc\", 15), 12)\n    assert reflect.DeepEqual(candidate(\"mnonmonmomnonmonmonmomnonm\", 15), 26)\n    assert reflect.DeepEqual(candidate(\"mississippi\", 7), 10)\n    assert reflect.DeepEqual(candidate(\"banana\", 10), 5)\n    assert reflect.DeepEqual(candidate(\"aabacbebebe\", 5), 8)\n    assert reflect.DeepEqual(candidate(\"madamimadam\", 10), 11)\n    assert reflect.DeepEqual(candidate(\"abcdexyzabcdexyzabcdexyz\", 50), 24)\n    assert reflect.DeepEqual(candidate(\"mississippi\", 10), 10)\n    assert reflect.DeepEqual(candidate(\"deified\", 4), 7)\n    assert reflect.DeepEqual(candidate(\"abcdedcba\", 2), 9)\n    assert reflect.DeepEqual(candidate(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", 50), 28)\n    assert reflect.DeepEqual(candidate(\"abcdedcba\", 3), 9)\n    assert reflect.DeepEqual(candidate(\"mnopqrstuvwxyzyxwvutsrqponmlkjihgfedcbazyxwvutsrqponmlkjihgfedcba\", 200), 60)\n    assert reflect.DeepEqual(candidate(\"aabbccabcabcabcabcabc\", 50), 21)\n    assert reflect.DeepEqual(candidate(\"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", 1), 50)\n    assert reflect.DeepEqual(candidate(\"abcdeedcba\", 0), 10)\n    assert reflect.DeepEqual(candidate(\"abbaacddcabb\", 4), 11)\n    assert reflect.DeepEqual(candidate(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", 200), 52)\n    assert reflect.DeepEqual(candidate(\"zzzyzzyzzyzzyzzyzzyz\", 200), 20)\n    assert reflect.DeepEqual(candidate(\"mississippi\", 5), 9)\n    assert reflect.DeepEqual(candidate(\"level\", 2), 5)\n    assert reflect.DeepEqual(candidate(\"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", 0), 32)\n    assert reflect.DeepEqual(candidate(\"ababbabbbabaaa\", 15), 14)\n    assert reflect.DeepEqual(candidate(\"rotor\", 15), 5)\n    assert reflect.DeepEqual(candidate(\"noon\", 1), 4)\n    assert reflect.DeepEqual(candidate(\"noonhighnoon\", 5), 12)\n    assert reflect.DeepEqual(candidate(\"abcdbca\", 2), 7)\n    assert reflect.DeepEqual(candidate(\"abcdxyzabcdxyzabcdxyz\", 30), 21)\n    assert reflect.DeepEqual(candidate(\"banana\", 3), 5)\n    assert reflect.DeepEqual(candidate(\"qwertyuiopasdfghjklzxcvbnmnbvcxzlkjhgfdsapoiuytrewq\", 50), 51)\n    assert reflect.DeepEqual(candidate(\"abacbacbacbacbacbacbacbacbacbacbacbacbacbacbacbacb\", 20), 50)\n    assert reflect.DeepEqual(candidate(\"abacaba\", 3), 7)\n    assert reflect.DeepEqual(candidate(\"mamamamamamamamamamamamamamamamama\", 50), 33)\n    assert reflect.DeepEqual(candidate(\"racecar\", 2), 7)\n    assert reflect.DeepEqual(candidate(\"noon\", 2), 4)\n    assert reflect.DeepEqual(candidate(\"abcdefghijklmnopqrstuvwxyzyxwvutsrqponmlkjihgfedcba\", 250), 51)\n    assert reflect.DeepEqual(candidate(\"abcdefg\", 6), 5)\n    assert reflect.DeepEqual(candidate(\"zyzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", 300), 84)\n    assert reflect.DeepEqual(candidate(\"madam\", 1), 5)\n    assert reflect.DeepEqual(candidate(\"zyxzyxzyxzyxzyxzyxzyxzyxzyxzyxzyxzyxzyxzyxzyxzyxzyxzyxzyx\", 100), 57)\n    assert reflect.DeepEqual(candidate(\"zyxzyxzyxzyxzyxzyxzyxzyxzyxzyxzyxzyxzyx\", 200), 39)\n    assert reflect.DeepEqual(candidate(\"rotor\", 0), 5)\n    assert reflect.DeepEqual(candidate(\"abcdefgzyxwvutsrqponmlkjihgfedcba\", 50), 29)\n    assert reflect.DeepEqual(candidate(\"abcdefghzyxwvutsrqponmlkjihgfedcba\", 150), 34)\n    assert reflect.DeepEqual(candidate(\"qwertyuiopasdfghjklzxcvbnmqwertyuiopasdfghjklzxcvbnm\", 100), 47)\n    assert reflect.DeepEqual(candidate(\"abcdefghizyxwvutsrqponmlkjihgfedcba\", 100), 35)\n    assert reflect.DeepEqual(candidate(\"deified\", 2), 7)\n    assert reflect.DeepEqual(candidate(\"aaaabbbbccccdddd\", 10), 13)\n    assert reflect.DeepEqual(candidate(\"madam\", 2), 5)\n    assert reflect.DeepEqual(candidate(\"rotor\", 3), 5)\n    assert reflect.DeepEqual(candidate(\"abcdefgihgfedcb\", 15), 15)\n    assert reflect.DeepEqual(candidate(\"abcdefghihgfedcba\", 10), 17)\n    assert reflect.DeepEqual(candidate(\"pqrstuvwxyzabcdefghijklmno\", 50), 20)\n    assert reflect.DeepEqual(candidate(\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\", 0), 30)\n    assert reflect.DeepEqual(candidate(\"abcdefghijklmnopqrstuvwxyz\", 10), 9)\n    assert reflect.DeepEqual(candidate(\"abcdefghijklmnopqrstuvwxzy\", 100), 26)\n    assert reflect.DeepEqual(candidate(\"zzzzzzzzzzzzzzzzzzzz\", 10), 20)\n    assert reflect.DeepEqual(candidate(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", 150), 49)\n    assert reflect.DeepEqual(candidate(\"abcabcabcabcabcabcabcabcabcabc\", 100), 30)\n    assert reflect.DeepEqual(candidate(\"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", 5), 52)\n    assert reflect.DeepEqual(candidate(\"reviled\", 7), 5)\n    assert reflect.DeepEqual(candidate(\"abccba\", 0), 6)\n    assert reflect.DeepEqual(candidate(\"zyxzyxzyxzyxzyxzyxzyx\", 100), 21)\n    assert reflect.DeepEqual(candidate(\"pneumonoultramicroscopicsilicovolcanoconiosis\", 50), 37)\n    assert reflect.DeepEqual(candidate(\"mnopqrstuvwxyz\", 10), 6)\n    assert reflect.DeepEqual(candidate(\"step on no pets\", 10), 15)\n    assert reflect.DeepEqual(candidate(\"zyxzyxzyxzyxzyxzyxzyxzyxzyxzyxzyxzyxzyxzyx\", 100), 42)\n    assert reflect.DeepEqual(candidate(\"abababababababababababababababab\", 50), 32)\n    assert reflect.DeepEqual(candidate(\"abcdefghijklmnopqrstuvwxyz\", 50), 20)\n    assert reflect.DeepEqual(candidate(\"mississippi\", 3), 9)\n    assert reflect.DeepEqual(candidate(\"abacabadabacaba\", 5), 15)\n    assert reflect.DeepEqual(candidate(\"mnopqrstuvwxyzzyxwvutsrqponmlk\", 80), 30)\n    assert reflect.DeepEqual(candidate(\"abcdezyxwvutsrqponmlkjihgf\", 50), 20)\n    assert reflect.DeepEqual(candidate(\"abacabadabacaba\", 10), 15)\n    assert reflect.DeepEqual(candidate(\"abcabcabc\", 4), 8)\n    assert reflect.DeepEqual(candidate(\"abababababababababab\", 10), 20)\n    assert reflect.DeepEqual(candidate(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", 100), 40)\n    assert reflect.DeepEqual(candidate(\"abcabcabcabcabcabcabc\", 20), 21)\n    assert reflect.DeepEqual(candidate(\"qwertyuiopasdfghjklzxcvbnm\", 25), 18)\n    assert reflect.DeepEqual(candidate(\"aaaaabbbbb\", 10), 10)\n    assert reflect.DeepEqual(candidate(\"zabacabadabacaba\", 10), 15)\n    assert reflect.DeepEqual(candidate(\"abcdefedcbaabcdefedcbaabcdefedcba\", 60), 33)\n    assert reflect.DeepEqual(candidate(\"mnopqrstuvwxyzyxwvutsrqponmlkjihgfedcba\", 150), 36)\n    assert reflect.DeepEqual(candidate(\"abcdxyzzyxcba\", 10), 13)\n    assert reflect.DeepEqual(candidate(\"abcdefghijklmnopqrstuvwxyzyxwvutsrqponmlkjihgfedcba\", 100), 51)\n    assert reflect.DeepEqual(candidate(\"kayak\", 20), 5)\n    assert reflect.DeepEqual(candidate(\"abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz\", 100), 40)\n    assert reflect.DeepEqual(candidate(\"abcdzdcba\", 3), 9)\n    assert reflect.DeepEqual(candidate(\"aababaaa\", 2), 8)\n    assert reflect.DeepEqual(candidate(\"deed\", 3), 4)\n    assert reflect.DeepEqual(candidate(\"ababababababababababababababababababababababababababab\", 100), 54)\n    assert reflect.DeepEqual(candidate(\"abcdefghijkmlkjihgfedcba\", 50), 24)\n    assert reflect.DeepEqual(candidate(\"abcdeedcba\", 3), 10)\n    assert reflect.DeepEqual(candidate(\"abcdefg\", 10), 6)\n    assert reflect.DeepEqual(candidate(\"mnopqrstuvwxyzyxwvutsrqponmlkjihgfedcba\", 50), 30)\n    assert reflect.DeepEqual(candidate(\"racecar\", 0), 7)\n    assert reflect.DeepEqual(candidate(\"zyxwvutsrqponmlkjihgfedcba\", 150), 26)\n    assert reflect.DeepEqual(candidate(\"abcdefghijklmnopqrstuvwxyzyxwvutsrqponmlkjihgfedcba\", 50), 51)\n    assert reflect.DeepEqual(candidate(\"abcdefghijabcdefghij\", 15), 13)\n    assert reflect.DeepEqual(candidate(\"abacabadabacabadabacaba\", 20), 23)\n    assert reflect.DeepEqual(candidate(\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\", 5), 52)\n    assert reflect.DeepEqual(candidate(\"abcdabcdabcdabcd\", 20), 16)\n    assert reflect.DeepEqual(candidate(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", 180), 52)\n    assert reflect.DeepEqual(candidate(\"abcdefghijjihgfedcba\", 5), 20)\n}",
+    "rust": "fn check(candidate: fn(Vec<i32>, i32) -> Vec<i32>) {\n    assert_eq!(candidate(\"zxy\", 1), 3);\n    assert_eq!(candidate(\"a\", 5), 1);\n    assert_eq!(candidate(\"abced\", 2), 3);\n    assert_eq!(candidate(\"abcdefghijklmnopqrstuvwxyz\", 25), 14);\n    assert_eq!(candidate(\"zzzzz\", 1), 5);\n    assert_eq!(candidate(\"abcdeedcba\", 5), 10);\n    assert_eq!(candidate(\"zzzzz\", 10), 5);\n    assert_eq!(candidate(\"abcba\", 0), 5);\n    assert_eq!(candidate(\"aaazzz\", 4), 6);\n    assert_eq!(candidate(\"abcdef\", 3), 3);\n    assert_eq!(candidate(\"adadd\", 2), 3);\n    assert_eq!(candidate(\"mamad\", 3), 3);\n    assert_eq!(candidate(\"zyxwvutsrqponmlkjihgfedcba\", 200), 26);\n    assert_eq!(candidate(\"xyz\", 1), 2);\n    assert_eq!(candidate(\"abba\", 1), 4);\n    assert_eq!(candidate(\"abcdedcba\", 0), 9);\n    assert_eq!(candidate(\"aabaa\", 2), 5);\n    assert_eq!(candidate(\"mnopqr\", 10), 6);\n    assert_eq!(candidate(\"a\", 0), 1);\n    assert_eq!(candidate(\"abcdefg\", 3), 3);\n    assert_eq!(candidate(\"abcdabcdabcd\", 6), 11);\n    assert_eq!(candidate(\"a\", 1), 1);\n    assert_eq!(candidate(\"abcdedcba\", 5), 9);\n    assert_eq!(candidate(\"zzzzzzzzzz\", 0), 10);\n    assert_eq!(candidate(\"zzzzzzzzzzzzzzzzzzzz\", 100), 20);\n    assert_eq!(candidate(\"racecar\", 10), 7);\n    assert_eq!(candidate(\"zzyzxzyzxzyzxzyzxzyz\", 30), 20);\n    assert_eq!(candidate(\"abcdefghijklmnopqrstuvwxyzz\", 50), 20);\n    assert_eq!(candidate(\"aaaabbbb\", 5), 8);\n    assert_eq!(candidate(\"abcabcabcabcabcabcabcabcabcabc\", 25), 30);\n    assert_eq!(candidate(\"aaaaabbbbbcccc\", 5), 10);\n    assert_eq!(candidate(\"aaaaabbbbbaaaa\", 50), 14);\n    assert_eq!(candidate(\"aaaaabbbbbaaaaa\", 10), 15);\n    assert_eq!(candidate(\"abcdefghijklmnopqrstuvwxyzyxwvutsrqponmlkjihgfedcba\", 180), 51);\n    assert_eq!(candidate(\"level\", 5), 5);\n    assert_eq!(candidate(\"racecar\", 5), 7);\n    assert_eq!(candidate(\"abcdefgabcdefgabcdefgabcdefg\", 10), 17);\n    assert_eq!(candidate(\"abcdedcba\", 1), 9);\n    assert_eq!(candidate(\"qwertyuioplkjhgfdsazxcvbnmqwertyuioplkjhgfdsazxcvb\", 100), 47);\n    assert_eq!(candidate(\"abxyzabcxyzabcxyz\", 25), 17);\n    assert_eq!(candidate(\"level\", 1), 5);\n    assert_eq!(candidate(\"abcba\", 1), 5);\n    assert_eq!(candidate(\"ababababababababababababababababababab\", 75), 38);\n    assert_eq!(candidate(\"abcdefgxyzzyxgfedcba\", 15), 20);\n    assert_eq!(candidate(\"refer\", 0), 5);\n    assert_eq!(candidate(\"aabbccddeeffggzzzyyxxwwvvuuttsrqponmlkjihgfedcba\", 100), 47);\n    assert_eq!(candidate(\"palindrome\", 15), 9);\n    assert_eq!(candidate(\"amanaplanacanalpanama\", 100), 21);\n    assert_eq!(candidate(\"qwertyuiopasdfghjklzxcvbnm\", 50), 23);\n    assert_eq!(candidate(\"aaaabbbbcccc\", 15), 12);\n    assert_eq!(candidate(\"mnonmonmomnonmonmonmomnonm\", 15), 26);\n    assert_eq!(candidate(\"mississippi\", 7), 10);\n    assert_eq!(candidate(\"banana\", 10), 5);\n    assert_eq!(candidate(\"aabacbebebe\", 5), 8);\n    assert_eq!(candidate(\"madamimadam\", 10), 11);\n    assert_eq!(candidate(\"abcdexyzabcdexyzabcdexyz\", 50), 24);\n    assert_eq!(candidate(\"mississippi\", 10), 10);\n    assert_eq!(candidate(\"deified\", 4), 7);\n    assert_eq!(candidate(\"abcdedcba\", 2), 9);\n    assert_eq!(candidate(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", 50), 28);\n    assert_eq!(candidate(\"abcdedcba\", 3), 9);\n    assert_eq!(candidate(\"mnopqrstuvwxyzyxwvutsrqponmlkjihgfedcbazyxwvutsrqponmlkjihgfedcba\", 200), 60);\n    assert_eq!(candidate(\"aabbccabcabcabcabcabc\", 50), 21);\n    assert_eq!(candidate(\"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", 1), 50);\n    assert_eq!(candidate(\"abcdeedcba\", 0), 10);\n    assert_eq!(candidate(\"abbaacddcabb\", 4), 11);\n    assert_eq!(candidate(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", 200), 52);\n    assert_eq!(candidate(\"zzzyzzyzzyzzyzzyzzyz\", 200), 20);\n    assert_eq!(candidate(\"mississippi\", 5), 9);\n    assert_eq!(candidate(\"level\", 2), 5);\n    assert_eq!(candidate(\"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", 0), 32);\n    assert_eq!(candidate(\"ababbabbbabaaa\", 15), 14);\n    assert_eq!(candidate(\"rotor\", 15), 5);\n    assert_eq!(candidate(\"noon\", 1), 4);\n    assert_eq!(candidate(\"noonhighnoon\", 5), 12);\n    assert_eq!(candidate(\"abcdbca\", 2), 7);\n    assert_eq!(candidate(\"abcdxyzabcdxyzabcdxyz\", 30), 21);\n    assert_eq!(candidate(\"banana\", 3), 5);\n    assert_eq!(candidate(\"qwertyuiopasdfghjklzxcvbnmnbvcxzlkjhgfdsapoiuytrewq\", 50), 51);\n    assert_eq!(candidate(\"abacbacbacbacbacbacbacbacbacbacbacbacbacbacbacbacb\", 20), 50);\n    assert_eq!(candidate(\"abacaba\", 3), 7);\n    assert_eq!(candidate(\"mamamamamamamamamamamamamamamamama\", 50), 33);\n    assert_eq!(candidate(\"racecar\", 2), 7);\n    assert_eq!(candidate(\"noon\", 2), 4);\n    assert_eq!(candidate(\"abcdefghijklmnopqrstuvwxyzyxwvutsrqponmlkjihgfedcba\", 250), 51);\n    assert_eq!(candidate(\"abcdefg\", 6), 5);\n    assert_eq!(candidate(\"zyzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", 300), 84);\n    assert_eq!(candidate(\"madam\", 1), 5);\n    assert_eq!(candidate(\"zyxzyxzyxzyxzyxzyxzyxzyxzyxzyxzyxzyxzyxzyxzyxzyxzyxzyxzyx\", 100), 57);\n    assert_eq!(candidate(\"zyxzyxzyxzyxzyxzyxzyxzyxzyxzyxzyxzyxzyx\", 200), 39);\n    assert_eq!(candidate(\"rotor\", 0), 5);\n    assert_eq!(candidate(\"abcdefgzyxwvutsrqponmlkjihgfedcba\", 50), 29);\n    assert_eq!(candidate(\"abcdefghzyxwvutsrqponmlkjihgfedcba\", 150), 34);\n    assert_eq!(candidate(\"qwertyuiopasdfghjklzxcvbnmqwertyuiopasdfghjklzxcvbnm\", 100), 47);\n    assert_eq!(candidate(\"abcdefghizyxwvutsrqponmlkjihgfedcba\", 100), 35);\n    assert_eq!(candidate(\"deified\", 2), 7);\n    assert_eq!(candidate(\"aaaabbbbccccdddd\", 10), 13);\n    assert_eq!(candidate(\"madam\", 2), 5);\n    assert_eq!(candidate(\"rotor\", 3), 5);\n    assert_eq!(candidate(\"abcdefgihgfedcb\", 15), 15);\n    assert_eq!(candidate(\"abcdefghihgfedcba\", 10), 17);\n    assert_eq!(candidate(\"pqrstuvwxyzabcdefghijklmno\", 50), 20);\n    assert_eq!(candidate(\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\", 0), 30);\n    assert_eq!(candidate(\"abcdefghijklmnopqrstuvwxyz\", 10), 9);\n    assert_eq!(candidate(\"abcdefghijklmnopqrstuvwxzy\", 100), 26);\n    assert_eq!(candidate(\"zzzzzzzzzzzzzzzzzzzz\", 10), 20);\n    assert_eq!(candidate(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", 150), 49);\n    assert_eq!(candidate(\"abcabcabcabcabcabcabcabcabcabc\", 100), 30);\n    assert_eq!(candidate(\"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", 5), 52);\n    assert_eq!(candidate(\"reviled\", 7), 5);\n    assert_eq!(candidate(\"abccba\", 0), 6);\n    assert_eq!(candidate(\"zyxzyxzyxzyxzyxzyxzyx\", 100), 21);\n    assert_eq!(candidate(\"pneumonoultramicroscopicsilicovolcanoconiosis\", 50), 37);\n    assert_eq!(candidate(\"mnopqrstuvwxyz\", 10), 6);\n    assert_eq!(candidate(\"step on no pets\", 10), 15);\n    assert_eq!(candidate(\"zyxzyxzyxzyxzyxzyxzyxzyxzyxzyxzyxzyxzyxzyx\", 100), 42);\n    assert_eq!(candidate(\"abababababababababababababababab\", 50), 32);\n    assert_eq!(candidate(\"abcdefghijklmnopqrstuvwxyz\", 50), 20);\n    assert_eq!(candidate(\"mississippi\", 3), 9);\n    assert_eq!(candidate(\"abacabadabacaba\", 5), 15);\n    assert_eq!(candidate(\"mnopqrstuvwxyzzyxwvutsrqponmlk\", 80), 30);\n    assert_eq!(candidate(\"abcdezyxwvutsrqponmlkjihgf\", 50), 20);\n    assert_eq!(candidate(\"abacabadabacaba\", 10), 15);\n    assert_eq!(candidate(\"abcabcabc\", 4), 8);\n    assert_eq!(candidate(\"abababababababababab\", 10), 20);\n    assert_eq!(candidate(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", 100), 40);\n    assert_eq!(candidate(\"abcabcabcabcabcabcabc\", 20), 21);\n    assert_eq!(candidate(\"qwertyuiopasdfghjklzxcvbnm\", 25), 18);\n    assert_eq!(candidate(\"aaaaabbbbb\", 10), 10);\n    assert_eq!(candidate(\"zabacabadabacaba\", 10), 15);\n    assert_eq!(candidate(\"abcdefedcbaabcdefedcbaabcdefedcba\", 60), 33);\n    assert_eq!(candidate(\"mnopqrstuvwxyzyxwvutsrqponmlkjihgfedcba\", 150), 36);\n    assert_eq!(candidate(\"abcdxyzzyxcba\", 10), 13);\n    assert_eq!(candidate(\"abcdefghijklmnopqrstuvwxyzyxwvutsrqponmlkjihgfedcba\", 100), 51);\n    assert_eq!(candidate(\"kayak\", 20), 5);\n    assert_eq!(candidate(\"abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz\", 100), 40);\n    assert_eq!(candidate(\"abcdzdcba\", 3), 9);\n    assert_eq!(candidate(\"aababaaa\", 2), 8);\n    assert_eq!(candidate(\"deed\", 3), 4);\n    assert_eq!(candidate(\"ababababababababababababababababababababababababababab\", 100), 54);\n    assert_eq!(candidate(\"abcdefghijkmlkjihgfedcba\", 50), 24);\n    assert_eq!(candidate(\"abcdeedcba\", 3), 10);\n    assert_eq!(candidate(\"abcdefg\", 10), 6);\n    assert_eq!(candidate(\"mnopqrstuvwxyzyxwvutsrqponmlkjihgfedcba\", 50), 30);\n    assert_eq!(candidate(\"racecar\", 0), 7);\n    assert_eq!(candidate(\"zyxwvutsrqponmlkjihgfedcba\", 150), 26);\n    assert_eq!(candidate(\"abcdefghijklmnopqrstuvwxyzyxwvutsrqponmlkjihgfedcba\", 50), 51);\n    assert_eq!(candidate(\"abcdefghijabcdefghij\", 15), 13);\n    assert_eq!(candidate(\"abacabadabacabadabacaba\", 20), 23);\n    assert_eq!(candidate(\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\", 5), 52);\n    assert_eq!(candidate(\"abcdabcdabcdabcd\", 20), 16);\n    assert_eq!(candidate(\"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", 180), 52);\n    assert_eq!(candidate(\"abcdefghijjihgfedcba\", 5), 20);\n}"
+  },
+  "test_cases": [
+    {
+      "input": "s = \"zxy\", k = 1",
+      "output": "3"
+    },
+    {
+      "input": "s = \"a\", k = 5",
+      "output": "1"
+    },
+    {
+      "input": "s = \"abced\", k = 2",
+      "output": "3"
+    },
+    {
+      "input": "s = \"abcdefghijklmnopqrstuvwxyz\", k = 25",
+      "output": "14"
+    },
+    {
+      "input": "s = \"zzzzz\", k = 1",
+      "output": "5"
+    },
+    {
+      "input": "s = \"abcdeedcba\", k = 5",
+      "output": "10"
+    },
+    {
+      "input": "s = \"zzzzz\", k = 10",
+      "output": "5"
+    },
+    {
+      "input": "s = \"abcba\", k = 0",
+      "output": "5"
+    },
+    {
+      "input": "s = \"aaazzz\", k = 4",
+      "output": "6"
+    },
+    {
+      "input": "s = \"abcdef\", k = 3",
+      "output": "3"
+    },
+    {
+      "input": "s = \"adadd\", k = 2",
+      "output": "3"
+    },
+    {
+      "input": "s = \"mamad\", k = 3",
+      "output": "3"
+    },
+    {
+      "input": "s = \"zyxwvutsrqponmlkjihgfedcba\", k = 200",
+      "output": "26"
+    },
+    {
+      "input": "s = \"xyz\", k = 1",
+      "output": "2"
+    },
+    {
+      "input": "s = \"abba\", k = 1",
+      "output": "4"
+    },
+    {
+      "input": "s = \"abcdedcba\", k = 0",
+      "output": "9"
+    },
+    {
+      "input": "s = \"aabaa\", k = 2",
+      "output": "5"
+    },
+    {
+      "input": "s = \"mnopqr\", k = 10",
+      "output": "6"
+    },
+    {
+      "input": "s = \"a\", k = 0",
+      "output": "1"
+    },
+    {
+      "input": "s = \"abcdefg\", k = 3",
+      "output": "3"
+    },
+    {
+      "input": "s = \"abcdabcdabcd\", k = 6",
+      "output": "11"
+    },
+    {
+      "input": "s = \"a\", k = 1",
+      "output": "1"
+    },
+    {
+      "input": "s = \"abcdedcba\", k = 5",
+      "output": "9"
+    },
+    {
+      "input": "s = \"zzzzzzzzzz\", k = 0",
+      "output": "10"
+    },
+    {
+      "input": "s = \"zzzzzzzzzzzzzzzzzzzz\", k = 100",
+      "output": "20"
+    },
+    {
+      "input": "s = \"racecar\", k = 10",
+      "output": "7"
+    },
+    {
+      "input": "s = \"zzyzxzyzxzyzxzyzxzyz\", k = 30",
+      "output": "20"
+    },
+    {
+      "input": "s = \"abcdefghijklmnopqrstuvwxyzz\", k = 50",
+      "output": "20"
+    },
+    {
+      "input": "s = \"aaaabbbb\", k = 5",
+      "output": "8"
+    },
+    {
+      "input": "s = \"abcabcabcabcabcabcabcabcabcabc\", k = 25",
+      "output": "30"
+    },
+    {
+      "input": "s = \"aaaaabbbbbcccc\", k = 5",
+      "output": "10"
+    },
+    {
+      "input": "s = \"aaaaabbbbbaaaa\", k = 50",
+      "output": "14"
+    },
+    {
+      "input": "s = \"aaaaabbbbbaaaaa\", k = 10",
+      "output": "15"
+    },
+    {
+      "input": "s = \"abcdefghijklmnopqrstuvwxyzyxwvutsrqponmlkjihgfedcba\", k = 180",
+      "output": "51"
+    },
+    {
+      "input": "s = \"level\", k = 5",
+      "output": "5"
+    },
+    {
+      "input": "s = \"racecar\", k = 5",
+      "output": "7"
+    },
+    {
+      "input": "s = \"abcdefgabcdefgabcdefgabcdefg\", k = 10",
+      "output": "17"
+    },
+    {
+      "input": "s = \"abcdedcba\", k = 1",
+      "output": "9"
+    },
+    {
+      "input": "s = \"qwertyuioplkjhgfdsazxcvbnmqwertyuioplkjhgfdsazxcvb\", k = 100",
+      "output": "47"
+    },
+    {
+      "input": "s = \"abxyzabcxyzabcxyz\", k = 25",
+      "output": "17"
+    },
+    {
+      "input": "s = \"level\", k = 1",
+      "output": "5"
+    },
+    {
+      "input": "s = \"abcba\", k = 1",
+      "output": "5"
+    },
+    {
+      "input": "s = \"ababababababababababababababababababab\", k = 75",
+      "output": "38"
+    },
+    {
+      "input": "s = \"abcdefgxyzzyxgfedcba\", k = 15",
+      "output": "20"
+    },
+    {
+      "input": "s = \"refer\", k = 0",
+      "output": "5"
+    },
+    {
+      "input": "s = \"aabbccddeeffggzzzyyxxwwvvuuttsrqponmlkjihgfedcba\", k = 100",
+      "output": "47"
+    },
+    {
+      "input": "s = \"palindrome\", k = 15",
+      "output": "9"
+    },
+    {
+      "input": "s = \"amanaplanacanalpanama\", k = 100",
+      "output": "21"
+    },
+    {
+      "input": "s = \"qwertyuiopasdfghjklzxcvbnm\", k = 50",
+      "output": "23"
+    },
+    {
+      "input": "s = \"aaaabbbbcccc\", k = 15",
+      "output": "12"
+    },
+    {
+      "input": "s = \"mnonmonmomnonmonmonmomnonm\", k = 15",
+      "output": "26"
+    },
+    {
+      "input": "s = \"mississippi\", k = 7",
+      "output": "10"
+    },
+    {
+      "input": "s = \"banana\", k = 10",
+      "output": "5"
+    },
+    {
+      "input": "s = \"aabacbebebe\", k = 5",
+      "output": "8"
+    },
+    {
+      "input": "s = \"madamimadam\", k = 10",
+      "output": "11"
+    },
+    {
+      "input": "s = \"abcdexyzabcdexyzabcdexyz\", k = 50",
+      "output": "24"
+    },
+    {
+      "input": "s = \"mississippi\", k = 10",
+      "output": "10"
+    },
+    {
+      "input": "s = \"deified\", k = 4",
+      "output": "7"
+    },
+    {
+      "input": "s = \"abcdedcba\", k = 2",
+      "output": "9"
+    },
+    {
+      "input": "s = \"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", k = 50",
+      "output": "28"
+    },
+    {
+      "input": "s = \"abcdedcba\", k = 3",
+      "output": "9"
+    },
+    {
+      "input": "s = \"mnopqrstuvwxyzyxwvutsrqponmlkjihgfedcbazyxwvutsrqponmlkjihgfedcba\", k = 200",
+      "output": "60"
+    },
+    {
+      "input": "s = \"aabbccabcabcabcabcabc\", k = 50",
+      "output": "21"
+    },
+    {
+      "input": "s = \"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", k = 1",
+      "output": "50"
+    },
+    {
+      "input": "s = \"abcdeedcba\", k = 0",
+      "output": "10"
+    },
+    {
+      "input": "s = \"abbaacddcabb\", k = 4",
+      "output": "11"
+    },
+    {
+      "input": "s = \"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", k = 200",
+      "output": "52"
+    },
+    {
+      "input": "s = \"zzzyzzyzzyzzyzzyzzyz\", k = 200",
+      "output": "20"
+    },
+    {
+      "input": "s = \"mississippi\", k = 5",
+      "output": "9"
+    },
+    {
+      "input": "s = \"level\", k = 2",
+      "output": "5"
+    },
+    {
+      "input": "s = \"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", k = 0",
+      "output": "32"
+    },
+    {
+      "input": "s = \"ababbabbbabaaa\", k = 15",
+      "output": "14"
+    },
+    {
+      "input": "s = \"rotor\", k = 15",
+      "output": "5"
+    },
+    {
+      "input": "s = \"noon\", k = 1",
+      "output": "4"
+    },
+    {
+      "input": "s = \"noonhighnoon\", k = 5",
+      "output": "12"
+    },
+    {
+      "input": "s = \"abcdbca\", k = 2",
+      "output": "7"
+    },
+    {
+      "input": "s = \"abcdxyzabcdxyzabcdxyz\", k = 30",
+      "output": "21"
+    },
+    {
+      "input": "s = \"banana\", k = 3",
+      "output": "5"
+    },
+    {
+      "input": "s = \"qwertyuiopasdfghjklzxcvbnmnbvcxzlkjhgfdsapoiuytrewq\", k = 50",
+      "output": "51"
+    },
+    {
+      "input": "s = \"abacbacbacbacbacbacbacbacbacbacbacbacbacbacbacbacb\", k = 20",
+      "output": "50"
+    },
+    {
+      "input": "s = \"abacaba\", k = 3",
+      "output": "7"
+    },
+    {
+      "input": "s = \"mamamamamamamamamamamamamamamamama\", k = 50",
+      "output": "33"
+    },
+    {
+      "input": "s = \"racecar\", k = 2",
+      "output": "7"
+    },
+    {
+      "input": "s = \"noon\", k = 2",
+      "output": "4"
+    },
+    {
+      "input": "s = \"abcdefghijklmnopqrstuvwxyzyxwvutsrqponmlkjihgfedcba\", k = 250",
+      "output": "51"
+    },
+    {
+      "input": "s = \"abcdefg\", k = 6",
+      "output": "5"
+    },
+    {
+      "input": "s = \"zyzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", k = 300",
+      "output": "84"
+    },
+    {
+      "input": "s = \"madam\", k = 1",
+      "output": "5"
+    },
+    {
+      "input": "s = \"zyxzyxzyxzyxzyxzyxzyxzyxzyxzyxzyxzyxzyxzyxzyxzyxzyxzyxzyx\", k = 100",
+      "output": "57"
+    },
+    {
+      "input": "s = \"zyxzyxzyxzyxzyxzyxzyxzyxzyxzyxzyxzyxzyx\", k = 200",
+      "output": "39"
+    },
+    {
+      "input": "s = \"rotor\", k = 0",
+      "output": "5"
+    },
+    {
+      "input": "s = \"abcdefgzyxwvutsrqponmlkjihgfedcba\", k = 50",
+      "output": "29"
+    },
+    {
+      "input": "s = \"abcdefghzyxwvutsrqponmlkjihgfedcba\", k = 150",
+      "output": "34"
+    },
+    {
+      "input": "s = \"qwertyuiopasdfghjklzxcvbnmqwertyuiopasdfghjklzxcvbnm\", k = 100",
+      "output": "47"
+    },
+    {
+      "input": "s = \"abcdefghizyxwvutsrqponmlkjihgfedcba\", k = 100",
+      "output": "35"
+    },
+    {
+      "input": "s = \"deified\", k = 2",
+      "output": "7"
+    },
+    {
+      "input": "s = \"aaaabbbbccccdddd\", k = 10",
+      "output": "13"
+    },
+    {
+      "input": "s = \"madam\", k = 2",
+      "output": "5"
+    },
+    {
+      "input": "s = \"rotor\", k = 3",
+      "output": "5"
+    },
+    {
+      "input": "s = \"abcdefgihgfedcb\", k = 15",
+      "output": "15"
+    },
+    {
+      "input": "s = \"abcdefghihgfedcba\", k = 10",
+      "output": "17"
+    },
+    {
+      "input": "s = \"pqrstuvwxyzabcdefghijklmno\", k = 50",
+      "output": "20"
+    },
+    {
+      "input": "s = \"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\", k = 0",
+      "output": "30"
+    },
+    {
+      "input": "s = \"abcdefghijklmnopqrstuvwxyz\", k = 10",
+      "output": "9"
+    },
+    {
+      "input": "s = \"abcdefghijklmnopqrstuvwxzy\", k = 100",
+      "output": "26"
+    },
+    {
+      "input": "s = \"zzzzzzzzzzzzzzzzzzzz\", k = 10",
+      "output": "20"
+    },
+    {
+      "input": "s = \"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", k = 150",
+      "output": "49"
+    },
+    {
+      "input": "s = \"abcabcabcabcabcabcabcabcabcabc\", k = 100",
+      "output": "30"
+    },
+    {
+      "input": "s = \"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz\", k = 5",
+      "output": "52"
+    },
+    {
+      "input": "s = \"reviled\", k = 7",
+      "output": "5"
+    },
+    {
+      "input": "s = \"abccba\", k = 0",
+      "output": "6"
+    },
+    {
+      "input": "s = \"zyxzyxzyxzyxzyxzyxzyx\", k = 100",
+      "output": "21"
+    },
+    {
+      "input": "s = \"pneumonoultramicroscopicsilicovolcanoconiosis\", k = 50",
+      "output": "37"
+    },
+    {
+      "input": "s = \"mnopqrstuvwxyz\", k = 10",
+      "output": "6"
+    },
+    {
+      "input": "s = \"step on no pets\", k = 10",
+      "output": "15"
+    },
+    {
+      "input": "s = \"zyxzyxzyxzyxzyxzyxzyxzyxzyxzyxzyxzyxzyxzyx\", k = 100",
+      "output": "42"
+    },
+    {
+      "input": "s = \"abababababababababababababababab\", k = 50",
+      "output": "32"
+    },
+    {
+      "input": "s = \"abcdefghijklmnopqrstuvwxyz\", k = 50",
+      "output": "20"
+    },
+    {
+      "input": "s = \"mississippi\", k = 3",
+      "output": "9"
+    },
+    {
+      "input": "s = \"abacabadabacaba\", k = 5",
+      "output": "15"
+    },
+    {
+      "input": "s = \"mnopqrstuvwxyzzyxwvutsrqponmlk\", k = 80",
+      "output": "30"
+    },
+    {
+      "input": "s = \"abcdezyxwvutsrqponmlkjihgf\", k = 50",
+      "output": "20"
+    },
+    {
+      "input": "s = \"abacabadabacaba\", k = 10",
+      "output": "15"
+    },
+    {
+      "input": "s = \"abcabcabc\", k = 4",
+      "output": "8"
+    },
+    {
+      "input": "s = \"abababababababababab\", k = 10",
+      "output": "20"
+    },
+    {
+      "input": "s = \"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", k = 100",
+      "output": "40"
+    },
+    {
+      "input": "s = \"abcabcabcabcabcabcabc\", k = 20",
+      "output": "21"
+    },
+    {
+      "input": "s = \"qwertyuiopasdfghjklzxcvbnm\", k = 25",
+      "output": "18"
+    },
+    {
+      "input": "s = \"aaaaabbbbb\", k = 10",
+      "output": "10"
+    },
+    {
+      "input": "s = \"zabacabadabacaba\", k = 10",
+      "output": "15"
+    },
+    {
+      "input": "s = \"abcdefedcbaabcdefedcbaabcdefedcba\", k = 60",
+      "output": "33"
+    },
+    {
+      "input": "s = \"mnopqrstuvwxyzyxwvutsrqponmlkjihgfedcba\", k = 150",
+      "output": "36"
+    },
+    {
+      "input": "s = \"abcdxyzzyxcba\", k = 10",
+      "output": "13"
+    },
+    {
+      "input": "s = \"abcdefghijklmnopqrstuvwxyzyxwvutsrqponmlkjihgfedcba\", k = 100",
+      "output": "51"
+    },
+    {
+      "input": "s = \"kayak\", k = 20",
+      "output": "5"
+    },
+    {
+      "input": "s = \"abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz\", k = 100",
+      "output": "40"
+    },
+    {
+      "input": "s = \"abcdzdcba\", k = 3",
+      "output": "9"
+    },
+    {
+      "input": "s = \"aababaaa\", k = 2",
+      "output": "8"
+    },
+    {
+      "input": "s = \"deed\", k = 3",
+      "output": "4"
+    },
+    {
+      "input": "s = \"ababababababababababababababababababababababababababab\", k = 100",
+      "output": "54"
+    },
+    {
+      "input": "s = \"abcdefghijkmlkjihgfedcba\", k = 50",
+      "output": "24"
+    },
+    {
+      "input": "s = \"abcdeedcba\", k = 3",
+      "output": "10"
+    },
+    {
+      "input": "s = \"abcdefg\", k = 10",
+      "output": "6"
+    },
+    {
+      "input": "s = \"mnopqrstuvwxyzyxwvutsrqponmlkjihgfedcba\", k = 50",
+      "output": "30"
+    },
+    {
+      "input": "s = \"racecar\", k = 0",
+      "output": "7"
+    },
+    {
+      "input": "s = \"zyxwvutsrqponmlkjihgfedcba\", k = 150",
+      "output": "26"
+    },
+    {
+      "input": "s = \"abcdefghijklmnopqrstuvwxyzyxwvutsrqponmlkjihgfedcba\", k = 50",
+      "output": "51"
+    },
+    {
+      "input": "s = \"abcdefghijabcdefghij\", k = 15",
+      "output": "13"
+    },
+    {
+      "input": "s = \"abacabadabacabadabacaba\", k = 20",
+      "output": "23"
+    },
+    {
+      "input": "s = \"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\", k = 5",
+      "output": "52"
+    },
+    {
+      "input": "s = \"abcdabcdabcdabcd\", k = 20",
+      "output": "16"
+    },
+    {
+      "input": "s = \"aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz\", k = 180",
+      "output": "52"
+    },
+    {
+      "input": "s = \"abcdefghijjihgfedcba\", k = 5",
+      "output": "20"
+    }
+  ],
+  "types": {
+    "python3": {
+      "input": [
+        {
+          "s": "str"
+        },
+        {
+          "k": "int"
+        }
+      ],
+      "output": "int"
+    },
+    "cpp": {
+      "input": [
+        {
+          "s": "string"
+        },
+        {
+          "k": "int"
+        }
+      ],
+      "output": "int"
+    },
+    "java": {
+      "input": [
+        {
+          "s": "String"
+        },
+        {
+          "k": "int"
+        }
+      ],
+      "output": "int"
+    },
+    "javascript": {
+      "input": [
+        {
+          "s": "string"
+        },
+        {
+          "k": "number"
+        }
+      ],
+      "output": "number"
+    },
+    "typescript": {
+      "input": [
+        {
+          "s": "string"
+        },
+        {
+          "k": "number"
+        }
+      ],
+      "output": "number"
+    },
+    "golang": {
+      "input": [
+        {
+          "s": "string"
+        },
+        {
+          "k": "int"
+        }
+      ],
+      "output": "int"
+    },
+    "rust": {
+      "input": [
+        {
+          "s": "String"
+        },
+        {
+          "k": "i32"
+        }
+      ],
+      "output": "i32"
+    }
+  },
+  "tags": [
+    "string",
+    "dynamic-programming"
+  ]
+}
