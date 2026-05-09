@@ -12,7 +12,10 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Optional, List
 
-from bytedojo.core.models import Problem, ProblemSummary, CodeSnippet, Difficulty, Language, Status
+from bytedojo.core.models import (
+    Problem, ProblemDetail, CodeSnippet, Difficulty, Language, Tag,
+    Example, TypeParam, TypeInfo, EntryPoint, TestSnippet, TestCase
+)
 from bytedojo.core.paths import PROBLEMS_INDEX, get_problem_file
 from bytedojo.core.repository import Repository
 from bytedojo.core.database import DatabaseManager
@@ -30,12 +33,12 @@ class PlaceResult:
     error: Optional[str] = None
 
 
-def _load_index() -> dict:
-    """Load the problems index."""
+def _load_index() -> list:
+    """Load the problems index as a list of problem entries."""
     if PROBLEMS_INDEX.exists():
         with open(PROBLEMS_INDEX, "r", encoding="utf-8") as f:
             return json.load(f)
-    return {}
+    return []
 
 
 def _load_problem_file(problem_id: int) -> Optional[dict]:
@@ -49,21 +52,76 @@ def _load_problem_file(problem_id: int) -> Optional[dict]:
 
 def _build_problem(data: dict) -> Problem:
     """Build a Problem object from raw data."""
-    snippets_dict = data.get("code_snippets", {})
+    # Parse tags
+    tags = [Tag.from_string(t) for t in data.get("tags", [])]
+
+    # Parse examples
+    examples = [
+        Example(
+            example_num=ex.get("example_num", 0),
+            example_text=ex.get("example_text", ""),
+            images=ex.get("images", [])
+        )
+        for ex in data.get("examples", [])
+    ]
+
+    # Parse code snippets
     code_snippets = []
-    for lang_str, code in snippets_dict.items():
+    for lang_str, code in data.get("code_snippets", {}).items():
         lang = Language.from_string(lang_str)
         if lang != Language.UNKNOWN:
             code_snippets.append(CodeSnippet(lang=lang, code=code))
 
+    # Parse entry points
+    entry_points = []
+    for lang_str, expr in data.get("entry_points", {}).items():
+        lang = Language.from_string(lang_str)
+        if lang != Language.UNKNOWN:
+            entry_points.append(EntryPoint(lang=lang, expression=expr))
+
+    # Parse types
+    types = []
+    for lang_str, type_data in data.get("types", {}).items():
+        lang = Language.from_string(lang_str)
+        if lang != Language.UNKNOWN:
+            input_params = []
+            for param_dict in type_data.get("input", []):
+                for name, type_str in param_dict.items():
+                    input_params.append(TypeParam(name=name, type_str=type_str))
+            types.append(TypeInfo(
+                lang=lang,
+                input=input_params,
+                output=type_data.get("output", "")
+            ))
+
+    # Parse test cases
+    test_cases = [
+        TestCase(input=tc.get("input", ""), output=tc.get("output", ""))
+        for tc in data.get("test_cases", [])
+    ]
+
+    # Parse test snippets
+    test_snippets = []
+    for lang_str, code in data.get("test_snippets", {}).items():
+        lang = Language.from_string(lang_str)
+        if lang != Language.UNKNOWN:
+            test_snippets.append(TestSnippet(lang=lang, code=code))
+
     return Problem(
         id=data.get("id", 0),
         title=data.get("title", ""),
-        title_slug=data.get("slug", ""),
+        slug=data.get("slug", ""),
         difficulty=Difficulty.from_string(data.get("difficulty", "")),
         description=data.get("description", ""),
+        tags=tags,
+        examples=examples,
+        constraints=data.get("constraints", []),
+        hints=data.get("hints", []),
         code_snippets=code_snippets,
-        test_cases=[]
+        entry_points=entry_points,
+        types=types,
+        test_cases=test_cases,
+        test_snippets=test_snippets
     )
 
 
@@ -94,10 +152,10 @@ def get_problem_by_slug(slug: str) -> Optional[Problem]:
         Problem object if found, None otherwise
     """
     index = _load_index()
-    entry = index.get(slug)
-    if not entry:
-        return None
-    return get_problem(entry["id"])
+    for entry in index:
+        if entry.get("slug") == slug:
+            return get_problem(entry["id"])
+    return None
 
 
 def problem_exists(problem_id: int) -> bool:
@@ -113,43 +171,64 @@ def problem_exists(problem_id: int) -> bool:
     return get_problem_file(problem_id).exists()
 
 def query_problems(
+    ids: Optional[List[int]] = None,
     difficulty: Difficulty = Difficulty.NONE,
-    tags: Optional[List[str]] = None,
+    tags: Optional[List[Tag]] = None,
+    search: Optional[str] = None,
     limit: Optional[int] = None
-) -> List[ProblemSummary]:
+) -> List[ProblemDetail]:
     """
     Query problems with optional filters.
 
     Uses the index for efficient filtering without loading full problem data.
 
     Args:
+        ids: Filter by specific problem IDs
         difficulty: Filter by difficulty level
-        tags: Filter by algorithm tags (e.g., ["Array", "Hash Table"])
+        tags: Filter by tags (e.g., [Tag.ARRAY, Tag.HASH_TABLE])
+        search: Search text in description
         limit: Maximum number of results
 
     Returns:
-        List of ProblemSummary objects matching the filters
+        List of ProblemDetail objects matching the filters
     """
     index = _load_index()
     results = []
 
-    for slug, entry in index.items():
+    # Pre-compute ID set for efficiency
+    id_set = set(ids) if ids else None
+    search_lower = search.lower() if search else None
+
+    for entry in index:
+        # Filter by IDs
+        if id_set and entry["id"] not in id_set:
+            continue
+
+        # Filter by difficulty
         if difficulty != Difficulty.NONE:
             entry_difficulty = Difficulty.from_string(entry.get("difficulty", ""))
             if entry_difficulty != difficulty:
                 continue
 
+        # Filter by tags
         if tags:
-            entry_tags = [t.lower() for t in entry.get("topics", [])]
-            if not any(t.lower() in entry_tags for t in tags):
+            entry_tags = [Tag.from_string(t) for t in entry.get("tags", [])]
+            if not any(t in entry_tags for t in tags):
                 continue
 
-        results.append(ProblemSummary(
+        # Filter by description search
+        if search_lower:
+            desc = entry.get("description", "").lower()
+            if search_lower not in desc:
+                continue
+
+        results.append(ProblemDetail(
             id=entry["id"],
             title=entry.get("title", ""),
-            title_slug=slug,
+            slug=entry.get("slug", ""),
             difficulty=Difficulty.from_string(entry.get("difficulty", "")),
-            tags=entry.get("topics", [])
+            tags=[Tag.from_string(t) for t in entry.get("tags", [])],
+            description=entry.get("description", "")
         ))
 
     results.sort(key=lambda p: p.id)
@@ -160,9 +239,9 @@ def query_problems(
     return results
 
 
-def get_all_tags() -> List[str]:
+def get_all_tags() -> List[Tag]:
     """
-    Get all available algorithm tags.
+    Get all available tags.
 
     Returns:
         Sorted list of unique tags
@@ -170,11 +249,14 @@ def get_all_tags() -> List[str]:
     index = _load_index()
     tags = set()
 
-    for entry in index.values():
-        for tag in entry.get("topics", []):
-            tags.add(tag)
+    for entry in index:
+        for tag_str in entry.get("tags", []):
+            tags.add(Tag.from_string(tag_str))
 
-    return sorted(tags)
+    # Remove UNKNOWN if present
+    tags.discard(Tag.UNKNOWN)
+
+    return sorted(tags, key=lambda t: t.value)
 
 
 def place_problem(

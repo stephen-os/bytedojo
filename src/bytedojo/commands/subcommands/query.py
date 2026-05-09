@@ -6,9 +6,10 @@ import click
 from pathlib import Path
 
 from bytedojo.core.logger import get_logger
-from bytedojo.core.query import QueryService
 from bytedojo.core.repository import Repository
-from bytedojo.core.models import Difficulty, Status
+from bytedojo.core.attempt_service import AttemptService
+from bytedojo.core.models import Difficulty, Status, Tag
+from bytedojo.core import problem_service
 
 
 # Status indicators for CLI display
@@ -66,7 +67,7 @@ def _display_page(all_problems, page, per_page, status_map):
     for problem in page_problems:
         status = _get_best_status(status_map, problem.id)
         status_icon = STATUS_ICONS.get(status, STATUS_ICONS[Status.NONE])
-        diff_icon = DIFFICULTY_SHORT.get(problem.difficulty, '?')
+        diff_icon = DIFFICULTY_SHORT.get(problem.difficulty.value, '?')
 
         click.echo(f"{problem.id:>5}  {status_icon}  {diff_icon}  {problem.title}")
 
@@ -126,6 +127,7 @@ def _interactive_loop(all_problems, start_page, per_page, status_map):
 
 
 @click.command()
+@click.argument('problem_ids', nargs=-1)
 @click.option(
     '--difficulty', '-d',
     type=click.Choice(['easy', 'medium', 'hard', '1', '2', '3'], case_sensitive=False),
@@ -134,7 +136,12 @@ def _interactive_loop(all_problems, start_page, per_page, status_map):
 @click.option(
     '--tag', '-t',
     multiple=True,
-    help='Filter by algorithm tag (can be used multiple times)'
+    help='Filter by tag (comma-separated or multiple flags)'
+)
+@click.option(
+    '--search', '-s',
+    type=str,
+    help='Search text in problem descriptions'
 )
 @click.option(
     '--page', '-p',
@@ -154,9 +161,14 @@ def _interactive_loop(all_problems, start_page, per_page, status_map):
     help='List all available tags and exit'
 )
 @click.pass_obj
-def query(ctx, difficulty: str, tag: tuple, page: int, per_page: int, list_tags: bool):
+def query(ctx, problem_ids: tuple, difficulty: str, tag: tuple, search: str, page: int, per_page: int, list_tags: bool):
     """
     Search LeetCode problems with local status.
+
+    Optionally specify problem IDs or ranges to filter:
+      dojo query 1 2 3              # Specific IDs
+      dojo query 1..10              # Range of IDs
+      dojo query 1,5..10,15         # Mixed format
 
     Status indicators:
       [P] Passed    [F] Failed    [S] Skipped    [ ] Not graded/fetched
@@ -166,29 +178,53 @@ def query(ctx, difficulty: str, tag: tuple, page: int, per_page: int, list_tags:
 
     Examples:
       dojo query                          # Browse all problems
+      dojo query 1..50                    # Problems 1-50
       dojo query -d easy                  # Easy problems only
       dojo query -t array                 # Array problems
+      dojo query -t array,hash-table      # Multiple tags
+      dojo query -s "binary search"       # Search in descriptions
       dojo query -d medium -t dp -n 50    # 50 per page
       dojo query --list-tags              # Show all tags
     """
     logger = get_logger()
     repo = Repository(Path.cwd())
-    query_service = QueryService(repo)
 
     # Handle --list-tags
     if list_tags:
         logger.info("Loading available tags...")
-        tags = query_service.get_available_tags()
+        tags = problem_service.get_all_tags()
         if tags:
             click.echo(f"Available tags ({len(tags)}):")
             for t in tags:
-                click.echo(f"  {t}")
+                click.echo(f"  {t.value}")
         else:
             logger.warning("No tags found")
         return
 
-    # Convert tag tuple to list
-    tags_list = list(tag) if tag else None
+    # Parse problem IDs if provided
+    ids_list = None
+    if problem_ids:
+        try:
+            ids_list = problem_service.parse_problem_ids(problem_ids)
+        except ValueError as e:
+            logger.error(str(e))
+            return
+
+    # Convert tag strings to Tag enums (support comma-separated)
+    tags_list = None
+    if tag:
+        all_tags = []
+        for t in tag:
+            # Split by comma to support comma-separated tags
+            for part in t.split(','):
+                part = part.strip()
+                if part:
+                    all_tags.append(Tag.from_string(part))
+        # Filter out UNKNOWN tags
+        tags_list = [t for t in all_tags if t != Tag.UNKNOWN]
+        if not tags_list:
+            logger.warning("No valid tags specified")
+            tags_list = None
 
     # Convert difficulty string to enum
     difficulty_enum = Difficulty.NONE
@@ -201,17 +237,26 @@ def query(ctx, difficulty: str, tag: tuple, page: int, per_page: int, list_tags:
         elif difficulty_lower in ('hard', '3'):
             difficulty_enum = Difficulty.HARD
 
-    # Query problems using service
+    # Query problems
     logger.info("Searching problems...")
-    result = query_service.query(
+    problems = problem_service.query_problems(
+        ids=ids_list,
         difficulty=difficulty_enum,
         tags=tags_list,
-        include_status=True
+        search=search
     )
 
-    if not result.problems:
+    if not problems:
         logger.warning("No problems found matching your criteria")
         return
 
+    # Get status map if repo is initialized
+    status_map = {}
+    if repo.is_initialized:
+        attempts = AttemptService(repo)
+        all_stats = attempts.get_all_stats()
+        problem_ids_set = {p.id for p in problems}
+        status_map = {pid: stats for pid, stats in all_stats.items() if pid in problem_ids_set}
+
     # Enter interactive pagination loop
-    _interactive_loop(result.problems, page, per_page, result.status_map)
+    _interactive_loop(problems, page, per_page, status_map)

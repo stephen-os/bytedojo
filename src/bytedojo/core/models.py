@@ -110,88 +110,93 @@ class Status(str, Enum):
         return cls(value.lower())
 
 
-class Topic(str, Enum):
-    """Problem topic/tag categories."""
-    UNKNOWN = "Unknown"
-    ARRAY = "Array"
-    BACKTRACKING = "Backtracking"
-    BICONNECTED_COMPONENT = "Biconnected Component"
-    BINARY_INDEXED_TREE = "Binary Indexed Tree"
-    BINARY_SEARCH = "Binary Search"
-    BINARY_SEARCH_TREE = "Binary Search Tree"
-    BINARY_TREE = "Binary Tree"
-    BIT_MANIPULATION = "Bit Manipulation"
-    BITMASK = "Bitmask"
-    BRAINTEASER = "Brainteaser"
-    BREADTH_FIRST_SEARCH = "Breadth-First Search"
-    BUCKET_SORT = "Bucket Sort"
-    COMBINATORICS = "Combinatorics"
-    COUNTING = "Counting"
-    COUNTING_SORT = "Counting Sort"
-    DEPTH_FIRST_SEARCH = "Depth-First Search"
-    DIVIDE_AND_CONQUER = "Divide and Conquer"
-    DYNAMIC_PROGRAMMING = "Dynamic Programming"
-    ENUMERATION = "Enumeration"
-    EULERIAN_CIRCUIT = "Eulerian Circuit"
-    GAME_THEORY = "Game Theory"
-    GEOMETRY = "Geometry"
-    GRAPH = "Graph"
-    GREEDY = "Greedy"
-    HASH_FUNCTION = "Hash Function"
-    HASH_TABLE = "Hash Table"
-    HEAP = "Heap (Priority Queue)"
-    INTERACTIVE = "Interactive"
-    LINE_SWEEP = "Line Sweep"
-    LINKED_LIST = "Linked List"
-    MATH = "Math"
-    MATRIX = "Matrix"
-    MEMOIZATION = "Memoization"
-    MERGE_SORT = "Merge Sort"
-    MINIMUM_SPANNING_TREE = "Minimum Spanning Tree"
-    MONOTONIC_QUEUE = "Monotonic Queue"
-    MONOTONIC_STACK = "Monotonic Stack"
-    NUMBER_THEORY = "Number Theory"
-    ORDERED_SET = "Ordered Set"
-    PREFIX_SUM = "Prefix Sum"
-    PROBABILITY_AND_STATISTICS = "Probability and Statistics"
-    QUEUE = "Queue"
-    QUICKSELECT = "Quickselect"
-    RADIX_SORT = "Radix Sort"
-    RANDOMIZED = "Randomized"
-    RECURSION = "Recursion"
-    ROLLING_HASH = "Rolling Hash"
-    SEGMENT_TREE = "Segment Tree"
-    SHORTEST_PATH = "Shortest Path"
-    SIMULATION = "Simulation"
-    SLIDING_WINDOW = "Sliding Window"
-    SORT = "Sort"
-    SORTING = "Sorting"
-    STACK = "Stack"
-    STRING = "String"
-    STRING_MATCHING = "String Matching"
-    STRONGLY_CONNECTED_COMPONENT = "Strongly Connected Component"
-    SUFFIX_ARRAY = "Suffix Array"
-    TOPOLOGICAL_SORT = "Topological Sort"
-    TREE = "Tree"
-    TRIE = "Trie"
-    TWO_POINTERS = "Two Pointers"
-    UNION_FIND = "Union Find"
+class Tag(str, Enum):
+    """Problem tag categories."""
+    UNKNOWN = "unknown"
+    ARRAY = "array"
+    BACKTRACKING = "backtracking"
+    BICONNECTED_COMPONENT = "biconnected-component"
+    BINARY_INDEXED_TREE = "binary-indexed-tree"
+    BINARY_SEARCH = "binary-search"
+    BINARY_SEARCH_TREE = "binary-search-tree"
+    BINARY_TREE = "binary-tree"
+    BIT_MANIPULATION = "bit-manipulation"
+    BITMASK = "bitmask"
+    BRAINTEASER = "brainteaser"
+    BREADTH_FIRST_SEARCH = "breadth-first-search"
+    BUCKET_SORT = "bucket-sort"
+    COMBINATORICS = "combinatorics"
+    COUNTING = "counting"
+    COUNTING_SORT = "counting-sort"
+    DEPTH_FIRST_SEARCH = "depth-first-search"
+    DIVIDE_AND_CONQUER = "divide-and-conquer"
+    DYNAMIC_PROGRAMMING = "dynamic-programming"
+    ENUMERATION = "enumeration"
+    EULERIAN_CIRCUIT = "eulerian-circuit"
+    GAME_THEORY = "game-theory"
+    GEOMETRY = "geometry"
+    GRAPH = "graph"
+    GREEDY = "greedy"
+    HASH_FUNCTION = "hash-function"
+    HASH_TABLE = "hash-table"
+    HEAP = "heap"
+    INTERACTIVE = "interactive"
+    LINE_SWEEP = "line-sweep"
+    LINKED_LIST = "linked-list"
+    MATH = "math"
+    MATRIX = "matrix"
+    MEMOIZATION = "memoization"
+    MERGE_SORT = "merge-sort"
+    MINIMUM_SPANNING_TREE = "minimum-spanning-tree"
+    MONOTONIC_QUEUE = "monotonic-queue"
+    MONOTONIC_STACK = "monotonic-stack"
+    NUMBER_THEORY = "number-theory"
+    ORDERED_SET = "ordered-set"
+    PREFIX_SUM = "prefix-sum"
+    PROBABILITY_AND_STATISTICS = "probability-and-statistics"
+    QUEUE = "queue"
+    QUICKSELECT = "quickselect"
+    RADIX_SORT = "radix-sort"
+    RANDOMIZED = "randomized"
+    RECURSION = "recursion"
+    ROLLING_HASH = "rolling-hash"
+    SEGMENT_TREE = "segment-tree"
+    SHORTEST_PATH = "shortest-path"
+    SIMULATION = "simulation"
+    SLIDING_WINDOW = "sliding-window"
+    SORT = "sort"
+    SORTING = "sorting"
+    STACK = "stack"
+    STRING = "string"
+    STRING_MATCHING = "string-matching"
+    STRONGLY_CONNECTED_COMPONENT = "strongly-connected-component"
+    SUFFIX_ARRAY = "suffix-array"
+    TOPOLOGICAL_SORT = "topological-sort"
+    TREE = "tree"
+    TRIE = "trie"
+    TWO_POINTERS = "two-pointers"
+    UNION_FIND = "union-find"
 
     @classmethod
     def _missing_(cls, value):
-        """Return UNKNOWN for unrecognized topic values."""
+        """Return UNKNOWN for unrecognized tag values."""
         return cls.UNKNOWN
 
     @classmethod
-    def from_string(cls, value: str) -> "Topic":
-        """Parse topic from string."""
+    def from_string(cls, value: str) -> "Tag":
+        """Parse tag from string."""
         if not value:
             return cls.UNKNOWN
 
         try:
-            return cls(value)
+            return cls(value.lower())
         except ValueError:
             return cls.UNKNOWN
+
+    @classmethod
+    def all(cls) -> list["Tag"]:
+        """Return all tags except UNKNOWN."""
+        return [t for t in cls if t != cls.UNKNOWN]
 
 
 @dataclass
@@ -252,7 +257,7 @@ class ProblemDetail:
     title: str
     slug: str
     difficulty: Difficulty
-    topics: List[Topic]
+    tags: List[Tag]
     description: str
 
 
