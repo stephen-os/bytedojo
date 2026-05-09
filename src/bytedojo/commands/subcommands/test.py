@@ -127,8 +127,8 @@ def _truncate(s: str, max_len: int) -> str:
 @click.option('--name', '-n', 'name_search', help='Search by problem name')
 @click.option('--desc', '-d', 'desc_search', help='Search by description keywords')
 @click.option('--python', '-py', 'language', flag_value='python3', help='Test Python version')
-@click.option('--java', 'language', flag_value='java', help='Test Java version (coming soon)')
-@click.option('--cpp', 'language', flag_value='cpp', help='Test C++ version (coming soon)')
+@click.option('--java', 'language', flag_value='java', help='Test Java version')
+@click.option('--cpp', 'language', flag_value='cpp', help='Test C++ version')
 @click.option('--last', is_flag=True, help='Test most recently fetched problem')
 @click.option('--verbose', '-v', is_flag=True, help='Show all test case results')
 @click.option('--timeout', '-t', type=int, default=60, help='Timeout in seconds (default: 60)')
@@ -160,12 +160,6 @@ def test(
     # Use configured default if no language flag specified
     if language is None:
         language = get_default_language()
-
-    # Currently only Python is supported
-    if language not in ('python', 'python3'):
-        click.echo(click.style(f"  Test runner for {language} is coming soon!", fg='yellow'))
-        click.echo("  Currently only Python is supported.")
-        return
 
     with DatabaseManager(repo.db_path) as db:
         # Handle --last flag

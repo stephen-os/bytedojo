@@ -21,9 +21,7 @@ def init(ctx, path: Path, force: bool):
     - db.sqlite for tracking problems and stats
     - settings.json for configuration
     - .gitignore to exclude build artifacts
-    - README with instructions
     """
-
     repository = Repository(root_dir=path or Path.cwd())
 
     result = repository.create(force=force)
