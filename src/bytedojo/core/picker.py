@@ -12,7 +12,7 @@ from typing import List, Optional, Set
 from bytedojo.core.repository import Repository
 from bytedojo.core.database import DatabaseManager
 from bytedojo.core import problem_service
-from bytedojo.core.models import ProblemSummary, Difficulty
+from bytedojo.core.models import ProblemDetail, Difficulty
 
 
 DIFFICULTY_MAP = {
@@ -28,7 +28,7 @@ DIFFICULTY_MAP = {
 @dataclass
 class PickResult:
     """Result of picking a problem."""
-    problem: Optional[ProblemSummary]
+    problem: Optional[ProblemDetail]
     unsolved_count: int
     solved_count: int
     total_count: int
@@ -125,7 +125,7 @@ class ProblemPicker:
         self,
         difficulty: Optional[str] = None,
         tags: Optional[List[str]] = None
-    ) -> List[ProblemSummary]:
+    ) -> List[ProblemDetail]:
         """
         Get all unsolved problems matching criteria.
 
@@ -134,7 +134,7 @@ class ProblemPicker:
             tags: Filter by algorithm tags
 
         Returns:
-            List of unsolved ProblemSummary objects
+            List of unsolved ProblemDetail objects
         """
         # Map difficulty to enum
         difficulty_enum = Difficulty.NONE

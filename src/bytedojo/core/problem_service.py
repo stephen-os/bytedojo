@@ -14,7 +14,7 @@ from typing import Optional, List
 
 from bytedojo.core.models import (
     Problem, ProblemDetail, CodeSnippet, Difficulty, Language, Tag,
-    Example, TypeParam, TypeInfo, EntryPoint, TestSnippet, TestCase
+    Example, TypeParam, TypeInfo, EntryPoint, TestSnippet, Case
 )
 from bytedojo.core.paths import PROBLEMS_INDEX, get_problem_file
 from bytedojo.core.repository import Repository
@@ -96,7 +96,7 @@ def _build_problem(data: dict) -> Problem:
 
     # Parse test cases
     test_cases = [
-        TestCase(input=tc.get("input", ""), output=tc.get("output", ""))
+        Case(input=tc.get("input", ""), output=tc.get("output", ""))
         for tc in data.get("test_cases", [])
     ]
 

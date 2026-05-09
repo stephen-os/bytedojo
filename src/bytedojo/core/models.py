@@ -244,7 +244,7 @@ class TestSnippet:
 
 
 @dataclass
-class TestCase:
+class Case:
     """A test case with input and expected output as strings."""
     input: str
     output: str
@@ -270,7 +270,7 @@ class Problem(ProblemDetail):
     code_snippets: List[CodeSnippet]
     entry_points: List[EntryPoint]
     types: List[TypeInfo]
-    test_cases: List[TestCase]
+    test_cases: List[Case]
     test_snippets: List[TestSnippet]
 
     def get_snippet(self, language: Language) -> Optional[str]:
