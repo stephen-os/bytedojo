@@ -161,18 +161,24 @@ class FetchPage(BasePage):
             error_count = 0
 
             for pid in problem_ids:
-                result = problem_service.place_problem(
-                    problem_id=pid,
-                    language=lang,
-                    repo=repo,
-                    force=False
-                )
-                if result.error:
+                problem = problem_service.get_problem(pid)
+                if problem is None:
                     error_count += 1
-                elif result.skipped:
-                    skip_count += 1
-                else:
-                    success_count += 1
+                    continue
+
+                try:
+                    if repo.is_problem_registered("leetcode", pid, lang):
+                        skip_count += 1
+                        continue
+
+                    attempt = repo.register_attempt(problem, lang)
+                    target = repo.attempt_path(problem, lang, attempt.version)
+                    repo.place_problem(problem, lang, target)
+                except Exception:
+                    error_count += 1
+                    continue
+
+                success_count += 1
 
             msg = f"Done: {success_count} fetched, {skip_count} skipped, {error_count} failed"
             self.call_from_thread(self._show_output, msg)

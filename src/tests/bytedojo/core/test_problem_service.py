@@ -13,9 +13,7 @@ from bytedojo.core.problem_service import (
     problem_exists,
     query_problems,
     get_all_tags,
-    place_problem,
     parse_problem_ids,
-    PlaceResult,
     _load_index,
     _load_problem_file,
     _build_problem,
@@ -353,46 +351,3 @@ class TestGetAllTags:
             result = get_all_tags()
 
             assert result == ["Array", "Dynamic Programming", "Hash Table", "Tree"]
-
-
-class TestPlaceResult:
-    """Test PlaceResult dataclass."""
-
-    def test_place_result_defaults(self):
-        """Test PlaceResult default values."""
-        result = PlaceResult(
-            problem_id=1,
-            title="Test",
-            language=Language.PYTHON3,
-            version=1,
-            file_path=Path("/test/path")
-        )
-
-        assert result.skipped is False
-        assert result.error is None
-
-    def test_place_result_with_error(self):
-        """Test PlaceResult with error."""
-        result = PlaceResult(
-            problem_id=1,
-            title="Test",
-            language=Language.PYTHON3,
-            version=0,
-            file_path=Path(),
-            error="Problem not found"
-        )
-
-        assert result.error == "Problem not found"
-
-    def test_place_result_skipped(self):
-        """Test PlaceResult when skipped."""
-        result = PlaceResult(
-            problem_id=1,
-            title="Test",
-            language=Language.PYTHON3,
-            version=0,
-            file_path=Path(),
-            skipped=True
-        )
-
-        assert result.skipped is True

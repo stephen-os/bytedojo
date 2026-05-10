@@ -9,7 +9,6 @@ from click.testing import CliRunner
 
 from bytedojo.commands.bytedojo import dojo
 from bytedojo.core.models import Language
-from bytedojo.core.problem_service import PlaceResult
 
 
 class TestFetchCommand:

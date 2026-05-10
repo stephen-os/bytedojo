@@ -1,95 +1,223 @@
 """
-Repository management for .dojo directories.
+Repository — represents a .dojo repository and the operations on it.
 
-Handles checking for .dojo existence, initialization status, etc.
+Construct via classmethods (`find`, `open`, `create`) or directly with a
+root path. The Repository owns its location, knows its own state, and
+mediates all operations against its contents (database, problems, etc.).
 """
 
+from dataclasses import dataclass
 from pathlib import Path
+from typing import Optional
 
-from bytedojo.core.database import create_database_schema
+from bytedojo.core.database import DatabaseManager, create_database_schema
+from bytedojo.core.logger import get_logger
+from bytedojo.core.models.code_language import CodeLanguage
+from bytedojo.core.models.problem import Problem
 from bytedojo.core.templates import GITIGNORE, README
 
-from bytedojo.core.result import Result
+
+@dataclass
+class Attempt:
+    """A versioned attempt at a problem in a given language."""
+    problem_id: int
+    language: CodeLanguage
+    version: int
+
 
 class Repository:
-    """Manages .dojo repository paths and initialization."""
+    """A .dojo repository rooted at a directory."""
 
     def __init__(self, root_dir: Path):
-        """
-        Initialize repository manager.
-
-        Args:
-            root_dir: Root directory containing .dojo.
-        """
         self.root_dir = root_dir
-        self.dojo_dir = self.root_dir / ".dojo"
-        self.db_path = self.dojo_dir / "db.sqlite"
-        self.settings_path = self.dojo_dir / "settings.json"
+
+    # ------------------------------------------------------------------
+    # Locators / lifecycle
+    # ------------------------------------------------------------------
+
+    @classmethod
+    def open(cls, path: Path) -> Optional["Repository"]:
+        """Return the Repository at `path`, or None if no .dojo is present."""
+        logger = get_logger()
+        if not (path / ".dojo").is_dir():
+            logger.debug(f"No repository found at path: {path}")
+            return None
+        logger.debug(f"Repository found at path: {path}")
+        return cls(root_dir=path)
+
+    @classmethod
+    def find(cls, start_path: Path) -> Optional["Repository"]:
+        """
+        Walk upward from `start_path` looking for a .dojo. Returns the
+        first Repository found, or None if no ancestor contains one.
+        """
+        logger = get_logger()
+        current = start_path.resolve()
+        while True:
+            if (current / ".dojo").is_dir():
+                logger.debug(f"Repository found above {start_path}: {current}")
+                return cls(root_dir=current)
+            if current.parent == current:
+                logger.debug(f"No repository found above {start_path}")
+                return None
+            current = current.parent
+
+    @classmethod
+    def create(cls, path: Path, force: bool = False) -> Optional["Repository"]:
+        """
+        Create a new .dojo at `path`. Returns the Repository on success,
+        None if a .dojo already exists and `force=False`.
+        """
+        logger = get_logger()
+        repo = cls(root_dir=path)
+        if repo.exists and not force:
+            logger.debug(f".dojo already exists at {path}")
+            return None
+        logger.debug(f"Creating repository at {path} (force={force})")
+        repo.dojo_dir.mkdir(exist_ok=True)
+        create_database_schema(repo.db_path)
+        repo._write_default_settings()
+        repo._write_gitignore()
+        repo._write_readme()
+        return repo
+
+    # ------------------------------------------------------------------
+    # Paths
+    # ------------------------------------------------------------------
 
     @property
-    def exists(self) -> bool:
-        """Check if .dojo directory exists."""
-        return self.dojo_dir.exists()
+    def dojo_dir(self) -> Path:
+        return self.root_dir / ".dojo"
 
     @property
-    def is_initialized(self) -> bool:
-        """Check if .dojo is properly initialized with database."""
-        return self.exists and self.db_path.exists()
+    def db_path(self) -> Path:
+        return self.dojo_dir / "db.sqlite"
+
+    @property
+    def settings_path(self) -> Path:
+        return self.dojo_dir / "settings.json"
 
     @property
     def build_dir(self) -> Path:
-        """Get path to build directory."""
         return self.dojo_dir / "build"
 
     @property
     def problems_dir(self) -> Path:
-        """Get path to problems directory."""
         return self.root_dir / "problems"
 
-    def create(self, force: bool = False) -> Result:
+    # ------------------------------------------------------------------
+    # State
+    # ------------------------------------------------------------------
+
+    @property
+    def exists(self) -> bool:
+        """Whether the .dojo directory is present on disk."""
+        return self.dojo_dir.exists()
+
+    @property
+    def is_initialized(self) -> bool:
+        """Whether .dojo is present and the database has been created."""
+        return self.exists and self.db_path.exists()
+
+    # ------------------------------------------------------------------
+    # Database access
+    # ------------------------------------------------------------------
+
+    def open_db(self) -> DatabaseManager:
+        """Construct a fresh DatabaseManager bound to this repo's db path."""
+        return DatabaseManager(self.db_path)
+
+    # ------------------------------------------------------------------
+    # Repo-level operations
+    # ------------------------------------------------------------------
+
+    def is_problem_registered(
+        self,
+        source: str,
+        problem_id: int,
+        language: CodeLanguage,
+    ) -> bool:
+        """Whether a problem is registered in this repo's database."""
+        if not self.is_initialized:
+            raise RuntimeError("Repository not initialized. Run 'dojo init' first.")
+        with self.open_db() as db:
+            return db.is_problem_registered(source, problem_id, language.value)
+
+    def register_attempt(
+        self,
+        problem: Problem,
+        language: CodeLanguage,
+        source: str = "leetcode",
+    ) -> Attempt:
         """
-        Initialize the repository.
-
-        Args:
-            force: If True, reinitialize even if exists
-
-        Returns:
-            Result with success status and message
+        Create a new versioned attempt and register the problem in the DB.
+        Returns the Attempt (problem_id, language, version).
         """
+        if not self.is_initialized:
+            raise RuntimeError("Repository not initialized. Run 'dojo init' first.")
 
-        # If .dojo already exists and we're not forcing, return False
-        if self.exists and not force:
-            return Result(success=False, message=".dojo already exists. Use --force to reinitialize.")
+        problem_id = problem.problem_detail.id
 
-        # Create .dojo directory
-        self.dojo_dir.mkdir(exist_ok=True)
+        with self.open_db() as db:
+            attempt_data = db.create_attempt(problem_id, language.value, source)
+            version = attempt_data["version"]
 
-        # Create database
-        create_database_schema(self.db_path)
+            db.register_problem(
+                problem=problem,
+                source=source,
+                language=language.value,
+                file_path=str(self.attempt_path(problem, language, version)),
+                force=True,
+            )
 
-        # Create default settings
-        self._create_default_settings()
+            return Attempt(
+                problem_id=problem_id,
+                language=language,
+                version=version,
+            )
 
-        # Create .gitignore
-        self._create_gitignore()
+    def attempt_path(
+        self,
+        problem: Problem,
+        language: CodeLanguage,
+        version: int,
+    ) -> Path:
+        """Solution file path for a given problem/language/version."""
+        folder_name = problem.get_folder_name()
+        version_str = f"v{version:03d}"
+        return (
+            self.problems_dir
+            / folder_name
+            / language.value
+            / version_str
+            / problem.get_solution_filename(language)
+        )
 
-        # Create README
-        self._create_readme()
+    def place_problem(
+        self,
+        problem: Problem,
+        language: CodeLanguage,
+        path: Path,
+    ) -> None:
+        """
+        Write the starter code for `problem` in `language` to `path`.
+        Filesystem only — no DB writes. Caller decides the destination.
+        """
+        path.parent.mkdir(parents=True, exist_ok=True)
+        starter_code = problem.get_snippet(language)
+        if starter_code:
+            path.write_text(starter_code, encoding="utf-8")
 
-        return Result(success=True, message="Repository initialized successfully.")
+    # ------------------------------------------------------------------
+    # Internal helpers
+    # ------------------------------------------------------------------
 
-    def _create_default_settings(self):
-        """Create default settings.json file."""
+    def _write_default_settings(self) -> None:
         from bytedojo.core.settings import SettingsManager
-        settings_manager = SettingsManager(self.dojo_dir)
-        settings_manager.create_default()
+        SettingsManager(self.dojo_dir).create_default()
 
-    def _create_gitignore(self):
-        """Create .gitignore for the .dojo directory."""
-        gitignore = self.dojo_dir / ".gitignore"
-        gitignore.write_text(GITIGNORE, encoding='utf-8')
+    def _write_gitignore(self) -> None:
+        (self.dojo_dir / ".gitignore").write_text(GITIGNORE, encoding="utf-8")
 
-    def _create_readme(self):
-        """Create README in .dojo directory."""
-        readme = self.dojo_dir / "README.md"
-        readme.write_text(README, encoding='utf-8')
+    def _write_readme(self) -> None:
+        (self.dojo_dir / "README.md").write_text(README, encoding="utf-8")
