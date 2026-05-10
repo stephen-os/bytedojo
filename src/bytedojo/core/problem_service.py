@@ -1,15 +1,14 @@
 """
-Problem service - unified API for problem operations.
+Problem service - read-side API for problem data.
 
-This module provides all problem-related operations:
+This module provides problem-related read operations:
 - GET: Load problem data from local JSON files
 - QUERY: Search/filter problems from index
-- PLACE: Create workspace files and register in database
+
+Placement (writing problems into a repo) lives on Repository.place_problem.
 """
 
 import json
-from dataclasses import dataclass
-from pathlib import Path
 from typing import Optional, List
 
 from bytedojo.core.models.code_language import CodeLanguage
@@ -25,20 +24,6 @@ from bytedojo.core.models.problem_difficulty import ProblemDifficulty
 from bytedojo.core.models.problem_tag import ProblemTag
 from bytedojo.core.models.test_case import TestCase
 from bytedojo.core.paths import PROBLEMS_INDEX, get_problem_file
-from bytedojo.core.repository import Repository
-from bytedojo.core.database import DatabaseManager
-
-
-@dataclass
-class PlaceResult:
-    """Result of placing a problem."""
-    problem_id: int
-    title: str
-    language: CodeLanguage
-    version: int
-    file_path: Path
-    skipped: bool = False
-    error: Optional[str] = None
 
 
 def _load_index() -> list:
@@ -151,22 +136,12 @@ def _build_problem(data: dict) -> Problem:
         test_cases=test_cases,
     )
 
-
 def get_problem(problem_id: int) -> Optional[Problem]:
-    """
-    Get a single problem by ID.
-
-    Args:
-        problem_id: The problem number (e.g., 1 for Two Sum)
-
-    Returns:
-        Problem object if found, None otherwise
-    """
+    """Get a single problem by ID."""
     data = _load_problem_file(problem_id)
     if not data:
         return None
     return _build_problem(data)
-
 
 def get_problem_by_slug(slug: str) -> Optional[Problem]:
     """
@@ -284,97 +259,6 @@ def get_all_tags() -> List[ProblemTag]:
     tags.discard(ProblemTag.UNKNOWN)
 
     return sorted(tags, key=lambda t: t.value)
-
-
-def place_problem(
-    problem_id: int,
-    language: CodeLanguage,
-    repo: Repository,
-    force: bool = False,
-    source: str = "leetcode"
-) -> PlaceResult:
-    """
-    Place a problem: create workspace file and register in database.
-
-    Args:
-        problem_id: The problem number
-        language: Programming language for the solution
-        repo: Repository instance (must be initialized)
-        force: If True, create new version even if problem exists
-        source: Problem source (default: 'leetcode')
-
-    Returns:
-        PlaceResult with file path and metadata
-    """
-    # Load problem from JSON
-    problem = get_problem(problem_id)
-    if not problem:
-        return PlaceResult(
-            problem_id=problem_id,
-            title="",
-            language=language,
-            version=0,
-            file_path=Path(),
-            error=f"Problem {problem_id} not found"
-        )
-
-    # Check if repo is initialized
-    if not repo.is_initialized:
-        return PlaceResult(
-            problem_id=problem_id,
-            title=problem.problem_detail.title,
-            language=language,
-            version=0,
-            file_path=Path(),
-            error="Repository not initialized. Run 'dojo init' first."
-        )
-
-    with DatabaseManager(repo.db_path) as db:
-        # Check if already registered (unless force)
-        if not force and db.is_problem_registered(source, problem_id, language.value):
-            return PlaceResult(
-                problem_id=problem_id,
-                title=problem.problem_detail.title,
-                language=language,
-                version=0,
-                file_path=Path(),
-                skipped=True
-            )
-
-        # Create versioned attempt (gets next version number)
-        attempt_data = db.create_attempt(problem_id, language.value, source)
-        version = attempt_data['version']
-
-        # Build folder path: problems/{id}-{slug}/{language}/v{version}/
-        folder_name = problem.get_folder_name()
-        version_str = f"v{version:03d}"
-        attempt_path = repo.problems_dir / folder_name / language.value / version_str
-        attempt_path.mkdir(parents=True, exist_ok=True)
-
-        # Write starter code
-        starter_code = problem.get_snippet(language)
-        solution_filename = problem.get_solution_filename(language)
-        solution_path = attempt_path / solution_filename
-
-        if starter_code:
-            solution_path.write_text(starter_code, encoding='utf-8')
-
-        # Register problem in database
-        db.register_problem(
-            problem=problem,
-            source=source,
-            language=language.value,
-            file_path=str(solution_path),
-            force=force
-        )
-
-        return PlaceResult(
-            problem_id=problem_id,
-            title=problem.problem_detail.title,
-            language=language,
-            version=version,
-            file_path=solution_path
-        )
 
 
 def parse_problem_ids(arguments: tuple) -> List[int]:
