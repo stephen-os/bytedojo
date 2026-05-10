@@ -7,7 +7,6 @@ from pathlib import Path
 
 from bytedojo.core.repository import Repository
 
-
 @click.command()
 @click.option('--path', '-p', type=click.Path(path_type=Path), default=None,
               help='Directory to initialize (defaults to current directory)')
@@ -22,11 +21,8 @@ def init(ctx, path: Path, force: bool):
     - settings.json for configuration
     - .gitignore to exclude build artifacts
     """
-    repository = Repository(root_dir=path or Path.cwd())
-
-    result = repository.create(force=force)
-    if result.success:
-        click.secho(result.message, fg="green")
+    if Repository.create(path=Path.cwd(), force=force) is not None:
+        click.secho("Repository initialized successfully.", fg="green")
     else:
-        click.secho(result.message, fg="red")
+        click.secho("Failed to initialize repository.", fg="red")
         raise SystemExit(1)
