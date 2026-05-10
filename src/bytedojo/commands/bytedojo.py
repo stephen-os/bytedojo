@@ -7,25 +7,20 @@ import click
 from pathlib import Path
 from typing import Optional
 
-from bytedojo.core.context import Context
-
-from bytedojo.core.logger import setup_logger, get_logger
-
+from bytedojo.core.logger import get_logger, setup_logger
 from bytedojo.__init__ import __version__, __author__
 
-from bytedojo.commands.subcommands import (
-    init,
-    stats,
-    grade,
-    settings,
-    fetch,
-    query,
-    pick,
-    review,
-    run,
-    enter,
-    test,
-)
+from bytedojo.commands.subcommands import init
+from bytedojo.commands.subcommands import stats
+from bytedojo.commands.subcommands import grade
+from bytedojo.commands.subcommands import settings
+from bytedojo.commands.subcommands import fetch
+from bytedojo.commands.subcommands import query
+from bytedojo.commands.subcommands import pick
+from bytedojo.commands.subcommands import review
+from bytedojo.commands.subcommands import run
+from bytedojo.commands.subcommands import enter
+from bytedojo.commands.subcommands import test
 
 # Helper functions for printing the version of bytedojo. 
 def print_version(ctx, _, value):
@@ -83,13 +78,14 @@ def bytedojo(ctx, debug: bool, config: Optional[Path]):
     Fetch, run, and grade problems, review solutions, and track
     progress—all from the command line.
     """
-    # Initialize logger
+
     setup_logger(debug=debug)
-    logger = get_logger() 
-    
+
+    logger = get_logger()
+
     # Create and store application context
     ctx.ensure_object(dict)
-    ctx.obj = Context(debug=debug, config_path=config)
+    # ctx.obj = Context(debug=debug, config_path=config)
 
 bytedojo.add_command(enter)
 bytedojo.add_command(fetch)
