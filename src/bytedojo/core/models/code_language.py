@@ -1,4 +1,5 @@
 from enum import Enum
+from bytedojo.core.logger import get_logger
 
 
 class CodeLanguage(str, Enum):
@@ -55,3 +56,15 @@ class CodeLanguage(str, Enum):
 
     def __repr__(self):
         return f"CodeLanguage.{self.name}"
+    
+
+def resolve(language: str) -> CodeLanguage:
+    logger = get_logger()
+    logger.debug(f"Resolving language: {language}")
+
+    if not language:
+        logger.debug("No language specified, defaulting to Python")
+        return CodeLanguage.default()
+    lang = CodeLanguage.from_string(language)
+    logger.debug(f"Resolved language: {lang}")
+    return lang

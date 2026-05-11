@@ -8,8 +8,8 @@ from pathlib import Path
 from bytedojo.core import problem_service
 from bytedojo.core.repository import Repository
 from bytedojo.core.logger import get_logger
-
-from bytedojo.core.models.code_language import CodeLanguage
+from bytedojo.core.models.code_language import CodeLanguage, resolve as resolve_language
+from bytedojo.services import FetchService
 
 # Define fetch command
 @click.command()
@@ -69,14 +69,9 @@ def fetch(ctx, arguments: tuple, force: bool, version: int | None,
         raise click.ClickException("--force has no effect with --path (scratch mode never registers)")
 
     # Resolve language
-    if language is None:
-        lang = CodeLanguage.default()
-    else:
-        lang = CodeLanguage.from_string(language)
-        if lang == CodeLanguage.UNKNOWN:
-            logger.error(f"Unknown language: {language}")
-            raise click.ClickException(f"Unknown language: {language}")
-    logger.debug(f"fetch: resolved language={lang}")
+    lang = resolve_language(language)
+    if lang == CodeLanguage.UNKNOWN:
+        raise click.ClickException(f"Unknown language: {language}")
 
     # Resolve repo
     repo = Repository.open(Path.cwd())
@@ -96,55 +91,36 @@ def fetch(ctx, arguments: tuple, force: bool, version: int | None,
     else:
         click.echo(f"Fetching {len(problem_ids)} problem(s) in {lang}")
 
-    # Per-problem loop
-    placed = skipped = failed = 0
+    # Fetch problems
+    service = FetchService()
+    batch = service.fetch_and_place_batch(
+        repo,
+        problem_ids,
+        lang,
+        force=force,
+        version=version,
+        custom_path=custom_path,
+    )
 
-    for pid in problem_ids:
-        problem = problem_service.get_problem(pid)
-        if problem is None:
-            click.echo(f"  #{pid}: not found", err=True)
-            logger.warning(f"fetch: problem #{pid} not found")
-            failed += 1
-            continue
-
-        # Mode 1: scratch (no DB, custom path)
-        if custom_path is not None:
-            target = custom_path / problem.get_folder_name()
-            repo.place_problem(problem, lang, target)
-            click.echo(f"  #{pid} {problem.problem_detail.title}: placed at {target} (untracked)")
-            logger.info(f"fetch: placed #{pid} ({lang}) at {target}, untracked")
-            placed += 1
-
-        # Mode 2: refetch existing tracked version
-        elif version is not None:
-            target = repo.attempt_path(problem, lang, version)
-            if not target.exists():
-                click.echo(f"  #{pid}: v{version} not found at {target}", err=True)
-                logger.warning(f"fetch: #{pid} v{version} not found at {target}")
-                failed += 1
-                continue
-            repo.place_problem(problem, lang, target)
-            click.echo(f"  #{pid} {problem.problem_detail.title}: refetched v{version} at {target}")
-            logger.info(f"fetch: refetched #{pid} ({lang}) v{version} at {target}")
-            placed += 1
-
-        # Mode 3: default (register new attempt, place under problems/)
-        else:
-            if not force and repo.is_problem_registered("leetcode", pid, lang):
-                click.echo(f"  #{pid}: already registered (use --force for new attempt, "
+    # Display results
+    for result in batch.results:
+        if result.success:
+            if custom_path is not None:
+                click.echo(f"  #{result.problem_id} {result.title}: placed at {result.target_path} (untracked)")
+            elif version is not None:
+                click.echo(f"  #{result.problem_id} {result.title}: refetched v{version} at {result.target_path}")
+            else:
+                click.echo(f"  #{result.problem_id} {result.title}: placed v{result.version} at {result.target_path}")
+        elif result.skipped:
+            if result.skip_reason == "already registered":
+                click.echo(f"  #{result.problem_id}: already registered (use --force for new attempt, "
                            f"--version N to rewrite)")
-                logger.info(f"fetch: skipped #{pid} ({lang}), already registered")
-                skipped += 1
-                continue
-
-            attempt = repo.register_attempt(problem, lang)
-            target = repo.attempt_path(problem, lang, attempt.version)
-            repo.place_problem(problem, lang, target)
-            click.echo(f"  #{pid} {problem.problem_detail.title}: placed v{attempt.version} at {target}")
-            logger.info(f"fetch: placed #{pid} ({lang}) v{attempt.version} at {target}")
-            placed += 1
+            else:
+                click.echo(f"  #{result.problem_id}: {result.skip_reason}", err=True)
+        elif result.failed:
+            click.echo(f"  #{result.problem_id}: {result.error}", err=True)
 
     # Summary
     click.echo("")
-    click.echo(f"Done: {placed} placed, {skipped} skipped, {failed} failed")
-    logger.info(f"fetch: complete — placed={placed} skipped={skipped} failed={failed}")
+    click.echo(f"Done: {batch.placed_count} placed, {batch.skipped_count} skipped, {batch.failed_count} failed")
+    logger.info(f"fetch: complete — placed={batch.placed_count} skipped={batch.skipped_count} failed={batch.failed_count}")
