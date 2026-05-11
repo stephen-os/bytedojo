@@ -189,18 +189,24 @@ def query(ctx, problem_ids: tuple, difficulty: str, tag: tuple, search: str, pag
       dojo query --list-tags              # Show all tags
     """
     logger = get_logger()
-    repo = Repository(Path.cwd())
+    logger.debug(f"query: problem_ids={problem_ids} difficulty={difficulty} tag={tag} "
+                 f"search={search} page={page} per_page={per_page} list_tags={list_tags}")
+
+    # Resolve repo
+    repo = Repository.open(Path.cwd())
+    if repo is None:
+        raise click.ClickException("Not inside a .dojo repository. Please run 'dojo init' first.")
 
     # Handle --list-tags
     if list_tags:
-        logger.info("Loading available tags...")
         tags = problem_service.get_all_tags()
         if tags:
             click.echo(f"Available tags ({len(tags)}):")
             for t in tags:
                 click.echo(f"  {t.value}")
         else:
-            logger.warning("No tags found")
+            click.echo("No tags found.")
+        logger.debug(f"query: list-tags returned {len(tags) if tags else 0} tags")
         return
 
     # Parse problem IDs if provided
@@ -209,8 +215,7 @@ def query(ctx, problem_ids: tuple, difficulty: str, tag: tuple, search: str, pag
         try:
             ids_list = problem_service.parse_problem_ids(problem_ids)
         except ValueError as e:
-            logger.error(str(e))
-            return
+            raise click.ClickException(str(e))
 
     # Convert tag strings to Tag enums (support comma-separated)
     tags_list = None
@@ -225,31 +230,29 @@ def query(ctx, problem_ids: tuple, difficulty: str, tag: tuple, search: str, pag
         # Filter out UNKNOWN tags
         tags_list = [t for t in all_tags if t != ProblemTag.UNKNOWN]
         if not tags_list:
-            logger.warning("No valid tags specified")
+            logger.debug("query: no valid tags after filtering")
             tags_list = None
 
-    # Convert difficulty string to enum
-    difficulty_enum = ProblemDifficulty.NONE
-    if difficulty:
-        difficulty_lower = difficulty.lower()
-        if difficulty_lower in ('easy', '1'):
-            difficulty_enum = ProblemDifficulty.EASY
-        elif difficulty_lower in ('medium', '2'):
-            difficulty_enum = ProblemDifficulty.MEDIUM
-        elif difficulty_lower in ('hard', '3'):
-            difficulty_enum = ProblemDifficulty.HARD
+    # Resolve difficulty
+    if difficulty is None:
+        difficulty_enum = ProblemDifficulty.NONE
+    else:
+        difficulty_enum = ProblemDifficulty.from_string(difficulty)
+        if difficulty_enum == ProblemDifficulty.NONE:
+            raise click.ClickException(f"Unknown difficulty: {difficulty}")
+    logger.debug(f"query: resolved difficulty={difficulty_enum}")
 
     # Query problems
-    logger.info("Searching problems...")
     problems = problem_service.query_problems(
         ids=ids_list,
         difficulty=difficulty_enum,
         tags=tags_list,
         search=search
     )
+    logger.debug(f"query: found {len(problems)} problems")
 
     if not problems:
-        logger.warning("No problems found matching your criteria")
+        click.echo("No problems found matching your criteria.")
         return
 
     # Get status map if repo is initialized
