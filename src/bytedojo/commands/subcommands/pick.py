@@ -8,7 +8,6 @@ from pathlib import Path
 from bytedojo.core.logger import get_logger
 from bytedojo.core.picker import ProblemPicker
 from bytedojo.core.repository import Repository
-from bytedojo.commands.subcommands.utils import DIFFICULTY_COLORS
 
 
 @click.command()
@@ -36,7 +35,9 @@ def pick(ctx, difficulty: str, tag: tuple):
       dojo pick -d medium -t tree  # Random medium tree problem
     """
     logger = get_logger()
-    repo = Repository(Path.cwd())
+    repo = Repository.open(Path.cwd())
+    if repo is None:
+        raise click.ClickException("Not inside a .dojo repository. Please run 'dojo init' first.")
     picker = ProblemPicker(repo)
 
     # Convert tag tuple to list
@@ -60,7 +61,6 @@ def pick(ctx, difficulty: str, tag: tuple):
 
     # Display the picked problem
     problem = result.problem
-    diff_color = DIFFICULTY_COLORS.get(problem.difficulty, 'white')
 
     click.echo("")
     click.echo(click.style("=" * 60, fg='bright_black'))
@@ -68,7 +68,7 @@ def pick(ctx, difficulty: str, tag: tuple):
     click.echo(click.style("=" * 60, fg='bright_black'))
     click.echo("")
     click.echo(f"  #{problem.id}: {click.style(problem.title, bold=True)}")
-    click.echo(f"  Difficulty: {click.style(problem.difficulty, fg=diff_color)}")
+    click.echo(f"  Difficulty: {problem.difficulty}")
 
     if problem.tags:
         tags_display = ", ".join(problem.tags[:5])

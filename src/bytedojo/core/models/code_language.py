@@ -24,6 +24,11 @@ class CodeLanguage(str, Enum):
             return cls.UNKNOWN
         return cls(value.lower())
 
+    @classmethod
+    def default(cls) -> "CodeLanguage":
+        """Get default language python3."""
+        return cls.PYTHON
+
     @property
     def extension(self) -> str:
         """Get file extension for this language."""

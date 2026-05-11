@@ -3,11 +3,16 @@ Settings command - View and modify bytedojo settings.
 """
 
 import click
+from pathlib import Path
 
 from bytedojo.core.logger import get_logger
 from bytedojo.core.settings import SettingsManager
 from bytedojo.core.database import DatabaseManager
-from bytedojo.commands.subcommands.utils import get_initialized_repo, SUPPORTED_LANGUAGES
+from bytedojo.core.repository import Repository
+
+
+# Languages supported by CLI (user-facing names)
+SUPPORTED_LANGUAGES = ['python', 'java', 'cpp']
 
 
 @click.group(invoke_without_command=True)
@@ -30,7 +35,9 @@ def settings(ctx):
 def _show_settings():
     """Display all current settings."""
     logger = get_logger()
-    repo = get_initialized_repo()
+    repo = Repository.open(Path.cwd())
+    if repo is None:
+        raise click.ClickException("Not inside a .dojo repository. Please run 'dojo init' first.")
 
     # Load and display settings
     settings_manager = SettingsManager(repo.dojo_dir)
@@ -91,7 +98,9 @@ def default_language(language: str):
       dojo settings default-language cpp       # Use C++ by default
     """
     logger = get_logger()
-    repo = get_initialized_repo()
+    repo = Repository.open(Path.cwd())
+    if repo is None:
+        raise click.ClickException("Not inside a .dojo repository. Please run 'dojo init' first.")
 
     with DatabaseManager(repo.db_path) as db:
         old_value = db.get_config('default_language', 'python')
@@ -114,7 +123,9 @@ def set(key: str, value: str):
       dojo settings set leetcode.organization difficulty
     """
     logger = get_logger()
-    repo = get_initialized_repo()
+    repo = Repository.open(Path.cwd())
+    if repo is None:
+        raise click.ClickException("Not inside a .dojo repository. Please run 'dojo init' first.")
 
     # Validate known settings
     valid_settings = {
@@ -152,7 +163,9 @@ def get(key: str):
       dojo settings get leetcode.organization
     """
     logger = get_logger()
-    repo = get_initialized_repo()
+    repo = Repository.open(Path.cwd())
+    if repo is None:
+        raise click.ClickException("Not inside a .dojo repository. Please run 'dojo init' first.")
 
     # Get the value
     settings_manager = SettingsManager(repo.dojo_dir)
@@ -187,7 +200,9 @@ def review_frequency(days: int):
     if days > 365:
         raise click.ClickException("Review frequency cannot exceed 365 days")
 
-    repo = get_initialized_repo()
+    repo = Repository.open(Path.cwd())
+    if repo is None:
+        raise click.ClickException("Not inside a .dojo repository. Please run 'dojo init' first.")
 
     with DatabaseManager(repo.db_path) as db:
         old_value = db.get_config('review_frequency_days', '7')

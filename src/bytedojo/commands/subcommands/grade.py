@@ -6,20 +6,15 @@ as a backup when tests haven't been run or when you want to override the result.
 """
 
 import click
+from pathlib import Path
 from typing import Optional, List
 
-from bytedojo.core.logger import get_logger, Theme
 from bytedojo.core.database import DatabaseManager
-from bytedojo.core.search import find_problems, select_problem
 from bytedojo.core.grading import GradingService, GradeResult
-from bytedojo.commands.subcommands.utils import (
-    get_initialized_repo,
-    get_default_language,
-    STATUS_COLORS,
-    DIFFICULTY_COLORS,
-    SOURCE_COLORS,
-    LANGUAGE_COLORS,
-)
+from bytedojo.core.logger import get_logger, Theme
+from bytedojo.core.models.code_language import CodeLanguage
+from bytedojo.core.repository import Repository
+from bytedojo.core.search import find_problems, select_problem
 
 
 def _display_problem_status(problem: dict, show_test_hint: bool = True):
@@ -40,9 +35,9 @@ def _display_problem_status(problem: dict, show_test_hint: bool = True):
     click.echo(click.style("=" * 70, fg='bright_black'))
     click.echo("")
     click.echo(f"  {problem_id}: {click.style(title, bold=True)}")
-    click.echo(f"  Source: {click.style(source.capitalize(), fg=SOURCE_COLORS.get(source, 'white'))}")
-    click.echo(f"  Language: {click.style(language.upper(), fg=LANGUAGE_COLORS.get(language, 'white'))}")
-    click.echo(f"  Difficulty: {click.style(difficulty, fg=DIFFICULTY_COLORS.get(difficulty, 'white'))}")
+    click.echo(f"  Source: {source.capitalize()}")
+    click.echo(f"  Language: {language.upper()}")
+    click.echo(f"  Difficulty: {difficulty}")
 
     if file_path:
         click.echo(f"  File: {file_path}")
@@ -53,8 +48,6 @@ def _display_problem_status(problem: dict, show_test_hint: bool = True):
     click.echo(click.style("-" * 70, fg='bright_black'))
     click.echo("")
 
-    # Display status with appropriate color
-    status_color = STATUS_COLORS.get(current_status, 'white')
     status_display = current_status.upper()
 
     if current_status == 'passed':
@@ -68,7 +61,7 @@ def _display_problem_status(problem: dict, show_test_hint: bool = True):
         if show_test_hint:
             click.echo(f"  {click.style('Tip:', fg='cyan')} Run 'dojo test {problem_id}' to test your solution")
     else:
-        click.echo(f"  Status: {click.style(status_display, fg=status_color)}")
+        click.echo(f"  Status: {status_display}")
 
     if last_test_run:
         click.echo(f"  Last Run: {last_test_run}")
@@ -177,7 +170,9 @@ def _view_and_grade_problem(problem: dict, status: str = None, notes: str = None
     Returns:
         True if action completed, False if cancelled
     """
-    repo = get_initialized_repo()
+    repo = Repository.open(Path.cwd())
+    if repo is None:
+        raise click.ClickException("Not inside a .dojo repository. Please run 'dojo init' first.")
 
     with DatabaseManager(repo.db_path) as db:
         # Refresh problem data
@@ -238,11 +233,7 @@ def _display_problems_page(problems: list, page: int, per_page: int, title: str)
         difficulty = (problem.get('difficulty') or '?')[:6]
         title_text = problem['title'][:25] + ('...' if len(problem['title']) > 25 else '')
 
-        status_styled = click.style(f"{status:8}", fg=STATUS_COLORS.get(status, 'white'))
-        lang_styled = click.style(f"{language:6}", fg=LANGUAGE_COLORS.get(problem.get('language'), 'white'))
-        diff_styled = click.style(f"{difficulty:6}", fg=DIFFICULTY_COLORS.get(problem.get('difficulty'), 'white'))
-
-        click.echo(f"  {i:>3}  {problem_id:>8}  {status_styled}  {lang_styled}  {diff_styled}  {title_text}")
+        click.echo(f"  {i:>3}  {problem_id:>8}  {status:8}  {language:6}  {difficulty:6}  {title_text}")
 
     click.echo("")
     click.echo(click.style("-" * 70, fg='bright_black'))
@@ -306,7 +297,9 @@ def _batch_view_loop(problems: list, per_page: int = 10):
                     _view_and_grade_problem(selected_problem, manual=True)
 
                     # Refresh problems list
-                    repo = get_initialized_repo()
+                    repo = Repository.open(Path.cwd())
+                    if repo is None:
+                        raise click.ClickException("Not inside a .dojo repository. Please run 'dojo init' first.")
                     with DatabaseManager(repo.db_path) as db:
                         problems = db.list_problems()
 
@@ -363,11 +356,13 @@ def grade(
       dojo grade --last                # View/grade last fetched problem
       dojo grade 1 -f --notes "TLE"    # Fail with notes
     """
-    repo = get_initialized_repo()
+    repo = Repository.open(Path.cwd())
+    if repo is None:
+        raise click.ClickException("Not inside a .dojo repository. Please run 'dojo init' first.")
 
     # Use configured default if no language flag specified
     if language is None:
-        language = get_default_language()
+        language = CodeLanguage.default().value
 
     # Determine status from flags
     status = None

@@ -3,9 +3,11 @@ Stats command - View statistics about problems in the repository.
 """
 
 import click
+from pathlib import Path
+
 from bytedojo.core.logger import get_logger
 from bytedojo.core.database import DatabaseManager
-from bytedojo.commands.subcommands.utils import get_initialized_repo
+from bytedojo.core.repository import Repository
 
 
 @click.command()
@@ -27,7 +29,9 @@ def stats(ctx, list_problems: bool, verbose: bool, source: str, difficulty: str)
       dojo stats --list --difficulty Easy # List easy problems
     """
     logger = get_logger()
-    repo = get_initialized_repo()
+    repo = Repository.open(Path.cwd())
+    if repo is None:
+        raise click.ClickException("Not inside a .dojo repository. Please run 'dojo init' first.")
 
     with DatabaseManager(repo.db_path) as db:
         if list_problems:

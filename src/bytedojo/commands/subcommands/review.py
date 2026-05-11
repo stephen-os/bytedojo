@@ -3,15 +3,11 @@ Review command - Spaced repetition review system for problems.
 """
 
 import click
+from pathlib import Path
 
 from bytedojo.core.database import DatabaseManager
+from bytedojo.core.repository import Repository
 from bytedojo.core.review_service import ReviewService, ReviewProblem
-from bytedojo.commands.subcommands.utils import get_initialized_repo, SOURCE_COLORS
-
-
-def _get_source_color(source: str) -> str:
-    """Get color for source platform."""
-    return SOURCE_COLORS.get(source, 'white')
 
 
 @click.group(invoke_without_command=True)
@@ -39,7 +35,9 @@ def review(ctx, show_all: bool):
 
 def _show_due_reviews(show_all: bool = False):
     """Show problems due for review."""
-    repo = get_initialized_repo()
+    repo = Repository.open(Path.cwd())
+    if repo is None:
+        raise click.ClickException("Not inside a .dojo repository. Please run 'dojo init' first.")
 
     with DatabaseManager(repo.db_path) as db:
         service = ReviewService(db)
@@ -88,9 +86,7 @@ def _show_due_reviews(show_all: bool = False):
             else:
                 due_styled = click.style(f"{due_date:15}", fg='green')
 
-            source_styled = click.style(f"{r.source:10}", fg=_get_source_color(r.source))
-
-            click.echo(f"  {r.problem_id:>8}  {source_styled}  {due_styled}  {r.repetitions:>7}  {title}")
+            click.echo(f"  {r.problem_id:>8}  {r.source:10}  {due_styled}  {r.repetitions:>7}  {title}")
 
         click.echo("")
         click.echo(click.style("-" * 60, fg='bright_black'))
@@ -114,7 +110,9 @@ def pick(ctx):
     Examples:
       dojo review pick             # Pick a random due problem
     """
-    repo = get_initialized_repo()
+    repo = Repository.open(Path.cwd())
+    if repo is None:
+        raise click.ClickException("Not inside a .dojo repository. Please run 'dojo init' first.")
 
     with DatabaseManager(repo.db_path) as db:
         service = ReviewService(db)
@@ -134,7 +132,7 @@ def pick(ctx):
         click.echo(click.style("=" * 60, fg='bright_black'))
         click.echo("")
         click.echo(f"  {problem.problem_id}: {click.style(problem.title, bold=True)}")
-        click.echo(f"  Source: {click.style(problem.source.capitalize(), fg=_get_source_color(problem.source))}")
+        click.echo(f"  Source: {problem.source.capitalize()}")
         click.echo(f"  Difficulty: {problem.difficulty}")
         click.echo(f"  Times Reviewed: {problem.repetitions}")
         click.echo(f"  Due: {due_date}")
@@ -173,7 +171,9 @@ def stats():
     Examples:
       dojo review stats
     """
-    repo = get_initialized_repo()
+    repo = Repository.open(Path.cwd())
+    if repo is None:
+        raise click.ClickException("Not inside a .dojo repository. Please run 'dojo init' first.")
 
     with DatabaseManager(repo.db_path) as db:
         service = ReviewService(db)

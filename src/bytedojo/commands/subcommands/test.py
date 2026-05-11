@@ -7,15 +7,10 @@ from pathlib import Path
 from typing import Optional
 
 from bytedojo.core.database import DatabaseManager
+from bytedojo.core.models.code_language import CodeLanguage
+from bytedojo.core.repository import Repository
 from bytedojo.core.search import find_problems, select_problem
 from bytedojo.core.test_runner import run_tests, TestRunResult
-from bytedojo.commands.subcommands.utils import (
-    get_initialized_repo,
-    get_default_language,
-    LANGUAGE_COLORS,
-    DIFFICULTY_COLORS,
-    STATUS_COLORS,
-)
 
 
 def _display_test_header(problem: dict, total_cases: int):
@@ -32,8 +27,8 @@ def _display_test_header(problem: dict, total_cases: int):
     click.echo(click.style("=" * 70, fg='bright_black'))
     click.echo("")
     click.echo(f"  {problem_id}: {click.style(title, bold=True)}")
-    click.echo(f"  Language: {click.style(language.upper(), fg=LANGUAGE_COLORS.get(language, 'white'))}")
-    click.echo(f"  Difficulty: {click.style(difficulty, fg=DIFFICULTY_COLORS.get(difficulty, 'white'))}")
+    click.echo(f"  Language: {language.upper()}")
+    click.echo(f"  Difficulty: {difficulty}")
     click.echo(f"  File: {file_path}")
     click.echo(f"  Test Cases: {total_cases}")
     click.echo("")
@@ -155,11 +150,13 @@ def test(
       dojo test --name "Two Sum"     # Search by name
       dojo test --last               # Test last fetched problem
     """
-    repo = get_initialized_repo()
+    repo = Repository.open(Path.cwd())
+    if repo is None:
+        raise click.ClickException("Not inside a .dojo repository. Please run 'dojo init' first.")
 
     # Use configured default if no language flag specified
     if language is None:
-        language = get_default_language()
+        language = CodeLanguage.default().value
 
     with DatabaseManager(repo.db_path) as db:
         # Handle --last flag
