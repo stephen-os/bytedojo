@@ -143,6 +143,13 @@ class Repository:
         with self.open_db() as db:
             return db.is_problem_registered(source, problem_id, language.value)
 
+    def get_registered_problems(self) -> list:
+        """Get all registered problems from the database."""
+        if not self.is_initialized:
+            return []
+        with self.open_db() as db:
+            return db.list_problems()
+
     def register_attempt(
         self,
         problem: Problem,
