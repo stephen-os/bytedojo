@@ -5,11 +5,12 @@ Provides fuzzy matching and interactive selection for problems.
 """
 
 import click
-from typing import List, Dict, Any, Optional
+from typing import List, Optional
 from pathlib import Path
 
-from bytedojo.core.database import DatabaseManager
+from bytedojo.core.database import Database
 from bytedojo.core.repository import Repository
+from bytedojo.core.models.registered_problem import RegisteredProblem
 
 
 def _normalize(text: str) -> str:
@@ -35,13 +36,13 @@ def _fuzzy_match(query: str, text: str) -> bool:
     return all(word in text_norm for word in query_words)
 
 
-def _score_match(query: str, problem: Dict[str, Any]) -> int:
+def _score_match(query: str, problem: RegisteredProblem) -> int:
     """
     Score how well a problem matches a query.
     Higher score = better match.
     """
     query_norm = _normalize(query)
-    title_norm = _normalize(problem.get('title', ''))
+    title_norm = _normalize(problem.title)
 
     # Exact title match
     if query_norm == title_norm:
@@ -68,18 +69,18 @@ def _score_match(query: str, problem: Dict[str, Any]) -> int:
 
 
 def find_problems(
-    db: DatabaseManager,
+    db: Database,
     identifier: Optional[str] = None,
     name: Optional[str] = None,
     desc: Optional[str] = None,
     language: Optional[str] = None,
     source: str = 'leetcode'
-) -> List[Dict[str, Any]]:
+) -> List[RegisteredProblem]:
     """
     Find problems matching criteria.
 
     Args:
-        db: Database manager instance
+        db: Database instance
         identifier: Numeric problem ID (exact match)
         name: Fuzzy match on title
         desc: Keyword search in description
@@ -99,7 +100,7 @@ def find_problems(
             return []
         # Search across all languages
         all_problems = db.list_problems(source=source)
-        matches = [p for p in all_problems if p['problem_id'] == identifier]
+        matches = [p for p in all_problems if p.problem_id == int(identifier)]
         return matches
 
     # Get all problems
@@ -112,15 +113,14 @@ def find_problems(
 
         # Match by name
         if name:
-            title = problem.get('title', '')
-            if _fuzzy_match(name, title):
+            if _fuzzy_match(name, problem.title):
                 score = _score_match(name, problem)
             else:
                 continue  # Name specified but doesn't match
 
         # Match by description
         if desc:
-            description = problem.get('description', '') or ''
+            description = problem.description or ''
             if not _fuzzy_match(desc, description):
                 continue
             score = max(score, 30)  # Description match
@@ -133,15 +133,15 @@ def find_problems(
             matches.append((score, problem))
 
     # Sort by score descending, then by problem_id
-    matches.sort(key=lambda x: (-x[0], x[1].get('problem_id', '')))
+    matches.sort(key=lambda x: (-x[0], x[1].problem_id))
 
     return [m[1] for m in matches]
 
 
 def select_problem(
-    problems: List[Dict[str, Any]],
+    problems: List[RegisteredProblem],
     prompt_text: str = "Select problem"
-) -> Optional[Dict[str, Any]]:
+) -> Optional[RegisteredProblem]:
     """
     Interactive selection when multiple problems match.
 
@@ -164,16 +164,16 @@ def select_problem(
     click.echo("")
 
     for i, problem in enumerate(problems[:10], 1):  # Limit to 10 options
-        pid = problem.get('problem_id', '?')
-        title = problem.get('title', 'Unknown')
-        difficulty = problem.get('difficulty', '')
-        language = problem.get('language', '')
+        pid = problem.problem_id
+        title = problem.title
+        difficulty = problem.difficulty.value if problem.difficulty else ''
+        language = problem.language.value if problem.language else ''
 
         diff_color = {
-            'Easy': 'green',
-            'Medium': 'yellow',
-            'Hard': 'red'
-        }.get(difficulty, 'white')
+            'easy': 'green',
+            'medium': 'yellow',
+            'hard': 'red'
+        }.get(difficulty.lower(), 'white')
 
         click.echo(f"  [{i}] {pid} - {title}", nl=False)
         if difficulty:
@@ -211,7 +211,7 @@ def resolve_problem(
     language: Optional[str] = None,
     source: str = 'leetcode',
     auto_select: bool = False
-) -> Optional[Dict[str, Any]]:
+) -> Optional[RegisteredProblem]:
     """
     High-level function to find and select a problem.
 
@@ -224,7 +224,7 @@ def resolve_problem(
         auto_select: If True, auto-select when single match
 
     Returns:
-        Selected problem dict or None
+        Selected problem or None
 
     Raises:
         click.ClickException: If no problems found or repo not initialized
@@ -234,7 +234,7 @@ def resolve_problem(
     if not repo.is_initialized:
         raise click.ClickException("No .dojo repository found. Run 'dojo init' first.")
 
-    with DatabaseManager(repo.db_path) as db:
+    with Database(repo.db_path) as db:
         matches = find_problems(
             db,
             identifier=identifier,

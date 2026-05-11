@@ -6,30 +6,25 @@ import click
 from pathlib import Path
 from typing import Optional
 
-from bytedojo.core.database import DatabaseManager
+from bytedojo.core.database import Database
 from bytedojo.core.models.code_language import CodeLanguage
+from bytedojo.core.models.registered_problem import RegisteredProblem
 from bytedojo.core.repository import Repository
 from bytedojo.core.search import find_problems, select_problem
 from bytedojo.core.test_runner import run_tests, TestRunResult
 
 
-def _display_test_header(problem: dict, total_cases: int):
+def _display_test_header(problem: RegisteredProblem, total_cases: int):
     """Display problem details before running tests."""
-    problem_id = problem['problem_id']
-    title = problem['title']
-    language = problem.get('language', 'python')
-    difficulty = problem.get('difficulty') or 'Unknown'
-    file_path = problem.get('file_path', '')
-
     click.echo("")
     click.echo(click.style("=" * 70, fg='bright_black'))
     click.echo(click.style("  TEST PROBLEM", fg='cyan', bold=True))
     click.echo(click.style("=" * 70, fg='bright_black'))
     click.echo("")
-    click.echo(f"  {problem_id}: {click.style(title, bold=True)}")
-    click.echo(f"  Language: {language.upper()}")
-    click.echo(f"  Difficulty: {difficulty}")
-    click.echo(f"  File: {file_path}")
+    click.echo(f"  {problem.problem_id}: {click.style(problem.title, bold=True)}")
+    click.echo(f"  Language: {problem.language.value.upper()}")
+    click.echo(f"  Difficulty: {problem.difficulty.value if problem.difficulty else 'Unknown'}")
+    click.echo(f"  File: {problem.file_path or ''}")
     click.echo(f"  Test Cases: {total_cases}")
     click.echo("")
 
@@ -158,7 +153,7 @@ def test(
     if language is None:
         language = CodeLanguage.default().value
 
-    with DatabaseManager(repo.db_path) as db:
+    with Database(repo.db_path) as db:
         # Handle --last flag
         if last:
             problems = db.list_problems(language=language, limit=1)
@@ -209,27 +204,19 @@ def test(
                 raise click.Abort()
 
         # Get file path
-        file_path_str = problem_data.get('file_path')
-        if not file_path_str:
+        if not problem_data.file_path:
             raise click.ClickException("Problem has no associated file path")
 
-        file_path = Path(file_path_str)
+        file_path = Path(problem_data.file_path)
         if not file_path.is_absolute():
             file_path = Path.cwd() / file_path
 
         if not file_path.exists():
             raise click.ClickException(f"Solution file not found: {file_path}")
 
-        # Get problem ID as int
-        problem_id_str = problem_data['problem_id']
-        try:
-            problem_id = int(problem_id_str)
-        except ValueError:
-            raise click.ClickException(f"Invalid problem ID: {problem_id_str}")
-
         # Import here to avoid circular imports
         from bytedojo.core.test_fetcher import fetch_test_cases
-        test_cases = fetch_test_cases(problem_id)
+        test_cases = fetch_test_cases(problem_data.problem_id)
 
         # Display header
         _display_test_header(problem_data, len(test_cases))
@@ -245,7 +232,7 @@ def test(
 
         result = run_tests(
             solution_path=file_path,
-            problem_id=problem_id,
+            problem_id=problem_data.problem_id,
             language=language,
             timeout=timeout
         )
@@ -254,9 +241,8 @@ def test(
         _display_test_results(result, verbose)
 
         # Update database with test status
-        problem_db_id = problem_data['id']
-        db.update_test_status(
-            problem_db_id=problem_db_id,
+        db.update_problem_status(
+            problem_db_id=problem_data.id,
             status=result.status,
             output=f"Passed: {result.passed_count}/{result.total_cases}"
         )

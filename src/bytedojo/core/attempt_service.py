@@ -5,13 +5,12 @@ Handles creating, tracking, and querying attempts at solving problems
 across multiple languages with version history.
 """
 
-from dataclasses import asdict
 from datetime import datetime
 from pathlib import Path
 from typing import List, Optional, Dict
 
 from bytedojo.core.repository import Repository
-from bytedojo.core.database import DatabaseManager
+from bytedojo.core.database import Database
 from bytedojo.core import problem_service
 from bytedojo.core.models.attempt import Attempt
 from bytedojo.core.models.attempt_stats import AttemptStats
@@ -59,13 +58,12 @@ class AttemptService:
         if not problem:
             return None
 
-        with DatabaseManager(self.repo.db_path) as db:
-            # Create database entry (returns next version)
-            attempt_data = db.create_attempt(problem_id, language.value, source)
-            version = attempt_data['version']
+        with Database(self.repo.db_path) as db:
+            # Create database entry (returns Attempt object)
+            attempt = db.create_attempt(source, problem_id, language.value)
 
             # Create folder structure
-            attempt_path = self._get_attempt_path(problem_id, language, version)
+            attempt_path = self._get_attempt_path(problem_id, language, attempt.version)
             attempt_path.mkdir(parents=True, exist_ok=True)
 
             # Write starter code
@@ -74,15 +72,7 @@ class AttemptService:
                 solution_file = attempt_path / problem.get_solution_filename(language)
                 solution_file.write_text(starter_code, encoding='utf-8')
 
-            return Attempt(
-                problem_id=problem_id,
-                language=language,
-                version=version,
-                status=ProblemStatus.UNGRADED,
-                created_at=datetime.now(),
-                run_count=0,
-                notes=""
-            )
+            return attempt
 
     def get_attempt(
         self,
@@ -106,12 +96,8 @@ class AttemptService:
         if not self.repo.is_initialized:
             return None
 
-        with DatabaseManager(self.repo.db_path) as db:
-            data = db.get_attempt(problem_id, language.value, version, source)
-            if not data:
-                return None
-
-            return self._dict_to_attempt(data)
+        with Database(self.repo.db_path) as db:
+            return db.get_attempt(source, problem_id, language.value, version)
 
     def list_attempts(
         self,
@@ -133,10 +119,9 @@ class AttemptService:
         if not self.repo.is_initialized:
             return []
 
-        with DatabaseManager(self.repo.db_path) as db:
+        with Database(self.repo.db_path) as db:
             lang_str = language.value if language else None
-            attempts_data = db.list_attempts(problem_id, lang_str, source)
-            return [self._dict_to_attempt(d) for d in attempts_data]
+            return db.list_attempts(source, problem_id, lang_str)
 
     def update_status(
         self,
@@ -162,9 +147,9 @@ class AttemptService:
         if not self.repo.is_initialized:
             return False
 
-        with DatabaseManager(self.repo.db_path) as db:
+        with Database(self.repo.db_path) as db:
             return db.update_attempt_status(
-                problem_id, language.value, version, status.value, source
+                source, problem_id, language.value, version, status.value
             )
 
     def increment_run_count(
@@ -189,8 +174,8 @@ class AttemptService:
         if not self.repo.is_initialized:
             return False
 
-        with DatabaseManager(self.repo.db_path) as db:
-            return db.increment_run_count(problem_id, language.value, version, source)
+        with Database(self.repo.db_path) as db:
+            return db.increment_run_count(source, problem_id, language.value, version)
 
     def get_stats(
         self,
@@ -212,25 +197,16 @@ class AttemptService:
         if not self.repo.is_initialized:
             return {}
 
-        with DatabaseManager(self.repo.db_path) as db:
+        with Database(self.repo.db_path) as db:
             lang_str = language.value if language else None
-            raw_stats = db.get_attempt_stats(problem_id, lang_str, source)
+            raw_stats = db.get_attempt_stats(source, problem_id, lang_str)
 
+            # Convert string keys to CodeLanguage
             result = {}
             for lang_key, stats in raw_stats.items():
                 lang = CodeLanguage.from_string(lang_key)
                 if lang != CodeLanguage.UNKNOWN:
-                    result[lang] = AttemptStats(
-                        problem_id=problem_id,
-                        language=lang,
-                        total_attempts=stats['total_attempts'],
-                        latest_version=stats['latest_version'],
-                        latest_status=ProblemStatus.from_string(stats['latest_status']),
-                        pass_count=stats['pass_count'],
-                        fail_count=stats['fail_count'],
-                        skip_count=stats['skip_count'],
-                        total_runs=stats['total_runs']
-                    )
+                    result[lang] = stats
 
             return result
 
@@ -250,26 +226,17 @@ class AttemptService:
         if not self.repo.is_initialized:
             return {}
 
-        with DatabaseManager(self.repo.db_path) as db:
+        with Database(self.repo.db_path) as db:
             raw_stats = db.get_all_attempt_stats(source)
 
+            # Convert string keys to CodeLanguage
             result = {}
             for pid, lang_stats in raw_stats.items():
                 result[pid] = {}
                 for lang_key, stats in lang_stats.items():
                     lang = CodeLanguage.from_string(lang_key)
                     if lang != CodeLanguage.UNKNOWN:
-                        result[pid][lang] = AttemptStats(
-                            problem_id=pid,
-                            language=lang,
-                            total_attempts=stats['total_attempts'],
-                            latest_version=stats['latest_version'],
-                            latest_status=ProblemStatus.from_string(stats['latest_status']),
-                            pass_count=stats['pass_count'],
-                            fail_count=stats['fail_count'],
-                            skip_count=stats['skip_count'],
-                            total_runs=stats['total_runs']
-                        )
+                        result[pid][lang] = stats
 
             return result
 
@@ -322,24 +289,3 @@ class AttemptService:
         version_str = f"v{version:03d}"
 
         return self.repo.problems_dir / folder_name / language.value / version_str
-
-    def _dict_to_attempt(self, data: dict) -> Attempt:
-        """Convert database dict to Attempt object."""
-        # Parse created_at if it's a string
-        created_at = data.get('created_at')
-        if isinstance(created_at, str):
-            created_at = datetime.fromisoformat(created_at)
-
-        lang = CodeLanguage.from_string(data['language'])
-        if lang == CodeLanguage.UNKNOWN:
-            lang = CodeLanguage.PYTHON  # fallback
-
-        return Attempt(
-            problem_id=data['problem_id'],
-            language=lang,
-            version=data['version'],
-            status=ProblemStatus.from_string(data.get('status')),
-            created_at=created_at or datetime.now(),
-            run_count=data.get('run_count', 0),
-            notes=data.get('notes', '')
-        )

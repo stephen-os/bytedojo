@@ -6,23 +6,16 @@ root path. The Repository owns its location, knows its own state, and
 mediates all operations against its contents (database, problems, etc.).
 """
 
-from dataclasses import dataclass
 from pathlib import Path
-from typing import Optional
+from typing import Optional, List
 
-from bytedojo.core.database import DatabaseManager, create_database_schema
+from bytedojo.core.database import Database, create_database_schema
 from bytedojo.core.logger import get_logger
+from bytedojo.core.models.attempt import Attempt
 from bytedojo.core.models.code_language import CodeLanguage
 from bytedojo.core.models.problem import Problem
+from bytedojo.core.models.registered_problem import RegisteredProblem
 from bytedojo.core.templates import GITIGNORE, README
-
-
-@dataclass
-class Attempt:
-    """A versioned attempt at a problem in a given language."""
-    problem_id: int
-    language: CodeLanguage
-    version: int
 
 
 class Repository:
@@ -123,9 +116,9 @@ class Repository:
     # Database access
     # ------------------------------------------------------------------
 
-    def open_db(self) -> DatabaseManager:
-        """Construct a fresh DatabaseManager bound to this repo's db path."""
-        return DatabaseManager(self.db_path)
+    def open_db(self) -> Database:
+        """Construct a fresh Database bound to this repo's db path."""
+        return Database(self.db_path)
 
     # ------------------------------------------------------------------
     # Repo-level operations
@@ -143,7 +136,7 @@ class Repository:
         with self.open_db() as db:
             return db.is_problem_registered(source, problem_id, language.value)
 
-    def get_registered_problems(self) -> list:
+    def get_registered_problems(self) -> List[RegisteredProblem]:
         """Get all registered problems from the database."""
         if not self.is_initialized:
             return []
@@ -166,22 +159,16 @@ class Repository:
         problem_id = problem.problem_detail.id
 
         with self.open_db() as db:
-            attempt_data = db.create_attempt(problem_id, language.value, source)
-            version = attempt_data["version"]
+            attempt = db.create_attempt(source, problem_id, language.value)
 
             db.register_problem(
                 problem=problem,
                 source=source,
                 language=language.value,
-                file_path=str(self.attempt_path(problem, language, version)),
-                force=True,
+                file_path=str(self.attempt_path(problem, language, attempt.version)),
             )
 
-            return Attempt(
-                problem_id=problem_id,
-                language=language,
-                version=version,
-            )
+            return attempt
 
     def attempt_path(
         self,

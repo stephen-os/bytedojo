@@ -7,7 +7,7 @@ from pathlib import Path
 
 from bytedojo.core.logger import get_logger
 from bytedojo.core.settings import SettingsManager
-from bytedojo.core.database import DatabaseManager
+from bytedojo.core.database import Database
 from bytedojo.core.repository import Repository
 
 
@@ -44,7 +44,7 @@ def _show_settings():
     current_settings = settings_manager.load()
 
     # Get database config
-    with DatabaseManager(repo.db_path) as db:
+    with Database(repo.db_path) as db:
         review_freq = db.get_config('review_frequency_days', '7')
         default_lang = db.get_config('default_language', 'python')
         default_source = db.get_config('default_source', 'leetcode')
@@ -102,7 +102,7 @@ def default_language(language: str):
     if repo is None:
         raise click.ClickException("Not inside a .dojo repository. Please run 'dojo init' first.")
 
-    with DatabaseManager(repo.db_path) as db:
+    with Database(repo.db_path) as db:
         old_value = db.get_config('default_language', 'python')
         new_value = language.lower()
         db.set_config('default_language', new_value)
@@ -204,7 +204,7 @@ def review_frequency(days: int):
     if repo is None:
         raise click.ClickException("Not inside a .dojo repository. Please run 'dojo init' first.")
 
-    with DatabaseManager(repo.db_path) as db:
+    with Database(repo.db_path) as db:
         old_value = db.get_config('review_frequency_days', '7')
         db.set_config('review_frequency_days', str(days))
 

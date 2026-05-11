@@ -8,7 +8,8 @@ and scheduling reviews for passed problems.
 from dataclasses import dataclass
 from typing import Optional, List
 
-from bytedojo.core.database import DatabaseManager
+from bytedojo.core.database import Database
+from bytedojo.core.models.registered_problem import RegisteredProblem
 
 
 @dataclass
@@ -24,12 +25,12 @@ class GradeResult:
 class GradingService:
     """Service for grading problems and managing review scheduling."""
 
-    def __init__(self, db: DatabaseManager):
+    def __init__(self, db: Database):
         """
         Initialize grading service.
 
         Args:
-            db: DatabaseManager instance
+            db: Database instance
         """
         self.db = db
 
@@ -58,14 +59,14 @@ class GradingService:
             raise ValueError(f"Invalid status '{status}'. Must be one of: {valid_statuses}")
 
         # Update the status
-        self.db.update_test_status(problem_id, status, notes)
+        self.db.update_problem_status(problem_id, status, notes)
 
         # Schedule review if passed
         scheduled_review = False
         review_freq = int(self.db.get_config('review_frequency_days', '7'))
 
         if status == 'passed':
-            self.db.schedule_review(problem_id)
+            self.db.schedule_review(problem_id, review_freq)
             scheduled_review = True
 
         return GradeResult(
@@ -76,16 +77,16 @@ class GradingService:
             review_frequency_days=review_freq
         )
 
-    def get_ungraded_problems(self) -> List[dict]:
+    def get_ungraded_problems(self) -> List[RegisteredProblem]:
         """
         Get all ungraded problems.
 
         Returns:
-            List of problem dicts with status 'ungraded'
+            List of RegisteredProblem with status 'ungraded'
         """
-        return self.db.get_problems_by_status('ungraded')
+        return self.db.list_problems(status='ungraded')
 
-    def get_problems_by_status(self, status: str) -> List[dict]:
+    def get_problems_by_status(self, status: str) -> List[RegisteredProblem]:
         """
         Get problems filtered by status.
 
@@ -93,6 +94,6 @@ class GradingService:
             status: Status to filter by ('passed', 'failed', 'skipped', 'ungraded')
 
         Returns:
-            List of problem dicts
+            List of RegisteredProblem objects
         """
-        return self.db.get_problems_by_status(status)
+        return self.db.list_problems(status=status)

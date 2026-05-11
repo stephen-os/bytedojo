@@ -6,28 +6,24 @@ import click
 from pathlib import Path
 from typing import Optional
 
-from bytedojo.core.database import DatabaseManager
+from bytedojo.core.database import Database
 from bytedojo.core.execution import ProblemExecutor, ExecutionResult
 from bytedojo.core.models.code_language import CodeLanguage
+from bytedojo.core.models.registered_problem import RegisteredProblem
 from bytedojo.core.repository import Repository
 from bytedojo.core.search import find_problems, select_problem
 
 
-def _display_run_header(problem: dict):
+def _display_run_header(problem: RegisteredProblem):
     """Display problem details before running."""
-    problem_id = problem['problem_id']
-    title = problem['title']
-    language = problem.get('language', 'python')
-    file_path = problem.get('file_path', '')
-
     click.echo("")
     click.echo(click.style("=" * 60, fg='bright_black'))
     click.echo(click.style("  RUN PROBLEM", fg='cyan', bold=True))
     click.echo(click.style("=" * 60, fg='bright_black'))
     click.echo("")
-    click.echo(f"  {problem_id}: {click.style(title, bold=True)}")
-    click.echo(f"  Language: {language.upper()}")
-    click.echo(f"  File: {file_path}")
+    click.echo(f"  {problem.problem_id}: {click.style(problem.title, bold=True)}")
+    click.echo(f"  Language: {problem.language.value.upper()}")
+    click.echo(f"  File: {problem.file_path or ''}")
     click.echo("")
     click.echo(click.style("-" * 60, fg='bright_black'))
     click.echo(click.style("  OUTPUT", fg='cyan'))
@@ -100,7 +96,7 @@ def run(identifier: Optional[str], name_search: Optional[str], desc_search: Opti
     if language is None:
         language = CodeLanguage.default().value
 
-    with DatabaseManager(repo.db_path) as db:
+    with Database(repo.db_path) as db:
         # Handle --last flag
         if last:
             problems = db.list_problems(language=language, limit=1)

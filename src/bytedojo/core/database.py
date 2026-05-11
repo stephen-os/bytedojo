@@ -1,28 +1,31 @@
 """
 Database operations for .dojo repository.
 
-Handles all SQLite interactions for problems, attempts, stats, etc.
+Thin data access layer - handles SQLite interactions only.
+Domain logic belongs in Repository or service modules.
 """
 
 import sqlite3
 from pathlib import Path
-from typing import Optional, List, Dict, Any
-from datetime import datetime
+from typing import Optional, List
+from datetime import datetime, date, timedelta
 
+from bytedojo.core.models.attempt import Attempt
+from bytedojo.core.models.attempt_stats import AttemptStats
+from bytedojo.core.models.code_language import CodeLanguage
 from bytedojo.core.models.problem import Problem
-from bytedojo.core.logger import get_logger
+from bytedojo.core.models.problem_status import ProblemStatus
+from bytedojo.core.models.registered_problem import RegisteredProblem
+from bytedojo.core.models.repository_stats import RepositoryStats
+from bytedojo.core.models.review_stats import ReviewStats
+from bytedojo.core.models.review_schedule import ReviewSchedule
 
 
-def create_database_schema(db_path: Path):
-    """
-    Create SQLite database with schema for tracking problems and stats.
-    
-    Args:
-        db_path: Path to SQLite database file
-    """
+def create_database_schema(db_path: Path) -> None:
+    """Create SQLite database with schema for tracking problems and stats."""
     conn = sqlite3.connect(db_path)
     cursor = conn.cursor()
-    
+
     # Problems table - stores fetched problems
     cursor.execute("""
         CREATE TABLE IF NOT EXISTS problems (
@@ -36,48 +39,11 @@ def create_database_schema(db_path: Path):
             tags TEXT,
             description TEXT,
             file_path TEXT,
-            test_status TEXT DEFAULT 'untested',
+            test_status TEXT DEFAULT 'ungraded',
             last_test_run TIMESTAMP,
             test_output TEXT,
             fetched_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
             UNIQUE(source, problem_id, language)
-        )
-    """)
-
-    # Attempts table - tracks solution attempts
-    cursor.execute("""
-        CREATE TABLE IF NOT EXISTS attempts (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            problem_id INTEGER NOT NULL,
-            attempted_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-            passed BOOLEAN NOT NULL,
-            time_taken INTEGER,
-            notes TEXT,
-            FOREIGN KEY (problem_id) REFERENCES problems(id)
-        )
-    """)
-    
-    # Review schedule table - spaced repetition
-    cursor.execute("""
-        CREATE TABLE IF NOT EXISTS reviews (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            problem_id INTEGER NOT NULL,
-            next_review_date DATE NOT NULL,
-            interval_days INTEGER DEFAULT 1,
-            ease_factor REAL DEFAULT 2.5,
-            repetitions INTEGER DEFAULT 0,
-            FOREIGN KEY (problem_id) REFERENCES problems(id)
-        )
-    """)
-    
-    # Stats table - aggregate statistics
-    cursor.execute("""
-        CREATE TABLE IF NOT EXISTS stats (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            date DATE NOT NULL UNIQUE,
-            problems_attempted INTEGER DEFAULT 0,
-            problems_solved INTEGER DEFAULT 0,
-            total_time_minutes INTEGER DEFAULT 0
         )
     """)
 
@@ -96,175 +62,123 @@ def create_database_schema(db_path: Path):
             UNIQUE(source, problem_id, language, version)
         )
     """)
-    
-    # User preferences
+
+    # Review schedule table - spaced repetition
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS reviews (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            problem_id INTEGER NOT NULL,
+            next_review_date DATE NOT NULL,
+            interval_days INTEGER DEFAULT 1,
+            ease_factor REAL DEFAULT 2.5,
+            repetitions INTEGER DEFAULT 0,
+            FOREIGN KEY (problem_id) REFERENCES problems(id)
+        )
+    """)
+
+    # Config table
     cursor.execute("""
         CREATE TABLE IF NOT EXISTS config (
             key TEXT PRIMARY KEY,
             value TEXT NOT NULL
         )
     """)
-    
+
     # Set default config values
     cursor.execute("""
         INSERT OR IGNORE INTO config (key, value) VALUES
         ('initialized_at', ?),
         ('default_language', 'python'),
-        ('default_source', 'leetcode'),
-        ('problems_dir', 'problems'),
-        ('review_frequency_days', '7')
+        ('default_source', 'leetcode')
     """, (datetime.now().isoformat(),))
-    
+
     conn.commit()
     conn.close()
 
 
-class DatabaseManager:
-    """Manages database operations for .dojo repository."""
-    
+class Database:
+    """
+    Thin data access layer for .dojo SQLite database.
+
+    Usage:
+        with Database(db_path) as db:
+            problems = db.list_problems()
+    """
+
     def __init__(self, db_path: Path):
-        """
-        Initialize database manager.
-        
-        Args:
-            db_path: Path to SQLite database file
-        """
         self.db_path = db_path
-        self.conn = None
-        self.logger = get_logger()
-    
-    def connect(self):
-        """Open database connection."""
-        if not self.conn:
-            self.conn = sqlite3.connect(self.db_path)
-            self.conn.row_factory = sqlite3.Row
-        return self.conn
-    
-    def close(self):
-        """Close database connection."""
+        self.conn: Optional[sqlite3.Connection] = None
+
+    def __enter__(self) -> "Database":
+        self.conn = sqlite3.connect(self.db_path)
+        self.conn.row_factory = sqlite3.Row
+        return self
+
+    def __exit__(self, exc_type, exc_val, exc_tb) -> None:
         if self.conn:
             self.conn.close()
             self.conn = None
-    
-    def __enter__(self):
-        """Context manager entry."""
-        self.connect()
-        return self
-    
-    def __exit__(self, exc_type, exc_val, exc_tb):
-        """Context manager exit."""
-        self.close()
-    
-    def is_problem_registered(self, source: str, problem_id: int, language: str = 'python') -> bool:
-        """
-        Check if problem is already registered.
 
-        Args:
-            source: Problem source (e.g., 'leetcode')
-            problem_id: Problem ID number
-            language: Programming language (default: 'python')
+    # ------------------------------------------------------------------
+    # Problems
+    # ------------------------------------------------------------------
 
-        Returns:
-            True if problem exists in database
-        """
+    def is_problem_registered(self, source: str, problem_id: int, language: str) -> bool:
+        """Check if a problem is registered."""
         cursor = self.conn.cursor()
         cursor.execute(
-            "SELECT COUNT(*) FROM problems WHERE source = ? AND problem_id = ? AND language = ?",
+            "SELECT 1 FROM problems WHERE source = ? AND problem_id = ? AND language = ?",
             (source, str(problem_id), language)
         )
-        count = cursor.fetchone()[0]
-        return count > 0
-    
+        return cursor.fetchone() is not None
+
     def register_problem(
         self,
         problem: Problem,
-        source: str = "leetcode",
-        language: str = "python",
+        source: str,
+        language: str,
         file_path: Optional[str] = None,
-        force: bool = False
-    ) -> bool:
-        """
-        Register a problem in the database.
-
-        Args:
-            problem: Problem object to register
-            source: Problem source (default: 'leetcode')
-            language: Programming language (default: 'python')
-            file_path: Path to the problem file
-            force: If True, overwrite existing entry
-
-        Returns:
-            True if registered successfully
-        """
+    ) -> None:
+        """Register or update a problem in the database."""
         cursor = self.conn.cursor()
-
         detail = problem.problem_detail
 
-        # Check if already exists
-        if self.is_problem_registered(source, detail.id, language) and not force:
-            return False
-
-        # Insert or replace
         cursor.execute("""
             INSERT OR REPLACE INTO problems (
-                source, problem_id, language, title, difficulty, category,
-                tags, description, file_path, fetched_at
-            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                source, problem_id, language, title, difficulty,
+                description, file_path, fetched_at
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
         """, (
             source,
             str(detail.id),
             language,
             detail.title,
-            detail.difficulty,
-            None,  # category - TODO: extract from tags
-            None,  # tags - TODO: extract from problem data
+            detail.difficulty.value if hasattr(detail.difficulty, 'value') else str(detail.difficulty),
             detail.description,
-            str(file_path) if file_path else None,
+            file_path,
             datetime.now().isoformat()
         ))
-
         self.conn.commit()
-        return True
-    
-    def get_problem(self, source: str, problem_id: int, language: str = 'python') -> Optional[Dict[str, Any]]:
-        """
-        Get problem from database.
 
-        Args:
-            source: Problem source
-            problem_id: Problem ID
-            language: Programming language (default: 'python')
-
-        Returns:
-            Problem data as dict or None
-        """
+    def get_problem(self, source: str, problem_id: int, language: str) -> Optional[RegisteredProblem]:
+        """Get a registered problem."""
         cursor = self.conn.cursor()
         cursor.execute(
             "SELECT * FROM problems WHERE source = ? AND problem_id = ? AND language = ?",
             (source, str(problem_id), language)
         )
         row = cursor.fetchone()
-        return dict(row) if row else None
-    
+        return RegisteredProblem.from_row(dict(row)) if row else None
+
     def list_problems(
         self,
         source: Optional[str] = None,
         difficulty: Optional[str] = None,
         language: Optional[str] = None,
-        limit: Optional[int] = None
-    ) -> List[Dict[str, Any]]:
-        """
-        List problems from database.
-
-        Args:
-            source: Filter by source (e.g., 'leetcode')
-            difficulty: Filter by difficulty (e.g., 'Easy')
-            language: Filter by language (e.g., 'python', 'java', 'cpp')
-            limit: Maximum number of results
-
-        Returns:
-            List of problem dictionaries
-        """
+        status: Optional[str] = None,
+        limit: Optional[int] = None,
+    ) -> List[RegisteredProblem]:
+        """List registered problems with optional filters."""
         cursor = self.conn.cursor()
 
         query = "SELECT * FROM problems WHERE 1=1"
@@ -273,436 +187,79 @@ class DatabaseManager:
         if source:
             query += " AND source = ?"
             params.append(source)
-
         if difficulty:
             query += " AND difficulty = ?"
             params.append(difficulty)
-
         if language:
             query += " AND language = ?"
             params.append(language)
+        if status:
+            if status == "ungraded":
+                query += " AND test_status IN ('ungraded', 'untested')"
+            else:
+                query += " AND test_status = ?"
+                params.append(status)
 
-        query += " ORDER BY problem_id ASC"
+        query += " ORDER BY CAST(problem_id AS INTEGER) ASC"
 
         if limit:
             query += " LIMIT ?"
             params.append(limit)
 
         cursor.execute(query, params)
-        return [dict(row) for row in cursor.fetchall()]
-    
-    def get_problem_stats(self, problem_db_id: int) -> Dict[str, Any]:
-        """
-        Get statistics for a specific problem.
-        
-        Args:
-            problem_db_id: Database ID of the problem
-            
-        Returns:
-            Dictionary with attempt statistics
-        """
+        return [RegisteredProblem.from_row(dict(row)) for row in cursor.fetchall()]
+
+    def update_problem_status(self, problem_db_id: int, status: str, output: Optional[str] = None) -> None:
+        """Update the status of a problem."""
         cursor = self.conn.cursor()
-        
-        cursor.execute("""
-            SELECT 
-                COUNT(*) as total_attempts,
-                SUM(CASE WHEN passed = 1 THEN 1 ELSE 0 END) as passed_attempts,
-                SUM(CASE WHEN passed = 0 THEN 1 ELSE 0 END) as failed_attempts,
-                MAX(attempted_at) as last_attempt
-            FROM attempts
-            WHERE problem_id = ?
-        """, (problem_db_id,))
-        
-        row = cursor.fetchone()
-        return dict(row) if row else {
-            'total_attempts': 0,
-            'passed_attempts': 0,
-            'failed_attempts': 0,
-            'last_attempt': None
-        }
-    
-    def get_summary_stats(self) -> Dict[str, Any]:
-        """
-        Get summary statistics for all problems.
-        
-        Returns:
-            Dictionary with overall statistics
-        """
-        cursor = self.conn.cursor()
-        
-        # Total problems
-        cursor.execute("SELECT COUNT(*) as total FROM problems")
-        total = cursor.fetchone()[0]
-        
-        # By difficulty
-        cursor.execute("""
-            SELECT difficulty, COUNT(*) as count
-            FROM problems
-            GROUP BY difficulty
-        """)
-        by_difficulty = {row[0]: row[1] for row in cursor.fetchall()}
-        
-        # By source
-        cursor.execute("""
-            SELECT source, COUNT(*) as count
-            FROM problems
-            GROUP BY source
-        """)
-        by_source = {row[0]: row[1] for row in cursor.fetchall()}
-        
-        return {
-            'total_problems': total,
-            'by_difficulty': by_difficulty,
-            'by_source': by_source
-        }
-    
-    def update_test_status(
-        self,
-        problem_db_id: int,
-        status: str,
-        output: Optional[str] = None
-    ) -> bool:
-        """
-        Update test status for a problem.
-        
-        Args:
-            problem_db_id: Database ID of the problem
-            status: Test status ('passed', 'failed', 'error', 'untested')
-            output: Test output/error message
-            
-        Returns:
-            True if updated successfully
-        """
-        cursor = self.conn.cursor()
-        
         cursor.execute("""
             UPDATE problems
             SET test_status = ?, last_test_run = ?, test_output = ?
             WHERE id = ?
         """, (status, datetime.now().isoformat(), output, problem_db_id))
-        
         self.conn.commit()
-        return True
-    
-    def get_problems_by_test_status(self, status: Optional[str] = None) -> List[Dict[str, Any]]:
-        """
-        Get problems filtered by test status.
 
-        Args:
-            status: Filter by test status ('passed', 'failed', 'error', 'untested')
-                None returns all problems
+    # ------------------------------------------------------------------
+    # Attempts
+    # ------------------------------------------------------------------
 
-        Returns:
-            List of problem dictionaries
-        """
+    def create_attempt(self, source: str, problem_id: int, language: str) -> Attempt:
+        """Create a new versioned attempt."""
         cursor = self.conn.cursor()
 
-        if status:
-            cursor.execute(
-                "SELECT * FROM problems WHERE test_status = ? ORDER BY problem_id ASC",
-                (status,)
-            )
-        else:
-            cursor.execute("SELECT * FROM problems ORDER BY problem_id ASC")
-
-        return [dict(row) for row in cursor.fetchall()]
-
-    def get_problems_by_status(self, status: Optional[str] = None) -> List[Dict[str, Any]]:
-        """
-        Get problems filtered by grade status.
-
-        Args:
-            status: Filter by status ('passed', 'failed', 'skipped', 'ungraded')
-                   Also accepts legacy values ('untested' -> 'ungraded')
-                   None returns all problems
-
-        Returns:
-            List of problem dictionaries ordered by fetched_at descending
-        """
-        cursor = self.conn.cursor()
-
-        # Map legacy status values
-        if status == 'ungraded':
-            # Match both 'ungraded' and legacy 'untested'
-            cursor.execute(
-                "SELECT * FROM problems WHERE test_status IN ('ungraded', 'untested') ORDER BY fetched_at DESC",
-            )
-        elif status:
-            cursor.execute(
-                "SELECT * FROM problems WHERE test_status = ? ORDER BY fetched_at DESC",
-                (status,)
-            )
-        else:
-            cursor.execute("SELECT * FROM problems ORDER BY fetched_at DESC")
-
-        return [dict(row) for row in cursor.fetchall()]
-
-    # ========================================================================
-    # Configuration Methods
-    # ========================================================================
-
-    def get_config(self, key: str, default: Optional[str] = None) -> Optional[str]:
-        """
-        Get a configuration value.
-
-        Args:
-            key: Configuration key
-            default: Default value if not found
-
-        Returns:
-            Configuration value or default
-        """
-        cursor = self.conn.cursor()
-        cursor.execute("SELECT value FROM config WHERE key = ?", (key,))
-        row = cursor.fetchone()
-        return row[0] if row else default
-
-    def set_config(self, key: str, value: str) -> bool:
-        """
-        Set a configuration value.
-
-        Args:
-            key: Configuration key
-            value: Configuration value
-
-        Returns:
-            True if set successfully
-        """
-        cursor = self.conn.cursor()
-        cursor.execute(
-            "INSERT OR REPLACE INTO config (key, value) VALUES (?, ?)",
-            (key, value)
-        )
-        self.conn.commit()
-        return True
-
-    def get_all_config(self) -> Dict[str, str]:
-        """
-        Get all configuration values.
-
-        Returns:
-            Dictionary of all config key-value pairs
-        """
-        cursor = self.conn.cursor()
-        cursor.execute("SELECT key, value FROM config")
-        return {row[0]: row[1] for row in cursor.fetchall()}
-
-    # ========================================================================
-    # Review/Spaced Repetition Methods
-    # ========================================================================
-
-    def schedule_review(self, problem_db_id: int, days_from_now: Optional[int] = None) -> bool:
-        """
-        Schedule a problem for review.
-
-        Args:
-            problem_db_id: Database ID of the problem
-            days_from_now: Days until next review (uses config default if None)
-
-        Returns:
-            True if scheduled successfully
-        """
-        cursor = self.conn.cursor()
-
-        # Get review frequency from config if not specified
-        if days_from_now is None:
-            freq = self.get_config('review_frequency_days', '7')
-            days_from_now = int(freq)
-
-        # Calculate next review date
-        from datetime import date, timedelta
-        next_review = date.today() + timedelta(days=days_from_now)
-
-        # Check if review entry exists
-        cursor.execute(
-            "SELECT id, repetitions FROM reviews WHERE problem_id = ?",
-            (problem_db_id,)
-        )
-        existing = cursor.fetchone()
-
-        if existing:
-            # Update existing review
-            new_reps = existing[1] + 1
-            cursor.execute("""
-                UPDATE reviews
-                SET next_review_date = ?, interval_days = ?, repetitions = ?
-                WHERE problem_id = ?
-            """, (next_review.isoformat(), days_from_now, new_reps, problem_db_id))
-        else:
-            # Create new review entry
-            cursor.execute("""
-                INSERT INTO reviews (problem_id, next_review_date, interval_days, repetitions)
-                VALUES (?, ?, ?, 1)
-            """, (problem_db_id, next_review.isoformat(), days_from_now))
-
-        self.conn.commit()
-        self.logger.debug(f"Scheduled review for problem {problem_db_id} on {next_review}")
-        return True
-
-    def get_due_reviews(self, include_future: bool = False) -> List[Dict[str, Any]]:
-        """
-        Get problems due for review.
-
-        Args:
-            include_future: If True, include future reviews with their dates
-
-        Returns:
-            List of problem dictionaries with review info
-        """
-        cursor = self.conn.cursor()
-        from datetime import date
-        today = date.today().isoformat()
-
-        if include_future:
-            query = """
-                SELECT p.*, r.next_review_date, r.interval_days, r.repetitions
-                FROM problems p
-                INNER JOIN reviews r ON p.id = r.problem_id
-                ORDER BY r.next_review_date ASC
-            """
-            cursor.execute(query)
-        else:
-            query = """
-                SELECT p.*, r.next_review_date, r.interval_days, r.repetitions
-                FROM problems p
-                INNER JOIN reviews r ON p.id = r.problem_id
-                WHERE r.next_review_date <= ?
-                ORDER BY r.next_review_date ASC
-            """
-            cursor.execute(query, (today,))
-
-        return [dict(row) for row in cursor.fetchall()]
-
-    def get_review_stats(self) -> Dict[str, Any]:
-        """
-        Get review statistics.
-
-        Returns:
-            Dictionary with review statistics
-        """
-        cursor = self.conn.cursor()
-        from datetime import date, timedelta
-        today = date.today()
-
-        # Due today
-        cursor.execute(
-            "SELECT COUNT(*) FROM reviews WHERE next_review_date <= ?",
-            (today.isoformat(),)
-        )
-        due_today = cursor.fetchone()[0]
-
-        # Due this week
-        week_end = today + timedelta(days=7)
-        cursor.execute(
-            "SELECT COUNT(*) FROM reviews WHERE next_review_date <= ?",
-            (week_end.isoformat(),)
-        )
-        due_this_week = cursor.fetchone()[0]
-
-        # Total in review system
-        cursor.execute("SELECT COUNT(*) FROM reviews")
-        total_in_review = cursor.fetchone()[0]
-
-        # Problems with most reviews
-        cursor.execute("""
-            SELECT p.problem_id, p.title, p.source, r.repetitions
-            FROM problems p
-            INNER JOIN reviews r ON p.id = r.problem_id
-            ORDER BY r.repetitions DESC
-            LIMIT 5
-        """)
-        most_reviewed = [dict(row) for row in cursor.fetchall()]
-
-        return {
-            'due_today': due_today,
-            'due_this_week': due_this_week,
-            'total_in_review': total_in_review,
-            'most_reviewed': most_reviewed
-        }
-
-    def remove_from_review(self, problem_db_id: int) -> bool:
-        """
-        Remove a problem from the review schedule.
-
-        Args:
-            problem_db_id: Database ID of the problem
-
-        Returns:
-            True if removed successfully
-        """
-        cursor = self.conn.cursor()
-        cursor.execute("DELETE FROM reviews WHERE problem_id = ?", (problem_db_id,))
-        self.conn.commit()
-        return True
-
-    # ========================================================================
-    # Versioned Attempts Methods
-    # ========================================================================
-
-    def create_attempt(
-        self,
-        problem_id: int,
-        language: str,
-        source: str = "leetcode"
-    ) -> Dict[str, Any]:
-        """
-        Create a new versioned attempt for a problem/language.
-
-        Args:
-            problem_id: Problem ID number
-            language: Programming language
-            source: Problem source (default: 'leetcode')
-
-        Returns:
-            The created attempt as a dictionary
-        """
-        cursor = self.conn.cursor()
-
-        # Get next version number
+        # Get next version
         cursor.execute("""
             SELECT COALESCE(MAX(version), 0) + 1
             FROM versioned_attempts
             WHERE source = ? AND problem_id = ? AND language = ?
         """, (source, problem_id, language))
-        next_version = cursor.fetchone()[0]
+        version = cursor.fetchone()[0]
 
-        # Insert new attempt
+        now = datetime.now()
         cursor.execute("""
             INSERT INTO versioned_attempts (source, problem_id, language, version, status, created_at)
             VALUES (?, ?, ?, ?, 'ungraded', ?)
-        """, (source, problem_id, language, next_version, datetime.now().isoformat()))
-
+        """, (source, problem_id, language, version, now.isoformat()))
         self.conn.commit()
 
-        return {
-            'problem_id': problem_id,
-            'language': language,
-            'version': next_version,
-            'status': 'ungraded',
-            'created_at': datetime.now().isoformat(),
-            'run_count': 0,
-            'notes': None
-        }
+        return Attempt(
+            problem_id=problem_id,
+            language=CodeLanguage.from_string(language),
+            version=version,
+            status=ProblemStatus.UNGRADED,
+            created_at=now,
+            run_count=0,
+            notes="",
+        )
 
     def get_attempt(
         self,
+        source: str,
         problem_id: int,
         language: str,
         version: Optional[int] = None,
-        source: str = "leetcode"
-    ) -> Optional[Dict[str, Any]]:
-        """
-        Get a specific attempt or the latest attempt.
-
-        Args:
-            problem_id: Problem ID number
-            language: Programming language
-            version: Specific version (None for latest)
-            source: Problem source (default: 'leetcode')
-
-        Returns:
-            Attempt data as dict or None
-        """
+    ) -> Optional[Attempt]:
+        """Get a specific attempt or the latest."""
         cursor = self.conn.cursor()
 
         if version is not None:
@@ -718,25 +275,22 @@ class DatabaseManager:
             """, (source, problem_id, language))
 
         row = cursor.fetchone()
-        return dict(row) if row else None
+        if not row:
+            return None
 
-    def list_attempts(
-        self,
-        problem_id: int,
-        language: Optional[str] = None,
-        source: str = "leetcode"
-    ) -> List[Dict[str, Any]]:
-        """
-        List all attempts for a problem, optionally filtered by language.
+        row_dict = dict(row)
+        return Attempt(
+            problem_id=row_dict["problem_id"],
+            language=CodeLanguage.from_string(row_dict["language"]),
+            version=row_dict["version"],
+            status=ProblemStatus.from_string(row_dict["status"]),
+            created_at=datetime.fromisoformat(row_dict["created_at"]),
+            run_count=row_dict.get("run_count", 0),
+            notes=row_dict.get("notes", ""),
+        )
 
-        Args:
-            problem_id: Problem ID number
-            language: Filter by language (None for all)
-            source: Problem source (default: 'leetcode')
-
-        Returns:
-            List of attempt dictionaries
-        """
+    def list_attempts(self, source: str, problem_id: int, language: Optional[str] = None) -> List[Attempt]:
+        """List all attempts for a problem."""
         cursor = self.conn.cursor()
 
         if language:
@@ -752,29 +306,22 @@ class DatabaseManager:
                 ORDER BY language, version ASC
             """, (source, problem_id))
 
-        return [dict(row) for row in cursor.fetchall()]
+        results = []
+        for row in cursor.fetchall():
+            row_dict = dict(row)
+            results.append(Attempt(
+                problem_id=row_dict["problem_id"],
+                language=CodeLanguage.from_string(row_dict["language"]),
+                version=row_dict["version"],
+                status=ProblemStatus.from_string(row_dict["status"]),
+                created_at=datetime.fromisoformat(row_dict["created_at"]),
+                run_count=row_dict.get("run_count", 0),
+                notes=row_dict.get("notes", ""),
+            ))
+        return results
 
-    def update_attempt_status(
-        self,
-        problem_id: int,
-        language: str,
-        version: int,
-        status: str,
-        source: str = "leetcode"
-    ) -> bool:
-        """
-        Update the status of a specific attempt.
-
-        Args:
-            problem_id: Problem ID number
-            language: Programming language
-            version: Attempt version
-            status: New status ('passed', 'failed', 'skipped', 'ungraded')
-            source: Problem source (default: 'leetcode')
-
-        Returns:
-            True if updated successfully
-        """
+    def update_attempt_status(self, source: str, problem_id: int, language: str, version: int, status: str) -> bool:
+        """Update attempt status."""
         cursor = self.conn.cursor()
         cursor.execute("""
             UPDATE versioned_attempts
@@ -784,25 +331,8 @@ class DatabaseManager:
         self.conn.commit()
         return cursor.rowcount > 0
 
-    def increment_run_count(
-        self,
-        problem_id: int,
-        language: str,
-        version: int,
-        source: str = "leetcode"
-    ) -> bool:
-        """
-        Increment the run count for an attempt.
-
-        Args:
-            problem_id: Problem ID number
-            language: Programming language
-            version: Attempt version
-            source: Problem source (default: 'leetcode')
-
-        Returns:
-            True if updated successfully
-        """
+    def increment_run_count(self, source: str, problem_id: int, language: str, version: int) -> bool:
+        """Increment run count for an attempt."""
         cursor = self.conn.cursor()
         cursor.execute("""
             UPDATE versioned_attempts
@@ -812,87 +342,63 @@ class DatabaseManager:
         self.conn.commit()
         return cursor.rowcount > 0
 
-    def get_attempt_stats(
-        self,
-        problem_id: int,
-        language: Optional[str] = None,
-        source: str = "leetcode"
-    ) -> Dict[str, Any]:
-        """
-        Get aggregated stats for attempts on a problem.
-
-        Args:
-            problem_id: Problem ID number
-            language: Filter by language (None for all languages)
-            source: Problem source (default: 'leetcode')
-
-        Returns:
-            Dictionary with attempt statistics per language
-        """
+    def get_attempt_stats(self, source: str, problem_id: int, language: Optional[str] = None) -> dict[str, AttemptStats]:
+        """Get attempt stats per language for a problem."""
         cursor = self.conn.cursor()
 
+        query = """
+            SELECT
+                language,
+                COUNT(*) as total_attempts,
+                MAX(version) as latest_version,
+                SUM(run_count) as total_runs,
+                SUM(CASE WHEN status = 'passed' THEN 1 ELSE 0 END) as pass_count,
+                SUM(CASE WHEN status = 'failed' THEN 1 ELSE 0 END) as fail_count,
+                SUM(CASE WHEN status = 'skipped' THEN 1 ELSE 0 END) as skip_count
+            FROM versioned_attempts
+            WHERE source = ? AND problem_id = ?
+        """
+        params = [source, problem_id]
+
         if language:
-            cursor.execute("""
-                SELECT
-                    language,
-                    COUNT(*) as total_attempts,
-                    MAX(version) as latest_version,
-                    SUM(run_count) as total_runs,
-                    SUM(CASE WHEN status = 'passed' THEN 1 ELSE 0 END) as pass_count,
-                    SUM(CASE WHEN status = 'failed' THEN 1 ELSE 0 END) as fail_count,
-                    SUM(CASE WHEN status = 'skipped' THEN 1 ELSE 0 END) as skip_count
-                FROM versioned_attempts
-                WHERE source = ? AND problem_id = ? AND language = ?
-                GROUP BY language
-            """, (source, problem_id, language))
-        else:
-            cursor.execute("""
-                SELECT
-                    language,
-                    COUNT(*) as total_attempts,
-                    MAX(version) as latest_version,
-                    SUM(run_count) as total_runs,
-                    SUM(CASE WHEN status = 'passed' THEN 1 ELSE 0 END) as pass_count,
-                    SUM(CASE WHEN status = 'failed' THEN 1 ELSE 0 END) as fail_count,
-                    SUM(CASE WHEN status = 'skipped' THEN 1 ELSE 0 END) as skip_count
-                FROM versioned_attempts
-                WHERE source = ? AND problem_id = ?
-                GROUP BY language
-            """, (source, problem_id))
+            query += " AND language = ?"
+            params.append(language)
+
+        query += " GROUP BY language"
+        cursor.execute(query, params)
 
         results = {}
         for row in cursor.fetchall():
             row_dict = dict(row)
-            lang = row_dict.pop('language')
+            lang = row_dict["language"]
 
             # Get latest status
             cursor.execute("""
                 SELECT status FROM versioned_attempts
                 WHERE source = ? AND problem_id = ? AND language = ? AND version = ?
-            """, (source, problem_id, lang, row_dict['latest_version']))
-            latest_row = cursor.fetchone()
-            row_dict['latest_status'] = latest_row[0] if latest_row else 'ungraded'
+            """, (source, problem_id, lang, row_dict["latest_version"]))
+            latest = cursor.fetchone()
 
-            results[lang] = row_dict
-
+            results[lang] = AttemptStats(
+                problem_id=problem_id,
+                language=CodeLanguage.from_string(lang),
+                total_attempts=row_dict["total_attempts"],
+                latest_version=row_dict["latest_version"],
+                latest_status=ProblemStatus.from_string(latest[0]) if latest else ProblemStatus.UNGRADED,
+                pass_count=row_dict["pass_count"] or 0,
+                fail_count=row_dict["fail_count"] or 0,
+                skip_count=row_dict["skip_count"] or 0,
+                total_runs=row_dict["total_runs"] or 0,
+            )
         return results
 
-    def get_all_attempt_stats(self, source: str = "leetcode") -> Dict[int, Dict[str, Any]]:
-        """
-        Get attempt stats for all problems.
-
-        Args:
-            source: Problem source (default: 'leetcode')
-
-        Returns:
-            Dictionary mapping problem_id to language stats
-        """
+    def get_all_attempt_stats(self, source: str) -> dict[int, dict[str, AttemptStats]]:
+        """Get attempt stats for all problems."""
         cursor = self.conn.cursor()
 
         cursor.execute("""
             SELECT
-                problem_id,
-                language,
+                problem_id, language,
                 COUNT(*) as total_attempts,
                 MAX(version) as latest_version,
                 SUM(run_count) as total_runs,
@@ -904,23 +410,152 @@ class DatabaseManager:
             GROUP BY problem_id, language
         """, (source,))
 
-        results = {}
+        results: dict[int, dict[str, AttemptStats]] = {}
         for row in cursor.fetchall():
             row_dict = dict(row)
-            pid = row_dict.pop('problem_id')
-            lang = row_dict.pop('language')
+            pid = row_dict["problem_id"]
+            lang = row_dict["language"]
 
             if pid not in results:
                 results[pid] = {}
 
-            # Get latest status for this problem/language
+            # Get latest status
             cursor.execute("""
                 SELECT status FROM versioned_attempts
                 WHERE source = ? AND problem_id = ? AND language = ? AND version = ?
-            """, (source, pid, lang, row_dict['latest_version']))
-            latest_row = cursor.fetchone()
-            row_dict['latest_status'] = latest_row[0] if latest_row else 'ungraded'
+            """, (source, pid, lang, row_dict["latest_version"]))
+            latest = cursor.fetchone()
 
-            results[pid][lang] = row_dict
-
+            results[pid][lang] = AttemptStats(
+                problem_id=pid,
+                language=CodeLanguage.from_string(lang),
+                total_attempts=row_dict["total_attempts"],
+                latest_version=row_dict["latest_version"],
+                latest_status=ProblemStatus.from_string(latest[0]) if latest else ProblemStatus.UNGRADED,
+                pass_count=row_dict["pass_count"] or 0,
+                fail_count=row_dict["fail_count"] or 0,
+                skip_count=row_dict["skip_count"] or 0,
+                total_runs=row_dict["total_runs"] or 0,
+            )
         return results
+
+    # ------------------------------------------------------------------
+    # Reviews
+    # ------------------------------------------------------------------
+
+    def schedule_review(self, problem_db_id: int, days_from_now: int) -> None:
+        """Schedule or update a review."""
+        cursor = self.conn.cursor()
+        next_review = date.today() + timedelta(days=days_from_now)
+
+        cursor.execute("SELECT id, repetitions FROM reviews WHERE problem_id = ?", (problem_db_id,))
+        existing = cursor.fetchone()
+
+        if existing:
+            cursor.execute("""
+                UPDATE reviews
+                SET next_review_date = ?, interval_days = ?, repetitions = repetitions + 1
+                WHERE problem_id = ?
+            """, (next_review.isoformat(), days_from_now, problem_db_id))
+        else:
+            cursor.execute("""
+                INSERT INTO reviews (problem_id, next_review_date, interval_days, repetitions)
+                VALUES (?, ?, ?, 1)
+            """, (problem_db_id, next_review.isoformat(), days_from_now))
+
+        self.conn.commit()
+
+    def get_due_reviews(self, include_future: bool = False) -> List[ReviewSchedule]:
+        """Get reviews due for today (or all if include_future), with problem details."""
+        cursor = self.conn.cursor()
+        today = date.today().isoformat()
+
+        query = """
+            SELECT
+                r.problem_id, r.next_review_date, r.interval_days, r.ease_factor, r.repetitions,
+                p.problem_id as problem_num, p.source, p.title, p.difficulty, p.language, p.file_path
+            FROM reviews r
+            LEFT JOIN problems p ON r.problem_id = p.id
+        """
+
+        if include_future:
+            query += " ORDER BY r.next_review_date ASC"
+            cursor.execute(query)
+        else:
+            query += " WHERE r.next_review_date <= ? ORDER BY r.next_review_date ASC"
+            cursor.execute(query, (today,))
+
+        return [ReviewSchedule.from_row(dict(row)) for row in cursor.fetchall()]
+
+    def remove_review(self, problem_db_id: int) -> None:
+        """Remove a problem from review schedule."""
+        cursor = self.conn.cursor()
+        cursor.execute("DELETE FROM reviews WHERE problem_id = ?", (problem_db_id,))
+        self.conn.commit()
+
+    def get_review_stats(self) -> ReviewStats:
+        """Get review statistics."""
+        cursor = self.conn.cursor()
+        today = date.today()
+        week_end = today + timedelta(days=7)
+
+        cursor.execute("SELECT COUNT(*) FROM reviews WHERE next_review_date <= ?", (today.isoformat(),))
+        due_today = cursor.fetchone()[0]
+
+        cursor.execute("SELECT COUNT(*) FROM reviews WHERE next_review_date <= ?", (week_end.isoformat(),))
+        due_this_week = cursor.fetchone()[0]
+
+        cursor.execute("SELECT COUNT(*) FROM reviews")
+        total = cursor.fetchone()[0]
+
+        return ReviewStats(due_today=due_today, due_this_week=due_this_week, total_in_review=total)
+
+    # ------------------------------------------------------------------
+    # Stats
+    # ------------------------------------------------------------------
+
+    def get_summary_stats(self) -> RepositoryStats:
+        """Get repository summary statistics."""
+        cursor = self.conn.cursor()
+
+        cursor.execute("SELECT COUNT(*) FROM problems")
+        total = cursor.fetchone()[0]
+
+        cursor.execute("SELECT difficulty, COUNT(*) FROM problems GROUP BY difficulty")
+        by_difficulty = {row[0]: row[1] for row in cursor.fetchall() if row[0]}
+
+        cursor.execute("SELECT source, COUNT(*) FROM problems GROUP BY source")
+        by_source = {row[0]: row[1] for row in cursor.fetchall() if row[0]}
+
+        cursor.execute("SELECT language, COUNT(*) FROM problems GROUP BY language")
+        by_language = {row[0]: row[1] for row in cursor.fetchall() if row[0]}
+
+        return RepositoryStats(
+            total_problems=total,
+            by_difficulty=by_difficulty,
+            by_source=by_source,
+            by_language=by_language,
+        )
+
+    # ------------------------------------------------------------------
+    # Config
+    # ------------------------------------------------------------------
+
+    def get_config(self, key: str, default: Optional[str] = None) -> Optional[str]:
+        """Get a config value."""
+        cursor = self.conn.cursor()
+        cursor.execute("SELECT value FROM config WHERE key = ?", (key,))
+        row = cursor.fetchone()
+        return row[0] if row else default
+
+    def set_config(self, key: str, value: str) -> None:
+        """Set a config value."""
+        cursor = self.conn.cursor()
+        cursor.execute("INSERT OR REPLACE INTO config (key, value) VALUES (?, ?)", (key, value))
+        self.conn.commit()
+
+    def get_all_config(self) -> dict[str, str]:
+        """Get all config values."""
+        cursor = self.conn.cursor()
+        cursor.execute("SELECT key, value FROM config")
+        return {row[0]: row[1] for row in cursor.fetchall()}

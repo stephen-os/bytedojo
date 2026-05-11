@@ -9,38 +9,30 @@ import click
 from pathlib import Path
 from typing import Optional, List
 
-from bytedojo.core.database import DatabaseManager
+from bytedojo.core.database import Database
 from bytedojo.core.grading import GradingService, GradeResult
 from bytedojo.core.logger import get_logger, Theme
 from bytedojo.core.models.code_language import CodeLanguage
+from bytedojo.core.models.problem_status import ProblemStatus
+from bytedojo.core.models.registered_problem import RegisteredProblem
 from bytedojo.core.repository import Repository
 from bytedojo.core.search import find_problems, select_problem
 
 
-def _display_problem_status(problem: dict, show_test_hint: bool = True):
+def _display_problem_status(problem: RegisteredProblem, show_test_hint: bool = True):
     """Display problem details and current test status."""
-    problem_id = problem['problem_id']
-    source = problem['source']
-    title = problem['title']
-    difficulty = problem.get('difficulty') or 'Unknown'
-    language = problem.get('language', 'python')
-    file_path = problem.get('file_path', '')
-    current_status = problem.get('test_status', 'untested')
-    last_test_run = problem.get('last_test_run')
-    test_output = problem.get('test_output')
-
     click.echo("")
     click.echo(click.style("=" * 70, fg='bright_black'))
     click.echo(click.style("  PROBLEM STATUS", fg='cyan', bold=True))
     click.echo(click.style("=" * 70, fg='bright_black'))
     click.echo("")
-    click.echo(f"  {problem_id}: {click.style(title, bold=True)}")
-    click.echo(f"  Source: {source.capitalize()}")
-    click.echo(f"  Language: {language.upper()}")
-    click.echo(f"  Difficulty: {difficulty}")
+    click.echo(f"  {problem.problem_id}: {click.style(problem.title, bold=True)}")
+    click.echo(f"  Source: {problem.source.capitalize()}")
+    click.echo(f"  Language: {problem.language.value.upper()}")
+    click.echo(f"  Difficulty: {problem.difficulty.value or 'Unknown'}")
 
-    if file_path:
-        click.echo(f"  File: {file_path}")
+    if problem.file_path:
+        click.echo(f"  File: {problem.file_path}")
 
     click.echo("")
     click.echo(click.style("-" * 70, fg='bright_black'))
@@ -48,26 +40,26 @@ def _display_problem_status(problem: dict, show_test_hint: bool = True):
     click.echo(click.style("-" * 70, fg='bright_black'))
     click.echo("")
 
-    status_display = current_status.upper()
+    status = problem.status or ProblemStatus.UNGRADED
 
-    if current_status == 'passed':
-        click.echo(f"  Status: {click.style(status_display, fg='green', bold=True)}")
-    elif current_status == 'failed':
-        click.echo(f"  Status: {click.style(status_display, fg='red', bold=True)}")
-    elif current_status == 'error':
-        click.echo(f"  Status: {click.style(status_display, fg='yellow', bold=True)}")
-    elif current_status in ('untested', 'ungraded'):
+    if status == ProblemStatus.PASSED:
+        click.echo(f"  Status: {click.style('PASSED', fg='green', bold=True)}")
+    elif status == ProblemStatus.FAILED:
+        click.echo(f"  Status: {click.style('FAILED', fg='red', bold=True)}")
+    elif status == ProblemStatus.SKIPPED:
+        click.echo(f"  Status: {click.style('SKIPPED', fg='yellow', bold=True)}")
+    elif status == ProblemStatus.UNGRADED:
         click.echo(f"  Status: {click.style('NOT TESTED', fg='bright_black')}")
         if show_test_hint:
-            click.echo(f"  {click.style('Tip:', fg='cyan')} Run 'dojo test {problem_id}' to test your solution")
+            click.echo(f"  {click.style('Tip:', fg='cyan')} Run 'dojo test {problem.problem_id}' to test your solution")
     else:
-        click.echo(f"  Status: {status_display}")
+        click.echo(f"  Status: {status.value.upper()}")
 
-    if last_test_run:
-        click.echo(f"  Last Run: {last_test_run}")
+    if problem.last_test_run:
+        click.echo(f"  Last Run: {problem.last_test_run}")
 
-    if test_output:
-        click.echo(f"  Results: {test_output}")
+    if problem.test_output:
+        click.echo(f"  Results: {problem.test_output}")
 
     click.echo("")
 
@@ -117,21 +109,19 @@ def _prompt_for_manual_grade() -> tuple[Optional[str], Optional[str]]:
     return status, notes if notes else None
 
 
-def _apply_grade(db: DatabaseManager, problem: dict, status: str, notes: str = None):
+def _apply_grade(db: Database, problem: RegisteredProblem, status: str, notes: str = None):
     """
     Apply a grade to a problem and display the result.
 
     Args:
-        db: Database manager
-        problem: Problem dict
+        db: Database instance
+        problem: RegisteredProblem object
         status: Grade status ('passed', 'failed', 'skipped')
         notes: Optional notes
     """
-    problem_db_id = problem['id']
-
     # Use grading service for business logic
     service = GradingService(db)
-    result = service.grade_problem(problem_db_id, status, notes)
+    result = service.grade_problem(problem.id, status, notes)
 
     # Display the result
     _display_grade_result(result)
@@ -157,12 +147,12 @@ def _display_grade_result(result: GradeResult):
     click.echo("")
 
 
-def _view_and_grade_problem(problem: dict, status: str = None, notes: str = None, manual: bool = False):
+def _view_and_grade_problem(problem: RegisteredProblem, status: str = None, notes: str = None, manual: bool = False):
     """
     View problem status and optionally apply a manual grade.
 
     Args:
-        problem: Problem dict from database
+        problem: RegisteredProblem object
         status: Optional status ('passed', 'failed', 'skipped')
         notes: Optional notes
         manual: If True, prompt for manual grade
@@ -174,13 +164,9 @@ def _view_and_grade_problem(problem: dict, status: str = None, notes: str = None
     if repo is None:
         raise click.ClickException("Not inside a .dojo repository. Please run 'dojo init' first.")
 
-    with DatabaseManager(repo.db_path) as db:
+    with Database(repo.db_path) as db:
         # Refresh problem data
-        refreshed = db.get_problem(
-            problem['source'],
-            int(problem['problem_id']),
-            problem['language']
-        )
+        refreshed = db.get_problem(problem.source, problem.problem_id, problem.language.value)
         if refreshed:
             problem = refreshed
 
@@ -203,7 +189,7 @@ def _view_and_grade_problem(problem: dict, status: str = None, notes: str = None
         return True
 
 
-def _display_problems_page(problems: list, page: int, per_page: int, title: str) -> tuple[int, int, List[dict]]:
+def _display_problems_page(problems: List[RegisteredProblem], page: int, per_page: int, title: str) -> tuple[int, int, List[RegisteredProblem]]:
     """
     Display a page of problems.
 
@@ -227,13 +213,13 @@ def _display_problems_page(problems: list, page: int, per_page: int, title: str)
     click.echo(f"  {'-' * 3}  {'-' * 8}  {'-' * 8}  {'-' * 6}  {'-' * 6}  {'-' * 25}")
 
     for i, problem in enumerate(page_problems, start=1):
-        problem_id = problem['problem_id']
-        status = (problem.get('test_status') or 'untested')[:8]
-        language = (problem.get('language') or 'py')[:6]
-        difficulty = (problem.get('difficulty') or '?')[:6]
-        title_text = problem['title'][:25] + ('...' if len(problem['title']) > 25 else '')
+        status = problem.status or ProblemStatus.UNGRADED
+        status_val = status.value[:8]
+        lang_val = (problem.language.value if problem.language else 'py')[:6]
+        diff_val = (problem.difficulty.value if problem.difficulty else '?')[:6]
+        title_text = problem.title[:25] + ('...' if len(problem.title) > 25 else '')
 
-        click.echo(f"  {i:>3}  {problem_id:>8}  {status:8}  {language:6}  {difficulty:6}  {title_text}")
+        click.echo(f"  {i:>3}  {problem.problem_id:>8}  {status_val:8}  {lang_val:6}  {diff_val:6}  {title_text}")
 
     click.echo("")
     click.echo(click.style("-" * 70, fg='bright_black'))
@@ -243,7 +229,7 @@ def _display_problems_page(problems: list, page: int, per_page: int, title: str)
     return page, total_pages, page_problems
 
 
-def _batch_view_loop(problems: list, per_page: int = 10):
+def _batch_view_loop(problems: List[RegisteredProblem], per_page: int = 10):
     """Run interactive problem status viewing loop."""
     if not problems:
         click.echo("")
@@ -300,7 +286,7 @@ def _batch_view_loop(problems: list, per_page: int = 10):
                     repo = Repository.open(Path.cwd())
                     if repo is None:
                         raise click.ClickException("Not inside a .dojo repository. Please run 'dojo init' first.")
-                    with DatabaseManager(repo.db_path) as db:
+                    with Database(repo.db_path) as db:
                         problems = db.list_problems()
 
                     # Pause before returning to list
@@ -378,7 +364,7 @@ def grade(
     elif status_skip:
         status = 'skipped'
 
-    with DatabaseManager(repo.db_path) as db:
+    with Database(repo.db_path) as db:
         # Batch mode: no identifier, name, desc, or last
         if not identifier and not name_search and not desc_search and not last:
             problems = db.list_problems()
@@ -394,7 +380,7 @@ def grade(
                     f"Fetch one first with: dojo fetch <id> --{language if language != 'python3' else 'python'}"
                 )
             # Get most recent by fetched_at
-            problem_data = max(problems, key=lambda p: p.get('fetched_at', ''))
+            problem_data = max(problems, key=lambda p: p.fetched_at)
         else:
             # Find matching problems
             matches = find_problems(

@@ -5,9 +5,9 @@ Review command - Spaced repetition review system for problems.
 import click
 from pathlib import Path
 
-from bytedojo.core.database import DatabaseManager
+from bytedojo.core.database import Database
 from bytedojo.core.repository import Repository
-from bytedojo.core.review_service import ReviewService, ReviewProblem
+from bytedojo.core.review_service import ReviewService
 
 
 @click.group(invoke_without_command=True)
@@ -39,7 +39,7 @@ def _show_due_reviews(show_all: bool = False):
     if repo is None:
         raise click.ClickException("Not inside a .dojo repository. Please run 'dojo init' first.")
 
-    with DatabaseManager(repo.db_path) as db:
+    with Database(repo.db_path) as db:
         service = ReviewService(db)
         reviews = service.get_due_reviews(include_future=show_all)
         review_freq = service.get_review_frequency()
@@ -77,6 +77,7 @@ def _show_due_reviews(show_all: bool = False):
         for r in reviews:
             title = r.title[:30] + '...' if len(r.title) > 30 else r.title
             due_date = ReviewService.format_due_date(r.next_review_date)
+            display_id = r.problem_num if r.problem_num else r.problem_id
 
             # Color based on due status
             if r.is_overdue:
@@ -86,7 +87,7 @@ def _show_due_reviews(show_all: bool = False):
             else:
                 due_styled = click.style(f"{due_date:15}", fg='green')
 
-            click.echo(f"  {r.problem_id:>8}  {r.source:10}  {due_styled}  {r.repetitions:>7}  {title}")
+            click.echo(f"  {display_id:>8}  {r.source:10}  {due_styled}  {r.repetitions:>7}  {title}")
 
         click.echo("")
         click.echo(click.style("-" * 60, fg='bright_black'))
@@ -114,7 +115,7 @@ def pick(ctx):
     if repo is None:
         raise click.ClickException("Not inside a .dojo repository. Please run 'dojo init' first.")
 
-    with DatabaseManager(repo.db_path) as db:
+    with Database(repo.db_path) as db:
         service = ReviewService(db)
         problem = service.pick_random_due()
 
@@ -124,6 +125,7 @@ def pick(ctx):
             return
 
         due_date = ReviewService.format_due_date(problem.next_review_date)
+        display_id = problem.problem_num if problem.problem_num else problem.problem_id
 
         # Display the picked problem
         click.echo("")
@@ -131,17 +133,14 @@ def pick(ctx):
         click.echo(click.style("  REVIEW THIS PROBLEM", fg='yellow', bold=True))
         click.echo(click.style("=" * 60, fg='bright_black'))
         click.echo("")
-        click.echo(f"  {problem.problem_id}: {click.style(problem.title, bold=True)}")
+        click.echo(f"  {display_id}: {click.style(problem.title, bold=True)}")
         click.echo(f"  Source: {problem.source.capitalize()}")
-        click.echo(f"  Difficulty: {problem.difficulty}")
+        click.echo(f"  Difficulty: {problem.difficulty or 'Unknown'}")
         click.echo(f"  Times Reviewed: {problem.repetitions}")
         click.echo(f"  Due: {due_date}")
 
         if problem.file_path:
             click.echo(f"  File: {problem.file_path}")
-
-        if problem.url:
-            click.echo(f"  URL: {problem.url}")
 
         click.echo("")
         click.echo(click.style("-" * 60, fg='bright_black'))
@@ -156,7 +155,7 @@ def pick(ctx):
         if problem.file_path:
             click.echo(f"  1. Open the file and solve it again")
             click.echo(f"  2. Submit to {problem.source.capitalize()} to verify your solution")
-            click.echo(f"  3. Run: dojo grade {problem.problem_id} --pass")
+            click.echo(f"  3. Run: dojo grade {display_id} --pass")
             click.echo(f"  4. Grading as passed will schedule the next review")
         click.echo("")
 
@@ -175,9 +174,10 @@ def stats():
     if repo is None:
         raise click.ClickException("Not inside a .dojo repository. Please run 'dojo init' first.")
 
-    with DatabaseManager(repo.db_path) as db:
+    with Database(repo.db_path) as db:
         service = ReviewService(db)
         review_stats = service.get_stats()
+        review_freq = service.get_review_frequency()
 
         click.echo("")
         click.echo(click.style("=" * 60, fg='bright_black'))
@@ -185,17 +185,11 @@ def stats():
         click.echo(click.style("=" * 60, fg='bright_black'))
         click.echo("")
 
-        click.echo(f"  Review Frequency: {review_stats.review_frequency_days} days")
+        click.echo(f"  Review Frequency: {review_freq} days")
         click.echo("")
         click.echo(f"  Due Today:        {click.style(str(review_stats.due_today), fg='yellow' if review_stats.due_today > 0 else 'green')}")
         click.echo(f"  Due This Week:    {review_stats.due_this_week}")
         click.echo(f"  Total in Review:  {review_stats.total_in_review}")
-
-        if review_stats.most_reviewed:
-            click.echo("")
-            click.echo("  Most Reviewed Problems:")
-            for p in review_stats.most_reviewed:
-                click.echo(f"    {p['problem_id']:>8} ({p['source']}) - {p['repetitions']} reviews")
 
         click.echo("")
         click.echo(click.style("=" * 60, fg='bright_black'))

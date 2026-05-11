@@ -98,7 +98,7 @@ def pick(ctx, difficulty: str | None, tags: tuple, scope: str | None):
 
     # Get already-registered problem IDs from repo
     registered_problems = repo.get_registered_problems()
-    registered_ids = {p["problem_id"] for p in registered_problems}
+    registered_ids = {p.problem_id for p in registered_problems}
     logger.debug(f"pick: {len(registered_ids)} problems already registered")
 
     # Filter based on scope
