@@ -1,0 +1,877 @@
+{
+  "schema_version": 1,
+  "problem_id": 3297,
+  "title": "Count Substrings That Can Be Rearranged to Contain a String I",
+  "method": "validSubstringCount",
+  "signature": {
+    "params": [
+      {
+        "name": "word1",
+        "type": "STRING"
+      },
+      {
+        "name": "word2",
+        "type": "STRING"
+      }
+    ],
+    "returns": "INT32"
+  },
+  "cases": [
+    {
+      "case_id": 1,
+      "input": {
+        "word1": "banana",
+        "word2": "ban"
+      },
+      "expected": 4
+    },
+    {
+      "case_id": 2,
+      "input": {
+        "word1": "abc",
+        "word2": "abcd"
+      },
+      "expected": 0
+    },
+    {
+      "case_id": 3,
+      "input": {
+        "word1": "abcdefghijklmnopqrstuvwxyz",
+        "word2": "zyxwvutsrqponmlkjihgfedcba"
+      },
+      "expected": 1
+    },
+    {
+      "case_id": 4,
+      "input": {
+        "word1": "aaaabc",
+        "word2": "aaa"
+      },
+      "expected": 7
+    },
+    {
+      "case_id": 5,
+      "input": {
+        "word1": "mississippi",
+        "word2": "issi"
+      },
+      "expected": 27
+    },
+    {
+      "case_id": 6,
+      "input": {
+        "word1": "abcabc",
+        "word2": "aaabc"
+      },
+      "expected": 0
+    },
+    {
+      "case_id": 7,
+      "input": {
+        "word1": "abababab",
+        "word2": "aba"
+      },
+      "expected": 18
+    },
+    {
+      "case_id": 8,
+      "input": {
+        "word1": "abcabc",
+        "word2": "abc"
+      },
+      "expected": 10
+    },
+    {
+      "case_id": 9,
+      "input": {
+        "word1": "aaaaaaaaaaa",
+        "word2": "aaaa"
+      },
+      "expected": 36
+    },
+    {
+      "case_id": 10,
+      "input": {
+        "word1": "zzzzzzzz",
+        "word2": "zzz"
+      },
+      "expected": 21
+    },
+    {
+      "case_id": 11,
+      "input": {
+        "word1": "a",
+        "word2": ""
+      },
+      "expected": "Error: string index out of range"
+    },
+    {
+      "case_id": 12,
+      "input": {
+        "word1": "abcdeabcde",
+        "word2": "abc"
+      },
+      "expected": 26
+    },
+    {
+      "case_id": 13,
+      "input": {
+        "word1": "aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz",
+        "word2": "zyxwvutsrqponmlkjihgfedcba"
+      },
+      "expected": 4
+    },
+    {
+      "case_id": 14,
+      "input": {
+        "word1": "",
+        "word2": "a"
+      },
+      "expected": 0
+    },
+    {
+      "case_id": 15,
+      "input": {
+        "word1": "bcca",
+        "word2": "abc"
+      },
+      "expected": 1
+    },
+    {
+      "case_id": 16,
+      "input": {
+        "word1": "aaa",
+        "word2": "a"
+      },
+      "expected": 6
+    },
+    {
+      "case_id": 17,
+      "input": {
+        "word1": "aabbcc",
+        "word2": "abc"
+      },
+      "expected": 4
+    },
+    {
+      "case_id": 18,
+      "input": {
+        "word1": "xyz",
+        "word2": "xyz"
+      },
+      "expected": 1
+    },
+    {
+      "case_id": 19,
+      "input": {
+        "word1": "abcabcabcabc",
+        "word2": "abcabc"
+      },
+      "expected": 28
+    },
+    {
+      "case_id": 20,
+      "input": {
+        "word1": "aaaa",
+        "word2": "aa"
+      },
+      "expected": 6
+    },
+    {
+      "case_id": 21,
+      "input": {
+        "word1": "abcdabcd",
+        "word2": "abcd"
+      },
+      "expected": 15
+    },
+    {
+      "case_id": 22,
+      "input": {
+        "word1": "zzzzzzzzzzzzzzzzzzzz",
+        "word2": "zzz"
+      },
+      "expected": 171
+    },
+    {
+      "case_id": 23,
+      "input": {
+        "word1": "abababababababababab",
+        "word2": "ababab"
+      },
+      "expected": 120
+    },
+    {
+      "case_id": 24,
+      "input": {
+        "word1": "abcabcabcabcabcabc",
+        "word2": "abcabc"
+      },
+      "expected": 91
+    },
+    {
+      "case_id": 25,
+      "input": {
+        "word1": "overlappingprefixoverlappingprefix",
+        "word2": "overlappingprefix"
+      },
+      "expected": 171
+    },
+    {
+      "case_id": 26,
+      "input": {
+        "word1": "supercalifragilisticexpialidocious",
+        "word2": "califragilisticexpialidocious"
+      },
+      "expected": 8
+    },
+    {
+      "case_id": 27,
+      "input": {
+        "word1": "xzyxzyxzyxzyxzyxzyxzyxzyxzyxzyxzyxzyxzyxzyxzyxzyxzyxzyxzyxzyxzyxzyxzyxzyxzyxzyxzyxzyxzyxzyxzyxzyxzyxzyxzy",
+        "word2": "xyz"
+      },
+      "expected": 5356
+    },
+    {
+      "case_id": 28,
+      "input": {
+        "word1": "aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz",
+        "word2": "mnopqrstuvwxyzaabbccddeeff"
+      },
+      "expected": 2
+    },
+    {
+      "case_id": 29,
+      "input": {
+        "word1": "abracadabra",
+        "word2": "abra"
+      },
+      "expected": 25
+    },
+    {
+      "case_id": 30,
+      "input": {
+        "word1": "zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz",
+        "word2": "zzz"
+      },
+      "expected": 1176
+    },
+    {
+      "case_id": 31,
+      "input": {
+        "word1": "ababababababababababababababababab",
+        "word2": "ababab"
+      },
+      "expected": 435
+    },
+    {
+      "case_id": 32,
+      "input": {
+        "word1": "abcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabc",
+        "word2": "abcabc"
+      },
+      "expected": 1081
+    },
+    {
+      "case_id": 33,
+      "input": {
+        "word1": "aabbccddeeff",
+        "word2": "abcdef"
+      },
+      "expected": 4
+    },
+    {
+      "case_id": 34,
+      "input": {
+        "word1": "thisisaverylongstringtocheck",
+        "word2": "verylong"
+      },
+      "expected": 112
+    },
+    {
+      "case_id": 35,
+      "input": {
+        "word1": "aaaaabaaaabaaaaaaaabaaaabaaaaabaaaabaaaaabaaaabaaaaabaaaaabaaaaabaaaabaaaaabaaaaabaaaaabaaaaaab",
+        "word2": "aaab"
+      },
+      "expected": 4225
+    },
+    {
+      "case_id": 36,
+      "input": {
+        "word1": "abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz",
+        "word2": "zyxwvutsrqponmlkjihgfedcba"
+      },
+      "expected": 378
+    },
+    {
+      "case_id": 37,
+      "input": {
+        "word1": "abcdabcdabcdabcdabcdabcdabcdabcdabcdabcd",
+        "word2": "abcdabcd"
+      },
+      "expected": 561
+    },
+    {
+      "case_id": 38,
+      "input": {
+        "word1": "abcdabcdabcdabcdabcdabcdabcdabcdabcd",
+        "word2": "abcdabcd"
+      },
+      "expected": 435
+    },
+    {
+      "case_id": 39,
+      "input": {
+        "word1": "qwertyuiopasdfghjklzxcvbnmqwertyuiopasdfghjklzxcvbnm",
+        "word2": "qwertyuiopasdfghjklzxcvbnm"
+      },
+      "expected": 378
+    },
+    {
+      "case_id": 40,
+      "input": {
+        "word1": "aaaaaaaaaabbbbbbbbbbccccccccccdddddddddd",
+        "word2": "abcd"
+      },
+      "expected": 100
+    },
+    {
+      "case_id": 41,
+      "input": {
+        "word1": "xyxxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyx",
+        "word2": "xyxy"
+      },
+      "expected": 1538
+    },
+    {
+      "case_id": 42,
+      "input": {
+        "word1": "repeatedprefixprefixprefixprefix",
+        "word2": "prefix"
+      },
+      "expected": 342
+    },
+    {
+      "case_id": 43,
+      "input": {
+        "word1": "aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz",
+        "word2": "abcdefghijklmnopqrstuv"
+      },
+      "expected": 20
+    },
+    {
+      "case_id": 44,
+      "input": {
+        "word1": "qwertyuiopasdfghjklzxcvbnmqwertyuiopasdfghjklzxcvbnm",
+        "word2": "qwerty"
+      },
+      "expected": 608
+    },
+    {
+      "case_id": 45,
+      "input": {
+        "word1": "abcabcabcabcabcabcabcabc",
+        "word2": "abcabc"
+      },
+      "expected": 190
+    },
+    {
+      "case_id": 46,
+      "input": {
+        "word1": "repeatedrepeatedrepeated",
+        "word2": "repeatedrepeated"
+      },
+      "expected": 45
+    },
+    {
+      "case_id": 47,
+      "input": {
+        "word1": "thisisaverylongwordthatcontainsmultipleoccurrencesofthesubstring",
+        "word2": "substring"
+      },
+      "expected": 146
+    },
+    {
+      "case_id": 48,
+      "input": {
+        "word1": "ababababab",
+        "word2": "abab"
+      },
+      "expected": 28
+    },
+    {
+      "case_id": 49,
+      "input": {
+        "word1": "aabbccddeeffaabbccddeeffaabbccddeeff",
+        "word2": "aabbccdd"
+      },
+      "expected": 349
+    },
+    {
+      "case_id": 50,
+      "input": {
+        "word1": "mississippimississippi",
+        "word2": "issi"
+      },
+      "expected": 161
+    },
+    {
+      "case_id": 51,
+      "input": {
+        "word1": "racecar",
+        "word2": "race"
+      },
+      "expected": 7
+    },
+    {
+      "case_id": 52,
+      "input": {
+        "word1": "hellohellohello",
+        "word2": "hell"
+      },
+      "expected": 69
+    },
+    {
+      "case_id": 53,
+      "input": {
+        "word1": "zzzzzzzzzz",
+        "word2": "zzz"
+      },
+      "expected": 36
+    },
+    {
+      "case_id": 54,
+      "input": {
+        "word1": "aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz",
+        "word2": "mnopqrstuvwxzy"
+      },
+      "expected": 52
+    },
+    {
+      "case_id": 55,
+      "input": {
+        "word1": "twoprefixtwoprefixtwoprefix",
+        "word2": "twoprefix"
+      },
+      "expected": 190
+    },
+    {
+      "case_id": 56,
+      "input": {
+        "word1": "shortword",
+        "word2": "word"
+      },
+      "expected": 6
+    },
+    {
+      "case_id": 57,
+      "input": {
+        "word1": "threeprefixthreeprefixthreeprefix",
+        "word2": "threeprefix"
+      },
+      "expected": 276
+    },
+    {
+      "case_id": 58,
+      "input": {
+        "word1": "aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz",
+        "word2": "abcdefghijklmnopqrstuvwxyz"
+      },
+      "expected": 4
+    },
+    {
+      "case_id": 59,
+      "input": {
+        "word1": "abababababababababababababababababababababababababababababa",
+        "word2": "bab"
+      },
+      "expected": 1624
+    },
+    {
+      "case_id": 60,
+      "input": {
+        "word1": "abcdeabcdeabcdeabcdeabcde",
+        "word2": "abcde"
+      },
+      "expected": 231
+    },
+    {
+      "case_id": 61,
+      "input": {
+        "word1": "aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz",
+        "word2": "mnopqrstuvwxyz"
+      },
+      "expected": 52
+    },
+    {
+      "case_id": 62,
+      "input": {
+        "word1": "hellohellohellohellohello",
+        "word2": "lohel"
+      },
+      "expected": 231
+    },
+    {
+      "case_id": 63,
+      "input": {
+        "word1": "abcabcabcabcabcabcabcabcabcabc",
+        "word2": "abcabc"
+      },
+      "expected": 325
+    },
+    {
+      "case_id": 64,
+      "input": {
+        "word1": "ababababababababababab",
+        "word2": "bababa"
+      },
+      "expected": 153
+    },
+    {
+      "case_id": 65,
+      "input": {
+        "word1": "oneprefixoneprefixoneprefix",
+        "word2": "oneprefix"
+      },
+      "expected": 190
+    },
+    {
+      "case_id": 66,
+      "input": {
+        "word1": "zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz",
+        "word2": "zzzzzzzzzz"
+      },
+      "expected": 946
+    },
+    {
+      "case_id": 67,
+      "input": {
+        "word1": "aaaaaaaaaa",
+        "word2": "aa"
+      },
+      "expected": 45
+    },
+    {
+      "case_id": 68,
+      "input": {
+        "word1": "ababababababababababababababababababababababababa",
+        "word2": "ab"
+      },
+      "expected": 1176
+    },
+    {
+      "case_id": 69,
+      "input": {
+        "word1": "xylophone",
+        "word2": "phone"
+      },
+      "expected": 5
+    },
+    {
+      "case_id": 70,
+      "input": {
+        "word1": "qwertyuiopasdfghjklzxcvbnm",
+        "word2": "zxcvbnm"
+      },
+      "expected": 20
+    },
+    {
+      "case_id": 71,
+      "input": {
+        "word1": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "word2": "aaa"
+      },
+      "expected": 1176
+    },
+    {
+      "case_id": 72,
+      "input": {
+        "word1": "abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz",
+        "word2": "zyxcba"
+      },
+      "expected": 588
+    },
+    {
+      "case_id": 73,
+      "input": {
+        "word1": "abracadabraabracadabraabracadabra",
+        "word2": "abrac"
+      },
+      "expected": 375
+    },
+    {
+      "case_id": 74,
+      "input": {
+        "word1": "thisisaverylongstringwithrepeatingcharacters",
+        "word2": "repeating"
+      },
+      "expected": 391
+    },
+    {
+      "case_id": 75,
+      "input": {
+        "word1": "xyzzxyzzxyzz",
+        "word2": "xyzz"
+      },
+      "expected": 45
+    },
+    {
+      "case_id": 76,
+      "input": {
+        "word1": "abcdefghijabcdefghij",
+        "word2": "abcdefghij"
+      },
+      "expected": 66
+    },
+    {
+      "case_id": 77,
+      "input": {
+        "word1": "abracadabraabracadabra",
+        "word2": "abracadabra"
+      },
+      "expected": 78
+    },
+    {
+      "case_id": 78,
+      "input": {
+        "word1": "testingtestingtestingtesting",
+        "word2": "testingtesting"
+      },
+      "expected": 120
+    },
+    {
+      "case_id": 79,
+      "input": {
+        "word1": "thisisaverylongstringthatcontainssomeprefixsomewhere",
+        "word2": "somewhere"
+      },
+      "expected": 183
+    },
+    {
+      "case_id": 80,
+      "input": {
+        "word1": "mississippi",
+        "word2": "iss"
+      },
+      "expected": 38
+    },
+    {
+      "case_id": 81,
+      "input": {
+        "word1": "thisisanexamplestringfortesting",
+        "word2": "example"
+      },
+      "expected": 159
+    },
+    {
+      "case_id": 82,
+      "input": {
+        "word1": "hellohellohellohellohellohellohellohello",
+        "word2": "hellohello"
+      },
+      "expected": 496
+    },
+    {
+      "case_id": 83,
+      "input": {
+        "word1": "alphabet",
+        "word2": "beta"
+      },
+      "expected": 5
+    },
+    {
+      "case_id": 84,
+      "input": {
+        "word1": "zyxwvutsrqponmlkjihgfedcba",
+        "word2": "abcdefghijklmnopqrstuvwxyz"
+      },
+      "expected": 1
+    },
+    {
+      "case_id": 85,
+      "input": {
+        "word1": "xyzxyzxyzxyzxyzxyz",
+        "word2": "zyxzyx"
+      },
+      "expected": 91
+    },
+    {
+      "case_id": 86,
+      "input": {
+        "word1": "abcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabc",
+        "word2": "abc"
+      },
+      "expected": 4465
+    },
+    {
+      "case_id": 87,
+      "input": {
+        "word1": "hellohellohellohellohellohellohellohellohellohellohello",
+        "word2": "hello"
+      },
+      "expected": 1326
+    },
+    {
+      "case_id": 88,
+      "input": {
+        "word1": "abacabadabacaba",
+        "word2": "abaca"
+      },
+      "expected": 56
+    },
+    {
+      "case_id": 89,
+      "input": {
+        "word1": "verylongstringwithmanymatchingprefixes",
+        "word2": "prefix"
+      },
+      "expected": 93
+    },
+    {
+      "case_id": 90,
+      "input": {
+        "word1": "zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz",
+        "word2": "zzzz"
+      },
+      "expected": 1431
+    },
+    {
+      "case_id": 91,
+      "input": {
+        "word1": "zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz",
+        "word2": "zzzz"
+      },
+      "expected": 5151
+    },
+    {
+      "case_id": 92,
+      "input": {
+        "word1": "pppppppppppppppppppppppppppppppppppppppppppppppppppppppppp",
+        "word2": "ppppppp"
+      },
+      "expected": 1378
+    },
+    {
+      "case_id": 93,
+      "input": {
+        "word1": "aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz",
+        "word2": "abcde"
+      },
+      "expected": 88
+    },
+    {
+      "case_id": 94,
+      "input": {
+        "word1": "onetwothreefourfivesixseveneightnine",
+        "word2": "threefour"
+      },
+      "expected": 164
+    },
+    {
+      "case_id": 95,
+      "input": {
+        "word1": "abababababababababababababababababab",
+        "word2": "aba"
+      },
+      "expected": 578
+    },
+    {
+      "case_id": 96,
+      "input": {
+        "word1": "aaabbbcccdddeeefffggghhhiiiijjjjkkkkllllmmmmnnnnooopppqqqqrrrrssssttttuuuuvvvvwwwwxxxxyyyyzzzz",
+        "word2": "mnopqrstuvwxyz"
+      },
+      "expected": 176
+    },
+    {
+      "case_id": 97,
+      "input": {
+        "word1": "aaaaaaaaaa",
+        "word2": "aaaaa"
+      },
+      "expected": 21
+    },
+    {
+      "case_id": 98,
+      "input": {
+        "word1": "abcabcabcabcabcabcabcabcabcabc",
+        "word2": "abcabcabc"
+      },
+      "expected": 253
+    },
+    {
+      "case_id": 99,
+      "input": {
+        "word1": "qwertyuiopasdfghjklzxcvbnm",
+        "word2": "abcdefghijklmnopqrstuvwxyz"
+      },
+      "expected": 1
+    },
+    {
+      "case_id": 100,
+      "input": {
+        "word1": "abcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcd",
+        "word2": "abcdabcdabcd"
+      },
+      "expected": 1431
+    },
+    {
+      "case_id": 101,
+      "input": {
+        "word1": "aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz",
+        "word2": "mnop"
+      },
+      "expected": 572
+    },
+    {
+      "case_id": 102,
+      "input": {
+        "word1": "loooooooooooooooooooongwordwithrepeatedletters",
+        "word2": "oooooo"
+      },
+      "expected": 557
+    },
+    {
+      "case_id": 103,
+      "input": {
+        "word1": "almostmatchingprefixalmostmatchingprefix",
+        "word2": "almostmatching"
+      },
+      "expected": 259
+    },
+    {
+      "case_id": 104,
+      "input": {
+        "word1": "xyzxyzxyzxyzxyzxyzxyzxyzxyzxyzxyzxyz",
+        "word2": "xyzxyz"
+      },
+      "expected": 496
+    },
+    {
+      "case_id": 105,
+      "input": {
+        "word1": "12345678901234567890",
+        "word2": "9087654321"
+      },
+      "expected": 66
+    },
+    {
+      "case_id": 106,
+      "input": {
+        "word1": "uniquecharacters",
+        "word2": "characters"
+      },
+      "expected": 7
+    },
+    {
+      "case_id": 107,
+      "input": {
+        "word1": "abcdefghijklmnopqrstuvwxyz",
+        "word2": "zyx"
+      },
+      "expected": 24
+    }
+  ]
+}

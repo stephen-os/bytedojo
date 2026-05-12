@@ -1,0 +1,1335 @@
+{
+  "schema_version": 1,
+  "problem_id": 2115,
+  "title": "Find All Possible Recipes from Given Supplies",
+  "method": "findAllRecipes",
+  "signature": {
+    "params": [
+      {
+        "name": "recipes",
+        "type": "STRING_ARRAY"
+      },
+      {
+        "name": "ingredients",
+        "type": "STRING_MATRIX"
+      },
+      {
+        "name": "supplies",
+        "type": "STRING_ARRAY"
+      }
+    ],
+    "returns": "STRING_ARRAY"
+  },
+  "comparison": "unordered_all",
+  "cases": [
+    {
+      "case_id": 1,
+      "input": {
+        "recipes": ["bread", "sandwich"],
+        "ingredients": [
+          ["yeast", "flour"],
+          ["bread", "meat"]
+        ],
+        "supplies": ["yeast", "flour", "meat"]
+      },
+      "expected": ["bread", "sandwich"]
+    },
+    {
+      "case_id": 2,
+      "input": {
+        "recipes": ["pasta", "salad"],
+        "ingredients": [
+          ["noodles", "sauce"],
+          ["lettuce", "tomato"]
+        ],
+        "supplies": ["noodles", "sauce", "lettuce"]
+      },
+      "expected": ["pasta"]
+    },
+    {
+      "case_id": 3,
+      "input": {
+        "recipes": ["bread", "sandwich", "burger"],
+        "ingredients": [
+          ["yeast", "flour"],
+          ["bread", "meat"],
+          ["sandwich", "meat", "bread"]
+        ],
+        "supplies": ["yeast", "flour", "meat"]
+      },
+      "expected": ["bread", "sandwich", "burger"]
+    },
+    {
+      "case_id": 4,
+      "input": {
+        "recipes": ["cake", "muffin"],
+        "ingredients": [
+          ["flour", "sugar"],
+          ["flour", "eggs"]
+        ],
+        "supplies": ["flour", "sugar"]
+      },
+      "expected": ["cake"]
+    },
+    {
+      "case_id": 5,
+      "input": {
+        "recipes": ["bread"],
+        "ingredients": [
+          ["yeast", "flour"]
+        ],
+        "supplies": ["yeast", "flour", "corn"]
+      },
+      "expected": ["bread"]
+    },
+    {
+      "case_id": 6,
+      "input": {
+        "recipes": ["sushi", "tempura", "udon"],
+        "ingredients": "[[\"rice\",\"seaweed\",\"fish\"],[\"vegetables\",\"tempura_flour\"],[\"noodles\",\"broth\",\"onion\"]",
+        "supplies": ["rice", "seaweed", "fish", "vegetables", "tempura_flour", "noodles", "broth", "onion"]
+      },
+      "expected": "Error: Solution.findAllRecipes() missing 1 required positional argument: 'ingredients'"
+    },
+    {
+      "case_id": 7,
+      "input": {
+        "recipes": ["cake", "muffin", "brownie"],
+        "ingredients": [
+          ["flour", "sugar", "eggs"],
+          ["flour", "sugar", "butter"],
+          ["flour", "sugar", "chocolate"]
+        ],
+        "supplies": ["flour", "sugar", "eggs"]
+      },
+      "expected": ["cake"]
+    },
+    {
+      "case_id": 8,
+      "input": {
+        "recipes": ["cake", "muffin"],
+        "ingredients": [
+          ["flour", "sugar", "eggs"],
+          ["flour", "sugar", "eggs", "butter"]
+        ],
+        "supplies": ["flour", "sugar", "eggs", "butter"]
+      },
+      "expected": ["cake", "muffin"]
+    },
+    {
+      "case_id": 9,
+      "input": {
+        "recipes": ["pizza", "pasta"],
+        "ingredients": [
+          ["dough", "tomato", "cheese"],
+          ["noodles", "sauce"]
+        ],
+        "supplies": ["dough", "tomato", "cheese", "noodles", "sauce"]
+      },
+      "expected": ["pizza", "pasta"]
+    },
+    {
+      "case_id": 10,
+      "input": {
+        "recipes": ["steak_dinner", "chicken_soup", "pasta"],
+        "ingredients": [
+          ["steak", "potato", "carrot"],
+          ["chicken", "vegetable_stock", "carrot"],
+          ["noodles", "sauce", "meat"]
+        ],
+        "supplies": ["steak", "potato", "carrot", "chicken", "vegetable_stock", "noodles", "sauce", "meat"]
+      },
+      "expected": ["steak_dinner", "chicken_soup", "pasta"]
+    },
+    {
+      "case_id": 11,
+      "input": {
+        "recipes": ["soup", "stew"],
+        "ingredients": [
+          ["water", "vegetables", "spices"],
+          ["water", "meat", "vegetables", "spices"]
+        ],
+        "supplies": ["water", "vegetables", "spices"]
+      },
+      "expected": ["soup"]
+    },
+    {
+      "case_id": 12,
+      "input": {
+        "recipes": ["cake", "ice_cream", "brownie"],
+        "ingredients": [
+          ["flour", "sugar", "eggs"],
+          ["milk", "sugar", "vanilla"],
+          ["flour", "cocoa", "sugar"]
+        ],
+        "supplies": ["flour", "sugar", "eggs", "milk", "vanilla"]
+      },
+      "expected": ["cake", "ice_cream"]
+    },
+    {
+      "case_id": 13,
+      "input": {
+        "recipes": ["sushi", "ramen"],
+        "ingredients": [
+          ["rice", "seaweed", "salmon"],
+          ["noodles", "water", "meat", "vegetables"]
+        ],
+        "supplies": ["rice", "noodles", "water", "meat"]
+      },
+      "expected": []
+    },
+    {
+      "case_id": 14,
+      "input": {
+        "recipes": ["cake", "pudding", "pie"],
+        "ingredients": [
+          ["flour", "sugar", "eggs"],
+          ["milk", "sugar", "flour"],
+          ["crust", "fruit", "filling"]
+        ],
+        "supplies": ["flour", "sugar", "eggs", "milk", "crust", "fruit", "filling"]
+      },
+      "expected": ["cake", "pudding", "pie"]
+    },
+    {
+      "case_id": 15,
+      "input": {
+        "recipes": ["cake", "brownie"],
+        "ingredients": [
+          ["flour", "sugar", "eggs"],
+          ["flour", "cocoa", "sugar"]
+        ],
+        "supplies": ["flour", "sugar", "eggs"]
+      },
+      "expected": ["cake"]
+    },
+    {
+      "case_id": 16,
+      "input": {
+        "recipes": ["omelette", "pancake", "waffle"],
+        "ingredients": [
+          ["eggs", "milk"],
+          ["flour", "eggs", "milk"],
+          ["flour", "eggs", "milk", "butter"]
+        ],
+        "supplies": ["eggs", "milk", "flour", "butter", "sugar"]
+      },
+      "expected": ["omelette", "pancake", "waffle"]
+    },
+    {
+      "case_id": 17,
+      "input": {
+        "recipes": ["bread", "sandwich", "burger", "wrap"],
+        "ingredients": [
+          ["yeast", "flour"],
+          ["bread", "meat"],
+          ["bread", "meat", "cheese"],
+          ["bread", "cheese", "lettuce"]
+        ],
+        "supplies": ["yeast", "flour", "meat", "cheese", "lettuce"]
+      },
+      "expected": ["bread", "sandwich", "burger", "wrap"]
+    },
+    {
+      "case_id": 18,
+      "input": {
+        "recipes": ["soup", "stew"],
+        "ingredients": [
+          ["carrot", "onion"],
+          ["carrot", "potato", "beef"]
+        ],
+        "supplies": ["carrot", "onion", "beef", "potato", "pepper"]
+      },
+      "expected": ["soup", "stew"]
+    },
+    {
+      "case_id": 19,
+      "input": {
+        "recipes": ["chocolate_chip_cookie", "oatmeal_cookie"],
+        "ingredients": [
+          ["flour", "sugar", "chocolate_chips"],
+          ["flour", "sugar", "oatmeal"]
+        ],
+        "supplies": ["flour", "sugar", "oatmeal"]
+      },
+      "expected": ["oatmeal_cookie"]
+    },
+    {
+      "case_id": 20,
+      "input": {
+        "recipes": ["pizza", "pasta", "omelette"],
+        "ingredients": [
+          ["dough", "tomato", "cheese"],
+          ["noodles", "sauce"],
+          ["eggs", "milk"]
+        ],
+        "supplies": ["dough", "tomato", "cheese", "noodles", "sauce", "eggs", "milk", "flour"]
+      },
+      "expected": ["pizza", "pasta", "omelette"]
+    },
+    {
+      "case_id": 21,
+      "input": {
+        "recipes": ["juice", "smoothie"],
+        "ingredients": [
+          ["fruit", "water"],
+          ["fruit", "yogurt", "banana"]
+        ],
+        "supplies": ["fruit", "water", "yogurt", "banana", "milk"]
+      },
+      "expected": ["juice", "smoothie"]
+    },
+    {
+      "case_id": 22,
+      "input": {
+        "recipes": ["steak", "chicken", "beef"],
+        "ingredients": [
+          ["beef", "salt"],
+          ["chicken", "pepper"],
+          ["salt", "spice"]
+        ],
+        "supplies": ["salt", "pepper", "spice", "chicken"]
+      },
+      "expected": ["beef", "chicken", "steak"]
+    },
+    {
+      "case_id": 23,
+      "input": {
+        "recipes": ["cheese_pizza", "pepperoni_pizza", "margherita_pizza"],
+        "ingredients": [
+          ["dough", "tomato", "cheese"],
+          ["dough", "tomato", "cheese", "pepperoni"],
+          ["dough", "tomato", "basil", "cheese"]
+        ],
+        "supplies": ["dough", "tomato", "cheese", "pepperoni", "basil"]
+      },
+      "expected": ["cheese_pizza", "pepperoni_pizza", "margherita_pizza"]
+    },
+    {
+      "case_id": 24,
+      "input": {
+        "recipes": ["soup", "stew"],
+        "ingredients": [
+          ["water", "vegetables", "meat"],
+          ["water", "vegetables", "meat", "tomato"]
+        ],
+        "supplies": ["water", "vegetables", "meat", "tomato", "salt"]
+      },
+      "expected": ["soup", "stew"]
+    },
+    {
+      "case_id": 25,
+      "input": {
+        "recipes": ["pizza", "taco", "pasta"],
+        "ingredients": [
+          ["dough", "tomato", "cheese"],
+          ["tortilla", "meat", "cheese"],
+          ["noodles", "sauce", "meat"]
+        ],
+        "supplies": ["dough", "tomato", "cheese", "tortilla", "meat", "noodles", "sauce"]
+      },
+      "expected": ["pizza", "taco", "pasta"]
+    },
+    {
+      "case_id": 26,
+      "input": {
+        "recipes": ["salmon", "trout"],
+        "ingredients": [
+          ["salmon_filet", "vegetables", "lemon"],
+          ["trout_filet", "vegetables", "lemon"]
+        ],
+        "supplies": ["vegetables", "lemon"]
+      },
+      "expected": []
+    },
+    {
+      "case_id": 27,
+      "input": {
+        "recipes": ["steak_dinner", "pasta_dinner", "chicken_dinner"],
+        "ingredients": [
+          ["steak", "potato", "carrot"],
+          ["pasta", "sauce"],
+          ["chicken", "vegetable_oil"]
+        ],
+        "supplies": ["steak", "potato", "carrot", "pasta", "sauce", "chicken", "vegetable_oil"]
+      },
+      "expected": ["steak_dinner", "pasta_dinner", "chicken_dinner"]
+    },
+    {
+      "case_id": 28,
+      "input": {
+        "recipes": ["smoothie", "juice"],
+        "ingredients": [
+          ["banana", "orange", "milk"],
+          ["apple", "orange", "water"]
+        ],
+        "supplies": ["banana", "orange", "water"]
+      },
+      "expected": []
+    },
+    {
+      "case_id": 29,
+      "input": {
+        "recipes": ["apple_crisp", "apple_pie", "blueberry_pie"],
+        "ingredients": [
+          ["apple", "oat", "sugar"],
+          ["apple", "pie_crust"],
+          ["blueberry", "pie_crust"]
+        ],
+        "supplies": ["apple", "oat", "sugar", "blueberry", "pie_crust"]
+      },
+      "expected": ["apple_crisp", "apple_pie", "blueberry_pie"]
+    },
+    {
+      "case_id": 30,
+      "input": {
+        "recipes": ["chocolate_cake", "vanilla_cake", "red_velvet"],
+        "ingredients": [
+          ["flour", "eggs", "chocolate", "sugar"],
+          ["flour", "eggs", "vanilla", "sugar"],
+          ["chocolate_cake", "red_food_color"]
+        ],
+        "supplies": ["flour", "eggs", "chocolate", "vanilla", "sugar", "red_food_color"]
+      },
+      "expected": ["chocolate_cake", "vanilla_cake", "red_velvet"]
+    },
+    {
+      "case_id": 31,
+      "input": {
+        "recipes": ["omelette", "frittata"],
+        "ingredients": [
+          ["eggs", "cheese"],
+          ["eggs", "cheese", "spinach", "tomato"]
+        ],
+        "supplies": ["eggs", "cheese", "spinach"]
+      },
+      "expected": ["omelette"]
+    },
+    {
+      "case_id": 32,
+      "input": {
+        "recipes": ["cake_layer", "chocolate_ganache", "frosting"],
+        "ingredients": [
+          ["flour", "sugar", "eggs"],
+          ["chocolate", "cream"],
+          ["powdered_sugar", "milk"]
+        ],
+        "supplies": ["flour", "sugar", "eggs", "chocolate", "cream", "powdered_sugar", "milk"]
+      },
+      "expected": ["cake_layer", "chocolate_ganache", "frosting"]
+    },
+    {
+      "case_id": 33,
+      "input": {
+        "recipes": ["pizza", "pasta"],
+        "ingredients": [
+          ["dough", "tomato_sauce", "cheese"],
+          ["dough", "noodles", "sauce"]
+        ],
+        "supplies": ["dough", "tomato_sauce", "cheese", "noodles", "sauce"]
+      },
+      "expected": ["pizza", "pasta"]
+    },
+    {
+      "case_id": 34,
+      "input": {
+        "recipes": ["taco", "burrito", "enchilada"],
+        "ingredients": [
+          ["beef", "shell"],
+          ["beef", "tortilla"],
+          ["beef", "taco_shell", "sauce"]
+        ],
+        "supplies": ["beef", "shell", "tortilla", "taco_shell", "sauce"]
+      },
+      "expected": ["taco", "burrito", "enchilada"]
+    },
+    {
+      "case_id": 35,
+      "input": {
+        "recipes": ["chocolate_cake", "vanilla_cake", "red_velvet_cake"],
+        "ingredients": [
+          ["flour", "sugar", "cocoa"],
+          ["flour", "sugar"],
+          ["vanilla_cake", "cocoa", "red_food_color"]
+        ],
+        "supplies": ["flour", "sugar", "cocoa", "red_food_color"]
+      },
+      "expected": ["vanilla_cake", "chocolate_cake", "red_velvet_cake"]
+    },
+    {
+      "case_id": 36,
+      "input": {
+        "recipes": ["omelette", "pancakes"],
+        "ingredients": [
+          ["eggs", "milk"],
+          ["eggs", "flour", "milk"]
+        ],
+        "supplies": ["eggs", "milk", "flour", "butter"]
+      },
+      "expected": ["omelette", "pancakes"]
+    },
+    {
+      "case_id": 37,
+      "input": {
+        "recipes": ["sandwich", "burger", "omelet"],
+        "ingredients": [
+          ["bread", "meat", "cheese"],
+          ["bread", "patty", "cheese"],
+          ["eggs", "cheese", "spinach"]
+        ],
+        "supplies": ["bread", "meat", "cheese", "patty", "eggs", "spinach"]
+      },
+      "expected": ["sandwich", "burger", "omelet"]
+    },
+    {
+      "case_id": 38,
+      "input": {
+        "recipes": ["salmon", "steak", "chicken"],
+        "ingredients": [
+          ["salmon_fillet", "lemon"],
+          ["beef_steak", "salt"],
+          ["chicken_breast", "pepper"]
+        ],
+        "supplies": ["salmon_fillet", "lemon", "beef_steak", "salt", "chicken_breast", "pepper", "oil"]
+      },
+      "expected": ["salmon", "steak", "chicken"]
+    },
+    {
+      "case_id": 39,
+      "input": {
+        "recipes": ["cake", "brownie"],
+        "ingredients": [
+          ["sugar", "flour", "eggs"],
+          ["sugar", "chocolate", "eggs"]
+        ],
+        "supplies": ["sugar", "eggs"]
+      },
+      "expected": []
+    },
+    {
+      "case_id": 40,
+      "input": {
+        "recipes": ["cake", "pie", "tiramisu"],
+        "ingredients": [
+          ["flour", "eggs", "sugar"],
+          ["apple", "flour", "sugar"],
+          ["cake", "coffee", "mascarpone"]
+        ],
+        "supplies": ["flour", "eggs", "sugar", "apple", "coffee", "mascarpone"]
+      },
+      "expected": ["cake", "pie", "tiramisu"]
+    },
+    {
+      "case_id": 41,
+      "input": {
+        "recipes": ["soup", "stew", "salad", "sandwich"],
+        "ingredients": [
+          ["carrot", "onion"],
+          ["carrot", "potato", "beef"],
+          ["lettuce", "cucumber"],
+          ["bread", "cheese"]
+        ],
+        "supplies": ["carrot", "onion", "beef", "potato", "pepper", "lettuce", "cucumber", "bread", "cheese", "eggs"]
+      },
+      "expected": ["soup", "stew", "salad", "sandwich"]
+    },
+    {
+      "case_id": 42,
+      "input": {
+        "recipes": ["chocolate_cake", "vanilla_cake", "red_velvet_cake"],
+        "ingredients": [
+          ["flour", "sugar", "eggs", "chocolate"],
+          ["flour", "sugar", "eggs"],
+          ["vanilla_cake", "red_food_color"]
+        ],
+        "supplies": ["flour", "sugar", "eggs", "chocolate", "red_food_color"]
+      },
+      "expected": ["vanilla_cake", "chocolate_cake", "red_velvet_cake"]
+    },
+    {
+      "case_id": 43,
+      "input": {
+        "recipes": ["mashed_potatoes", "grilled_cheese", "mac_n_cheese"],
+        "ingredients": [
+          ["potatoes", "butter", "milk"],
+          ["bread", "cheese"],
+          ["macaroni", "cheese", "milk"]
+        ],
+        "supplies": ["potatoes", "butter", "milk", "bread", "cheese", "macaroni"]
+      },
+      "expected": ["mashed_potatoes", "grilled_cheese", "mac_n_cheese"]
+    },
+    {
+      "case_id": 44,
+      "input": {
+        "recipes": ["pancake", "waffle", "muffin"],
+        "ingredients": [
+          ["flour", "eggs", "milk"],
+          ["flour", "eggs", "milk", "butter"],
+          ["flour", "sugar", "eggs"]
+        ],
+        "supplies": ["flour", "eggs", "milk", "butter", "sugar"]
+      },
+      "expected": ["pancake", "waffle", "muffin"]
+    },
+    {
+      "case_id": 45,
+      "input": {
+        "recipes": ["apple_pie", "blueberry_pie"],
+        "ingredients": [
+          ["apple", "pie_crust"],
+          ["blueberry", "pie_crust"]
+        ],
+        "supplies": ["apple", "blueberry", "pie_crust"]
+      },
+      "expected": ["apple_pie", "blueberry_pie"]
+    },
+    {
+      "case_id": 46,
+      "input": {
+        "recipes": ["chocolate_cake", "vanilla_cake", "red_velvet_cake"],
+        "ingredients": [
+          ["flour", "sugar", "eggs", "chocolate"],
+          ["flour", "sugar", "eggs"],
+          ["vanilla_cake", "red_food_coloring"]
+        ],
+        "supplies": ["flour", "sugar", "eggs", "chocolate", "vanilla", "red_food_coloring"]
+      },
+      "expected": ["vanilla_cake", "chocolate_cake", "red_velvet_cake"]
+    },
+    {
+      "case_id": 47,
+      "input": {
+        "recipes": ["pizza", "pasta", "soup"],
+        "ingredients": [
+          ["dough", "tomato", "cheese"],
+          ["noodles", "sauce"],
+          ["carrots", "onions", "water"]
+        ],
+        "supplies": ["dough", "tomato", "noodles", "carrots"]
+      },
+      "expected": []
+    },
+    {
+      "case_id": 48,
+      "input": {
+        "recipes": ["a", "b", "c", "d"],
+        "ingredients": [
+          ["e", "f"],
+          ["a", "g"],
+          ["b", "h"],
+          ["c", "i"]
+        ],
+        "supplies": ["e", "f", "g", "h", "i"]
+      },
+      "expected": ["a", "b", "c", "d"]
+    },
+    {
+      "case_id": 49,
+      "input": {
+        "recipes": ["beer", "wine"],
+        "ingredients": [
+          ["grains", "water", "hops"],
+          ["grapes", "yeast", "sugar"]
+        ],
+        "supplies": ["grains", "water", "hops", "grapes", "yeast", "sugar"]
+      },
+      "expected": ["beer", "wine"]
+    },
+    {
+      "case_id": 50,
+      "input": {
+        "recipes": ["pizza", "pasta", "salad"],
+        "ingredients": [
+          ["dough", "sauce", "cheese"],
+          ["noodles", "sauce"],
+          ["lettuce", "tomato"]
+        ],
+        "supplies": ["dough", "cheese", "noodles", "sauce", "lettuce", "tomato", "spinach"]
+      },
+      "expected": ["pizza", "pasta", "salad"]
+    },
+    {
+      "case_id": 51,
+      "input": {
+        "recipes": ["smoothie", "juice"],
+        "ingredients": [
+          ["banana", "strawberry", "milk"],
+          ["apple", "orange", "water"]
+        ],
+        "supplies": ["banana", "strawberry", "milk", "apple", "orange"]
+      },
+      "expected": ["smoothie"]
+    },
+    {
+      "case_id": 52,
+      "input": {
+        "recipes": ["fish_stew", "chicken_stew", "beef_stew"],
+        "ingredients": [
+          ["fish", "potatoes", "carrots"],
+          ["chicken", "potatoes", "carrots"],
+          ["beef", "potatoes", "carrots"]
+        ],
+        "supplies": ["potatoes", "carrots", "fish", "chicken"]
+      },
+      "expected": ["fish_stew", "chicken_stew"]
+    },
+    {
+      "case_id": 53,
+      "input": {
+        "recipes": ["omelette", "pancake"],
+        "ingredients": [
+          ["eggs", "milk"],
+          ["flour", "eggs", "milk"]
+        ],
+        "supplies": ["eggs", "milk", "flour", "butter"]
+      },
+      "expected": ["omelette", "pancake"]
+    },
+    {
+      "case_id": 54,
+      "input": {
+        "recipes": ["cheesecake", "ice_cream", "fruit_salad"],
+        "ingredients": [
+          ["cream", "sugar", "cheese"],
+          ["cream", "sugar"],
+          ["fruit", "sugar"]
+        ],
+        "supplies": ["cream", "sugar", "cheese", "fruit"]
+      },
+      "expected": ["ice_cream", "cheesecake", "fruit_salad"]
+    },
+    {
+      "case_id": 55,
+      "input": {
+        "recipes": ["omelette", "scrambled_eggs"],
+        "ingredients": [
+          ["egg", "cheese", "milk"],
+          ["egg", "milk"]
+        ],
+        "supplies": ["egg", "milk", "cheese", "salt"]
+      },
+      "expected": ["scrambled_eggs", "omelette"]
+    },
+    {
+      "case_id": 56,
+      "input": {
+        "recipes": ["chocolate_cake", "vanilla_cake"],
+        "ingredients": [
+          ["flour", "sugar", "cocoa"],
+          ["flour", "sugar"]
+        ],
+        "supplies": ["flour", "sugar", "cocoa"]
+      },
+      "expected": ["vanilla_cake", "chocolate_cake"]
+    },
+    {
+      "case_id": 57,
+      "input": {
+        "recipes": ["bread", "toast", "baguette"],
+        "ingredients": [
+          ["flour", "yeast"],
+          ["bread"],
+          ["flour", "yeast", "oil"]
+        ],
+        "supplies": ["flour", "yeast", "oil", "butter"]
+      },
+      "expected": ["bread", "baguette", "toast"]
+    },
+    {
+      "case_id": 58,
+      "input": {
+        "recipes": ["soup", "stew", "omelette"],
+        "ingredients": [
+          ["water", "vegetables", "salt"],
+          ["water", "meat", "vegetables"],
+          ["eggs", "cheese", "pepper"]
+        ],
+        "supplies": ["water", "vegetables", "meat", "eggs", "cheese", "pepper"]
+      },
+      "expected": ["stew", "omelette"]
+    },
+    {
+      "case_id": 59,
+      "input": {
+        "recipes": ["banana_bread", "apple_pie", "cheese_pie"],
+        "ingredients": [
+          ["banana", "flour", "eggs", "sugar"],
+          ["apple", "flour", "sugar", "eggs"],
+          ["cheese", "flour", "eggs", "sugar"]
+        ],
+        "supplies": ["banana", "apple", "flour", "eggs", "sugar", "cheese"]
+      },
+      "expected": ["banana_bread", "apple_pie", "cheese_pie"]
+    },
+    {
+      "case_id": 60,
+      "input": {
+        "recipes": ["steak_dish", "chicken_dish", "beef_dish"],
+        "ingredients": [
+          ["steak", "salt", "pepper"],
+          ["chicken", "salt", "pepper"],
+          ["beef", "salt", "pepper"]
+        ],
+        "supplies": ["steak", "chicken", "beef", "salt", "pepper"]
+      },
+      "expected": ["steak_dish", "chicken_dish", "beef_dish"]
+    },
+    {
+      "case_id": 61,
+      "input": {
+        "recipes": ["pizza", "fries", "burger"],
+        "ingredients": [
+          ["dough", "tomato", "cheese"],
+          ["potato", "salt"],
+          ["patty", "cheese", "bun"]
+        ],
+        "supplies": ["dough", "tomato", "cheese", "potato", "salt", "patty", "bun"]
+      },
+      "expected": ["pizza", "fries", "burger"]
+    },
+    {
+      "case_id": 62,
+      "input": {
+        "recipes": ["sushi", "ramen"],
+        "ingredients": [
+          ["rice", "fish", "seaweed"],
+          ["noodles", "broth", "egg"]
+        ],
+        "supplies": ["rice", "fish", "seaweed", "noodles", "broth", "egg"]
+      },
+      "expected": ["sushi", "ramen"]
+    },
+    {
+      "case_id": 63,
+      "input": {
+        "recipes": ["soup", "stew", "salad"],
+        "ingredients": [
+          ["carrot", "onion"],
+          ["carrot", "potato", "beef"],
+          ["lettuce", "cucumber"]
+        ],
+        "supplies": ["carrot", "onion", "beef", "potato", "pepper", "lettuce", "cucumber"]
+      },
+      "expected": ["soup", "stew", "salad"]
+    },
+    {
+      "case_id": 64,
+      "input": {
+        "recipes": ["pizza", "spaghetti"],
+        "ingredients": [
+          ["dough", "tomato_sauce", "cheese"],
+          ["pasta", "meat_sauce", "cheese"]
+        ],
+        "supplies": ["dough", "pasta", "cheese"]
+      },
+      "expected": []
+    },
+    {
+      "case_id": 65,
+      "input": {
+        "recipes": ["cake", "pie"],
+        "ingredients": [
+          ["flour", "eggs", "sugar"],
+          ["apple", "flour", "sugar"]
+        ],
+        "supplies": ["flour", "eggs", "sugar", "milk"]
+      },
+      "expected": ["cake"]
+    },
+    {
+      "case_id": 66,
+      "input": {
+        "recipes": ["pasta", "pizza", "lasagna"],
+        "ingredients": [
+          ["noodles", "sauce"],
+          ["dough", "sauce", "cheese"],
+          ["noodles", "sauce", "cheese", "milk"]
+        ],
+        "supplies": ["noodles", "sauce", "cheese", "dough", "milk"]
+      },
+      "expected": ["pasta", "pizza", "lasagna"]
+    },
+    {
+      "case_id": 67,
+      "input": {
+        "recipes": ["omelette", "pancake"],
+        "ingredients": [
+          ["eggs", "cheese", "bacon"],
+          ["flour", "eggs", "milk"]
+        ],
+        "supplies": ["eggs", "flour", "milk"]
+      },
+      "expected": ["pancake"]
+    },
+    {
+      "case_id": 68,
+      "input": {
+        "recipes": ["pizza", "sandwich", "omelette", "burger"],
+        "ingredients": [
+          ["dough", "tomato", "cheese"],
+          ["bread", "cheese", "meat"],
+          ["egg", "milk", "cheese"],
+          ["patty", "cheese", "bun"]
+        ],
+        "supplies": ["dough", "tomato", "cheese", "bread", "meat", "egg", "milk", "patty", "bun"]
+      },
+      "expected": ["pizza", "sandwich", "omelette", "burger"]
+    },
+    {
+      "case_id": 69,
+      "input": {
+        "recipes": ["chicken_salad", "turkey_salad", "veggie_salad"],
+        "ingredients": [
+          ["chicken", "lettuce", "tomato"],
+          ["turkey", "lettuce", "tomato"],
+          ["lettuce", "tomato", "carrot"]
+        ],
+        "supplies": ["chicken", "turkey", "lettuce", "tomato", "carrot"]
+      },
+      "expected": ["chicken_salad", "turkey_salad", "veggie_salad"]
+    },
+    {
+      "case_id": 70,
+      "input": {
+        "recipes": ["apple_pie", "banana_bread", "cherry_pie"],
+        "ingredients": [
+          ["apples", "dough", "sugar"],
+          ["bananas", "dough", "sugar"],
+          ["cherries", "dough", "sugar"]
+        ],
+        "supplies": ["apples", "bananas", "cherries", "dough", "sugar"]
+      },
+      "expected": ["apple_pie", "banana_bread", "cherry_pie"]
+    },
+    {
+      "case_id": 71,
+      "input": {
+        "recipes": ["recipe1", "recipe2", "recipe3", "recipe4"],
+        "ingredients": [
+          ["ing1", "ing2"],
+          ["recipe1", "ing3"],
+          ["recipe2", "ing4"],
+          ["recipe3", "ing5"]
+        ],
+        "supplies": ["ing1", "ing2", "ing3", "ing4", "ing5"]
+      },
+      "expected": ["recipe1", "recipe2", "recipe3", "recipe4"]
+    },
+    {
+      "case_id": 72,
+      "input": {
+        "recipes": ["cake", "pudding", "pie"],
+        "ingredients": [
+          ["flour", "eggs", "sugar"],
+          ["milk", "cornstarch"],
+          ["crust", "apple", "sugar"]
+        ],
+        "supplies": ["flour", "eggs", "milk", "sugar"]
+      },
+      "expected": ["cake"]
+    },
+    {
+      "case_id": 73,
+      "input": {
+        "recipes": ["ice_cream", "pudding"],
+        "ingredients": [
+          ["cream", "sugar", "vanilla"],
+          ["milk", "sugar", "flour"]
+        ],
+        "supplies": ["cream", "sugar", "vanilla", "milk", "flour", "chocolate"]
+      },
+      "expected": ["ice_cream", "pudding"]
+    },
+    {
+      "case_id": 74,
+      "input": {
+        "recipes": ["salad", "soup", "stew"],
+        "ingredients": [
+          ["lettuce", "tomato", "onion"],
+          ["carrot", "potato", "beef"],
+          ["carrot", "potato", "beef", "tomato"]
+        ],
+        "supplies": ["lettuce", "tomato", "onion", "carrot", "potato"]
+      },
+      "expected": ["salad"]
+    },
+    {
+      "case_id": 75,
+      "input": {
+        "recipes": ["omelette", "scramble", "frittata"],
+        "ingredients": [
+          ["eggs", "cheese"],
+          ["eggs"],
+          ["eggs", "cheese", "spinach"]
+        ],
+        "supplies": ["eggs", "cheese", "spinach", "milk"]
+      },
+      "expected": ["scramble", "omelette", "frittata"]
+    },
+    {
+      "case_id": 76,
+      "input": {
+        "recipes": ["cake", "brownie", "pudding"],
+        "ingredients": [
+          ["flour", "sugar", "eggs", "milk"],
+          ["flour", "sugar", "chocolate"],
+          ["milk", "sugar", "gelatin"]
+        ],
+        "supplies": ["flour", "sugar", "eggs", "milk", "chocolate", "gelatin"]
+      },
+      "expected": ["cake", "brownie", "pudding"]
+    },
+    {
+      "case_id": 77,
+      "input": {
+        "recipes": ["apple_pie", "cherry_pie", "blueberry_pie"],
+        "ingredients": [
+          ["crust", "apple", "sugar"],
+          ["crust", "cherry", "sugar"],
+          ["crust", "blueberry", "sugar"]
+        ],
+        "supplies": ["crust", "sugar", "apple", "blueberry"]
+      },
+      "expected": ["apple_pie", "blueberry_pie"]
+    },
+    {
+      "case_id": 78,
+      "input": {
+        "recipes": ["soup", "stew", "chili"],
+        "ingredients": [
+          ["water", "carrot", "potato"],
+          ["water", "tomato", "carrot", "potato"],
+          ["water", "tomato", "beef", "potato"]
+        ],
+        "supplies": ["water", "carrot", "potato", "tomato", "beef"]
+      },
+      "expected": ["soup", "stew", "chili"]
+    },
+    {
+      "case_id": 79,
+      "input": {
+        "recipes": ["pizza", "lasagna", "taco"],
+        "ingredients": [
+          ["dough", "tomato", "cheese"],
+          ["pasta", "mozzarella", "sauce"],
+          ["tortilla", "meat", "cheese"]
+        ],
+        "supplies": ["dough", "tomato", "cheese", "pasta", "mozzarella", "sauce", "tortilla", "meat"]
+      },
+      "expected": ["pizza", "lasagna", "taco"]
+    },
+    {
+      "case_id": 80,
+      "input": {
+        "recipes": ["omelette", "french_toast"],
+        "ingredients": [
+          ["egg", "milk", "cheese"],
+          ["egg", "bread", "milk"]
+        ],
+        "supplies": ["egg", "milk", "cheese", "bread"]
+      },
+      "expected": ["omelette", "french_toast"]
+    },
+    {
+      "case_id": 81,
+      "input": {
+        "recipes": ["bread", "cake", "pudding"],
+        "ingredients": [
+          ["flour", "yeast", "water"],
+          ["flour", "eggs", "sugar"],
+          ["milk", "cornstarch", "water"]
+        ],
+        "supplies": ["flour", "yeast", "eggs", "sugar", "milk"]
+      },
+      "expected": ["cake"]
+    },
+    {
+      "case_id": 82,
+      "input": {
+        "recipes": ["steak_dish", "chicken_dish"],
+        "ingredients": [
+          ["steak", "garlic", "onion"],
+          ["chicken", "garlic", "onion"]
+        ],
+        "supplies": ["steak", "chicken", "garlic", "onion", "potato"]
+      },
+      "expected": ["steak_dish", "chicken_dish"]
+    },
+    {
+      "case_id": 83,
+      "input": {
+        "recipes": ["pizza", "lasagna"],
+        "ingredients": [
+          ["dough", "tomato_sauce", "cheese"],
+          ["pasta", "meat", "cheese", "tomato_sauce"]
+        ],
+        "supplies": ["dough", "tomato_sauce", "cheese", "pasta", "meat"]
+      },
+      "expected": ["pizza", "lasagna"]
+    },
+    {
+      "case_id": 84,
+      "input": {
+        "recipes": ["cake", "brownie", "tiramisu"],
+        "ingredients": [
+          ["flour", "sugar", "eggs"],
+          ["flour", "sugar", "chocolate"],
+          ["coffee", "brownie", "cream"]
+        ],
+        "supplies": ["flour", "sugar", "eggs", "chocolate", "coffee", "cream"]
+      },
+      "expected": ["cake", "brownie", "tiramisu"]
+    },
+    {
+      "case_id": 85,
+      "input": {
+        "recipes": ["pizza", "calzone", "taco", "burrito"],
+        "ingredients": [
+          ["dough", "sauce", "cheese"],
+          ["dough", "cheese", "meat"],
+          ["tortilla", "meat", "lettuce"],
+          ["tortilla", "meat", "beans"]
+        ],
+        "supplies": ["dough", "sauce", "cheese", "meat", "tortilla", "lettuce", "beans"]
+      },
+      "expected": ["pizza", "calzone", "taco", "burrito"]
+    },
+    {
+      "case_id": 86,
+      "input": {
+        "recipes": ["taco", "burrito"],
+        "ingredients": [
+          ["tortilla", "ground_beef", "cheese"],
+          ["tortilla", "beans", "cheese", "lettuce"]
+        ],
+        "supplies": ["tortilla", "ground_beef", "beans", "cheese", "lettuce"]
+      },
+      "expected": ["taco", "burrito"]
+    },
+    {
+      "case_id": 87,
+      "input": {
+        "recipes": ["steak", "chicken", "beef"],
+        "ingredients": [
+          ["meat", "seasoning"],
+          ["meat", "vegetables"],
+          ["meat", "sauce"]
+        ],
+        "supplies": ["meat", "seasoning", "vegetables"]
+      },
+      "expected": ["steak", "chicken"]
+    },
+    {
+      "case_id": 88,
+      "input": {
+        "recipes": ["tacos", "burritos", "enchiladas"],
+        "ingredients": [
+          ["shell", "ground beef", "cheese"],
+          ["shell", "ground beef", "beans"],
+          ["tortilla", "ground beef", "cheese", "sauce"]
+        ],
+        "supplies": ["shell", "tortilla", "ground beef", "cheese"]
+      },
+      "expected": ["tacos"]
+    },
+    {
+      "case_id": 89,
+      "input": {
+        "recipes": ["taco", "burrito"],
+        "ingredients": [
+          ["tortilla", "beef", "cheese"],
+          ["tortilla", "chicken", "cheese", "lettuce"]
+        ],
+        "supplies": ["tortilla", "cheese", "lettuce"]
+      },
+      "expected": []
+    },
+    {
+      "case_id": 90,
+      "input": {
+        "recipes": ["muffin", "brownie", "cupcake"],
+        "ingredients": [
+          ["flour", "eggs", "milk", "sugar"],
+          ["flour", "eggs", "chocolate", "sugar"],
+          ["muffin", "icing"]
+        ],
+        "supplies": ["flour", "eggs", "milk", "sugar", "chocolate", "icing"]
+      },
+      "expected": ["muffin", "brownie", "cupcake"]
+    },
+    {
+      "case_id": 91,
+      "input": {
+        "recipes": ["soup", "stew"],
+        "ingredients": [
+          ["water", "carrot", "potato"],
+          ["water", "tomato", "carrot", "potato"]
+        ],
+        "supplies": ["water", "carrot", "potato", "tomato"]
+      },
+      "expected": ["soup", "stew"]
+    },
+    {
+      "case_id": 92,
+      "input": {
+        "recipes": ["chicken_soup", "veggie_soup", "beef_stew"],
+        "ingredients": [
+          ["chicken", "carrot", "potato"],
+          ["carrot", "potato", "onion"],
+          ["beef", "carrot", "potato"]
+        ],
+        "supplies": ["chicken", "carrot", "potato", "onion", "beef"]
+      },
+      "expected": ["chicken_soup", "veggie_soup", "beef_stew"]
+    },
+    {
+      "case_id": 93,
+      "input": {
+        "recipes": ["taco", "burrito"],
+        "ingredients": [
+          ["shell", "meat", "cheese"],
+          ["wrap", "meat", "cheese", "lettuce"]
+        ],
+        "supplies": ["shell", "wrap", "meat", "cheese", "lettuce", "tomato"]
+      },
+      "expected": ["taco", "burrito"]
+    },
+    {
+      "case_id": 94,
+      "input": {
+        "recipes": ["cake", "brownie"],
+        "ingredients": [
+          ["flour", "eggs", "sugar"],
+          ["flour", "eggs", "chocolate"]
+        ],
+        "supplies": ["flour", "eggs", "sugar", "chocolate"]
+      },
+      "expected": ["cake", "brownie"]
+    },
+    {
+      "case_id": 95,
+      "input": {
+        "recipes": ["smoothie", "juice", "shake"],
+        "ingredients": [
+          ["banana", "milk"],
+          ["orange", "apple"],
+          ["banana", "milk", "peanut_butter"]
+        ],
+        "supplies": ["banana", "milk", "orange", "apple", "peanut_butter"]
+      },
+      "expected": ["smoothie", "juice", "shake"]
+    },
+    {
+      "case_id": 96,
+      "input": {
+        "recipes": ["chocolate_cake", "vanilla_cake"],
+        "ingredients": [
+          ["flour", "sugar", "cocoa", "eggs"],
+          ["flour", "sugar", "vanilla", "eggs"]
+        ],
+        "supplies": ["flour", "sugar", "eggs", "vanilla"]
+      },
+      "expected": ["vanilla_cake"]
+    },
+    {
+      "case_id": 97,
+      "input": {
+        "recipes": ["cake", "muffin", "brownie"],
+        "ingredients": [
+          ["flour", "sugar", "eggs"],
+          ["flour", "sugar", "eggs", "butter"],
+          ["flour", "sugar", "chocolate"]
+        ],
+        "supplies": ["flour", "sugar", "eggs", "butter", "chocolate"]
+      },
+      "expected": ["cake", "muffin", "brownie"]
+    },
+    {
+      "case_id": 98,
+      "input": {
+        "recipes": ["muffin", "pancake", "scone"],
+        "ingredients": [
+          ["flour", "sugar", "milk"],
+          ["flour", "eggs", "milk"],
+          ["flour", "butter", "milk"]
+        ],
+        "supplies": ["flour", "eggs", "butter", "milk"]
+      },
+      "expected": ["pancake", "scone"]
+    },
+    {
+      "case_id": 99,
+      "input": {
+        "recipes": ["juice", "smoothie"],
+        "ingredients": [
+          ["orange", "apple"],
+          ["banana", "orange", "milk"]
+        ],
+        "supplies": ["orange", "apple", "banana", "milk", "water"]
+      },
+      "expected": ["juice", "smoothie"]
+    },
+    {
+      "case_id": 100,
+      "input": {
+        "recipes": ["smoothie", "yogurt_parfait"],
+        "ingredients": [
+          ["banana", "mango", "yogurt"],
+          ["yogurt", "berry", "honey"]
+        ],
+        "supplies": ["banana", "mango", "yogurt", "berry", "honey"]
+      },
+      "expected": ["smoothie", "yogurt_parfait"]
+    },
+    {
+      "case_id": 101,
+      "input": {
+        "recipes": ["pancake", "waffle", "omelette"],
+        "ingredients": [
+          ["flour", "eggs", "milk"],
+          ["flour", "eggs", "syrup"],
+          ["eggs", "milk", "cheese"]
+        ],
+        "supplies": ["flour", "eggs", "milk", "syrup", "cheese"]
+      },
+      "expected": ["pancake", "waffle", "omelette"]
+    },
+    {
+      "case_id": 102,
+      "input": {
+        "recipes": ["pizza", "pasta"],
+        "ingredients": [
+          ["dough", "sauce", "cheese"],
+          ["noodles", "sauce"]
+        ],
+        "supplies": ["dough", "sauce", "cheese", "noodles", "tomato"]
+      },
+      "expected": ["pizza", "pasta"]
+    },
+    {
+      "case_id": 103,
+      "input": {
+        "recipes": ["pizza", "spaghetti"],
+        "ingredients": [
+          ["dough", "sauce", "cheese"],
+          ["pasta", "sauce", "meat"]
+        ],
+        "supplies": ["dough", "sauce", "pasta"]
+      },
+      "expected": []
+    },
+    {
+      "case_id": 104,
+      "input": {
+        "recipes": ["chicken_soup", "beef_stew"],
+        "ingredients": [
+          ["chicken", "vegetables", "water"],
+          ["beef", "vegetables", "water", "potato"]
+        ],
+        "supplies": ["chicken", "vegetables", "water", "beef", "potato"]
+      },
+      "expected": ["chicken_soup", "beef_stew"]
+    }
+  ]
+}

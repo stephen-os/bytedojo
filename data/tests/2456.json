@@ -1,0 +1,1174 @@
+{
+  "schema_version": 1,
+  "problem_id": 2456,
+  "title": "Most Popular Video Creator",
+  "method": "mostPopularCreator",
+  "signature": {
+    "params": [
+      {
+        "name": "creators",
+        "type": "STRING_ARRAY"
+      },
+      {
+        "name": "ids",
+        "type": "STRING_ARRAY"
+      },
+      {
+        "name": "views",
+        "type": "INT32_ARRAY"
+      }
+    ],
+    "returns": "STRING_MATRIX"
+  },
+  "comparison": "unordered_all",
+  "cases": [
+    {
+      "case_id": 1,
+      "input": {
+        "creators": ["eve", "eve", "eve", "eve"],
+        "ids": ["a", "a", "b", "b"],
+        "views": [10, 20, 20, 10]
+      },
+      "expected": [
+        ["eve", "a"]
+      ]
+    },
+    {
+      "case_id": 2,
+      "input": {
+        "creators": ["alice", "bob", "alice", "chris"],
+        "ids": ["one", "two", "three", "four"],
+        "views": [5, 10, 5, 4]
+      },
+      "expected": [
+        ["alice", "one"],
+        ["bob", "two"]
+      ]
+    },
+    {
+      "case_id": 3,
+      "input": {
+        "creators": ["john", "john", "john"],
+        "ids": ["x", "y", "x"],
+        "views": [10, 10, 10]
+      },
+      "expected": [
+        ["john", "x"]
+      ]
+    },
+    {
+      "case_id": 4,
+      "input": {
+        "creators": ["anna", "bob", "charlie"],
+        "ids": ["a", "b", "c"],
+        "views": [100, 200, 300]
+      },
+      "expected": [
+        ["charlie", "c"]
+      ]
+    },
+    {
+      "case_id": 5,
+      "input": {
+        "creators": ["alice", "alice", "alice"],
+        "ids": ["a", "b", "c"],
+        "views": [1, 2, 2]
+      },
+      "expected": [
+        ["alice", "b"]
+      ]
+    },
+    {
+      "case_id": 6,
+      "input": {
+        "creators": ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j"],
+        "ids": ["id", "id", "id", "id", "id", "id", "id", "id", "id", "id"],
+        "views": [10, 9, 8, 7, 6, 5, 4, 3, 2, 1]
+      },
+      "expected": [
+        ["a", "id"]
+      ]
+    },
+    {
+      "case_id": 7,
+      "input": {
+        "creators": ["alice", "bob", "charlie", "dave", "eve"],
+        "ids": ["a", "b", "c", "d", "e"],
+        "views": [100, 200, 300, 400, 500]
+      },
+      "expected": [
+        ["eve", "e"]
+      ]
+    },
+    {
+      "case_id": 8,
+      "input": {
+        "creators": ["frank", "frank", "frank", "frank", "frank", "frank"],
+        "ids": ["one", "two", "three", "four", "five", "six"],
+        "views": [1000, 1000, 1000, 1000, 1000, 1000]
+      },
+      "expected": [
+        ["frank", "five"]
+      ]
+    },
+    {
+      "case_id": 9,
+      "input": {
+        "creators": ["alice", "alice", "alice", "bob", "bob", "bob"],
+        "ids": ["x", "y", "z", "x", "y", "z"],
+        "views": [10, 20, 30, 30, 20, 10]
+      },
+      "expected": [
+        ["alice", "z"],
+        ["bob", "x"]
+      ]
+    },
+    {
+      "case_id": 10,
+      "input": {
+        "creators": ["alice", "bob", "alice", "chris", "alice"],
+        "ids": ["one", "two", "three", "four", "five"],
+        "views": [5, 10, 5, 4, 15]
+      },
+      "expected": [
+        ["alice", "five"]
+      ]
+    },
+    {
+      "case_id": 11,
+      "input": {
+        "creators": ["alice", "bob", "alice", "charlie", "bob", "alice"],
+        "ids": ["one", "two", "three", "four", "five", "six"],
+        "views": [5, 10, 5, 4, 10, 15]
+      },
+      "expected": [
+        ["alice", "six"]
+      ]
+    },
+    {
+      "case_id": 12,
+      "input": {
+        "creators": ["dave", "dave", "dave", "eve", "eve", "eve"],
+        "ids": ["alpha", "beta", "gamma", "delta", "epsilon", "delta"],
+        "views": [1, 3, 2, 5, 6, 5]
+      },
+      "expected": [
+        ["eve", "epsilon"]
+      ]
+    },
+    {
+      "case_id": 13,
+      "input": {
+        "creators": ["alice", "bob", "alice", "bob", "charlie", "charlie"],
+        "ids": ["x", "y", "z", "x", "y", "z"],
+        "views": [100, 200, 100, 300, 150, 150]
+      },
+      "expected": [
+        ["bob", "x"]
+      ]
+    },
+    {
+      "case_id": 14,
+      "input": {
+        "creators": ["george", "harry", "george", "harry", "george", "harry"],
+        "ids": ["abc", "def", "ghi", "jkl", "mno", "pqr"],
+        "views": [100, 200, 100, 200, 150, 150]
+      },
+      "expected": [
+        ["harry", "def"]
+      ]
+    },
+    {
+      "case_id": 15,
+      "input": {
+        "creators": ["alice", "bob", "alice", "bob", "alice", "bob", "alice"],
+        "ids": ["abc", "def", "ghi", "jkl", "mno", "pqr", "stu"],
+        "views": [10, 20, 10, 20, 30, 40, 50]
+      },
+      "expected": [
+        ["alice", "stu"]
+      ]
+    },
+    {
+      "case_id": 16,
+      "input": {
+        "creators": ["dave", "eve", "eve", "eve", "dave"],
+        "ids": ["x", "y", "z", "y", "x"],
+        "views": [30, 20, 30, 40, 10]
+      },
+      "expected": [
+        ["eve", "y"]
+      ]
+    },
+    {
+      "case_id": 17,
+      "input": {
+        "creators": ["alice", "alice", "alice", "alice", "alice"],
+        "ids": ["z", "y", "x", "w", "v"],
+        "views": [5, 5, 5, 5, 5]
+      },
+      "expected": [
+        ["alice", "v"]
+      ]
+    },
+    {
+      "case_id": 18,
+      "input": {
+        "creators": ["alice", "bob", "alice", "bob", "alice", "bob"],
+        "ids": ["one", "two", "three", "four", "five", "six"],
+        "views": [5, 15, 10, 10, 5, 5]
+      },
+      "expected": [
+        ["bob", "two"]
+      ]
+    },
+    {
+      "case_id": 19,
+      "input": {
+        "creators": ["alice", "bob", "charlie", "alice", "bob", "charlie", "alice", "bob", "charlie"],
+        "ids": ["a1", "a2", "a3", "a4", "a5", "a6", "a7", "a8", "a9"],
+        "views": [1, 2, 3, 4, 5, 6, 7, 8, 9]
+      },
+      "expected": [
+        ["charlie", "a9"]
+      ]
+    },
+    {
+      "case_id": 20,
+      "input": {
+        "creators": ["alice", "bob", "alice", "charlie", "bob", "alice"],
+        "ids": ["one", "two", "three", "four", "five", "six"],
+        "views": [15, 25, 15, 35, 25, 15]
+      },
+      "expected": [
+        ["bob", "five"]
+      ]
+    },
+    {
+      "case_id": 21,
+      "input": {
+        "creators": ["karen", "karen", "karen", "karen", "karen", "karen", "karen", "karen"],
+        "ids": ["a", "b", "c", "d", "e", "f", "g", "h"],
+        "views": [100, 200, 100, 200, 100, 200, 100, 200]
+      },
+      "expected": [
+        ["karen", "b"]
+      ]
+    },
+    {
+      "case_id": 22,
+      "input": {
+        "creators": ["mike", "mike", "mike", "mike", "mike", "mike", "mike"],
+        "ids": ["one", "two", "three", "four", "five", "six", "seven"],
+        "views": [10, 20, 30, 40, 50, 60, 70]
+      },
+      "expected": [
+        ["mike", "seven"]
+      ]
+    },
+    {
+      "case_id": 23,
+      "input": {
+        "creators": ["eve", "eve", "eve", "eve", "eve"],
+        "ids": ["a", "b", "c", "d", "e"],
+        "views": [10, 20, 10, 10, 20]
+      },
+      "expected": [
+        ["eve", "b"]
+      ]
+    },
+    {
+      "case_id": 24,
+      "input": {
+        "creators": ["a", "b", "a", "b", "a", "b"],
+        "ids": ["aaa", "bbb", "aaa", "bbb", "aaa", "bbb"],
+        "views": [1, 2, 3, 4, 5, 6]
+      },
+      "expected": [
+        ["b", "bbb"]
+      ]
+    },
+    {
+      "case_id": 25,
+      "input": {
+        "creators": ["alice", "bob", "alice", "charlie", "bob", "alice"],
+        "ids": ["one", "two", "three", "four", "five", "six"],
+        "views": [10, 20, 5, 30, 20, 15]
+      },
+      "expected": [
+        ["bob", "five"]
+      ]
+    },
+    {
+      "case_id": 26,
+      "input": {
+        "creators": ["alice", "bob", "alice", "charlie", "bob", "alice", "alice"],
+        "ids": ["aaa", "bbb", "ccc", "ddd", "eee", "fff", "ggg"],
+        "views": [1, 2, 1, 3, 2, 1, 2]
+      },
+      "expected": [
+        ["alice", "ggg"]
+      ]
+    },
+    {
+      "case_id": 27,
+      "input": {
+        "creators": ["alice", "bob", "alice", "chris", "bob"],
+        "ids": ["one", "two", "three", "four", "five"],
+        "views": [5, 15, 5, 4, 15]
+      },
+      "expected": [
+        ["bob", "five"]
+      ]
+    },
+    {
+      "case_id": 28,
+      "input": {
+        "creators": ["rachel", "sam", "rachel", "sam", "rachel", "sam"],
+        "ids": ["pqr", "stu", "vwx", "yza", "bcd", "efg"],
+        "views": [5, 5, 5, 5, 5, 5]
+      },
+      "expected": [
+        ["rachel", "bcd"],
+        ["sam", "efg"]
+      ]
+    },
+    {
+      "case_id": 29,
+      "input": {
+        "creators": ["anna", "anna", "anna", "anna", "anna", "anna"],
+        "ids": ["x", "y", "z", "x", "y", "z"],
+        "views": [10, 20, 30, 40, 50, 60]
+      },
+      "expected": [
+        ["anna", "z"]
+      ]
+    },
+    {
+      "case_id": 30,
+      "input": {
+        "creators": ["creatorA", "creatorB", "creatorC", "creatorA", "creatorB", "creatorC"],
+        "ids": ["videoA", "videoB", "videoC", "videoA", "videoB", "videoC"],
+        "views": [1000, 2000, 1500, 1000, 2500, 1500]
+      },
+      "expected": [
+        ["creatorB", "videoB"]
+      ]
+    },
+    {
+      "case_id": 31,
+      "input": {
+        "creators": ["alice", "bob", "alice", "charlie", "bob", "alice"],
+        "ids": ["aaaaa", "bbbbb", "ccccc", "ddddd", "eeeee", "fffff"],
+        "views": [1, 2, 3, 4, 5, 6]
+      },
+      "expected": [
+        ["alice", "fffff"]
+      ]
+    },
+    {
+      "case_id": 32,
+      "input": {
+        "creators": ["alice", "bob", "alice", "charlie", "bob", "alice"],
+        "ids": ["x", "y", "z", "a", "b", "c"],
+        "views": [15, 25, 15, 35, 35, 10]
+      },
+      "expected": [
+        ["bob", "b"]
+      ]
+    },
+    {
+      "case_id": 33,
+      "input": {
+        "creators": ["anna", "bob", "charlie", "dave", "eve"],
+        "ids": ["aaa", "bbb", "ccc", "ddd", "eee"],
+        "views": [100, 200, 300, 400, 500]
+      },
+      "expected": [
+        ["eve", "eee"]
+      ]
+    },
+    {
+      "case_id": 34,
+      "input": {
+        "creators": ["alice", "bob", "alice", "chris", "bob", "alice", "chris", "eve", "eve", "eve"],
+        "ids": ["one", "two", "three", "four", "two", "six", "seven", "eight", "nine", "ten"],
+        "views": [5, 10, 5, 4, 10, 15, 1, 20, 20, 5]
+      },
+      "expected": [
+        ["eve", "eight"]
+      ]
+    },
+    {
+      "case_id": 35,
+      "input": {
+        "creators": ["frank", "frank", "frank", "frank", "frank"],
+        "ids": ["a", "b", "a", "c", "b"],
+        "views": [100, 200, 300, 100, 200]
+      },
+      "expected": [
+        ["frank", "a"]
+      ]
+    },
+    {
+      "case_id": 36,
+      "input": {
+        "creators": ["anna", "anna", "anna", "bob", "bob", "bob", "charlie", "charlie", "charlie"],
+        "ids": ["a", "b", "c", "a", "b", "c", "a", "b", "c"],
+        "views": [100, 200, 300, 100, 200, 300, 100, 200, 300]
+      },
+      "expected": [
+        ["anna", "c"],
+        ["bob", "c"],
+        ["charlie", "c"]
+      ]
+    },
+    {
+      "case_id": 37,
+      "input": {
+        "creators": ["alice", "bob", "alice", "chris", "bob", "alice"],
+        "ids": ["one", "two", "three", "four", "two", "six"],
+        "views": [5, 10, 5, 4, 10, 15]
+      },
+      "expected": [
+        ["alice", "six"]
+      ]
+    },
+    {
+      "case_id": 38,
+      "input": {
+        "creators": ["eve", "eve", "eve", "eve", "eve", "eve", "eve"],
+        "ids": ["a", "b", "c", "d", "e", "f", "g"],
+        "views": [10, 10, 10, 10, 10, 10, 10]
+      },
+      "expected": [
+        ["eve", "a"]
+      ]
+    },
+    {
+      "case_id": 39,
+      "input": {
+        "creators": ["alice", "alice", "alice", "alice", "alice"],
+        "ids": ["a", "a", "b", "b", "c"],
+        "views": [10, 10, 20, 20, 30]
+      },
+      "expected": [
+        ["alice", "c"]
+      ]
+    },
+    {
+      "case_id": 40,
+      "input": {
+        "creators": ["ivan", "ivan", "ivan", "ivan", "ivan", "ivan", "ivan"],
+        "ids": ["vid1", "vid2", "vid3", "vid4", "vid5", "vid6", "vid7"],
+        "views": [1, 2, 3, 4, 5, 6, 7]
+      },
+      "expected": [
+        ["ivan", "vid7"]
+      ]
+    },
+    {
+      "case_id": 41,
+      "input": {
+        "creators": ["eve", "eve", "eve", "eve", "eve", "eve"],
+        "ids": ["aaa", "aab", "aac", "aad", "aae", "aaf"],
+        "views": [10, 10, 10, 10, 10, 10]
+      },
+      "expected": [
+        ["eve", "aaa"]
+      ]
+    },
+    {
+      "case_id": 42,
+      "input": {
+        "creators": ["alice", "bob", "alice", "bob", "alice", "bob"],
+        "ids": ["a", "b", "a", "b", "a", "b"],
+        "views": [10, 15, 10, 20, 10, 25]
+      },
+      "expected": [
+        ["bob", "b"]
+      ]
+    },
+    {
+      "case_id": 43,
+      "input": {
+        "creators": ["alice", "bob", "alice", "bob", "alice", "bob"],
+        "ids": ["a", "a", "b", "b", "c", "c"],
+        "views": [10, 20, 30, 40, 50, 60]
+      },
+      "expected": [
+        ["bob", "c"]
+      ]
+    },
+    {
+      "case_id": 44,
+      "input": {
+        "creators": ["nina", "oliver", "nina", "oliver", "nina", "oliver"],
+        "ids": ["x", "y", "x", "y", "x", "y"],
+        "views": [1000, 1000, 1000, 1000, 1000, 1000]
+      },
+      "expected": [
+        ["nina", "x"],
+        ["oliver", "y"]
+      ]
+    },
+    {
+      "case_id": 45,
+      "input": {
+        "creators": ["anna", "bob", "charlie", "bob", "anna"],
+        "ids": ["aaa", "bbb", "ccc", "bbb", "aaa"],
+        "views": [150, 250, 350, 250, 150]
+      },
+      "expected": [
+        ["bob", "bbb"]
+      ]
+    },
+    {
+      "case_id": 46,
+      "input": {
+        "creators": ["a", "a", "a", "b", "b", "b", "c", "c"],
+        "ids": ["m", "n", "o", "p", "q", "r", "s", "t"],
+        "views": [100, 200, 150, 300, 400, 400, 500, 600]
+      },
+      "expected": [
+        ["b", "q"],
+        ["c", "t"]
+      ]
+    },
+    {
+      "case_id": 47,
+      "input": {
+        "creators": ["grace", "heidi", "grace", "heidi", "grace", "heidi"],
+        "ids": ["film1", "film2", "film3", "film4", "film5", "film6"],
+        "views": [500, 500, 600, 600, 700, 700]
+      },
+      "expected": [
+        ["grace", "film5"],
+        ["heidi", "film6"]
+      ]
+    },
+    {
+      "case_id": 48,
+      "input": {
+        "creators": ["ivan", "ivan", "ivan", "ivan", "ivan", "ivan"],
+        "ids": ["m", "n", "m", "n", "m", "n"],
+        "views": [10, 20, 10, 20, 10, 20]
+      },
+      "expected": [
+        ["ivan", "n"]
+      ]
+    },
+    {
+      "case_id": 49,
+      "input": {
+        "creators": ["alice", "bob", "alice", "chris", "chris", "bob"],
+        "ids": ["one", "two", "three", "four", "five", "six"],
+        "views": [5, 10, 5, 4, 3, 15]
+      },
+      "expected": [
+        ["bob", "six"]
+      ]
+    },
+    {
+      "case_id": 50,
+      "input": {
+        "creators": ["alice", "alice", "alice", "alice", "alice", "alice"],
+        "ids": ["a", "b", "c", "d", "e", "f"],
+        "views": [100000, 99999, 99998, 99997, 99996, 99995]
+      },
+      "expected": [
+        ["alice", "a"]
+      ]
+    },
+    {
+      "case_id": 51,
+      "input": {
+        "creators": ["nina", "nina", "nina", "nina", "nina", "nina", "nina"],
+        "ids": ["a", "a", "b", "b", "c", "c", "d"],
+        "views": [10, 20, 30, 20, 30, 40, 50]
+      },
+      "expected": [
+        ["nina", "d"]
+      ]
+    },
+    {
+      "case_id": 52,
+      "input": {
+        "creators": ["alice", "bob", "alice", "charlie", "bob", "alice", "alice"],
+        "ids": ["abc", "bcd", "abc", "xyz", "bcd", "abc", "xyz"],
+        "views": [10, 20, 10, 30, 20, 10, 30]
+      },
+      "expected": [
+        ["alice", "xyz"]
+      ]
+    },
+    {
+      "case_id": 53,
+      "input": {
+        "creators": ["dave", "eve", "frank", "dave", "eve", "frank"],
+        "ids": ["alpha", "beta", "gamma", "alpha", "beta", "gamma"],
+        "views": [10, 20, 10, 5, 25, 15]
+      },
+      "expected": [
+        ["eve", "beta"]
+      ]
+    },
+    {
+      "case_id": 54,
+      "input": {
+        "creators": ["alice", "bob", "charlie"],
+        "ids": ["aaaaa", "bbbbb", "ccccc"],
+        "views": [100000, 100000, 100000]
+      },
+      "expected": [
+        ["alice", "aaaaa"],
+        ["bob", "bbbbb"],
+        ["charlie", "ccccc"]
+      ]
+    },
+    {
+      "case_id": 55,
+      "input": {
+        "creators": ["alice", "bob", "alice", "chris", "alice"],
+        "ids": ["one", "two", "three", "four", "five"],
+        "views": [5, 10, 15, 4, 10]
+      },
+      "expected": [
+        ["alice", "three"]
+      ]
+    },
+    {
+      "case_id": 56,
+      "input": {
+        "creators": ["alice", "bob", "charlie", "alice", "bob", "charlie"],
+        "ids": ["abc", "def", "ghi", "jkl", "mno", "pqr"],
+        "views": [100, 100, 100, 100, 100, 100]
+      },
+      "expected": [
+        ["alice", "abc"],
+        ["bob", "def"],
+        ["charlie", "ghi"]
+      ]
+    },
+    {
+      "case_id": 57,
+      "input": {
+        "creators": ["dave", "dave", "dave", "dave"],
+        "ids": ["abc", "abcd", "abcde", "abcdef"],
+        "views": [100, 100, 100, 100]
+      },
+      "expected": [
+        ["dave", "abc"]
+      ]
+    },
+    {
+      "case_id": 58,
+      "input": {
+        "creators": ["isaac", "jack", "isaac", "jack", "isaac", "jack"],
+        "ids": ["aaa", "bbb", "ccc", "ddd", "eee", "fff"],
+        "views": [1, 2, 1, 2, 1, 2]
+      },
+      "expected": [
+        ["jack", "bbb"]
+      ]
+    },
+    {
+      "case_id": 59,
+      "input": {
+        "creators": ["alice", "bob", "alice", "chris", "bob", "alice", "chris"],
+        "ids": ["one", "two", "three", "four", "two", "six", "seven"],
+        "views": [5, 10, 5, 4, 10, 15, 1]
+      },
+      "expected": [
+        ["alice", "six"]
+      ]
+    },
+    {
+      "case_id": 60,
+      "input": {
+        "creators": ["tom", "jerry", "spike", "tom", "jerry", "spike"],
+        "ids": ["q", "w", "e", "r", "t", "y"],
+        "views": [100, 200, 150, 100, 200, 150]
+      },
+      "expected": [
+        ["jerry", "t"]
+      ]
+    },
+    {
+      "case_id": 61,
+      "input": {
+        "creators": ["karen", "karen", "karen", "karen", "karen", "karen"],
+        "ids": ["a", "b", "c", "d", "e", "f"],
+        "views": [1, 2, 3, 4, 5, 6]
+      },
+      "expected": [
+        ["karen", "f"]
+      ]
+    },
+    {
+      "case_id": 62,
+      "input": {
+        "creators": ["anna", "anna", "anna", "anna"],
+        "ids": ["aaa", "bbb", "aaa", "bbb"],
+        "views": [50, 50, 50, 50]
+      },
+      "expected": [
+        ["anna", "aaa"]
+      ]
+    },
+    {
+      "case_id": 63,
+      "input": {
+        "creators": ["leo", "leo", "leo", "leo", "leo"],
+        "ids": ["z", "y", "x", "w", "v"],
+        "views": [1000, 1000, 1000, 1000, 1000]
+      },
+      "expected": [
+        ["leo", "v"]
+      ]
+    },
+    {
+      "case_id": 64,
+      "input": {
+        "creators": ["alice", "bob", "alice", "charlie", "bob", "alice", "alice"],
+        "ids": ["x", "y", "z", "x", "y", "z", "x"],
+        "views": [10, 20, 10, 30, 20, 10, 10]
+      },
+      "expected": [
+        ["alice", "x"],
+        ["bob", "y"]
+      ]
+    },
+    {
+      "case_id": 65,
+      "input": {
+        "creators": ["alice", "bob", "alice", "charlie", "bob", "alice"],
+        "ids": ["a", "b", "c", "d", "e", "f"],
+        "views": [0, 0, 0, 0, 0, 0]
+      },
+      "expected": [
+        ["alice", "a"],
+        ["bob", "b"],
+        ["charlie", "d"]
+      ]
+    },
+    {
+      "case_id": 66,
+      "input": {
+        "creators": ["anna", "bob", "charlie", "anna", "bob"],
+        "ids": ["a", "b", "c", "d", "e"],
+        "views": [100, 200, 300, 50, 200]
+      },
+      "expected": [
+        ["bob", "b"]
+      ]
+    },
+    {
+      "case_id": 67,
+      "input": {
+        "creators": ["tom", "ulysses", "tom", "ulysses", "tom", "ulysses"],
+        "ids": ["hello", "world", "hello", "world", "hello", "world"],
+        "views": [1000, 2000, 3000, 4000, 5000, 6000]
+      },
+      "expected": [
+        ["ulysses", "world"]
+      ]
+    },
+    {
+      "case_id": 68,
+      "input": {
+        "creators": ["alice", "bob", "charlie", "alice", "bob", "charlie"],
+        "ids": ["aaa", "bbb", "ccc", "ddd", "eee", "fff"],
+        "views": [1, 1, 1, 1, 1, 1]
+      },
+      "expected": [
+        ["alice", "aaa"],
+        ["bob", "bbb"],
+        ["charlie", "ccc"]
+      ]
+    },
+    {
+      "case_id": 69,
+      "input": {
+        "creators": ["anna", "anna", "bob", "bob", "charlie", "charlie"],
+        "ids": ["a", "b", "c", "d", "e", "f"],
+        "views": [5, 15, 10, 20, 25, 30]
+      },
+      "expected": [
+        ["charlie", "f"]
+      ]
+    },
+    {
+      "case_id": 70,
+      "input": {
+        "creators": ["nina", "nina", "nina", "nina", "nina", "nina", "nina", "nina", "nina", "nina"],
+        "ids": ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j"],
+        "views": [10, 20, 10, 20, 10, 20, 10, 20, 10, 20]
+      },
+      "expected": [
+        ["nina", "b"]
+      ]
+    },
+    {
+      "case_id": 71,
+      "input": {
+        "creators": ["anna", "anna", "anna", "anna"],
+        "ids": ["aaa", "aab", "aac", "aad"],
+        "views": [5, 5, 5, 5]
+      },
+      "expected": [
+        ["anna", "aaa"]
+      ]
+    },
+    {
+      "case_id": 72,
+      "input": {
+        "creators": ["peter", "peter", "peter", "peter", "peter"],
+        "ids": ["video1", "video2", "video3", "video4", "video5"],
+        "views": [500, 1000, 1000, 500, 250]
+      },
+      "expected": [
+        ["peter", "video2"]
+      ]
+    },
+    {
+      "case_id": 73,
+      "input": {
+        "creators": ["alice", "bob", "alice", "bob", "alice", "bob"],
+        "ids": ["a", "a", "b", "b", "c", "c"],
+        "views": [10, 20, 20, 10, 30, 30]
+      },
+      "expected": [
+        ["alice", "c"],
+        ["bob", "c"]
+      ]
+    },
+    {
+      "case_id": 74,
+      "input": {
+        "creators": ["alice", "alice", "bob", "bob", "alice", "bob"],
+        "ids": ["a", "b", "c", "d", "e", "f"],
+        "views": [10, 20, 30, 30, 40, 10]
+      },
+      "expected": [
+        ["alice", "e"],
+        ["bob", "c"]
+      ]
+    },
+    {
+      "case_id": 75,
+      "input": {
+        "creators": ["dave", "dave", "dave", "dave"],
+        "ids": ["aaa", "aab", "aac", "aad"],
+        "views": [1000, 1000, 1000, 1000]
+      },
+      "expected": [
+        ["dave", "aaa"]
+      ]
+    },
+    {
+      "case_id": 76,
+      "input": {
+        "creators": ["alice", "alice", "alice", "bob", "bob"],
+        "ids": ["id1", "id1", "id2", "id2", "id2"],
+        "views": [10, 20, 10, 5, 15]
+      },
+      "expected": [
+        ["alice", "id1"]
+      ]
+    },
+    {
+      "case_id": 77,
+      "input": {
+        "creators": ["alice", "bob", "alice", "charlie", "bob", "alice"],
+        "ids": ["apple", "banana", "cherry", "date", "elderberry", "fig"],
+        "views": [100, 120, 100, 130, 120, 100]
+      },
+      "expected": [
+        ["alice", "apple"]
+      ]
+    },
+    {
+      "case_id": 78,
+      "input": {
+        "creators": ["leo", "mike", "leo", "mike", "leo", "mike", "leo", "mike"],
+        "ids": ["video1", "video2", "video3", "video4", "video5", "video6", "video7", "video8"],
+        "views": [100, 200, 100, 200, 100, 200, 100, 200]
+      },
+      "expected": [
+        ["mike", "video2"]
+      ]
+    },
+    {
+      "case_id": 79,
+      "input": {
+        "creators": ["james", "james", "james", "james", "james", "james", "james"],
+        "ids": ["v1", "v1", "v1", "v1", "v1", "v1", "v1"],
+        "views": [1000, 2000, 3000, 4000, 5000, 6000, 7000]
+      },
+      "expected": [
+        ["james", "v1"]
+      ]
+    },
+    {
+      "case_id": 80,
+      "input": {
+        "creators": ["alice", "bob", "charlie", "bob", "anna", "charlie", "anna", "bob"],
+        "ids": ["a", "b", "c", "d", "e", "f", "g", "h"],
+        "views": [100, 200, 300, 200, 100, 300, 100, 200]
+      },
+      "expected": [
+        ["bob", "b"],
+        ["charlie", "c"]
+      ]
+    },
+    {
+      "case_id": 81,
+      "input": {
+        "creators": ["alice", "alice", "bob", "bob", "bob"],
+        "ids": ["abc", "def", "ghi", "jkl", "mno"],
+        "views": [50, 50, 60, 60, 60]
+      },
+      "expected": [
+        ["bob", "ghi"]
+      ]
+    },
+    {
+      "case_id": 82,
+      "input": {
+        "creators": ["grace", "heidi", "grace", "heidi", "grace"],
+        "ids": ["alpha", "beta", "gamma", "delta", "epsilon"],
+        "views": [500, 500, 400, 300, 500]
+      },
+      "expected": [
+        ["grace", "alpha"]
+      ]
+    },
+    {
+      "case_id": 83,
+      "input": {
+        "creators": ["alice", "bob", "bob", "alice", "chris"],
+        "ids": ["a", "b", "c", "a", "d"],
+        "views": [10, 20, 20, 30, 5]
+      },
+      "expected": [
+        ["alice", "a"],
+        ["bob", "b"]
+      ]
+    },
+    {
+      "case_id": 84,
+      "input": {
+        "creators": ["dave", "eve", "dave", "eve", "dave"],
+        "ids": ["movie", "movie", "series", "series", "episode"],
+        "views": [100, 100, 200, 200, 50]
+      },
+      "expected": [
+        ["dave", "series"]
+      ]
+    },
+    {
+      "case_id": 85,
+      "input": {
+        "creators": ["eve", "eve", "eve", "eve", "eve", "eve"],
+        "ids": ["a", "b", "c", "d", "e", "f"],
+        "views": [5, 10, 15, 20, 25, 30]
+      },
+      "expected": [
+        ["eve", "f"]
+      ]
+    },
+    {
+      "case_id": 86,
+      "input": {
+        "creators": ["karen", "leo", "mike", "leo", "karen", "mike"],
+        "ids": ["a", "b", "c", "d", "e", "f"],
+        "views": [30, 40, 30, 40, 30, 40]
+      },
+      "expected": [
+        ["leo", "b"]
+      ]
+    },
+    {
+      "case_id": 87,
+      "input": {
+        "creators": ["eve", "eve", "eve", "eve", "eve"],
+        "ids": ["x", "y", "z", "x", "y"],
+        "views": [10, 20, 30, 10, 20]
+      },
+      "expected": [
+        ["eve", "z"]
+      ]
+    },
+    {
+      "case_id": 88,
+      "input": {
+        "creators": ["jane", "jane", "jane", "jane", "jane", "jane"],
+        "ids": ["one", "two", "three", "four", "five", "six"],
+        "views": [10, 10, 10, 10, 10, 10]
+      },
+      "expected": [
+        ["jane", "five"]
+      ]
+    },
+    {
+      "case_id": 89,
+      "input": {
+        "creators": ["dave", "eve", "frank", "dave", "eve", "frank"],
+        "ids": ["m", "n", "o", "p", "q", "r"],
+        "views": [100, 200, 150, 250, 175, 225]
+      },
+      "expected": [
+        ["eve", "n"],
+        ["frank", "r"]
+      ]
+    },
+    {
+      "case_id": 90,
+      "input": {
+        "creators": ["eve", "eve", "eve", "eve", "eve"],
+        "ids": ["x", "y", "z", "x", "y"],
+        "views": [10, 20, 10, 20, 10]
+      },
+      "expected": [
+        ["eve", "x"]
+      ]
+    },
+    {
+      "case_id": 91,
+      "input": {
+        "creators": ["creator1", "creator2", "creator1", "creator2", "creator3"],
+        "ids": ["video1", "video2", "video3", "video4", "video5"],
+        "views": [100000, 100000, 100000, 100000, 100000]
+      },
+      "expected": [
+        ["creator1", "video1"],
+        ["creator2", "video2"]
+      ]
+    },
+    {
+      "case_id": 92,
+      "input": {
+        "creators": ["anna", "anna", "anna", "bob", "bob"],
+        "ids": ["a", "b", "c", "a", "b"],
+        "views": [100, 100, 150, 200, 200]
+      },
+      "expected": [
+        ["bob", "a"]
+      ]
+    },
+    {
+      "case_id": 93,
+      "input": {
+        "creators": ["alice", "bob", "alice", "charlie", "bob", "alice", "alice"],
+        "ids": ["one", "two", "three", "four", "five", "six", "seven"],
+        "views": [5, 10, 5, 4, 10, 5, 10]
+      },
+      "expected": [
+        ["alice", "seven"]
+      ]
+    },
+    {
+      "case_id": 94,
+      "input": {
+        "creators": ["alice", "bob", "alice", "bob", "alice"],
+        "ids": ["x", "y", "z", "x", "y"],
+        "views": [10, 20, 10, 20, 30]
+      },
+      "expected": [
+        ["alice", "y"]
+      ]
+    },
+    {
+      "case_id": 95,
+      "input": {
+        "creators": ["alice", "bob", "alice", "bob", "alice", "bob", "alice", "bob"],
+        "ids": ["a", "a", "a", "a", "a", "a", "a", "a"],
+        "views": [1, 2, 3, 4, 5, 6, 7, 8]
+      },
+      "expected": [
+        ["bob", "a"]
+      ]
+    },
+    {
+      "case_id": 96,
+      "input": {
+        "creators": ["mike", "mike", "mike", "mike", "mike", "mike"],
+        "ids": ["same", "same", "same", "same", "same", "same"],
+        "views": [5, 5, 5, 5, 5, 5]
+      },
+      "expected": [
+        ["mike", "same"]
+      ]
+    },
+    {
+      "case_id": 97,
+      "input": {
+        "creators": ["x", "y", "z", "x", "y", "z"],
+        "ids": ["a", "b", "c", "a", "b", "c"],
+        "views": [10, 10, 10, 20, 20, 20]
+      },
+      "expected": [
+        ["x", "a"],
+        ["y", "b"],
+        ["z", "c"]
+      ]
+    },
+    {
+      "case_id": 98,
+      "input": {
+        "creators": ["peter", "quinn", "peter", "quinn", "peter", "quinn"],
+        "ids": ["zero", "one", "zero", "one", "zero", "one"],
+        "views": [500, 600, 700, 800, 900, 1000]
+      },
+      "expected": [
+        ["quinn", "one"]
+      ]
+    },
+    {
+      "case_id": 99,
+      "input": {
+        "creators": ["anna", "anna", "anna", "anna", "anna"],
+        "ids": ["z", "y", "x", "w", "v"],
+        "views": [5, 5, 5, 5, 5]
+      },
+      "expected": [
+        ["anna", "v"]
+      ]
+    },
+    {
+      "case_id": 100,
+      "input": {
+        "creators": ["anna", "bob", "charlie", "anna", "bob", "anna"],
+        "ids": ["x", "y", "z", "x", "y", "z"],
+        "views": [100, 200, 300, 150, 250, 50]
+      },
+      "expected": [
+        ["bob", "y"]
+      ]
+    },
+    {
+      "case_id": 101,
+      "input": {
+        "creators": ["z", "z", "z", "y", "y", "y", "x", "x", "x"],
+        "ids": ["a", "b", "c", "a", "b", "c", "a", "b", "c"],
+        "views": [100, 200, 150, 300, 400, 400, 500, 600, 650]
+      },
+      "expected": [
+        ["x", "c"]
+      ]
+    },
+    {
+      "case_id": 102,
+      "input": {
+        "creators": ["alice", "bob", "alice", "charlie", "bob", "alice"],
+        "ids": ["abc", "bcd", "cba", "xyz", "zyx", "bac"],
+        "views": [50, 75, 50, 100, 75, 50]
+      },
+      "expected": [
+        ["alice", "abc"],
+        ["bob", "bcd"]
+      ]
+    }
+  ]
+}

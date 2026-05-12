@@ -1,0 +1,845 @@
+{
+  "schema_version": 1,
+  "problem_id": 1170,
+  "title": "Compare Strings by Frequency of the Smallest Character",
+  "method": "numSmallerByFrequency",
+  "signature": {
+    "params": [
+      {
+        "name": "queries",
+        "type": "STRING_ARRAY"
+      },
+      {
+        "name": "words",
+        "type": "STRING_ARRAY"
+      }
+    ],
+    "returns": "INT32_ARRAY"
+  },
+  "cases": [
+    {
+      "case_id": 1,
+      "input": {
+        "queries": ["ccc"],
+        "words": ["a", "bb", "ccc", "dddd"]
+      },
+      "expected": [1]
+    },
+    {
+      "case_id": 2,
+      "input": {
+        "queries": ["a", "b", "c"],
+        "words": ["d", "e", "f", "g"]
+      },
+      "expected": [0, 0, 0]
+    },
+    {
+      "case_id": 3,
+      "input": {
+        "queries": ["abc", "def"],
+        "words": ["ghi", "jkl"]
+      },
+      "expected": [0, 0]
+    },
+    {
+      "case_id": 4,
+      "input": {
+        "queries": ["zzz"],
+        "words": ["aaa", "bbb", "ccc"]
+      },
+      "expected": [0]
+    },
+    {
+      "case_id": 5,
+      "input": {
+        "queries": ["abc", "bcd"],
+        "words": ["def", "ghi"]
+      },
+      "expected": [0, 0]
+    },
+    {
+      "case_id": 6,
+      "input": {
+        "queries": ["aaa", "bbb", "ccc"],
+        "words": ["ddd", "eee", "fff"]
+      },
+      "expected": [0, 0, 0]
+    },
+    {
+      "case_id": 7,
+      "input": {
+        "queries": ["a", "aa", "aaa"],
+        "words": ["b", "bb", "bbb", "bbbb"]
+      },
+      "expected": [3, 2, 1]
+    },
+    {
+      "case_id": 8,
+      "input": {
+        "queries": ["cbd"],
+        "words": ["zaaaz"]
+      },
+      "expected": [1]
+    },
+    {
+      "case_id": 9,
+      "input": {
+        "queries": ["bbb", "cc"],
+        "words": ["a", "aa", "aaa", "aaaa"]
+      },
+      "expected": [1, 2]
+    },
+    {
+      "case_id": 10,
+      "input": {
+        "queries": ["a"],
+        "words": ["b", "c", "d"]
+      },
+      "expected": [0]
+    },
+    {
+      "case_id": 11,
+      "input": {
+        "queries": ["abc", "bcd"],
+        "words": ["cde", "def", "efg"]
+      },
+      "expected": [0, 0]
+    },
+    {
+      "case_id": 12,
+      "input": {
+        "queries": ["xyz"],
+        "words": ["aaa", "bbb", "ccc", "ddd", "eee"]
+      },
+      "expected": [5]
+    },
+    {
+      "case_id": 13,
+      "input": {
+        "queries": ["a", "aa"],
+        "words": ["b", "bb", "bbb"]
+      },
+      "expected": [2, 1]
+    },
+    {
+      "case_id": 14,
+      "input": {
+        "queries": ["xyz"],
+        "words": ["abc", "def", "ghi"]
+      },
+      "expected": [0]
+    },
+    {
+      "case_id": 15,
+      "input": {
+        "queries": ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j"],
+        "words": ["k", "l", "m", "n", "o", "p", "q", "r", "s", "t"]
+      },
+      "expected": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+    },
+    {
+      "case_id": 16,
+      "input": {
+        "queries": ["zz", "zaz", "zzz"],
+        "words": ["aaa", "aa", "a", "aaaaa", "aaaa", "aaaab"]
+      },
+      "expected": [4, 5, 3]
+    },
+    {
+      "case_id": 17,
+      "input": {
+        "queries": ["aabbcc", "ddeeff", "gghhii"],
+        "words": ["jjkkll", "mmnnoo", "ppqqrr", "ssttuu"]
+      },
+      "expected": [0, 0, 0]
+    },
+    {
+      "case_id": 18,
+      "input": {
+        "queries": ["aaa", "aab", "aac"],
+        "words": ["bbb", "bbc", "bba", "abb", "aba", "aab"]
+      },
+      "expected": [0, 1, 1]
+    },
+    {
+      "case_id": 19,
+      "input": {
+        "queries": ["ab", "bc", "cd"],
+        "words": ["a", "b", "c", "d", "e", "f", "g", "h"]
+      },
+      "expected": [0, 0, 0]
+    },
+    {
+      "case_id": 20,
+      "input": {
+        "queries": ["abcd", "dcba", "abcd", "dcba"],
+        "words": ["abcd", "dcba", "abcd", "dcba", "abcd", "dcba"]
+      },
+      "expected": [0, 0, 0, 0]
+    },
+    {
+      "case_id": 21,
+      "input": {
+        "queries": ["abcd", "abdc", "acdb"],
+        "words": ["bcde", "cdef", "defg", "efgh"]
+      },
+      "expected": [0, 0, 0]
+    },
+    {
+      "case_id": 22,
+      "input": {
+        "queries": ["aaaa", "bbb", "cc"],
+        "words": ["zzzz", "zzz", "zz", "z"]
+      },
+      "expected": [0, 1, 2]
+    },
+    {
+      "case_id": 23,
+      "input": {
+        "queries": ["a", "b", "c", "d", "e", "f"],
+        "words": ["g", "h", "i", "j", "k", "l", "m", "n", "o", "p"]
+      },
+      "expected": [0, 0, 0, 0, 0, 0]
+    },
+    {
+      "case_id": 24,
+      "input": {
+        "queries": ["abcdabcd", "bcdbcd", "cdcdcd"],
+        "words": ["ddd", "dddd", "ddddd"]
+      },
+      "expected": [3, 3, 2]
+    },
+    {
+      "case_id": 25,
+      "input": {
+        "queries": ["a", "a", "a", "a"],
+        "words": ["b", "b", "b", "b"]
+      },
+      "expected": [0, 0, 0, 0]
+    },
+    {
+      "case_id": 26,
+      "input": {
+        "queries": ["abcde", "bcdef", "cdefg"],
+        "words": ["defgh", "efghi", "fghij", "ghijk", "hijkl", "ijklm"]
+      },
+      "expected": [0, 0, 0]
+    },
+    {
+      "case_id": 27,
+      "input": {
+        "queries": ["zzzzzzz", "zzzzzz", "zzzzz", "zzzz", "zzz"],
+        "words": ["zzzz", "zzz", "zz", "z", "a"]
+      },
+      "expected": [0, 0, 0, 0, 1]
+    },
+    {
+      "case_id": 28,
+      "input": {
+        "queries": ["hello", "world"],
+        "words": ["python", "java", "csharp", "ruby", "swift"]
+      },
+      "expected": [1, 1]
+    },
+    {
+      "case_id": 29,
+      "input": {
+        "queries": ["abcd", "ab", "abc"],
+        "words": ["abcd", "abc", "ab", "a"]
+      },
+      "expected": [0, 0, 0]
+    },
+    {
+      "case_id": 30,
+      "input": {
+        "queries": ["x", "xx", "xxx", "xxxx", "xxxxx"],
+        "words": ["y", "yy", "yyy", "yyyy", "yyyyy", "yyyyyy"]
+      },
+      "expected": [5, 4, 3, 2, 1]
+    },
+    {
+      "case_id": 31,
+      "input": {
+        "queries": ["xyxzyz", "yzyzyx", "zxzyxz"],
+        "words": ["zxyzxy", "xyzxyz", "yzxyzx", "zyxzyz"]
+      },
+      "expected": [0, 3, 0]
+    },
+    {
+      "case_id": 32,
+      "input": {
+        "queries": ["abcdefghij", "bcdefghijk", "cdefghijkl"],
+        "words": ["defghijklm", "efghijklmn", "fghijklmno", "ghijklmnop", "hijklmnopq", "ijklmnopqr"]
+      },
+      "expected": [0, 0, 0]
+    },
+    {
+      "case_id": 33,
+      "input": {
+        "queries": ["xyz", "xyzz", "xyzzz"],
+        "words": ["wxyz", "wwxyz", "wwwxyz", "wwwwxyz"]
+      },
+      "expected": [3, 3, 3]
+    },
+    {
+      "case_id": 34,
+      "input": {
+        "queries": ["abcdefghijklmnopqrstuvwxyz", "zyxwvutsrqponmlkjihgfedcba"],
+        "words": ["qwertyuiopasdfghjklzxcvbnm", "mnbvcxzasdfghjklpoiuytrewq"]
+      },
+      "expected": [0, 0]
+    },
+    {
+      "case_id": 35,
+      "input": {
+        "queries": ["zzzzzz", "yyyyyy", "xxxxxx"],
+        "words": ["wwwwww", "vvvvvv", "uuuuuu", "tttttt"]
+      },
+      "expected": [0, 0, 0]
+    },
+    {
+      "case_id": 36,
+      "input": {
+        "queries": ["aabbcc", "bbccdd", "ccddee", "ddeeff", "eeffgg"],
+        "words": ["ffgghh", "gghhiijj", "hhiijjkk", "iijjkkll", "jjkkllmm"]
+      },
+      "expected": [0, 0, 0, 0, 0]
+    },
+    {
+      "case_id": 37,
+      "input": {
+        "queries": ["abcdef", "bcdefg", "cdefgh"],
+        "words": ["defghi", "efghij", "fghijk", "ghijkl", "hijklm", "ijklmn"]
+      },
+      "expected": [0, 0, 0]
+    },
+    {
+      "case_id": 38,
+      "input": {
+        "queries": ["zzz", "zzzz"],
+        "words": ["aaaaa", "aaa", "aa", "a"]
+      },
+      "expected": [1, 1]
+    },
+    {
+      "case_id": 39,
+      "input": {
+        "queries": ["a", "aa", "aaa", "aaaa", "aaaaa"],
+        "words": ["z", "zz", "zzz", "zzzz", "zzzzz", "zzzzzz"]
+      },
+      "expected": [5, 4, 3, 2, 1]
+    },
+    {
+      "case_id": 40,
+      "input": {
+        "queries": "[\"abcd\" * 2, \"efgh\" * 2, \"ijkl\" * 2]",
+        "words": "[\"mnop\" * 2, \"qrst\" * 2, \"uvwx\" * 2, \"yzab\" * 2]"
+      },
+      "expected": "Error: Solution.numSmallerByFrequency() missing 2 required positional arguments: 'queries' and 'words'"
+    },
+    {
+      "case_id": 41,
+      "input": {
+        "queries": ["zzzzz", "zzzz", "zzz", "zz", "z"],
+        "words": ["zzzzzz", "zzzzz", "zzzz", "zzz", "zz", "z", "a"]
+      },
+      "expected": [1, 2, 3, 4, 5]
+    },
+    {
+      "case_id": 42,
+      "input": {
+        "queries": ["zzz", "zz", "z"],
+        "words": ["aaa", "aa", "a", "aaaa"]
+      },
+      "expected": [1, 2, 3]
+    },
+    {
+      "case_id": 43,
+      "input": {
+        "queries": ["aabbcc", "bbaacc", "ccaabb"],
+        "words": ["aabbb", "bbccc", "ccaaa", "abcabc", "aabbccaa"]
+      },
+      "expected": [2, 2, 2]
+    },
+    {
+      "case_id": 44,
+      "input": {
+        "queries": ["aab", "abb", "abc"],
+        "words": ["aab", "abb", "abc", "acc", "bac", "bca", "cab", "cba", "cca"]
+      },
+      "expected": [0, 1, 1]
+    },
+    {
+      "case_id": 45,
+      "input": {
+        "queries": ["aaaaab", "aaaabb", "aaabbb", "aabbbb", "abbbbb"],
+        "words": ["bbbbb", "bbbb", "bbb", "bb", "b"]
+      },
+      "expected": [0, 1, 2, 3, 4]
+    },
+    {
+      "case_id": 46,
+      "input": {
+        "queries": ["apple", "banana", "cherry"],
+        "words": ["date", "elderberry", "fig", "grape", "kiwi", "lemon", "mango", "nectarine", "orange", "papaya"]
+      },
+      "expected": [2, 0, 2]
+    },
+    {
+      "case_id": 47,
+      "input": {
+        "queries": "[\"a\" * 5, \"b\" * 5, \"c\" * 5, \"d\" * 5]",
+        "words": "[\"e\" * 5, \"f\" * 5, \"g\" * 5, \"h\" * 5, \"i\" * 5]"
+      },
+      "expected": "Error: Solution.numSmallerByFrequency() missing 2 required positional arguments: 'queries' and 'words'"
+    },
+    {
+      "case_id": 48,
+      "input": {
+        "queries": ["apple", "banana", "cherry"],
+        "words": ["date", "fig", "grape", "kiwi"]
+      },
+      "expected": [1, 0, 1]
+    },
+    {
+      "case_id": 49,
+      "input": {
+        "queries": ["aabbcc", "bbaacc", "ccaabb"],
+        "words": ["aabbc", "bbccc", "ccaab", "aaabb", "bbcca", "ccaab"]
+      },
+      "expected": [1, 1, 1]
+    },
+    {
+      "case_id": 50,
+      "input": {
+        "queries": ["apple", "banana", "cherry"],
+        "words": ["date", "elderberry", "fig", "grape"]
+      },
+      "expected": [0, 0, 0]
+    },
+    {
+      "case_id": 51,
+      "input": {
+        "queries": ["zzzzz", "zzzz", "zzz", "zz", "z"],
+        "words": ["aaaaa", "aaaa", "aaa", "aa", "a"]
+      },
+      "expected": [0, 1, 2, 3, 4]
+    },
+    {
+      "case_id": 52,
+      "input": {
+        "queries": ["mnopqr", "nopqrs", "opqrst"],
+        "words": ["pqrsqt", "qrstuv", "rstuvw", "stuvwx", "tuvwxy", "uvwxyx"]
+      },
+      "expected": [0, 0, 0]
+    },
+    {
+      "case_id": 53,
+      "input": {
+        "queries": ["zzz", "yyy", "xxx"],
+        "words": ["www", "vvv", "uuu", "ttt", "ss"]
+      },
+      "expected": [0, 0, 0]
+    },
+    {
+      "case_id": 54,
+      "input": {
+        "queries": ["aabbcc", "bbccdd", "ccddeeff"],
+        "words": ["abc", "bcd", "cde", "def", "efg", "fgh", "ghi", "hij"]
+      },
+      "expected": [0, 0, 0]
+    },
+    {
+      "case_id": 55,
+      "input": {
+        "queries": ["abcd", "abc", "ab"],
+        "words": ["zzzz", "zzz", "zz", "z"]
+      },
+      "expected": [3, 3, 3]
+    },
+    {
+      "case_id": 56,
+      "input": {
+        "queries": ["aabbcc", "bbccdd", "ccddaa"],
+        "words": ["ddeeff", "eeffgg", "ffgghh"]
+      },
+      "expected": [0, 0, 0]
+    },
+    {
+      "case_id": 57,
+      "input": {
+        "queries": ["aab", "aabbb", "aabbbb"],
+        "words": ["b", "bb", "bbb", "bbbb", "bbbbb", "bbbbbb", "bbbbbbb"]
+      },
+      "expected": [5, 5, 5]
+    },
+    {
+      "case_id": 58,
+      "input": {
+        "queries": ["leetcode", "challenge", "python"],
+        "words": ["programming", "interview", "solution", "difficulty", "easy", "hard", "medium"]
+      },
+      "expected": [1, 1, 1]
+    },
+    {
+      "case_id": 59,
+      "input": {
+        "queries": ["abcd", "abcde", "abcdef"],
+        "words": ["bcdefg", "cdefgh", "defghi", "efghij"]
+      },
+      "expected": [0, 0, 0]
+    },
+    {
+      "case_id": 60,
+      "input": {
+        "queries": ["abcd", "abdc", "adcb"],
+        "words": ["bcde", "dcbe", "debc", "edcb"]
+      },
+      "expected": [0, 0, 0]
+    },
+    {
+      "case_id": 61,
+      "input": {
+        "queries": ["mississippi", "delaware", "kentucky"],
+        "words": ["alabama", "missouri", "georgia", "texas", "california", "arizona", "wyoming"]
+      },
+      "expected": [0, 1, 4]
+    },
+    {
+      "case_id": 62,
+      "input": {
+        "queries": ["abcdefg", "hijklmn", "opqrstu", "vwxyzab"],
+        "words": ["cdefghi", "defghij", "efghijk", "fghijkl", "ghijklm"]
+      },
+      "expected": [0, 0, 0, 0]
+    },
+    {
+      "case_id": 63,
+      "input": {
+        "queries": ["abcdef", "ghijkl", "mnopqr"],
+        "words": ["stuvwx", "yzabcd", "efghij", "klmnop", "qrstuv"]
+      },
+      "expected": [0, 0, 0]
+    },
+    {
+      "case_id": 64,
+      "input": {
+        "queries": ["apple", "banana", "cherry"],
+        "words": ["date", "fig", "grape", "kiwi", "lemon", "mango"]
+      },
+      "expected": [1, 0, 1]
+    },
+    {
+      "case_id": 65,
+      "input": {
+        "queries": ["hello", "world"],
+        "words": ["python", "java", "c++", "ruby"]
+      },
+      "expected": [1, 1]
+    },
+    {
+      "case_id": 66,
+      "input": {
+        "queries": ["abcd", "abdc", "aabc"],
+        "words": ["aaa", "aaab", "baaab", "baaabbb"]
+      },
+      "expected": [4, 4, 4]
+    },
+    {
+      "case_id": 67,
+      "input": {
+        "queries": ["a"],
+        "words": ["aaaaaaaaaab", "aaaaaaaaaa", "aaaaaaaaa", "aaaaaaaa", "aaaaaaa", "aaaaaa", "aaaaa", "aaaa", "aaa", "aa", "a"]
+      },
+      "expected": [10]
+    },
+    {
+      "case_id": 68,
+      "input": {
+        "queries": ["a", "b", "c", "d", "e", "f"],
+        "words": ["g", "h", "i", "j", "k", "l", "m"]
+      },
+      "expected": [0, 0, 0, 0, 0, 0]
+    },
+    {
+      "case_id": 69,
+      "input": {
+        "queries": ["zzz", "zzzz", "zzzzz"],
+        "words": ["zzzzzz", "zzzzzzz", "zzzzzzzz", "zzzzzzzzz"]
+      },
+      "expected": [4, 4, 4]
+    },
+    {
+      "case_id": 70,
+      "input": {
+        "queries": ["zzzzzz", "zzzzz", "zzzz", "zzz", "zz", "z"],
+        "words": ["aaaaaa", "aaaaa", "aaaa", "aaa", "aa", "a"]
+      },
+      "expected": [0, 1, 2, 3, 4, 5]
+    },
+    {
+      "case_id": 71,
+      "input": {
+        "queries": ["abcdef", "bcdefg", "cdefgh"],
+        "words": ["defghi", "efghij", "fghijk", "ghijkl", "hijklm"]
+      },
+      "expected": [0, 0, 0]
+    },
+    {
+      "case_id": 72,
+      "input": {
+        "queries": ["xylophone", "guitar", "piano"],
+        "words": ["flute", "harmonica", "trumpet", "violin", "cello", "saxophone", "trombone", "tuba"]
+      },
+      "expected": [2, 2, 2]
+    },
+    {
+      "case_id": 73,
+      "input": {
+        "queries": ["zz", "yy", "xx"],
+        "words": ["ww", "vv", "uu", "tt", "ss", "rr", "qq", "pp", "oo", "nn"]
+      },
+      "expected": [0, 0, 0]
+    },
+    {
+      "case_id": 74,
+      "input": {
+        "queries": ["abcxyz", "zzzz", "uvw"],
+        "words": ["mnop", "qrst", "xyz", "aabbcc"]
+      },
+      "expected": [1, 0, 1]
+    },
+    {
+      "case_id": 75,
+      "input": {
+        "queries": ["mnop", "qrst", "uvwx", "yzab", "cdef"],
+        "words": ["efgh", "ghij", "ijkl", "klmn", "lmno"]
+      },
+      "expected": [0, 0, 0, 0, 0]
+    },
+    {
+      "case_id": 76,
+      "input": {
+        "queries": ["zzz", "yyy", "xxx"],
+        "words": ["www", "vvv", "uuu", "ttt"]
+      },
+      "expected": [0, 0, 0]
+    },
+    {
+      "case_id": 77,
+      "input": {
+        "queries": ["xyzz", "zzyx", "zzyy"],
+        "words": ["zzzz", "zzyz", "zyzz", "zzzy", "zyyz", "zyzy", "zyzz", "zzzyz"]
+      },
+      "expected": [3, 3, 1]
+    },
+    {
+      "case_id": 78,
+      "input": {
+        "queries": ["a", "b", "c", "d", "e"],
+        "words": ["f", "g", "h", "i", "j", "k", "l", "m", "n", "o"]
+      },
+      "expected": [0, 0, 0, 0, 0]
+    },
+    {
+      "case_id": 79,
+      "input": {
+        "queries": ["zzz", "zzzz", "zzzzz"],
+        "words": ["zzzzzz", "zzzzzzz", "zzzzzzzz", "zzzzzzzzz", "zzzzzzzzzz"]
+      },
+      "expected": [5, 5, 5]
+    },
+    {
+      "case_id": 80,
+      "input": {
+        "queries": ["aaaaa", "bbb", "cccc"],
+        "words": ["ddd", "eee", "ffff", "ggggg"]
+      },
+      "expected": [0, 2, 1]
+    },
+    {
+      "case_id": 81,
+      "input": {
+        "queries": ["mnop", "qrst", "uvwx", "yzab"],
+        "words": ["abcd", "efgh", "ijkl", "mnop", "qrst", "uvwx", "yzab"]
+      },
+      "expected": [0, 0, 0, 0]
+    },
+    {
+      "case_id": 82,
+      "input": {
+        "queries": ["abcdabcd", "abcdeabcde", "abcdefabcdef"],
+        "words": ["bcdefgbcdefg", "cdefghcdefgh", "defghidefghi"]
+      },
+      "expected": [0, 0, 0]
+    },
+    {
+      "case_id": 83,
+      "input": {
+        "queries": ["zzzz", "yyyy", "xxxx", "wwww"],
+        "words": ["vvvv", "uuuu", "tttt", "ssss", "rrrr", "qqqq", "pppp", "oooo", "nnnn", "mmmm"]
+      },
+      "expected": [0, 0, 0, 0]
+    },
+    {
+      "case_id": 84,
+      "input": {
+        "queries": "[\"a\" * 10, \"b\" * 10, \"c\" * 10]",
+        "words": "[\"d\" * 10, \"e\" * 10, \"f\" * 10, \"g\" * 10]"
+      },
+      "expected": "Error: Solution.numSmallerByFrequency() missing 2 required positional arguments: 'queries' and 'words'"
+    },
+    {
+      "case_id": 85,
+      "input": {
+        "queries": ["applepie", "bananabread", "cherrypie"],
+        "words": ["strawberry", "blueberry", "raspberry"]
+      },
+      "expected": [1, 0, 1]
+    },
+    {
+      "case_id": 86,
+      "input": {
+        "queries": ["abcd", "abcde", "abcdef"],
+        "words": ["bcde", "bcdef", "bcdefg", "bcdefgh", "bcdefghi", "bcdefghij"]
+      },
+      "expected": [0, 0, 0]
+    },
+    {
+      "case_id": 87,
+      "input": {
+        "queries": ["zzz", "yyy", "xxx"],
+        "words": ["www", "vvv", "uuu", "ttt", "sss"]
+      },
+      "expected": [0, 0, 0]
+    },
+    {
+      "case_id": 88,
+      "input": {
+        "queries": ["abc", "abcd", "abcde", "abcdef"],
+        "words": ["bcde", "cdef", "defg", "efgh", "fghi", "ghij", "hijk", "ijkl"]
+      },
+      "expected": [0, 0, 0, 0]
+    },
+    {
+      "case_id": 89,
+      "input": {
+        "queries": ["xyz", "xyzz", "xyzzz"],
+        "words": ["uvw", "uvwv", "uvwvv", "uvwvvv", "uvwvvvv", "uvwvvvvv"]
+      },
+      "expected": [0, 0, 0]
+    },
+    {
+      "case_id": 90,
+      "input": {
+        "queries": ["aabbcc", "bbccdd", "ccddee"],
+        "words": ["ddeeff", "eeffgg", "ffgghh", "gghhii"]
+      },
+      "expected": [0, 0, 0]
+    },
+    {
+      "case_id": 91,
+      "input": {
+        "queries": ["zzzzz", "yyyyy", "xxxxx"],
+        "words": ["wwwww", "vvvvv", "uuuuu", "ttttt", "sssss"]
+      },
+      "expected": [0, 0, 0]
+    },
+    {
+      "case_id": 92,
+      "input": {
+        "queries": ["abcdefgh", "hgfedcba", "fedcbahg"],
+        "words": ["ghfedcba", "ahgfedcb", "bahgfedc", "cbahgfed", "dcbahegf", "efgdcba", "gfedcba", "hgfedcb", "abcdefgh"]
+      },
+      "expected": [0, 0, 0]
+    },
+    {
+      "case_id": 93,
+      "input": {
+        "queries": ["abcdabcd", "bcdbcd", "cdab"],
+        "words": ["ababcdabcd", "bcdbcdabcd", "cdababcd", "abcdabcdabcd", "bcdabcd", "cdabcd", "abcd"]
+      },
+      "expected": [2, 2, 3]
+    },
+    {
+      "case_id": 94,
+      "input": {
+        "queries": ["ab", "abc", "abcd"],
+        "words": ["bc", "bcd", "bcde", "bcdef", "bcdefg", "bcdefgh"]
+      },
+      "expected": [0, 0, 0]
+    },
+    {
+      "case_id": 95,
+      "input": {
+        "queries": ["zzzzzzzzzz", "zzzzzzzzz", "zzzzzzzz", "zzzzzzz", "zzzzzz", "zzzzz", "zzzz", "zzz", "zz", "z"],
+        "words": ["aaaaaaaaaa", "aaaaaaaaa", "aaaaaaaa", "aaaaaaa", "aaaaaa", "aaaaa", "aaaa", "aaa", "aa", "a"]
+      },
+      "expected": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+    },
+    {
+      "case_id": 96,
+      "input": {
+        "queries": ["zz", "yy", "xx", "ww", "vv"],
+        "words": ["uu", "tt", "ss", "rr", "qq", "pp", "oo", "nn", "mm", "ll"]
+      },
+      "expected": [0, 0, 0, 0, 0]
+    },
+    {
+      "case_id": 97,
+      "input": {
+        "queries": ["abcdef", "ghijkl", "mnopqr"],
+        "words": ["stuvwx", "yzabcd", "efghij", "klmnop"]
+      },
+      "expected": [0, 0, 0]
+    },
+    {
+      "case_id": 98,
+      "input": {
+        "queries": ["mmmmmm", "nnnnnn", "oooooo", "pppppp"],
+        "words": ["qqqqqq", "rrrrrr", "ssssss", "tttttt"]
+      },
+      "expected": [0, 0, 0, 0]
+    },
+    {
+      "case_id": 99,
+      "input": {
+        "queries": ["qwerty", "asdfgh", "zxcvbn"],
+        "words": ["poiuyt", "lkjhgf", "mnbvcx", "tyuiop", "ghjklcvbnm"]
+      },
+      "expected": [0, 0, 0]
+    },
+    {
+      "case_id": 100,
+      "input": {
+        "queries": ["xyz", "zyx", "yxz"],
+        "words": ["qrs", "rsq", "srq"]
+      },
+      "expected": [0, 0, 0]
+    },
+    {
+      "case_id": 101,
+      "input": {
+        "queries": ["aaaaaaaa", "bbbbbbbb", "cccccccc"],
+        "words": ["dddddddd", "eeeeeeee", "ffffffff", "gggggggg", "hhhhhhhh", "iiiiiiii", "jjjjjjjj", "kkkkkkkk", "llllllll"]
+      },
+      "expected": [0, 0, 0]
+    },
+    {
+      "case_id": 102,
+      "input": {
+        "queries": ["ab", "bc", "cd", "de", "ef"],
+        "words": ["zz", "zy", "yx", "xw", "vw", "uv", "tu", "ts", "sr", "rq", "qp", "po", "on", "nm", "ml", "lk", "kj", "ji", "ih", "hg", "gf", "fe", "ed", "dc", "cb", "ba"]
+      },
+      "expected": [1, 1, 1, 1, 1]
+    },
+    {
+      "case_id": 103,
+      "input": {
+        "queries": ["apple", "banana", "cherry"],
+        "words": ["date", "elderberry", "fig", "grape", "honeydew"]
+      },
+      "expected": [0, 0, 0]
+    }
+  ]
+}

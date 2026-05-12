@@ -1,0 +1,1655 @@
+{
+  "schema_version": 1,
+  "problem_id": 591,
+  "title": "Tag Validator",
+  "method": "isValid",
+  "signature": {
+    "params": [
+      {
+        "name": "code",
+        "type": "STRING"
+      }
+    ],
+    "returns": "BOOL"
+  },
+  "cases": [
+    {
+      "case_id": 1,
+      "input": {
+        "code": "<A>abc</A>"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 2,
+      "input": {
+        "code": "<A><![CDATA[wahaha]]]></A>"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 3,
+      "input": {
+        "code": "<A><B><![CDATA[CDATA]]></B></A>"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 4,
+      "input": {
+        "code": "<A><B></C></B></A>"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 5,
+      "input": {
+        "code": "\"This is the first line <div>\"\""
+      },
+      "expected": "Error: Solution.isValid() missing 1 required positional argument: 'code'"
+    },
+    {
+      "case_id": 6,
+      "input": {
+        "code": "This is the first line <DIV></DIV>"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 7,
+      "input": {
+        "code": "<![CDATA[CDATA_CONTENT]]>"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 8,
+      "input": {
+        "code": "<A><B></A></B>"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 9,
+      "input": {
+        "code": "<A> <B> <C></C> </B> </A>"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 10,
+      "input": {
+        "code": "This is the first line <DIV> [CDATA[CDATA_CONTENT]] </DIV>"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 11,
+      "input": {
+        "code": "\"<A></A><![CDATA[unmatched < > ]]>"
+      },
+      "expected": "Error: Solution.isValid() missing 1 required positional argument: 'code'"
+    },
+    {
+      "case_id": 12,
+      "input": {
+        "code": ">>  ![cdata[]] <div>]>]]>>]"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 13,
+      "input": {
+        "code": "<A><![CDATA[CDATA]]></A>"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 14,
+      "input": {
+        "code": "This is the first line <DIV><SPAN></SPAN></DIV>"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 15,
+      "input": {
+        "code": "<A></A><B></B>"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 16,
+      "input": {
+        "code": "<A><A><A></A></A></A>"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 17,
+      "input": {
+        "code": "<A><TAG></TAG></A>"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 18,
+      "input": {
+        "code": "<A><A>456</A>  <A> 123  <B> <C>  123 </C> <B></B> </A></A>"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 19,
+      "input": {
+        "code": "<![CDATA[CDATA_CONTENT]]></DIV>"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 20,
+      "input": {
+        "code": "      "
+      },
+      "expected": false
+    },
+    {
+      "case_id": 21,
+      "input": {
+        "code": "<A>text <![CDATA[CDATA_CONTENT]]></A>"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 22,
+      "input": {
+        "code": "\"<A><![CDATA[CDATA</A>\"]]>\""
+      },
+      "expected": "Error: Solution.isValid() missing 1 required positional argument: 'code'"
+    },
+    {
+      "case_id": 23,
+      "input": {
+        "code": "<A><![CDATA[unmatched < > ]]></A>"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 24,
+      "input": {
+        "code": "<A>abc<![CDATA[CDATA]]>def</A>"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 25,
+      "input": {
+        "code": "<A><TAG>sometext</TAG></A>"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 26,
+      "input": {
+        "code": "<A></B>"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 27,
+      "input": {
+        "code": "<![CDATA[<![CDATA[]]]]><TAG>sometext</TAG>"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 28,
+      "input": {
+        "code": "<A><![CDATA[CDATA_CONTENT]]></A>"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 29,
+      "input": {
+        "code": "<A><B><C></C></B></A>"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 30,
+      "input": {
+        "code": "<A></A><A></A>"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 31,
+      "input": {
+        "code": "<A><A>abc</A></A>"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 32,
+      "input": {
+        "code": "<![CDATA[unmatched < > ]]><TAG></TAG>"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 33,
+      "input": {
+        "code": "<![CDATA[wahaha]]]><TAG>sometext</TAG>"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 34,
+      "input": {
+        "code": "<A><B></B></A><A></A>"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 35,
+      "input": {
+        "code": "<A></A>"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 36,
+      "input": {
+        "code": "<A><B></B></A>"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 37,
+      "input": {
+        "code": "<![CDATA[CDATA_CONTENT]]></CDATA>"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 38,
+      "input": {
+        "code": "<VALID><![CDATA[<INVALID></INVALID>]]></VALID>"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 39,
+      "input": {
+        "code": "<A>content<![CDATA[<B>content</B>]]></A><C>content</C><![CDATA[content]]></C>"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 40,
+      "input": {
+        "code": "<A><B><C><D><E><![CDATA[ignore <F> here]]></E></D></C></B></A>"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 41,
+      "input": {
+        "code": "<A><B><C><D></D></C></B></A>"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 42,
+      "input": {
+        "code": "<S><E><![CDATA[<INVALID></INVALID>]]></E></S>"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 43,
+      "input": {
+        "code": "<NESTEDCDATA><CDATA><![CDATA[Nested CDATA]]></CDATA>]]></NESTEDCDATA>"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 44,
+      "input": {
+        "code": "<A><B><C><![CDATA[unmatched <]]></C></B></A>"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 45,
+      "input": {
+        "code": "<A><B><C><![CDATA[<UNBALANCED></UNBALANCED></C></B></A>"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 46,
+      "input": {
+        "code": "<P><![CDATA[<P><P><P><P><P><P><P>many</P></P></P></P></P></P></P>]]></P>"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 47,
+      "input": {
+        "code": "<A><B><![CDATA[abc]]></B><![CDATA[def]]></A>"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 48,
+      "input": {
+        "code": "<A><B><C><D><E><F><G><H><I><J><K></K></J></I></H></G></F></E></D></C></B></A>"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 49,
+      "input": {
+        "code": "<A><B><C><D><E><F><G><![CDATA[wahaha]]></G></F></E></D></C></B>></A>"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 50,
+      "input": {
+        "code": "<A><B><C><D><E><F><G><H><I><![CDATA[</I></H></G></F></E></D></C></B></A>"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 51,
+      "input": {
+        "code": "<A><B><C><![CDATA[TEXT]]></C></B><D><![CDATA[TEXT]]></D></A>"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 52,
+      "input": {
+        "code": "<A><B><![CDATA[<B>]]></A></B>"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 53,
+      "input": {
+        "code": "<A><B><![CDATA[TEXT]]></B><![CDATA[TEXT]]></B></A>"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 54,
+      "input": {
+        "code": "<A><B><C><![CDATA[<]]></C></B></A>"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 55,
+      "input": {
+        "code": "<A><![CDATA[ignore <B><C></C></B> here]]><B></B></A>"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 56,
+      "input": {
+        "code": "<![CDATA[<A>content</A>]]><A>content</A>"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 57,
+      "input": {
+        "code": "<A><![CDATA[</]]></A>"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 58,
+      "input": {
+        "code": "<NINECHARS><INNER><INNERMOST></INNERMOST></INNER></NINECHARS>"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 59,
+      "input": {
+        "code": "<A><B><C><D><E><F><G><![CDATA[wahaha]]></G></F></E></D></C></B></A></D>"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 60,
+      "input": {
+        "code": "<A><B><![CDATA[</A><B>]]></B></A>"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 61,
+      "input": {
+        "code": "<TAG><![CDATA[<TAG>data</TAG>]]></TAG>"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 62,
+      "input": {
+        "code": "<![CDATA[<A>content</A>]]><B>content<![CDATA[<C>content</C>]]></B>"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 63,
+      "input": {
+        "code": "<A><B><![CDATA[<A></A>]]></B></A>"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 64,
+      "input": {
+        "code": "<A><B><![CDATA[<A><B></B></A>]]></B></A>"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 65,
+      "input": {
+        "code": "<AA><BB><CC><DD><![CDATA[DDDD]]></DD></CC></BB></AA>"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 66,
+      "input": {
+        "code": "<![CDATA[<A>content</A>]]><B><![CDATA[<C>content</C>]]></B>"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 67,
+      "input": {
+        "code": "<A><B><![CDATA[TEXT]]></B><B><![CDATA[TEXT]]></B></A>"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 68,
+      "input": {
+        "code": "<A><B><C><![CDATA[<D><E>deep</E></D>]]></C></B></A>"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 69,
+      "input": {
+        "code": "<TAG><INNER><CDATA><TAG>invalid</TAG></CDATA></INNER></TAG>"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 70,
+      "input": {
+        "code": "<![CDATA[This is a <tag> inside CDATA]]></CDATA><TAG></TAG>"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 71,
+      "input": {
+        "code": "<A><B><![CDATA[<A><B></B>]]></B></A>"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 72,
+      "input": {
+        "code": "<TAG>Some text <![CDATA[<TAG>more text</TAG>]]> even more text</TAG>"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 73,
+      "input": {
+        "code": "<A><B><C><D><E><F><G><![CDATA[wahaha]]></G></F></E></D></C></B></A></C>"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 74,
+      "input": {
+        "code": "<A><B><C><![CDATA[wahaha]]></C></B></D>"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 75,
+      "input": {
+        "code": "<![CDATA[ignore <A><B><C> here]]></A></B></C>]]>"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 76,
+      "input": {
+        "code": "<A><B><C><D><E><F><G><H><I><![CDATA[CDATA]]></I></H></G></F></E></D></C></B></A>"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 77,
+      "input": {
+        "code": "<A><B><![CDATA[wahaha]]></B></C></A>"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 78,
+      "input": {
+        "code": "<A><B><C><![CDATA[ignore <D></D> here]]></C></B></A>"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 79,
+      "input": {
+        "code": "<A><B><C><![CDATA[CDATA]]></C></B></A>"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 80,
+      "input": {
+        "code": "<A><B><![CDATA[<A>]]></B></A>"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 81,
+      "input": {
+        "code": "<CODE><CODE><![CDATA[CODE]]></CODE></CODE>"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 82,
+      "input": {
+        "code": "<T><![CDATA[This is a ]]><![CDATA[CDATA section]]></T>"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 83,
+      "input": {
+        "code": "<A>content<![CDATA[<>]]>content</A>"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 84,
+      "input": {
+        "code": "<LONGTAG><SHORT><LONGER></LONGER></SHORT></LONGTAG>"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 85,
+      "input": {
+        "code": "<X><Y><Z><![CDATA[X]]></Z></Y></X>"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 86,
+      "input": {
+        "code": "<A><B><C><![CDATA[TEXT]]></C></B></A>"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 87,
+      "input": {
+        "code": "<A><B><C><![CDATA[<D></D>]]></C></B></A>"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 88,
+      "input": {
+        "code": "<A>content<![CDATA[<B>content</B>]]>content</A>"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 89,
+      "input": {
+        "code": "<A><![CDATA[<B></B>]]></A>"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 90,
+      "input": {
+        "code": "<WRONG><TAG></WRONG></TAG>"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 91,
+      "input": {
+        "code": "<TAG><![CDATA[<TAG>content</TAG>]]></TAG>"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 92,
+      "input": {
+        "code": "<A><B><C><![CDATA[<D><E>INNER</E></D>]]></C></B></A>"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 93,
+      "input": {
+        "code": "<A><![CDATA[<B><C><D><E><F><G><![CDATA[wahaha]]></G></F></E></D></C></B>]]></A>"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 94,
+      "input": {
+        "code": "<A><B><C><D><![CDATA[<E>]]></D></C></B></A>"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 95,
+      "input": {
+        "code": "<A><B><C><D><E><F><![CDATA[FGHIJKL]]></F></E></D></C></B></A>"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 96,
+      "input": {
+        "code": "<MULTIPLECDATA><![CDATA[First CDATA]]></MULTIPLECDATA><![CDATA[Second CDATA]]></MULTIPLECDATA>"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 97,
+      "input": {
+        "code": "<A><B><![CDATA[wahaha]]></B></A><C></C>"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 98,
+      "input": {
+        "code": "<NEST><INNER1><INNER2></INNER2></INNER1></NEST>"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 99,
+      "input": {
+        "code": "<XYZ><XYZ><![CDATA[XYZ]]></XYZ></XYZ>"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 100,
+      "input": {
+        "code": "<A><![CDATA[<B><C><D><E><F><G><![CDATA[wahaha]]></G></F></E></D></C></B]]></A>"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 101,
+      "input": {
+        "code": "<A><![CDATA[<B><C><D><E><F><G><H><I></I></H></G></F></E></D></C></B>]]></A>"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 102,
+      "input": {
+        "code": "<OUTER><INNER><![CDATA[<OUTER><INNER>]]></INNER></OUTER>"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 103,
+      "input": {
+        "code": "<A><B><![CDATA[wahaha>]]></B></A>"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 104,
+      "input": {
+        "code": "<![CDATA[<NOTATAG><INSIDECDATA>]]></NOTATAG>]<A></A>"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 105,
+      "input": {
+        "code": "<A><![CDATA[>]]></A>"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 106,
+      "input": {
+        "code": "<A><B></B></A><![CDATA[abc<def>ghi]]>"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 107,
+      "input": {
+        "code": "<X><![CDATA[<Y><Z></Z></Y>]]></X>"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 108,
+      "input": {
+        "code": "<A><B><![CDATA[CDATA]]></B></A><C><![CDATA[CDATA]]></C><D><![CDATA[CDATA]]></D><E><![CDATA[CDATA]]></E><F><![CDATA[CDATA]]></F><G><![CDATA[CDATA]]></G><H><![CDATA[CDATA]]></H><I><![CDATA[CDATA]]></I>"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 109,
+      "input": {
+        "code": "<A>content<![CDATA[<B>content</B>]]></A><C><![CDATA[content]]></C>"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 110,
+      "input": {
+        "code": "<X1><X2><X3></X3><X4><X5><X6></X6></X5></X4></X2></X1>"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 111,
+      "input": {
+        "code": "<A><B><C><D><E><F><G><![CDATA[wahaha]]></G></F></E></D>></C></B></A>"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 112,
+      "input": {
+        "code": "<INVALID><INNER></INNER></OUTER>"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 113,
+      "input": {
+        "code": "<A><![CDATA[abc<def>ghi]]></A>"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 114,
+      "input": {
+        "code": "<SINGLE><CDATA></CDATA></SINGLE><![CDATA[<![CDATA[<SINGLE>]]></SINGLE>]]>"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 115,
+      "input": {
+        "code": "<A><B><C><D><E><F><G><![CDATA[wahaha]]></G></F></E></D></C></B></A></A>"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 116,
+      "input": {
+        "code": "<A><B><![CDATA[abc]]></B><![CDATA[def]></A>"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 117,
+      "input": {
+        "code": "<A><B></B><C></C><D></D><E></E></A>"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 118,
+      "input": {
+        "code": "<NESTED><INSIDE><MOREINSIDE>content</MOREINSIDE></INSIDE></NESTED>"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 119,
+      "input": {
+        "code": "<Z><Z></Z></Z><Z><Z></Z></Z>"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 120,
+      "input": {
+        "code": "<A><B><C><![CDATA[<UNBALANCED>data</C></B></A>"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 121,
+      "input": {
+        "code": "<A><B><C><![CDATA[wahaha>]]></C></B></A>"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 122,
+      "input": {
+        "code": "<X><Y><Z></Z></Y></X> <![CDATA[DATA]]></X>"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 123,
+      "input": {
+        "code": "<A><![CDATA[<B>![CDATA[wahaha]]]>]]></A>"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 124,
+      "input": {
+        "code": "<TAG1><TAG2><![CDATA[valid CDATA]]></TAG2><TAG3>content</TAG3></TAG1>"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 125,
+      "input": {
+        "code": "<A><B><![CDATA[CDATA]]></B></A><C><![CDATA[CDATA]]></C><D><![CDATA[CDATA]]></D><E><![CDATA[CDATA]]></E><F><![CDATA[CDATA]]></F>"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 126,
+      "input": {
+        "code": "<A><![CDATA[<B><![CDATA[wahaha]]]]></A>"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 127,
+      "input": {
+        "code": "<A><B><C><D><E><F><G><![CDATA[wahaha]]></G></F>></E></D></C></B></A>"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 128,
+      "input": {
+        "code": "<A><![CDATA[<B><C><D><E>CDATA</E></D></C></B>]]></A>"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 129,
+      "input": {
+        "code": "<A><![CDATA[ignore <B><C></C></B> here]]></A><B></B>"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 130,
+      "input": {
+        "code": "<A><B><C><![CDATA[<UNBALANCED></C></B></A>"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 131,
+      "input": {
+        "code": "<A><B><C><![CDATA[ignore <D> here]]></C></B></A>"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 132,
+      "input": {
+        "code": "<A><![CDATA[ignore <B><C></C></B> here]]></A>"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 133,
+      "input": {
+        "code": "<A><![CDATA[<A><B><C></C></B></A>]]></A>"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 134,
+      "input": {
+        "code": "<TAG>some <TAG> nested <TAG></TAG> tags</TAG></TAG>"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 135,
+      "input": {
+        "code": "<A><![CDATA[<B>content</B>]]></A><B>content</B><![CDATA[content]]></A>"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 136,
+      "input": {
+        "code": "<MAIN><SUB1><SUB2>data</SUB2></SUB1></MAIN>"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 137,
+      "input": {
+        "code": "<A><![CDATA[<B><![CDATA[<C>content</C>]]></B>]]></A>"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 138,
+      "input": {
+        "code": "<A><B><C><D><E><F><G><![CDATA[wahaha]]></G></F></E></D></C>></B></A>"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 139,
+      "input": {
+        "code": "<A><![CDATA[<B><C><D><E><F><G><![CDATA[wahaha]]></G></F></E></D></C></B>></A>"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 140,
+      "input": {
+        "code": "<VALID><INNER> <![CDATA[<INNER>CDATA_CONTENT</INNER>]]> </INNER></VALID>"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 141,
+      "input": {
+        "code": "<NESTED><INNER>CONTENT</INNER></NESTED>"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 142,
+      "input": {
+        "code": "<PARENT><CHILD><GRANDCHILD></GRANDCHILD></CHILD></PARENT><![CDATA[<PARENT><CHILD></CHILD></PARENT>]]></PARENT>"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 143,
+      "input": {
+        "code": "<ROOT><CHILD><![CDATA[<DIV>unparsed</DIV>]]></CHILD></ROOT>"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 144,
+      "input": {
+        "code": "<A><B><C><![CDATA[<D></E>]]></C></B></A>"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 145,
+      "input": {
+        "code": "<A><B><![CDATA[<A></B>]]></A>"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 146,
+      "input": {
+        "code": "<A><![CDATA[<B><C><D><E><F><G><![CDATA[wahaha]]></G></F></E></D></C></B></A>></A>"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 147,
+      "input": {
+        "code": "<X><Y><![CDATA[<Z>]]></X></Y></Z>"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 148,
+      "input": {
+        "code": "<A><B><C></C></B></A><![CDATA[<D>]]></D>]><A>"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 149,
+      "input": {
+        "code": "<A><B><C></C></B><![CDATA[TEXT]]></A>"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 150,
+      "input": {
+        "code": "<VALID><INNER>TEXT<![CDATA[CDATA_CONTENT]]></INNER></VALID>"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 151,
+      "input": {
+        "code": "<A><B><![CDATA[CDATA]]></B></A><C><D><![CDATA[CDATA]]></D></C><E><F><![CDATA[CDATA]]></F></E><G><H><![CDATA[CDATA]]></H></G><I><J><![CDATA[CDATA]]></J></I>"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 152,
+      "input": {
+        "code": "<A><B><C></D></C></B></A>"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 153,
+      "input": {
+        "code": "<A><![CDATA[<]]></A>"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 154,
+      "input": {
+        "code": "<MAIN><SUB1><SUB2></SUB2></SUB1></MAIN>"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 155,
+      "input": {
+        "code": "<A><![CDATA[content]]></A><B>content</B>"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 156,
+      "input": {
+        "code": "<A><![CDATA[TEXT]]></A><![CDATA[TEXT]]></A>"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 157,
+      "input": {
+        "code": "<ROOT><CHILD1><GRANDCHILD></GRANDCHILD></CHILD1><CHILD2></CHILD2></ROOT>"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 158,
+      "input": {
+        "code": "<A><B><![CDATA[<C></D>]]></B></A>"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 159,
+      "input": {
+        "code": "<ROOT><![CDATA[<A></A>]]></ROOT>"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 160,
+      "input": {
+        "code": "<A><B><C><![CDATA[wahaha]]></C></B></A>"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 161,
+      "input": {
+        "code": "<A><B><![CDATA[<C><D></C>]]></D></B></A>"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 162,
+      "input": {
+        "code": "<A><![CDATA[content]]></A>"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 163,
+      "input": {
+        "code": "<A><B><![CDATA[ignore <TAG> and </TAG> here]]></B></A>"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 164,
+      "input": {
+        "code": "<A><B><C><D><E><F><G><![CDATA[wahaha]]></G></F></E></D></C></B></A></B>"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 165,
+      "input": {
+        "code": "<P><A><![CDATA[<BR>]]></A><SPAN>text</SPAN></P>"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 166,
+      "input": {
+        "code": "<A><B><C><D><E></E></D></C></B></A>"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 167,
+      "input": {
+        "code": "<OUTER><MID><![CDATA[<INNER></INNER>]]></MID></OUTER>"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 168,
+      "input": {
+        "code": "<TAG1><TAG2><TAG3>CONTENT</TAG3></TAG2></TAG1>"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 169,
+      "input": {
+        "code": "<A><B><C><![CDATA[<D><E>CDATA</E></D>]]></C></B></A>"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 170,
+      "input": {
+        "code": "<A><B><![CDATA[CDATA]]></B></A><C><![CDATA[CDATA]]></C><D><![CDATA[CDATA]]></D>"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 171,
+      "input": {
+        "code": "<A><B><C><![CDATA[unmatched </]]></C></B></A>"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 172,
+      "input": {
+        "code": "<A><![CDATA[<B><C><D><E><F><G><![CDATA[wahaha>]]></G></F></E></D></C></B>]]></A>"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 173,
+      "input": {
+        "code": "<A><B><![CDATA[CDATA]]></B></A><C><![CDATA[CDATA]]></C><D><![CDATA[CDATA]]></D><E><![CDATA[CDATA]]></E>"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 174,
+      "input": {
+        "code": "<T><T><![CDATA[<T><T>INNER</T></T>]]></T></T>"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 175,
+      "input": {
+        "code": "<![CDATA[ignore <A><B><C></C></B></A> here]]>"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 176,
+      "input": {
+        "code": "<TAG><![CDATA[<TAG><![CDATA[CDATA_CONTENT]]></TAG>]]></TAG>"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 177,
+      "input": {
+        "code": "<HELLO><WORLD><![CDATA[<HELLO>world</WORLD>]]></HELLO>"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 178,
+      "input": {
+        "code": "<A><B><![CDATA[not <CLOSING]]></B></A>"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 179,
+      "input": {
+        "code": "<A><B><C><D><E><F><G><![CDATA[wahaha]]></G></F></E>></D></C></B></A>"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 180,
+      "input": {
+        "code": "<A><B><C><![CDATA[TEXT]]></C><D><![CDATA[TEXT]]></D></B></A>"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 181,
+      "input": {
+        "code": "<A><B><C><![CDATA[</]]></C></B></A>"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 182,
+      "input": {
+        "code": "<A><B><C><![CDATA[<D><E><![CDATA[CONTENT]]></E></D>]]></C></B></A>"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 183,
+      "input": {
+        "code": "<A><B><C><D><E><F><G></G></F></E></D></C></B></A>"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 184,
+      "input": {
+        "code": "<A><![CDATA[CDATA]]></A><B><![CDATA[CDATA]]></B><C><![CDATA[CDATA]]></C><D><![CDATA[CDATA]]></D><E><![CDATA[CDATA]]></E><F><![CDATA[CDATA]]></F><G><![CDATA[CDATA]]></G>"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 185,
+      "input": {
+        "code": "<A><B><C><D><E><F><G><H><I></I></H></G></F></E></D></C></B></A>"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 186,
+      "input": {
+        "code": "<A><B><![CDATA[<A>]]><C></C></B></A>"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 187,
+      "input": {
+        "code": "<A><B><C><D><![CDATA[<E><F></F>]]></D></C></B></A>"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 188,
+      "input": {
+        "code": "<A><B><C></C></B><D><![CDATA[TEXT]]></D></A>"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 189,
+      "input": {
+        "code": "<NEST><INNER><![CDATA[<NEST><INNER><![CDATA[CDATA_CONTENT]]></INNER></NEST>]]></INNER></NEST>"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 190,
+      "input": {
+        "code": "<A><B><C><![CDATA[>]]></C></B></A>"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 191,
+      "input": {
+        "code": "<CORRECT><INSIDE></INSIDE></CORRECT>"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 192,
+      "input": {
+        "code": "<A><B><C><D><E><F><G><H><I><J><K><L><M><N><O><P><Q><R><S><T><U><V><W><X><Y><Z></Z></Y></X></W></V></U></T></S></R></Q></P></O></N></M></L></K></J></I></H></G></F></E></D></C></B></A>"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 193,
+      "input": {
+        "code": "<A><B><C><![CDATA[<D><E><![CDATA[CDATA_CONTENT]]></E></D>]]></C></B></A>"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 194,
+      "input": {
+        "code": "<A><B><C><D><E><F><G><![CDATA[wahaha]]></F></E></D></C></B></A>"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 195,
+      "input": {
+        "code": "<A><B>content<![CDATA[<C>content</C>]]></B></A>"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 196,
+      "input": {
+        "code": "<![CDATA[<NOTATAG>data</NOTATAG>]]><VALID></VALID>"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 197,
+      "input": {
+        "code": "<LAYER1><LAYER2><LAYER3></LAYER3></LAYER2></LAYER1>"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 198,
+      "input": {
+        "code": "<TAG><INNER><![CDATA[<INNER>CDATA_CONTENT</INNER>]]> <![CDATA[TEXT]]></INNER></TAG>"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 199,
+      "input": {
+        "code": "<A><B><C></C><![CDATA[TEXT]]></B></A>"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 200,
+      "input": {
+        "code": "<![CDATA[<Z><Z></Z></Z><Z><Z></Z></Z>]]></Z>"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 201,
+      "input": {
+        "code": "<A><![CDATA[<B>content</B>]]></A><C><![CDATA[content]]></C><D>content</D>"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 202,
+      "input": {
+        "code": "<OUTER><MID><INNER>TEXT</INNER> <![CDATA[TEXT]]></MID></OUTER>"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 203,
+      "input": {
+        "code": "<A><B><C><D><E><![CDATA[ABCDE]]></E></D></C></B></A>"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 204,
+      "input": {
+        "code": "<A><![CDATA[&]][CDATA[]]><B></B></A>"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 205,
+      "input": {
+        "code": "<A><![CDATA[<B>content</B>]]></A><C><![CDATA[content]]></C>"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 206,
+      "input": {
+        "code": "<A><![CDATA[content]]></A><![CDATA[morecontent]]>"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 207,
+      "input": {
+        "code": "<NEST><LVL1><LVL2><LVL3><![CDATA[<NEST><LVL1>deep</LVL1></NEST>]]></LVL3></LVL2></LVL1></NEST>"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 208,
+      "input": {
+        "code": "<A><B>content</B><![CDATA[content]]></A>"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 209,
+      "input": {
+        "code": "<A><B><C><D><E><![CDATA[ignore <F></F> here]]></E></D></C></B></A>"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 210,
+      "input": {
+        "code": "<A><B><C><![CDATA[<A><B><C>]]></C></B></A>"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 211,
+      "input": {
+        "code": "<A><![CDATA[<!CDATA[CDATA_CONTENT]]]]><B></B></A>"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 212,
+      "input": {
+        "code": "<A><B><![CDATA[This is a <C></C> test]]></B></A>"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 213,
+      "input": {
+        "code": "<A><B><![CDATA[<C></C>]]></B></A>"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 214,
+      "input": {
+        "code": "<OUTER><INNER><![CDATA[<INNER>CDATA</INNER>]]></INNER></OUTER>"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 215,
+      "input": {
+        "code": "<![CDATA[ignore <TAG> tags <INSIDE> </INSIDE> </TAG> ]]>"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 216,
+      "input": {
+        "code": "<A><B><C></C><D><![CDATA[TEXT]]></D></B></A>"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 217,
+      "input": {
+        "code": "<A><B><C></C><D></D></B></A>"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 218,
+      "input": {
+        "code": "<![CDATA[ignore <A><B><C></C></B></A> here]]><A></A>"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 219,
+      "input": {
+        "code": "<A><B><![CDATA[<C><D></D></C>]]></B><C><D><![CDATA[<E><F></F></E>]]></D></C></A>"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 220,
+      "input": {
+        "code": "<ALMOST><INNER><![CDATA[</INNER>]]></ALMOST>"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 221,
+      "input": {
+        "code": "<A><B><C><![CDATA[unmatched ]]></C></B></A>"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 222,
+      "input": {
+        "code": "<A><![CDATA[<B><![CDATA[wahaha>]]></A>"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 223,
+      "input": {
+        "code": "<X><Y><![CDATA[Not a tag>]]></Y></X>"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 224,
+      "input": {
+        "code": "<A><![CDATA[This is some text <B></B> with CDATA]]></A>"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 225,
+      "input": {
+        "code": "<A><B><C></C></B></A><D></D>"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 226,
+      "input": {
+        "code": "<A><B><![CDATA[<A></A>]]></B></A><C><D><![CDATA[<E></E>]]></D></C>"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 227,
+      "input": {
+        "code": "<A><B>content<![CDATA[<C>content</C>]]></B><![CDATA[content]]></A>"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 228,
+      "input": {
+        "code": "<A><![CDATA[<B>]]></A>"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 229,
+      "input": {
+        "code": "<A><![CDATA[<B><C><D><E><F><G><![CDATA[wahaha]]></G></F></E></D></C></B></A>></B>"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 230,
+      "input": {
+        "code": "<A><B><C><![CDATA[wahaha]]></C></D></B></A>"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 231,
+      "input": {
+        "code": "<A><B><![CDATA[<B></C>]]></B></A>"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 232,
+      "input": {
+        "code": "<A><B><C><D><E><F><G><![CDATA[wahaha]]></G>></F></E></D></C></B></A>"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 233,
+      "input": {
+        "code": "<A>content<![CDATA[<B>content</B>]]></A>"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 234,
+      "input": {
+        "code": "<A><B><C><D><E><F><G><![CDATA[wahaha>]]></F></E></D></C></B></A>"
+      },
+      "expected": false
+    }
+  ]
+}

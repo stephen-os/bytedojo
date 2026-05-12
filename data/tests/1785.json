@@ -1,0 +1,979 @@
+{
+  "schema_version": 1,
+  "problem_id": 1785,
+  "title": "Minimum Elements to Add to Form a Given Sum",
+  "method": "minElements",
+  "signature": {
+    "params": [
+      {
+        "name": "nums",
+        "type": "INT32_ARRAY"
+      },
+      {
+        "name": "limit",
+        "type": "INT32"
+      },
+      {
+        "name": "goal",
+        "type": "INT32"
+      }
+    ],
+    "returns": "INT32"
+  },
+  "cases": [
+    {
+      "case_id": 1,
+      "input": {
+        "nums": [1, -1, 1],
+        "limit": 3,
+        "goal": -4
+      },
+      "expected": 2
+    },
+    {
+      "case_id": 2,
+      "input": {
+        "nums": [1, 2, 3],
+        "limit": 1,
+        "goal": 6
+      },
+      "expected": 0
+    },
+    {
+      "case_id": 3,
+      "input": {
+        "nums": [1, -10, 9, 1],
+        "limit": 100,
+        "goal": 0
+      },
+      "expected": 1
+    },
+    {
+      "case_id": 4,
+      "input": {
+        "nums": [0, 0, 0],
+        "limit": 1,
+        "goal": 3
+      },
+      "expected": 3
+    },
+    {
+      "case_id": 5,
+      "input": {
+        "nums": [0, 0, 0, 0],
+        "limit": 5,
+        "goal": 10
+      },
+      "expected": 2
+    },
+    {
+      "case_id": 6,
+      "input": {
+        "nums": [2, 2, 2],
+        "limit": 2,
+        "goal": 6
+      },
+      "expected": 0
+    },
+    {
+      "case_id": 7,
+      "input": {
+        "nums": [-3, -2, -1],
+        "limit": 1,
+        "goal": -9
+      },
+      "expected": 3
+    },
+    {
+      "case_id": 8,
+      "input": {
+        "nums": [-5, -5, -5],
+        "limit": 5,
+        "goal": 15
+      },
+      "expected": 6
+    },
+    {
+      "case_id": 9,
+      "input": {
+        "nums": [10, 10, 10, 10, 10, 10, 10, 10, 10, 10],
+        "limit": 5,
+        "goal": 50
+      },
+      "expected": 10
+    },
+    {
+      "case_id": 10,
+      "input": {
+        "nums": [10, -10, 20, -20, 30, -30],
+        "limit": 15,
+        "goal": 0
+      },
+      "expected": 0
+    },
+    {
+      "case_id": 11,
+      "input": {
+        "nums": [500000, -250000, 125000, -62500, 31250, -15625],
+        "limit": 100000,
+        "goal": 1000000
+      },
+      "expected": 7
+    },
+    {
+      "case_id": 12,
+      "input": {
+        "nums": [100000, 200000, 300000, 400000, 500000],
+        "limit": 100000,
+        "goal": 1500000
+      },
+      "expected": 0
+    },
+    {
+      "case_id": 13,
+      "input": {
+        "nums": [999999, -999999, 999998, -999998, 999997, -999997],
+        "limit": 1000000,
+        "goal": -1000000
+      },
+      "expected": 1
+    },
+    {
+      "case_id": 14,
+      "input": {
+        "nums": [1000000, -1000000, 500000, -500000],
+        "limit": 1000000,
+        "goal": 0
+      },
+      "expected": 0
+    },
+    {
+      "case_id": 15,
+      "input": {
+        "nums": [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1],
+        "limit": 2,
+        "goal": -15
+      },
+      "expected": 3
+    },
+    {
+      "case_id": 16,
+      "input": {
+        "nums": [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+        "limit": 1,
+        "goal": -10
+      },
+      "expected": 20
+    },
+    {
+      "case_id": 17,
+      "input": {
+        "nums": [5, 10, 15, 20, 25],
+        "limit": 10,
+        "goal": 100
+      },
+      "expected": 3
+    },
+    {
+      "case_id": 18,
+      "input": {
+        "nums": [1, -2, 3, -4, 5],
+        "limit": 2,
+        "goal": -10
+      },
+      "expected": 7
+    },
+    {
+      "case_id": 19,
+      "input": {
+        "nums": [100, -100, 200, -200, 300, -300],
+        "limit": 100,
+        "goal": -1500
+      },
+      "expected": 15
+    },
+    {
+      "case_id": 20,
+      "input": {
+        "nums": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+        "limit": 3,
+        "goal": 0
+      },
+      "expected": 19
+    },
+    {
+      "case_id": 21,
+      "input": {
+        "nums": [1000000, 1000000, 1000000, 1000000, 1000000],
+        "limit": 1000000,
+        "goal": 0
+      },
+      "expected": 5
+    },
+    {
+      "case_id": 22,
+      "input": {
+        "nums": [5, -5, 5, -5, 5, -5],
+        "limit": 5,
+        "goal": 10
+      },
+      "expected": 2
+    },
+    {
+      "case_id": 23,
+      "input": {
+        "nums": [999999, 999999, 999999],
+        "limit": 1000000,
+        "goal": -2999997
+      },
+      "expected": 6
+    },
+    {
+      "case_id": 24,
+      "input": {
+        "nums": [5, 10, -15, 20, -25, 30, -35, 40, -45, 50],
+        "limit": 10,
+        "goal": 100
+      },
+      "expected": 7
+    },
+    {
+      "case_id": 25,
+      "input": {
+        "nums": [999999, -999999, 999999, -999999, 999999, -999999],
+        "limit": 1000000,
+        "goal": 0
+      },
+      "expected": 0
+    },
+    {
+      "case_id": 26,
+      "input": {
+        "nums": [-5, -4, -3, -2, -1],
+        "limit": 3,
+        "goal": 15
+      },
+      "expected": 10
+    },
+    {
+      "case_id": 27,
+      "input": {
+        "nums": [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1],
+        "limit": 1,
+        "goal": -20
+      },
+      "expected": 10
+    },
+    {
+      "case_id": 28,
+      "input": {
+        "nums": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+        "limit": 1,
+        "goal": 55
+      },
+      "expected": 0
+    },
+    {
+      "case_id": 29,
+      "input": {
+        "nums": [1000000, -1000000, 1000000],
+        "limit": 1000000,
+        "goal": 3000000
+      },
+      "expected": 2
+    },
+    {
+      "case_id": 30,
+      "input": {
+        "nums": [-1, -2, -3, -4, -5, -6, -7, -8, -9, -10],
+        "limit": 3,
+        "goal": -50
+      },
+      "expected": 2
+    },
+    {
+      "case_id": 31,
+      "input": {
+        "nums": [123456, -654321, 111111, -222222, 333333, -444444],
+        "limit": 500000,
+        "goal": -1000000
+      },
+      "expected": 1
+    },
+    {
+      "case_id": 32,
+      "input": {
+        "nums": [999999, 999998, 999997, 999996],
+        "limit": 999999,
+        "goal": 3999990
+      },
+      "expected": 0
+    },
+    {
+      "case_id": 33,
+      "input": {
+        "nums": [1000000, -1000000, 500000],
+        "limit": 1000000,
+        "goal": 0
+      },
+      "expected": 1
+    },
+    {
+      "case_id": 34,
+      "input": {
+        "nums": [1000, -1000, 1000, -1000],
+        "limit": 1000,
+        "goal": 1000
+      },
+      "expected": 1
+    },
+    {
+      "case_id": 35,
+      "input": {
+        "nums": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+        "limit": 10,
+        "goal": 55
+      },
+      "expected": 0
+    },
+    {
+      "case_id": 36,
+      "input": {
+        "nums": [5, -5, 5, -5, 5],
+        "limit": 10,
+        "goal": -15
+      },
+      "expected": 2
+    },
+    {
+      "case_id": 37,
+      "input": {
+        "nums": [10, -10, 20, -20, 30, -30],
+        "limit": 5,
+        "goal": 15
+      },
+      "expected": 3
+    },
+    {
+      "case_id": 38,
+      "input": {
+        "nums": [100000, 200000, 300000, 400000, 500000],
+        "limit": 100000,
+        "goal": 1000000
+      },
+      "expected": 5
+    },
+    {
+      "case_id": 39,
+      "input": {
+        "nums": [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1],
+        "limit": 1,
+        "goal": -5
+      },
+      "expected": 5
+    },
+    {
+      "case_id": 40,
+      "input": {
+        "nums": [1, 2, 3, 4, 5],
+        "limit": 1,
+        "goal": -15
+      },
+      "expected": 30
+    },
+    {
+      "case_id": 41,
+      "input": {
+        "nums": [-1000000, -2000000, -3000000],
+        "limit": 1000000,
+        "goal": -10000000
+      },
+      "expected": 4
+    },
+    {
+      "case_id": 42,
+      "input": {
+        "nums": [100, -50, 25],
+        "limit": 100,
+        "goal": 200
+      },
+      "expected": 2
+    },
+    {
+      "case_id": 43,
+      "input": {
+        "nums": [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+        "limit": 1,
+        "goal": 15
+      },
+      "expected": 5
+    },
+    {
+      "case_id": 44,
+      "input": {
+        "nums": [10, 20, 30, 40, 50, 60, 70, 80, 90, 100],
+        "limit": 50,
+        "goal": 500
+      },
+      "expected": 1
+    },
+    {
+      "case_id": 45,
+      "input": {
+        "nums": [-1, 1, -2, 2, -3, 3, -4, 4, -5, 5],
+        "limit": 5,
+        "goal": -10
+      },
+      "expected": 2
+    },
+    {
+      "case_id": 46,
+      "input": {
+        "nums": [100, -100, 50, -50],
+        "limit": 50,
+        "goal": 0
+      },
+      "expected": 0
+    },
+    {
+      "case_id": 47,
+      "input": {
+        "nums": [1000000, -1000000, 500000],
+        "limit": 1000000,
+        "goal": 1000000
+      },
+      "expected": 1
+    },
+    {
+      "case_id": 48,
+      "input": {
+        "nums": [123456, -123456, 234567, -234567],
+        "limit": 100000,
+        "goal": -345678
+      },
+      "expected": 4
+    },
+    {
+      "case_id": 49,
+      "input": {
+        "nums": [-1, -2, -3, -4, -5],
+        "limit": 3,
+        "goal": -15
+      },
+      "expected": 0
+    },
+    {
+      "case_id": 50,
+      "input": {
+        "nums": [123456, -654321, 789012, -321098],
+        "limit": 100000,
+        "goal": 500000
+      },
+      "expected": 6
+    },
+    {
+      "case_id": 51,
+      "input": {
+        "nums": [-100, 100, -100, 100],
+        "limit": 100,
+        "goal": 0
+      },
+      "expected": 0
+    },
+    {
+      "case_id": 52,
+      "input": {
+        "nums": [-100000, 100000, -100000, 100000, -100000],
+        "limit": 100000,
+        "goal": 50000
+      },
+      "expected": 2
+    },
+    {
+      "case_id": 53,
+      "input": {
+        "nums": [1000000, -1000000, 500000, -500000],
+        "limit": 100000,
+        "goal": 0
+      },
+      "expected": 0
+    },
+    {
+      "case_id": 54,
+      "input": {
+        "nums": [100, 200, 300, 400, 500],
+        "limit": 100,
+        "goal": 1500
+      },
+      "expected": 0
+    },
+    {
+      "case_id": 55,
+      "input": {
+        "nums": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+        "limit": 5,
+        "goal": 50
+      },
+      "expected": 1
+    },
+    {
+      "case_id": 56,
+      "input": {
+        "nums": [1, -1, 1, -1, 1, -1, 1, -1, 1, -1],
+        "limit": 1,
+        "goal": 5
+      },
+      "expected": 5
+    },
+    {
+      "case_id": 57,
+      "input": {
+        "nums": [-100000, 50000, 25000, -12500, 6250],
+        "limit": 10000,
+        "goal": -100000
+      },
+      "expected": 7
+    },
+    {
+      "case_id": 58,
+      "input": {
+        "nums": [100000, 100000, 100000, 100000, 100000],
+        "limit": 100000,
+        "goal": 600000
+      },
+      "expected": 1
+    },
+    {
+      "case_id": 59,
+      "input": {
+        "nums": [1000, -1000, 2000, -2000, 3000],
+        "limit": 1000,
+        "goal": 5000
+      },
+      "expected": 2
+    },
+    {
+      "case_id": 60,
+      "input": {
+        "nums": [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+        "limit": 1,
+        "goal": 10
+      },
+      "expected": 0
+    },
+    {
+      "case_id": 61,
+      "input": {
+        "nums": [5, -5, 5, -5],
+        "limit": 5,
+        "goal": 10
+      },
+      "expected": 2
+    },
+    {
+      "case_id": 62,
+      "input": {
+        "nums": [1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1, -1],
+        "limit": 1,
+        "goal": 1
+      },
+      "expected": 1
+    },
+    {
+      "case_id": 63,
+      "input": {
+        "nums": [-5, 5, -5, 5, -5],
+        "limit": 5,
+        "goal": 0
+      },
+      "expected": 1
+    },
+    {
+      "case_id": 64,
+      "input": {
+        "nums": [1000000],
+        "limit": 500000,
+        "goal": 2000000
+      },
+      "expected": 2
+    },
+    {
+      "case_id": 65,
+      "input": {
+        "nums": [1, -1, 1, -1, 1, -1, 1, -1, 1, -1],
+        "limit": 10,
+        "goal": 0
+      },
+      "expected": 0
+    },
+    {
+      "case_id": 66,
+      "input": {
+        "nums": [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+        "limit": 5,
+        "goal": 10
+      },
+      "expected": 0
+    },
+    {
+      "case_id": 67,
+      "input": {
+        "nums": [1, -1, 2, -2, 3, -3, 4, -4, 5, -5, 6, -6, 7, -7, 8, -8, 9, -9, 10, -10],
+        "limit": 10,
+        "goal": 0
+      },
+      "expected": 0
+    },
+    {
+      "case_id": 68,
+      "input": {
+        "nums": [1, -1, 1, -1, 1, -1, 1, -1, 1, -1],
+        "limit": 1,
+        "goal": 0
+      },
+      "expected": 0
+    },
+    {
+      "case_id": 69,
+      "input": {
+        "nums": [-999999, -999999, -999999],
+        "limit": 1000000,
+        "goal": 2999997
+      },
+      "expected": 6
+    },
+    {
+      "case_id": 70,
+      "input": {
+        "nums": [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1],
+        "limit": 1,
+        "goal": -15
+      },
+      "expected": 5
+    },
+    {
+      "case_id": 71,
+      "input": {
+        "nums": [-1, -2, -3, -4, -5, -6, -7, -8, -9, -10],
+        "limit": 3,
+        "goal": 0
+      },
+      "expected": 19
+    },
+    {
+      "case_id": 72,
+      "input": {
+        "nums": [-1, -1, -1, -1, -1],
+        "limit": 3,
+        "goal": 5
+      },
+      "expected": 4
+    },
+    {
+      "case_id": 73,
+      "input": {
+        "nums": [1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1, -1],
+        "limit": 2,
+        "goal": 0
+      },
+      "expected": 0
+    },
+    {
+      "case_id": 74,
+      "input": {
+        "nums": [1, -1, 1, -1, 1],
+        "limit": 1,
+        "goal": -1
+      },
+      "expected": 2
+    },
+    {
+      "case_id": 75,
+      "input": {
+        "nums": [10, 20, 30, 40, 50, 60, 70, 80, 90, 100],
+        "limit": 50,
+        "goal": 0
+      },
+      "expected": 11
+    },
+    {
+      "case_id": 76,
+      "input": {
+        "nums": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+        "limit": 5,
+        "goal": 55
+      },
+      "expected": 0
+    },
+    {
+      "case_id": 77,
+      "input": {
+        "nums": [1, 2, 3, 4, 5],
+        "limit": 2,
+        "goal": 20
+      },
+      "expected": 3
+    },
+    {
+      "case_id": 78,
+      "input": {
+        "nums": [-5, 3, 2, -4, 1],
+        "limit": 5,
+        "goal": -10
+      },
+      "expected": 2
+    },
+    {
+      "case_id": 79,
+      "input": {
+        "nums": [999999, -999999, 999999, -999999, 999999],
+        "limit": 1000000,
+        "goal": 4999995
+      },
+      "expected": 4
+    },
+    {
+      "case_id": 80,
+      "input": {
+        "nums": [-100, 100, -100, 100, -100],
+        "limit": 50,
+        "goal": 0
+      },
+      "expected": 2
+    },
+    {
+      "case_id": 81,
+      "input": {
+        "nums": [1, 2, 3, 4, 5],
+        "limit": 2,
+        "goal": 0
+      },
+      "expected": 8
+    },
+    {
+      "case_id": 82,
+      "input": {
+        "nums": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+        "limit": 3,
+        "goal": 55
+      },
+      "expected": 0
+    },
+    {
+      "case_id": 83,
+      "input": {
+        "nums": [1000000, 1000000, 1000000],
+        "limit": 500000,
+        "goal": 500000
+      },
+      "expected": 5
+    },
+    {
+      "case_id": 84,
+      "input": {
+        "nums": [-1, -2, -3, -4, -5, -6, -7, -8, -9, -10],
+        "limit": 5,
+        "goal": -55
+      },
+      "expected": 0
+    },
+    {
+      "case_id": 85,
+      "input": {
+        "nums": [-1, 0, 1],
+        "limit": 1,
+        "goal": -1000000
+      },
+      "expected": 1000000
+    },
+    {
+      "case_id": 86,
+      "input": {
+        "nums": [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1],
+        "limit": 2,
+        "goal": -30
+      },
+      "expected": 10
+    },
+    {
+      "case_id": 87,
+      "input": {
+        "nums": [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+        "limit": 3,
+        "goal": 20
+      },
+      "expected": 0
+    },
+    {
+      "case_id": 88,
+      "input": {
+        "nums": [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+        "limit": 1,
+        "goal": 5
+      },
+      "expected": 5
+    },
+    {
+      "case_id": 89,
+      "input": {
+        "nums": [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+        "limit": 1,
+        "goal": 20
+      },
+      "expected": 10
+    },
+    {
+      "case_id": 90,
+      "input": {
+        "nums": [-999999, -999999, -999999, -999999, -999999],
+        "limit": 1000000,
+        "goal": -5000000
+      },
+      "expected": 1
+    },
+    {
+      "case_id": 91,
+      "input": {
+        "nums": [1, -2, 3, -4, 5],
+        "limit": 5,
+        "goal": 0
+      },
+      "expected": 1
+    },
+    {
+      "case_id": 92,
+      "input": {
+        "nums": [999999, 999999, 999999, 999999, 999999],
+        "limit": 1000000,
+        "goal": 5000000
+      },
+      "expected": 1
+    },
+    {
+      "case_id": 93,
+      "input": {
+        "nums": [-1000000, -1000000, -1000000, -1000000, -1000000],
+        "limit": 1000000,
+        "goal": 0
+      },
+      "expected": 5
+    },
+    {
+      "case_id": 94,
+      "input": {
+        "nums": [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+        "limit": 10,
+        "goal": 5
+      },
+      "expected": 1
+    },
+    {
+      "case_id": 95,
+      "input": {
+        "nums": [123456, -234567, 345678, -456789, 567890],
+        "limit": 100000,
+        "goal": 123456789
+      },
+      "expected": 1232
+    },
+    {
+      "case_id": 96,
+      "input": {
+        "nums": [-999999, -999998, -999997, -999996],
+        "limit": 999999,
+        "goal": -3999990
+      },
+      "expected": 0
+    },
+    {
+      "case_id": 97,
+      "input": {
+        "nums": [-10, 20, -30, 40],
+        "limit": 15,
+        "goal": 0
+      },
+      "expected": 2
+    },
+    {
+      "case_id": 98,
+      "input": {
+        "nums": [-1, -2, -3, -4, -5, -6, -7, -8, -9, -10],
+        "limit": 10,
+        "goal": -55
+      },
+      "expected": 0
+    },
+    {
+      "case_id": 99,
+      "input": {
+        "nums": [1000000, 2000000, 3000000],
+        "limit": 1000000,
+        "goal": 10000000
+      },
+      "expected": 4
+    },
+    {
+      "case_id": 100,
+      "input": {
+        "nums": [500000, 500000, 500000, 500000, 500000],
+        "limit": 1000000,
+        "goal": 500000
+      },
+      "expected": 2
+    },
+    {
+      "case_id": 101,
+      "input": {
+        "nums": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        "limit": 1000000,
+        "goal": 10000000
+      },
+      "expected": 10
+    },
+    {
+      "case_id": 102,
+      "input": {
+        "nums": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        "limit": 100,
+        "goal": 500
+      },
+      "expected": 5
+    },
+    {
+      "case_id": 103,
+      "input": {
+        "nums": [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1],
+        "limit": 2,
+        "goal": -20
+      },
+      "expected": 5
+    },
+    {
+      "case_id": 104,
+      "input": {
+        "nums": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+        "limit": 5,
+        "goal": 0
+      },
+      "expected": 11
+    },
+    {
+      "case_id": 105,
+      "input": {
+        "nums": [-10, -20, -30, -40, -50],
+        "limit": 10,
+        "goal": 150
+      },
+      "expected": 30
+    },
+    {
+      "case_id": 106,
+      "input": {
+        "nums": [10, 20, 30, 40, 50],
+        "limit": 5,
+        "goal": 150
+      },
+      "expected": 0
+    }
+  ]
+}

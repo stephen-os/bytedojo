@@ -1,0 +1,871 @@
+{
+  "schema_version": 1,
+  "problem_id": 1576,
+  "title": "Replace All ?'s to Avoid Consecutive Repeating Characters",
+  "method": "modifyString",
+  "signature": {
+    "params": [
+      {
+        "name": "s",
+        "type": "STRING"
+      }
+    ],
+    "returns": "STRING"
+  },
+  "cases": [
+    {
+      "case_id": 1,
+      "input": {
+        "s": "?zs"
+      },
+      "expected": "azs"
+    },
+    {
+      "case_id": 2,
+      "input": {
+        "s": "b?a"
+      },
+      "expected": "bca"
+    },
+    {
+      "case_id": 3,
+      "input": {
+        "s": "a?b?"
+      },
+      "expected": "acba"
+    },
+    {
+      "case_id": 4,
+      "input": {
+        "s": "zz?z?zz"
+      },
+      "expected": "zzazazz"
+    },
+    {
+      "case_id": 5,
+      "input": {
+        "s": "z?z"
+      },
+      "expected": "zaz"
+    },
+    {
+      "case_id": 6,
+      "input": {
+        "s": "abc?de?"
+      },
+      "expected": "abcadea"
+    },
+    {
+      "case_id": 7,
+      "input": {
+        "s": "?abcd"
+      },
+      "expected": "babcd"
+    },
+    {
+      "case_id": 8,
+      "input": {
+        "s": "zyx?"
+      },
+      "expected": "zyxa"
+    },
+    {
+      "case_id": 9,
+      "input": {
+        "s": "z?a?a?a?z"
+      },
+      "expected": "zbabababz"
+    },
+    {
+      "case_id": 10,
+      "input": {
+        "s": "a?b?c?"
+      },
+      "expected": "acbaca"
+    },
+    {
+      "case_id": 11,
+      "input": {
+        "s": "a?c?e?"
+      },
+      "expected": "abcaea"
+    },
+    {
+      "case_id": 12,
+      "input": {
+        "s": "??a??"
+      },
+      "expected": "ababa"
+    },
+    {
+      "case_id": 13,
+      "input": {
+        "s": "abc?ef?"
+      },
+      "expected": "abcaefa"
+    },
+    {
+      "case_id": 14,
+      "input": {
+        "s": "b?a?c?"
+      },
+      "expected": "bcabca"
+    },
+    {
+      "case_id": 15,
+      "input": {
+        "s": "?a?a?a?"
+      },
+      "expected": "bababab"
+    },
+    {
+      "case_id": 16,
+      "input": {
+        "s": "????"
+      },
+      "expected": "abab"
+    },
+    {
+      "case_id": 17,
+      "input": {
+        "s": "a?b?c?d?"
+      },
+      "expected": "acbacada"
+    },
+    {
+      "case_id": 18,
+      "input": {
+        "s": "abcd?"
+      },
+      "expected": "abcda"
+    },
+    {
+      "case_id": 19,
+      "input": {
+        "s": "xyz?"
+      },
+      "expected": "xyza"
+    },
+    {
+      "case_id": 20,
+      "input": {
+        "s": "?"
+      },
+      "expected": "a"
+    },
+    {
+      "case_id": 21,
+      "input": {
+        "s": "a?b"
+      },
+      "expected": "acb"
+    },
+    {
+      "case_id": 22,
+      "input": {
+        "s": "?a?b?c?"
+      },
+      "expected": "bacbaca"
+    },
+    {
+      "case_id": 23,
+      "input": {
+        "s": "a?b?c"
+      },
+      "expected": "acbac"
+    },
+    {
+      "case_id": 24,
+      "input": {
+        "s": "?a?a?a"
+      },
+      "expected": "bababa"
+    },
+    {
+      "case_id": 25,
+      "input": {
+        "s": "a?c"
+      },
+      "expected": "abc"
+    },
+    {
+      "case_id": 26,
+      "input": {
+        "s": "a?a"
+      },
+      "expected": "aba"
+    },
+    {
+      "case_id": 27,
+      "input": {
+        "s": "ubv?w"
+      },
+      "expected": "ubvaw"
+    },
+    {
+      "case_id": 28,
+      "input": {
+        "s": "?????"
+      },
+      "expected": "ababa"
+    },
+    {
+      "case_id": 29,
+      "input": {
+        "s": "abc?"
+      },
+      "expected": "abca"
+    },
+    {
+      "case_id": 30,
+      "input": {
+        "s": "?a?b?c"
+      },
+      "expected": "bacbac"
+    },
+    {
+      "case_id": 31,
+      "input": {
+        "s": "????????????"
+      },
+      "expected": "abababababab"
+    },
+    {
+      "case_id": 32,
+      "input": {
+        "s": "??a??b??c??d??"
+      },
+      "expected": "ababababcabdab"
+    },
+    {
+      "case_id": 33,
+      "input": {
+        "s": "a?b?c?d?e?f?g?h?i?j?k?l?m?n?o?p?q?r?s?t?u?v?w?x?y?z?abcdef?"
+      },
+      "expected": "acbacadaeafagahaiajakalamanaoapaqarasatauavawaxayazbabcdefa"
+    },
+    {
+      "case_id": 34,
+      "input": {
+        "s": "a?b?c?d?e?f?g?h?i?j?k?l?m?n?o?p?q?r?s?t?u?v?w?x?y?z?a?b?c?d?e?f?g?h?i?j?k?l?m?n?o?p?q?r?s?t?u?v?w?x?y?z"
+      },
+      "expected": "acbacadaeafagahaiajakalamanaoapaqarasatauavawaxayazbacbacadaeafagahaiajakalamanaoapaqarasatauavawaxayaz"
+    },
+    {
+      "case_id": 35,
+      "input": {
+        "s": "z?????????"
+      },
+      "expected": "zababababa"
+    },
+    {
+      "case_id": 36,
+      "input": {
+        "s": "a?b?c?d?e?fa?b?c?d?e?fa?b?c?d?e?fa?b?c?d?e?fa?b?c?d?e?f"
+      },
+      "expected": "acbacadaeafacbacadaeafacbacadaeafacbacadaeafacbacadaeaf"
+    },
+    {
+      "case_id": 37,
+      "input": {
+        "s": "x?y?z?x?y?"
+      },
+      "expected": "xayazaxaya"
+    },
+    {
+      "case_id": 38,
+      "input": {
+        "s": "?a?b?c?d?e"
+      },
+      "expected": "bacbacadae"
+    },
+    {
+      "case_id": 39,
+      "input": {
+        "s": "????????????????????"
+      },
+      "expected": "abababababababababab"
+    },
+    {
+      "case_id": 40,
+      "input": {
+        "s": "a?z?b?y?c?x?d?w?e?v?f?u?g?t?h?s?i?r?j?q?k?p?l?o?m?n?l?k?j?i?h?g?f?e?d?c?b?a"
+      },
+      "expected": "abzabayacaxadawaeavafauagatahasaiarajaqakapalaoamanalakajaiahagafaeadacabca"
+    },
+    {
+      "case_id": 41,
+      "input": {
+        "s": "abcd????efgh????ijkl????mnop????qrst????uvw????xyz????"
+      },
+      "expected": "abcdababefghababijklababmnopababqrstababuvwababxyzabab"
+    },
+    {
+      "case_id": 42,
+      "input": {
+        "s": "a?b?c?d?e?f?g?"
+      },
+      "expected": "acbacadaeafaga"
+    },
+    {
+      "case_id": 43,
+      "input": {
+        "s": "?b?a?b?a?b?a?b?a?b?"
+      },
+      "expected": "abcacbcacbcacbcacba"
+    },
+    {
+      "case_id": 44,
+      "input": {
+        "s": "a??????b??????c??????d??????e??????"
+      },
+      "expected": "abababababababcabababdabababeababab"
+    },
+    {
+      "case_id": 45,
+      "input": {
+        "s": "abcdefghijklmnopqrstuvwxyz????"
+      },
+      "expected": "abcdefghijklmnopqrstuvwxyzabab"
+    },
+    {
+      "case_id": 46,
+      "input": {
+        "s": "ab?cde?fg?hij?kl?mno?pqr?stu?vwx?yz?"
+      },
+      "expected": "abacdeafgahijaklamnoapqrastuavwxayza"
+    },
+    {
+      "case_id": 47,
+      "input": {
+        "s": "a?b?c?d?e?f?g?h?i?j?k?l?m?n?o?p?q?r?s?t?u?v?w?x?y?z?ab?"
+      },
+      "expected": "acbacadaeafagahaiajakalamanaoapaqarasatauavawaxayazbaba"
+    },
+    {
+      "case_id": 48,
+      "input": {
+        "s": "a????b????c????"
+      },
+      "expected": "abababababcabab"
+    },
+    {
+      "case_id": 49,
+      "input": {
+        "s": "a?b?c?d?e?f?g?h?i?j?k?l?m?n?o?p?q?r?s?t?u?v?w?x?y?z?abcdefghijklmnopqrstuvwxyz"
+      },
+      "expected": "acbacadaeafagahaiajakalamanaoapaqarasatauavawaxayazbabcdefghijklmnopqrstuvwxyz"
+    },
+    {
+      "case_id": 50,
+      "input": {
+        "s": "zyxwvutsrqponmlkjihgfedcba?"
+      },
+      "expected": "zyxwvutsrqponmlkjihgfedcbab"
+    },
+    {
+      "case_id": 51,
+      "input": {
+        "s": "x???x???"
+      },
+      "expected": "xabaxaba"
+    },
+    {
+      "case_id": 52,
+      "input": {
+        "s": "a?b?c?d?e?f?g?h?i?j?k?l?m?n?o?p?q?r?s?t?u?v?w?x?y?z?abcde?"
+      },
+      "expected": "acbacadaeafagahaiajakalamanaoapaqarasatauavawaxayazbabcdea"
+    },
+    {
+      "case_id": 53,
+      "input": {
+        "s": "abc????def????ghi????jkl????mno????pqr????stu????vwx????yz?"
+      },
+      "expected": "abcababdefababghiababjklababmnoababpqrababstuababvwxababyza"
+    },
+    {
+      "case_id": 54,
+      "input": {
+        "s": "a????b????c????d????e????"
+      },
+      "expected": "abababababcababdababeabab"
+    },
+    {
+      "case_id": 55,
+      "input": {
+        "s": "?????????"
+      },
+      "expected": "ababababa"
+    },
+    {
+      "case_id": 56,
+      "input": {
+        "s": "abcd?efg?hij?"
+      },
+      "expected": "abcdaefgahija"
+    },
+    {
+      "case_id": 57,
+      "input": {
+        "s": "a?z?b?y?c?x?d?w?e?v?f?u?g?t?h?s?i?r?j?q?k?p?l?o?m?n?l?k?j?i?h?g?f?e?d?c?b?a????"
+      },
+      "expected": "abzabayacaxadawaeavafauagatahasaiarajaqakapalaoamanalakajaiahagafaeadacabcababa"
+    },
+    {
+      "case_id": 58,
+      "input": {
+        "s": "?a?b?c?d?e?fg?h?i?j?k?l?m?n?o?p?q?r?s?t?u?v?w?x?y?z"
+      },
+      "expected": "bacbacadaeafgahaiajakalamanaoapaqarasatauavawaxayaz"
+    },
+    {
+      "case_id": 59,
+      "input": {
+        "s": "a???????????????????????????????????????????????????????b"
+      },
+      "expected": "abababababababababababababababababababababababababababacb"
+    },
+    {
+      "case_id": 60,
+      "input": {
+        "s": "a?z?b?y?c?x?d?w?e?v?f?u?g?t?h?s?i?r?j?q?k?p?l?o?m?n?l?k?j?i?h?g?f?e?d?c?b?a?z?y?x?w?"
+      },
+      "expected": "abzabayacaxadawaeavafauagatahasaiarajaqakapalaoamanalakajaiahagafaeadacabcabzayaxawa"
+    },
+    {
+      "case_id": 61,
+      "input": {
+        "s": "xyz???uvw???stu???rst???qpo???nml???kji???hgf???edc???ba???"
+      },
+      "expected": "xyzabauvwabastuabarstabaqpoabanmlabakjiabahgfabaedcabababab"
+    },
+    {
+      "case_id": 62,
+      "input": {
+        "s": "abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz????"
+      },
+      "expected": "abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabab"
+    },
+    {
+      "case_id": 63,
+      "input": {
+        "s": "?a?b?c?d?e?f?g"
+      },
+      "expected": "bacbacadaeafag"
+    },
+    {
+      "case_id": 64,
+      "input": {
+        "s": "????a????"
+      },
+      "expected": "ababababa"
+    },
+    {
+      "case_id": 65,
+      "input": {
+        "s": "z?y?x?w?v?u?t?s?r?q?p?o?n?m?l?k?j?i?h?g?f?e?d?c?b?a?"
+      },
+      "expected": "zayaxawavauatasaraqapaoanamalakajaiahagafaeadacabcab"
+    },
+    {
+      "case_id": 66,
+      "input": {
+        "s": "a?b?c?d?e?f?g?h?i?j?k?l?m?n?o?p?q?r?s?t?u?v?w?x?y?z????"
+      },
+      "expected": "acbacadaeafagahaiajakalamanaoapaqarasatauavawaxayazabab"
+    },
+    {
+      "case_id": 67,
+      "input": {
+        "s": "abc??xyz?"
+      },
+      "expected": "abcabxyza"
+    },
+    {
+      "case_id": 68,
+      "input": {
+        "s": "abc?de?fg?"
+      },
+      "expected": "abcadeafga"
+    },
+    {
+      "case_id": 69,
+      "input": {
+        "s": "????z"
+      },
+      "expected": "ababz"
+    },
+    {
+      "case_id": 70,
+      "input": {
+        "s": "a?????z"
+      },
+      "expected": "abababz"
+    },
+    {
+      "case_id": 71,
+      "input": {
+        "s": "abc????????de?????fg????hi????j????k????lm????n????op????qr????st????uv????wxyz????"
+      },
+      "expected": "abcababababdeababafgababhiababjababkabablmababnababopababqrababstababuvababwxyzabab"
+    },
+    {
+      "case_id": 72,
+      "input": {
+        "s": "a?????b?????c?????d?????e?????f?????g?????h?????i?????j?????"
+      },
+      "expected": "ababacbababacababadababaeababafababagababahababaiababajababa"
+    },
+    {
+      "case_id": 73,
+      "input": {
+        "s": "a?b?c?d?e?f?g?h?i?j?k?l?m?n?o?p?q?r?s?t?u?v?w?x?y?z?a?"
+      },
+      "expected": "acbacadaeafagahaiajakalamanaoapaqarasatauavawaxayazbab"
+    },
+    {
+      "case_id": 74,
+      "input": {
+        "s": "xyz???abc"
+      },
+      "expected": "xyzabcabc"
+    },
+    {
+      "case_id": 75,
+      "input": {
+        "s": "xyz?yxz?"
+      },
+      "expected": "xyzayxza"
+    },
+    {
+      "case_id": 76,
+      "input": {
+        "s": "?a?b?c?d?e?"
+      },
+      "expected": "bacbacadaea"
+    },
+    {
+      "case_id": 77,
+      "input": {
+        "s": "a?b?c?d?e?f?g?h?i?j?k?l?m?n?o?p?q?r?s?t?u?v?w?x?y?z?"
+      },
+      "expected": "acbacadaeafagahaiajakalamanaoapaqarasatauavawaxayaza"
+    },
+    {
+      "case_id": 78,
+      "input": {
+        "s": "ab?cd?ef?gh?ij?kl?mn?op?qr?st?uv?wx?yz?a?b?c?d?e?"
+      },
+      "expected": "abacdaefaghaijaklamnaopaqrastauvawxayzbacbacadaea"
+    },
+    {
+      "case_id": 79,
+      "input": {
+        "s": "a?b?c?d?e?f?g?h?i?j?k?l?m?n?o?p?q?r?s?t?u?v?w?x?y?z?abcdefg?"
+      },
+      "expected": "acbacadaeafagahaiajakalamanaoapaqarasatauavawaxayazbabcdefga"
+    },
+    {
+      "case_id": 80,
+      "input": {
+        "s": "????abc????def????ghi????jkl????mno????pqr????stu????vwx????yz????"
+      },
+      "expected": "abababcababdefababghiababjklababmnoababpqrababstuababvwxababyzabab"
+    },
+    {
+      "case_id": 81,
+      "input": {
+        "s": "a?b?c?d?e?f?g?h?i?j?"
+      },
+      "expected": "acbacadaeafagahaiaja"
+    },
+    {
+      "case_id": 82,
+      "input": {
+        "s": "a?b?c?d?e?f?g?h?i?j?k?l?m?n?o?p?q?r?s?t?u?v?w?x?y?z?a?b?c?"
+      },
+      "expected": "acbacadaeafagahaiajakalamanaoapaqarasatauavawaxayazbacbaca"
+    },
+    {
+      "case_id": 83,
+      "input": {
+        "s": "a?b?c?d?e?f?g?h?i?j?k?l?m?n?o?p?q?r?s?t?u?v?w?x?y?z?a?b?"
+      },
+      "expected": "acbacadaeafagahaiajakalamanaoapaqarasatauavawaxayazbacba"
+    },
+    {
+      "case_id": 84,
+      "input": {
+        "s": "a?????????????????????????????????????????????b"
+      },
+      "expected": "ababababababababababababababababababababababacb"
+    },
+    {
+      "case_id": 85,
+      "input": {
+        "s": "????????"
+      },
+      "expected": "abababab"
+    },
+    {
+      "case_id": 86,
+      "input": {
+        "s": "????abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz"
+      },
+      "expected": "abababcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz"
+    },
+    {
+      "case_id": 87,
+      "input": {
+        "s": "a????????????????????z"
+      },
+      "expected": "ababababababababababaz"
+    },
+    {
+      "case_id": 88,
+      "input": {
+        "s": "a?b?c?d?e?f?g?h?i?j?k?l?m?n?o?p?q?r?s?t?u?v?w?x?y?z"
+      },
+      "expected": "acbacadaeafagahaiajakalamanaoapaqarasatauavawaxayaz"
+    },
+    {
+      "case_id": 89,
+      "input": {
+        "s": "a?b?c?d?e?f?g?h?i?j?k?l?m?n?o?p?q?r?s?t?u?v?w?x?y?z?abcdefghijklmnopqrstuvwxyz?a?b?c?d?e?f?g?h?i?j?k?l?m?n?o?p?q?r?s?t?u?v?w?x?y?z????"
+      },
+      "expected": "acbacadaeafagahaiajakalamanaoapaqarasatauavawaxayazbabcdefghijklmnopqrstuvwxyzbacbacadaeafagahaiajakalamanaoapaqarasatauavawaxayazabab"
+    },
+    {
+      "case_id": 90,
+      "input": {
+        "s": "a?b?c?d?e?f?g?h?i?j?k?l?m?n?o?p?q?r?s?t?u?v?w?x?y?z?abc?"
+      },
+      "expected": "acbacadaeafagahaiajakalamanaoapaqarasatauavawaxayazbabca"
+    },
+    {
+      "case_id": 91,
+      "input": {
+        "s": "?b?a?c?b?a?"
+      },
+      "expected": "abcabcabcab"
+    },
+    {
+      "case_id": 92,
+      "input": {
+        "s": "z??y?x?w?"
+      },
+      "expected": "zabyaxawa"
+    },
+    {
+      "case_id": 93,
+      "input": {
+        "s": "????abcdefghijklmnopqrstuvwxyz"
+      },
+      "expected": "abababcdefghijklmnopqrstuvwxyz"
+    },
+    {
+      "case_id": 94,
+      "input": {
+        "s": "abcdefghijklmnopqrstuvwxy?"
+      },
+      "expected": "abcdefghijklmnopqrstuvwxya"
+    },
+    {
+      "case_id": 95,
+      "input": {
+        "s": "a?b?c?d?e?"
+      },
+      "expected": "acbacadaea"
+    },
+    {
+      "case_id": 96,
+      "input": {
+        "s": "abc?def?ghi?jkl?mno?pqr?stu?vwx?yz?"
+      },
+      "expected": "abcadefaghiajklamnoapqrastuavwxayza"
+    },
+    {
+      "case_id": 97,
+      "input": {
+        "s": "a?b?a?b?a?b?a?b?a?"
+      },
+      "expected": "acbcacbcacbcacbcab"
+    },
+    {
+      "case_id": 98,
+      "input": {
+        "s": "ab?c?d?e?f?g?h?i?j?k?l?m?n?o?p?q?r?s?t?u?v?w?x?y?z?"
+      },
+      "expected": "abacadaeafagahaiajakalamanaoapaqarasatauavawaxayaza"
+    },
+    {
+      "case_id": 99,
+      "input": {
+        "s": "a?b?c?d?e?f?g?h?i?j?k?l?m?n?o?p?q?r?s?t?u?v?w?x?y?z?abcd?"
+      },
+      "expected": "acbacadaeafagahaiajakalamanaoapaqarasatauavawaxayazbabcda"
+    },
+    {
+      "case_id": 100,
+      "input": {
+        "s": "z?a?y?b?x?c?w?v?d?u?t?e?s?r?q?p?o?n?m?l?k?j?i?h?g?f?e?d?c?b?a?"
+      },
+      "expected": "zbabyabaxacawavadauataeasaraqapaoanamalakajaiahagafaeadacabcab"
+    },
+    {
+      "case_id": 101,
+      "input": {
+        "s": "abcdefghijklmnopqrstuvwxyz?a?b?c?d?e?f?g?h?i?j?k?l?m?n?o?p?q?r?s?t?u?v?w?x?y?z????"
+      },
+      "expected": "abcdefghijklmnopqrstuvwxyzbacbacadaeafagahaiajakalamanaoapaqarasatauavawaxayazabab"
+    },
+    {
+      "case_id": 102,
+      "input": {
+        "s": "aaaa???bbbbb???ccccc???"
+      },
+      "expected": "aaaabacbbbbbabacccccaba"
+    },
+    {
+      "case_id": 103,
+      "input": {
+        "s": "?a?b?c?d?e?f?g?"
+      },
+      "expected": "bacbacadaeafaga"
+    },
+    {
+      "case_id": 104,
+      "input": {
+        "s": "z?y?x?w?v?u?t?s?r?q?p?o?n?m?l?k?j?i?h?g?f?e?d?c?b?a"
+      },
+      "expected": "zayaxawavauatasaraqapaoanamalakajaiahagafaeadacabca"
+    },
+    {
+      "case_id": 105,
+      "input": {
+        "s": "?a?b?c?d?e?f?g?h?i?j?k?l?m?n?o?p?q?r?s?t?u?v?w?x?y?z"
+      },
+      "expected": "bacbacadaeafagahaiajakalamanaoapaqarasatauavawaxayaz"
+    },
+    {
+      "case_id": 106,
+      "input": {
+        "s": "a?a?a?a?a?a?a?a?a?a"
+      },
+      "expected": "abababababababababa"
+    },
+    {
+      "case_id": 107,
+      "input": {
+        "s": "a??b??c??d??"
+      },
+      "expected": "abababcabdab"
+    },
+    {
+      "case_id": 108,
+      "input": {
+        "s": "??a?b??c??"
+      },
+      "expected": "abacbabcab"
+    },
+    {
+      "case_id": 109,
+      "input": {
+        "s": "a?b??c?d"
+      },
+      "expected": "acbabcad"
+    },
+    {
+      "case_id": 110,
+      "input": {
+        "s": "abcdefghijklmnopqrstuvwxyz?"
+      },
+      "expected": "abcdefghijklmnopqrstuvwxyza"
+    },
+    {
+      "case_id": 111,
+      "input": {
+        "s": "abcd????????efgh????????ijkl????????mnop????????qrst????????uvwx????????yz??"
+      },
+      "expected": "abcdababababefghababababijklababababmnopababababqrstababababuvwxababababyzab"
+    },
+    {
+      "case_id": 112,
+      "input": {
+        "s": "z????z????z????z????z"
+      },
+      "expected": "zababzababzababzababz"
+    },
+    {
+      "case_id": 113,
+      "input": {
+        "s": "a?a?a?a?a?b?b?b?b?b?c?c?c?c?c?d?d?d?d?d?"
+      },
+      "expected": "ababababacbababababacacacacacadadadadada"
+    },
+    {
+      "case_id": 114,
+      "input": {
+        "s": "xyz?abc?def?ghi?"
+      },
+      "expected": "xyzbabcadefaghia"
+    },
+    {
+      "case_id": 115,
+      "input": {
+        "s": "xyz??abc"
+      },
+      "expected": "xyzababc"
+    },
+    {
+      "case_id": 116,
+      "input": {
+        "s": "abcd????efgh"
+      },
+      "expected": "abcdababefgh"
+    },
+    {
+      "case_id": 117,
+      "input": {
+        "s": "?ab?bc?cd?de?ef?fg?"
+      },
+      "expected": "bababcacdadeaefafga"
+    },
+    {
+      "case_id": 118,
+      "input": {
+        "s": "a?????z?????y?????x?????w?????v?????u?????t?????s?????r?????q?????p?????o?????n?????m?????l?????k?????j?????i?????h?????g?????f?????e?????d?????c?????b"
+      },
+      "expected": "abababzababayababaxababawababavababauababatababasababarababaqababapababaoababanababamababalababakababajababaiababahababagababafababaeababadababacababab"
+    },
+    {
+      "case_id": 119,
+      "input": {
+        "s": "abc???def"
+      },
+      "expected": "abcabadef"
+    },
+    {
+      "case_id": 120,
+      "input": {
+        "s": "b?a?b?a?b?a?"
+      },
+      "expected": "bcacbcacbcab"
+    },
+    {
+      "case_id": 121,
+      "input": {
+        "s": "abc?def?ghi?jkl?mno?pqr?stu?vwx?yz"
+      },
+      "expected": "abcadefaghiajklamnoapqrastuavwxayz"
+    },
+    {
+      "case_id": 122,
+      "input": {
+        "s": "abc?def?ghi?"
+      },
+      "expected": "abcadefaghia"
+    }
+  ]
+}

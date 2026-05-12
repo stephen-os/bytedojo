@@ -1,0 +1,773 @@
+{
+  "schema_version": 1,
+  "problem_id": 1301,
+  "title": "Number of Paths with Max Score",
+  "method": "pathsWithMaxScore",
+  "signature": {
+    "params": [
+      {
+        "name": "board",
+        "type": "STRING_ARRAY"
+      }
+    ],
+    "returns": "INT32_ARRAY"
+  },
+  "cases": [
+    {
+      "case_id": 1,
+      "input": {
+        "board": ["E123", "45X7", "89XS"]
+      },
+      "expected": [21, 1]
+    },
+    {
+      "case_id": 2,
+      "input": {
+        "board": ["E11", "XXX", "11S"]
+      },
+      "expected": [0, 0]
+    },
+    {
+      "case_id": 3,
+      "input": {
+        "board": ["EX", "XS"]
+      },
+      "expected": [0, 1]
+    },
+    {
+      "case_id": 4,
+      "input": {
+        "board": ["E", "S"]
+      },
+      "expected": "Error: string index out of range"
+    },
+    {
+      "case_id": 5,
+      "input": {
+        "board": ["E111", "1X11", "1111", "111S"]
+      },
+      "expected": [5, 8]
+    },
+    {
+      "case_id": 6,
+      "input": {
+        "board": ["E22", "222", "22S"]
+      },
+      "expected": [6, 6]
+    },
+    {
+      "case_id": 7,
+      "input": {
+        "board": ["E1X", "X1X", "X1S"]
+      },
+      "expected": [3, 1]
+    },
+    {
+      "case_id": 8,
+      "input": {
+        "board": ["E123", "12X3", "21XS"]
+      },
+      "expected": [4, 3]
+    },
+    {
+      "case_id": 9,
+      "input": {
+        "board": ["E123", "1X21", "21XS"]
+      },
+      "expected": [5, 1]
+    },
+    {
+      "case_id": 10,
+      "input": {
+        "board": ["EX", "1S"]
+      },
+      "expected": [1, 1]
+    },
+    {
+      "case_id": 11,
+      "input": {
+        "board": ["E23", "2X2", "12S"]
+      },
+      "expected": [7, 1]
+    },
+    {
+      "case_id": 12,
+      "input": {
+        "board": ["E1", "X1", "1S"]
+      },
+      "expected": "Error: string index out of range"
+    },
+    {
+      "case_id": 13,
+      "input": {
+        "board": ["E111", "1111", "11X1", "111S"]
+      },
+      "expected": [5, 8]
+    },
+    {
+      "case_id": 14,
+      "input": {
+        "board": ["E12", "1X1", "21S"]
+      },
+      "expected": [4, 2]
+    },
+    {
+      "case_id": 15,
+      "input": {
+        "board": ["E123", "456X", "789S"]
+      },
+      "expected": [28, 1]
+    },
+    {
+      "case_id": 16,
+      "input": {
+        "board": ["E123", "4X56", "789S"]
+      },
+      "expected": [28, 1]
+    },
+    {
+      "case_id": 17,
+      "input": {
+        "board": ["E1X", "1X1", "S11"]
+      },
+      "expected": [3, 2]
+    },
+    {
+      "case_id": 18,
+      "input": {
+        "board": ["E1", "1S"]
+      },
+      "expected": [1, 2]
+    },
+    {
+      "case_id": 19,
+      "input": {
+        "board": ["E123456", "2345678", "345678X", "456789X", "56789XS", "6789XSX"]
+      },
+      "expected": [44, 35]
+    },
+    {
+      "case_id": 20,
+      "input": {
+        "board": ["E121", "2121", "1212", "1S11"]
+      },
+      "expected": [9, 6]
+    },
+    {
+      "case_id": 21,
+      "input": {
+        "board": ["E12X4", "56789", "X1234", "5678X", "9XS12"]
+      },
+      "expected": [40, 1]
+    },
+    {
+      "case_id": 22,
+      "input": {
+        "board": ["E12345", "6789X1", "234567", "89XS12", "345678"]
+      },
+      "expected": [49, 1]
+    },
+    {
+      "case_id": 23,
+      "input": {
+        "board": ["E1X1X1X1", "1X1X1X1X", "1X1X1X1X", "1X1X1X1X", "1X1X1X1X", "1X1X1X1X", "1X1X1X1S"]
+      },
+      "expected": [0, 0]
+    },
+    {
+      "case_id": 24,
+      "input": {
+        "board": ["E11", "1X1", "11X", "X1S"]
+      },
+      "expected": "Error: string index out of range"
+    },
+    {
+      "case_id": 25,
+      "input": {
+        "board": ["E1234", "56X89", "4X321", "12X56", "789XS"]
+      },
+      "expected": [30, 1]
+    },
+    {
+      "case_id": 26,
+      "input": {
+        "board": ["E1234567", "23456789", "3456789X", "456789XS", "56789XSX", "6789XSXX", "789XSXXX", "89XSXXXX"]
+      },
+      "expected": [0, 0]
+    },
+    {
+      "case_id": 27,
+      "input": {
+        "board": ["E123", "45X7", "89XS", "1234", "5678", "9XS1", "2345", "6789", "XS12", "3456"]
+      },
+      "expected": "Error: string index out of range"
+    },
+    {
+      "case_id": 28,
+      "input": {
+        "board": ["E1234", "56789", "X123X", "45678", "9XS12"]
+      },
+      "expected": [46, 1]
+    },
+    {
+      "case_id": 29,
+      "input": {
+        "board": ["E1X1", "1X1X", "1X1X", "1X1S"]
+      },
+      "expected": [4, 1]
+    },
+    {
+      "case_id": 30,
+      "input": {
+        "board": ["E2222", "22222", "22X22", "22222", "2222S"]
+      },
+      "expected": [14, 34]
+    },
+    {
+      "case_id": 31,
+      "input": {
+        "board": ["E11111111", "1X1X1X1X1", "111X111X1", "1X1X1X1X1", "111X111X1", "1X1X1X1X1", "111X111X1", "1X1X1X1X1", "11111111S"]
+      },
+      "expected": [15, 11]
+    },
+    {
+      "case_id": 32,
+      "input": {
+        "board": ["E9876", "9X8X7", "6X5X4", "3X2X1", "4321S"]
+      },
+      "expected": [42, 1]
+    },
+    {
+      "case_id": 33,
+      "input": {
+        "board": ["E1234567", "89X12345", "6789X123", "456789X1", "23456789", "1234567S", "89XS1234"]
+      },
+      "expected": [90, 1]
+    },
+    {
+      "case_id": 34,
+      "input": {
+        "board": ["E999", "9X99", "99X9", "999S"]
+      },
+      "expected": [45, 4]
+    },
+    {
+      "case_id": 35,
+      "input": {
+        "board": ["E12X4", "56789", "X1234", "56789", "S1234"]
+      },
+      "expected": [52, 1]
+    },
+    {
+      "case_id": 36,
+      "input": {
+        "board": ["E123456", "789X123", "456789X", "1234567", "89X1234", "56789XS"]
+      },
+      "expected": [63, 1]
+    },
+    {
+      "case_id": 37,
+      "input": {
+        "board": ["E111", "1X11", "11X1", "111S"]
+      },
+      "expected": [5, 4]
+    },
+    {
+      "case_id": 38,
+      "input": {
+        "board": ["E222", "2X22", "2X22", "2X2S"]
+      },
+      "expected": [10, 4]
+    },
+    {
+      "case_id": 39,
+      "input": {
+        "board": ["E12345", "6X7X89", "1X2X3X", "4X5X6X", "7X8X9X", "12345S"]
+      },
+      "expected": [41, 1]
+    },
+    {
+      "case_id": 40,
+      "input": {
+        "board": ["E1234", "1X1X1", "21212", "31313", "4141S"]
+      },
+      "expected": [16, 2]
+    },
+    {
+      "case_id": 41,
+      "input": {
+        "board": ["E1234", "56X78", "9X0X1", "23456", "7XS9E"]
+      },
+      "expected": [37, 1]
+    },
+    {
+      "case_id": 42,
+      "input": {
+        "board": ["E1234567", "1X2X3X4X", "5X6X7X8X", "9X0X1X2X", "3X4X5X6X", "7X8X9X0X", "1234567S"]
+      },
+      "expected": [53, 2]
+    },
+    {
+      "case_id": 43,
+      "input": {
+        "board": ["E11", "X11", "11S", "111", "111", "111", "111", "111", "111", "111"]
+      },
+      "expected": "Error: string index out of range"
+    },
+    {
+      "case_id": 44,
+      "input": {
+        "board": ["E12345", "1X2X3X", "4X5X6X", "7X8X9X", "1X2X3X", "45678X", "12345S"]
+      },
+      "expected": "Error: string index out of range"
+    },
+    {
+      "case_id": 45,
+      "input": {
+        "board": ["E2222", "2X2X2", "2X2X2", "2X2X2", "2222S"]
+      },
+      "expected": [14, 3]
+    },
+    {
+      "case_id": 46,
+      "input": {
+        "board": ["E123456", "789X123", "456789X", "1234567", "89XS123", "3456789"]
+      },
+      "expected": [70, 1]
+    },
+    {
+      "case_id": 47,
+      "input": {
+        "board": ["E1X1X1X1X1X1", "111111111111", "1X1X1X1X1X11", "111X1X1X1X11", "1X1X1X1X1X11", "111X1X1X1X11", "1X1X1X1X1X11", "111X1X1X1X1S"]
+      },
+      "expected": [13, 2]
+    },
+    {
+      "case_id": 48,
+      "input": {
+        "board": ["E1X1X1X1X1X1X1X1", "1111111111111111", "1X1X1X1X1X1X1X11", "111X1X1X1X1X1X11", "1X1X1X1X1X1X1X11", "111X1X1X1X1X1X11", "1X1X1X1X1X1X1X11", "111X1X1X1X1X1X11", "1X1X1X1X1X1X1X11", "111X1X1X1X1X1X11", "1X1X1X1X1X1X1X11", "111X1X1X1X1X1X11", "1X1X1X1X1X1X1X11", "111111111111111S"]
+      },
+      "expected": [26, 18]
+    },
+    {
+      "case_id": 49,
+      "input": {
+        "board": ["E12X45", "1X2X3X", "4X5X6X", "7X8X9X", "1X2X3X", "45678S"]
+      },
+      "expected": [43, 1]
+    },
+    {
+      "case_id": 50,
+      "input": {
+        "board": ["E1111", "1X1X1", "111X1", "1X1X1", "1111S"]
+      },
+      "expected": [7, 4]
+    },
+    {
+      "case_id": 51,
+      "input": {
+        "board": ["E1234", "56X78", "9XABC", "DEFXS"]
+      },
+      "expected": [14, 2]
+    },
+    {
+      "case_id": 52,
+      "input": {
+        "board": ["E12121", "1X1X11", "212121", "1X1X11", "212121", "11111S"]
+      },
+      "expected": [13, 12]
+    },
+    {
+      "case_id": 53,
+      "input": {
+        "board": ["E12345", "6789XS", "54321X", "98765X", "43210X", "32109S"]
+      },
+      "expected": [55, 1]
+    },
+    {
+      "case_id": 54,
+      "input": {
+        "board": ["E123", "4567", "89X1", "2345", "678S"]
+      },
+      "expected": "Error: string index out of range"
+    },
+    {
+      "case_id": 55,
+      "input": {
+        "board": ["E12345", "1X1X1X", "212121", "1X1X1X", "32323S"]
+      },
+      "expected": [17, 2]
+    },
+    {
+      "case_id": 56,
+      "input": {
+        "board": ["E22222", "2X2X22", "222X22", "2X2X22", "222X22", "22222S"]
+      },
+      "expected": [18, 11]
+    },
+    {
+      "case_id": 57,
+      "input": {
+        "board": ["E11111", "1X1X11", "1X1X11", "1X1X11", "1X1X11", "11111S"]
+      },
+      "expected": [9, 8]
+    },
+    {
+      "case_id": 58,
+      "input": {
+        "board": ["E12345", "67X9X1", "234567", "89XS12", "345678", "456789"]
+      },
+      "expected": [64, 10]
+    },
+    {
+      "case_id": 59,
+      "input": {
+        "board": ["E1X1X1X1X1X1X1", "11111111111111", "1X1X1X1X1X1X11", "111X1X1X1X1X11", "1X1X1X1X1X1X11", "111X1X1X1X1X11", "1X1X1X1X1X1X11", "111X1X1X1X1X11", "1X1X1X1X1X1X11", "111X1X1X1X1X11", "1X1X1X1X1X1X11", "1111111111111S"]
+      },
+      "expected": [22, 15]
+    },
+    {
+      "case_id": 60,
+      "input": {
+        "board": ["E1234", "56X78", "9X123", "45678", "89XS1"]
+      },
+      "expected": [45, 1]
+    },
+    {
+      "case_id": 61,
+      "input": {
+        "board": ["E234", "1X12", "21XS", "3456"]
+      },
+      "expected": [21, 1]
+    },
+    {
+      "case_id": 62,
+      "input": {
+        "board": ["E1111", "1X1X1", "1X1X1", "1X1X1", "1111S"]
+      },
+      "expected": [7, 3]
+    },
+    {
+      "case_id": 63,
+      "input": {
+        "board": ["E11111", "111111", "111X11", "111111", "111111", "11111S"]
+      },
+      "expected": [9, 152]
+    },
+    {
+      "case_id": 64,
+      "input": {
+        "board": ["E1111111", "1X1X1X11", "111X1111", "1X1X1X11", "111X1111", "1X1X1X11", "111X1111", "1111111S"]
+      },
+      "expected": [13, 28]
+    },
+    {
+      "case_id": 65,
+      "input": {
+        "board": ["E12345678910", "1X1X1X1X1X1X11", "212121212121", "1X1X1X1X1X1X11", "323232323232", "1X1X1X1X1X1X11", "414141414141", "1X1X1X1X1X1X11", "515151515151", "1X1X1X1X1X1X11", "616161616161", "1111111111111S"]
+      },
+      "expected": [73, 2]
+    },
+    {
+      "case_id": 66,
+      "input": {
+        "board": ["E123456789", "987654321X", "123456789X", "X987654321", "123456789X", "X987654321", "123456789X", "X987654321", "123456789X", "XS12345678"]
+      },
+      "expected": [121, 72]
+    },
+    {
+      "case_id": 67,
+      "input": {
+        "board": ["E12345", "67X890", "123X45", "678X90", "123X45", "6789XS"]
+      },
+      "expected": [45, 1]
+    },
+    {
+      "case_id": 68,
+      "input": {
+        "board": ["E12345678", "9X1234567", "89X123456", "789X12345", "6789X1234", "56789X123", "456789XS1", "345678912", "234567891", "12345678S"]
+      },
+      "expected": "Error: string index out of range"
+    },
+    {
+      "case_id": 69,
+      "input": {
+        "board": ["E12345", "1X2X3X", "4X5X6X", "7X8X9X", "1X2X3X", "45678S"]
+      },
+      "expected": [43, 1]
+    },
+    {
+      "case_id": 70,
+      "input": {
+        "board": ["E1111", "11111", "11X11", "11111", "1111S"]
+      },
+      "expected": [7, 34]
+    },
+    {
+      "case_id": 71,
+      "input": {
+        "board": ["E11X1", "1X1X1", "1X1X1", "1X1X1", "111XS"]
+      },
+      "expected": [0, 0]
+    },
+    {
+      "case_id": 72,
+      "input": {
+        "board": ["E111111", "1X1X1X1", "111X111", "1X1X1X1", "111X111", "1X1X1X1", "111111S"]
+      },
+      "expected": [11, 8]
+    },
+    {
+      "case_id": 73,
+      "input": {
+        "board": ["E1X1X1", "1X1X1X", "1X1X1X", "1X1X1X", "1X1X1S"]
+      },
+      "expected": [0, 0]
+    },
+    {
+      "case_id": 74,
+      "input": {
+        "board": ["E123456789", "1X2X3X4X5", "6X7X8X9X0", "1X2X3X4X5", "6X7X8X9X0", "1X2X3X4X5", "6X7X8X9X0", "1X2X3X4X5", "6X7X8X9X0", "123456789S"]
+      },
+      "expected": "Error: string index out of range"
+    },
+    {
+      "case_id": 75,
+      "input": {
+        "board": ["E11111", "1X1X1X", "111X11", "1X1X1X", "11111S"]
+      },
+      "expected": [8, 4]
+    },
+    {
+      "case_id": 76,
+      "input": {
+        "board": ["E1X1X1X1X1X1X1X1X1", "111111111111111111", "1X1X1X1X1X1X1X1X11", "111X1X1X1X1X1X1X11", "1X1X1X1X1X1X1X1X11", "111X1X1X1X1X1X1X11", "1X1X1X1X1X1X1X1X11", "111X1X1X1X1X1X1X11", "1X1X1X1X1X1X1X1X11", "111X1X1X1X1X1X1X11", "1X1X1X1X1X1X1X1X11", "111X1X1X1X1X1X1X11", "1X1X1X1X1X1X1X1X11", "111X1X1X1X1X1X1X11", "1X1X1X1X1X1X1X1X11", "11111111111111111S"]
+      },
+      "expected": [30, 21]
+    },
+    {
+      "case_id": 77,
+      "input": {
+        "board": ["E9876", "8765X", "76543", "65432", "54321", "4321S"]
+      },
+      "expected": "Error: string index out of range"
+    },
+    {
+      "case_id": 78,
+      "input": {
+        "board": ["E111111", "1X1X1X1", "111X1X1", "1X1X1X1", "111X1X1", "1X1X1X1", "111111S"]
+      },
+      "expected": [11, 6]
+    },
+    {
+      "case_id": 79,
+      "input": {
+        "board": ["E11X1", "1X1X1", "1X1X1", "1X1X1", "11X1S"]
+      },
+      "expected": [6, 1]
+    },
+    {
+      "case_id": 80,
+      "input": {
+        "board": ["E1234", "56X78", "9X1X2", "34567", "89XS"]
+      },
+      "expected": "Error: string index out of range"
+    },
+    {
+      "case_id": 81,
+      "input": {
+        "board": ["E123", "21X1", "1X1X", "321S"]
+      },
+      "expected": [9, 1]
+    },
+    {
+      "case_id": 82,
+      "input": {
+        "board": ["E11111", "1X1X11", "111X11", "1X1X11", "111X11", "11111S"]
+      },
+      "expected": [9, 11]
+    },
+    {
+      "case_id": 83,
+      "input": {
+        "board": ["E1111", "1X1X1", "11111", "1X1X1", "1111S"]
+      },
+      "expected": [7, 6]
+    },
+    {
+      "case_id": 84,
+      "input": {
+        "board": ["E1X11", "11X11", "111X1", "1111X", "1111S"]
+      },
+      "expected": [7, 19]
+    },
+    {
+      "case_id": 85,
+      "input": {
+        "board": ["E123456", "1X2X3X4", "5X6X7X8", "9X0X1X2", "3X4X5X6", "7X8X9XS"]
+      },
+      "expected": [35, 1]
+    },
+    {
+      "case_id": 86,
+      "input": {
+        "board": ["E12345678", "9X1234567", "89X12345X", "789XS1234", "6789XS123", "56789XS12", "456789XS1", "3456789XS"]
+      },
+      "expected": [111, 1]
+    },
+    {
+      "case_id": 87,
+      "input": {
+        "board": ["E11111", "1X1X11", "111111", "1X1X1X", "111111", "11XS11"]
+      },
+      "expected": [10, 12]
+    },
+    {
+      "case_id": 88,
+      "input": {
+        "board": ["E1111111", "1X1X1X11", "11111111", "1X1X1X11", "11111111", "1X1X1X11", "11111111", "11XS1111"]
+      },
+      "expected": [14, 90]
+    },
+    {
+      "case_id": 89,
+      "input": {
+        "board": ["E123456", "789X123", "456789X", "1234567", "89XS123", "456789S"]
+      },
+      "expected": [71, 1]
+    },
+    {
+      "case_id": 90,
+      "input": {
+        "board": ["E12345", "1X2X3X", "4X5X6X", "7X8X9X", "1X2X3X", "4567XS"]
+      },
+      "expected": [31, 1]
+    },
+    {
+      "case_id": 91,
+      "input": {
+        "board": ["E1212121", "1X1X1X11", "21212121", "1X1X1X11", "21212121", "1X1X1X11", "21212121", "1111111S"]
+      },
+      "expected": [19, 40]
+    },
+    {
+      "case_id": 92,
+      "input": {
+        "board": ["E1234", "4321X", "1234X", "4321X", "1234S"]
+      },
+      "expected": [21, 8]
+    },
+    {
+      "case_id": 93,
+      "input": {
+        "board": ["E2222", "2X2X2", "222X2", "2X2X2", "2222S"]
+      },
+      "expected": [14, 4]
+    },
+    {
+      "case_id": 94,
+      "input": {
+        "board": ["E11111", "1X1X1X", "1X1X1X", "1X1X1X", "1X1X1X", "11111S"]
+      },
+      "expected": [9, 3]
+    },
+    {
+      "case_id": 95,
+      "input": {
+        "board": ["E1111", "11111", "11111", "11111", "1111S"]
+      },
+      "expected": [7, 70]
+    },
+    {
+      "case_id": 96,
+      "input": {
+        "board": ["E123456789", "1X11111111", "2121212121", "3131313131", "4141414141", "5151515151", "6161616161", "7171717171", "8181818181", "9191919191S"]
+      },
+      "expected": [86, 1]
+    },
+    {
+      "case_id": 97,
+      "input": {
+        "board": ["E12X12", "234567", "89XS12", "345678", "456789", "56789S"]
+      },
+      "expected": [58, 15]
+    },
+    {
+      "case_id": 98,
+      "input": {
+        "board": ["E12345", "678X91", "234567", "89X123", "456789", "9XS123"]
+      },
+      "expected": [63, 2]
+    },
+    {
+      "case_id": 99,
+      "input": {
+        "board": ["E123456789", "1X2X3X4X5", "6X7X8X9X0", "1X2X3X4X5", "6X7X8X9X0", "1X2X3X4X5", "6X7X8X9X0", "1X2X3X4X5", "6X7X8X9XS"]
+      },
+      "expected": [56, 1]
+    },
+    {
+      "case_id": 100,
+      "input": {
+        "board": ["E1111", "1X1X1", "1X1X1", "1111S"]
+      },
+      "expected": [6, 2]
+    },
+    {
+      "case_id": 101,
+      "input": {
+        "board": ["E1X1X1X1X", "1X1X1X1X1", "1X1X1X1X1", "1X1X1X1X1", "1X1X1X1X1", "1X1X1X1X1", "1X1X1X1X1", "1X1X1X1X1", "1X1X1X1X1", "1X1X1X1X1", "1X1X1X1XS"]
+      },
+      "expected": "Error: string index out of range"
+    },
+    {
+      "case_id": 102,
+      "input": {
+        "board": ["E12", "2X3", "321", "X1S"]
+      },
+      "expected": "Error: string index out of range"
+    },
+    {
+      "case_id": 103,
+      "input": {
+        "board": ["E1234567", "89X12345", "6789XS12", "3456789S", "456789XS", "56789XS1", "6789XS12"]
+      },
+      "expected": [0, 0]
+    },
+    {
+      "case_id": 104,
+      "input": {
+        "board": ["E12X45", "6789X1", "234567", "89X123", "45678X", "9XS123"]
+      },
+      "expected": [56, 4]
+    },
+    {
+      "case_id": 105,
+      "input": {
+        "board": ["E123456789", "987654X789", "87654321X9", "7654321X89", "654321X789", "54321X6789", "4321X56789", "321X456789", "21X3456789", "1XS2345678"]
+      },
+      "expected": [125, 1]
+    },
+    {
+      "case_id": 106,
+      "input": {
+        "board": ["E1111", "11X11", "1X1X1", "11X11", "1111S"]
+      },
+      "expected": [7, 4]
+    },
+    {
+      "case_id": 107,
+      "input": {
+        "board": ["E12345", "67X89X", "123XS1", "456789", "X98765", "4321XS"]
+      },
+      "expected": [55, 2]
+    },
+    {
+      "case_id": 108,
+      "input": {
+        "board": ["E1234", "1X1X1", "23X32", "1X1X1", "4321S"]
+      },
+      "expected": [14, 2]
+    }
+  ]
+}

@@ -1,0 +1,565 @@
+{
+  "schema_version": 1,
+  "problem_id": 1379,
+  "title": "Find a Corresponding Node of a Binary Tree in a Clone of That Tree",
+  "method": "getTargetCopy",
+  "signature": {
+    "params": [
+      {
+        "name": "original",
+        "type": "TREE_NODE"
+      },
+      {
+        "name": "cloned",
+        "type": "TREE_NODE"
+      },
+      {
+        "name": "target",
+        "type": "TREE_NODE"
+      }
+    ],
+    "returns": "TREE_NODE"
+  },
+  "cases": [
+    {
+      "case_id": 1,
+      "input": {
+        "original": [8, null, 6, null, 5, null, 4, null, 3, null, 2, null, 1],
+        "cloned": [8, null, 6, null, 5, null, 4, null, 3, null, 2, null, 1],
+        "target": 4
+      },
+      "expected": null
+    },
+    {
+      "case_id": 2,
+      "input": {
+        "original": [7, 4, 3, null, null, 6, 19],
+        "cloned": [7, 4, 3, null, null, 6, 19],
+        "target": 3
+      },
+      "expected": null
+    },
+    {
+      "case_id": 3,
+      "input": {
+        "original": [7],
+        "cloned": [7],
+        "target": 7
+      },
+      "expected": null
+    },
+    {
+      "case_id": 4,
+      "input": {
+        "original": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15],
+        "cloned": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15],
+        "target": 10
+      },
+      "expected": null
+    },
+    {
+      "case_id": 5,
+      "input": {
+        "original": [1, null, 2, null, 3, null, 4, null, 5, null, 6, null, 7, null, 8, null, 9, null, 10],
+        "cloned": [1, null, 2, null, 3, null, 4, null, 5, null, 6, null, 7, null, 8, null, 9, null, 10],
+        "target": 5
+      },
+      "expected": null
+    },
+    {
+      "case_id": 6,
+      "input": {
+        "original": [5, 3, 6, 2, 4, null, 8, 1, null, null, null, 7, 9],
+        "cloned": [5, 3, 6, 2, 4, null, 8, 1, null, null, null, 7, 9],
+        "target": 7
+      },
+      "expected": null
+    },
+    {
+      "case_id": 7,
+      "input": {
+        "original": [1, 2, null, 3, null, 4, null, 5, null, 6, null, 7, null, 8, null, 9, null, 10],
+        "cloned": [1, 2, null, 3, null, 4, null, 5, null, 6, null, 7, null, 8, null, 9, null, 10],
+        "target": 6
+      },
+      "expected": null
+    },
+    {
+      "case_id": 8,
+      "input": {
+        "original": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15],
+        "cloned": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15],
+        "target": 12
+      },
+      "expected": null
+    },
+    {
+      "case_id": 9,
+      "input": {
+        "original": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
+        "cloned": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
+        "target": 10
+      },
+      "expected": null
+    },
+    {
+      "case_id": 10,
+      "input": {
+        "original": [3, 1, 4, null, null, 2],
+        "cloned": [3, 1, 4, null, null, 2],
+        "target": 2
+      },
+      "expected": null
+    },
+    {
+      "case_id": 11,
+      "input": {
+        "original": [100, 50, 150, 25, 75, 125, 175, 10, 30, 60, 80, 110, 140, 160, 180],
+        "cloned": [100, 50, 150, 25, 75, 125, 175, 10, 30, 60, 80, 110, 140, 160, 180],
+        "target": 140
+      },
+      "expected": null
+    },
+    {
+      "case_id": 12,
+      "input": {
+        "original": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31],
+        "cloned": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31],
+        "target": 17
+      },
+      "expected": null
+    },
+    {
+      "case_id": 13,
+      "input": {
+        "original": [1, 2, 3, 4, 5, null, null, 6, 7, null, null, null, null, 8, 9],
+        "cloned": [1, 2, 3, 4, 5, null, null, 6, 7, null, null, null, null, 8, 9],
+        "target": 9
+      },
+      "expected": null
+    },
+    {
+      "case_id": 14,
+      "input": {
+        "original": [10, 5, 15, 3, 7, 13, 18, 1, null, 6, null, null, 14, null, null, 17],
+        "cloned": [10, 5, 15, 3, 7, 13, 18, 1, null, 6, null, null, 14, null, null, 17],
+        "target": 13
+      },
+      "expected": null
+    },
+    {
+      "case_id": 15,
+      "input": {
+        "original": [20, 10, 30, 5, 15, 25, 35, 2, 7, 12, 18, 23, 27, 32, 38, 1, null, 6, 8, 11, 13, 17, 19, 22, 24, 26, 28, 31, 33, 36, 39, null, null, null, null, 4, null, null, null, null, null, null, 3, 9, 14, 16, 20, 21, 25, 29, 30, 34, 37, 40, null, null, null, null, null, null, null, null, null, null, null, null, null, null],
+        "cloned": [20, 10, 30, 5, 15, 25, 35, 2, 7, 12, 18, 23, 27, 32, 38, 1, null, 6, 8, 11, 13, 17, 19, 22, 24, 26, 28, 31, 33, 36, 39, null, null, null, null, null, null, null, null, null, null, null, null, null, null],
+        "target": 23
+      },
+      "expected": "Error: 'NoneType' object has no attribute 'left'"
+    },
+    {
+      "case_id": 16,
+      "input": {
+        "original": [9, 4, 20, null, null, 15, 170, 11, null, null, 16, null, null, 13, null, 12, null, 10],
+        "cloned": [9, 4, 20, null, null, 15, 170, 11, null, null, 16, null, null, 13, null, 12, null, 10],
+        "target": 13
+      },
+      "expected": null
+    },
+    {
+      "case_id": 17,
+      "input": {
+        "original": [4, 2, 7, 1, 3, 6, 9],
+        "cloned": [4, 2, 7, 1, 3, 6, 9],
+        "target": 9
+      },
+      "expected": null
+    },
+    {
+      "case_id": 18,
+      "input": {
+        "original": [5, 3, 6, 2, 4, null, 7, 1, null, null, null, null, null, null, 8],
+        "cloned": [5, 3, 6, 2, 4, null, 7, 1, null, null, null, null, null, null, 8],
+        "target": 4
+      },
+      "expected": null
+    },
+    {
+      "case_id": 19,
+      "input": {
+        "original": [2, 1, 3, null, null, 4, 5],
+        "cloned": [2, 1, 3, null, null, 4, 5],
+        "target": 4
+      },
+      "expected": null
+    },
+    {
+      "case_id": 20,
+      "input": {
+        "original": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15],
+        "cloned": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15],
+        "target": 8
+      },
+      "expected": null
+    },
+    {
+      "case_id": 21,
+      "input": {
+        "original": [4, 2, 7, 1, 3, 6, 9, null, null, null, null, 5, 8],
+        "cloned": [4, 2, 7, 1, 3, 6, 9, null, null, null, null, 5, 8],
+        "target": 6
+      },
+      "expected": null
+    },
+    {
+      "case_id": 22,
+      "input": {
+        "original": [20, 10, 30, 5, 15, 25, 35, 2, 7, 12, 17, 22, 27, 32, 37, 1, 3, 6, 8, 11, 13, 16, 18, 21, 23, 26, 28, 31, 33, 36, 38],
+        "cloned": [20, 10, 30, 5, 15, 25, 35, 2, 7, 12, 17, 22, 27, 32, 37, 1, 3, 6, 8, 11, 13, 16, 18, 21, 23, 26, 28, 31, 33, 36, 38],
+        "target": 13
+      },
+      "expected": null
+    },
+    {
+      "case_id": 23,
+      "input": {
+        "original": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31],
+        "cloned": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31],
+        "target": 15
+      },
+      "expected": null
+    },
+    {
+      "case_id": 24,
+      "input": {
+        "original": [5, 1, 4, null, 2, null, 3],
+        "cloned": [5, 1, 4, null, 2, null, 3],
+        "target": 3
+      },
+      "expected": null
+    },
+    {
+      "case_id": 25,
+      "input": {
+        "original": [2, 1, 3, null, null, 4, 5, null, null, 6, 7],
+        "cloned": [2, 1, 3, null, null, 4, 5, null, null, 6, 7],
+        "target": 7
+      },
+      "expected": null
+    },
+    {
+      "case_id": 26,
+      "input": {
+        "original": [2, null, 3, null, 4, null, 5, null, 6],
+        "cloned": [2, null, 3, null, 4, null, 5, null, 6],
+        "target": 6
+      },
+      "expected": null
+    },
+    {
+      "case_id": 27,
+      "input": {
+        "original": [1, 2, 3, 4, null, 5, 6, null, null, 7, 8],
+        "cloned": [1, 2, 3, 4, null, 5, 6, null, null, 7, 8],
+        "target": 7
+      },
+      "expected": null
+    },
+    {
+      "case_id": 28,
+      "input": {
+        "original": [20, 10, 30, 5, 15, 25, 35, 3, 7, 12, 18, 23, 28, 33, 38, 1, 4, 6, 8, 11, 13, 17, 19, 22, 24, 27, 29, 32, 36, 31, 34, 37, 39, 40],
+        "cloned": [20, 10, 30, 5, 15, 25, 35, 3, 7, 12, 18, 23, 28, 33, 38, 1, 4, 6, 8, 11, 13, 17, 19, 22, 24, 27, 29, 32, 36, 31, 34, 37, 39, 40],
+        "target": 28
+      },
+      "expected": null
+    },
+    {
+      "case_id": 29,
+      "input": {
+        "original": [1, 2, 3, null, null, 4, 5, 6, 7, 8, 9],
+        "cloned": [1, 2, 3, null, null, 4, 5, 6, 7, 8, 9],
+        "target": 6
+      },
+      "expected": null
+    },
+    {
+      "case_id": 30,
+      "input": {
+        "original": [3, 5, 1, 6, 2, 0, 8, null, null, 7, 4],
+        "cloned": [3, 5, 1, 6, 2, 0, 8, null, null, 7, 4],
+        "target": 5
+      },
+      "expected": null
+    },
+    {
+      "case_id": 31,
+      "input": {
+        "original": [1, null, 2, null, 3, null, 4, null, 5, null, 6, null, 7, null, 8, null, 9, null, 10],
+        "cloned": [1, null, 2, null, 3, null, 4, null, 5, null, 6, null, 7, null, 8, null, 9, null, 10],
+        "target": 7
+      },
+      "expected": null
+    },
+    {
+      "case_id": 32,
+      "input": {
+        "original": [5, 3, 6, 2, 4, null, 7, 1],
+        "cloned": [5, 3, 6, 2, 4, null, 7, 1],
+        "target": 2
+      },
+      "expected": null
+    },
+    {
+      "case_id": 33,
+      "input": {
+        "original": [10, 5, 15, 3, 7, null, 18],
+        "cloned": [10, 5, 15, 3, 7, null, 18],
+        "target": 7
+      },
+      "expected": null
+    },
+    {
+      "case_id": 34,
+      "input": {
+        "original": [10, 5, 15, 3, 7, 13, 18, 1, null, 6],
+        "cloned": [10, 5, 15, 3, 7, 13, 18, 1, null, 6],
+        "target": 13
+      },
+      "expected": null
+    },
+    {
+      "case_id": 35,
+      "input": {
+        "original": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15],
+        "cloned": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15],
+        "target": 13
+      },
+      "expected": null
+    },
+    {
+      "case_id": 36,
+      "input": {
+        "original": [3, 1, 4, null, 2, null, null, null, null],
+        "cloned": [3, 1, 4, null, 2, null, null, null, null],
+        "target": 2
+      },
+      "expected": null
+    },
+    {
+      "case_id": 37,
+      "input": {
+        "original": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
+        "cloned": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
+        "target": 15
+      },
+      "expected": null
+    },
+    {
+      "case_id": 38,
+      "input": {
+        "original": [10, 5, 15, 3, 7, null, 18, 1, null, 6],
+        "cloned": [10, 5, 15, 3, 7, null, 18, 1, null, 6],
+        "target": 15
+      },
+      "expected": null
+    },
+    {
+      "case_id": 39,
+      "input": {
+        "original": [2, 1, null, 5, 6],
+        "cloned": [2, 1, null, 5, 6],
+        "target": 5
+      },
+      "expected": null
+    },
+    {
+      "case_id": 40,
+      "input": {
+        "original": [5, 3, 6, 2, 4, null, 7, 1, null, null, null, 8],
+        "cloned": [5, 3, 6, 2, 4, null, 7, 1, null, null, null, 8],
+        "target": 8
+      },
+      "expected": null
+    },
+    {
+      "case_id": 41,
+      "input": {
+        "original": [6, 2, 8, 0, 4, 7, 9, null, null, 3, 5],
+        "cloned": [6, 2, 8, 0, 4, 7, 9, null, null, 3, 5],
+        "target": 3
+      },
+      "expected": null
+    },
+    {
+      "case_id": 42,
+      "input": {
+        "original": [2, 1, null, null, 3, null, null, null, 4, null, null, null, 5, null, null, null, 6, null, null, null, 7],
+        "cloned": [2, 1, null, null, 3, null, null, null, 4, null, null, null, 5, null, null, null, 6, null, null, null, 7],
+        "target": 7
+      },
+      "expected": null
+    },
+    {
+      "case_id": 43,
+      "input": {
+        "original": [1, 2, 2, 3, 4, 4, 3],
+        "cloned": [1, 2, 2, 3, 4, 4, 3],
+        "target": 4
+      },
+      "expected": null
+    },
+    {
+      "case_id": 44,
+      "input": {
+        "original": [1, null, 2, null, 3, null, 4, null, 5, null, 6, null, 7, null, 8, null, 9],
+        "cloned": [1, null, 2, null, 3, null, 4, null, 5, null, 6, null, 7, null, 8, null, 9],
+        "target": 9
+      },
+      "expected": null
+    },
+    {
+      "case_id": 45,
+      "input": {
+        "original": [2, null, 3, null, 4, null, 5, null, 6, null, 7, null, 8, null, 9, null, 10, null, 11],
+        "cloned": [2, null, 3, null, 4, null, 5, null, 6, null, 7, null, 8, null, 9, null, 10, null, 11],
+        "target": 8
+      },
+      "expected": null
+    },
+    {
+      "case_id": 46,
+      "input": {
+        "original": [100, 50, 150, 25, 75, 125, 175, 10, 30, 60, 80, 110, 140, 160, 180],
+        "cloned": [100, 50, 150, 25, 75, 125, 175, 10, 30, 60, 80, 110, 140, 160, 180],
+        "target": 60
+      },
+      "expected": null
+    },
+    {
+      "case_id": 47,
+      "input": {
+        "original": [2, 1, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
+        "cloned": [2, 1, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
+        "target": 13
+      },
+      "expected": null
+    },
+    {
+      "case_id": 48,
+      "input": {
+        "original": [1, 2, null, 3, null, 4, null, 5, null, 6, null, 7, null, 8, null, 9, null, 10],
+        "cloned": [1, 2, null, 3, null, 4, null, 5, null, 6, null, 7, null, 8, null, 9, null, 10],
+        "target": 5
+      },
+      "expected": null
+    },
+    {
+      "case_id": 49,
+      "input": {
+        "original": [5, 3, 6, 2, 4, null, 8, 1, null, null, null, 7, 9],
+        "cloned": [5, 3, 6, 2, 4, null, 8, 1, null, null, null, 7, 9],
+        "target": 1
+      },
+      "expected": null
+    },
+    {
+      "case_id": 50,
+      "input": {
+        "original": [50, 40, 60, 30, 45, 55, 65, 20, null, null, null, null, null, 25, null],
+        "cloned": [50, 40, 60, 30, 45, 55, 65, 20, null, null, null, null, null, 25, null],
+        "target": 25
+      },
+      "expected": null
+    },
+    {
+      "case_id": 51,
+      "input": {
+        "original": [10, 5, 15, 3, 7, 12, 18, 1, null, 6],
+        "cloned": [10, 5, 15, 3, 7, 12, 18, 1, null, 6],
+        "target": 18
+      },
+      "expected": null
+    },
+    {
+      "case_id": 52,
+      "input": {
+        "original": [2, 1, null, 5, null, 3, null, 4, null],
+        "cloned": [2, 1, null, 5, null, 3, null, 4, null],
+        "target": 4
+      },
+      "expected": null
+    },
+    {
+      "case_id": 53,
+      "input": {
+        "original": [5, 3, 6, 2, 4, null, 7, 1, null, null, null, 8],
+        "cloned": [5, 3, 6, 2, 4, null, 7, 1, null, null, null, 8],
+        "target": 7
+      },
+      "expected": null
+    },
+    {
+      "case_id": 54,
+      "input": {
+        "original": [3, 1, 4, null, 2],
+        "cloned": [3, 1, 4, null, 2],
+        "target": 2
+      },
+      "expected": null
+    },
+    {
+      "case_id": 55,
+      "input": {
+        "original": [10, 5, -3, 3, 2, null, 11, 3, -2, null, 1],
+        "cloned": [10, 5, -3, 3, 2, null, 11, 3, -2, null, 1],
+        "target": 3
+      },
+      "expected": null
+    },
+    {
+      "case_id": 56,
+      "input": {
+        "original": [10, 5, 15, 3, 7, null, 18, null, null, 6],
+        "cloned": [10, 5, 15, 3, 7, null, 18, null, null, 6],
+        "target": 15
+      },
+      "expected": null
+    },
+    {
+      "case_id": 57,
+      "input": {
+        "original": [20, 10, 30, 5, 15, null, null, 3, 7, null, null, 12, 18],
+        "cloned": [20, 10, 30, 5, 15, null, null, 3, 7, null, null, 12, 18],
+        "target": 7
+      },
+      "expected": null
+    },
+    {
+      "case_id": 58,
+      "input": {
+        "original": [1, null, 2, null, 3, null, 4, null, 5],
+        "cloned": [1, null, 2, null, 3, null, 4, null, 5],
+        "target": 5
+      },
+      "expected": null
+    },
+    {
+      "case_id": 59,
+      "input": {
+        "original": [100, 50, 150, 25, 75, 125, 175, 10, 35, 60, 90, 110, 140, 160, 190, 5, 15, 28, 40, 55, 65, 80, 95, 105, 115, 130, 135, 145, 155, 180, 195],
+        "cloned": [100, 50, 150, 25, 75, 125, 175, 10, 35, 60, 90, 110, 140, 160, 190, 5, 15, 28, 40, 55, 65, 80, 95, 105, 115, 130, 135, 145, 155, 180, 195],
+        "target": 135
+      },
+      "expected": null
+    },
+    {
+      "case_id": 60,
+      "input": {
+        "original": [1, null, 2, null, 3, null, 4, null, 5, null, 6, null, 7, null, 8],
+        "cloned": [1, null, 2, null, 3, null, 4, null, 5, null, 6, null, 7, null, 8],
+        "target": 7
+      },
+      "expected": null
+    }
+  ]
+}

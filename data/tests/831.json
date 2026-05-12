@@ -1,0 +1,1326 @@
+{
+  "schema_version": 1,
+  "problem_id": 831,
+  "title": "Masking Personal Information",
+  "method": "maskPII",
+  "signature": {
+    "params": [
+      {
+        "name": "s",
+        "type": "STRING"
+      }
+    ],
+    "returns": "STRING"
+  },
+  "cases": [
+    {
+      "case_id": 1,
+      "input": {
+        "s": "12345678901"
+      },
+      "expected": "+*-***-***-8901"
+    },
+    {
+      "case_id": 2,
+      "input": {
+        "s": "+11234567890"
+      },
+      "expected": "+*-***-***-7890"
+    },
+    {
+      "case_id": 3,
+      "input": {
+        "s": "123 456 7890"
+      },
+      "expected": "***-***-7890"
+    },
+    {
+      "case_id": 4,
+      "input": {
+        "s": "+1-800-555-0199"
+      },
+      "expected": "+*-***-***-0199"
+    },
+    {
+      "case_id": 5,
+      "input": {
+        "s": "9876543210"
+      },
+      "expected": "***-***-3210"
+    },
+    {
+      "case_id": 6,
+      "input": {
+        "s": "123456789012"
+      },
+      "expected": "+**-***-***-9012"
+    },
+    {
+      "case_id": 7,
+      "input": {
+        "s": "123.456.7890"
+      },
+      "expected": "***-***-7890"
+    },
+    {
+      "case_id": 8,
+      "input": {
+        "s": "jane.doe@domain.co"
+      },
+      "expected": "j*****e@domain.co"
+    },
+    {
+      "case_id": 9,
+      "input": {
+        "s": "1234567890"
+      },
+      "expected": "***-***-7890"
+    },
+    {
+      "case_id": 10,
+      "input": {
+        "s": "John.Doe@example.com"
+      },
+      "expected": "j*****e@example.com"
+    },
+    {
+      "case_id": 11,
+      "input": {
+        "s": "alice@leetcode.com"
+      },
+      "expected": "a*****e@leetcode.com"
+    },
+    {
+      "case_id": 12,
+      "input": {
+        "s": "LeetCode@LeetCode.com"
+      },
+      "expected": "l*****e@leetcode.com"
+    },
+    {
+      "case_id": 13,
+      "input": {
+        "s": "AB@qq.com"
+      },
+      "expected": "a*****b@qq.com"
+    },
+    {
+      "case_id": 14,
+      "input": {
+        "s": "0-213-321-2345"
+      },
+      "expected": "+*-***-***-2345"
+    },
+    {
+      "case_id": 15,
+      "input": {
+        "s": "+91(123) 456-7890"
+      },
+      "expected": "+**-***-***-7890"
+    },
+    {
+      "case_id": 16,
+      "input": {
+        "s": "+123(123) 456-7890"
+      },
+      "expected": "+***-***-***-7890"
+    },
+    {
+      "case_id": 17,
+      "input": {
+        "s": "(123) 456-7890"
+      },
+      "expected": "***-***-7890"
+    },
+    {
+      "case_id": 18,
+      "input": {
+        "s": "abcdef@gmail.com"
+      },
+      "expected": "a*****f@gmail.com"
+    },
+    {
+      "case_id": 19,
+      "input": {
+        "s": "+111234567890"
+      },
+      "expected": "+**-***-***-7890"
+    },
+    {
+      "case_id": 20,
+      "input": {
+        "s": "+1-234-567-890"
+      },
+      "expected": "***-***-7890"
+    },
+    {
+      "case_id": 21,
+      "input": {
+        "s": "+1234567890"
+      },
+      "expected": "***-***-7890"
+    },
+    {
+      "case_id": 22,
+      "input": {
+        "s": "a@leetcode.com"
+      },
+      "expected": "a*****a@leetcode.com"
+    },
+    {
+      "case_id": 23,
+      "input": {
+        "s": "+1111234567890"
+      },
+      "expected": "+***-***-***-7890"
+    },
+    {
+      "case_id": 24,
+      "input": {
+        "s": "john.doe@example.co.uk"
+      },
+      "expected": "j*****e@example.co.uk"
+    },
+    {
+      "case_id": 25,
+      "input": {
+        "s": "+1-123-456-7890"
+      },
+      "expected": "+*-***-***-7890"
+    },
+    {
+      "case_id": 26,
+      "input": {
+        "s": "+12(123) 456-7890"
+      },
+      "expected": "+**-***-***-7890"
+    },
+    {
+      "case_id": 27,
+      "input": {
+        "s": "1234567890123"
+      },
+      "expected": "+***-***-***-0123"
+    },
+    {
+      "case_id": 28,
+      "input": {
+        "s": "+(123)-456-7890"
+      },
+      "expected": "***-***-7890"
+    },
+    {
+      "case_id": 29,
+      "input": {
+        "s": "bob.cathy@leetcode.com"
+      },
+      "expected": "b*****y@leetcode.com"
+    },
+    {
+      "case_id": 30,
+      "input": {
+        "s": "a.b@c.com"
+      },
+      "expected": "a*****b@c.com"
+    },
+    {
+      "case_id": 31,
+      "input": {
+        "s": "abcdefghijk@leetcode.com"
+      },
+      "expected": "a*****k@leetcode.com"
+    },
+    {
+      "case_id": 32,
+      "input": {
+        "s": "aBcD@eFgHiJ.com"
+      },
+      "expected": "a*****d@efghij.com"
+    },
+    {
+      "case_id": 33,
+      "input": {
+        "s": "1(234)567-890"
+      },
+      "expected": "***-***-7890"
+    },
+    {
+      "case_id": 34,
+      "input": {
+        "s": "+49 176 2345 6789"
+      },
+      "expected": "+***-***-***-6789"
+    },
+    {
+      "case_id": 35,
+      "input": {
+        "s": "+49(123) 456-7890"
+      },
+      "expected": "+**-***-***-7890"
+    },
+    {
+      "case_id": 36,
+      "input": {
+        "s": "ABCDE@FGHI.JKL"
+      },
+      "expected": "a*****e@fghi.jkl"
+    },
+    {
+      "case_id": 37,
+      "input": {
+        "s": "+442079460958"
+      },
+      "expected": "+**-***-***-0958"
+    },
+    {
+      "case_id": 38,
+      "input": {
+        "s": "abcdefghijklmnopqrstuvwxyz@abc.def.ghijklmnopqrstuvwxyz"
+      },
+      "expected": "a*****z@abc.def.ghijklmnopqrstuvwxyz"
+    },
+    {
+      "case_id": 39,
+      "input": {
+        "s": "Annie.Marie@service.org"
+      },
+      "expected": "a*****e@service.org"
+    },
+    {
+      "case_id": 40,
+      "input": {
+        "s": "+91-8765432109"
+      },
+      "expected": "+**-***-***-2109"
+    },
+    {
+      "case_id": 41,
+      "input": {
+        "s": "+1-800-MY-BANK"
+      },
+      "expected": "+-***-***-1800"
+    },
+    {
+      "case_id": 42,
+      "input": {
+        "s": "+911234567890"
+      },
+      "expected": "+**-***-***-7890"
+    },
+    {
+      "case_id": 43,
+      "input": {
+        "s": "(123) 456-7890 ext. 1234"
+      },
+      "expected": "+****-***-***-1234"
+    },
+    {
+      "case_id": 44,
+      "input": {
+        "s": "user@website.co"
+      },
+      "expected": "u*****r@website.co"
+    },
+    {
+      "case_id": 45,
+      "input": {
+        "s": "john.doe@EXAMPLE.COM"
+      },
+      "expected": "j*****e@example.com"
+    },
+    {
+      "case_id": 46,
+      "input": {
+        "s": "+91 (123) 456 7890"
+      },
+      "expected": "+**-***-***-7890"
+    },
+    {
+      "case_id": 47,
+      "input": {
+        "s": "+91 (123) 456-7890"
+      },
+      "expected": "+**-***-***-7890"
+    },
+    {
+      "case_id": 48,
+      "input": {
+        "s": "(+123) 456-7890123"
+      },
+      "expected": "+***-***-***-0123"
+    },
+    {
+      "case_id": 49,
+      "input": {
+        "s": "001234567890"
+      },
+      "expected": "+**-***-***-7890"
+    },
+    {
+      "case_id": 50,
+      "input": {
+        "s": "+44 20 7946 0958"
+      },
+      "expected": "+**-***-***-0958"
+    },
+    {
+      "case_id": 51,
+      "input": {
+        "s": "(012) 345 6789"
+      },
+      "expected": "***-***-6789"
+    },
+    {
+      "case_id": 52,
+      "input": {
+        "s": "user@domain.c"
+      },
+      "expected": "u*****r@domain.c"
+    },
+    {
+      "case_id": 53,
+      "input": {
+        "s": "ABC.DEF@GMAIL.COM"
+      },
+      "expected": "a*****f@gmail.com"
+    },
+    {
+      "case_id": 54,
+      "input": {
+        "s": "A.B.C.D.E.F.G.H.I.J.K.L.M.N.O.P.Q.R.S.T.U.V.W.X.Y.Z@domain.com"
+      },
+      "expected": "a*****z@domain.com"
+    },
+    {
+      "case_id": 55,
+      "input": {
+        "s": "Alice.Bob.Charlie@example.co.uk"
+      },
+      "expected": "a*****e@example.co.uk"
+    },
+    {
+      "case_id": 56,
+      "input": {
+        "s": "+31(0)123456789"
+      },
+      "expected": "+**-***-***-6789"
+    },
+    {
+      "case_id": 57,
+      "input": {
+        "s": "+1 800 555 0199"
+      },
+      "expected": "+*-***-***-0199"
+    },
+    {
+      "case_id": 58,
+      "input": {
+        "s": "+0 1234 5678901"
+      },
+      "expected": "+**-***-***-8901"
+    },
+    {
+      "case_id": 59,
+      "input": {
+        "s": "An.Extremely.Long.Name@subdomain.example.com"
+      },
+      "expected": "a*****e@subdomain.example.com"
+    },
+    {
+      "case_id": 60,
+      "input": {
+        "s": "John_Doe@domain.com"
+      },
+      "expected": "j*****e@domain.com"
+    },
+    {
+      "case_id": 61,
+      "input": {
+        "s": "John-Doe@Example.com"
+      },
+      "expected": "j*****e@example.com"
+    },
+    {
+      "case_id": 62,
+      "input": {
+        "s": "foo-bar@baz-qux.org"
+      },
+      "expected": "f*****r@baz-qux.org"
+    },
+    {
+      "case_id": 63,
+      "input": {
+        "s": "FirstName.LastName@domain.co.uk"
+      },
+      "expected": "f*****e@domain.co.uk"
+    },
+    {
+      "case_id": 64,
+      "input": {
+        "s": "+01-123-456-7890"
+      },
+      "expected": "+**-***-***-7890"
+    },
+    {
+      "case_id": 65,
+      "input": {
+        "s": "PhoneNumber123@domain.com"
+      },
+      "expected": "p*****3@domain.com"
+    },
+    {
+      "case_id": 66,
+      "input": {
+        "s": "+1234-567-8901"
+      },
+      "expected": "+*-***-***-8901"
+    },
+    {
+      "case_id": 67,
+      "input": {
+        "s": "user@domain"
+      },
+      "expected": "u*****r@domain"
+    },
+    {
+      "case_id": 68,
+      "input": {
+        "s": "abcdefghij@klmno.pqr"
+      },
+      "expected": "a*****j@klmno.pqr"
+    },
+    {
+      "case_id": 69,
+      "input": {
+        "s": "Alice.Bob-Charlie.D@example.co.uk"
+      },
+      "expected": "a*****d@example.co.uk"
+    },
+    {
+      "case_id": 70,
+      "input": {
+        "s": "+1-234-567-89012"
+      },
+      "expected": "+**-***-***-9012"
+    },
+    {
+      "case_id": 71,
+      "input": {
+        "s": "(123) 456-7890; 123-456-7891; 123-456-7892"
+      },
+      "expected": "+********************-***-***-7892"
+    },
+    {
+      "case_id": 72,
+      "input": {
+        "s": "+44 (0) 1234 567890"
+      },
+      "expected": "+***-***-***-7890"
+    },
+    {
+      "case_id": 73,
+      "input": {
+        "s": "abcdefghijklmnopqrstuvwxyz@abc.def"
+      },
+      "expected": "a*****z@abc.def"
+    },
+    {
+      "case_id": 74,
+      "input": {
+        "s": "1-800-555-0199"
+      },
+      "expected": "+*-***-***-0199"
+    },
+    {
+      "case_id": 75,
+      "input": {
+        "s": "0012345678901"
+      },
+      "expected": "+***-***-***-8901"
+    },
+    {
+      "case_id": 76,
+      "input": {
+        "s": "+1234567890123"
+      },
+      "expected": "+***-***-***-0123"
+    },
+    {
+      "case_id": 77,
+      "input": {
+        "s": "user@domain.com"
+      },
+      "expected": "u*****r@domain.com"
+    },
+    {
+      "case_id": 78,
+      "input": {
+        "s": "abcdefg@hijklmnopqrstuvwxyz.co"
+      },
+      "expected": "a*****g@hijklmnopqrstuvwxyz.co"
+    },
+    {
+      "case_id": 79,
+      "input": {
+        "s": "+1 (234) 567-8901"
+      },
+      "expected": "+*-***-***-8901"
+    },
+    {
+      "case_id": 80,
+      "input": {
+        "s": "Nina.Nightly-Owl@Mailbox.ORG"
+      },
+      "expected": "n*****l@mailbox.org"
+    },
+    {
+      "case_id": 81,
+      "input": {
+        "s": "Name@Domain.co"
+      },
+      "expected": "n*****e@domain.co"
+    },
+    {
+      "case_id": 82,
+      "input": {
+        "s": "+91 12345 67890"
+      },
+      "expected": "+**-***-***-7890"
+    },
+    {
+      "case_id": 83,
+      "input": {
+        "s": "+33123456789"
+      },
+      "expected": "+*-***-***-6789"
+    },
+    {
+      "case_id": 84,
+      "input": {
+        "s": "user.name@sub.domain.co.uk"
+      },
+      "expected": "u*****e@sub.domain.co.uk"
+    },
+    {
+      "case_id": 85,
+      "input": {
+        "s": "234-567-8901"
+      },
+      "expected": "***-***-8901"
+    },
+    {
+      "case_id": 86,
+      "input": {
+        "s": "+358 (0)10 123 4567"
+      },
+      "expected": "+***-***-***-4567"
+    },
+    {
+      "case_id": 87,
+      "input": {
+        "s": "+1 (123) 456-7890x1234"
+      },
+      "expected": "+*****-***-***-1234"
+    },
+    {
+      "case_id": 88,
+      "input": {
+        "s": "user.name@sub.domain.com"
+      },
+      "expected": "u*****e@sub.domain.com"
+    },
+    {
+      "case_id": 89,
+      "input": {
+        "s": "123-4567-890"
+      },
+      "expected": "***-***-7890"
+    },
+    {
+      "case_id": 90,
+      "input": {
+        "s": "+33 (0)1 23 45 67 89"
+      },
+      "expected": "+**-***-***-6789"
+    },
+    {
+      "case_id": 91,
+      "input": {
+        "s": "+91-1234567890"
+      },
+      "expected": "+**-***-***-7890"
+    },
+    {
+      "case_id": 92,
+      "input": {
+        "s": "(+12) 123 456-7890x1234"
+      },
+      "expected": "+******-***-***-1234"
+    },
+    {
+      "case_id": 93,
+      "input": {
+        "s": "+44 1234567890"
+      },
+      "expected": "+**-***-***-7890"
+    },
+    {
+      "case_id": 94,
+      "input": {
+        "s": "A.B.C.D.E.F@domain.com"
+      },
+      "expected": "a*****f@domain.com"
+    },
+    {
+      "case_id": 95,
+      "input": {
+        "s": "(+1) 123 456 7890"
+      },
+      "expected": "+*-***-***-7890"
+    },
+    {
+      "case_id": 96,
+      "input": {
+        "s": "+1 800-555-0199 ext. 1234"
+      },
+      "expected": "+*****-***-***-1234"
+    },
+    {
+      "case_id": 97,
+      "input": {
+        "s": "+33 1 23 45 67 89"
+      },
+      "expected": "+*-***-***-6789"
+    },
+    {
+      "case_id": 98,
+      "input": {
+        "s": "++44-1234567890"
+      },
+      "expected": "+**-***-***-7890"
+    },
+    {
+      "case_id": 99,
+      "input": {
+        "s": "EMail+Address@domain.com"
+      },
+      "expected": "e*****s@domain.com"
+    },
+    {
+      "case_id": 100,
+      "input": {
+        "s": "abc-def@ghi.jkl.mno"
+      },
+      "expected": "a*****f@ghi.jkl.mno"
+    },
+    {
+      "case_id": 101,
+      "input": {
+        "s": "@domain.com"
+      },
+      "expected": "+-***-***-"
+    },
+    {
+      "case_id": 102,
+      "input": {
+        "s": "VeryLongFirstName.Last@website.org"
+      },
+      "expected": "v*****t@website.org"
+    },
+    {
+      "case_id": 103,
+      "input": {
+        "s": "+31 (6) 1234 5678"
+      },
+      "expected": "+*-***-***-5678"
+    },
+    {
+      "case_id": 104,
+      "input": {
+        "s": "(123) 4567 89012"
+      },
+      "expected": "+**-***-***-9012"
+    },
+    {
+      "case_id": 105,
+      "input": {
+        "s": "12345678901234567890"
+      },
+      "expected": "+**********-***-***-7890"
+    },
+    {
+      "case_id": 106,
+      "input": {
+        "s": "+123 (456) 7890-1234"
+      },
+      "expected": "+****-***-***-1234"
+    },
+    {
+      "case_id": 107,
+      "input": {
+        "s": "++1-123-456-7890"
+      },
+      "expected": "+*-***-***-7890"
+    },
+    {
+      "case_id": 108,
+      "input": {
+        "s": "John_Doe-123@website.net"
+      },
+      "expected": "j*****3@website.net"
+    },
+    {
+      "case_id": 109,
+      "input": {
+        "s": "+44 1234 567890"
+      },
+      "expected": "+**-***-***-7890"
+    },
+    {
+      "case_id": 110,
+      "input": {
+        "s": "(123) 456-7890x1234"
+      },
+      "expected": "+****-***-***-1234"
+    },
+    {
+      "case_id": 111,
+      "input": {
+        "s": "(+12) 345-678-9012"
+      },
+      "expected": "+**-***-***-9012"
+    },
+    {
+      "case_id": 112,
+      "input": {
+        "s": "McDonalds.Restaurant@domain.co.in"
+      },
+      "expected": "m*****t@domain.co.in"
+    },
+    {
+      "case_id": 113,
+      "input": {
+        "s": "+55(11)1234-5678"
+      },
+      "expected": "+**-***-***-5678"
+    },
+    {
+      "case_id": 114,
+      "input": {
+        "s": "(123)4567890"
+      },
+      "expected": "***-***-7890"
+    },
+    {
+      "case_id": 115,
+      "input": {
+        "s": "123-456-7890"
+      },
+      "expected": "***-***-7890"
+    },
+    {
+      "case_id": 116,
+      "input": {
+        "s": "a.b.c.d.e@f.com"
+      },
+      "expected": "a*****e@f.com"
+    },
+    {
+      "case_id": 117,
+      "input": {
+        "s": "++33 6 12 34 56 78"
+      },
+      "expected": "+*-***-***-5678"
+    },
+    {
+      "case_id": 118,
+      "input": {
+        "s": "FOO@BAR.COM"
+      },
+      "expected": "f*****o@bar.com"
+    },
+    {
+      "case_id": 119,
+      "input": {
+        "s": "Elizabeth-II@royal.gov.uk"
+      },
+      "expected": "e*****i@royal.gov.uk"
+    },
+    {
+      "case_id": 120,
+      "input": {
+        "s": "+1 (123) 456-7890 ext 1234"
+      },
+      "expected": "+*****-***-***-1234"
+    },
+    {
+      "case_id": 121,
+      "input": {
+        "s": "++++1234567890"
+      },
+      "expected": "***-***-7890"
+    },
+    {
+      "case_id": 122,
+      "input": {
+        "s": "(123) 456 7890"
+      },
+      "expected": "***-***-7890"
+    },
+    {
+      "case_id": 123,
+      "input": {
+        "s": "(123) 456-7890, 123-456-7891, 123-456-7892"
+      },
+      "expected": "+********************-***-***-7892"
+    },
+    {
+      "case_id": 124,
+      "input": {
+        "s": "alice+bob.cathy@leetcode.com"
+      },
+      "expected": "a*****y@leetcode.com"
+    },
+    {
+      "case_id": 125,
+      "input": {
+        "s": "001 415 796 2345"
+      },
+      "expected": "+***-***-***-2345"
+    },
+    {
+      "case_id": 126,
+      "input": {
+        "s": "aBCdE@fGh.iJk"
+      },
+      "expected": "a*****e@fgh.ijk"
+    },
+    {
+      "case_id": 127,
+      "input": {
+        "s": "user.name+tag+sorting@example.com"
+      },
+      "expected": "u*****g@example.com"
+    },
+    {
+      "case_id": 128,
+      "input": {
+        "s": "+123-456-7890123"
+      },
+      "expected": "+***-***-***-0123"
+    },
+    {
+      "case_id": 129,
+      "input": {
+        "s": "(123) 456-7890, 123-456-7891"
+      },
+      "expected": "+**********-***-***-7891"
+    },
+    {
+      "case_id": 130,
+      "input": {
+        "s": "1234567890123456"
+      },
+      "expected": "+******-***-***-3456"
+    },
+    {
+      "case_id": 131,
+      "input": {
+        "s": "(123)456-789012"
+      },
+      "expected": "+**-***-***-9012"
+    },
+    {
+      "case_id": 132,
+      "input": {
+        "s": "++44 1234 567890"
+      },
+      "expected": "+**-***-***-7890"
+    },
+    {
+      "case_id": 133,
+      "input": {
+        "s": "first.last@sub.domain.com"
+      },
+      "expected": "f*****t@sub.domain.com"
+    },
+    {
+      "case_id": 134,
+      "input": {
+        "s": "a.b.c@domain.com"
+      },
+      "expected": "a*****c@domain.com"
+    },
+    {
+      "case_id": 135,
+      "input": {
+        "s": "(012)-34567890"
+      },
+      "expected": "+*-***-***-7890"
+    },
+    {
+      "case_id": 136,
+      "input": {
+        "s": "firstname.lastname@sub.domain.co.uk"
+      },
+      "expected": "f*****e@sub.domain.co.uk"
+    },
+    {
+      "case_id": 137,
+      "input": {
+        "s": "++44(0)1234 567890"
+      },
+      "expected": "+***-***-***-7890"
+    },
+    {
+      "case_id": 138,
+      "input": {
+        "s": "+49 1234 5678901"
+      },
+      "expected": "+***-***-***-8901"
+    },
+    {
+      "case_id": 139,
+      "input": {
+        "s": "+49-89-636-48018"
+      },
+      "expected": "+**-***-***-8018"
+    },
+    {
+      "case_id": 140,
+      "input": {
+        "s": "john.doe@mywebsite.net"
+      },
+      "expected": "j*****e@mywebsite.net"
+    },
+    {
+      "case_id": 141,
+      "input": {
+        "s": "a@b.c"
+      },
+      "expected": "a*****a@b.c"
+    },
+    {
+      "case_id": 142,
+      "input": {
+        "s": "(123)-456-78901"
+      },
+      "expected": "+*-***-***-8901"
+    },
+    {
+      "case_id": 143,
+      "input": {
+        "s": "John.Doe123@example.co"
+      },
+      "expected": "j*****3@example.co"
+    },
+    {
+      "case_id": 144,
+      "input": {
+        "s": "(+44)1234567890"
+      },
+      "expected": "+**-***-***-7890"
+    },
+    {
+      "case_id": 145,
+      "input": {
+        "s": "+123 456 7890123"
+      },
+      "expected": "+***-***-***-0123"
+    },
+    {
+      "case_id": 146,
+      "input": {
+        "s": "eMail@Company.com"
+      },
+      "expected": "e*****l@company.com"
+    },
+    {
+      "case_id": 147,
+      "input": {
+        "s": "+1 (415) 796 2345"
+      },
+      "expected": "+*-***-***-2345"
+    },
+    {
+      "case_id": 148,
+      "input": {
+        "s": "Abc@xyz.co"
+      },
+      "expected": "a*****c@xyz.co"
+    },
+    {
+      "case_id": 149,
+      "input": {
+        "s": "(+12) 123 456-7890 ext 1234"
+      },
+      "expected": "+******-***-***-1234"
+    },
+    {
+      "case_id": 150,
+      "input": {
+        "s": "(123) 456-7890 (ext. 1234)"
+      },
+      "expected": "+****-***-***-1234"
+    },
+    {
+      "case_id": 151,
+      "input": {
+        "s": "Email@Subdomain.MyDomain.co.uk"
+      },
+      "expected": "e*****l@subdomain.mydomain.co.uk"
+    },
+    {
+      "case_id": 152,
+      "input": {
+        "s": "12345678901234"
+      },
+      "expected": "+****-***-***-1234"
+    },
+    {
+      "case_id": 153,
+      "input": {
+        "s": "user@.com"
+      },
+      "expected": "u*****r@.com"
+    },
+    {
+      "case_id": 154,
+      "input": {
+        "s": "USER.NAME@DOMAIN.COM"
+      },
+      "expected": "u*****e@domain.com"
+    },
+    {
+      "case_id": 155,
+      "input": {
+        "s": "123456789012345"
+      },
+      "expected": "+*****-***-***-2345"
+    },
+    {
+      "case_id": 156,
+      "input": {
+        "s": "FirstName.LastName@sub.domain.com"
+      },
+      "expected": "f*****e@sub.domain.com"
+    },
+    {
+      "case_id": 157,
+      "input": {
+        "s": "+86 123 4567 8901"
+      },
+      "expected": "+***-***-***-8901"
+    },
+    {
+      "case_id": 158,
+      "input": {
+        "s": "Foo@bar.com"
+      },
+      "expected": "f*****o@bar.com"
+    },
+    {
+      "case_id": 159,
+      "input": {
+        "s": "Alice.Bob.Clarke@mydomain.org"
+      },
+      "expected": "a*****e@mydomain.org"
+    },
+    {
+      "case_id": 160,
+      "input": {
+        "s": "Alice.Bob-Carol@domain.co.uk"
+      },
+      "expected": "a*****l@domain.co.uk"
+    },
+    {
+      "case_id": 161,
+      "input": {
+        "s": "++++1-234-567-8901"
+      },
+      "expected": "+*-***-***-8901"
+    },
+    {
+      "case_id": 162,
+      "input": {
+        "s": "FIRST.Last@domain.com"
+      },
+      "expected": "f*****t@domain.com"
+    },
+    {
+      "case_id": 163,
+      "input": {
+        "s": "user@sub.domain.com"
+      },
+      "expected": "u*****r@sub.domain.com"
+    },
+    {
+      "case_id": 164,
+      "input": {
+        "s": "++44 1234567890"
+      },
+      "expected": "+**-***-***-7890"
+    },
+    {
+      "case_id": 165,
+      "input": {
+        "s": "Alice.Bob-Jones@company.org"
+      },
+      "expected": "a*****s@company.org"
+    },
+    {
+      "case_id": 166,
+      "input": {
+        "s": "001-123-456-7890"
+      },
+      "expected": "+***-***-***-7890"
+    },
+    {
+      "case_id": 167,
+      "input": {
+        "s": "+358101234567"
+      },
+      "expected": "+**-***-***-4567"
+    },
+    {
+      "case_id": 168,
+      "input": {
+        "s": "987654321098765"
+      },
+      "expected": "+*****-***-***-8765"
+    },
+    {
+      "case_id": 169,
+      "input": {
+        "s": "(123)-456-7890"
+      },
+      "expected": "***-***-7890"
+    },
+    {
+      "case_id": 170,
+      "input": {
+        "s": "+49-123-456789-0"
+      },
+      "expected": "+**-***-***-7890"
+    },
+    {
+      "case_id": 171,
+      "input": {
+        "s": "-123-456-7890"
+      },
+      "expected": "***-***-7890"
+    },
+    {
+      "case_id": 172,
+      "input": {
+        "s": "+44(0)1234-567890"
+      },
+      "expected": "+***-***-***-7890"
+    },
+    {
+      "case_id": 173,
+      "input": {
+        "s": "9876543210123"
+      },
+      "expected": "+***-***-***-0123"
+    },
+    {
+      "case_id": 174,
+      "input": {
+        "s": "(123) 456-7890 x1234"
+      },
+      "expected": "+****-***-***-1234"
+    },
+    {
+      "case_id": 175,
+      "input": {
+        "s": "Alice.Bob-Carol@domain.co"
+      },
+      "expected": "a*****l@domain.co"
+    },
+    {
+      "case_id": 176,
+      "input": {
+        "s": "A.B.C.D.E.F.G.H@subdomain.example.com"
+      },
+      "expected": "a*****h@subdomain.example.com"
+    },
+    {
+      "case_id": 177,
+      "input": {
+        "s": "(123) 456-7890; 123-456-7891"
+      },
+      "expected": "+**********-***-***-7891"
+    },
+    {
+      "case_id": 178,
+      "input": {
+        "s": "name@sub.sub.domain.com"
+      },
+      "expected": "n*****e@sub.sub.domain.com"
+    },
+    {
+      "case_id": 179,
+      "input": {
+        "s": "(123)456-7890"
+      },
+      "expected": "***-***-7890"
+    },
+    {
+      "case_id": 180,
+      "input": {
+        "s": "(123) 456-7890-1234"
+      },
+      "expected": "+****-***-***-1234"
+    },
+    {
+      "case_id": 181,
+      "input": {
+        "s": "(123)456-7890-1234"
+      },
+      "expected": "+****-***-***-1234"
+    },
+    {
+      "case_id": 182,
+      "input": {
+        "s": "valid.email@sub.domain.co.uk"
+      },
+      "expected": "v*****l@sub.domain.co.uk"
+    },
+    {
+      "case_id": 183,
+      "input": {
+        "s": "++1-234-567-8901"
+      },
+      "expected": "+*-***-***-8901"
+    },
+    {
+      "case_id": 184,
+      "input": {
+        "s": "+1 (123) 456-7890"
+      },
+      "expected": "+*-***-***-7890"
+    },
+    {
+      "case_id": 185,
+      "input": {
+        "s": "(123) 456-7890 ext 1234"
+      },
+      "expected": "+****-***-***-1234"
+    },
+    {
+      "case_id": 186,
+      "input": {
+        "s": "123456789012123"
+      },
+      "expected": "+*****-***-***-2123"
+    },
+    {
+      "case_id": 187,
+      "input": {
+        "s": "123-456-7890-1234"
+      },
+      "expected": "+****-***-***-1234"
+    }
+  ]
+}

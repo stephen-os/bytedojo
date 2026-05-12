@@ -1,0 +1,1597 @@
+{
+  "schema_version": 1,
+  "problem_id": 1813,
+  "title": "Sentence Similarity III",
+  "method": "areSentencesSimilar",
+  "signature": {
+    "params": [
+      {
+        "name": "sentence1",
+        "type": "STRING"
+      },
+      {
+        "name": "sentence2",
+        "type": "STRING"
+      }
+    ],
+    "returns": "BOOL"
+  },
+  "cases": [
+    {
+      "case_id": 1,
+      "input": {
+        "sentence1": "Similar sentences",
+        "sentence2": "Similar similar sentences"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 2,
+      "input": {
+        "sentence1": "Start end",
+        "sentence2": "Start middle end"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 3,
+      "input": {
+        "sentence1": "Eating right now",
+        "sentence2": "Eating"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 4,
+      "input": {
+        "sentence1": "A quick brown fox",
+        "sentence2": "A quick brown fox jumps over the lazy dog"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 5,
+      "input": {
+        "sentence1": "Quick brown fox",
+        "sentence2": "Quick brown fox jumps over the lazy dog"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 6,
+      "input": {
+        "sentence1": "of",
+        "sentence2": "A lot of words"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 7,
+      "input": {
+        "sentence1": "Similarity check",
+        "sentence2": "check Similarity"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 8,
+      "input": {
+        "sentence1": "Similar sentences",
+        "sentence2": "Sentences Similar"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 9,
+      "input": {
+        "sentence1": "Similar sentences",
+        "sentence2": "Similar very very similar sentences"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 10,
+      "input": {
+        "sentence1": "Python is great",
+        "sentence2": "Python is very very great"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 11,
+      "input": {
+        "sentence1": "One two three",
+        "sentence2": "One three"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 12,
+      "input": {
+        "sentence1": "Python is great",
+        "sentence2": "is great"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 13,
+      "input": {
+        "sentence1": "Similar sentences",
+        "sentence2": "Sentences that are Similar"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 14,
+      "input": {
+        "sentence1": "One",
+        "sentence2": "One two three"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 15,
+      "input": {
+        "sentence1": "One",
+        "sentence2": "One"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 16,
+      "input": {
+        "sentence1": "Test",
+        "sentence2": "Test test"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 17,
+      "input": {
+        "sentence1": "Single",
+        "sentence2": "Single word"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 18,
+      "input": {
+        "sentence1": "Test test test",
+        "sentence2": "Test test test test"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 19,
+      "input": {
+        "sentence1": "Python programming",
+        "sentence2": "programming"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 20,
+      "input": {
+        "sentence1": "This is a test",
+        "sentence2": "This is"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 21,
+      "input": {
+        "sentence1": "A B C",
+        "sentence2": "A B X C"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 22,
+      "input": {
+        "sentence1": "One two three",
+        "sentence2": "One two three four"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 23,
+      "input": {
+        "sentence1": "Similar sentences",
+        "sentence2": "Similar very similar sentences"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 24,
+      "input": {
+        "sentence1": "My name is Haley",
+        "sentence2": "My Haley"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 25,
+      "input": {
+        "sentence1": "Same Same Same",
+        "sentence2": "Same"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 26,
+      "input": {
+        "sentence1": "This is a test",
+        "sentence2": "This is a dummy test"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 27,
+      "input": {
+        "sentence1": "Same same",
+        "sentence2": "Same same same"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 28,
+      "input": {
+        "sentence1": "Overlap here",
+        "sentence2": "Overlap word here"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 29,
+      "input": {
+        "sentence1": "Hello World",
+        "sentence2": "World"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 30,
+      "input": {
+        "sentence1": "Hello World",
+        "sentence2": "Hello"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 31,
+      "input": {
+        "sentence1": "Same same",
+        "sentence2": "Same same"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 32,
+      "input": {
+        "sentence1": "Hello World",
+        "sentence2": "Hello amazing World"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 33,
+      "input": {
+        "sentence1": "This is a test",
+        "sentence2": "This is a simple test"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 34,
+      "input": {
+        "sentence1": "First Second Third",
+        "sentence2": "First Third"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 35,
+      "input": {
+        "sentence1": "Match here",
+        "sentence2": "Match something here"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 36,
+      "input": {
+        "sentence1": "Hello World",
+        "sentence2": "Hello from the World"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 37,
+      "input": {
+        "sentence1": "Alice in Wonderland",
+        "sentence2": "Alice is in Wonderland"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 38,
+      "input": {
+        "sentence1": "Left Right",
+        "sentence2": "Left Middle Right"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 39,
+      "input": {
+        "sentence1": "The quick brown fox",
+        "sentence2": "The quick brown fox jumps over"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 40,
+      "input": {
+        "sentence1": "To be or not to be that is the question",
+        "sentence2": "To be that is the question"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 41,
+      "input": {
+        "sentence1": "The world is a stage",
+        "sentence2": "The world is a stage and all the men and women merely players"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 42,
+      "input": {
+        "sentence1": "One two three",
+        "sentence2": "One two insert three"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 43,
+      "input": {
+        "sentence1": "The quick brown fox",
+        "sentence2": "The quick brown fox jumps"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 44,
+      "input": {
+        "sentence1": "No pain no gain",
+        "sentence2": "No pain no gain but sometimes the pain is not worth the gain"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 45,
+      "input": {
+        "sentence1": "Let us play",
+        "sentence2": "Let us play a game"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 46,
+      "input": {
+        "sentence1": "Mary had a little lamb",
+        "sentence2": "Mary lamb"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 47,
+      "input": {
+        "sentence1": "All roads lead to Rome",
+        "sentence2": "All roads lead to Rome but not all roads are the same"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 48,
+      "input": {
+        "sentence1": "Unique words only",
+        "sentence2": "Unique unique words only"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 49,
+      "input": {
+        "sentence1": "Quick brown fox jumps over the lazy dog",
+        "sentence2": "Quick brown fox jumps over the lazy quick brown dog"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 50,
+      "input": {
+        "sentence1": "a b c d e f g h i j",
+        "sentence2": "a b c X Y Z d e f g h i j"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 51,
+      "input": {
+        "sentence1": "OnlyOneWordHere",
+        "sentence2": "Only One Word Here"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 52,
+      "input": {
+        "sentence1": "Actions speak louder than words",
+        "sentence2": "Actions speak"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 53,
+      "input": {
+        "sentence1": "One two three four five",
+        "sentence2": "One two four five"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 54,
+      "input": {
+        "sentence1": "Python programming is fun",
+        "sentence2": "Python programming is very fun"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 55,
+      "input": {
+        "sentence1": "Actions speak louder than words",
+        "sentence2": "Actions speak louder than words but intentions matter"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 56,
+      "input": {
+        "sentence1": "Python is fun",
+        "sentence2": "Python programming is really fun"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 57,
+      "input": {
+        "sentence1": "OpenAI is great",
+        "sentence2": "OpenAI is indeed indeed great"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 58,
+      "input": {
+        "sentence1": "Do or do not there is no try",
+        "sentence2": "Do or do not there is no no try"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 59,
+      "input": {
+        "sentence1": "Quick brown fox jumps over the lazy dog",
+        "sentence2": "Quick fox jumps over the lazy dog"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 60,
+      "input": {
+        "sentence1": "Time flies when you are having fun",
+        "sentence2": "Time flies"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 61,
+      "input": {
+        "sentence1": "The world is a book and those who do not travel read only one page",
+        "sentence2": "The world is a book and those who do not travel read only one chapter"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 62,
+      "input": {
+        "sentence1": "Python programming is fun and effective",
+        "sentence2": "Python programming effective"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 63,
+      "input": {
+        "sentence1": "Complex complex case",
+        "sentence2": "Complex even more complex case"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 64,
+      "input": {
+        "sentence1": "Time heals all wounds",
+        "sentence2": "Time heals all wounds but time is also a thief"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 65,
+      "input": {
+        "sentence1": "SingleWord",
+        "sentence2": "SingleWord"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 66,
+      "input": {
+        "sentence1": "The cat sat on the mat",
+        "sentence2": "The cat sat on the blue mat"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 67,
+      "input": {
+        "sentence1": "First and last",
+        "sentence2": "First something in the middle last"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 68,
+      "input": {
+        "sentence1": "Once upon a time",
+        "sentence2": "Once upon a time in a land far far away"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 69,
+      "input": {
+        "sentence1": "I think therefore I am",
+        "sentence2": "I think therefore I am six"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 70,
+      "input": {
+        "sentence1": "Single word match",
+        "sentence2": "Single word match"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 71,
+      "input": {
+        "sentence1": "Silence is golden",
+        "sentence2": "Silence is golden in the morning"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 72,
+      "input": {
+        "sentence1": "A quick brown fox jumps",
+        "sentence2": "A quick brown fox quick brown fox jumps"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 73,
+      "input": {
+        "sentence1": "Complex problem solving",
+        "sentence2": "Complex problem problem solving"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 74,
+      "input": {
+        "sentence1": "Short",
+        "sentence2": "Short and sweet"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 75,
+      "input": {
+        "sentence1": "a",
+        "sentence2": "a b c d e f g h i j k l m n o p q r s t u v w x y z"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 76,
+      "input": {
+        "sentence1": "Overlap at end",
+        "sentence2": "Continue overlap at end"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 77,
+      "input": {
+        "sentence1": "Happy birthday",
+        "sentence2": "Happy birthday dear"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 78,
+      "input": {
+        "sentence1": "First word last word",
+        "sentence2": "First first word last word"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 79,
+      "input": {
+        "sentence1": "To be or not to be",
+        "sentence2": "To be or not to be that is the question"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 80,
+      "input": {
+        "sentence1": "May the force be with you",
+        "sentence2": "May the force"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 81,
+      "input": {
+        "sentence1": "Python programming is fun",
+        "sentence2": "Python programming is really really fun"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 82,
+      "input": {
+        "sentence1": "Alibaba Cloud offers various cloud services",
+        "sentence2": "Alibaba Cloud offers cloud computing and storage services"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 83,
+      "input": {
+        "sentence1": "The early morning sun was a beautiful sight",
+        "sentence2": "The early morning sun was a beautiful golden sight"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 84,
+      "input": {
+        "sentence1": "This is a long sentence with multiple words in it",
+        "sentence2": "This long sentence with multiple words in it"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 85,
+      "input": {
+        "sentence1": "Lorem ipsum dolor sit amet",
+        "sentence2": "Lorem ipsum dolor sit amet consectetur adipiscing elit"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 86,
+      "input": {
+        "sentence1": "Hello from the other side",
+        "sentence2": "Hello from this side"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 87,
+      "input": {
+        "sentence1": "One two three",
+        "sentence2": "One two X Y Z three"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 88,
+      "input": {
+        "sentence1": "Beginning middle end",
+        "sentence2": "Beginning middle middle middle end"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 89,
+      "input": {
+        "sentence1": "Unique sentence",
+        "sentence2": "Unique special sentence"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 90,
+      "input": {
+        "sentence1": "The quick brown fox jumps over the lazy dog",
+        "sentence2": "The quick brown fox jumps over the lazy"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 91,
+      "input": {
+        "sentence1": "Start with a sentence",
+        "sentence2": "Start with a really long sentence"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 92,
+      "input": {
+        "sentence1": "Python is fun",
+        "sentence2": "Python is an amazing and fun language"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 93,
+      "input": {
+        "sentence1": "All your base are belong to us",
+        "sentence2": "All base are belong to us"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 94,
+      "input": {
+        "sentence1": "Longer sentence with multiple words",
+        "sentence2": "Longer sentence with even more multiple words"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 95,
+      "input": {
+        "sentence1": "She sells sea shells by the sea shore",
+        "sentence2": "She sells green sea shells by the sea shore"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 96,
+      "input": {
+        "sentence1": "Complex algorithm design and analysis",
+        "sentence2": "Complex algorithm"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 97,
+      "input": {
+        "sentence1": "In the middle",
+        "sentence2": "In the middle of nowhere"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 98,
+      "input": {
+        "sentence1": "First Last",
+        "sentence2": "First in between Last"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 99,
+      "input": {
+        "sentence1": "I love to code",
+        "sentence2": "I love to code code code"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 100,
+      "input": {
+        "sentence1": "Unique words only",
+        "sentence2": "Unique words in between only"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 101,
+      "input": {
+        "sentence1": "The quick brown fox",
+        "sentence2": "The quick brown fox jumps over the lazy dog"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 102,
+      "input": {
+        "sentence1": "Single",
+        "sentence2": "Single single single"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 103,
+      "input": {
+        "sentence1": "Life is a journey",
+        "sentence2": "Life is a journey not a destination"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 104,
+      "input": {
+        "sentence1": "A B C D E",
+        "sentence2": "A B X Y Z C D E"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 105,
+      "input": {
+        "sentence1": "The rain in Spain stays mainly in the plain",
+        "sentence2": "The rain in Spain falls mainly in the plain"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 106,
+      "input": {
+        "sentence1": "A quick movement of the enemy will jeopardize six gunboats",
+        "sentence2": "A quick movement of the enemy will jeopardize"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 107,
+      "input": {
+        "sentence1": "Short",
+        "sentence2": "Very very short"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 108,
+      "input": {
+        "sentence1": "Do or do not there is no try",
+        "sentence2": "Do or do not there is no other way"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 109,
+      "input": {
+        "sentence1": "Python programming is fun",
+        "sentence2": "Python programming is very very fun"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 110,
+      "input": {
+        "sentence1": "Start coding",
+        "sentence2": "Start coding today"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 111,
+      "input": {
+        "sentence1": "Happy new year",
+        "sentence2": "Happy new new new year"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 112,
+      "input": {
+        "sentence1": "I love programming in Python",
+        "sentence2": "I love programming in Java Python"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 113,
+      "input": {
+        "sentence1": "Actions speak louder than words",
+        "sentence2": "Actions speak louder than words but words can inspire actions"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 114,
+      "input": {
+        "sentence1": "Python is great",
+        "sentence2": "Programming in Python is great"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 115,
+      "input": {
+        "sentence1": "Data engineering and data science",
+        "sentence2": "Data engineering"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 116,
+      "input": {
+        "sentence1": "One two three four",
+        "sentence2": "One two five six seven eight three four"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 117,
+      "input": {
+        "sentence1": "I love coding",
+        "sentence2": "I love coding in Python"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 118,
+      "input": {
+        "sentence1": "Prefix and suffix",
+        "sentence2": "Prefix and more words suffix"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 119,
+      "input": {
+        "sentence1": "One two three four",
+        "sentence2": "One two three four five six"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 120,
+      "input": {
+        "sentence1": "The quick brown fox jumps over the lazy dog",
+        "sentence2": "The quick brown fox jumps over lazy dog"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 121,
+      "input": {
+        "sentence1": "Catch me if you can",
+        "sentence2": "Catch me"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 122,
+      "input": {
+        "sentence1": "This is a complex example",
+        "sentence2": "This is an extremely complex example"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 123,
+      "input": {
+        "sentence1": "Match start",
+        "sentence2": "Match start middle"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 124,
+      "input": {
+        "sentence1": "x y z",
+        "sentence2": "a b c x y z"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 125,
+      "input": {
+        "sentence1": "This is a test",
+        "sentence2": "This is only a test"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 126,
+      "input": {
+        "sentence1": "The quick brown fox jumps over the lazy dog",
+        "sentence2": "The quick brown fox jumps high over the lazy dog"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 127,
+      "input": {
+        "sentence1": "Python is great",
+        "sentence2": "Python is the best language great"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 128,
+      "input": {
+        "sentence1": "The cat in the hat sat on the mat",
+        "sentence2": "The cat sat on the mat"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 129,
+      "input": {
+        "sentence1": "The pen is mightier than the sword",
+        "sentence2": "The pen is mightier than the sword but silence is golden"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 130,
+      "input": {
+        "sentence1": "Machine learning is transforming industries",
+        "sentence2": "Machine learning transforming industries"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 131,
+      "input": {
+        "sentence1": "The quick brown fox",
+        "sentence2": "The quick brown lazy dog"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 132,
+      "input": {
+        "sentence1": "One two three",
+        "sentence2": "One two two three"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 133,
+      "input": {
+        "sentence1": "This is a test",
+        "sentence2": "This is a longer test sentence"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 134,
+      "input": {
+        "sentence1": "Insert this sentence",
+        "sentence2": "Insert some words this sentence"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 135,
+      "input": {
+        "sentence1": "An apple a day keeps the doctor away",
+        "sentence2": "An apple a day"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 136,
+      "input": {
+        "sentence1": "Learning new things every day",
+        "sentence2": "Learning new things every single day"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 137,
+      "input": {
+        "sentence1": "Match end",
+        "sentence2": "Middle match end"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 138,
+      "input": {
+        "sentence1": "Silence is golden",
+        "sentence2": "Silence is golden but sometimes it's better to speak your mind"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 139,
+      "input": {
+        "sentence1": "Test",
+        "sentence2": "Test test test"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 140,
+      "input": {
+        "sentence1": "A B C D E",
+        "sentence2": "A B C X Y Z D E"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 141,
+      "input": {
+        "sentence1": "Start with this",
+        "sentence2": "Start with something in the middle this"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 142,
+      "input": {
+        "sentence1": "Qwen is a large language model",
+        "sentence2": "Qwen is a language model"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 143,
+      "input": {
+        "sentence1": "The cat sat on the mat",
+        "sentence2": "The cat sat on the brown mat"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 144,
+      "input": {
+        "sentence1": "Last word",
+        "sentence2": "Last last last word"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 145,
+      "input": {
+        "sentence1": "Python is great for data science",
+        "sentence2": "Python is great"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 146,
+      "input": {
+        "sentence1": "Quick brown fox jumps over the lazy dog",
+        "sentence2": "Quick brown fox quickly jumps over the lazy dog"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 147,
+      "input": {
+        "sentence1": "It is a truth universally acknowledged",
+        "sentence2": "It is a universally acknowledged"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 148,
+      "input": {
+        "sentence1": "Start and finish",
+        "sentence2": "Start middle and finish"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 149,
+      "input": {
+        "sentence1": "SingleWord",
+        "sentence2": "SingleWordInserted"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 150,
+      "input": {
+        "sentence1": "End with a sentence",
+        "sentence2": "End with a sentence and more words"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 151,
+      "input": {
+        "sentence1": "Overlap at start",
+        "sentence2": "Overlap at start and continue"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 152,
+      "input": {
+        "sentence1": "We hold these truths to be self evident",
+        "sentence2": "We hold these self evident"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 153,
+      "input": {
+        "sentence1": "Once upon a time in a land far far away",
+        "sentence2": "Once upon a time"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 154,
+      "input": {
+        "sentence1": "Java is a high level programming language",
+        "sentence2": "Java is a high level programming language that is platform independent"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 155,
+      "input": {
+        "sentence1": "Similar beginning and end",
+        "sentence2": "Similar beginning with extra words and end"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 156,
+      "input": {
+        "sentence1": "Hello from the other side",
+        "sentence2": "Hello from the very very other side"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 157,
+      "input": {
+        "sentence1": "Quick brown fox jumps over lazy dog",
+        "sentence2": "Quick brown fox jumps over the lazy dog"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 158,
+      "input": {
+        "sentence1": "Silence is golden",
+        "sentence2": "Silence"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 159,
+      "input": {
+        "sentence1": "Middle insertion is key",
+        "sentence2": "Middle insertion of some text is key"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 160,
+      "input": {
+        "sentence1": "To be or not to be that is the question",
+        "sentence2": "To be or not to be"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 161,
+      "input": {
+        "sentence1": "This is a simple test",
+        "sentence2": "This is an extremely simple and detailed test"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 162,
+      "input": {
+        "sentence1": "It was the best of times it was the worst of times",
+        "sentence2": "It was the best of times"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 163,
+      "input": {
+        "sentence1": "Quick brown fox jumps over the lazy dog",
+        "sentence2": "Quick brown fox jumps over the lazy brown dog"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 164,
+      "input": {
+        "sentence1": "Learning new things is fun",
+        "sentence2": "Learning fun"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 165,
+      "input": {
+        "sentence1": "Life is a journey not a destination",
+        "sentence2": "Life is a journey of ups and downs not a destination"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 166,
+      "input": {
+        "sentence1": "She sells sea shells by the sea shore",
+        "sentence2": "She sells sea"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 167,
+      "input": {
+        "sentence1": "In the beginning God created the heaven and the earth",
+        "sentence2": "In the beginning God created the earth"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 168,
+      "input": {
+        "sentence1": "Insert sentence here",
+        "sentence2": "Insert sentence in the middle sentence here"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 169,
+      "input": {
+        "sentence1": "End with this",
+        "sentence2": "End with this and something more"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 170,
+      "input": {
+        "sentence1": "Python is fun",
+        "sentence2": "Python is very very fun"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 171,
+      "input": {
+        "sentence1": "Advanced machine learning techniques",
+        "sentence2": "Advanced machine learning deep learning techniques"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 172,
+      "input": {
+        "sentence1": "Hello from the other side",
+        "sentence2": "Hello from the other side my old friend"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 173,
+      "input": {
+        "sentence1": "Single word",
+        "sentence2": "Single single word"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 174,
+      "input": {
+        "sentence1": "Time heals all wounds",
+        "sentence2": "Time heals all wounds but sometimes it's better to face them head on"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 175,
+      "input": {
+        "sentence1": "One two three four five",
+        "sentence2": "One two six seven eight nine five"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 176,
+      "input": {
+        "sentence1": "Same at the start",
+        "sentence2": "Same at the start but different end"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 177,
+      "input": {
+        "sentence1": "All animals are equal",
+        "sentence2": "All animals are equal but some animals are more equal than others"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 178,
+      "input": {
+        "sentence1": "The rain in Spain stays mainly in the plain",
+        "sentence2": "The rain in Spain stays"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 179,
+      "input": {
+        "sentence1": "Multiple words in between",
+        "sentence2": "Multiple multiple words in between"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 180,
+      "input": {
+        "sentence1": "Natural language processing is fascinating",
+        "sentence2": "Natural language processing"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 181,
+      "input": {
+        "sentence1": "Hello my friend",
+        "sentence2": "Hello my dear friend"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 182,
+      "input": {
+        "sentence1": "This is a test",
+        "sentence2": "This is an amazing test"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 183,
+      "input": {
+        "sentence1": "Front and back",
+        "sentence2": "Front middle back"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 184,
+      "input": {
+        "sentence1": "Complex sentences are fun",
+        "sentence2": "Complex sentences with more words in between are fun"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 185,
+      "input": {
+        "sentence1": "Alice went to the market",
+        "sentence2": "Alice went to the market to buy apples"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 186,
+      "input": {
+        "sentence1": "The early morning light",
+        "sentence2": "The early morning light is so peaceful"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 187,
+      "input": {
+        "sentence1": "Same same same",
+        "sentence2": "Same Same"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 188,
+      "input": {
+        "sentence1": "Same at the end",
+        "sentence2": "Different start same at the end"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 189,
+      "input": {
+        "sentence1": "Beautiful day in the neighborhood",
+        "sentence2": "Beautiful day in the beautiful neighborhood"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 190,
+      "input": {
+        "sentence1": "First second third",
+        "sentence2": "First first first second third"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 191,
+      "input": {
+        "sentence1": "Hello from the other side",
+        "sentence2": "Hello"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 192,
+      "input": {
+        "sentence1": "I have a dream",
+        "sentence2": "I have a dream that one day this nation will rise up and live out the True meaning of its creed"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 193,
+      "input": {
+        "sentence1": "May the force be with you",
+        "sentence2": "May the be with you"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 194,
+      "input": {
+        "sentence1": "OpenAI develops AI models",
+        "sentence2": "OpenAI develops cutting edge AI models"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 195,
+      "input": {
+        "sentence1": "May the Force be with you",
+        "sentence2": "May the Force be with you always"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 196,
+      "input": {
+        "sentence1": "Keep it simple",
+        "sentence2": "Keep it simple stupid"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 197,
+      "input": {
+        "sentence1": "A short sentence",
+        "sentence2": "A very very very short sentence"
+      },
+      "expected": true
+    }
+  ]
+}

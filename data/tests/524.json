@@ -1,0 +1,773 @@
+{
+  "schema_version": 1,
+  "problem_id": 524,
+  "title": "Longest Word in Dictionary through Deleting",
+  "method": "findLongestWord",
+  "signature": {
+    "params": [
+      {
+        "name": "s",
+        "type": "STRING"
+      },
+      {
+        "name": "dictionary",
+        "type": "STRING_ARRAY"
+      }
+    ],
+    "returns": "STRING"
+  },
+  "cases": [
+    {
+      "case_id": 1,
+      "input": {
+        "s": "",
+        "dictionary": ["a", "b", "c"]
+      },
+      "expected": null
+    },
+    {
+      "case_id": 2,
+      "input": {
+        "s": "a",
+        "dictionary": ["b", "c", "d"]
+      },
+      "expected": null
+    },
+    {
+      "case_id": 3,
+      "input": {
+        "s": "zcfzdb",
+        "dictionary": ["a", "b", "c"]
+      },
+      "expected": "b"
+    },
+    {
+      "case_id": 4,
+      "input": {
+        "s": "aaaaaaa",
+        "dictionary": ["aaa", "aaaa"]
+      },
+      "expected": "aaaa"
+    },
+    {
+      "case_id": 5,
+      "input": {
+        "s": "aaaaaaa",
+        "dictionary": ["aaaaaaa", "aa", "a", ""]
+      },
+      "expected": "aaaaaaa"
+    },
+    {
+      "case_id": 6,
+      "input": {
+        "s": "xyz",
+        "dictionary": ["x", "y", "z", "xy", "xyz"]
+      },
+      "expected": "xyz"
+    },
+    {
+      "case_id": 7,
+      "input": {
+        "s": "apple",
+        "dictionary": ["app", "appl", "applep"]
+      },
+      "expected": "appl"
+    },
+    {
+      "case_id": 8,
+      "input": {
+        "s": "aaaa",
+        "dictionary": ["aa", "aaa", "aaaa"]
+      },
+      "expected": "aaaa"
+    },
+    {
+      "case_id": 9,
+      "input": {
+        "s": "abpcplea",
+        "dictionary": ["a", "b", "c"]
+      },
+      "expected": "a"
+    },
+    {
+      "case_id": 10,
+      "input": {
+        "s": "abcd",
+        "dictionary": ["db", "abc", "ab", "b"]
+      },
+      "expected": "abc"
+    },
+    {
+      "case_id": 11,
+      "input": {
+        "s": "",
+        "dictionary": ["a", "b", "c"]
+      },
+      "expected": null
+    },
+    {
+      "case_id": 12,
+      "input": {
+        "s": "aaa",
+        "dictionary": ["a", "aa", "aaa"]
+      },
+      "expected": "aaa"
+    },
+    {
+      "case_id": 13,
+      "input": {
+        "s": "xyz",
+        "dictionary": ["x", "y", "z", "xy", "yz", "xyz"]
+      },
+      "expected": "xyz"
+    },
+    {
+      "case_id": 14,
+      "input": {
+        "s": "aewfafwafjlwajflwajflwafj",
+        "dictionary": ["apple", "ewaf", "awefawfwaf", "awef", "awefe", "ewafeffewafewf"]
+      },
+      "expected": "ewaf"
+    },
+    {
+      "case_id": 15,
+      "input": {
+        "s": "abpcplea",
+        "dictionary": ["ale", "apple", "monkey", "plea"]
+      },
+      "expected": "apple"
+    },
+    {
+      "case_id": 16,
+      "input": {
+        "s": "abcd",
+        "dictionary": []
+      },
+      "expected": null
+    },
+    {
+      "case_id": 17,
+      "input": {
+        "s": "abcd",
+        "dictionary": ["db", "dc", "bd", "ac", "cad"]
+      },
+      "expected": "ac"
+    },
+    {
+      "case_id": 18,
+      "input": {
+        "s": "aewfafwafjlwajflwajflwafjlwafjl",
+        "dictionary": ["apple", "ewaf", "awefawfwaf", "awef", "awefe", "ewafeffewafewf"]
+      },
+      "expected": "ewaf"
+    },
+    {
+      "case_id": 19,
+      "input": {
+        "s": "xyz",
+        "dictionary": ["xyzz", "zxy", "zyx"]
+      },
+      "expected": null
+    },
+    {
+      "case_id": 20,
+      "input": {
+        "s": "abcdabcdabcd",
+        "dictionary": ["abcd", "abc", "ab", "a", "bc", "bcd", "abcdabcd", "abcdabcdabcd", "abcdabcda", "bcdabcdabcd", "abcabcabc"]
+      },
+      "expected": "abcdabcdabcd"
+    },
+    {
+      "case_id": 21,
+      "input": {
+        "s": "abracadabra",
+        "dictionary": ["ab", "abc", "abrac", "abraca", "abracadabra", "cadabra", "rac"]
+      },
+      "expected": "abracadabra"
+    },
+    {
+      "case_id": 22,
+      "input": {
+        "s": "abcdefghijklmnopqrstuvwxyz",
+        "dictionary": ["zyxwvutsrqponmlkjihgfedcba", "abcdefghijklmnopqrstuvwxyz", "mnopqrstuv"]
+      },
+      "expected": "abcdefghijklmnopqrstuvwxyz"
+    },
+    {
+      "case_id": 23,
+      "input": {
+        "s": "banana",
+        "dictionary": ["an", "banana", "anana", "nana", "ba", "ana", "aaa", "aa", "a", "b"]
+      },
+      "expected": "banana"
+    },
+    {
+      "case_id": 24,
+      "input": {
+        "s": "thequickbrownfoxjumpsoverthelazydog",
+        "dictionary": ["the", "quick", "brown", "fox", "jumps", "over", "lazy", "dog", "hello", "world", "python"]
+      },
+      "expected": "brown"
+    },
+    {
+      "case_id": 25,
+      "input": {
+        "s": "mississippi",
+        "dictionary": ["issi", "ppis", "miss", "ssip", "isip", "mississippi", "mis", "sip", "iss", "piss"]
+      },
+      "expected": "mississippi"
+    },
+    {
+      "case_id": 26,
+      "input": {
+        "s": "abcdefghijklmnopqrstuvwxyz",
+        "dictionary": ["abcdefghijklmnopqrstuvwxyz", "zyxwvutsrqponmlkjihgfedcba", "ab", "cd"]
+      },
+      "expected": "abcdefghijklmnopqrstuvwxyz"
+    },
+    {
+      "case_id": 27,
+      "input": {
+        "s": "vvvvvvvvvv",
+        "dictionary": ["v", "vv", "vvv", "vvvv", "vvvvv", "vvvvvv", "vvvvvvv", "vvvvvvvv", "vvvvvvvvv", "vvvvvvvvvv"]
+      },
+      "expected": "vvvvvvvvvv"
+    },
+    {
+      "case_id": 28,
+      "input": {
+        "s": "mississippi",
+        "dictionary": ["issi", "miss", "pissi", "ppi", "issipi", "ississi", "mississi", "issippi"]
+      },
+      "expected": "mississi"
+    },
+    {
+      "case_id": 29,
+      "input": {
+        "s": "abracadabra",
+        "dictionary": ["abc", "abcd", "abrac", "cadabra", "abra"]
+      },
+      "expected": "cadabra"
+    },
+    {
+      "case_id": 30,
+      "input": {
+        "s": "abcabcabc",
+        "dictionary": ["abc", "abca", "abcb", "abcc", "aabbcc", "abcabc", "abcabca", "abcaabc"]
+      },
+      "expected": "abcaabc"
+    },
+    {
+      "case_id": 31,
+      "input": {
+        "s": "mississippi",
+        "dictionary": ["issi", "miss", "mississ", "issippi", "issippis"]
+      },
+      "expected": "issippi"
+    },
+    {
+      "case_id": 32,
+      "input": {
+        "s": "abracadabra",
+        "dictionary": ["abc", "abcd", "abracadabra", "racad", "abraca", "cadabra", "dabra", "bra"]
+      },
+      "expected": "abracadabra"
+    },
+    {
+      "case_id": 33,
+      "input": {
+        "s": "zyxwvutsrqponmlkjihgfedcba",
+        "dictionary": ["zyx", "wvu", "tsr", "pon", "mlk", "jih", "gfed", "cba", "zyxwvut", "srqponmlkjihgfedcba"]
+      },
+      "expected": "srqponmlkjihgfedcba"
+    },
+    {
+      "case_id": 34,
+      "input": {
+        "s": "babgbagagbagagbagagbag",
+        "dictionary": ["bag", "bags", "bagga", "baggage", "bagag", "bagagag", "bagagaga", "bagagagag", "bagagagaga"]
+      },
+      "expected": "bagagagaga"
+    },
+    {
+      "case_id": 35,
+      "input": {
+        "s": "abcdefghijklmnopqrstuvwxyz",
+        "dictionary": ["abc", "def", "ghijk", "lmnop", "qrstuv", "wxyz"]
+      },
+      "expected": "qrstuv"
+    },
+    {
+      "case_id": 36,
+      "input": {
+        "s": "abcdeffedcba",
+        "dictionary": ["abcd", "abce", "abcf", "abde", "abdf", "acde", "acdf", "adef", "bcde", "bcdf", "bcef", "bdef", "cdef"]
+      },
+      "expected": "abcd"
+    },
+    {
+      "case_id": 37,
+      "input": {
+        "s": "aabbbccddeeff",
+        "dictionary": ["abc", "abcd", "abde", "acde", "aabbccddeeff", "abcde"]
+      },
+      "expected": "aabbccddeeff"
+    },
+    {
+      "case_id": 38,
+      "input": {
+        "s": "bananaanananannanana",
+        "dictionary": ["ana", "anan", "anana", "ananas", "banana", "bananana", "ananan", "nananan"]
+      },
+      "expected": "bananana"
+    },
+    {
+      "case_id": 39,
+      "input": {
+        "s": "aaaabaaaabaaaaabaaaabaaaab",
+        "dictionary": ["ab", "aba", "abab", "ababa", "ababab", "abababa", "abababab"]
+      },
+      "expected": "abababab"
+    },
+    {
+      "case_id": 40,
+      "input": {
+        "s": "mississippi",
+        "dictionary": ["is", "ppi", "missi", "missis", "mississi", "mississipp"]
+      },
+      "expected": "mississipp"
+    },
+    {
+      "case_id": 41,
+      "input": {
+        "s": "aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz",
+        "dictionary": ["abcdefghij", "klmnopqrstu", "vwxyz", "mnop", "abcd", "mnopqr", "ghijkl", "efgh", "mnopqrstuv", "vwxyzabc"]
+      },
+      "expected": "klmnopqrstu"
+    },
+    {
+      "case_id": 42,
+      "input": {
+        "s": "abcdeabcdeabcde",
+        "dictionary": ["abcde", "abcdee", "abcd", "abcdeeabcde", "abcdeabcdeabcde"]
+      },
+      "expected": "abcdeabcdeabcde"
+    },
+    {
+      "case_id": 43,
+      "input": {
+        "s": "abcdefghijklmno",
+        "dictionary": ["abc", "abcd", "abcde", "abcdef", "abcdefg", "abcdefgh", "abcdefghi", "abcdefghij", "abcdefghijk", "abcdefghijkl", "abcdefghijklm", "abcdefghijklmn", "abcdefghijklmno"]
+      },
+      "expected": "abcdefghijklmno"
+    },
+    {
+      "case_id": 44,
+      "input": {
+        "s": "longwordwithmanycharacters",
+        "dictionary": ["long", "word", "with", "many", "characters", "longword", "longwordwith", "withmany", "manycharacters", "longwordwithmany", "wordwithmany", "wordwithmanycharacters"]
+      },
+      "expected": "wordwithmanycharacters"
+    },
+    {
+      "case_id": 45,
+      "input": {
+        "s": "leetcode",
+        "dictionary": ["leet", "leetc", "lee", "code", "leetcod", "cod", "ode", "leetode", "leetcoded", "teecode"]
+      },
+      "expected": "leetcod"
+    },
+    {
+      "case_id": 46,
+      "input": {
+        "s": "abcxyz",
+        "dictionary": ["abc", "bca", "cab", "xyz", "zyx"]
+      },
+      "expected": "abc"
+    },
+    {
+      "case_id": 47,
+      "input": {
+        "s": "thisisaverylongstringthatwilltestourfunction",
+        "dictionary": ["this", "is", "a", "very", "long", "string", "that", "will", "test", "our", "function", "thisisaverylongstringthatwilltestourfunction"]
+      },
+      "expected": "thisisaverylongstringthatwilltestourfunction"
+    },
+    {
+      "case_id": 48,
+      "input": {
+        "s": "abacaxbabax",
+        "dictionary": ["aba", "abacax", "bacab", "cab", "bacabc", "abcabc"]
+      },
+      "expected": "abacax"
+    },
+    {
+      "case_id": 49,
+      "input": {
+        "s": "mississippi",
+        "dictionary": ["mis", "issi", "issip", "ippi", "ppi", "pip", "pis", "is", "i"]
+      },
+      "expected": "issip"
+    },
+    {
+      "case_id": 50,
+      "input": {
+        "s": "mississippi",
+        "dictionary": ["issi", "miss", "pippi", "mippi", "mississippi"]
+      },
+      "expected": "mississippi"
+    },
+    {
+      "case_id": 51,
+      "input": {
+        "s": "zyxwvutsrqponmlkjihgfedcba",
+        "dictionary": ["zyx", "zyxwv", "zyxwvutsrqponmlkjihgfedcba", "zyxwvutsrqponmlkjihgfedcb", "zyxwvutsrqponmlkjihgfedc", "zyxwvutsrqponmlkjihgfed", "zyxwvutsrqponmlkjihgfe", "zyxwvutsrqponmlkjihgf", "zyxwvutsrqponmlkjihg", "zyxwvutsrqponmlkjih", "zyxwvutsrqponmlkji", "zyxwvutsrqponmlkj", "zyxwvutsrqponmlk", "zyxwvutsrqponml", "zyxwvutsrqponm", "zyxwvutsrqpon", "zyxwvutsrqpo", "zyxwvutsrqp", "zyxwvutsrq", "zyxwvutsr", "zyxwvuts", "zyxwvut", "zyxwvu", "zyxwv", "zyxw", "zyx", "zy", "z"]
+      },
+      "expected": "zyxwvutsrqponmlkjihgfedcba"
+    },
+    {
+      "case_id": 52,
+      "input": {
+        "s": "aaaaabbbbcccc",
+        "dictionary": ["abc", "acb", "bac", "bca", "cab", "cba", "aaa", "bbb", "ccc", "aabb", "abcc", "bbcc", "aabbcc", "ab", "bc", "ca", "bb", "cc", "aa"]
+      },
+      "expected": "aabbcc"
+    },
+    {
+      "case_id": 53,
+      "input": {
+        "s": "programmingisfun",
+        "dictionary": ["pro", "gram", "ming", "is", "fun", "program", "programming", "programmin", "programmingi", "programmingis", "programmingisf", "programmingisfu", "programmingisfun", "programmingisfunn", "programmingisfuns"]
+      },
+      "expected": "programmingisfun"
+    },
+    {
+      "case_id": 54,
+      "input": {
+        "s": "mississippi",
+        "dictionary": ["miss", "piss", "misp", "issi", "issipp"]
+      },
+      "expected": "issipp"
+    },
+    {
+      "case_id": 55,
+      "input": {
+        "s": "zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz",
+        "dictionary": ["zzzzzzzzzz", "zzzzzzzz", "zzzzzzz", "zzzzzz", "zzzzz", "zzzz", "zzz", "zz", "z"]
+      },
+      "expected": "zzzzzzzzzz"
+    },
+    {
+      "case_id": 56,
+      "input": {
+        "s": "babgbag",
+        "dictionary": ["bag", "bgb", "ggb", "bbag", "baggb"]
+      },
+      "expected": "bbag"
+    },
+    {
+      "case_id": 57,
+      "input": {
+        "s": "bananaaa",
+        "dictionary": ["baaa", "ban", "anana", "nana", "banan", "anan", "na", "n", "a", "b", "ba", "ban", "bana", "banan", "banana", "bananaa"]
+      },
+      "expected": "bananaa"
+    },
+    {
+      "case_id": 58,
+      "input": {
+        "s": "mississippi",
+        "dictionary": ["issi", "missi", "issipi", "mississippi", "mis", "pi"]
+      },
+      "expected": "mississippi"
+    },
+    {
+      "case_id": 59,
+      "input": {
+        "s": "abcdefghijklmnopqrstuvwxyz",
+        "dictionary": ["zyxwvutsrqponmlkjihgfedcba", "abcdefghijklmnopqrstuvwxyz", "abcdefghijklmnopqrstuvwxy"]
+      },
+      "expected": "abcdefghijklmnopqrstuvwxyz"
+    },
+    {
+      "case_id": 60,
+      "input": {
+        "s": "abcdefghijklmnopqrstuvwxyz",
+        "dictionary": ["zyx", "yxz", "xyz", "abcdefghijklmnopqrstuvwxyzz", "abcdefghijklmnopqrstuvwxyz"]
+      },
+      "expected": "abcdefghijklmnopqrstuvwxyz"
+    },
+    {
+      "case_id": 61,
+      "input": {
+        "s": "abracadabra",
+        "dictionary": ["bra", "abr", "cad", "acad", "a", "abracadabra"]
+      },
+      "expected": "abracadabra"
+    },
+    {
+      "case_id": 62,
+      "input": {
+        "s": "aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz",
+        "dictionary": ["abc", "def", "ghi", "jkl", "mno", "pqr", "stu", "vwx", "yz", "zzyx"]
+      },
+      "expected": "abc"
+    },
+    {
+      "case_id": 63,
+      "input": {
+        "s": "abcdefghij",
+        "dictionary": ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "abcdefghij", "abcdefghijk", "abcdefghi", "abcdefgh", "abcdefg", "abcdef", "abcde", "abcd", "abc", "ab", "a"]
+      },
+      "expected": "abcdefghij"
+    },
+    {
+      "case_id": 64,
+      "input": {
+        "s": "xxyyzz",
+        "dictionary": ["xyz", "xyzz", "xzyz", "xzy", "yzx", "zyx", "zx", "yx", "xz", "zy"]
+      },
+      "expected": "xyzz"
+    },
+    {
+      "case_id": 65,
+      "input": {
+        "s": "babbbbaabbaaaaabbaabbbabbbaaabbbbbabababbbababbbbbbbbbaabbaaaabbabbbaababbaabbbaaaabbbbbbaaaabbabbbaaaabbaaabbaabba",
+        "dictionary": ["babbbbaabbaaaaaaba", "babbbaaabbbaabbbba", "bbbaabbbaaaaaababb", "bbbabbbbaabbaaaaaabb", "abababbaabbbaababa", "bbbbbabbaabbaaaaaa", "babbbbaaaabbaaaaaa", "abbbbabbaaaabbaabaa", "baabaaaabaaabaaaab"]
+      },
+      "expected": "bbbabbbbaabbaaaaaabb"
+    },
+    {
+      "case_id": 66,
+      "input": {
+        "s": "kfkfkfkfkfkfkfkfkfkfkfkfkfkfkfkf",
+        "dictionary": ["kfk", "fkf", "kfkf", "fkfk", "kfkfkf", "fkfkfk"]
+      },
+      "expected": "fkfkfk"
+    },
+    {
+      "case_id": 67,
+      "input": {
+        "s": "aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz",
+        "dictionary": ["abcdefghijklmnopqrstuvwxyz", "zyxwvutsrqponmlkjihgfedcba", "abcdefghijklmnopqrstuvwxy", "qrstuvwxy", "wxyz", "uvw", "vw", "w"]
+      },
+      "expected": "abcdefghijklmnopqrstuvwxyz"
+    },
+    {
+      "case_id": 68,
+      "input": {
+        "s": "aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz",
+        "dictionary": ["aabbcc", "ddeeff", "gghhiijj", "kkllmm", "nnoopp", "qqrrst", "tuuvvw", "xxyyzz", "zzzyyx"]
+      },
+      "expected": "gghhiijj"
+    },
+    {
+      "case_id": 69,
+      "input": {
+        "s": "a",
+        "dictionary": ["b", "c", "d", "e", "f", "g"]
+      },
+      "expected": null
+    },
+    {
+      "case_id": 70,
+      "input": {
+        "s": "leetcodeisgreat",
+        "dictionary": ["leet", "code", "is", "great", "leetcode", "leetcodes", "leetcodeis", "leetcodeisgreat", "etcodeisgreat"]
+      },
+      "expected": "leetcodeisgreat"
+    },
+    {
+      "case_id": 71,
+      "input": {
+        "s": "aabbaabbaabbaabbaabbaabbaabbaabbaabbaabb",
+        "dictionary": ["aabba", "aabbaabb", "aabbaabbaabb", "aabbaabbaabbaabb", "aabbaabbaabbaabbaabb", "aabbaabbaabbaabbaabbaabb"]
+      },
+      "expected": "aabbaabbaabbaabbaabbaabb"
+    },
+    {
+      "case_id": 72,
+      "input": {
+        "s": "longestwordinadictionary",
+        "dictionary": ["longestword", "word", "dictionary", "in", "a", "longest", "long"]
+      },
+      "expected": "longestword"
+    },
+    {
+      "case_id": 73,
+      "input": {
+        "s": "llllllllllllllllllllllllllllllllllllllllll",
+        "dictionary": ["l", "ll", "lll", "llll", "lllll", "llllll", "lllllll", "llllllll", "lllllllll", "llllllllll", "lllllllllll", "llllllllllll", "lllllllllllll", "llllllllllllll", "lllllllllllllll", "llllllllllllllll", "lllllllllllllllll", "llllllllllllllllll"]
+      },
+      "expected": "llllllllllllllllll"
+    },
+    {
+      "case_id": 74,
+      "input": {
+        "s": "aaabbcccddd",
+        "dictionary": ["aabbbcccddd", "aabbbccc", "aabbcc", "aabc", "abc", "a", "b", "c"]
+      },
+      "expected": "aabbcc"
+    },
+    {
+      "case_id": 75,
+      "input": {
+        "s": "ababcababc",
+        "dictionary": ["ab", "abc", "ababc", "aabbcc", "aabbc", "abab", "abba", "ababab", "babab", "abcabcabc"]
+      },
+      "expected": "ababab"
+    },
+    {
+      "case_id": 76,
+      "input": {
+        "s": "ababcabcabc",
+        "dictionary": ["abc", "abca", "abcab", "abcabc", "abcabcd"]
+      },
+      "expected": "abcabc"
+    },
+    {
+      "case_id": 77,
+      "input": {
+        "s": "abcdefghijklmnopqrstuvwxyz",
+        "dictionary": ["zyxwvutsrqponmlkjihgfedcba", "nopqrstuvwxy", "mnopqrstuvwx", "lmnopqrstu", "klmnopqr", "jklmnop", "ijklmno", "ijklm", "ijkl", "ijk", "ij", "i"]
+      },
+      "expected": "mnopqrstuvwx"
+    },
+    {
+      "case_id": 78,
+      "input": {
+        "s": "aaaaaaa",
+        "dictionary": ["aaaa", "aa", "a", "aaa", "aaaaa", "aaaaaa"]
+      },
+      "expected": "aaaaaa"
+    },
+    {
+      "case_id": 79,
+      "input": {
+        "s": "zyxwvutsrqponmlkjihgfedcba",
+        "dictionary": ["zyx", "wvut", "srqpo", "nmlkj", "ihgfedcba", "mnopqrstu", "zyxwvutsrqponmlkjihgfedcba"]
+      },
+      "expected": "zyxwvutsrqponmlkjihgfedcba"
+    },
+    {
+      "case_id": 80,
+      "input": {
+        "s": "longestword",
+        "dictionary": ["long", "longer", "longest", "longestw", "longestwo", "longestwor", "longestword", "longestworde"]
+      },
+      "expected": "longestword"
+    },
+    {
+      "case_id": 81,
+      "input": {
+        "s": "qwertyuiopasdfghjklzxcvbnm",
+        "dictionary": ["qwerty", "asdfgh", "zxcvbn", "mnbvcxz", "lkjhgfdsa", "poiuytrewq", "uytrewqpo", "uytres", "yuiop", "poiuyt", "poiuy", "poiu", "po", "p", "zxcvbn", "qwerty", "asdfghjklzxcvbnm", "qwertyuiopasdfghjklzxcvbnm", "qwertyuiopasdfghjklzzzzzzzz", "zxcvbnmlkjhgfdsapoiuytrewq"]
+      },
+      "expected": "qwertyuiopasdfghjklzxcvbnm"
+    },
+    {
+      "case_id": 82,
+      "input": {
+        "s": "aaaaaaaaaabbbbbbbbbbccccccccccdddddddddd",
+        "dictionary": ["aaaabbbbccccddd", "bbbccccddd", "ccccddd", "ddd", "ccc", "bbb", "aaa", "aaabbb", "bbcccc", "ccccdd", "ddd"]
+      },
+      "expected": "aaaabbbbccccddd"
+    },
+    {
+      "case_id": 83,
+      "input": {
+        "s": "abcdabcdabcdabcdabcdabcdabcdabcdabcdabcd",
+        "dictionary": ["abcdabcdabcdabcdabcdabcdabcdabcdabcdabcd", "abcdabcdabcdabcdabcdabcdabcdabcdabcdabc", "abcdabcdabcdabcdabcdabcdabcdabcdabcdab", "abcdabcdabcdabcdabcdabcdabcdabcdabcd", "abcdabcdabcdabcdabcdabcdabcdabcdabc", "abcdabcdabcdabcdabcdabcdabcdabcdab", "abcdabcdabcdabcdabcdabcdabcdabcd"]
+      },
+      "expected": "abcdabcdabcdabcdabcdabcdabcdabcdabcdabcd"
+    },
+    {
+      "case_id": 84,
+      "input": {
+        "s": "lletscodeleet",
+        "dictionary": ["code", "let", "lets", "leetc", "leet", "leetcode", "ccode", "lcode"]
+      },
+      "expected": "lcode"
+    },
+    {
+      "case_id": 85,
+      "input": {
+        "s": "aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz",
+        "dictionary": ["zz", "yy", "xx", "ww", "vv", "uu", "tt", "ss", "rr", "qq", "pp", "oo", "nn", "mm", "ll", "kk", "jj", "ii", "hh", "gg", "ff", "ee", "dd", "cc", "bb", "aa"]
+      },
+      "expected": "aa"
+    },
+    {
+      "case_id": 86,
+      "input": {
+        "s": "mississippi",
+        "dictionary": ["miss", "missi", "missis", "mississ", "mississi", "mississip", "mississipp", "mississippi"]
+      },
+      "expected": "mississippi"
+    },
+    {
+      "case_id": 87,
+      "input": {
+        "s": "aaaabbbbcccc",
+        "dictionary": ["abc", "aab", "bbcc", "aabbcc", "aaabbbccc", "ccccbbbbaaa", "aaaabbbbcccc"]
+      },
+      "expected": "aaaabbbbcccc"
+    },
+    {
+      "case_id": 88,
+      "input": {
+        "s": "abcdefghij",
+        "dictionary": ["abc", "def", "ghi", "j", "abcdefghij", "abcd", "efgh", "ijkl", "ghij"]
+      },
+      "expected": "abcdefghij"
+    },
+    {
+      "case_id": 89,
+      "input": {
+        "s": "supercalifragilisticexpialidocious",
+        "dictionary": ["super", "cali", "fragilistic", "expialidocious", "docious", "ocious", "cious", "ious", "ous", "us", "s", "ex", "pi", "li", "tic", "exp", "cal", "sup", "era", "istic"]
+      },
+      "expected": "expialidocious"
+    },
+    {
+      "case_id": 90,
+      "input": {
+        "s": "pppqqqrrrsssttt",
+        "dictionary": ["ppqrs", "pqr", "pppp", "qqqq", "rrrr", "ssss", "tttt", "pqqqrrrsttt", "pppqqqrrrssttt"]
+      },
+      "expected": "pppqqqrrrssttt"
+    },
+    {
+      "case_id": 91,
+      "input": {
+        "s": "abcdabcdabcd",
+        "dictionary": ["abcd", "abc", "ab", "a", "abcdabcdabcd", "abcdabcd", "bcd", "cd", "d", "abcdabcda", "bcdabcd", "cdabcd", "dabcd"]
+      },
+      "expected": "abcdabcdabcd"
+    },
+    {
+      "case_id": 92,
+      "input": {
+        "s": "abcdefghijklmnopqrstuvwxyz",
+        "dictionary": ["abcdefghijklmnopqrstuvwxyz", "zyxwvutsrqponmlkjihgfedcba"]
+      },
+      "expected": "abcdefghijklmnopqrstuvwxyz"
+    },
+    {
+      "case_id": 93,
+      "input": {
+        "s": "banana",
+        "dictionary": ["ban", "banana", "banan", "bananas", "anana", "ana", "nana", "na", "a"]
+      },
+      "expected": "banana"
+    },
+    {
+      "case_id": 94,
+      "input": {
+        "s": "banana",
+        "dictionary": ["ban", "anana", "nana", "banan", "anan", "na", "n", "a", "b", "ba", "ban", "bana", "banan", "banana"]
+      },
+      "expected": "banana"
+    }
+  ]
+}

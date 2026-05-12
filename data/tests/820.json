@@ -1,0 +1,830 @@
+{
+  "schema_version": 1,
+  "problem_id": 820,
+  "title": "Short Encoding of Words",
+  "method": "minimumLengthEncoding",
+  "signature": {
+    "params": [
+      {
+        "name": "words",
+        "type": "STRING_ARRAY"
+      }
+    ],
+    "returns": "INT32"
+  },
+  "comparison": "unordered_all",
+  "cases": [
+    {
+      "case_id": 1,
+      "input": {
+        "words": ["abc", "def", "ghi", "jkl", "mno"]
+      },
+      "expected": 20
+    },
+    {
+      "case_id": 2,
+      "input": {
+        "words": ["test", "testing", "tested", "testable"]
+      },
+      "expected": 29
+    },
+    {
+      "case_id": 3,
+      "input": {
+        "words": ["hello", "hell", "he", "h"]
+      },
+      "expected": 16
+    },
+    {
+      "case_id": 4,
+      "input": {
+        "words": ["aaa", "aa", "a"]
+      },
+      "expected": 4
+    },
+    {
+      "case_id": 5,
+      "input": {
+        "words": ["one", "two", "three", "four", "five"]
+      },
+      "expected": 24
+    },
+    {
+      "case_id": 6,
+      "input": {
+        "words": ["abcd", "bcde", "cdef", "defg"]
+      },
+      "expected": 20
+    },
+    {
+      "case_id": 7,
+      "input": {
+        "words": ["apple", "ple", "le", "e"]
+      },
+      "expected": 6
+    },
+    {
+      "case_id": 8,
+      "input": {
+        "words": ["test", "testcase", "cases", "ase", "se", "e"]
+      },
+      "expected": 20
+    },
+    {
+      "case_id": 9,
+      "input": {
+        "words": ["hello", "world", "python", "programming"]
+      },
+      "expected": 31
+    },
+    {
+      "case_id": 10,
+      "input": {
+        "words": ["apple", "pple", "ple", "le", "e"]
+      },
+      "expected": 6
+    },
+    {
+      "case_id": 11,
+      "input": {
+        "words": ["ab", "bc", "cd", "da"]
+      },
+      "expected": 12
+    },
+    {
+      "case_id": 12,
+      "input": {
+        "words": ["aa", "aaa", "aaaa", "aaaaa"]
+      },
+      "expected": 6
+    },
+    {
+      "case_id": 13,
+      "input": {
+        "words": ["aa", "aaa", "aaaa"]
+      },
+      "expected": 5
+    },
+    {
+      "case_id": 14,
+      "input": {
+        "words": ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
+      },
+      "expected": 52
+    },
+    {
+      "case_id": 15,
+      "input": {
+        "words": ["xyz", "xy", "y", "z"]
+      },
+      "expected": 7
+    },
+    {
+      "case_id": 16,
+      "input": {
+        "words": ["a", "b", "c", "d", "e", "f", "g"]
+      },
+      "expected": 14
+    },
+    {
+      "case_id": 17,
+      "input": {
+        "words": ["cat", "dog", "rat", "car"]
+      },
+      "expected": 16
+    },
+    {
+      "case_id": 18,
+      "input": {
+        "words": ["hello", "world", "hold"]
+      },
+      "expected": 17
+    },
+    {
+      "case_id": 19,
+      "input": {
+        "words": ["time", "me", "bell"]
+      },
+      "expected": 10
+    },
+    {
+      "case_id": 20,
+      "input": {
+        "words": ["at", "ac", "bc", "abc"]
+      },
+      "expected": 10
+    },
+    {
+      "case_id": 21,
+      "input": {
+        "words": ["hello", "world", "code", "word"]
+      },
+      "expected": 22
+    },
+    {
+      "case_id": 22,
+      "input": {
+        "words": ["abc", "bcd", "cde"]
+      },
+      "expected": 12
+    },
+    {
+      "case_id": 23,
+      "input": {
+        "words": ["t"]
+      },
+      "expected": 2
+    },
+    {
+      "case_id": 24,
+      "input": {
+        "words": ["hello", "world", "word", "hello"]
+      },
+      "expected": 17
+    },
+    {
+      "case_id": 25,
+      "input": {
+        "words": ["a", "ab", "abc", "abcd", "abcde"]
+      },
+      "expected": 20
+    },
+    {
+      "case_id": 26,
+      "input": {
+        "words": ["abc", "bcd", "cde", "def", "efg", "fgh"]
+      },
+      "expected": 24
+    },
+    {
+      "case_id": 27,
+      "input": {
+        "words": ["banana", "nana", "ana", "na", "a", "nan", "nanan"]
+      },
+      "expected": 13
+    },
+    {
+      "case_id": 28,
+      "input": {
+        "words": ["sequence", "equence", "quence", "uence", "ence", "nce", "ce", "e", "sq", "qu", "uen", "en"]
+      },
+      "expected": 19
+    },
+    {
+      "case_id": 29,
+      "input": {
+        "words": ["xyz", "xy", "xz", "yz", "x", "y", "z"]
+      },
+      "expected": 12
+    },
+    {
+      "case_id": 30,
+      "input": {
+        "words": ["xyz", "zyx", "yzx", "yxz", "zxy", "xzy", "zy", "yx", "xz", "zx", "xy"]
+      },
+      "expected": 24
+    },
+    {
+      "case_id": 31,
+      "input": {
+        "words": ["random", "andom", "dom", "om", "m", "rando", "and", "nd", "d", "rand", "ran", "ra", "ndom"]
+      },
+      "expected": 25
+    },
+    {
+      "case_id": 32,
+      "input": {
+        "words": ["abcd", "bcde", "cdef", "defg", "efgh"]
+      },
+      "expected": 25
+    },
+    {
+      "case_id": 33,
+      "input": {
+        "words": ["abc", "bc", "c", "abcd", "bcd"]
+      },
+      "expected": 9
+    },
+    {
+      "case_id": 34,
+      "input": {
+        "words": ["apple", "ple", "leetcode", "code", "ode", "de"]
+      },
+      "expected": 15
+    },
+    {
+      "case_id": 35,
+      "input": {
+        "words": ["a", "aa", "aaa", "aaaa", "aaaaa", "aaaaaa", "aaaaaaa", "aaaaaaaa", "aaaaaaaaa", "aaaaaaaaaa", "aaaaaaaaaaa", "aaaaaaaaaaaa", "aaaaaaaaaaaaa", "aaaaaaaaaaaaaa", "aaaaaaaaaaaaaaa"]
+      },
+      "expected": 16
+    },
+    {
+      "case_id": 36,
+      "input": {
+        "words": ["aa", "aaa", "aaaa", "aab", "aabaa", "aabaaa", "aabaaaa"]
+      },
+      "expected": 25
+    },
+    {
+      "case_id": 37,
+      "input": {
+        "words": ["abcdefgh", "efgh", "fgh", "gh", "h", "abcdefghijk", "ghijk", "hijk", "ijk", "jk", "k"]
+      },
+      "expected": 21
+    },
+    {
+      "case_id": 38,
+      "input": {
+        "words": ["xylophone", "ylophone", "lophone", "ophone", "phone", "hone", "one", "ne", "e"]
+      },
+      "expected": 10
+    },
+    {
+      "case_id": 39,
+      "input": {
+        "words": ["a", "ab", "abc", "abcd", "abcde", "abcdef", "abcdefg"]
+      },
+      "expected": 35
+    },
+    {
+      "case_id": 40,
+      "input": {
+        "words": ["one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen", "twenty", "twentyone", "twentytwo", "twentythree", "twentyfour", "twentyfive"]
+      },
+      "expected": 162
+    },
+    {
+      "case_id": 41,
+      "input": {
+        "words": ["abcd", "bcd", "cd", "d", "abcde", "bcde", "cde", "de", "e"]
+      },
+      "expected": 11
+    },
+    {
+      "case_id": 42,
+      "input": {
+        "words": ["hello", "hell", "hel", "he", "h", "world", "worl", "wor", "wo", "w"]
+      },
+      "expected": 40
+    },
+    {
+      "case_id": 43,
+      "input": {
+        "words": ["supercalifragilisticexpialidocious", "supercalifragilisticexpialidocio", "supercalifragilisticexpialido", "supercalifragilisticexpalia", "supercalifragilisticexpali", "supercalifragilisticexpal", "supercalifragilisticexpa", "supercalifragilisticex", "supercalifragilistice", "supercalifragilistic", "supercalifragilisti", "supercalifragilist", "supercalifragilis", "supercalifragili", "supercalifragil", "supercalifragi", "supercalifrag", "supercalifra", "supercalifr", "supercalif", "supercali", "supercal", "superc", "super", "supe", "sup", "su", "s"]
+      },
+      "expected": 469
+    },
+    {
+      "case_id": 44,
+      "input": {
+        "words": ["abcd", "bcd", "cd", "d", "a", "ab", "abc", "bc", "c"]
+      },
+      "expected": 14
+    },
+    {
+      "case_id": 45,
+      "input": {
+        "words": ["abracadabra", "bracadabr", "racadabr", "acadabr", "cadabr", "adabr", "dabr", "abr", "br", "r"]
+      },
+      "expected": 22
+    },
+    {
+      "case_id": 46,
+      "input": {
+        "words": ["xylophone", "ylophone", "lophone", "ophone", "phone", "hone", "one", "ne", "e", "x"]
+      },
+      "expected": 12
+    },
+    {
+      "case_id": 47,
+      "input": {
+        "words": ["qwerty", "werty", "erty", "rty", "ty", "y", "qwertyuiop", "ertyuiop", "rtyuiop", "tyuiop", "yuiop", "uiop", "iop", "op", "p"]
+      },
+      "expected": 18
+    },
+    {
+      "case_id": 48,
+      "input": {
+        "words": ["aaaaaa", "aaaaa", "aaaa", "aaa", "aa", "a", "aa", "aaa", "aaaa", "aaaaa", "aaaaaa"]
+      },
+      "expected": 7
+    },
+    {
+      "case_id": 49,
+      "input": {
+        "words": ["zebra", "bra", "ra", "a", "abacaxi", "bacaxi", "acaxi", "caxi", "axi", "xi", "i"]
+      },
+      "expected": 14
+    },
+    {
+      "case_id": 50,
+      "input": {
+        "words": ["zzzzzzz", "zzzzzz", "zzzzz", "zzzz", "zzz", "zz", "z", "zzzzzzz", "zzzzzz", "zzzzz", "zzzz", "zzz", "zz", "z"]
+      },
+      "expected": 8
+    },
+    {
+      "case_id": 51,
+      "input": {
+        "words": ["ab", "abc", "abcd", "abcde", "abcdef"]
+      },
+      "expected": 25
+    },
+    {
+      "case_id": 52,
+      "input": {
+        "words": ["abcd", "bcd", "cd", "d", "efgh", "fgh", "gh", "h", "ijkl", "jkl", "kl", "l"]
+      },
+      "expected": 15
+    },
+    {
+      "case_id": 53,
+      "input": {
+        "words": ["test", "testing", "tests", "tes", "te", "t", "testcase", "cases", "ase", "se", "e"]
+      },
+      "expected": 41
+    },
+    {
+      "case_id": 54,
+      "input": {
+        "words": ["banana", "anana", "nana", "ana", "na", "a", "ban"]
+      },
+      "expected": 11
+    },
+    {
+      "case_id": 55,
+      "input": {
+        "words": ["abcd", "bcd", "cd", "d", "def", "ef", "f", "fgh", "gh", "h"]
+      },
+      "expected": 13
+    },
+    {
+      "case_id": 56,
+      "input": {
+        "words": ["banana", "anana", "nana", "ana", "na", "a", "nabana", "bananab"]
+      },
+      "expected": 22
+    },
+    {
+      "case_id": 57,
+      "input": {
+        "words": ["ab", "abc", "abcd", "abcde", "abcdef", "abcdefg", "abcdefgh"]
+      },
+      "expected": 42
+    },
+    {
+      "case_id": 58,
+      "input": {
+        "words": ["algorithm", "logarithm", "rhythm", "syzygy", "zymurgy", "zymurgy", "zymurgy", "zymurgy", "zymurgy"]
+      },
+      "expected": 42
+    },
+    {
+      "case_id": 59,
+      "input": {
+        "words": ["abcd", "bcde", "cdef", "defg", "efgh", "fghi", "ghij", "hijk", "ijkl", "jkl", "kl", "l"]
+      },
+      "expected": 45
+    },
+    {
+      "case_id": 60,
+      "input": {
+        "words": ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", "aa", "bb", "cc", "dd", "ee", "ff", "gg", "hh", "ii", "jj", "kk", "ll", "mm", "nn", "oo", "pp", "qq", "rr", "ss", "tt", "uu", "vv", "ww", "xx", "yy", "zz"]
+      },
+      "expected": 78
+    },
+    {
+      "case_id": 61,
+      "input": {
+        "words": ["hello", "hell", "helo", "he", "h", "e"]
+      },
+      "expected": 21
+    },
+    {
+      "case_id": 62,
+      "input": {
+        "words": ["abacaxi", "bacaxi", "caxi", "axi", "xi", "i"]
+      },
+      "expected": 8
+    },
+    {
+      "case_id": 63,
+      "input": {
+        "words": ["xyz", "zyx", "yzx", "yxz", "xzy", "zxy"]
+      },
+      "expected": 24
+    },
+    {
+      "case_id": 64,
+      "input": {
+        "words": ["algorithm", "rhythm", "rhythmically", "thym", "hym", "ym", "m"]
+      },
+      "expected": 35
+    },
+    {
+      "case_id": 65,
+      "input": {
+        "words": ["flower", "flow", "flight", "flighting", "flour"]
+      },
+      "expected": 35
+    },
+    {
+      "case_id": 66,
+      "input": {
+        "words": ["a", "aa", "aaa", "aaaa", "aaaaa", "aaaaaa", "aaaaaaa"]
+      },
+      "expected": 8
+    },
+    {
+      "case_id": 67,
+      "input": {
+        "words": ["word", "ord", "rd", "d", "word", "ord", "rd", "d", "word", "ord", "rd", "d", "word", "ord", "rd", "d", "word", "ord", "rd", "d"]
+      },
+      "expected": 5
+    },
+    {
+      "case_id": 68,
+      "input": {
+        "words": ["apple", "peel", "pale", "ale", "le"]
+      },
+      "expected": 16
+    },
+    {
+      "case_id": 69,
+      "input": {
+        "words": ["apple", "ple", "le", "e", "app", "ppl"]
+      },
+      "expected": 14
+    },
+    {
+      "case_id": 70,
+      "input": {
+        "words": ["abcdefgh", "bcdefghi", "cdefghij", "defghijk", "efghijkl", "fghijklm", "ghijklmn", "hijklmno", "ijklmnop", "jklmnopq"]
+      },
+      "expected": 90
+    },
+    {
+      "case_id": 71,
+      "input": {
+        "words": ["ab", "bc", "abc", "abcd", "abcde"]
+      },
+      "expected": 18
+    },
+    {
+      "case_id": 72,
+      "input": {
+        "words": ["overlap", "lap", "ap", "p", "nolap", "olap", "lapo", "lapor", "laporator", "laporatory"]
+      },
+      "expected": 46
+    },
+    {
+      "case_id": 73,
+      "input": {
+        "words": ["panorama", "anorama", "norama", "orama", "rama", "ama", "ma", "a", "planet", "lanet", "anet", "net", "et", "t"]
+      },
+      "expected": 16
+    },
+    {
+      "case_id": 74,
+      "input": {
+        "words": ["apple", "ple", "le", "e", "app", "pple", "plea"]
+      },
+      "expected": 15
+    },
+    {
+      "case_id": 75,
+      "input": {
+        "words": ["zebra", "ebra", "bra", "ra", "a", "z"]
+      },
+      "expected": 8
+    },
+    {
+      "case_id": 76,
+      "input": {
+        "words": ["cat", "dog", "god", "tac", "act", "gat"]
+      },
+      "expected": 24
+    },
+    {
+      "case_id": 77,
+      "input": {
+        "words": ["abc", "bcd", "cde", "def", "efg"]
+      },
+      "expected": 20
+    },
+    {
+      "case_id": 78,
+      "input": {
+        "words": ["coding", "ing", "ode", "de", "e"]
+      },
+      "expected": 11
+    },
+    {
+      "case_id": 79,
+      "input": {
+        "words": ["aaa", "aab", "aba", "abb", "baa", "bab", "bba", "bbb", "bbb", "bbb"]
+      },
+      "expected": 32
+    },
+    {
+      "case_id": 80,
+      "input": {
+        "words": ["abcd", "bcd", "cd", "d", "abcds", "bcde", "cde", "de", "efg", "fgh", "ghi", "hij", "ijk", "jkl", "klm", "lmn", "mno", "nop", "opq", "pqr", "qrs", "rst", "stu", "tuv", "uvw", "vwx", "wxy", "xyz"]
+      },
+      "expected": 96
+    },
+    {
+      "case_id": 81,
+      "input": {
+        "words": ["unique", "un", "iq", "que", "eue", "eu", "ue", "eq", "qu", "uq"]
+      },
+      "expected": 29
+    },
+    {
+      "case_id": 82,
+      "input": {
+        "words": ["banana", "ana", "nana", "anaconda", "conda"]
+      },
+      "expected": 16
+    },
+    {
+      "case_id": 83,
+      "input": {
+        "words": ["zebra", "ebra", "bra", "ra", "a", "cab", "ab", "b"]
+      },
+      "expected": 10
+    },
+    {
+      "case_id": 84,
+      "input": {
+        "words": ["programming", "ming", "gram", "ing", "am", "m"]
+      },
+      "expected": 17
+    },
+    {
+      "case_id": 85,
+      "input": {
+        "words": ["a", "ab", "abc", "abcd", "abcde", "abcdef", "abcdefg", "abcdefgh", "abcdefghi", "abcdefghij"]
+      },
+      "expected": 65
+    },
+    {
+      "case_id": 86,
+      "input": {
+        "words": ["algorithm", "lgorithm", "gorithm", "orithm", "rithm", "ithm", "thm", "hm", "m"]
+      },
+      "expected": 10
+    },
+    {
+      "case_id": 87,
+      "input": {
+        "words": ["algorithm", "lgorithm", "gorithm", "rhythm", "hythm", "hythm", "thm", "hm", "m", "a"]
+      },
+      "expected": 19
+    },
+    {
+      "case_id": 88,
+      "input": {
+        "words": ["abcdefgh", "bcdefgh", "cdefgh", "defgh", "efgh", "fgh", "gh", "h"]
+      },
+      "expected": 9
+    },
+    {
+      "case_id": 89,
+      "input": {
+        "words": ["sun", "un", "n", "moon", "oon", "on", "noon", "oon", "on", "n"]
+      },
+      "expected": 14
+    },
+    {
+      "case_id": 90,
+      "input": {
+        "words": ["longest", "longer", "long", "lo", "l", "longestword", "word", "ord", "rd", "d"]
+      },
+      "expected": 37
+    },
+    {
+      "case_id": 91,
+      "input": {
+        "words": ["apple", "peach", "pear", "leap", "lead", "meat", "heat", "seat"]
+      },
+      "expected": 42
+    },
+    {
+      "case_id": 92,
+      "input": {
+        "words": ["watermelon", "atermelon", "termelon", "ermelon", "rmelon", "melon", "elon", "lon", "on", "n", "w"]
+      },
+      "expected": 13
+    },
+    {
+      "case_id": 93,
+      "input": {
+        "words": ["aaaa", "aaab", "aabb", "abbb", "bbbb"]
+      },
+      "expected": 25
+    },
+    {
+      "case_id": 94,
+      "input": {
+        "words": ["banana", "ananas", "nana", "ana", "na", "a", "banana", "ananas", "nana", "ana", "na", "a"]
+      },
+      "expected": 14
+    },
+    {
+      "case_id": 95,
+      "input": {
+        "words": ["aaaa", "bbbb", "cccc", "dddd", "eeee", "ffff", "gggg", "hhhh", "iiii", "jjjj", "kkkk", "llll", "mmmm", "nnnn", "oooo", "pppp", "qqqq", "rrrr", "ssss", "tttt"]
+      },
+      "expected": 100
+    },
+    {
+      "case_id": 96,
+      "input": {
+        "words": ["aaa", "aab", "aac", "aba", "abc", "aca", "baa", "bab", "bac", "bba", "bbb", "bbc", "bca", "bcb", "bcc", "caa", "cab", "cac", "cba", "cbb", "cbc", "cca", "ccb", "ccc"]
+      },
+      "expected": 96
+    },
+    {
+      "case_id": 97,
+      "input": {
+        "words": ["aaaa", "aaa", "aa", "a", "aaaaa"]
+      },
+      "expected": 6
+    },
+    {
+      "case_id": 98,
+      "input": {
+        "words": ["banana", "nana", "ana", "na", "a", "anana", "ananana", "anananana", "ananananana"]
+      },
+      "expected": 19
+    },
+    {
+      "case_id": 99,
+      "input": {
+        "words": ["abcdexyz", "bcdexyz", "cdexyz", "dexyz", "exyz", "xyz", "yz", "z"]
+      },
+      "expected": 9
+    },
+    {
+      "case_id": 100,
+      "input": {
+        "words": ["banana", "anana", "nana", "ana", "na", "a", "cat", "at", "t"]
+      },
+      "expected": 11
+    },
+    {
+      "case_id": 101,
+      "input": {
+        "words": ["xyz", "yz", "z", "xy", "x", "yx", "zxy", "zyx", "yxz", "zyxz", "xyzz", "zyzzz", "zyzyz"]
+      },
+      "expected": 34
+    },
+    {
+      "case_id": 102,
+      "input": {
+        "words": ["abcdefgh", "bcdefghi", "cdefghij", "defghijk", "efghijkl", "fghijklm", "ghijklmn", "hijklmno", "ijklmnop", "jklmnopq", "klmnopqr", "lmnopqrs", "mnopqrst", "nopqrstu", "opqrstuv", "pqrstuvw", "qrstuvwx", "rstuvwxy", "stuvwxyz"]
+      },
+      "expected": 171
+    },
+    {
+      "case_id": 103,
+      "input": {
+        "words": ["programming", "gramming", "mming", "ming", "ing", "ng", "g"]
+      },
+      "expected": 12
+    },
+    {
+      "case_id": 104,
+      "input": {
+        "words": ["abcde", "bcdef", "cdefg", "defgh", "efghi", "fghij", "ghijk", "hijkl", "ijklm", "jklmn", "klmno", "lmnop", "mnopq", "nopqr", "opqrs", "pqrst", "qrstu", "rstuv", "stuvw", "tuvwx", "uvwxy", "vwxyz", "wxyz", "xyz", "yz", "z"]
+      },
+      "expected": 132
+    },
+    {
+      "case_id": 105,
+      "input": {
+        "words": ["apple", "app", "ple", "le", "e"]
+      },
+      "expected": 10
+    },
+    {
+      "case_id": 106,
+      "input": {
+        "words": ["pqr", "pqs", "prq", "prs", "psq", "psr", "rpq", "rps", "rsp", "rsq", "spq", "spr"]
+      },
+      "expected": 48
+    },
+    {
+      "case_id": 107,
+      "input": {
+        "words": ["ab", "bc", "cd", "de", "ef", "fg", "gh", "hi", "ij", "jk", "kl", "lm", "mn", "no", "op", "pq", "qr", "rs", "st", "tu", "uv", "vw", "wx", "xy", "yz"]
+      },
+      "expected": 75
+    },
+    {
+      "case_id": 108,
+      "input": {
+        "words": ["apple", "ple", "le", "e", "orange", "range", "age", "ge"]
+      },
+      "expected": 17
+    },
+    {
+      "case_id": 109,
+      "input": {
+        "words": ["abcd", "bcd", "cd", "d", "abcd", "bcd", "cd", "d"]
+      },
+      "expected": 5
+    },
+    {
+      "case_id": 110,
+      "input": {
+        "words": ["apple", "ple", "app", "le", "p", "l", "e", "a"]
+      },
+      "expected": 14
+    },
+    {
+      "case_id": 111,
+      "input": {
+        "words": ["abc", "bcd", "cde", "def", "efg", "fgh", "ghi", "hij", "ijk", "jkl", "klm", "lmn", "mno", "nop", "opq", "pqr", "qrs", "rst", "stu", "tuv", "uvw", "vwx", "wxy", "xyz"]
+      },
+      "expected": 96
+    },
+    {
+      "case_id": 112,
+      "input": {
+        "words": ["optimization", "ptimization", "timization", "imization", "mization", "ization", "zation", "ation", "tion", "ion", "on", "n"]
+      },
+      "expected": 13
+    },
+    {
+      "case_id": 113,
+      "input": {
+        "words": ["sequence", "equence", "quence", "uence", "ence", "nce", "ce", "e", "s", "sequ", "seq"]
+      },
+      "expected": 20
+    },
+    {
+      "case_id": 114,
+      "input": {
+        "words": ["abcdefg", "cdefg", "defg", "efg", "fg", "g"]
+      },
+      "expected": 8
+    },
+    {
+      "case_id": 115,
+      "input": {
+        "words": ["abracadabra", "racadabra", "cadabra", "adabra", "dabra", "abra", "bra", "ra", "a"]
+      },
+      "expected": 12
+    },
+    {
+      "case_id": 116,
+      "input": {
+        "words": ["kitten", "ten", "en", "n", "sitting", "ting", "ing", "ng", "g"]
+      },
+      "expected": 15
+    }
+  ]
+}

@@ -1,0 +1,933 @@
+{
+  "schema_version": 1,
+  "problem_id": 2452,
+  "title": "Words Within Two Edits of Dictionary",
+  "method": "twoEditWords",
+  "signature": {
+    "params": [
+      {
+        "name": "queries",
+        "type": "STRING_ARRAY"
+      },
+      {
+        "name": "dictionary",
+        "type": "STRING_ARRAY"
+      }
+    ],
+    "returns": "STRING_ARRAY"
+  },
+  "cases": [
+    {
+      "case_id": 1,
+      "input": {
+        "queries": ["test", "text", "sett"],
+        "dictionary": ["test", "text", "sett", "best"]
+      },
+      "expected": ["test", "text", "sett"]
+    },
+    {
+      "case_id": 2,
+      "input": {
+        "queries": ["abc", "bcd", "cde"],
+        "dictionary": ["xyz", "zyx", "abc"]
+      },
+      "expected": ["abc"]
+    },
+    {
+      "case_id": 3,
+      "input": {
+        "queries": ["apple", "apply"],
+        "dictionary": ["appla", "apple", "apply"]
+      },
+      "expected": ["apple", "apply"]
+    },
+    {
+      "case_id": 4,
+      "input": {
+        "queries": ["test", "text", "sett"],
+        "dictionary": ["text", "test", "sett", "best"]
+      },
+      "expected": ["test", "text", "sett"]
+    },
+    {
+      "case_id": 5,
+      "input": {
+        "queries": ["hello", "world"],
+        "dictionary": ["hallo", "wurld", "holdo"]
+      },
+      "expected": ["hello", "world"]
+    },
+    {
+      "case_id": 6,
+      "input": {
+        "queries": ["word", "note", "ants", "wood"],
+        "dictionary": ["wood", "joke", "moat"]
+      },
+      "expected": ["word", "note", "wood"]
+    },
+    {
+      "case_id": 7,
+      "input": {
+        "queries": ["test", "sett", "best"],
+        "dictionary": ["rest", "test", "best"]
+      },
+      "expected": ["test", "sett", "best"]
+    },
+    {
+      "case_id": 8,
+      "input": {
+        "queries": ["abcd", "abce", "abcf"],
+        "dictionary": ["abef", "abcf", "abcd"]
+      },
+      "expected": ["abcd", "abce", "abcf"]
+    },
+    {
+      "case_id": 9,
+      "input": {
+        "queries": ["apple", "apply", "spoil"],
+        "dictionary": ["appla", "appie", "spoil"]
+      },
+      "expected": ["apple", "apply", "spoil"]
+    },
+    {
+      "case_id": 10,
+      "input": {
+        "queries": ["hello", "world"],
+        "dictionary": ["hallo", "werld"]
+      },
+      "expected": ["hello", "world"]
+    },
+    {
+      "case_id": 11,
+      "input": {
+        "queries": ["apple", "apply", "happy"],
+        "dictionary": ["pally", "apple", "happy"]
+      },
+      "expected": ["apple", "apply", "happy"]
+    },
+    {
+      "case_id": 12,
+      "input": {
+        "queries": ["test", "text", "sett"],
+        "dictionary": ["best", "text", "west"]
+      },
+      "expected": ["test", "text", "sett"]
+    },
+    {
+      "case_id": 13,
+      "input": {
+        "queries": ["apple", "apply"],
+        "dictionary": ["spale", "spaly"]
+      },
+      "expected": ["apple", "apply"]
+    },
+    {
+      "case_id": 14,
+      "input": {
+        "queries": ["aabb", "abab", "baba"],
+        "dictionary": ["aaaa", "bbbb", "abab"]
+      },
+      "expected": ["aabb", "abab", "baba"]
+    },
+    {
+      "case_id": 15,
+      "input": {
+        "queries": ["yes"],
+        "dictionary": ["not"]
+      },
+      "expected": []
+    },
+    {
+      "case_id": 16,
+      "input": {
+        "queries": ["test"],
+        "dictionary": ["tast", "test", "sett"]
+      },
+      "expected": ["test"]
+    },
+    {
+      "case_id": 17,
+      "input": {
+        "queries": ["elephant", "giraffe", "hippo"],
+        "dictionary": ["elefant", "giraff", "hippo"]
+      },
+      "expected": ["giraffe", "hippo"]
+    },
+    {
+      "case_id": 18,
+      "input": {
+        "queries": ["xylophone", "balloon", "umbrella"],
+        "dictionary": ["xylofune", "baloone", "umbrelia", "xylophine", "balloon"]
+      },
+      "expected": ["xylophone", "balloon", "umbrella"]
+    },
+    {
+      "case_id": 19,
+      "input": {
+        "queries": ["abcdefgh", "abcdefghi", "abcdefghj"],
+        "dictionary": ["abcdefghj", "abcdefghi", "abcdefghk"]
+      },
+      "expected": ["abcdefgh", "abcdefghi", "abcdefghj"]
+    },
+    {
+      "case_id": 20,
+      "input": {
+        "queries": ["banana", "bananb", "bananc"],
+        "dictionary": ["banana", "bananb", "bananc", "banand"]
+      },
+      "expected": ["banana", "bananb", "bananc"]
+    },
+    {
+      "case_id": 21,
+      "input": {
+        "queries": ["abcdefgh", "abcdefgh"],
+        "dictionary": ["abcdefgh", "abcdefgh", "abcdefgh"]
+      },
+      "expected": ["abcdefgh", "abcdefgh"]
+    },
+    {
+      "case_id": 22,
+      "input": {
+        "queries": ["algorithm", "datastructure", "binarysearch"],
+        "dictionary": ["alorithm", "datstructure", "binrysearch"]
+      },
+      "expected": []
+    },
+    {
+      "case_id": 23,
+      "input": {
+        "queries": ["banana", "ananas"],
+        "dictionary": ["banana", "ananas", "bandana", "panama", "kanana"]
+      },
+      "expected": ["banana", "ananas"]
+    },
+    {
+      "case_id": 24,
+      "input": {
+        "queries": ["racecar", "level", "rotor"],
+        "dictionary": ["racecer", "levek", "roter"]
+      },
+      "expected": ["racecar", "level", "rotor"]
+    },
+    {
+      "case_id": 25,
+      "input": {
+        "queries": ["xylophone", "clarinet"],
+        "dictionary": ["xylophon", "clarinat", "xylopane", "clarinet", "xylophen"]
+      },
+      "expected": ["xylophone", "clarinet"]
+    },
+    {
+      "case_id": 26,
+      "input": {
+        "queries": ["abcdef", "fedcba"],
+        "dictionary": ["fedcba", "abcdefg", "bacdef"]
+      },
+      "expected": ["abcdef", "fedcba"]
+    },
+    {
+      "case_id": 27,
+      "input": {
+        "queries": ["abcdefghij", "klmnopqrst"],
+        "dictionary": ["abcdeffhij", "klmnopqrts", "abcdefghij"]
+      },
+      "expected": ["abcdefghij", "klmnopqrst"]
+    },
+    {
+      "case_id": 28,
+      "input": {
+        "queries": ["abcdef", "ghijkl", "mnopqr"],
+        "dictionary": ["abcdeg", "ghijkm", "mnopqs"]
+      },
+      "expected": ["abcdef", "ghijkl", "mnopqr"]
+    },
+    {
+      "case_id": 29,
+      "input": {
+        "queries": ["abcd", "abce", "abcf"],
+        "dictionary": ["abcf", "abcg", "abcd", "abch"]
+      },
+      "expected": ["abcd", "abce", "abcf"]
+    },
+    {
+      "case_id": 30,
+      "input": {
+        "queries": ["abcdefghij", "jihgfedcba"],
+        "dictionary": ["abcdefghij", "jihgfedcba", "abcdefghij", "jihgfedcba", "abcdefghij"]
+      },
+      "expected": ["abcdefghij", "jihgfedcba"]
+    },
+    {
+      "case_id": 31,
+      "input": {
+        "queries": ["abcd", "abdc", "acbd", "acdb"],
+        "dictionary": ["abcd", "abdc", "acbd", "acdb", "dcba", "bdca"]
+      },
+      "expected": ["abcd", "abdc", "acbd", "acdb"]
+    },
+    {
+      "case_id": 32,
+      "input": {
+        "queries": ["abcdefgh", "abcdefghi"],
+        "dictionary": ["abcdefgh", "abcdefghij", "abcdefghi", "abcdefghijj"]
+      },
+      "expected": ["abcdefgh", "abcdefghi"]
+    },
+    {
+      "case_id": 33,
+      "input": {
+        "queries": ["abcdefghij", "abcdefghij", "abcdefghij"],
+        "dictionary": ["abcdefghij", "abcdefghik", "abcdefghil", "abcdefghim", "abcdefghin"]
+      },
+      "expected": ["abcdefghij", "abcdefghij", "abcdefghij"]
+    },
+    {
+      "case_id": 34,
+      "input": {
+        "queries": ["abcdef", "ghijkl"],
+        "dictionary": ["abchef", "ghijkl", "abcdeg", "ghijkl", "abcfeg"]
+      },
+      "expected": ["abcdef", "ghijkl"]
+    },
+    {
+      "case_id": 35,
+      "input": {
+        "queries": ["algorithm", "data", "structure"],
+        "dictionary": ["algorith", "datq", "strcuture"]
+      },
+      "expected": ["algorithm", "data", "structure"]
+    },
+    {
+      "case_id": 36,
+      "input": {
+        "queries": ["abcdefghij", "jihgfedcba"],
+        "dictionary": ["abcdefghij", "jihgfedcba", "abcdefghij", "jihgfedcba"]
+      },
+      "expected": ["abcdefghij", "jihgfedcba"]
+    },
+    {
+      "case_id": 37,
+      "input": {
+        "queries": ["abcdefghij", "jihgfedcba"],
+        "dictionary": ["abcdefghij", "jihgfedcba", "abcdefghij", "abcdefghij"]
+      },
+      "expected": ["abcdefghij", "jihgfedcba"]
+    },
+    {
+      "case_id": 38,
+      "input": {
+        "queries": ["abcdefgh", "abceghij", "abcdefij"],
+        "dictionary": ["abcdefgh", "abceghij", "abcdefij", "abcdefgj"]
+      },
+      "expected": ["abcdefgh", "abceghij", "abcdefij"]
+    },
+    {
+      "case_id": 39,
+      "input": {
+        "queries": ["testcase", "unittest", "performance"],
+        "dictionary": ["testcases", "unitstest", "performence"]
+      },
+      "expected": ["testcase", "performance"]
+    },
+    {
+      "case_id": 40,
+      "input": {
+        "queries": ["abcdefghij", "klmnopqrst", "uvwxyz"],
+        "dictionary": ["abcdefghig", "klmnopqrsu", "uvwxyg"]
+      },
+      "expected": ["abcdefghij", "klmnopqrst", "uvwxyz"]
+    },
+    {
+      "case_id": 41,
+      "input": {
+        "queries": ["abcde", "edcba", "bacde"],
+        "dictionary": ["abcde", "edcba", "bacde", "cabed", "abcde", "edcba", "bacde", "cabed"]
+      },
+      "expected": ["abcde", "edcba", "bacde"]
+    },
+    {
+      "case_id": 42,
+      "input": {
+        "queries": ["sequence", "consequence", "subsequence"],
+        "dictionary": ["sequences", "consequense", "subsequense", "sequence"]
+      },
+      "expected": ["sequence", "consequence", "subsequence"]
+    },
+    {
+      "case_id": 43,
+      "input": {
+        "queries": ["abcdef", "ghijkl"],
+        "dictionary": ["abcgef", "ghikjl", "abcdef"]
+      },
+      "expected": ["abcdef", "ghijkl"]
+    },
+    {
+      "case_id": 44,
+      "input": {
+        "queries": ["abcd", "abce", "abcf"],
+        "dictionary": ["abcf", "abce", "abcc"]
+      },
+      "expected": ["abcd", "abce", "abcf"]
+    },
+    {
+      "case_id": 45,
+      "input": {
+        "queries": ["programming", "development", "debugging"],
+        "dictionary": ["proogramming", "develpopment", "debguggin"]
+      },
+      "expected": []
+    },
+    {
+      "case_id": 46,
+      "input": {
+        "queries": ["programming", "python"],
+        "dictionary": ["programmmg", "pythoon", "progrqmig"]
+      },
+      "expected": ["programming", "python"]
+    },
+    {
+      "case_id": 47,
+      "input": {
+        "queries": ["python", "pyhton", "pythpn"],
+        "dictionary": ["python", "pyhton", "pythpn", "pythun"]
+      },
+      "expected": ["python", "pyhton", "pythpn"]
+    },
+    {
+      "case_id": 48,
+      "input": {
+        "queries": ["cat", "bat", "rat"],
+        "dictionary": ["cap", "bap", "rap", "tap"]
+      },
+      "expected": ["cat", "bat", "rat"]
+    },
+    {
+      "case_id": 49,
+      "input": {
+        "queries": ["abcdefghij", "klmnopqrst"],
+        "dictionary": ["abcdefghij", "klmnopqrts", "abcdefghik", "klmnopqrst", "abcdefghim"]
+      },
+      "expected": ["abcdefghij", "klmnopqrst"]
+    },
+    {
+      "case_id": 50,
+      "input": {
+        "queries": ["programming", "programing", "progrmaing"],
+        "dictionary": ["programming", "programing", "progrmaing", "prograaming"]
+      },
+      "expected": ["programming", "programing", "progrmaing"]
+    },
+    {
+      "case_id": 51,
+      "input": {
+        "queries": ["kitten", "sitten", "bitten"],
+        "dictionary": ["sitten", "kitten", "biting", "bitten"]
+      },
+      "expected": ["kitten", "sitten", "bitten"]
+    },
+    {
+      "case_id": 52,
+      "input": {
+        "queries": ["test", "tast", "rest"],
+        "dictionary": ["best", "rest", "tast", "test"]
+      },
+      "expected": ["test", "tast", "rest"]
+    },
+    {
+      "case_id": 53,
+      "input": {
+        "queries": ["algorithm", "data", "structure"],
+        "dictionary": ["algorithim", "datum", "struckture"]
+      },
+      "expected": ["algorithm", "data"]
+    },
+    {
+      "case_id": 54,
+      "input": {
+        "queries": ["apple", "banana", "cherry"],
+        "dictionary": ["appla", "banna", "chhery"]
+      },
+      "expected": ["apple", "banana", "cherry"]
+    },
+    {
+      "case_id": 55,
+      "input": {
+        "queries": ["programming", "coding", "debugging"],
+        "dictionary": ["programing", "codding", "debagging"]
+      },
+      "expected": ["debugging"]
+    },
+    {
+      "case_id": 56,
+      "input": {
+        "queries": ["transform", "transforn", "tranformt"],
+        "dictionary": ["transfarm", "transform", "transfurm"]
+      },
+      "expected": ["transform", "transforn"]
+    },
+    {
+      "case_id": 57,
+      "input": {
+        "queries": ["mississippi", "delaware", "rhodeisland"],
+        "dictionary": ["mississipp", "delawere", "rhodeiland"]
+      },
+      "expected": ["mississippi", "delaware"]
+    },
+    {
+      "case_id": 58,
+      "input": {
+        "queries": ["abcdef", "ghijkl", "mnopqr", "stuvwx"],
+        "dictionary": ["abcdef", "ghijkl", "mnopqr", "stuvwx"]
+      },
+      "expected": ["abcdef", "ghijkl", "mnopqr", "stuvwx"]
+    },
+    {
+      "case_id": 59,
+      "input": {
+        "queries": ["hello", "hallo", "hxllo"],
+        "dictionary": ["hallo", "hell", "hxllo", "hxllx"]
+      },
+      "expected": ["hello", "hallo", "hxllo"]
+    },
+    {
+      "case_id": 60,
+      "input": {
+        "queries": ["kitten", "sitting", "flask"],
+        "dictionary": ["kitchen", "sitting", "fask"]
+      },
+      "expected": ["kitten", "sitting"]
+    },
+    {
+      "case_id": 61,
+      "input": {
+        "queries": ["abcdefghij", "abcdefghik", "abcdefghil"],
+        "dictionary": ["abcdefghio", "abcdefghij", "abcdefghim"]
+      },
+      "expected": ["abcdefghij", "abcdefghik", "abcdefghil"]
+    },
+    {
+      "case_id": 62,
+      "input": {
+        "queries": ["qwertyuiop", "asdfghjklz", "xcvbnm"],
+        "dictionary": ["qwertyuioz", "asdfghjklx", "xcvbnml"]
+      },
+      "expected": ["qwertyuiop", "asdfghjklz", "xcvbnm"]
+    },
+    {
+      "case_id": 63,
+      "input": {
+        "queries": ["algorithm", "algorith", "algoritm"],
+        "dictionary": ["algorithm", "algorith", "algoritm", "algorithn", "aloritum"]
+      },
+      "expected": ["algorithm", "algorith", "algoritm"]
+    },
+    {
+      "case_id": 64,
+      "input": {
+        "queries": ["elephant", "giraffe", "hippopotamus"],
+        "dictionary": ["elephont", "giraff", "hippopotamuse", "elephant"]
+      },
+      "expected": ["elephant", "giraffe", "hippopotamus"]
+    },
+    {
+      "case_id": 65,
+      "input": {
+        "queries": ["apple", "apply", "pally"],
+        "dictionary": ["appel", "abble", "appie"]
+      },
+      "expected": ["apple", "apply"]
+    },
+    {
+      "case_id": 66,
+      "input": {
+        "queries": ["zzzzzz", "yyyyyy", "xxxxxx"],
+        "dictionary": ["zzzzzz", "yyyyyy", "xxxxxx", "wwwwww", "vvvvvv", "uuuuuu", "tttttt"]
+      },
+      "expected": ["zzzzzz", "yyyyyy", "xxxxxx"]
+    },
+    {
+      "case_id": 67,
+      "input": {
+        "queries": ["apple", "apply", "pally"],
+        "dictionary": ["appla", "appli", "apple", "pally", "polly"]
+      },
+      "expected": ["apple", "apply", "pally"]
+    },
+    {
+      "case_id": 68,
+      "input": {
+        "queries": ["apple", "apply", "appla"],
+        "dictionary": ["apple", "apply", "appel", "appla"]
+      },
+      "expected": ["apple", "apply", "appla"]
+    },
+    {
+      "case_id": 69,
+      "input": {
+        "queries": ["aaaaaa", "bbbbbb", "cccccc"],
+        "dictionary": ["aaaaab", "bbbbc", "cccccd"]
+      },
+      "expected": ["aaaaaa", "bbbbbb", "cccccc"]
+    },
+    {
+      "case_id": 70,
+      "input": {
+        "queries": ["kitten", "sitting"],
+        "dictionary": ["sitting", "kitten", "bitten", "biting"]
+      },
+      "expected": ["kitten", "sitting"]
+    },
+    {
+      "case_id": 71,
+      "input": {
+        "queries": ["abcdef", "ghijkl", "mnopqr", "stuvwx", "yzabcd"],
+        "dictionary": ["abcdeg", "ghijkm", "mnopqs", "stuvwx", "yzabcd"]
+      },
+      "expected": ["abcdef", "ghijkl", "mnopqr", "stuvwx", "yzabcd"]
+    },
+    {
+      "case_id": 72,
+      "input": {
+        "queries": ["abcdefgh", "hgfedcba", "abcdefgh"],
+        "dictionary": ["abcdefgh", "hgfedcba", "zyxwvuts", "qrstuvwx"]
+      },
+      "expected": ["abcdefgh", "hgfedcba", "abcdefgh"]
+    },
+    {
+      "case_id": 73,
+      "input": {
+        "queries": ["kitten", "sitting", "kitten"],
+        "dictionary": ["sitting", "kitten", "bitten", "kettle"]
+      },
+      "expected": ["kitten", "sitting", "kitten"]
+    },
+    {
+      "case_id": 74,
+      "input": {
+        "queries": ["abcdefghijk", "lmnopqrstuv"],
+        "dictionary": ["abcdefghij", "lmnopqrstv", "abcdefghijk", "lmnopqrstuv", "abcdefghikl"]
+      },
+      "expected": ["abcdefghijk", "lmnopqrstuv"]
+    },
+    {
+      "case_id": 75,
+      "input": {
+        "queries": ["abcdefghij", "abcdefghij", "abcdefghij"],
+        "dictionary": ["abcdefghij", "abcdefghij", "abcdefghij", "abcdefghij", "abcdefghij"]
+      },
+      "expected": ["abcdefghij", "abcdefghij", "abcdefghij"]
+    },
+    {
+      "case_id": 76,
+      "input": {
+        "queries": ["unbelievable", "incredible", "believable"],
+        "dictionary": ["unbelieveble", "incredibile", "believeble"]
+      },
+      "expected": ["unbelievable", "incredible", "believable"]
+    },
+    {
+      "case_id": 77,
+      "input": {
+        "queries": ["abcde", "fghij", "klmno"],
+        "dictionary": ["abxde", "fghij", "klmnp"]
+      },
+      "expected": ["abcde", "fghij", "klmno"]
+    },
+    {
+      "case_id": 78,
+      "input": {
+        "queries": ["repetition", "repetitions", "repetitive"],
+        "dictionary": ["repetion", "repetitons", "repetite"]
+      },
+      "expected": ["repetition", "repetitions", "repetitive"]
+    },
+    {
+      "case_id": 79,
+      "input": {
+        "queries": ["apple", "apply", "appla"],
+        "dictionary": ["appel", "apply", "ample"]
+      },
+      "expected": ["apple", "apply", "appla"]
+    },
+    {
+      "case_id": 80,
+      "input": {
+        "queries": ["abcdefgh", "abcdefgh", "abcdefgh"],
+        "dictionary": ["abcdefgh", "abcdefgh", "abcdefgh", "abcdefgh", "abcdefgh"]
+      },
+      "expected": ["abcdefgh", "abcdefgh", "abcdefgh"]
+    },
+    {
+      "case_id": 81,
+      "input": {
+        "queries": ["abcdef", "ghijkl", "mnopqr"],
+        "dictionary": ["abcdeg", "ghikjl", "mnopqg"]
+      },
+      "expected": ["abcdef", "ghijkl", "mnopqr"]
+    },
+    {
+      "case_id": 82,
+      "input": {
+        "queries": ["abcdef", "abcdeg", "abcdeh"],
+        "dictionary": ["abcdef", "abcdeg", "abcdeh", "abcdei"]
+      },
+      "expected": ["abcdef", "abcdeg", "abcdeh"]
+    },
+    {
+      "case_id": 83,
+      "input": {
+        "queries": ["aabbcc", "ddeeff", "gghhii"],
+        "dictionary": ["aabbcc", "ddeeff", "gghhij"]
+      },
+      "expected": ["aabbcc", "ddeeff", "gghhii"]
+    },
+    {
+      "case_id": 84,
+      "input": {
+        "queries": ["abcdefgh", "hgfedcba"],
+        "dictionary": ["abcdefgh", "hgfedcba", "abcdefgh"]
+      },
+      "expected": ["abcdefgh", "hgfedcba"]
+    },
+    {
+      "case_id": 85,
+      "input": {
+        "queries": ["kitten", "sitting", "flask"],
+        "dictionary": ["kitchen", "kitten", "flasky"]
+      },
+      "expected": ["kitten", "sitting", "flask"]
+    },
+    {
+      "case_id": 86,
+      "input": {
+        "queries": ["cat", "dog", "rat"],
+        "dictionary": ["bat", "bag", "rat", "tag"]
+      },
+      "expected": ["cat", "dog", "rat"]
+    },
+    {
+      "case_id": 87,
+      "input": {
+        "queries": ["abcdef", "ghijkl"],
+        "dictionary": ["fedcba", "lkjihg", "abcdeg", "ghijkl", "mnopqr", "stuvwx", "yzabcd"]
+      },
+      "expected": ["abcdef", "ghijkl"]
+    },
+    {
+      "case_id": 88,
+      "input": {
+        "queries": ["aaaaaaaaaa", "bbbbbbbbbb", "cccccccccc"],
+        "dictionary": ["aaaaaaaaaa", "aaaaaaaabb", "aaaaaaabbb", "aaaaaabbbb", "aaaaabbbbb", "aaaabbbbbb", "aabbbbbbbb", "abbbbbbbbb", "bbbbbbbbbb"]
+      },
+      "expected": ["aaaaaaaaaa", "bbbbbbbbbb"]
+    },
+    {
+      "case_id": 89,
+      "input": {
+        "queries": ["abcdefghij", "abcdefghik"],
+        "dictionary": ["abcdefghix", "abcdefghiy", "abcdefghij"]
+      },
+      "expected": ["abcdefghij", "abcdefghik"]
+    },
+    {
+      "case_id": 90,
+      "input": {
+        "queries": ["abcdef", "ghijkl", "mnopqr"],
+        "dictionary": ["abcdej", "ghijkl", "mnopqr", "mnopqs", "mnopqt"]
+      },
+      "expected": ["abcdef", "ghijkl", "mnopqr"]
+    },
+    {
+      "case_id": 91,
+      "input": {
+        "queries": ["dictionary", "queries", "solution"],
+        "dictionary": ["dictionry", "querries", "soultion"]
+      },
+      "expected": ["dictionary", "solution"]
+    },
+    {
+      "case_id": 92,
+      "input": {
+        "queries": ["abcdef", "ghijkl", "mnopqr"],
+        "dictionary": ["abcdef", "ghijkl", "mnopqt"]
+      },
+      "expected": ["abcdef", "ghijkl", "mnopqr"]
+    },
+    {
+      "case_id": 93,
+      "input": {
+        "queries": ["mississippi", "mississipp", "mississippa"],
+        "dictionary": ["mississippi", "mississippa", "mississippb"]
+      },
+      "expected": ["mississippi", "mississipp", "mississippa"]
+    },
+    {
+      "case_id": 94,
+      "input": {
+        "queries": ["abcdefg", "hijklmn", "opqrstu"],
+        "dictionary": ["abcdefg", "hijklmn", "opqrsuv"]
+      },
+      "expected": ["abcdefg", "hijklmn", "opqrstu"]
+    },
+    {
+      "case_id": 95,
+      "input": {
+        "queries": ["abcdefgh", "abcdefgh"],
+        "dictionary": ["abcdwxyz", "abcdefgz", "abcdefgh"]
+      },
+      "expected": ["abcdefgh", "abcdefgh"]
+    },
+    {
+      "case_id": 96,
+      "input": {
+        "queries": ["qwerty", "asdfgh", "zxcvbn"],
+        "dictionary": ["qwerty", "qwertr", "asdwgh", "zxcvbn", "qwertx"]
+      },
+      "expected": ["qwerty", "asdfgh", "zxcvbn"]
+    },
+    {
+      "case_id": 97,
+      "input": {
+        "queries": ["aaaaaa", "bbbbbb", "cccccc"],
+        "dictionary": ["aaaaaa", "bbbbbb", "cccccc", "dddddd", "eeeeee", "ffffff"]
+      },
+      "expected": ["aaaaaa", "bbbbbb", "cccccc"]
+    },
+    {
+      "case_id": 98,
+      "input": {
+        "queries": ["abcdefghij", "jihgfedcba", "abcdefghij"],
+        "dictionary": ["abcdefghij", "jihgfedcba", "abcdefghji", "jihgfedcbj", "abcdefghii", "jihgfedcbi"]
+      },
+      "expected": ["abcdefghij", "jihgfedcba", "abcdefghij"]
+    },
+    {
+      "case_id": 99,
+      "input": {
+        "queries": ["abcdefgh", "abcdefgh"],
+        "dictionary": ["abcdefgh", "abcdefgh", "abcdefgh", "abcdefgh"]
+      },
+      "expected": ["abcdefgh", "abcdefgh"]
+    },
+    {
+      "case_id": 100,
+      "input": {
+        "queries": ["algorithm", "alorithgm", "alohrithm"],
+        "dictionary": ["algorithm", "alorithgm", "alohrithm", "aloritrhm"]
+      },
+      "expected": ["algorithm", "alorithgm", "alohrithm"]
+    },
+    {
+      "case_id": 101,
+      "input": {
+        "queries": ["programming", "prograiming", "prograimng"],
+        "dictionary": ["programming", "prograiming", "prograimng", "prograimnig"]
+      },
+      "expected": ["programming", "prograiming", "prograimng"]
+    },
+    {
+      "case_id": 102,
+      "input": {
+        "queries": ["education", "educatiom", "educatiin"],
+        "dictionary": ["education", "educatiom", "educatiin", "educatiomn"]
+      },
+      "expected": ["education", "educatiom", "educatiin"]
+    },
+    {
+      "case_id": 103,
+      "input": {
+        "queries": ["abcdef", "ghijkl", "mnopqr", "stuvwx", "yzabcd"],
+        "dictionary": ["abcdefg", "ghijklm", "nopqrs", "stuvwxy", "yzabcdf"]
+      },
+      "expected": ["abcdef", "ghijkl", "stuvwx", "yzabcd"]
+    },
+    {
+      "case_id": 104,
+      "input": {
+        "queries": ["compiler", "comipler", "comipler"],
+        "dictionary": ["compiler", "comipler", "compilir", "comiplir"]
+      },
+      "expected": ["compiler", "comipler", "comipler"]
+    },
+    {
+      "case_id": 105,
+      "input": {
+        "queries": ["zzzzz", "yyyyy", "xxxxx"],
+        "dictionary": ["zzzzz", "xyzyx", "zxyxz"]
+      },
+      "expected": ["zzzzz"]
+    },
+    {
+      "case_id": 106,
+      "input": {
+        "queries": ["zxywvutsrqponmlkjihgfedcba"],
+        "dictionary": ["zyxwvutsrqponmlkjihgfedcba", "zxywvutsrqponmlkjihgfedcbb"]
+      },
+      "expected": ["zxywvutsrqponmlkjihgfedcba"]
+    },
+    {
+      "case_id": 107,
+      "input": {
+        "queries": ["programming", "language"],
+        "dictionary": ["progrgmmg", "langauge", "programming"]
+      },
+      "expected": ["programming", "language"]
+    },
+    {
+      "case_id": 108,
+      "input": {
+        "queries": ["apple", "apply", "ample"],
+        "dictionary": ["ample", "appli", "appel"]
+      },
+      "expected": ["apple", "apply", "ample"]
+    },
+    {
+      "case_id": 109,
+      "input": {
+        "queries": ["kitten", "sitting"],
+        "dictionary": ["kitten", "sitting", "biting", "kiting", "kitting"]
+      },
+      "expected": ["kitten", "sitting"]
+    },
+    {
+      "case_id": 110,
+      "input": {
+        "queries": ["abcdef", "ghijkl", "mnopqr", "stuvwx", "yzabcd"],
+        "dictionary": ["abcdef", "ghijkl", "mnopqr", "stuvwx", "yzabcd"]
+      },
+      "expected": ["abcdef", "ghijkl", "mnopqr", "stuvwx", "yzabcd"]
+    },
+    {
+      "case_id": 111,
+      "input": {
+        "queries": ["algorithm", "algorith", "algoritm"],
+        "dictionary": ["algorithm", "algorith", "algoritm", "algorimt"]
+      },
+      "expected": ["algorithm", "algorith", "algoritm"]
+    },
+    {
+      "case_id": 112,
+      "input": {
+        "queries": ["aaaaaa", "bbbbbb", "cccccc"],
+        "dictionary": ["aabbaa", "bbccbb", "ccddcc"]
+      },
+      "expected": ["aaaaaa", "bbbbbb", "cccccc"]
+    },
+    {
+      "case_id": 113,
+      "input": {
+        "queries": ["abcdefghij", "abcdefghij", "abcdefghij"],
+        "dictionary": ["abcdefghij", "abcdefghij", "abcdefghij", "abcdefghij", "abcdefghij", "abcdefghij", "abcdefghij"]
+      },
+      "expected": ["abcdefghij", "abcdefghij", "abcdefghij"]
+    },
+    {
+      "case_id": 114,
+      "input": {
+        "queries": ["sunshine", "rainbow", "cloud"],
+        "dictionary": ["sunshn", "rainbw", "clodu"]
+      },
+      "expected": ["sunshine", "rainbow", "cloud"]
+    }
+  ]
+}

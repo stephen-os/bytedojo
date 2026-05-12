@@ -1,0 +1,917 @@
+{
+  "schema_version": 1,
+  "problem_id": 2075,
+  "title": "Decode the Slanted Ciphertext",
+  "method": "decodeCiphertext",
+  "signature": {
+    "params": [
+      {
+        "name": "encodedText",
+        "type": "STRING"
+      },
+      {
+        "name": "rows",
+        "type": "INT32"
+      }
+    ],
+    "returns": "STRING"
+  },
+  "cases": [
+    {
+      "case_id": 1,
+      "input": {
+        "encodedText": "a",
+        "rows": 1
+      },
+      "expected": "a"
+    },
+    {
+      "case_id": 2,
+      "input": {
+        "encodedText": "abcd efg hijk",
+        "rows": 3
+      },
+      "expected": "aeibfjcgd"
+    },
+    {
+      "case_id": 3,
+      "input": {
+        "encodedText": "a   b   c   d",
+        "rows": 2
+      },
+      "expected": "a  c    b"
+    },
+    {
+      "case_id": 4,
+      "input": {
+        "encodedText": "coding",
+        "rows": 1
+      },
+      "expected": "coding"
+    },
+    {
+      "case_id": 5,
+      "input": {
+        "encodedText": "abc def ghi jkl mno",
+        "rows": 5
+      },
+      "expected": "adgbec"
+    },
+    {
+      "case_id": 6,
+      "input": {
+        "encodedText": "ab c  de",
+        "rows": 2
+      },
+      "expected": "a bd ec"
+    },
+    {
+      "case_id": 7,
+      "input": {
+        "encodedText": "ch   ie   pr",
+        "rows": 3
+      },
+      "expected": "cipher"
+    },
+    {
+      "case_id": 8,
+      "input": {
+        "encodedText": "iveo    eed   l te   olc",
+        "rows": 4
+      },
+      "expected": "i love leetcode"
+    },
+    {
+      "case_id": 9,
+      "input": {
+        "encodedText": "python programming is fun",
+        "rows": 4
+      },
+      "expected": "ppm yriftonuhggorn"
+    },
+    {
+      "case_id": 10,
+      "input": {
+        "encodedText": "algorithms and data structures",
+        "rows": 5
+      },
+      "expected": "ah telmdrsgsauo trai"
+    },
+    {
+      "case_id": 11,
+      "input": {
+        "encodedText": "hello world  from    leetcode     challenges",
+        "rows": 6
+      },
+      "expected": "hrmt nel c gld ocl  do   fw"
+    },
+    {
+      "case_id": 12,
+      "input": {
+        "encodedText": "t a c o s e q u i r r e s e l l   f o o d   s o u p",
+        "rows": 5
+      },
+      "expected": "t e s q f a s o u o c e u i o o l  r s"
+    },
+    {
+      "case_id": 13,
+      "input": {
+        "encodedText": "one    two    three    four    five    six",
+        "rows": 3
+      },
+      "expected": "oh nrfeei ev  e      t  wf oos ui rx"
+    },
+    {
+      "case_id": 14,
+      "input": {
+        "encodedText": "programming challenges are fun",
+        "rows": 4
+      },
+      "expected": "pilrrneeogn g gfrceahm"
+    },
+    {
+      "case_id": 15,
+      "input": {
+        "encodedText": "filling   the   matrix   in   a   slanted   manner",
+        "rows": 6
+      },
+      "expected": "f t aaitr nnlhi tnlexaei   n  g"
+    },
+    {
+      "case_id": 16,
+      "input": {
+        "encodedText": "p y trh    e  t s    o    n    a",
+        "rows": 3
+      },
+      "expected": "pe    y   t t nrs h"
+    },
+    {
+      "case_id": 17,
+      "input": {
+        "encodedText": "m e t a l l i c a",
+        "rows": 3
+      },
+      "expected": "mai   elc  t"
+    },
+    {
+      "case_id": 18,
+      "input": {
+        "encodedText": "",
+        "rows": 10
+      },
+      "expected": null
+    },
+    {
+      "case_id": 19,
+      "input": {
+        "encodedText": "padding   with   spaces   at   the   end     ",
+        "rows": 5
+      },
+      "expected": "pwc  aiet dtsh dh e i    n   g a s"
+    },
+    {
+      "case_id": 20,
+      "input": {
+        "encodedText": "a    b    c    d    e    f    g    h    i",
+        "rows": 9
+      },
+      "expected": "abcd"
+    },
+    {
+      "case_id": 21,
+      "input": {
+        "encodedText": "qo   su   me   ve   rt",
+        "rows": 5
+      },
+      "expected": "qsmvoue"
+    },
+    {
+      "case_id": 22,
+      "input": {
+        "encodedText": "sh jfuew xq  z   r e",
+        "rows": 3
+      },
+      "expected": "sw h   x jqrf u"
+    },
+    {
+      "case_id": 23,
+      "input": {
+        "encodedText": "this  is a   test  string",
+        "rows": 5
+      },
+      "expected": "ti  ghstsi esa"
+    },
+    {
+      "case_id": 24,
+      "input": {
+        "encodedText": "abcdef ghijkl mnopqr stuvwx yz",
+        "rows": 5
+      },
+      "expected": "agmsybhntzcioudjpekf"
+    },
+    {
+      "case_id": 25,
+      "input": {
+        "encodedText": "a quick brown fox jumps over the lazy dog",
+        "rows": 6
+      },
+      "expected": "a fp z bostqrx uo iwc"
+    },
+    {
+      "case_id": 26,
+      "input": {
+        "encodedText": "wcy  hmu  eai  xfi",
+        "rows": 3
+      },
+      "expected": "wu c xy f ei ah"
+    },
+    {
+      "case_id": 27,
+      "input": {
+        "encodedText": "two words",
+        "rows": 1
+      },
+      "expected": "two words"
+    },
+    {
+      "case_id": 28,
+      "input": {
+        "encodedText": "th qzih xof  c ",
+        "rows": 3
+      },
+      "expected": "th h c x qoz"
+    },
+    {
+      "case_id": 29,
+      "input": {
+        "encodedText": "ab  c   d    e     f      g       h        i         j",
+        "rows": 10
+      },
+      "expected": "a    b ef d   c"
+    },
+    {
+      "case_id": 30,
+      "input": {
+        "encodedText": "programming in python is fun",
+        "rows": 3
+      },
+      "expected": "pgnr  oiignsr  apfmyumti"
+    },
+    {
+      "case_id": 31,
+      "input": {
+        "encodedText": "spaces   in   between   words",
+        "rows": 4
+      },
+      "expected": "s twpiwoanerc ede ns"
+    },
+    {
+      "case_id": 32,
+      "input": {
+        "encodedText": "qjewukcuvm xs   ezmrg",
+        "rows": 4
+      },
+      "expected": "qcsmju rev wmu"
+    },
+    {
+      "case_id": 33,
+      "input": {
+        "encodedText": "this is a longer example to test the decoding function",
+        "rows": 8
+      },
+      "expected": "t epteharlei  esle oi"
+    },
+    {
+      "case_id": 34,
+      "input": {
+        "encodedText": "q w   e r   t y   u i   o p",
+        "rows": 4
+      },
+      "expected": "q y  r  w"
+    },
+    {
+      "case_id": 35,
+      "input": {
+        "encodedText": "a    q    o    q    r    s",
+        "rows": 6
+      },
+      "expected": "aqoq"
+    },
+    {
+      "case_id": 36,
+      "input": {
+        "encodedText": "abcdefghi jklmnop qrstuv wx yz",
+        "rows": 5
+      },
+      "expected": "ahntybiouzc pvdj ekf"
+    },
+    {
+      "case_id": 37,
+      "input": {
+        "encodedText": "i s l a n d   o f   d r e a m s",
+        "rows": 3
+      },
+      "expected": "i r   s e o l a f a m   n"
+    },
+    {
+      "case_id": 38,
+      "input": {
+        "encodedText": "s h e e l  s  s  f  i  r  e",
+        "rows": 5
+      },
+      "expected": "se       hls  e"
+    },
+    {
+      "case_id": 39,
+      "input": {
+        "encodedText": "abc def ghi jkl mno pqr stu vwx yz",
+        "rows": 6
+      },
+      "expected": "afjosb k cgl hd"
+    },
+    {
+      "case_id": 40,
+      "input": {
+        "encodedText": "hello   world   this   is   a   test",
+        "rows": 5
+      },
+      "expected": "hwtsteoh elri slls od"
+    },
+    {
+      "case_id": 41,
+      "input": {
+        "encodedText": "c o n s t a n t i n o p o l i s",
+        "rows": 6
+      },
+      "expected": "csnno    ott  n"
+    },
+    {
+      "case_id": 42,
+      "input": {
+        "encodedText": "a b c d e f g h i j k l m n o p q r s t u v w x y z",
+        "rows": 5
+      },
+      "expected": "a l w g r b m x h s c n y i t d o  j e"
+    },
+    {
+      "case_id": 43,
+      "input": {
+        "encodedText": "this is a test of the emergency broadcast system",
+        "rows": 6
+      },
+      "expected": "t tedththnceieecamss ys te i mso"
+    },
+    {
+      "case_id": 44,
+      "input": {
+        "encodedText": "x w v u t s r q p o n m l k j i h g f e d c b a",
+        "rows": 26
+      },
+      "expected": "x"
+    },
+    {
+      "case_id": 45,
+      "input": {
+        "encodedText": "keep it secret keep it safe",
+        "rows": 6
+      },
+      "expected": "kicketre p"
+    },
+    {
+      "case_id": 46,
+      "input": {
+        "encodedText": "a    b   c  d e f g h i j k l m n o p q r s t u v w x y z",
+        "rows": 26
+      },
+      "expected": "a"
+    },
+    {
+      "case_id": 47,
+      "input": {
+        "encodedText": "hello world from the other side",
+        "rows": 4
+      },
+      "expected": "hr eeltrldh l esof  rw"
+    },
+    {
+      "case_id": 48,
+      "input": {
+        "encodedText": "data structures and algorithms",
+        "rows": 8
+      },
+      "expected": "d uast"
+    },
+    {
+      "case_id": 49,
+      "input": {
+        "encodedText": "abcdefghij klmnopqrst uvwxyz",
+        "rows": 3
+      },
+      "expected": "a tbk cludmvenwfoxgpyhqi"
+    },
+    {
+      "case_id": 50,
+      "input": {
+        "encodedText": "singleword",
+        "rows": 10
+      },
+      "expected": "s"
+    },
+    {
+      "case_id": 51,
+      "input": {
+        "encodedText": "the quick brown fox jumps over the lazy dog",
+        "rows": 6
+      },
+      "expected": "tkfshdh o eoebxo  r vqojuwi"
+    },
+    {
+      "case_id": 52,
+      "input": {
+        "encodedText": "thisisaverylongstringthatwillbereconstructedusingtheslantedciphertechnique",
+        "rows": 7
+      },
+      "expected": "tlhcunehoaostcintniehsgwsndnisitgcstlrtarluvibenr"
+    },
+    {
+      "case_id": 53,
+      "input": {
+        "encodedText": "one",
+        "rows": 1
+      },
+      "expected": "one"
+    },
+    {
+      "case_id": 54,
+      "input": {
+        "encodedText": "z y x w v u t s r q p o n m l k j i h g f e d c b a",
+        "rows": 5
+      },
+      "expected": "z o d t i y n c s h x m b r g w l  q v"
+    },
+    {
+      "case_id": 55,
+      "input": {
+        "encodedText": "t h e q u i c k b r o w n   f o x   j u m p s   o v e r   t h e   l a z y   d o g",
+        "rows": 7
+      },
+      "expected": "tcnjohy       hk uve        ebfme d      qropr    uox  i"
+    },
+    {
+      "case_id": 56,
+      "input": {
+        "encodedText": "abcdefgh ijklmnop qrstuvwx yz      this is a test",
+        "rows": 5
+      },
+      "expected": "ajs ibkt sclu  dmv aenw  foxtgp h"
+    },
+    {
+      "case_id": 57,
+      "input": {
+        "encodedText": "a quick movement of the enemy will jeopardize five gunboats",
+        "rows": 7
+      },
+      "expected": "aofme b v yofoqet piumhwaieeicn kt"
+    },
+    {
+      "case_id": 58,
+      "input": {
+        "encodedText": "slantedtranspositioncipheriscomplexandfun",
+        "rows": 7
+      },
+      "expected": "sdpoeltonarsnat"
+    },
+    {
+      "case_id": 59,
+      "input": {
+        "encodedText": "one two three four five six seven eight nine ten eleven twelve",
+        "rows": 4
+      },
+      "expected": "oun nr ee el fietigvwvheoetn    tsnthiiwrxnee eles  ef"
+    },
+    {
+      "case_id": 60,
+      "input": {
+        "encodedText": "abcdefghij",
+        "rows": 1
+      },
+      "expected": "abcdefghij"
+    },
+    {
+      "case_id": 61,
+      "input": {
+        "encodedText": "x    y     z      ",
+        "rows": 3
+      },
+      "expected": "x            zy"
+    },
+    {
+      "case_id": 62,
+      "input": {
+        "encodedText": "machine learning is fascinating",
+        "rows": 7
+      },
+      "expected": "mnagaerc h"
+    },
+    {
+      "case_id": 63,
+      "input": {
+        "encodedText": "lqtk e o mu yzfe ot i g rya wne l oxtesn gdeo",
+        "rows": 5
+      },
+      "expected": "luie q   gtygldkz  e frooeeyx  aoo"
+    },
+    {
+      "case_id": 64,
+      "input": {
+        "encodedText": "p r o g r a m m i n g   l a n g u a g e s",
+        "rows": 5
+      },
+      "expected": "p n g a n r g e m g o    m g"
+    },
+    {
+      "case_id": 65,
+      "input": {
+        "encodedText": "wecoloveleetcode",
+        "rows": 2
+      },
+      "expected": "weeectocloodvee"
+    },
+    {
+      "case_id": 66,
+      "input": {
+        "encodedText": "example     of    a    very    long    encoded    text",
+        "rows": 7
+      },
+      "expected": "e  eon x  rnca aygm   po lfe"
+    },
+    {
+      "case_id": 67,
+      "input": {
+        "encodedText": "longer text with multiple spaces in between",
+        "rows": 3
+      },
+      "expected": "lheo snm guielnrt  ibtpeeltxewt e sewpi"
+    },
+    {
+      "case_id": 68,
+      "input": {
+        "encodedText": "it wof  eit   ss dp",
+        "rows": 4
+      },
+      "expected": "iftst    w"
+    },
+    {
+      "case_id": 69,
+      "input": {
+        "encodedText": "a      b      c      d      e",
+        "rows": 5
+      },
+      "expected": "a     b    c"
+    },
+    {
+      "case_id": 70,
+      "input": {
+        "encodedText": "abcd efgh ijkl mnop qrst uvwx yz",
+        "rows": 5
+      },
+      "expected": "ag rxbhms c ntdio je"
+    },
+    {
+      "case_id": 71,
+      "input": {
+        "encodedText": "the quick brown fox jumps over lazy dogs",
+        "rows": 4
+      },
+      "expected": "trmzhopyews  n dq ooufvgioescxrk"
+    },
+    {
+      "case_id": 72,
+      "input": {
+        "encodedText": "special    characters    !@#$%^&*() are    allowed    in    the    text",
+        "rows": 10
+      },
+      "expected": "s c * ep t!( e e@)ccr#ihsaal"
+    },
+    {
+      "case_id": 73,
+      "input": {
+        "encodedText": "thisisaverylongtextthatneedstobeencodedusingaslantedtranspositioncipher",
+        "rows": 8
+      },
+      "expected": "trtsdsaohyttelnilhodasoabuintesgnatv"
+    },
+    {
+      "case_id": 74,
+      "input": {
+        "encodedText": "spaces    are   handled   correctly",
+        "rows": 5
+      },
+      "expected": "s h tp a laancycrdoeels"
+    },
+    {
+      "case_id": 75,
+      "input": {
+        "encodedText": "f l e x i b l e   r e s o u r c e s",
+        "rows": 5
+      },
+      "expected": "fi oe     lbrus    ele  x"
+    },
+    {
+      "case_id": 76,
+      "input": {
+        "encodedText": "t h e   q u i c k   b r o w n   f o x   j u m p s   o v e r   l a z y   d o g s",
+        "rows": 3
+      },
+      "expected": "t v n h e   e r f     o q l x u a   i z j c y u k   m   d p b o s r g   o"
+    },
+    {
+      "case_id": 77,
+      "input": {
+        "encodedText": "a    b     c      d       e        f         g          h           i",
+        "rows": 9
+      },
+      "expected": "a              de  c     b"
+    },
+    {
+      "case_id": 78,
+      "input": {
+        "encodedText": "python programming is fun",
+        "rows": 3
+      },
+      "expected": "po ygitrsha omfnmu ip"
+    },
+    {
+      "case_id": 79,
+      "input": {
+        "encodedText": "spaces   between   words   are   preserved",
+        "rows": 3
+      },
+      "expected": "sn p  a  c pewrsoe rs de srb ve et dwae"
+    },
+    {
+      "case_id": 80,
+      "input": {
+        "encodedText": "keep calm and code on",
+        "rows": 2
+      },
+      "expected": "knede pc ocdael mo"
+    },
+    {
+      "case_id": 81,
+      "input": {
+        "encodedText": "abcdefgh ijklmnop qrstuv wxyz",
+        "rows": 4
+      },
+      "expected": "a p bi wcjqxdkryelsfmg"
+    },
+    {
+      "case_id": 82,
+      "input": {
+        "encodedText": "decoding slanted transposition cipher is challenging",
+        "rows": 7
+      },
+      "expected": "d  si gestipcclrthoaaidnnitn"
+    },
+    {
+      "case_id": 83,
+      "input": {
+        "encodedText": "a quick brown fox jumps over the lazy dog",
+        "rows": 3
+      },
+      "expected": "af  otqxhu eij culkma pzbsyr  oodwvn"
+    },
+    {
+      "case_id": 84,
+      "input": {
+        "encodedText": "the quick brown fox jumps over the lazy dog and then some more text to fill",
+        "rows": 8
+      },
+      "expected": "tbj der hrutonefeomhg   wpe sqns au  lifocok"
+    },
+    {
+      "case_id": 85,
+      "input": {
+        "encodedText": "empty string test",
+        "rows": 1
+      },
+      "expected": "empty string test"
+    },
+    {
+      "case_id": 86,
+      "input": {
+        "encodedText": "u p   d o w n   w i d e   t h i n g s",
+        "rows": 4
+      },
+      "expected": "uwdi    pnen       g    dwt  o"
+    },
+    {
+      "case_id": 87,
+      "input": {
+        "encodedText": "this is a test of the emergency broadcast system",
+        "rows": 5
+      },
+      "expected": "tteythe   isebsstmry  eosiorasfg  a"
+    },
+    {
+      "case_id": 88,
+      "input": {
+        "encodedText": "shorttext",
+        "rows": 1
+      },
+      "expected": "shorttext"
+    },
+    {
+      "case_id": 89,
+      "input": {
+        "encodedText": "a quick brown fox jumps over the lazy dog",
+        "rows": 5
+      },
+      "expected": "arjry ou  qwmtdunphoi secf ko"
+    },
+    {
+      "case_id": 90,
+      "input": {
+        "encodedText": "a   bcd efgh  ijklm nopqrst uvwxy z",
+        "rows": 5
+      },
+      "expected": "aekry fls  gmtz h  b nc d"
+    },
+    {
+      "case_id": 91,
+      "input": {
+        "encodedText": "one two three four five six seven eight nine ten",
+        "rows": 4
+      },
+      "expected": "o x nf neosi uentrvew e ofnt i etvenheir e"
+    },
+    {
+      "case_id": 92,
+      "input": {
+        "encodedText": "a    b    c    d    e",
+        "rows": 5
+      },
+      "expected": "abcd"
+    },
+    {
+      "case_id": 93,
+      "input": {
+        "encodedText": "thisisaverylongtextthatneedstobeencodedproperly",
+        "rows": 6
+      },
+      "expected": "teeeerhrxenoiytdcsltsiohsna"
+    },
+    {
+      "case_id": 94,
+      "input": {
+        "encodedText": "the quick brown fox jumps over a lazy dog",
+        "rows": 3
+      },
+      "expected": "tneh ref  oaqx u lijacuzkmy p bsdr o"
+    },
+    {
+      "case_id": 95,
+      "input": {
+        "encodedText": "one two    three four    five six seven",
+        "rows": 3
+      },
+      "expected": "oeene e s fitoxwu ors  e  v  e  ntfh"
+    },
+    {
+      "case_id": 96,
+      "input": {
+        "encodedText": "pythonprogramminglanguageisawesome",
+        "rows": 5
+      },
+      "expected": "priuwyonaetggghrloan"
+    },
+    {
+      "case_id": 97,
+      "input": {
+        "encodedText": "sl  yz  vx  qu  tm",
+        "rows": 4
+      },
+      "expected": "sz  l"
+    },
+    {
+      "case_id": 98,
+      "input": {
+        "encodedText": "this   is   a   long   encoded   text   for   testing",
+        "rows": 7
+      },
+      "expected": "tsln fsh octoi noes gd a"
+    },
+    {
+      "case_id": 99,
+      "input": {
+        "encodedText": "abcdefghij    klmnopqrst    uvwxyz",
+        "rows": 3
+      },
+      "expected": "a  b  ck dl emufnvgowhpxiqyjr"
+    },
+    {
+      "case_id": 100,
+      "input": {
+        "encodedText": "a quick brown fox jumps over the lazy dog",
+        "rows": 4
+      },
+      "expected": "awsl n aq ozufvyioe cxrdk  o jtbur"
+    },
+    {
+      "case_id": 101,
+      "input": {
+        "encodedText": "a            b           c          d         e",
+        "rows": 5
+      },
+      "expected": "a               b          c"
+    },
+    {
+      "case_id": 102,
+      "input": {
+        "encodedText": "a   bcd   efgh   ijklm   nopqrst   uvwxyz",
+        "rows": 6
+      },
+      "expected": "a  mqu    r     eibfc"
+    },
+    {
+      "case_id": 103,
+      "input": {
+        "encodedText": "a   a   a   a   a   a   a   a   a   a",
+        "rows": 10
+      },
+      "expected": "aaa"
+    },
+    {
+      "case_id": 104,
+      "input": {
+        "encodedText": "exampleofasingleword",
+        "rows": 1
+      },
+      "expected": "exampleofasingleword"
+    },
+    {
+      "case_id": 105,
+      "input": {
+        "encodedText": "the quick brown fox jumps over lazy dogs",
+        "rows": 5
+      },
+      "expected": "t xvdhb eoerjrg ou sqwmlunpi c"
+    },
+    {
+      "case_id": 106,
+      "input": {
+        "encodedText": "a very long text that is used to test the edge cases of the problem statement",
+        "rows": 10
+      },
+      "expected": "ao   ea ntut vghsee aerttye"
+    },
+    {
+      "case_id": 107,
+      "input": {
+        "encodedText": "a  b c d e f g h i j k l m n o p q r s t u v w x y z",
+        "rows": 6
+      },
+      "expected": "ae n w  j s  f o xb k t g pc l hd"
+    },
+    {
+      "case_id": 108,
+      "input": {
+        "encodedText": "onewordonly",
+        "rows": 1
+      },
+      "expected": "onewordonly"
+    },
+    {
+      "case_id": 109,
+      "input": {
+        "encodedText": "python is an interpreted high level general purpose programming language",
+        "rows": 6
+      },
+      "expected": "piiepayngrrntthaoghe lguorl ranpepag rvumeieermstlp e adn"
+    },
+    {
+      "case_id": 110,
+      "input": {
+        "encodedText": "abcdefghijklmnopqrstuvwxyz",
+        "rows": 10
+      },
+      "expected": "adb"
+    },
+    {
+      "case_id": 111,
+      "input": {
+        "encodedText": "abcdefghijklmnopqrstuvwxyz",
+        "rows": 26
+      },
+      "expected": "a"
+    },
+    {
+      "case_id": 112,
+      "input": {
+        "encodedText": "slantedtranspositioncipherexample",
+        "rows": 10
+      },
+      "expected": "strlea"
+    }
+  ]
+}

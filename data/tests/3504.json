@@ -1,0 +1,997 @@
+{
+  "schema_version": 1,
+  "problem_id": 3504,
+  "title": "Longest Palindrome After Substring Concatenation II",
+  "method": "longestPalindrome",
+  "signature": {
+    "params": [
+      {
+        "name": "s",
+        "type": "STRING"
+      },
+      {
+        "name": "t",
+        "type": "STRING"
+      }
+    ],
+    "returns": "INT32"
+  },
+  "cases": [
+    {
+      "case_id": 1,
+      "input": {
+        "s": "b",
+        "t": "aaaa"
+      },
+      "expected": 4
+    },
+    {
+      "case_id": 2,
+      "input": {
+        "s": "hello",
+        "t": "world"
+      },
+      "expected": 3
+    },
+    {
+      "case_id": 3,
+      "input": {
+        "s": "aaaa",
+        "t": "bbbb"
+      },
+      "expected": 4
+    },
+    {
+      "case_id": 4,
+      "input": {
+        "s": "abcde",
+        "t": "ecdba"
+      },
+      "expected": 5
+    },
+    {
+      "case_id": 5,
+      "input": {
+        "s": "noon",
+        "t": "moon"
+      },
+      "expected": 7
+    },
+    {
+      "case_id": 6,
+      "input": {
+        "s": "race",
+        "t": "care"
+      },
+      "expected": 7
+    },
+    {
+      "case_id": 7,
+      "input": {
+        "s": "a",
+        "t": "a"
+      },
+      "expected": 2
+    },
+    {
+      "case_id": 8,
+      "input": {
+        "s": "abcd",
+        "t": "dcba"
+      },
+      "expected": 8
+    },
+    {
+      "case_id": 9,
+      "input": {
+        "s": "xyz",
+        "t": "zyx"
+      },
+      "expected": 6
+    },
+    {
+      "case_id": 10,
+      "input": {
+        "s": "abc",
+        "t": "def"
+      },
+      "expected": 1
+    },
+    {
+      "case_id": 11,
+      "input": {
+        "s": "referrefer",
+        "t": "referref"
+      },
+      "expected": 16
+    },
+    {
+      "case_id": 12,
+      "input": {
+        "s": "abccba",
+        "t": "abcba"
+      },
+      "expected": 7
+    },
+    {
+      "case_id": 13,
+      "input": {
+        "s": "abcabc",
+        "t": "cbacba"
+      },
+      "expected": 12
+    },
+    {
+      "case_id": 14,
+      "input": {
+        "s": "mnopqr",
+        "t": "rqpomn"
+      },
+      "expected": 8
+    },
+    {
+      "case_id": 15,
+      "input": {
+        "s": "rotorrotor",
+        "t": "rotorrot"
+      },
+      "expected": 16
+    },
+    {
+      "case_id": 16,
+      "input": {
+        "s": "madam",
+        "t": "madammadam"
+      },
+      "expected": 15
+    },
+    {
+      "case_id": 17,
+      "input": {
+        "s": "aabbaabb",
+        "t": "bbaa"
+      },
+      "expected": 10
+    },
+    {
+      "case_id": 18,
+      "input": {
+        "s": "aaaaabbbbb",
+        "t": "bbbbbbaaaa"
+      },
+      "expected": 19
+    },
+    {
+      "case_id": 19,
+      "input": {
+        "s": "abccba",
+        "t": "bccbab"
+      },
+      "expected": 11
+    },
+    {
+      "case_id": 20,
+      "input": {
+        "s": "aabbcc",
+        "t": "ccbbaa"
+      },
+      "expected": 12
+    },
+    {
+      "case_id": 21,
+      "input": {
+        "s": "abcdef",
+        "t": "fedabc"
+      },
+      "expected": 6
+    },
+    {
+      "case_id": 22,
+      "input": {
+        "s": "xyxyxy",
+        "t": "yxyxyx"
+      },
+      "expected": 12
+    },
+    {
+      "case_id": 23,
+      "input": {
+        "s": "aba",
+        "t": "bab"
+      },
+      "expected": 5
+    },
+    {
+      "case_id": 24,
+      "input": {
+        "s": "abcdefg",
+        "t": "gfedcba"
+      },
+      "expected": 14
+    },
+    {
+      "case_id": 25,
+      "input": {
+        "s": "tatactatta",
+        "t": "tatattac"
+      },
+      "expected": 11
+    },
+    {
+      "case_id": 26,
+      "input": {
+        "s": "madam",
+        "t": "madam"
+      },
+      "expected": 10
+    },
+    {
+      "case_id": 27,
+      "input": {
+        "s": "aabaa",
+        "t": "bbabb"
+      },
+      "expected": 6
+    },
+    {
+      "case_id": 28,
+      "input": {
+        "s": "abcdef",
+        "t": "fedcbaghi"
+      },
+      "expected": 12
+    },
+    {
+      "case_id": 29,
+      "input": {
+        "s": "palindrome",
+        "t": "emordnilap"
+      },
+      "expected": 20
+    },
+    {
+      "case_id": 30,
+      "input": {
+        "s": "xyzaaayzx",
+        "t": "zyxxzyxzy"
+      },
+      "expected": 9
+    },
+    {
+      "case_id": 31,
+      "input": {
+        "s": "abcabcabc",
+        "t": "cbacbacba"
+      },
+      "expected": 18
+    },
+    {
+      "case_id": 32,
+      "input": {
+        "s": "pqr",
+        "t": "rqp"
+      },
+      "expected": 6
+    },
+    {
+      "case_id": 33,
+      "input": {
+        "s": "abcdcba",
+        "t": "abcdcba"
+      },
+      "expected": 14
+    },
+    {
+      "case_id": 34,
+      "input": {
+        "s": "deified",
+        "t": "deified"
+      },
+      "expected": 14
+    },
+    {
+      "case_id": 35,
+      "input": {
+        "s": "abracadabra",
+        "t": "abraccadabr"
+      },
+      "expected": 8
+    },
+    {
+      "case_id": 36,
+      "input": {
+        "s": "longestpalindrome",
+        "t": "emordnilapgnol"
+      },
+      "expected": 20
+    },
+    {
+      "case_id": 37,
+      "input": {
+        "s": "abcdefghijk",
+        "t": "kjihgfedcba"
+      },
+      "expected": 22
+    },
+    {
+      "case_id": 38,
+      "input": {
+        "s": "abacax",
+        "t": "xacaba"
+      },
+      "expected": 12
+    },
+    {
+      "case_id": 39,
+      "input": {
+        "s": "pqrstu",
+        "t": "utsrqponmlkjihgfedcba"
+      },
+      "expected": 12
+    },
+    {
+      "case_id": 40,
+      "input": {
+        "s": "abcdef",
+        "t": "gfedcbaa"
+      },
+      "expected": 13
+    },
+    {
+      "case_id": 41,
+      "input": {
+        "s": "civiccivic",
+        "t": "iviciciv"
+      },
+      "expected": 11
+    },
+    {
+      "case_id": 42,
+      "input": {
+        "s": "aabbccdd",
+        "t": "ddeeccbbaa"
+      },
+      "expected": 14
+    },
+    {
+      "case_id": 43,
+      "input": {
+        "s": "abcxyzdef",
+        "t": "fedxyzcba"
+      },
+      "expected": 7
+    },
+    {
+      "case_id": 44,
+      "input": {
+        "s": "civic",
+        "t": "civiccivic"
+      },
+      "expected": 15
+    },
+    {
+      "case_id": 45,
+      "input": {
+        "s": "banana",
+        "t": "nanaba"
+      },
+      "expected": 11
+    },
+    {
+      "case_id": 46,
+      "input": {
+        "s": "abacdfgdcaba",
+        "t": "abacdfgdcaba"
+      },
+      "expected": 11
+    },
+    {
+      "case_id": 47,
+      "input": {
+        "s": "tattarrattat",
+        "t": "tattarrattat"
+      },
+      "expected": 24
+    },
+    {
+      "case_id": 48,
+      "input": {
+        "s": "level",
+        "t": "levvel"
+      },
+      "expected": 7
+    },
+    {
+      "case_id": 49,
+      "input": {
+        "s": "xxyyyzzz",
+        "t": "zzzyyyxx"
+      },
+      "expected": 16
+    },
+    {
+      "case_id": 50,
+      "input": {
+        "s": "rotorrotor",
+        "t": "rotor"
+      },
+      "expected": 15
+    },
+    {
+      "case_id": 51,
+      "input": {
+        "s": "rotor",
+        "t": "rotator"
+      },
+      "expected": 7
+    },
+    {
+      "case_id": 52,
+      "input": {
+        "s": "abacaxbaca",
+        "t": "xacabacaba"
+      },
+      "expected": 13
+    },
+    {
+      "case_id": 53,
+      "input": {
+        "s": "mnopqrstu",
+        "t": "utsrqponmlkjihgfedcbazyxwvut"
+      },
+      "expected": 18
+    },
+    {
+      "case_id": 54,
+      "input": {
+        "s": "aabbccddeeffgg",
+        "t": "ggffeeeeddccbbaa"
+      },
+      "expected": 22
+    },
+    {
+      "case_id": 55,
+      "input": {
+        "s": "xyzyx",
+        "t": "yzyxxy"
+      },
+      "expected": 9
+    },
+    {
+      "case_id": 56,
+      "input": {
+        "s": "aaaaaa",
+        "t": "bbbbbb"
+      },
+      "expected": 6
+    },
+    {
+      "case_id": 57,
+      "input": {
+        "s": "abcdefg",
+        "t": "hijklmn"
+      },
+      "expected": 1
+    },
+    {
+      "case_id": 58,
+      "input": {
+        "s": "abcdef",
+        "t": "fedcbag"
+      },
+      "expected": 12
+    },
+    {
+      "case_id": 59,
+      "input": {
+        "s": "level",
+        "t": "leveleveleveleveleveleveleveleveleveleveleveleveleve"
+      },
+      "expected": 55
+    },
+    {
+      "case_id": 60,
+      "input": {
+        "s": "abcdabcd",
+        "t": "dcbaabcd"
+      },
+      "expected": 9
+    },
+    {
+      "case_id": 61,
+      "input": {
+        "s": "abcdeedcba",
+        "t": "fghijklkjihgf"
+      },
+      "expected": 13
+    },
+    {
+      "case_id": 62,
+      "input": {
+        "s": "aaaabb",
+        "t": "aabbaa"
+      },
+      "expected": 10
+    },
+    {
+      "case_id": 63,
+      "input": {
+        "s": "civic",
+        "t": "civic"
+      },
+      "expected": 10
+    },
+    {
+      "case_id": 64,
+      "input": {
+        "s": "level",
+        "t": "levevl"
+      },
+      "expected": 8
+    },
+    {
+      "case_id": 65,
+      "input": {
+        "s": "racecar",
+        "t": "madam"
+      },
+      "expected": 7
+    },
+    {
+      "case_id": 66,
+      "input": {
+        "s": "deifieddeified",
+        "t": "deifiededeif"
+      },
+      "expected": 21
+    },
+    {
+      "case_id": 67,
+      "input": {
+        "s": "noonhighnoon",
+        "t": "deifiedlevel"
+      },
+      "expected": 7
+    },
+    {
+      "case_id": 68,
+      "input": {
+        "s": "abracadabra",
+        "t": "aracabradab"
+      },
+      "expected": 7
+    },
+    {
+      "case_id": 69,
+      "input": {
+        "s": "level",
+        "t": "deified"
+      },
+      "expected": 7
+    },
+    {
+      "case_id": 70,
+      "input": {
+        "s": "mirror",
+        "t": "rimmom"
+      },
+      "expected": 9
+    },
+    {
+      "case_id": 71,
+      "input": {
+        "s": "abcdedcba",
+        "t": "zyxwxyzyx"
+      },
+      "expected": 9
+    },
+    {
+      "case_id": 72,
+      "input": {
+        "s": "pneumonoultramicroscopicsilicovolcanoconiosis",
+        "t": "osivicnoclovosicrepimicroscopultramaounep"
+      },
+      "expected": 11
+    },
+    {
+      "case_id": 73,
+      "input": {
+        "s": "xyzzyx",
+        "t": "abczyzyxcba"
+      },
+      "expected": 7
+    },
+    {
+      "case_id": 74,
+      "input": {
+        "s": "abcxyzyxcba",
+        "t": "xyzzyx"
+      },
+      "expected": 11
+    },
+    {
+      "case_id": 75,
+      "input": {
+        "s": "abcabcabc",
+        "t": "abcabcabc"
+      },
+      "expected": 3
+    },
+    {
+      "case_id": 76,
+      "input": {
+        "s": "mississippi",
+        "t": "ppissimms"
+      },
+      "expected": 13
+    },
+    {
+      "case_id": 77,
+      "input": {
+        "s": "abacaxaba",
+        "t": "abacaxaba"
+      },
+      "expected": 7
+    },
+    {
+      "case_id": 78,
+      "input": {
+        "s": "hello",
+        "t": "olleh"
+      },
+      "expected": 10
+    },
+    {
+      "case_id": 79,
+      "input": {
+        "s": "noonhighnoon",
+        "t": "noonlownoon"
+      },
+      "expected": 9
+    },
+    {
+      "case_id": 80,
+      "input": {
+        "s": "abaccadda",
+        "t": "addacca"
+      },
+      "expected": 14
+    },
+    {
+      "case_id": 81,
+      "input": {
+        "s": "refer",
+        "t": "repaper"
+      },
+      "expected": 7
+    },
+    {
+      "case_id": 82,
+      "input": {
+        "s": "mississippi",
+        "t": "ippississimm"
+      },
+      "expected": 22
+    },
+    {
+      "case_id": 83,
+      "input": {
+        "s": "abacaba",
+        "t": "bdcabdc"
+      },
+      "expected": 9
+    },
+    {
+      "case_id": 84,
+      "input": {
+        "s": "mississippi",
+        "t": "noon"
+      },
+      "expected": 7
+    },
+    {
+      "case_id": 85,
+      "input": {
+        "s": "noon",
+        "t": "noonnoonnoonnoon"
+      },
+      "expected": 20
+    },
+    {
+      "case_id": 86,
+      "input": {
+        "s": "abracadabra",
+        "t": "abacabadabrac"
+      },
+      "expected": 11
+    },
+    {
+      "case_id": 87,
+      "input": {
+        "s": "abcd",
+        "t": "abcdabcd"
+      },
+      "expected": 3
+    },
+    {
+      "case_id": 88,
+      "input": {
+        "s": "abc",
+        "t": "mnopqr"
+      },
+      "expected": 1
+    },
+    {
+      "case_id": 89,
+      "input": {
+        "s": "abccba",
+        "t": "xyzyx"
+      },
+      "expected": 6
+    },
+    {
+      "case_id": 90,
+      "input": {
+        "s": "zzzzzz",
+        "t": "zzzzzz"
+      },
+      "expected": 12
+    },
+    {
+      "case_id": 91,
+      "input": {
+        "s": "amanaplanacanalpanama",
+        "t": "amanaP lanac a nalp a namA"
+      },
+      "expected": 21
+    },
+    {
+      "case_id": 92,
+      "input": {
+        "s": "noonnoon",
+        "t": "moonmoon"
+      },
+      "expected": 8
+    },
+    {
+      "case_id": 93,
+      "input": {
+        "s": "noonhighnoon",
+        "t": "noon"
+      },
+      "expected": 9
+    },
+    {
+      "case_id": 94,
+      "input": {
+        "s": "xyzz",
+        "t": "zzxy"
+      },
+      "expected": 4
+    },
+    {
+      "case_id": 95,
+      "input": {
+        "s": "racecar",
+        "t": "civic"
+      },
+      "expected": 7
+    },
+    {
+      "case_id": 96,
+      "input": {
+        "s": "mnopqr",
+        "t": "rqponm"
+      },
+      "expected": 12
+    },
+    {
+      "case_id": 97,
+      "input": {
+        "s": "levellevellevel",
+        "t": "levevlevevlevevl"
+      },
+      "expected": 18
+    },
+    {
+      "case_id": 98,
+      "input": {
+        "s": "mammam",
+        "t": "mammam"
+      },
+      "expected": 12
+    },
+    {
+      "case_id": 99,
+      "input": {
+        "s": "kayak",
+        "t": "yakayk"
+      },
+      "expected": 7
+    },
+    {
+      "case_id": 100,
+      "input": {
+        "s": "radar",
+        "t": "radar"
+      },
+      "expected": 10
+    },
+    {
+      "case_id": 101,
+      "input": {
+        "s": "neveroddoreven",
+        "t": "levelmadamrotor"
+      },
+      "expected": 14
+    },
+    {
+      "case_id": 102,
+      "input": {
+        "s": "madam",
+        "t": "refer"
+      },
+      "expected": 5
+    },
+    {
+      "case_id": 103,
+      "input": {
+        "s": "hello",
+        "t": "ollehworld"
+      },
+      "expected": 10
+    },
+    {
+      "case_id": 104,
+      "input": {
+        "s": "xyzuvw",
+        "t": "vwxyz"
+      },
+      "expected": 3
+    },
+    {
+      "case_id": 105,
+      "input": {
+        "s": "zzzzzzzzzz",
+        "t": "zzzzzzzzzz"
+      },
+      "expected": 20
+    },
+    {
+      "case_id": 106,
+      "input": {
+        "s": "zzzzz",
+        "t": "zzzz"
+      },
+      "expected": 9
+    },
+    {
+      "case_id": 107,
+      "input": {
+        "s": "banana",
+        "t": "ananab"
+      },
+      "expected": 12
+    },
+    {
+      "case_id": 108,
+      "input": {
+        "s": "abacabadabacaba",
+        "t": "abacabadabacaba"
+      },
+      "expected": 30
+    },
+    {
+      "case_id": 109,
+      "input": {
+        "s": "rotor",
+        "t": "rotorrotorrotor"
+      },
+      "expected": 20
+    },
+    {
+      "case_id": 110,
+      "input": {
+        "s": "aabbccddeeff",
+        "t": "ffeeddccbbaa"
+      },
+      "expected": 24
+    },
+    {
+      "case_id": 111,
+      "input": {
+        "s": "abracadabra",
+        "t": "arbadacarba"
+      },
+      "expected": 22
+    },
+    {
+      "case_id": 112,
+      "input": {
+        "s": "aaaabbbb",
+        "t": "bbbbcccc"
+      },
+      "expected": 8
+    },
+    {
+      "case_id": 113,
+      "input": {
+        "s": "abacdfgdcaba",
+        "t": "abacdgfdcaba"
+      },
+      "expected": 24
+    },
+    {
+      "case_id": 114,
+      "input": {
+        "s": "repaper",
+        "t": "repaper"
+      },
+      "expected": 14
+    },
+    {
+      "case_id": 115,
+      "input": {
+        "s": "aabbccddeeffgg",
+        "t": "ggffeeddcbaabbccddeeffgg"
+      },
+      "expected": 18
+    },
+    {
+      "case_id": 116,
+      "input": {
+        "s": "racecar",
+        "t": "carrear"
+      },
+      "expected": 7
+    },
+    {
+      "case_id": 117,
+      "input": {
+        "s": "abcabcabcabc",
+        "t": "cbacbacbacba"
+      },
+      "expected": 24
+    },
+    {
+      "case_id": 118,
+      "input": {
+        "s": "racecar",
+        "t": "racecar"
+      },
+      "expected": 14
+    },
+    {
+      "case_id": 119,
+      "input": {
+        "s": "aabbccdd",
+        "t": "dccbbaaa"
+      },
+      "expected": 15
+    },
+    {
+      "case_id": 120,
+      "input": {
+        "s": "abcdefgfedcba",
+        "t": "ghijklimno"
+      },
+      "expected": 13
+    },
+    {
+      "case_id": 121,
+      "input": {
+        "s": "aabbccddeeaabbccddeeaabb",
+        "t": "ddeeaabbccddeeaabb"
+      },
+      "expected": 6
+    },
+    {
+      "case_id": 122,
+      "input": {
+        "s": "rotor",
+        "t": "rotor"
+      },
+      "expected": 10
+    }
+  ]
+}

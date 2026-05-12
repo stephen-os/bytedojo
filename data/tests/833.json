@@ -1,0 +1,989 @@
+{
+  "schema_version": 1,
+  "problem_id": 833,
+  "title": "Find And Replace in String",
+  "method": "findReplaceString",
+  "signature": {
+    "params": [
+      {
+        "name": "s",
+        "type": "STRING"
+      },
+      {
+        "name": "indices",
+        "type": "INT32_ARRAY"
+      },
+      {
+        "name": "sources",
+        "type": "STRING_ARRAY"
+      },
+      {
+        "name": "targets",
+        "type": "STRING_ARRAY"
+      }
+    ],
+    "returns": "STRING"
+  },
+  "cases": [
+    {
+      "case_id": 1,
+      "input": {
+        "s": "abcd",
+        "indices": [0, 2],
+        "sources": ["a", "cd"],
+        "targets": ["eee", "ffff"]
+      },
+      "expected": "eeebffff"
+    },
+    {
+      "case_id": 2,
+      "input": {
+        "s": "abcd",
+        "indices": [0, 1, 2, 3],
+        "sources": ["a", "b", "c", "d"],
+        "targets": ["aa", "bb", "cc", "dd"]
+      },
+      "expected": "aabbccdd"
+    },
+    {
+      "case_id": 3,
+      "input": {
+        "s": "abcd",
+        "indices": [0, 2],
+        "sources": ["ab", "ec"],
+        "targets": ["eee", "ffff"]
+      },
+      "expected": "eeecd"
+    },
+    {
+      "case_id": 4,
+      "input": {
+        "s": "vmokgggqzp",
+        "indices": [3, 5, 1],
+        "sources": ["kg", "gggg", "mo"],
+        "targets": ["s", "so", "bfr"]
+      },
+      "expected": "vbfrsggqzp"
+    },
+    {
+      "case_id": 5,
+      "input": {
+        "s": "hello",
+        "indices": [1, 4],
+        "sources": ["el", "o"],
+        "targets": ["ll", "oo"]
+      },
+      "expected": "hllloo"
+    },
+    {
+      "case_id": 6,
+      "input": {
+        "s": "aaaaaa",
+        "indices": [0, 2, 4],
+        "sources": ["aa", "aa", "aa"],
+        "targets": ["AA", "BB", "CC"]
+      },
+      "expected": "AABBCC"
+    },
+    {
+      "case_id": 7,
+      "input": {
+        "s": "aaaaabbbbb",
+        "indices": [0, 5],
+        "sources": ["aaaaa", "bbbbb"],
+        "targets": ["z", "y"]
+      },
+      "expected": "zy"
+    },
+    {
+      "case_id": 8,
+      "input": {
+        "s": "aabbccddeeffgghhiijjkkllmmnnoopp",
+        "indices": [1, 3, 5, 7, 9, 11, 13, 15, 17, 19],
+        "sources": ["bb", "dd", "ff", "hh", "jj", "ll", "nn", "pp"],
+        "targets": ["XX", "YY", "ZZ", "WW", "VV", "UU", "TT", "SS"]
+      },
+      "expected": "aabbccddeeffgghhiijjkkllmmnnoopp"
+    },
+    {
+      "case_id": 9,
+      "input": {
+        "s": "programming",
+        "indices": [0, 4, 9],
+        "sources": ["pro", "gra", "ing"],
+        "targets": ["123", "456", "789"]
+      },
+      "expected": "123gramming"
+    },
+    {
+      "case_id": 10,
+      "input": {
+        "s": "xylophone",
+        "indices": [2, 4],
+        "sources": ["lo", "ph"],
+        "targets": ["LOLO", "PH"]
+      },
+      "expected": "xyLOLOPHone"
+    },
+    {
+      "case_id": 11,
+      "input": {
+        "s": "mississippi",
+        "indices": [0, 4, 10],
+        "sources": ["mis", "issi", "i"],
+        "targets": ["xxx", "yyy", "zzz"]
+      },
+      "expected": "xxxsyyyppzzz"
+    },
+    {
+      "case_id": 12,
+      "input": {
+        "s": "banana",
+        "indices": [0, 1, 2, 3, 4, 5],
+        "sources": ["b", "a", "n", "a", "n", "a"],
+        "targets": ["B", "A", "N", "A", "N", "A"]
+      },
+      "expected": "BANANA"
+    },
+    {
+      "case_id": 13,
+      "input": {
+        "s": "helloworld",
+        "indices": [0, 5],
+        "sources": ["hello", "world"],
+        "targets": ["HELLO", "WORLD"]
+      },
+      "expected": "HELLOWORLD"
+    },
+    {
+      "case_id": 14,
+      "input": {
+        "s": "algorithms",
+        "indices": [2, 6, 8],
+        "sources": ["gor", "rith", "ms"],
+        "targets": ["GOR", "RITH", "MS"]
+      },
+      "expected": "alGORithMS"
+    },
+    {
+      "case_id": 15,
+      "input": {
+        "s": "mississippi",
+        "indices": [0, 4, 6],
+        "sources": ["mi", "iss", "ippi"],
+        "targets": ["MMM", "NNN", "OOO"]
+      },
+      "expected": "MMMssNNNippi"
+    },
+    {
+      "case_id": 16,
+      "input": {
+        "s": "zzzzzzzzzz",
+        "indices": [0, 2, 4, 6, 8],
+        "sources": ["zz", "zz", "zz", "zz", "zz"],
+        "targets": ["1", "2", "3", "4", "5"]
+      },
+      "expected": "12345"
+    },
+    {
+      "case_id": 17,
+      "input": {
+        "s": "abcdefg",
+        "indices": [1, 2, 3, 4, 5],
+        "sources": ["b", "c", "d", "e", "f"],
+        "targets": ["B", "C", "D", "E", "F"]
+      },
+      "expected": "aBCDEFg"
+    },
+    {
+      "case_id": 18,
+      "input": {
+        "s": "abababab",
+        "indices": [0, 2, 4, 6],
+        "sources": ["ab", "ab", "ab", "ab"],
+        "targets": ["xy", "yz", "zx", "wv"]
+      },
+      "expected": "xyyzzxwv"
+    },
+    {
+      "case_id": 19,
+      "input": {
+        "s": "abcdefgh",
+        "indices": [1, 3, 5, 7],
+        "sources": ["bc", "fg", "h", "a"],
+        "targets": ["X", "Y", "Z", "W"]
+      },
+      "expected": "aXdefgh"
+    },
+    {
+      "case_id": 20,
+      "input": {
+        "s": "abcdefghij",
+        "indices": [0, 2, 4, 6, 8],
+        "sources": ["ab", "cd", "ef", "gh", "ij"],
+        "targets": ["12", "34", "56", "78", "90"]
+      },
+      "expected": "1234567890"
+    },
+    {
+      "case_id": 21,
+      "input": {
+        "s": "ababababab",
+        "indices": [0, 2, 4, 6, 8],
+        "sources": ["ab", "ab", "ab", "ab", "ab"],
+        "targets": ["xy", "yx", "xy", "yx", "xy"]
+      },
+      "expected": "xyyxxyyxxy"
+    },
+    {
+      "case_id": 22,
+      "input": {
+        "s": "abcdefghijk",
+        "indices": [1, 3, 5, 7, 9],
+        "sources": ["bc", "ef", "gh", "jk", "l"],
+        "targets": ["2", "3", "4", "5", "6"]
+      },
+      "expected": "a2defghijk"
+    },
+    {
+      "case_id": 23,
+      "input": {
+        "s": "abcdefghij",
+        "indices": [0, 2, 4, 6, 8],
+        "sources": ["ab", "cd", "ef", "gh", "ij"],
+        "targets": ["A", "B", "C", "D", "E"]
+      },
+      "expected": "ABCDE"
+    },
+    {
+      "case_id": 24,
+      "input": {
+        "s": "mississippi",
+        "indices": [4, 6],
+        "sources": ["iss", "iss"],
+        "targets": ["42", "43"]
+      },
+      "expected": "miss42ippi"
+    },
+    {
+      "case_id": 25,
+      "input": {
+        "s": "abcdefghij",
+        "indices": [1, 4, 7],
+        "sources": ["bc", "ef", "hi"],
+        "targets": ["BCD", "EFG", "HIJ"]
+      },
+      "expected": "aBCDdEFGgHIJj"
+    },
+    {
+      "case_id": 26,
+      "input": {
+        "s": "programming",
+        "indices": [0, 3, 6, 9],
+        "sources": ["pro", "gra", "mming"],
+        "targets": ["123", "456", "789"]
+      },
+      "expected": "123456789"
+    },
+    {
+      "case_id": 27,
+      "input": {
+        "s": "hellothere",
+        "indices": [0, 5],
+        "sources": ["he", "th"],
+        "targets": ["hola", "allahuakbar"]
+      },
+      "expected": "holalloallahuakbarere"
+    },
+    {
+      "case_id": 28,
+      "input": {
+        "s": "aabbccddeeff",
+        "indices": [0, 3, 6, 9],
+        "sources": ["aab", "bcd", "cde", "def"],
+        "targets": ["AAB", "BCD", "CDE", "DEF"]
+      },
+      "expected": "AABbccddeeff"
+    },
+    {
+      "case_id": 29,
+      "input": {
+        "s": "abcdefghijk",
+        "indices": [0, 3, 6, 9],
+        "sources": ["abc", "def", "ghi", "jk"],
+        "targets": ["XXX", "YYY", "ZZZ", "WWW"]
+      },
+      "expected": "XXXYYYZZZWWW"
+    },
+    {
+      "case_id": 30,
+      "input": {
+        "s": "aabbccddeeff",
+        "indices": [1, 3, 5, 7, 9, 11],
+        "sources": ["ab", "cd", "ef", "de", "fg", "ef"],
+        "targets": ["12", "34", "56", "43", "65", "65"]
+      },
+      "expected": "a12bccd43eff"
+    },
+    {
+      "case_id": 31,
+      "input": {
+        "s": "mississippi",
+        "indices": [4, 6],
+        "sources": ["iss", "issi"],
+        "targets": ["3", "4"]
+      },
+      "expected": "miss3ippi"
+    },
+    {
+      "case_id": 32,
+      "input": {
+        "s": "abcdefgh",
+        "indices": [1, 4, 6],
+        "sources": ["bc", "ef", "gh"],
+        "targets": ["12", "34", "56"]
+      },
+      "expected": "a12d3456"
+    },
+    {
+      "case_id": 33,
+      "input": {
+        "s": "thisisatest",
+        "indices": [2, 6, 9],
+        "sources": ["is", "is", "est"],
+        "targets": ["IS", "IS", "EST"]
+      },
+      "expected": "thISisatest"
+    },
+    {
+      "case_id": 34,
+      "input": {
+        "s": "thequickbrownfox",
+        "indices": [4, 9, 15],
+        "sources": ["qui", "bro", "fox"],
+        "targets": ["QUI", "BRO", "FOX"]
+      },
+      "expected": "thequickbrownfox"
+    },
+    {
+      "case_id": 35,
+      "input": {
+        "s": "ababababab",
+        "indices": [0, 2, 4, 6, 8],
+        "sources": ["ab", "ab", "ab", "ab", "ab"],
+        "targets": ["xy", "xy", "xy", "xy", "xy"]
+      },
+      "expected": "xyxyxyxyxy"
+    },
+    {
+      "case_id": 36,
+      "input": {
+        "s": "hellothere",
+        "indices": [1, 5, 8],
+        "sources": ["ell", "the", "er"],
+        "targets": ["123", "456", "789"]
+      },
+      "expected": "h123o456re"
+    },
+    {
+      "case_id": 37,
+      "input": {
+        "s": "aabbccddeeffgghhii",
+        "indices": [0, 2, 4, 6, 8, 10, 12, 14, 16],
+        "sources": ["aa", "bb", "cc", "dd", "ee", "ff", "gg", "hh", "ii"],
+        "targets": ["AA", "BB", "CC", "DD", "EE", "FF", "GG", "HH", "II"]
+      },
+      "expected": "AABBCCDDEEFFGGHHII"
+    },
+    {
+      "case_id": 38,
+      "input": {
+        "s": "abcdefghijk",
+        "indices": [0, 4, 8],
+        "sources": ["abc", "efg", "ijk"],
+        "targets": ["123", "456", "789"]
+      },
+      "expected": "123d456h789"
+    },
+    {
+      "case_id": 39,
+      "input": {
+        "s": "abcdefghij",
+        "indices": [1, 3, 5, 7],
+        "sources": ["bc", "de", "fg", "hi"],
+        "targets": ["BCD", "EFG", "FGH", "HIJ"]
+      },
+      "expected": "aBCDEFGFGHHIJj"
+    },
+    {
+      "case_id": 40,
+      "input": {
+        "s": "aabbccddeeff",
+        "indices": [0, 2, 4, 6, 8, 10],
+        "sources": ["aa", "bb", "cc", "dd", "ee", "ff"],
+        "targets": ["AA", "BB", "CC", "DD", "EE", "FF"]
+      },
+      "expected": "AABBCCDDEEFF"
+    },
+    {
+      "case_id": 41,
+      "input": {
+        "s": "ababababab",
+        "indices": [0, 2, 4, 6, 8],
+        "sources": ["ab", "ba", "ab", "ba", "ab"],
+        "targets": ["A", "B", "C", "D", "E"]
+      },
+      "expected": "AabCabE"
+    },
+    {
+      "case_id": 42,
+      "input": {
+        "s": "replacements",
+        "indices": [0, 5, 9],
+        "sources": ["rep", "lac", "tions"],
+        "targets": ["REP", "LAC", "TIONS"]
+      },
+      "expected": "REPlacements"
+    },
+    {
+      "case_id": 43,
+      "input": {
+        "s": "mississippi",
+        "indices": [0, 4, 6],
+        "sources": ["mis", "sis", "sip"],
+        "targets": ["miss", "sis", "sip"]
+      },
+      "expected": "misssissippi"
+    },
+    {
+      "case_id": 44,
+      "input": {
+        "s": "thisisateststring",
+        "indices": [0, 4, 8, 12],
+        "sources": ["this", "is", "a", "test"],
+        "targets": ["1", "2", "3", "4"]
+      },
+      "expected": "12ateststring"
+    },
+    {
+      "case_id": 45,
+      "input": {
+        "s": "mississippi",
+        "indices": [4, 6],
+        "sources": ["issi", "issi"],
+        "targets": ["XXXX", "YYYY"]
+      },
+      "expected": "missXXXXppi"
+    },
+    {
+      "case_id": 46,
+      "input": {
+        "s": "ababab",
+        "indices": [0, 2, 4],
+        "sources": ["ab", "ab", "ab"],
+        "targets": ["xy", "yz", "zx"]
+      },
+      "expected": "xyyzzx"
+    },
+    {
+      "case_id": 47,
+      "input": {
+        "s": "abcdefgh",
+        "indices": [1, 4, 7],
+        "sources": ["bc", "ef", "h"],
+        "targets": ["BBB", "EEE", "HHH"]
+      },
+      "expected": "aBBBdEEEgHHH"
+    },
+    {
+      "case_id": 48,
+      "input": {
+        "s": "aaaaaa",
+        "indices": [0, 2, 4],
+        "sources": ["aa", "aa", "aa"],
+        "targets": ["AA", "AA", "AA"]
+      },
+      "expected": "AAAAAA"
+    },
+    {
+      "case_id": 49,
+      "input": {
+        "s": "hellothere",
+        "indices": [0, 5],
+        "sources": ["hello", "there"],
+        "targets": ["hi", "bye"]
+      },
+      "expected": "hibye"
+    },
+    {
+      "case_id": 50,
+      "input": {
+        "s": "aaaaaa",
+        "indices": [0, 1, 2, 3, 4, 5],
+        "sources": ["a", "a", "a", "a", "a", "a"],
+        "targets": ["b", "c", "d", "e", "f", "g"]
+      },
+      "expected": "bcdefg"
+    },
+    {
+      "case_id": 51,
+      "input": {
+        "s": "abcdefghij",
+        "indices": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+        "sources": ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j"],
+        "targets": ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"]
+      },
+      "expected": "ABCDEFGHIJ"
+    },
+    {
+      "case_id": 52,
+      "input": {
+        "s": "abcdefghijk",
+        "indices": [0, 5, 10],
+        "sources": ["abc", "fgh", "ijk"],
+        "targets": ["123", "456", "789"]
+      },
+      "expected": "123de456ijk"
+    },
+    {
+      "case_id": 53,
+      "input": {
+        "s": "replaceeverything",
+        "indices": [0, 7, 14],
+        "sources": ["rep", "ev", "ing"],
+        "targets": ["REPLACE", "EVERY", "THING"]
+      },
+      "expected": "REPLACElaceEVERYerythTHING"
+    },
+    {
+      "case_id": 54,
+      "input": {
+        "s": "abcdefghij",
+        "indices": [3, 7],
+        "sources": ["def", "hij"],
+        "targets": ["12345", "67890"]
+      },
+      "expected": "abc12345g67890"
+    },
+    {
+      "case_id": 55,
+      "input": {
+        "s": "aaaabbbbcccc",
+        "indices": [0, 4, 8],
+        "sources": ["aaaa", "bbbb", "cccc"],
+        "targets": ["AAAA", "BBBB", "CCCC"]
+      },
+      "expected": "AAAABBBBCCCC"
+    },
+    {
+      "case_id": 56,
+      "input": {
+        "s": "abcdefghij",
+        "indices": [1, 4, 7],
+        "sources": ["bc", "efg", "ij"],
+        "targets": ["XX", "YYY", "ZZ"]
+      },
+      "expected": "aXXdYYYhij"
+    },
+    {
+      "case_id": 57,
+      "input": {
+        "s": "xxxyyyzzz",
+        "indices": [0, 3, 6],
+        "sources": ["xxx", "yyy", "zzz"],
+        "targets": ["aaa", "bbb", "ccc"]
+      },
+      "expected": "aaabbbccc"
+    },
+    {
+      "case_id": 58,
+      "input": {
+        "s": "hello_world",
+        "indices": [0, 6],
+        "sources": ["hello", "world"],
+        "targets": ["hi", "earth"]
+      },
+      "expected": "hi_earth"
+    },
+    {
+      "case_id": 59,
+      "input": {
+        "s": "mississippi",
+        "indices": [0, 4, 7],
+        "sources": ["mi", "issi", "issi"],
+        "targets": ["MMMM", "IIII", "XXXX"]
+      },
+      "expected": "MMMMssIIIIppi"
+    },
+    {
+      "case_id": 60,
+      "input": {
+        "s": "thisisatest",
+        "indices": [0, 2, 4, 6, 8, 10],
+        "sources": ["this", "is", "a", "test", "xx", "xx"],
+        "targets": ["that", "was", "the", "exam", "yy", "zz"]
+      },
+      "expected": "thatisatest"
+    },
+    {
+      "case_id": 61,
+      "input": {
+        "s": "hellohellohello",
+        "indices": [0, 5, 10],
+        "sources": ["hello", "hello", "hello"],
+        "targets": ["hi", "ho", "ha"]
+      },
+      "expected": "hihoha"
+    },
+    {
+      "case_id": 62,
+      "input": {
+        "s": "abcdefgabcdefg",
+        "indices": [0, 7],
+        "sources": ["abcdefg", "abcdefg"],
+        "targets": ["ABCDEFG", "ABCDEFG"]
+      },
+      "expected": "ABCDEFGABCDEFG"
+    },
+    {
+      "case_id": 63,
+      "input": {
+        "s": "abcdefghijk",
+        "indices": [0, 3, 6, 9],
+        "sources": ["abc", "def", "ghi", "jk"],
+        "targets": ["1", "2", "3", "4"]
+      },
+      "expected": "1234"
+    },
+    {
+      "case_id": 64,
+      "input": {
+        "s": "mississippi",
+        "indices": [1, 4, 7],
+        "sources": ["is", "is", "is"],
+        "targets": ["aa", "bb", "cc"]
+      },
+      "expected": "maasbbsippi"
+    },
+    {
+      "case_id": 65,
+      "input": {
+        "s": "oneonetwoonetwoone",
+        "indices": [0, 4, 8, 12],
+        "sources": ["one", "one", "two", "two"],
+        "targets": ["111", "222", "333", "444"]
+      },
+      "expected": "111onetwoone444one"
+    },
+    {
+      "case_id": 66,
+      "input": {
+        "s": "hellohellohello",
+        "indices": [0, 5, 10],
+        "sources": ["hel", "ell", "llo"],
+        "targets": ["H", "E", "L"]
+      },
+      "expected": "Hlohellohello"
+    },
+    {
+      "case_id": 67,
+      "input": {
+        "s": "programming",
+        "indices": [0, 3, 6, 9],
+        "sources": ["pro", "gra", "mmi", "ng"],
+        "targets": ["PRO", "GRA", "MMI", "NG"]
+      },
+      "expected": "PROGRAMMING"
+    },
+    {
+      "case_id": 68,
+      "input": {
+        "s": "abcdefghij",
+        "indices": [0, 2, 4, 6, 8],
+        "sources": ["ab", "cd", "ef", "gh", "ij"],
+        "targets": ["xy", "zw", "00", "11", "22"]
+      },
+      "expected": "xyzw001122"
+    },
+    {
+      "case_id": 69,
+      "input": {
+        "s": "alabama",
+        "indices": [0, 2, 4],
+        "sources": ["al", "ba", "ma"],
+        "targets": ["AL", "BA", "MA"]
+      },
+      "expected": "ALabama"
+    },
+    {
+      "case_id": 70,
+      "input": {
+        "s": "abracadabra",
+        "indices": [0, 3, 7, 10],
+        "sources": ["abra", "cad", "abr", "a"],
+        "targets": ["1", "2", "3", "4"]
+      },
+      "expected": "1cad34"
+    },
+    {
+      "case_id": 71,
+      "input": {
+        "s": "mississippi",
+        "indices": [0, 4, 8],
+        "sources": ["mis", "iss", "ippi"],
+        "targets": ["misss", "issii", "ipppi"]
+      },
+      "expected": "missssissiiippi"
+    },
+    {
+      "case_id": 72,
+      "input": {
+        "s": "programming",
+        "indices": [0, 3, 5, 8],
+        "sources": ["pro", "gra", "mmi", "ng"],
+        "targets": ["1", "2", "3", "4"]
+      },
+      "expected": "12mming"
+    },
+    {
+      "case_id": 73,
+      "input": {
+        "s": "programming",
+        "indices": [0, 3, 5, 8],
+        "sources": ["pro", "g", "am", "mm"],
+        "targets": ["code", "G", "AM", "MM"]
+      },
+      "expected": "codeGrAMming"
+    },
+    {
+      "case_id": 74,
+      "input": {
+        "s": "hellothere",
+        "indices": [0, 5],
+        "sources": ["he", "there"],
+        "targets": ["HELLO", "THERE"]
+      },
+      "expected": "HELLOlloTHERE"
+    },
+    {
+      "case_id": 75,
+      "input": {
+        "s": "mississippi",
+        "indices": [4, 6],
+        "sources": ["is", "ip"],
+        "targets": ["IS", "IP"]
+      },
+      "expected": "missISsippi"
+    },
+    {
+      "case_id": 76,
+      "input": {
+        "s": "foobarbaz",
+        "indices": [0, 3, 6],
+        "sources": ["foo", "bar", "baz"],
+        "targets": ["FOO", "BAR", "BAZ"]
+      },
+      "expected": "FOOBARBAZ"
+    },
+    {
+      "case_id": 77,
+      "input": {
+        "s": "abababab",
+        "indices": [0, 2, 4, 6],
+        "sources": ["ab", "ab", "ab", "ab"],
+        "targets": ["XX", "YY", "ZZ", "WW"]
+      },
+      "expected": "XXYYZZWW"
+    },
+    {
+      "case_id": 78,
+      "input": {
+        "s": "hellothere",
+        "indices": [0, 5],
+        "sources": ["hello", "there"],
+        "targets": ["hi", "world"]
+      },
+      "expected": "hiworld"
+    },
+    {
+      "case_id": 79,
+      "input": {
+        "s": "banana",
+        "indices": [0, 2, 4],
+        "sources": ["ba", "na", "na"],
+        "targets": ["xx", "yy", "zz"]
+      },
+      "expected": "xxyyzz"
+    },
+    {
+      "case_id": 80,
+      "input": {
+        "s": "abcdefghij",
+        "indices": [2, 4, 6, 8],
+        "sources": ["cd", "ef", "gh", "ij"],
+        "targets": ["1234", "5678", "91011", "121314"]
+      },
+      "expected": "ab1234567891011121314"
+    },
+    {
+      "case_id": 81,
+      "input": {
+        "s": "banana",
+        "indices": [1, 3],
+        "sources": ["an", "na"],
+        "targets": ["xx", "yy"]
+      },
+      "expected": "bxxana"
+    },
+    {
+      "case_id": 82,
+      "input": {
+        "s": "algorithms",
+        "indices": [1, 3, 5, 7],
+        "sources": ["l", "g", "m", "th"],
+        "targets": ["X", "Y", "Z", "ABC"]
+      },
+      "expected": "aXgorithms"
+    },
+    {
+      "case_id": 83,
+      "input": {
+        "s": "abracadabra",
+        "indices": [0, 5, 7],
+        "sources": ["abra", "a", "abra"],
+        "targets": ["zzzz", "x", "yyyy"]
+      },
+      "expected": "zzzzcxdyyyy"
+    },
+    {
+      "case_id": 84,
+      "input": {
+        "s": "abcdefghij",
+        "indices": [1, 3, 5, 7],
+        "sources": ["bc", "de", "fg", "hi"],
+        "targets": ["XX", "YY", "ZZ", "QQ"]
+      },
+      "expected": "aXXYYZZQQj"
+    },
+    {
+      "case_id": 85,
+      "input": {
+        "s": "banana",
+        "indices": [1, 3, 5],
+        "sources": ["an", "an", "a"],
+        "targets": ["XX", "YY", "ZZ"]
+      },
+      "expected": "bXXYYZZ"
+    },
+    {
+      "case_id": 86,
+      "input": {
+        "s": "aabbccddeeff",
+        "indices": [1, 3, 5, 7, 9],
+        "sources": ["ab", "cd", "ef", "gh", "ij"],
+        "targets": ["xy", "zw", "XY", "ZW", "IJ"]
+      },
+      "expected": "axybccddeeff"
+    },
+    {
+      "case_id": 87,
+      "input": {
+        "s": "abcdefghijklmnopqrstuvwxyz",
+        "indices": [0, 5, 10, 15, 20],
+        "sources": ["abc", "fgh", "klm", "pqr", "uvw"],
+        "targets": ["123", "456", "789", "012", "345"]
+      },
+      "expected": "123de456ij789no012st345xyz"
+    },
+    {
+      "case_id": 88,
+      "input": {
+        "s": "abracadabra",
+        "indices": [0, 3, 7],
+        "sources": ["abr", "aca", "bra"],
+        "targets": ["A", "B", "C"]
+      },
+      "expected": "ABdabra"
+    },
+    {
+      "case_id": 89,
+      "input": {
+        "s": "abcdefghijklmnopqrstuvwxyz",
+        "indices": [0, 5, 10, 15, 20],
+        "sources": ["abcde", "fghij", "klmno", "pqrst", "uvwxy"],
+        "targets": ["11111", "22222", "33333", "44444", "55555"]
+      },
+      "expected": "1111122222333334444455555z"
+    },
+    {
+      "case_id": 90,
+      "input": {
+        "s": "programmingisfun",
+        "indices": [3, 10, 15],
+        "sources": ["gram", "is", "fun"],
+        "targets": ["code", "was", "great"]
+      },
+      "expected": "procodemingisfun"
+    },
+    {
+      "case_id": 91,
+      "input": {
+        "s": "aaaaaa",
+        "indices": [0, 2, 4],
+        "sources": ["aa", "aa", "aa"],
+        "targets": ["1", "2", "3"]
+      },
+      "expected": "123"
+    },
+    {
+      "case_id": 92,
+      "input": {
+        "s": "abcdefg",
+        "indices": [0, 3, 5],
+        "sources": ["abc", "de", "fg"],
+        "targets": ["xyz", "qrs", "tuv"]
+      },
+      "expected": "xyzqrstuv"
+    },
+    {
+      "case_id": 93,
+      "input": {
+        "s": "xyzxyzxyz",
+        "indices": [0, 3, 6],
+        "sources": ["xyz", "xyz", "xyz"],
+        "targets": ["123", "456", "789"]
+      },
+      "expected": "123456789"
+    },
+    {
+      "case_id": 94,
+      "input": {
+        "s": "zzzzzzzz",
+        "indices": [0, 1, 2, 3, 4, 5, 6],
+        "sources": ["zz", "zz", "zz", "zz", "zz", "zz", "zz"],
+        "targets": ["ZZ", "YY", "XX", "WW", "VV", "UU", "TT"]
+      },
+      "expected": "ZZXXVVTT"
+    },
+    {
+      "case_id": 95,
+      "input": {
+        "s": "abcdefghij",
+        "indices": [1, 3, 5, 7, 9],
+        "sources": ["bc", "ef", "hi", "jk"],
+        "targets": ["XXX", "YYY", "ZZZ", "WWW"]
+      },
+      "expected": "aXXXdefghij"
+    },
+    {
+      "case_id": 96,
+      "input": {
+        "s": "xyzxyzxyz",
+        "indices": [0, 3, 6],
+        "sources": ["xyz", "xyz", "xyz"],
+        "targets": ["XYZ", "XYZ", "XYZ"]
+      },
+      "expected": "XYZXYZXYZ"
+    }
+  ]
+}

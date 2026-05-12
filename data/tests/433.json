@@ -1,0 +1,754 @@
+{
+  "schema_version": 1,
+  "problem_id": 433,
+  "title": "Minimum Genetic Mutation",
+  "method": "minMutation",
+  "signature": {
+    "params": [
+      {
+        "name": "startGene",
+        "type": "STRING"
+      },
+      {
+        "name": "endGene",
+        "type": "STRING"
+      },
+      {
+        "name": "bank",
+        "type": "STRING_ARRAY"
+      }
+    ],
+    "returns": "INT32"
+  },
+  "cases": [
+    {
+      "case_id": 1,
+      "input": {
+        "startGene": "AACCGGTT",
+        "endGene": "AAACGGTA",
+        "bank": ["AACCGGTA", "AACCGCTA", "AAACGGTA"]
+      },
+      "expected": 2
+    },
+    {
+      "case_id": 2,
+      "input": {
+        "startGene": "AACCGGTT",
+        "endGene": "AACCGGTA",
+        "bank": ["AACCGGTA"]
+      },
+      "expected": 1
+    },
+    {
+      "case_id": 3,
+      "input": {
+        "startGene": "AACCGGTT",
+        "endGene": "AACCGGTA",
+        "bank": []
+      },
+      "expected": -1
+    },
+    {
+      "case_id": 4,
+      "input": {
+        "startGene": "AACCGGTT",
+        "endGene": "AACCGGTA",
+        "bank": ["TACCGGTA"]
+      },
+      "expected": -1
+    },
+    {
+      "case_id": 5,
+      "input": {
+        "startGene": "AAAAAAAA",
+        "endGene": "CCCCCCCC",
+        "bank": ["AAAAAAAA", "AAAAAAAC", "AAAAAACC", "AAAAACCC", "AAAACCCC", "AAACCCCC", "AACCCCCC", "ACCCCCCC", "CCCCCCCC"]
+      },
+      "expected": 8
+    },
+    {
+      "case_id": 6,
+      "input": {
+        "startGene": "AACCGGTT",
+        "endGene": "AACCAAAA",
+        "bank": ["AACCAAAA", "AACCAAAT", "AACCAATA", "AACCGAAA", "AACCAATA", "AACCAATT", "AACAAATT", "AACCGGAA", "AACCGGAT", "AACCGGTT"]
+      },
+      "expected": 4
+    },
+    {
+      "case_id": 7,
+      "input": {
+        "startGene": "AACCGGTT",
+        "endGene": "ACCTGCTA",
+        "bank": ["AACCGGCA", "AACCGGTA", "AAACGGTA", "AACCGGAC", "ACCGGCTA", "ACCTGCTA"]
+      },
+      "expected": -1
+    },
+    {
+      "case_id": 8,
+      "input": {
+        "startGene": "AACCGGTT",
+        "endGene": "TTTTCCCC",
+        "bank": ["AAACGGCT", "AACCGGCA", "AAACGGTA", "AAACGGCC", "TTTTCCCC"]
+      },
+      "expected": -1
+    },
+    {
+      "case_id": 9,
+      "input": {
+        "startGene": "AACCGGTT",
+        "endGene": "ACCGCGCG",
+        "bank": ["AACCGGTA", "AACCGGCA", "AAACGGTA", "ACCGCGTA", "ACCGCGCG", "ACCGCGCT", "ACCGCGTT"]
+      },
+      "expected": -1
+    },
+    {
+      "case_id": 10,
+      "input": {
+        "startGene": "AACCGGTT",
+        "endGene": "TTTTCCCC",
+        "bank": ["AACCGGTA", "AACCGGCA", "AACCGGCT", "AACCGGCG", "TTACGGCG", "TTACGGCC", "TTACGGTC", "TTACGGTT", "TTAGGGTT", "TTAGGGTC", "TTAGGGCC", "TTAGGGCG", "TTTTGGCG", "TTTTGGCC", "TTTTGGTC", "TTTTGGTT", "TTTTGGGA", "TTTTGGAA", "TTTTGGAT", "TTTTGCAA", "TTTTGCCA", "TTTTGCTA", "TTTTGCAC", "TTTTGCGA", "TTTTGCAG", "TTTTGCGT", "TTTTGCTC", "TTTTGCCG", "TTTTGGCG", "TTTTGCCC", "TTTTCCCC"]
+      },
+      "expected": -1
+    },
+    {
+      "case_id": 11,
+      "input": {
+        "startGene": "AACCGGTT",
+        "endGene": "GGCCGACT",
+        "bank": ["AACCGGCA", "AACCGGAA", "AACCGGGA", "GGCCGGTA", "GGCCGGCA", "GGCCGGAA", "GGCCGGGA", "GGCCGACT"]
+      },
+      "expected": -1
+    },
+    {
+      "case_id": 12,
+      "input": {
+        "startGene": "AAAAAAAA",
+        "endGene": "TTTTTTTT",
+        "bank": ["AAAAAGGG", "AAAGGGGG", "AAGGGGGG", "AGGGGGGG", "GGGGGGGG", "GGGGGGGT", "GGGGGGTT", "GGGGGTTT", "GGGGTTTT", "GGGTTTTT", "GGTTTTTT", "GTTTTTTT", "TTTTTTTT"]
+      },
+      "expected": -1
+    },
+    {
+      "case_id": 13,
+      "input": {
+        "startGene": "AAAAAAAA",
+        "endGene": "TTTTTTTT",
+        "bank": ["AAAAAACC", "AAAAACCC", "AAAAACGG", "AAAACGGG", "AAACGGGG", "AACGGGGG", "ACGGGGGG", "CGGGGGGG", "TTTTTTTA", "TTTTTTAG", "TTTTTTCG", "TTTTTCGG", "TTTTGCGG", "TTTTGGGG", "TTTGCGGG", "TTTGGGGG", "TTGCGGGG", "TTGGGGGG", "TGCGGGGG", "TGGGGGGG", "GCGGGGGG", "GGGGGGGG"]
+      },
+      "expected": -1
+    },
+    {
+      "case_id": 14,
+      "input": {
+        "startGene": "ACAGACGG",
+        "endGene": "AACCGGGA",
+        "bank": ["AACGACGG", "AACGACGT", "AACGGCGT", "AACGGCGA", "AACGGGGA", "AACCGGGA"]
+      },
+      "expected": -1
+    },
+    {
+      "case_id": 15,
+      "input": {
+        "startGene": "ACGTACGT",
+        "endGene": "TTACGTAC",
+        "bank": ["ACGTACGA", "TTACGTAA", "TTACGTAC", "TTACGTCG", "ACGTACGG"]
+      },
+      "expected": -1
+    },
+    {
+      "case_id": 16,
+      "input": {
+        "startGene": "AAAAAAAA",
+        "endGene": "CCCCCCCC",
+        "bank": ["AAAAAACC", "AAAAACCC", "AAAACCCC", "AAACCCCC", "AACCACCC", "AACCCCAC", "AACCACCC", "ACCAACCC", "ACCCACCC", "CCCCCCCC"]
+      },
+      "expected": -1
+    },
+    {
+      "case_id": 17,
+      "input": {
+        "startGene": "AACCGGTT",
+        "endGene": "GACCGGTA",
+        "bank": ["AACCGGCA", "GACCGGTA", "AACCGGCT", "AACCGGAA", "AACCGGAT", "AACCGGTT", "GACCGGTT", "GACCGGTC", "GACCGGTA", "GACCGGAC"]
+      },
+      "expected": 2
+    },
+    {
+      "case_id": 18,
+      "input": {
+        "startGene": "AACCGGTT",
+        "endGene": "AACCGTAA",
+        "bank": ["AACCGGCA", "AACCGGTA", "AACCGGTC", "AACCGTCA", "AACCGTAA"]
+      },
+      "expected": 4
+    },
+    {
+      "case_id": 19,
+      "input": {
+        "startGene": "AACCGGTT",
+        "endGene": "AACCGGTA",
+        "bank": ["AACCGGCA", "AACCGGTA", "AACCGGCT", "AACCGGAA", "AACCGGAT", "AACCGGTT"]
+      },
+      "expected": 1
+    },
+    {
+      "case_id": 20,
+      "input": {
+        "startGene": "AACCGGTT",
+        "endGene": "TTTTTTTT",
+        "bank": ["AAACGGTA", "AACCGCTA", "AAACGGTT", "TTTTGGTT", "TTTTTGGT", "TTTTTTGT", "TTTTTTTT"]
+      },
+      "expected": -1
+    },
+    {
+      "case_id": 21,
+      "input": {
+        "startGene": "AACCGGTT",
+        "endGene": "GGGGGGGG",
+        "bank": ["AACCGGTA", "AACCGGTC", "TACCGGTT", "GGACGGTT", "GGGGGGTA", "GGGGGGTT", "GGGGGGGT", "GGGGGGGG"]
+      },
+      "expected": -1
+    },
+    {
+      "case_id": 22,
+      "input": {
+        "startGene": "AACCGGTT",
+        "endGene": "CGCGCGCG",
+        "bank": ["AACCGGTA", "AACCGGCA", "AAACGGTA", "CGCGGGTA", "CGCGCGCG"]
+      },
+      "expected": -1
+    },
+    {
+      "case_id": 23,
+      "input": {
+        "startGene": "AACCGGTT",
+        "endGene": "GGAACTTT",
+        "bank": ["AACCGGCA", "AACCGGTA", "AAACGGTA", "GAACGGTA", "GGAACTTA", "GGAACTTT"]
+      },
+      "expected": -1
+    },
+    {
+      "case_id": 24,
+      "input": {
+        "startGene": "AACCGGTT",
+        "endGene": "AACCGGTA",
+        "bank": ["AACCGGCA", "AACCGGTA", "AACCGGCT", "AACCGGAA", "AACCGGAT", "AACCGGTT", "AACCGGTC", "AACCGGTA", "AACCGGTA", "AACCGGTA"]
+      },
+      "expected": 1
+    },
+    {
+      "case_id": 25,
+      "input": {
+        "startGene": "AACCGGTT",
+        "endGene": "AACCGGCT",
+        "bank": ["AACCGGCA", "AACCGGCG", "AACCGGCT", "AACCGGCT", "AACCGGCT"]
+      },
+      "expected": 1
+    },
+    {
+      "case_id": 26,
+      "input": {
+        "startGene": "AAAACCCC",
+        "endGene": "CCCCAAAA",
+        "bank": ["AAAACCCA", "AAAACCAA", "AAAACCAA", "AAAACAAA", "AAACAAAA", "AACAAAAA", "ACAAAAAA", "CAAAAAAA", "CAAACCAA", "CCAACCAA", "CCCCAAAC", "CCCCACAA", "CCCCAACC", "CCCCAAAC", "CCCCAACA", "CCCCAAAA"]
+      },
+      "expected": -1
+    },
+    {
+      "case_id": 27,
+      "input": {
+        "startGene": "AAAAACCC",
+        "endGene": "CCCCCCCC",
+        "bank": ["AAAACCCC", "AAACCCCC", "AACCCCCC", "AACCACCC", "AACCGCCC", "AACCGCCC", "AACCGGCC", "AACCGGTC", "AACCGGTA", "AACCGGTT", "AACCGGCT", "AACCGGCG", "AACCGGCA", "AACCGGCC", "AACCGGCG", "AACCGGCA", "GGCCCCCC", "GGCCCACC", "GGCCCCGC", "GGCCCCGA", "GGCCCCTC", "GGCCCCTG", "GGCCCCTA", "GGCCGGCC", "GGCCGGCG", "GGCCGGCA", "GGCCGGTC", "GGCCGGTA", "GGCCGGTT", "GGCCGCCC", "GGCCGGGG", "CCCCGGGG", "CCCCGGGC", "CCCCGGCG", "CCCCGGCA", "CCCCGGTC", "CCCCGGTA", "CCCCGGTT", "CCCCGCCC", "CCCCGGGG", "CCCCCCCC"]
+      },
+      "expected": -1
+    },
+    {
+      "case_id": 28,
+      "input": {
+        "startGene": "AACCGGTT",
+        "endGene": "TTCGCGCG",
+        "bank": ["AACCGGTA", "AACCGGCA", "AAACGGTA", "TTCGCGTA", "TTCGCGCG"]
+      },
+      "expected": -1
+    },
+    {
+      "case_id": 29,
+      "input": {
+        "startGene": "AACCGGTT",
+        "endGene": "AAGGCGTT",
+        "bank": ["AACCGGTA", "AACCGGCT", "AACCGGCA", "AACCGGCG", "AACCGGTC", "AACCGCTA", "AAACGGTA", "AACAGGTA", "AAACGGTC", "AAACGGCT", "AAACGGCG", "AAACGGTT", "AAGGCGTA", "AAGGCGTC", "AAGGCGCA", "AAGGCGCG", "AAGGCGCT", "AAGGCGTT"]
+      },
+      "expected": -1
+    },
+    {
+      "case_id": 30,
+      "input": {
+        "startGene": "AAAAACCC",
+        "endGene": "GGGGCCCC",
+        "bank": ["AAAACCCC", "AAAGCCCC", "AAGGCCCC", "GGGGCCCC"]
+      },
+      "expected": -1
+    },
+    {
+      "case_id": 31,
+      "input": {
+        "startGene": "AACCGGTT",
+        "endGene": "AACCGGTA",
+        "bank": ["AACCGGTA", "AACCGGCA", "AAACGGTA", "AAACGGCA", "AACCGGCA", "AAACGGTA", "AAACGGCA", "AACCGGCA", "AAACGGTA", "AAACGGCA"]
+      },
+      "expected": 1
+    },
+    {
+      "case_id": 32,
+      "input": {
+        "startGene": "AACCGGTT",
+        "endGene": "GGGGGGGA",
+        "bank": ["AACCGGTA", "AACCGGCA", "AAACGGTA", "GGGGGGTT", "GGGGGGTA", "GGGGGGGA"]
+      },
+      "expected": -1
+    },
+    {
+      "case_id": 33,
+      "input": {
+        "startGene": "AACCGGTT",
+        "endGene": "AACCGGTA",
+        "bank": ["AACCGGTA", "AACCGGTA", "AACCGGTA", "AACCGGTA", "AACCGGTA", "AACCGGTA", "AACCGGTA"]
+      },
+      "expected": 1
+    },
+    {
+      "case_id": 34,
+      "input": {
+        "startGene": "AACCGGTT",
+        "endGene": "AAAAAAAA",
+        "bank": ["AACCGGTA", "AACCGGCA", "AAACGGTA", "AAAAAGTA", "AAAAAAAA"]
+      },
+      "expected": -1
+    },
+    {
+      "case_id": 35,
+      "input": {
+        "startGene": "AACCGGTT",
+        "endGene": "TTTTTTTT",
+        "bank": ["AACCGGCA", "AACCGGTA", "AAACGGTA", "AACCGGAC", "TTTTTTTA", "TTTTTTTT"]
+      },
+      "expected": -1
+    },
+    {
+      "case_id": 36,
+      "input": {
+        "startGene": "AAAAACCC",
+        "endGene": "CCCCGGGG",
+        "bank": ["AACCCCCC", "ACCCCCCG", "ACCACCCC", "ACCACCCC", "ACCCCACG", "CCCCGGGA", "CCCCGGGG"]
+      },
+      "expected": -1
+    },
+    {
+      "case_id": 37,
+      "input": {
+        "startGene": "GGGGCCCC",
+        "endGene": "AACCGGTT",
+        "bank": ["GGGGCCCG", "GGGGCCCT", "GGGGCCTT", "GGGGCCGG", "GGGGACGG", "GGGAGCGG", "GGGAACGG", "GGAACCGG", "GAACCGGG", "AACCGGGG", "AACCGGTT"]
+      },
+      "expected": -1
+    },
+    {
+      "case_id": 38,
+      "input": {
+        "startGene": "TTTTTTTT",
+        "endGene": "AAAAAAAA",
+        "bank": ["ATTTTTTT", "AATTTTTT", "AAATTTTT", "AAAATTTT", "AAAAATTT", "AAAAATTA", "AAAAAATT", "AAAAAAAT", "AAAAAAAC", "AAAACAAA", "AAACAAAA", "AACAAAAA", "ACAAAAAA", "CAAAAAAA"]
+      },
+      "expected": -1
+    },
+    {
+      "case_id": 39,
+      "input": {
+        "startGene": "AACCGGTT",
+        "endGene": "AGCTAGCA",
+        "bank": ["AACCGGCA", "AACCGGTA", "AACCGGTA", "AACCGGTA", "AACCGGTA", "AACCGGTA", "AACCGGTA", "AACCGGTA", "AACCGGTA", "AACCGGTA", "AACCGGTA", "AACCGGTA", "AACCGGTA", "AACCGGTA", "AACCGGTA", "AACCGGTA", "AACCGGTA", "AACCGGTA", "AACCGGTA", "AGCTAGCA"]
+      },
+      "expected": -1
+    },
+    {
+      "case_id": 40,
+      "input": {
+        "startGene": "AACCGGTT",
+        "endGene": "ACCGTGTA",
+        "bank": ["AACCGGTA", "AACCGCTA", "AAACGGTA", "ACCGTGTA", "ACCGTGGT", "ACCGTGTT"]
+      },
+      "expected": -1
+    },
+    {
+      "case_id": 41,
+      "input": {
+        "startGene": "AACCGGTT",
+        "endGene": "ACCGCGCG",
+        "bank": ["AACCGGTA", "AACCGGCA", "AAACGGTA", "ACCGCGTA", "ACCGCGCG", "ACCGCGCT", "ACCGCGTT", "ACCGCGGA", "ACCGCGGC", "ACCGCGCC"]
+      },
+      "expected": -1
+    },
+    {
+      "case_id": 42,
+      "input": {
+        "startGene": "AACCGGTT",
+        "endGene": "AGCGGTTA",
+        "bank": ["AACCGGTA", "AACCGGCT", "AACCGGCA", "AACCGGCG", "AACCGGTC", "AACCGCTA", "AAACGGTA", "AACAGGTA", "AAACGGTC", "AAACGGCT", "AAACGGCG", "AAACGGTT", "AAGGCGTA", "AAGGCGTC", "AAGGCGCA", "AAGGCGCG", "AAGGCGCT", "AAGGCGTT", "AGCGGTTA", "AGCGGCTA", "AGCGGCTC", "AGCGGCGT", "AGCGGCGC", "AGCGGCCC", "AGCGGGTA", "AGCGGGCA", "AGCGGGCG", "AGCGGGCT", "AGCGGGAA", "AGCGGGAC", "AGCGGGAG", "AGCGGCGT"]
+      },
+      "expected": -1
+    },
+    {
+      "case_id": 43,
+      "input": {
+        "startGene": "AACCGGTT",
+        "endGene": "ACCGGTTA",
+        "bank": ["AACCGGCA", "AACCGGTA", "AACCGGCT", "AACCGGAA", "AACCGGAT", "AACCGGTT", "ACCGGTTA", "ACCGGGTA", "ACCGGATA", "ACCGGTTT"]
+      },
+      "expected": -1
+    },
+    {
+      "case_id": 44,
+      "input": {
+        "startGene": "GACCGGTA",
+        "endGene": "AACCGGTA",
+        "bank": ["AACCGGCA", "AACCGGTA", "AACCGGCT", "AACCGGAA", "AACCGGAT", "AACCGGTT", "GACCGGTT", "GACCGGTC", "GACCGGTA", "GACCGGAC"]
+      },
+      "expected": 1
+    },
+    {
+      "case_id": 45,
+      "input": {
+        "startGene": "AACCGGTT",
+        "endGene": "ACCGTGGT",
+        "bank": ["AACCGGTA", "AACCGGCA", "AACCGGCG", "AACCGGCT", "AACCGGAT", "AACCGGAA", "AACCGCAT", "AACCGCCT", "AACCGCGT", "AACCGCGC", "AAACGGTA", "AAACGGCA", "AAACGGCG", "AAACGGCT", "AAACGGAT", "AAACGGAA", "AAACGGCA", "AAACGGCC", "AAACGCCG", "AAACGCCT", "ACCGGGTA", "ACCGGGCA", "ACCGGGCG", "ACCGGGCT", "ACCGGGAT", "ACCGGGAA", "ACCGGGCA", "ACCGGGCC", "ACCGGGCG", "ACCGGGCT", "ACCGGCTA", "ACCGGCCA", "ACCGGCGT", "ACCGGCGC", "ACCGGCCT", "ACCGGCCC", "ACCGGTAA", "ACCGGTCG", "ACCGGTTA", "ACCGGTCA", "ACCGGTCC", "ACCGGTCG", "ACCGGTCA", "ACCGGTCC", "ACCGGTCG", "ACCGGTCA", "ACCGGTCC", "ACCGTGGC", "ACCGTGGT"]
+      },
+      "expected": -1
+    },
+    {
+      "case_id": 46,
+      "input": {
+        "startGene": "AAACGGTA",
+        "endGene": "AACCGGTA",
+        "bank": ["AAACGGTT", "AACCGGTT", "AACCGGTA"]
+      },
+      "expected": 1
+    },
+    {
+      "case_id": 47,
+      "input": {
+        "startGene": "AACCGGTT",
+        "endGene": "GACCGGTA",
+        "bank": ["AACCGGTA", "AACCGGCA", "AACCGGAA", "AACCGGTC", "AACCGGTA", "AACCGGTC", "AACCGGTT", "AACCGGTA", "AACCGGTC", "AACCGGTT", "AACCGGTA", "AACCGGTC", "AACCGGTT", "AACCGGTA", "AACCGGTC", "AACCGGTT", "AACCGGTA", "AACCGGTC", "AACCGGTT", "GACCGGTA"]
+      },
+      "expected": 2
+    },
+    {
+      "case_id": 48,
+      "input": {
+        "startGene": "AACCGGTT",
+        "endGene": "AACCGGGA",
+        "bank": ["AACCGGTA", "AACCGGCA", "AACCGGGA", "AACCGGGA", "AACCGGGA"]
+      },
+      "expected": 2
+    },
+    {
+      "case_id": 49,
+      "input": {
+        "startGene": "AACCGGTT",
+        "endGene": "GGGGGGGG",
+        "bank": ["AACCGGTA", "AAACGGTA", "GGAAAAAA", "GGGGGGGA", "GGGGGGGG"]
+      },
+      "expected": -1
+    },
+    {
+      "case_id": 50,
+      "input": {
+        "startGene": "GAGGACAA",
+        "endGene": "AACCGGTA",
+        "bank": ["AACCGGTA", "GAGGAGAA", "GAGGAGGA", "GAGGACGA", "GAGGACCA", "GAGGACTA", "GAGGACAA", "GAGGACAT", "GAAGACAA", "AACGACAA", "AACGGCAA", "AACGGGAA", "AACGGGTA", "AACCGGTA"]
+      },
+      "expected": -1
+    },
+    {
+      "case_id": 51,
+      "input": {
+        "startGene": "AACCGGTT",
+        "endGene": "ACCGGCTA",
+        "bank": ["AACCGGTA", "AACCGCTA", "ACCGGCTA", "ACCGGCTC", "ACCGGCCC", "ACCGGTTA"]
+      },
+      "expected": -1
+    },
+    {
+      "case_id": 52,
+      "input": {
+        "startGene": "AACCGGTT",
+        "endGene": "AAACGGGA",
+        "bank": ["AACCGGTA", "AAACGGTA", "AAACGGCA", "AAACGGAA", "AAACGGGA", "AAACGGGA"]
+      },
+      "expected": 3
+    },
+    {
+      "case_id": 53,
+      "input": {
+        "startGene": "AACCGGTT",
+        "endGene": "ACGGTACC",
+        "bank": ["AACCGGCA", "AACCGGTA", "AAACGGTA", "AACCGGAC", "ACGGTACC"]
+      },
+      "expected": -1
+    },
+    {
+      "case_id": 54,
+      "input": {
+        "startGene": "AACCGGTT",
+        "endGene": "TTCCGGAA",
+        "bank": ["AACCGGTA", "AACCGGCA", "AAACGGTA", "AAACGGCA", "TTACGGTA", "TTACGGCA", "TTCCGGTA", "TTCCGGCA", "TTCCGGAA", "GGCCGGTA", "GGCCGGCA", "GGCCGGAA", "TTCCGGTG", "TTCCGGTC", "TTCCGGAU", "TTCCGGAC", "TTCCGGAG", "TTCCGGAT"]
+      },
+      "expected": -1
+    },
+    {
+      "case_id": 55,
+      "input": {
+        "startGene": "AACCGGTT",
+        "endGene": "AACCGGTC",
+        "bank": ["AACCGGCA", "AACCGGTA", "AAACGGTA", "AACCGGAC", "AACCGGTC"]
+      },
+      "expected": 1
+    },
+    {
+      "case_id": 56,
+      "input": {
+        "startGene": "AAAAACCC",
+        "endGene": "GGGGGGGG",
+        "bank": ["AAAACCCC", "AAACCCCC", "AACCCCCC", "AACCACCC", "AACCGCCC", "AACCGGCC", "AACCGGTC", "AACCGGTA", "AACCGGTT", "AACCGGCT", "AACCGGCG", "AACCGGCA", "GGCCCCCC", "GGCCCACC", "GGCCCCGC", "GGCCCCGA", "GGCCCCTC", "GGCCCCTG", "GGCCCCTA", "GGCCGGCC", "GGCCGGCG", "GGCCGGCA", "GGCCGGTC", "GGCCGGTA", "GGCCGGTT", "GGCCGCCC", "GGCCGGGG", "GGGGGGGG"]
+      },
+      "expected": -1
+    },
+    {
+      "case_id": 57,
+      "input": {
+        "startGene": "AACCGGTT",
+        "endGene": "GGGGGGGG",
+        "bank": ["AACCGGTA", "AACCGGCA", "AAACGGTA", "GGGGGGTA", "GGGGGGGG"]
+      },
+      "expected": -1
+    },
+    {
+      "case_id": 58,
+      "input": {
+        "startGene": "AACCGGTT",
+        "endGene": "AAAAAAGG",
+        "bank": ["AACCGGTA", "AACCGGCA", "AACCGGCG", "AACCGGCT", "AACCGGAT", "AACCGGAA", "AACCGCAC", "AACCGCCA", "AACCGCCG", "AACCGCCT", "AAACGGTA", "AAACGGCA", "AAACGGCG", "AAACGGCT", "AAACGGAT", "AAACGGAA", "AAACGGCA", "AAACGGCC", "AAACGCCG", "AAACGCCT", "AAAAGGTA", "AAAAGGCA", "AAAAGGCG", "AAAAGGCT", "AAAAGGAA", "AAAAGGAC", "AAAAGGAG", "AAAAAGTA", "AAAAAGCA", "AAAAAGCG", "AAAAAGCT", "AAAAAGAA", "AAAAAGAC", "AAAAAGAG", "AAAAAAGT", "AAAAAAGC", "AAAAAAGA", "AAAAAAGG"]
+      },
+      "expected": -1
+    },
+    {
+      "case_id": 59,
+      "input": {
+        "startGene": "AACCGGTT",
+        "endGene": "AAACGGCC",
+        "bank": ["AAACGGTA", "AAACGGCA", "AAACGGCC", "AACCGGCA", "AACCGGTA", "AACCGGTC"]
+      },
+      "expected": 4
+    },
+    {
+      "case_id": 60,
+      "input": {
+        "startGene": "AGCTATAG",
+        "endGene": "GACTGTAG",
+        "bank": ["AGCTATAC", "AGCTGTAG", "AGCTTTAG", "GACTATAG", "GACTGTAG", "GACTTTAG", "GAATATAG", "GGCTATAG", "AGGTATAG"]
+      },
+      "expected": 3
+    },
+    {
+      "case_id": 61,
+      "input": {
+        "startGene": "AAGAACGG",
+        "endGene": "GGAACGGT",
+        "bank": ["AAGAACGA", "AAGAACGG", "AAGAACGT", "AAGACGGT", "AAGGACGT", "AGGAACGT", "GGAACGGT", "GGAACGGC", "GGAACGGA", "GGGAACGA"]
+      },
+      "expected": -1
+    },
+    {
+      "case_id": 62,
+      "input": {
+        "startGene": "AACCGGTT",
+        "endGene": "CGGTTTAA",
+        "bank": ["AACCGGTA", "AACCGGTC", "AACCGGTA", "CCCGGGTT", "CGGTTTTT", "CGGTTTAA", "CGGTTTTG", "CGGTGGAA", "CGGACGAA", "AACCGGAG", "AACCGGCG", "AACCGGGA", "AACCGGTT", "AACCGGAT", "AACCGGTA", "AACCGGTC", "AACCGGTT", "AACCGGTT", "AACCGGTA", "AACCGGTT"]
+      },
+      "expected": -1
+    },
+    {
+      "case_id": 63,
+      "input": {
+        "startGene": "AACCGGTT",
+        "endGene": "AAACGGGA",
+        "bank": ["AACCGGTA", "AACCGCTA", "AAACGGTA", "AAACGGGA", "AAACGGGC", "AACCGGGT", "AACCGGGG"]
+      },
+      "expected": 3
+    },
+    {
+      "case_id": 64,
+      "input": {
+        "startGene": "AAAAAAAA",
+        "endGene": "TTTTTTTT",
+        "bank": ["AAAAAAGA", "AAAACAAA", "AAACAAAA", "AAGAAAAA", "AGAAAAAA", "GAAAAAAA", "TAAAAAAA", "TTAAAAAA", "TTTAAAAA", "TTTTAAAA", "TTTTTAAA", "TTTTTTAA", "TTTTTTTA", "TTTTTTTT"]
+      },
+      "expected": 8
+    },
+    {
+      "case_id": 65,
+      "input": {
+        "startGene": "ACGTACGT",
+        "endGene": "TGCATGCA",
+        "bank": ["ACGTACGA", "ACGTACGC", "ACGTCAGT", "TACGACGT", "TGCATGCA", "TGCATGCG", "TGCATGTA", "TGCAACGT", "TGCGACGT", "TGCAACGG"]
+      },
+      "expected": -1
+    },
+    {
+      "case_id": 66,
+      "input": {
+        "startGene": "AACCGGTT",
+        "endGene": "TTCCGCCC",
+        "bank": ["AACCGGTA", "AACCGGTC", "AACCGGCA", "AACCGGCC", "AACCGGCG", "AACCGGCT", "AACCGGAT", "AACCGGAC", "AACCGGAG", "AACCGGAA", "AACCGCAT", "AACCGCCT", "AACCGCGT", "AACCGCGC", "AACCGCCT", "AACCGCCC", "AACCAGCC", "AACCAGCA", "AACCAGCT", "AACCAGCG", "AACCGCCA", "AACCGCCC", "AACCGCCA", "AACCGCCC", "AACCGCCT", "AACCGCCA", "AACCGCCG", "AACCGCCC", "AACCGCCC", "AACCGCCC", "TTACGGCC", "TTACGGCA", "TTACGGCT", "TTACGGCG", "TTACGGTA", "TTACGGTC", "TTACGGAA", "TTACGGAC", "TTACGGAG", "TTACGGCG", "TTACGGCA", "TTACGGCT", "TTACGGCG", "TTAGGGCC", "TTAGGGCA", "TTAGGGCT", "TTAGGGCG", "TTAGGGTA", "TTAGGGTC", "TTAGGGAA", "TTAGGGAC", "TTAGGGAG", "TTAGGGCG", "TTAGGGCA", "TTAGGGCT", "TTAGGGCG", "TTTTGGCC", "TTTTGGCA", "TTTTGGCT", "TTTTGGCG", "TTTTGGTA", "TTTTGGTC", "TTTTGGAA", "TTTTGGAC", "TTTTGGAG", "TTTTGGCA", "TTTTGGCC", "TTTTGGCT", "TTTTGGCG", "TTTTGGAA", "TTTTGGAC", "TTTTGGAG", "TTTTGCAA", "TTTTGCCA", "TTTTGCTA", "TTTTGCAC", "TTTTGCGA", "TTTTGCAG", "TTTTGCGT", "TTTTGCTC", "TTTTGCCG", "TTTTGGCG", "TTTTGCCC", "TTTTCCCC"]
+      },
+      "expected": -1
+    },
+    {
+      "case_id": 67,
+      "input": {
+        "startGene": "AAAAAAAA",
+        "endGene": "AAAAAAAA",
+        "bank": ["AAAAAAAA", "AAAAAAAA", "AAAAAAAA", "AAAAAAAA", "AAAAAAAA", "AAAAAAAA", "AAAAAAAA", "AAAAAAAA", "AAAAAAAA", "AAAAAAAA"]
+      },
+      "expected": 0
+    },
+    {
+      "case_id": 68,
+      "input": {
+        "startGene": "AACCGGTT",
+        "endGene": "AACCGGCT",
+        "bank": ["AACCGGCA", "AACCGGTA", "AAACGGTA", "AACCGGAC", "AACCGGCA", "AACCGGCT"]
+      },
+      "expected": 1
+    },
+    {
+      "case_id": 69,
+      "input": {
+        "startGene": "AAAAAAAA",
+        "endGene": "TTTTTTTT",
+        "bank": ["AAAAAAAA", "AAAACCCC", "AAAAACCC", "AAAAAACC", "AAAAAAAC", "AAAAAAAT", "AAAAAATT", "AAAAATTT", "AAAATTTT", "AAATTTTT", "AATTTTTT", "ATTTTTTT", "TTTTTTTT"]
+      },
+      "expected": 8
+    },
+    {
+      "case_id": 70,
+      "input": {
+        "startGene": "AACCGGTT",
+        "endGene": "ACCGGTTA",
+        "bank": ["AACCGGTA", "AACCGGCT", "AACCGGCA", "ACCGGTTA", "ACCGGGTA", "ACCGGTCG", "ACCGGCTA"]
+      },
+      "expected": -1
+    },
+    {
+      "case_id": 71,
+      "input": {
+        "startGene": "AACCGGTT",
+        "endGene": "AAGCGGTA",
+        "bank": ["AACCGGTA", "AAGCGGTA", "AACCGCTA", "AAACGGTA"]
+      },
+      "expected": 2
+    },
+    {
+      "case_id": 72,
+      "input": {
+        "startGene": "AACCGGTT",
+        "endGene": "CGTACGTA",
+        "bank": ["AACCGGCA", "AACCGGTA", "AAACGGTA", "AACCGGAC", "CGTACGTA", "CGTACGTT", "CGTACGCA"]
+      },
+      "expected": -1
+    },
+    {
+      "case_id": 73,
+      "input": {
+        "startGene": "AACCGGTT",
+        "endGene": "AACCGGTC",
+        "bank": ["AACCGGTA", "AACCGGTC", "AACCGGTT", "AACCGGGA", "AACCGGGA", "AACCGGGA", "AACCGGGA", "AACCGGGA", "AACCGGGA", "AACCGGGA", "AACCGGGA", "AACCGGGA", "AACCGGGA"]
+      },
+      "expected": 1
+    },
+    {
+      "case_id": 74,
+      "input": {
+        "startGene": "AACCGGTT",
+        "endGene": "TTTTTTTT",
+        "bank": ["AACCGGTA", "AACCGGCA", "AAACGGTA", "TTTTGGTA", "TTTTTTTA", "TTTTTTTT"]
+      },
+      "expected": -1
+    },
+    {
+      "case_id": 75,
+      "input": {
+        "startGene": "AACCGGTT",
+        "endGene": "AAGCGGTA",
+        "bank": ["AACCGGCA", "AACCGGTA", "AACCGGTA", "AAGCGGTA"]
+      },
+      "expected": 2
+    },
+    {
+      "case_id": 76,
+      "input": {
+        "startGene": "AACCGGTT",
+        "endGene": "AAACGGTA",
+        "bank": ["AACCGGTA", "AACCGCTA", "AAACGGTA", "AACCGGCA", "AACCGGAA", "AAACGGCA", "AAACGGAA", "AACCGGTC", "AAACGGTC", "AAACGGCA", "AAACGGAA", "AACCGGTT", "AACCGGTA", "AACCGGTC", "AACCGGTT", "AACCGGTA", "AACCGGTC", "AACCGGTT", "AACCGGTA", "AACCGGTT"]
+      },
+      "expected": 2
+    },
+    {
+      "case_id": 77,
+      "input": {
+        "startGene": "AACCGGTT",
+        "endGene": "TACCGGTA",
+        "bank": ["AACCGGTC", "TACCGGTA", "AACCGGTA", "AACCGGCA", "AAACGGTA", "TACCGGTA", "TACCGGTT", "TACCGGTC"]
+      },
+      "expected": 2
+    },
+    {
+      "case_id": 78,
+      "input": {
+        "startGene": "AACCGGTT",
+        "endGene": "GGGGGGGG",
+        "bank": ["AACCGGTA", "AACCGGCA", "AACCGGGA", "AAGCGGGA", "AAGCGGTA", "AAGCGGGA", "GGGGGGGA", "GGGGGGGG"]
+      },
+      "expected": -1
+    },
+    {
+      "case_id": 79,
+      "input": {
+        "startGene": "AACCGGTT",
+        "endGene": "AACCGGTT",
+        "bank": ["AACCGGTA", "AACCGGCT", "AACCGGCA", "AACCGGCG", "AACCGGTC", "AACCGCTA", "AAACGGTA", "AACAGGTA", "AAACGGTC", "AAACGGCT", "AAACGGCG", "AAACGGTT", "AAGGCGTA", "AAGGCGTC", "AAGGCGCA", "AAGGCGCG", "AAGGCGCT", "AAGGCGTT"]
+      },
+      "expected": 0
+    },
+    {
+      "case_id": 80,
+      "input": {
+        "startGene": "AACCGGTT",
+        "endGene": "GACCGGTA",
+        "bank": ["AACCGGCA", "GACCGGTA", "AACCGGCT", "AACCGGAA", "AACCGGAT", "AACCGGTT"]
+      },
+      "expected": -1
+    },
+    {
+      "case_id": 81,
+      "input": {
+        "startGene": "AACCGGTT",
+        "endGene": "ACCGCGCG",
+        "bank": ["AACCGGTA", "AACCGGCA", "AAACGGTA", "ACCGCGTA", "ACCGCGCG", "ACCGCGCT", "ACCGCGTT", "ACCGCGGA"]
+      },
+      "expected": -1
+    }
+  ]
+}

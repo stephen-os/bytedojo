@@ -1,0 +1,885 @@
+{
+  "schema_version": 1,
+  "problem_id": 68,
+  "title": "Text Justification",
+  "method": "fullJustify",
+  "signature": {
+    "params": [
+      {
+        "name": "words",
+        "type": "STRING_ARRAY"
+      },
+      {
+        "name": "maxWidth",
+        "type": "INT32"
+      }
+    ],
+    "returns": "STRING_ARRAY"
+  },
+  "cases": [
+    {
+      "case_id": 1,
+      "input": {
+        "words": ["Try", "your", "best", "to", "be", "like", "them", "at", "best", "you", "can", "be", "like", "them."],
+        "maxWidth": 20
+      },
+      "expected": ["Try  your best to be", "like  them  at  best", "you   can   be  like", "them.               "]
+    },
+    {
+      "case_id": 2,
+      "input": {
+        "words": ["a", "b", "c", "d", "e"],
+        "maxWidth": 3
+      },
+      "expected": ["a b", "c d", "e  "]
+    },
+    {
+      "case_id": 3,
+      "input": {
+        "words": ["What", "must", "be", "acknowledgment", "shall", "be"],
+        "maxWidth": 16
+      },
+      "expected": ["What   must   be", "acknowledgment  ", "shall be        "]
+    },
+    {
+      "case_id": 4,
+      "input": {
+        "words": ["Listen", "to", "many", "people", "so", "that", "you", "can", "speak", "to", "none."],
+        "maxWidth": 15
+      },
+      "expected": ["Listen  to many", "people  so that", "you  can  speak", "to none.       "]
+    },
+    {
+      "case_id": 5,
+      "input": {
+        "words": ["short", "longwordhere", "longwordhere", "short"],
+        "maxWidth": 20
+      },
+      "expected": ["short   longwordhere", "longwordhere short  "]
+    },
+    {
+      "case_id": 6,
+      "input": {
+        "words": ["a"],
+        "maxWidth": 2
+      },
+      "expected": ["a "]
+    },
+    {
+      "case_id": 7,
+      "input": {
+        "words": ["a", "b", "c", "d", "e"],
+        "maxWidth": 3
+      },
+      "expected": ["a b", "c d", "e  "]
+    },
+    {
+      "case_id": 8,
+      "input": {
+        "words": ["Science", "is", "what", "we", "understand", "well", "enough", "to", "explain", "to", "a", "computer.", "Art", "is", "everything", "else", "we", "do"],
+        "maxWidth": 20
+      },
+      "expected": ["Science  is  what we", "understand      well", "enough to explain to", "a  computer.  Art is", "everything  else  we", "do                  "]
+    },
+    {
+      "case_id": 9,
+      "input": {
+        "words": ["Listen", "to", "many", "people", "so", "you", "can", "speak", "to", "all", "people"],
+        "maxWidth": 7
+      },
+      "expected": ["Listen ", "to many", "people ", "so  you", "can    ", "speak  ", "to  all", "people "]
+    },
+    {
+      "case_id": 10,
+      "input": {
+        "words": ["This", "is", "an", "example", "of", "text", "justification."],
+        "maxWidth": 16
+      },
+      "expected": ["This    is    an", "example  of text", "justification.  "]
+    },
+    {
+      "case_id": 11,
+      "input": {
+        "words": ["Lorem", "ipsum", "dolor", "sit", "amet,", "consectetur", "adipiscing", "elit.", "Vestibulum", "bibendum", "porttitor", "diam,"],
+        "maxWidth": 20
+      },
+      "expected": ["Lorem   ipsum  dolor", "sit            amet,", "consectetur         ", "adipiscing     elit.", "Vestibulum  bibendum", "porttitor diam,     "]
+    },
+    {
+      "case_id": 12,
+      "input": {
+        "words": ["Even", "though", "the", "path", "may", "seem", "long", "and", "difficult."],
+        "maxWidth": 18
+      },
+      "expected": ["Even   though  the", "path may seem long", "and difficult.    "]
+    },
+    {
+      "case_id": 13,
+      "input": {
+        "words": ["OneWordHereIsVeryLongIndeedAndItWillCauseSomeIssuesWithTheAlgorithmIfNotHandledProperly"],
+        "maxWidth": 50
+      },
+      "expected": ["OneWordHereIsVeryLongIndeedAndItWillCauseSomeIssuesWithTheAlgorithmIfNotHandledProperly"]
+    },
+    {
+      "case_id": 14,
+      "input": {
+        "words": ["Longer", "words", "and", "evenlongerwords", "are", "here"],
+        "maxWidth": 25
+      },
+      "expected": ["Longer      words     and", "evenlongerwords are here "]
+    },
+    {
+      "case_id": 15,
+      "input": {
+        "words": ["Pack", "my", "box", "with", "five", "dozen", "liquor", "jugs"],
+        "maxWidth": 20
+      },
+      "expected": ["Pack   my  box  with", "five   dozen  liquor", "jugs                "]
+    },
+    {
+      "case_id": 16,
+      "input": {
+        "words": ["In", "the", "middle", "of", "the", "night", "the", "old", "owl", "wisely", "spread", "his", "wings"],
+        "maxWidth": 35
+      },
+      "expected": ["In  the middle of the night the old", "owl wisely spread his wings        "]
+    },
+    {
+      "case_id": 17,
+      "input": {
+        "words": ["Do", "what", "you", "can", "with", "all", "you", "have,", "wherever", "you", "are."],
+        "maxWidth": 23
+      },
+      "expected": ["Do  what  you  can with", "all  you have, wherever", "you are.               "]
+    },
+    {
+      "case_id": 18,
+      "input": {
+        "words": ["Keep", "your", "face", "always", "toward", "the", "sunset."],
+        "maxWidth": 21
+      },
+      "expected": ["Keep your face always", "toward the sunset.   "]
+    },
+    {
+      "case_id": 19,
+      "input": {
+        "words": ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t"],
+        "maxWidth": 5
+      },
+      "expected": ["a b c", "d e f", "g h i", "j k l", "m n o", "p q r", "s t  "]
+    },
+    {
+      "case_id": 20,
+      "input": {
+        "words": ["Look", "into", "the", "distance", "where", "you", "can", "see", "the", "futuristic", "cityscape"],
+        "maxWidth": 35
+      },
+      "expected": ["Look  into  the  distance where you", "can see the futuristic cityscape   "]
+    },
+    {
+      "case_id": 21,
+      "input": {
+        "words": ["Why", "do", "we", "fall", "ape", "not", "to", "rise"],
+        "maxWidth": 8
+      },
+      "expected": ["Why   do", "we  fall", "ape  not", "to rise "]
+    },
+    {
+      "case_id": 22,
+      "input": {
+        "words": ["To", "be", "or", "not", "to", "be", "that", "is", "the", "question"],
+        "maxWidth": 12
+      },
+      "expected": ["To be or not", "to  be  that", "is       the", "question    "]
+    },
+    {
+      "case_id": 23,
+      "input": {
+        "words": ["Listen", "to", "many,", "speak", "to", "a", "few."],
+        "maxWidth": 15
+      },
+      "expected": ["Listen to many,", "speak to a few."]
+    },
+    {
+      "case_id": 24,
+      "input": {
+        "words": ["Success", "is", "not", "final,", "failure", "is", "not", "fatal:", "It", "is", "the", "courage", "to", "continue", "that", "counts."],
+        "maxWidth": 25
+      },
+      "expected": ["Success   is  not  final,", "failure  is not fatal: It", "is    the    courage   to", "continue that counts.    "]
+    },
+    {
+      "case_id": 25,
+      "input": {
+        "words": ["To", "be", "or", "not", "to", "be", "that", "is", "the", "question"],
+        "maxWidth": 15
+      },
+      "expected": ["To be or not to", "be  that is the", "question       "]
+    },
+    {
+      "case_id": 26,
+      "input": {
+        "words": ["To", "be", "or", "not", "to", "be,that", "is", "the", "question:"],
+        "maxWidth": 10
+      },
+      "expected": ["To  be  or", "not     to", "be,that is", "the       ", "question: "]
+    },
+    {
+      "case_id": 27,
+      "input": {
+        "words": ["Python", "programming", "is", "fun,and", "effective."],
+        "maxWidth": 25
+      },
+      "expected": ["Python   programming   is", "fun,and effective.       "]
+    },
+    {
+      "case_id": 28,
+      "input": {
+        "words": ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"],
+        "maxWidth": 5
+      },
+      "expected": ["A B C", "D E F", "G H I", "J    "]
+    },
+    {
+      "case_id": 29,
+      "input": {
+        "words": ["Programming", "is", "not", "about", "what", "you", "know;", "it", "is", "about", "what", "you", "can", "figure", "out."],
+        "maxWidth": 25
+      },
+      "expected": ["Programming  is not about", "what   you  know;  it  is", "about what you can figure", "out.                     "]
+    },
+    {
+      "case_id": 30,
+      "input": {
+        "words": ["One", "ring", "to", "rule", "them", "all,", "One", "ring", "to", "find", "them."],
+        "maxWidth": 18
+      },
+      "expected": ["One  ring  to rule", "them all, One ring", "to find them.     "]
+    },
+    {
+      "case_id": 31,
+      "input": {
+        "words": ["To", "be", "or", "not", "to", "be,", "that", "is", "the", "question:"],
+        "maxWidth": 25
+      },
+      "expected": ["To  be or not to be, that", "is the question:         "]
+    },
+    {
+      "case_id": 32,
+      "input": {
+        "words": ["Left", "justified", "line"],
+        "maxWidth": 30
+      },
+      "expected": ["Left justified line           "]
+    },
+    {
+      "case_id": 33,
+      "input": {
+        "words": ["In", "order", "to", "write", "about", "life,", "one", "must", "live", "it."],
+        "maxWidth": 22
+      },
+      "expected": ["In   order   to  write", "about  life,  one must", "live it.              "]
+    },
+    {
+      "case_id": 34,
+      "input": {
+        "words": ["The", "quick", "brown", "fox", "jumps", "over", "the", "lazy", "dog"],
+        "maxWidth": 20
+      },
+      "expected": ["The  quick brown fox", "jumps  over the lazy", "dog                 "]
+    },
+    {
+      "case_id": 35,
+      "input": {
+        "words": ["Sometimes", "the", "wisest", "course", "requires", "a", "great", "deal", "of", "courage"],
+        "maxWidth": 25
+      },
+      "expected": ["Sometimes    the   wisest", "course  requires  a great", "deal of courage          "]
+    },
+    {
+      "case_id": 36,
+      "input": {
+        "words": ["The", "only", "way", "to", "do", "great", "work", "is", "to", "love", "what", "you", "do."],
+        "maxWidth": 25
+      },
+      "expected": ["The  only way to do great", "work  is to love what you", "do.                      "]
+    },
+    {
+      "case_id": 37,
+      "input": {
+        "words": ["How", "much", "wood", "would", "a", "woodchuck", "chuck", "if", "a", "woodchuck", "could", "chuck", "wood"],
+        "maxWidth": 20
+      },
+      "expected": ["How  much wood would", "a woodchuck chuck if", "a   woodchuck  could", "chuck wood          "]
+    },
+    {
+      "case_id": 38,
+      "input": {
+        "words": ["Sometimes", "you", "have", "to", "run", "before", "you", "can", "walk"],
+        "maxWidth": 20
+      },
+      "expected": ["Sometimes  you  have", "to  run  before  you", "can walk            "]
+    },
+    {
+      "case_id": 39,
+      "input": {
+        "words": ["So", "musing", "on", "the", "marvel", "of", "this", "theatre,"],
+        "maxWidth": 25
+      },
+      "expected": ["So  musing  on the marvel", "of this theatre,         "]
+    },
+    {
+      "case_id": 40,
+      "input": {
+        "words": ["Knowledge", "is", "a", "treasure,", "and", "practice", "is", "the", "key", "to", "mastering", "it."],
+        "maxWidth": 28
+      },
+      "expected": ["Knowledge is a treasure, and", "practice   is   the  key  to", "mastering it.               "]
+    },
+    {
+      "case_id": 41,
+      "input": {
+        "words": ["Do", "not", "wait", "to", "strike", "till", "the", "iron", "is", "hot;", "but", "make", "it", "hot", "by", "striking."],
+        "maxWidth": 22
+      },
+      "expected": ["Do  not wait to strike", "till  the iron is hot;", "but  make  it  hot  by", "striking.             "]
+    },
+    {
+      "case_id": 42,
+      "input": {
+        "words": ["Just", "one", "word"],
+        "maxWidth": 50
+      },
+      "expected": ["Just one word                                     "]
+    },
+    {
+      "case_id": 43,
+      "input": {
+        "words": ["The", "quick", "brown", "fox", "jumps", "over", "the", "lazy", "dog."],
+        "maxWidth": 15
+      },
+      "expected": ["The quick brown", "fox  jumps over", "the lazy dog.  "]
+    },
+    {
+      "case_id": 44,
+      "input": {
+        "words": ["Lorem", "ipsum", "dolor", "sit", "amet,", "consectetur", "adipiscing", "elit"],
+        "maxWidth": 20
+      },
+      "expected": ["Lorem   ipsum  dolor", "sit            amet,", "consectetur         ", "adipiscing elit     "]
+    },
+    {
+      "case_id": 45,
+      "input": {
+        "words": ["The", "quick", "brown", "fox", "jumps", "over", "the", "lazy", "dog"],
+        "maxWidth": 15
+      },
+      "expected": ["The quick brown", "fox  jumps over", "the lazy dog   "]
+    },
+    {
+      "case_id": 46,
+      "input": {
+        "words": ["a", "very", "long", "sentence", "that", "needs", "to", "be", "formatted", "correctly", "with", "various", "spaces"],
+        "maxWidth": 10
+      },
+      "expected": ["a     very", "long      ", "sentence  ", "that needs", "to      be", "formatted ", "correctly ", "with      ", "various   ", "spaces    "]
+    },
+    {
+      "case_id": 47,
+      "input": {
+        "words": ["Lorem", "ipsum", "dolor", "sit", "amet,", "consectetur", "adipiscing", "elit."],
+        "maxWidth": 12
+      },
+      "expected": ["Lorem  ipsum", "dolor    sit", "amet,       ", "consectetur ", "adipiscing  ", "elit.       "]
+    },
+    {
+      "case_id": 48,
+      "input": {
+        "words": ["There", "is", "no", "royal", "road", "to", "learning."],
+        "maxWidth": 20
+      },
+      "expected": ["There  is  no  royal", "road to learning.   "]
+    },
+    {
+      "case_id": 49,
+      "input": {
+        "words": ["word"],
+        "maxWidth": 1
+      },
+      "expected": ["word"]
+    },
+    {
+      "case_id": 50,
+      "input": {
+        "words": ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o"],
+        "maxWidth": 5
+      },
+      "expected": ["a b c", "d e f", "g h i", "j k l", "m n o"]
+    },
+    {
+      "case_id": 51,
+      "input": {
+        "words": ["To", "be", "or", "not", "to", "be", "that", "is", "the", "question"],
+        "maxWidth": 15
+      },
+      "expected": ["To be or not to", "be  that is the", "question       "]
+    },
+    {
+      "case_id": 52,
+      "input": {
+        "words": ["A", "quick", "brown", "fox", "jumps", "over", "the", "lazy", "dog."],
+        "maxWidth": 15
+      },
+      "expected": ["A  quick  brown", "fox  jumps over", "the lazy dog.  "]
+    },
+    {
+      "case_id": 53,
+      "input": {
+        "words": ["Short", "words", "only"],
+        "maxWidth": 5
+      },
+      "expected": ["Short", "words", "only "]
+    },
+    {
+      "case_id": 54,
+      "input": {
+        "words": ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"],
+        "maxWidth": 5
+      },
+      "expected": ["A B C", "D E F", "G H I", "J K L", "M N O", "P Q R", "S T U", "V W X", "Y Z  "]
+    },
+    {
+      "case_id": 55,
+      "input": {
+        "words": ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"],
+        "maxWidth": 6
+      },
+      "expected": ["a  b c", "d  e f", "g  h i", "j  k l", "m  n o", "p  q r", "s  t u", "v  w x", "y z   "]
+    },
+    {
+      "case_id": 56,
+      "input": {
+        "words": ["The", "best", "way", "to", "predict", "the", "future", "is", "to", "create", "it."],
+        "maxWidth": 20
+      },
+      "expected": ["The   best   way  to", "predict  the  future", "is to create it.    "]
+    },
+    {
+      "case_id": 57,
+      "input": {
+        "words": ["SingleWord"],
+        "maxWidth": 10
+      },
+      "expected": ["SingleWord"]
+    },
+    {
+      "case_id": 58,
+      "input": {
+        "words": ["Failure", "is", "not", "the", "opposite", "of", "success;", "it", "is", "part", "of", "success."],
+        "maxWidth": 30
+      },
+      "expected": ["Failure is not the opposite of", "success;   it   is   part   of", "success.                      "]
+    },
+    {
+      "case_id": 59,
+      "input": {
+        "words": ["Lorem", "ipsum", "dolor", "sit", "amet,", "consectetur", "adipiscing", "elit."],
+        "maxWidth": 20
+      },
+      "expected": ["Lorem   ipsum  dolor", "sit            amet,", "consectetur         ", "adipiscing elit.    "]
+    },
+    {
+      "case_id": 60,
+      "input": {
+        "words": ["Listen", "to", "many,", "speak", "to", "a", "few."],
+        "maxWidth": 6
+      },
+      "expected": ["Listen", "to    ", "many, ", "speak ", "to   a", "few.  "]
+    },
+    {
+      "case_id": 61,
+      "input": {
+        "words": ["Equal", "space", "distribution"],
+        "maxWidth": 20
+      },
+      "expected": ["Equal          space", "distribution        "]
+    },
+    {
+      "case_id": 62,
+      "input": {
+        "words": ["Lorem", "ipsum", "dolor", "sit", "amet,", "consectetur", "adipiscing", "elit."],
+        "maxWidth": 20
+      },
+      "expected": ["Lorem   ipsum  dolor", "sit            amet,", "consectetur         ", "adipiscing elit.    "]
+    },
+    {
+      "case_id": 63,
+      "input": {
+        "words": ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"],
+        "maxWidth": 5
+      },
+      "expected": ["A B C", "D E F", "G H I", "J K L", "M N O", "P Q R", "S T U", "V W X", "Y Z  "]
+    },
+    {
+      "case_id": 64,
+      "input": {
+        "words": ["A", "brave", "new", "world,"],
+        "maxWidth": 30
+      },
+      "expected": ["A brave new world,            "]
+    },
+    {
+      "case_id": 65,
+      "input": {
+        "words": ["Listen", "to", "the", "wind.", "It", "is", "talking", "to", "you."],
+        "maxWidth": 20
+      },
+      "expected": ["Listen  to the wind.", "It   is  talking  to", "you.                "]
+    },
+    {
+      "case_id": 66,
+      "input": {
+        "words": ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T"],
+        "maxWidth": 20
+      },
+      "expected": ["A  B C D E F G H I J", "K L M N O P Q R S T "]
+    },
+    {
+      "case_id": 67,
+      "input": {
+        "words": ["Let", "us", "hope", "it", "will", "never", "come", "to", "war"],
+        "maxWidth": 15
+      },
+      "expected": ["Let  us hope it", "will never come", "to war         "]
+    },
+    {
+      "case_id": 68,
+      "input": {
+        "words": ["Equal", "rights", "for", "all"],
+        "maxWidth": 10
+      },
+      "expected": ["Equal     ", "rights for", "all       "]
+    },
+    {
+      "case_id": 69,
+      "input": {
+        "words": ["all", "the", "world", "is", "a", "stage", "and", "all", "the", "men", "and", "women", "merely", "players"],
+        "maxWidth": 25
+      },
+      "expected": ["all  the world is a stage", "and all the men and women", "merely players           "]
+    },
+    {
+      "case_id": 70,
+      "input": {
+        "words": ["One", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten"],
+        "maxWidth": 12
+      },
+      "expected": ["One      two", "three   four", "five     six", "seven  eight", "nine ten    "]
+    },
+    {
+      "case_id": 71,
+      "input": {
+        "words": ["It", "is", "during", "our", "darkest", "hours", "that", "we", "must", "trust", "in", "the", "light."],
+        "maxWidth": 24
+      },
+      "expected": ["It is during our darkest", "hours that we must trust", "in the light.           "]
+    },
+    {
+      "case_id": 72,
+      "input": {
+        "words": ["Once", "upon", "a", "time", "in", "a", "land", "far", "far", "away"],
+        "maxWidth": 25
+      },
+      "expected": ["Once  upon  a  time  in a", "land far far away        "]
+    },
+    {
+      "case_id": 73,
+      "input": {
+        "words": ["LongWord1234567890", "Short", "AnotherLongWord1234567", "Tiny", "Word"],
+        "maxWidth": 25
+      },
+      "expected": ["LongWord1234567890  Short", "AnotherLongWord1234567   ", "Tiny Word                "]
+    },
+    {
+      "case_id": 74,
+      "input": {
+        "words": ["We", "are", "now", "a", "great", "nation", "", "must", "make", "amends", "that", "we", "have", "wronged", "visitors", "from", "other", "lands"],
+        "maxWidth": 12
+      },
+      "expected": ["We are now a", "great nation", "  must  make", "amends  that", "we      have", "wronged     ", "visitors    ", "from   other", "lands       "]
+    },
+    {
+      "case_id": 75,
+      "input": {
+        "words": ["Sometimes", "we", "have", "to", "let", "go", "of", "the", "past,to", "move", "forward."],
+        "maxWidth": 22
+      },
+      "expected": ["Sometimes  we  have to", "let  go of the past,to", "move forward.         "]
+    },
+    {
+      "case_id": 76,
+      "input": {
+        "words": ["A", "journey", "of", "a", "thousand", "miles", "begins", "with", "a", "single", "step"],
+        "maxWidth": 30
+      },
+      "expected": ["A  journey of a thousand miles", "begins with a single step     "]
+    },
+    {
+      "case_id": 77,
+      "input": {
+        "words": ["The", "quick", "brown", "fox", "jumps", "over", "the", "lazy", "dog"],
+        "maxWidth": 10
+      },
+      "expected": ["The  quick", "brown  fox", "jumps over", "the   lazy", "dog       "]
+    },
+    {
+      "case_id": 78,
+      "input": {
+        "words": ["One", "two", "three", "four", "five", "six", "seven"],
+        "maxWidth": 10
+      },
+      "expected": ["One    two", "three four", "five   six", "seven     "]
+    },
+    {
+      "case_id": 79,
+      "input": {
+        "words": ["Short", "words", "only"],
+        "maxWidth": 10
+      },
+      "expected": ["Short     ", "words only"]
+    },
+    {
+      "case_id": 80,
+      "input": {
+        "words": ["Life", "is", "either", "a", "great", "adventure", "or", "nothing."],
+        "maxWidth": 19
+      },
+      "expected": ["Life  is  either  a", "great  adventure or", "nothing.           "]
+    },
+    {
+      "case_id": 81,
+      "input": {
+        "words": ["The", "quick", "brown", "fox", "jumps", "over", "the", "lazy", "dog"],
+        "maxWidth": 20
+      },
+      "expected": ["The  quick brown fox", "jumps  over the lazy", "dog                 "]
+    },
+    {
+      "case_id": 82,
+      "input": {
+        "words": ["Justification", "is", "a", "bit", "tricky,", "especially", "when", "the", "words", "are", "short.", "Here", "we", "go."],
+        "maxWidth": 20
+      },
+      "expected": ["Justification  is  a", "bit          tricky,", "especially  when the", "words   are   short.", "Here we go.         "]
+    },
+    {
+      "case_id": 83,
+      "input": {
+        "words": ["Here", "is", "a", "longer", "word", "that", "will", "require", "some", "additional", "spaces", "to", "justify"],
+        "maxWidth": 30
+      },
+      "expected": ["Here  is  a  longer  word that", "will  require  some additional", "spaces to justify             "]
+    },
+    {
+      "case_id": 84,
+      "input": {
+        "words": ["It", "is", "a", "truth", "universally", "acknowledged", "that", "a", "single", "man", "in", "possession", "of", "a", "good", "fortune"],
+        "maxWidth": 20
+      },
+      "expected": ["It    is   a   truth", "universally         ", "acknowledged  that a", "single     man    in", "possession of a good", "fortune             "]
+    },
+    {
+      "case_id": 85,
+      "input": {
+        "words": ["If", "you", "set", "your", "goals", "beyond", "your", "abilities,", "you", "will", "never", "achieve", "them."],
+        "maxWidth": 25
+      },
+      "expected": ["If  you  set  your  goals", "beyond   your  abilities,", "you  will  never  achieve", "them.                    "]
+    },
+    {
+      "case_id": 86,
+      "input": {
+        "words": ["The", "world", "is", "a", "book", "and", "those", "who", "do", "not", "travel", "read", "only", "one", "page."],
+        "maxWidth": 25
+      },
+      "expected": ["The  world  is a book and", "those  who  do not travel", "read only one page.      "]
+    },
+    {
+      "case_id": 87,
+      "input": {
+        "words": ["Every", "great", "developer", "you", "know", "got", "where", "he", "is", "by", "solving", "problems", "they", "were", "uncomfortable", "solving", "before."],
+        "maxWidth": 40
+      },
+      "expected": ["Every great developer you know got where", "he  is  by  solving  problems  they were", "uncomfortable solving before.           "]
+    },
+    {
+      "case_id": 88,
+      "input": {
+        "words": ["To", "be", "or", "not", "to", "be", "that", "is", "the", "question"],
+        "maxWidth": 25
+      },
+      "expected": ["To  be  or not to be that", "is the question          "]
+    },
+    {
+      "case_id": 89,
+      "input": {
+        "words": ["Once", "upon", "a", "time", "in", "a", "land", "far", "far", "away"],
+        "maxWidth": 22
+      },
+      "expected": ["Once  upon a time in a", "land far far away     "]
+    },
+    {
+      "case_id": 90,
+      "input": {
+        "words": ["I", "have", "a", "dream"],
+        "maxWidth": 10
+      },
+      "expected": ["I  have  a", "dream     "]
+    },
+    {
+      "case_id": 91,
+      "input": {
+        "words": ["Programming", "is", "the", "art", "of", "telling", "another", "person", "what", "to", "do", "in", "a", "language", "that", "the", "other", "person", "can", "understand"],
+        "maxWidth": 60
+      },
+      "expected": ["Programming  is the art of telling another person what to do", "in a language that the other person can understand          "]
+    },
+    {
+      "case_id": 92,
+      "input": {
+        "words": ["One", "small", "step", "for", "man", "one", "giants", "leap", "for", "mankind"],
+        "maxWidth": 30
+      },
+      "expected": ["One  small  step  for  man one", "giants leap for mankind       "]
+    },
+    {
+      "case_id": 93,
+      "input": {
+        "words": ["This", "is", "a", "test", "for", "justification", "algorithm", "to", "see", "how", "it", "works", "with", "longer", "texts"],
+        "maxWidth": 25
+      },
+      "expected": ["This   is   a   test  for", "justification   algorithm", "to  see how it works with", "longer texts             "]
+    },
+    {
+      "case_id": 94,
+      "input": {
+        "words": ["One", "word", "in", "each", "line"],
+        "maxWidth": 1
+      },
+      "expected": ["One", "word", "in", "each", "line"]
+    },
+    {
+      "case_id": 95,
+      "input": {
+        "words": ["All", "the", "world’s", "a", "stage,", "And", "all", "the", "men", "and", "women", "merely", "players."],
+        "maxWidth": 20
+      },
+      "expected": ["All  the  world’s  a", "stage,  And  all the", "men and women merely", "players.            "]
+    },
+    {
+      "case_id": 96,
+      "input": {
+        "words": ["Continuous", "learning", "is", "the", "only", "way", "to", "remain", "relevant", "in", "the", "fast-paced", "world", "of", "technology."],
+        "maxWidth": 40
+      },
+      "expected": ["Continuous  learning  is the only way to", "remain  relevant in the fast-paced world", "of technology.                          "]
+    },
+    {
+      "case_id": 97,
+      "input": {
+        "words": ["The", "quick", "brown", "fox", "jumps", "over", "the", "lazy", "dog"],
+        "maxWidth": 10
+      },
+      "expected": ["The  quick", "brown  fox", "jumps over", "the   lazy", "dog       "]
+    },
+    {
+      "case_id": 98,
+      "input": {
+        "words": ["The", "best", "time", "of", "our", "lives", "The", "worst", "time", "of", "our", "lives"],
+        "maxWidth": 20
+      },
+      "expected": ["The best time of our", "lives The worst time", "of our lives        "]
+    },
+    {
+      "case_id": 99,
+      "input": {
+        "words": ["A", "simple", "sentence."],
+        "maxWidth": 20
+      },
+      "expected": ["A simple sentence.  "]
+    },
+    {
+      "case_id": 100,
+      "input": {
+        "words": ["To", "be", "or", "not", "to", "be", "that", "is", "the", "question"],
+        "maxWidth": 20
+      },
+      "expected": ["To  be  or not to be", "that is the question"]
+    },
+    {
+      "case_id": 101,
+      "input": {
+        "words": ["SingleLongWordThatExceedsTheMaxWidthAndNeedsToBeHandledProperly"],
+        "maxWidth": 30
+      },
+      "expected": ["SingleLongWordThatExceedsTheMaxWidthAndNeedsToBeHandledProperly"]
+    },
+    {
+      "case_id": 102,
+      "input": {
+        "words": ["Pneumonoultramicroscopicsilicovolcanoconiosis"],
+        "maxWidth": 40
+      },
+      "expected": ["Pneumonoultramicroscopicsilicovolcanoconiosis"]
+    },
+    {
+      "case_id": 103,
+      "input": {
+        "words": ["Believe", "you", "can", "and", "you", "re", "halfway", "there."],
+        "maxWidth": 15
+      },
+      "expected": ["Believe you can", "and    you   re", "halfway there. "]
+    },
+    {
+      "case_id": 104,
+      "input": {
+        "words": ["To", "be", "or", "not", "to", "be,", "that", "is", "the", "question:"],
+        "maxWidth": 10
+      },
+      "expected": ["To  be  or", "not to be,", "that    is", "the       ", "question: "]
+    },
+    {
+      "case_id": 105,
+      "input": {
+        "words": ["This", "is", "an", "example", "of", "a", "longer", "text", "that", "will", "be", "used", "to", "test", "the", "algorithm"],
+        "maxWidth": 15
+      },
+      "expected": ["This    is   an", "example   of  a", "longer     text", "that   will  be", "used   to  test", "the algorithm  "]
+    },
+    {
+      "case_id": 106,
+      "input": {
+        "words": ["One", "Two", "Three", "Four", "Five"],
+        "maxWidth": 10
+      },
+      "expected": ["One    Two", "Three Four", "Five      "]
+    },
+    {
+      "case_id": 107,
+      "input": {
+        "words": ["Many", "spaces", "should", "go", "here"],
+        "maxWidth": 23
+      },
+      "expected": ["Many  spaces  should go", "here                   "]
+    },
+    {
+      "case_id": 108,
+      "input": {
+        "words": ["Pack", "my", "box", "with", "five", "dozen", "liquor", "jugs."],
+        "maxWidth": 20
+      },
+      "expected": ["Pack   my  box  with", "five   dozen  liquor", "jugs.               "]
+    }
+  ]
+}

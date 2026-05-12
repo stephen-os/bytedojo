@@ -1,0 +1,997 @@
+{
+  "schema_version": 1,
+  "problem_id": 1967,
+  "title": "Number of Strings That Appear as Substrings in Word",
+  "method": "numOfStrings",
+  "signature": {
+    "params": [
+      {
+        "name": "patterns",
+        "type": "STRING_ARRAY"
+      },
+      {
+        "name": "word",
+        "type": "STRING"
+      }
+    ],
+    "returns": "INT32"
+  },
+  "cases": [
+    {
+      "case_id": 1,
+      "input": {
+        "patterns": ["a", "b", "c"],
+        "word": "aaaaabbbbb"
+      },
+      "expected": 2
+    },
+    {
+      "case_id": 2,
+      "input": {
+        "patterns": ["aa", "bb", "cc"],
+        "word": "abcabc"
+      },
+      "expected": 0
+    },
+    {
+      "case_id": 3,
+      "input": {
+        "patterns": ["a", "abc", "bc", "d"],
+        "word": "abc"
+      },
+      "expected": 3
+    },
+    {
+      "case_id": 4,
+      "input": {
+        "patterns": ["aaa"],
+        "word": "aaaaa"
+      },
+      "expected": 1
+    },
+    {
+      "case_id": 5,
+      "input": {
+        "patterns": ["abc"],
+        "word": "abc"
+      },
+      "expected": 1
+    },
+    {
+      "case_id": 6,
+      "input": {
+        "patterns": ["xyz", "xy", "yz"],
+        "word": "xyz"
+      },
+      "expected": 3
+    },
+    {
+      "case_id": 7,
+      "input": {
+        "patterns": ["hello", "world"],
+        "word": "helloworld"
+      },
+      "expected": 2
+    },
+    {
+      "case_id": 8,
+      "input": {
+        "patterns": ["a", "a", "a"],
+        "word": "ab"
+      },
+      "expected": 3
+    },
+    {
+      "case_id": 9,
+      "input": {
+        "patterns": ["z"],
+        "word": "abcz"
+      },
+      "expected": 1
+    },
+    {
+      "case_id": 10,
+      "input": {
+        "patterns": ["a", "b", "c", "d", "e"],
+        "word": "edcba"
+      },
+      "expected": 5
+    },
+    {
+      "case_id": 11,
+      "input": {
+        "patterns": ["hello", "world", "foo", "bar"],
+        "word": "helloworldfoo"
+      },
+      "expected": 3
+    },
+    {
+      "case_id": 12,
+      "input": {
+        "patterns": ["repeated", "repeat", "eat"],
+        "word": "repeatedrepeat"
+      },
+      "expected": 3
+    },
+    {
+      "case_id": 13,
+      "input": {
+        "patterns": ["this", "is", "a", "test"],
+        "word": "thisisatest"
+      },
+      "expected": 4
+    },
+    {
+      "case_id": 14,
+      "input": {
+        "patterns": ["abc", "cab", "bac"],
+        "word": "abacabcabc"
+      },
+      "expected": 3
+    },
+    {
+      "case_id": 15,
+      "input": {
+        "patterns": ["aabb", "bbcc", "ccdd", "ddaa"],
+        "word": "aabbccdd"
+      },
+      "expected": 3
+    },
+    {
+      "case_id": 16,
+      "input": {
+        "patterns": ["a", "ab", "abc", "abcd"],
+        "word": "abcd"
+      },
+      "expected": 4
+    },
+    {
+      "case_id": 17,
+      "input": {
+        "patterns": ["a", "aa", "aaa", "aaaa"],
+        "word": "aaaaaaaa"
+      },
+      "expected": 4
+    },
+    {
+      "case_id": 18,
+      "input": {
+        "patterns": ["overlapping", "lapping", "lappingo", "verlapping"],
+        "word": "overlappinglappingoverlappingoverlapping"
+      },
+      "expected": 4
+    },
+    {
+      "case_id": 19,
+      "input": {
+        "patterns": ["hello", "world", "python", "programming"],
+        "word": "helloworldpythonprogramming"
+      },
+      "expected": 4
+    },
+    {
+      "case_id": 20,
+      "input": {
+        "patterns": ["xyz", "zyx", "zxy"],
+        "word": "xyzzyxzyxzxyzyx"
+      },
+      "expected": 3
+    },
+    {
+      "case_id": 21,
+      "input": {
+        "patterns": ["xy", "yx", "xyz", "zyx"],
+        "word": "xyzzyx"
+      },
+      "expected": 4
+    },
+    {
+      "case_id": 22,
+      "input": {
+        "patterns": ["lorem", "ipsum", "dolor", "sit", "amet"],
+        "word": "loremipsumdolorsitamet"
+      },
+      "expected": 5
+    },
+    {
+      "case_id": 23,
+      "input": {
+        "patterns": ["abcd", "bcde", "cdef", "defg", "efgh", "fghi", "ghij", "hijk", "ijkl", "jklm", "klmn", "lmno", "mnop", "nopq", "opqr", "pqrs", "qrst", "rstu", "stuv", "tuvw", "uvwx", "vwxy", "wxyz"],
+        "word": "abcdefghijklmnopqrstuvwxyz"
+      },
+      "expected": 23
+    },
+    {
+      "case_id": 24,
+      "input": {
+        "patterns": ["mnop", "nopq", "opqr", "pqrs", "qrst"],
+        "word": "mnopqrstu"
+      },
+      "expected": 5
+    },
+    {
+      "case_id": 25,
+      "input": {
+        "patterns": ["quick", "brown", "fox"],
+        "word": "thequickbrownfox"
+      },
+      "expected": 3
+    },
+    {
+      "case_id": 26,
+      "input": {
+        "patterns": ["abcd", "abcde", "abcdef"],
+        "word": "abcdefgabcdefg"
+      },
+      "expected": 3
+    },
+    {
+      "case_id": 27,
+      "input": {
+        "patterns": ["xyz", "zyx", "yxz", "xzy", "zyx"],
+        "word": "zyxzyxzyxzyx"
+      },
+      "expected": 4
+    },
+    {
+      "case_id": 28,
+      "input": {
+        "patterns": ["ab", "ba", "aba", "bab"],
+        "word": "abababab"
+      },
+      "expected": 4
+    },
+    {
+      "case_id": 29,
+      "input": {
+        "patterns": ["aaaa", "bbbb", "cccc"],
+        "word": "aaaabbbbccccaaaabbbbcccc"
+      },
+      "expected": 3
+    },
+    {
+      "case_id": 30,
+      "input": {
+        "patterns": ["aba", "bba", "aaa", "bbb"],
+        "word": "abababababa"
+      },
+      "expected": 1
+    },
+    {
+      "case_id": 31,
+      "input": {
+        "patterns": ["repeated", "pattern", "substring", "string"],
+        "word": "repeatedpatternsubstringstring"
+      },
+      "expected": 4
+    },
+    {
+      "case_id": 32,
+      "input": {
+        "patterns": ["ab", "bc", "cd", "de", "ef", "fg"],
+        "word": "abcdefg"
+      },
+      "expected": 6
+    },
+    {
+      "case_id": 33,
+      "input": {
+        "patterns": ["repeated", "substring", "example"],
+        "word": "repeatedsubstringexample"
+      },
+      "expected": 3
+    },
+    {
+      "case_id": 34,
+      "input": {
+        "patterns": ["overlap", "lap", "ap", "p"],
+        "word": "overlaplapap"
+      },
+      "expected": 4
+    },
+    {
+      "case_id": 35,
+      "input": {
+        "patterns": ["hello", "world", "python", "programming"],
+        "word": "programmingworldpython"
+      },
+      "expected": 3
+    },
+    {
+      "case_id": 36,
+      "input": {
+        "patterns": ["longer", "substrings", "to", "check"],
+        "word": "thisisalongersubstringtocheck"
+      },
+      "expected": 3
+    },
+    {
+      "case_id": 37,
+      "input": {
+        "patterns": ["unique", "un", "iq"],
+        "word": "uniqueiq"
+      },
+      "expected": 3
+    },
+    {
+      "case_id": 38,
+      "input": {
+        "patterns": ["substring", "string", "sub"],
+        "word": "thisisjustasubstringexample"
+      },
+      "expected": 3
+    },
+    {
+      "case_id": 39,
+      "input": {
+        "patterns": ["hello", "world", "hello", "world"],
+        "word": "helloworldhello"
+      },
+      "expected": 4
+    },
+    {
+      "case_id": 40,
+      "input": {
+        "patterns": ["aaa", "aa", "a"],
+        "word": "aaaaaaaaaaaa"
+      },
+      "expected": 3
+    },
+    {
+      "case_id": 41,
+      "input": {
+        "patterns": ["z", "zz", "zzz"],
+        "word": "zzzzzzzzz"
+      },
+      "expected": 3
+    },
+    {
+      "case_id": 42,
+      "input": {
+        "patterns": ["ab", "bc", "cd", "de", "ef"],
+        "word": "abcdef"
+      },
+      "expected": 5
+    },
+    {
+      "case_id": 43,
+      "input": {
+        "patterns": ["123", "234", "345"],
+        "word": "1234567890"
+      },
+      "expected": 3
+    },
+    {
+      "case_id": 44,
+      "input": {
+        "patterns": ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j"],
+        "word": "abcdefghij"
+      },
+      "expected": 10
+    },
+    {
+      "case_id": 45,
+      "input": {
+        "patterns": ["a", "b", "c", "d", "e", "f"],
+        "word": "abcdef"
+      },
+      "expected": 6
+    },
+    {
+      "case_id": 46,
+      "input": {
+        "patterns": ["a", "ab", "abc", "abcd", "abcde"],
+        "word": "abcde"
+      },
+      "expected": 5
+    },
+    {
+      "case_id": 47,
+      "input": {
+        "patterns": ["one", "two", "three"],
+        "word": "onetwothreeonetwothree"
+      },
+      "expected": 3
+    },
+    {
+      "case_id": 48,
+      "input": {
+        "patterns": ["aaa", "aab", "aba", "baa", "aabaa", "aaaba", "aaba", "baaa"],
+        "word": "aaaabaaaa"
+      },
+      "expected": 8
+    },
+    {
+      "case_id": 49,
+      "input": {
+        "patterns": ["hello", "world", "helloworld"],
+        "word": "helloworld"
+      },
+      "expected": 3
+    },
+    {
+      "case_id": 50,
+      "input": {
+        "patterns": ["quick", "brown", "fox"],
+        "word": "thequickbrownfoxjumps"
+      },
+      "expected": 3
+    },
+    {
+      "case_id": 51,
+      "input": {
+        "patterns": ["xyz", "zyx", "yzz", "zzz"],
+        "word": "xyzzyzyzzz"
+      },
+      "expected": 3
+    },
+    {
+      "case_id": 52,
+      "input": {
+        "patterns": ["aaa", "bbb", "ccc", "abc", "bca", "cab"],
+        "word": "abcabcabc"
+      },
+      "expected": 3
+    },
+    {
+      "case_id": 53,
+      "input": {
+        "patterns": ["abcd", "dcba", "abcdabcd"],
+        "word": "abcdabcdabcdabcd"
+      },
+      "expected": 2
+    },
+    {
+      "case_id": 54,
+      "input": {
+        "patterns": ["a", "ab", "abc", "abcd", "abcde"],
+        "word": "abcdefghijklmnopqrstuvwxyz"
+      },
+      "expected": 5
+    },
+    {
+      "case_id": 55,
+      "input": {
+        "patterns": ["abc", "def", "ghi", "jkl"],
+        "word": "abcdefghijkl"
+      },
+      "expected": 4
+    },
+    {
+      "case_id": 56,
+      "input": {
+        "patterns": ["aaaaa", "bbbbb", "ccccc", "ddddd"],
+        "word": "abcdeabcdeabcdeabcde"
+      },
+      "expected": 0
+    },
+    {
+      "case_id": 57,
+      "input": {
+        "patterns": ["ab", "bc", "cd", "de"],
+        "word": "abcdefg"
+      },
+      "expected": 4
+    },
+    {
+      "case_id": 58,
+      "input": {
+        "patterns": ["pattern", "matching", "substrings"],
+        "word": "matchingpatternsubstring"
+      },
+      "expected": 2
+    },
+    {
+      "case_id": 59,
+      "input": {
+        "patterns": ["ab", "ba", "abab", "baba"],
+        "word": "abababababababab"
+      },
+      "expected": 4
+    },
+    {
+      "case_id": 60,
+      "input": {
+        "patterns": ["same", "sub", "string", "test", "case"],
+        "word": "substringtestcase"
+      },
+      "expected": 4
+    },
+    {
+      "case_id": 61,
+      "input": {
+        "patterns": ["aaaa", "bbbb", "cccc", "ddd"],
+        "word": "aaaabbbbccccddd"
+      },
+      "expected": 4
+    },
+    {
+      "case_id": 62,
+      "input": {
+        "patterns": ["apple", "banana", "cherry"],
+        "word": "cherrybananaapple"
+      },
+      "expected": 3
+    },
+    {
+      "case_id": 63,
+      "input": {
+        "patterns": ["cat", "dog", "bird", "fish"],
+        "word": "fishdogcatbird"
+      },
+      "expected": 4
+    },
+    {
+      "case_id": 64,
+      "input": {
+        "patterns": ["python", "java", "cpp"],
+        "word": "pythonjavacpp"
+      },
+      "expected": 3
+    },
+    {
+      "case_id": 65,
+      "input": {
+        "patterns": ["aaa", "bbb", "ccc", "ddd"],
+        "word": "aaabbbcccddd"
+      },
+      "expected": 4
+    },
+    {
+      "case_id": 66,
+      "input": {
+        "patterns": ["test", "sett", "best"],
+        "word": "bestsett"
+      },
+      "expected": 2
+    },
+    {
+      "case_id": 67,
+      "input": {
+        "patterns": ["abc", "bca", "cab", "abcabc"],
+        "word": "abcabcabcabc"
+      },
+      "expected": 4
+    },
+    {
+      "case_id": 68,
+      "input": {
+        "patterns": ["aaa", "aa", "a"],
+        "word": "aaaaaaaaaa"
+      },
+      "expected": 3
+    },
+    {
+      "case_id": 69,
+      "input": {
+        "patterns": ["quick", "brown", "fox", "jump", "over", "lazy", "dog"],
+        "word": "thequickbrownfoxjumpsoverthelazydog"
+      },
+      "expected": 7
+    },
+    {
+      "case_id": 70,
+      "input": {
+        "patterns": ["abc", "cab", "bca"],
+        "word": "abcabcabcabc"
+      },
+      "expected": 3
+    },
+    {
+      "case_id": 71,
+      "input": {
+        "patterns": ["xyz", "zyx", "xy", "yx", "xzy", "yzx"],
+        "word": "zyxwvutsrqponmlkjihgfedcba"
+      },
+      "expected": 2
+    },
+    {
+      "case_id": 72,
+      "input": {
+        "patterns": ["aaa", "bbb", "ccc", "ddd", "eee", "fff"],
+        "word": "abcdefabcdefabcdef"
+      },
+      "expected": 0
+    },
+    {
+      "case_id": 73,
+      "input": {
+        "patterns": ["abc", "def", "ghi"],
+        "word": "defabc"
+      },
+      "expected": 2
+    },
+    {
+      "case_id": 74,
+      "input": {
+        "patterns": ["quick", "brown", "fox"],
+        "word": "thequickbrownfoxjumpsoverthelazydog"
+      },
+      "expected": 3
+    },
+    {
+      "case_id": 75,
+      "input": {
+        "patterns": ["abc", "def", "ghi", "jkl", "mno", "pqr", "stu", "vwx", "yz"],
+        "word": "abcdef ghijklmnopqrstuvwxyz"
+      },
+      "expected": 9
+    },
+    {
+      "case_id": 76,
+      "input": {
+        "patterns": ["aaa", "aa", "a"],
+        "word": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      },
+      "expected": 3
+    },
+    {
+      "case_id": 77,
+      "input": {
+        "patterns": ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j"],
+        "word": "abcdefghijabcdefghij"
+      },
+      "expected": 10
+    },
+    {
+      "case_id": 78,
+      "input": {
+        "patterns": ["test", "string", "finding", "substring"],
+        "word": "teststringfindingsubstring"
+      },
+      "expected": 4
+    },
+    {
+      "case_id": 79,
+      "input": {
+        "patterns": ["aa", "aaa", "aaaa"],
+        "word": "aaaa"
+      },
+      "expected": 3
+    },
+    {
+      "case_id": 80,
+      "input": {
+        "patterns": ["short", "shot", "dot"],
+        "word": "shortshot"
+      },
+      "expected": 2
+    },
+    {
+      "case_id": 81,
+      "input": {
+        "patterns": ["foo", "bar", "foobar", "barfoo"],
+        "word": "foobarbarfoobarfoo"
+      },
+      "expected": 4
+    },
+    {
+      "case_id": 82,
+      "input": {
+        "patterns": ["aba", "bab", "aba"],
+        "word": "ababababa"
+      },
+      "expected": 3
+    },
+    {
+      "case_id": 83,
+      "input": {
+        "patterns": ["hello", "world", "python"],
+        "word": "pythonworldhello"
+      },
+      "expected": 3
+    },
+    {
+      "case_id": 84,
+      "input": {
+        "patterns": ["abc", "acb", "bac", "bca", "cab", "cba"],
+        "word": "abcacbcbacbacbcbac"
+      },
+      "expected": 5
+    },
+    {
+      "case_id": 85,
+      "input": {
+        "patterns": ["banana", "ana", "nan", "ban"],
+        "word": "banananana"
+      },
+      "expected": 4
+    },
+    {
+      "case_id": 86,
+      "input": {
+        "patterns": ["abc", "abcd", "abcde"],
+        "word": "abcdefgh"
+      },
+      "expected": 3
+    },
+    {
+      "case_id": 87,
+      "input": {
+        "patterns": ["abcd", "dcba", "abcd"],
+        "word": "abcdcbaabcd"
+      },
+      "expected": 3
+    },
+    {
+      "case_id": 88,
+      "input": {
+        "patterns": ["aaaa", "bbbb", "cccc", "dddd"],
+        "word": "abcdeabcdeabcde"
+      },
+      "expected": 0
+    },
+    {
+      "case_id": 89,
+      "input": {
+        "patterns": ["longpattern", "long", "pattern"],
+        "word": "longpatternlongpattern"
+      },
+      "expected": 3
+    },
+    {
+      "case_id": 90,
+      "input": {
+        "patterns": ["ab", "bc", "cd", "de", "ef", "fg", "gh", "hi", "ij"],
+        "word": "abcdefghij"
+      },
+      "expected": 9
+    },
+    {
+      "case_id": 91,
+      "input": {
+        "patterns": ["abc", "bcd", "cde", "def", "efg", "fgh", "ghi", "hij", "ijk", "jkl", "klm", "lmn", "mno", "nop", "opq", "pqr", "qrs", "rst", "stu", "tuv", "uvw", "vwx", "wxy", "xyz"],
+        "word": "abcdefghijklmnopqrstuvwxyz"
+      },
+      "expected": 24
+    },
+    {
+      "case_id": 92,
+      "input": {
+        "patterns": ["zzz", "zzzz", "zzzzz"],
+        "word": "zzzzzzzzzz"
+      },
+      "expected": 3
+    },
+    {
+      "case_id": 93,
+      "input": {
+        "patterns": ["ab", "bc", "cd", "de"],
+        "word": "abcde"
+      },
+      "expected": 4
+    },
+    {
+      "case_id": 94,
+      "input": {
+        "patterns": ["abc", "bcd", "cde", "def"],
+        "word": "abcdefg"
+      },
+      "expected": 4
+    },
+    {
+      "case_id": 95,
+      "input": {
+        "patterns": ["abc", "abcd", "abcde", "abcdef"],
+        "word": "abcdefg"
+      },
+      "expected": 4
+    },
+    {
+      "case_id": 96,
+      "input": {
+        "patterns": ["test", "tset", "sett", "settset"],
+        "word": "testsettsettset"
+      },
+      "expected": 4
+    },
+    {
+      "case_id": 97,
+      "input": {
+        "patterns": ["small", "medium", "large", "extra", "huge"],
+        "word": "smallmediumlargeextrahuge"
+      },
+      "expected": 5
+    },
+    {
+      "case_id": 98,
+      "input": {
+        "patterns": ["pattern", "tern", "ternary", "ternarysearch"],
+        "word": "binarysearchternarysearch"
+      },
+      "expected": 3
+    },
+    {
+      "case_id": 99,
+      "input": {
+        "patterns": ["xyz", "zyx", "yzx"],
+        "word": "xyzzyxzyxzyx"
+      },
+      "expected": 2
+    },
+    {
+      "case_id": 100,
+      "input": {
+        "patterns": ["abcd", "efgh", "ijkl"],
+        "word": "efghijklabcd"
+      },
+      "expected": 3
+    },
+    {
+      "case_id": 101,
+      "input": {
+        "patterns": ["abc", "cab", "bac", "bca", "acb", "cba"],
+        "word": "abcabcabc"
+      },
+      "expected": 3
+    },
+    {
+      "case_id": 102,
+      "input": {
+        "patterns": ["abc", "abcabc", "abcabcabc"],
+        "word": "abcabcabcabc"
+      },
+      "expected": 3
+    },
+    {
+      "case_id": 103,
+      "input": {
+        "patterns": ["aaa", "bbb", "ccc"],
+        "word": "abacabadabc"
+      },
+      "expected": 0
+    },
+    {
+      "case_id": 104,
+      "input": {
+        "patterns": ["one", "two", "three", "onetwothree"],
+        "word": "onetwothreeonetwothree"
+      },
+      "expected": 4
+    },
+    {
+      "case_id": 105,
+      "input": {
+        "patterns": ["search", "sear", "arch"],
+        "word": "searchingthesearchinthesearch"
+      },
+      "expected": 3
+    },
+    {
+      "case_id": 106,
+      "input": {
+        "patterns": ["overlap", "lap", "lapping"],
+        "word": "lapping"
+      },
+      "expected": 2
+    },
+    {
+      "case_id": 107,
+      "input": {
+        "patterns": ["abc", "def", "ghi", "jkl"],
+        "word": "abcdefghijklmnopqrstuvwxyz"
+      },
+      "expected": 4
+    },
+    {
+      "case_id": 108,
+      "input": {
+        "patterns": ["abc", "def", "ghi", "jkl"],
+        "word": "abcdefghijk"
+      },
+      "expected": 3
+    },
+    {
+      "case_id": 109,
+      "input": {
+        "patterns": ["xyz", "zyx", "wxy", "uvw"],
+        "word": "xyzzyxwxyuvw"
+      },
+      "expected": 4
+    },
+    {
+      "case_id": 110,
+      "input": {
+        "patterns": ["abc", "def", "ghi", "jkl"],
+        "word": "abcdefghij"
+      },
+      "expected": 3
+    },
+    {
+      "case_id": 111,
+      "input": {
+        "patterns": ["abcd", "efgh", "ijkl", "mnop", "qrst", "uvwx", "yz"],
+        "word": "abcdefghijklmnopqrstuvwxyz"
+      },
+      "expected": 7
+    },
+    {
+      "case_id": 112,
+      "input": {
+        "patterns": ["abc", "def", "ghi", "jkl", "mno", "pqr", "stu", "vwx", "yz"],
+        "word": "abcdefghijklmnopqrstuvwxyz"
+      },
+      "expected": 9
+    },
+    {
+      "case_id": 113,
+      "input": {
+        "patterns": ["zz", "zzz", "zzzz"],
+        "word": "zzzzzzzzzz"
+      },
+      "expected": 3
+    },
+    {
+      "case_id": 114,
+      "input": {
+        "patterns": ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"],
+        "word": "zyxwvutsrqponmlkjihgfedcba"
+      },
+      "expected": 26
+    },
+    {
+      "case_id": 115,
+      "input": {
+        "patterns": ["example", "ample", "mple", "ple", "le", "e"],
+        "word": "exampleexampleexample"
+      },
+      "expected": 6
+    },
+    {
+      "case_id": 116,
+      "input": {
+        "patterns": ["ab", "ba", "ac", "ca", "bc", "cb"],
+        "word": "abcbaacbba"
+      },
+      "expected": 5
+    },
+    {
+      "case_id": 117,
+      "input": {
+        "patterns": ["abc", "def", "ghi"],
+        "word": "abcdefghi"
+      },
+      "expected": 3
+    },
+    {
+      "case_id": 118,
+      "input": {
+        "patterns": ["xyz", "zyx", "yzx"],
+        "word": "xyzzyxzyx"
+      },
+      "expected": 2
+    },
+    {
+      "case_id": 119,
+      "input": {
+        "patterns": ["zzz", "zz", "z"],
+        "word": "zzzzzzzzzz"
+      },
+      "expected": 3
+    },
+    {
+      "case_id": 120,
+      "input": {
+        "patterns": ["pattern", "tern", "ternary", "ary"],
+        "word": "patternarypatternary"
+      },
+      "expected": 4
+    },
+    {
+      "case_id": 121,
+      "input": {
+        "patterns": ["xyz", "abc", "def", "ghi", "jkl"],
+        "word": "zyxwvutsrqponmlkjihgfedcba"
+      },
+      "expected": 0
+    },
+    {
+      "case_id": 122,
+      "input": {
+        "patterns": ["a", "ab", "abc", "abcd"],
+        "word": "abcdabcdabcd"
+      },
+      "expected": 4
+    }
+  ]
+}

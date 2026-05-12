@@ -1,0 +1,957 @@
+{
+  "schema_version": 1,
+  "problem_id": 2284,
+  "title": "Sender With Largest Word Count",
+  "method": "largestWordCount",
+  "signature": {
+    "params": [
+      {
+        "name": "messages",
+        "type": "STRING_ARRAY"
+      },
+      {
+        "name": "senders",
+        "type": "STRING_ARRAY"
+      }
+    ],
+    "returns": "STRING"
+  },
+  "cases": [
+    {
+      "case_id": 1,
+      "input": {
+        "messages": ["This is a test", "Another test", "Final test"],
+        "senders": ["Alice", "Bob", "Alice"]
+      },
+      "expected": "Alice"
+    },
+    {
+      "case_id": 2,
+      "input": {
+        "messages": ["Hi"],
+        "senders": ["Bob"]
+      },
+      "expected": "Bob"
+    },
+    {
+      "case_id": 3,
+      "input": {
+        "messages": ["Short", "Longer message indeed"],
+        "senders": ["Alice", "Alice"]
+      },
+      "expected": "Alice"
+    },
+    {
+      "case_id": 4,
+      "input": {
+        "messages": ["How is leetcode for everyone", "Leetcode is useful for practice"],
+        "senders": ["Bob", "Charlie"]
+      },
+      "expected": "Charlie"
+    },
+    {
+      "case_id": 5,
+      "input": {
+        "messages": ["Hi", "Hello", "Hey"],
+        "senders": ["Alice", "Bob", "Alice"]
+      },
+      "expected": "Alice"
+    },
+    {
+      "case_id": 6,
+      "input": {
+        "messages": ["Hello userTwooo", "Hi userThree", "Wonderful day Alice", "Nice day userThree"],
+        "senders": ["Alice", "userTwo", "userThree", "Alice"]
+      },
+      "expected": "Alice"
+    },
+    {
+      "case_id": 7,
+      "input": {
+        "messages": ["Short", "Longer message indeed"],
+        "senders": ["Bob", "Alice"]
+      },
+      "expected": "Alice"
+    },
+    {
+      "case_id": 8,
+      "input": {
+        "messages": ["This is a test", "Another test", "Final test"],
+        "senders": ["Alice", "Alice", "Bob"]
+      },
+      "expected": "Alice"
+    },
+    {
+      "case_id": 9,
+      "input": {
+        "messages": ["Short", "Longer message indeed"],
+        "senders": ["Charlie", "Alice"]
+      },
+      "expected": "Alice"
+    },
+    {
+      "case_id": 10,
+      "input": {
+        "messages": ["Short", "Longer message here", "Even longer message here"],
+        "senders": ["Zoe", "Zoe", "Zoe"]
+      },
+      "expected": "Zoe"
+    },
+    {
+      "case_id": 11,
+      "input": {
+        "messages": ["a", "b", "c", "d"],
+        "senders": ["Anna", "Bob", "Charlie", "David"]
+      },
+      "expected": "David"
+    },
+    {
+      "case_id": 12,
+      "input": {
+        "messages": ["Hello", "Hi"],
+        "senders": ["Alice", "Bob"]
+      },
+      "expected": "Bob"
+    },
+    {
+      "case_id": 13,
+      "input": {
+        "messages": ["Hello World", "Foo Bar"],
+        "senders": ["Alice", "Bob"]
+      },
+      "expected": "Bob"
+    },
+    {
+      "case_id": 14,
+      "input": {
+        "messages": ["Hi", "Hello"],
+        "senders": ["Alice", "Bob"]
+      },
+      "expected": "Bob"
+    },
+    {
+      "case_id": 15,
+      "input": {
+        "messages": ["Equal length messages here", "Equal length messages here", "Equal length messages here"],
+        "senders": ["Alice", "Bob", "Charlie"]
+      },
+      "expected": "Charlie"
+    },
+    {
+      "case_id": 16,
+      "input": {
+        "messages": ["a a a a a a a a a a", "b b b b b b b b b", "c c c c c c c c", "d d d d d d d"],
+        "senders": ["Alice", "Bob", "Alice", "Bob"]
+      },
+      "expected": "Alice"
+    },
+    {
+      "case_id": 17,
+      "input": {
+        "messages": ["Hello Alice", "Hello Bob", "Hello Charlie", "Hello Dave", "Hello Eve"],
+        "senders": ["Alice", "Bob", "Charlie", "Dave", "Eve"]
+      },
+      "expected": "Eve"
+    },
+    {
+      "case_id": 18,
+      "input": {
+        "messages": ["Short", "Longer message with multiple words", "Another long message that is quite lengthy"],
+        "senders": ["Alice", "Bob", "Alice"]
+      },
+      "expected": "Alice"
+    },
+    {
+      "case_id": 19,
+      "input": {
+        "messages": ["abc def ghi", "jkl mno pqr", "stu vwx yz"],
+        "senders": ["Alice", "Alice", "Bob"]
+      },
+      "expected": "Alice"
+    },
+    {
+      "case_id": 20,
+      "input": {
+        "messages": ["Word", "Word Word", "Word Word Word", "Word Word Word Word", "Word Word Word Word Word"],
+        "senders": ["Yankee", "yankee", "YANKEE", "Yankee", "yankee"]
+      },
+      "expected": "yankee"
+    },
+    {
+      "case_id": 21,
+      "input": {
+        "messages": ["a", "b c", "d e f", "g h i j"],
+        "senders": ["Z", "Y", "X", "W"]
+      },
+      "expected": "W"
+    },
+    {
+      "case_id": 22,
+      "input": {
+        "messages": ["First message", "Second message", "Third message", "Fourth message"],
+        "senders": ["Dave", "Dave", "Eve", "Dave"]
+      },
+      "expected": "Dave"
+    },
+    {
+      "case_id": 23,
+      "input": {
+        "messages": ["This is a longer message with multiple words", "Short message", "Another long message with several words in it"],
+        "senders": ["Charlie", "Alice", "Bob"]
+      },
+      "expected": "Charlie"
+    },
+    {
+      "case_id": 24,
+      "input": {
+        "messages": ["a", "b", "c", "d", "e", "f"],
+        "senders": ["Z", "Y", "X", "W", "V", "U"]
+      },
+      "expected": "Z"
+    },
+    {
+      "case_id": 25,
+      "input": {
+        "messages": ["Hi", "Hello", "Hey", "Goodbye", "See you later"],
+        "senders": ["Alice", "Bob", "Alice", "Bob", "Alice"]
+      },
+      "expected": "Alice"
+    },
+    {
+      "case_id": 26,
+      "input": {
+        "messages": ["Hello world", "How are you doing", "I am fine thank you", "And you"],
+        "senders": ["Bob", "Charlie", "Alice", "Bob"]
+      },
+      "expected": "Alice"
+    },
+    {
+      "case_id": 27,
+      "input": {
+        "messages": ["Many many words in this message to test the function", "Few words"],
+        "senders": ["Alice", "Bob"]
+      },
+      "expected": "Alice"
+    },
+    {
+      "case_id": 28,
+      "input": {
+        "messages": ["a b c d e f g h i j k l m n o p q r s t u v w x y z", "a b c d e f g h i j k l m n o p q r s t u v w x y", "a b c d e f g h i j k l m n o p q r s t u v w x"],
+        "senders": ["Alice", "Bob", "Alice"]
+      },
+      "expected": "Alice"
+    },
+    {
+      "case_id": 29,
+      "input": {
+        "messages": ["Short message", "Another short one"],
+        "senders": ["charlie", "Charlie"]
+      },
+      "expected": "Charlie"
+    },
+    {
+      "case_id": 30,
+      "input": {
+        "messages": ["One two three four five", "Six seven eight nine ten", "Eleven twelve"],
+        "senders": ["George", "Hannah", "George"]
+      },
+      "expected": "George"
+    },
+    {
+      "case_id": 31,
+      "input": {
+        "messages": ["Hello userTwooo", "Hi userThree", "Wonderful day Alice", "Nice day userThree", "Great to see you Alice"],
+        "senders": ["Alice", "userTwo", "userThree", "Alice", "Alice"]
+      },
+      "expected": "Alice"
+    },
+    {
+      "case_id": 32,
+      "input": {
+        "messages": ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j"],
+        "senders": ["A", "A", "A", "A", "A", "A", "A", "A", "A", "A"]
+      },
+      "expected": "A"
+    },
+    {
+      "case_id": 33,
+      "input": {
+        "messages": ["Short msg", "Medium length message indeed", "A very long message with lots of words to count accurately"],
+        "senders": ["Carol", "Carol", "Carol"]
+      },
+      "expected": "Carol"
+    },
+    {
+      "case_id": 34,
+      "input": {
+        "messages": ["Hello world", "Python programming is fun", "Hello again", "Data structures and algorithms"],
+        "senders": ["Alice", "Bob", "Alice", "Charlie"]
+      },
+      "expected": "Charlie"
+    },
+    {
+      "case_id": 35,
+      "input": {
+        "messages": ["Long message to test", "Another long message to test", "Short"],
+        "senders": ["Charlie", "Alice", "Charlie"]
+      },
+      "expected": "Charlie"
+    },
+    {
+      "case_id": 36,
+      "input": {
+        "messages": ["One", "Two", "Three", "Four", "Five"],
+        "senders": ["Zebra", "Zebra", "Zebra", "Zebra", "Zebra"]
+      },
+      "expected": "Zebra"
+    },
+    {
+      "case_id": 37,
+      "input": {
+        "messages": ["One", "Two words here", "Three words in this message", "Four words make a sentence"],
+        "senders": ["Anna", "Anna", "Anna", "Anna"]
+      },
+      "expected": "Anna"
+    },
+    {
+      "case_id": 38,
+      "input": {
+        "messages": ["Quick brown fox jumps over lazy dog", "Hello", "Goodbye"],
+        "senders": ["Alice", "Alice", "Alice"]
+      },
+      "expected": "Alice"
+    },
+    {
+      "case_id": 39,
+      "input": {
+        "messages": ["Quick brown fox", "Lazy dog", "Uppercase LOWERCASE", "Mixed CASE Words"],
+        "senders": ["Alex", "Bob", "Charlie", "David"]
+      },
+      "expected": "David"
+    },
+    {
+      "case_id": 40,
+      "input": {
+        "messages": ["One", "Two words here", "Three words in this one", "Four words make this message"],
+        "senders": ["Eve", "eve", "EVE", "Eve"]
+      },
+      "expected": "Eve"
+    },
+    {
+      "case_id": 41,
+      "input": {
+        "messages": ["This is a longer message", "Even longer message here", "Short"],
+        "senders": ["Charlie", "Charlie", "Alice"]
+      },
+      "expected": "Charlie"
+    },
+    {
+      "case_id": 42,
+      "input": {
+        "messages": ["Short", "Longer message to test", "Even longer message to check the word count", "Short again"],
+        "senders": ["Bob", "Charlie", "Alice", "Charlie"]
+      },
+      "expected": "Alice"
+    },
+    {
+      "case_id": 43,
+      "input": {
+        "messages": ["This is a test message", "Another test", "Yet another message here"],
+        "senders": ["Charlie", "Alice", "Bob"]
+      },
+      "expected": "Charlie"
+    },
+    {
+      "case_id": 44,
+      "input": {
+        "messages": ["A quick brown fox jumps over the lazy dog", "Foo bar baz"],
+        "senders": ["Dave", "Eve"]
+      },
+      "expected": "Dave"
+    },
+    {
+      "case_id": 45,
+      "input": {
+        "messages": ["Equal words here", "Equal words here"],
+        "senders": ["Alice", "Bob"]
+      },
+      "expected": "Bob"
+    },
+    {
+      "case_id": 46,
+      "input": {
+        "messages": ["Many words in this message to test the word count functionality", "Another message to ensure the solution works correctly"],
+        "senders": ["Anna", "Anna"]
+      },
+      "expected": "Anna"
+    },
+    {
+      "case_id": 47,
+      "input": {
+        "messages": ["Multiple words", "Multiple words", "Multiple words", "Multiple words"],
+        "senders": ["Alice", "Bob", "Charlie", "David"]
+      },
+      "expected": "David"
+    },
+    {
+      "case_id": 48,
+      "input": {
+        "messages": ["Equal words", "Equal words"],
+        "senders": ["Anna", "Bob"]
+      },
+      "expected": "Bob"
+    },
+    {
+      "case_id": 49,
+      "input": {
+        "messages": ["Equal length message", "Another equal length message"],
+        "senders": ["Dave", "Charlie"]
+      },
+      "expected": "Charlie"
+    },
+    {
+      "case_id": 50,
+      "input": {
+        "messages": ["Word", "Word word", "Word word word", "Word word word word", "Word word word word word"],
+        "senders": ["Alex", "Alex", "Alex", "Brian", "Brian"]
+      },
+      "expected": "Brian"
+    },
+    {
+      "case_id": 51,
+      "input": {
+        "messages": ["One", "Two words", "Three words here", "Four words in this message"],
+        "senders": ["Bob", "Charlie", "Bob", "Charlie"]
+      },
+      "expected": "Charlie"
+    },
+    {
+      "case_id": 52,
+      "input": {
+        "messages": ["Multiple words in this message", "Single", "Two words"],
+        "senders": ["Alice", "Bob", "Alice"]
+      },
+      "expected": "Alice"
+    },
+    {
+      "case_id": 53,
+      "input": {
+        "messages": ["Equal length", "Equal length"],
+        "senders": ["Tom", "Jerry"]
+      },
+      "expected": "Tom"
+    },
+    {
+      "case_id": 54,
+      "input": {
+        "messages": ["Equal words in messages", "Equal words in messages"],
+        "senders": ["Sender1", "Sender2"]
+      },
+      "expected": "Sender2"
+    },
+    {
+      "case_id": 55,
+      "input": {
+        "messages": ["Message one", "Message two", "Message three", "Message four"],
+        "senders": ["Zebra", "Zebra", "Zebra", "Zebra"]
+      },
+      "expected": "Zebra"
+    },
+    {
+      "case_id": 56,
+      "input": {
+        "messages": ["Unique message each time", "Another unique one"],
+        "senders": ["Alice", "Bob"]
+      },
+      "expected": "Alice"
+    },
+    {
+      "case_id": 57,
+      "input": {
+        "messages": ["Same sender many times", "Same sender many times", "Same sender many times"],
+        "senders": ["Alice", "Alice", "Alice"]
+      },
+      "expected": "Alice"
+    },
+    {
+      "case_id": 58,
+      "input": {
+        "messages": ["Message one", "Another message", "Yet another message to test", "Final message"],
+        "senders": ["Zara", "Alice", "Bob", "Charlie"]
+      },
+      "expected": "Bob"
+    },
+    {
+      "case_id": 59,
+      "input": {
+        "messages": ["A B C D E", "F G H I J K L M N O P", "Q R S T U V W X Y Z"],
+        "senders": ["Alice", "Bob", "Charlie"]
+      },
+      "expected": "Bob"
+    },
+    {
+      "case_id": 60,
+      "input": {
+        "messages": ["Hello world", "Foo bar baz", "This is a test message"],
+        "senders": ["alice", "Bob", "alice"]
+      },
+      "expected": "alice"
+    },
+    {
+      "case_id": 61,
+      "input": {
+        "messages": ["Message one", "Message two", "Message three"],
+        "senders": ["Zach", "Yvonne", "Xander"]
+      },
+      "expected": "Zach"
+    },
+    {
+      "case_id": 62,
+      "input": {
+        "messages": ["Different sender", "Different sender", "Different sender", "Different sender"],
+        "senders": ["Mike", "Mike", "Mike", "Mike"]
+      },
+      "expected": "Mike"
+    },
+    {
+      "case_id": 63,
+      "input": {
+        "messages": ["Short", "Medium length message", "A very very very long message that spans several words indeed"],
+        "senders": ["Alice", "Alice", "Alice"]
+      },
+      "expected": "Alice"
+    },
+    {
+      "case_id": 64,
+      "input": {
+        "messages": ["This is a longer message", "Short", "Another long message here"],
+        "senders": ["Alice", "Bob", "Alice"]
+      },
+      "expected": "Alice"
+    },
+    {
+      "case_id": 65,
+      "input": {
+        "messages": ["A B C D E F G H I J K L M N O P Q R S T U V W X Y Z"],
+        "senders": ["Alice"]
+      },
+      "expected": "Alice"
+    },
+    {
+      "case_id": 66,
+      "input": {
+        "messages": ["a", "b", "c", "d", "e"],
+        "senders": ["Eve", "Eve", "Eve", "Eve", "Eve"]
+      },
+      "expected": "Eve"
+    },
+    {
+      "case_id": 67,
+      "input": {
+        "messages": ["Equal words", "Equal words"],
+        "senders": ["Frank", "frank"]
+      },
+      "expected": "frank"
+    },
+    {
+      "case_id": 68,
+      "input": {
+        "messages": ["This is a test message", "Another test", "Short one"],
+        "senders": ["Alice", "Bob", "Alice"]
+      },
+      "expected": "Alice"
+    },
+    {
+      "case_id": 69,
+      "input": {
+        "messages": ["A quick brown fox jumps over the lazy dog", "Lorem ipsum dolor sit amet", "Consectetur adipiscing elit", "Sed do eiusmod tempor incididunt"],
+        "senders": ["Sam", "Sam", "Sam", "Sam"]
+      },
+      "expected": "Sam"
+    },
+    {
+      "case_id": 70,
+      "input": {
+        "messages": ["Equal", "Equal Equal", "Equal Equal Equal"],
+        "senders": ["Mickey", "mickey", "MICKEY"]
+      },
+      "expected": "MICKEY"
+    },
+    {
+      "case_id": 71,
+      "input": {
+        "messages": ["Hi Alice", "Hello Bob", "How are you Charlie"],
+        "senders": ["Bob", "Alice", "Bob"]
+      },
+      "expected": "Bob"
+    },
+    {
+      "case_id": 72,
+      "input": {
+        "messages": ["Hello world", "Good morning", "How are you doing"],
+        "senders": ["Charlie", "Bob", "Charlie"]
+      },
+      "expected": "Charlie"
+    },
+    {
+      "case_id": 73,
+      "input": {
+        "messages": ["Hello world", "How are you today", "Hope you are well"],
+        "senders": ["Alice", "Bob", "Alice"]
+      },
+      "expected": "Alice"
+    },
+    {
+      "case_id": 74,
+      "input": {
+        "messages": ["abc def ghi", "jkl mno pqr", "stu vwx yz", "abc def", "ghi jkl"],
+        "senders": ["Charlie", "Bob", "Alice", "Charlie", "Alice"]
+      },
+      "expected": "Charlie"
+    },
+    {
+      "case_id": 75,
+      "input": {
+        "messages": ["Word", "Word Word", "Word Word Word", "Word Word Word Word"],
+        "senders": ["Zeta", "Zeta", "zeta", "ZETA"]
+      },
+      "expected": "ZETA"
+    },
+    {
+      "case_id": 76,
+      "input": {
+        "messages": ["This is a very long message to test the word count functionality", "Short msg"],
+        "senders": ["Delta", "delta"]
+      },
+      "expected": "Delta"
+    },
+    {
+      "case_id": 77,
+      "input": {
+        "messages": ["Hi there", "Hello there", "Hi there", "Hello there"],
+        "senders": ["Alice", "Bob", "Alice", "Bob"]
+      },
+      "expected": "Bob"
+    },
+    {
+      "case_id": 78,
+      "input": {
+        "messages": ["A", "B", "C", "D"],
+        "senders": ["Anna", "Bob", "Charlie", "David"]
+      },
+      "expected": "David"
+    },
+    {
+      "case_id": 79,
+      "input": {
+        "messages": ["One", "Two words", "Three words here", "Four words message test"],
+        "senders": ["David", "David", "Eve", "Eve"]
+      },
+      "expected": "Eve"
+    },
+    {
+      "case_id": 80,
+      "input": {
+        "messages": ["Same length", "Same length", "Same length", "Same length"],
+        "senders": ["Alice", "Bob", "Charlie", "David"]
+      },
+      "expected": "David"
+    },
+    {
+      "case_id": 81,
+      "input": {
+        "messages": ["Quick brown fox jumps over the lazy dog", "Lazy dog sleeps", "Quick fox runs away"],
+        "senders": ["Dog", "Dog", "Fox"]
+      },
+      "expected": "Dog"
+    },
+    {
+      "case_id": 82,
+      "input": {
+        "messages": ["Equal words here", "Equal words here", "Equal words here"],
+        "senders": ["Anna", "Bob", "Charlie"]
+      },
+      "expected": "Charlie"
+    },
+    {
+      "case_id": 83,
+      "input": {
+        "messages": ["Multiple messages here", "Even more messages", "And yet another message"],
+        "senders": ["Kate", "Kate", "Laura"]
+      },
+      "expected": "Kate"
+    },
+    {
+      "case_id": 84,
+      "input": {
+        "messages": ["Multiple words in this message", "Another message with several words", "Just a few words"],
+        "senders": ["SenderX", "SenderX", "SenderY"]
+      },
+      "expected": "SenderX"
+    },
+    {
+      "case_id": 85,
+      "input": {
+        "messages": ["Message from Alice", "Another message from Alice", "Yet another message from Alice", "Final message from Alice"],
+        "senders": ["Alice", "Alice", "Alice", "Alice"]
+      },
+      "expected": "Alice"
+    },
+    {
+      "case_id": 86,
+      "input": {
+        "messages": ["Message one", "Message two", "Message three", "Message four", "Message five"],
+        "senders": ["Neil", "Neil", "Neil", "Neil", "Neil"]
+      },
+      "expected": "Neil"
+    },
+    {
+      "case_id": 87,
+      "input": {
+        "messages": ["a b c d e f g h i j k l m n o p q r s t u v w x y z", "a b c d e f g h i j k l m n o p q r s t u v w x y z"],
+        "senders": ["Alice", "Bob"]
+      },
+      "expected": "Bob"
+    },
+    {
+      "case_id": 88,
+      "input": {
+        "messages": ["Multiple words in this message", "Few words", "One"],
+        "senders": ["Alice", "Bob", "Alice"]
+      },
+      "expected": "Alice"
+    },
+    {
+      "case_id": 89,
+      "input": {
+        "messages": ["Equal length message", "Equal length message"],
+        "senders": ["Alice", "Bob"]
+      },
+      "expected": "Bob"
+    },
+    {
+      "case_id": 90,
+      "input": {
+        "messages": ["word"],
+        "senders": ["Z"]
+      },
+      "expected": "Z"
+    },
+    {
+      "case_id": 91,
+      "input": {
+        "messages": ["Single", "Double words", "Triple words here"],
+        "senders": ["Eve", "Eve", "Frank"]
+      },
+      "expected": "Frank"
+    },
+    {
+      "case_id": 92,
+      "input": {
+        "messages": ["Many words in this message to test the word count", "Few words"],
+        "senders": ["Charlie", "Charlie"]
+      },
+      "expected": "Charlie"
+    },
+    {
+      "case_id": 93,
+      "input": {
+        "messages": ["Same sender multiple times", "Same sender multiple times", "Same sender multiple times"],
+        "senders": ["Zoe", "Zoe", "Zoe"]
+      },
+      "expected": "Zoe"
+    },
+    {
+      "case_id": 94,
+      "input": {
+        "messages": ["A B C D E", "F G H", "I J K L M N O"],
+        "senders": ["Dave", "Eve", "Frank"]
+      },
+      "expected": "Frank"
+    },
+    {
+      "case_id": 95,
+      "input": {
+        "messages": ["Long message with multiple words indeed", "Another long message with multiple words indeed"],
+        "senders": ["Anna", "Anna"]
+      },
+      "expected": "Anna"
+    },
+    {
+      "case_id": 96,
+      "input": {
+        "messages": ["A quick brown fox jumps over the lazy dog", "Lorem ipsum dolor sit amet", "Python programming"],
+        "senders": ["Alice", "Bob", "Charlie"]
+      },
+      "expected": "Alice"
+    },
+    {
+      "case_id": 97,
+      "input": {
+        "messages": ["a b c d e f g h i j k l m n o p q r s t u v w x y z"],
+        "senders": ["Zachary"]
+      },
+      "expected": "Zachary"
+    },
+    {
+      "case_id": 98,
+      "input": {
+        "messages": ["This is a test message", "Another message here", "Short one"],
+        "senders": ["Alice", "Bob", "Charlie"]
+      },
+      "expected": "Alice"
+    },
+    {
+      "case_id": 99,
+      "input": {
+        "messages": ["A quick brown fox jumps over the lazy dog", "The quick brown fox jumps over the lazy dog"],
+        "senders": ["Grace", "grace"]
+      },
+      "expected": "grace"
+    },
+    {
+      "case_id": 100,
+      "input": {
+        "messages": ["Single", "Double double", "Triple triple triple"],
+        "senders": ["Alice", "Bob", "Charlie"]
+      },
+      "expected": "Charlie"
+    },
+    {
+      "case_id": 101,
+      "input": {
+        "messages": ["Short message", "Longer message here", "Even longer message to check", "Short again"],
+        "senders": ["Bob", "Charlie", "Alice", "Charlie"]
+      },
+      "expected": "Charlie"
+    },
+    {
+      "case_id": 102,
+      "input": {
+        "messages": ["Short one", "Another short one"],
+        "senders": ["Alice", "Bob"]
+      },
+      "expected": "Bob"
+    },
+    {
+      "case_id": 103,
+      "input": {
+        "messages": ["One", "Two words", "Three words here"],
+        "senders": ["Zara", "Zara", "Zara"]
+      },
+      "expected": "Zara"
+    },
+    {
+      "case_id": 104,
+      "input": {
+        "messages": ["Unique words in each message", "Unique words here too", "More unique words"],
+        "senders": ["Zoe", "Yasmin", "Xander"]
+      },
+      "expected": "Zoe"
+    },
+    {
+      "case_id": 105,
+      "input": {
+        "messages": ["One", "Two words", "Three words here", "Four words in a sentence"],
+        "senders": ["Charlie", "Alice", "Bob", "Charlie"]
+      },
+      "expected": "Charlie"
+    },
+    {
+      "case_id": 106,
+      "input": {
+        "messages": ["Hello world", "This is a longer message", "Another message"],
+        "senders": ["Charlie", "Bob", "Charlie"]
+      },
+      "expected": "Bob"
+    },
+    {
+      "case_id": 107,
+      "input": {
+        "messages": ["Test message", "Test message", "Test message", "Test message"],
+        "senders": ["Jack", "Jack", "Jack", "Jack"]
+      },
+      "expected": "Jack"
+    },
+    {
+      "case_id": 108,
+      "input": {
+        "messages": ["One more message", "Yet another message", "Final message"],
+        "senders": ["Charlie", "Charlie", "Charlie"]
+      },
+      "expected": "Charlie"
+    },
+    {
+      "case_id": 109,
+      "input": {
+        "messages": ["Hello world", "How are you doing today", "Fine thank you"],
+        "senders": ["Charlie", "Alice", "Bob"]
+      },
+      "expected": "Alice"
+    },
+    {
+      "case_id": 110,
+      "input": {
+        "messages": ["Hello world", "This is a test", "Python programming"],
+        "senders": ["Alice", "Bob", "Charlie"]
+      },
+      "expected": "Bob"
+    },
+    {
+      "case_id": 111,
+      "input": {
+        "messages": ["Single", "Two words", "Three word phrase", "Four word sentence structure"],
+        "senders": ["Zebra", "Zebra", "Zebra", "Zebra"]
+      },
+      "expected": "Zebra"
+    },
+    {
+      "case_id": 112,
+      "input": {
+        "messages": ["Hello world", "Hello Alice", "Hello Bob"],
+        "senders": ["Bob", "Alice", "Bob"]
+      },
+      "expected": "Bob"
+    },
+    {
+      "case_id": 113,
+      "input": {
+        "messages": ["A B C D E F G", "H I J K L M N", "O P Q R S T U V W X Y Z"],
+        "senders": ["SenderA", "SenderB", "SenderC"]
+      },
+      "expected": "SenderC"
+    },
+    {
+      "case_id": 114,
+      "input": {
+        "messages": ["Unique message", "Unique message", "Unique message"],
+        "senders": ["Ian", "Ian", "Ian"]
+      },
+      "expected": "Ian"
+    },
+    {
+      "case_id": 115,
+      "input": {
+        "messages": ["Message one", "Message two", "Message three", "Message four"],
+        "senders": ["Anna", "Bob", "Charlie", "Bob"]
+      },
+      "expected": "Bob"
+    },
+    {
+      "case_id": 116,
+      "input": {
+        "messages": ["Long message to increase word count significantly", "Short"],
+        "senders": ["Charlie", "Charlie"]
+      },
+      "expected": "Charlie"
+    },
+    {
+      "case_id": 117,
+      "input": {
+        "messages": ["A quick brown fox jumps over the lazy dog", "The quick brown fox jumps over the lazy dog", "Lazy dog"],
+        "senders": ["Alice", "Bob", "Alice"]
+      },
+      "expected": "Alice"
+    }
+  ]
+}

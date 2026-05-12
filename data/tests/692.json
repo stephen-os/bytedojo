@@ -1,0 +1,757 @@
+{
+  "schema_version": 1,
+  "problem_id": 692,
+  "title": "Top K Frequent Words",
+  "method": "topKFrequent",
+  "signature": {
+    "params": [
+      {
+        "name": "words",
+        "type": "STRING_ARRAY"
+      },
+      {
+        "name": "k",
+        "type": "INT32"
+      }
+    ],
+    "returns": "STRING_ARRAY"
+  },
+  "cases": [
+    {
+      "case_id": 1,
+      "input": {
+        "words": ["a", "aa", "aaa"],
+        "k": 1
+      },
+      "expected": ["a"]
+    },
+    {
+      "case_id": 2,
+      "input": {
+        "words": ["a", "aa", "aaa"],
+        "k": 2
+      },
+      "expected": ["a", "aa"]
+    },
+    {
+      "case_id": 3,
+      "input": {
+        "words": ["i", "love", "leetcode", "i", "love", "coding"],
+        "k": 2
+      },
+      "expected": ["i", "love"]
+    },
+    {
+      "case_id": 4,
+      "input": {
+        "words": ["the", "day", "is", "sunny", "the", "the", "the", "sunny", "is", "is"],
+        "k": 4
+      },
+      "expected": ["the", "is", "sunny", "day"]
+    },
+    {
+      "case_id": 5,
+      "input": {
+        "words": ["apple", "banana", "apple", "orange", "banana", "apple"],
+        "k": 3
+      },
+      "expected": ["apple", "banana", "orange"]
+    },
+    {
+      "case_id": 6,
+      "input": {
+        "words": ["zebra", "dog", "duck", "dog", "zebra", "zebra"],
+        "k": 1
+      },
+      "expected": ["zebra"]
+    },
+    {
+      "case_id": 7,
+      "input": {
+        "words": ["hello", "world", "hello", "world", "hello"],
+        "k": 2
+      },
+      "expected": ["hello", "world"]
+    },
+    {
+      "case_id": 8,
+      "input": {
+        "words": ["sun", "moon", "star", "sun", "moon", "star", "sun", "moon", "star", "star", "star", "star"],
+        "k": 2
+      },
+      "expected": ["star", "moon"]
+    },
+    {
+      "case_id": 9,
+      "input": {
+        "words": ["apple", "orange", "banana", "grape", "apple", "orange", "banana", "grape", "apple", "orange", "banana", "grape", "apple", "orange", "banana", "grape"],
+        "k": 4
+      },
+      "expected": ["apple", "banana", "grape", "orange"]
+    },
+    {
+      "case_id": 10,
+      "input": {
+        "words": ["quick", "brown", "fox", "jumps", "over", "lazy", "dog", "quick", "fox", "quick"],
+        "k": 2
+      },
+      "expected": ["quick", "fox"]
+    },
+    {
+      "case_id": 11,
+      "input": {
+        "words": ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"],
+        "k": 10
+      },
+      "expected": ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j"]
+    },
+    {
+      "case_id": 12,
+      "input": {
+        "words": ["a", "abc", "abcd", "abc", "a", "abcde", "a", "abcdef", "a", "abcde", "a", "abcdef", "a"],
+        "k": 4
+      },
+      "expected": ["a", "abc", "abcde", "abcdef"]
+    },
+    {
+      "case_id": 13,
+      "input": {
+        "words": ["quick", "brown", "fox", "jumps", "over", "lazy", "dog", "quick", "brown", "fox", "jumps", "over", "lazy", "dog", "quick", "brown", "fox", "jumps", "over", "lazy", "dog", "quick", "brown", "fox", "jumps", "over", "lazy", "dog", "quick", "brown", "fox", "jumps", "over", "lazy", "dog"],
+        "k": 5
+      },
+      "expected": ["brown", "dog", "fox", "jumps", "lazy"]
+    },
+    {
+      "case_id": 14,
+      "input": {
+        "words": ["one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve"],
+        "k": 5
+      },
+      "expected": ["eight", "eleven", "five", "four", "nine"]
+    },
+    {
+      "case_id": 15,
+      "input": {
+        "words": ["quick", "brown", "fox", "jumps", "over", "lazy", "dog", "quick", "brown", "fox", "jumps", "over", "lazy", "dog", "quick", "brown", "fox", "jumps", "over", "lazy", "dog", "quick", "brown", "fox", "jumps", "over", "lazy", "dog"],
+        "k": 4
+      },
+      "expected": ["brown", "dog", "fox", "jumps"]
+    },
+    {
+      "case_id": 16,
+      "input": {
+        "words": ["apple", "banana", "cherry", "apple", "banana", "apple", "cherry", "cherry", "banana"],
+        "k": 2
+      },
+      "expected": ["apple", "banana"]
+    },
+    {
+      "case_id": 17,
+      "input": {
+        "words": ["a", "aa", "aaa", "aaaa", "aaaaa", "a", "aa", "aaa", "aaaa", "aaaaa"],
+        "k": 3
+      },
+      "expected": ["a", "aa", "aaa"]
+    },
+    {
+      "case_id": 18,
+      "input": {
+        "words": ["apple", "banana", "apple", "orange", "banana", "apple", "kiwi", "banana", "kiwi", "kiwi", "kiwi"],
+        "k": 3
+      },
+      "expected": ["kiwi", "apple", "banana"]
+    },
+    {
+      "case_id": 19,
+      "input": {
+        "words": ["sun", "moon", "star", "planet", "sun", "moon", "star", "moon", "moon", "sun", "star", "star", "star", "star"],
+        "k": 3
+      },
+      "expected": ["star", "moon", "sun"]
+    },
+    {
+      "case_id": 20,
+      "input": {
+        "words": ["one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve"],
+        "k": 12
+      },
+      "expected": ["eight", "eleven", "five", "four", "nine", "one", "seven", "six", "ten", "three", "twelve", "two"]
+    },
+    {
+      "case_id": 21,
+      "input": {
+        "words": ["zebra", "dog", "duck", "dog", "zebra", "zebra", "cat", "cat", "cat", "dog", "cat"],
+        "k": 3
+      },
+      "expected": ["cat", "dog", "zebra"]
+    },
+    {
+      "case_id": 22,
+      "input": {
+        "words": ["zebra", "dog", "duck", "dog", "zebra", "zebra", "dog", "zebra", "dog", "duck", "duck", "zebra", "dog", "zebra", "zebra", "dog"],
+        "k": 3
+      },
+      "expected": ["zebra", "dog", "duck"]
+    },
+    {
+      "case_id": 23,
+      "input": {
+        "words": ["coding", "programming", "hacking", "debugging", "coding", "programming", "debugging", "hacking", "hacking", "hacking"],
+        "k": 2
+      },
+      "expected": ["hacking", "coding"]
+    },
+    {
+      "case_id": 24,
+      "input": {
+        "words": ["x", "y", "z", "x", "y", "x", "y", "x", "y", "x", "y", "x", "y", "x", "y", "x", "y", "x", "y", "x", "y", "x", "y", "x", "y", "x", "y"],
+        "k": 2
+      },
+      "expected": ["x", "y"]
+    },
+    {
+      "case_id": 25,
+      "input": {
+        "words": ["alpha", "beta", "gamma", "delta", "epsilon", "zeta", "alpha", "beta", "gamma", "delta", "epsilon", "zeta", "alpha", "beta", "gamma"],
+        "k": 5
+      },
+      "expected": ["alpha", "beta", "gamma", "delta", "epsilon"]
+    },
+    {
+      "case_id": 26,
+      "input": {
+        "words": ["a", "ab", "abc", "abcd", "abcde", "abcdef", "a", "ab", "abc", "abcd", "abcde", "abcdef"],
+        "k": 2
+      },
+      "expected": ["a", "ab"]
+    },
+    {
+      "case_id": 27,
+      "input": {
+        "words": ["red", "blue", "green", "red", "blue", "red", "green", "red", "blue", "green", "red", "red"],
+        "k": 3
+      },
+      "expected": ["red", "blue", "green"]
+    },
+    {
+      "case_id": 28,
+      "input": {
+        "words": ["a", "abc", "abcd", "abc", "a", "abcde", "abcd", "abcde", "a", "abcd"],
+        "k": 3
+      },
+      "expected": ["a", "abcd", "abc"]
+    },
+    {
+      "case_id": 29,
+      "input": {
+        "words": ["red", "blue", "green", "red", "blue", "green", "red", "blue", "green", "red", "blue", "green", "red"],
+        "k": 2
+      },
+      "expected": ["red", "blue"]
+    },
+    {
+      "case_id": 30,
+      "input": {
+        "words": ["cat", "bat", "rat", "cat", "bat", "rat", "rat", "cat", "bat", "cat", "bat", "bat"],
+        "k": 3
+      },
+      "expected": ["bat", "cat", "rat"]
+    },
+    {
+      "case_id": 31,
+      "input": {
+        "words": ["leetcode", "coding", "interview", "questions", "leetcode", "interview", "coding", "coding", "leetcode", "questions", "questions"],
+        "k": 3
+      },
+      "expected": ["coding", "leetcode", "questions"]
+    },
+    {
+      "case_id": 32,
+      "input": {
+        "words": ["one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve", "thirteen"],
+        "k": 5
+      },
+      "expected": ["eight", "eleven", "five", "four", "nine"]
+    },
+    {
+      "case_id": 33,
+      "input": {
+        "words": ["apple", "banana", "apple", "orange", "banana", "apple", "kiwi", "kiwi", "kiwi", "banana"],
+        "k": 2
+      },
+      "expected": ["apple", "banana"]
+    },
+    {
+      "case_id": 34,
+      "input": {
+        "words": ["apple", "banana", "apple", "orange", "banana", "banana", "kiwi", "kiwi", "kiwi", "kiwi"],
+        "k": 2
+      },
+      "expected": ["kiwi", "banana"]
+    },
+    {
+      "case_id": 35,
+      "input": {
+        "words": ["apple", "banana", "cherry", "date", "elderberry", "fig", "grape", "honeydew", "kiwi", "lemon", "mango", "nectarine", "orange", "papaya", "quince", "raspberry", "strawberry", "tangerine", "ugli", "vanilla", "watermelon", "xigua", "yam", "zucchini"],
+        "k": 10
+      },
+      "expected": ["apple", "banana", "cherry", "date", "elderberry", "fig", "grape", "honeydew", "kiwi", "lemon"]
+    },
+    {
+      "case_id": 36,
+      "input": {
+        "words": ["zebra", "dog", "duck", "dog", "zebra", "zebra", "lion", "tiger", "lion", "tiger", "tiger", "lion", "zebra"],
+        "k": 3
+      },
+      "expected": ["zebra", "lion", "tiger"]
+    },
+    {
+      "case_id": 37,
+      "input": {
+        "words": ["x", "y", "z", "x", "y", "z", "x", "y", "z", "x", "y", "z", "x", "y", "z", "x", "y", "z", "x", "y", "z", "x", "y", "z", "x", "y", "z", "x", "y", "z", "x", "y", "z", "x", "y", "z", "x", "y", "z", "x", "y", "z", "x", "y", "z", "x", "y", "z", "x", "y", "z", "x", "y", "z"],
+        "k": 3
+      },
+      "expected": ["x", "y", "z"]
+    },
+    {
+      "case_id": 38,
+      "input": {
+        "words": ["a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a"],
+        "k": 1
+      },
+      "expected": ["a"]
+    },
+    {
+      "case_id": 39,
+      "input": {
+        "words": ["sun", "moon", "star", "planet", "moon", "moon", "sun", "star", "planet", "planet", "star"],
+        "k": 4
+      },
+      "expected": ["moon", "planet", "star", "sun"]
+    },
+    {
+      "case_id": 40,
+      "input": {
+        "words": ["a", "aa", "aaa", "aaaa", "a", "aa", "aaa", "aaaa", "a", "aa", "aaa", "aaaa"],
+        "k": 4
+      },
+      "expected": ["a", "aa", "aaa", "aaaa"]
+    },
+    {
+      "case_id": 41,
+      "input": {
+        "words": ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", "a", "b", "c", "d"],
+        "k": 10
+      },
+      "expected": ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j"]
+    },
+    {
+      "case_id": 42,
+      "input": {
+        "words": ["a", "a", "a", "b", "b", "b", "b", "c", "c", "c", "c", "c", "d", "d", "d", "d", "d", "d", "e", "e", "e", "e", "e", "e", "e"],
+        "k": 2
+      },
+      "expected": ["e", "d"]
+    },
+    {
+      "case_id": 43,
+      "input": {
+        "words": ["leetcode", "python", "java", "c", "cpp", "python", "java", "java", "c", "cpp", "cpp", "cpp", "c", "c", "java", "java", "java", "python"],
+        "k": 4
+      },
+      "expected": ["java", "c", "cpp", "python"]
+    },
+    {
+      "case_id": 44,
+      "input": {
+        "words": ["sun", "moon", "star", "sky", "sun", "moon", "star", "sky", "sun", "moon", "star", "sky", "sun", "moon", "star", "sky", "sun", "moon", "star", "sky", "sun", "moon", "star", "sky", "sun", "moon", "star", "sky"],
+        "k": 4
+      },
+      "expected": ["moon", "sky", "star", "sun"]
+    },
+    {
+      "case_id": 45,
+      "input": {
+        "words": ["zebra", "dog", "duck", "dog", "zebra", "zebra", "cat", "cat", "dog", "cat"],
+        "k": 3
+      },
+      "expected": ["cat", "dog", "zebra"]
+    },
+    {
+      "case_id": 46,
+      "input": {
+        "words": ["one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "one", "two", "three", "four", "five"],
+        "k": 5
+      },
+      "expected": ["five", "four", "one", "three", "two"]
+    },
+    {
+      "case_id": 47,
+      "input": {
+        "words": ["frequency", "of", "words", "frequency", "in", "a", "sentence", "frequency", "sentence", "frequency"],
+        "k": 3
+      },
+      "expected": ["frequency", "sentence", "a"]
+    },
+    {
+      "case_id": 48,
+      "input": {
+        "words": ["ab", "abc", "abcd", "abcde", "abcdef", "abcdefg", "abcdefgh", "abcdefghi", "abcdefghij", "abcdefghijk"],
+        "k": 4
+      },
+      "expected": ["ab", "abc", "abcd", "abcde"]
+    },
+    {
+      "case_id": 49,
+      "input": {
+        "words": ["apple", "banana", "apple", "orange", "banana", "apple", "kiwi", "kiwi", "kiwi"],
+        "k": 3
+      },
+      "expected": ["apple", "kiwi", "banana"]
+    },
+    {
+      "case_id": 50,
+      "input": {
+        "words": ["aaa", "bbb", "ccc", "aaa", "bbb", "aaa", "bbb", "ccc", "aaa", "bbb", "ccc", "ccc"],
+        "k": 2
+      },
+      "expected": ["aaa", "bbb"]
+    },
+    {
+      "case_id": 51,
+      "input": {
+        "words": ["zebra", "dog", "duck", "dog", "zebra", "zebra", "cat", "cat", "cat", "bird", "bird", "bird", "bird"],
+        "k": 4
+      },
+      "expected": ["bird", "cat", "zebra", "dog"]
+    },
+    {
+      "case_id": 52,
+      "input": {
+        "words": ["alpha", "beta", "gamma", "delta", "epsilon", "zeta", "eta", "theta", "iota", "kappa", "lambda", "mu", "nu", "xi", "omicron", "pi"],
+        "k": 5
+      },
+      "expected": ["alpha", "beta", "delta", "epsilon", "eta"]
+    },
+    {
+      "case_id": 53,
+      "input": {
+        "words": ["zebra", "dog", "duck", "dog", "zebra", "zebra", "dog", "dog", "dog", "zebra", "zebra", "zebra", "zebra"],
+        "k": 2
+      },
+      "expected": ["zebra", "dog"]
+    },
+    {
+      "case_id": 54,
+      "input": {
+        "words": ["cat", "dog", "cat", "dog", "cat", "dog", "cat", "dog", "cat", "dog", "cat", "dog", "cat", "dog", "cat", "dog", "cat", "dog", "cat", "dog"],
+        "k": 2
+      },
+      "expected": ["cat", "dog"]
+    },
+    {
+      "case_id": 55,
+      "input": {
+        "words": ["hello", "world", "hello", "world", "hello", "world", "hello", "world", "hello", "world", "hello", "world"],
+        "k": 1
+      },
+      "expected": ["hello"]
+    },
+    {
+      "case_id": 56,
+      "input": {
+        "words": ["python", "java", "c", "cpp", "python", "java", "python", "java", "java", "c", "c", "cpp", "cpp", "cpp", "cpp"],
+        "k": 4
+      },
+      "expected": ["cpp", "java", "c", "python"]
+    },
+    {
+      "case_id": 57,
+      "input": {
+        "words": ["algorithm", "data", "structure", "algorithm", "data", "data", "algorithm", "algorithm", "data", "structure", "structure", "structure", "structure"],
+        "k": 2
+      },
+      "expected": ["structure", "algorithm"]
+    },
+    {
+      "case_id": 58,
+      "input": {
+        "words": ["a", "b", "c", "d", "e", "a", "b", "c", "a", "b", "a", "a", "b", "b", "c", "d", "d", "e", "e", "e", "e"],
+        "k": 4
+      },
+      "expected": ["a", "b", "e", "c"]
+    },
+    {
+      "case_id": 59,
+      "input": {
+        "words": ["apple", "banana", "apple", "orange", "banana", "apple", "banana", "kiwi", "kiwi", "kiwi", "kiwi"],
+        "k": 3
+      },
+      "expected": ["kiwi", "apple", "banana"]
+    },
+    {
+      "case_id": 60,
+      "input": {
+        "words": ["panda", "polar", "bear", "panda", "polar", "polar", "polar", "bear", "bear", "bear", "bear", "bear"],
+        "k": 3
+      },
+      "expected": ["bear", "polar", "panda"]
+    },
+    {
+      "case_id": 61,
+      "input": {
+        "words": ["flower", "flow", "flight", "flow", "flight", "flow", "flower", "flight", "flower", "flower"],
+        "k": 4
+      },
+      "expected": ["flower", "flight", "flow"]
+    },
+    {
+      "case_id": 62,
+      "input": {
+        "words": ["zebra", "dog", "duck", "dog", "zebra", "zebra", "zebra", "dog", "dog", "dog", "duck", "duck", "duck", "duck"],
+        "k": 2
+      },
+      "expected": ["dog", "duck"]
+    },
+    {
+      "case_id": 63,
+      "input": {
+        "words": ["one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten"],
+        "k": 5
+      },
+      "expected": ["eight", "five", "four", "nine", "one"]
+    },
+    {
+      "case_id": 64,
+      "input": {
+        "words": ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"],
+        "k": 5
+      },
+      "expected": ["a", "b", "c", "d", "e"]
+    },
+    {
+      "case_id": 65,
+      "input": {
+        "words": ["cat", "bat", "rat", "cat", "bat", "rat", "cat", "bat", "rat", "cat"],
+        "k": 2
+      },
+      "expected": ["cat", "bat"]
+    },
+    {
+      "case_id": 66,
+      "input": {
+        "words": ["cat", "bat", "rat", "cat", "bat", "rat", "cat", "bat", "rat", "cat", "bat", "rat", "cat", "bat", "rat", "cat", "bat", "rat", "cat", "bat", "rat", "cat", "bat", "rat"],
+        "k": 2
+      },
+      "expected": ["bat", "cat"]
+    },
+    {
+      "case_id": 67,
+      "input": {
+        "words": ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"],
+        "k": 5
+      },
+      "expected": ["a", "b", "c", "d", "e"]
+    },
+    {
+      "case_id": 68,
+      "input": {
+        "words": ["red", "blue", "green", "red", "blue", "red", "blue", "red", "blue", "red", "blue", "red", "blue", "red", "blue", "red", "blue", "red", "blue", "red", "blue", "red", "blue", "red", "blue", "red", "blue", "red", "blue", "red", "blue"],
+        "k": 3
+      },
+      "expected": ["blue", "red", "green"]
+    },
+    {
+      "case_id": 69,
+      "input": {
+        "words": ["apple", "banana", "apple", "orange", "banana", "banana", "kiwi", "kiwi", "kiwi", "kiwi"],
+        "k": 3
+      },
+      "expected": ["kiwi", "banana", "apple"]
+    },
+    {
+      "case_id": 70,
+      "input": {
+        "words": ["apple", "banana", "apple", "orange", "banana", "banana", "grape", "grape", "grape"],
+        "k": 3
+      },
+      "expected": ["banana", "grape", "apple"]
+    },
+    {
+      "case_id": 71,
+      "input": {
+        "words": ["x", "y", "z", "w", "v", "u", "t", "s", "r", "q", "p", "o", "n", "m", "l", "k", "j", "i", "h", "g", "f", "e", "d", "c", "b", "a"],
+        "k": 5
+      },
+      "expected": ["a", "b", "c", "d", "e"]
+    },
+    {
+      "case_id": 72,
+      "input": {
+        "words": ["aaaaa", "aaa", "aa", "a", "aaaaa", "aaa", "aa", "a", "aaaaa", "aaa", "aa", "a", "aaaaa", "aaa", "aa", "a", "aaaaa", "aaa", "aa", "a"],
+        "k": 4
+      },
+      "expected": ["a", "aa", "aaa", "aaaaa"]
+    },
+    {
+      "case_id": 73,
+      "input": {
+        "words": ["jump", "run", "walk", "jump", "run", "walk", "jump", "run", "walk", "jump", "run", "walk", "jump", "run", "walk", "jump", "run", "walk", "jump", "run", "walk", "jump", "run", "walk", "jump", "run", "walk", "jump", "run", "walk", "jump", "run", "walk", "jump", "run", "walk", "jump", "run", "walk", "jump", "run", "walk", "jump", "run", "walk", "jump", "run", "walk", "jump", "run", "walk", "jump", "run", "walk", "jump", "run", "walk"],
+        "k": 2
+      },
+      "expected": ["jump", "run"]
+    },
+    {
+      "case_id": 74,
+      "input": {
+        "words": ["zebra", "dog", "duck", "dog", "zebra", "zebra", "zebra", "dog", "dog", "dog", "duck", "duck", "duck", "duck", "duck", "zebra"],
+        "k": 3
+      },
+      "expected": ["duck", "dog", "zebra"]
+    },
+    {
+      "case_id": 75,
+      "input": {
+        "words": ["repeated", "word", "repeated", "word", "repeated", "word", "unique", "unique", "unique", "unique", "another", "another", "another", "another", "another"],
+        "k": 3
+      },
+      "expected": ["another", "unique", "repeated"]
+    },
+    {
+      "case_id": 76,
+      "input": {
+        "words": ["sun", "moon", "star", "moon", "sun", "moon", "star", "sun", "star", "star", "star", "sun", "moon", "moon", "moon"],
+        "k": 3
+      },
+      "expected": ["moon", "star", "sun"]
+    },
+    {
+      "case_id": 77,
+      "input": {
+        "words": ["car", "bike", "train", "car", "bike", "car", "bike", "train", "car", "bike", "car", "bike", "train", "car", "train", "car", "bike", "train"],
+        "k": 3
+      },
+      "expected": ["car", "bike", "train"]
+    },
+    {
+      "case_id": 78,
+      "input": {
+        "words": ["alpha", "beta", "gamma", "delta", "epsilon", "alpha", "beta", "gamma", "delta", "epsilon", "alpha", "beta", "gamma", "delta", "epsilon", "alpha", "beta", "gamma", "delta", "epsilon", "alpha", "beta", "gamma", "delta", "epsilon", "alpha", "beta", "gamma", "delta", "epsilon"],
+        "k": 3
+      },
+      "expected": ["alpha", "beta", "delta"]
+    },
+    {
+      "case_id": 79,
+      "input": {
+        "words": ["a", "aa", "aaa", "aaaa", "a", "aa", "aaa", "aaaa", "a", "aa", "aaa", "aaaa"],
+        "k": 3
+      },
+      "expected": ["a", "aa", "aaa"]
+    },
+    {
+      "case_id": 80,
+      "input": {
+        "words": ["cat", "bat", "rat", "hat", "mat", "pat", "sat", "fat", "tat", "cat", "bat", "rat", "hat", "mat", "pat", "sat", "fat", "tat", "cat", "bat", "rat", "hat", "mat", "pat", "sat", "fat", "tat"],
+        "k": 5
+      },
+      "expected": ["bat", "cat", "fat", "hat", "mat"]
+    },
+    {
+      "case_id": 81,
+      "input": {
+        "words": ["zebra", "dog", "duck", "dog", "zebra", "zebra", "lion", "tiger", "bear", "zebra", "dog", "duck"],
+        "k": 4
+      },
+      "expected": ["zebra", "dog", "duck", "bear"]
+    },
+    {
+      "case_id": 82,
+      "input": {
+        "words": ["elephant", "giraffe", "lion", "tiger", "elephant", "lion", "giraffe", "tiger", "elephant", "lion", "giraffe", "tiger", "lion", "giraffe", "tiger", "elephant", "tiger", "giraffe", "lion", "tiger"],
+        "k": 4
+      },
+      "expected": ["tiger", "giraffe", "lion", "elephant"]
+    },
+    {
+      "case_id": 83,
+      "input": {
+        "words": ["sunrise", "sunset", "midnight", "noon", "sunrise", "sunset", "midnight", "noon", "sunrise", "sunset", "midnight", "noon", "sunrise", "sunset", "midnight", "noon", "sunrise", "sunset", "midnight", "noon", "sunrise", "sunset", "midnight", "noon", "sunrise", "sunset", "midnight", "noon", "sunrise", "sunset", "midnight", "noon", "sunrise", "sunset", "midnight", "noon", "sunrise", "sunset", "midnight", "noon"],
+        "k": 4
+      },
+      "expected": ["midnight", "noon", "sunrise", "sunset"]
+    },
+    {
+      "case_id": 84,
+      "input": {
+        "words": ["apple", "banana", "apple", "orange", "banana", "apple", "banana", "banana"],
+        "k": 2
+      },
+      "expected": ["banana", "apple"]
+    },
+    {
+      "case_id": 85,
+      "input": {
+        "words": ["flower", "tree", "bush", "flower", "tree", "flower", "bush", "flower", "tree", "bush", "flower", "tree", "bush", "flower", "tree", "bush", "flower", "tree", "bush", "flower", "tree", "bush", "flower", "tree", "bush", "flower", "tree", "bush", "flower", "tree", "bush"],
+        "k": 2
+      },
+      "expected": ["flower", "bush"]
+    },
+    {
+      "case_id": 86,
+      "input": {
+        "words": ["apple", "banana", "apple", "orange", "banana", "banana", "kiwi", "kiwi", "kiwi"],
+        "k": 3
+      },
+      "expected": ["banana", "kiwi", "apple"]
+    },
+    {
+      "case_id": 87,
+      "input": {
+        "words": ["a", "aa", "aaa", "aaaa", "a", "aa", "aaa", "aaaa", "a", "aa", "aaa", "aaaa", "a", "aa", "aaa"],
+        "k": 2
+      },
+      "expected": ["a", "aa"]
+    },
+    {
+      "case_id": 88,
+      "input": {
+        "words": ["sun", "moon", "star", "planet", "galaxy", "universe", "sun", "moon", "star", "planet", "galaxy", "universe", "sun", "moon", "star", "planet", "galaxy", "universe", "sun", "moon", "star", "planet", "galaxy", "universe"],
+        "k": 3
+      },
+      "expected": ["galaxy", "moon", "planet"]
+    },
+    {
+      "case_id": 89,
+      "input": {
+        "words": ["aaa", "aa", "a", "aaaa", "aa", "a", "aaa", "aa", "a", "aaaa", "aa", "a", "aaa", "aa", "a", "aaaa", "aa", "a", "aaa", "aa", "a"],
+        "k": 4
+      },
+      "expected": ["a", "aa", "aaa", "aaaa"]
+    },
+    {
+      "case_id": 90,
+      "input": {
+        "words": ["cat", "dog", "cat", "bird", "dog", "cat", "dog", "dog", "dog", "cat", "cat", "bird"],
+        "k": 3
+      },
+      "expected": ["cat", "dog", "bird"]
+    },
+    {
+      "case_id": 91,
+      "input": {
+        "words": ["sun", "moon", "star", "sun", "moon", "star", "sun", "moon", "star", "moon", "star", "star", "star"],
+        "k": 1
+      },
+      "expected": ["star"]
+    },
+    {
+      "case_id": 92,
+      "input": {
+        "words": ["red", "blue", "green", "yellow", "red", "blue", "green", "yellow", "red", "blue", "green", "yellow", "red", "blue", "green", "yellow", "red", "blue", "green", "yellow", "red", "blue", "green", "yellow", "red", "blue", "green", "yellow", "red", "blue"],
+        "k": 2
+      },
+      "expected": ["blue", "red"]
+    }
+  ]
+}

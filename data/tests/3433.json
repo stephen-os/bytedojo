@@ -1,0 +1,1618 @@
+{
+  "schema_version": 1,
+  "problem_id": 3433,
+  "title": "Count Mentions Per User",
+  "method": "countMentions",
+  "signature": {
+    "params": [
+      {
+        "name": "numberOfUsers",
+        "type": "INT32"
+      },
+      {
+        "name": "events",
+        "type": "STRING_MATRIX"
+      }
+    ],
+    "returns": "INT32_ARRAY"
+  },
+  "cases": [
+    {
+      "case_id": 1,
+      "input": {
+        "numberOfUsers": 1,
+        "events": [
+          ["MESSAGE", "1", "id0"],
+          ["MESSAGE", "1", "HERE"],
+          ["MESSAGE", "1", "ALL"]
+        ]
+      },
+      "expected": [3]
+    },
+    {
+      "case_id": 2,
+      "input": {
+        "numberOfUsers": 2,
+        "events": [
+          ["OFFLINE", "10", "0"],
+          ["MESSAGE", "12", "HERE"]
+        ]
+      },
+      "expected": [0, 1]
+    },
+    {
+      "case_id": 3,
+      "input": {
+        "numberOfUsers": 3,
+        "events": [
+          ["MESSAGE", "5", "id0 id1 id2"],
+          ["OFFLINE", "10", "1"],
+          ["MESSAGE", "20", "HERE"],
+          ["MESSAGE", "60", "ALL"]
+        ]
+      },
+      "expected": [3, 2, 3]
+    },
+    {
+      "case_id": 4,
+      "input": {
+        "numberOfUsers": 5,
+        "events": [
+          ["MESSAGE", "1", "id0 id1 id2 id3 id4"],
+          ["OFFLINE", "2", "0"],
+          ["OFFLINE", "3", "1"],
+          ["MESSAGE", "4", "HERE"],
+          ["MESSAGE", "65", "id0 id1"],
+          ["OFFLINE", "70", "2"],
+          ["MESSAGE", "75", "ALL"]
+        ]
+      },
+      "expected": [3, 3, 3, 3, 3]
+    },
+    {
+      "case_id": 5,
+      "input": {
+        "numberOfUsers": 1,
+        "events": [
+          ["MESSAGE", "5", "ALL"],
+          ["OFFLINE", "10", "0"],
+          ["MESSAGE", "20", "HERE"]
+        ]
+      },
+      "expected": [1]
+    },
+    {
+      "case_id": 6,
+      "input": {
+        "numberOfUsers": 4,
+        "events": [
+          ["OFFLINE", "5", "0"],
+          ["OFFLINE", "10", "1"],
+          ["MESSAGE", "15", "HERE"],
+          ["MESSAGE", "20", "ALL"],
+          ["MESSAGE", "25", "id0 id2"]
+        ]
+      },
+      "expected": [2, 1, 3, 2]
+    },
+    {
+      "case_id": 7,
+      "input": {
+        "numberOfUsers": 2,
+        "events": [
+          ["MESSAGE", "10", "id1 id0"],
+          ["OFFLINE", "11", "0"],
+          ["MESSAGE", "12", "ALL"]
+        ]
+      },
+      "expected": [2, 2]
+    },
+    {
+      "case_id": 8,
+      "input": {
+        "numberOfUsers": 5,
+        "events": [
+          ["MESSAGE", "5", "id0 id1 id2 id3 id4"],
+          ["OFFLINE", "10", "0"],
+          ["OFFLINE", "10", "1"],
+          ["MESSAGE", "15", "HERE"],
+          ["MESSAGE", "20", "id2 id3 id4"],
+          ["MESSAGE", "25", "ALL"]
+        ]
+      },
+      "expected": [2, 2, 4, 4, 4]
+    },
+    {
+      "case_id": 9,
+      "input": {
+        "numberOfUsers": 4,
+        "events": [
+          ["MESSAGE", "1", "id0 id1"],
+          ["OFFLINE", "2", "0"],
+          ["MESSAGE", "3", "HERE"],
+          ["MESSAGE", "65", "id0"],
+          ["OFFLINE", "70", "1"],
+          ["MESSAGE", "75", "ALL"]
+        ]
+      },
+      "expected": [3, 3, 2, 2]
+    },
+    {
+      "case_id": 10,
+      "input": {
+        "numberOfUsers": 3,
+        "events": [
+          ["OFFLINE", "5", "0"],
+          ["OFFLINE", "10", "1"],
+          ["MESSAGE", "15", "id0 id1 id2"],
+          ["MESSAGE", "20", "HERE"],
+          ["MESSAGE", "25", "ALL"]
+        ]
+      },
+      "expected": [2, 2, 3]
+    },
+    {
+      "case_id": 11,
+      "input": {
+        "numberOfUsers": 3,
+        "events": [
+          ["MESSAGE", "5", "ALL"],
+          ["OFFLINE", "10", "1"],
+          ["MESSAGE", "15", "HERE"],
+          ["OFFLINE", "20", "2"],
+          ["MESSAGE", "25", "id0 id1 id2"]
+        ]
+      },
+      "expected": [3, 2, 3]
+    },
+    {
+      "case_id": 12,
+      "input": {
+        "numberOfUsers": 1,
+        "events": [
+          ["MESSAGE", "1", "id0"],
+          ["OFFLINE", "10", "0"],
+          ["MESSAGE", "20", "HERE"]
+        ]
+      },
+      "expected": [1]
+    },
+    {
+      "case_id": 13,
+      "input": {
+        "numberOfUsers": 1,
+        "events": [
+          ["MESSAGE", "1", "ALL"],
+          ["OFFLINE", "61", "0"],
+          ["MESSAGE", "120", "HERE"]
+        ]
+      },
+      "expected": [1]
+    },
+    {
+      "case_id": 14,
+      "input": {
+        "numberOfUsers": 2,
+        "events": [
+          ["MESSAGE", "10", "id1 id0"],
+          ["OFFLINE", "11", "0"],
+          ["MESSAGE", "71", "HERE"]
+        ]
+      },
+      "expected": [2, 2]
+    },
+    {
+      "case_id": 15,
+      "input": {
+        "numberOfUsers": 4,
+        "events": [
+          ["OFFLINE", "20", "0"],
+          ["MESSAGE", "25", "HERE"],
+          ["OFFLINE", "30", "1"],
+          ["MESSAGE", "35", "ALL"]
+        ]
+      },
+      "expected": [1, 2, 2, 2]
+    },
+    {
+      "case_id": 16,
+      "input": {
+        "numberOfUsers": 3,
+        "events": [
+          ["MESSAGE", "5", "id0 id1 id2"],
+          ["OFFLINE", "10", "1"],
+          ["MESSAGE", "20", "HERE"],
+          ["MESSAGE", "30", "ALL"]
+        ]
+      },
+      "expected": [3, 2, 3]
+    },
+    {
+      "case_id": 17,
+      "input": {
+        "numberOfUsers": 2,
+        "events": [
+          ["MESSAGE", "10", "id1 id0"],
+          ["OFFLINE", "11", "0"],
+          ["MESSAGE", "71", "HERE"]
+        ]
+      },
+      "expected": [2, 2]
+    },
+    {
+      "case_id": 18,
+      "input": {
+        "numberOfUsers": 3,
+        "events": [
+          ["MESSAGE", "5", "id0 id1 id2"],
+          ["OFFLINE", "10", "1"],
+          ["MESSAGE", "15", "HERE"],
+          ["MESSAGE", "20", "ALL"]
+        ]
+      },
+      "expected": [3, 2, 3]
+    },
+    {
+      "case_id": 19,
+      "input": {
+        "numberOfUsers": 5,
+        "events": [
+          ["MESSAGE", "5", "id0 id1 id2 id3 id4"],
+          ["OFFLINE", "10", "0"],
+          ["MESSAGE", "20", "HERE"],
+          ["OFFLINE", "25", "1"],
+          ["MESSAGE", "30", "ALL"]
+        ]
+      },
+      "expected": [2, 3, 3, 3, 3]
+    },
+    {
+      "case_id": 20,
+      "input": {
+        "numberOfUsers": 10,
+        "events": [
+          ["MESSAGE", "1", "id0 id1 id2 id3 id4 id5 id6 id7 id8 id9"],
+          ["OFFLINE", "10", "0"],
+          ["OFFLINE", "20", "1"],
+          ["MESSAGE", "30", "HERE"],
+          ["OFFLINE", "40", "2"],
+          ["OFFLINE", "50", "3"],
+          ["OFFLINE", "60", "4"],
+          ["MESSAGE", "70", "HERE"],
+          ["OFFLINE", "80", "5"],
+          ["OFFLINE", "90", "6"],
+          ["MESSAGE", "100", "HERE"],
+          ["OFFLINE", "110", "7"],
+          ["OFFLINE", "120", "8"],
+          ["MESSAGE", "130", "HERE"],
+          ["OFFLINE", "140", "9"],
+          ["MESSAGE", "150", "ALL"]
+        ]
+      },
+      "expected": [5, 4, 5, 4, 4, 4, 4, 5, 5, 6]
+    },
+    {
+      "case_id": 21,
+      "input": {
+        "numberOfUsers": 7,
+        "events": [
+          ["MESSAGE", "1", "id0 id0 id1 id1 id2 id2 id3 id3 id4 id4 id5 id5 id6 id6"],
+          ["OFFLINE", "2", "0"],
+          ["MESSAGE", "3", "HERE"],
+          ["OFFLINE", "4", "1"],
+          ["MESSAGE", "5", "ALL"],
+          ["OFFLINE", "6", "2"],
+          ["MESSAGE", "10", "id0 id2"],
+          ["OFFLINE", "11", "3"],
+          ["MESSAGE", "15", "HERE"],
+          ["OFFLINE", "16", "4"],
+          ["MESSAGE", "20", "ALL"],
+          ["MESSAGE", "25", "id0 id1 id2 id3 id4 id5 id6 id0 id1 id2 id3 id4 id5 id6"],
+          ["OFFLINE", "26", "0"],
+          ["MESSAGE", "30", "HERE"],
+          ["OFFLINE", "31", "1"],
+          ["MESSAGE", "35", "ALL"],
+          ["OFFLINE", "36", "2"],
+          ["MESSAGE", "40", "id0 id1 id2 id3 id4 id5 id6 id0 id1 id2 id3 id4 id5 id6"],
+          ["OFFLINE", "41", "3"],
+          ["MESSAGE", "45", "HERE"],
+          ["OFFLINE", "46", "4"],
+          ["MESSAGE", "50", "ALL"],
+          ["OFFLINE", "51", "5"],
+          ["MESSAGE", "55", "id0 id1 id2 id3 id4 id5 id6 id0 id1 id2 id3 id4 id5 id6"],
+          ["OFFLINE", "56", "6"],
+          ["MESSAGE", "60", "HERE"],
+          ["MESSAGE", "65", "ALL"]
+        ]
+      },
+      "expected": [14, 14, 15, 14, 15, 17, 17]
+    },
+    {
+      "case_id": 22,
+      "input": {
+        "numberOfUsers": 5,
+        "events": [
+          ["MESSAGE", "1", "id0 id1"],
+          ["OFFLINE", "2", "0"],
+          ["OFFLINE", "3", "1"],
+          ["MESSAGE", "4", "HERE"],
+          ["OFFLINE", "5", "2"],
+          ["OFFLINE", "6", "3"],
+          ["MESSAGE", "7", "HERE"],
+          ["OFFLINE", "8", "4"],
+          ["MESSAGE", "9", "HERE"],
+          ["MESSAGE", "61", "id0 id1 id2 id3 id4"],
+          ["MESSAGE", "62", "HERE"],
+          ["MESSAGE", "121", "ALL"],
+          ["MESSAGE", "122", "HERE"]
+        ]
+      },
+      "expected": [5, 4, 4, 4, 5]
+    },
+    {
+      "case_id": 23,
+      "input": {
+        "numberOfUsers": 7,
+        "events": [
+          ["MESSAGE", "10", "id0 id1"],
+          ["OFFLINE", "15", "0"],
+          ["MESSAGE", "20", "id0 id1 id2"],
+          ["OFFLINE", "25", "1"],
+          ["MESSAGE", "30", "HERE"],
+          ["OFFLINE", "35", "2"],
+          ["MESSAGE", "40", "id0 id1 id2 id3 id4"],
+          ["OFFLINE", "45", "3"],
+          ["MESSAGE", "50", "id0 id1 id2 id3 id4 id5 id6"],
+          ["MESSAGE", "90", "HERE"],
+          ["OFFLINE", "95", "4"],
+          ["MESSAGE", "100", "ALL"]
+        ]
+      },
+      "expected": [6, 6, 5, 4, 5, 4, 4]
+    },
+    {
+      "case_id": 24,
+      "input": {
+        "numberOfUsers": 10,
+        "events": [
+          ["MESSAGE", "5", "id1 id2"],
+          ["OFFLINE", "10", "0"],
+          ["MESSAGE", "15", "HERE"],
+          ["OFFLINE", "20", "2"],
+          ["MESSAGE", "25", "HERE"],
+          ["OFFLINE", "30", "3"],
+          ["MESSAGE", "35", "HERE"],
+          ["OFFLINE", "40", "4"],
+          ["MESSAGE", "45", "HERE"],
+          ["OFFLINE", "50", "5"],
+          ["MESSAGE", "55", "HERE"],
+          ["OFFLINE", "60", "6"],
+          ["MESSAGE", "65", "HERE"],
+          ["OFFLINE", "70", "7"],
+          ["MESSAGE", "75", "HERE"],
+          ["OFFLINE", "80", "8"],
+          ["MESSAGE", "85", "HERE"],
+          ["OFFLINE", "90", "9"],
+          ["MESSAGE", "95", "HERE"],
+          ["MESSAGE", "100", "ALL"],
+          ["MESSAGE", "110", "id0 id1 id2 id3 id4 id5 id6 id7 id8 id9"],
+          ["OFFLINE", "115", "0"],
+          ["MESSAGE", "120", "HERE"],
+          ["MESSAGE", "130", "ALL"],
+          ["OFFLINE", "135", "1"],
+          ["MESSAGE", "140", "HERE"],
+          ["MESSAGE", "150", "id0 id1 id2 id3 id4 id5 id6 id7 id8 id9"],
+          ["OFFLINE", "155", "2"],
+          ["MESSAGE", "160", "HERE"],
+          ["MESSAGE", "170", "ALL"]
+        ]
+      },
+      "expected": [8, 16, 11, 11, 11, 12, 13, 13, 14, 14]
+    },
+    {
+      "case_id": 25,
+      "input": {
+        "numberOfUsers": 8,
+        "events": [
+          ["OFFLINE", "5", "0"],
+          ["OFFLINE", "10", "1"],
+          ["OFFLINE", "15", "2"],
+          ["MESSAGE", "20", "HERE"],
+          ["OFFLINE", "25", "3"],
+          ["MESSAGE", "30", "id0 id1 id2 id3"],
+          ["OFFLINE", "35", "4"],
+          ["OFFLINE", "40", "5"],
+          ["MESSAGE", "45", "id0 id1 id2 id3 id4 id5"],
+          ["OFFLINE", "50", "6"],
+          ["MESSAGE", "55", "HERE"],
+          ["OFFLINE", "60", "7"],
+          ["MESSAGE", "65", "ALL"],
+          ["MESSAGE", "70", "HERE"],
+          ["MESSAGE", "75", "id0 id1 id2 id3 id4 id5 id6 id7"]
+        ]
+      },
+      "expected": [5, 5, 4, 5, 4, 4, 3, 4]
+    },
+    {
+      "case_id": 26,
+      "input": {
+        "numberOfUsers": 3,
+        "events": [
+          ["MESSAGE", "1", "ALL"],
+          ["OFFLINE", "2", "0"],
+          ["OFFLINE", "3", "1"],
+          ["MESSAGE", "4", "HERE"],
+          ["OFFLINE", "5", "2"],
+          ["MESSAGE", "6", "HERE"],
+          ["MESSAGE", "61", "id0 id1 id2"],
+          ["MESSAGE", "62", "HERE"],
+          ["MESSAGE", "121", "ALL"],
+          ["MESSAGE", "122", "HERE"]
+        ]
+      },
+      "expected": [5, 4, 5]
+    },
+    {
+      "case_id": 27,
+      "input": {
+        "numberOfUsers": 10,
+        "events": [
+          ["MESSAGE", "5", "id0 id1 id2 id3 id4 id5 id6 id7 id8 id9"],
+          ["OFFLINE", "15", "0"],
+          ["MESSAGE", "20", "HERE"],
+          ["OFFLINE", "25", "1"],
+          ["MESSAGE", "30", "ALL"],
+          ["OFFLINE", "35", "2"],
+          ["MESSAGE", "45", "HERE"],
+          ["OFFLINE", "50", "3"],
+          ["MESSAGE", "55", "ALL"],
+          ["OFFLINE", "65", "4"],
+          ["MESSAGE", "70", "HERE"],
+          ["OFFLINE", "75", "5"],
+          ["MESSAGE", "80", "ALL"],
+          ["OFFLINE", "85", "6"],
+          ["MESSAGE", "90", "HERE"],
+          ["OFFLINE", "95", "7"],
+          ["MESSAGE", "100", "ALL"],
+          ["OFFLINE", "105", "8"],
+          ["MESSAGE", "110", "HERE"],
+          ["OFFLINE", "115", "9"],
+          ["MESSAGE", "120", "ALL"]
+        ]
+      },
+      "expected": [8, 9, 8, 9, 8, 9, 9, 10, 10, 11]
+    },
+    {
+      "case_id": 28,
+      "input": {
+        "numberOfUsers": 15,
+        "events": [
+          ["MESSAGE", "1", "id0 id1 id2 id3 id4 id5 id6 id7 id8 id9 id10 id11 id12 id13 id14"],
+          ["OFFLINE", "2", "0"],
+          ["MESSAGE", "3", "HERE"],
+          ["OFFLINE", "4", "1"],
+          ["MESSAGE", "5", "ALL"],
+          ["OFFLINE", "6", "2"],
+          ["MESSAGE", "10", "id0 id2"],
+          ["OFFLINE", "11", "3"],
+          ["MESSAGE", "15", "HERE"],
+          ["OFFLINE", "16", "4"],
+          ["MESSAGE", "20", "ALL"],
+          ["OFFLINE", "21", "5"],
+          ["MESSAGE", "25", "id0 id1 id2 id3 id4 id5 id6 id7 id8 id9 id10 id11 id12 id13 id14"],
+          ["OFFLINE", "26", "6"],
+          ["MESSAGE", "30", "HERE"],
+          ["OFFLINE", "31", "7"],
+          ["MESSAGE", "35", "ALL"],
+          ["OFFLINE", "36", "8"],
+          ["MESSAGE", "40", "id0 id1 id2 id3 id4 id5 id6 id7 id8 id9 id10 id11 id12 id13 id14"],
+          ["OFFLINE", "41", "9"],
+          ["MESSAGE", "45", "HERE"],
+          ["OFFLINE", "46", "10"],
+          ["MESSAGE", "50", "ALL"],
+          ["OFFLINE", "51", "11"],
+          ["MESSAGE", "55", "id0 id1 id2 id3 id4 id5 id6 id7 id8 id9 id10 id11 id12 id13 id14"],
+          ["OFFLINE", "56", "12"],
+          ["MESSAGE", "60", "HERE"],
+          ["OFFLINE", "61", "13"],
+          ["MESSAGE", "65", "ALL"],
+          ["OFFLINE", "66", "14"],
+          ["MESSAGE", "70", "id0 id1 id2 id3 id4 id5 id6 id7 id8 id9 id10 id11 id12 id13 id14"]
+        ]
+      },
+      "expected": [11, 11, 12, 11, 12, 12, 12, 13, 13, 13, 14, 14, 14, 15, 15]
+    },
+    {
+      "case_id": 29,
+      "input": {
+        "numberOfUsers": 8,
+        "events": [
+          ["OFFLINE", "10", "0"],
+          ["MESSAGE", "20", "HERE"],
+          ["OFFLINE", "30", "1"],
+          ["MESSAGE", "40", "HERE"],
+          ["OFFLINE", "50", "2"],
+          ["MESSAGE", "60", "HERE"],
+          ["OFFLINE", "70", "3"],
+          ["MESSAGE", "80", "HERE"],
+          ["OFFLINE", "90", "4"],
+          ["MESSAGE", "100", "HERE"],
+          ["OFFLINE", "110", "5"],
+          ["MESSAGE", "120", "HERE"],
+          ["OFFLINE", "130", "6"],
+          ["MESSAGE", "140", "HERE"],
+          ["OFFLINE", "150", "7"],
+          ["MESSAGE", "160", "HERE"],
+          ["MESSAGE", "200", "ALL"]
+        ]
+      },
+      "expected": [6, 6, 6, 6, 6, 6, 7, 8]
+    },
+    {
+      "case_id": 30,
+      "input": {
+        "numberOfUsers": 6,
+        "events": [
+          ["MESSAGE", "1", "id0 id1 id2 id3 id4 id5"],
+          ["OFFLINE", "10", "0"],
+          ["MESSAGE", "20", "HERE"],
+          ["OFFLINE", "30", "1"],
+          ["MESSAGE", "40", "ALL"],
+          ["OFFLINE", "50", "2"],
+          ["MESSAGE", "60", "HERE"],
+          ["OFFLINE", "70", "3"],
+          ["MESSAGE", "80", "ALL"],
+          ["OFFLINE", "90", "4"],
+          ["MESSAGE", "100", "HERE"],
+          ["OFFLINE", "110", "5"],
+          ["MESSAGE", "120", "ALL"],
+          ["MESSAGE", "130", "HERE"],
+          ["MESSAGE", "140", "ALL"]
+        ]
+      },
+      "expected": [7, 8, 7, 8, 7, 8]
+    },
+    {
+      "case_id": 31,
+      "input": {
+        "numberOfUsers": 3,
+        "events": [
+          ["MESSAGE", "10", "id0 id1"],
+          ["OFFLINE", "15", "0"],
+          ["MESSAGE", "20", "HERE"],
+          ["OFFLINE", "25", "1"],
+          ["MESSAGE", "30", "ALL"],
+          ["MESSAGE", "40", "id0 id1"],
+          ["MESSAGE", "50", "HERE"],
+          ["OFFLINE", "55", "2"],
+          ["MESSAGE", "60", "ALL"],
+          ["MESSAGE", "70", "id0 id1 id2"],
+          ["MESSAGE", "80", "HERE"],
+          ["MESSAGE", "90", "ALL"]
+        ]
+      },
+      "expected": [7, 7, 6]
+    },
+    {
+      "case_id": 32,
+      "input": {
+        "numberOfUsers": 5,
+        "events": [
+          ["OFFLINE", "5", "0"],
+          ["OFFLINE", "10", "1"],
+          ["OFFLINE", "15", "2"],
+          ["MESSAGE", "20", "ALL"],
+          ["MESSAGE", "25", "HERE"],
+          ["OFFLINE", "30", "3"],
+          ["OFFLINE", "35", "4"],
+          ["MESSAGE", "40", "id0 id1 id2 id3 id4"],
+          ["MESSAGE", "80", "HERE"],
+          ["MESSAGE", "100", "ALL"]
+        ]
+      },
+      "expected": [4, 4, 4, 4, 4]
+    },
+    {
+      "case_id": 33,
+      "input": {
+        "numberOfUsers": 6,
+        "events": [
+          ["OFFLINE", "10", "0"],
+          ["MESSAGE", "12", "HERE"],
+          ["OFFLINE", "20", "1"],
+          ["MESSAGE", "25", "HERE"],
+          ["OFFLINE", "30", "2"],
+          ["MESSAGE", "35", "HERE"],
+          ["OFFLINE", "40", "3"],
+          ["MESSAGE", "45", "HERE"],
+          ["OFFLINE", "50", "4"],
+          ["MESSAGE", "55", "HERE"],
+          ["OFFLINE", "60", "5"],
+          ["MESSAGE", "65", "HERE"],
+          ["MESSAGE", "70", "ALL"],
+          ["MESSAGE", "75", "id0 id1 id2 id3 id4 id5"],
+          ["OFFLINE", "80", "0"],
+          ["MESSAGE", "85", "HERE"],
+          ["MESSAGE", "90", "id0 id1 id2 id3 id4 id5"],
+          ["OFFLINE", "95", "1"],
+          ["MESSAGE", "100", "HERE"],
+          ["MESSAGE", "110", "ALL"]
+        ]
+      },
+      "expected": [4, 6, 7, 8, 8, 9]
+    },
+    {
+      "case_id": 34,
+      "input": {
+        "numberOfUsers": 6,
+        "events": [
+          ["MESSAGE", "10", "id0 id1 id2"],
+          ["OFFLINE", "15", "0"],
+          ["OFFLINE", "20", "1"],
+          ["OFFLINE", "25", "2"],
+          ["MESSAGE", "30", "HERE"],
+          ["OFFLINE", "35", "3"],
+          ["MESSAGE", "40", "id3 id4"],
+          ["OFFLINE", "45", "4"],
+          ["MESSAGE", "50", "HERE"],
+          ["OFFLINE", "55", "5"],
+          ["MESSAGE", "60", "ALL"],
+          ["MESSAGE", "100", "id0 id1 id2 id3 id4 id5"],
+          ["MESSAGE", "150", "HERE"],
+          ["MESSAGE", "200", "ALL"]
+        ]
+      },
+      "expected": [5, 5, 5, 6, 6, 6]
+    },
+    {
+      "case_id": 35,
+      "input": {
+        "numberOfUsers": 5,
+        "events": [
+          ["MESSAGE", "10", "id0 id1 id2 id3 id4"],
+          ["OFFLINE", "20", "0"],
+          ["MESSAGE", "30", "HERE"],
+          ["MESSAGE", "40", "ALL"],
+          ["OFFLINE", "50", "1"],
+          ["MESSAGE", "60", "HERE"],
+          ["MESSAGE", "70", "ALL"],
+          ["OFFLINE", "80", "2"],
+          ["MESSAGE", "90", "HERE"],
+          ["MESSAGE", "100", "ALL"],
+          ["OFFLINE", "110", "3"],
+          ["MESSAGE", "120", "HERE"],
+          ["MESSAGE", "130", "ALL"],
+          ["OFFLINE", "140", "4"],
+          ["MESSAGE", "150", "HERE"],
+          ["MESSAGE", "160", "ALL"]
+        ]
+      },
+      "expected": [9, 9, 9, 9, 10]
+    },
+    {
+      "case_id": 36,
+      "input": {
+        "numberOfUsers": 10,
+        "events": [
+          ["MESSAGE", "1", "id0 id1 id2 id3 id4"],
+          ["OFFLINE", "5", "0"],
+          ["OFFLINE", "10", "1"],
+          ["OFFLINE", "15", "2"],
+          ["MESSAGE", "20", "HERE"],
+          ["OFFLINE", "25", "3"],
+          ["MESSAGE", "30", "ALL"],
+          ["OFFLINE", "35", "4"],
+          ["MESSAGE", "40", "id0 id1 id2 id3 id4"],
+          ["MESSAGE", "80", "HERE"]
+        ]
+      },
+      "expected": [4, 4, 4, 4, 4, 3, 3, 3, 3, 3]
+    },
+    {
+      "case_id": 37,
+      "input": {
+        "numberOfUsers": 10,
+        "events": [
+          ["MESSAGE", "5", "id0 id1 id2 id3 id4 id5 id6 id7 id8 id9"],
+          ["OFFLINE", "15", "0"],
+          ["MESSAGE", "25", "id1 id2 id3 id4"],
+          ["OFFLINE", "35", "1"],
+          ["MESSAGE", "45", "id2 id3 id4 id5"],
+          ["OFFLINE", "55", "2"],
+          ["MESSAGE", "65", "id3 id4 id5 id6"],
+          ["OFFLINE", "75", "3"],
+          ["MESSAGE", "85", "id4 id5 id6 id7"],
+          ["OFFLINE", "95", "4"],
+          ["MESSAGE", "105", "id5 id6 id7 id8"],
+          ["OFFLINE", "115", "5"],
+          ["MESSAGE", "125", "id6 id7 id8 id9"],
+          ["OFFLINE", "135", "6"],
+          ["MESSAGE", "145", "id7 id8 id9"],
+          ["OFFLINE", "155", "7"],
+          ["MESSAGE", "165", "id8 id9"],
+          ["OFFLINE", "175", "8"],
+          ["MESSAGE", "185", "id9"],
+          ["OFFLINE", "195", "9"],
+          ["MESSAGE", "205", "HERE"],
+          ["MESSAGE", "215", "ALL"]
+        ]
+      },
+      "expected": [3, 4, 5, 6, 7, 7, 7, 6, 6, 6]
+    },
+    {
+      "case_id": 38,
+      "input": {
+        "numberOfUsers": 5,
+        "events": [
+          ["MESSAGE", "1", "id0"],
+          ["OFFLINE", "2", "0"],
+          ["MESSAGE", "3", "id0"],
+          ["OFFLINE", "4", "1"],
+          ["MESSAGE", "5", "id1"],
+          ["OFFLINE", "6", "2"],
+          ["MESSAGE", "7", "id2"],
+          ["OFFLINE", "8", "3"],
+          ["MESSAGE", "9", "id3"],
+          ["OFFLINE", "10", "4"],
+          ["MESSAGE", "11", "id4"],
+          ["MESSAGE", "12", "HERE"],
+          ["MESSAGE", "13", "ALL"]
+        ]
+      },
+      "expected": [3, 2, 2, 2, 2]
+    },
+    {
+      "case_id": 39,
+      "input": {
+        "numberOfUsers": 15,
+        "events": [
+          ["OFFLINE", "5", "0"],
+          ["OFFLINE", "10", "1"],
+          ["OFFLINE", "15", "2"],
+          ["MESSAGE", "20", "HERE"],
+          ["OFFLINE", "25", "3"],
+          ["MESSAGE", "30", "id0 id1 id2 id3"],
+          ["OFFLINE", "35", "4"],
+          ["OFFLINE", "40", "5"],
+          ["MESSAGE", "45", "id0 id1 id2 id3 id4 id5"],
+          ["OFFLINE", "50", "6"],
+          ["MESSAGE", "55", "HERE"],
+          ["OFFLINE", "60", "7"],
+          ["MESSAGE", "65", "ALL"],
+          ["OFFLINE", "70", "8"],
+          ["MESSAGE", "75", "HERE"],
+          ["OFFLINE", "80", "9"],
+          ["MESSAGE", "85", "id0 id1 id2 id3 id4 id5 id6 id7 id8 id9"],
+          ["OFFLINE", "90", "10"],
+          ["MESSAGE", "95", "HERE"],
+          ["OFFLINE", "100", "11"],
+          ["MESSAGE", "105", "id0 id1 id2 id3 id4 id5 id6 id7 id8 id9 id10 id11"],
+          ["OFFLINE", "110", "12"],
+          ["MESSAGE", "115", "ALL"],
+          ["OFFLINE", "120", "13"],
+          ["MESSAGE", "125", "HERE"],
+          ["OFFLINE", "130", "14"],
+          ["MESSAGE", "135", "id0 id1 id2 id3 id4 id5 id6 id7 id8 id9 id10 id11 id12 id13 id14"]
+        ]
+      },
+      "expected": [10, 10, 10, 10, 9, 8, 7, 8, 7, 8, 7, 8, 7, 7, 8]
+    },
+    {
+      "case_id": 40,
+      "input": {
+        "numberOfUsers": 8,
+        "events": [
+          ["MESSAGE", "5", "id1 id2"],
+          ["OFFLINE", "10", "0"],
+          ["OFFLINE", "20", "1"],
+          ["MESSAGE", "25", "HERE"],
+          ["OFFLINE", "30", "2"],
+          ["OFFLINE", "30", "3"],
+          ["MESSAGE", "40", "id0 id1 id2 id3"],
+          ["MESSAGE", "80", "ALL"],
+          ["OFFLINE", "100", "4"],
+          ["OFFLINE", "100", "5"],
+          ["MESSAGE", "120", "HERE"],
+          ["MESSAGE", "140", "id4 id5"],
+          ["OFFLINE", "150", "6"],
+          ["MESSAGE", "160", "ALL"]
+        ]
+      },
+      "expected": [4, 5, 6, 5, 4, 4, 4, 4]
+    },
+    {
+      "case_id": 41,
+      "input": {
+        "numberOfUsers": 3,
+        "events": [
+          ["MESSAGE", "5", "id0 id1 id2"],
+          ["OFFLINE", "10", "0"],
+          ["MESSAGE", "15", "HERE"],
+          ["OFFLINE", "20", "1"],
+          ["MESSAGE", "25", "HERE"],
+          ["MESSAGE", "70", "ALL"],
+          ["OFFLINE", "80", "2"],
+          ["MESSAGE", "90", "HERE"],
+          ["MESSAGE", "150", "ALL"]
+        ]
+      },
+      "expected": [4, 5, 5]
+    },
+    {
+      "case_id": 42,
+      "input": {
+        "numberOfUsers": 10,
+        "events": [
+          ["OFFLINE", "10", "0"],
+          ["OFFLINE", "20", "1"],
+          ["MESSAGE", "30", "HERE"],
+          ["OFFLINE", "40", "2"],
+          ["OFFLINE", "50", "3"],
+          ["MESSAGE", "60", "id0 id1 id2 id3"],
+          ["OFFLINE", "70", "4"],
+          ["MESSAGE", "80", "HERE"],
+          ["MESSAGE", "90", "id4 id5"],
+          ["OFFLINE", "100", "5"],
+          ["OFFLINE", "110", "6"],
+          ["MESSAGE", "120", "id6 id7"],
+          ["OFFLINE", "130", "7"],
+          ["MESSAGE", "140", "HERE"],
+          ["MESSAGE", "150", "id8 id9"],
+          ["OFFLINE", "160", "8"],
+          ["OFFLINE", "170", "9"],
+          ["MESSAGE", "180", "ALL"]
+        ]
+      },
+      "expected": [4, 4, 4, 4, 4, 4, 4, 4, 5, 5]
+    },
+    {
+      "case_id": 43,
+      "input": {
+        "numberOfUsers": 10,
+        "events": [
+          ["MESSAGE", "1", "id0 id1 id2 id3 id4"],
+          ["OFFLINE", "2", "0"],
+          ["OFFLINE", "3", "1"],
+          ["MESSAGE", "4", "HERE"],
+          ["MESSAGE", "5", "id5 id6 id7 id8 id9"],
+          ["OFFLINE", "6", "2"],
+          ["MESSAGE", "65", "id0 id1"],
+          ["OFFLINE", "70", "3"],
+          ["MESSAGE", "75", "ALL"],
+          ["OFFLINE", "120", "4"],
+          ["MESSAGE", "125", "HERE"],
+          ["OFFLINE", "130", "5"],
+          ["MESSAGE", "135", "ALL"],
+          ["OFFLINE", "140", "6"],
+          ["MESSAGE", "145", "HERE"],
+          ["OFFLINE", "150", "7"],
+          ["MESSAGE", "155", "ALL"],
+          ["OFFLINE", "160", "8"],
+          ["MESSAGE", "165", "HERE"],
+          ["OFFLINE", "170", "9"],
+          ["MESSAGE", "175", "ALL"]
+        ]
+      },
+      "expected": [9, 9, 9, 8, 6, 7, 7, 8, 8, 9]
+    },
+    {
+      "case_id": 44,
+      "input": {
+        "numberOfUsers": 10,
+        "events": [
+          ["MESSAGE", "1", "id0 id1 id2 id3 id4 id5 id6 id7 id8 id9"],
+          ["OFFLINE", "2", "0"],
+          ["MESSAGE", "3", "HERE"],
+          ["OFFLINE", "4", "1"],
+          ["MESSAGE", "5", "ALL"],
+          ["OFFLINE", "6", "2"],
+          ["MESSAGE", "10", "id0 id2"],
+          ["OFFLINE", "11", "3"],
+          ["MESSAGE", "15", "HERE"],
+          ["OFFLINE", "16", "4"],
+          ["MESSAGE", "20", "ALL"],
+          ["OFFLINE", "21", "5"],
+          ["MESSAGE", "25", "id0 id1 id2 id3 id4 id5 id6 id7 id8 id9"],
+          ["OFFLINE", "26", "6"],
+          ["MESSAGE", "30", "HERE"],
+          ["OFFLINE", "31", "7"],
+          ["MESSAGE", "35", "ALL"],
+          ["OFFLINE", "36", "8"],
+          ["MESSAGE", "40", "id0 id1 id2 id3 id4 id5 id6 id7 id8 id9"],
+          ["OFFLINE", "41", "9"],
+          ["MESSAGE", "45", "HERE"],
+          ["MESSAGE", "50", "ALL"]
+        ]
+      },
+      "expected": [8, 8, 9, 8, 9, 9, 9, 10, 10, 10]
+    },
+    {
+      "case_id": 45,
+      "input": {
+        "numberOfUsers": 5,
+        "events": [
+          ["MESSAGE", "10", "id0 id1 id2 id3 id4"],
+          ["OFFLINE", "20", "0"],
+          ["MESSAGE", "30", "HERE"],
+          ["OFFLINE", "40", "1"],
+          ["MESSAGE", "50", "HERE"],
+          ["OFFLINE", "60", "2"],
+          ["MESSAGE", "70", "HERE"],
+          ["OFFLINE", "80", "3"],
+          ["MESSAGE", "90", "HERE"],
+          ["OFFLINE", "100", "4"],
+          ["MESSAGE", "110", "HERE"],
+          ["MESSAGE", "120", "ALL"]
+        ]
+      },
+      "expected": [4, 4, 4, 5, 6]
+    },
+    {
+      "case_id": 46,
+      "input": {
+        "numberOfUsers": 7,
+        "events": [
+          ["OFFLINE", "5", "0"],
+          ["MESSAGE", "10", "HERE"],
+          ["OFFLINE", "15", "1"],
+          ["MESSAGE", "20", "HERE"],
+          ["OFFLINE", "25", "2"],
+          ["MESSAGE", "30", "HERE"],
+          ["OFFLINE", "35", "3"],
+          ["MESSAGE", "40", "HERE"],
+          ["OFFLINE", "45", "4"],
+          ["MESSAGE", "50", "HERE"],
+          ["OFFLINE", "55", "5"],
+          ["MESSAGE", "60", "HERE"],
+          ["OFFLINE", "65", "6"],
+          ["MESSAGE", "70", "HERE"],
+          ["MESSAGE", "75", "ALL"],
+          ["MESSAGE", "80", "id0 id1 id2 id3 id4 id5 id6 id0 id1 id2 id3 id4 id5 id6"],
+          ["MESSAGE", "85", "HERE"],
+          ["MESSAGE", "90", "ALL"]
+        ]
+      },
+      "expected": [6, 6, 7, 7, 8, 9, 10]
+    },
+    {
+      "case_id": 47,
+      "input": {
+        "numberOfUsers": 6,
+        "events": [
+          ["MESSAGE", "5", "id0 id1 id2 id3 id4 id5"],
+          ["OFFLINE", "10", "0"],
+          ["MESSAGE", "15", "HERE"],
+          ["OFFLINE", "20", "1"],
+          ["MESSAGE", "25", "HERE"],
+          ["OFFLINE", "30", "2"],
+          ["MESSAGE", "35", "HERE"],
+          ["OFFLINE", "40", "3"],
+          ["MESSAGE", "45", "HERE"],
+          ["OFFLINE", "50", "4"],
+          ["MESSAGE", "55", "HERE"],
+          ["OFFLINE", "60", "5"],
+          ["MESSAGE", "65", "HERE"],
+          ["MESSAGE", "70", "ALL"],
+          ["MESSAGE", "75", "id0 id1 id2 id3 id4 id5 id0 id1 id2 id3 id4 id5"],
+          ["MESSAGE", "80", "HERE"],
+          ["MESSAGE", "85", "ALL"]
+        ]
+      },
+      "expected": [6, 7, 7, 8, 9, 10]
+    },
+    {
+      "case_id": 48,
+      "input": {
+        "numberOfUsers": 20,
+        "events": [
+          ["MESSAGE", "1", "id0 id1 id2 id3 id4 id5 id6 id7 id8 id9 id10 id11 id12 id13 id14 id15 id16 id17 id18 id19"],
+          ["OFFLINE", "2", "0"],
+          ["MESSAGE", "3", "HERE"],
+          ["OFFLINE", "4", "1"],
+          ["MESSAGE", "5", "ALL"],
+          ["OFFLINE", "6", "2"],
+          ["MESSAGE", "10", "id0 id2"],
+          ["OFFLINE", "11", "3"],
+          ["MESSAGE", "15", "HERE"],
+          ["OFFLINE", "16", "4"],
+          ["MESSAGE", "20", "ALL"],
+          ["OFFLINE", "21", "5"],
+          ["MESSAGE", "25", "id0 id1 id2 id3 id4 id5 id6 id7 id8 id9 id10 id11 id12 id13 id14 id15 id16 id17 id18 id19"],
+          ["OFFLINE", "26", "6"],
+          ["MESSAGE", "30", "HERE"],
+          ["OFFLINE", "31", "7"],
+          ["MESSAGE", "35", "ALL"],
+          ["OFFLINE", "36", "8"],
+          ["MESSAGE", "40", "id0 id1 id2 id3 id4 id5 id6 id7 id8 id9 id10 id11 id12 id13 id14 id15 id16 id17 id18 id19"],
+          ["OFFLINE", "41", "9"],
+          ["MESSAGE", "45", "HERE"],
+          ["OFFLINE", "46", "10"],
+          ["MESSAGE", "50", "ALL"],
+          ["OFFLINE", "51", "11"],
+          ["MESSAGE", "55", "id0 id1 id2 id3 id4 id5 id6 id7 id8 id9 id10 id11 id12 id13 id14 id15 id16 id17 id18 id19"],
+          ["OFFLINE", "56", "12"],
+          ["MESSAGE", "60", "HERE"],
+          ["OFFLINE", "61", "13"],
+          ["MESSAGE", "65", "ALL"],
+          ["OFFLINE", "66", "14"],
+          ["MESSAGE", "70", "id0 id1 id2 id3 id4 id5 id6 id7 id8 id9 id10 id11 id12 id13 id14 id15 id16 id17 id18 id19"],
+          ["OFFLINE", "71", "15"],
+          ["MESSAGE", "75", "HERE"],
+          ["OFFLINE", "76", "16"],
+          ["MESSAGE", "80", "ALL"],
+          ["OFFLINE", "81", "17"],
+          ["MESSAGE", "85", "id0 id1 id2 id3 id4 id5 id6 id7 id8 id9 id10 id11 id12 id13 id14 id15 id16 id17 id18 id19"],
+          ["OFFLINE", "86", "18"],
+          ["MESSAGE", "90", "HERE"],
+          ["OFFLINE", "91", "19"],
+          ["MESSAGE", "95", "ALL"]
+        ]
+      },
+      "expected": [16, 16, 17, 16, 16, 16, 16, 16, 16, 16, 17, 17, 17, 18, 18, 18, 19, 19, 19, 20]
+    },
+    {
+      "case_id": 49,
+      "input": {
+        "numberOfUsers": 7,
+        "events": [
+          ["OFFLINE", "5", "0"],
+          ["OFFLINE", "10", "1"],
+          ["MESSAGE", "15", "HERE"],
+          ["MESSAGE", "20", "id0 id1 id2"],
+          ["OFFLINE", "25", "2"],
+          ["OFFLINE", "30", "3"],
+          ["MESSAGE", "35", "HERE"],
+          ["MESSAGE", "40", "id4 id4 id4"],
+          ["OFFLINE", "45", "4"],
+          ["OFFLINE", "50", "5"],
+          ["MESSAGE", "55", "HERE"],
+          ["MESSAGE", "60", "id5 id5 id5"],
+          ["OFFLINE", "65", "6"],
+          ["MESSAGE", "70", "HERE"],
+          ["MESSAGE", "75", "ALL"]
+        ]
+      },
+      "expected": [3, 3, 3, 2, 6, 6, 4]
+    },
+    {
+      "case_id": 50,
+      "input": {
+        "numberOfUsers": 10,
+        "events": [
+          ["MESSAGE", "10", "id0 id1 id2 id3 id4 id5 id6 id7 id8 id9"],
+          ["OFFLINE", "15", "0"],
+          ["MESSAGE", "20", "HERE"],
+          ["OFFLINE", "25", "1"],
+          ["MESSAGE", "30", "id2 id3 id4"],
+          ["OFFLINE", "35", "2"],
+          ["MESSAGE", "40", "ALL"],
+          ["MESSAGE", "45", "id0 id1"],
+          ["OFFLINE", "50", "3"],
+          ["MESSAGE", "55", "HERE"],
+          ["OFFLINE", "60", "4"],
+          ["MESSAGE", "65", "id0 id1 id2 id3 id4"],
+          ["MESSAGE", "75", "ALL"]
+        ]
+      },
+      "expected": [5, 6, 6, 6, 7, 5, 5, 5, 5, 5]
+    },
+    {
+      "case_id": 51,
+      "input": {
+        "numberOfUsers": 3,
+        "events": [
+          ["OFFLINE", "10", "0"],
+          ["MESSAGE", "12", "HERE"],
+          ["MESSAGE", "20", "ALL"],
+          ["MESSAGE", "65", "id0"],
+          ["OFFLINE", "70", "2"],
+          ["MESSAGE", "75", "HERE"],
+          ["MESSAGE", "80", "id0 id2"],
+          ["OFFLINE", "90", "1"],
+          ["MESSAGE", "100", "HERE"],
+          ["MESSAGE", "120", "ALL"]
+        ]
+      },
+      "expected": [6, 4, 4]
+    },
+    {
+      "case_id": 52,
+      "input": {
+        "numberOfUsers": 3,
+        "events": [
+          ["MESSAGE", "1", "id0 id1"],
+          ["OFFLINE", "15", "0"],
+          ["MESSAGE", "20", "id0 id2"],
+          ["OFFLINE", "25", "1"],
+          ["MESSAGE", "30", "HERE"],
+          ["OFFLINE", "35", "2"],
+          ["MESSAGE", "40", "ALL"],
+          ["MESSAGE", "45", "id0"],
+          ["MESSAGE", "50", "id1"],
+          ["MESSAGE", "55", "id2"],
+          ["OFFLINE", "60", "0"],
+          ["OFFLINE", "65", "1"],
+          ["MESSAGE", "70", "HERE"],
+          ["OFFLINE", "75", "2"],
+          ["MESSAGE", "80", "ALL"]
+        ]
+      },
+      "expected": [5, 4, 5]
+    },
+    {
+      "case_id": 53,
+      "input": {
+        "numberOfUsers": 7,
+        "events": [
+          ["MESSAGE", "1", "id1 id2"],
+          ["OFFLINE", "2", "0"],
+          ["OFFLINE", "3", "1"],
+          ["MESSAGE", "4", "HERE"],
+          ["OFFLINE", "5", "2"],
+          ["OFFLINE", "6", "3"],
+          ["MESSAGE", "7", "HERE"],
+          ["OFFLINE", "8", "4"],
+          ["MESSAGE", "9", "HERE"],
+          ["MESSAGE", "61", "id0 id1 id2 id3 id4 id5 id6"],
+          ["MESSAGE", "62", "HERE"],
+          ["MESSAGE", "121", "ALL"],
+          ["MESSAGE", "122", "HERE"]
+        ]
+      },
+      "expected": [4, 4, 5, 4, 5, 7, 7]
+    },
+    {
+      "case_id": 54,
+      "input": {
+        "numberOfUsers": 7,
+        "events": [
+          ["MESSAGE", "1", "id0 id1 id2"],
+          ["OFFLINE", "10", "0"],
+          ["MESSAGE", "20", "id3 id4 id5"],
+          ["OFFLINE", "30", "1"],
+          ["MESSAGE", "40", "id0 id1"],
+          ["OFFLINE", "50", "2"],
+          ["MESSAGE", "60", "HERE"],
+          ["OFFLINE", "70", "3"],
+          ["MESSAGE", "80", "ALL"],
+          ["OFFLINE", "90", "4"],
+          ["MESSAGE", "100", "id0 id1 id2"],
+          ["OFFLINE", "110", "5"],
+          ["MESSAGE", "120", "HERE"],
+          ["OFFLINE", "130", "6"],
+          ["MESSAGE", "140", "ALL"],
+          ["MESSAGE", "150", "HERE"],
+          ["MESSAGE", "160", "ALL"]
+        ]
+      },
+      "expected": [8, 8, 7, 6, 6, 5, 5]
+    },
+    {
+      "case_id": 55,
+      "input": {
+        "numberOfUsers": 8,
+        "events": [
+          ["MESSAGE", "1", "id0 id1 id2 id3 id4 id5 id6 id7"],
+          ["OFFLINE", "10", "0"],
+          ["MESSAGE", "15", "HERE"],
+          ["OFFLINE", "20", "1"],
+          ["MESSAGE", "25", "HERE"],
+          ["OFFLINE", "30", "2"],
+          ["MESSAGE", "35", "HERE"],
+          ["OFFLINE", "35", "3"],
+          ["MESSAGE", "40", "HERE"],
+          ["OFFLINE", "45", "4"],
+          ["MESSAGE", "50", "HERE"],
+          ["OFFLINE", "55", "5"],
+          ["MESSAGE", "60", "HERE"],
+          ["OFFLINE", "65", "6"],
+          ["MESSAGE", "70", "HERE"],
+          ["OFFLINE", "75", "7"],
+          ["MESSAGE", "80", "HERE"],
+          ["MESSAGE", "85", "ALL"],
+          ["MESSAGE", "90", "id0 id1 id2 id3 id4 id5 id6 id7 id0 id1 id2 id3 id4 id5 id6 id7"],
+          ["MESSAGE", "95", "HERE"],
+          ["MESSAGE", "100", "ALL"]
+        ]
+      },
+      "expected": [8, 8, 8, 8, 9, 10, 11, 12]
+    },
+    {
+      "case_id": 56,
+      "input": {
+        "numberOfUsers": 10,
+        "events": [
+          ["MESSAGE", "1", "id0"],
+          ["MESSAGE", "2", "id1"],
+          ["MESSAGE", "3", "id2"],
+          ["MESSAGE", "4", "id3"],
+          ["MESSAGE", "5", "id4"],
+          ["MESSAGE", "6", "id5"],
+          ["MESSAGE", "7", "id6"],
+          ["MESSAGE", "8", "id7"],
+          ["MESSAGE", "9", "id8"],
+          ["MESSAGE", "10", "id9"],
+          ["OFFLINE", "11", "0"],
+          ["OFFLINE", "21", "1"],
+          ["OFFLINE", "31", "2"],
+          ["OFFLINE", "41", "3"],
+          ["OFFLINE", "51", "4"],
+          ["OFFLINE", "61", "5"],
+          ["OFFLINE", "71", "6"],
+          ["OFFLINE", "81", "7"],
+          ["OFFLINE", "91", "8"],
+          ["OFFLINE", "101", "9"],
+          ["MESSAGE", "110", "HERE"],
+          ["MESSAGE", "120", "ALL"]
+        ]
+      },
+      "expected": [3, 3, 3, 3, 2, 2, 2, 2, 2, 2]
+    },
+    {
+      "case_id": 57,
+      "input": {
+        "numberOfUsers": 6,
+        "events": [
+          ["MESSAGE", "5", "id0 id1 id2"],
+          ["OFFLINE", "10", "0"],
+          ["MESSAGE", "15", "HERE"],
+          ["OFFLINE", "20", "1"],
+          ["MESSAGE", "25", "ALL"],
+          ["OFFLINE", "30", "2"],
+          ["MESSAGE", "35", "HERE"],
+          ["OFFLINE", "40", "3"],
+          ["MESSAGE", "45", "ALL"],
+          ["OFFLINE", "50", "4"],
+          ["MESSAGE", "55", "HERE"],
+          ["OFFLINE", "60", "5"],
+          ["MESSAGE", "65", "ALL"]
+        ]
+      },
+      "expected": [4, 5, 5, 5, 5, 6]
+    },
+    {
+      "case_id": 58,
+      "input": {
+        "numberOfUsers": 5,
+        "events": [
+          ["MESSAGE", "5", "id1 id2"],
+          ["OFFLINE", "10", "0"],
+          ["MESSAGE", "15", "HERE"],
+          ["OFFLINE", "20", "2"],
+          ["MESSAGE", "25", "HERE"],
+          ["OFFLINE", "30", "3"],
+          ["MESSAGE", "35", "HERE"],
+          ["OFFLINE", "40", "4"],
+          ["MESSAGE", "45", "HERE"],
+          ["MESSAGE", "55", "ALL"],
+          ["OFFLINE", "60", "1"],
+          ["MESSAGE", "65", "HERE"],
+          ["MESSAGE", "70", "id1 id2 id3 id4"],
+          ["OFFLINE", "75", "0"],
+          ["MESSAGE", "80", "HERE"],
+          ["MESSAGE", "90", "ALL"]
+        ]
+      },
+      "expected": [2, 8, 6, 5, 6]
+    },
+    {
+      "case_id": 59,
+      "input": {
+        "numberOfUsers": 6,
+        "events": [
+          ["MESSAGE", "5", "id1 id2 id3 id4 id5"],
+          ["OFFLINE", "10", "0"],
+          ["OFFLINE", "10", "1"],
+          ["MESSAGE", "20", "HERE"],
+          ["MESSAGE", "70", "id0 id1"],
+          ["OFFLINE", "80", "2"],
+          ["OFFLINE", "80", "3"],
+          ["MESSAGE", "100", "ALL"]
+        ]
+      },
+      "expected": [2, 3, 3, 3, 3, 3]
+    },
+    {
+      "case_id": 60,
+      "input": {
+        "numberOfUsers": 6,
+        "events": [
+          ["MESSAGE", "5", "id1 id1 id2 id2"],
+          ["OFFLINE", "10", "1"],
+          ["MESSAGE", "15", "HERE"],
+          ["MESSAGE", "20", "id0 id0 id0 id0"],
+          ["OFFLINE", "25", "2"],
+          ["MESSAGE", "30", "HERE"],
+          ["MESSAGE", "35", "id3 id3 id3"],
+          ["OFFLINE", "40", "3"],
+          ["MESSAGE", "45", "HERE"],
+          ["MESSAGE", "50", "ALL"],
+          ["OFFLINE", "55", "4"],
+          ["OFFLINE", "60", "5"],
+          ["MESSAGE", "65", "HERE"],
+          ["MESSAGE", "70", "ALL"]
+        ]
+      },
+      "expected": [10, 4, 5, 7, 5, 5]
+    },
+    {
+      "case_id": 61,
+      "input": {
+        "numberOfUsers": 8,
+        "events": [
+          ["OFFLINE", "15", "0"],
+          ["OFFLINE", "20", "1"],
+          ["OFFLINE", "25", "2"],
+          ["MESSAGE", "30", "HERE"],
+          ["MESSAGE", "35", "ALL"],
+          ["OFFLINE", "40", "3"],
+          ["OFFLINE", "45", "4"],
+          ["MESSAGE", "50", "HERE"],
+          ["OFFLINE", "55", "5"],
+          ["MESSAGE", "60", "ALL"],
+          ["OFFLINE", "65", "6"],
+          ["MESSAGE", "70", "HERE"],
+          ["OFFLINE", "75", "7"],
+          ["MESSAGE", "80", "ALL"]
+        ]
+      },
+      "expected": [3, 3, 3, 4, 4, 5, 5, 6]
+    },
+    {
+      "case_id": 62,
+      "input": {
+        "numberOfUsers": 20,
+        "events": [
+          ["MESSAGE", "5", "id0 id1 id2 id3 id4 id5 id6 id7"],
+          ["OFFLINE", "10", "0"],
+          ["OFFLINE", "15", "1"],
+          ["OFFLINE", "20", "2"],
+          ["OFFLINE", "25", "3"],
+          ["MESSAGE", "30", "HERE"],
+          ["OFFLINE", "35", "4"],
+          ["OFFLINE", "40", "5"],
+          ["OFFLINE", "45", "6"],
+          ["OFFLINE", "50", "7"],
+          ["MESSAGE", "55", "ALL"],
+          ["OFFLINE", "60", "8"],
+          ["OFFLINE", "65", "9"],
+          ["OFFLINE", "70", "10"],
+          ["MESSAGE", "75", "HERE"],
+          ["OFFLINE", "80", "11"],
+          ["OFFLINE", "85", "12"],
+          ["OFFLINE", "90", "13"],
+          ["MESSAGE", "95", "ALL"],
+          ["OFFLINE", "100", "14"],
+          ["MESSAGE", "105", "HERE"],
+          ["OFFLINE", "110", "15"],
+          ["OFFLINE", "115", "16"],
+          ["MESSAGE", "120", "ALL"],
+          ["OFFLINE", "125", "17"],
+          ["MESSAGE", "130", "HERE"],
+          ["OFFLINE", "135", "18"],
+          ["MESSAGE", "140", "ALL"],
+          ["OFFLINE", "145", "19"],
+          ["MESSAGE", "150", "HERE"]
+        ]
+      },
+      "expected": [9, 9, 8, 8, 9, 9, 9, 8, 7, 7, 7, 7, 7, 7, 6, 7, 7, 7, 8, 8]
+    },
+    {
+      "case_id": 63,
+      "input": {
+        "numberOfUsers": 6,
+        "events": [
+          ["OFFLINE", "5", "0"],
+          ["OFFLINE", "10", "1"],
+          ["MESSAGE", "15", "HERE"],
+          ["OFFLINE", "20", "2"],
+          ["MESSAGE", "25", "id0 id1 id2"],
+          ["OFFLINE", "30", "3"],
+          ["MESSAGE", "35", "HERE"],
+          ["OFFLINE", "40", "4"],
+          ["MESSAGE", "45", "id0 id1 id2 id3 id4"],
+          ["OFFLINE", "50", "5"],
+          ["MESSAGE", "55", "ALL"],
+          ["MESSAGE", "60", "HERE"],
+          ["MESSAGE", "65", "id0 id1 id2 id3 id4 id5"]
+        ]
+      },
+      "expected": [4, 4, 5, 4, 5, 4]
+    },
+    {
+      "case_id": 64,
+      "input": {
+        "numberOfUsers": 20,
+        "events": [
+          ["OFFLINE", "5", "0"],
+          ["OFFLINE", "10", "1"],
+          ["OFFLINE", "15", "2"],
+          ["MESSAGE", "20", "HERE"],
+          ["OFFLINE", "25", "3"],
+          ["MESSAGE", "30", "id0 id1 id2 id3"],
+          ["OFFLINE", "35", "4"],
+          ["OFFLINE", "40", "5"],
+          ["MESSAGE", "45", "id0 id1 id2 id3 id4 id5"],
+          ["OFFLINE", "50", "6"],
+          ["MESSAGE", "55", "HERE"],
+          ["OFFLINE", "60", "7"],
+          ["MESSAGE", "65", "ALL"],
+          ["OFFLINE", "70", "8"],
+          ["MESSAGE", "75", "HERE"],
+          ["OFFLINE", "80", "9"],
+          ["MESSAGE", "85", "id0 id1 id2 id3 id4 id5 id6 id7 id8 id9"],
+          ["OFFLINE", "85", "10"],
+          ["MESSAGE", "90", "HERE"],
+          ["OFFLINE", "95", "11"],
+          ["MESSAGE", "100", "id0 id1 id2 id3 id4 id5 id6 id7 id8 id9 id10 id11"],
+          ["OFFLINE", "105", "12"],
+          ["MESSAGE", "110", "ALL"],
+          ["OFFLINE", "115", "13"],
+          ["MESSAGE", "120", "HERE"],
+          ["OFFLINE", "125", "14"],
+          ["MESSAGE", "130", "id0 id1 id2 id3 id4 id5 id6 id7 id8 id9 id10 id11 id12 id13 id14"],
+          ["OFFLINE", "135", "15"],
+          ["MESSAGE", "140", "HERE"],
+          ["OFFLINE", "145", "16"],
+          ["MESSAGE", "150", "id0 id1 id2 id3 id4 id5 id6 id7 id8 id9 id10 id11 id12 id13 id14 id15 id16"],
+          ["OFFLINE", "155", "17"],
+          ["MESSAGE", "160", "ALL"],
+          ["OFFLINE", "165", "18"],
+          ["MESSAGE", "170", "HERE"],
+          ["OFFLINE", "175", "19"],
+          ["MESSAGE", "180", "id0 id1 id2 id3 id4 id5 id6 id7 id8 id9 id10 id11 id12 id13 id14 id15 id16 id17 id18 id19"]
+        ]
+      },
+      "expected": [15, 15, 15, 15, 13, 13, 12, 13, 12, 13, 11, 12, 11, 10, 11, 10, 11, 10, 10, 11]
+    },
+    {
+      "case_id": 65,
+      "input": {
+        "numberOfUsers": 3,
+        "events": [
+          ["MESSAGE", "1", "id0 id1"],
+          ["OFFLINE", "10", "0"],
+          ["MESSAGE", "15", "HERE"],
+          ["MESSAGE", "20", "id0"],
+          ["OFFLINE", "25", "1"],
+          ["MESSAGE", "30", "HERE"],
+          ["MESSAGE", "40", "ALL"],
+          ["OFFLINE", "50", "2"],
+          ["MESSAGE", "60", "HERE"]
+        ]
+      },
+      "expected": [3, 3, 3]
+    },
+    {
+      "case_id": 66,
+      "input": {
+        "numberOfUsers": 4,
+        "events": [
+          ["OFFLINE", "5", "0"],
+          ["MESSAGE", "10", "HERE"],
+          ["OFFLINE", "15", "1"],
+          ["MESSAGE", "20", "HERE"],
+          ["OFFLINE", "25", "2"],
+          ["MESSAGE", "30", "HERE"],
+          ["OFFLINE", "35", "3"],
+          ["MESSAGE", "40", "HERE"],
+          ["MESSAGE", "50", "ALL"],
+          ["MESSAGE", "60", "id0 id1 id2 id3 id0 id1 id2 id3"],
+          ["MESSAGE", "70", "HERE"],
+          ["MESSAGE", "80", "ALL"]
+        ]
+      },
+      "expected": [5, 5, 6, 7]
+    },
+    {
+      "case_id": 67,
+      "input": {
+        "numberOfUsers": 3,
+        "events": [
+          ["MESSAGE", "1", "id0 id1 id2"],
+          ["OFFLINE", "2", "0"],
+          ["OFFLINE", "3", "1"],
+          ["OFFLINE", "4", "2"],
+          ["MESSAGE", "5", "HERE"],
+          ["MESSAGE", "6", "ALL"],
+          ["MESSAGE", "7", "id0 id1 id2"],
+          ["MESSAGE", "8", "HERE"],
+          ["MESSAGE", "9", "ALL"],
+          ["MESSAGE", "10", "id0 id1 id2"],
+          ["MESSAGE", "11", "HERE"],
+          ["MESSAGE", "12", "ALL"],
+          ["MESSAGE", "13", "id0 id1 id2"],
+          ["MESSAGE", "14", "HERE"],
+          ["MESSAGE", "15", "ALL"]
+        ]
+      },
+      "expected": [8, 8, 8]
+    },
+    {
+      "case_id": 68,
+      "input": {
+        "numberOfUsers": 15,
+        "events": [
+          ["MESSAGE", "5", "id0 id1 id2 id3 id4"],
+          ["OFFLINE", "10", "0"],
+          ["OFFLINE", "15", "1"],
+          ["OFFLINE", "20", "2"],
+          ["MESSAGE", "25", "HERE"],
+          ["OFFLINE", "30", "3"],
+          ["OFFLINE", "35", "4"],
+          ["MESSAGE", "40", "ALL"],
+          ["OFFLINE", "45", "5"],
+          ["OFFLINE", "50", "6"],
+          ["MESSAGE", "55", "HERE"],
+          ["OFFLINE", "60", "7"],
+          ["OFFLINE", "65", "8"],
+          ["MESSAGE", "70", "ALL"],
+          ["OFFLINE", "75", "9"],
+          ["OFFLINE", "80", "10"],
+          ["MESSAGE", "85", "HERE"],
+          ["OFFLINE", "90", "11"],
+          ["MESSAGE", "95", "ALL"],
+          ["OFFLINE", "100", "12"],
+          ["MESSAGE", "105", "HERE"],
+          ["OFFLINE", "110", "13"],
+          ["MESSAGE", "115", "ALL"]
+        ]
+      },
+      "expected": [7, 7, 7, 7, 7, 6, 5, 6, 6, 6, 6, 7, 7, 8, 8]
+    },
+    {
+      "case_id": 69,
+      "input": {
+        "numberOfUsers": 5,
+        "events": [
+          ["MESSAGE", "1", "id0 id0 id1 id1 id2 id2 id3 id3 id4 id4"],
+          ["OFFLINE", "2", "0"],
+          ["MESSAGE", "3", "HERE"],
+          ["OFFLINE", "4", "1"],
+          ["MESSAGE", "5", "ALL"],
+          ["OFFLINE", "6", "2"],
+          ["MESSAGE", "10", "id0 id2"],
+          ["OFFLINE", "11", "3"],
+          ["MESSAGE", "15", "HERE"],
+          ["OFFLINE", "16", "4"],
+          ["MESSAGE", "20", "ALL"],
+          ["MESSAGE", "25", "id0 id1 id2 id3 id4 id0 id1 id2 id3 id4"],
+          ["OFFLINE", "26", "0"],
+          ["MESSAGE", "30", "HERE"],
+          ["OFFLINE", "31", "1"],
+          ["MESSAGE", "35", "ALL"],
+          ["OFFLINE", "36", "2"],
+          ["MESSAGE", "40", "id0 id1 id2 id3 id4 id0 id1 id2 id3 id4"],
+          ["OFFLINE", "41", "3"],
+          ["MESSAGE", "45", "HERE"],
+          ["OFFLINE", "46", "4"],
+          ["MESSAGE", "50", "ALL"]
+        ]
+      },
+      "expected": [11, 11, 12, 11, 12]
+    },
+    {
+      "case_id": 70,
+      "input": {
+        "numberOfUsers": 10,
+        "events": [
+          ["MESSAGE", "5", "id0 id1 id2"],
+          ["OFFLINE", "10", "0"],
+          ["MESSAGE", "15", "HERE"],
+          ["OFFLINE", "20", "1"],
+          ["MESSAGE", "25", "ALL"],
+          ["MESSAGE", "30", "id3 id4 id5"],
+          ["OFFLINE", "35", "2"],
+          ["MESSAGE", "40", "HERE"],
+          ["OFFLINE", "45", "3"],
+          ["MESSAGE", "50", "ALL"],
+          ["OFFLINE", "55", "4"],
+          ["MESSAGE", "60", "HERE"],
+          ["OFFLINE", "65", "5"],
+          ["MESSAGE", "70", "ALL"]
+        ]
+      },
+      "expected": [4, 5, 5, 6, 6, 7, 6, 6, 6, 6]
+    }
+  ]
+}

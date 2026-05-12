@@ -1,0 +1,725 @@
+{
+  "schema_version": 1,
+  "problem_id": 936,
+  "title": "Stamping The Sequence",
+  "method": "movesToStamp",
+  "signature": {
+    "params": [
+      {
+        "name": "stamp",
+        "type": "STRING"
+      },
+      {
+        "name": "target",
+        "type": "STRING"
+      }
+    ],
+    "returns": "INT32_ARRAY"
+  },
+  "cases": [
+    {
+      "case_id": 1,
+      "input": {
+        "stamp": "world",
+        "target": "worldworldworld"
+      },
+      "expected": [9, 8, 7, 6, 4, 3, 2, 1, 10, 5, 0]
+    },
+    {
+      "case_id": 2,
+      "input": {
+        "stamp": "abc",
+        "target": "abcababcbcababc"
+      },
+      "expected": [11, 9, 8, 6, 4, 2, 1, 10, 7, 3, 12, 5, 0]
+    },
+    {
+      "case_id": 3,
+      "input": {
+        "stamp": "abcde",
+        "target": "abcdeabcde"
+      },
+      "expected": [4, 3, 2, 1, 5, 0]
+    },
+    {
+      "case_id": 4,
+      "input": {
+        "stamp": "abc",
+        "target": "abc????"
+      },
+      "expected": []
+    },
+    {
+      "case_id": 5,
+      "input": {
+        "stamp": "a",
+        "target": "aaaaaaaa"
+      },
+      "expected": [7, 6, 5, 4, 3, 2, 1, 0]
+    },
+    {
+      "case_id": 6,
+      "input": {
+        "stamp": "abcde",
+        "target": "abcdeabcdeabcde"
+      },
+      "expected": [9, 8, 7, 6, 4, 3, 2, 1, 10, 5, 0]
+    },
+    {
+      "case_id": 7,
+      "input": {
+        "stamp": "abc",
+        "target": "????abc???"
+      },
+      "expected": []
+    },
+    {
+      "case_id": 8,
+      "input": {
+        "stamp": "abc",
+        "target": "abcabc????????"
+      },
+      "expected": []
+    },
+    {
+      "case_id": 9,
+      "input": {
+        "stamp": "abc",
+        "target": "?????"
+      },
+      "expected": []
+    },
+    {
+      "case_id": 10,
+      "input": {
+        "stamp": "abc",
+        "target": "ab?bc"
+      },
+      "expected": []
+    },
+    {
+      "case_id": 11,
+      "input": {
+        "stamp": "hello",
+        "target": "hellohellohello"
+      },
+      "expected": [9, 8, 7, 6, 4, 3, 2, 1, 10, 5, 0]
+    },
+    {
+      "case_id": 12,
+      "input": {
+        "stamp": "abc",
+        "target": "abc????abc"
+      },
+      "expected": []
+    },
+    {
+      "case_id": 13,
+      "input": {
+        "stamp": "ab",
+        "target": "abababab"
+      },
+      "expected": [5, 3, 1, 6, 4, 2, 0]
+    },
+    {
+      "case_id": 14,
+      "input": {
+        "stamp": "abcdef",
+        "target": "abcdefabcdef"
+      },
+      "expected": [5, 4, 3, 2, 1, 6, 0]
+    },
+    {
+      "case_id": 15,
+      "input": {
+        "stamp": "a",
+        "target": "aaaaaaaaa"
+      },
+      "expected": [8, 7, 6, 5, 4, 3, 2, 1, 0]
+    },
+    {
+      "case_id": 16,
+      "input": {
+        "stamp": "abc",
+        "target": "abcabcabc"
+      },
+      "expected": [5, 4, 2, 1, 6, 3, 0]
+    },
+    {
+      "case_id": 17,
+      "input": {
+        "stamp": "abc",
+        "target": "abc????????abc"
+      },
+      "expected": []
+    },
+    {
+      "case_id": 18,
+      "input": {
+        "stamp": "abc",
+        "target": "abcabc"
+      },
+      "expected": [2, 1, 3, 0]
+    },
+    {
+      "case_id": 19,
+      "input": {
+        "stamp": "a",
+        "target": "aaaaaaaaaa"
+      },
+      "expected": [9, 8, 7, 6, 5, 4, 3, 2, 1, 0]
+    },
+    {
+      "case_id": 20,
+      "input": {
+        "stamp": "test",
+        "target": "testtesttest"
+      },
+      "expected": [7, 6, 5, 3, 2, 1, 8, 4, 0]
+    },
+    {
+      "case_id": 21,
+      "input": {
+        "stamp": "abcd",
+        "target": "abcdabcd"
+      },
+      "expected": [3, 2, 1, 4, 0]
+    },
+    {
+      "case_id": 22,
+      "input": {
+        "stamp": "abca",
+        "target": "aabcaca"
+      },
+      "expected": [2, 3, 0, 1]
+    },
+    {
+      "case_id": 23,
+      "input": {
+        "stamp": "abc",
+        "target": "????abc"
+      },
+      "expected": []
+    },
+    {
+      "case_id": 24,
+      "input": {
+        "stamp": "abc",
+        "target": "??abc??"
+      },
+      "expected": []
+    },
+    {
+      "case_id": 25,
+      "input": {
+        "stamp": "abc",
+        "target": "ababc"
+      },
+      "expected": [1, 0, 2]
+    },
+    {
+      "case_id": 26,
+      "input": {
+        "stamp": "xyz",
+        "target": "xyzxyzxyz"
+      },
+      "expected": [5, 4, 2, 1, 6, 3, 0]
+    },
+    {
+      "case_id": 27,
+      "input": {
+        "stamp": "abc",
+        "target": "????????abcabc"
+      },
+      "expected": []
+    },
+    {
+      "case_id": 28,
+      "input": {
+        "stamp": "abc",
+        "target": "abcabcabcabcabc"
+      },
+      "expected": [11, 10, 8, 7, 5, 4, 2, 1, 12, 9, 6, 3, 0]
+    },
+    {
+      "case_id": 29,
+      "input": {
+        "stamp": "abcde",
+        "target": "abcde"
+      },
+      "expected": [0]
+    },
+    {
+      "case_id": 30,
+      "input": {
+        "stamp": "abc",
+        "target": "ababcbababcbababc"
+      },
+      "expected": [11, 9, 5, 3, 13, 10, 7, 4, 1, 12, 6, 0, 14, 8, 2]
+    },
+    {
+      "case_id": 31,
+      "input": {
+        "stamp": "mnopqr",
+        "target": "mnopqrmnopqrmnopqrmnopqrmnopqr"
+      },
+      "expected": [23, 22, 21, 20, 19, 17, 16, 15, 14, 13, 11, 10, 9, 8, 7, 5, 4, 3, 2, 1, 24, 18, 12, 6, 0]
+    },
+    {
+      "case_id": 32,
+      "input": {
+        "stamp": "efgh",
+        "target": "efghefghefghefghefghefghefgh"
+      },
+      "expected": [23, 22, 21, 19, 18, 17, 15, 14, 13, 11, 10, 9, 7, 6, 5, 3, 2, 1, 24, 20, 16, 12, 8, 4, 0]
+    },
+    {
+      "case_id": 33,
+      "input": {
+        "stamp": "aabbcc",
+        "target": "aabbccaaabbccaaabbcc"
+      },
+      "expected": [11, 10, 9, 8, 4, 3, 2, 1, 13, 12, 6, 5, 14, 7, 0]
+    },
+    {
+      "case_id": 34,
+      "input": {
+        "stamp": "abcd",
+        "target": "ddddddddddddddddddddddddddddabcd"
+      },
+      "expected": []
+    },
+    {
+      "case_id": 35,
+      "input": {
+        "stamp": "xyz",
+        "target": "xyxyxyxyxyxyxyxyxyxy"
+      },
+      "expected": []
+    },
+    {
+      "case_id": 36,
+      "input": {
+        "stamp": "zzz",
+        "target": "zzzzzzzzzzzzzzzzzzzz"
+      },
+      "expected": [17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0]
+    },
+    {
+      "case_id": 37,
+      "input": {
+        "stamp": "abcdef",
+        "target": "abcdefabcdefabcdefabcdefabcdefabcdef"
+      },
+      "expected": [29, 28, 27, 26, 25, 23, 22, 21, 20, 19, 17, 16, 15, 14, 13, 11, 10, 9, 8, 7, 5, 4, 3, 2, 1, 30, 24, 18, 12, 6, 0]
+    },
+    {
+      "case_id": 38,
+      "input": {
+        "stamp": "xyz",
+        "target": "xyxyxyxyxyxyxyxyxyxyxyx"
+      },
+      "expected": []
+    },
+    {
+      "case_id": 39,
+      "input": {
+        "stamp": "abcabc",
+        "target": "abcabcabcabcabcabcabcd"
+      },
+      "expected": []
+    },
+    {
+      "case_id": 40,
+      "input": {
+        "stamp": "aabbcc",
+        "target": "aabbccaaabbccaaabbccaaabbcc"
+      },
+      "expected": [18, 17, 16, 15, 11, 10, 9, 8, 4, 3, 2, 1, 20, 19, 13, 12, 6, 5, 21, 14, 7, 0]
+    },
+    {
+      "case_id": 41,
+      "input": {
+        "stamp": "xyz",
+        "target": "xyzxyzxyzxyzxyz"
+      },
+      "expected": [11, 10, 8, 7, 5, 4, 2, 1, 12, 9, 6, 3, 0]
+    },
+    {
+      "case_id": 42,
+      "input": {
+        "stamp": "abcd",
+        "target": "abcdabcdeabcdabcd"
+      },
+      "expected": []
+    },
+    {
+      "case_id": 43,
+      "input": {
+        "stamp": "aaaa",
+        "target": "aaaaaaaaaaaaaaaa"
+      },
+      "expected": [12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0]
+    },
+    {
+      "case_id": 44,
+      "input": {
+        "stamp": "abcde",
+        "target": "abcdeabcdeabcdeabcdef"
+      },
+      "expected": []
+    },
+    {
+      "case_id": 45,
+      "input": {
+        "stamp": "abc",
+        "target": "xyzabcxyzabcxyz"
+      },
+      "expected": []
+    },
+    {
+      "case_id": 46,
+      "input": {
+        "stamp": "abcd",
+        "target": "abcdabcdabcdabcd"
+      },
+      "expected": [11, 10, 9, 7, 6, 5, 3, 2, 1, 12, 8, 4, 0]
+    },
+    {
+      "case_id": 47,
+      "input": {
+        "stamp": "xyz",
+        "target": "xyzxyzxyzxyz"
+      },
+      "expected": [8, 7, 5, 4, 2, 1, 9, 6, 3, 0]
+    },
+    {
+      "case_id": 48,
+      "input": {
+        "stamp": "qrstuv",
+        "target": "qrstuvqrstuvqrstuvqrstuvqrstuvqrstuvqrstuv"
+      },
+      "expected": [35, 34, 33, 32, 31, 29, 28, 27, 26, 25, 23, 22, 21, 20, 19, 17, 16, 15, 14, 13, 11, 10, 9, 8, 7, 5, 4, 3, 2, 1, 36, 30, 24, 18, 12, 6, 0]
+    },
+    {
+      "case_id": 49,
+      "input": {
+        "stamp": "aaa",
+        "target": "aaaaaaaaaaaaaaaaaaaa"
+      },
+      "expected": [17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0]
+    },
+    {
+      "case_id": 50,
+      "input": {
+        "stamp": "a",
+        "target": "aaaaaaaaaaaaaaaaaaaa"
+      },
+      "expected": [19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0]
+    },
+    {
+      "case_id": 51,
+      "input": {
+        "stamp": "xyzabc",
+        "target": "xyzabcxyzabcxyzabcxyzabc"
+      },
+      "expected": [17, 16, 15, 14, 13, 11, 10, 9, 8, 7, 5, 4, 3, 2, 1, 18, 12, 6, 0]
+    },
+    {
+      "case_id": 52,
+      "input": {
+        "stamp": "abcabc",
+        "target": "abcabcabcabcabcabcabc"
+      },
+      "expected": [14, 13, 11, 10, 8, 7, 5, 4, 2, 1, 15, 12, 9, 6, 3, 0]
+    },
+    {
+      "case_id": 53,
+      "input": {
+        "stamp": "abcde",
+        "target": "edcbaedcbaedcba"
+      },
+      "expected": []
+    },
+    {
+      "case_id": 54,
+      "input": {
+        "stamp": "abcabc",
+        "target": "abcabcabcabcabcabcabcabc"
+      },
+      "expected": [17, 16, 14, 13, 11, 10, 8, 7, 5, 4, 2, 1, 18, 15, 12, 9, 6, 3, 0]
+    },
+    {
+      "case_id": 55,
+      "input": {
+        "stamp": "xyz",
+        "target": "xyzxyzxyzxyzxyzxyz"
+      },
+      "expected": [14, 13, 11, 10, 8, 7, 5, 4, 2, 1, 15, 12, 9, 6, 3, 0]
+    },
+    {
+      "case_id": 56,
+      "input": {
+        "stamp": "qrst",
+        "target": "qrstqrstqrstqrstqrstqrstqrstqrst"
+      },
+      "expected": [27, 26, 25, 23, 22, 21, 19, 18, 17, 15, 14, 13, 11, 10, 9, 7, 6, 5, 3, 2, 1, 28, 24, 20, 16, 12, 8, 4, 0]
+    },
+    {
+      "case_id": 57,
+      "input": {
+        "stamp": "mnop",
+        "target": "mnopmnopmnopmnopmnopmnopmnopmnop"
+      },
+      "expected": [27, 26, 25, 23, 22, 21, 19, 18, 17, 15, 14, 13, 11, 10, 9, 7, 6, 5, 3, 2, 1, 28, 24, 20, 16, 12, 8, 4, 0]
+    },
+    {
+      "case_id": 58,
+      "input": {
+        "stamp": "abc",
+        "target": "abcabcabcabcabcabc"
+      },
+      "expected": [14, 13, 11, 10, 8, 7, 5, 4, 2, 1, 15, 12, 9, 6, 3, 0]
+    },
+    {
+      "case_id": 59,
+      "input": {
+        "stamp": "abac",
+        "target": "abacabacabacabacabac"
+      },
+      "expected": [15, 14, 13, 11, 10, 9, 7, 6, 5, 3, 2, 1, 16, 12, 8, 4, 0]
+    },
+    {
+      "case_id": 60,
+      "input": {
+        "stamp": "abc",
+        "target": "aaaaaaaaaaabcabcaaaaaaaaaa"
+      },
+      "expected": []
+    },
+    {
+      "case_id": 61,
+      "input": {
+        "stamp": "ab",
+        "target": "abababababababababab"
+      },
+      "expected": [17, 15, 13, 11, 9, 7, 5, 3, 1, 18, 16, 14, 12, 10, 8, 6, 4, 2, 0]
+    },
+    {
+      "case_id": 62,
+      "input": {
+        "stamp": "stamp",
+        "target": "stampstampstamp"
+      },
+      "expected": [9, 8, 7, 6, 4, 3, 2, 1, 10, 5, 0]
+    },
+    {
+      "case_id": 63,
+      "input": {
+        "stamp": "abcdefg",
+        "target": "abcdefgabcdefgabcdefgabcdefg"
+      },
+      "expected": [20, 19, 18, 17, 16, 15, 13, 12, 11, 10, 9, 8, 6, 5, 4, 3, 2, 1, 21, 14, 7, 0]
+    },
+    {
+      "case_id": 64,
+      "input": {
+        "stamp": "abcde",
+        "target": "abcdeabcdeabcdeabcdeabc"
+      },
+      "expected": []
+    },
+    {
+      "case_id": 65,
+      "input": {
+        "stamp": "abab",
+        "target": "abababababababab"
+      },
+      "expected": [11, 9, 7, 5, 3, 1, 12, 10, 8, 6, 4, 2, 0]
+    },
+    {
+      "case_id": 66,
+      "input": {
+        "stamp": "ab",
+        "target": "abaabaabaab"
+      },
+      "expected": [7, 4, 1, 8, 5, 2, 9, 6, 3, 0]
+    },
+    {
+      "case_id": 67,
+      "input": {
+        "stamp": "hello",
+        "target": "hellohellohellohello"
+      },
+      "expected": [14, 13, 12, 11, 9, 8, 7, 6, 4, 3, 2, 1, 15, 10, 5, 0]
+    },
+    {
+      "case_id": 68,
+      "input": {
+        "stamp": "mnopqr",
+        "target": "mnopqrnopqrmonpqrnonqrmpnoqrmnoprqmnopqr"
+      },
+      "expected": []
+    },
+    {
+      "case_id": 69,
+      "input": {
+        "stamp": "abc",
+        "target": "ababababababababc"
+      },
+      "expected": [1, 3, 0, 5, 2, 7, 4, 9, 6, 11, 8, 13, 10, 12, 14]
+    },
+    {
+      "case_id": 70,
+      "input": {
+        "stamp": "xyzxyz",
+        "target": "xyzxyzxyzxyzxyzxyzxyzxyzxyzxyzxyzxyz"
+      },
+      "expected": [29, 28, 26, 25, 23, 22, 20, 19, 17, 16, 14, 13, 11, 10, 8, 7, 5, 4, 2, 1, 30, 27, 24, 21, 18, 15, 12, 9, 6, 3, 0]
+    },
+    {
+      "case_id": 71,
+      "input": {
+        "stamp": "hello",
+        "target": "hellohellohellohelloh"
+      },
+      "expected": []
+    },
+    {
+      "case_id": 72,
+      "input": {
+        "stamp": "abcd",
+        "target": "abcabcabcabc"
+      },
+      "expected": []
+    },
+    {
+      "case_id": 73,
+      "input": {
+        "stamp": "abcd",
+        "target": "abcdeabcd"
+      },
+      "expected": []
+    },
+    {
+      "case_id": 74,
+      "input": {
+        "stamp": "mnopqr",
+        "target": "mnopqrmnopqrmnopqr"
+      },
+      "expected": [11, 10, 9, 8, 7, 5, 4, 3, 2, 1, 12, 6, 0]
+    },
+    {
+      "case_id": 75,
+      "input": {
+        "stamp": "aabbcc",
+        "target": "aabbccaaabbccaaabbccabc"
+      },
+      "expected": []
+    },
+    {
+      "case_id": 76,
+      "input": {
+        "stamp": "abcdef",
+        "target": "fedcbafedcbafedcba"
+      },
+      "expected": []
+    },
+    {
+      "case_id": 77,
+      "input": {
+        "stamp": "abcdef",
+        "target": "abcdefabcdefabcdefabcdef"
+      },
+      "expected": [17, 16, 15, 14, 13, 11, 10, 9, 8, 7, 5, 4, 3, 2, 1, 18, 12, 6, 0]
+    },
+    {
+      "case_id": 78,
+      "input": {
+        "stamp": "stamp",
+        "target": "stampstampstampstam"
+      },
+      "expected": []
+    },
+    {
+      "case_id": 79,
+      "input": {
+        "stamp": "abcdefg",
+        "target": "abcdefgabcdefgabcdefgabcdefgabcdefgabcdefg"
+      },
+      "expected": [34, 33, 32, 31, 30, 29, 27, 26, 25, 24, 23, 22, 20, 19, 18, 17, 16, 15, 13, 12, 11, 10, 9, 8, 6, 5, 4, 3, 2, 1, 35, 28, 21, 14, 7, 0]
+    },
+    {
+      "case_id": 80,
+      "input": {
+        "stamp": "abcd",
+        "target": "abcdabcdabcdabcdabcd"
+      },
+      "expected": [15, 14, 13, 11, 10, 9, 7, 6, 5, 3, 2, 1, 16, 12, 8, 4, 0]
+    },
+    {
+      "case_id": 81,
+      "input": {
+        "stamp": "abcd",
+        "target": "abcdabcabcd"
+      },
+      "expected": [6, 5, 3, 2, 1, 4, 7, 0]
+    },
+    {
+      "case_id": 82,
+      "input": {
+        "stamp": "xyzyx",
+        "target": "xyzyxyzyxyzyxyzyxyzyxyzyxyzyxyzyxyzyxyzyxyzyxyzyxyzyxyzyxyzyxyzyxyzyxyzyx"
+      },
+      "expected": [67, 66, 65, 63, 62, 61, 59, 58, 57, 55, 54, 53, 51, 50, 49, 47, 46, 45, 43, 42, 41, 39, 38, 37, 35, 34, 33, 31, 30, 29, 27, 26, 25, 23, 22, 21, 19, 18, 17, 15, 14, 13, 11, 10, 9, 7, 6, 5, 3, 2, 1, 68, 64, 60, 56, 52, 48, 44, 40, 36, 32, 28, 24, 20, 16, 12, 8, 4, 0]
+    },
+    {
+      "case_id": 83,
+      "input": {
+        "stamp": "ab",
+        "target": "ababababababababababh"
+      },
+      "expected": []
+    },
+    {
+      "case_id": 84,
+      "input": {
+        "stamp": "abcde",
+        "target": "abcdeabcdeabcdeabcde"
+      },
+      "expected": [14, 13, 12, 11, 9, 8, 7, 6, 4, 3, 2, 1, 15, 10, 5, 0]
+    },
+    {
+      "case_id": 85,
+      "input": {
+        "stamp": "abcd",
+        "target": "dabcdabc"
+      },
+      "expected": []
+    },
+    {
+      "case_id": 86,
+      "input": {
+        "stamp": "aabbcc",
+        "target": "aabbccaabbccaaabbccaaabbccaaabbccaaabbcc"
+      },
+      "expected": [31, 30, 29, 28, 24, 23, 22, 21, 17, 16, 15, 14, 10, 9, 8, 7, 33, 32, 26, 25, 19, 18, 12, 11, 5, 4, 3, 2, 1, 34, 27, 20, 13, 6, 0]
+    },
+    {
+      "case_id": 87,
+      "input": {
+        "stamp": "aabbcc",
+        "target": "aabbccaabbccaabbcc"
+      },
+      "expected": [11, 10, 9, 8, 7, 5, 4, 3, 2, 1, 12, 6, 0]
+    },
+    {
+      "case_id": 88,
+      "input": {
+        "stamp": "abcdef",
+        "target": "fedcbafedcbafedcbafedcbafedcbafedcbafedcba"
+      },
+      "expected": []
+    }
+  ]
+}

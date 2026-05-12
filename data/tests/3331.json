@@ -1,0 +1,829 @@
+{
+  "schema_version": 1,
+  "problem_id": 3331,
+  "title": "Find Subtree Sizes After Changes",
+  "method": "findSubtreeSizes",
+  "signature": {
+    "params": [
+      {
+        "name": "parent",
+        "type": "INT32_ARRAY"
+      },
+      {
+        "name": "s",
+        "type": "STRING"
+      }
+    ],
+    "returns": "INT32_ARRAY"
+  },
+  "cases": [
+    {
+      "case_id": 1,
+      "input": {
+        "parent": [-1, 0, 1, 2, 3, 4],
+        "s": "aaaaa"
+      },
+      "expected": [5, 4, 3, 2, 1]
+    },
+    {
+      "case_id": 2,
+      "input": {
+        "parent": [-1, 0, 0, 0, 0],
+        "s": "abcde"
+      },
+      "expected": [5, 1, 1, 1, 1]
+    },
+    {
+      "case_id": 3,
+      "input": {
+        "parent": [-1, 0, 4, 0, 1],
+        "s": "abbba"
+      },
+      "expected": [5, 2, 1, 1, 1]
+    },
+    {
+      "case_id": 4,
+      "input": {
+        "parent": [-1, 0, 1, 2, 3, 0, 2],
+        "s": "abacaba"
+      },
+      "expected": [7, 1, 4, 1, 1, 1, 1]
+    },
+    {
+      "case_id": 5,
+      "input": {
+        "parent": [-1, 0, 0, 1, 1, 1],
+        "s": "abaabc"
+      },
+      "expected": [6, 3, 1, 1, 1, 1]
+    },
+    {
+      "case_id": 6,
+      "input": {
+        "parent": [-1, 0, 1, 1, 2, 2, 3, 3, 4, 4],
+        "s": "aabbaabbaa"
+      },
+      "expected": [10, 9, 1, 3, 3, 1, 1, 1, 1, 1]
+    },
+    {
+      "case_id": 7,
+      "input": {
+        "parent": [-1, 0, 1, 2, 3],
+        "s": "aaaaa"
+      },
+      "expected": [5, 4, 3, 2, 1]
+    },
+    {
+      "case_id": 8,
+      "input": {
+        "parent": [-1, 0, 1, 2, 3, 4],
+        "s": "abcde"
+      },
+      "expected": [5, 4, 3, 2, 1]
+    },
+    {
+      "case_id": 9,
+      "input": {
+        "parent": [-1, 0, 0, 2, 2],
+        "s": "aaaba"
+      },
+      "expected": [5, 1, 3, 1, 1]
+    },
+    {
+      "case_id": 10,
+      "input": {
+        "parent": [-1, 0, 0, 0, 0, 0],
+        "s": "abcabc"
+      },
+      "expected": [6, 1, 1, 1, 1, 1]
+    },
+    {
+      "case_id": 11,
+      "input": {
+        "parent": [-1, 0, 0, 2, 2],
+        "s": "aaaaa"
+      },
+      "expected": [5, 1, 3, 1, 1]
+    },
+    {
+      "case_id": 12,
+      "input": {
+        "parent": [-1, 0, 0, 2, 2],
+        "s": "abcde"
+      },
+      "expected": [5, 1, 3, 1, 1]
+    },
+    {
+      "case_id": 13,
+      "input": {
+        "parent": [-1, 0, 0, 0],
+        "s": "aaaa"
+      },
+      "expected": [4, 1, 1, 1]
+    },
+    {
+      "case_id": 14,
+      "input": {
+        "parent": [-1, 0, 1, 2, 3, 4, 5],
+        "s": "aaaaaaa"
+      },
+      "expected": [7, 6, 5, 4, 3, 2, 1]
+    },
+    {
+      "case_id": 15,
+      "input": {
+        "parent": [-1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 0, 0, 1, 1, 2, 2, 3, 3, 4, 4],
+        "s": "abcabcabcabcabcabcabcabcabcabc"
+      },
+      "expected": [30, 19, 9, 7, 6, 6, 5, 5, 5, 4, 4, 4, 3, 3, 3, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+    },
+    {
+      "case_id": 16,
+      "input": {
+        "parent": [-1, 0, 0, 1, 1, 1, 2, 2, 2, 3, 3, 3, 4, 4, 4],
+        "s": "abcdefabcdef"
+      },
+      "expected": [12, 7, 3, 4, 1, 1, 1, 1, 1, 1, 1, 1]
+    },
+    {
+      "case_id": 17,
+      "input": {
+        "parent": [-1, 0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8],
+        "s": "aaaaaaaaaaaaaaaa"
+      },
+      "expected": [16, 8, 7, 4, 3, 3, 3, 2, 1, 1, 1, 1, 1, 1, 1, 1]
+    },
+    {
+      "case_id": 18,
+      "input": {
+        "parent": [-1, 0, 1, 2, 3, 2, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8, 9, 9, 10, 10, 11, 11, 12, 12, 13, 13, 14, 14, 15, 15, 16, 16, 17, 17],
+        "s": "abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz"
+      },
+      "expected": "Error: list index out of range"
+    },
+    {
+      "case_id": 19,
+      "input": {
+        "parent": [-1, 0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8, 9, 9, 10, 10, 11, 11, 12, 12, 13, 13],
+        "s": "abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz"
+      },
+      "expected": "Error: list index out of range"
+    },
+    {
+      "case_id": 20,
+      "input": {
+        "parent": [-1, 0, 0, 1, 1, 1, 2, 2, 2, 3, 3, 3, 4, 4, 4, 5, 5, 5, 6, 6, 6, 7, 7, 7, 8, 8, 8, 9, 9, 9, 10, 10, 10],
+        "s": "aababababaabababababaababababaababababaababababaababababa"
+      },
+      "expected": "Error: list index out of range"
+    },
+    {
+      "case_id": 21,
+      "input": {
+        "parent": [-1, 0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6],
+        "s": "abacabadabacabad"
+      },
+      "expected": "Error: list index out of range"
+    },
+    {
+      "case_id": 22,
+      "input": {
+        "parent": [-1, 0, 0, 0, 0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8, 9, 9, 10, 10, 11, 11, 12, 12, 13, 13, 14, 14, 15, 15],
+        "s": "ababababababababababababababababababababababab"
+      },
+      "expected": "Error: list index out of range"
+    },
+    {
+      "case_id": 23,
+      "input": {
+        "parent": [-1, 0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8, 9, 9],
+        "s": "abcdefghijabcdefghij"
+      },
+      "expected": [20, 18, 9, 7, 7, 1, 2, 3, 3, 3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+    },
+    {
+      "case_id": 24,
+      "input": {
+        "parent": [-1, 0, 1, 0, 2, 3, 3, 2, 4, 5, 6, 7, 8],
+        "s": "aabbccddeee"
+      },
+      "expected": [11, 5, 4, 5, 2, 2, 2, 1, 1, 1, 1]
+    },
+    {
+      "case_id": 25,
+      "input": {
+        "parent": [-1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49],
+        "s": "abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz"
+      },
+      "expected": "Error: list index out of range"
+    },
+    {
+      "case_id": 26,
+      "input": {
+        "parent": [-1, 0, 0, 1, 1, 1, 2, 2, 2, 3, 3, 3],
+        "s": "aabaaaabbb"
+      },
+      "expected": [10, 5, 3, 2, 1, 1, 1, 1, 1, 1]
+    },
+    {
+      "case_id": 27,
+      "input": {
+        "parent": [-1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14],
+        "s": "aabababababababab"
+      },
+      "expected": "Error: list index out of range"
+    },
+    {
+      "case_id": 28,
+      "input": {
+        "parent": [-1, 0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8, 9, 9, 10, 10, 11, 11, 12, 12, 13, 13, 14, 14, 15, 15, 16, 16, 17, 17, 18, 18, 19, 19, 20, 20, 21, 21, 22, 22, 23, 23, 24, 24],
+        "s": "abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz"
+      },
+      "expected": "Error: list index out of range"
+    },
+    {
+      "case_id": 29,
+      "input": {
+        "parent": [-1, 0, 1, 2, 2, 1, 0],
+        "s": "abacaba"
+      },
+      "expected": [7, 2, 3, 1, 1, 1, 1]
+    },
+    {
+      "case_id": 30,
+      "input": {
+        "parent": [-1, 0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8, 9, 9],
+        "s": "abcdefghijklmnopqrst"
+      },
+      "expected": [20, 12, 7, 7, 4, 3, 3, 3, 3, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+    },
+    {
+      "case_id": 31,
+      "input": {
+        "parent": [-1, 0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8, 9, 9, 10, 10, 11, 11, 12, 12, 13, 13, 14, 14, 15, 15, 16, 16],
+        "s": "abacabadabeabacabadabeabacabadabe"
+      },
+      "expected": [33, 7, 15, 2, 5, 4, 7, 1, 3, 2, 2, 2, 2, 3, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+    },
+    {
+      "case_id": 32,
+      "input": {
+        "parent": [-1, 0, 1, 2, 1, 4, 3, 3, 2, 8],
+        "s": "abacabadab"
+      },
+      "expected": [10, 3, 5, 2, 1, 1, 1, 1, 1, 1]
+    },
+    {
+      "case_id": 33,
+      "input": {
+        "parent": [-1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39],
+        "s": "abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz"
+      },
+      "expected": "Error: list index out of range"
+    },
+    {
+      "case_id": 34,
+      "input": {
+        "parent": [-1, 0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5],
+        "s": "aaaaaaaaaaa"
+      },
+      "expected": [11, 7, 3, 3, 3, 1, 1, 1, 1, 1, 1]
+    },
+    {
+      "case_id": 35,
+      "input": {
+        "parent": [-1, 0, 1, 2, 3, 2, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8, 9, 9, 10, 10, 11, 11, 12, 12, 13, 13, 14, 14, 15, 15, 16, 16, 17, 17],
+        "s": "aababababababababababababababababa"
+      },
+      "expected": [34, 33, 16, 11, 8, 5, 4, 4, 4, 3, 2, 2, 2, 2, 2, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+    },
+    {
+      "case_id": 36,
+      "input": {
+        "parent": [-1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19],
+        "s": "abcdefghijklmnopqrstuvwxyz"
+      },
+      "expected": "Error: list index out of range"
+    },
+    {
+      "case_id": 37,
+      "input": {
+        "parent": [-1, 0, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23],
+        "s": "abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz"
+      },
+      "expected": "Error: list index out of range"
+    },
+    {
+      "case_id": 38,
+      "input": {
+        "parent": [-1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
+        "s": "abcdefghijabcdefghij"
+      },
+      "expected": [20, 18, 16, 14, 12, 10, 8, 6, 4, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+    },
+    {
+      "case_id": 39,
+      "input": {
+        "parent": [-1, 0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8, 9, 9],
+        "s": "aabbbccddeeffgghhiijj"
+      },
+      "expected": [21, 13, 7, 7, 5, 3, 3, 3, 3, 3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+    },
+    {
+      "case_id": 40,
+      "input": {
+        "parent": [-1, 0, 0, 0, 0, 0, 1, 1, 1, 2, 2, 2, 3, 3, 3, 4, 4, 4, 5, 5, 5, 6, 6, 6, 7, 7, 7],
+        "s": "abababababababababababababab"
+      },
+      "expected": "Error: list index out of range"
+    },
+    {
+      "case_id": 41,
+      "input": {
+        "parent": [-1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49],
+        "s": "aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz"
+      },
+      "expected": "Error: list index out of range"
+    },
+    {
+      "case_id": 42,
+      "input": {
+        "parent": [-1, 0, 1, 2, 3, 3, 2, 1, 0],
+        "s": "aabacabc"
+      },
+      "expected": [8, 7, 2, 3, 1, 1, 1, 1]
+    },
+    {
+      "case_id": 43,
+      "input": {
+        "parent": [-1, 0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8, 9, 9],
+        "s": "abacabadabacabad"
+      },
+      "expected": [16, 8, 4, 3, 2, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1]
+    },
+    {
+      "case_id": 44,
+      "input": {
+        "parent": [-1, 0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8],
+        "s": "abacabadabacabadabacaba"
+      },
+      "expected": "Error: list index out of range"
+    },
+    {
+      "case_id": 45,
+      "input": {
+        "parent": [-1, 0, 0, 1, 1, 2, 2, 3, 3],
+        "s": "aabbaabbaba"
+      },
+      "expected": "Error: list index out of range"
+    },
+    {
+      "case_id": 46,
+      "input": {
+        "parent": [-1, 0, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8, 9, 9, 10, 10, 11, 11, 12, 12, 13, 13, 14, 14, 15, 15],
+        "s": "abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz"
+      },
+      "expected": "Error: list index out of range"
+    },
+    {
+      "case_id": 47,
+      "input": {
+        "parent": [-1, 0, 0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8, 9, 9],
+        "s": "abcdefghiabcdefghi"
+      },
+      "expected": [18, 7, 7, 2, 2, 3, 3, 3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+    },
+    {
+      "case_id": 48,
+      "input": {
+        "parent": [-1, 0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6],
+        "s": "abacabadabacab"
+      },
+      "expected": [14, 7, 4, 2, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1]
+    },
+    {
+      "case_id": 49,
+      "input": {
+        "parent": [-1, 0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8, 9, 9, 10, 10, 11, 11, 12, 12, 13, 13, 14, 14, 15, 15, 16, 16, 17, 17, 18, 18, 19, 19],
+        "s": "abacabadabacabadabacabadabacabad"
+      },
+      "expected": [32, 9, 15, 4, 4, 4, 7, 3, 2, 2, 2, 2, 2, 2, 3, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+    },
+    {
+      "case_id": 50,
+      "input": {
+        "parent": [-1, 0, 0, 0, 0, 0, 0, 0, 0],
+        "s": "abcdefghi"
+      },
+      "expected": [9, 1, 1, 1, 1, 1, 1, 1, 1]
+    },
+    {
+      "case_id": 51,
+      "input": {
+        "parent": [-1, 0, 0, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8, 9, 9, 10, 10, 11, 11, 12, 12],
+        "s": "abcabcabcabcabcabcabcabcabcabc"
+      },
+      "expected": "Error: list index out of range"
+    },
+    {
+      "case_id": 52,
+      "input": {
+        "parent": [-1, 0, 0, 1, 2, 1, 2, 3, 3, 4, 4, 5, 5, 6, 6],
+        "s": "abcdefghijabcdefghij"
+      },
+      "expected": "Error: list index out of range"
+    },
+    {
+      "case_id": 53,
+      "input": {
+        "parent": [-1, 0, 0, 1, 2, 2, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8, 9, 9, 10, 10, 11, 11, 12, 12, 13, 13, 14, 14, 15, 15, 16, 16, 17, 17, 18, 18, 19, 19, 0, 0, 1, 1, 2, 2, 3, 3, 4, 4],
+        "s": "abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz"
+      },
+      "expected": "Error: list index out of range"
+    },
+    {
+      "case_id": 54,
+      "input": {
+        "parent": [-1, 0, 0, 2, 2, 4, 5, 5, 4, 6, 9],
+        "s": "aabbabbaac"
+      },
+      "expected": [10, 1, 5, 1, 3, 3, 2, 1, 1, 1]
+    },
+    {
+      "case_id": 55,
+      "input": {
+        "parent": [-1, 0, 0, 1, 1, 2, 2, 3, 3, 4, 4],
+        "s": "abcdefghij"
+      },
+      "expected": [10, 6, 3, 3, 2, 1, 1, 1, 1, 1]
+    },
+    {
+      "case_id": 56,
+      "input": {
+        "parent": [-1, 0, 1, 2, 3, 4, 5, 6, 7, 8],
+        "s": "abcdefghi"
+      },
+      "expected": [9, 8, 7, 6, 5, 4, 3, 2, 1]
+    },
+    {
+      "case_id": 57,
+      "input": {
+        "parent": [-1, 0, 1, 2, 1, 2, 3, 3, 4, 5],
+        "s": "abacabacab"
+      },
+      "expected": [10, 3, 4, 2, 2, 2, 1, 1, 1, 1]
+    },
+    {
+      "case_id": 58,
+      "input": {
+        "parent": [-1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13],
+        "s": "abcdefghijklmnopqrstuvwxyz"
+      },
+      "expected": "Error: list index out of range"
+    },
+    {
+      "case_id": 59,
+      "input": {
+        "parent": [-1, 0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8, 9, 9],
+        "s": "aabacaddaebacadd"
+      },
+      "expected": [16, 8, 3, 4, 3, 3, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1]
+    },
+    {
+      "case_id": 60,
+      "input": {
+        "parent": [-1, 0, 0, 1, 1, 2, 2, 3, 3, 4],
+        "s": "aabbaacab"
+      },
+      "expected": [9, 5, 2, 2, 1, 1, 1, 1, 1]
+    },
+    {
+      "case_id": 61,
+      "input": {
+        "parent": [-1, 0, 0, 0, 0, 1, 1, 1, 2, 2, 2, 3, 3, 3, 4, 4, 4, 5, 5, 5],
+        "s": "abcdefghijklmnop"
+      },
+      "expected": [16, 4, 4, 4, 3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+    },
+    {
+      "case_id": 62,
+      "input": {
+        "parent": [-1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49],
+        "s": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      },
+      "expected": [40, 39, 38, 37, 36, 35, 34, 33, 32, 31, 30, 29, 28, 27, 26, 25, 24, 23, 22, 21, 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1]
+    },
+    {
+      "case_id": 63,
+      "input": {
+        "parent": [-1, 0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8, 9, 9, 10, 10, 11, 11, 12, 12, 13, 13, 14, 14, 15, 15, 16, 16, 17, 17, 18, 18, 19, 19, 20, 20],
+        "s": "abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz"
+      },
+      "expected": "Error: list index out of range"
+    },
+    {
+      "case_id": 64,
+      "input": {
+        "parent": [-1, 0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8, 9, 9, 10, 10, 11, 11, 12, 12, 13, 13, 14, 14, 15, 15, 16, 16, 17, 17, 18, 18, 19, 19, 20, 20, 21, 21, 22, 22, 23, 23, 24, 24, 25, 25],
+        "s": "abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz"
+      },
+      "expected": [52, 31, 19, 15, 15, 11, 6, 7, 7, 7, 7, 7, 3, 2, 3, 3, 2, 3, 3, 3, 3, 3, 3, 3, 3, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+    },
+    {
+      "case_id": 65,
+      "input": {
+        "parent": [-1, 0, 1, 2, 3, 4, 5, 6, 7, 8],
+        "s": "abcdefghij"
+      },
+      "expected": [10, 9, 8, 7, 6, 5, 4, 3, 2, 1]
+    },
+    {
+      "case_id": 66,
+      "input": {
+        "parent": [-1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49],
+        "s": "zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      "expected": "Error: list index out of range"
+    },
+    {
+      "case_id": 67,
+      "input": {
+        "parent": [-1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28],
+        "s": "zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+      },
+      "expected": "Error: list index out of range"
+    },
+    {
+      "case_id": 68,
+      "input": {
+        "parent": [-1, 0, 1, 2, 3, 4, 5],
+        "s": "abcdefg"
+      },
+      "expected": [7, 6, 5, 4, 3, 2, 1]
+    },
+    {
+      "case_id": 69,
+      "input": {
+        "parent": [-1, 0, 0, 1, 2, 2, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8, 9, 9, 10, 10, 11, 11, 12, 12, 13, 13, 14, 14, 15, 15],
+        "s": "abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz"
+      },
+      "expected": "Error: list index out of range"
+    },
+    {
+      "case_id": 70,
+      "input": {
+        "parent": [-1, 0, 0, 1, 2, 2, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8, 9, 9],
+        "s": "abcabcabcabcabcabc"
+      },
+      "expected": [18, 1, 10, 4, 4, 3, 3, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+    },
+    {
+      "case_id": 71,
+      "input": {
+        "parent": [-1, 0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8, 9, 9, 10, 10, 11, 11, 12, 12, 13, 13, 14, 14, 15, 15, 16, 16, 17, 17, 18, 18, 19, 19, 20, 20],
+        "s": "aabacabaabacabaabacabaabacabaabacaba"
+      },
+      "expected": [36, 35, 9, 15, 3, 5, 3, 7, 4, 1, 2, 1, 3, 2, 3, 3, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+    },
+    {
+      "case_id": 72,
+      "input": {
+        "parent": [-1, 0, 0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5],
+        "s": "abcabcabcabc"
+      },
+      "expected": [12, 5, 2, 3, 3, 1, 1, 1, 1, 1, 1, 1]
+    },
+    {
+      "case_id": 73,
+      "input": {
+        "parent": [-1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        "s": "aaaaaaaaaaaaaaaab"
+      },
+      "expected": "Error: list index out of range"
+    },
+    {
+      "case_id": 74,
+      "input": {
+        "parent": [-1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14],
+        "s": "aaaaaabbbbbcccccc"
+      },
+      "expected": "Error: list index out of range"
+    },
+    {
+      "case_id": 75,
+      "input": {
+        "parent": [-1, 0, 0, 1, 2, 2, 3, 4, 4, 5],
+        "s": "abacbabca"
+      },
+      "expected": [9, 3, 5, 1, 2, 1, 1, 1, 1]
+    },
+    {
+      "case_id": 76,
+      "input": {
+        "parent": [-1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+        "s": "abcdefghijklmnopqrstuvwxyabcdefghijklmnopqrstuvwxyabcdefghijklmnopqrstuvwxyabcdefghijklmnopqrstuvwxyabcdefghijklmnopqrstuvwxyabcdefghijklmnopqrstuvwxyabcdefghijklmnopqrstuvwxyabcdefghijklmnopqrstuvwxyabcdefghijklmnopqrstuvwxyabcdefghijklmnopqrstuvwxyabcdefghijklmnopqrstuvwxyabcdefghijklmnopqrstuvwxy"
+      },
+      "expected": "Error: list index out of range"
+    },
+    {
+      "case_id": 77,
+      "input": {
+        "parent": [-1, 0, 0, 2, 2, 4, 5, 5, 4, 6, 7, 11, 11, 11, 6, 14],
+        "s": "xyzxyzxyxzyzyxzyx"
+      },
+      "expected": "Error: list index out of range"
+    },
+    {
+      "case_id": 78,
+      "input": {
+        "parent": [-1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28],
+        "s": "abacabadabacabadabacabadabacabad"
+      },
+      "expected": "Error: list index out of range"
+    },
+    {
+      "case_id": 79,
+      "input": {
+        "parent": [-1, 0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8, 9, 9],
+        "s": "abcdefghijklmnopqrstuvwxyz"
+      },
+      "expected": "Error: list index out of range"
+    },
+    {
+      "case_id": 80,
+      "input": {
+        "parent": [-1, 0, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8, 9, 9, 10, 10, 11, 11],
+        "s": "aaaaaaaaaaaaaaaaaaaaaaaaa"
+      },
+      "expected": "Error: list index out of range"
+    },
+    {
+      "case_id": 81,
+      "input": {
+        "parent": [-1, 0, 0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8, 9, 9],
+        "s": "aaabbbcccddd"
+      },
+      "expected": [12, 5, 3, 3, 3, 1, 1, 1, 1, 1, 1, 1]
+    },
+    {
+      "case_id": 82,
+      "input": {
+        "parent": [-1, 0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8, 9, 9, 10, 10, 11, 11, 12, 12, 13, 13, 14, 14],
+        "s": "abcdefghijklmnopqrstuvwxzywxzywxzywxzywxzywxzy"
+      },
+      "expected": "Error: list index out of range"
+    },
+    {
+      "case_id": 83,
+      "input": {
+        "parent": [-1, 0, 0, 0, 0, 1, 1, 1, 2, 2, 2, 3, 3, 3, 4, 4, 4, 5, 5, 5, 6, 6, 6, 7, 7, 7, 8, 8, 8, 9, 9, 9],
+        "s": "abababababababababababab"
+      },
+      "expected": [24, 7, 4, 3, 4, 3, 3, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+    },
+    {
+      "case_id": 84,
+      "input": {
+        "parent": [-1, 0, 0, 1, 1, 2, 2, 3, 3, 4, 5, 5],
+        "s": "aabbaabbaaba"
+      },
+      "expected": [12, 6, 3, 2, 2, 2, 1, 1, 1, 1, 1, 1]
+    },
+    {
+      "case_id": 85,
+      "input": {
+        "parent": [-1, 0, 0, 0, 0, 1, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5],
+        "s": "abcdefghijklmnop"
+      },
+      "expected": [16, 6, 3, 3, 3, 3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+    },
+    {
+      "case_id": 86,
+      "input": {
+        "parent": [-1, 0, 0, 0, 1, 1, 1, 2, 2, 2, 3, 3, 3, 4, 4, 4, 5, 5, 5, 6, 6, 6, 7, 7, 7, 8, 8, 8, 9, 9, 9, 10, 10, 10, 11, 11, 11, 12, 12, 12, 13, 13, 13, 14, 14, 14, 15, 15, 15, 16, 16, 16],
+        "s": "abababababababababababababababababababababababababababababababababababab"
+      },
+      "expected": "Error: list index out of range"
+    },
+    {
+      "case_id": 87,
+      "input": {
+        "parent": [-1, 0, 0, 1, 1, 1, 2, 2, 2, 3, 3, 3, 4, 4, 4, 5, 5, 5, 6, 6, 6, 7, 7, 7, 8, 8, 8, 9, 9, 9, 10, 10, 10],
+        "s": "abcdefghijabcdefghijabcdefghij"
+      },
+      "expected": [30, 15, 12, 5, 4, 4, 3, 3, 4, 4, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+    },
+    {
+      "case_id": 88,
+      "input": {
+        "parent": [-1, 0, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6],
+        "s": "abacabadabacaba"
+      },
+      "expected": "Error: list index out of range"
+    },
+    {
+      "case_id": 89,
+      "input": {
+        "parent": [-1, 0, 0, 1, 1, 2, 2, 3, 3, 4, 4],
+        "s": "aabbbcccc"
+      },
+      "expected": [9, 5, 3, 3, 1, 1, 1, 1, 1]
+    },
+    {
+      "case_id": 90,
+      "input": {
+        "parent": [-1, 0, 0, 0, 1, 1, 1, 2, 2, 2, 3, 3, 3, 4, 4, 4, 5, 5, 5, 6, 6, 6, 7, 7, 7, 8, 8, 8, 9, 9, 9],
+        "s": "aabbaabbaabbaabbaabbaabbaabbaabb"
+      },
+      "expected": "Error: list index out of range"
+    },
+    {
+      "case_id": 91,
+      "input": {
+        "parent": [-1, 0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8, 9, 9],
+        "s": "ababababababababab"
+      },
+      "expected": [18, 6, 7, 4, 2, 2, 3, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+    },
+    {
+      "case_id": 92,
+      "input": {
+        "parent": [-1, 0, 0, 0, 1, 1, 1, 2, 2, 2, 3, 3, 3, 4, 4, 4, 5, 5, 5, 6, 6, 6, 7, 7, 7],
+        "s": "aaaaabbbbccccdddddeeeeeffffffggggghhhh"
+      },
+      "expected": "Error: list index out of range"
+    },
+    {
+      "case_id": 93,
+      "input": {
+        "parent": [-1, 0, 0, 1, 1, 2, 2, 3, 3, 4, 4],
+        "s": "abacabacaba"
+      },
+      "expected": [11, 4, 3, 2, 2, 1, 1, 1, 1, 1, 1]
+    },
+    {
+      "case_id": 94,
+      "input": {
+        "parent": [-1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 7, 7, 7, 7, 7, 8, 8, 8, 8, 8, 9, 9, 9, 9, 9],
+        "s": "aaaaabbbbbcccccdddddeeeee"
+      },
+      "expected": [25, 6, 6, 6, 5, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+    },
+    {
+      "case_id": 95,
+      "input": {
+        "parent": [-1, 0, 0, 0, 1, 1, 1, 2, 2, 3, 3, 4, 4],
+        "s": "abcdefgabcdefg"
+      },
+      "expected": "Error: list index out of range"
+    },
+    {
+      "case_id": 96,
+      "input": {
+        "parent": [-1, 0, 0, 1, 2, 2, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8, 9, 9, 10, 10, 11, 11, 12, 12],
+        "s": "aaaabbbbccccddddeeeeffffggghhhiiijjjkkklllmmmnnooopppqqqrrrssstttuuuvvvwwwxxxxyyyzzz"
+      },
+      "expected": "Error: list index out of range"
+    },
+    {
+      "case_id": 97,
+      "input": {
+        "parent": [-1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        "s": "abcdefghijklllll"
+      },
+      "expected": [16, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+    },
+    {
+      "case_id": 98,
+      "input": {
+        "parent": [-1, 0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8, 9, 9, 10, 10, 11, 11, 12, 12, 13, 13, 14, 14],
+        "s": "aabbaabbaabbaabbaabbaabbaabbaabbaabb"
+      },
+      "expected": "Error: list index out of range"
+    },
+    {
+      "case_id": 99,
+      "input": {
+        "parent": [-1, 0, 0, 0, 1, 1, 1, 2, 2, 3, 3, 3, 4, 4, 4],
+        "s": "ababababababab"
+      },
+      "expected": [14, 3, 3, 3, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+    },
+    {
+      "case_id": 100,
+      "input": {
+        "parent": [-1, 0, 0, 0, 1, 2, 1, 2, 3, 4, 4, 5, 6, 7, 7, 8, 8],
+        "s": "aaaabbbbbbccccdddd"
+      },
+      "expected": "Error: list index out of range"
+    },
+    {
+      "case_id": 101,
+      "input": {
+        "parent": [-1, 0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4],
+        "s": "aabbaabbccddeeff"
+      },
+      "expected": [16, 5, 5, 4, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+    }
+  ]
+}

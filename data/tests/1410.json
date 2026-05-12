@@ -1,0 +1,346 @@
+{
+  "schema_version": 1,
+  "problem_id": 1410,
+  "title": "HTML Entity Parser",
+  "method": "entityParser",
+  "signature": {
+    "params": [
+      {
+        "name": "text",
+        "type": "STRING"
+      }
+    ],
+    "returns": "STRING"
+  },
+  "cases": [
+    {
+      "case_id": 1,
+      "input": {
+        "text": "&amp; is an HTML entity but &ambassador; is not."
+      },
+      "expected": "& is an HTML entity but &ambassador; is not."
+    },
+    {
+      "case_id": 2,
+      "input": {
+        "text": "and I quote: &quot;...&quot;"
+      },
+      "expected": "and I quote: \"...\""
+    },
+    {
+      "case_id": 3,
+      "input": {
+        "text": "Stay home! Practice on Leetcode :)"
+      },
+      "expected": "Stay home! Practice on Leetcode :)"
+    },
+    {
+      "case_id": 4,
+      "input": {
+        "text": "x &gt; y &amp;&amp; x &lt; y is always False"
+      },
+      "expected": "x > y && x < y is always False"
+    },
+    {
+      "case_id": 5,
+      "input": {
+        "text": "leetcode.com&frasl;problemset&frasl;all"
+      },
+      "expected": "leetcode.com/problemset/all"
+    },
+    {
+      "case_id": 6,
+      "input": {
+        "text": "&amp;lt;div&amp;gt;&amp;amp;lt;p&amp;amp;gt;Multiple &amp;amp;amp;entities&amp;amp;amp; in &amp;amp;amp;one&amp;amp;amp; &amp;amp;lt;tag&amp;amp;gt;&amp;amp;lt;/tag&amp;amp;gt;&amp;amp;lt;/p&amp;amp;gt;&amp;lt;/div&amp;gt;"
+      },
+      "expected": "&lt;div&gt;&amp;lt;p&amp;gt;Multiple &amp;amp;entities&amp;amp; in &amp;amp;one&amp;amp; &amp;lt;tag&amp;gt;&amp;lt;/tag&amp;gt;&amp;lt;/p&amp;gt;&lt;/div&gt;"
+    },
+    {
+      "case_id": 7,
+      "input": {
+        "text": "Nested &amp;lt;tags&amp;gt; with &amp;amp;lt;nested&amp;amp;gt;entities&amp;amp;lt;/nested&amp;amp;gt;&amp;lt;/tags&amp;gt;"
+      },
+      "expected": "Nested &lt;tags&gt; with &amp;lt;nested&amp;gt;entities&amp;lt;/nested&amp;gt;&lt;/tags&gt;"
+    },
+    {
+      "case_id": 8,
+      "input": {
+        "text": "Multiple &gt;&gt;&gt; &gt; and &lt;&lt;&lt; &lt; should be &gt; and &lt;"
+      },
+      "expected": "Multiple >>> > and <<< < should be > and <"
+    },
+    {
+      "case_id": 9,
+      "input": {
+        "text": "&amp;lt;span&amp;gt;This &amp;amp;lt;a&amp;amp;gt;link&amp;amp;lt;/a&amp;amp;gt; has an &amp;amp;amp;entity&amp;amp;amp; in it.&amp;lt;/span&amp;gt;"
+      },
+      "expected": "&lt;span&gt;This &amp;lt;a&amp;gt;link&amp;lt;/a&amp;gt; has an &amp;amp;entity&amp;amp; in it.&lt;/span&gt;"
+    },
+    {
+      "case_id": 10,
+      "input": {
+        "text": "Multiple &amp;&amp; entities &gt; here &lt; and &quot;quotes&quot; &apos;apostrophes&apos;"
+      },
+      "expected": "Multiple && entities > here < and \"quotes\" 'apostrophes'"
+    },
+    {
+      "case_id": 11,
+      "input": {
+        "text": "Nested &amp; entities: &amp;amp;lt; &amp;amp;gt; &amp;amp;amp; &amp;amp;quot; &amp;amp;apos; &amp;amp;frasl;"
+      },
+      "expected": "Nested & entities: &amp;lt; &amp;gt; &amp;amp; &amp;quot; &amp;apos; &amp;frasl;"
+    },
+    {
+      "case_id": 12,
+      "input": {
+        "text": "Combining &lt;b&gt;&amp;bold&amp;&gt; &lt;i&gt;&amp;italic&amp;&gt; &lt;u&gt;&amp;underline&amp;&gt; entities &lt;/u&gt;&lt;/i&gt;&lt;/b&gt;"
+      },
+      "expected": "Combining <b>&bold&> <i>&italic&> <u>&underline&> entities </u></i></b>"
+    },
+    {
+      "case_id": 13,
+      "input": {
+        "text": "He said, &quot;&apos;Hello, &amp; welcome to the world of &gt;HTML&lt;!&apos;&quot;"
+      },
+      "expected": "He said, \"'Hello, & welcome to the world of >HTML<!'\""
+    },
+    {
+      "case_id": 14,
+      "input": {
+        "text": "&lt;script&gt;alert(&apos;Hello &lt;b&gt;World&lt;/b&gt;&apos;);&lt;/script&gt; &frasl; &lt;hr&gt;"
+      },
+      "expected": "<script>alert('Hello <b>World</b>');</script> / <hr>"
+    },
+    {
+      "case_id": 15,
+      "input": {
+        "text": "Edge cases &amp; special characters: &gt;&lt;&amp;&quot;&apos;&frasl;&lt;&gt;&amp;&quot;&apos;&frasl;&gt;&lt;"
+      },
+      "expected": "Edge cases & special characters: ><&\"'/<>&\"'/><"
+    },
+    {
+      "case_id": 16,
+      "input": {
+        "text": "&amp;lt;table&amp;gt;&amp;amp;lt;tr&amp;amp;gt;&amp;amp;amp;lt;td&amp;amp;amp;gt;&amp;amp;amp;Data &amp;amp;amp;1&amp;amp;amp;&amp;amp;amp;lt;/td&amp;amp;amp;gt;&amp;amp;lt;/tr&amp;amp;gt;&amp;amp;lt;tr&amp;amp;gt;&amp;amp;amp;lt;td&amp;amp;amp;gt;&amp;amp;amp;Data &amp;amp;amp;2&amp;amp;amp;&amp;amp;amp;lt;/td&amp;amp;amp;gt;&amp;amp;lt;/tr&amp;amp;gt;&amp;lt;/table&amp;gt;"
+      },
+      "expected": "&lt;table&gt;&amp;lt;tr&amp;gt;&amp;amp;lt;td&amp;amp;gt;&amp;amp;Data &amp;amp;1&amp;amp;&amp;amp;lt;/td&amp;amp;gt;&amp;lt;/tr&amp;gt;&amp;lt;tr&amp;gt;&amp;amp;lt;td&amp;amp;gt;&amp;amp;Data &amp;amp;2&amp;amp;&amp;amp;lt;/td&amp;amp;gt;&amp;lt;/tr&amp;gt;&lt;/table&gt;"
+    },
+    {
+      "case_id": 17,
+      "input": {
+        "text": "&amp;lt;p&amp;gt;&amp;amp;lt;strong&amp;amp;gt;Bold &amp;amp;amp;italic&amp;amp;amp;&amp;amp;lt;/strong&amp;amp;gt;&amp;lt;/p&amp;gt;"
+      },
+      "expected": "&lt;p&gt;&amp;lt;strong&amp;gt;Bold &amp;amp;italic&amp;amp;&amp;lt;/strong&amp;gt;&lt;/p&gt;"
+    },
+    {
+      "case_id": 18,
+      "input": {
+        "text": "Escaping &amp;quot;quotes&amp;quot; &amp;amp; &amp;apos;apostrophes&amp;apos; in &lt;code&gt;&amp;lt;p&amp;gt;tags&amp;lt;/p&amp;gt;&lt;/code&gt;"
+      },
+      "expected": "Escaping &quot;quotes&quot; &amp; &apos;apostrophes&apos; in <code>&lt;p&gt;tags&lt;/p&gt;</code>"
+    },
+    {
+      "case_id": 19,
+      "input": {
+        "text": "Multiple &quot;&amp;quot;&amp;quot; and &apos;&amp;apos;&amp;apos; in a row"
+      },
+      "expected": "Multiple \"&quot;&quot; and '&apos;&apos; in a row"
+    },
+    {
+      "case_id": 20,
+      "input": {
+        "text": "&amp;lt;ul&amp;gt;&amp;amp;lt;li&amp;amp;gt;First &amp;amp;amp;item&amp;amp;amp;&amp;amp;lt;/li&amp;amp;gt;&amp;amp;lt;li&amp;amp;gt;Second &amp;amp;amp;item&amp;amp;amp;&amp;amp;lt;/li&amp;amp;gt;&amp;lt;/ul&amp;gt;"
+      },
+      "expected": "&lt;ul&gt;&amp;lt;li&amp;gt;First &amp;amp;item&amp;amp;&amp;lt;/li&amp;gt;&amp;lt;li&amp;gt;Second &amp;amp;item&amp;amp;&amp;lt;/li&amp;gt;&lt;/ul&gt;"
+    },
+    {
+      "case_id": 21,
+      "input": {
+        "text": "&lt;table&gt;&lt;tr&gt;&lt;td&gt;&amp;cell &gt; &lt;td&gt;&amp;&amp; data &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt; &frasl; &lt;pre&gt;&amp;code&amp;&gt;&lt;/pre&gt;"
+      },
+      "expected": "<table><tr><td>&cell > <td>&& data </td></tr></table> / <pre>&code&></pre>"
+    },
+    {
+      "case_id": 22,
+      "input": {
+        "text": "&quot;Nested &lt;quotes&gt; and &apos;apostrophes&apos; within&quot;"
+      },
+      "expected": "Nested <quotes> and 'apostrophes' within"
+    },
+    {
+      "case_id": 23,
+      "input": {
+        "text": "&lt;a href=&quot;http://example.com&quot;&gt;Visit Example&lt;/a&gt; &frasl; &amp; other &lt;tags&gt;&quot;"
+      },
+      "expected": "<a href=\"http://example.com\">Visit Example</a> / & other <tags>\""
+    },
+    {
+      "case_id": 24,
+      "input": {
+        "text": "&lt;img src=&apos;image.jpg&apos; alt=&quot;An &amp;quot;image&amp;quot; &amp;amp; text&quot; /&gt; &frasl; &lt;strong&gt;strong&lt;/strong&gt;"
+      },
+      "expected": "<img src='image.jpg' alt=\"An &quot;image&quot; &amp; text\" /> / <strong>strong</strong>"
+    },
+    {
+      "case_id": 25,
+      "input": {
+        "text": "This &frasl;example&frasl; should have slashes replaced everywhere.&frasl;&frasl;&frasl;"
+      },
+      "expected": "This /example/ should have slashes replaced everywhere.///"
+    },
+    {
+      "case_id": 26,
+      "input": {
+        "text": "&lt;p&gt;This &amp; that &lt;/p&gt; &frasl; &lt;div&gt;example&lt;/div&gt;"
+      },
+      "expected": "<p>This & that </p> / <div>example</div>"
+    },
+    {
+      "case_id": 27,
+      "input": {
+        "text": "&amp;quot; and &amp;apos; should be &quot; and &apos; respectively"
+      },
+      "expected": "&quot; and &apos; should be \" and ' respectively"
+    },
+    {
+      "case_id": 28,
+      "input": {
+        "text": "Combining &amp;frasl;slashes&amp;frasl; with other &amp;gt;&amp;amp;lt;entities&amp;amp;gt;&amp;lt;&amp;gt;"
+      },
+      "expected": "Combining &frasl;slashes&frasl; with other &gt;&amp;lt;entities&amp;gt;&lt;&gt;"
+    },
+    {
+      "case_id": 29,
+      "input": {
+        "text": "&amp;lt;div&amp;gt; &amp;amp;lt;p&amp;amp;gt;Hello &amp;amp;amp; World!&amp;amp;lt;/p&amp;amp;gt; &amp;lt;/div&amp;gt;"
+      },
+      "expected": "&lt;div&gt; &amp;lt;p&amp;gt;Hello &amp;amp; World!&amp;lt;/p&amp;gt; &lt;/div&gt;"
+    },
+    {
+      "case_id": 30,
+      "input": {
+        "text": "This &amp; that &amp; the other &amp; &frasl;"
+      },
+      "expected": "This & that & the other & /"
+    },
+    {
+      "case_id": 31,
+      "input": {
+        "text": "Multiple &quot;quotes&quot; and &apos;apostrophes&apos; in this &quot;&apos;string&apos;&quot;"
+      },
+      "expected": "Multiple \"quotes\" and 'apostrophes' in this \"'string'\""
+    },
+    {
+      "case_id": 32,
+      "input": {
+        "text": "&amp;lt;p&amp;gt;&amp;amp;lt;p&amp;amp;gt;Nested &amp;amp;amp;amp; entities&amp;amp;&lt;/p&amp;amp;gt;&amp;lt;/p&amp;gt;"
+      },
+      "expected": "&lt;p&gt;&amp;lt;p&amp;gt;Nested &amp;amp;amp; entities&amp;</p&amp;gt;&lt;/p&gt;"
+    },
+    {
+      "case_id": 33,
+      "input": {
+        "text": "Combining &quot;quotes&quot; and &apos;apostrophes&apos; in &lt;tags&gt;"
+      },
+      "expected": "Combining \"quotes\" and 'apostrophes' in <tags>"
+    },
+    {
+      "case_id": 34,
+      "input": {
+        "text": "&frasl;&frasl;&frasl; should become ///"
+      },
+      "expected": "/// should become ///"
+    },
+    {
+      "case_id": 35,
+      "input": {
+        "text": "Combining &amp; &gt; &lt; &quot; &apos; &frasl; in a single string: &amp;gt;&lt;&quot;&apos;&frasl;&amp;lt;&gt;&quot;&apos;&frasl;&amp;"
+      },
+      "expected": "Combining & > < \" ' / in a single string: &gt;<\"'/&lt;>\"'/&"
+    },
+    {
+      "case_id": 36,
+      "input": {
+        "text": "&amp;lt; &amp;gt; &amp;amp; &amp;quot; &amp;apos; &amp;frasl;"
+      },
+      "expected": "&lt; &gt; &amp; &quot; &apos; &frasl;"
+    },
+    {
+      "case_id": 37,
+      "input": {
+        "text": "&lt;p&gt;This is a &lt;b&gt;bold&lt;/b&gt; paragraph.&lt;/p&gt;"
+      },
+      "expected": "<p>This is a <b>bold</b> paragraph.</p>"
+    },
+    {
+      "case_id": 38,
+      "input": {
+        "text": "This is a test: &amp;&amp; &gt;&gt;&gt; &lt;&lt;&lt; &quot;&quot;&quot; &apos;&apos;&apos; &frasl;&frasl;&frasl;"
+      },
+      "expected": "This is a test: && >>> <<< \"\"\" ''' ///"
+    },
+    {
+      "case_id": 39,
+      "input": {
+        "text": "Nested &lt;div&gt;&lt;p&gt;&amp;nested &lt;span&gt;&amp;&amp; entities&lt;/span&gt;&lt;/p&gt;&lt;/div&gt; &frasl; &lt;em&gt;emphasis&lt;/em&gt;"
+      },
+      "expected": "Nested <div><p>&nested <span>&& entities</span></p></div> / <em>emphasis</em>"
+    },
+    {
+      "case_id": 40,
+      "input": {
+        "text": "&amp;lt;a href=&amp;quot;http://example.com&amp;amp;frasl;test&amp;quot;&amp;gt;Link&amp;lt;/a&amp;gt;"
+      },
+      "expected": "&lt;a href=&quot;http://example.com&amp;frasl;test&quot;&gt;Link&lt;/a&gt;"
+    },
+    {
+      "case_id": 41,
+      "input": {
+        "text": "&gt;&amp;gt;&amp;gt; Greater than signs &lt;&amp;lt;&amp;lt; and &amp;amp;&gt;&amp;amp;&lt; mixed up &lt;&amp;lt;&amp;lt; &gt;&amp;gt;&amp;gt;"
+      },
+      "expected": ">&gt;&gt; Greater than signs <&lt;&lt; and &amp;>&amp;< mixed up <&lt;&lt; >&gt;&gt;"
+    },
+    {
+      "case_id": 42,
+      "input": {
+        "text": "Complex &amp; example: &lt;p&gt;&amp;lt;&amp;gt;&amp;amp;&amp;quot;&amp;apos;&amp;frasl;&lt;/p&gt;"
+      },
+      "expected": "Complex & example: <p>&lt;&gt;&amp;&quot;&apos;&frasl;</p>"
+    },
+    {
+      "case_id": 43,
+      "input": {
+        "text": "&amp;&amp;&amp;&amp; is not a valid HTML entity, but &amp;amp;&amp;amp; is &quot;&amp;&amp;&quot;"
+      },
+      "expected": "&&&& is not a valid HTML entity, but &amp;&amp; is \"&&\""
+    },
+    {
+      "case_id": 44,
+      "input": {
+        "text": "Complex &amp;&gt;&amp;&lt; should be &amp;&gt;&amp;&lt;"
+      },
+      "expected": "Complex &>&< should be &>&<"
+    },
+    {
+      "case_id": 45,
+      "input": {
+        "text": "Complex &lt;span class=&quot;example&quot; &gt;&amp; special &lt;i&gt;entities&lt;/i&gt;&lt;/span&gt;"
+      },
+      "expected": "Complex <span class=\"example\" >& special <i>entities</i></span>"
+    },
+    {
+      "case_id": 46,
+      "input": {
+        "text": "Escaping &amp;amp;lt; &amp;amp;gt; &amp;amp;amp; &amp;amp;quot; &amp;amp;apos; &amp;amp;frasl;"
+      },
+      "expected": "Escaping &amp;lt; &amp;gt; &amp;amp; &amp;quot; &amp;apos; &amp;frasl;"
+    },
+    {
+      "case_id": 47,
+      "input": {
+        "text": "&amp;quot;He said, &amp;amp;quot;&amp;apos;Hello &amp;amp;gt; World&amp;amp;lt;!&amp;apos;&amp;amp;quot;&amp;quot;"
+      },
+      "expected": "&quot;He said, &amp;quot;&apos;Hello &amp;gt; World&amp;lt;!&apos;&amp;quot;&quot;"
+    }
+  ]
+}

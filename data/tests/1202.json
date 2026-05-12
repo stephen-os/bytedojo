@@ -1,0 +1,1493 @@
+{
+  "schema_version": 1,
+  "problem_id": 1202,
+  "title": "Smallest String With Swaps",
+  "method": "smallestStringWithSwaps",
+  "signature": {
+    "params": [
+      {
+        "name": "s",
+        "type": "STRING"
+      },
+      {
+        "name": "pairs",
+        "type": "INT32_MATRIX"
+      }
+    ],
+    "returns": "STRING"
+  },
+  "cases": [
+    {
+      "case_id": 1,
+      "input": {
+        "s": "acbd",
+        "pairs": [
+          [0, 3],
+          [1, 2]
+        ]
+      },
+      "expected": "abcd"
+    },
+    {
+      "case_id": 2,
+      "input": {
+        "s": "cba",
+        "pairs": [
+          [0, 1],
+          [1, 2]
+        ]
+      },
+      "expected": "abc"
+    },
+    {
+      "case_id": 3,
+      "input": {
+        "s": "aabbcc",
+        "pairs": [
+          [0, 1],
+          [2, 3],
+          [4, 5]
+        ]
+      },
+      "expected": "aabbcc"
+    },
+    {
+      "case_id": 4,
+      "input": {
+        "s": "zyx",
+        "pairs": [
+          [0, 1],
+          [1, 2]
+        ]
+      },
+      "expected": "xyz"
+    },
+    {
+      "case_id": 5,
+      "input": {
+        "s": "abcd",
+        "pairs": [
+          [0, 1],
+          [1, 2],
+          [2, 3]
+        ]
+      },
+      "expected": "abcd"
+    },
+    {
+      "case_id": 6,
+      "input": {
+        "s": "leetcode",
+        "pairs": [
+          [0, 2],
+          [1, 3]
+        ]
+      },
+      "expected": "eeltcode"
+    },
+    {
+      "case_id": 7,
+      "input": {
+        "s": "dcab",
+        "pairs": [
+          [0, 3],
+          [1, 2]
+        ]
+      },
+      "expected": "bacd"
+    },
+    {
+      "case_id": 8,
+      "input": {
+        "s": "dcab",
+        "pairs": [
+          [0, 3],
+          [1, 2],
+          [0, 2]
+        ]
+      },
+      "expected": "abcd"
+    },
+    {
+      "case_id": 9,
+      "input": {
+        "s": "qwe",
+        "pairs": [
+          [0, 2]
+        ]
+      },
+      "expected": "ewq"
+    },
+    {
+      "case_id": 10,
+      "input": {
+        "s": "abdc",
+        "pairs": [
+          [0, 3]
+        ]
+      },
+      "expected": "abdc"
+    },
+    {
+      "case_id": 11,
+      "input": {
+        "s": "vokh",
+        "pairs": [
+          [0, 1],
+          [1, 3],
+          [0, 3]
+        ]
+      },
+      "expected": "hokv"
+    },
+    {
+      "case_id": 12,
+      "input": {
+        "s": "abcdefgh",
+        "pairs": [
+          [0, 7],
+          [1, 6],
+          [2, 5],
+          [3, 4],
+          [0, 6],
+          [1, 5],
+          [2, 4]
+        ]
+      },
+      "expected": "abcdefgh"
+    },
+    {
+      "case_id": 13,
+      "input": {
+        "s": "mnopqr",
+        "pairs": [
+          [0, 1],
+          [1, 2],
+          [2, 3],
+          [3, 4],
+          [4, 5],
+          [5, 6],
+          [6, 7]
+        ]
+      },
+      "expected": "Error: list index out of range"
+    },
+    {
+      "case_id": 14,
+      "input": {
+        "s": "jklmno",
+        "pairs": [
+          [0, 3],
+          [1, 4],
+          [2, 5],
+          [0, 5],
+          [1, 3]
+        ]
+      },
+      "expected": "jklmno"
+    },
+    {
+      "case_id": 15,
+      "input": {
+        "s": "dcabxy",
+        "pairs": [
+          [0, 3],
+          [1, 2],
+          [4, 5],
+          [0, 2]
+        ]
+      },
+      "expected": "abcdxy"
+    },
+    {
+      "case_id": 16,
+      "input": {
+        "s": "aazaa",
+        "pairs": [
+          [0, 1],
+          [1, 2],
+          [2, 3],
+          [3, 4]
+        ]
+      },
+      "expected": "aaaaz"
+    },
+    {
+      "case_id": 17,
+      "input": {
+        "s": "aefdcba",
+        "pairs": [
+          [0, 1],
+          [1, 2],
+          [2, 3],
+          [3, 4],
+          [4, 5],
+          [5, 6]
+        ]
+      },
+      "expected": "aabcdef"
+    },
+    {
+      "case_id": 18,
+      "input": {
+        "s": "xyzabc",
+        "pairs": [
+          [0, 5],
+          [1, 4],
+          [2, 3],
+          [0, 2]
+        ]
+      },
+      "expected": "abcxyz"
+    },
+    {
+      "case_id": 19,
+      "input": {
+        "s": "xyzabc",
+        "pairs": [
+          [0, 5],
+          [1, 4],
+          [2, 3]
+        ]
+      },
+      "expected": "cbazyx"
+    },
+    {
+      "case_id": 20,
+      "input": {
+        "s": "abcdeffedcba",
+        "pairs": [
+          [0, 11],
+          [1, 10],
+          [2, 9],
+          [3, 8],
+          [4, 7],
+          [5, 6],
+          [5, 7],
+          [6, 7]
+        ]
+      },
+      "expected": "abcdeeffdcba"
+    },
+    {
+      "case_id": 21,
+      "input": {
+        "s": "qwertyuiopasdfghjklzxcvbnm",
+        "pairs": [
+          [0, 25],
+          [1, 24],
+          [2, 23],
+          [3, 22],
+          [4, 21],
+          [5, 20],
+          [6, 19],
+          [7, 18],
+          [8, 17],
+          [9, 16],
+          [10, 15],
+          [11, 14],
+          [12, 13]
+        ]
+      },
+      "expected": "mnbrcxuikjagdfshpolzytvewq"
+    },
+    {
+      "case_id": 22,
+      "input": {
+        "s": "bdcagf",
+        "pairs": [
+          [0, 3],
+          [1, 4],
+          [2, 5]
+        ]
+      },
+      "expected": "adcbgf"
+    },
+    {
+      "case_id": 23,
+      "input": {
+        "s": "racecar",
+        "pairs": [
+          [0, 6],
+          [1, 5],
+          [2, 4]
+        ]
+      },
+      "expected": "racecar"
+    },
+    {
+      "case_id": 24,
+      "input": {
+        "s": "abcdefghijk",
+        "pairs": [
+          [0, 3],
+          [1, 4],
+          [2, 5],
+          [3, 6],
+          [4, 7],
+          [5, 8],
+          [6, 9],
+          [7, 10]
+        ]
+      },
+      "expected": "abcdefghijk"
+    },
+    {
+      "case_id": 25,
+      "input": {
+        "s": "leetcodeproblems",
+        "pairs": [
+          [0, 11],
+          [1, 10],
+          [2, 9],
+          [3, 8],
+          [4, 7],
+          [5, 6],
+          [12, 20],
+          [13, 19],
+          [14, 18],
+          [15, 17]
+        ]
+      },
+      "expected": "Error: list index out of range"
+    },
+    {
+      "case_id": 26,
+      "input": {
+        "s": "abcdefg",
+        "pairs": [
+          [0, 1],
+          [0, 2],
+          [1, 3],
+          [1, 4],
+          [2, 5],
+          [2, 6]
+        ]
+      },
+      "expected": "abcdefg"
+    },
+    {
+      "case_id": 27,
+      "input": {
+        "s": "leetcode",
+        "pairs": [
+          [0, 2],
+          [1, 3],
+          [4, 5],
+          [6, 7]
+        ]
+      },
+      "expected": "eeltcode"
+    },
+    {
+      "case_id": 28,
+      "input": {
+        "s": "zyxzyx",
+        "pairs": [
+          [0, 1],
+          [1, 2],
+          [2, 3],
+          [3, 4],
+          [4, 5],
+          [5, 0]
+        ]
+      },
+      "expected": "xxyyzz"
+    },
+    {
+      "case_id": 29,
+      "input": {
+        "s": "abcdefghijk",
+        "pairs": [
+          [0, 1],
+          [0, 2],
+          [0, 3],
+          [0, 4],
+          [0, 5],
+          [0, 6],
+          [0, 7],
+          [0, 8],
+          [0, 9],
+          [0, 10]
+        ]
+      },
+      "expected": "abcdefghijk"
+    },
+    {
+      "case_id": 30,
+      "input": {
+        "s": "challenge",
+        "pairs": [
+          [0, 9],
+          [1, 8],
+          [2, 7],
+          [3, 6],
+          [4, 5],
+          [0, 8],
+          [1, 7],
+          [2, 6],
+          [3, 5]
+        ]
+      },
+      "expected": "Error: list index out of range"
+    },
+    {
+      "case_id": 31,
+      "input": {
+        "s": "abacabad",
+        "pairs": [
+          [0, 2],
+          [1, 3],
+          [4, 6],
+          [5, 7]
+        ]
+      },
+      "expected": "abacabad"
+    },
+    {
+      "case_id": 32,
+      "input": {
+        "s": "lkjihgfedcba",
+        "pairs": [
+          [0, 10],
+          [1, 9],
+          [2, 8],
+          [3, 7],
+          [4, 6],
+          [0, 5],
+          [1, 6]
+        ]
+      },
+      "expected": "bcdefghijkla"
+    },
+    {
+      "case_id": 33,
+      "input": {
+        "s": "algorithm",
+        "pairs": [
+          [0, 6],
+          [1, 5],
+          [2, 4],
+          [3, 7]
+        ]
+      },
+      "expected": "aighrltom"
+    },
+    {
+      "case_id": 34,
+      "input": {
+        "s": "mnopqr",
+        "pairs": [
+          [0, 1],
+          [1, 2],
+          [2, 3],
+          [3, 4],
+          [4, 5],
+          [5, 6]
+        ]
+      },
+      "expected": "Error: list index out of range"
+    },
+    {
+      "case_id": 35,
+      "input": {
+        "s": "abcd",
+        "pairs": [
+          [0, 1],
+          [1, 2],
+          [2, 3],
+          [0, 3],
+          [1, 2]
+        ]
+      },
+      "expected": "abcd"
+    },
+    {
+      "case_id": 36,
+      "input": {
+        "s": "acbdf",
+        "pairs": [
+          [0, 1],
+          [0, 2],
+          [1, 2],
+          [3, 4]
+        ]
+      },
+      "expected": "abcdf"
+    },
+    {
+      "case_id": 37,
+      "input": {
+        "s": "aabbccddeeff",
+        "pairs": [
+          [0, 1],
+          [2, 3],
+          [4, 5],
+          [6, 7],
+          [8, 9],
+          [10, 11],
+          [0, 2],
+          [1, 3],
+          [4, 6],
+          [5, 7],
+          [8, 10],
+          [9, 11]
+        ]
+      },
+      "expected": "aabbccddeeff"
+    },
+    {
+      "case_id": 38,
+      "input": {
+        "s": "jklmnopqrst",
+        "pairs": [
+          [0, 2],
+          [3, 5],
+          [6, 8],
+          [9, 11],
+          [1, 4],
+          [5, 7],
+          [8, 10],
+          [11, 13]
+        ]
+      },
+      "expected": "Error: list index out of range"
+    },
+    {
+      "case_id": 39,
+      "input": {
+        "s": "stuvwx",
+        "pairs": [
+          [0, 3],
+          [1, 4],
+          [2, 5],
+          [0, 5],
+          [1, 3],
+          [2, 4]
+        ]
+      },
+      "expected": "stuvwx"
+    },
+    {
+      "case_id": 40,
+      "input": {
+        "s": "abcde",
+        "pairs": [
+          [0, 1],
+          [0, 4],
+          [1, 2],
+          [2, 3]
+        ]
+      },
+      "expected": "abcde"
+    },
+    {
+      "case_id": 41,
+      "input": {
+        "s": "ympxz",
+        "pairs": [
+          [0, 1],
+          [1, 2],
+          [2, 3],
+          [3, 4]
+        ]
+      },
+      "expected": "mpxyz"
+    },
+    {
+      "case_id": 42,
+      "input": {
+        "s": "ekzpz",
+        "pairs": [
+          [0, 1],
+          [1, 2],
+          [2, 3],
+          [3, 4]
+        ]
+      },
+      "expected": "ekpzz"
+    },
+    {
+      "case_id": 43,
+      "input": {
+        "s": "abcdefghijklmnopqrstuvwxyz",
+        "pairs": [
+          [0, 25],
+          [1, 24],
+          [2, 23],
+          [3, 22],
+          [4, 21]
+        ]
+      },
+      "expected": "abcdefghijklmnopqrstuvwxyz"
+    },
+    {
+      "case_id": 44,
+      "input": {
+        "s": "fedcba",
+        "pairs": [
+          [0, 1],
+          [1, 2],
+          [2, 3],
+          [3, 4],
+          [4, 5]
+        ]
+      },
+      "expected": "abcdef"
+    },
+    {
+      "case_id": 45,
+      "input": {
+        "s": "abacabadabacaba",
+        "pairs": [
+          [0, 1],
+          [2, 3],
+          [4, 5],
+          [6, 7],
+          [8, 9],
+          [10, 11],
+          [12, 13],
+          [0, 2],
+          [2, 4],
+          [4, 6],
+          [6, 8],
+          [8, 10],
+          [10, 12],
+          [1, 3],
+          [3, 5],
+          [5, 7],
+          [7, 9],
+          [9, 11],
+          [1, 13]
+        ]
+      },
+      "expected": "aaaaaaabbbbccda"
+    },
+    {
+      "case_id": 46,
+      "input": {
+        "s": "abcdefg",
+        "pairs": [
+          [0, 3],
+          [1, 4],
+          [2, 5],
+          [0, 5],
+          [1, 2],
+          [3, 4]
+        ]
+      },
+      "expected": "abcdefg"
+    },
+    {
+      "case_id": 47,
+      "input": {
+        "s": "hellothereeveryone",
+        "pairs": [
+          [0, 8],
+          [1, 3],
+          [2, 9],
+          [5, 11],
+          [6, 7],
+          [12, 16],
+          [13, 14],
+          [15, 17]
+        ]
+      },
+      "expected": "heelotehrleveryeno"
+    },
+    {
+      "case_id": 48,
+      "input": {
+        "s": "dcabxyz",
+        "pairs": [
+          [0, 3],
+          [1, 2],
+          [3, 5],
+          [4, 6]
+        ]
+      },
+      "expected": "bacdxyz"
+    },
+    {
+      "case_id": 49,
+      "input": {
+        "s": "xyzab",
+        "pairs": [
+          [0, 1],
+          [1, 2],
+          [2, 3],
+          [3, 4],
+          [0, 3]
+        ]
+      },
+      "expected": "abxyz"
+    },
+    {
+      "case_id": 50,
+      "input": {
+        "s": "uvuuvuvuvu",
+        "pairs": [
+          [0, 1],
+          [2, 3],
+          [4, 5],
+          [6, 7],
+          [8, 9],
+          [0, 2],
+          [2, 4],
+          [4, 6],
+          [6, 8],
+          [1, 3],
+          [3, 5],
+          [5, 7],
+          [7, 9],
+          [0, 9]
+        ]
+      },
+      "expected": "uuuuuuvvvv"
+    },
+    {
+      "case_id": 51,
+      "input": {
+        "s": "abcdefghijk",
+        "pairs": [
+          [0, 1],
+          [1, 2],
+          [2, 3],
+          [3, 4],
+          [4, 5],
+          [5, 6],
+          [6, 7],
+          [7, 8],
+          [8, 9],
+          [9, 10]
+        ]
+      },
+      "expected": "abcdefghijk"
+    },
+    {
+      "case_id": 52,
+      "input": {
+        "s": "uvazyx",
+        "pairs": [
+          [0, 5],
+          [1, 4],
+          [2, 3]
+        ]
+      },
+      "expected": "uvazyx"
+    },
+    {
+      "case_id": 53,
+      "input": {
+        "s": "xyzxyz",
+        "pairs": [
+          [0, 3],
+          [1, 4],
+          [2, 5]
+        ]
+      },
+      "expected": "xyzxyz"
+    },
+    {
+      "case_id": 54,
+      "input": {
+        "s": "abcdefghij",
+        "pairs": [
+          [0, 9],
+          [1, 8],
+          [2, 7],
+          [3, 6],
+          [4, 5],
+          [0, 8],
+          [1, 7],
+          [2, 6],
+          [3, 5]
+        ]
+      },
+      "expected": "abcdefghij"
+    },
+    {
+      "case_id": 55,
+      "input": {
+        "s": "programming",
+        "pairs": [
+          [0, 8],
+          [1, 7],
+          [2, 6],
+          [3, 5],
+          [4, 9]
+        ]
+      },
+      "expected": "immangorprg"
+    },
+    {
+      "case_id": 56,
+      "input": {
+        "s": "abacabadabacaba",
+        "pairs": [
+          [0, 2],
+          [1, 3],
+          [4, 6],
+          [5, 7],
+          [8, 10],
+          [9, 11],
+          [12, 14],
+          [13, 15]
+        ]
+      },
+      "expected": "Error: list index out of range"
+    },
+    {
+      "case_id": 57,
+      "input": {
+        "s": "ufyx",
+        "pairs": [
+          [0, 3],
+          [1, 2],
+          [0, 2],
+          [1, 3]
+        ]
+      },
+      "expected": "fuxy"
+    },
+    {
+      "case_id": 58,
+      "input": {
+        "s": "lkjhgfedcba",
+        "pairs": [
+          [0, 1],
+          [1, 2],
+          [2, 3],
+          [3, 4],
+          [4, 5],
+          [5, 6],
+          [6, 7],
+          [7, 8],
+          [8, 9],
+          [9, 10]
+        ]
+      },
+      "expected": "abcdefghjkl"
+    },
+    {
+      "case_id": 59,
+      "input": {
+        "s": "aaaabbbbccccdddd",
+        "pairs": [
+          [0, 8],
+          [1, 9],
+          [2, 10],
+          [3, 11],
+          [4, 12],
+          [5, 13],
+          [6, 14],
+          [7, 15],
+          [0, 4],
+          [1, 5],
+          [2, 6],
+          [3, 7],
+          [0, 1],
+          [2, 3],
+          [4, 5],
+          [6, 7]
+        ]
+      },
+      "expected": "aaaabbbbccccdddd"
+    },
+    {
+      "case_id": 60,
+      "input": {
+        "s": "zzzzzzzzzzzzzzzzzzzz",
+        "pairs": [
+          [0, 1],
+          [1, 2],
+          [2, 3],
+          [3, 4],
+          [4, 5],
+          [5, 6],
+          [6, 7],
+          [7, 8],
+          [8, 9],
+          [9, 10],
+          [10, 11],
+          [11, 12],
+          [12, 13],
+          [13, 14],
+          [14, 15],
+          [15, 16],
+          [16, 17],
+          [17, 18],
+          [18, 19],
+          [19, 20]
+        ]
+      },
+      "expected": "Error: list index out of range"
+    },
+    {
+      "case_id": 61,
+      "input": {
+        "s": "abcdef",
+        "pairs": [
+          [0, 1],
+          [1, 2],
+          [2, 3],
+          [3, 4],
+          [4, 5],
+          [0, 5]
+        ]
+      },
+      "expected": "abcdef"
+    },
+    {
+      "case_id": 62,
+      "input": {
+        "s": "nmosq",
+        "pairs": [
+          [0, 3],
+          [1, 2],
+          [2, 3],
+          [3, 4]
+        ]
+      },
+      "expected": "mnoqs"
+    },
+    {
+      "case_id": 63,
+      "input": {
+        "s": "abcdefgh",
+        "pairs": [
+          [0, 7],
+          [1, 6],
+          [2, 5],
+          [3, 4],
+          [0, 3],
+          [1, 4]
+        ]
+      },
+      "expected": "abcdefgh"
+    },
+    {
+      "case_id": 64,
+      "input": {
+        "s": "helloworld",
+        "pairs": [
+          [0, 8],
+          [1, 7],
+          [2, 6],
+          [3, 5]
+        ]
+      },
+      "expected": "helloworld"
+    },
+    {
+      "case_id": 65,
+      "input": {
+        "s": "abcdefghij",
+        "pairs": [
+          [0, 9],
+          [1, 8],
+          [2, 7],
+          [3, 6],
+          [4, 5],
+          [0, 5],
+          [1, 4],
+          [2, 3],
+          [0, 1],
+          [8, 9]
+        ]
+      },
+      "expected": "abcdefghij"
+    },
+    {
+      "case_id": 66,
+      "input": {
+        "s": "thisisateststring",
+        "pairs": [
+          [0, 4],
+          [2, 6],
+          [3, 9],
+          [5, 10],
+          [7, 11],
+          [12, 15],
+          [13, 16],
+          [14, 17],
+          [18, 20]
+        ]
+      },
+      "expected": "Error: list index out of range"
+    },
+    {
+      "case_id": 67,
+      "input": {
+        "s": "abacabadaba",
+        "pairs": [
+          [0, 10],
+          [1, 9],
+          [2, 8],
+          [3, 7],
+          [4, 6],
+          [0, 5],
+          [1, 4],
+          [2, 3],
+          [0, 1],
+          [8, 9],
+          [5, 6]
+        ]
+      },
+      "expected": "aaaaaabbbcd"
+    },
+    {
+      "case_id": 68,
+      "input": {
+        "s": "programming",
+        "pairs": [
+          [0, 8],
+          [1, 7],
+          [2, 6],
+          [3, 5],
+          [1, 9]
+        ]
+      },
+      "expected": "immargonprg"
+    },
+    {
+      "case_id": 69,
+      "input": {
+        "s": "zxcvbnmlkjhgfdsapoiuytrewq",
+        "pairs": [
+          [0, 23],
+          [1, 22],
+          [2, 21],
+          [3, 20],
+          [4, 19],
+          [5, 18],
+          [6, 17],
+          [7, 16],
+          [8, 15],
+          [9, 14],
+          [10, 13],
+          [11, 12]
+        ]
+      },
+      "expected": "ercvbimlajdfghskponuytxzwq"
+    },
+    {
+      "case_id": 70,
+      "input": {
+        "s": "abcdefghij",
+        "pairs": [
+          [0, 9],
+          [1, 8],
+          [2, 7],
+          [3, 6],
+          [4, 5]
+        ]
+      },
+      "expected": "abcdefghij"
+    },
+    {
+      "case_id": 71,
+      "input": {
+        "s": "xyz",
+        "pairs": [
+          [0, 1],
+          [1, 2],
+          [2, 0]
+        ]
+      },
+      "expected": "xyz"
+    },
+    {
+      "case_id": 72,
+      "input": {
+        "s": "fedcbaz",
+        "pairs": [
+          [0, 1],
+          [2, 3],
+          [4, 5],
+          [6, 7]
+        ]
+      },
+      "expected": "Error: list index out of range"
+    },
+    {
+      "case_id": 73,
+      "input": {
+        "s": "mnopqr",
+        "pairs": [
+          [0, 2],
+          [0, 4],
+          [0, 6],
+          [1, 3],
+          [1, 5],
+          [2, 4],
+          [3, 5]
+        ]
+      },
+      "expected": "Error: list index out of range"
+    },
+    {
+      "case_id": 74,
+      "input": {
+        "s": "xzy",
+        "pairs": [
+          [0, 1],
+          [1, 2],
+          [0, 2],
+          [1, 2],
+          [0, 1]
+        ]
+      },
+      "expected": "xyz"
+    },
+    {
+      "case_id": 75,
+      "input": {
+        "s": "abcdefghijk",
+        "pairs": [
+          [0, 10],
+          [1, 9],
+          [2, 8],
+          [3, 7],
+          [4, 6],
+          [0, 9],
+          [1, 8],
+          [2, 7],
+          [3, 6],
+          [4, 5]
+        ]
+      },
+      "expected": "abcdefghijk"
+    },
+    {
+      "case_id": 76,
+      "input": {
+        "s": "aabbccddeeffgghhii",
+        "pairs": [
+          [0, 1],
+          [2, 3],
+          [4, 5],
+          [6, 7],
+          [8, 9],
+          [10, 11],
+          [12, 13],
+          [14, 15],
+          [16, 17],
+          [0, 2],
+          [1, 3],
+          [4, 6],
+          [5, 7],
+          [8, 10],
+          [9, 11],
+          [12, 14],
+          [13, 15],
+          [16, 18]
+        ]
+      },
+      "expected": "Error: list index out of range"
+    },
+    {
+      "case_id": 77,
+      "input": {
+        "s": "abcdefghijklmnopqrstuvwxyz",
+        "pairs": [
+          [0, 25],
+          [1, 24],
+          [2, 23],
+          [3, 22],
+          [4, 21],
+          [5, 20],
+          [6, 19],
+          [7, 18],
+          [8, 17],
+          [9, 16],
+          [10, 15],
+          [11, 14],
+          [12, 13]
+        ]
+      },
+      "expected": "abcdefghijklmnopqrstuvwxyz"
+    },
+    {
+      "case_id": 78,
+      "input": {
+        "s": "aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz",
+        "pairs": [
+          [0, 2],
+          [1, 3],
+          [4, 6],
+          [5, 7],
+          [8, 10],
+          [9, 11],
+          [12, 14],
+          [13, 15],
+          [16, 18],
+          [17, 19],
+          [20, 22],
+          [21, 23],
+          [24, 26],
+          [25, 27],
+          [28, 30],
+          [29, 31],
+          [32, 34],
+          [33, 35],
+          [36, 38],
+          [37, 39],
+          [40, 42],
+          [41, 43],
+          [44, 46],
+          [45, 47],
+          [48, 50],
+          [49, 51],
+          [52, 54],
+          [53, 55],
+          [56, 58],
+          [57, 59],
+          [58, 60],
+          [59, 61],
+          [60, 62],
+          [61, 63],
+          [62, 64],
+          [63, 65],
+          [0, 1],
+          [2, 3],
+          [4, 5],
+          [6, 7],
+          [8, 9],
+          [10, 11],
+          [12, 13],
+          [14, 15],
+          [16, 17],
+          [18, 19],
+          [20, 21],
+          [22, 23],
+          [24, 25],
+          [26, 27],
+          [28, 29],
+          [30, 31],
+          [32, 33],
+          [34, 35],
+          [36, 37],
+          [38, 39],
+          [40, 41],
+          [42, 43],
+          [44, 45],
+          [46, 47],
+          [48, 49],
+          [50, 51],
+          [52, 53],
+          [54, 55],
+          [56, 57]
+        ]
+      },
+      "expected": "Error: list index out of range"
+    },
+    {
+      "case_id": 79,
+      "input": {
+        "s": "jklmnopqrstuvwxyza",
+        "pairs": [
+          [0, 1],
+          [1, 2],
+          [2, 3],
+          [3, 4],
+          [4, 5],
+          [5, 6],
+          [6, 7],
+          [7, 8],
+          [8, 9],
+          [9, 10],
+          [10, 11],
+          [11, 12],
+          [12, 13],
+          [13, 14],
+          [14, 15],
+          [15, 16],
+          [16, 17],
+          [17, 18],
+          [18, 19],
+          [0, 19]
+        ]
+      },
+      "expected": "Error: list index out of range"
+    },
+    {
+      "case_id": 80,
+      "input": {
+        "s": "aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz",
+        "pairs": [
+          [0, 25],
+          [1, 24],
+          [2, 23],
+          [3, 22],
+          [4, 21],
+          [5, 20],
+          [6, 19],
+          [7, 18],
+          [8, 17],
+          [9, 16],
+          [10, 15],
+          [11, 14],
+          [12, 13],
+          [0, 13],
+          [1, 14],
+          [2, 15],
+          [3, 16],
+          [4, 17],
+          [5, 18],
+          [6, 19],
+          [7, 20],
+          [8, 21],
+          [9, 22],
+          [10, 23],
+          [11, 24],
+          [12, 25]
+        ]
+      },
+      "expected": "aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz"
+    },
+    {
+      "case_id": 81,
+      "input": {
+        "s": "abcdefgh",
+        "pairs": [
+          [0, 1],
+          [1, 2],
+          [2, 3],
+          [3, 4],
+          [4, 5],
+          [5, 6],
+          [6, 7],
+          [0, 7]
+        ]
+      },
+      "expected": "abcdefgh"
+    },
+    {
+      "case_id": 82,
+      "input": {
+        "s": "aaabbbccc",
+        "pairs": [
+          [0, 1],
+          [2, 3],
+          [4, 5],
+          [0, 5],
+          [1, 4],
+          [2, 8]
+        ]
+      },
+      "expected": "aaabbbccc"
+    },
+    {
+      "case_id": 83,
+      "input": {
+        "s": "abcdexyz",
+        "pairs": [
+          [0, 7],
+          [1, 6],
+          [2, 5],
+          [3, 4]
+        ]
+      },
+      "expected": "abcdexyz"
+    },
+    {
+      "case_id": 84,
+      "input": {
+        "s": "abcdefghijklmnopqrstuvwxyz",
+        "pairs": [
+          [0, 1],
+          [1, 2],
+          [2, 3],
+          [3, 4],
+          [4, 5],
+          [5, 6],
+          [6, 7],
+          [7, 8],
+          [8, 9],
+          [9, 10],
+          [10, 11],
+          [11, 12],
+          [12, 13],
+          [13, 14],
+          [14, 15],
+          [15, 16],
+          [16, 17],
+          [17, 18],
+          [18, 19],
+          [19, 20],
+          [20, 21],
+          [21, 22],
+          [22, 23],
+          [23, 24],
+          [24, 25]
+        ]
+      },
+      "expected": "abcdefghijklmnopqrstuvwxyz"
+    },
+    {
+      "case_id": 85,
+      "input": {
+        "s": "abcdefghij",
+        "pairs": [
+          [0, 1],
+          [1, 2],
+          [2, 3],
+          [3, 4],
+          [4, 5],
+          [5, 6],
+          [6, 7],
+          [7, 8],
+          [8, 9]
+        ]
+      },
+      "expected": "abcdefghij"
+    },
+    {
+      "case_id": 86,
+      "input": {
+        "s": "abcdef",
+        "pairs": [
+          [0, 5],
+          [1, 4],
+          [2, 3]
+        ]
+      },
+      "expected": "abcdef"
+    },
+    {
+      "case_id": 87,
+      "input": {
+        "s": "zyxwvutsrqponmlkjihgfedcba",
+        "pairs": [
+          [0, 1],
+          [1, 2],
+          [2, 3],
+          [3, 4],
+          [4, 5],
+          [5, 6],
+          [6, 7],
+          [7, 8],
+          [8, 9],
+          [9, 10],
+          [10, 11],
+          [11, 12],
+          [12, 13],
+          [13, 14],
+          [14, 15],
+          [15, 16],
+          [16, 17],
+          [17, 18],
+          [18, 19],
+          [19, 20],
+          [20, 21],
+          [21, 22],
+          [22, 23],
+          [23, 24],
+          [24, 25]
+        ]
+      },
+      "expected": "abcdefghijklmnopqrstuvwxyz"
+    }
+  ]
+}

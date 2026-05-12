@@ -1,0 +1,752 @@
+{
+  "schema_version": 1,
+  "problem_id": 960,
+  "title": "Delete Columns to Make Sorted III",
+  "method": "minDeletionSize",
+  "signature": {
+    "params": [
+      {
+        "name": "strs",
+        "type": "STRING_ARRAY"
+      }
+    ],
+    "returns": "INT32"
+  },
+  "cases": [
+    {
+      "case_id": 1,
+      "input": {
+        "strs": ["zyx", "zyx", "zyx"]
+      },
+      "expected": 2
+    },
+    {
+      "case_id": 2,
+      "input": {
+        "strs": ["rrjk", "furt", "guzm"]
+      },
+      "expected": 2
+    },
+    {
+      "case_id": 3,
+      "input": {
+        "strs": ["axx", "ggs", "zzz"]
+      },
+      "expected": 0
+    },
+    {
+      "case_id": 4,
+      "input": {
+        "strs": ["ghi", "def", "abc"]
+      },
+      "expected": 0
+    },
+    {
+      "case_id": 5,
+      "input": {
+        "strs": ["aaa", "bbb", "ccc"]
+      },
+      "expected": 0
+    },
+    {
+      "case_id": 6,
+      "input": {
+        "strs": ["abc", "bcd", "cde"]
+      },
+      "expected": 0
+    },
+    {
+      "case_id": 7,
+      "input": {
+        "strs": ["abc", "abc", "abc"]
+      },
+      "expected": 0
+    },
+    {
+      "case_id": 8,
+      "input": {
+        "strs": ["a", "b", "c", "d"]
+      },
+      "expected": 0
+    },
+    {
+      "case_id": 9,
+      "input": {
+        "strs": ["abcdef", "uvwxyz"]
+      },
+      "expected": 0
+    },
+    {
+      "case_id": 10,
+      "input": {
+        "strs": ["zzz", "aaa", "zzz"]
+      },
+      "expected": 0
+    },
+    {
+      "case_id": 11,
+      "input": {
+        "strs": ["zyx", "wvu", "tsr"]
+      },
+      "expected": 2
+    },
+    {
+      "case_id": 12,
+      "input": {
+        "strs": ["edcba"]
+      },
+      "expected": 4
+    },
+    {
+      "case_id": 13,
+      "input": {
+        "strs": ["abcd", "abdc", "acdb"]
+      },
+      "expected": 1
+    },
+    {
+      "case_id": 14,
+      "input": {
+        "strs": ["abcd", "dbca", "adcb", "cbad"]
+      },
+      "expected": 3
+    },
+    {
+      "case_id": 15,
+      "input": {
+        "strs": ["babca", "bbazb"]
+      },
+      "expected": 3
+    },
+    {
+      "case_id": 16,
+      "input": {
+        "strs": ["a", "b", "c"]
+      },
+      "expected": 0
+    },
+    {
+      "case_id": 17,
+      "input": {
+        "strs": ["abcdef", "ghijkl", "mnopqr", "stuvwx", "yzabcd"]
+      },
+      "expected": 2
+    },
+    {
+      "case_id": 18,
+      "input": {
+        "strs": ["abcdefghij", "abcdefghij", "abcdefghij", "abcdefghij", "abcdefghij", "abcdefghij", "abcdefghij", "abcdefghij", "abcdefghij", "abcdefghij"]
+      },
+      "expected": 0
+    },
+    {
+      "case_id": 19,
+      "input": {
+        "strs": ["fedcb", "edcba", "dcbae", "cbade", "baced", "acbed"]
+      },
+      "expected": 4
+    },
+    {
+      "case_id": 20,
+      "input": {
+        "strs": ["zyxwvutsrqponmlkjihgfedcba", "zyxwvutsrqponmlkjihgfedcba", "zyxwvutsrqponmlkjihgfedcba"]
+      },
+      "expected": 25
+    },
+    {
+      "case_id": 21,
+      "input": {
+        "strs": ["abcd", "adbc", "bacd", "bdac"]
+      },
+      "expected": 2
+    },
+    {
+      "case_id": 22,
+      "input": {
+        "strs": ["abcdefghij", "abcdefghij", "abcdefghij", "abcdefghij", "abcdefghij"]
+      },
+      "expected": 0
+    },
+    {
+      "case_id": 23,
+      "input": {
+        "strs": ["abacabad", "babacaba", "cacabada", "dacabada"]
+      },
+      "expected": 5
+    },
+    {
+      "case_id": 24,
+      "input": {
+        "strs": ["abcdabcd", "dcbaabcd", "abcdabdc", "abdcabcd", "abcdcdab", "cdabcdab", "abcdabcd", "cdababcd", "abcdcdab", "dcabcdab"]
+      },
+      "expected": 6
+    },
+    {
+      "case_id": 25,
+      "input": {
+        "strs": ["abcdefgh", "hgfedcba", "abcdefgh", "hgfedcba", "abcdefgh"]
+      },
+      "expected": 7
+    },
+    {
+      "case_id": 26,
+      "input": {
+        "strs": ["leetcode", "leetcoed", "leetcdeo", "leetcodeo", "leetcodeo", "leetcodeo"]
+      },
+      "expected": 5
+    },
+    {
+      "case_id": 27,
+      "input": {
+        "strs": ["zyx", "yxz", "xyz"]
+      },
+      "expected": 2
+    },
+    {
+      "case_id": 28,
+      "input": {
+        "strs": ["aabbaa", "abcabc", "acbacb", "bacbac", "bbacab"]
+      },
+      "expected": 4
+    },
+    {
+      "case_id": 29,
+      "input": {
+        "strs": ["zzz", "yyy", "xxx", "www", "vvv", "uuu"]
+      },
+      "expected": 0
+    },
+    {
+      "case_id": 30,
+      "input": {
+        "strs": ["aabbcc", "bbccdd", "ccddeeff", "ddeeffgg", "eeffgghh", "ffgghhiijj", "gghhiijjkk", "hhiijjkkll", "iijjkkllmm", "jjkkllmmnn", "kkllmmnnoo", "llmmnnoopq", "mmnnoopqrs", "nnoopqrstu", "noopqrstuv", "oopqrstuvw", "opqrstuvwx", "pqrstuvwxy", "qrstuvwx", "rstuvwx", "stuvwx", "tuvwxy", "uvwxy", "vwxy", "wxy", "xy", "y"]
+      },
+      "expected": "Error: string index out of range"
+    },
+    {
+      "case_id": 31,
+      "input": {
+        "strs": ["abcdefgh", "bcadegfh", "cgdbefha", "dgfbceha", "egfdcbha", "fgecadhb"]
+      },
+      "expected": 5
+    },
+    {
+      "case_id": 32,
+      "input": {
+        "strs": ["abcdefghijklmnopqrstuvwxyz", "zyxwvutsrqponmlkjihgfedcba", "abcdefghijklnmopqrstuvwxyz"]
+      },
+      "expected": 25
+    },
+    {
+      "case_id": 33,
+      "input": {
+        "strs": ["abcdefgh", "abcdefgh", "abcdefgh", "abcdefgh", "abcdefgh"]
+      },
+      "expected": 0
+    },
+    {
+      "case_id": 34,
+      "input": {
+        "strs": ["qwert", "qwerr", "qwrer", "qwer", "qwe", "qw", "q"]
+      },
+      "expected": "Error: string index out of range"
+    },
+    {
+      "case_id": 35,
+      "input": {
+        "strs": ["zabc", "zcad", "zdba", "zeac", "zfcd", "zgda", "zhec", "zida", "zjea", "zkcf"]
+      },
+      "expected": 3
+    },
+    {
+      "case_id": 36,
+      "input": {
+        "strs": ["abcd", "bcde", "cdef", "defg", "efgh", "fghi", "ghij", "hijk", "ijkl", "jklm"]
+      },
+      "expected": 0
+    },
+    {
+      "case_id": 37,
+      "input": {
+        "strs": ["azazaz", "bababa", "cacaca", "dadada", "eaeaea"]
+      },
+      "expected": 3
+    },
+    {
+      "case_id": 38,
+      "input": {
+        "strs": ["abcdefg", "bcefgij", "acdfhij"]
+      },
+      "expected": 0
+    },
+    {
+      "case_id": 39,
+      "input": {
+        "strs": ["abcd", "abdc", "acdb", "cadb", "dabc"]
+      },
+      "expected": 2
+    },
+    {
+      "case_id": 40,
+      "input": {
+        "strs": ["xyz", "zyx", "wvu", "tsr", "qpo", "nml", "kji", "hgf", "edc", "baa"]
+      },
+      "expected": 2
+    },
+    {
+      "case_id": 41,
+      "input": {
+        "strs": ["aeg", "bdh", "cfi", "egj", "fhk", "gjl"]
+      },
+      "expected": 0
+    },
+    {
+      "case_id": 42,
+      "input": {
+        "strs": ["qrst", "mnop", "ijkl", "efgh", "abcd", "mnop", "qrst", "efgh", "ijkl", "abcd", "mnop", "qrst", "efgh", "ijkl", "abcd", "mnop", "qrst", "efgh", "ijkl", "abcd"]
+      },
+      "expected": 0
+    },
+    {
+      "case_id": 43,
+      "input": {
+        "strs": ["zzzzzzzzzz", "zzzzzzzzzz", "zzzzzzzzzz", "zzzzzzzzzz", "zzzzzzzzzz"]
+      },
+      "expected": 0
+    },
+    {
+      "case_id": 44,
+      "input": {
+        "strs": ["zzzzzzzz", "zzzzzzzy", "zzzzzzzx", "zzzzzzyx", "zzzzzyxy", "zzzzyxxy", "zzzyxxyx", "zzyxxyxy"]
+      },
+      "expected": 6
+    },
+    {
+      "case_id": 45,
+      "input": {
+        "strs": ["abcdefghij", "abcdefghik", "abcdefghij", "abcdefghim", "abcdefghin"]
+      },
+      "expected": 0
+    },
+    {
+      "case_id": 46,
+      "input": {
+        "strs": ["aabbcc", "bbccaa", "ccaabb", "aabbbc"]
+      },
+      "expected": 4
+    },
+    {
+      "case_id": 47,
+      "input": {
+        "strs": ["abcdefg", "bceghik", "acegikm", "adegimn"]
+      },
+      "expected": 0
+    },
+    {
+      "case_id": 48,
+      "input": {
+        "strs": ["qwertyuiop", "asdfghjklz", "zxcvbnmqwe", "qwertyuiop", "asdfghjklz"]
+      },
+      "expected": 7
+    },
+    {
+      "case_id": 49,
+      "input": {
+        "strs": ["qrst", "rstu", "stuv", "tuvw", "uvwx"]
+      },
+      "expected": 0
+    },
+    {
+      "case_id": 50,
+      "input": {
+        "strs": ["aabbccdd", "bbaaccee", "ccaabbee", "ddeebbaa", "eeccbbdd"]
+      },
+      "expected": 6
+    },
+    {
+      "case_id": 51,
+      "input": {
+        "strs": ["zyxwvutsrqponmlkjihgfedcba", "zyxwvutsrqponmlkjihgfedcba", "zyxwvutsrqponmlkjihgfedcba"]
+      },
+      "expected": 25
+    },
+    {
+      "case_id": 52,
+      "input": {
+        "strs": ["zzzz", "zzzz", "zzzz", "zzzz", "zzzz", "zzzz", "zzzz"]
+      },
+      "expected": 0
+    },
+    {
+      "case_id": 53,
+      "input": {
+        "strs": ["xyzabc", "yzabcd", "zabcde", "abcde", "bcdef", "cdefg", "defgh", "efghi", "fghij"]
+      },
+      "expected": "Error: string index out of range"
+    },
+    {
+      "case_id": 54,
+      "input": {
+        "strs": ["qwerty", "wertyq", "ertyqw", "rtyqwe", "tyqwer", "yqwret"]
+      },
+      "expected": 5
+    },
+    {
+      "case_id": 55,
+      "input": {
+        "strs": ["cba", "bca", "bac", "acb"]
+      },
+      "expected": 2
+    },
+    {
+      "case_id": 56,
+      "input": {
+        "strs": ["abcdefg", "bcefg", "bdfg", "beg", "bf", "bg", "b"]
+      },
+      "expected": "Error: string index out of range"
+    },
+    {
+      "case_id": 57,
+      "input": {
+        "strs": ["aebf", "accf", "bdgf", "cddg", "defh", "edgh", "feih", "gjih", "hkji"]
+      },
+      "expected": 2
+    },
+    {
+      "case_id": 58,
+      "input": {
+        "strs": ["aabbcc", "bbaacc", "ccabba", "aababc", "bbacab", "abcabc", "cbaabc", "abacba", "bacabc", "cababc"]
+      },
+      "expected": 4
+    },
+    {
+      "case_id": 59,
+      "input": {
+        "strs": ["zyxwvu", "utsrqpon", "mlkjihgf", "edcba"]
+      },
+      "expected": 5
+    },
+    {
+      "case_id": 60,
+      "input": {
+        "strs": ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
+      },
+      "expected": 0
+    },
+    {
+      "case_id": 61,
+      "input": {
+        "strs": ["abcde", "fghij", "klmno", "pqrst", "uvwxy"]
+      },
+      "expected": 0
+    },
+    {
+      "case_id": 62,
+      "input": {
+        "strs": ["cba", "daf", "gee"]
+      },
+      "expected": 2
+    },
+    {
+      "case_id": 63,
+      "input": {
+        "strs": ["abc", "bac", "cab", "bca", "cab", "cba"]
+      },
+      "expected": 2
+    },
+    {
+      "case_id": 64,
+      "input": {
+        "strs": ["leetcode", "leetcede", "leotcede"]
+      },
+      "expected": 5
+    },
+    {
+      "case_id": 65,
+      "input": {
+        "strs": ["zyxwvutsrqponmlkjihgfedcba", "zyxwvutsrqponmlkjihgfedcba"]
+      },
+      "expected": 25
+    },
+    {
+      "case_id": 66,
+      "input": {
+        "strs": ["zzzz", "zzzz", "zzzz", "zzzz", "zzzz"]
+      },
+      "expected": 0
+    },
+    {
+      "case_id": 67,
+      "input": {
+        "strs": ["abcd", "adcb", "bacd", "bdac", "cabd", "cdab", "dcba", "dcab", "dabc", "dacb"]
+      },
+      "expected": 3
+    },
+    {
+      "case_id": 68,
+      "input": {
+        "strs": ["zzzz", "zzyz", "zyyz", "yzzz", "yzyz", "yyyz", "yyyx", "yyxx", "yxxx", "xxxx"]
+      },
+      "expected": 3
+    },
+    {
+      "case_id": 69,
+      "input": {
+        "strs": ["abcd", "efgh", "ijkl", "mnop", "qrst", "uvwx", "yzab"]
+      },
+      "expected": 2
+    },
+    {
+      "case_id": 70,
+      "input": {
+        "strs": ["aabbcc", "bbaacc", "bbacac", "aabcbc", "cababc", "bcbacc"]
+      },
+      "expected": 3
+    },
+    {
+      "case_id": 71,
+      "input": {
+        "strs": ["aaa", "bbb", "ccc", "ddd", "eee", "fff"]
+      },
+      "expected": 0
+    },
+    {
+      "case_id": 72,
+      "input": {
+        "strs": ["xyz", "zyx", "yxz", "xzy", "yzx", "zxy"]
+      },
+      "expected": 2
+    },
+    {
+      "case_id": 73,
+      "input": {
+        "strs": ["abcdefghijklmnopqrstuvwxyz", "zyxwvutsrqponmlkjihgfedcba", "mnopqrstuvwxyzabcdefghijkl", "fedcbazyxwvutsrqponmlkjihg"]
+      },
+      "expected": 25
+    },
+    {
+      "case_id": 74,
+      "input": {
+        "strs": ["mnopqr", "opqrst", "pqrstu", "qrstuv"]
+      },
+      "expected": 0
+    },
+    {
+      "case_id": 75,
+      "input": {
+        "strs": ["abcdef", "bcdefg", "cdefgh", "defghi", "efghij", "fghijk", "ghijkl", "hijklm", "ijklmn"]
+      },
+      "expected": 0
+    },
+    {
+      "case_id": 76,
+      "input": {
+        "strs": ["abcd", "dcba", "abcd", "dcba"]
+      },
+      "expected": 3
+    },
+    {
+      "case_id": 77,
+      "input": {
+        "strs": ["aabbcc", "bbccaa", "ccaabb", "aabbbc", "bbccaa", "ccaabb", "aabbbc"]
+      },
+      "expected": 4
+    },
+    {
+      "case_id": 78,
+      "input": {
+        "strs": ["abcdefg", "gfedcba", "bacdefg", "ihgfedc", "jklmnop"]
+      },
+      "expected": 6
+    },
+    {
+      "case_id": 79,
+      "input": {
+        "strs": ["pqr", "qrs", "rst", "stu", "tuv", "uvw", "vwx", "wxy", "xyz"]
+      },
+      "expected": 0
+    },
+    {
+      "case_id": 80,
+      "input": {
+        "strs": ["qpwoeiruty", "qpwoeiruty", "qpwoeiruty"]
+      },
+      "expected": 5
+    },
+    {
+      "case_id": 81,
+      "input": {
+        "strs": ["mnop", "qrst", "uvwx", "yzab", "cdef", "ghij", "klmn", "opqr", "stuv", "wxyz"]
+      },
+      "expected": 2
+    },
+    {
+      "case_id": 82,
+      "input": {
+        "strs": ["abcd", "bcde", "cdef", "defg"]
+      },
+      "expected": 0
+    },
+    {
+      "case_id": 83,
+      "input": {
+        "strs": ["aabbcc", "abbccc", "abcccc", "bcccdd", "cccddd", "ccdddd", "cddddd", "dddddd"]
+      },
+      "expected": 0
+    },
+    {
+      "case_id": 84,
+      "input": {
+        "strs": ["aabbccddeeff", "abcdefabcdef", "fedcbafedcba", "abcdefabcdef", "aabbccddeeff"]
+      },
+      "expected": 10
+    },
+    {
+      "case_id": 85,
+      "input": {
+        "strs": ["abcdefghij", "jihgfedcba", "abcdefghij", "jihgfedcba", "abcdefghij", "jihgfedcba"]
+      },
+      "expected": 9
+    },
+    {
+      "case_id": 86,
+      "input": {
+        "strs": ["zyxwvutsrqponmlkjihgfedcba", "zyxwvutsrqponmlkjihgfedcba", "zyxwvutsrqponmlkjihgfedcba", "zyxwvutsrqponmlkjihgfedcba", "zyxwvutsrqponmlkjihgfedcba"]
+      },
+      "expected": 25
+    },
+    {
+      "case_id": 87,
+      "input": {
+        "strs": ["abcd", "bcde", "cdef", "defg", "efgh", "fghi", "ghij", "hijk", "ijkl", "jklm", "klmn", "lmno", "mnop", "nopq", "opqr", "pqrs", "qrst", "rstu", "stuv", "tuvw", "uvwx", "vwxy", "wxyz"]
+      },
+      "expected": 0
+    },
+    {
+      "case_id": 88,
+      "input": {
+        "strs": ["aabbcc", "bbccdd", "ccddeeff", "ddeeffgg"]
+      },
+      "expected": 0
+    },
+    {
+      "case_id": 89,
+      "input": {
+        "strs": ["abcdabcd", "bcdbcdcd", "cdcdcdcd", "dcdcdcdc", "efefefef", "fefefefe", "gfefefef", "hfhfhfhf", "ihihihih"]
+      },
+      "expected": 5
+    },
+    {
+      "case_id": 90,
+      "input": {
+        "strs": ["xyzuvw", "wvuxyz", "uvwxyx", "vxyzwu", "uzwvxy", "zwxyuv", "yxwvuz", "zyxuvw", "wvuzxy", "uvwxyx", "vxyzwu", "uzwvxy", "zwxyuv", "yxwvuz", "zyxuvw", "wvuzxy", "uvwxyx", "vxyzwu", "uzwvxy", "zwxyuv", "yxwvuz", "zyxuvw"]
+      },
+      "expected": 5
+    },
+    {
+      "case_id": 91,
+      "input": {
+        "strs": ["abcde", "bcdef", "cdefg", "defgh", "efghi", "fghij", "ghijk", "hijkl", "ijklm", "jklmn"]
+      },
+      "expected": 0
+    },
+    {
+      "case_id": 92,
+      "input": {
+        "strs": ["zzzzzzzzzz", "zzzzzzzzzz", "zzzzzzzzzz", "zzzzzzzzzz", "zzzzzzzzzz"]
+      },
+      "expected": 0
+    },
+    {
+      "case_id": 93,
+      "input": {
+        "strs": ["ba", "ab", "ba", "ab", "ba", "ab"]
+      },
+      "expected": 1
+    },
+    {
+      "case_id": 94,
+      "input": {
+        "strs": ["zab", "bac", "cab", "dcb"]
+      },
+      "expected": 2
+    },
+    {
+      "case_id": 95,
+      "input": {
+        "strs": ["abcde", "edcba", "fghij", "jihgf", "klmno", "onmlk"]
+      },
+      "expected": 4
+    },
+    {
+      "case_id": 96,
+      "input": {
+        "strs": ["abcdef", "fedcba", "dcbaef", "bacfed", "efabcd", "fedcba"]
+      },
+      "expected": 5
+    },
+    {
+      "case_id": 97,
+      "input": {
+        "strs": ["aaaaaaaaaa", "aabbaabbcc", "aabbaabbcc", "aabbaabbcc", "aabbaabbcc", "aabbaabbcc"]
+      },
+      "expected": 2
+    },
+    {
+      "case_id": 98,
+      "input": {
+        "strs": ["abcd", "dcba", "abcd", "dcba", "abcd"]
+      },
+      "expected": 3
+    },
+    {
+      "case_id": 99,
+      "input": {
+        "strs": ["abcdef", "bcdefg", "cdefgh", "defghi", "efghij", "fghijk", "ghijkl", "hijklm", "ijklmn", "jklmno", "klmnop", "lmnopq", "mnopqr", "nopqrs", "opqrst", "pqrstu", "qrstuv", "rstuvw", "stuvwx", "tuvwxy", "uvwxy", "vwxy", "wxy", "xy", "y"]
+      },
+      "expected": "Error: string index out of range"
+    },
+    {
+      "case_id": 100,
+      "input": {
+        "strs": ["aaaaa", "bbbbb", "ccccc", "ddddd", "eeeee", "fffff", "ggggg", "hhhhh", "iiiii", "jjjjj"]
+      },
+      "expected": 0
+    },
+    {
+      "case_id": 101,
+      "input": {
+        "strs": ["aabb", "bbaa", "abab", "baba", "abba", "baab"]
+      },
+      "expected": 3
+    },
+    {
+      "case_id": 102,
+      "input": {
+        "strs": ["abcd", "abdc", "acbd", "bacd", "badc", "bcad", "bcda", "bdac", "bdca", "cabd", "cadb", "cbad", "cbda", "cdab", "cdba", "dabc", "dacb", "dbac", "dbca", "dcab", "dcba"]
+      },
+      "expected": 3
+    },
+    {
+      "case_id": 103,
+      "input": {
+        "strs": ["abcde", "edcba", "fghij", "jihgf", "klmno", "onmlk", "pqrst", "tsrqp", "uvwxy", "yxwvu", "z", "z", "z", "z", "z"]
+      },
+      "expected": 4
+    },
+    {
+      "case_id": 104,
+      "input": {
+        "strs": ["abcd", "efgh", "ijkl", "mnop"]
+      },
+      "expected": 0
+    },
+    {
+      "case_id": 105,
+      "input": {
+        "strs": ["abcdefg", "gfedcba", "hijklmn", "nmolkji", "opqrstu", "utsrqpo"]
+      },
+      "expected": 6
+    }
+  ]
+}

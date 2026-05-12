@@ -1,0 +1,623 @@
+{
+  "schema_version": 1,
+  "problem_id": 2135,
+  "title": "Count Words Obtained After Adding a Letter",
+  "method": "wordCount",
+  "signature": {
+    "params": [
+      {
+        "name": "startWords",
+        "type": "STRING_ARRAY"
+      },
+      {
+        "name": "targetWords",
+        "type": "STRING_ARRAY"
+      }
+    ],
+    "returns": "INT32"
+  },
+  "cases": [
+    {
+      "case_id": 1,
+      "input": {
+        "startWords": ["ant", "act", "tack"],
+        "targetWords": ["tack", "act", "acti"]
+      },
+      "expected": 2
+    },
+    {
+      "case_id": 2,
+      "input": {
+        "startWords": ["ab", "a"],
+        "targetWords": ["abc", "abcd"]
+      },
+      "expected": 1
+    },
+    {
+      "case_id": 3,
+      "input": {
+        "startWords": ["pqrst", "vwxyz", "abcdef"],
+        "targetWords": ["qrstuvw", "vwxyzab", "abcdefg", "pqrstuv", "mnopqr"]
+      },
+      "expected": 1
+    },
+    {
+      "case_id": 4,
+      "input": {
+        "startWords": "[\"abcdefghijklmnopqrstuvwxyz\"[2:-2]]",
+        "targetWords": ["abcdefghijklmnopqrstuvwxyz", "abcdefghijklmnopqrstuvwxyza", "abcdefghijklmnopqrstuvwxyzab"]
+      },
+      "expected": "Error: Solution.wordCount() missing 1 required positional argument: 'startWords'"
+    },
+    {
+      "case_id": 5,
+      "input": {
+        "startWords": ["python", "java", "c"],
+        "targetWords": ["pythonx", "javaz", "cb"]
+      },
+      "expected": 3
+    },
+    {
+      "case_id": 6,
+      "input": {
+        "startWords": ["abcdexyz", "mnopqr", "stuv"],
+        "targetWords": ["abcdexyzw", "mnopqrs", "stuvq"]
+      },
+      "expected": 3
+    },
+    {
+      "case_id": 7,
+      "input": {
+        "startWords": ["python", "java", "csharp"],
+        "targetWords": ["pythonic", "javacoffee", "csharptool", "pythonjava", "javacsharp"]
+      },
+      "expected": 0
+    },
+    {
+      "case_id": 8,
+      "input": {
+        "startWords": ["abc", "def", "ghi", "jkl", "mno"],
+        "targetWords": ["abcd", "abce", "abcf", "abck", "abcm"]
+      },
+      "expected": 5
+    },
+    {
+      "case_id": 9,
+      "input": {
+        "startWords": ["python", "java", "c++"],
+        "targetWords": ["pythona", "javab", "c++c", "pythonb", "javac", "c++d"]
+      },
+      "expected": "Error: negative shift count"
+    },
+    {
+      "case_id": 10,
+      "input": {
+        "startWords": ["xyz", "uvw", "rst"],
+        "targetWords": ["xyza", "uvwq", "rstv", "rstw"]
+      },
+      "expected": 4
+    },
+    {
+      "case_id": 11,
+      "input": {
+        "startWords": "[\"abcdefghijklmnopqrstuvwxyz\"[:i] for i in range(1, 26)]",
+        "targetWords": "[\"abcdefghijklmnopqrstuvwxyz\"[:i+1] for i in range(1, 26)]"
+      },
+      "expected": "Error: Solution.wordCount() missing 2 required positional arguments: 'startWords' and 'targetWords'"
+    },
+    {
+      "case_id": 12,
+      "input": {
+        "startWords": ["abcd", "bcde", "cdef"],
+        "targetWords": ["abcde", "bcdefg", "abcdef", "bcd"]
+      },
+      "expected": 1
+    },
+    {
+      "case_id": 13,
+      "input": {
+        "startWords": ["a", "bc", "def", "ghij", "klmno"],
+        "targetWords": ["ab", "bcd", "cdef", "defgh", "efghij", "fghijk"]
+      },
+      "expected": 3
+    },
+    {
+      "case_id": 14,
+      "input": {
+        "startWords": ["abcde", "fghij", "klmno"],
+        "targetWords": ["bcdef", "ghijk", "klmnoa", "mnopqr", "stuvwx"]
+      },
+      "expected": 1
+    },
+    {
+      "case_id": 15,
+      "input": {
+        "startWords": ["hello", "world", "abc"],
+        "targetWords": ["helloa", "worldb", "abcd"]
+      },
+      "expected": 3
+    },
+    {
+      "case_id": 16,
+      "input": {
+        "startWords": ["mnopqr", "stuvwx", "yzabcd"],
+        "targetWords": ["mnopqrs", "stuvwxy", "yzabcde", "mnopqrst", "stuvwxyz", "yzabcdef", "mnopqrstuv", "stuvwxyzab", "yzabcdefg", "mnopqrstu", "stuvwxyzabc", "yzabcdefg", "mnopqrstuvw", "stuvwxyzabcd", "yzabcdefgh", "mnopqrstuvwx", "stuvwxyzabcde", "yzabcdefgij", "mnopqrstuvwxy", "stuvwxyzabcdef", "yzabcdefgijk"]
+      },
+      "expected": 3
+    },
+    {
+      "case_id": 17,
+      "input": {
+        "startWords": ["xyz", "uvw", "qrst"],
+        "targetWords": ["xyza", "uvwxy", "qrstuv", "qrstuvw", "uvwq"]
+      },
+      "expected": 2
+    },
+    {
+      "case_id": 18,
+      "input": {
+        "startWords": ["mnopqr", "stuvwx", "yzabcd", "efghij", "klmno"],
+        "targetWords": ["mnopqrs", "stuvwxy", "yzabcdx", "efghijk", "klmnop", "abcdefgh"]
+      },
+      "expected": 5
+    },
+    {
+      "case_id": 19,
+      "input": {
+        "startWords": ["abc", "def", "ghi"],
+        "targetWords": ["abcd", "abcf", "defg", "ghij"]
+      },
+      "expected": 4
+    },
+    {
+      "case_id": 20,
+      "input": {},
+      "expected": "Error: Solution.wordCount() missing 2 required positional arguments: 'startWords' and 'targetWords'"
+    },
+    {
+      "case_id": 21,
+      "input": {
+        "startWords": ["abc", "def", "ghi"],
+        "targetWords": ["abcd", "efg", "hij", "defg", "ghik"]
+      },
+      "expected": 3
+    },
+    {
+      "case_id": 22,
+      "input": {
+        "startWords": ["xyz", "mnop", "qrst"],
+        "targetWords": ["xyzw", "mnopq", "qrstuvw"]
+      },
+      "expected": 2
+    },
+    {
+      "case_id": 23,
+      "input": {
+        "startWords": ["a", "b", "c", "d"],
+        "targetWords": ["ab", "bc", "cd", "da", "abc", "bcd", "cda", "dab"]
+      },
+      "expected": 4
+    },
+    {
+      "case_id": 24,
+      "input": {
+        "startWords": "[\"abcdefghijklmnopqrstuvwxyz\"[1:-1]]",
+        "targetWords": ["abcdefghijklmnopqrstuvwxyz", "abcdefghijklmnopqrstuvwxyza"]
+      },
+      "expected": "Error: Solution.wordCount() missing 1 required positional argument: 'startWords'"
+    },
+    {
+      "case_id": 25,
+      "input": {
+        "startWords": ["abcdefghij", "klmnopqr", "stuvwxyz"],
+        "targetWords": ["abcdefghijk", "klmnopqrs", "stuvwxyzab", "abcdefghijl", "klmnopqrt", "stuvwxyzabc", "abcdefghijm", "klmnopqru", "stuvwxyzabcd", "abcdefghijn", "klmnopqrv", "stuvwxyzabcde", "abcdefghijo", "klmnopqrw", "stuvwxyzabcdef", "abcdefghijp", "klmnopqrx", "stuvwxyzabcdefg", "abcdefghirq", "klmnopqry", "stuvwxyzabcdefgh", "abcdefghirs", "klmnopqrz", "stuvwxyzabcdefghi", "abcdefghirt", "klmnopqs", "stuvwxyzabcdefghij", "abcdefghiru", "klmnopqt", "stuvwxyzabcdefghijk", "abcdefghirv", "klmnopqu", "stuvwxyzabcdefghijl", "abcdefghirw", "klmnopqv", "stuvwxyzabcdefghijm", "abcdefghirx", "klmnopqw", "stuvwxyzabcdefghijn", "abcdefghiry", "klmnopqx", "stuvwxyzabcdefghijo", "abcdefghirz", "klmnopqy", "stuvwxyzabcdefghijp", "klmnopqz", "stuvwxyzabcdefghirq"]
+      },
+      "expected": 14
+    },
+    {
+      "case_id": 26,
+      "input": {
+        "startWords": ["quick", "brown", "fox"],
+        "targetWords": ["quicks", "brownf", "foxj", "quickm", "brownx"]
+      },
+      "expected": 5
+    },
+    {
+      "case_id": 27,
+      "input": {
+        "startWords": ["a", "b", "c"],
+        "targetWords": ["ab", "bc", "ca", "abc", "abcd"]
+      },
+      "expected": 3
+    },
+    {
+      "case_id": 28,
+      "input": {
+        "startWords": ["abc", "def", "ghi"],
+        "targetWords": ["abcd", "efg", "ghij"]
+      },
+      "expected": 2
+    },
+    {
+      "case_id": 29,
+      "input": {
+        "startWords": ["zebra", "dog", "cat"],
+        "targetWords": ["zebrao", "doge", "taco"]
+      },
+      "expected": 3
+    },
+    {
+      "case_id": 30,
+      "input": {
+        "startWords": ["a", "b", "c", "d", "e", "f", "g", "h"],
+        "targetWords": ["ab", "bc", "cd", "de", "ef", "fg", "gh", "ha"]
+      },
+      "expected": 8
+    },
+    {
+      "case_id": 31,
+      "input": {
+        "startWords": ["abcdefgh", "ijklmnop", "qrstuvwxyz"],
+        "targetWords": ["abcdefghi", "ijklmnopq", "qrstuvwxyzx", "abcdefghjkl", "ijklmnopqr"]
+      },
+      "expected": 2
+    },
+    {
+      "case_id": 32,
+      "input": {
+        "startWords": ["xyz", "abc", "uvw", "def", "ghi"],
+        "targetWords": ["xyzab", "uvwxy", "defgh", "abcdef", "mnopq"]
+      },
+      "expected": 0
+    },
+    {
+      "case_id": 33,
+      "input": {
+        "startWords": ["pqr", "stu", "vwx"],
+        "targetWords": ["pqrs", "stuv", "vwxy", "pqrst", "stuvw", "vwxys", "mnopq"]
+      },
+      "expected": 3
+    },
+    {
+      "case_id": 34,
+      "input": {
+        "startWords": ["quick", "brown", "fox"],
+        "targetWords": ["quickly", "brownly", "foxes", "quickbrown", "brownfox"]
+      },
+      "expected": 0
+    },
+    {
+      "case_id": 35,
+      "input": {
+        "startWords": ["a", "b", "c", "d"],
+        "targetWords": ["ab", "bc", "cd", "abc", "abcd"]
+      },
+      "expected": 3
+    },
+    {
+      "case_id": 36,
+      "input": {
+        "startWords": ["aabbcc", "ddeeff", "gghhii"],
+        "targetWords": ["aabbccx", "ddeeffx", "gghhia", "ddeeffg", "gghhiih"]
+      },
+      "expected": 2
+    },
+    {
+      "case_id": 37,
+      "input": {
+        "startWords": ["abcdef", "ghijkl", "mnopqr", "stuvwx"],
+        "targetWords": ["abcdefg", "ghijklm", "mnopqrs", "stuvwxz", "abcdefghijklmnopqrstuvwxyza", "ghijklmnopqrstuvwxyz", "mnopqrstuvwxyzabc", "stuvwxyzmnopqr"]
+      },
+      "expected": 4
+    },
+    {
+      "case_id": 38,
+      "input": {
+        "startWords": ["abc", "de", "fgh", "xyz"],
+        "targetWords": ["abcd", "def", "efg", "xyzz"]
+      },
+      "expected": 2
+    },
+    {
+      "case_id": 39,
+      "input": {
+        "startWords": ["jump", "over", "lazy"],
+        "targetWords": ["jumpo", "overj", "lazyr", "jumpr", "overv"]
+      },
+      "expected": 4
+    },
+    {
+      "case_id": 40,
+      "input": {
+        "startWords": ["mnop", "qrst", "uvwx"],
+        "targetWords": ["mnopq", "qrstu", "vwxyz", "mnopqr", "qrstuv"]
+      },
+      "expected": 2
+    },
+    {
+      "case_id": 41,
+      "input": {
+        "startWords": ["abcd", "efgh", "ijkl"],
+        "targetWords": ["abcde", "efghi", "ijklm", "abcdx", "efghy", "ijklz"]
+      },
+      "expected": 6
+    },
+    {
+      "case_id": 42,
+      "input": {},
+      "expected": "Error: Solution.wordCount() missing 2 required positional arguments: 'startWords' and 'targetWords'"
+    },
+    {
+      "case_id": 43,
+      "input": {
+        "startWords": ["hello", "world", "abc"],
+        "targetWords": ["helloz", "worldy", "abcd"]
+      },
+      "expected": 3
+    },
+    {
+      "case_id": 44,
+      "input": {
+        "startWords": ["mnop", "qrst", "uvwx"],
+        "targetWords": ["mnopq", "qrstuv", "uvwxy", "mnopqr", "qrstuvw", "uvwxzy", "mnopqrst", "qrstuvwx", "uvwxyza", "mnopqrstuvwxyz"]
+      },
+      "expected": 2
+    },
+    {
+      "case_id": 45,
+      "input": {
+        "startWords": ["programming", "is", "fun"],
+        "targetWords": ["programmings", "isis", "funny", "programmingis", "isfun"]
+      },
+      "expected": 0
+    },
+    {
+      "case_id": 46,
+      "input": {
+        "startWords": ["jump", "over", "lazy"],
+        "targetWords": ["jumped", "overly", "lazily", "jumpover", "overlazy"]
+      },
+      "expected": 0
+    },
+    {
+      "case_id": 47,
+      "input": {
+        "startWords": "[\"programming\"[i:] for i in range(len(\"programming\"))]",
+        "targetWords": "[\"programming\"[i:] + chr(ord('a') + i % 26) for i in range(len(\"programming\"))]"
+      },
+      "expected": "Error: Solution.wordCount() missing 2 required positional arguments: 'startWords' and 'targetWords'"
+    },
+    {
+      "case_id": 48,
+      "input": {
+        "startWords": ["abcdefghij"],
+        "targetWords": ["abcdefghijk", "abcdefghijl", "abcdefghijm", "abcdefghijn", "abcdefghijo", "abcdefghijp", "abcdefghijq", "abcdefghijr", "abcdefghjis", "abcdefghijt", "abcdefghiju", "abcdefghijv", "abcdefghijw", "abcdefghijx", "abcdefghijy", "abcdefghijz"]
+      },
+      "expected": 16
+    },
+    {
+      "case_id": 49,
+      "input": {
+        "startWords": ["abc", "bcd", "efg"],
+        "targetWords": ["abcd", "bcde", "efgh"]
+      },
+      "expected": 3
+    },
+    {
+      "case_id": 50,
+      "input": {
+        "startWords": ["zebra", "panda", "giraffe"],
+        "targetWords": ["zebrac", "pandaf", "giraffeb", "zebrad", "pandaq"]
+      },
+      "expected": 5
+    },
+    {
+      "case_id": 51,
+      "input": {
+        "startWords": ["jump", "over", "lazy"],
+        "targetWords": ["jumper", "overt", "lazier"]
+      },
+      "expected": 1
+    },
+    {
+      "case_id": 52,
+      "input": {
+        "startWords": ["a", "b", "c"],
+        "targetWords": ["ab", "bc", "ca", "abc", "abcd", "abcde"]
+      },
+      "expected": 3
+    },
+    {
+      "case_id": 53,
+      "input": {
+        "startWords": ["xyz", "wxy", "uvw"],
+        "targetWords": ["xyza", "wxyb", "uvwz", "uvwxy"]
+      },
+      "expected": 3
+    },
+    {
+      "case_id": 54,
+      "input": {
+        "startWords": ["abcdefgh", "ijklmnop", "qrstuvwxyz", "abcxyz", "uvwxy"],
+        "targetWords": ["abcdefghi", "ijklmnopq", "qrstuvwxyzx", "abcxyzw", "uvwxyza", "mnopqrstu"]
+      },
+      "expected": 3
+    },
+    {
+      "case_id": 55,
+      "input": {
+        "startWords": ["abcd", "efgh", "ijkl"],
+        "targetWords": ["abcde", "efghi", "jklmn", "abcd"]
+      },
+      "expected": 2
+    },
+    {
+      "case_id": 56,
+      "input": {
+        "startWords": ["abcd", "efgh", "ijkl"],
+        "targetWords": ["abcde", "efghi", "ijklm", "mnop"]
+      },
+      "expected": 3
+    },
+    {
+      "case_id": 57,
+      "input": {
+        "startWords": ["xyz", "uvw", "rst"],
+        "targetWords": ["xyza", "uvwq", "rstu", "rstuv"]
+      },
+      "expected": 3
+    },
+    {
+      "case_id": 58,
+      "input": {
+        "startWords": ["abc", "def", "ghi"],
+        "targetWords": ["abcd", "defg", "ghij", "hijk", "mnop", "qrst", "uvw", "xyz"]
+      },
+      "expected": 3
+    },
+    {
+      "case_id": 59,
+      "input": {
+        "startWords": ["quick", "brown", "fox"],
+        "targetWords": ["quickly", "brownie", "foxy", "quicklybrown", "brownief", "quickbrown", "quickfox", "brownfox"]
+      },
+      "expected": 1
+    },
+    {
+      "case_id": 60,
+      "input": {
+        "startWords": ["abcdefghijklmnopqrstuvwxyz"],
+        "targetWords": ["abcdefghijklmnopqrstuvwxyza", "abcdefghijklmnopqrstuvwxyzb"]
+      },
+      "expected": 0
+    },
+    {
+      "case_id": 61,
+      "input": {
+        "startWords": ["quick", "brown", "fox"],
+        "targetWords": ["quickly", "brownish", "foxy"]
+      },
+      "expected": 1
+    },
+    {
+      "case_id": 62,
+      "input": {
+        "startWords": ["apple", "banana", "cherry"],
+        "targetWords": ["appleb", "bananac", "cherryd", "applef", "bananag"]
+      },
+      "expected": 4
+    },
+    {
+      "case_id": 63,
+      "input": {
+        "startWords": ["abcd", "efgh", "ijkl"],
+        "targetWords": ["abcde", "efghi", "ijklm"]
+      },
+      "expected": 3
+    },
+    {
+      "case_id": 64,
+      "input": {
+        "startWords": ["one", "two", "three"],
+        "targetWords": ["onet", "twot", "threet", "oneto", "twoto", "threeto", "onetwo", "twotwo", "threetwo", "onetwothree", "twotwothree", "threetwothree", "onetwofour", "twotwofour", "threetwofour"]
+      },
+      "expected": 1
+    },
+    {
+      "case_id": 65,
+      "input": {
+        "startWords": ["abcd", "efgh", "ijkl"],
+        "targetWords": ["abcde", "efghi", "ijklm", "mnopq"]
+      },
+      "expected": 3
+    },
+    {
+      "case_id": 66,
+      "input": {
+        "startWords": ["hello", "world"],
+        "targetWords": ["hellow", "worlds", "dlrow"]
+      },
+      "expected": 2
+    },
+    {
+      "case_id": 67,
+      "input": {
+        "startWords": ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"],
+        "targetWords": ["ab", "bc", "cd", "de", "ef", "fg", "gh", "hi", "ij", "jk", "kl", "lm", "mn", "no", "op", "pq", "qr", "rs", "st", "tu", "uv", "vw", "wx", "xy", "yz", "za"]
+      },
+      "expected": 26
+    },
+    {
+      "case_id": 68,
+      "input": {
+        "startWords": ["zyxwvutsrqponmlkjihgfedcba"],
+        "targetWords": ["zyxwvutsrqponmlkjihgfedcbaz", "zyxwvutsrqponmlkjihgfedcbay", "zyxwvutsrqponmlkjihgfedcbax", "zyxwvutsrqponmlkjihgfedcbaw"]
+      },
+      "expected": 0
+    },
+    {
+      "case_id": 69,
+      "input": {
+        "startWords": ["pqr", "stu", "vwx", "yz", "abc"],
+        "targetWords": ["pqrs", "stuv", "vwxy", "yzab", "uvwxy", "mnopq"]
+      },
+      "expected": 3
+    },
+    {
+      "case_id": 70,
+      "input": {
+        "startWords": ["abcd", "efgh", "ijkl", "mnop"],
+        "targetWords": ["abcde", "efghi", "ijklm", "nopqr"]
+      },
+      "expected": 3
+    },
+    {
+      "case_id": 71,
+      "input": {
+        "startWords": ["hello", "world"],
+        "targetWords": ["ehllo", "dlrow", "owrld", "helloa", "worldb"]
+      },
+      "expected": 2
+    },
+    {
+      "case_id": 72,
+      "input": {
+        "startWords": ["a", "b", "c", "d"],
+        "targetWords": ["ab", "bc", "cd", "de", "ef", "fg", "gh", "hi", "ij", "jk", "kl", "lm", "mn", "no", "op", "pq", "qr", "rs", "st", "tu", "uv", "vw", "wx", "xy", "yz", "za"]
+      },
+      "expected": 5
+    },
+    {
+      "case_id": 73,
+      "input": {
+        "startWords": ["mnopq", "rstuv", "wxyz"],
+        "targetWords": ["mnopqr", "rstuvw", "wxyza", "mnopqs", "rstuvx", "wxyzab", "mnopqt", "rstuvy", "wxyzac", "mnopqu", "rstuvz", "wxyzad", "mnopqv", "rstuvw", "wxyzae"]
+      },
+      "expected": 11
+    },
+    {
+      "case_id": 74,
+      "input": {
+        "startWords": ["abcdefghijklmnopqrstuvwxyz"],
+        "targetWords": ["abcdefghijklmnopqrstuvwxyza", "abcdefghijklmnopqrstuvwxyzb", "abcdefghijklmnopqrstuvwxyzc"]
+      },
+      "expected": 0
+    },
+    {
+      "case_id": 75,
+      "input": {
+        "startWords": ["abcdefghijklmnopqrstuvwxyz"],
+        "targetWords": ["abcdefghijklmnopqrstuvwxyza", "abcdefghijklmnopqrstuvwxyzb", "abcdefghijklmnopqrstuvwxyzc", "abcdefghijklmnopqrstuvwxyzd", "abcdefghijklmnopqrstuvwxyze", "abcdefghijklmnopqrstuvwxyzf", "abcdefghijklmnopqrstuvwxy zg", "abcdefghijklmnopqrstuvwxyzh", "abcdefghijklmnopqrstuvwxyzi", "abcdefghijklmnopqrstuvwxyzj", "abcdefghijklmnopqrstuvwxyzk", "abcdefghijklmnopqrstuvwxyzl", "abcdefghijklmnopqrstuvwxyzm", "abcdefghijklmnopqrstuvwxyzn", "abcdefghijklmnopqrstuvwxyzo", "abcdefghijklmnopqrstuvwxyzp", "abcdefghijklmnopqrstuvwxyzq", "abcdefghijklmnopqrstuvwxyza", "abcdefghijklmnopqrstuvwxyzz"]
+      },
+      "expected": "Error: negative shift count"
+    },
+    {
+      "case_id": 76,
+      "input": {
+        "startWords": ["a", "b", "c", "d"],
+        "targetWords": ["ab", "bc", "cd", "da"]
+      },
+      "expected": 4
+    }
+  ]
+}

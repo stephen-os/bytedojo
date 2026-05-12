@@ -1,0 +1,934 @@
+{
+  "schema_version": 1,
+  "problem_id": 1078,
+  "title": "Occurrences After Bigram",
+  "method": "findOcurrences",
+  "signature": {
+    "params": [
+      {
+        "name": "text",
+        "type": "STRING"
+      },
+      {
+        "name": "first",
+        "type": "STRING"
+      },
+      {
+        "name": "second",
+        "type": "STRING"
+      }
+    ],
+    "returns": "STRING_ARRAY"
+  },
+  "cases": [
+    {
+      "case_id": 1,
+      "input": {
+        "text": "hello world hello hello world",
+        "first": "hello",
+        "second": "world"
+      },
+      "expected": ["hello"]
+    },
+    {
+      "case_id": 2,
+      "input": {
+        "text": "repeat repeat repeat repeat",
+        "first": "repeat",
+        "second": "repeat"
+      },
+      "expected": ["repeat", "repeat"]
+    },
+    {
+      "case_id": 3,
+      "input": {
+        "text": "look at the stars look at the moon",
+        "first": "look",
+        "second": "at"
+      },
+      "expected": ["the", "the"]
+    },
+    {
+      "case_id": 4,
+      "input": {
+        "text": "in the beginning there was the word",
+        "first": "the",
+        "second": "beginning"
+      },
+      "expected": ["there"]
+    },
+    {
+      "case_id": 5,
+      "input": {
+        "text": "this is a test this is only a test",
+        "first": "this",
+        "second": "is"
+      },
+      "expected": ["a", "only"]
+    },
+    {
+      "case_id": 6,
+      "input": {
+        "text": "one two three two three four three five",
+        "first": "two",
+        "second": "three"
+      },
+      "expected": ["two", "four"]
+    },
+    {
+      "case_id": 7,
+      "input": {
+        "text": "every good boy does fine every good boy does fine",
+        "first": "good",
+        "second": "boy"
+      },
+      "expected": ["does", "does"]
+    },
+    {
+      "case_id": 8,
+      "input": {
+        "text": "alice is a good girl she is a good student",
+        "first": "a",
+        "second": "good"
+      },
+      "expected": ["girl", "student"]
+    },
+    {
+      "case_id": 9,
+      "input": {
+        "text": "we will we will rock you",
+        "first": "we",
+        "second": "will"
+      },
+      "expected": ["we", "rock"]
+    },
+    {
+      "case_id": 10,
+      "input": {
+        "text": "foo bar foo bar foo",
+        "first": "foo",
+        "second": "bar"
+      },
+      "expected": ["foo", "foo"]
+    },
+    {
+      "case_id": 11,
+      "input": {
+        "text": "in a village of la mancha the name of which i have no desire to call to mind",
+        "first": "village",
+        "second": "of"
+      },
+      "expected": ["la"]
+    },
+    {
+      "case_id": 12,
+      "input": {
+        "text": "this is a test this is only a test",
+        "first": "is",
+        "second": "a"
+      },
+      "expected": ["test"]
+    },
+    {
+      "case_id": 13,
+      "input": {
+        "text": "foo bar foo foo bar bar foo",
+        "first": "foo",
+        "second": "bar"
+      },
+      "expected": ["foo", "bar"]
+    },
+    {
+      "case_id": 14,
+      "input": {
+        "text": "the quick brown fox jumps over the lazy dog",
+        "first": "the",
+        "second": "lazy"
+      },
+      "expected": ["dog"]
+    },
+    {
+      "case_id": 15,
+      "input": {
+        "text": "the quick brown fox jumps over the lazy dog the quick brown fox jumps over the lazy dog",
+        "first": "quick",
+        "second": "brown"
+      },
+      "expected": ["fox", "fox"]
+    },
+    {
+      "case_id": 16,
+      "input": {
+        "text": "a b c a b c a b c a b c a b c a b c",
+        "first": "a",
+        "second": "b"
+      },
+      "expected": ["c", "c", "c", "c", "c", "c"]
+    },
+    {
+      "case_id": 17,
+      "input": {
+        "text": "repeat repeat repeat repeat repeat repeat repeat repeat repeat",
+        "first": "repeat",
+        "second": "repeat"
+      },
+      "expected": ["repeat", "repeat", "repeat", "repeat", "repeat", "repeat", "repeat"]
+    },
+    {
+      "case_id": 18,
+      "input": {
+        "text": "one two three four five six seven eight nine ten eleven twelve",
+        "first": "five",
+        "second": "six"
+      },
+      "expected": ["seven"]
+    },
+    {
+      "case_id": 19,
+      "input": {
+        "text": "the quick brown fox jumps over the lazy dog the quick brown fox",
+        "first": "quick",
+        "second": "brown"
+      },
+      "expected": ["fox", "fox"]
+    },
+    {
+      "case_id": 20,
+      "input": {
+        "text": "a tale of two cities a tale of two brothers a tale of two sisters",
+        "first": "tale",
+        "second": "of"
+      },
+      "expected": ["two", "two", "two"]
+    },
+    {
+      "case_id": 21,
+      "input": {
+        "text": "once upon a time in a land far far away once upon a time in a magical land",
+        "first": "once",
+        "second": "upon"
+      },
+      "expected": ["a", "a"]
+    },
+    {
+      "case_id": 22,
+      "input": {
+        "text": "this is a simple test this is a more complex test this is a simple test",
+        "first": "is",
+        "second": "a"
+      },
+      "expected": ["simple", "more", "simple"]
+    },
+    {
+      "case_id": 23,
+      "input": {
+        "text": "the rain in spain stays mainly in the plain the rain in spain",
+        "first": "rain",
+        "second": "in"
+      },
+      "expected": ["spain", "spain"]
+    },
+    {
+      "case_id": 24,
+      "input": {
+        "text": "one fish two fish red fish blue fish one fish two fish red fish blue fish",
+        "first": "fish",
+        "second": "red"
+      },
+      "expected": ["fish", "fish"]
+    },
+    {
+      "case_id": 25,
+      "input": {
+        "text": "one two three four five six seven eight nine ten one two three four five six",
+        "first": "three",
+        "second": "four"
+      },
+      "expected": ["five", "five"]
+    },
+    {
+      "case_id": 26,
+      "input": {
+        "text": "x y z x y z x y z x y z x y z x y z x y z x y z",
+        "first": "x",
+        "second": "y"
+      },
+      "expected": ["z", "z", "z", "z", "z", "z", "z", "z"]
+    },
+    {
+      "case_id": 27,
+      "input": {
+        "text": "this is a simple sentence to test the function this is a simple test",
+        "first": "simple",
+        "second": "sentence"
+      },
+      "expected": ["to"]
+    },
+    {
+      "case_id": 28,
+      "input": {
+        "text": "a a a a a a a a a a a a a a a a a a a a a",
+        "first": "a",
+        "second": "a"
+      },
+      "expected": ["a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a"]
+    },
+    {
+      "case_id": 29,
+      "input": {
+        "text": "once upon a time in a land far far away once upon a time",
+        "first": "once",
+        "second": "upon"
+      },
+      "expected": ["a", "a"]
+    },
+    {
+      "case_id": 30,
+      "input": {
+        "text": "repeated repeated repeated repeated repeated repeated",
+        "first": "repeated",
+        "second": "repeated"
+      },
+      "expected": ["repeated", "repeated", "repeated", "repeated"]
+    },
+    {
+      "case_id": 31,
+      "input": {
+        "text": "abc def ghi jkl mno pqr stu vwx yz abc def ghi jkl mno",
+        "first": "def",
+        "second": "ghi"
+      },
+      "expected": ["jkl", "jkl"]
+    },
+    {
+      "case_id": 32,
+      "input": {
+        "text": "a b c a b c a b c a b c a b c a b c a b c a b c a b c a b c",
+        "first": "a",
+        "second": "b"
+      },
+      "expected": ["c", "c", "c", "c", "c", "c", "c", "c", "c", "c"]
+    },
+    {
+      "case_id": 33,
+      "input": {
+        "text": "a b c d e f g h i j k l m n o p q r s t u v w x y z a b c d",
+        "first": "a",
+        "second": "b"
+      },
+      "expected": ["c", "c"]
+    },
+    {
+      "case_id": 34,
+      "input": {
+        "text": "this is a simple test case this is a very simple test case",
+        "first": "is",
+        "second": "a"
+      },
+      "expected": ["simple", "very"]
+    },
+    {
+      "case_id": 35,
+      "input": {
+        "text": "the quick brown fox jumps over the lazy dog the quick brown fox jumps",
+        "first": "quick",
+        "second": "brown"
+      },
+      "expected": ["fox", "fox"]
+    },
+    {
+      "case_id": 36,
+      "input": {
+        "text": "once upon a time in a land far far away once upon a time in a land",
+        "first": "once",
+        "second": "upon"
+      },
+      "expected": ["a", "a"]
+    },
+    {
+      "case_id": 37,
+      "input": {
+        "text": "find these occurrences carefully find these occurrences again find these occurrences one more time",
+        "first": "find",
+        "second": "these"
+      },
+      "expected": ["occurrences", "occurrences", "occurrences"]
+    },
+    {
+      "case_id": 38,
+      "input": {
+        "text": "a quick movement of the enemy will jeopardize six gunboats a quick and silent movement of the enemy will jeopardize five gunboats",
+        "first": "quick",
+        "second": "and"
+      },
+      "expected": ["silent"]
+    },
+    {
+      "case_id": 39,
+      "input": {
+        "text": "complex example with multiple matches and no matches complex example with multiple matches and no matches",
+        "first": "with",
+        "second": "multiple"
+      },
+      "expected": ["matches", "matches"]
+    },
+    {
+      "case_id": 40,
+      "input": {
+        "text": "she sells sea shells by the sea shore she sells sea shells by the sea shore",
+        "first": "sea",
+        "second": "shells"
+      },
+      "expected": ["by", "by"]
+    },
+    {
+      "case_id": 41,
+      "input": {
+        "text": "complex scenario with different words complex scenario with different words complex",
+        "first": "with",
+        "second": "different"
+      },
+      "expected": ["words", "words"]
+    },
+    {
+      "case_id": 42,
+      "input": {
+        "text": "repeated repeated repeated words words words in a sentence",
+        "first": "words",
+        "second": "in"
+      },
+      "expected": ["a"]
+    },
+    {
+      "case_id": 43,
+      "input": {
+        "text": "unique words with no repetitions should return empty list",
+        "first": "no",
+        "second": "repetitions"
+      },
+      "expected": ["should"]
+    },
+    {
+      "case_id": 44,
+      "input": {
+        "text": "the quick brown fox jumps over the lazy dog the quick brown fox jumps over the quick brown fox",
+        "first": "quick",
+        "second": "brown"
+      },
+      "expected": ["fox", "fox", "fox"]
+    },
+    {
+      "case_id": 45,
+      "input": {
+        "text": "x y z a b c x y z a b c x y z a b c x y z a b c",
+        "first": "x",
+        "second": "y"
+      },
+      "expected": ["z", "z", "z", "z"]
+    },
+    {
+      "case_id": 46,
+      "input": {
+        "text": "word word word word word word word word word word word word word word word word word word word word",
+        "first": "word",
+        "second": "word"
+      },
+      "expected": ["word", "word", "word", "word", "word", "word", "word", "word", "word", "word", "word", "word", "word", "word", "word", "word", "word", "word"]
+    },
+    {
+      "case_id": 47,
+      "input": {
+        "text": "edge case where the last word is the second",
+        "first": "second",
+        "second": "word"
+      },
+      "expected": []
+    },
+    {
+      "case_id": 48,
+      "input": {
+        "text": "a b c d e f g h i j k l m n o p q r s t u v w x y z a b c d e f g h i j k l m n o p q r s t u v w x y z",
+        "first": "f",
+        "second": "g"
+      },
+      "expected": ["h", "h"]
+    },
+    {
+      "case_id": 49,
+      "input": {
+        "text": "the cat sat on the mat the dog sat on the log the cat sat on the mat the dog sat on the log",
+        "first": "sat",
+        "second": "on"
+      },
+      "expected": ["the", "the", "the", "the"]
+    },
+    {
+      "case_id": 50,
+      "input": {
+        "text": "hello there hello there hello there hello there hello there",
+        "first": "hello",
+        "second": "there"
+      },
+      "expected": ["hello", "hello", "hello", "hello"]
+    },
+    {
+      "case_id": 51,
+      "input": {
+        "text": "one fish two fish red fish blue fish one fish two fish red fish blue fish",
+        "first": "two",
+        "second": "fish"
+      },
+      "expected": ["red", "red"]
+    },
+    {
+      "case_id": 52,
+      "input": {
+        "text": "repeat after me repeat after me repeat after me repeat after me",
+        "first": "repeat",
+        "second": "after"
+      },
+      "expected": ["me", "me", "me", "me"]
+    },
+    {
+      "case_id": 53,
+      "input": {
+        "text": "one two three four five six seven eight nine ten eleven twelve",
+        "first": "three",
+        "second": "four"
+      },
+      "expected": ["five"]
+    },
+    {
+      "case_id": 54,
+      "input": {
+        "text": "in the heart of the night the old owl hooted and the stars twinkled in the dark",
+        "first": "the",
+        "second": "old"
+      },
+      "expected": ["owl"]
+    },
+    {
+      "case_id": 55,
+      "input": {
+        "text": "finding the third word after first second finding the third word after first",
+        "first": "finding",
+        "second": "the"
+      },
+      "expected": ["third", "third"]
+    },
+    {
+      "case_id": 56,
+      "input": {
+        "text": "abracadabra abracadabra abracadabra abracadabra abracadabra",
+        "first": "abracadabra",
+        "second": "abracadabra"
+      },
+      "expected": ["abracadabra", "abracadabra", "abracadabra"]
+    },
+    {
+      "case_id": 57,
+      "input": {
+        "text": "find the pattern in this text pattern in this text pattern in this text pattern",
+        "first": "pattern",
+        "second": "in"
+      },
+      "expected": ["this", "this", "this"]
+    },
+    {
+      "case_id": 58,
+      "input": {
+        "text": "a longer sentence with a variety of words and phrases to test the function properly",
+        "first": "variety",
+        "second": "of"
+      },
+      "expected": ["words"]
+    },
+    {
+      "case_id": 59,
+      "input": {
+        "text": "she sells sea shells by the sea shore and the shells she sells are sea shells",
+        "first": "sea",
+        "second": "shells"
+      },
+      "expected": ["by"]
+    },
+    {
+      "case_id": 60,
+      "input": {
+        "text": "example of a longer sentence where the pattern can be found multiple times example of a longer",
+        "first": "example",
+        "second": "of"
+      },
+      "expected": ["a", "a"]
+    },
+    {
+      "case_id": 61,
+      "input": {
+        "text": "multiple words in sequence are repeated multiple times multiple words in sequence",
+        "first": "multiple",
+        "second": "words"
+      },
+      "expected": ["in", "in"]
+    },
+    {
+      "case_id": 62,
+      "input": {
+        "text": "abc def ghi jkl mno pqr stu vwx yza abc def ghi jkl mno pqr stu vwx yza",
+        "first": "ghi",
+        "second": "jkl"
+      },
+      "expected": ["mno", "mno"]
+    },
+    {
+      "case_id": 63,
+      "input": {
+        "text": "abc abc abc abc abc abc abc abc abc abc",
+        "first": "abc",
+        "second": "abc"
+      },
+      "expected": ["abc", "abc", "abc", "abc", "abc", "abc", "abc", "abc"]
+    },
+    {
+      "case_id": 64,
+      "input": {
+        "text": "a quick movement of the enemy will jeopardize five gunboats a quick movement of the army will jeopardize five gunboats",
+        "first": "quick",
+        "second": "movement"
+      },
+      "expected": ["of", "of"]
+    },
+    {
+      "case_id": 65,
+      "input": {
+        "text": "a quick movement of the enemy will jeopardize six gunboats a quick movement of the enemy will jeopardize five gunboats",
+        "first": "quick",
+        "second": "movement"
+      },
+      "expected": ["of", "of"]
+    },
+    {
+      "case_id": 66,
+      "input": {
+        "text": "complex pattern with complex pattern and another complex pattern",
+        "first": "complex",
+        "second": "pattern"
+      },
+      "expected": ["with", "and"]
+    },
+    {
+      "case_id": 67,
+      "input": {
+        "text": "a b c a b c a b c a b c a b c",
+        "first": "a",
+        "second": "b"
+      },
+      "expected": ["c", "c", "c", "c", "c"]
+    },
+    {
+      "case_id": 68,
+      "input": {
+        "text": "this is a simple test to see if the function works correctly with multiple occurrences of first second third",
+        "first": "first",
+        "second": "second"
+      },
+      "expected": ["third"]
+    },
+    {
+      "case_id": 69,
+      "input": {
+        "text": "once upon a time in a galaxy far far away once upon a time in a galaxy",
+        "first": "once",
+        "second": "upon"
+      },
+      "expected": ["a", "a"]
+    },
+    {
+      "case_id": 70,
+      "input": {
+        "text": "cycling in the mountains mountains are beautiful cycling in the mountains",
+        "first": "cycling",
+        "second": "in"
+      },
+      "expected": ["the", "the"]
+    },
+    {
+      "case_id": 71,
+      "input": {
+        "text": "one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen twenty",
+        "first": "one",
+        "second": "two"
+      },
+      "expected": ["three"]
+    },
+    {
+      "case_id": 72,
+      "input": {
+        "text": "this is a simple sentence with multiple occurrences of the same word word",
+        "first": "the",
+        "second": "same"
+      },
+      "expected": ["word"]
+    },
+    {
+      "case_id": 73,
+      "input": {
+        "text": "if you are reading this text then you are doing a great job reading",
+        "first": "reading",
+        "second": "this"
+      },
+      "expected": ["text"]
+    },
+    {
+      "case_id": 74,
+      "input": {
+        "text": "this is a simple test case with multiple matches this is a simple test",
+        "first": "this",
+        "second": "is"
+      },
+      "expected": ["a", "a"]
+    },
+    {
+      "case_id": 75,
+      "input": {
+        "text": "to be or not to be that is the question to be or not to be that is the question",
+        "first": "be",
+        "second": "or"
+      },
+      "expected": ["not", "not"]
+    },
+    {
+      "case_id": 76,
+      "input": {
+        "text": "in the heart of the city in the heart of the heart in the heart of the city",
+        "first": "heart",
+        "second": "of"
+      },
+      "expected": ["the", "the", "the"]
+    },
+    {
+      "case_id": 77,
+      "input": {
+        "text": "the quick brown fox jumps over the lazy dog the lazy dog jumps over the quick brown fox",
+        "first": "the",
+        "second": "lazy"
+      },
+      "expected": ["dog", "dog"]
+    },
+    {
+      "case_id": 78,
+      "input": {
+        "text": "this is a simple test this is a simple test this is a simple test",
+        "first": "is",
+        "second": "a"
+      },
+      "expected": ["simple", "simple", "simple"]
+    },
+    {
+      "case_id": 79,
+      "input": {
+        "text": "a b c d e f g h i j k l m n o p q r s t u v w x y z a b c",
+        "first": "a",
+        "second": "b"
+      },
+      "expected": ["c", "c"]
+    },
+    {
+      "case_id": 80,
+      "input": {
+        "text": "last two words do not match first second",
+        "first": "first",
+        "second": "second"
+      },
+      "expected": []
+    },
+    {
+      "case_id": 81,
+      "input": {
+        "text": "every good boy does fine every good boy does fine every good boy does fine",
+        "first": "good",
+        "second": "boy"
+      },
+      "expected": ["does", "does", "does"]
+    },
+    {
+      "case_id": 82,
+      "input": {
+        "text": "the quick brown fox jumps over the lazy dog the quick brown fox jumps over the lazy dog again",
+        "first": "quick",
+        "second": "brown"
+      },
+      "expected": ["fox", "fox"]
+    },
+    {
+      "case_id": 83,
+      "input": {
+        "text": "repeat repeat repeat repeat repeat repeat repeat",
+        "first": "repeat",
+        "second": "repeat"
+      },
+      "expected": ["repeat", "repeat", "repeat", "repeat", "repeat"]
+    },
+    {
+      "case_id": 84,
+      "input": {
+        "text": "a b c d e f g h i j k l m n o p q r s t u v w x y z",
+        "first": "x",
+        "second": "y"
+      },
+      "expected": ["z"]
+    },
+    {
+      "case_id": 85,
+      "input": {
+        "text": "the quick brown fox jumps over the lazy dog the quick brown fox is quick",
+        "first": "quick",
+        "second": "brown"
+      },
+      "expected": ["fox", "fox"]
+    },
+    {
+      "case_id": 86,
+      "input": {
+        "text": "cycling through the words cycling through the words cycling",
+        "first": "through",
+        "second": "the"
+      },
+      "expected": ["words", "words"]
+    },
+    {
+      "case_id": 87,
+      "input": {
+        "text": "a b c a b c a b c d e f g h i j k l m n o p q r s t u v w x y z",
+        "first": "b",
+        "second": "c"
+      },
+      "expected": ["a", "a", "d"]
+    },
+    {
+      "case_id": 88,
+      "input": {
+        "text": "she sells sea shells by the sea shore she sells sea shells",
+        "first": "sea",
+        "second": "shells"
+      },
+      "expected": ["by"]
+    },
+    {
+      "case_id": 89,
+      "input": {
+        "text": "hello world hello world hello world hello world hello world hello world",
+        "first": "hello",
+        "second": "world"
+      },
+      "expected": ["hello", "hello", "hello", "hello", "hello"]
+    },
+    {
+      "case_id": 90,
+      "input": {
+        "text": "consecutive consecutive words words words words in this sequence sequence",
+        "first": "words",
+        "second": "words"
+      },
+      "expected": ["words", "words", "in"]
+    },
+    {
+      "case_id": 91,
+      "input": {
+        "text": "complex sentence with multiple occurrences of first second third first second third",
+        "first": "first",
+        "second": "second"
+      },
+      "expected": ["third", "third"]
+    },
+    {
+      "case_id": 92,
+      "input": {
+        "text": "every good boy does fine every good boy does fine every good boy does fine",
+        "first": "every",
+        "second": "good"
+      },
+      "expected": ["boy", "boy", "boy"]
+    },
+    {
+      "case_id": 93,
+      "input": {
+        "text": "this is a test this is only a test this is a test this is a test",
+        "first": "this",
+        "second": "is"
+      },
+      "expected": ["a", "only", "a", "a"]
+    },
+    {
+      "case_id": 94,
+      "input": {
+        "text": "repeat repeat repeat repeat repeat repeat",
+        "first": "repeat",
+        "second": "repeat"
+      },
+      "expected": ["repeat", "repeat", "repeat", "repeat"]
+    },
+    {
+      "case_id": 95,
+      "input": {
+        "text": "repeated repeated repeated repeated repeated repeated repeated repeated",
+        "first": "repeated",
+        "second": "repeated"
+      },
+      "expected": ["repeated", "repeated", "repeated", "repeated", "repeated", "repeated"]
+    },
+    {
+      "case_id": 96,
+      "input": {
+        "text": "aa bb aa bb aa bb aa bb aa bb aa bb",
+        "first": "aa",
+        "second": "bb"
+      },
+      "expected": ["aa", "aa", "aa", "aa", "aa"]
+    },
+    {
+      "case_id": 97,
+      "input": {
+        "text": "a quick movement of the enemy will jeopardize six gunboats a quick movement of the enemy will jeopardize six gunboats",
+        "first": "movement",
+        "second": "of"
+      },
+      "expected": ["the", "the"]
+    },
+    {
+      "case_id": 98,
+      "input": {
+        "text": "x y z x y z x y z x y z x y z x y z x y z x y z x y z x y z x y z",
+        "first": "y",
+        "second": "z"
+      },
+      "expected": ["x", "x", "x", "x", "x", "x", "x", "x", "x", "x"]
+    },
+    {
+      "case_id": 99,
+      "input": {
+        "text": "consecutive consecutive consecutive words words words in in in the the the sentence sentence sentence",
+        "first": "consecutive",
+        "second": "consecutive"
+      },
+      "expected": ["consecutive", "words"]
+    },
+    {
+      "case_id": 100,
+      "input": {
+        "text": "this is a test this is only a test in case of an actual emergency this is a test",
+        "first": "this",
+        "second": "is"
+      },
+      "expected": ["a", "only", "a"]
+    },
+    {
+      "case_id": 101,
+      "input": {
+        "text": "to be or not to be that is the question to be or not to be",
+        "first": "to",
+        "second": "be"
+      },
+      "expected": ["or", "that", "or"]
+    }
+  ]
+}

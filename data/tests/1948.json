@@ -1,0 +1,1884 @@
+{
+  "schema_version": 1,
+  "problem_id": 1948,
+  "title": "Delete Duplicate Folders in System",
+  "method": "deleteDuplicateFolder",
+  "signature": {
+    "params": [
+      {
+        "name": "paths",
+        "type": "STRING_MATRIX"
+      }
+    ],
+    "returns": "STRING_MATRIX"
+  },
+  "comparison": "unordered_all",
+  "cases": [
+    {
+      "case_id": 1,
+      "input": {
+        "paths": [
+          ["project"],
+          ["project", "src"],
+          ["project", "src", "main"],
+          ["project", "src", "test"],
+          ["project", "docs"],
+          ["project", "docs", "api"],
+          ["project", "docs", "user"]
+        ]
+      },
+      "expected": [
+        ["project", "docs", "api"],
+        ["project", "docs", "user"],
+        ["project", "docs"],
+        ["project", "src", "main"],
+        ["project", "src", "test"],
+        ["project", "src"],
+        ["project"]
+      ]
+    },
+    {
+      "case_id": 2,
+      "input": {
+        "paths": [
+          ["x"],
+          ["x", "y"],
+          ["x", "z"],
+          ["y"],
+          ["y", "x"],
+          ["z"],
+          ["z", "x"]
+        ]
+      },
+      "expected": [
+        ["x", "y"],
+        ["x", "z"],
+        ["x"]
+      ]
+    },
+    {
+      "case_id": 3,
+      "input": {
+        "paths": [
+          ["a", "b"],
+          ["c", "d"],
+          ["c"],
+          ["a"]
+        ]
+      },
+      "expected": [
+        ["a", "b"],
+        ["a"],
+        ["c", "d"],
+        ["c"]
+      ]
+    },
+    {
+      "case_id": 4,
+      "input": {
+        "paths": [
+          ["home"],
+          ["home", "user"],
+          ["home", "user", "documents"],
+          ["home", "guest"],
+          ["home", "guest", "documents"]
+        ]
+      },
+      "expected": [
+        ["home"]
+      ]
+    },
+    {
+      "case_id": 5,
+      "input": {
+        "paths": [
+          ["a"],
+          ["a", "b"],
+          ["a", "b", "c"],
+          ["a", "b", "c", "d"],
+          ["a", "b", "c", "d", "e"],
+          ["f"],
+          ["f", "g"],
+          ["f", "g", "h"],
+          ["f", "g", "h", "i"],
+          ["f", "g", "h", "i", "j"]
+        ]
+      },
+      "expected": [
+        ["a", "b", "c", "d", "e"],
+        ["a", "b", "c", "d"],
+        ["a", "b", "c"],
+        ["a", "b"],
+        ["a"],
+        ["f", "g", "h", "i", "j"],
+        ["f", "g", "h", "i"],
+        ["f", "g", "h"],
+        ["f", "g"],
+        ["f"]
+      ]
+    },
+    {
+      "case_id": 6,
+      "input": {
+        "paths": [
+          ["root"],
+          ["root", "a"],
+          ["root", "b"],
+          ["root", "a", "x"],
+          ["root", "b", "x"],
+          ["root", "a", "x", "y"],
+          ["root", "b", "x", "y"]
+        ]
+      },
+      "expected": [
+        ["root"]
+      ]
+    },
+    {
+      "case_id": 7,
+      "input": {
+        "paths": [
+          ["folder1"],
+          ["folder1", "sub1"],
+          ["folder1", "sub2"],
+          ["folder2"],
+          ["folder2", "sub1"],
+          ["folder2", "sub2"]
+        ]
+      },
+      "expected": []
+    },
+    {
+      "case_id": 8,
+      "input": {
+        "paths": [
+          ["a"],
+          ["c"],
+          ["a", "b"],
+          ["c", "b"],
+          ["a", "b", "x"],
+          ["a", "b", "x", "y"],
+          ["w"],
+          ["w", "y"]
+        ]
+      },
+      "expected": [
+        ["a", "b"],
+        ["a"],
+        ["c", "b"],
+        ["c"]
+      ]
+    },
+    {
+      "case_id": 9,
+      "input": {
+        "paths": [
+          ["x"],
+          ["x", "y"],
+          ["x", "y", "z"],
+          ["x", "y", "z", "w"],
+          ["u"],
+          ["u", "v"],
+          ["u", "v", "w"]
+        ]
+      },
+      "expected": [
+        ["u"],
+        ["x", "y"],
+        ["x"]
+      ]
+    },
+    {
+      "case_id": 10,
+      "input": {
+        "paths": [
+          ["m"],
+          ["m", "n"],
+          ["n"],
+          ["n", "m"],
+          ["m", "n", "o"],
+          ["n", "m", "o"]
+        ]
+      },
+      "expected": [
+        ["m"],
+        ["n"]
+      ]
+    },
+    {
+      "case_id": 11,
+      "input": {
+        "paths": [
+          ["root"],
+          ["root", "folder1"],
+          ["root", "folder2"],
+          ["root", "folder1", "subfolder1"],
+          ["root", "folder2", "subfolder1"]
+        ]
+      },
+      "expected": [
+        ["root"]
+      ]
+    },
+    {
+      "case_id": 12,
+      "input": {
+        "paths": [
+          ["m"],
+          ["m", "n"],
+          ["p"],
+          ["p", "n"]
+        ]
+      },
+      "expected": []
+    },
+    {
+      "case_id": 13,
+      "input": {
+        "paths": [
+          ["a"],
+          ["c"],
+          ["d"],
+          ["a", "b"],
+          ["c", "b"],
+          ["d", "a"]
+        ]
+      },
+      "expected": [
+        ["d", "a"],
+        ["d"]
+      ]
+    },
+    {
+      "case_id": 14,
+      "input": {
+        "paths": [
+          ["x"],
+          ["x", "y"],
+          ["x", "y", "z"],
+          ["y"],
+          ["y", "z"]
+        ]
+      },
+      "expected": [
+        ["x"]
+      ]
+    },
+    {
+      "case_id": 15,
+      "input": {
+        "paths": [
+          ["one"],
+          ["one", "two"],
+          ["one", "two", "three"],
+          ["two"],
+          ["two", "three"]
+        ]
+      },
+      "expected": [
+        ["one"]
+      ]
+    },
+    {
+      "case_id": 16,
+      "input": {
+        "paths": [
+          ["p"],
+          ["p", "q"],
+          ["p", "q", "r"],
+          ["p", "q", "r", "s"],
+          ["p", "q", "r", "t"],
+          ["q"],
+          ["q", "r"],
+          ["q", "r", "s"],
+          ["q", "r", "t"],
+          ["r"],
+          ["r", "s"],
+          ["r", "t"],
+          ["s"],
+          ["t"],
+          ["u"],
+          ["u", "v"],
+          ["u", "v", "w"],
+          ["u", "v", "w", "x"],
+          ["u", "v", "w", "y"],
+          ["v"],
+          ["v", "w"],
+          ["v", "w", "x"],
+          ["v", "w", "y"],
+          ["w"],
+          ["w", "x"],
+          ["w", "y"],
+          ["x"],
+          ["y"]
+        ]
+      },
+      "expected": [
+        ["p"],
+        ["s"],
+        ["t"],
+        ["u"],
+        ["x"],
+        ["y"]
+      ]
+    },
+    {
+      "case_id": 17,
+      "input": {
+        "paths": [
+          ["level1", "level2", "level3", "level4"],
+          ["level1", "level2", "level5", "level4"],
+          ["level1", "level6", "level3", "level4"],
+          ["level1", "level6", "level5", "level4"],
+          ["level1", "level7", "level8"],
+          ["level1", "level9", "level10", "level11"],
+          ["level1", "level9", "level10", "level12"]
+        ]
+      },
+      "expected": [
+        ["level1", "level7", "level8"],
+        ["level1", "level7"],
+        ["level1", "level9", "level10", "level11"],
+        ["level1", "level9", "level10", "level12"],
+        ["level1", "level9", "level10"],
+        ["level1", "level9"],
+        ["level1"]
+      ]
+    },
+    {
+      "case_id": 18,
+      "input": {
+        "paths": [
+          ["system", "folderA"],
+          ["system", "folderB"],
+          ["system", "folderA", "subfolderA1"],
+          ["system", "folderB", "subfolderA1"],
+          ["system", "folderA", "subfolderA2"],
+          ["system", "folderB", "subfolderA2"],
+          ["system", "folderA", "subfolderA1", "subsubfolderA1"],
+          ["system", "folderB", "subfolderA1", "subsubfolderA1"],
+          ["system", "folderA", "subfolderA1", "subsubfolderA2"],
+          ["system", "folderB", "subfolderA1", "subsubfolderA2"],
+          ["system", "folderA", "subfolderA2", "subsubfolderA1"],
+          ["system", "folderB", "subfolderA2", "subsubfolderA1"],
+          ["system", "folderA", "subfolderA2", "subsubfolderA2"],
+          ["system", "folderB", "subfolderA2", "subsubfolderA2"]
+        ]
+      },
+      "expected": [
+        ["system"]
+      ]
+    },
+    {
+      "case_id": 19,
+      "input": {
+        "paths": [
+          ["home", "user", "docs"],
+          ["home", "user", "photos"],
+          ["home", "guest", "docs"],
+          ["home", "guest", "photos"],
+          ["home", "user", "docs", "file1"],
+          ["home", "guest", "docs", "file1"],
+          ["home", "user", "photos", "image1"],
+          ["home", "guest", "photos", "image1"],
+          ["home", "user", "docs", "file2"],
+          ["home", "guest", "docs", "file2"]
+        ]
+      },
+      "expected": [
+        ["home"]
+      ]
+    },
+    {
+      "case_id": 20,
+      "input": {
+        "paths": [
+          ["projects", "proj1"],
+          ["projects", "proj2"],
+          ["projects", "proj1", "src"],
+          ["projects", "proj2", "src"],
+          ["projects", "proj1", "src", "main"],
+          ["projects", "proj2", "src", "main"],
+          ["projects", "proj1", "src", "test"],
+          ["projects", "proj2", "src", "test"],
+          ["projects", "proj1", "src", "main", "file1"],
+          ["projects", "proj2", "src", "main", "file1"],
+          ["projects", "proj1", "src", "test", "test1"],
+          ["projects", "proj2", "src", "test", "test1"]
+        ]
+      },
+      "expected": [
+        ["projects"]
+      ]
+    },
+    {
+      "case_id": 21,
+      "input": {
+        "paths": [
+          ["alpha"],
+          ["alpha", "beta"],
+          ["alpha", "beta", "gamma"],
+          ["alpha", "beta", "delta"],
+          ["alpha", "epsilon"],
+          ["alpha", "epsilon", "gamma"],
+          ["alpha", "epsilon", "delta"],
+          ["beta"],
+          ["beta", "gamma"],
+          ["beta", "delta"],
+          ["epsilon"],
+          ["epsilon", "gamma"],
+          ["epsilon", "delta"],
+          ["gamma"],
+          ["delta"],
+          ["charlie"],
+          ["charlie", "foxtrot"],
+          ["charlie", "foxtrot", "gamma"],
+          ["charlie", "foxtrot", "delta"],
+          ["charlie", "tango"],
+          ["charlie", "tango", "gamma"],
+          ["charlie", "tango", "delta"]
+        ]
+      },
+      "expected": [
+        ["alpha"],
+        ["charlie"],
+        ["delta"],
+        ["gamma"]
+      ]
+    },
+    {
+      "case_id": 22,
+      "input": {
+        "paths": [
+          ["project"],
+          ["project", "src"],
+          ["project", "docs"],
+          ["project", "src", "main"],
+          ["project", "src", "test"],
+          ["project", "docs", "api"],
+          ["project", "docs", "userguide"],
+          ["project", "src", "main", "java"],
+          ["project", "src", "test", "java"],
+          ["project", "docs", "api", "java"],
+          ["project", "docs", "userguide", "java"],
+          ["project", "src", "main", "java", "utils"],
+          ["project", "src", "test", "java", "utils"],
+          ["project", "docs", "api", "java", "utils"],
+          ["project", "docs", "userguide", "java", "utils"]
+        ]
+      },
+      "expected": [
+        ["project", "docs"],
+        ["project", "src"],
+        ["project"]
+      ]
+    },
+    {
+      "case_id": 23,
+      "input": {
+        "paths": [
+          ["data", "archive"],
+          ["data", "archive", "2021"],
+          ["data", "archive", "2022"],
+          ["data", "archive", "2023"],
+          ["data", "backup"],
+          ["data", "backup", "2021"],
+          ["data", "backup", "2022"],
+          ["data", "backup", "2023"],
+          ["data", "logs"],
+          ["data", "logs", "server1"],
+          ["data", "logs", "server2"],
+          ["data", "logs", "server3"],
+          ["data", "temp"],
+          ["data", "temp", "server1"],
+          ["data", "temp", "server2"],
+          ["data", "temp", "server3"]
+        ]
+      },
+      "expected": [
+        ["data"]
+      ]
+    },
+    {
+      "case_id": 24,
+      "input": {
+        "paths": [
+          ["app"],
+          ["app", "module1"],
+          ["app", "module2"],
+          ["app", "module1", "component1"],
+          ["app", "module2", "component1"],
+          ["app", "module1", "component2"],
+          ["app", "module2", "component2"],
+          ["app", "module1", "component1", "subcomponent1"],
+          ["app", "module2", "component1", "subcomponent1"],
+          ["app", "module1", "component2", "subcomponent1"],
+          ["app", "module2", "component2", "subcomponent1"],
+          ["app", "module1", "component1", "subcomponent2"],
+          ["app", "module2", "component1", "subcomponent2"],
+          ["app", "module1", "component2", "subcomponent2"],
+          ["app", "module2", "component2", "subcomponent2"],
+          ["app", "module1", "component1", "subcomponent2", "deep1"],
+          ["app", "module2", "component1", "subcomponent2", "deep1"]
+        ]
+      },
+      "expected": [
+        ["app"]
+      ]
+    },
+    {
+      "case_id": 25,
+      "input": {
+        "paths": [
+          ["root", "a"],
+          ["root", "b"],
+          ["root", "a", "c"],
+          ["root", "b", "c"],
+          ["root", "a", "d"],
+          ["root", "b", "d"],
+          ["root", "a", "c", "e"],
+          ["root", "b", "c", "e"]
+        ]
+      },
+      "expected": [
+        ["root"]
+      ]
+    },
+    {
+      "case_id": 26,
+      "input": {
+        "paths": [
+          ["root", "folder1"],
+          ["root", "folder2"],
+          ["root", "folder1", "subfolder1"],
+          ["root", "folder2", "subfolder1"],
+          ["root", "folder1", "subfolder1", "subsubfolder1"],
+          ["root", "folder2", "subfolder1", "subsubfolder1"],
+          ["root", "unique", "folder1"],
+          ["root", "unique", "folder1", "subfolder1"],
+          ["root", "unique", "folder1", "subfolder1", "subsubfolder1"]
+        ]
+      },
+      "expected": [
+        ["root", "unique"],
+        ["root"]
+      ]
+    },
+    {
+      "case_id": 27,
+      "input": {
+        "paths": [
+          ["home"],
+          ["home", "user1"],
+          ["home", "user2"],
+          ["home", "user1", "files"],
+          ["home", "user2", "files"],
+          ["home", "user1", "files", "docs"],
+          ["home", "user2", "files", "docs"],
+          ["home", "user1", "files", "docs", "report1"],
+          ["home", "user2", "files", "docs", "report1"],
+          ["home", "user1", "files", "docs", "report2"],
+          ["home", "user2", "files", "docs", "report2"]
+        ]
+      },
+      "expected": [
+        ["home"]
+      ]
+    },
+    {
+      "case_id": 28,
+      "input": {
+        "paths": [
+          ["x"],
+          ["y"],
+          ["z"],
+          ["x", "a"],
+          ["y", "a"],
+          ["z", "a"],
+          ["x", "a", "b"],
+          ["y", "a", "b"],
+          ["z", "a", "b"],
+          ["x", "a", "b", "c"],
+          ["y", "a", "b", "c"],
+          ["z", "a", "b", "c"],
+          ["x", "d"],
+          ["y", "e"],
+          ["z", "f"]
+        ]
+      },
+      "expected": [
+        ["x", "d"],
+        ["x"],
+        ["y", "e"],
+        ["y"],
+        ["z", "f"],
+        ["z"]
+      ]
+    },
+    {
+      "case_id": 29,
+      "input": {
+        "paths": [
+          ["root", "a", "b", "c", "d"],
+          ["root", "x", "y", "z", "w"],
+          ["root", "a", "b", "c", "d", "e"],
+          ["root", "x", "y", "z", "w", "v"],
+          ["root", "a", "b", "f"],
+          ["root", "x", "y", "f"],
+          ["root", "a", "g"],
+          ["root", "x", "g"],
+          ["root", "a", "h"],
+          ["root", "x", "h"],
+          ["root", "a", "i", "j"],
+          ["root", "x", "i", "j"],
+          ["root", "a", "i", "k"],
+          ["root", "x", "i", "k"]
+        ]
+      },
+      "expected": [
+        ["root", "a", "b", "c", "d", "e"],
+        ["root", "a", "b", "c", "d"],
+        ["root", "a", "b", "c"],
+        ["root", "a", "b", "f"],
+        ["root", "a", "b"],
+        ["root", "a", "g"],
+        ["root", "a", "h"],
+        ["root", "a"],
+        ["root", "x", "g"],
+        ["root", "x", "h"],
+        ["root", "x", "y", "f"],
+        ["root", "x", "y", "z", "w", "v"],
+        ["root", "x", "y", "z", "w"],
+        ["root", "x", "y", "z"],
+        ["root", "x", "y"],
+        ["root", "x"],
+        ["root"]
+      ]
+    },
+    {
+      "case_id": 30,
+      "input": {
+        "paths": [
+          ["root"],
+          ["root", "folder1"],
+          ["root", "folder2"],
+          ["root", "folder1", "sub1"],
+          ["root", "folder2", "sub1"],
+          ["root", "folder1", "sub1", "subsub1"],
+          ["root", "folder2", "sub1", "subsub1"]
+        ]
+      },
+      "expected": [
+        ["root"]
+      ]
+    },
+    {
+      "case_id": 31,
+      "input": {
+        "paths": [
+          ["base"],
+          ["base", "folder1"],
+          ["base", "folder1", "subfolder1"],
+          ["base", "folder1", "subfolder2"],
+          ["base", "folder2"],
+          ["base", "folder2", "subfolder1"],
+          ["base", "folder2", "subfolder2"],
+          ["base", "folder3"],
+          ["base", "folder3", "subfolder1"],
+          ["base", "folder3", "subfolder2"],
+          ["base", "folder1", "subfolder1", "deep1"],
+          ["base", "folder2", "subfolder1", "deep1"],
+          ["base", "folder3", "subfolder1", "deep1"]
+        ]
+      },
+      "expected": [
+        ["base"]
+      ]
+    },
+    {
+      "case_id": 32,
+      "input": {
+        "paths": [
+          ["system"],
+          ["system", "app1"],
+          ["system", "app1", "data"],
+          ["system", "app2"],
+          ["system", "app2", "data"],
+          ["system", "app3"],
+          ["system", "app3", "data"],
+          ["system", "app3", "logs"],
+          ["system", "app4"],
+          ["system", "app4", "data"],
+          ["system", "app4", "logs"],
+          ["system", "app4", "temp"],
+          ["system", "app5"],
+          ["system", "app5", "data"],
+          ["system", "app5", "logs"],
+          ["system", "app5", "temp"],
+          ["system", "app6"],
+          ["system", "app6", "data"],
+          ["system", "app6", "logs"],
+          ["system", "app6", "temp"],
+          ["system", "app6", "config"],
+          ["system", "app7"],
+          ["system", "app7", "data"],
+          ["system", "app7", "logs"],
+          ["system", "app7", "temp"],
+          ["system", "app7", "config"],
+          ["system", "app8"],
+          ["system", "app8", "data"],
+          ["system", "app8", "logs"],
+          ["system", "app8", "temp"],
+          ["system", "app8", "config"],
+          ["system", "app8", "bin"]
+        ]
+      },
+      "expected": [
+        ["system", "app3", "data"],
+        ["system", "app3", "logs"],
+        ["system", "app3"],
+        ["system", "app8", "bin"],
+        ["system", "app8", "config"],
+        ["system", "app8", "data"],
+        ["system", "app8", "logs"],
+        ["system", "app8", "temp"],
+        ["system", "app8"],
+        ["system"]
+      ]
+    },
+    {
+      "case_id": 33,
+      "input": {
+        "paths": [
+          ["root", "x"],
+          ["root", "y"],
+          ["root", "x", "z"],
+          ["root", "y", "z"],
+          ["root", "x", "a"],
+          ["root", "y", "a"],
+          ["root", "x", "a", "b"],
+          ["root", "y", "a", "b"]
+        ]
+      },
+      "expected": [
+        ["root"]
+      ]
+    },
+    {
+      "case_id": 34,
+      "input": {
+        "paths": [
+          ["root", "level1", "level2", "level3"],
+          ["root", "level1", "level2", "level4"],
+          ["root", "level5", "level6"],
+          ["root", "level1", "level2", "level3", "level7"],
+          ["root", "level5", "level6", "level7"],
+          ["root", "level1", "level2", "level3", "level7", "level8"],
+          ["root", "level5", "level6", "level7", "level8"]
+        ]
+      },
+      "expected": [
+        ["root", "level1", "level2", "level4"],
+        ["root", "level1", "level2"],
+        ["root", "level1"],
+        ["root", "level5"],
+        ["root"]
+      ]
+    },
+    {
+      "case_id": 35,
+      "input": {
+        "paths": [
+          ["data"],
+          ["data", "backup"],
+          ["data", "backup", "2021"],
+          ["data", "backup", "2022"],
+          ["data", "backup", "2021", "month1"],
+          ["data", "backup", "2022", "month1"],
+          ["data", "backup", "2021", "month2"],
+          ["data", "backup", "2022", "month2"],
+          ["data", "backup", "2021", "month1", "day1"],
+          ["data", "backup", "2022", "month1", "day1"],
+          ["data", "backup", "2021", "month1", "day2"],
+          ["data", "backup", "2022", "month1", "day2"],
+          ["data", "backup", "2021", "month2", "day1"],
+          ["data", "backup", "2022", "month2", "day1"],
+          ["data", "backup", "2021", "month2", "day2"],
+          ["data", "backup", "2022", "month2", "day2"],
+          ["data", "backup", "2021", "month1", "day1", "file1"],
+          ["data", "backup", "2022", "month1", "day1", "file1"],
+          ["data", "backup", "2021", "month1", "day2", "file1"],
+          ["data", "backup", "2022", "month1", "day2", "file1"],
+          ["data", "backup", "2021", "month2", "day1", "file1"],
+          ["data", "backup", "2022", "month2", "day1", "file1"],
+          ["data", "backup", "2021", "month2", "day2", "file1"],
+          ["data", "backup", "2022", "month2", "day2", "file1"]
+        ]
+      },
+      "expected": [
+        ["data", "backup"],
+        ["data"]
+      ]
+    },
+    {
+      "case_id": 36,
+      "input": {
+        "paths": [
+          ["root", "dir1", "subdir1"],
+          ["root", "dir1", "subdir2"],
+          ["root", "dir2", "subdir1"],
+          ["root", "dir2", "subdir3"],
+          ["root", "dir3", "subdir2"],
+          ["root", "dir3", "subdir4"]
+        ]
+      },
+      "expected": [
+        ["root", "dir1", "subdir1"],
+        ["root", "dir1", "subdir2"],
+        ["root", "dir1"],
+        ["root", "dir2", "subdir1"],
+        ["root", "dir2", "subdir3"],
+        ["root", "dir2"],
+        ["root", "dir3", "subdir2"],
+        ["root", "dir3", "subdir4"],
+        ["root", "dir3"],
+        ["root"]
+      ]
+    },
+    {
+      "case_id": 37,
+      "input": {
+        "paths": [
+          ["x"],
+          ["x", "y"],
+          ["x", "y", "z"],
+          ["x", "y", "w"],
+          ["y"],
+          ["y", "z"],
+          ["y", "w"],
+          ["a"],
+          ["a", "b"],
+          ["a", "b", "c"],
+          ["b"],
+          ["b", "c"],
+          ["b", "d"],
+          ["c"],
+          ["c", "d"],
+          ["d"]
+        ]
+      },
+      "expected": [
+        ["a", "b", "c"],
+        ["a", "b"],
+        ["a"],
+        ["b", "c"],
+        ["b", "d"],
+        ["b"],
+        ["c", "d"],
+        ["c"],
+        ["d"],
+        ["x"]
+      ]
+    },
+    {
+      "case_id": 38,
+      "input": {
+        "paths": [
+          ["base", "level1", "level2", "level3"],
+          ["other", "level1", "level2", "level3"],
+          ["base", "level1", "level2", "level3", "level4"],
+          ["other", "level1", "level2", "level3", "level4"],
+          ["base", "level1", "level2", "level3", "level4", "level5"],
+          ["other", "level1", "level2", "level3", "level4", "level5"],
+          ["base", "level1", "level2", "other"],
+          ["other", "level1", "level2", "other"]
+        ]
+      },
+      "expected": []
+    },
+    {
+      "case_id": 39,
+      "input": {
+        "paths": [
+          ["home", "user1", "documents"],
+          ["home", "user2", "documents"],
+          ["home", "user1", "documents", "file1"],
+          ["home", "user2", "documents", "file1"],
+          ["home", "user1", "pictures"],
+          ["home", "user2", "pictures"],
+          ["home", "user1", "pictures", "photo1"],
+          ["home", "user2", "pictures", "photo1"]
+        ]
+      },
+      "expected": [
+        ["home"]
+      ]
+    },
+    {
+      "case_id": 40,
+      "input": {
+        "paths": [
+          ["nested", "folder1"],
+          ["nested", "folder2"],
+          ["nested", "folder1", "subfolder1"],
+          ["nested", "folder2", "subfolder1"],
+          ["nested", "folder1", "subfolder1", "subsubfolder1"],
+          ["nested", "folder2", "subfolder1", "subsubfolder1"],
+          ["nested", "folder1", "subfolder2"],
+          ["nested", "folder2", "subfolder2"],
+          ["nested", "folder1", "subfolder2", "subsubfolder2"],
+          ["nested", "folder2", "subfolder2", "subsubfolder2"],
+          ["nested", "folder1", "subfolder2", "subsubfolder2", "file1"],
+          ["nested", "folder2", "subfolder2", "subsubfolder2", "file1"]
+        ]
+      },
+      "expected": [
+        ["nested"]
+      ]
+    },
+    {
+      "case_id": 41,
+      "input": {
+        "paths": [
+          ["a", "b", "c", "d", "e"],
+          ["f", "g", "h"],
+          ["a", "b", "c", "d", "f"],
+          ["f", "g", "h", "i"],
+          ["a", "b", "c", "d", "j"],
+          ["j", "k"],
+          ["f", "g", "h", "i", "k"]
+        ]
+      },
+      "expected": [
+        ["a", "b", "c", "d", "e"],
+        ["a", "b", "c", "d", "f"],
+        ["a", "b", "c", "d", "j"],
+        ["a", "b", "c", "d"],
+        ["a", "b", "c"],
+        ["a", "b"],
+        ["a"],
+        ["f", "g", "h"],
+        ["f", "g"],
+        ["f"]
+      ]
+    },
+    {
+      "case_id": 42,
+      "input": {
+        "paths": [
+          ["root", "a", "b", "c"],
+          ["root", "x", "y", "z"],
+          ["root", "a", "b", "d"],
+          ["root", "x", "y", "d"],
+          ["root", "a", "b", "c", "e"],
+          ["root", "x", "y", "z", "e"],
+          ["root", "a", "b", "c", "f"],
+          ["root", "x", "y", "z", "f"],
+          ["root", "a", "g"],
+          ["root", "x", "g"],
+          ["root", "a", "h"],
+          ["root", "x", "h"]
+        ]
+      },
+      "expected": [
+        ["root", "a", "b", "d"],
+        ["root", "a", "b"],
+        ["root", "a", "g"],
+        ["root", "a", "h"],
+        ["root", "a"],
+        ["root", "x", "g"],
+        ["root", "x", "h"],
+        ["root", "x", "y", "d"],
+        ["root", "x", "y"],
+        ["root", "x"],
+        ["root"]
+      ]
+    },
+    {
+      "case_id": 43,
+      "input": {
+        "paths": [
+          ["library", "books", "genre1"],
+          ["library", "books", "genre2"],
+          ["library", "books", "genre3"],
+          ["library", "books", "genre1", "author1"],
+          ["library", "books", "genre3", "author1"],
+          ["library", "books", "genre2", "author2"],
+          ["library", "books", "genre3", "author2"],
+          ["library", "books", "genre1", "author1", "book1"],
+          ["library", "books", "genre3", "author1", "book1"]
+        ]
+      },
+      "expected": [
+        ["library", "books", "genre1"],
+        ["library", "books", "genre2", "author2"],
+        ["library", "books", "genre2"],
+        ["library", "books", "genre3", "author2"],
+        ["library", "books", "genre3"],
+        ["library", "books"],
+        ["library"]
+      ]
+    },
+    {
+      "case_id": 44,
+      "input": {
+        "paths": [
+          ["a"],
+          ["a", "b"],
+          ["a", "b", "c"],
+          ["a", "b", "c", "d"],
+          ["a", "b", "c", "d", "e"],
+          ["b"],
+          ["b", "c"],
+          ["b", "c", "d"],
+          ["b", "c", "d", "e"],
+          ["c"],
+          ["c", "d"],
+          ["c", "d", "e"],
+          ["d"],
+          ["d", "e"],
+          ["e"]
+        ]
+      },
+      "expected": [
+        ["a"],
+        ["e"]
+      ]
+    },
+    {
+      "case_id": 45,
+      "input": {
+        "paths": [
+          ["folder1"],
+          ["folder1", "folder2"],
+          ["folder1", "folder2", "folder3"],
+          ["folder1", "folder2", "folder3", "folder4"],
+          ["folder1", "folder2", "folder3", "folder5"],
+          ["folder1", "folder2", "folder6"],
+          ["folder1", "folder2", "folder6", "folder7"],
+          ["folder1", "folder2", "folder6", "folder8"],
+          ["folder1", "folder9"],
+          ["folder1", "folder9", "folder10"],
+          ["folder1", "folder9", "folder10", "folder11"],
+          ["folder1", "folder9", "folder10", "folder12"],
+          ["folder1", "folder9", "folder13"],
+          ["folder1", "folder9", "folder13", "folder14"],
+          ["folder1", "folder9", "folder13", "folder15"]
+        ]
+      },
+      "expected": [
+        ["folder1", "folder2", "folder3", "folder4"],
+        ["folder1", "folder2", "folder3", "folder5"],
+        ["folder1", "folder2", "folder3"],
+        ["folder1", "folder2", "folder6", "folder7"],
+        ["folder1", "folder2", "folder6", "folder8"],
+        ["folder1", "folder2", "folder6"],
+        ["folder1", "folder2"],
+        ["folder1", "folder9", "folder10", "folder11"],
+        ["folder1", "folder9", "folder10", "folder12"],
+        ["folder1", "folder9", "folder10"],
+        ["folder1", "folder9", "folder13", "folder14"],
+        ["folder1", "folder9", "folder13", "folder15"],
+        ["folder1", "folder9", "folder13"],
+        ["folder1", "folder9"],
+        ["folder1"]
+      ]
+    },
+    {
+      "case_id": 46,
+      "input": {
+        "paths": [
+          ["projects", "projectA"],
+          ["projects", "projectB"],
+          ["projects", "projectA", "src"],
+          ["projects", "projectB", "src"],
+          ["projects", "projectA", "src", "module1"],
+          ["projects", "projectB", "src", "module1"],
+          ["projects", "projectA", "src", "module2"],
+          ["projects", "projectB", "src", "module2"],
+          ["projects", "projectA", "src", "module1", "file1"],
+          ["projects", "projectB", "src", "module1", "file1"],
+          ["projects", "projectA", "src", "module2", "file2"],
+          ["projects", "projectB", "src", "module2", "file3"],
+          ["projects", "projectA", "src", "module1", "file4"],
+          ["projects", "projectB", "src", "module1", "file5"]
+        ]
+      },
+      "expected": [
+        ["projects", "projectA", "src", "module1", "file1"],
+        ["projects", "projectA", "src", "module1", "file4"],
+        ["projects", "projectA", "src", "module1"],
+        ["projects", "projectA", "src", "module2", "file2"],
+        ["projects", "projectA", "src", "module2"],
+        ["projects", "projectA", "src"],
+        ["projects", "projectA"],
+        ["projects", "projectB", "src", "module1", "file1"],
+        ["projects", "projectB", "src", "module1", "file5"],
+        ["projects", "projectB", "src", "module1"],
+        ["projects", "projectB", "src", "module2", "file3"],
+        ["projects", "projectB", "src", "module2"],
+        ["projects", "projectB", "src"],
+        ["projects", "projectB"],
+        ["projects"]
+      ]
+    },
+    {
+      "case_id": 47,
+      "input": {
+        "paths": [
+          ["dir1"],
+          ["dir2"],
+          ["dir3"],
+          ["dir1", "sub1"],
+          ["dir2", "sub2"],
+          ["dir3", "sub1"],
+          ["dir1", "sub1", "subsub1"],
+          ["dir2", "sub2", "subsub2"],
+          ["dir3", "sub1", "subsub1"],
+          ["dir1", "sub1", "subsub1", "deeper1"],
+          ["dir3", "sub1", "subsub1", "deeper1"]
+        ]
+      },
+      "expected": [
+        ["dir2", "sub2", "subsub2"],
+        ["dir2", "sub2"],
+        ["dir2"]
+      ]
+    },
+    {
+      "case_id": 48,
+      "input": {
+        "paths": [
+          ["a"],
+          ["a", "b"],
+          ["a", "b", "c"],
+          ["a", "b", "d"],
+          ["b"],
+          ["b", "c"],
+          ["b", "d"],
+          ["c"],
+          ["c", "a"],
+          ["c", "a", "b"],
+          ["d"],
+          ["d", "a"],
+          ["d", "a", "b"]
+        ]
+      },
+      "expected": [
+        ["a"]
+      ]
+    },
+    {
+      "case_id": 49,
+      "input": {
+        "paths": [
+          ["root", "folder1", "subfolder1", "subsubfolder1"],
+          ["root", "folder2", "subfolder2", "subsubfolder1"],
+          ["root", "folder3", "subfolder3"],
+          ["root", "folder1", "subfolder1"],
+          ["root", "folder2", "subfolder2"]
+        ]
+      },
+      "expected": [
+        ["root", "folder1"],
+        ["root", "folder2"],
+        ["root", "folder3", "subfolder3"],
+        ["root", "folder3"],
+        ["root"]
+      ]
+    },
+    {
+      "case_id": 50,
+      "input": {
+        "paths": [
+          ["folderA"],
+          ["folderB"],
+          ["folderA", "subA"],
+          ["folderB", "subA"],
+          ["folderA", "subA", "subsubA"],
+          ["folderB", "subA", "subsubA"],
+          ["folderC"],
+          ["folderC", "subB"],
+          ["folderD"],
+          ["folderD", "subB", "subsubB"],
+          ["folderE"],
+          ["folderE", "subB", "subsubB", "deepB"]
+        ]
+      },
+      "expected": [
+        ["folderC", "subB"],
+        ["folderC"],
+        ["folderD", "subB", "subsubB"],
+        ["folderD", "subB"],
+        ["folderD"],
+        ["folderE", "subB", "subsubB", "deepB"],
+        ["folderE", "subB", "subsubB"],
+        ["folderE", "subB"],
+        ["folderE"]
+      ]
+    },
+    {
+      "case_id": 51,
+      "input": {
+        "paths": [
+          ["main"],
+          ["main", "projects"],
+          ["main", "projects", "project1"],
+          ["main", "projects", "project2"],
+          ["main", "projects", "project1", "code"],
+          ["main", "projects", "project2", "code"],
+          ["main", "docs"],
+          ["main", "docs", "project1"],
+          ["main", "docs", "project2"],
+          ["main", "docs", "project1", "notes"],
+          ["main", "docs", "project2", "notes"]
+        ]
+      },
+      "expected": [
+        ["main", "docs"],
+        ["main", "projects"],
+        ["main"]
+      ]
+    },
+    {
+      "case_id": 52,
+      "input": {
+        "paths": [
+          ["folder1", "subfolder1", "deepsub1"],
+          ["folder2", "subfolder2", "deepsub2"],
+          ["folder1", "subfolder1", "deepsub3"],
+          ["folder2", "subfolder2", "deepsub3"],
+          ["folder1", "subfolder2"],
+          ["folder2", "subfolder2"],
+          ["folder3", "subfolder3"]
+        ]
+      },
+      "expected": [
+        ["folder1", "subfolder1", "deepsub1"],
+        ["folder1", "subfolder1", "deepsub3"],
+        ["folder1", "subfolder1"],
+        ["folder1", "subfolder2"],
+        ["folder1"],
+        ["folder2", "subfolder2", "deepsub2"],
+        ["folder2", "subfolder2", "deepsub3"],
+        ["folder2", "subfolder2"],
+        ["folder2"],
+        ["folder3", "subfolder3"],
+        ["folder3"]
+      ]
+    },
+    {
+      "case_id": 53,
+      "input": {
+        "paths": [
+          ["parent", "child1", "grandchild1"],
+          ["parent", "child2", "grandchild1"],
+          ["parent", "child1", "grandchild2"],
+          ["parent", "child2", "grandchild2"],
+          ["parent", "child1", "grandchild3"],
+          ["parent", "child2", "grandchild3"],
+          ["parent", "child1", "subchild1", "subsubchild1"],
+          ["parent", "child2", "subchild1", "subsubchild1"],
+          ["parent", "child1", "subchild2", "subsubchild2"],
+          ["parent", "child2", "subchild2", "subsubchild2"]
+        ]
+      },
+      "expected": [
+        ["parent"]
+      ]
+    },
+    {
+      "case_id": 54,
+      "input": {
+        "paths": [
+          ["root", "a", "x"],
+          ["root", "b", "x"],
+          ["root", "a", "y"],
+          ["root", "b", "y"],
+          ["root", "a", "x", "z"],
+          ["root", "b", "x", "z"],
+          ["root", "a", "w"],
+          ["root", "b", "w"]
+        ]
+      },
+      "expected": [
+        ["root"]
+      ]
+    },
+    {
+      "case_id": 55,
+      "input": {
+        "paths": [
+          ["a", "b", "c"],
+          ["a", "d", "e"],
+          ["a", "d", "e", "f"],
+          ["g", "h", "i"],
+          ["g", "j", "k"],
+          ["g", "j", "l"],
+          ["a", "b", "c", "m"],
+          ["g", "h", "i", "m"],
+          ["n", "o", "p"],
+          ["n", "o", "q"],
+          ["n", "r", "s"],
+          ["n", "r", "s", "t"]
+        ]
+      },
+      "expected": [
+        ["a", "b"],
+        ["a", "d", "e", "f"],
+        ["a", "d", "e"],
+        ["a", "d"],
+        ["a"],
+        ["g", "h"],
+        ["g", "j", "k"],
+        ["g", "j", "l"],
+        ["g", "j"],
+        ["g"],
+        ["n", "o", "p"],
+        ["n", "o", "q"],
+        ["n", "o"],
+        ["n", "r", "s", "t"],
+        ["n", "r", "s"],
+        ["n", "r"],
+        ["n"]
+      ]
+    },
+    {
+      "case_id": 56,
+      "input": {
+        "paths": [
+          ["x"],
+          ["x", "y"],
+          ["x", "y", "z"],
+          ["x", "y", "z", "w"],
+          ["y"],
+          ["y", "z"],
+          ["y", "z", "w"],
+          ["z"],
+          ["z", "w"],
+          ["w"]
+        ]
+      },
+      "expected": [
+        ["w"],
+        ["x"]
+      ]
+    },
+    {
+      "case_id": 57,
+      "input": {
+        "paths": [
+          ["main", "branch1"],
+          ["main", "branch2"],
+          ["main", "branch1", "sub1"],
+          ["main", "branch2", "sub1"],
+          ["main", "branch1", "sub2"],
+          ["main", "branch2", "sub2"],
+          ["main", "branch1", "sub1", "subsub1"],
+          ["main", "branch2", "sub1", "subsub1"],
+          ["main", "branch1", "sub1", "subsub2"],
+          ["main", "branch2", "sub1", "subsub2"]
+        ]
+      },
+      "expected": [
+        ["main"]
+      ]
+    },
+    {
+      "case_id": 58,
+      "input": {
+        "paths": [
+          ["x"],
+          ["y"],
+          ["z"],
+          ["x", "a"],
+          ["y", "a"],
+          ["z", "a"],
+          ["x", "a", "b"],
+          ["y", "a", "b"],
+          ["x", "a", "b", "c"],
+          ["y", "a", "b", "c"],
+          ["w"],
+          ["w", "d"],
+          ["w", "d", "e"],
+          ["w", "d", "e", "f"],
+          ["v"],
+          ["v", "d"],
+          ["v", "d", "e"],
+          ["v", "d", "e", "f"]
+        ]
+      },
+      "expected": [
+        ["z", "a"],
+        ["z"]
+      ]
+    },
+    {
+      "case_id": 59,
+      "input": {
+        "paths": [
+          ["level1"],
+          ["level1", "level2"],
+          ["level1", "level2", "level3"],
+          ["level1", "level2", "level3", "level4"],
+          ["level1", "level2", "level3", "level4", "level5"],
+          ["levelA"],
+          ["levelA", "level2"],
+          ["levelA", "level2", "level3"],
+          ["levelA", "level2", "level3", "level4"],
+          ["levelA", "level2", "level3", "level4", "level5"]
+        ]
+      },
+      "expected": []
+    },
+    {
+      "case_id": 60,
+      "input": {
+        "paths": [
+          ["root"],
+          ["root", "dir1"],
+          ["root", "dir1", "subdir1"],
+          ["root", "dir2"],
+          ["root", "dir2", "subdir1"],
+          ["root", "dir2", "subdir2"],
+          ["root", "dir3"],
+          ["root", "dir3", "subdir2"],
+          ["root", "dir4"],
+          ["root", "dir4", "subdir1"],
+          ["root", "dir4", "subdir2"]
+        ]
+      },
+      "expected": [
+        ["root", "dir1", "subdir1"],
+        ["root", "dir1"],
+        ["root", "dir3", "subdir2"],
+        ["root", "dir3"],
+        ["root"]
+      ]
+    },
+    {
+      "case_id": 61,
+      "input": {
+        "paths": [
+          ["root", "folder1", "subfolder1"],
+          ["root", "folder2", "subfolder1"],
+          ["root", "folder3", "subfolder2"],
+          ["root", "folder3", "subfolder2", "deepsubfolder1"],
+          ["root", "folder4", "subfolder2", "deepsubfolder1"],
+          ["root", "folder5", "subfolder2", "deepsubfolder1", "deeper1"]
+        ]
+      },
+      "expected": [
+        ["root", "folder5", "subfolder2", "deepsubfolder1", "deeper1"],
+        ["root", "folder5", "subfolder2", "deepsubfolder1"],
+        ["root", "folder5", "subfolder2"],
+        ["root", "folder5"],
+        ["root"]
+      ]
+    },
+    {
+      "case_id": 62,
+      "input": {
+        "paths": [
+          ["home", "user1", "docs"],
+          ["home", "user2", "docs"],
+          ["home", "user1", "music"],
+          ["home", "user2", "music"],
+          ["home", "user1", "docs", "report"],
+          ["home", "user2", "docs", "report"],
+          ["home", "user1", "music", "song1"],
+          ["home", "user2", "music", "song2"],
+          ["home", "user1", "docs", "report", "summary"],
+          ["home", "user2", "docs", "report", "summary"],
+          ["home", "user1", "docs", "report", "summary", "details"],
+          ["home", "user2", "docs", "report", "summary", "details"]
+        ]
+      },
+      "expected": [
+        ["home", "user1", "music", "song1"],
+        ["home", "user1", "music"],
+        ["home", "user1"],
+        ["home", "user2", "music", "song2"],
+        ["home", "user2", "music"],
+        ["home", "user2"],
+        ["home"]
+      ]
+    },
+    {
+      "case_id": 63,
+      "input": {
+        "paths": [
+          ["main", "project", "src", "module1"],
+          ["main", "project", "src", "module2"],
+          ["main", "project", "src", "module1", "submodule1"],
+          ["main", "project", "src", "module2", "submodule1"],
+          ["main", "project", "src", "module1", "submodule2"],
+          ["main", "project", "src", "module2", "submodule2"],
+          ["main", "project", "src", "module1", "submodule1", "subsubmodule1"],
+          ["main", "project", "src", "module2", "submodule1", "subsubmodule1"],
+          ["main", "unique", "project", "src", "module1"],
+          ["main", "unique", "project", "src", "module1", "submodule1"],
+          ["main", "unique", "project", "src", "module1", "submodule1", "subsubmodule1"]
+        ]
+      },
+      "expected": [
+        ["main", "project", "src"],
+        ["main", "project"],
+        ["main", "unique", "project", "src", "module1"],
+        ["main", "unique", "project", "src"],
+        ["main", "unique", "project"],
+        ["main", "unique"],
+        ["main"]
+      ]
+    },
+    {
+      "case_id": 64,
+      "input": {
+        "paths": [
+          ["projects", "proj1", "src"],
+          ["projects", "proj2", "src"],
+          ["projects", "proj3"],
+          ["projects", "proj1", "src", "main"],
+          ["projects", "proj2", "src", "main"],
+          ["projects", "proj1", "docs"],
+          ["projects", "proj2", "docs"],
+          ["projects", "proj3", "docs"]
+        ]
+      },
+      "expected": [
+        ["projects", "proj3", "docs"],
+        ["projects", "proj3"],
+        ["projects"]
+      ]
+    },
+    {
+      "case_id": 65,
+      "input": {
+        "paths": [
+          ["alpha"],
+          ["beta"],
+          ["gamma"],
+          ["alpha", "delta"],
+          ["beta", "delta"],
+          ["gamma", "epsilon"],
+          ["alpha", "delta", "zeta"],
+          ["beta", "delta", "zeta"],
+          ["alpha", "delta", "zeta", "eta"],
+          ["beta", "delta", "zeta", "eta"],
+          ["alpha", "theta"],
+          ["beta", "theta"],
+          ["gamma", "theta"]
+        ]
+      },
+      "expected": [
+        ["gamma", "epsilon"],
+        ["gamma", "theta"],
+        ["gamma"]
+      ]
+    },
+    {
+      "case_id": 66,
+      "input": {
+        "paths": [
+          ["project"],
+          ["project", "module1"],
+          ["project", "module1", "file1"],
+          ["project", "module2"],
+          ["project", "module2", "file1"],
+          ["project", "module3"],
+          ["project", "module3", "file2"],
+          ["project", "module4"],
+          ["project", "module4", "file3"],
+          ["project", "module5"],
+          ["project", "module5", "file3"],
+          ["project", "module6"],
+          ["project", "module6", "file4"],
+          ["project", "module7"],
+          ["project", "module7", "file4"],
+          ["project", "module8"],
+          ["project", "module8", "file5"],
+          ["project", "module8", "file6"]
+        ]
+      },
+      "expected": [
+        ["project", "module3", "file2"],
+        ["project", "module3"],
+        ["project", "module8", "file5"],
+        ["project", "module8", "file6"],
+        ["project", "module8"],
+        ["project"]
+      ]
+    },
+    {
+      "case_id": 67,
+      "input": {
+        "paths": [
+          ["app", "module1", "service1"],
+          ["app", "module2", "service2"],
+          ["app", "module3", "service1"],
+          ["app", "module4", "service4"],
+          ["app", "module1", "service1", "endpoint1"],
+          ["app", "module3", "service1", "endpoint1"],
+          ["app", "module5"],
+          ["app", "module5", "endpoint2"]
+        ]
+      },
+      "expected": [
+        ["app", "module2", "service2"],
+        ["app", "module2"],
+        ["app", "module4", "service4"],
+        ["app", "module4"],
+        ["app", "module5", "endpoint2"],
+        ["app", "module5"],
+        ["app"]
+      ]
+    },
+    {
+      "case_id": 68,
+      "input": {
+        "paths": [
+          ["root", "dir1", "subdir1"],
+          ["root", "dir2", "subdir1"],
+          ["root", "dir1", "subdir2"],
+          ["root", "dir2", "subdir2"],
+          ["root", "dir1", "subdir1", "subsubdir1"],
+          ["root", "dir2", "subdir1", "subsubdir1"],
+          ["root", "dir1", "subdir3"],
+          ["root", "dir2", "subdir3"]
+        ]
+      },
+      "expected": [
+        ["root"]
+      ]
+    },
+    {
+      "case_id": 69,
+      "input": {
+        "paths": [
+          ["root"],
+          ["root", "child1"],
+          ["root", "child2"],
+          ["root", "child1", "sub1"],
+          ["root", "child2", "sub1"],
+          ["root", "child1", "sub1", "subsub1"],
+          ["root", "child2", "sub1", "subsub1"],
+          ["root", "child1", "sub2"],
+          ["root", "child2", "sub2"],
+          ["root", "child1", "sub2", "subsub2"],
+          ["root", "child2", "sub2", "subsub2"],
+          ["root", "child3"],
+          ["root", "child3", "sub1"],
+          ["root", "child3", "sub1", "subsub1"],
+          ["root", "child3", "sub2"],
+          ["root", "child3", "sub2", "subsub2"]
+        ]
+      },
+      "expected": [
+        ["root"]
+      ]
+    },
+    {
+      "case_id": 70,
+      "input": {
+        "paths": [
+          ["home"],
+          ["home", "user1"],
+          ["home", "user1", "documents"],
+          ["home", "user1", "pictures"],
+          ["home", "user2"],
+          ["home", "user2", "documents"],
+          ["home", "user2", "pictures"],
+          ["home", "user3"],
+          ["home", "user3", "documents"],
+          ["home", "user3", "pictures"],
+          ["home", "user3", "videos"],
+          ["home", "user4"],
+          ["home", "user4", "documents"],
+          ["home", "user4", "pictures"],
+          ["home", "user4", "videos"],
+          ["home", "user5"],
+          ["home", "user5", "documents"],
+          ["home", "user5", "pictures"],
+          ["home", "user5", "videos"],
+          ["home", "user6"],
+          ["home", "user6", "documents"],
+          ["home", "user6", "pictures"],
+          ["home", "user6", "videos"],
+          ["home", "user6", "music"]
+        ]
+      },
+      "expected": [
+        ["home", "user6", "documents"],
+        ["home", "user6", "music"],
+        ["home", "user6", "pictures"],
+        ["home", "user6", "videos"],
+        ["home", "user6"],
+        ["home"]
+      ]
+    },
+    {
+      "case_id": 71,
+      "input": {
+        "paths": [
+          ["documents", "work", "reports"],
+          ["documents", "work", "reports", "monthly"],
+          ["documents", "work", "reports", "monthly", "jan"],
+          ["documents", "work", "reports", "monthly", "feb"],
+          ["documents", "work", "reports", "monthly", "mar"],
+          ["documents", "home", "reports"],
+          ["documents", "home", "reports", "monthly"],
+          ["documents", "home", "reports", "monthly", "jan"],
+          ["documents", "home", "reports", "monthly", "feb"],
+          ["documents", "home", "reports", "monthly", "mar"],
+          ["documents", "finance", "reports"],
+          ["documents", "finance", "reports", "monthly"],
+          ["documents", "finance", "reports", "monthly", "jan"],
+          ["documents", "finance", "reports", "monthly", "feb"],
+          ["documents", "finance", "reports", "monthly", "mar"]
+        ]
+      },
+      "expected": [
+        ["documents"]
+      ]
+    },
+    {
+      "case_id": 72,
+      "input": {
+        "paths": [
+          ["root", "folder1", "sub1"],
+          ["root", "folder2", "sub1"],
+          ["root", "folder1", "sub2"],
+          ["root", "folder2", "sub2"],
+          ["root", "folder3", "sub1"],
+          ["root", "folder4", "sub1"],
+          ["root", "folder3", "sub3"],
+          ["root", "folder4", "sub3"]
+        ]
+      },
+      "expected": [
+        ["root"]
+      ]
+    },
+    {
+      "case_id": 73,
+      "input": {
+        "paths": [
+          ["home", "user1", "docs", "work"],
+          ["home", "user2", "docs", "work"],
+          ["home", "user1", "docs", "projects"],
+          ["home", "user2", "docs", "projects"],
+          ["home", "user1", "downloads", "movies"],
+          ["home", "user2", "downloads", "movies"],
+          ["home", "user1", "downloads", "music"],
+          ["home", "user2", "downloads", "music"],
+          ["home", "user1", "pictures", "vacation"],
+          ["home", "user2", "pictures", "vacation"],
+          ["home", "user1", "pictures", "wedding"],
+          ["home", "user2", "pictures", "wedding"]
+        ]
+      },
+      "expected": [
+        ["home"]
+      ]
+    },
+    {
+      "case_id": 74,
+      "input": {
+        "paths": [
+          ["library"],
+          ["library", "section1"],
+          ["library", "section1", "shelf1"],
+          ["library", "section1", "shelf2"],
+          ["library", "section1", "shelf3"],
+          ["library", "section2"],
+          ["library", "section2", "shelf1"],
+          ["library", "section2", "shelf2"],
+          ["library", "section2", "shelf4"],
+          ["library", "section3"],
+          ["library", "section3", "shelf3"],
+          ["library", "section3", "shelf4"],
+          ["library", "section4"],
+          ["library", "section4", "shelf5"],
+          ["library", "section4", "shelf6"],
+          ["library", "section5"],
+          ["library", "section5", "shelf5"],
+          ["library", "section5", "shelf6"],
+          ["library", "section6"],
+          ["library", "section6", "shelf7"],
+          ["library", "section6", "shelf8"],
+          ["library", "section7"],
+          ["library", "section7", "shelf9"],
+          ["library", "section7", "shelf10"]
+        ]
+      },
+      "expected": [
+        ["library", "section1", "shelf1"],
+        ["library", "section1", "shelf2"],
+        ["library", "section1", "shelf3"],
+        ["library", "section1"],
+        ["library", "section2", "shelf1"],
+        ["library", "section2", "shelf2"],
+        ["library", "section2", "shelf4"],
+        ["library", "section2"],
+        ["library", "section3", "shelf3"],
+        ["library", "section3", "shelf4"],
+        ["library", "section3"],
+        ["library", "section6", "shelf7"],
+        ["library", "section6", "shelf8"],
+        ["library", "section6"],
+        ["library", "section7", "shelf10"],
+        ["library", "section7", "shelf9"],
+        ["library", "section7"],
+        ["library"]
+      ]
+    },
+    {
+      "case_id": 75,
+      "input": {
+        "paths": [
+          ["home"],
+          ["home", "user1"],
+          ["home", "user2"],
+          ["home", "user1", "documents"],
+          ["home", "user2", "documents"],
+          ["home", "user1", "pictures"],
+          ["home", "user2", "pictures"],
+          ["home", "user1", "documents", "work"],
+          ["home", "user2", "documents", "work"],
+          ["home", "user1", "documents", "personal"],
+          ["home", "user2", "documents", "personal"],
+          ["home", "user1", "pictures", "vacation"],
+          ["home", "user2", "pictures", "vacation"],
+          ["home", "user1", "pictures", "travel"],
+          ["home", "user2", "pictures", "travel"],
+          ["home", "user1", "pictures", "travel", "2022"],
+          ["home", "user2", "pictures", "travel", "2022"]
+        ]
+      },
+      "expected": [
+        ["home"]
+      ]
+    },
+    {
+      "case_id": 76,
+      "input": {
+        "paths": [
+          ["root"],
+          ["root", "dir1"],
+          ["root", "dir2"],
+          ["root", "dir1", "dir3"],
+          ["root", "dir2", "dir4"],
+          ["root", "dir2", "dir3"],
+          ["root", "dir1", "dir3", "dir5"],
+          ["root", "dir2", "dir3", "dir5"]
+        ]
+      },
+      "expected": [
+        ["root", "dir1"],
+        ["root", "dir2", "dir4"],
+        ["root", "dir2"],
+        ["root"]
+      ]
+    }
+  ]
+}

@@ -1,0 +1,781 @@
+{
+  "schema_version": 1,
+  "problem_id": 2096,
+  "title": "Step-By-Step Directions From a Binary Tree Node to Another",
+  "method": "getDirections",
+  "signature": {
+    "params": [
+      {
+        "name": "root",
+        "type": "TREE_NODE"
+      },
+      {
+        "name": "startValue",
+        "type": "INT32"
+      },
+      {
+        "name": "destValue",
+        "type": "INT32"
+      }
+    ],
+    "returns": "STRING"
+  },
+  "cases": [
+    {
+      "case_id": 1,
+      "input": {
+        "root": [10, 5, 15, 3, 7, null, 18],
+        "startValue": 3,
+        "destValue": 18
+      },
+      "expected": "UURR"
+    },
+    {
+      "case_id": 2,
+      "input": {
+        "root": [2, 1],
+        "startValue": 2,
+        "destValue": 1
+      },
+      "expected": "L"
+    },
+    {
+      "case_id": 3,
+      "input": {
+        "root": [5, 1, 2, 3, null, 6, 4],
+        "startValue": 3,
+        "destValue": 6
+      },
+      "expected": "UURL"
+    },
+    {
+      "case_id": 4,
+      "input": {
+        "root": [1, 2, 3, 4, 5, 6, 7],
+        "startValue": 4,
+        "destValue": 7
+      },
+      "expected": "UURR"
+    },
+    {
+      "case_id": 5,
+      "input": {
+        "root": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+        "startValue": 8,
+        "destValue": 10
+      },
+      "expected": "UURL"
+    },
+    {
+      "case_id": 6,
+      "input": {
+        "root": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15],
+        "startValue": 8,
+        "destValue": 15
+      },
+      "expected": "UUURRR"
+    },
+    {
+      "case_id": 7,
+      "input": {
+        "root": [1, 2],
+        "startValue": 2,
+        "destValue": 1
+      },
+      "expected": "U"
+    },
+    {
+      "case_id": 8,
+      "input": {
+        "root": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15],
+        "startValue": 1,
+        "destValue": 15
+      },
+      "expected": "RRR"
+    },
+    {
+      "case_id": 9,
+      "input": {
+        "root": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15],
+        "startValue": 8,
+        "destValue": 14
+      },
+      "expected": "UUURRL"
+    },
+    {
+      "case_id": 10,
+      "input": {
+        "root": [3, 1, 4, null, 2],
+        "startValue": 2,
+        "destValue": 4
+      },
+      "expected": "UUR"
+    },
+    {
+      "case_id": 11,
+      "input": {
+        "root": [3, 1, 2],
+        "startValue": 2,
+        "destValue": 1
+      },
+      "expected": "UL"
+    },
+    {
+      "case_id": 12,
+      "input": {
+        "root": [20, 10, 30, 5, 15, 25, 35, 3, 7, 12, 17, 22, 27, 32, 38, 1, 4, 6, 8, 11, 13, 16, 18, 19, 21, 23, 24, 26, 28, 30, 31, 33, 34, 36, 37, 39, 40],
+        "startValue": 37,
+        "destValue": 4
+      },
+      "expected": "U"
+    },
+    {
+      "case_id": 13,
+      "input": {
+        "root": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50],
+        "startValue": 45,
+        "destValue": 50
+      },
+      "expected": "UUUUURLLRL"
+    },
+    {
+      "case_id": 14,
+      "input": {
+        "root": [5, 1, 2, 3, 8, 6, 4, 9, null, null, 10],
+        "startValue": 9,
+        "destValue": 10
+      },
+      "expected": "UURR"
+    },
+    {
+      "case_id": 15,
+      "input": {
+        "root": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15],
+        "startValue": 12,
+        "destValue": 14
+      },
+      "expected": "UURL"
+    },
+    {
+      "case_id": 16,
+      "input": {
+        "root": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
+        "startValue": 16,
+        "destValue": 19
+      },
+      "expected": "UURR"
+    },
+    {
+      "case_id": 17,
+      "input": {
+        "root": [1, 2, 3, null, null, 6, 7, 8, 9, null, null, 12, 13, null, null, 16, 17],
+        "startValue": 16,
+        "destValue": 17
+      },
+      "expected": "UR"
+    },
+    {
+      "case_id": 18,
+      "input": {
+        "root": [5, 1, 2, 3, null, 6, 4, 8, null, null, null, 9],
+        "startValue": 8,
+        "destValue": 9
+      },
+      "expected": "UUURRL"
+    },
+    {
+      "case_id": 19,
+      "input": {
+        "root": [5, 1, 2, 3, 6, null, 4, 7, 8, null, null, 9, 10, null, null, 11, 12, null, null, 13, 14, null, null, 15, 16],
+        "startValue": 7,
+        "destValue": 16
+      },
+      "expected": "URRR"
+    },
+    {
+      "case_id": 20,
+      "input": {
+        "root": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
+        "startValue": 4,
+        "destValue": 17
+      },
+      "expected": "LR"
+    },
+    {
+      "case_id": 21,
+      "input": {
+        "root": [50, 25, 75, 12, 37, 62, 87, 6, 20, null, 40, null, 59, 80, 90],
+        "startValue": 6,
+        "destValue": 80
+      },
+      "expected": "UUURRL"
+    },
+    {
+      "case_id": 22,
+      "input": {
+        "root": [10, 5, 15, 3, 7, 12, 18, 1, null, 6, null, 11, 13, null, null, null, null, null, null, null],
+        "startValue": 3,
+        "destValue": 13
+      },
+      "expected": "UURLR"
+    },
+    {
+      "case_id": 23,
+      "input": {
+        "root": [1, 2, null, 3, null, 4, null, 5, null, 6, null, 7, null, 8, null, 9, null, 10, null, 11, null, 12],
+        "startValue": 7,
+        "destValue": 12
+      },
+      "expected": "LLLLL"
+    },
+    {
+      "case_id": 24,
+      "input": {
+        "root": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30],
+        "startValue": 21,
+        "destValue": 28
+      },
+      "expected": "UUUURRLL"
+    },
+    {
+      "case_id": 25,
+      "input": {
+        "root": [1, 2, null, 3, 4, null, 5, 6, null, null, 7, 8, 9],
+        "startValue": 6,
+        "destValue": 9
+      },
+      "expected": "R"
+    },
+    {
+      "case_id": 26,
+      "input": {
+        "root": [20, 10, 30, 5, 15, 25, 35, 3, 7, 12, 17, 22, 27, 32, 38, 1, 4, 6, 8, 11, 13, 16, 18, 19, 21, 23, 24, 26, 28, 30, 31, 33, 34, 36, 37, 39, 40],
+        "startValue": 4,
+        "destValue": 37
+      },
+      "expected": "R"
+    },
+    {
+      "case_id": 27,
+      "input": {
+        "root": [10, 5, 15, 3, 7, null, 18, 1, null, 6, null, 14, 20, null, null, null, null, null, 13, 16, 19],
+        "startValue": 3,
+        "destValue": 20
+      },
+      "expected": "UURRR"
+    },
+    {
+      "case_id": 28,
+      "input": {
+        "root": [3, 1, 2, null, null, null, 4, null, 5, null, null, null, 6, null, null, null, null, null, null, 7],
+        "startValue": 1,
+        "destValue": 7
+      },
+      "expected": null
+    },
+    {
+      "case_id": 29,
+      "input": {
+        "root": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
+        "startValue": 10,
+        "destValue": 19
+      },
+      "expected": "UULRR"
+    },
+    {
+      "case_id": 30,
+      "input": {
+        "root": [50, 25, 75, 12, 37, 62, 87, 6, 18, 31, 43, 55, 59, 81, 93, 3, 9, 15, 21, 27, 35, 39, 47, 51, 57, 61, 67, 71, 77, 83, 89, 95, 1, 5, 7, 11, 13, 17, 19, 23, 29, 33, 37, 41, 45, 49, 53, 58, 63, 65, 69, 73, 75, 79, 85, 88, 91, 94, 97, 99],
+        "startValue": 55,
+        "destValue": 88
+      },
+      "expected": "UURLLL"
+    },
+    {
+      "case_id": 31,
+      "input": {
+        "root": [200, 100, 300, 50, 150, 250, 350, 25, 75, 125, 175, 225, 275, 325, 375, 10, 40, 60, 90, 130, 160, 180, 210, 240, 260, 290, 310, 340, 360, 390],
+        "startValue": 10,
+        "destValue": 390
+      },
+      "expected": "UUUURRRL"
+    },
+    {
+      "case_id": 32,
+      "input": {
+        "root": [1, 2, 3, null, null, 4, 5, 6, 7, null, null, null, null, 8, 9, null, null, null, null, 10],
+        "startValue": 10,
+        "destValue": 8
+      },
+      "expected": null
+    },
+    {
+      "case_id": 33,
+      "input": {
+        "root": [1, 2, 3, null, null, 4, 5, null, null, 6, 7, null, null, 8, 9],
+        "startValue": 6,
+        "destValue": 9
+      },
+      "expected": "URR"
+    },
+    {
+      "case_id": 34,
+      "input": {
+        "root": [1, 2, 3, null, null, 4, 5, 6, null, null, 7, 8, null, null, 9, 10, 11, 12, 13, 14, null, null, null, null, null, null, null, 15, 16, null, 17, null, null, 18],
+        "startValue": 6,
+        "destValue": 18
+      },
+      "expected": "LLLLRL"
+    },
+    {
+      "case_id": 35,
+      "input": {
+        "root": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25],
+        "startValue": 12,
+        "destValue": 24
+      },
+      "expected": "L"
+    },
+    {
+      "case_id": 36,
+      "input": {
+        "root": [10, 5, 15, 3, 7, null, 18, 1, null, 6],
+        "startValue": 3,
+        "destValue": 7
+      },
+      "expected": "UR"
+    },
+    {
+      "case_id": 37,
+      "input": {
+        "root": [5, 1, 2, 3, 4, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15],
+        "startValue": 8,
+        "destValue": 15
+      },
+      "expected": "UUURRR"
+    },
+    {
+      "case_id": 38,
+      "input": {
+        "root": [3, 5, 1, 6, 2, 0, 8, null, null, 7, 4],
+        "startValue": 5,
+        "destValue": 1
+      },
+      "expected": "UR"
+    },
+    {
+      "case_id": 39,
+      "input": {
+        "root": [30, 15, 45, 10, 20, 40, 50, 5, 12, null, 25, 35, 48, null, null, null, 18, null, null, null, null, null, null, null, null, 22, null, null, null, null, null, null, null, null, null, null],
+        "startValue": 5,
+        "destValue": 22
+      },
+      "expected": "RL"
+    },
+    {
+      "case_id": 40,
+      "input": {
+        "root": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, null, null, 14, 15, null, null, null, null, null, 16, 17, 18, 19, 20],
+        "startValue": 8,
+        "destValue": 19
+      },
+      "expected": "UUURLRL"
+    },
+    {
+      "case_id": 41,
+      "input": {
+        "root": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15],
+        "startValue": 14,
+        "destValue": 11
+      },
+      "expected": "UUULRR"
+    },
+    {
+      "case_id": 42,
+      "input": {
+        "root": [10, 5, 15, 3, 7, null, 18, 1, null, 6],
+        "startValue": 1,
+        "destValue": 6
+      },
+      "expected": "UURL"
+    },
+    {
+      "case_id": 43,
+      "input": {
+        "root": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
+        "startValue": 16,
+        "destValue": 20
+      },
+      "expected": "UUURLL"
+    },
+    {
+      "case_id": 44,
+      "input": {
+        "root": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15],
+        "startValue": 5,
+        "destValue": 11
+      },
+      "expected": "R"
+    },
+    {
+      "case_id": 45,
+      "input": {
+        "root": [100, 50, 150, 25, 75, 125, 175, 10, 30, 60, 85, 110, 140, 160, 180],
+        "startValue": 85,
+        "destValue": 140
+      },
+      "expected": "UUURLR"
+    },
+    {
+      "case_id": 46,
+      "input": {
+        "root": [1, 2, 3, null, 4, null, null, 5, 6, null, null, null, null, 7, 8, null, null, null, null, 9, 10],
+        "startValue": 9,
+        "destValue": 10
+      },
+      "expected": null
+    },
+    {
+      "case_id": 47,
+      "input": {
+        "root": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50],
+        "startValue": 10,
+        "destValue": 45
+      },
+      "expected": "URLR"
+    },
+    {
+      "case_id": 48,
+      "input": {
+        "root": [15, 10, 20, 8, 12, 18, 25, 6, 9, 11, 13, 16, 19, 22, 28, 5, 7, null, null, null, null, null, null, 14, null, null, null, null, null, 17, null, null, null, null, null, null, 21, null, null, null, null, null, null, null, null, null, null, null, null, 24, null, null, null, null, null, null, 26, null, 27],
+        "startValue": 5,
+        "destValue": 27
+      },
+      "expected": null
+    },
+    {
+      "case_id": 49,
+      "input": {
+        "root": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50],
+        "startValue": 12,
+        "destValue": 49
+      },
+      "expected": "LR"
+    },
+    {
+      "case_id": 50,
+      "input": {
+        "root": [100, 50, 150, 25, 75, 125, 175, 10, 35, 65, 85, 115, 135, 165, 185],
+        "startValue": 10,
+        "destValue": 185
+      },
+      "expected": "UUURRR"
+    },
+    {
+      "case_id": 51,
+      "input": {
+        "root": [5, 1, 2, 3, 9, null, 6, 4, null, null, null, null, 8],
+        "startValue": 4,
+        "destValue": 9
+      },
+      "expected": "UUR"
+    },
+    {
+      "case_id": 52,
+      "input": {
+        "root": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, null, null, null, null, null, null, null, null, 20, 21, 22, null, 24, 25, 26, 27, 28],
+        "startValue": 20,
+        "destValue": 27
+      },
+      "expected": "UUURRR"
+    },
+    {
+      "case_id": 53,
+      "input": {
+        "root": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
+        "startValue": 19,
+        "destValue": 7
+      },
+      "expected": "UUUURR"
+    },
+    {
+      "case_id": 54,
+      "input": {
+        "root": [5, 1, 2, 3, null, 6, 4, 8, 9, null, null, 12, 13, null, null, 16, 17, null, null, null, 18, 19, 20, null, null, null, null, 22, 23, 24, 25, 26, 27, 28, null, null, null, null, null, null, null, null, null, null, null, 30],
+        "startValue": 16,
+        "destValue": 28
+      },
+      "expected": "LRL"
+    },
+    {
+      "case_id": 55,
+      "input": {
+        "root": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15],
+        "startValue": 7,
+        "destValue": 1
+      },
+      "expected": "UU"
+    },
+    {
+      "case_id": 56,
+      "input": {
+        "root": [1, null, 2, null, 3, null, 4, null, 5, null, 6, null, 7, null, 8, null, 9, null, 10],
+        "startValue": 1,
+        "destValue": 10
+      },
+      "expected": "RRRRRRRRR"
+    },
+    {
+      "case_id": 57,
+      "input": {
+        "root": [30, 15, 45, 10, 20, 40, 50, 5, 12, 18, 25, 35, 48, 2, 8, 13, 16, 19, 23, 32, 38, 43, 47, 49, 1, 6, 9, 11, 14, 17, 21, 22, 24, 26, 29, 31, 33, 37, 41, 42, 44, 46, 51],
+        "startValue": 42,
+        "destValue": 46
+      },
+      "expected": "UURL"
+    },
+    {
+      "case_id": 58,
+      "input": {
+        "root": [1, 2, 3, 4, null, 5, 6, 7, null, 8, 9, 10, null, null, 11, 12, null, null, 13, 14, null, null, 15],
+        "startValue": 11,
+        "destValue": 15
+      },
+      "expected": "R"
+    },
+    {
+      "case_id": 59,
+      "input": {
+        "root": [1, 2, 3, null, null, 6, 4, null, null, null, 5],
+        "startValue": 5,
+        "destValue": 1
+      },
+      "expected": "UUU"
+    },
+    {
+      "case_id": 60,
+      "input": {
+        "root": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63],
+        "startValue": 10,
+        "destValue": 60
+      },
+      "expected": "UUURRRLL"
+    },
+    {
+      "case_id": 61,
+      "input": {
+        "root": [10, 5, 15, 3, 7, 13, 18, 1, null, 6],
+        "startValue": 3,
+        "destValue": 6
+      },
+      "expected": "URL"
+    },
+    {
+      "case_id": 62,
+      "input": {
+        "root": [10, 5, 15, 3, 7, 12, 20, 1, 4, 6, 8, null, 17, 16, 25, 0, 2, null, null, null, null, null, null, 9],
+        "startValue": 3,
+        "destValue": 25
+      },
+      "expected": "UURRR"
+    },
+    {
+      "case_id": 63,
+      "input": {
+        "root": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, null, null, null, null, null, null, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30],
+        "startValue": 16,
+        "destValue": 30
+      },
+      "expected": "UUUURLLLL"
+    },
+    {
+      "case_id": 64,
+      "input": {
+        "root": [100, 50, 150, 25, 75, 125, 175, 12, 37, 62, 87, 112, 137, 162, 187, 6, 18, 31, 43, 55, 59, 81, 93, 107, 118, 127, 133, 147, 153, 167, 173, 183, 193, 3, 9, 15, 21, 27, 33, 39, 45, 49, 53, 58, 63, 65, 69, 73, 75, 79, 85, 88, 91, 94, 97, 99, 103, 109, 115, 121, 123, 129, 131, 139, 141, 149, 151, 157, 159, 165, 169, 171, 179, 181, 189, 191, 199],
+        "startValue": 69,
+        "destValue": 171
+      },
+      "expected": "UUUULRLLL"
+    },
+    {
+      "case_id": 65,
+      "input": {
+        "root": [5, 1, 2, 3, 8, null, 6, 4, null, null, 9, 10, 11],
+        "startValue": 4,
+        "destValue": 11
+      },
+      "expected": "UUURRR"
+    },
+    {
+      "case_id": 66,
+      "input": {
+        "root": [5, 1, 2, 3, 6, 7, 4, null, null, null, null, null, null, 8, 9, 10, 11, null, null, 12, 13],
+        "startValue": 8,
+        "destValue": 13
+      },
+      "expected": "LR"
+    },
+    {
+      "case_id": 67,
+      "input": {
+        "root": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40],
+        "startValue": 19,
+        "destValue": 38
+      },
+      "expected": "L"
+    },
+    {
+      "case_id": 68,
+      "input": {
+        "root": [1, 2, 3, 4, 5, 6, 7, null, 8, null, 9, null, 10, null, 11, null, 12, null, 13, null, 14, null, 15],
+        "startValue": 2,
+        "destValue": 14
+      },
+      "expected": "URLRR"
+    },
+    {
+      "case_id": 69,
+      "input": {
+        "root": [3, 5, 1, 6, 2, 0, 8, null, null, 7, 4],
+        "startValue": 5,
+        "destValue": 0
+      },
+      "expected": "URL"
+    },
+    {
+      "case_id": 70,
+      "input": {
+        "root": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50],
+        "startValue": 10,
+        "destValue": 40
+      },
+      "expected": "LL"
+    },
+    {
+      "case_id": 71,
+      "input": {
+        "root": [5, 1, 2, 3, null, 6, 4, 8, 9, null, null, 12, 13, null, null, 16, 17, null, null, null, 18, 19, 20, null, null, null, null, 22, 23, 24, 25, 26, 27, 28, null, null, null, null, null, null, null, null, null, null, null, 30, null, null, null, 34, 35, 36, 37, 38, 39, 40, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 45],
+        "startValue": 34,
+        "destValue": 40
+      },
+      "expected": null
+    },
+    {
+      "case_id": 72,
+      "input": {
+        "root": [50, 25, 75, 10, 30, 60, 80, 5, 15, 27, 33, 55, 65, 77, 85],
+        "startValue": 5,
+        "destValue": 65
+      },
+      "expected": "UUURLR"
+    },
+    {
+      "case_id": 73,
+      "input": {
+        "root": [5, 2, 8, 1, 3, 6, 9, null, null, 4, 7, null, null, null, null, 10, 11],
+        "startValue": 10,
+        "destValue": 11
+      },
+      "expected": "UR"
+    },
+    {
+      "case_id": 74,
+      "input": {
+        "root": [10, 5, 15, 3, 7, null, 18, null, 4, null, null, null, null, null, 8],
+        "startValue": 3,
+        "destValue": 7
+      },
+      "expected": "UR"
+    },
+    {
+      "case_id": 75,
+      "input": {
+        "root": [5, 1, 2, 3, null, 6, 4, 8, 9, null, null, 12, 13, null, null, 16, 17, null, null, null, 18, 19, 20, null, null, null, null, 22, 23, 24, 25, 26, 27, 28, null, null, null, null, null, null, null, null, null, null, null, 30, null, null, null, 34, 35, 36, 37, 38, 39, 40, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 45, null, null, null, 49, 50, 51, 52, 53, 54, 55],
+        "startValue": 49,
+        "destValue": 55
+      },
+      "expected": null
+    },
+    {
+      "case_id": 76,
+      "input": {
+        "root": [1, 2, 3, null, null, null, 4, null, 5, 6, null, null, null, null, null, 7, 8],
+        "startValue": 1,
+        "destValue": 8
+      },
+      "expected": null
+    },
+    {
+      "case_id": 77,
+      "input": {
+        "root": [2, 1, 3, null, null, 4, 5],
+        "startValue": 3,
+        "destValue": 5
+      },
+      "expected": "R"
+    },
+    {
+      "case_id": 78,
+      "input": {
+        "root": [20, 10, 30, 5, 15, 25, 35, 3, 7, 13, 17, 23, 27, 33, 37, 2, 4, 6, 8, 12, 14, 16, 18, 22, 24, 26, 28, 32, 34, 36, 38],
+        "startValue": 8,
+        "destValue": 32
+      },
+      "expected": "UUUURRLL"
+    },
+    {
+      "case_id": 79,
+      "input": {
+        "root": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
+        "startValue": 8,
+        "destValue": 19
+      },
+      "expected": "URR"
+    },
+    {
+      "case_id": 80,
+      "input": {
+        "root": [3, 5, 1, 6, 2, 0, 8, null, null, 7, 4, null, null, null, null],
+        "startValue": 6,
+        "destValue": 7
+      },
+      "expected": "URL"
+    },
+    {
+      "case_id": 81,
+      "input": {
+        "root": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15],
+        "startValue": 3,
+        "destValue": 14
+      },
+      "expected": "RL"
+    },
+    {
+      "case_id": 82,
+      "input": {
+        "root": [1, 2, 3, null, 4, null, 5, null, 6, null, 7, null, 8, null, 9],
+        "startValue": 1,
+        "destValue": 9
+      },
+      "expected": "RRRR"
+    },
+    {
+      "case_id": 83,
+      "input": {
+        "root": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15],
+        "startValue": 14,
+        "destValue": 12
+      },
+      "expected": "UULL"
+    },
+    {
+      "case_id": 84,
+      "input": {
+        "root": [8, 3, 10, 1, 6, null, 14, null, null, 4, 7, 13],
+        "startValue": 7,
+        "destValue": 13
+      },
+      "expected": "UUURRL"
+    }
+  ]
+}

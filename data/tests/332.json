@@ -1,0 +1,1738 @@
+{
+  "schema_version": 1,
+  "problem_id": 332,
+  "title": "Reconstruct Itinerary",
+  "method": "findItinerary",
+  "signature": {
+    "params": [
+      {
+        "name": "tickets",
+        "type": "STRING_MATRIX"
+      }
+    ],
+    "returns": "STRING_ARRAY"
+  },
+  "cases": [
+    {
+      "case_id": 1,
+      "input": {
+        "tickets": [
+          ["JFK", "NRT"],
+          ["NRT", "JFK"]
+        ]
+      },
+      "expected": ["JFK", "NRT", "JFK"]
+    },
+    {
+      "case_id": 2,
+      "input": {
+        "tickets": [
+          ["JFK", "MUC"],
+          ["MUC", "LHR"],
+          ["LHR", "SFO"],
+          ["SFO", "SJC"]
+        ]
+      },
+      "expected": ["JFK", "MUC", "LHR", "SFO", "SJC"]
+    },
+    {
+      "case_id": 3,
+      "input": {
+        "tickets": [
+          ["JFK", "AXA"],
+          ["AXA", "TIA"],
+          ["TIA", "JFK"],
+          ["JFK", "AXA"]
+        ]
+      },
+      "expected": ["JFK", "AXA", "TIA", "JFK", "AXA"]
+    },
+    {
+      "case_id": 4,
+      "input": {
+        "tickets": [
+          ["EZE", "TIA"],
+          ["EZE", "HOU"],
+          ["AXA", "TIA"],
+          ["JFK", "AXA"],
+          ["ANU", "JFK"],
+          ["TIA", "ANU"],
+          ["JFK", "TIA"]
+        ]
+      },
+      "expected": ["JFK", "AXA", "TIA", "ANU", "JFK", "TIA"]
+    },
+    {
+      "case_id": 5,
+      "input": {
+        "tickets": [
+          ["JFK", "PEK"],
+          ["PEK", "LAX"],
+          ["LAX", "JFK"],
+          ["JFK", "ORD"],
+          ["ORD", "SFO"]
+        ]
+      },
+      "expected": ["JFK", "PEK", "LAX", "JFK", "ORD", "SFO"]
+    },
+    {
+      "case_id": 6,
+      "input": {
+        "tickets": [
+          ["JFK", "AXA"],
+          ["AXA", "TIA"],
+          ["TIA", "JFK"],
+          ["JFK", "TIA"],
+          ["TIA", "JFK"]
+        ]
+      },
+      "expected": ["JFK", "AXA", "TIA", "JFK", "TIA", "JFK"]
+    },
+    {
+      "case_id": 7,
+      "input": {
+        "tickets": [
+          ["MUC", "LHR"],
+          ["JFK", "MUC"],
+          ["SFO", "SJC"],
+          ["LHR", "SFO"]
+        ]
+      },
+      "expected": ["JFK", "MUC", "LHR", "SFO", "SJC"]
+    },
+    {
+      "case_id": 8,
+      "input": {
+        "tickets": [
+          ["JFK", "KUL"],
+          ["JFK", "NRT"],
+          ["NRT", "JFK"]
+        ]
+      },
+      "expected": ["JFK", "NRT", "JFK", "KUL"]
+    },
+    {
+      "case_id": 9,
+      "input": {
+        "tickets": [
+          ["JFK", "AAA"],
+          ["JFK", "BBB"],
+          ["BBB", "JFK"]
+        ]
+      },
+      "expected": ["JFK", "BBB", "JFK", "AAA"]
+    },
+    {
+      "case_id": 10,
+      "input": {
+        "tickets": [
+          ["JFK", "SFO"],
+          ["JFK", "ATL"],
+          ["SFO", "ATL"],
+          ["ATL", "JFK"],
+          ["ATL", "SFO"]
+        ]
+      },
+      "expected": ["JFK", "ATL", "JFK", "SFO", "ATL", "SFO"]
+    },
+    {
+      "case_id": 11,
+      "input": {
+        "tickets": [
+          ["EZE", "AXA"],
+          ["TIA", "ANU"],
+          ["ANU", "JFK"],
+          ["JFK", "ANU"],
+          ["ANU", "EZE"],
+          ["TIA", "ANU"],
+          ["AXA", "TIA"],
+          ["TIA", "JFK"],
+          ["ANU", "TIA"],
+          ["JFK", "TIA"]
+        ]
+      },
+      "expected": ["JFK", "ANU", "EZE", "AXA", "TIA", "ANU", "JFK", "TIA", "ANU", "TIA", "JFK"]
+    },
+    {
+      "case_id": 12,
+      "input": {
+        "tickets": [
+          ["EZE", "AXA"],
+          ["TIA", "ANU"],
+          ["ANU", "JFK"],
+          ["JFK", "TIA"],
+          ["ANU", "EZE"],
+          ["TIA", "ANU"],
+          ["AXA", "TIA"],
+          ["TIA", "JFK"],
+          ["ANU", "TIA"],
+          ["JFK", "TIA"]
+        ]
+      },
+      "expected": ["JFK", "TIA", "ANU", "EZE", "AXA", "TIA", "ANU", "TIA", "JFK", "TIA", "JFK"]
+    },
+    {
+      "case_id": 13,
+      "input": {
+        "tickets": [
+          ["MUC", "LHR"],
+          ["JFK", "MUC"],
+          ["SFO", "SJC"],
+          ["LHR", "SFO"]
+        ]
+      },
+      "expected": ["JFK", "MUC", "LHR", "SFO", "SJC"]
+    },
+    {
+      "case_id": 14,
+      "input": {
+        "tickets": [
+          ["JFK", "SFO"],
+          ["JFK", "ATL"],
+          ["SFO", "ATL"],
+          ["ATL", "JFK"],
+          ["ATL", "SFO"]
+        ]
+      },
+      "expected": ["JFK", "ATL", "JFK", "SFO", "ATL", "SFO"]
+    },
+    {
+      "case_id": 15,
+      "input": {
+        "tickets": [
+          ["EZE", "AXA"],
+          ["TIA", "ANU"],
+          ["ANU", "JFK"],
+          ["JFK", "TIA"],
+          ["AXA", "TIA"],
+          ["TIA", "ANU"],
+          ["AXA", "EZE"],
+          ["EZE", "ANU"],
+          ["AXA", "TIA"],
+          ["ANU", "JFK"],
+          ["JFK", "TIA"],
+          ["JFK", "ANU"],
+          ["ANU", "EZE"],
+          ["TIA", "JFK"],
+          ["EZE", "TIA"],
+          ["EZE", "AXA"],
+          ["AXA", "TIA"],
+          ["AXA", "EZE"],
+          ["TIA", "AXA"],
+          ["JFK", "AXA"],
+          ["AXA", "TIA"],
+          ["TIA", "JFK"],
+          ["AXA", "EZE"],
+          ["EZE", "ANU"],
+          ["JFK", "TIA"],
+          ["JFK", "ANU"],
+          ["ANU", "JFK"],
+          ["TIA", "JFK"],
+          ["JFK", "TIA"],
+          ["JFK", "AXA"],
+          ["AXA", "TIA"],
+          ["TIA", "JFK"],
+          ["AXA", "EZE"]
+        ]
+      },
+      "expected": ["JFK", "ANU", "EZE", "ANU", "JFK", "ANU", "JFK", "AXA", "EZE", "ANU", "JFK", "AXA", "EZE", "AXA", "EZE", "AXA", "EZE", "TIA", "AXA", "TIA", "TIA", "TIA", "TIA", "TIA", "JFK", "TIA", "JFK", "TIA", "JFK", "TIA", "JFK", "TIA", "ANU", "ANU"]
+    },
+    {
+      "case_id": 16,
+      "input": {
+        "tickets": [
+          ["JFK", "PDX"],
+          ["PDX", "JFK"],
+          ["JFK", "PDX"],
+          ["PDX", "LAX"],
+          ["LAX", "PDX"],
+          ["PDX", "JFK"],
+          ["JFK", "PDX"],
+          ["PDX", "LAX"]
+        ]
+      },
+      "expected": ["JFK", "PDX", "JFK", "PDX", "JFK", "PDX", "LAX", "PDX", "LAX"]
+    },
+    {
+      "case_id": 17,
+      "input": {
+        "tickets": [
+          ["JFK", "BKK"],
+          ["BKK", "LAX"],
+          ["LAX", "BKK"],
+          ["BKK", "SFO"],
+          ["SFO", "BKK"],
+          ["BKK", "JFK"],
+          ["JFK", "LAX"],
+          ["LAX", "JFK"],
+          ["JFK", "BKK"],
+          ["BKK", "LAX"],
+          ["LAX", "BKK"],
+          ["BKK", "SFO"],
+          ["SFO", "BKK"],
+          ["BKK", "LAX"],
+          ["LAX", "BKK"],
+          ["BKK", "SFO"],
+          ["SFO", "BKK"],
+          ["BKK", "LAX"],
+          ["LAX", "BKK"],
+          ["BKK", "SFO"],
+          ["SFO", "BKK"],
+          ["BKK", "LAX"],
+          ["LAX", "BKK"],
+          ["BKK", "SFO"],
+          ["SFO", "BKK"],
+          ["BKK", "LAX"],
+          ["LAX", "BKK"],
+          ["BKK", "SFO"],
+          ["SFO", "BKK"],
+          ["BKK", "LAX"],
+          ["LAX", "BKK"],
+          ["BKK", "SFO"],
+          ["SFO", "BKK"]
+        ]
+      },
+      "expected": ["JFK", "BKK", "JFK", "BKK", "LAX", "BKK", "LAX", "BKK", "LAX", "BKK", "LAX", "BKK", "LAX", "BKK", "LAX", "BKK", "LAX", "JFK", "LAX", "BKK", "SFO", "BKK", "SFO", "BKK", "SFO", "BKK", "SFO", "BKK", "SFO", "BKK", "SFO", "BKK", "SFO", "BKK"]
+    },
+    {
+      "case_id": 18,
+      "input": {
+        "tickets": [
+          ["JFK", "LHR"],
+          ["LHR", "DEL"],
+          ["DEL", "DXB"],
+          ["DXB", "JFK"],
+          ["JFK", "LHR"],
+          ["LHR", "DEL"],
+          ["DEL", "DXB"],
+          ["DXB", "JFK"],
+          ["JFK", "LHR"],
+          ["LHR", "DEL"],
+          ["DEL", "DXB"],
+          ["DXB", "JFK"],
+          ["JFK", "LHR"],
+          ["LHR", "DEL"],
+          ["DEL", "DXB"],
+          ["DXB", "JFK"],
+          ["JFK", "LHR"],
+          ["LHR", "DEL"],
+          ["DEL", "DXB"],
+          ["DXB", "JFK"],
+          ["JFK", "LHR"],
+          ["LHR", "DEL"],
+          ["DEL", "DXB"],
+          ["DXB", "JFK"],
+          ["JFK", "LHR"],
+          ["LHR", "DEL"],
+          ["DEL", "DXB"],
+          ["DXB", "JFK"]
+        ]
+      },
+      "expected": ["JFK", "LHR", "DEL", "DXB", "JFK", "LHR", "DEL", "DXB", "JFK", "LHR", "DEL", "DXB", "JFK", "LHR", "DEL", "DXB", "JFK", "LHR", "DEL", "DXB", "JFK", "LHR", "DEL", "DXB", "JFK", "LHR", "DEL", "DXB", "JFK"]
+    },
+    {
+      "case_id": 19,
+      "input": {
+        "tickets": "[[\"JFK\",\"HOU\"],[\"HOU\",\"DEN\"],[\"DEN\",\"JFK\"],[\"JFK\",\"SFO\"],[\"SFO\",\"HOU\"],[\"HOU\",\"DEN\"],[\"DEN\",\"SFO\"],[\"SFO\",\"JFK\"],[\"JFK\",\"DEN\"],[\"DEN\",\"HOU\"],[\"HOU\",\"SFO\"],[\"SFO\",\"DEN\"],[\"DEN\",\"JFK\"],[\"JFK\",\"HOU\"]]\""
+      },
+      "expected": "Error: Solution.findItinerary() missing 1 required positional argument: 'tickets'"
+    },
+    {
+      "case_id": 20,
+      "input": {
+        "tickets": [
+          ["JFK", "BKK"],
+          ["BKK", "LHR"],
+          ["LHR", "AMS"],
+          ["AMS", "JFK"],
+          ["JFK", "DXB"],
+          ["DXB", "LAX"],
+          ["LAX", "BKK"],
+          ["BKK", "JFK"]
+        ]
+      },
+      "expected": ["JFK", "BKK", "JFK", "DXB", "LAX", "BKK", "LHR", "AMS", "JFK"]
+    },
+    {
+      "case_id": 21,
+      "input": {
+        "tickets": [
+          ["JFK", "IST"],
+          ["IST", "JFK"],
+          ["JFK", "IST"],
+          ["IST", "SAW"],
+          ["SAW", "IST"],
+          ["IST", "JFK"],
+          ["JFK", "SAW"],
+          ["SAW", "JFK"],
+          ["JFK", "IST"],
+          ["IST", "SAW"],
+          ["SAW", "IST"],
+          ["IST", "JFK"],
+          ["JFK", "SAW"],
+          ["SAW", "JFK"],
+          ["JFK", "IST"],
+          ["IST", "SAW"],
+          ["SAW", "IST"],
+          ["IST", "JFK"],
+          ["JFK", "SAW"],
+          ["SAW", "JFK"],
+          ["JFK", "IST"],
+          ["IST", "SAW"],
+          ["SAW", "IST"],
+          ["IST", "JFK"],
+          ["JFK", "SAW"],
+          ["SAW", "JFK"],
+          ["JFK", "IST"],
+          ["IST", "SAW"],
+          ["SAW", "IST"],
+          ["IST", "JFK"],
+          ["JFK", "SAW"],
+          ["SAW", "JFK"],
+          ["JFK", "IST"],
+          ["IST", "SAW"],
+          ["SAW", "IST"],
+          ["IST", "JFK"],
+          ["JFK", "SAW"],
+          ["SAW", "JFK"],
+          ["JFK", "IST"],
+          ["IST", "SAW"],
+          ["SAW", "IST"],
+          ["IST", "JFK"],
+          ["JFK", "SAW"],
+          ["SAW", "JFK"],
+          ["JFK", "IST"],
+          ["IST", "SAW"],
+          ["SAW", "IST"],
+          ["IST", "JFK"],
+          ["JFK", "SAW"],
+          ["SAW", "JFK"],
+          ["JFK", "IST"],
+          ["IST", "SAW"],
+          ["SAW", "IST"],
+          ["IST", "JFK"],
+          ["JFK", "SAW"],
+          ["SAW", "JFK"],
+          ["JFK", "IST"],
+          ["IST", "SAW"],
+          ["SAW", "IST"],
+          ["IST", "JFK"],
+          ["JFK", "SAW"],
+          ["SAW", "JFK"]
+        ]
+      },
+      "expected": ["JFK", "IST", "JFK", "IST", "JFK", "IST", "JFK", "IST", "JFK", "IST", "JFK", "IST", "JFK", "IST", "JFK", "IST", "JFK", "IST", "JFK", "IST", "JFK", "IST", "JFK", "SAW", "IST", "SAW", "IST", "SAW", "IST", "SAW", "IST", "SAW", "IST", "SAW", "IST", "SAW", "IST", "SAW", "IST", "SAW", "IST", "SAW", "IST", "SAW", "JFK", "SAW", "JFK", "SAW", "JFK", "SAW", "JFK", "SAW", "JFK", "SAW", "JFK", "SAW", "JFK", "SAW", "JFK", "SAW", "JFK", "SAW", "JFK"]
+    },
+    {
+      "case_id": 22,
+      "input": {
+        "tickets": [
+          ["JFK", "HOU"],
+          ["HOU", "SLC"],
+          ["SLC", "JFK"],
+          ["JFK", "HOU"],
+          ["HOU", "ORD"],
+          ["ORD", "JFK"],
+          ["JFK", "ORD"],
+          ["ORD", "SLC"],
+          ["SLC", "HOU"]
+        ]
+      },
+      "expected": ["JFK", "HOU", "ORD", "JFK", "HOU", "SLC", "JFK", "ORD", "SLC", "HOU"]
+    },
+    {
+      "case_id": 23,
+      "input": {
+        "tickets": [
+          ["JFK", "DEL"],
+          ["DEL", "BOM"],
+          ["BOM", "DXB"],
+          ["DXB", "JFK"],
+          ["JFK", "LAX"],
+          ["LAX", "HOU"],
+          ["HOU", "SFO"],
+          ["SFO", "ORD"],
+          ["ORD", "JFK"],
+          ["JFK", "LAX"],
+          ["LAX", "JFK"]
+        ]
+      },
+      "expected": ["JFK", "DEL", "BOM", "DXB", "JFK", "LAX", "HOU", "SFO", "ORD", "JFK", "LAX", "JFK"]
+    },
+    {
+      "case_id": 24,
+      "input": {
+        "tickets": [
+          ["JFK", "A"],
+          ["A", "B"],
+          ["B", "C"],
+          ["C", "D"],
+          ["D", "A"],
+          ["A", "JFK"],
+          ["JFK", "C"]
+        ]
+      },
+      "expected": ["JFK", "A", "B", "C", "D", "A", "JFK", "C"]
+    },
+    {
+      "case_id": 25,
+      "input": {
+        "tickets": [
+          ["JFK", "A"],
+          ["A", "B"],
+          ["B", "C"],
+          ["C", "A"],
+          ["A", "D"],
+          ["D", "E"],
+          ["E", "F"],
+          ["F", "G"],
+          ["G", "F"],
+          ["F", "E"],
+          ["E", "D"],
+          ["D", "C"],
+          ["C", "B"],
+          ["B", "A"],
+          ["A", "JFK"],
+          ["JFK", "H"],
+          ["H", "I"],
+          ["I", "J"],
+          ["J", "H"],
+          ["H", "JFK"],
+          ["JFK", "K"],
+          ["K", "L"],
+          ["L", "M"],
+          ["M", "N"],
+          ["N", "O"],
+          ["O", "P"],
+          ["P", "Q"],
+          ["Q", "R"],
+          ["R", "S"],
+          ["S", "T"],
+          ["T", "U"],
+          ["U", "V"],
+          ["V", "W"],
+          ["W", "X"],
+          ["X", "Y"],
+          ["Y", "Z"],
+          ["Z", "W"],
+          ["W", "V"],
+          ["V", "U"],
+          ["U", "T"],
+          ["T", "S"],
+          ["S", "R"],
+          ["R", "Q"],
+          ["Q", "P"],
+          ["P", "O"],
+          ["O", "N"],
+          ["N", "M"],
+          ["M", "L"],
+          ["L", "K"],
+          ["K", "JFK"],
+          ["JFK", "G"],
+          ["G", "F"],
+          ["F", "E"],
+          ["E", "D"],
+          ["D", "C"],
+          ["C", "B"],
+          ["B", "A"],
+          ["A", "JFK"]
+        ]
+      },
+      "expected": ["JFK", "A", "B", "A", "D", "C", "A", "JFK", "G", "F", "E", "D", "E", "F", "G", "F", "E", "D", "C", "B", "C", "B", "A", "JFK", "H", "I", "J", "H", "JFK", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "W", "V", "U", "T", "S", "R", "Q", "P", "O", "N", "M", "L", "K", "JFK"]
+    },
+    {
+      "case_id": 26,
+      "input": {
+        "tickets": [
+          ["JFK", "CDG"],
+          ["CDG", "MIA"],
+          ["MIA", "LAX"],
+          ["LAX", "HOU"],
+          ["HOU", "SFO"],
+          ["SFO", "HOU"],
+          ["HOU", "LAX"],
+          ["LAX", "MIA"],
+          ["MIA", "CDG"],
+          ["CDG", "JFK"]
+        ]
+      },
+      "expected": ["JFK", "CDG", "MIA", "LAX", "HOU", "SFO", "HOU", "LAX", "MIA", "CDG", "JFK"]
+    },
+    {
+      "case_id": 27,
+      "input": {
+        "tickets": [
+          ["JFK", "NRT"],
+          ["NRT", "JFK"],
+          ["JFK", "KUL"],
+          ["KUL", "NRT"],
+          ["NRT", "KUL"],
+          ["KUL", "JFK"]
+        ]
+      },
+      "expected": ["JFK", "KUL", "JFK", "NRT", "KUL", "NRT", "JFK"]
+    },
+    {
+      "case_id": 28,
+      "input": {
+        "tickets": "[[\"JFK\",\"NRT\"],[\"NRT\",\"JFK\"],[\"JFK\",\"KUL\"],[\"KUL\",\"LAX\"],[\"LAX\",\"JFK\"],[\"JFK\",\"SFO\"],[\"SFO\",\"ORD\"],[\"ORD\",\"JFK\"],[\"JFK\",\"SFO\"],[\"SFO\",\"NRT\"],[\"NRT\",\"KUL\"],[\"KUL\",\"JFK\"]]\""
+      },
+      "expected": "Error: Solution.findItinerary() missing 1 required positional argument: 'tickets'"
+    },
+    {
+      "case_id": 29,
+      "input": {
+        "tickets": [
+          ["JFK", "KUL"],
+          ["KUL", "LAX"],
+          ["LAX", "KUL"],
+          ["KUL", "SFO"],
+          ["SFO", "JFK"],
+          ["JFK", "ORD"],
+          ["ORD", "SFO"],
+          ["SFO", "ORD"],
+          ["ORD", "JFK"],
+          ["JFK", "SFO"]
+        ]
+      },
+      "expected": ["JFK", "KUL", "LAX", "KUL", "SFO", "JFK", "ORD", "JFK", "SFO", "ORD", "SFO"]
+    },
+    {
+      "case_id": 30,
+      "input": {
+        "tickets": "[[\"JFK\",\"NRT\"],[\"NRT\",\"JFK\"],[\"JFK\",\"KUL\"],[\"KUL\",\"LAX\"],[\"LAX\",\"JFK\"],[\"JFK\",\"SFO\"],[\"SFO\",\"ORD\"],[\"ORD\",\"JFK\"],[\"JFK\",\"SFO\"],[\"SFO\",\"NRT\"],[\"NRT\",\"KUL\"],[\"KUL\",\"JFK\"],[\"JFK\",\"ORD\"],[\"ORD\",\"SFO\"],[\"SFO\",\"KUL\"],[\"KUL\",\"NRT\"],[\"NRT\",\"SFO\"],[\"SFO\",\"ORD\"],[\"ORD\",\"JFK\"],[\"JFK\",\"SFO\"],[\"SFO\",\"NRT\"],[\"NRT\",\"KUL\"],[\"KUL\",\"JFK\"],[\"JFK\",\"ORD\"],[\"ORD\",\"SFO\"],[\"SFO\",\"KUL\"],[\"KUL\",\"NRT\"],[\"NRT\",\"SFO\"],[\"SFO\",\"ORD\"],[\"ORD\",\"JFK\"],[\"JFK\",\"SFO\"],[\"SFO\",\"NRT\"],[\"NRT\",\"KUL\"],[\"KUL\",\"JFK\"]]\""
+      },
+      "expected": "Error: Solution.findItinerary() missing 1 required positional argument: 'tickets'"
+    },
+    {
+      "case_id": 31,
+      "input": {
+        "tickets": "[[\"JFK\",\"NRT\"],[\"NRT\",\"JFK\"],[\"JFK\",\"KUL\"],[\"KUL\",\"LAX\"],[\"LAX\",\"JFK\"],[\"JFK\",\"SFO\"],[\"SFO\",\"ORD\"],[\"ORD\",\"JFK\"],[\"JFK\",\"SFO\"],[\"SFO\",\"NRT\"],[\"NRT\",\"KUL\"],[\"KUL\",\"JFK\"],[\"JFK\",\"ORD\"],[\"ORD\",\"SFO\"],[\"SFO\",\"KUL\"],[\"KUL\",\"NRT\"],[\"NRT\",\"SFO\"],[\"SFO\",\"ORD\"],[\"ORD\",\"JFK\"],[\"JFK\",\"SFO\"],[\"SFO\",\"NRT\"],[\"NRT\",\"KUL\"],[\"KUL\",\"JFK\"],[\"JFK\",\"ORD\"],[\"ORD\",\"SFO\"],[\"SFO\",\"KUL\"],[\"KUL\",\"NRT\"],[\"NRT\",\"SFO\"],[\"SFO\",\"ORD\"],[\"ORD\",\"JFK\"],[\"JFK\",\"SFO\"],[\"SFO\",\"NRT\"],[\"NRT\",\"KUL\"],[\"KUL\",\"JFK\"],[\"JFK\",\"ORD\"],[\"ORD\",\"SFO\"],[\"SFO\",\"KUL\"],[\"KUL\",\"NRT\"],[\"NRT\",\"SFO\"],[\"SFO\",\"ORD\"],[\"ORD\",\"JFK\"]]\""
+      },
+      "expected": "Error: Solution.findItinerary() missing 1 required positional argument: 'tickets'"
+    },
+    {
+      "case_id": 32,
+      "input": {
+        "tickets": "[[\"JFK\",\"BOM\"],[\"BOM\",\"SIN\"],[\"SIN\",\"HOU\"],[\"HOU\",\"JFK\"],[\"JFK\",\"HOU\"],[\"HOU\",\"SIN\"],[\"SIN\",\"BOM\"],[\"BOM\",\"JFK\"],[\"JFK\",\"DXB\"],[\"DXB\",\"JFK\"]]\""
+      },
+      "expected": "Error: Solution.findItinerary() missing 1 required positional argument: 'tickets'"
+    },
+    {
+      "case_id": 33,
+      "input": {
+        "tickets": [
+          ["JFK", "AUA"],
+          ["AUA", "SYD"],
+          ["SYD", "LAX"],
+          ["LAX", "JFK"],
+          ["JFK", "PEK"],
+          ["PEK", "AUA"],
+          ["AUA", "SYD"],
+          ["SYD", "PEK"],
+          ["PEK", "JFK"],
+          ["JFK", "LAX"],
+          ["LAX", "SYD"],
+          ["SYD", "JFK"],
+          ["JFK", "AUA"]
+        ]
+      },
+      "expected": ["JFK", "AUA", "SYD", "JFK", "AUA", "SYD", "LAX", "JFK", "LAX", "SYD", "PEK", "JFK", "PEK", "AUA"]
+    },
+    {
+      "case_id": 34,
+      "input": {
+        "tickets": [
+          ["JFK", "KUL"],
+          ["KUL", "LAX"],
+          ["LAX", "JFK"],
+          ["JFK", "HOU"],
+          ["HOU", "SFO"],
+          ["SFO", "JFK"],
+          ["JFK", "SLC"],
+          ["SLC", "HOU"],
+          ["HOU", "JFK"]
+        ]
+      },
+      "expected": ["JFK", "HOU", "JFK", "KUL", "LAX", "JFK", "SLC", "HOU", "SFO", "JFK"]
+    },
+    {
+      "case_id": 35,
+      "input": {
+        "tickets": [
+          ["JFK", "IAH"],
+          ["IAH", "ORD"],
+          ["ORD", "DEN"],
+          ["DEN", "LAX"],
+          ["LAX", "SFO"],
+          ["SFO", "IAH"],
+          ["IAH", "ORD"],
+          ["ORD", "DEN"],
+          ["DEN", "LAX"]
+        ]
+      },
+      "expected": ["JFK", "IAH", "ORD", "DEN", "LAX", "SFO", "IAH", "ORD", "DEN", "LAX"]
+    },
+    {
+      "case_id": 36,
+      "input": {
+        "tickets": [
+          ["JFK", "LGA"],
+          ["LGA", "JFK"],
+          ["JFK", "LGA"],
+          ["LGA", "JFK"],
+          ["JFK", "LGA"],
+          ["LGA", "JFK"],
+          ["JFK", "LGA"],
+          ["LGA", "JFK"],
+          ["JFK", "LGA"],
+          ["LGA", "JFK"]
+        ]
+      },
+      "expected": ["JFK", "LGA", "JFK", "LGA", "JFK", "LGA", "JFK", "LGA", "JFK", "LGA", "JFK"]
+    },
+    {
+      "case_id": 37,
+      "input": {
+        "tickets": [
+          ["JFK", "SFO"],
+          ["SFO", "JFK"],
+          ["JFK", "SFO"],
+          ["SFO", "LAX"],
+          ["LAX", "JFK"],
+          ["JFK", "ORD"],
+          ["ORD", "SFO"],
+          ["SFO", "LAX"],
+          ["LAX", "ORD"],
+          ["ORD", "JFK"],
+          ["JFK", "HOU"],
+          ["HOU", "SFO"],
+          ["SFO", "HOU"]
+        ]
+      },
+      "expected": ["JFK", "HOU", "SFO", "JFK", "ORD", "JFK", "SFO", "LAX", "JFK", "SFO", "LAX", "ORD", "SFO", "HOU"]
+    },
+    {
+      "case_id": 38,
+      "input": {
+        "tickets": [
+          ["JFK", "AAA"],
+          ["AAA", "BBB"],
+          ["BBB", "CCC"],
+          ["CCC", "DDD"],
+          ["DDD", "JFK"],
+          ["JFK", "EZE"],
+          ["EZE", "JFK"]
+        ]
+      },
+      "expected": ["JFK", "AAA", "BBB", "CCC", "DDD", "JFK", "EZE", "JFK"]
+    },
+    {
+      "case_id": 39,
+      "input": {
+        "tickets": [
+          ["JFK", "LAX"],
+          ["LAX", "SFO"],
+          ["SFO", "JFK"],
+          ["JFK", "LAX"],
+          ["LAX", "SFO"],
+          ["SFO", "LAX"],
+          ["LAX", "JFK"],
+          ["JFK", "SFO"],
+          ["SFO", "LAX"],
+          ["LAX", "SFO"],
+          ["SFO", "JFK"],
+          ["JFK", "LAX"],
+          ["LAX", "SFO"],
+          ["SFO", "LAX"],
+          ["LAX", "JFK"],
+          ["JFK", "SFO"],
+          ["SFO", "LAX"],
+          ["LAX", "SFO"],
+          ["SFO", "JFK"],
+          ["JFK", "LAX"],
+          ["LAX", "SFO"],
+          ["SFO", "LAX"],
+          ["LAX", "JFK"],
+          ["JFK", "SFO"],
+          ["SFO", "LAX"],
+          ["LAX", "SFO"],
+          ["SFO", "JFK"],
+          ["JFK", "LAX"],
+          ["LAX", "SFO"],
+          ["SFO", "LAX"],
+          ["LAX", "JFK"],
+          ["JFK", "SFO"],
+          ["SFO", "LAX"]
+        ]
+      },
+      "expected": ["JFK", "LAX", "JFK", "LAX", "JFK", "LAX", "JFK", "LAX", "JFK", "LAX", "SFO", "JFK", "SFO", "JFK", "SFO", "JFK", "SFO", "JFK", "SFO", "LAX", "SFO", "LAX", "SFO", "LAX", "SFO", "LAX", "SFO", "LAX", "SFO", "LAX", "SFO", "LAX", "SFO", "LAX"]
+    },
+    {
+      "case_id": 40,
+      "input": {
+        "tickets": [
+          ["JFK", "KUL"],
+          ["KUL", "LAX"],
+          ["LAX", "JFK"],
+          ["JFK", "DUB"],
+          ["DUB", "ORD"],
+          ["ORD", "LAX"],
+          ["LAX", "HOU"],
+          ["HOU", "SFO"],
+          ["SFO", "JFK"]
+        ]
+      },
+      "expected": ["JFK", "DUB", "ORD", "LAX", "HOU", "SFO", "JFK", "KUL", "LAX", "JFK"]
+    },
+    {
+      "case_id": 41,
+      "input": {
+        "tickets": [
+          ["JFK", "XYZ"],
+          ["XYZ", "ABC"],
+          ["ABC", "JKL"],
+          ["JKL", "MNO"],
+          ["MNO", "PQR"],
+          ["PQR", "JKL"],
+          ["JKL", "ABC"],
+          ["ABC", "XYZ"],
+          ["XYZ", "JFK"],
+          ["JFK", "MNO"]
+        ]
+      },
+      "expected": ["JFK", "MNO", "PQR", "JKL", "ABC", "XYZ", "JFK", "XYZ", "ABC", "JKL", "MNO"]
+    },
+    {
+      "case_id": 42,
+      "input": {
+        "tickets": [
+          ["JFK", "XYZ"],
+          ["XYZ", "ABC"],
+          ["ABC", "JFK"],
+          ["JFK", "XYZ"],
+          ["XYZ", "DEF"],
+          ["DEF", "ABC"],
+          ["ABC", "XYZ"],
+          ["XYZ", "DEF"],
+          ["DEF", "JFK"]
+        ]
+      },
+      "expected": ["JFK", "XYZ", "ABC", "JFK", "XYZ", "DEF", "ABC", "XYZ", "DEF", "JFK"]
+    },
+    {
+      "case_id": 43,
+      "input": {
+        "tickets": [
+          ["JFK", "DEL"],
+          ["DEL", "JFK"],
+          ["JFK", "BOM"],
+          ["BOM", "DEL"],
+          ["DEL", "JFK"],
+          ["JFK", "DEL"],
+          ["DEL", "BOM"],
+          ["BOM", "JFK"],
+          ["JFK", "BOM"],
+          ["BOM", "DEL"]
+        ]
+      },
+      "expected": ["JFK", "BOM", "DEL", "BOM", "DEL", "JFK", "BOM", "JFK", "DEL", "JFK", "DEL"]
+    },
+    {
+      "case_id": 44,
+      "input": {
+        "tickets": [
+          ["JFK", "DEL"],
+          ["DEL", "BOM"],
+          ["BOM", "DEL"],
+          ["DEL", "LHR"],
+          ["LHR", "BOM"],
+          ["BOM", "SFO"],
+          ["SFO", "LHR"],
+          ["LHR", "SFO"],
+          ["SFO", "DEL"],
+          ["DEL", "JFK"],
+          ["JFK", "LHR"],
+          ["LHR", "DEL"],
+          ["DEL", "BOM"],
+          ["BOM", "SFO"],
+          ["SFO", "JFK"],
+          ["JFK", "BOM"],
+          ["BOM", "LHR"],
+          ["LHR", "JFK"],
+          ["JFK", "SFO"],
+          ["SFO", "BOM"]
+        ]
+      },
+      "expected": ["JFK", "BOM", "DEL", "BOM", "LHR", "BOM", "SFO", "BOM", "SFO", "DEL", "JFK", "DEL", "LHR", "JFK", "LHR", "SFO", "JFK", "SFO", "LHR", "DEL", "BOM"]
+    },
+    {
+      "case_id": 45,
+      "input": {
+        "tickets": [
+          ["JFK", "BCN"],
+          ["BCN", "JFK"],
+          ["JFK", "MIA"],
+          ["MIA", "JFK"],
+          ["JFK", "DXB"],
+          ["DXB", "JFK"],
+          ["JFK", "SFO"],
+          ["SFO", "JFK"]
+        ]
+      },
+      "expected": ["JFK", "BCN", "JFK", "DXB", "JFK", "MIA", "JFK", "SFO", "JFK"]
+    },
+    {
+      "case_id": 46,
+      "input": {
+        "tickets": [
+          ["JFK", "DXB"],
+          ["DXB", "JFK"],
+          ["JFK", "DXB"],
+          ["DXB", "LHR"],
+          ["LHR", "DXB"],
+          ["DXB", "JFK"],
+          ["JFK", "LHR"],
+          ["LHR", "DXB"],
+          ["DXB", "LHR"],
+          ["LHR", "JFK"],
+          ["JFK", "LHR"],
+          ["LHR", "DXB"],
+          ["DXB", "JFK"],
+          ["JFK", "LHR"],
+          ["LHR", "DXB"],
+          ["DXB", "JFK"],
+          ["JFK", "LHR"],
+          ["LHR", "DXB"],
+          ["DXB", "JFK"],
+          ["JFK", "LHR"],
+          ["LHR", "DXB"],
+          ["DXB", "JFK"],
+          ["JFK", "LHR"],
+          ["LHR", "DXB"],
+          ["DXB", "JFK"],
+          ["JFK", "LHR"],
+          ["LHR", "DXB"],
+          ["DXB", "JFK"],
+          ["JFK", "LHR"],
+          ["LHR", "DXB"],
+          ["DXB", "JFK"],
+          ["JFK", "LHR"],
+          ["LHR", "DXB"],
+          ["DXB", "JFK"],
+          ["JFK", "LHR"],
+          ["LHR", "DXB"],
+          ["DXB", "JFK"],
+          ["JFK", "LHR"],
+          ["LHR", "DXB"],
+          ["DXB", "JFK"],
+          ["JFK", "LHR"],
+          ["LHR", "DXB"],
+          ["DXB", "JFK"],
+          ["JFK", "LHR"],
+          ["LHR", "DXB"],
+          ["DXB", "JFK"],
+          ["JFK", "LHR"],
+          ["LHR", "DXB"]
+        ]
+      },
+      "expected": ["JFK", "DXB", "JFK", "DXB", "JFK", "LHR", "DXB", "JFK", "LHR", "DXB", "JFK", "LHR", "DXB", "JFK", "LHR", "DXB", "JFK", "LHR", "DXB", "JFK", "LHR", "DXB", "JFK", "LHR", "DXB", "JFK", "LHR", "DXB", "JFK", "LHR", "DXB", "JFK", "LHR", "DXB", "JFK", "LHR", "DXB", "JFK", "LHR", "DXB", "JFK", "LHR", "DXB", "LHR", "DXB", "LHR", "JFK", "LHR", "DXB"]
+    },
+    {
+      "case_id": 47,
+      "input": {
+        "tickets": [
+          ["JFK", "NRT"],
+          ["NRT", "JFK"],
+          ["JFK", "NRT"],
+          ["NRT", "PEK"],
+          ["PEK", "LAX"],
+          ["LAX", "PEK"],
+          ["PEK", "JFK"],
+          ["JFK", "LAX"],
+          ["LAX", "JFK"],
+          ["JFK", "PEK"],
+          ["PEK", "NRT"],
+          ["NRT", "LAX"],
+          ["LAX", "NRT"],
+          ["NRT", "JFK"],
+          ["JFK", "PEK"],
+          ["PEK", "LAX"],
+          ["LAX", "JFK"]
+        ]
+      },
+      "expected": ["JFK", "LAX", "JFK", "NRT", "JFK", "NRT", "JFK", "PEK", "JFK", "PEK", "LAX", "NRT", "LAX", "PEK", "NRT", "PEK", "LAX", "JFK"]
+    },
+    {
+      "case_id": 48,
+      "input": {
+        "tickets": [
+          ["JFK", "FRA"],
+          ["JFK", "TIA"],
+          ["FRA", "JFK"],
+          ["TIA", "FRA"],
+          ["FRA", "TIA"],
+          ["TIA", "JFK"]
+        ]
+      },
+      "expected": ["JFK", "FRA", "JFK", "TIA", "FRA", "TIA", "JFK"]
+    },
+    {
+      "case_id": 49,
+      "input": {
+        "tickets": [
+          ["JFK", "YYZ"],
+          ["YYZ", "BOS"],
+          ["BOS", "YYZ"],
+          ["YYZ", "JFK"],
+          ["JFK", "YYZ"],
+          ["YYZ", "BOS"],
+          ["BOS", "JFK"],
+          ["JFK", "BOS"],
+          ["BOS", "YYZ"],
+          ["YYZ", "JFK"]
+        ]
+      },
+      "expected": ["JFK", "BOS", "JFK", "YYZ", "BOS", "YYZ", "BOS", "YYZ", "JFK", "YYZ", "JFK"]
+    },
+    {
+      "case_id": 50,
+      "input": {
+        "tickets": [
+          ["JFK", "YYZ"],
+          ["YYZ", "JFK"],
+          ["JFK", "YYZ"],
+          ["YYZ", "LHR"],
+          ["LHR", "YYZ"],
+          ["YYZ", "JFK"],
+          ["JFK", "LHR"],
+          ["LHR", "YYZ"],
+          ["YYZ", "LHR"],
+          ["LHR", "JFK"],
+          ["JFK", "YYZ"],
+          ["YYZ", "JFK"],
+          ["JFK", "LHR"],
+          ["LHR", "YYZ"],
+          ["YYZ", "JFK"],
+          ["JFK", "LHR"],
+          ["LHR", "YYZ"],
+          ["YYZ", "JFK"],
+          ["JFK", "LHR"],
+          ["LHR", "YYZ"],
+          ["YYZ", "JFK"],
+          ["JFK", "LHR"],
+          ["LHR", "YYZ"],
+          ["YYZ", "JFK"],
+          ["JFK", "LHR"],
+          ["LHR", "YYZ"],
+          ["YYZ", "JFK"],
+          ["JFK", "LHR"]
+        ]
+      },
+      "expected": ["JFK", "LHR", "JFK", "LHR", "YYZ", "JFK", "LHR", "YYZ", "JFK", "LHR", "YYZ", "JFK", "LHR", "YYZ", "JFK", "LHR", "YYZ", "JFK", "LHR", "YYZ", "JFK", "YYZ", "JFK", "YYZ", "JFK", "YYZ", "LHR", "YYZ", "LHR"]
+    },
+    {
+      "case_id": 51,
+      "input": {
+        "tickets": "[[\"JFK\",\"ORD\"],[\"ORD\",\"SFO\"],[\"SFO\",\"JFK\"],[\"JFK\",\"LAX\"],[\"LAX\",\"SFO\"],[\"SFO\",\"ORD\"],[\"ORD\",\"JFK\"],[\"JFK\",\"NRT\"],[\"NRT\",\"SFO\"],[\"SFO\",\"LAX\"],[\"LAX\",\"ORD\"],[\"ORD\",\"NRT\"],[\"NRT\",\"JFK\"],[\"JFK\",\"SFO\"],[\"SFO\",\"NRT\"],[\"NRT\",\"ORD\"],[\"ORD\",\"LAX\"],[\"LAX\",\"JFK\"]]\""
+      },
+      "expected": "Error: Solution.findItinerary() missing 1 required positional argument: 'tickets'"
+    },
+    {
+      "case_id": 52,
+      "input": {
+        "tickets": [
+          ["JFK", "NRT"],
+          ["NRT", "JFK"],
+          ["JFK", "KUL"],
+          ["KUL", "LAX"],
+          ["LAX", "NRT"],
+          ["NRT", "KUL"],
+          ["KUL", "JFK"]
+        ]
+      },
+      "expected": ["JFK", "KUL", "JFK", "NRT", "KUL", "LAX", "NRT", "JFK"]
+    },
+    {
+      "case_id": 53,
+      "input": {
+        "tickets": [
+          ["JFK", "SFO"],
+          ["SFO", "LAX"],
+          ["LAX", "DEN"],
+          ["DEN", "LAX"],
+          ["LAX", "SFO"],
+          ["SFO", "JFK"],
+          ["JFK", "SFO"],
+          ["SFO", "LAX"],
+          ["LAX", "DEN"]
+        ]
+      },
+      "expected": ["JFK", "SFO", "JFK", "SFO", "LAX", "DEN", "LAX", "SFO", "LAX", "DEN"]
+    },
+    {
+      "case_id": 54,
+      "input": {
+        "tickets": [
+          ["JFK", "SFO"],
+          ["SFO", "ATL"],
+          ["ATL", "JFK"],
+          ["JFK", "ORD"],
+          ["ORD", "SFO"],
+          ["SFO", "ORD"],
+          ["ORD", "ATL"],
+          ["ATL", "SFO"],
+          ["SFO", "JFK"],
+          ["JFK", "ORD"],
+          ["ORD", "ATL"],
+          ["ATL", "ORD"],
+          ["ORD", "SFO"],
+          ["SFO", "ATL"],
+          ["ATL", "JFK"],
+          ["JFK", "SFO"],
+          ["SFO", "ORD"],
+          ["ORD", "SFO"],
+          ["SFO", "ATL"],
+          ["ATL", "ORD"],
+          ["ORD", "JFK"],
+          ["JFK", "ATL"],
+          ["ATL", "ORD"],
+          ["ORD", "SFO"],
+          ["SFO", "JFK"],
+          ["JFK", "ORD"],
+          ["ORD", "SFO"],
+          ["SFO", "ATL"],
+          ["ATL", "ORD"],
+          ["ORD", "JFK"],
+          ["JFK", "SFO"]
+        ]
+      },
+      "expected": ["JFK", "ATL", "JFK", "ORD", "ATL", "JFK", "ORD", "ATL", "ORD", "JFK", "ORD", "JFK", "SFO", "ATL", "ORD", "SFO", "ATL", "ORD", "SFO", "ATL", "ORD", "SFO", "ATL", "SFO", "JFK", "SFO", "JFK", "SFO", "ORD", "SFO", "ORD", "SFO"]
+    },
+    {
+      "case_id": 55,
+      "input": {
+        "tickets": [
+          ["JFK", "ZRH"],
+          ["ZRH", "HOU"],
+          ["HOU", "JFK"],
+          ["JFK", "LHR"],
+          ["LHR", "HOU"],
+          ["HOU", "LHR"],
+          ["LHR", "ZRH"],
+          ["ZRH", "JFK"]
+        ]
+      },
+      "expected": ["JFK", "LHR", "HOU", "JFK", "ZRH", "HOU", "LHR", "ZRH", "JFK"]
+    },
+    {
+      "case_id": 56,
+      "input": {
+        "tickets": [
+          ["JFK", "IST"],
+          ["IST", "DXB"],
+          ["DXB", "ORD"],
+          ["ORD", "JFK"],
+          ["JFK", "IST"],
+          ["IST", "DXB"],
+          ["DXB", "ORD"],
+          ["ORD", "LAX"],
+          ["LAX", "JFK"]
+        ]
+      },
+      "expected": ["JFK", "IST", "DXB", "ORD", "JFK", "IST", "DXB", "ORD", "LAX", "JFK"]
+    },
+    {
+      "case_id": 57,
+      "input": {
+        "tickets": [
+          ["JFK", "SFO"],
+          ["SFO", "ATL"],
+          ["ATL", "JFK"],
+          ["JFK", "SFO"],
+          ["SFO", "ORD"],
+          ["ORD", "SFO"],
+          ["SFO", "ATL"],
+          ["ATL", "SFO"],
+          ["SFO", "ORD"],
+          ["ORD", "JFK"]
+        ]
+      },
+      "expected": ["JFK", "SFO", "ATL", "JFK", "SFO", "ATL", "SFO", "ORD", "SFO", "ORD", "JFK"]
+    },
+    {
+      "case_id": 58,
+      "input": {
+        "tickets": [
+          ["JFK", "DXB"],
+          ["DXB", "SYD"],
+          ["SYD", "JFK"],
+          ["JFK", "DEL"],
+          ["DEL", "DXB"],
+          ["DXB", "SYD"],
+          ["SYD", "DEL"],
+          ["DEL", "JFK"]
+        ]
+      },
+      "expected": ["JFK", "DEL", "DXB", "SYD", "DEL", "JFK", "DXB", "SYD", "JFK"]
+    },
+    {
+      "case_id": 59,
+      "input": {
+        "tickets": [
+          ["JFK", "DXB"],
+          ["DXB", "BKK"],
+          ["BKK", "DXB"],
+          ["DXB", "JFK"],
+          ["JFK", "DEL"],
+          ["DEL", "DXB"],
+          ["DXB", "DEL"],
+          ["DEL", "BKK"],
+          ["BKK", "DEL"],
+          ["DEL", "JFK"],
+          ["JFK", "BKK"],
+          ["BKK", "JFK"],
+          ["JFK", "DXB"]
+        ]
+      },
+      "expected": ["JFK", "BKK", "DEL", "BKK", "DXB", "BKK", "JFK", "DEL", "DXB", "DEL", "JFK", "DXB", "JFK", "DXB"]
+    },
+    {
+      "case_id": 60,
+      "input": {
+        "tickets": [
+          ["JFK", "CPT"],
+          ["CPT", "DEL"],
+          ["DEL", "DXB"],
+          ["DXB", "SFO"],
+          ["SFO", "HOU"],
+          ["HOU", "JFK"],
+          ["JFK", "BOM"],
+          ["BOM", "CPT"],
+          ["CPT", "HOU"],
+          ["HOU", "DXB"],
+          ["DXB", "JFK"],
+          ["JFK", "SFO"],
+          ["SFO", "DEL"],
+          ["DEL", "BOM"],
+          ["BOM", "HOU"],
+          ["HOU", "SFO"],
+          ["SFO", "DXB"],
+          ["DXB", "CPT"],
+          ["CPT", "BOM"],
+          ["BOM", "SFO"]
+        ]
+      },
+      "expected": ["JFK", "BOM", "CPT", "BOM", "HOU", "DXB", "CPT", "DEL", "BOM", "SFO", "DEL", "DXB", "JFK", "CPT", "HOU", "JFK", "SFO", "DXB", "SFO", "HOU", "SFO"]
+    },
+    {
+      "case_id": 61,
+      "input": {
+        "tickets": [
+          ["JFK", "LAX"],
+          ["LAX", "SFO"],
+          ["SFO", "HOU"],
+          ["HOU", "LAX"],
+          ["LAX", "JFK"],
+          ["JFK", "ORD"],
+          ["ORD", "SFO"],
+          ["SFO", "HOU"],
+          ["HOU", "ORD"],
+          ["ORD", "JFK"]
+        ]
+      },
+      "expected": ["JFK", "LAX", "JFK", "ORD", "SFO", "HOU", "LAX", "SFO", "HOU", "ORD", "JFK"]
+    },
+    {
+      "case_id": 62,
+      "input": {
+        "tickets": [
+          ["JFK", "NRT"],
+          ["JFK", "KUL"],
+          ["NRT", "JFK"],
+          ["KUL", "JFK"],
+          ["JFK", "NRT"],
+          ["NRT", "KUL"],
+          ["KUL", "NRT"],
+          ["NRT", "LAX"],
+          ["LAX", "HOU"],
+          ["HOU", "SYD"],
+          ["SYD", "JFK"],
+          ["JFK", "SYD"],
+          ["SYD", "HOU"],
+          ["HOU", "LAX"],
+          ["LAX", "NRT"],
+          ["NRT", "JFK"],
+          ["JFK", "LAX"],
+          ["LAX", "SYD"],
+          ["SYD", "JFK"],
+          ["JFK", "AUA"],
+          ["AUA", "SYD"],
+          ["SYD", "LAX"],
+          ["LAX", "JFK"],
+          ["JFK", "PEK"],
+          ["PEK", "AUA"],
+          ["AUA", "SYD"],
+          ["SYD", "PEK"],
+          ["PEK", "JFK"]
+        ]
+      },
+      "expected": ["JFK", "AUA", "SYD", "HOU", "LAX", "HOU", "SYD", "JFK", "KUL", "JFK", "LAX", "JFK", "NRT", "JFK", "NRT", "JFK", "PEK", "AUA", "SYD", "JFK", "SYD", "LAX", "NRT", "KUL", "NRT", "LAX", "SYD", "PEK", "JFK"]
+    },
+    {
+      "case_id": 63,
+      "input": {
+        "tickets": "[[\"JFK\",\"NRT\"],[\"JFK\",\"KUL\"],[\"NRT\",\"JFK\"],[\"KUL\",\"JFK\"],[\"JFK\",\"NRT\"],[\"NRT\",\"KUL\"],[\"KUL\",\"NRT\"],[\"NRT\",\"LAX\"],[\"LAX\",\"HOU\"],[\"HOU\",\"SYD\"],[\"SYD\",\"JFK\"],[\"JFK\",\"SYD\"],[\"SYD\",\"HOU\"],[\"HOU\",\"LAX\"]]\""
+      },
+      "expected": "Error: Solution.findItinerary() missing 1 required positional argument: 'tickets'"
+    },
+    {
+      "case_id": 64,
+      "input": {
+        "tickets": [
+          ["JFK", "A"],
+          ["A", "B"],
+          ["B", "C"],
+          ["C", "D"],
+          ["D", "E"],
+          ["E", "F"],
+          ["F", "G"],
+          ["G", "H"],
+          ["H", "I"],
+          ["I", "J"],
+          ["J", "K"],
+          ["K", "L"],
+          ["L", "M"],
+          ["M", "N"],
+          ["N", "O"],
+          ["O", "P"],
+          ["P", "Q"],
+          ["Q", "R"],
+          ["R", "S"],
+          ["S", "T"],
+          ["T", "U"],
+          ["U", "V"],
+          ["V", "W"],
+          ["W", "X"],
+          ["X", "Y"],
+          ["Y", "Z"],
+          ["Z", "A"],
+          ["A", "JFK"],
+          ["JFK", "Z"],
+          ["Z", "Y"],
+          ["Y", "X"],
+          ["X", "W"],
+          ["W", "V"],
+          ["V", "U"],
+          ["U", "T"],
+          ["T", "S"],
+          ["S", "R"],
+          ["R", "Q"],
+          ["Q", "P"],
+          ["P", "O"],
+          ["O", "N"],
+          ["N", "M"],
+          ["M", "L"],
+          ["L", "K"],
+          ["K", "J"],
+          ["J", "I"],
+          ["I", "H"],
+          ["H", "G"],
+          ["G", "F"],
+          ["F", "E"],
+          ["E", "D"],
+          ["D", "C"],
+          ["C", "B"],
+          ["B", "A"],
+          ["A", "JFK"]
+        ]
+      },
+      "expected": ["JFK", "A", "B", "A", "JFK", "Z", "Y", "X", "W", "V", "U", "T", "S", "R", "Q", "P", "O", "N", "M", "L", "K", "J", "I", "H", "G", "F", "E", "D", "C", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "A", "JFK"]
+    },
+    {
+      "case_id": 65,
+      "input": {
+        "tickets": "[[\"JFK\",\"KUL\"],[\"KUL\",\"LAX\"],[\"LAX\",\"DXB\"],[\"DXB\",\"JFK\"],[\"JFK\",\"NRT\"],[\"NRT\",\"LAX\"],[\"LAX\",\"SYD\"],[\"SYD\",\"DXB\"]]\""
+      },
+      "expected": "Error: Solution.findItinerary() missing 1 required positional argument: 'tickets'"
+    },
+    {
+      "case_id": 66,
+      "input": {
+        "tickets": [
+          ["JFK", "NRT"],
+          ["NRT", "JFK"],
+          ["JFK", "KUL"],
+          ["KUL", "NRT"],
+          ["NRT", "JFK"],
+          ["JFK", "NRT"]
+        ]
+      },
+      "expected": ["JFK", "KUL", "NRT", "JFK", "NRT", "JFK", "NRT"]
+    },
+    {
+      "case_id": 67,
+      "input": {
+        "tickets": [
+          ["JFK", "DEL"],
+          ["DEL", "BLR"],
+          ["BLR", "DEL"],
+          ["DEL", "JFK"],
+          ["JFK", "DEL"],
+          ["DEL", "BLR"],
+          ["BLR", "DEL"],
+          ["DEL", "JFK"],
+          ["JFK", "DEL"],
+          ["DEL", "BLR"],
+          ["BLR", "DEL"],
+          ["DEL", "JFK"],
+          ["JFK", "DEL"],
+          ["DEL", "BLR"],
+          ["BLR", "DEL"],
+          ["DEL", "JFK"],
+          ["JFK", "DEL"],
+          ["DEL", "BLR"],
+          ["BLR", "DEL"],
+          ["DEL", "JFK"],
+          ["JFK", "DEL"],
+          ["DEL", "BLR"],
+          ["BLR", "DEL"],
+          ["DEL", "JFK"],
+          ["JFK", "DEL"],
+          ["DEL", "BLR"],
+          ["BLR", "DEL"],
+          ["DEL", "JFK"],
+          ["JFK", "DEL"],
+          ["DEL", "BLR"],
+          ["BLR", "DEL"],
+          ["DEL", "JFK"],
+          ["JFK", "DEL"],
+          ["DEL", "BLR"],
+          ["BLR", "DEL"],
+          ["DEL", "JFK"],
+          ["JFK", "DEL"],
+          ["DEL", "BLR"],
+          ["BLR", "DEL"],
+          ["DEL", "JFK"],
+          ["JFK", "DEL"],
+          ["DEL", "BLR"],
+          ["BLR", "DEL"],
+          ["DEL", "JFK"],
+          ["JFK", "DEL"],
+          ["DEL", "BLR"],
+          ["BLR", "DEL"],
+          ["DEL", "JFK"],
+          ["JFK", "DEL"],
+          ["DEL", "BLR"],
+          ["BLR", "DEL"],
+          ["DEL", "JFK"],
+          ["JFK", "DEL"]
+        ]
+      },
+      "expected": ["JFK", "DEL", "BLR", "DEL", "BLR", "DEL", "BLR", "DEL", "BLR", "DEL", "BLR", "DEL", "BLR", "DEL", "BLR", "DEL", "BLR", "DEL", "BLR", "DEL", "BLR", "DEL", "BLR", "DEL", "BLR", "DEL", "BLR", "DEL", "JFK", "DEL", "JFK", "DEL", "JFK", "DEL", "JFK", "DEL", "JFK", "DEL", "JFK", "DEL", "JFK", "DEL", "JFK", "DEL", "JFK", "DEL", "JFK", "DEL", "JFK", "DEL", "JFK", "DEL", "JFK", "DEL"]
+    },
+    {
+      "case_id": 68,
+      "input": {
+        "tickets": [
+          ["JFK", "B"],
+          ["B", "JFK"],
+          ["JFK", "C"],
+          ["C", "JFK"],
+          ["JFK", "D"],
+          ["D", "JFK"],
+          ["JFK", "E"],
+          ["E", "JFK"]
+        ]
+      },
+      "expected": ["JFK", "B", "JFK", "C", "JFK", "D", "JFK", "E", "JFK"]
+    },
+    {
+      "case_id": 69,
+      "input": {
+        "tickets": [
+          ["JFK", "CDG"],
+          ["CDG", "HOU"],
+          ["HOU", "DXB"],
+          ["DXB", "SFO"],
+          ["SFO", "JFK"],
+          ["JFK", "DXB"],
+          ["DXB", "HOU"],
+          ["HOU", "CDG"],
+          ["CDG", "JFK"],
+          ["JFK", "HOU"],
+          ["HOU", "SFO"],
+          ["SFO", "DXB"],
+          ["DXB", "JFK"],
+          ["JFK", "SFO"],
+          ["SFO", "HOU"],
+          ["HOU", "CDG"],
+          ["CDG", "DXB"],
+          ["DXB", "SFO"],
+          ["SFO", "CDG"],
+          ["CDG", "HOU"],
+          ["HOU", "JFK"],
+          ["JFK", "CDG"]
+        ]
+      },
+      "expected": ["JFK", "CDG", "DXB", "HOU", "CDG", "HOU", "CDG", "HOU", "DXB", "JFK", "CDG", "JFK", "DXB", "SFO", "DXB", "SFO", "HOU", "JFK", "HOU", "SFO", "JFK", "SFO", "CDG"]
+    },
+    {
+      "case_id": 70,
+      "input": {
+        "tickets": [
+          ["JFK", "SFO"],
+          ["SFO", "DSM"],
+          ["DSM", "JFK"],
+          ["JFK", "SFO"],
+          ["SFO", "LAX"],
+          ["LAX", "JFK"],
+          ["JFK", "SFO"],
+          ["SFO", "DSM"]
+        ]
+      },
+      "expected": ["JFK", "SFO", "DSM", "JFK", "SFO", "LAX", "JFK", "SFO", "DSM"]
+    },
+    {
+      "case_id": 71,
+      "input": {
+        "tickets": [
+          ["JFK", "HOU"],
+          ["HOU", "LAX"],
+          ["LAX", "NRT"],
+          ["NRT", "DXB"],
+          ["DXB", "SFO"],
+          ["SFO", "MIA"],
+          ["MIA", "JFK"],
+          ["JFK", "HOU"],
+          ["HOU", "LAX"],
+          ["LAX", "NRT"],
+          ["NRT", "DXB"],
+          ["DXB", "SFO"],
+          ["SFO", "MIA"],
+          ["MIA", "JFK"],
+          ["JFK", "HOU"],
+          ["HOU", "LAX"],
+          ["LAX", "NRT"],
+          ["NRT", "DXB"],
+          ["DXB", "SFO"],
+          ["SFO", "MIA"],
+          ["MIA", "JFK"],
+          ["JFK", "HOU"],
+          ["HOU", "LAX"],
+          ["LAX", "NRT"],
+          ["NRT", "DXB"],
+          ["DXB", "SFO"],
+          ["SFO", "MIA"],
+          ["MIA", "JFK"]
+        ]
+      },
+      "expected": ["JFK", "HOU", "LAX", "NRT", "DXB", "SFO", "MIA", "JFK", "HOU", "LAX", "NRT", "DXB", "SFO", "MIA", "JFK", "HOU", "LAX", "NRT", "DXB", "SFO", "MIA", "JFK", "HOU", "LAX", "NRT", "DXB", "SFO", "MIA", "JFK"]
+    },
+    {
+      "case_id": 72,
+      "input": {
+        "tickets": "[[\"JFK\",\"NRT\"],[\"NRT\",\"JFK\"],[\"JFK\",\"KUL\"],[\"KUL\",\"LAX\"],[\"LAX\",\"JFK\"],[\"JFK\",\"SFO\"],[\"SFO\",\"ORD\"],[\"ORD\",\"JFK\"]]\""
+      },
+      "expected": "Error: Solution.findItinerary() missing 1 required positional argument: 'tickets'"
+    },
+    {
+      "case_id": 73,
+      "input": {
+        "tickets": [
+          ["JFK", "A"],
+          ["A", "B"],
+          ["B", "C"],
+          ["C", "A"],
+          ["A", "D"],
+          ["D", "E"],
+          ["E", "F"],
+          ["F", "G"],
+          ["G", "F"],
+          ["F", "E"],
+          ["E", "D"],
+          ["D", "C"],
+          ["C", "B"],
+          ["B", "A"],
+          ["A", "JFK"],
+          ["JFK", "H"],
+          ["H", "I"],
+          ["I", "J"],
+          ["J", "H"],
+          ["H", "JFK"],
+          ["JFK", "K"],
+          ["K", "L"],
+          ["L", "M"],
+          ["M", "N"],
+          ["N", "O"],
+          ["O", "P"],
+          ["P", "Q"],
+          ["Q", "R"],
+          ["R", "S"],
+          ["S", "T"],
+          ["T", "U"],
+          ["U", "V"],
+          ["V", "W"],
+          ["W", "X"],
+          ["X", "Y"],
+          ["Y", "Z"],
+          ["Z", "W"],
+          ["W", "V"],
+          ["V", "U"],
+          ["U", "T"],
+          ["T", "S"],
+          ["S", "R"],
+          ["R", "Q"],
+          ["Q", "P"],
+          ["P", "O"],
+          ["O", "N"],
+          ["N", "M"],
+          ["M", "L"],
+          ["L", "K"],
+          ["K", "JFK"]
+        ]
+      },
+      "expected": ["JFK", "A", "B", "A", "D", "E", "F", "G", "F", "E", "D", "C", "B", "C", "A", "JFK", "H", "I", "J", "H", "JFK", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "W", "V", "U", "T", "S", "R", "Q", "P", "O", "N", "M", "L", "K", "JFK"]
+    },
+    {
+      "case_id": 74,
+      "input": {
+        "tickets": "[[\"JFK\",\"LHR\"],[\"LHR\",\"SFO\"],[\"SFO\",\"JFK\"],[\"JFK\",\"LAX\"],[\"LAX\",\"ORD\"],[\"ORD\",\"JFK\"],[\"JFK\",\"CDG\"],[\"CDG\",\"HOU\"],[\"HOU\",\"LAX\"],[\"LAX\",\"JFK\"],[\"JFK\",\"CDG\"],[\"CDG\",\"LHR\"],[\"LHR\",\"ORD\"],[\"ORD\",\"HOU\"],[\"HOU\",\"JFK\"],[\"JFK\",\"LAX\"],[\"LAX\",\"SFO\"],[\"SFO\",\"CDG\"],[\"CDG\",\"JFK\"],[\"JFK\",\"HOU\"],[\"HOU\",\"ORD\"],[\"ORD\",\"LAX\"],[\"LAX\",\"SFO\"],[\"SFO\",\"ORD\"],[\"ORD\",\"JFK\"]]\""
+      },
+      "expected": "Error: Solution.findItinerary() missing 1 required positional argument: 'tickets'"
+    },
+    {
+      "case_id": 75,
+      "input": {
+        "tickets": [
+          ["JFK", "BOS"],
+          ["BOS", "SFO"],
+          ["SFO", "BOS"],
+          ["BOS", "JFK"],
+          ["JFK", "BOS"],
+          ["BOS", "JFK"],
+          ["JFK", "BOS"],
+          ["BOS", "SFO"]
+        ]
+      },
+      "expected": ["JFK", "BOS", "JFK", "BOS", "JFK", "BOS", "SFO", "BOS", "SFO"]
+    },
+    {
+      "case_id": 76,
+      "input": {
+        "tickets": [
+          ["JFK", "MEX"],
+          ["MEX", "LAX"],
+          ["LAX", "JFK"],
+          ["JFK", "MEX"],
+          ["MEX", "LAX"],
+          ["LAX", "MEX"],
+          ["MEX", "JFK"],
+          ["JFK", "LAX"],
+          ["LAX", "MEX"],
+          ["MEX", "LAX"]
+        ]
+      },
+      "expected": ["JFK", "LAX", "JFK", "MEX", "JFK", "MEX", "LAX", "MEX", "LAX", "MEX", "LAX"]
+    },
+    {
+      "case_id": 77,
+      "input": {
+        "tickets": [
+          ["JFK", "A"],
+          ["A", "B"],
+          ["B", "C"],
+          ["C", "A"],
+          ["A", "D"],
+          ["D", "E"],
+          ["E", "F"],
+          ["F", "G"],
+          ["G", "E"],
+          ["E", "D"],
+          ["D", "A"],
+          ["A", "C"],
+          ["C", "B"],
+          ["B", "A"],
+          ["A", "F"],
+          ["F", "E"],
+          ["E", "D"],
+          ["D", "C"],
+          ["C", "A"],
+          ["A", "B"],
+          ["B", "C"],
+          ["C", "D"],
+          ["D", "E"],
+          ["E", "F"],
+          ["F", "G"],
+          ["G", "F"],
+          ["F", "E"],
+          ["E", "D"],
+          ["D", "C"],
+          ["C", "B"],
+          ["B", "A"],
+          ["A", "JFK"]
+        ]
+      },
+      "expected": ["JFK", "A", "B", "A", "B", "A", "C", "A", "D", "A", "F", "E", "D", "C", "B", "C", "B", "C", "D", "E", "D", "E", "F", "E", "F", "G", "F", "G", "E", "D", "C", "A", "JFK"]
+    },
+    {
+      "case_id": 78,
+      "input": {
+        "tickets": "[[\"JFK\",\"SLC\"],[\"SLC\",\"JFK\"],[\"JFK\",\"ATL\"],[\"ATL\",\"JFK\"],[\"JFK\",\"SFO\"],[\"SFO\",\"JFK\"],[\"JFK\",\"ORD\"],[\"ORD\",\"JFK\"],[\"JFK\",\"LAX\"],[\"LAX\",\"JFK\"]]\""
+      },
+      "expected": "Error: Solution.findItinerary() missing 1 required positional argument: 'tickets'"
+    },
+    {
+      "case_id": 79,
+      "input": {
+        "tickets": [
+          ["JFK", "AAA"],
+          ["AAA", "BBB"],
+          ["BBB", "CCC"],
+          ["CCC", "DDD"],
+          ["DDD", "EEE"],
+          ["EEE", "DDD"],
+          ["DDD", "CCC"],
+          ["CCC", "BBB"],
+          ["BBB", "AAA"],
+          ["AAA", "JFK"],
+          ["JFK", "DDD"],
+          ["DDD", "EEE"],
+          ["EEE", "DDD"],
+          ["DDD", "CCC"],
+          ["CCC", "BBB"],
+          ["BBB", "AAA"],
+          ["AAA", "JFK"]
+        ]
+      },
+      "expected": ["JFK", "AAA", "BBB", "AAA", "JFK", "DDD", "CCC", "BBB", "CCC", "DDD", "EEE", "DDD", "EEE", "DDD", "CCC", "BBB", "AAA", "JFK"]
+    },
+    {
+      "case_id": 80,
+      "input": {
+        "tickets": [
+          ["JFK", "AUA"],
+          ["AUA", "SFO"],
+          ["SFO", "HOU"],
+          ["HOU", "JFK"],
+          ["JFK", "AUA"],
+          ["AUA", "HOU"],
+          ["HOU", "SFO"],
+          ["SFO", "JFK"],
+          ["JFK", "AUA"],
+          ["AUA", "SFO"],
+          ["SFO", "HOU"],
+          ["HOU", "JFK"]
+        ]
+      },
+      "expected": ["JFK", "AUA", "HOU", "JFK", "AUA", "SFO", "HOU", "JFK", "AUA", "SFO", "HOU", "SFO", "JFK"]
+    },
+    {
+      "case_id": 81,
+      "input": {
+        "tickets": "[[\"JFK\",\"NRT\"],[\"JFK\",\"KUL\"],[\"NRT\",\"JFK\"],[\"KUL\",\"JFK\"],[\"JFK\",\"NRT\"],[\"NRT\",\"KUL\"],[\"KUL\",\"NRT\"]]\""
+      },
+      "expected": "Error: Solution.findItinerary() missing 1 required positional argument: 'tickets'"
+    }
+  ]
+}

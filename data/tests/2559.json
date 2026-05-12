@@ -1,0 +1,1470 @@
+{
+  "schema_version": 1,
+  "problem_id": 2559,
+  "title": "Count Vowel Strings in Ranges",
+  "method": "vowelStrings",
+  "signature": {
+    "params": [
+      {
+        "name": "words",
+        "type": "STRING_ARRAY"
+      },
+      {
+        "name": "queries",
+        "type": "INT32_MATRIX"
+      }
+    ],
+    "returns": "INT32_ARRAY"
+  },
+  "cases": [
+    {
+      "case_id": 1,
+      "input": {
+        "words": ["aeiou", "bcd", "cde", "ua"],
+        "queries": [
+          [0, 0],
+          [1, 2],
+          [0, 3]
+        ]
+      },
+      "expected": [1, 0, 2]
+    },
+    {
+      "case_id": 2,
+      "input": {
+        "words": ["aeiou", "bcd", "cde", "dea"],
+        "queries": [
+          [0, 3],
+          [1, 2],
+          [2, 2]
+        ]
+      },
+      "expected": [1, 0, 0]
+    },
+    {
+      "case_id": 3,
+      "input": {
+        "words": ["aeiou", "bcd", "cde", "aeiou"],
+        "queries": [
+          [0, 3],
+          [1, 2],
+          [3, 3]
+        ]
+      },
+      "expected": [2, 0, 1]
+    },
+    {
+      "case_id": 4,
+      "input": {
+        "words": ["aaaa", "ee", "iii", "oo", "uu"],
+        "queries": [
+          [0, 0],
+          [1, 1],
+          [2, 2],
+          [3, 3],
+          [4, 4]
+        ]
+      },
+      "expected": [1, 1, 1, 1, 1]
+    },
+    {
+      "case_id": 5,
+      "input": {
+        "words": ["abc", "bcd", "cde", "dea"],
+        "queries": [
+          [0, 1],
+          [1, 3],
+          [2, 3]
+        ]
+      },
+      "expected": [0, 0, 0]
+    },
+    {
+      "case_id": 6,
+      "input": {
+        "words": ["abc", "bcd", "cde", "dea"],
+        "queries": [
+          [0, 1],
+          [1, 3],
+          [0, 3]
+        ]
+      },
+      "expected": [0, 0, 0]
+    },
+    {
+      "case_id": 7,
+      "input": {
+        "words": ["a", "e", "i", "o", "u"],
+        "queries": [
+          [0, 0],
+          [1, 1],
+          [2, 2],
+          [3, 3],
+          [4, 4]
+        ]
+      },
+      "expected": [1, 1, 1, 1, 1]
+    },
+    {
+      "case_id": 8,
+      "input": {
+        "words": ["aba", "bcb", "ece", "aa", "e"],
+        "queries": [
+          [0, 2],
+          [1, 4],
+          [1, 1]
+        ]
+      },
+      "expected": [2, 3, 0]
+    },
+    {
+      "case_id": 9,
+      "input": {
+        "words": ["abc", "bcd", "cde", "dea"],
+        "queries": [
+          [0, 1],
+          [2, 3],
+          [0, 3]
+        ]
+      },
+      "expected": [0, 0, 0]
+    },
+    {
+      "case_id": 10,
+      "input": {
+        "words": ["aeiou", "bcd", "cde", "dea", "eae"],
+        "queries": [
+          [0, 4],
+          [1, 3],
+          [2, 2]
+        ]
+      },
+      "expected": [2, 0, 0]
+    },
+    {
+      "case_id": 11,
+      "input": {
+        "words": ["abc", "bcd", "cde", "dea", "eae"],
+        "queries": [
+          [0, 1],
+          [1, 3],
+          [2, 4]
+        ]
+      },
+      "expected": [0, 0, 1]
+    },
+    {
+      "case_id": 12,
+      "input": {
+        "words": ["a", "e", "i"],
+        "queries": [
+          [0, 2],
+          [0, 1],
+          [2, 2]
+        ]
+      },
+      "expected": [3, 2, 1]
+    },
+    {
+      "case_id": 13,
+      "input": {
+        "words": ["abc", "bcd", "cde", "dea"],
+        "queries": [
+          [0, 3],
+          [1, 2],
+          [2, 2]
+        ]
+      },
+      "expected": [0, 0, 0]
+    },
+    {
+      "case_id": 14,
+      "input": {
+        "words": ["a", "b", "c", "d", "e"],
+        "queries": [
+          [0, 0],
+          [1, 1],
+          [2, 2],
+          [3, 3],
+          [4, 4]
+        ]
+      },
+      "expected": [1, 0, 0, 0, 1]
+    },
+    {
+      "case_id": 15,
+      "input": {
+        "words": ["a", "b", "c", "d", "e"],
+        "queries": [
+          [0, 4],
+          [1, 3],
+          [2, 2]
+        ]
+      },
+      "expected": [2, 0, 0]
+    },
+    {
+      "case_id": 16,
+      "input": {
+        "words": ["aeiou", "bcd", "eoe"],
+        "queries": [
+          [0, 0],
+          [1, 2],
+          [0, 2]
+        ]
+      },
+      "expected": [1, 1, 2]
+    },
+    {
+      "case_id": 17,
+      "input": {
+        "words": ["aeioua", "beoibe", "ieoiie", "oioioi", "uaouau", "aeiou", "eioue", "iouoi", "ououo", "uouou"],
+        "queries": [
+          [0, 9],
+          [1, 8],
+          [2, 7],
+          [3, 6],
+          [4, 5],
+          [0, 4],
+          [5, 9],
+          [1, 3],
+          [2, 4],
+          [3, 5],
+          [4, 6],
+          [5, 7],
+          [6, 8],
+          [7, 9]
+        ]
+      },
+      "expected": [9, 7, 6, 4, 2, 4, 5, 2, 3, 3, 3, 3, 3, 3]
+    },
+    {
+      "case_id": 18,
+      "input": {
+        "words": ["a", "e", "i", "o", "u", "aeiou", "uoiea", "aeiouaeiou"],
+        "queries": [
+          [0, 7],
+          [1, 6],
+          [2, 5],
+          [3, 4],
+          [0, 0],
+          [7, 7]
+        ]
+      },
+      "expected": [8, 6, 4, 2, 1, 1]
+    },
+    {
+      "case_id": 19,
+      "input": {
+        "words": ["ae", "ea", "aa", "ee", "ii", "oo", "uu", "aee", "eaa", "iee"],
+        "queries": [
+          [0, 9],
+          [0, 5],
+          [5, 9],
+          [3, 6],
+          [7, 8]
+        ]
+      },
+      "expected": [10, 6, 5, 4, 2]
+    },
+    {
+      "case_id": 20,
+      "input": {
+        "words": ["aeiou"],
+        "queries": [
+          [0, 0]
+        ]
+      },
+      "expected": [1]
+    },
+    {
+      "case_id": 21,
+      "input": {
+        "words": ["apple", "orange", "umbrella", "elephant", "ice"],
+        "queries": [
+          [0, 2],
+          [1, 4],
+          [2, 2],
+          [3, 4],
+          [0, 4]
+        ]
+      },
+      "expected": [3, 3, 1, 1, 4]
+    },
+    {
+      "case_id": 22,
+      "input": {
+        "words": ["automobile", "bicycle", "car", "plane", "ship", "train", "truck", "motorcycle", "bus", "ferry"],
+        "queries": [
+          [0, 4],
+          [1, 5],
+          [2, 8],
+          [0, 9],
+          [1, 6],
+          [2, 4],
+          [3, 7],
+          [0, 7],
+          [8, 9]
+        ]
+      },
+      "expected": [1, 0, 0, 1, 0, 0, 0, 1, 0]
+    },
+    {
+      "case_id": 23,
+      "input": {
+        "words": ["education", "environment", "algorithm", "finance", "economics", "optimization", "development"],
+        "queries": [
+          [0, 2],
+          [3, 5],
+          [0, 6],
+          [2, 4],
+          [1, 3],
+          [0, 5],
+          [4, 6]
+        ]
+      },
+      "expected": [0, 0, 0, 0, 0, 0, 0]
+    },
+    {
+      "case_id": 24,
+      "input": {
+        "words": ["umbrella", "elephant", "ice", "onion", "apple", "orange"],
+        "queries": [
+          [0, 2],
+          [1, 5],
+          [3, 4],
+          [0, 1],
+          [2, 3]
+        ]
+      },
+      "expected": [2, 3, 1, 1, 1]
+    },
+    {
+      "case_id": 25,
+      "input": {
+        "words": ["banana", "grape", "kiwi", "lemon", "melon", "mango", "peach", "pear", "plum"],
+        "queries": [
+          [0, 8],
+          [1, 7],
+          [2, 6],
+          [3, 5],
+          [4, 4],
+          [5, 5],
+          [6, 6],
+          [7, 7],
+          [0, 1],
+          [2, 3],
+          [4, 5],
+          [6, 7]
+        ]
+      },
+      "expected": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+    },
+    {
+      "case_id": 26,
+      "input": {
+        "words": ["aabbcc", "eoo", "i", "oee", "u", "aa", "e", "i", "o", "u"],
+        "queries": [
+          [0, 9],
+          [1, 8],
+          [2, 7],
+          [3, 6],
+          [4, 5],
+          [0, 4],
+          [5, 9]
+        ]
+      },
+      "expected": [9, 8, 6, 4, 2, 4, 5]
+    },
+    {
+      "case_id": 27,
+      "input": {
+        "words": ["ab", "cd", "ef", "gh", "ij", "kl", "mn", "op", "qr", "st", "uv", "wx", "yz"],
+        "queries": [
+          [0, 12],
+          [1, 11],
+          [2, 10],
+          [3, 9],
+          [4, 8]
+        ]
+      },
+      "expected": [0, 0, 0, 0, 0]
+    },
+    {
+      "case_id": 28,
+      "input": {
+        "words": ["aaaaaa", "bbbbbb", "cccccc", "dddddd", "eeeeee", "ffffff", "gggggg"],
+        "queries": [
+          [0, 1],
+          [1, 2],
+          [2, 3],
+          [3, 4],
+          [4, 5],
+          [5, 6],
+          [0, 6]
+        ]
+      },
+      "expected": [1, 0, 0, 1, 1, 0, 2]
+    },
+    {
+      "case_id": 29,
+      "input": {
+        "words": ["a", "e", "i", "o", "u"],
+        "queries": [
+          [0, 0],
+          [1, 1],
+          [2, 2],
+          [3, 3],
+          [4, 4],
+          [0, 4],
+          [0, 3],
+          [1, 4]
+        ]
+      },
+      "expected": [1, 1, 1, 1, 1, 5, 4, 4]
+    },
+    {
+      "case_id": 30,
+      "input": {
+        "words": ["aeiou", "bcd", "efg", "hij", "klm", "nop", "qrstu", "vwxyz", "yzzzy", "uaeuu"],
+        "queries": [
+          [0, 9],
+          [1, 3],
+          [2, 8],
+          [4, 7],
+          [5, 5]
+        ]
+      },
+      "expected": [2, 0, 0, 0, 0]
+    },
+    {
+      "case_id": 31,
+      "input": {
+        "words": ["a", "e", "i", "o", "u", "aa", "ee", "ii", "oo", "uu", "aaa", "eee", "iii", "ooo", "uuu"],
+        "queries": [
+          [0, 4],
+          [5, 9],
+          [10, 14],
+          [0, 9],
+          [5, 14],
+          [0, 14],
+          [1, 13]
+        ]
+      },
+      "expected": [5, 5, 5, 10, 10, 15, 13]
+    },
+    {
+      "case_id": 32,
+      "input": {
+        "words": ["banana", "apple", "grape", "kiwi", "melon", "peach", "pear"],
+        "queries": [
+          [0, 3],
+          [2, 5],
+          [1, 6],
+          [0, 6],
+          [4, 4]
+        ]
+      },
+      "expected": [1, 0, 1, 1, 0]
+    },
+    {
+      "case_id": 33,
+      "input": {
+        "words": ["aeiouaeiou", "bcdefghijklmno", "pqrstuvwxyzz", "zyxwvutsrqponmlkjihgfedcba", "aeiouaeiouaeiou"],
+        "queries": [
+          [0, 4],
+          [1, 3],
+          [0, 0],
+          [2, 2],
+          [1, 4]
+        ]
+      },
+      "expected": [2, 0, 1, 0, 1]
+    },
+    {
+      "case_id": 34,
+      "input": {
+        "words": ["education", "university", "college", "school", "academy", "institute", "faculty", "student", "teacher", "research"],
+        "queries": [
+          [0, 9],
+          [1, 4],
+          [2, 6],
+          [3, 8],
+          [4, 7]
+        ]
+      },
+      "expected": [1, 0, 1, 1, 1]
+    },
+    {
+      "case_id": 35,
+      "input": {
+        "words": ["umbrella", "elephant", "ice", "onion", "apple", "orange", "grape"],
+        "queries": [
+          [0, 6],
+          [1, 5],
+          [2, 4],
+          [0, 1],
+          [5, 6],
+          [2, 3],
+          [4, 4]
+        ]
+      },
+      "expected": [4, 3, 2, 1, 1, 1, 1]
+    },
+    {
+      "case_id": 36,
+      "input": {
+        "words": ["aaa", "bbb", "ccc", "ddd", "eee", "fff", "ggg", "hhh", "iii", "jjj"],
+        "queries": [
+          [0, 9],
+          [1, 8],
+          [2, 7],
+          [3, 6],
+          [4, 5]
+        ]
+      },
+      "expected": [3, 2, 1, 1, 1]
+    },
+    {
+      "case_id": 37,
+      "input": {
+        "words": ["aaaa", "eeeee", "iiii", "oooo", "uuuu", "aeiou", "uoiea"],
+        "queries": [
+          [0, 4],
+          [3, 6],
+          [0, 3],
+          [4, 4],
+          [5, 6],
+          [1, 1],
+          [2, 2]
+        ]
+      },
+      "expected": [5, 4, 4, 1, 2, 1, 1]
+    },
+    {
+      "case_id": 38,
+      "input": {
+        "words": ["abc", "bcd", "cde", "dea", "aeiou", "uoiea"],
+        "queries": [
+          [0, 5],
+          [1, 4],
+          [2, 3],
+          [0, 0],
+          [5, 5]
+        ]
+      },
+      "expected": [2, 1, 0, 0, 1]
+    },
+    {
+      "case_id": 39,
+      "input": {
+        "words": ["a", "e", "i", "o", "u", "aeiou", "uoiea"],
+        "queries": [
+          [0, 6],
+          [1, 5],
+          [2, 4],
+          [0, 3],
+          [3, 6]
+        ]
+      },
+      "expected": [7, 5, 3, 4, 4]
+    },
+    {
+      "case_id": 40,
+      "input": {
+        "words": ["a", "e", "i", "o", "u", "ae", "ei", "ou", "io", "ua"],
+        "queries": [
+          [0, 9],
+          [1, 8],
+          [2, 7],
+          [3, 6],
+          [4, 5],
+          [0, 0],
+          [9, 9]
+        ]
+      },
+      "expected": [10, 8, 6, 4, 2, 1, 1]
+    },
+    {
+      "case_id": 41,
+      "input": {
+        "words": ["apple", "orange", "banana", "grape", "peach"],
+        "queries": [
+          [0, 2],
+          [1, 3],
+          [0, 3],
+          [2, 2],
+          [3, 3],
+          [1, 4],
+          [0, 4]
+        ]
+      },
+      "expected": [2, 1, 2, 0, 0, 1, 2]
+    },
+    {
+      "case_id": 42,
+      "input": {
+        "words": ["bcd"],
+        "queries": [
+          [0, 0]
+        ]
+      },
+      "expected": [0]
+    },
+    {
+      "case_id": 43,
+      "input": {
+        "words": ["banana", "apricot", "grape", "kiwi", "peach", "melon"],
+        "queries": [
+          [0, 5],
+          [1, 3],
+          [2, 4],
+          [0, 2],
+          [3, 5]
+        ]
+      },
+      "expected": [0, 0, 0, 0, 0]
+    },
+    {
+      "case_id": 44,
+      "input": {
+        "words": ["banana", "anana", "nana", "ana", "na", "a", "e", "i", "o", "u"],
+        "queries": [
+          [0, 5],
+          [1, 6],
+          [2, 7],
+          [3, 8],
+          [4, 9],
+          [0, 9]
+        ]
+      },
+      "expected": [3, 4, 4, 5, 5, 7]
+    },
+    {
+      "case_id": 45,
+      "input": {
+        "words": ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o"],
+        "queries": [
+          [0, 14],
+          [0, 9],
+          [5, 10],
+          [10, 14]
+        ]
+      },
+      "expected": [4, 3, 1, 1]
+    },
+    {
+      "case_id": 46,
+      "input": {
+        "words": ["abcde", "edcba", "fghij", "jihgf", "klmno", "onmlk", "pqrst", "tsrqp", "uvwxy", "yxwvu"],
+        "queries": [
+          [0, 1],
+          [2, 3],
+          [4, 5],
+          [6, 7],
+          [0, 8],
+          [1, 9],
+          [0, 7],
+          [2, 5]
+        ]
+      },
+      "expected": [2, 0, 0, 0, 2, 1, 2, 0]
+    },
+    {
+      "case_id": 47,
+      "input": {
+        "words": ["banana", "grape", "avocado", "kiwi", "melon", "orange", "elderberry"],
+        "queries": [
+          [0, 6],
+          [1, 5],
+          [2, 4],
+          [3, 3],
+          [0, 3]
+        ]
+      },
+      "expected": [2, 2, 1, 0, 1]
+    },
+    {
+      "case_id": 48,
+      "input": {
+        "words": ["x", "y", "z", "aeiou", "aeiou", "aeiou"],
+        "queries": [
+          [0, 2],
+          [2, 4],
+          [4, 5],
+          [0, 5]
+        ]
+      },
+      "expected": [0, 2, 2, 3]
+    },
+    {
+      "case_id": 49,
+      "input": {
+        "words": ["aeiou", "bcd", "cde", "dea", "aeiou", "bcd", "cde", "dea", "aeiou", "bcd"],
+        "queries": [
+          [0, 9],
+          [1, 8],
+          [2, 7],
+          [3, 6],
+          [4, 5]
+        ]
+      },
+      "expected": [3, 2, 1, 1, 1]
+    },
+    {
+      "case_id": 50,
+      "input": {
+        "words": ["aeiou", "bcd", "cde", "dea", "aeiou", "bcd", "cde", "dea", "aeiou", "bcd", "cde", "dea", "aeiou", "bcd", "cde", "dea"],
+        "queries": [
+          [0, 15],
+          [1, 14],
+          [2, 13],
+          [3, 12],
+          [4, 11],
+          [5, 10],
+          [6, 9],
+          [7, 8]
+        ]
+      },
+      "expected": [4, 3, 3, 3, 2, 1, 1, 1]
+    },
+    {
+      "case_id": 51,
+      "input": {
+        "words": ["a", "e", "i", "o", "u", "ae", "ei", "ou", "ia", "uo"],
+        "queries": [
+          [0, 5],
+          [2, 8],
+          [1, 4],
+          [0, 9],
+          [3, 7],
+          [5, 9],
+          [0, 0],
+          [9, 9]
+        ]
+      },
+      "expected": [6, 7, 4, 10, 5, 5, 1, 1]
+    },
+    {
+      "case_id": 52,
+      "input": {
+        "words": ["abacax", "azedo", "oiue", "ueia", "uiaeu", "uiaed", "uieaeu", "ueae", "euae", "aeu"],
+        "queries": [
+          [0, 0],
+          [1, 1],
+          [2, 2],
+          [3, 3],
+          [4, 4],
+          [5, 5],
+          [6, 6],
+          [7, 7],
+          [8, 8],
+          [9, 9]
+        ]
+      },
+      "expected": [0, 1, 1, 1, 1, 0, 1, 1, 1, 1]
+    },
+    {
+      "case_id": 53,
+      "input": {
+        "words": ["a", "e", "i", "o", "u", "ae", "ei", "ou", "uo", "ea"],
+        "queries": [
+          [0, 9],
+          [0, 5],
+          [5, 9],
+          [3, 6],
+          [7, 8]
+        ]
+      },
+      "expected": [10, 6, 5, 4, 2]
+    },
+    {
+      "case_id": 54,
+      "input": {
+        "words": ["aeiou", "bcd", "aee", "oau", "bcd", "eaa"],
+        "queries": [
+          [0, 2],
+          [1, 5],
+          [3, 5],
+          [0, 5]
+        ]
+      },
+      "expected": [2, 3, 2, 4]
+    },
+    {
+      "case_id": 55,
+      "input": {
+        "words": ["apple", "orange", "umbrella", "elephant", "ice", "onion"],
+        "queries": [
+          [0, 5],
+          [1, 4],
+          [2, 3],
+          [0, 0],
+          [5, 5]
+        ]
+      },
+      "expected": [4, 3, 1, 1, 0]
+    },
+    {
+      "case_id": 56,
+      "input": {
+        "words": ["aeiou", "bcd", "efgh", "ijkl", "mnop", "qrst", "uvw", "xyz"],
+        "queries": [
+          [0, 7],
+          [1, 6],
+          [2, 5],
+          [3, 4],
+          [0, 0],
+          [7, 7]
+        ]
+      },
+      "expected": [1, 0, 0, 0, 1, 0]
+    },
+    {
+      "case_id": 57,
+      "input": {
+        "words": ["aaa", "eee", "iii", "ooo", "uuu", "aa", "ee", "ii", "oo", "uu"],
+        "queries": [
+          [0, 9],
+          [1, 8],
+          [2, 7],
+          [3, 6],
+          [4, 5],
+          [0, 4],
+          [5, 9]
+        ]
+      },
+      "expected": [10, 8, 6, 4, 2, 5, 5]
+    },
+    {
+      "case_id": 58,
+      "input": {
+        "words": ["banana", "avocado", "elderberry", "kiwi", "grape", "lemon"],
+        "queries": [
+          [0, 2],
+          [1, 5],
+          [2, 3],
+          [0, 5]
+        ]
+      },
+      "expected": [1, 1, 0, 1]
+    },
+    {
+      "case_id": 59,
+      "input": {
+        "words": ["aeiou", "bcd", "ocean", "elephant", "umbrella"],
+        "queries": [
+          [0, 0],
+          [0, 4],
+          [1, 2],
+          [2, 3],
+          [3, 4],
+          [0, 3],
+          [1, 4]
+        ]
+      },
+      "expected": [1, 2, 0, 0, 1, 1, 1]
+    },
+    {
+      "case_id": 60,
+      "input": {
+        "words": ["under", "over", "around", "before", "after", "above", "below"],
+        "queries": [
+          [0, 1],
+          [2, 4],
+          [1, 3],
+          [0, 6],
+          [5, 5]
+        ]
+      },
+      "expected": [0, 0, 0, 1, 1]
+    },
+    {
+      "case_id": 61,
+      "input": {
+        "words": ["a", "e", "i", "o", "u", "a", "e", "i", "o", "u", "a", "e", "i", "o", "u", "a", "e", "i", "o", "u"],
+        "queries": [
+          [0, 19],
+          [1, 18],
+          [2, 17],
+          [3, 16],
+          [4, 15],
+          [5, 14],
+          [6, 13],
+          [7, 12],
+          [8, 11],
+          [9, 10],
+          [0, 5],
+          [5, 10],
+          [10, 15],
+          [15, 20]
+        ]
+      },
+      "expected": [20, 18, 16, 14, 12, 10, 8, 6, 4, 2, 6, 6, 6, 5]
+    },
+    {
+      "case_id": 62,
+      "input": {
+        "words": ["aeiou", "bcd", "eae", "oio", "uaa"],
+        "queries": [
+          [0, 2],
+          [1, 4],
+          [0, 4]
+        ]
+      },
+      "expected": [2, 3, 4]
+    },
+    {
+      "case_id": 63,
+      "input": {
+        "words": ["aabbcc", "bbaacc", "ccaabb", "ccbbdd", "ddeerr", "eeffgg", "ffggee", "gghhee", "hhiig", "iihhj"],
+        "queries": [
+          [0, 2],
+          [1, 5],
+          [2, 7],
+          [0, 8],
+          [1, 6],
+          [2, 4],
+          [3, 7],
+          [0, 7],
+          [8, 9]
+        ]
+      },
+      "expected": [0, 0, 0, 0, 0, 0, 0, 0, 0]
+    },
+    {
+      "case_id": 64,
+      "input": {
+        "words": ["algorithm", "data", "science", "python", "java", "c++", "javascript"],
+        "queries": [
+          [0, 2],
+          [3, 5],
+          [1, 4],
+          [0, 6],
+          [5, 5],
+          [2, 3],
+          [4, 6]
+        ]
+      },
+      "expected": [0, 0, 0, 0, 0, 0, 0]
+    },
+    {
+      "case_id": 65,
+      "input": {
+        "words": ["abacax", "azedo", "oiue", "ueia", "uiaeu", "uiaed", "uieaeu", "ueae", "euae", "aeu"],
+        "queries": [
+          [0, 4],
+          [1, 7],
+          [2, 8],
+          [3, 9],
+          [0, 9]
+        ]
+      },
+      "expected": [4, 6, 6, 6, 8]
+    },
+    {
+      "case_id": 66,
+      "input": {
+        "words": ["aeiou", "bcdfg", "ae", "iou", "a", "e", "i", "o", "u"],
+        "queries": [
+          [0, 8],
+          [1, 5],
+          [2, 7],
+          [3, 6],
+          [4, 4],
+          [5, 5],
+          [6, 6],
+          [7, 7],
+          [8, 8]
+        ]
+      },
+      "expected": [8, 4, 6, 4, 1, 1, 1, 1, 1]
+    },
+    {
+      "case_id": 67,
+      "input": {
+        "words": ["a", "e", "i", "o", "u", "aeiou"],
+        "queries": [
+          [0, 5],
+          [1, 4],
+          [2, 3],
+          [0, 0],
+          [5, 5],
+          [1, 1],
+          [2, 2],
+          [3, 3],
+          [4, 4]
+        ]
+      },
+      "expected": [6, 4, 2, 1, 1, 1, 1, 1, 1]
+    },
+    {
+      "case_id": 68,
+      "input": {
+        "words": ["a", "e", "i", "o", "u", "aeiou"],
+        "queries": [
+          [0, 5],
+          [1, 4],
+          [0, 0],
+          [5, 5]
+        ]
+      },
+      "expected": [6, 4, 1, 1]
+    },
+    {
+      "case_id": 69,
+      "input": {
+        "words": ["apple", "orange", "umbrella", "echo", "alpha"],
+        "queries": [
+          [0, 4],
+          [1, 3],
+          [0, 0],
+          [2, 2],
+          [1, 4]
+        ]
+      },
+      "expected": [5, 3, 1, 1, 4]
+    },
+    {
+      "case_id": 70,
+      "input": {
+        "words": ["a", "e", "i", "o", "u", "a", "e", "i", "o", "u", "a", "e", "i", "o", "u"],
+        "queries": [
+          [0, 14],
+          [1, 13],
+          [2, 12],
+          [3, 11],
+          [4, 10],
+          [5, 9],
+          [6, 8],
+          [7, 7],
+          [0, 9],
+          [1, 8]
+        ]
+      },
+      "expected": [15, 13, 11, 9, 7, 5, 3, 1, 10, 8]
+    },
+    {
+      "case_id": 71,
+      "input": {
+        "words": ["a", "e", "i", "o", "u", "aeiou", "uoiea", "bcd"],
+        "queries": [
+          [0, 6],
+          [1, 5],
+          [2, 7],
+          [3, 3]
+        ]
+      },
+      "expected": [7, 5, 5, 1]
+    },
+    {
+      "case_id": 72,
+      "input": {
+        "words": ["abcd", "efgh", "ijkl", "mnop", "qrst", "uvwx", "yz"],
+        "queries": [
+          [0, 0],
+          [1, 1],
+          [2, 2],
+          [3, 3],
+          [4, 4],
+          [5, 5],
+          [6, 6],
+          [0, 6],
+          [1, 5],
+          [2, 4]
+        ]
+      },
+      "expected": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+    },
+    {
+      "case_id": 73,
+      "input": {
+        "words": ["amplifier", "equalizer", "microphone", "audio", "sound", "voice", "volume", "level", "peak", "gain"],
+        "queries": [
+          [0, 2],
+          [1, 5],
+          [2, 7],
+          [3, 8],
+          [4, 9],
+          [0, 9]
+        ]
+      },
+      "expected": [0, 1, 1, 1, 0, 1]
+    },
+    {
+      "case_id": 74,
+      "input": {
+        "words": ["algorithm", "datastructure", "programming", "python", "java", "csharp", "javascript", "html", "css", "vue"],
+        "queries": [
+          [0, 9],
+          [1, 8],
+          [2, 7],
+          [3, 6],
+          [4, 5]
+        ]
+      },
+      "expected": [0, 0, 0, 0, 0]
+    },
+    {
+      "case_id": 75,
+      "input": {
+        "words": ["a", "bcd", "cde", "dea", "aeiou", "bcd", "cde", "dea", "aeiou", "bcd", "cde", "dea", "aeiou", "bcd", "cde", "dea"],
+        "queries": [
+          [0, 15],
+          [0, 0],
+          [1, 1],
+          [2, 2],
+          [3, 3],
+          [4, 4],
+          [5, 5],
+          [6, 6],
+          [7, 7],
+          [8, 8],
+          [9, 9],
+          [10, 10],
+          [11, 11],
+          [12, 12],
+          [13, 13],
+          [14, 14],
+          [15, 15]
+        ]
+      },
+      "expected": [4, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0]
+    },
+    {
+      "case_id": 76,
+      "input": {
+        "words": ["strawberry", "blueberry", "raspberry", "blackberry", "kiwi", "mango", "papaya"],
+        "queries": [
+          [0, 6],
+          [1, 5],
+          [2, 4],
+          [0, 1],
+          [5, 6]
+        ]
+      },
+      "expected": [0, 0, 0, 0, 0]
+    },
+    {
+      "case_id": 77,
+      "input": {
+        "words": ["aabb", "bbaa", "abcd", "dcba", "efgh", "hgfe", "ijkl", "lkji", "mnop", "ponm"],
+        "queries": [
+          [0, 1],
+          [2, 3],
+          [4, 5],
+          [6, 7],
+          [8, 9],
+          [0, 9]
+        ]
+      },
+      "expected": [0, 0, 0, 0, 0, 0]
+    },
+    {
+      "case_id": 78,
+      "input": {
+        "words": ["algorithm", "engine", "idea", "open", "ocean", "under", "education"],
+        "queries": [
+          [0, 2],
+          [1, 5],
+          [2, 6],
+          [0, 6]
+        ]
+      },
+      "expected": [2, 2, 1, 2]
+    },
+    {
+      "case_id": 79,
+      "input": {
+        "words": ["abacaxi", "ananas", "acerola", "banana", "manga", "abacaxi", "manga", "banana"],
+        "queries": [
+          [0, 3],
+          [4, 7],
+          [0, 4],
+          [3, 6],
+          [1, 5],
+          [2, 2],
+          [6, 7]
+        ]
+      },
+      "expected": [2, 1, 2, 1, 2, 1, 0]
+    },
+    {
+      "case_id": 80,
+      "input": {
+        "words": ["umbrella", "orange", "apple", "elephant", "ocean", "idea", "education"],
+        "queries": [
+          [0, 1],
+          [1, 2],
+          [2, 3],
+          [3, 4],
+          [4, 5],
+          [5, 6],
+          [0, 6]
+        ]
+      },
+      "expected": [2, 2, 1, 0, 1, 1, 4]
+    },
+    {
+      "case_id": 81,
+      "input": {
+        "words": ["ae", "ei", "ou", "ia", "oe", "uo", "oi", "ie", "oa", "eu"],
+        "queries": [
+          [0, 9],
+          [1, 8],
+          [2, 7],
+          [3, 6],
+          [4, 5],
+          [0, 4],
+          [5, 9],
+          [0, 3],
+          [1, 7],
+          [2, 6]
+        ]
+      },
+      "expected": [10, 8, 6, 4, 2, 5, 5, 4, 7, 5]
+    },
+    {
+      "case_id": 82,
+      "input": {
+        "words": ["apple", "orange", "umbrella", "electric", "ice", "onion", "octopus"],
+        "queries": [
+          [0, 6],
+          [1, 3],
+          [2, 5],
+          [0, 0],
+          [6, 6],
+          [3, 4],
+          [1, 5]
+        ]
+      },
+      "expected": [4, 2, 2, 1, 0, 1, 3]
+    },
+    {
+      "case_id": 83,
+      "input": {
+        "words": ["a", "e", "i", "o", "u", "vowel", "nonvowel"],
+        "queries": [
+          [0, 6],
+          [1, 5],
+          [2, 4],
+          [3, 3],
+          [4, 4]
+        ]
+      },
+      "expected": [5, 4, 3, 1, 1]
+    },
+    {
+      "case_id": 84,
+      "input": {
+        "words": ["aeioua", "aeioue", "aeiouo", "aeioui", "aeiouu", "euoeu", "iuoie", "oueia", "uaeio", "eaoui"],
+        "queries": [
+          [0, 9],
+          [1, 8],
+          [2, 7],
+          [3, 6],
+          [4, 5],
+          [0, 4],
+          [5, 9],
+          [0, 3],
+          [1, 7],
+          [2, 6]
+        ]
+      },
+      "expected": [10, 8, 6, 4, 2, 5, 5, 4, 7, 5]
+    },
+    {
+      "case_id": 85,
+      "input": {
+        "words": ["algorithm", "data", "structure", "design", "computer", "science", "software", "engineering"],
+        "queries": [
+          [0, 3],
+          [1, 5],
+          [2, 7],
+          [0, 8],
+          [1, 6],
+          [2, 4],
+          [3, 7],
+          [0, 7]
+        ]
+      },
+      "expected": [0, 0, 0, 0, 0, 0, 0, 0]
+    },
+    {
+      "case_id": 86,
+      "input": {
+        "words": ["aabbcc", "ddeeff", "gg", "hhii", "jjkk", "llmm", "nnoopp", "qqrr", "ssttuu", "vvww"],
+        "queries": [
+          [0, 9],
+          [1, 8],
+          [2, 7],
+          [3, 6],
+          [4, 5]
+        ]
+      },
+      "expected": [0, 0, 0, 0, 0]
+    },
+    {
+      "case_id": 87,
+      "input": {
+        "words": ["aeiou", "bcd", "eae", "oio", "uaa", "aeiou", "bcd", "eae", "oio", "uaa"],
+        "queries": [
+          [0, 9],
+          [1, 8],
+          [2, 7],
+          [3, 6],
+          [4, 5],
+          [0, 5],
+          [0, 4],
+          [1, 9]
+        ]
+      },
+      "expected": [8, 6, 5, 3, 2, 5, 4, 7]
+    },
+    {
+      "case_id": 88,
+      "input": {
+        "words": ["apple", "orange", "ice", "elephant", "umbrella"],
+        "queries": [
+          [0, 1],
+          [1, 3],
+          [2, 4],
+          [0, 4]
+        ]
+      },
+      "expected": [2, 2, 2, 4]
+    },
+    {
+      "case_id": 89,
+      "input": {
+        "words": ["aeiou", "bcd", "eee", "oee", "uau"],
+        "queries": [
+          [0, 4],
+          [1, 3],
+          [2, 4],
+          [0, 0],
+          [4, 4]
+        ]
+      },
+      "expected": [4, 2, 3, 1, 1]
+    },
+    {
+      "case_id": 90,
+      "input": {
+        "words": ["umbrella", "raincoat", "umbrella", "hat", "scarf", "umbrella", "umbrella", "raincoat"],
+        "queries": [
+          [0, 3],
+          [4, 7],
+          [0, 4],
+          [3, 6],
+          [1, 5],
+          [0, 6],
+          [2, 2],
+          [5, 7]
+        ]
+      },
+      "expected": [2, 2, 2, 2, 2, 4, 1, 2]
+    },
+    {
+      "case_id": 91,
+      "input": {
+        "words": ["abacax", "azedo", "oiue", "ueia", "uiaeu", "uiaed", "uieaeu", "ueae", "euae", "aeu"],
+        "queries": [
+          [0, 4],
+          [1, 3],
+          [2, 5],
+          [3, 6],
+          [4, 7],
+          [5, 8],
+          [6, 9]
+        ]
+      },
+      "expected": [4, 3, 3, 3, 3, 3, 4]
+    },
+    {
+      "case_id": 92,
+      "input": {
+        "words": ["abcd", "efgh", "ijkl", "mnop", "qrst", "uvw", "xyz"],
+        "queries": [
+          [0, 6],
+          [1, 5],
+          [2, 4],
+          [0, 2],
+          [3, 5],
+          [0, 6],
+          [6, 6]
+        ]
+      },
+      "expected": [0, 0, 0, 0, 0, 0, 0]
+    },
+    {
+      "case_id": 93,
+      "input": {
+        "words": ["aeiouaeiou", "bcd", "eee", "oau", "bcd", "eaa", "aeiou", "bcd", "cde", "dea"],
+        "queries": [
+          [0, 4],
+          [1, 7],
+          [3, 8],
+          [0, 9],
+          [5, 5]
+        ]
+      },
+      "expected": [3, 4, 3, 5, 1]
+    },
+    {
+      "case_id": 94,
+      "input": {
+        "words": ["aabbcc", "eeffgg", "hhhiii", "jjjkll", "mmmoonnn", "pppqqq", "rrrsss", "tttuuu", "vvvwww", "xxxyyy"],
+        "queries": [
+          [0, 9],
+          [1, 8],
+          [2, 7],
+          [3, 6],
+          [4, 5]
+        ]
+      },
+      "expected": [0, 0, 0, 0, 0]
+    },
+    {
+      "case_id": 95,
+      "input": {
+        "words": ["apple", "orange", "banana", "umbrella", "ice", "elephant", "octopus"],
+        "queries": [
+          [0, 2],
+          [3, 6],
+          [0, 6],
+          [2, 4]
+        ]
+      },
+      "expected": [2, 2, 4, 2]
+    },
+    {
+      "case_id": 96,
+      "input": {
+        "words": ["banana", "apple", "orange", "grape", "kiwi"],
+        "queries": [
+          [0, 4],
+          [1, 2],
+          [2, 3],
+          [3, 4],
+          [0, 3]
+        ]
+      },
+      "expected": [2, 2, 1, 0, 2]
+    },
+    {
+      "case_id": 97,
+      "input": {
+        "words": ["aeiou", "banana", "grape", "kiwi", "a", "e", "i", "o", "u"],
+        "queries": [
+          [0, 8],
+          [1, 7],
+          [2, 6],
+          [3, 5],
+          [4, 4]
+        ]
+      },
+      "expected": [6, 4, 3, 2, 1]
+    }
+  ]
+}

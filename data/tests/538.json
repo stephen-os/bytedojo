@@ -1,0 +1,696 @@
+{
+  "schema_version": 1,
+  "problem_id": 538,
+  "title": "Convert BST to Greater Tree",
+  "method": "convertBST",
+  "signature": {
+    "params": [
+      {
+        "name": "root",
+        "type": "TREE_NODE"
+      }
+    ],
+    "returns": "TREE_NODE"
+  },
+  "cases": [
+    {
+      "case_id": 1,
+      "input": {
+        "root": [3, 1, 4, null, 2]
+      },
+      "expected": [7, 10, 4, null, 9]
+    },
+    {
+      "case_id": 2,
+      "input": {
+        "root": [1, null, 2, null, 3, null, 4, null, 5]
+      },
+      "expected": [15, null, 14, null, 12, null, 9, null, 5]
+    },
+    {
+      "case_id": 3,
+      "input": {
+        "root": [5, 2, 13]
+      },
+      "expected": [18, 20, 13]
+    },
+    {
+      "case_id": 4,
+      "input": {
+        "root": [10, 5, 15, 3, 7, null, 18]
+      },
+      "expected": [43, 55, 33, 58, 50, null, 18]
+    },
+    {
+      "case_id": 5,
+      "input": {
+        "root": [1, null, 3, null, null, 2]
+      },
+      "expected": [4, null, 3]
+    },
+    {
+      "case_id": 6,
+      "input": {
+        "root": [3, 2, 4, 1]
+      },
+      "expected": [7, 9, 4, 10]
+    },
+    {
+      "case_id": 7,
+      "input": {
+        "root": [5, null, 14]
+      },
+      "expected": [19, null, 14]
+    },
+    {
+      "case_id": 8,
+      "input": {
+        "root": [100, 50, 150, 25, 75, 125, 175]
+      },
+      "expected": [550, 675, 325, 700, 625, 450, 175]
+    },
+    {
+      "case_id": 9,
+      "input": {
+        "root": [4, 1, 6, 0, 2, 5, 7, null, null, null, 3, null, null, null, 8]
+      },
+      "expected": [30, 36, 21, 36, 35, 26, 15, null, null, null, 33, null, null, null, 8]
+    },
+    {
+      "case_id": 10,
+      "input": {
+        "root": [1, null, 2, null, 3]
+      },
+      "expected": [6, null, 5, null, 3]
+    },
+    {
+      "case_id": 11,
+      "input": {
+        "root": [0, null, 1]
+      },
+      "expected": [1, null, 1]
+    },
+    {
+      "case_id": 12,
+      "input": {
+        "root": [10, 5, 15, null, 7, 13, null, null, 8]
+      },
+      "expected": [38, 58, 15, null, 53, 28, null, null, 46]
+    },
+    {
+      "case_id": 13,
+      "input": {
+        "root": []
+      },
+      "expected": null
+    },
+    {
+      "case_id": 14,
+      "input": {
+        "root": [100, 50, 150, 25, 75, 125, 175, 10, 30, 60, 80, 110, 130, 160, 180]
+      },
+      "expected": [1130, 1395, 665, 1450, 1285, 920, 355, 1460, 1425, 1345, 1210, 1030, 795, 515, 180]
+    },
+    {
+      "case_id": 15,
+      "input": {
+        "root": [20, 10, 30, 5, 15, 25, 35, 2, 7, 12, 18, 23, 27, 32, 37]
+      },
+      "expected": [229, 284, 134, 296, 262, 186, 72, 298, 291, 274, 247, 209, 161, 104, 37]
+    },
+    {
+      "case_id": 16,
+      "input": {
+        "root": [2, 1, 4, null, null, 3, 5]
+      },
+      "expected": [14, 15, 9, null, null, 12, 5]
+    },
+    {
+      "case_id": 17,
+      "input": {
+        "root": [5, 3, 8, 2, 4, 6, 9, 1, null, null, null, null, null, null, 10]
+      },
+      "expected": [38, 45, 27, 47, 42, 33, 19, 48, null, null, null, null, null, null, 10]
+    },
+    {
+      "case_id": 18,
+      "input": {
+        "root": [1, null, 2, null, 3, null, 4, null, 5, null, 6, null, 7, null, 8, null, 9, null, 10]
+      },
+      "expected": [55, null, 54, null, 52, null, 49, null, 45, null, 40, null, 34, null, 27, null, 19, null, 10]
+    },
+    {
+      "case_id": 19,
+      "input": {
+        "root": [9, 4, 17, 3, 7, 12, 22, 1, 5, null, 8, 11, 15, 18, 26]
+      },
+      "expected": [130, 149, 83, 157, 145, 110, 48, 158, 154, null, 138, 121, 98, 66, 26]
+    },
+    {
+      "case_id": 20,
+      "input": {
+        "root": [15, 7, 20, null, 10, 18, 23, null, null, 9, 11, 16, 19, null, null, null, null, null, 17]
+      },
+      "expected": [148, 165, 95, null, 158, 124, 42, null, null, 133, 106, 75, 19, null, null, null, null, null, 59]
+    },
+    {
+      "case_id": 21,
+      "input": {
+        "root": [-2147483648, null, 2147483647]
+      },
+      "expected": [-1, null, 2147483647]
+    },
+    {
+      "case_id": 22,
+      "input": {
+        "root": [30, 10, 50, 5, 15, 40, 60, 2, 7, 12, 18, 35, 45, 55, 65]
+      },
+      "expected": [380, 435, 230, 447, 413, 315, 125, 449, 442, 425, 398, 350, 275, 180, 65]
+    },
+    {
+      "case_id": 23,
+      "input": {
+        "root": [100, 50, 150, 25, 75, 125, 175, 10, 30, 60, 80, 110, 140, 160, 190]
+      },
+      "expected": [1150, 1415, 675, 1470, 1305, 940, 365, 1480, 1445, 1365, 1230, 1050, 815, 525, 190]
+    },
+    {
+      "case_id": 24,
+      "input": {
+        "root": [10, 5, 15, 3, 7, null, 18, 1, null, 6, null, 12, 20]
+      },
+      "expected": [75, 93, 65, 96, 82, null, 38, 97, null, 88, null, 50, 20]
+    },
+    {
+      "case_id": 25,
+      "input": {
+        "root": [12, 7, 17, 4, 9, 14, 20, 2, 5, 8, 11, 13, 16, 18, 22, null, null, null, null, 6, null, 10, null, null, null, null, null, null, null, 15, 19, null, null, 21, null, 23]
+      },
+      "expected": [189, 261, 134, 270, 240, 164, 99, 272, 266, 248, 200, 177, 150, 117, 41, null, null, null, null, 254, null, 210, null, null, null, null, null, null, null, 56, 19, null, null, 231, null, 79]
+    },
+    {
+      "case_id": 26,
+      "input": {
+        "root": [8, 3, 10, 1, 6, null, 14, null, null, 4, 7, 13]
+      },
+      "expected": [45, 65, 37, 66, 58, null, 14, null, null, 62, 52, 27]
+    },
+    {
+      "case_id": 27,
+      "input": {
+        "root": [15, 10, 20, 8, 12, 16, 25, 6, 9, 11, 13, 18, 22, 28]
+      },
+      "expected": [144, 190, 73, 207, 169, 111, 25, 213, 199, 180, 157, 129, 95, 53]
+    },
+    {
+      "case_id": 28,
+      "input": {
+        "root": [5, 3, 8, 2, 4, 7, 9, 1, null, null, null, 6, null, null, 10]
+      },
+      "expected": [45, 52, 27, 54, 49, 34, 19, 55, null, null, null, 40, null, null, 10]
+    },
+    {
+      "case_id": 29,
+      "input": {
+        "root": [1, null, 2, null, 3, null, 4, null, 5, null, 6, null, 7, null, 8, null, 9, null, 10, null, 11, null, 12, null, 13, null, 14, null, 15]
+      },
+      "expected": [120, null, 119, null, 117, null, 114, null, 110, null, 105, null, 99, null, 92, null, 84, null, 75, null, 65, null, 54, null, 42, null, 29, null, 15]
+    },
+    {
+      "case_id": 30,
+      "input": {
+        "root": [1, null, 2, null, 3, null, 4, null, 5, null, 6, null, 7, null, 8, null, 9]
+      },
+      "expected": [45, null, 44, null, 42, null, 39, null, 35, null, 30, null, 24, null, 17, null, 9]
+    },
+    {
+      "case_id": 31,
+      "input": {
+        "root": [25, 15, 35, 10, 20, 30, 40, 5, 12, 18, 22, 28, 32, 38, 45]
+      },
+      "expected": [273, 348, 158, 370, 315, 220, 85, 375, 360, 333, 295, 248, 190, 123, 45]
+    },
+    {
+      "case_id": 32,
+      "input": {
+        "root": [8, 3, 10, 1, 6, null, 14, null, 4, 7, 9, 13, null, null, null, null, null, null, null, 12, 15]
+      },
+      "expected": [72, 97, 64, 102, 87, null, 14, null, 101, 94, 81, 42, null, null, null, null, null, null, null, 54, 29]
+    },
+    {
+      "case_id": 33,
+      "input": {
+        "root": [100, 50, 150, 25, 75, 125, 175, 10, 30, 60, 80, 110, 130, 160, 180, null, null, null, null, null, null, 12, null, 35, null, null, null, null, 95, null, null, 145, null, 190]
+      },
+      "expected": [1450, 1872, 760, 1927, 1762, 1015, 355, 1937, 1902, 1822, 1530, 1125, 890, 610, 180, null, null, null, null, null, null, 1542, null, 1160, null, null, null, null, 450, null, null, 1687, null, 1350]
+    },
+    {
+      "case_id": 34,
+      "input": {
+        "root": [7, 3, 15, 1, 5, 9, 20, null, null, 2, 6, null, 12, null, null, null, null, 8, 11, 13, 19, 21]
+      },
+      "expected": [95, 151, 35, 152, 146, 88, 20, null, null, 148, 112, null, 66, null, null, null, null, 120, 106, 79, 54, 141]
+    },
+    {
+      "case_id": 35,
+      "input": {
+        "root": [8, 3, 10, 1, 6, null, 14, null, null, 4, 7, 13, null, null, null, null, null, 11]
+      },
+      "expected": [56, 76, 48, 77, 69, null, 14, null, null, 73, 63, 27, null, null, null, null, null, 38]
+    },
+    {
+      "case_id": 36,
+      "input": {
+        "root": [7, 3, 15, 1, 5, 9, 20, null, null, 4, 6, 8, 13, null, null, 17, 22]
+      },
+      "expected": [72, 129, 35, 130, 83, 57, 20, null, null, 109, 78, 65, 48, null, null, 126, 105]
+    },
+    {
+      "case_id": 37,
+      "input": {
+        "root": [50, 30, 70, 20, 40, 60, 80, 10, null, 35, 45, 55, 65, null, 75, null, 90]
+      },
+      "expected": [455, 605, 225, 625, 540, 350, 155, 725, null, 575, 500, 405, 290, null, 75, null, 715]
+    },
+    {
+      "case_id": 38,
+      "input": {
+        "root": [1, 0, 2, null, -1]
+      },
+      "expected": [3, 2, 2, null, 2]
+    },
+    {
+      "case_id": 39,
+      "input": {
+        "root": [-10, -5, 0, null, -8, -3, -1]
+      },
+      "expected": [-14, -27, -1, null, -22, -4, -1]
+    },
+    {
+      "case_id": 40,
+      "input": {
+        "root": [8, 3, 10, null, 6, 9, 12, null, 5, 7, 11, 13]
+      },
+      "expected": [70, 84, 35, null, 81, 55, 12, null, 75, 62, 46, 25]
+    },
+    {
+      "case_id": 41,
+      "input": {
+        "root": [10, 5, 15, 2, 7, null, 20, 1, 3, 6, 8, null, null, null, null, null, 17]
+      },
+      "expected": [45, 71, 35, 93, 60, null, 20, 94, 91, 66, 53, null, null, null, null, null, 88]
+    },
+    {
+      "case_id": 42,
+      "input": {
+        "root": [50, 30, 70, 10, 40, 60, 80, 5, 20, null, 45, 55, 65, 75, 90]
+      },
+      "expected": [545, 660, 315, 690, 630, 440, 170, 695, 680, null, 590, 495, 380, 245, 90]
+    },
+    {
+      "case_id": 43,
+      "input": {
+        "root": [10, 5, 15, 3, 7, null, 18, 1, null, 6, 8, 13, 17]
+      },
+      "expected": [73, 99, 63, 102, 88, null, 35, 103, null, 94, 81, 48, 17]
+    },
+    {
+      "case_id": 44,
+      "input": {
+        "root": [7, 3, 15, 1, null, 9, 20, null, 2, null, 18]
+      },
+      "expected": [69, 72, 35, 75, null, 62, 20, null, 74, null, 53]
+    },
+    {
+      "case_id": 45,
+      "input": {
+        "root": [10, 5, 15, 3, 7, null, 18, 1, null, 6, 9, 14, 17, 20]
+      },
+      "expected": [74, 101, 64, 104, 90, null, 35, 105, null, 96, 83, 49, 17, 125]
+    },
+    {
+      "case_id": 46,
+      "input": {
+        "root": [2, 1, 3]
+      },
+      "expected": [5, 6, 3]
+    },
+    {
+      "case_id": 47,
+      "input": {
+        "root": [5, null, -3, 2, null, null, -1, null, 4]
+      },
+      "expected": [7, null, -3, 2, null, null, 0, null, 1]
+    },
+    {
+      "case_id": 48,
+      "input": {
+        "root": [20, 10, 30, 5, 15, 25, 35, 3, 7, 12, 18, 23, 28, 33, 38]
+      },
+      "expected": [232, 287, 136, 299, 265, 189, 73, 302, 294, 277, 250, 212, 164, 106, 38]
+    },
+    {
+      "case_id": 49,
+      "input": {
+        "root": [-10, 5, null, 3, 7, -3, null, -5, null, null, 8]
+      },
+      "expected": [-10, -3, null, 0, -3, 5, null, -8, null, null, 8]
+    },
+    {
+      "case_id": 50,
+      "input": {
+        "root": [20, 15, 25, 10, 18, null, 30, 5, 13, 16, 19, null, 28, 35]
+      },
+      "expected": [103, 171, 83, 194, 140, null, 58, 199, 184, 156, 122, null, 28, 234]
+    },
+    {
+      "case_id": 51,
+      "input": {
+        "root": [25, 15, 35, 10, 20, 30, 40, 5, 12, 17, 22, 28, 33, 38, 45]
+      },
+      "expected": [274, 348, 158, 370, 316, 221, 85, 375, 360, 333, 296, 249, 191, 123, 45]
+    },
+    {
+      "case_id": 52,
+      "input": {
+        "root": [60, 30, 90, 15, 45, 75, 105, 5, 25, 40, 55, 70, 85, 100, 110]
+      },
+      "expected": [695, 865, 405, 905, 795, 565, 215, 910, 890, 835, 750, 635, 490, 315, 110]
+    },
+    {
+      "case_id": 53,
+      "input": {
+        "root": [10, 5, 15, 3, 7, null, 18, 1, null, 6, 8, null, null, null, null, 14, 19]
+      },
+      "expected": [43, 102, 33, 105, 58, null, 18, 106, null, 83, 51, null, null, null, null, 97, 77]
+    },
+    {
+      "case_id": 54,
+      "input": {
+        "root": [15, 10, 20, 8, 12, 16, 25, 5, 9, 11, 13, 14, 18, 22, 27]
+      },
+      "expected": [157, 203, 94, 220, 182, 128, 52, 225, 212, 193, 170, 142, 112, 74, 27]
+    },
+    {
+      "case_id": 55,
+      "input": {
+        "root": [15, 9, 20, 7, 12, 17, 25, 5, 8, 11, 13, 16, 19, 23, 27]
+      },
+      "expected": [162, 207, 95, 222, 187, 131, 52, 227, 215, 198, 175, 147, 114, 75, 27]
+    },
+    {
+      "case_id": 56,
+      "input": {
+        "root": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
+      },
+      "expected": [71, 99, 39, 112, 87, 58, 22, 120, 108, 97, 82, 70, 52, 36, 15]
+    },
+    {
+      "case_id": 57,
+      "input": {
+        "root": [21, 7, 32, 3, 14, 28, 37, 2, 5, 9, 16, 24, 30, 35, 40]
+      },
+      "expected": [247, 293, 144, 301, 277, 202, 77, 303, 298, 286, 263, 226, 174, 112, 40]
+    },
+    {
+      "case_id": 58,
+      "input": {
+        "root": [20, 15, 30, 10, 17, 25, 35, 5, 12, 16, 18, 22, 28, 33, 40]
+      },
+      "expected": [233, 299, 138, 321, 268, 191, 75, 326, 311, 284, 251, 213, 166, 108, 40]
+    },
+    {
+      "case_id": 59,
+      "input": {
+        "root": [25, 15, 35, 10, 20, 30, 40, 5, 12, 17, 22, 27, 32, 37, 42]
+      },
+      "expected": [268, 342, 154, 364, 310, 216, 82, 369, 354, 327, 290, 243, 186, 119, 42]
+    },
+    {
+      "case_id": 60,
+      "input": {
+        "root": [50, 20, 70, 10, 30, 60, 80, 5, 15, 25, 35, 55, 65, 75, 85]
+      },
+      "expected": [540, 650, 310, 675, 605, 435, 165, 680, 665, 630, 575, 490, 375, 240, 85]
+    },
+    {
+      "case_id": 61,
+      "input": {
+        "root": [30, 20, 40, 15, 25, 35, 45, 10, 18, 23, 28, 32, 38, 43, 48]
+      },
+      "expected": [311, 407, 176, 440, 364, 249, 93, 450, 425, 387, 339, 281, 214, 136, 48]
+    },
+    {
+      "case_id": 62,
+      "input": {
+        "root": [5, 2, 13, 1, 4, 9, 21, 0, null, null, 6, 8, 11, 19, null]
+      },
+      "expected": [86, 98, 53, 99, 96, 73, 21, 99, null, null, 92, 81, 64, 40]
+    },
+    {
+      "case_id": 63,
+      "input": {
+        "root": [5, 2, 13, 1, 4, 9, 18, null, null, 3, 6, 7, 12, 15, null, null, null, null, null, null, 14, 19]
+      },
+      "expected": [112, 127, 46, 128, 122, 86, 18, null, null, 125, 118, 107, 58, 33, null, null, null, null, null, null, 100, 77]
+    },
+    {
+      "case_id": 64,
+      "input": {
+        "root": [100, 50, 150, 25, 75, 125, 175, 10, 40, 60, 90, 110, 140, 160, 190, 5, 15, 28, 45, 65, 85, 105, 135, 155, 178, 188, 200]
+      },
+      "expected": [1871, 2536, 675, 2674, 2276, 1328, 365, 2699, 2621, 2421, 2096, 1616, 1015, 525, 190, 2704, 2689, 2649, 2581, 2486, 2361, 2201, 2006, 1771, 1506, 1203, 875]
+    },
+    {
+      "case_id": 65,
+      "input": {
+        "root": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+      },
+      "expected": [17, 34, 10, 47, 22, 16, 7, 55, 43, 32]
+    },
+    {
+      "case_id": 66,
+      "input": {
+        "root": [5, 3, 8, 1, 4, 7, 9, null, 2, null, null, null, null, null, 10]
+      },
+      "expected": [39, 46, 27, 49, 43, 34, 19, null, 48, null, null, null, null, null, 10]
+    },
+    {
+      "case_id": 67,
+      "input": {
+        "root": [3, 2, 5, 1, null, 4, 6, null, null, null, null, null, 7]
+      },
+      "expected": [25, 27, 18, 28, null, 22, 13, null, null, null, null, null, 7]
+    },
+    {
+      "case_id": 68,
+      "input": {
+        "root": [20, 10, 30, 5, 15, 25, 35, 3, 7, 13, 17, 23, 27, 33, 37, 1, 4, 6, 8, 11, 14, 16, 19, 21, 24, 26, 29, 31, 34, 36, 39, 41, 43, 44]
+      },
+      "expected": [470, 585, 275, 611, 537, 382, 147, 662, 600, 564, 506, 429, 331, 214, 76, 706, 615, 606, 593, 575, 551, 522, 489, 450, 406, 357, 304, 245, 181, 112, 39, 747, 705, 659]
+    },
+    {
+      "case_id": 69,
+      "input": {
+        "root": [50, 25, 75, 10, 30, 60, 90, 5, 15, 20, 35, 55, 65, 85, 100]
+      },
+      "expected": [580, 690, 350, 715, 645, 475, 190, 720, 705, 665, 615, 530, 415, 275, 100]
+    },
+    {
+      "case_id": 70,
+      "input": {
+        "root": [100, 50, 150, 25, 75, 125, 175, 10, 30, 60, 80, 110, 140, 160, 190, 5, 15, 20, 35, 55, 65, 70, 85, 105, 115, 135, 145, 155, 170, 180, 195, null, null, null, null, null, null, null, null, null, null, 40, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 120]
+      },
+      "expected": [2470, 3050, 1495, 3160, 2780, 2040, 860, 3185, 3115, 2945, 2635, 2265, 1780, 1190, 505, 3190, 3175, 3135, 3085, 3000, 2845, 2705, 2555, 2370, 2155, 1915, 1640, 1345, 1030, 685, 195, null, null, null, null, null, null, null, null, null, null, 2885, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 315]
+    },
+    {
+      "case_id": 71,
+      "input": {
+        "root": [50, 20, 70, 10, 30, 60, 80, 5, 15, 25, 35, 55, 65, 75, 85, null, null, null, null, null, null, null, 1, null, null, null, null, null, 4, 8, 9, null, null, 17, 33, 34, 36, null, null, null, 76, null, null, 86, null, null, 95, null, null, 99]
+      },
+      "expected": [1037, 1148, 807, 1173, 1103, 932, 532, 1178, 1163, 1128, 1073, 987, 872, 737, 94, null, null, null, null, null, null, null, 1038, null, null, null, null, null, 569, 233, 9, null, null, 662, 565, 267, 225, null, null, null, 645, null, null, 353, null, null, 189, null, null, 452]
+    },
+    {
+      "case_id": 72,
+      "input": {
+        "root": [100, 50, 150, 25, 75, 125, 175, 10, 35, 60, 90, 110, 140, 160, 190]
+      },
+      "expected": [1150, 1425, 675, 1485, 1315, 940, 365, 1495, 1460, 1375, 1240, 1050, 815, 525, 190]
+    },
+    {
+      "case_id": 73,
+      "input": {
+        "root": [2147483647]
+      },
+      "expected": [2147483647]
+    },
+    {
+      "case_id": 74,
+      "input": {
+        "root": [5, 2, 13, 1, 3, 9, 21, null, null, null, null, 7, 15, null, null, 17, null, null, null, 25]
+      },
+      "expected": [112, 117, 34, 118, 115, 58, 21, null, null, null, null, 65, 49, null, null, 82, null, null, null, 107]
+    },
+    {
+      "case_id": 75,
+      "input": {
+        "root": [7, 3, 15, 1, 5, null, 20, null, null, 4, 6]
+      },
+      "expected": [42, 60, 35, 61, 53, null, 20, null, null, 57, 48]
+    },
+    {
+      "case_id": 76,
+      "input": {
+        "root": [20, 15, 25, 10, 18, 22, 30, 5, 12, 16, 19, 21, 24, 27, 35]
+      },
+      "expected": [204, 272, 117, 294, 241, 163, 65, 299, 284, 257, 223, 184, 141, 92, 35]
+    },
+    {
+      "case_id": 77,
+      "input": {
+        "root": [8, 3, 13, null, 7, 10, 17, 1, null, null, 8, null, null, 11, 14]
+      },
+      "expected": [56, 92, 30, null, 63, 48, 17, 78, null, null, 38, null, null, 89, 77]
+    },
+    {
+      "case_id": 78,
+      "input": {
+        "root": [90, 45, 135, 20, 70, 110, 160, 10, 30, 50, 80, 105, 125, 145, 175]
+      },
+      "expected": [1045, 1290, 615, 1340, 1195, 850, 335, 1350, 1320, 1245, 1125, 955, 740, 480, 175]
+    },
+    {
+      "case_id": 79,
+      "input": {
+        "root": [8, 3, 13, 1, 5, 10, 18, 0, 2, 4, 7, 9, 11, 14, 20, null, null, null, null, null, 6]
+      },
+      "expected": [103, 128, 65, 131, 115, 86, 38, 131, 130, 125, 110, 95, 76, 52, 20, null, null, null, null, null, 121]
+    },
+    {
+      "case_id": 80,
+      "input": {
+        "root": [30, 15, 45, 10, 20, 40, 50, 5, 12, 18, 23, 35, 43, 48, 55]
+      },
+      "expected": [346, 422, 198, 444, 389, 281, 105, 449, 434, 407, 369, 316, 241, 153, 55]
+    },
+    {
+      "case_id": 81,
+      "input": {
+        "root": [10, 5, 15, 3, 7, null, 18, 1, null, 6, 8]
+      },
+      "expected": [43, 69, 33, 72, 58, null, 18, 73, null, 64, 51]
+    },
+    {
+      "case_id": 82,
+      "input": {
+        "root": [12, 7, 15, 5, 8, 13, 18, 3, 6, 9, 11, 14, 17, 20]
+      },
+      "expected": [109, 144, 53, 155, 128, 83, 18, 158, 150, 137, 120, 97, 70, 38]
+    },
+    {
+      "case_id": 83,
+      "input": {
+        "root": [25, 15, 35, 10, 20, 30, 40, 5, 12, 17, 22, 28, 32, 38, 45]
+      },
+      "expected": [273, 347, 158, 369, 315, 220, 85, 374, 359, 332, 295, 248, 190, 123, 45]
+    },
+    {
+      "case_id": 84,
+      "input": {
+        "root": [100, 50, 150, 25, 75, 125, 175, 10, 30, 60, 85, 110, 140, 160, 190]
+      },
+      "expected": [1150, 1420, 675, 1475, 1310, 940, 365, 1485, 1450, 1370, 1235, 1050, 815, 525, 190]
+    },
+    {
+      "case_id": 85,
+      "input": {
+        "root": [7, 3, 15, 1, 5, 9, 20, null, 2, 4, 6, 8, 12, 17, 25]
+      },
+      "expected": [113, 131, 77, 134, 124, 98, 45, null, 133, 128, 119, 106, 89, 62, 25]
+    },
+    {
+      "case_id": 86,
+      "input": {
+        "root": [25, 15, 35, 10, 20, 30, 40, 5, 12, null, 17, 22, 28, 33, 45]
+      },
+      "expected": [258, 310, 153, 332, 295, 211, 85, 337, 322, null, 275, 233, 181, 118, 45]
+    },
+    {
+      "case_id": 87,
+      "input": {
+        "root": [75, 35, 115, 15, 55, 85, 145, 10, 25, 45, 65, 78, 105, 135, 165]
+      },
+      "expected": [903, 1103, 560, 1143, 1023, 750, 310, 1153, 1128, 1068, 968, 828, 665, 445, 165]
+    },
+    {
+      "case_id": 88,
+      "input": {
+        "root": [8, 3, 13, null, 7, 10, 17, 1, null, 5, 9, 12, 15, null, 16]
+      },
+      "expected": [89, 116, 57, null, 96, 76, 32, 113, null, 81, 66, 44, 15, null, 112]
+    },
+    {
+      "case_id": 89,
+      "input": {
+        "root": [1, null, 2, null, 3, null, 4, null, 5, null, 6, null, 7, null, 8, null, 9, null, 10, null, 11, null, 12, null, 13]
+      },
+      "expected": [91, null, 90, null, 88, null, 85, null, 81, null, 76, null, 70, null, 63, null, 55, null, 46, null, 36, null, 25, null, 13]
+    },
+    {
+      "case_id": 90,
+      "input": {
+        "root": [7, 3, 15, null, 5, 9, 20, null, null, 4, 6, 8, 11, 19, 25, null, 17, 18, 21, 23, 27, 26, 28, null, null, null, null, null, 22, null, null, 24, null, null, null, null, null, null, 29, null, null, 30]
+      },
+      "expected": [389, 397, 219, null, 394, 251, 135, null, null, 280, 242, 164, 38, 356, 276, null, 236, 204, 156, 61, 27, 382, 337, null, null, null, null, null, 186, null, null, 85, null, null, null, null, null, null, 309, null, null, 115]
+    },
+    {
+      "case_id": 91,
+      "input": {
+        "root": [10, 5, 15, 3, 7, null, 18, 1, null, null, 6, null, 19]
+      },
+      "expected": [62, 80, 52, 83, 75, null, 37, 84, null, null, 68, null, 19]
+    },
+    {
+      "case_id": 92,
+      "input": {
+        "root": [15, 10, 20, 8, 12, 16, 25, 5, 9, 11, 13, 17, 22, 28]
+      },
+      "expected": [143, 189, 73, 206, 168, 111, 25, 211, 198, 179, 156, 128, 95, 53]
+    },
+    {
+      "case_id": 93,
+      "input": {
+        "root": [8, 3, 10, 1, 6, null, 14, null, 4, 7, 13, null, null, 9]
+      },
+      "expected": [32, 61, 24, 75, 51, null, 14, null, 65, 58, 45, null, null, 74]
+    },
+    {
+      "case_id": 94,
+      "input": {
+        "root": [8, 3, 10, 1, 6, null, 14, null, 4, 7, 13, null, null, 11, 15]
+      },
+      "expected": [32, 61, 24, 92, 51, null, 14, null, 80, 58, 45, null, null, 91, 76]
+    },
+    {
+      "case_id": 95,
+      "input": {
+        "root": [12, 7, 17, 5, 9, 14, 20, 3, 6, 8, 11, 13, 16, 19, 22]
+      },
+      "expected": [133, 168, 78, 179, 153, 108, 42, 182, 174, 161, 144, 121, 94, 61, 22]
+    },
+    {
+      "case_id": 96,
+      "input": {
+        "root": [50, 30, 70, 20, 40, 60, 80, 10, 25, 35, 45, 55, 65, 75, 90]
+      },
+      "expected": [545, 695, 315, 740, 630, 440, 170, 750, 720, 665, 590, 495, 380, 245, 90]
+    },
+    {
+      "case_id": 97,
+      "input": {
+        "root": [10, 5, 15, 2, 7, null, 20, 1, null, 6, null, null, null, 18]
+      },
+      "expected": [45, 63, 35, 65, 52, null, 20, 66, null, 58, null, null, null, 84]
+    }
+  ]
+}

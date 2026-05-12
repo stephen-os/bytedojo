@@ -1,0 +1,893 @@
+{
+  "schema_version": 1,
+  "problem_id": 1604,
+  "title": "Alert Using Same Key-Card Three or More Times in a One Hour Period",
+  "method": "alertNames",
+  "signature": {
+    "params": [
+      {
+        "name": "keyName",
+        "type": "STRING_ARRAY"
+      },
+      {
+        "name": "keyTime",
+        "type": "STRING_ARRAY"
+      }
+    ],
+    "returns": "STRING_ARRAY"
+  },
+  "cases": [
+    {
+      "case_id": 1,
+      "input": {
+        "keyName": ["daniel", "daniel", "daniel", "luis", "luis", "luis", "luis"],
+        "keyTime": ["10:00", "10:40", "11:00", "09:00", "11:00", "13:00", "15:00"]
+      },
+      "expected": ["daniel"]
+    },
+    {
+      "case_id": 2,
+      "input": {
+        "keyName": ["amy", "amy", "amy", "adam", "adam", "adam", "adam"],
+        "keyTime": ["12:00", "12:05", "12:10", "09:00", "09:15", "09:30", "09:45"]
+      },
+      "expected": ["adam", "amy"]
+    },
+    {
+      "case_id": 3,
+      "input": {
+        "keyName": ["alice", "alice", "alice", "bob", "bob", "bob", "bob"],
+        "keyTime": ["12:01", "12:00", "18:00", "21:00", "21:20", "21:30", "23:00"]
+      },
+      "expected": ["bob"]
+    },
+    {
+      "case_id": 4,
+      "input": {
+        "keyName": ["john", "john", "john"],
+        "keyTime": ["09:15", "09:30", "10:00"]
+      },
+      "expected": ["john"]
+    },
+    {
+      "case_id": 5,
+      "input": {
+        "keyName": ["amy", "david", "david"],
+        "keyTime": ["12:00", "12:00", "13:00"]
+      },
+      "expected": []
+    },
+    {
+      "case_id": 6,
+      "input": {
+        "keyName": ["eve", "eve", "eve", "eve", "eve"],
+        "keyTime": ["08:00", "08:20", "08:40", "09:00", "09:20"]
+      },
+      "expected": ["eve"]
+    },
+    {
+      "case_id": 7,
+      "input": {
+        "keyName": ["chris", "chris", "chris"],
+        "keyTime": ["09:00", "09:30", "10:00"]
+      },
+      "expected": ["chris"]
+    },
+    {
+      "case_id": 8,
+      "input": {
+        "keyName": ["john", "john", "john", "john"],
+        "keyTime": ["09:00", "09:15", "09:30", "10:00"]
+      },
+      "expected": ["john"]
+    },
+    {
+      "case_id": 9,
+      "input": {
+        "keyName": ["eve", "eve", "eve", "eve", "eve"],
+        "keyTime": ["01:00", "01:10", "01:20", "02:00", "02:10"]
+      },
+      "expected": ["eve"]
+    },
+    {
+      "case_id": 10,
+      "input": {
+        "keyName": ["john"],
+        "keyTime": ["00:00"]
+      },
+      "expected": []
+    },
+    {
+      "case_id": 11,
+      "input": {
+        "keyName": ["eve", "eve", "eve", "eve", "eve"],
+        "keyTime": ["23:58", "23:59", "00:00", "00:01", "00:02"]
+      },
+      "expected": ["eve"]
+    },
+    {
+      "case_id": 12,
+      "input": {
+        "keyName": ["john", "john", "john", "john"],
+        "keyTime": ["09:15", "09:45", "10:00", "10:30"]
+      },
+      "expected": ["john"]
+    },
+    {
+      "case_id": 13,
+      "input": {
+        "keyName": ["anna", "anna", "anna", "anna"],
+        "keyTime": ["10:00", "10:10", "10:20", "10:30"]
+      },
+      "expected": ["anna"]
+    },
+    {
+      "case_id": 14,
+      "input": {
+        "keyName": ["alice", "bob", "alice"],
+        "keyTime": ["10:00", "10:10", "10:20"]
+      },
+      "expected": []
+    },
+    {
+      "case_id": 15,
+      "input": {
+        "keyName": ["mike", "mike", "mike", "mike"],
+        "keyTime": ["00:00", "00:05", "00:10", "00:15"]
+      },
+      "expected": ["mike"]
+    },
+    {
+      "case_id": 16,
+      "input": {
+        "keyName": ["anna", "anna", "bob", "bob", "bob"],
+        "keyTime": ["12:00", "12:05", "12:00", "12:05", "12:10"]
+      },
+      "expected": ["bob"]
+    },
+    {
+      "case_id": 17,
+      "input": {
+        "keyName": ["amy", "amy", "amy", "adam"],
+        "keyTime": ["08:00", "08:10", "08:20", "08:30"]
+      },
+      "expected": ["amy"]
+    },
+    {
+      "case_id": 18,
+      "input": {
+        "keyName": ["grace", "grace", "grace", "grace", "grace", "grace", "grace", "grace", "grace", "grace", "grace", "grace"],
+        "keyTime": ["08:00", "08:10", "08:20", "08:30", "08:40", "08:50", "09:00", "09:10", "09:20", "09:30", "09:40", "09:50"]
+      },
+      "expected": ["grace"]
+    },
+    {
+      "case_id": 19,
+      "input": {
+        "keyName": ["grace", "grace", "grace", "grace", "grace", "grace", "grace", "grace", "grace", "grace"],
+        "keyTime": ["23:50", "00:00", "00:10", "00:20", "00:30", "00:40", "00:50", "01:00", "01:10", "01:20"]
+      },
+      "expected": ["grace"]
+    },
+    {
+      "case_id": 20,
+      "input": {
+        "keyName": ["amy", "amy", "amy", "amy", "amy"],
+        "keyTime": ["08:00", "08:30", "09:00", "09:30", "10:00"]
+      },
+      "expected": ["amy"]
+    },
+    {
+      "case_id": 21,
+      "input": {
+        "keyName": ["alice", "alice", "alice", "alice", "alice"],
+        "keyTime": ["08:00", "08:10", "08:20", "08:30", "08:40"]
+      },
+      "expected": ["alice"]
+    },
+    {
+      "case_id": 22,
+      "input": {
+        "keyName": ["grace", "grace", "grace", "grace", "grace", "grace", "grace"],
+        "keyTime": ["12:00", "12:15", "12:30", "12:45", "13:00", "13:15", "13:30"]
+      },
+      "expected": ["grace"]
+    },
+    {
+      "case_id": 23,
+      "input": {
+        "keyName": ["karen", "karen", "karen", "karen", "karen", "karen", "karen", "karen"],
+        "keyTime": ["01:00", "01:10", "01:20", "01:30", "01:40", "01:50", "02:00", "02:10"]
+      },
+      "expected": ["karen"]
+    },
+    {
+      "case_id": 24,
+      "input": {
+        "keyName": ["carol", "carol", "carol", "carol", "carol", "carol", "carol"],
+        "keyTime": ["23:00", "23:15", "23:30", "23:45", "00:00", "00:15", "00:30"]
+      },
+      "expected": ["carol"]
+    },
+    {
+      "case_id": 25,
+      "input": {
+        "keyName": ["grace", "grace", "grace", "grace", "grace", "grace"],
+        "keyTime": ["23:55", "00:00", "00:01", "00:02", "00:03", "00:04"]
+      },
+      "expected": ["grace"]
+    },
+    {
+      "case_id": 26,
+      "input": {
+        "keyName": ["hank", "hank", "hank", "hank", "hank", "hank", "hank", "hank", "hank", "hank", "hank", "hank", "hank", "hank", "hank", "hank", "hank", "hank", "hank", "hank", "hank", "hank", "hank", "hank", "hank"],
+        "keyTime": ["10:00", "10:05", "10:10", "10:15", "10:20", "10:25", "10:30", "10:35", "10:40", "10:45", "10:50", "10:55", "11:00", "11:05", "11:10", "11:15", "11:20", "11:25", "11:30", "11:35", "11:40", "11:45", "11:50", "11:55", "12:00"]
+      },
+      "expected": ["hank"]
+    },
+    {
+      "case_id": 27,
+      "input": {
+        "keyName": ["ivan", "ivan", "ivan", "ivan", "ivan", "ivan", "ivan", "ivan", "ivan", "ivan", "ivan", "ivan"],
+        "keyTime": ["09:00", "09:10", "09:20", "09:30", "09:40", "09:50", "10:00", "10:10", "10:20", "10:30", "10:40", "10:50"]
+      },
+      "expected": ["ivan"]
+    },
+    {
+      "case_id": 28,
+      "input": {
+        "keyName": ["dave", "dave", "dave", "dave", "dave", "dave", "dave", "dave"],
+        "keyTime": ["09:00", "09:30", "10:00", "10:30", "11:00", "11:30", "12:00", "12:30"]
+      },
+      "expected": ["dave"]
+    },
+    {
+      "case_id": 29,
+      "input": {
+        "keyName": ["alice", "alice", "alice", "alice", "alice"],
+        "keyTime": ["09:00", "09:15", "09:30", "09:45", "10:00"]
+      },
+      "expected": ["alice"]
+    },
+    {
+      "case_id": 30,
+      "input": {
+        "keyName": ["ivan", "ivan", "ivan", "ivan", "ivan", "ivan", "ivan", "ivan", "ivan", "ivan", "ivan", "ivan", "ivan", "ivan", "ivan", "ivan", "ivan", "ivan", "ivan", "ivan", "ivan", "ivan", "ivan", "ivan", "ivan"],
+        "keyTime": ["09:00", "09:01", "09:02", "09:03", "09:04", "09:05", "09:06", "09:07", "09:08", "09:09", "09:10", "09:11", "09:12", "09:13", "09:14", "09:15", "09:16", "09:17", "09:18", "09:19", "09:20", "09:21", "09:22", "09:23", "09:24"]
+      },
+      "expected": ["ivan"]
+    },
+    {
+      "case_id": 31,
+      "input": {
+        "keyName": ["karen", "karen", "karen", "karen", "karen", "karen", "karen", "karen", "karen", "karen", "karen", "karen", "karen", "karen", "karen", "karen", "karen", "karen", "karen"],
+        "keyTime": ["09:00", "09:10", "09:20", "09:30", "09:40", "09:50", "10:00", "10:10", "10:20", "10:30", "10:40", "10:50", "11:00", "11:10", "11:20", "11:30", "11:40", "11:50", "12:00"]
+      },
+      "expected": ["karen"]
+    },
+    {
+      "case_id": 32,
+      "input": {
+        "keyName": ["leo", "leo", "leo", "leo", "leo", "leo", "leo", "leo", "leo"],
+        "keyTime": ["22:00", "22:10", "22:20", "22:30", "22:40", "22:50", "23:00", "23:10", "23:20"]
+      },
+      "expected": ["leo"]
+    },
+    {
+      "case_id": 33,
+      "input": {
+        "keyName": ["eve", "eve", "eve", "eve", "eve", "eve", "eve", "eve"],
+        "keyTime": ["09:00", "09:10", "09:20", "09:30", "09:40", "09:50", "10:00", "10:10"]
+      },
+      "expected": ["eve"]
+    },
+    {
+      "case_id": 34,
+      "input": {
+        "keyName": ["max", "max", "max", "max", "max", "max", "max", "max", "max", "max", "max", "max", "max"],
+        "keyTime": ["09:00", "09:05", "09:10", "09:15", "09:20", "09:25", "09:30", "09:35", "09:40", "09:45", "09:50", "09:55", "10:00"]
+      },
+      "expected": ["max"]
+    },
+    {
+      "case_id": 35,
+      "input": {
+        "keyName": ["lucy", "lucy", "lucy", "lucy", "lucy", "lucy", "lucy"],
+        "keyTime": ["16:00", "16:05", "16:10", "16:15", "16:20", "16:25", "16:30"]
+      },
+      "expected": ["lucy"]
+    },
+    {
+      "case_id": 36,
+      "input": {
+        "keyName": ["eve", "eve", "eve", "eve", "eve", "eve", "eve"],
+        "keyTime": ["12:00", "12:20", "12:40", "13:00", "13:20", "13:40", "14:00"]
+      },
+      "expected": ["eve"]
+    },
+    {
+      "case_id": 37,
+      "input": {
+        "keyName": ["alice", "alice", "alice", "bob", "bob", "bob", "charlie", "charlie", "charlie"],
+        "keyTime": ["09:00", "09:10", "09:20", "09:30", "09:35", "09:40", "09:00", "09:55", "10:05"]
+      },
+      "expected": ["alice", "bob"]
+    },
+    {
+      "case_id": 38,
+      "input": {
+        "keyName": ["tom", "jerry", "tom", "jerry", "tom", "jerry", "tom", "jerry"],
+        "keyTime": ["09:00", "09:05", "09:10", "09:15", "09:20", "09:25", "09:30", "09:35"]
+      },
+      "expected": ["jerry", "tom"]
+    },
+    {
+      "case_id": 39,
+      "input": {
+        "keyName": ["alice", "alice", "alice", "bob", "bob", "bob", "bob", "bob", "charlie", "charlie", "charlie", "charlie"],
+        "keyTime": ["08:59", "09:00", "09:01", "23:59", "00:01", "00:02", "00:03", "00:04", "10:00", "10:59", "11:00", "11:01"]
+      },
+      "expected": ["alice", "bob", "charlie"]
+    },
+    {
+      "case_id": 40,
+      "input": {
+        "keyName": ["amy", "amy", "amy", "amy", "amy", "amy", "amy", "amy", "amy", "amy", "amy"],
+        "keyTime": ["08:00", "08:15", "08:30", "08:45", "09:00", "09:15", "09:30", "09:45", "10:00", "10:15", "10:30"]
+      },
+      "expected": ["amy"]
+    },
+    {
+      "case_id": 41,
+      "input": {
+        "keyName": ["david", "david", "david", "david", "david"],
+        "keyTime": ["08:00", "08:05", "08:10", "08:55", "09:00"]
+      },
+      "expected": ["david"]
+    },
+    {
+      "case_id": 42,
+      "input": {
+        "keyName": ["eve", "eve", "eve", "eve", "eve", "eve", "eve", "eve", "eve", "eve"],
+        "keyTime": ["08:00", "08:10", "08:20", "08:30", "08:40", "08:50", "09:00", "09:10", "09:20", "09:30"]
+      },
+      "expected": ["eve"]
+    },
+    {
+      "case_id": 43,
+      "input": {
+        "keyName": ["ivan", "ivan", "ivan", "ivan", "ivan", "ivan", "ivan", "ivan", "ivan", "ivan"],
+        "keyTime": ["09:00", "09:10", "09:20", "09:30", "09:40", "09:50", "10:00", "10:10", "10:20", "10:30"]
+      },
+      "expected": ["ivan"]
+    },
+    {
+      "case_id": 44,
+      "input": {
+        "keyName": ["frank", "frank", "frank", "frank", "frank", "frank", "frank", "frank", "frank"],
+        "keyTime": ["08:00", "08:10", "08:20", "08:30", "08:40", "08:50", "09:00", "09:10", "09:20"]
+      },
+      "expected": ["frank"]
+    },
+    {
+      "case_id": 45,
+      "input": {
+        "keyName": ["david", "david", "david", "david", "david", "david"],
+        "keyTime": ["09:00", "09:10", "09:20", "10:00", "10:10", "10:20"]
+      },
+      "expected": ["david"]
+    },
+    {
+      "case_id": 46,
+      "input": {
+        "keyName": ["hank", "hank", "hank", "hank", "hank", "hank", "hank", "hank", "hank", "hank", "hank", "hank", "hank", "hank", "hank", "hank", "hank", "hank", "hank", "hank"],
+        "keyTime": ["11:00", "11:10", "11:20", "11:30", "11:40", "11:50", "12:00", "12:10", "12:20", "12:30", "12:40", "12:50", "13:00", "13:10", "13:20", "13:30", "13:40", "13:50", "14:00", "14:10"]
+      },
+      "expected": ["hank"]
+    },
+    {
+      "case_id": 47,
+      "input": {
+        "keyName": ["eve", "eve", "eve", "eve", "eve", "eve"],
+        "keyTime": ["23:00", "23:30", "00:00", "00:30", "01:00", "01:30"]
+      },
+      "expected": ["eve"]
+    },
+    {
+      "case_id": 48,
+      "input": {
+        "keyName": ["lucy", "lucy", "lucy", "lucy", "lucy", "lucy", "lucy", "lucy"],
+        "keyTime": ["12:00", "12:15", "12:30", "12:45", "13:00", "13:15", "13:30", "13:45"]
+      },
+      "expected": ["lucy"]
+    },
+    {
+      "case_id": 49,
+      "input": {
+        "keyName": ["grace", "grace", "grace", "grace", "grace", "grace", "grace", "grace", "grace", "grace", "grace", "grace", "grace", "grace", "grace", "grace", "grace", "grace", "grace", "grace"],
+        "keyTime": ["10:00", "10:15", "10:30", "10:45", "11:00", "11:15", "11:30", "11:45", "12:00", "12:15", "12:30", "12:45", "13:00", "13:15", "13:30", "13:45", "14:00", "14:15", "14:30", "14:45"]
+      },
+      "expected": ["grace"]
+    },
+    {
+      "case_id": 50,
+      "input": {
+        "keyName": ["jane", "jane", "jane", "jane", "jane", "jane", "jane", "jane", "jane"],
+        "keyTime": ["09:00", "09:10", "09:20", "09:30", "09:40", "09:50", "10:00", "10:10", "10:20"]
+      },
+      "expected": ["jane"]
+    },
+    {
+      "case_id": 51,
+      "input": {
+        "keyName": ["judy", "judy", "judy", "judy", "judy", "judy", "judy", "judy", "judy", "judy", "judy", "judy", "judy", "judy", "judy", "judy", "judy", "judy", "judy", "judy"],
+        "keyTime": ["11:00", "11:10", "11:20", "11:30", "11:40", "11:50", "12:00", "12:10", "12:20", "12:30", "12:40", "12:50", "13:00", "13:10", "13:20", "13:30", "13:40", "13:50", "14:00", "14:10"]
+      },
+      "expected": ["judy"]
+    },
+    {
+      "case_id": 52,
+      "input": {
+        "keyName": ["hank", "hank", "hank", "hank", "hank", "hank", "hank", "hank"],
+        "keyTime": ["08:00", "08:30", "09:00", "09:30", "10:00", "10:30", "11:00", "11:30"]
+      },
+      "expected": ["hank"]
+    },
+    {
+      "case_id": 53,
+      "input": {
+        "keyName": ["eve", "eve", "eve", "eve", "eve", "eve", "eve", "eve", "eve", "eve"],
+        "keyTime": ["08:50", "08:55", "09:00", "09:05", "09:10", "09:15", "09:20", "09:25", "09:30", "09:35"]
+      },
+      "expected": ["eve"]
+    },
+    {
+      "case_id": 54,
+      "input": {
+        "keyName": ["ivan", "ivan", "ivan", "ivan", "ivan", "ivan", "ivan", "ivan", "ivan", "ivan", "ivan", "ivan", "ivan", "ivan", "ivan", "ivan", "ivan", "ivan", "ivan"],
+        "keyTime": ["06:00", "06:15", "06:30", "06:45", "07:00", "07:15", "07:30", "07:45", "08:00", "08:15", "08:30", "08:45", "09:00", "09:15", "09:30", "09:45", "10:00", "10:15", "10:30"]
+      },
+      "expected": ["ivan"]
+    },
+    {
+      "case_id": 55,
+      "input": {
+        "keyName": ["dave", "dave", "dave", "dave", "dave", "dave", "dave", "dave", "dave"],
+        "keyTime": ["08:00", "08:10", "08:20", "08:30", "08:40", "08:50", "09:00", "09:10", "09:20"]
+      },
+      "expected": ["dave"]
+    },
+    {
+      "case_id": 56,
+      "input": {
+        "keyName": ["ivan", "ivan", "ivan", "ivan", "ivan", "ivan", "ivan", "ivan", "ivan", "ivan", "ivan", "ivan", "ivan", "ivan", "ivan", "ivan"],
+        "keyTime": ["23:50", "00:00", "00:10", "00:20", "00:30", "00:40", "00:50", "01:00", "01:10", "01:20", "01:30", "01:40", "01:50", "02:00", "02:10", "02:20"]
+      },
+      "expected": ["ivan"]
+    },
+    {
+      "case_id": 57,
+      "input": {
+        "keyName": ["bob", "bob", "bob", "bob", "bob", "bob"],
+        "keyTime": ["23:50", "00:05", "00:10", "00:15", "00:20", "00:25"]
+      },
+      "expected": ["bob"]
+    },
+    {
+      "case_id": 58,
+      "input": {
+        "keyName": ["chris", "chris", "chris", "chris", "chris", "chris"],
+        "keyTime": ["23:45", "00:00", "00:15", "00:30", "00:45", "01:00"]
+      },
+      "expected": ["chris"]
+    },
+    {
+      "case_id": 59,
+      "input": {
+        "keyName": ["dave", "dave", "dave", "dave", "dave", "dave", "dave"],
+        "keyTime": ["23:55", "00:00", "00:01", "00:02", "00:03", "00:04", "00:05"]
+      },
+      "expected": ["dave"]
+    },
+    {
+      "case_id": 60,
+      "input": {
+        "keyName": ["grace", "grace", "grace", "grace", "grace", "grace"],
+        "keyTime": ["09:00", "09:01", "09:02", "09:03", "09:04", "09:05"]
+      },
+      "expected": ["grace"]
+    },
+    {
+      "case_id": 61,
+      "input": {
+        "keyName": ["grace", "grace", "grace", "grace", "grace", "grace", "grace", "grace", "grace", "grace", "grace", "grace", "grace", "grace"],
+        "keyTime": ["08:00", "08:15", "08:30", "08:45", "09:00", "09:15", "09:30", "09:45", "10:00", "10:15", "10:30", "10:45", "11:00", "11:15"]
+      },
+      "expected": ["grace"]
+    },
+    {
+      "case_id": 62,
+      "input": {
+        "keyName": ["eve", "eve", "eve", "eve", "eve", "eve", "eve", "eve", "eve", "eve"],
+        "keyTime": ["09:00", "09:05", "09:10", "09:15", "09:20", "09:25", "09:30", "09:35", "09:40", "09:45"]
+      },
+      "expected": ["eve"]
+    },
+    {
+      "case_id": 63,
+      "input": {
+        "keyName": ["charlie", "charlie", "charlie", "charlie", "charlie", "charlie", "charlie"],
+        "keyTime": ["12:00", "12:20", "12:40", "13:00", "13:20", "13:40", "14:00"]
+      },
+      "expected": ["charlie"]
+    },
+    {
+      "case_id": 64,
+      "input": {
+        "keyName": ["frank", "frank", "frank", "frank", "frank", "frank", "frank", "frank", "frank", "frank", "frank", "frank", "frank", "frank"],
+        "keyTime": ["08:00", "08:10", "08:20", "08:30", "08:40", "08:50", "09:00", "09:10", "09:20", "09:30", "09:40", "09:50", "10:00", "10:10"]
+      },
+      "expected": ["frank"]
+    },
+    {
+      "case_id": 65,
+      "input": {
+        "keyName": ["frank", "frank", "frank", "frank", "frank", "frank", "frank", "frank", "frank", "frank"],
+        "keyTime": ["10:00", "10:10", "10:20", "10:30", "10:40", "10:50", "11:00", "11:10", "11:20", "11:30"]
+      },
+      "expected": ["frank"]
+    },
+    {
+      "case_id": 66,
+      "input": {
+        "keyName": ["alice", "alice", "bob", "bob", "bob", "bob", "bob"],
+        "keyTime": ["08:00", "08:05", "08:00", "08:10", "08:15", "08:20", "08:25"]
+      },
+      "expected": ["bob"]
+    },
+    {
+      "case_id": 67,
+      "input": {
+        "keyName": ["bob", "bob", "bob", "bob", "bob", "bob"],
+        "keyTime": ["09:00", "09:20", "09:40", "10:00", "10:20", "10:40"]
+      },
+      "expected": ["bob"]
+    },
+    {
+      "case_id": 68,
+      "input": {
+        "keyName": ["emma", "emma", "emma", "emma", "emma"],
+        "keyTime": ["09:00", "09:15", "09:30", "09:45", "10:00"]
+      },
+      "expected": ["emma"]
+    },
+    {
+      "case_id": 69,
+      "input": {
+        "keyName": ["daniel", "daniel", "daniel", "daniel", "daniel", "daniel"],
+        "keyTime": ["10:00", "10:15", "10:30", "11:00", "11:15", "11:30"]
+      },
+      "expected": ["daniel"]
+    },
+    {
+      "case_id": 70,
+      "input": {
+        "keyName": ["alice", "bob", "charlie", "alice", "bob", "charlie"],
+        "keyTime": ["08:00", "08:05", "08:10", "08:15", "08:20", "08:25"]
+      },
+      "expected": []
+    },
+    {
+      "case_id": 71,
+      "input": {
+        "keyName": ["jane", "jane", "jane", "jane", "jane", "jane", "jane", "jane", "jane", "jane"],
+        "keyTime": ["09:00", "09:01", "09:02", "09:03", "09:04", "09:05", "09:06", "09:07", "09:08", "09:09"]
+      },
+      "expected": ["jane"]
+    },
+    {
+      "case_id": 72,
+      "input": {
+        "keyName": ["charlie", "charlie", "charlie", "dave", "dave", "dave", "dave"],
+        "keyTime": ["08:00", "08:10", "08:20", "12:00", "12:05", "12:10", "12:15"]
+      },
+      "expected": ["charlie", "dave"]
+    },
+    {
+      "case_id": 73,
+      "input": {
+        "keyName": ["eve", "eve", "eve", "eve", "eve", "eve", "eve", "eve", "eve"],
+        "keyTime": ["08:00", "08:10", "08:20", "08:30", "08:40", "08:50", "09:00", "09:10", "09:20"]
+      },
+      "expected": ["eve"]
+    },
+    {
+      "case_id": 74,
+      "input": {
+        "keyName": ["eve", "eve", "eve", "eve", "eve", "eve", "eve", "eve", "eve", "eve"],
+        "keyTime": ["12:00", "12:20", "12:40", "13:00", "13:20", "13:40", "14:00", "14:20", "14:40", "15:00"]
+      },
+      "expected": ["eve"]
+    },
+    {
+      "case_id": 75,
+      "input": {
+        "keyName": ["alice", "alice", "bob", "bob", "charlie", "charlie"],
+        "keyTime": ["12:00", "12:59", "13:00", "13:59", "14:00", "14:59"]
+      },
+      "expected": []
+    },
+    {
+      "case_id": 76,
+      "input": {
+        "keyName": ["heidi", "heidi", "heidi", "heidi", "heidi", "heidi", "heidi"],
+        "keyTime": ["23:50", "23:55", "00:00", "00:05", "00:10", "00:15", "00:20"]
+      },
+      "expected": ["heidi"]
+    },
+    {
+      "case_id": 77,
+      "input": {
+        "keyName": ["tim", "tim", "tim", "tim", "tim", "tim", "tim", "tim", "tim", "tim", "tim", "tim", "tim", "tim", "tim"],
+        "keyTime": ["08:00", "08:10", "08:20", "08:30", "08:40", "08:50", "09:00", "09:10", "09:20", "09:30", "09:40", "09:50", "10:00", "10:10", "10:20"]
+      },
+      "expected": ["tim"]
+    },
+    {
+      "case_id": 78,
+      "input": {
+        "keyName": ["jill", "jill", "jill", "jill", "jill", "jill", "jill", "jill", "jill", "jill", "jill", "jill", "jill", "jill", "jill", "jill", "jill"],
+        "keyTime": ["09:00", "09:10", "09:20", "09:30", "09:40", "09:50", "10:00", "10:10", "10:20", "10:30", "10:40", "10:50", "11:00", "11:10", "11:20", "11:30", "11:40"]
+      },
+      "expected": ["jill"]
+    },
+    {
+      "case_id": 79,
+      "input": {
+        "keyName": ["hank", "hank", "hank", "hank", "hank", "hank", "hank", "hank", "hank", "hank", "hank", "hank", "hank", "hank"],
+        "keyTime": ["12:00", "12:10", "12:20", "12:30", "12:40", "12:50", "13:00", "13:10", "13:20", "13:30", "13:40", "13:50", "14:00", "14:10"]
+      },
+      "expected": ["hank"]
+    },
+    {
+      "case_id": 80,
+      "input": {
+        "keyName": ["ivan", "ivan", "ivan", "ivan", "ivan", "ivan", "ivan"],
+        "keyTime": ["07:00", "07:10", "07:20", "07:30", "07:40", "07:50", "08:00"]
+      },
+      "expected": ["ivan"]
+    },
+    {
+      "case_id": 81,
+      "input": {
+        "keyName": ["charlie", "david", "david", "charlie", "david"],
+        "keyTime": ["09:00", "09:10", "09:20", "09:30", "09:35"]
+      },
+      "expected": ["david"]
+    },
+    {
+      "case_id": 82,
+      "input": {
+        "keyName": ["frank", "frank", "frank", "frank", "frank", "frank"],
+        "keyTime": ["09:00", "09:01", "09:02", "09:03", "09:04", "09:05"]
+      },
+      "expected": ["frank"]
+    },
+    {
+      "case_id": 83,
+      "input": {
+        "keyName": ["heidi", "heidi", "heidi", "heidi", "heidi", "heidi", "heidi", "heidi", "heidi", "heidi", "heidi"],
+        "keyTime": ["11:00", "11:10", "11:20", "11:30", "11:40", "11:50", "12:00", "12:10", "12:20", "12:30", "12:40"]
+      },
+      "expected": ["heidi"]
+    },
+    {
+      "case_id": 84,
+      "input": {
+        "keyName": ["heidi", "heidi", "heidi", "heidi", "heidi", "heidi", "heidi", "heidi", "heidi", "heidi", "heidi", "heidi", "heidi", "heidi", "heidi"],
+        "keyTime": ["07:00", "07:30", "08:00", "08:30", "09:00", "09:30", "10:00", "10:30", "11:00", "11:30", "12:00", "12:30", "13:00", "13:30", "14:00"]
+      },
+      "expected": ["heidi"]
+    },
+    {
+      "case_id": 85,
+      "input": {
+        "keyName": ["dave", "dave", "dave", "dave", "dave", "dave", "dave"],
+        "keyTime": ["08:00", "08:30", "09:00", "09:30", "10:00", "10:30", "11:00"]
+      },
+      "expected": ["dave"]
+    },
+    {
+      "case_id": 86,
+      "input": {
+        "keyName": ["grace", "grace", "grace", "grace", "grace", "grace", "grace", "grace", "grace", "grace", "grace", "grace", "grace", "grace", "grace", "grace"],
+        "keyTime": ["23:00", "23:10", "23:20", "23:30", "23:40", "23:50", "00:00", "00:10", "00:20", "00:30", "00:40", "00:50", "01:00", "01:10", "01:20", "01:30"]
+      },
+      "expected": ["grace"]
+    },
+    {
+      "case_id": 87,
+      "input": {
+        "keyName": ["alice", "alice", "alice", "alice", "alice"],
+        "keyTime": ["08:00", "08:30", "09:00", "09:30", "10:00"]
+      },
+      "expected": ["alice"]
+    },
+    {
+      "case_id": 88,
+      "input": {
+        "keyName": ["eve", "eve", "eve", "eve", "eve", "eve"],
+        "keyTime": ["10:00", "10:10", "10:20", "10:30", "10:40", "10:50"]
+      },
+      "expected": ["eve"]
+    },
+    {
+      "case_id": 89,
+      "input": {
+        "keyName": ["jane", "jane", "jane", "jane", "jane", "jane", "jane"],
+        "keyTime": ["18:00", "18:10", "18:20", "18:30", "18:40", "18:50", "19:00"]
+      },
+      "expected": ["jane"]
+    },
+    {
+      "case_id": 90,
+      "input": {
+        "keyName": ["frank", "frank", "frank", "frank", "frank", "frank", "frank", "frank", "frank", "frank", "frank", "frank", "frank"],
+        "keyTime": ["00:00", "00:15", "00:30", "00:45", "01:00", "01:15", "01:30", "01:45", "02:00", "02:15", "02:30", "02:45", "03:00"]
+      },
+      "expected": ["frank"]
+    },
+    {
+      "case_id": 91,
+      "input": {
+        "keyName": ["mike", "mike", "mike", "mike", "mike", "mike", "mike", "mike", "mike", "mike", "mike", "mike", "mike", "mike", "mike", "mike", "mike"],
+        "keyTime": ["09:00", "09:05", "09:10", "09:15", "09:20", "09:25", "09:30", "09:35", "09:40", "09:45", "09:50", "09:55", "10:00", "10:05", "10:10", "10:15", "10:20"]
+      },
+      "expected": ["mike"]
+    },
+    {
+      "case_id": 92,
+      "input": {
+        "keyName": ["ivan", "ivan", "ivan", "ivan", "ivan", "ivan", "ivan", "ivan", "ivan", "ivan"],
+        "keyTime": ["09:00", "09:05", "09:10", "09:15", "09:20", "09:25", "09:30", "09:35", "09:40", "09:45"]
+      },
+      "expected": ["ivan"]
+    },
+    {
+      "case_id": 93,
+      "input": {
+        "keyName": ["ivan", "ivan", "ivan", "ivan", "ivan", "ivan", "ivan", "ivan"],
+        "keyTime": ["11:00", "11:10", "11:20", "11:30", "11:40", "11:50", "12:00", "12:10"]
+      },
+      "expected": ["ivan"]
+    },
+    {
+      "case_id": 94,
+      "input": {
+        "keyName": ["frank", "frank", "frank", "frank", "frank", "frank", "frank", "frank", "frank", "frank", "frank", "frank"],
+        "keyTime": ["09:00", "09:15", "09:30", "09:45", "10:00", "10:15", "10:30", "10:45", "11:00", "11:15", "11:30", "11:45"]
+      },
+      "expected": ["frank"]
+    },
+    {
+      "case_id": 95,
+      "input": {
+        "keyName": ["frank", "grace", "heidi", "frank", "grace", "heidi", "frank", "grace", "heidi"],
+        "keyTime": ["10:00", "10:00", "10:00", "10:05", "10:05", "10:05", "10:10", "10:10", "10:10"]
+      },
+      "expected": ["frank", "grace", "heidi"]
+    },
+    {
+      "case_id": 96,
+      "input": {
+        "keyName": ["ivan", "ivan", "ivan", "ivan", "ivan", "ivan", "ivan", "ivan", "ivan", "ivan", "ivan", "ivan", "ivan", "ivan", "ivan", "ivan", "ivan", "ivan", "ivan", "ivan", "ivan", "ivan", "ivan", "ivan", "ivan", "ivan", "ivan", "ivan", "ivan", "ivan", "ivan", "ivan"],
+        "keyTime": ["09:00", "09:01", "09:02", "09:03", "09:04", "09:05", "09:06", "09:07", "09:08", "09:09", "09:10", "09:11", "09:12", "09:13", "09:14", "09:15", "09:16", "09:17", "09:18", "09:19", "09:20", "09:21", "09:22", "09:23", "09:24", "09:25", "09:26", "09:27", "09:28", "09:29", "09:30"]
+      },
+      "expected": ["ivan"]
+    },
+    {
+      "case_id": 97,
+      "input": {
+        "keyName": ["daniel", "daniel", "daniel", "daniel", "daniel", "daniel"],
+        "keyTime": ["09:00", "09:15", "09:30", "10:00", "10:15", "10:30"]
+      },
+      "expected": ["daniel"]
+    },
+    {
+      "case_id": 98,
+      "input": {
+        "keyName": ["sam", "sam", "sam", "sam", "sam", "sam", "sam", "sam", "sam", "sam"],
+        "keyTime": ["09:00", "09:10", "09:20", "09:30", "09:40", "09:50", "10:00", "10:10", "10:20", "10:30"]
+      },
+      "expected": ["sam"]
+    },
+    {
+      "case_id": 99,
+      "input": {
+        "keyName": ["jill", "jill", "jill", "jill", "jill", "jill", "jill", "jill", "jill", "jill", "jill", "jill", "jill", "jill", "jill", "jill", "jill", "jill", "jill", "jill", "jill", "jill", "jill", "jill", "jill", "jill", "jill", "jill", "jill", "jill", "jill", "jill", "jill", "jill", "jill", "jill", "jill", "jill", "jill"],
+        "keyTime": ["09:00", "09:30", "10:00", "10:30", "11:00", "11:30", "12:00", "12:30", "13:00", "13:30", "14:00", "14:30", "15:00", "15:30", "16:00", "16:30", "17:00", "17:30", "18:00", "18:30", "19:00", "19:30", "20:00", "20:30", "21:00", "21:30", "22:00", "22:30", "23:00", "23:30", "00:00", "00:30", "01:00", "01:30", "02:00", "02:30", "03:00", "03:30", "04:00", "04:30"]
+      },
+      "expected": ["jill"]
+    },
+    {
+      "case_id": 100,
+      "input": {
+        "keyName": ["frank", "frank", "frank", "frank", "frank", "frank", "frank"],
+        "keyTime": ["23:45", "23:50", "23:55", "00:00", "00:05", "00:10", "00:15"]
+      },
+      "expected": ["frank"]
+    },
+    {
+      "case_id": 101,
+      "input": {
+        "keyName": ["charlie", "charlie", "charlie", "charlie", "charlie", "charlie", "charlie"],
+        "keyTime": ["10:00", "10:10", "10:20", "10:30", "10:40", "11:00", "11:10"]
+      },
+      "expected": ["charlie"]
+    },
+    {
+      "case_id": 102,
+      "input": {
+        "keyName": ["hank", "hank", "hank", "hank", "hank", "hank"],
+        "keyTime": ["14:00", "14:30", "15:00", "15:30", "16:00", "16:30"]
+      },
+      "expected": ["hank"]
+    },
+    {
+      "case_id": 103,
+      "input": {
+        "keyName": ["kyle", "kyle", "kyle", "kyle", "kyle", "kyle", "kyle"],
+        "keyTime": ["22:00", "22:15", "22:30", "22:45", "23:00", "23:15", "23:30"]
+      },
+      "expected": ["kyle"]
+    },
+    {
+      "case_id": 104,
+      "input": {
+        "keyName": ["frank", "frank", "frank", "frank", "frank", "frank", "frank", "frank", "frank"],
+        "keyTime": ["09:00", "09:10", "09:20", "09:30", "09:40", "09:50", "10:00", "10:10", "10:20"]
+      },
+      "expected": ["frank"]
+    },
+    {
+      "case_id": 105,
+      "input": {
+        "keyName": ["julia", "julia", "julia", "julia", "julia", "julia", "julia", "julia", "julia", "julia", "julia"],
+        "keyTime": ["09:00", "09:10", "09:20", "09:30", "09:40", "09:50", "10:00", "10:10", "10:20", "10:30", "10:40"]
+      },
+      "expected": ["julia"]
+    },
+    {
+      "case_id": 106,
+      "input": {
+        "keyName": ["julia", "julia", "julia", "julia", "julia", "julia", "julia", "julia"],
+        "keyTime": ["12:00", "12:10", "12:20", "12:30", "12:40", "12:50", "13:00", "13:10"]
+      },
+      "expected": ["julia"]
+    },
+    {
+      "case_id": 107,
+      "input": {
+        "keyName": ["karen", "karen", "karen", "karen", "karen", "karen", "karen", "karen", "karen", "karen", "karen", "karen"],
+        "keyTime": ["09:00", "09:10", "09:20", "09:30", "09:40", "09:50", "10:00", "10:10", "10:20", "10:30", "10:40", "10:50"]
+      },
+      "expected": ["karen"]
+    },
+    {
+      "case_id": 108,
+      "input": {
+        "keyName": ["bob", "bob", "bob", "bob", "bob", "bob"],
+        "keyTime": ["12:00", "12:01", "12:02", "12:03", "12:04", "12:05"]
+      },
+      "expected": ["bob"]
+    },
+    {
+      "case_id": 109,
+      "input": {
+        "keyName": ["alice", "alice", "alice", "alice", "alice"],
+        "keyTime": ["09:00", "09:30", "10:00", "10:30", "11:00"]
+      },
+      "expected": ["alice"]
+    }
+  ]
+}

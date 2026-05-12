@@ -1,0 +1,1056 @@
+{
+  "schema_version": 1,
+  "problem_id": 2977,
+  "title": "Minimum Cost to Convert String II",
+  "method": "minimumCost",
+  "signature": {
+    "params": [
+      {
+        "name": "source",
+        "type": "STRING"
+      },
+      {
+        "name": "target",
+        "type": "STRING"
+      },
+      {
+        "name": "original",
+        "type": "STRING_ARRAY"
+      },
+      {
+        "name": "changed",
+        "type": "STRING_ARRAY"
+      },
+      {
+        "name": "cost",
+        "type": "INT32_ARRAY"
+      }
+    ],
+    "returns": "INT32"
+  },
+  "cases": [
+    {
+      "case_id": 1,
+      "input": {
+        "source": "abcdefgh",
+        "target": "acdeeghh",
+        "original": ["bcd", "fgh", "thh"],
+        "changed": ["cde", "thh", "ghh"],
+        "cost": [1, 3, 5]
+      },
+      "expected": 9
+    },
+    {
+      "case_id": 2,
+      "input": {
+        "source": "abcd",
+        "target": "acbe",
+        "original": ["a", "b", "c", "c", "e", "d"],
+        "changed": ["b", "c", "b", "e", "b", "e"],
+        "cost": [2, 5, 5, 1, 2, 20]
+      },
+      "expected": 28
+    },
+    {
+      "case_id": 3,
+      "input": {
+        "source": "abcdefgh",
+        "target": "addddddd",
+        "original": ["bcd", "defgh"],
+        "changed": ["ddd", "ddddd"],
+        "cost": [100, 1578]
+      },
+      "expected": -1
+    },
+    {
+      "case_id": 4,
+      "input": {
+        "source": "mississippi",
+        "target": "massissippi",
+        "original": ["issi", "miss"],
+        "changed": ["assi", "mass"],
+        "cost": [20, 30]
+      },
+      "expected": 20
+    },
+    {
+      "case_id": 5,
+      "input": {
+        "source": "xyzxyzxyz",
+        "target": "zyxzyxzyx",
+        "original": ["xyz", "zyx"],
+        "changed": ["zyx", "xyz"],
+        "cost": [500, 500]
+      },
+      "expected": 1500
+    },
+    {
+      "case_id": 6,
+      "input": {
+        "source": "abcdeffedcba",
+        "target": "zyxwvutsrqponmlkjihgfedcba",
+        "original": ["abc", "def", "fed", "cba"],
+        "changed": ["zyx", "wvu", "tsr", "pon"],
+        "cost": [50, 60, 70, 80]
+      },
+      "expected": -1
+    },
+    {
+      "case_id": 7,
+      "input": {
+        "source": "aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz",
+        "target": "zzxxwwvvuuttrrssqqppoonnmmllkkjjiihhggffeeeeddccbbaa",
+        "original": ["ab", "bc", "cd", "de", "ef", "fg", "gh", "hi", "ij", "jk", "kl", "lm", "mn", "no", "op", "pq", "qr", "rs", "st", "tu", "uv", "vw", "wx", "xy", "yz"],
+        "changed": ["yx", "xw", "wg", "vf", "fu", "et", "ts", "sr", "rq", "qp", "po", "on", "nm", "ml", "lk", "kj", "ji", "ih", "hg", "gf", "fe", "ed", "dc", "cb", "ba"],
+        "cost": [10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150, 160, 170, 180, 190, 200, 210, 220, 230, 240, 250]
+      },
+      "expected": -1
+    },
+    {
+      "case_id": 8,
+      "input": {
+        "source": "abcdefghijklmnopqrstuvwxyz",
+        "target": "zyxwvutsrqponmlkjihgfedcba",
+        "original": ["abc", "def", "ghi", "jkl", "mno", "pqr", "stu", "vwx", "yz"],
+        "changed": ["zyx", "wvu", "tsr", "pon", "mlk", "jih", "gf", "edc", "ba"],
+        "cost": [200, 150, 100, 50, 150, 200, 50, 100, 150]
+      },
+      "expected": -1
+    },
+    {
+      "case_id": 9,
+      "input": {
+        "source": "mnopqr",
+        "target": "rqpomn",
+        "original": ["mnop", "opqr", "pqro", "qrop", "rpoq", "poqm"],
+        "changed": ["rpoq", "poqm", "mnop", "opqr", "pqro", "qrop"],
+        "cost": [100, 200, 300, 400, 500, 600]
+      },
+      "expected": -1
+    },
+    {
+      "case_id": 10,
+      "input": {
+        "source": "abcdefgabcdefgabcdefg",
+        "target": "zyxwvutzyxwvutzyxwvut",
+        "original": ["abc", "def", "ghi", "jkl", "mno", "pqr", "stu", "vwx", "yz"],
+        "changed": ["zyx", "wvu", "tsr", "pon", "mlk", "jih", "fed", "cba", "ba"],
+        "cost": [1, 2, 3, 4, 5, 6, 7, 8, 9]
+      },
+      "expected": -1
+    },
+    {
+      "case_id": 11,
+      "input": {
+        "source": "mnopqrst",
+        "target": "nopqrstu",
+        "original": ["mnop", "qrst", "rstu"],
+        "changed": ["nopq", "mnop", "rstv"],
+        "cost": [100, 200, 300]
+      },
+      "expected": -1
+    },
+    {
+      "case_id": 12,
+      "input": {
+        "source": "abracadabra",
+        "target": "abracabadaa",
+        "original": ["ra"],
+        "changed": ["aa"],
+        "cost": [3]
+      },
+      "expected": -1
+    },
+    {
+      "case_id": 13,
+      "input": {
+        "source": "abcabcabcabc",
+        "target": "defdefdefdef",
+        "original": ["abc", "def"],
+        "changed": ["def", "abc"],
+        "cost": [1000, 1000]
+      },
+      "expected": 4000
+    },
+    {
+      "case_id": 14,
+      "input": {
+        "source": "aaaaabbbbb",
+        "target": "bbbbbbaaaa",
+        "original": ["aaaaa", "bbbbb"],
+        "changed": ["bbbbb", "aaaaa"],
+        "cost": [2000, 1000]
+      },
+      "expected": -1
+    },
+    {
+      "case_id": 15,
+      "input": {
+        "source": "mississippi",
+        "target": "mssssssssss",
+        "original": ["issi", "ssis", "ippi", "ppi", "missi", "ssipp"],
+        "changed": ["ssss", "ssss", "ppp", "pp", "sssss", "sssss"],
+        "cost": [50, 55, 30, 35, 40, 45]
+      },
+      "expected": -1
+    },
+    {
+      "case_id": 16,
+      "input": {
+        "source": "aaaaabbbbb",
+        "target": "bbbbbbaaaa",
+        "original": ["aaaaa", "bbbbb"],
+        "changed": ["bbbbb", "aaaaa"],
+        "cost": [1000, 1000]
+      },
+      "expected": -1
+    },
+    {
+      "case_id": 17,
+      "input": {
+        "source": "abcdefabcdefabcdef",
+        "target": "ghijklghijklghijkl",
+        "original": ["abc", "def", "ghi", "jkl"],
+        "changed": ["ghi", "jkl", "abc", "def"],
+        "cost": [10, 20, 30, 40]
+      },
+      "expected": 90
+    },
+    {
+      "case_id": 18,
+      "input": {
+        "source": "qwertyuiopqwertyuiopqwertyuiop",
+        "target": "asdfghjklasdfghjklasdfghjkl",
+        "original": ["qwerty", "uiop", "asdf", "ghjkl", "qwertyuiop", "asdfghjkl"],
+        "changed": ["asdfgh", "jklasdf", "qwerty", "uiopqw", "asdfghjkl", "qwertyui"],
+        "cost": [150, 250, 350, 450, 550, 650]
+      },
+      "expected": -1
+    },
+    {
+      "case_id": 19,
+      "input": {
+        "source": "ababababab",
+        "target": "bababababa",
+        "original": ["aba", "bab"],
+        "changed": ["bab", "aba"],
+        "cost": [5, 10]
+      },
+      "expected": -1
+    },
+    {
+      "case_id": 20,
+      "input": {
+        "source": "ababababab",
+        "target": "cdcdcdcdcd",
+        "original": ["ab", "ba"],
+        "changed": ["cd", "dc"],
+        "cost": [1, 2]
+      },
+      "expected": 5
+    },
+    {
+      "case_id": 21,
+      "input": {
+        "source": "abababababababababababab",
+        "target": "babababababababababababa",
+        "original": ["ab", "ba"],
+        "changed": ["ba", "ab"],
+        "cost": [1, 2]
+      },
+      "expected": 12
+    },
+    {
+      "case_id": 22,
+      "input": {
+        "source": "abcdefgabcdefg",
+        "target": "gfedcbagfedcba",
+        "original": ["abc", "def", "ghi", "jkl", "mno", "pqr", "stu", "vwx", "yz"],
+        "changed": ["cba", "fed", "ihg", "lkj", "onm", "rqp", "uts", "xwv", "zy"],
+        "cost": [10, 20, 30, 40, 50, 60, 70, 80, 90]
+      },
+      "expected": -1
+    },
+    {
+      "case_id": 23,
+      "input": {
+        "source": "aabbccddeeffgg",
+        "target": "ffeeddccbbaa",
+        "original": ["aa", "bb", "cc", "dd", "ee", "ff", "gg"],
+        "changed": ["ff", "ee", "dd", "cc", "bb", "aa", "gg"],
+        "cost": [10, 20, 30, 40, 50, 60, 70]
+      },
+      "expected": "Error: string index out of range"
+    },
+    {
+      "case_id": 24,
+      "input": {
+        "source": "abcabcabcabcabcabc",
+        "target": "defdefdefdefdefdef",
+        "original": ["abc", "def"],
+        "changed": ["def", "abc"],
+        "cost": [1, 2]
+      },
+      "expected": 6
+    },
+    {
+      "case_id": 25,
+      "input": {
+        "source": "abcdef",
+        "target": "fedcba",
+        "original": ["abc", "def", "fed"],
+        "changed": ["def", "fed", "abc"],
+        "cost": [100, 200, 300]
+      },
+      "expected": -1
+    },
+    {
+      "case_id": 26,
+      "input": {
+        "source": "abcabcabcabc",
+        "target": "cbacbacbacba",
+        "original": ["abc", "cba"],
+        "changed": ["cba", "abc"],
+        "cost": [25, 35]
+      },
+      "expected": 100
+    },
+    {
+      "case_id": 27,
+      "input": {
+        "source": "aaaabbbbccccddddeeeeffff",
+        "target": "zzzzzzzzzzzzzzzzzzzzzzzzzz",
+        "original": ["aaaa", "bbbb", "cccc", "dddd", "eeee", "ffff"],
+        "changed": ["zzzz", "zzzz", "zzzz", "zzzz", "zzzz", "zzzz"],
+        "cost": [100, 200, 300, 400, 500, 600]
+      },
+      "expected": 2100
+    },
+    {
+      "case_id": 28,
+      "input": {
+        "source": "abababab",
+        "target": "cdcdcdcd",
+        "original": ["ab", "ba", "abcd", "cd", "dc"],
+        "changed": ["cd", "cd", "cdcd", "ab", "ab"],
+        "cost": [10, 20, 30, 40, 50]
+      },
+      "expected": 40
+    },
+    {
+      "case_id": 29,
+      "input": {
+        "source": "abcdefghij",
+        "target": "jihgfedcba",
+        "original": ["abcdefghi", "hgfedcba"],
+        "changed": ["jihgfedcba", "abcdefghij"],
+        "cost": [500, 600]
+      },
+      "expected": -1
+    },
+    {
+      "case_id": 30,
+      "input": {
+        "source": "abcdefghijkl",
+        "target": "abcklmnopq",
+        "original": ["def", "ghi", "jkl", "mnop"],
+        "changed": ["ghi", "jkl", "mnop", "nopq"],
+        "cost": [10, 15, 20, 25]
+      },
+      "expected": -1
+    },
+    {
+      "case_id": 31,
+      "input": {
+        "source": "abcdefghij",
+        "target": "jihgfedcba",
+        "original": ["abcdefghi", "bcdefgh", "cdefgh", "defgh", "efgh", "fgh", "gh", "h"],
+        "changed": ["ihgfedcb", "ihgfedc", "ihgfed", "ihgfe", "ihgf", "ihg", "ih", "i"],
+        "cost": [1000, 900, 800, 700, 600, 500, 400, 300]
+      },
+      "expected": -1
+    },
+    {
+      "case_id": 32,
+      "input": {
+        "source": "abcdefghijklmnopqrstuvwxyz",
+        "target": "zyxwvutsrqponmlkjihgfedcba",
+        "original": ["abc", "def", "ghi", "jkl", "mno", "pqr", "stu", "vwx", "yz"],
+        "changed": ["xyz", "wvu", "tsr", "qpo", "nml", "kji", "hgf", "edc", "ba"],
+        "cost": [10, 20, 30, 40, 50, 60, 70, 80, 90]
+      },
+      "expected": -1
+    },
+    {
+      "case_id": 33,
+      "input": {
+        "source": "abcdefgabcdefg",
+        "target": "ghijklmghijklm",
+        "original": ["abc", "def", "ghi", "jkl"],
+        "changed": ["ghi", "jkl", "mno", "pqr"],
+        "cost": [50, 75, 100, 125]
+      },
+      "expected": -1
+    },
+    {
+      "case_id": 34,
+      "input": {
+        "source": "aaaaaaaaaaaaaaaaaaaa",
+        "target": "bbbbbbbbbbbbbbbbbbbb",
+        "original": ["aaa", "bbb", "aab", "abb"],
+        "changed": ["bbb", "aaa", "abb", "aab"],
+        "cost": [10, 5, 20, 15]
+      },
+      "expected": -1
+    },
+    {
+      "case_id": 35,
+      "input": {
+        "source": "mississippi",
+        "target": "maddessippi",
+        "original": ["issi", "ippi", "ippi", "issi"],
+        "changed": ["addi", "essi", "ppii", "ppii"],
+        "cost": [100, 200, 50, 300]
+      },
+      "expected": -1
+    },
+    {
+      "case_id": 36,
+      "input": {
+        "source": "abcdefg",
+        "target": "abcdefg",
+        "original": ["abc", "def", "ghi"],
+        "changed": ["bcd", "efg", "hij"],
+        "cost": [10, 20, 30]
+      },
+      "expected": 0
+    },
+    {
+      "case_id": 37,
+      "input": {
+        "source": "thisisatargetstring",
+        "target": "thisisanoriginalstr",
+        "original": ["target", "string", "atarget", "original"],
+        "changed": ["original", "str", "isan", "target"],
+        "cost": [12, 15, 7, 18]
+      },
+      "expected": -1
+    },
+    {
+      "case_id": 38,
+      "input": {
+        "source": "aaaaaabbbbbbccccccdddddd",
+        "target": "ddddddddccccccccbbbbbaaaaa",
+        "original": ["aaaaaa", "bbbbbb", "cccccc", "dddddd"],
+        "changed": ["dddddd", "cccccc", "bbbbbb", "aaaaaa"],
+        "cost": [1000, 2000, 3000, 4000]
+      },
+      "expected": -1
+    },
+    {
+      "case_id": 39,
+      "input": {
+        "source": "ababababab",
+        "target": "bababababa",
+        "original": ["aba", "bab"],
+        "changed": ["bab", "aba"],
+        "cost": [5, 7]
+      },
+      "expected": -1
+    },
+    {
+      "case_id": 40,
+      "input": {
+        "source": "mississippi",
+        "target": "missezzzzzzzzzz",
+        "original": ["issi", "ssis", "ssiss", "ippi", "ppi", "ippii"],
+        "changed": ["zzzz", "pppi", "issip", "zzzz", "ippp", "zzzzz"],
+        "cost": [100, 200, 300, 400, 500, 600]
+      },
+      "expected": -1
+    },
+    {
+      "case_id": 41,
+      "input": {
+        "source": "abcdabcdabcd",
+        "target": "zzzzzzzzzzzz",
+        "original": ["abcd", "abc", "bcd", "cd", "d", "ab"],
+        "changed": ["zzzz", "zzz", "zzz", "zz", "z", "zz"],
+        "cost": [100, 110, 120, 130, 140, 150]
+      },
+      "expected": 300
+    },
+    {
+      "case_id": 42,
+      "input": {
+        "source": "transform",
+        "target": "reformant",
+        "original": ["trans", "form", "ant"],
+        "changed": ["reform", "orm", "tant"],
+        "cost": [150, 250, 350]
+      },
+      "expected": -1
+    },
+    {
+      "case_id": 43,
+      "input": {
+        "source": "aabbcc",
+        "target": "bbaaccaa",
+        "original": ["aa", "bb", "cc", "bb", "aa"],
+        "changed": ["bb", "cc", "bb", "aa", "cc"],
+        "cost": [5, 10, 15, 20, 25]
+      },
+      "expected": 25
+    },
+    {
+      "case_id": 44,
+      "input": {
+        "source": "abcde",
+        "target": "edcba",
+        "original": ["abc", "cde", "edc", "cba"],
+        "changed": ["cde", "edc", "cba", "abc"],
+        "cost": [10, 20, 30, 40]
+      },
+      "expected": -1
+    },
+    {
+      "case_id": 45,
+      "input": {
+        "source": "abcdefgabcdefgabcdefg",
+        "target": "bcdefgbcdefgbcdefga",
+        "original": ["abcdefg"],
+        "changed": ["bcdefga"],
+        "cost": [500]
+      },
+      "expected": -1
+    },
+    {
+      "case_id": 46,
+      "input": {
+        "source": "complexproblemcomplexproblem",
+        "target": "simpleproblemcomplexproblem",
+        "original": ["complex", "problem", "simple"],
+        "changed": ["simple", "solution", "complex"],
+        "cost": [100, 200, 50]
+      },
+      "expected": -1
+    },
+    {
+      "case_id": 47,
+      "input": {
+        "source": "abababab",
+        "target": "babababa",
+        "original": ["aba", "bab", "aab"],
+        "changed": ["bab", "aba", "bab"],
+        "cost": [2, 3, 1]
+      },
+      "expected": -1
+    },
+    {
+      "case_id": 48,
+      "input": {
+        "source": "abcdefabcdef",
+        "target": "fedcbafedcba",
+        "original": ["abc", "def"],
+        "changed": ["def", "abc"],
+        "cost": [50, 60]
+      },
+      "expected": -1
+    },
+    {
+      "case_id": 49,
+      "input": {
+        "source": "abcdefghijklmnopqrstuvwxyz",
+        "target": "zyxwvutsrqponmlkjihgfedcba",
+        "original": ["abc", "def", "ghi", "jkl", "mno", "pqr", "stu", "vwx", "yza"],
+        "changed": ["uvw", "rst", "opq", "lmn", "fed", "cba", "zyx", "wvu", "tsr"],
+        "cost": [10, 20, 30, 40, 50, 60, 70, 80, 90]
+      },
+      "expected": -1
+    },
+    {
+      "case_id": 50,
+      "input": {
+        "source": "aaaabbbbcccc",
+        "target": "bbbbaaaaaccc",
+        "original": ["aaa", "bbb", "ccc"],
+        "changed": ["bbb", "aaa", "ccc"],
+        "cost": [10, 20, 30]
+      },
+      "expected": -1
+    },
+    {
+      "case_id": 51,
+      "input": {
+        "source": "hellohellohello",
+        "target": "worldworldworld",
+        "original": ["hello", "world"],
+        "changed": ["world", "hello"],
+        "cost": [500, 300]
+      },
+      "expected": 1500
+    },
+    {
+      "case_id": 52,
+      "input": {
+        "source": "abcabcabcabc",
+        "target": "xyzxyzxyzxyz",
+        "original": ["abc", "ab", "bc"],
+        "changed": ["xyz", "yx", "zx"],
+        "cost": [100, 50, 30]
+      },
+      "expected": 400
+    },
+    {
+      "case_id": 53,
+      "input": {
+        "source": "abcdefghij",
+        "target": "jihgfedcba",
+        "original": ["abc", "def", "ghi", "jkl"],
+        "changed": ["cba", "fed", "ihg", "lkj"],
+        "cost": [10, 20, 30, 40]
+      },
+      "expected": -1
+    },
+    {
+      "case_id": 54,
+      "input": {
+        "source": "abcdefg",
+        "target": "zzzzzzz",
+        "original": ["abc", "def", "gh", "a", "b", "c", "d", "e", "f", "g"],
+        "changed": ["zzz", "zzz", "zzz", "z", "z", "z", "z", "z", "z", "z"],
+        "cost": [100, 100, 100, 1, 2, 3, 4, 5, 6, 7]
+      },
+      "expected": 28
+    },
+    {
+      "case_id": 55,
+      "input": {
+        "source": "aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz",
+        "target": "zzxxwwvvuuttssrrqqppoonnmmllkkjjiihhggffeeddccbbaa",
+        "original": ["ab", "cd", "ef", "gh", "ij", "kl", "mn", "op", "qr", "st", "uv", "wx", "yz"],
+        "changed": ["ba", "dc", "fe", "hg", "ji", "lk", "no", "po", "rq", "ts", "vu", "xw", "zy"],
+        "cost": [111, 222, 333, 444, 555, 666, 777, 888, 999, 1111, 2222, 3333, 4444]
+      },
+      "expected": -1
+    },
+    {
+      "case_id": 56,
+      "input": {
+        "source": "aaaaabbbbbcccc",
+        "target": "bbbbbcccccddddd",
+        "original": ["aaa", "bbb", "ccc"],
+        "changed": ["bbb", "ccc", "ddd"],
+        "cost": [1, 2, 3]
+      },
+      "expected": -1
+    },
+    {
+      "case_id": 57,
+      "input": {
+        "source": "abcdefghij",
+        "target": "ijabcdefgh",
+        "original": ["abcdefgh", "ijkl"],
+        "changed": ["ijkl", "abcdefgh"],
+        "cost": [2000000, 2000000]
+      },
+      "expected": -1
+    },
+    {
+      "case_id": 58,
+      "input": {
+        "source": "abcdef",
+        "target": "fedcba",
+        "original": ["abc", "def"],
+        "changed": ["def", "abc"],
+        "cost": [10, 20]
+      },
+      "expected": -1
+    },
+    {
+      "case_id": 59,
+      "input": {
+        "source": "abacabadabacaba",
+        "target": "xyzxyzxyzxyzxyz",
+        "original": ["aba", "bac", "cab", "abc"],
+        "changed": ["xyz", "zyx", "yxz", "yzx"],
+        "cost": [1000, 2000, 3000, 4000]
+      },
+      "expected": -1
+    },
+    {
+      "case_id": 60,
+      "input": {
+        "source": "zzzzzzzzzz",
+        "target": "zzzzzzzzzz",
+        "original": ["zzz", "zzzz"],
+        "changed": ["zzzz", "zzz"],
+        "cost": [1000, 2000]
+      },
+      "expected": 0
+    },
+    {
+      "case_id": 61,
+      "input": {
+        "source": "abcdefghijklmnopqrstuvwxyz",
+        "target": "zyxwvutsrqponmlkjihgfedcba",
+        "original": ["abc", "def", "ghi", "jkl", "mno", "pqr", "stu", "vwx", "yz"],
+        "changed": ["zyx", "wvu", "tsr", "pon", "mlk", "jih", "fed", "cba", "ba"],
+        "cost": [10, 20, 30, 40, 50, 60, 70, 80, 90]
+      },
+      "expected": -1
+    },
+    {
+      "case_id": 62,
+      "input": {
+        "source": "abcdefghij",
+        "target": "zabcdefghi",
+        "original": ["a", "z"],
+        "changed": ["z", "a"],
+        "cost": [1000000]
+      },
+      "expected": -1
+    },
+    {
+      "case_id": 63,
+      "input": {
+        "source": "xyxyxyxyxy",
+        "target": "yxyxyxyxyx",
+        "original": ["xy", "yx"],
+        "changed": ["yx", "xy"],
+        "cost": [10, 5]
+      },
+      "expected": 50
+    },
+    {
+      "case_id": 64,
+      "input": {
+        "source": "abcdefghij",
+        "target": "abcdefghij",
+        "original": ["abc", "def", "ghi", "jkl"],
+        "changed": ["abc", "def", "ghi", "jkl"],
+        "cost": [1, 1, 1, 1]
+      },
+      "expected": 0
+    },
+    {
+      "case_id": 65,
+      "input": {
+        "source": "xyzxyzxyz",
+        "target": "zyxzyxzyx",
+        "original": ["xyz", "zyx"],
+        "changed": ["zyx", "xyz"],
+        "cost": [1, 2]
+      },
+      "expected": 3
+    },
+    {
+      "case_id": 66,
+      "input": {
+        "source": "mississippi",
+        "target": "hellohello",
+        "original": ["issi", "issipp", "ippi", "issipp", "issipp"],
+        "changed": ["ello", "ello", "ello", "ello", "ello"],
+        "cost": [1, 2, 3, 4, 5]
+      },
+      "expected": -1
+    },
+    {
+      "case_id": 67,
+      "input": {
+        "source": "aabbccddeeff",
+        "target": "ffeeddccbbaa",
+        "original": ["aa", "bb", "cc", "dd", "ee", "ff"],
+        "changed": ["ff", "ee", "dd", "cc", "bb", "aa"],
+        "cost": [1, 2, 3, 4, 5, 6]
+      },
+      "expected": 21
+    },
+    {
+      "case_id": 68,
+      "input": {
+        "source": "zzzzzzzz",
+        "target": "yyyyyyyy",
+        "original": ["zzz", "zyz", "yzy"],
+        "changed": ["yyy", "yyy", "yyy"],
+        "cost": [10, 20, 5]
+      },
+      "expected": -1
+    },
+    {
+      "case_id": 69,
+      "input": {
+        "source": "aabbccddeeff",
+        "target": "ffeeddccbbaa",
+        "original": ["ab", "bc", "cd", "de", "ef"],
+        "changed": ["fe", "ed", "dc", "cb", "ba"],
+        "cost": [1, 2, 3, 4, 5]
+      },
+      "expected": -1
+    },
+    {
+      "case_id": 70,
+      "input": {
+        "source": "aabbccddeeff",
+        "target": "zzzzzzzzzzzz",
+        "original": ["aa", "bb", "cc", "dd", "ee", "ff", "abcdef"],
+        "changed": ["zz", "zz", "zz", "zz", "zz", "zz", "zzzzzz"],
+        "cost": [10, 10, 10, 10, 10, 10, 50]
+      },
+      "expected": 60
+    },
+    {
+      "case_id": 71,
+      "input": {
+        "source": "zzzzzzzzzz",
+        "target": "abcdefghij",
+        "original": ["zzzz", "zzz", "zz", "z"],
+        "changed": ["abcd", "bcde", "cdef", "defg"],
+        "cost": [1000, 500, 250, 125]
+      },
+      "expected": -1
+    },
+    {
+      "case_id": 72,
+      "input": {
+        "source": "thisisaverylongstringthatweneedtoconvert",
+        "target": "toreallyconvertthislongstring",
+        "original": ["this", "very", "long", "string", "that", "need", "to"],
+        "changed": ["to", "need", "that", "convert", "very", "long", "this"],
+        "cost": [1, 2, 3, 4, 5, 6, 7]
+      },
+      "expected": -1
+    },
+    {
+      "case_id": 73,
+      "input": {
+        "source": "abcdefghij",
+        "target": "jihgfedcba",
+        "original": ["abc", "def", "ghi", "jih", "fed", "cba"],
+        "changed": ["jih", "fed", "cba", "abc", "def", "ghi"],
+        "cost": [100, 200, 300, 400, 500, 600]
+      },
+      "expected": -1
+    },
+    {
+      "case_id": 74,
+      "input": {
+        "source": "aabbccddeeff",
+        "target": "ffeeddccbbaa",
+        "original": ["aab", "bcc", "dde", "eff"],
+        "changed": ["ff", "ee", "dd", "cc"],
+        "cost": [1, 2, 3, 4]
+      },
+      "expected": -1
+    },
+    {
+      "case_id": 75,
+      "input": {
+        "source": "aaaaabbbbbcccccdddddeeeee",
+        "target": "eeeeeaaaaabbbbcccccd",
+        "original": ["aaaaa", "bbbbb", "ccccc", "ddddd", "eeeee"],
+        "changed": ["eeeee", "aaaaa", "bbbbb", "ccccc", "ddddd"],
+        "cost": [100, 200, 300, 400, 500]
+      },
+      "expected": -1
+    },
+    {
+      "case_id": 76,
+      "input": {
+        "source": "abcabcabcabcabcabcabcabcabcabc",
+        "target": "xyzxyzxyzxyzxyzxyzxyzxyzxyzxyz",
+        "original": ["abc", "bc", "c", "a", "b", "ab", "bc", "ca"],
+        "changed": ["xyz", "yz", "z", "x", "y", "xy", "yz", "zx"],
+        "cost": [10, 20, 30, 40, 50, 60, 70, 80]
+      },
+      "expected": 100
+    },
+    {
+      "case_id": 77,
+      "input": {
+        "source": "conversionexampleexample",
+        "target": "transformationexampleexample",
+        "original": ["conversion", "transformation"],
+        "changed": ["transformation", "conversion"],
+        "cost": [40, 60]
+      },
+      "expected": -1
+    },
+    {
+      "case_id": 78,
+      "input": {
+        "source": "abacabadabacaba",
+        "target": "zzzzzzzzzzzzzzz",
+        "original": ["aba", "abc", "aca", "bca", "cab"],
+        "changed": ["zzz", "zzz", "zzz", "zzz", "zzz"],
+        "cost": [10, 20, 30, 40, 50]
+      },
+      "expected": -1
+    },
+    {
+      "case_id": 79,
+      "input": {
+        "source": "abacabadabacabad",
+        "target": "xyzxyzxyzxyz",
+        "original": ["aba", "bac", "cad", "bad", "abc", "acb", "bcd", "bca", "cab", "cba"],
+        "changed": ["xyz", "zyx", "yzx", "xyz", "zyx", "yzx", "xyz", "zyx", "yzx", "xyz"],
+        "cost": [10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
+      },
+      "expected": -1
+    },
+    {
+      "case_id": 80,
+      "input": {
+        "source": "xyzxyzxyz",
+        "target": "uvwuvwuvw",
+        "original": ["xyz", "yzx", "zxy", "xy", "yz", "zx", "x", "y", "z"],
+        "changed": ["uvw", "uvw", "uvw", "uv", "uw", "vw", "u", "v", "w"],
+        "cost": [100, 150, 200, 10, 20, 30, 1, 2, 3]
+      },
+      "expected": 18
+    },
+    {
+      "case_id": 81,
+      "input": {
+        "source": "aaaaabbbbb",
+        "target": "bbbbbbaaaa",
+        "original": ["aaaa", "bbbb"],
+        "changed": ["bbbb", "aaaa"],
+        "cost": [1000, 2000]
+      },
+      "expected": -1
+    },
+    {
+      "case_id": 82,
+      "input": {
+        "source": "aabbccddeeff",
+        "target": "aabbccddeeff",
+        "original": ["aa", "bb", "cc", "dd", "ee", "ff"],
+        "changed": ["bb", "cc", "dd", "ee", "ff", "aa"],
+        "cost": [10, 20, 30, 40, 50, 60]
+      },
+      "expected": 0
+    },
+    {
+      "case_id": 83,
+      "input": {
+        "source": "abababababababababab",
+        "target": "babababababababababa",
+        "original": ["ab", "ba"],
+        "changed": ["ba", "ab"],
+        "cost": [3, 2]
+      },
+      "expected": 30
+    },
+    {
+      "case_id": 84,
+      "input": {
+        "source": "abcdabcdabcd",
+        "target": "dcbaabcbab",
+        "original": ["abcd", "dcba", "abcb"],
+        "changed": ["dcba", "abcd", "abcb"],
+        "cost": [10, 20, 30]
+      },
+      "expected": "Error: string index out of range"
+    },
+    {
+      "case_id": 85,
+      "input": {
+        "source": "repeatedsubstringsubstring",
+        "target": "differentsubstringsubstring",
+        "original": ["repeated", "different"],
+        "changed": ["different", "repeated"],
+        "cost": [100, 120]
+      },
+      "expected": -1
+    },
+    {
+      "case_id": 86,
+      "input": {
+        "source": "qwertyuiop",
+        "target": "zxcvbnmzxc",
+        "original": ["qw", "er", "ty", "ui", "op", "zxc", "cv", "bn", "m", "zx", "xc"],
+        "changed": ["zx", "xc", "cv", "bn", "m", "qw", "er", "ty", "ui", "op", "zxc"],
+        "cost": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+      },
+      "expected": -1
+    },
+    {
+      "case_id": 87,
+      "input": {
+        "source": "mississippi",
+        "target": "mississippa",
+        "original": ["ippi"],
+        "changed": ["appa"],
+        "cost": [5]
+      },
+      "expected": -1
+    },
+    {
+      "case_id": 88,
+      "input": {
+        "source": "abcdefghijklmnopqrstuvwxyz",
+        "target": "zyxwvutsrqponmlkjihgfedcba",
+        "original": ["abc", "def", "ghi", "jkl", "mno", "pqr", "stu", "vwx", "yz"],
+        "changed": ["zyx", "wvu", "tsr", "pon", "mlk", "jih", "gf", "ed", "cb"],
+        "cost": [100, 200, 300, 400, 500, 600, 700, 800, 900]
+      },
+      "expected": -1
+    },
+    {
+      "case_id": 89,
+      "input": {
+        "source": "aaaaabbbbbaaaaabbbbbaaaaabbbbbaaaaa",
+        "target": "zzzzzxxxxxzzzzzxxxxxzzzzzxxxxxzzzzz",
+        "original": ["aaaaa", "bbbbb", "xxxxx", "zzzzz"],
+        "changed": ["zzzzz", "aaaaa", "zzzzz", "xxxxx"],
+        "cost": [100, 200, 300, 400]
+      },
+      "expected": 2500
+    },
+    {
+      "case_id": 90,
+      "input": {
+        "source": "xyxyxyxyxyxyxyxyxy",
+        "target": "yxyxyxyxyxyxyxyxyx",
+        "original": ["xy", "yx"],
+        "changed": ["yx", "xy"],
+        "cost": [1, 2]
+      },
+      "expected": 9
+    },
+    {
+      "case_id": 91,
+      "input": {
+        "source": "abcdefghijklmnopqrstuvwxyz",
+        "target": "zyxwvutsrqponmlkjihgfedcba",
+        "original": ["abc", "def", "ghi", "jkl", "mno", "pqr", "stu", "vwx", "yz"],
+        "changed": ["zyx", "wvu", "tsr", "pon", "mlk", "jih", "fed", "cba", "abc"],
+        "cost": [100, 200, 300, 400, 500, 600, 700, 800, 900]
+      },
+      "expected": -1
+    },
+    {
+      "case_id": 92,
+      "input": {
+        "source": "nestednestednested",
+        "target": "deepdeepdeep",
+        "original": ["nested", "deep"],
+        "changed": ["deep", "nested"],
+        "cost": [50, 30]
+      },
+      "expected": -1
+    },
+    {
+      "case_id": 93,
+      "input": {
+        "source": "thisisatest",
+        "target": "tistiatest",
+        "original": ["this", "test"],
+        "changed": ["tist", "taste"],
+        "cost": [50, 70]
+      },
+      "expected": -1
+    }
+  ]
+}

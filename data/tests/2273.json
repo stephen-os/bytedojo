@@ -1,0 +1,619 @@
+{
+  "schema_version": 1,
+  "problem_id": 2273,
+  "title": "Find Resultant Array After Removing Anagrams",
+  "method": "removeAnagrams",
+  "signature": {
+    "params": [
+      {
+        "name": "words",
+        "type": "STRING_ARRAY"
+      }
+    ],
+    "returns": "STRING_ARRAY"
+  },
+  "cases": [
+    {
+      "case_id": 1,
+      "input": {
+        "words": ["abc", "cab", "bca", "xyz", "zyx", "yxz"]
+      },
+      "expected": ["abc", "xyz"]
+    },
+    {
+      "case_id": 2,
+      "input": {
+        "words": ["abc", "cba", "bca", "xyz", "zyx"]
+      },
+      "expected": ["abc", "xyz"]
+    },
+    {
+      "case_id": 3,
+      "input": {
+        "words": ["unique", "words", "here", "now"]
+      },
+      "expected": ["unique", "words", "here", "now"]
+    },
+    {
+      "case_id": 4,
+      "input": {
+        "words": ["test", "sett", "tset", "ttew"]
+      },
+      "expected": ["test", "ttew"]
+    },
+    {
+      "case_id": 5,
+      "input": {
+        "words": ["same", "same", "same", "same", "same"]
+      },
+      "expected": ["same"]
+    },
+    {
+      "case_id": 6,
+      "input": {
+        "words": ["a", "b", "c", "d", "e"]
+      },
+      "expected": ["a", "b", "c", "d", "e"]
+    },
+    {
+      "case_id": 7,
+      "input": {
+        "words": ["aabbcc", "abcabc", "bcaacb", "bacbac", "cababc"]
+      },
+      "expected": ["aabbcc"]
+    },
+    {
+      "case_id": 8,
+      "input": {
+        "words": ["test", "sett", "tset", "stet", "ttes"]
+      },
+      "expected": ["test"]
+    },
+    {
+      "case_id": 9,
+      "input": {
+        "words": ["one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten"]
+      },
+      "expected": ["one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten"]
+    },
+    {
+      "case_id": 10,
+      "input": {
+        "words": ["hello", "billion", "oellh", "llheo", "note", "tone"]
+      },
+      "expected": ["hello", "billion", "oellh", "note"]
+    },
+    {
+      "case_id": 11,
+      "input": {
+        "words": ["abc", "cab", "bac", "bca", "xyz"]
+      },
+      "expected": ["abc", "xyz"]
+    },
+    {
+      "case_id": 12,
+      "input": {
+        "words": ["abcd", "dcba", "abcd", "dcba", "abcd"]
+      },
+      "expected": ["abcd"]
+    },
+    {
+      "case_id": 13,
+      "input": {
+        "words": ["hello", "olleh", "world", "dlrow", "python", "nohtyp"]
+      },
+      "expected": ["hello", "world", "python"]
+    },
+    {
+      "case_id": 14,
+      "input": {
+        "words": ["abba", "baba", "bbaa", "cd", "cd"]
+      },
+      "expected": ["abba", "cd"]
+    },
+    {
+      "case_id": 15,
+      "input": {
+        "words": ["deed", "deep", "peed", "depe", "dpee"]
+      },
+      "expected": ["deed", "deep"]
+    },
+    {
+      "case_id": 16,
+      "input": {
+        "words": ["hello", "world", "dlrow", "owrld", "worlc"]
+      },
+      "expected": ["hello", "world", "worlc"]
+    },
+    {
+      "case_id": 17,
+      "input": {
+        "words": ["same", "same", "same", "same"]
+      },
+      "expected": ["same"]
+    },
+    {
+      "case_id": 18,
+      "input": {
+        "words": ["abc", "cba", "bac", "bca", "cab", "acb"]
+      },
+      "expected": ["abc"]
+    },
+    {
+      "case_id": 19,
+      "input": {
+        "words": ["aaa", "aa", "a", "aaaa", "aaa"]
+      },
+      "expected": ["aaa", "aa", "a", "aaaa", "aaa"]
+    },
+    {
+      "case_id": 20,
+      "input": {
+        "words": ["aabbcc", "baccab", "abcabc", "xyz", "zyx", "yxz"]
+      },
+      "expected": ["aabbcc", "xyz"]
+    },
+    {
+      "case_id": 21,
+      "input": {
+        "words": ["listen", "silent", "enlist", "google", "gooegl"]
+      },
+      "expected": ["listen", "google"]
+    },
+    {
+      "case_id": 22,
+      "input": {
+        "words": ["abc", "cab", "bac", "bca", "acb", "cba"]
+      },
+      "expected": ["abc"]
+    },
+    {
+      "case_id": 23,
+      "input": {
+        "words": ["aaa", "aa", "a"]
+      },
+      "expected": ["aaa", "aa", "a"]
+    },
+    {
+      "case_id": 24,
+      "input": {
+        "words": ["deed", "deed", "deed", "deed", "deed"]
+      },
+      "expected": ["deed"]
+    },
+    {
+      "case_id": 25,
+      "input": {
+        "words": ["hello", "world", "dlrow", "owrld", "werld", "hello", "olleh", "dlrow", "world", "rowld", "dlrow", "hello", "hello", "world", "world", "world", "dlrow", "dlrow", "dlrow", "dlrow"]
+      },
+      "expected": ["hello", "world", "werld", "hello", "dlrow", "hello", "world"]
+    },
+    {
+      "case_id": 26,
+      "input": {
+        "words": ["triangle", "integral", "integral", "integral", "integral", "integral", "integral", "integral"]
+      },
+      "expected": ["triangle"]
+    },
+    {
+      "case_id": 27,
+      "input": {
+        "words": ["a", "b", "c", "d", "e", "a", "b", "c", "d", "e", "a", "b", "c", "d", "e", "a", "b", "c", "d", "e", "a", "b", "c", "d", "e", "a", "b", "c", "d", "e", "a", "b", "c", "d", "e", "a", "b", "c", "d", "e", "a", "b", "c", "d", "e", "a", "b", "c", "d", "e", "a", "b", "c", "d", "e", "a", "b", "c", "d", "e"]
+      },
+      "expected": ["a", "b", "c", "d", "e", "a", "b", "c", "d", "e", "a", "b", "c", "d", "e", "a", "b", "c", "d", "e", "a", "b", "c", "d", "e", "a", "b", "c", "d", "e", "a", "b", "c", "d", "e", "a", "b", "c", "d", "e", "a", "b", "c", "d", "e", "a", "b", "c", "d", "e", "a", "b", "c", "d", "e", "a", "b", "c", "d", "e"]
+    },
+    {
+      "case_id": 28,
+      "input": {
+        "words": ["listen", "silent", "enlist", "google", "gooegl", "abc", "cab", "bac", "xyz", "zyx", "yxz"]
+      },
+      "expected": ["listen", "google", "abc", "xyz"]
+    },
+    {
+      "case_id": 29,
+      "input": {
+        "words": ["rat", "car", "tar", "arc", "art", "cat", "tac", "act", "rat", "car"]
+      },
+      "expected": ["rat", "car", "tar", "arc", "art", "cat", "rat", "car"]
+    },
+    {
+      "case_id": 30,
+      "input": {
+        "words": ["racecar", "carrace", "acecar", "enlist", "inlets", "silent", "google", "gooegl", "abc", "bac", "cba", "xyz", "zyx", "yxz", "zyx", "xyz", "listen", "silent", "enlist"]
+      },
+      "expected": ["racecar", "acecar", "enlist", "google", "abc", "xyz", "listen"]
+    },
+    {
+      "case_id": 31,
+      "input": {
+        "words": ["aabbcc", "aabbc", "aabc", "abc", "ab", "a", "abcd", "dcba", "bacd", "cadb", "abdc", "cabd", "mnop", "ponm", "omnp", "nmop", "mpno", "pmno"]
+      },
+      "expected": ["aabbcc", "aabbc", "aabc", "abc", "ab", "a", "abcd", "mnop"]
+    },
+    {
+      "case_id": 32,
+      "input": {
+        "words": ["ab", "ba", "ab", "ba", "ab", "ba", "ab", "ba", "ab", "ba", "ab", "ba", "ab", "ba", "ab", "ba", "ab", "ba", "ab", "ba", "ab", "ba", "ab", "ba", "ab", "ba", "ab", "ba", "ab", "ba"]
+      },
+      "expected": ["ab"]
+    },
+    {
+      "case_id": 33,
+      "input": {
+        "words": ["hello", "olleh", "loleh", "ohell", "ehlol", "world", "dlrow", "rowld", "owlrd", "wrold", "hello", "olleh", "loleh", "ohell", "ehlol"]
+      },
+      "expected": ["hello", "world", "hello"]
+    },
+    {
+      "case_id": 34,
+      "input": {
+        "words": ["listen", "silent", "enlist", "google", "gooegl", "abc", "cab", "bac", "xyz", "zyx", "zyxw", "wxyz"]
+      },
+      "expected": ["listen", "google", "abc", "xyz", "zyxw"]
+    },
+    {
+      "case_id": 35,
+      "input": {
+        "words": ["abcd", "dcba", "bacd", "cadb", "abdc", "cabd", "abcd", "dcba", "bacd", "cadb", "abdc", "cabd", "mnop", "ponm", "omnp", "nmop", "mpno", "pmno"]
+      },
+      "expected": ["abcd", "mnop"]
+    },
+    {
+      "case_id": 36,
+      "input": {
+        "words": ["aabbcc", "baccab", "abcabc", "xyz", "zyx", "yxz", "test", "sett", "tset", "stet", "ttes"]
+      },
+      "expected": ["aabbcc", "xyz", "test"]
+    },
+    {
+      "case_id": 37,
+      "input": {
+        "words": ["listen", "silent", "enlist", "google", "gooegl", "abc", "cab", "bac", "bca", "acb", "cba", "xyz", "zyx", "yxz"]
+      },
+      "expected": ["listen", "google", "abc", "xyz"]
+    },
+    {
+      "case_id": 38,
+      "input": {
+        "words": ["rat", "tar", "art", "star", "rats", "tars", "arts", "tsar", "chart", "arch", "cart", "ract", "track", "krat", "tract", "crat", "carr", "rack", "crab", "back", "bark", "park", "parking", "arking", "king", "gnik", "pink", "kimp", "pink", "knip", "kpin"]
+      },
+      "expected": ["rat", "star", "chart", "arch", "cart", "track", "krat", "tract", "crat", "carr", "rack", "crab", "back", "bark", "park", "parking", "arking", "king", "pink", "kimp", "pink"]
+    },
+    {
+      "case_id": 39,
+      "input": {
+        "words": ["rat", "tar", "art", "car", "arc", "par", "arp", "arc", "rac", "cat", "tac", "act", "cta", "atc", "tca", "pqr", "qrp", "rpq", "prq", "rqp", "qpr", "aabb", "bbaa", "abab", "abba", "aaaa", "bbba", "baab", "aabb", "baba", "bbaa", "cd", "cd", "efg", "feg", "gfe", "geg", "eee", "fff", "ggg", "hhh", "iii", "jjj", "kkk", "lll", "mmm", "nnn", "ooo", "ppp", "qqq", "rrr", "sss", "ttt", "uuu", "vvv", "www", "xxx", "yyy", "zzz"]
+      },
+      "expected": ["rat", "car", "par", "arc", "cat", "pqr", "aabb", "aaaa", "bbba", "baab", "cd", "efg", "geg", "eee", "fff", "ggg", "hhh", "iii", "jjj", "kkk", "lll", "mmm", "nnn", "ooo", "ppp", "qqq", "rrr", "sss", "ttt", "uuu", "vvv", "www", "xxx", "yyy", "zzz"]
+    },
+    {
+      "case_id": 40,
+      "input": {
+        "words": ["race", "care", "acre", "racecar", "carrace", "racecar", "carrace", "abc", "bca", "cab", "xyz", "zyx", "yxz", "zyxzyx", "xzyzyz", "yzyzyx"]
+      },
+      "expected": ["race", "racecar", "abc", "xyz", "zyxzyx", "xzyzyz", "yzyzyx"]
+    },
+    {
+      "case_id": 41,
+      "input": {
+        "words": ["abcd", "dcba", "abcd", "dcba", "abcd", "dcba", "abcd", "dcba", "abcd", "dcba", "abcd", "dcba", "abcd", "dcba", "abcd", "dcba", "abcd", "dcba", "abcd", "dcba", "abcd", "dcba", "abcd", "dcba", "abcd", "dcba", "abcd", "dcba", "abcd", "dcba", "abcd", "dcba"]
+      },
+      "expected": ["abcd"]
+    },
+    {
+      "case_id": 42,
+      "input": {
+        "words": ["aaaa", "aaab", "aabb", "abbb", "bbbb", "bbb", "bb", "b", "a", "abc", "bac", "cba", "bca", "cab", "acb", "xyz", "zyx", "yxz"]
+      },
+      "expected": ["aaaa", "aaab", "aabb", "abbb", "bbbb", "bbb", "bb", "b", "a", "abc", "xyz"]
+    },
+    {
+      "case_id": 43,
+      "input": {
+        "words": ["rat", "tar", "art", "dog", "god", "cat", "act", "tac", "tack", "rack", "track", "chart", "cart"]
+      },
+      "expected": ["rat", "dog", "cat", "tack", "rack", "track", "chart", "cart"]
+    },
+    {
+      "case_id": 44,
+      "input": {
+        "words": ["abcde", "edcba", "decba", "acdeb", "badce", "abcde", "edcba", "decba", "acdeb", "badce", "abcde", "edcba", "decba", "acdeb", "badce", "abcde", "edcba", "decba", "acdeb", "badce"]
+      },
+      "expected": ["abcde"]
+    },
+    {
+      "case_id": 45,
+      "input": {
+        "words": ["anagram", "nagaram", "margana", "anagram", "margana", "anagram", "nagaram", "margana", "anagram", "nagaram", "margana", "anagram", "nagaram", "margana", "anagram", "nagaram", "margana", "anagram", "nagaram", "margana"]
+      },
+      "expected": ["anagram"]
+    },
+    {
+      "case_id": 46,
+      "input": {
+        "words": ["python", "typhon", "hypton", "ypthon", "phonto", "opynth", "ypthon", "phonto", "opynth", "ypthon", "phonto", "opynth", "ypthon", "phonto", "opynth"]
+      },
+      "expected": ["python", "phonto", "opynth", "phonto", "opynth", "phonto", "opynth", "phonto", "opynth"]
+    },
+    {
+      "case_id": 47,
+      "input": {
+        "words": ["dormitory", "dirtyroom", "dirtyroom", "dormitory", "dirtyroom", "dirtyroom", "dormitory"]
+      },
+      "expected": ["dormitory"]
+    },
+    {
+      "case_id": 48,
+      "input": {
+        "words": ["abcd", "dcba", "abcd", "dcba", "abcd", "dcba", "abcd", "dcba", "abcd", "dcba", "abcd", "dcba", "abcd", "dcba", "abcd", "dcba", "abcd", "dcba", "abcd", "dcba"]
+      },
+      "expected": ["abcd"]
+    },
+    {
+      "case_id": 49,
+      "input": {
+        "words": ["aaaaa", "aaabb", "aabba", "abbaa", "baaab", "baaba", "bbaaa", "abcde", "edcba", "decba", "cbade", "badec"]
+      },
+      "expected": ["aaaaa", "aaabb", "abcde"]
+    },
+    {
+      "case_id": 50,
+      "input": {
+        "words": ["listen", "silent", "enlist", "google", "gooegl", "abc", "bca", "cab", "xyz", "zyx", "yxz"]
+      },
+      "expected": ["listen", "google", "abc", "xyz"]
+    },
+    {
+      "case_id": 51,
+      "input": {
+        "words": ["race", "care", "acre", "barc", "racecar", "carrace", "racecar", "carecar", "abcde", "edcba", "bcdea", "deabc", "acdeb", "decab"]
+      },
+      "expected": ["race", "barc", "racecar", "abcde"]
+    },
+    {
+      "case_id": 52,
+      "input": {
+        "words": ["triangle", "integral", "integral", "integral", "integral", "integral", "integral", "integral", "integral", "integral", "integral", "integral", "integral", "integral", "integral", "integral", "integral", "integral", "integral", "integral", "integral", "integral", "integral", "integral", "integral", "integral", "integral", "integral", "integral", "integral", "integral", "integral", "integral", "integral", "integral"]
+      },
+      "expected": ["triangle"]
+    },
+    {
+      "case_id": 53,
+      "input": {
+        "words": ["aabbcc", "abcabc", "baccab", "abccba", "bacabc", "aabbcc", "abcd", "dcba", "cdab", "bcda", "badc", "cabd"]
+      },
+      "expected": ["aabbcc", "abcd"]
+    },
+    {
+      "case_id": 54,
+      "input": {
+        "words": ["abcd", "dcba", "abcd", "abcd", "dcba", "abcd", "dcba", "abcd", "dcba"]
+      },
+      "expected": ["abcd"]
+    },
+    {
+      "case_id": 55,
+      "input": {
+        "words": ["rat", "tar", "art", "dog", "god", "cat", "act", "tac", "abc", "bca", "cab", "xyz", "zyx", "yxz"]
+      },
+      "expected": ["rat", "dog", "cat", "abc", "xyz"]
+    },
+    {
+      "case_id": 56,
+      "input": {
+        "words": ["abcdefghijklmnopqrstuvwxyz", "zyxwvutsrqponmlkjihgfedcba", "mnopqrstuvwxyzabcdefghijkl", "defghijklmnopqrstuvwxyzabc", "jklmnopqrstuvwxyzabcdefghi", "pqrsutvwxyzabcdefghijklmno", "nopqrstuvwxyzabcdefghijklm", "mnopqrstuvwxyzabcdefghijklmno", "opqrstuvwxyzabcdefghijklmno", "pqrsutvwxyzabcdefghijklmno", "nopqrstuvwxyzabcdefghijklm", "mnopqrstuvwxyzabcdefghijklmno", "opqrstuvwxyzabcdefghijklmno", "pqrsutvwxyzabcdefghijklmno", "nopqrstuvwxyzabcdefghijklm", "mnopqrstuvwxyzabcdefghijklmno", "opqrstuvwxyzabcdefghijklmno", "pqrsutvwxyzabcdefghijklmno", "nopqrstuvwxyzabcdefghijklm", "mnopqrstuvwxyzabcdefghijklmno", "opqrstuvwxyzabcdefghijklmno", "pqrsutvwxyzabcdefghijklmno"]
+      },
+      "expected": ["abcdefghijklmnopqrstuvwxyz", "mnopqrstuvwxyzabcdefghijklmno", "opqrstuvwxyzabcdefghijklmno", "pqrsutvwxyzabcdefghijklmno", "mnopqrstuvwxyzabcdefghijklmno", "opqrstuvwxyzabcdefghijklmno", "pqrsutvwxyzabcdefghijklmno", "mnopqrstuvwxyzabcdefghijklmno", "opqrstuvwxyzabcdefghijklmno", "pqrsutvwxyzabcdefghijklmno", "mnopqrstuvwxyzabcdefghijklmno", "opqrstuvwxyzabcdefghijklmno", "pqrsutvwxyzabcdefghijklmno"]
+    },
+    {
+      "case_id": 57,
+      "input": {
+        "words": ["hello", "olleh", "world", "dlrow", "python", "nothpy", "java", "avaj", "abcd", "dcba", "bacd", "cadb", "abdc", "cabd"]
+      },
+      "expected": ["hello", "world", "python", "java", "abcd"]
+    },
+    {
+      "case_id": 58,
+      "input": {
+        "words": ["anagram", "nagaram", "margana", "ramnaga", "gnamar", "gnamar", "gnamra", "gnamra", "gnamra", "gnamra", "gnamra", "gnamra", "gnamra"]
+      },
+      "expected": ["anagram", "gnamar"]
+    },
+    {
+      "case_id": 59,
+      "input": {
+        "words": ["listen", "silent", "enlist", "google", "gooegl", "abc", "bca", "cab", "xyz", "zyx", "zyx", "xyz"]
+      },
+      "expected": ["listen", "google", "abc", "xyz"]
+    },
+    {
+      "case_id": 60,
+      "input": {
+        "words": ["aabbcc", "baccab", "cbaabc", "abc", "acb", "bac", "bca", "cab", "cba", "xyz", "zyx", "yxz", "zyx", "xyz"]
+      },
+      "expected": ["aabbcc", "abc", "xyz"]
+    },
+    {
+      "case_id": 61,
+      "input": {
+        "words": ["listen", "silent", "enlist", "google", "gooegl", "abc", "cab", "bac", "xyz", "zyx", "yxz", "uvw", "vuw", "wuv"]
+      },
+      "expected": ["listen", "google", "abc", "xyz", "uvw"]
+    },
+    {
+      "case_id": 62,
+      "input": {
+        "words": ["abcd", "dcba", "bacd", "cadb", "abdc", "cabd", "abcd", "dcba", "bacd", "cadb", "abdc", "cabd"]
+      },
+      "expected": ["abcd"]
+    },
+    {
+      "case_id": 63,
+      "input": {
+        "words": ["python", "typhon", "nohtyp", "ypthon", "hypnot", "python", "typhon", "nohtyp", "ypthon", "hypnot", "python", "typhon", "nohtyp", "ypthon", "hypnot", "python", "typhon", "nohtyp", "ypthon", "hypnot"]
+      },
+      "expected": ["python"]
+    },
+    {
+      "case_id": 64,
+      "input": {
+        "words": ["listen", "silent", "enlist", "google", "gooegl", "inlets"]
+      },
+      "expected": ["listen", "google", "inlets"]
+    },
+    {
+      "case_id": 65,
+      "input": {
+        "words": ["aabbcc", "abcabc", "baccab", "cabcab", "abacbc", "bbacac", "acbbca", "aabbbc", "aabbbc", "aabbbc"]
+      },
+      "expected": ["aabbcc", "aabbbc"]
+    },
+    {
+      "case_id": 66,
+      "input": {
+        "words": ["abcd", "dcba", "cdab", "bacd", "cadb", "abcd", "dcba", "abcd", "dcba", "abcd", "dcba", "abcd", "dcba", "abcd", "dcba", "abcd", "dcba", "abcd", "dcba", "abcd", "dcba", "abcd", "dcba", "abcd", "dcba", "abcd", "dcba", "abcd", "dcba", "abcd", "dcba", "abcd", "dcba"]
+      },
+      "expected": ["abcd"]
+    },
+    {
+      "case_id": 67,
+      "input": {
+        "words": ["aabbcc", "abcabc", "baccab", "xyz", "zyx", "yxz", "mnop", "ponm", "omnp", "nmop", "mpno", "pmno"]
+      },
+      "expected": ["aabbcc", "xyz", "mnop"]
+    },
+    {
+      "case_id": 68,
+      "input": {
+        "words": ["abc", "acb", "bac", "bca", "cab", "cba", "abcd", "abdc", "acbd", "acdb", "adbc", "adcb", "bacd", "badc", "bcad", "bcda", "bdac", "bdca", "cabd", "cadb", "cbad", "cbda", "cdab", "cdba", "dabc", "dacb", "dbac", "dbca", "dcab", "dcba", "zzzz", "zzz", "zz", "z"]
+      },
+      "expected": ["abc", "abcd", "zzzz", "zzz", "zz", "z"]
+    },
+    {
+      "case_id": 69,
+      "input": {
+        "words": ["ab", "ba", "aabb", "bbaa", "abab", "baba", "abba", "baab", "ab", "ba"]
+      },
+      "expected": ["ab", "aabb", "ab"]
+    },
+    {
+      "case_id": 70,
+      "input": {
+        "words": ["aabbcc", "baccab", "abcabc", "abc", "bac", "cab", "bac", "abc", "bac", "cab", "bac", "abc", "bac", "abc", "bac", "abc", "bac", "abc", "bac", "abc", "bac", "abc", "bac", "abc", "bac", "abc", "bac", "abc", "bac", "abc", "bac", "abc"]
+      },
+      "expected": ["aabbcc", "abc"]
+    },
+    {
+      "case_id": 71,
+      "input": {
+        "words": ["abcd", "dcba", "abdc", "cbad", "bcad", "adbc", "dabc", "cdab", "dacb", "cadb", "acbd", "bdac", "bdca", "abcd", "dcba", "abdc", "cbad", "bcad", "adbc", "dabc", "cdab", "dacb", "cadb", "acbd", "bdac", "bdca", "abcd", "dcba", "abdc", "cbad", "bcad", "adbc", "dabc", "cdab", "dacb", "cadb", "acbd", "bdac", "bdca", "abcd", "dcba", "abdc", "cbad", "bcad", "adbc", "dabc", "cdab", "dacb", "cadb", "acbd", "bdac", "bdca"]
+      },
+      "expected": ["abcd"]
+    },
+    {
+      "case_id": 72,
+      "input": {
+        "words": ["aabbcc", "abcabc", "baccab", "ccabba", "cabacb", "abcabc", "aabbcc", "xyzxyz", "zyxzyx", "yxzyxz", "zyxzyx"]
+      },
+      "expected": ["aabbcc", "xyzxyz"]
+    },
+    {
+      "case_id": 73,
+      "input": {
+        "words": ["anagram", "nagaram", "margana", "gnarama", "granama", "aaagmnr", "ab", "ba", "abc", "cba", "abcd", "dcba", "xyz", "zyx", "yxz", "test", "sett", "tset", "stet", "ttes", "deed", "deep", "peed", "depe", "dpee", "aabbcc", "baccab", "abcabc", "rat", "tar", "art", "dog", "god", "cat", "act", "tac", "abcd", "abdc", "acbd", "acdb", "adbc", "adcb", "bacd", "badc", "bcad", "bcda", "bdac", "bdca", "cabd", "cadb", "cbad", "cbda", "cdab", "cdba", "dabc", "dacb", "dbac", "dbca", "dcab", "dcba", "zzzz", "zzz", "zz", "z"]
+      },
+      "expected": ["anagram", "ab", "abc", "abcd", "xyz", "test", "deed", "deep", "aabbcc", "rat", "dog", "cat", "abcd", "zzzz", "zzz", "zz", "z"]
+    },
+    {
+      "case_id": 74,
+      "input": {
+        "words": ["word", "drow", "dwor", "owrd", "abcd", "dcba", "cadb", "bdac", "abcd", "dcba", "cabd", "bdac"]
+      },
+      "expected": ["word", "abcd"]
+    },
+    {
+      "case_id": 75,
+      "input": {
+        "words": ["abcd", "dcba", "abcd", "abdc", "abcd", "dcba", "abcd", "dcba", "abcd"]
+      },
+      "expected": ["abcd"]
+    },
+    {
+      "case_id": 76,
+      "input": {
+        "words": ["anagram", "nagaram", "margana", "anagram", "nagaram", "margana", "anagram", "nagaram"]
+      },
+      "expected": ["anagram"]
+    },
+    {
+      "case_id": 77,
+      "input": {
+        "words": ["evil", "vile", "live", "veil", "liVE", "EVIL"]
+      },
+      "expected": ["evil", "liVE", "EVIL"]
+    },
+    {
+      "case_id": 78,
+      "input": {
+        "words": ["abcd", "dcba", "cdab", "bacd", "adcb", "cbad", "bcda", "abcd", "dcba", "cdab", "bacd", "adcb", "cbad", "bcda"]
+      },
+      "expected": ["abcd"]
+    },
+    {
+      "case_id": 79,
+      "input": {
+        "words": ["rat", "tar", "art", "car", "arc", "arc", "rca", "arc", "cat", "tac", "act", "dog", "god", "god", "ogd"]
+      },
+      "expected": ["rat", "car", "cat", "dog"]
+    },
+    {
+      "case_id": 80,
+      "input": {
+        "words": ["hello", "billion", "nillion", "illonbi", "onbilin", "nnoblli", "olnibin", "lobinin", "ollinbi", "bloninl", "bnoloni", "noblinl", "llinbon", "lobinln", "nilonbl", "nonlibl", "oblinln", "nlonbil", "oninlb", "nobinll", "binlonl", "onlibnl", "nbinlol", "inlboon", "libnoln", "onilnbl", "inlobnl", "lnoibnl", "nobllin", "oinlnbl", "onilb", "nlibl", "inlbn", "lnbol", "onbil", "ilnob", "lnoib", "nlobi", "olnib", "blnio", "bnlio", "nliob", "libon", "inlob", "onilb", "nobil", "inobl", "onlbi", "nobil", "lobin", "linbo", "inolb", "nolbi", "libno", "inlob", "onilb", "nobli", "inobl", "onlbi", "nobil", "lobin", "linbo", "inolb", "nolbi", "libno"]
+      },
+      "expected": ["hello", "billion", "nillion", "illonbi", "onbilin", "nnoblli", "olnibin", "ollinbi", "bloninl", "bnoloni", "noblinl", "oninlb", "nobinll", "inlboon", "libnoln", "onilb", "nlibl", "inlbn", "lnbol", "onbil"]
+    },
+    {
+      "case_id": 81,
+      "input": {
+        "words": ["aabb", "abab", "bbaa", "abcd", "dcba", "cdab", "bcda", "mnop", "ponm", "opnm", "nmop", "qrst", "srqt", "qstr", "tqrs", "stqr", "abcd", "dcba", "abcd", "dcba", "abcd"]
+      },
+      "expected": ["aabb", "abcd", "mnop", "qrst", "abcd"]
+    },
+    {
+      "case_id": 82,
+      "input": {
+        "words": ["triangle", "integral", "integral", "integral", "triangle", "integral"]
+      },
+      "expected": ["triangle"]
+    },
+    {
+      "case_id": 83,
+      "input": {
+        "words": ["listen", "silent", "enlist", "google", "gooegl", "abc", "cab", "bac", "xyz", "zyx", "yxz", "test", "sett", "tset", "stet", "ttes", "deed", "deep", "peed", "depe", "dpee"]
+      },
+      "expected": ["listen", "google", "abc", "xyz", "test", "deed", "deep"]
+    },
+    {
+      "case_id": 84,
+      "input": {
+        "words": ["deed", "deep", "peed", "depe", "dpee", "abcd", "dcba", "cbad", "adcb", "bacd", "cabd", "abcd", "dcba", "abcd", "dcba", "abcd", "dcba", "abcd", "dcba", "abcd", "dcba", "abcd", "dcba", "abcd", "dcba"]
+      },
+      "expected": ["deed", "deep", "abcd"]
+    },
+    {
+      "case_id": 85,
+      "input": {
+        "words": ["aabbcc", "bbaacc", "abcabc", "cccccc", "bbbaaa", "aabbcc", "ccbbdd"]
+      },
+      "expected": ["aabbcc", "cccccc", "bbbaaa", "aabbcc", "ccbbdd"]
+    },
+    {
+      "case_id": 86,
+      "input": {
+        "words": ["anagram", "nagaram", "margana", "gnarham", "ramnaga", "gramana", "amnagar", "mangara", "gnarama", "ramagna", "amnagra", "agranam", "mangnra", "gnanram", "rangnam", "anagram", "nagaram", "margana", "gnarham", "ramnaga", "gramana", "amnagar", "mangara", "gnarama", "ramagna", "amnagra", "agranam", "mangnra", "gnanram", "rangnam"]
+      },
+      "expected": ["anagram", "gnarham", "ramnaga", "mangnra", "anagram", "gnarham", "ramnaga", "mangnra"]
+    }
+  ]
+}

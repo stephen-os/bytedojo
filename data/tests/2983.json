@@ -1,0 +1,1112 @@
+{
+  "schema_version": 1,
+  "problem_id": 2983,
+  "title": "Palindrome Rearrangement Queries",
+  "method": "canMakePalindromeQueries",
+  "signature": {
+    "params": [
+      {
+        "name": "s",
+        "type": "STRING"
+      },
+      {
+        "name": "queries",
+        "type": "INT32_MATRIX"
+      }
+    ],
+    "returns": "BOOL_ARRAY"
+  },
+  "cases": [
+    {
+      "case_id": 1,
+      "input": {
+        "s": "abbcdecbba",
+        "queries": [
+          [0, 2, 7, 9]
+        ]
+      },
+      "expected": [false]
+    },
+    {
+      "case_id": 2,
+      "input": {
+        "s": "abcabc",
+        "queries": [
+          [1, 1, 3, 5],
+          [0, 2, 5, 5]
+        ]
+      },
+      "expected": [true, true]
+    },
+    {
+      "case_id": 3,
+      "input": {
+        "s": "abcdefgfedcba",
+        "queries": [
+          [1, 2, 11, 12],
+          [3, 4, 8, 9]
+        ]
+      },
+      "expected": [true, true]
+    },
+    {
+      "case_id": 4,
+      "input": {
+        "s": "acbcab",
+        "queries": [
+          [1, 2, 4, 5]
+        ]
+      },
+      "expected": [true]
+    },
+    {
+      "case_id": 5,
+      "input": {
+        "s": "aabbaa",
+        "queries": [
+          [0, 2, 3, 5]
+        ]
+      },
+      "expected": [true]
+    },
+    {
+      "case_id": 6,
+      "input": {
+        "s": "abcdefgihgfedcba",
+        "queries": [
+          [0, 3, 8, 11],
+          [1, 2, 6, 7]
+        ]
+      },
+      "expected": "Error: list index out of range"
+    },
+    {
+      "case_id": 7,
+      "input": {
+        "s": "abcdedcba",
+        "queries": [
+          [0, 1, 7, 8],
+          [2, 3, 5, 6]
+        ]
+      },
+      "expected": [true, true]
+    },
+    {
+      "case_id": 8,
+      "input": {
+        "s": "aabbccdd",
+        "queries": [
+          [0, 1, 6, 7],
+          [2, 3, 4, 5]
+        ]
+      },
+      "expected": [false, false]
+    },
+    {
+      "case_id": 9,
+      "input": {
+        "s": "aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz",
+        "queries": [
+          [0, 19, 38, 57],
+          [1, 18, 39, 56],
+          [2, 17, 40, 55]
+        ]
+      },
+      "expected": [false, false, false]
+    },
+    {
+      "case_id": 10,
+      "input": {
+        "s": "abcdefghijkllkjihgfedcba",
+        "queries": [
+          [0, 4, 11, 15],
+          [5, 9, 6, 10]
+        ]
+      },
+      "expected": "Error: list index out of range"
+    },
+    {
+      "case_id": 11,
+      "input": {
+        "s": "levellevel",
+        "queries": [
+          [0, 2, 5, 7],
+          [1, 3, 4, 6]
+        ]
+      },
+      "expected": "Error: list index out of range"
+    },
+    {
+      "case_id": 12,
+      "input": {
+        "s": "aaabbbcccdddeeefffggghhhiiiijjjkkklllmmmnnnoooppqqrrrsssttuuvvwwxxyyzz",
+        "queries": [
+          [0, 30, 31, 60],
+          [10, 20, 40, 50]
+        ]
+      },
+      "expected": "Error: list index out of range"
+    },
+    {
+      "case_id": 13,
+      "input": {
+        "s": "qwertyuiopoiuytrewq",
+        "queries": [
+          [0, 4, 10, 14],
+          [5, 7, 8, 12],
+          [1, 3, 11, 13]
+        ]
+      },
+      "expected": "Error: list index out of range"
+    },
+    {
+      "case_id": 14,
+      "input": {
+        "s": "abcdexyzwvutsrqponmlkjihgfedcbazyxwvutsrqponmlkjihgfedcba",
+        "queries": [
+          [0, 1, 38, 39],
+          [2, 3, 36, 37],
+          [4, 5, 34, 35]
+        ]
+      },
+      "expected": [false, false, false]
+    },
+    {
+      "case_id": 15,
+      "input": {
+        "s": "aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz",
+        "queries": [
+          [0, 9, 32, 41],
+          [1, 5, 28, 37],
+          [2, 7, 25, 34]
+        ]
+      },
+      "expected": [false, false, false]
+    },
+    {
+      "case_id": 16,
+      "input": {
+        "s": "racecaracercar",
+        "queries": [
+          [0, 2, 10, 12],
+          [3, 5, 8, 10],
+          [1, 4, 7, 9]
+        ]
+      },
+      "expected": [false, false, false]
+    },
+    {
+      "case_id": 17,
+      "input": {
+        "s": "abacaxbaxaba",
+        "queries": [
+          [0, 1, 9, 10],
+          [2, 3, 7, 8],
+          [4, 5, 5, 6]
+        ]
+      },
+      "expected": [false, false, false]
+    },
+    {
+      "case_id": 18,
+      "input": {
+        "s": "abcdefghijklmnopqrstuvwxyzzyxwvutsrqponmlkjihgfedcba",
+        "queries": [
+          [0, 12, 12, 24],
+          [4, 8, 16, 20],
+          [6, 10, 10, 14]
+        ]
+      },
+      "expected": "Error: list index out of range"
+    },
+    {
+      "case_id": 19,
+      "input": {
+        "s": "abcdefghijklmnopqrstuvwxyzzyxwvutsrqponmlkjihgfedcba",
+        "queries": [
+          [0, 12, 13, 25],
+          [1, 10, 15, 24]
+        ]
+      },
+      "expected": "Error: list index out of range"
+    },
+    {
+      "case_id": 20,
+      "input": {
+        "s": "abacabadabacaba",
+        "queries": [
+          [0, 4, 11, 15],
+          [1, 3, 12, 14],
+          [2, 2, 13, 13]
+        ]
+      },
+      "expected": [true, true, true]
+    },
+    {
+      "case_id": 21,
+      "input": {
+        "s": "aabbccddeeffgg",
+        "queries": [
+          [0, 5, 7, 12],
+          [2, 3, 10, 11]
+        ]
+      },
+      "expected": [false, false]
+    },
+    {
+      "case_id": 22,
+      "input": {
+        "s": "aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz",
+        "queries": [
+          [0, 15, 16, 29],
+          [1, 14, 17, 28],
+          [2, 13, 18, 27]
+        ]
+      },
+      "expected": "Error: list index out of range"
+    },
+    {
+      "case_id": 23,
+      "input": {
+        "s": "zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz",
+        "queries": [
+          [0, 14, 15, 29],
+          [1, 13, 16, 28]
+        ]
+      },
+      "expected": "Error: list index out of range"
+    },
+    {
+      "case_id": 24,
+      "input": {
+        "s": "racecaracecar",
+        "queries": [
+          [0, 2, 8, 10],
+          [1, 4, 6, 9]
+        ]
+      },
+      "expected": "Error: list index out of range"
+    },
+    {
+      "case_id": 25,
+      "input": {
+        "s": "zxcvbnmasdfghjklqwertyuiopoiuytrewqlkjhgfdasbvncxz",
+        "queries": [
+          [0, 14, 15, 29],
+          [1, 13, 16, 28],
+          [2, 12, 17, 27]
+        ]
+      },
+      "expected": "Error: list index out of range"
+    },
+    {
+      "case_id": 26,
+      "input": {
+        "s": "aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz",
+        "queries": [
+          [0, 5, 20, 25],
+          [6, 10, 15, 19]
+        ]
+      },
+      "expected": "Error: list index out of range"
+    },
+    {
+      "case_id": 27,
+      "input": {
+        "s": "mississippiissippi",
+        "queries": [
+          [0, 4, 10, 14],
+          [1, 3, 11, 13]
+        ]
+      },
+      "expected": [false, false]
+    },
+    {
+      "case_id": 28,
+      "input": {
+        "s": "abcdefghijklmnopqrstuvwxyz",
+        "queries": [
+          [0, 24, 24, 48],
+          [1, 23, 25, 47],
+          [2, 22, 26, 46]
+        ]
+      },
+      "expected": "Error: list index out of range"
+    },
+    {
+      "case_id": 29,
+      "input": {
+        "s": "abcdefghijhgfedcba",
+        "queries": [
+          [0, 4, 14, 18],
+          [1, 3, 15, 17],
+          [2, 2, 16, 16]
+        ]
+      },
+      "expected": [false, false, false]
+    },
+    {
+      "case_id": 30,
+      "input": {
+        "s": "aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz",
+        "queries": [
+          [0, 11, 34, 45],
+          [12, 22, 23, 33]
+        ]
+      },
+      "expected": [false, false]
+    },
+    {
+      "case_id": 31,
+      "input": {
+        "s": "mississippiissippi",
+        "queries": [
+          [0, 4, 10, 14],
+          [2, 6, 8, 12]
+        ]
+      },
+      "expected": [false, false]
+    },
+    {
+      "case_id": 32,
+      "input": {
+        "s": "abacabadabacaba",
+        "queries": [
+          [0, 6, 11, 17],
+          [1, 5, 12, 16],
+          [2, 4, 13, 15]
+        ]
+      },
+      "expected": [true, true, true]
+    },
+    {
+      "case_id": 33,
+      "input": {
+        "s": "xyzyxzyzyxzyzyxzyz",
+        "queries": [
+          [0, 3, 9, 12],
+          [4, 7, 13, 16],
+          [1, 2, 17, 18]
+        ]
+      },
+      "expected": [false, false, false]
+    },
+    {
+      "case_id": 34,
+      "input": {
+        "s": "levellevel",
+        "queries": [
+          [1, 2, 5, 6],
+          [0, 3, 3, 6],
+          [2, 4, 4, 5]
+        ]
+      },
+      "expected": "Error: list index out of range"
+    },
+    {
+      "case_id": 35,
+      "input": {
+        "s": "aaaabbbbccccdddd",
+        "queries": [
+          [0, 3, 12, 15],
+          [1, 2, 13, 14],
+          [2, 3, 14, 15]
+        ]
+      },
+      "expected": [false, false, false]
+    },
+    {
+      "case_id": 36,
+      "input": {
+        "s": "levellevellevellevel",
+        "queries": [
+          [0, 4, 8, 12],
+          [1, 3, 9, 11]
+        ]
+      },
+      "expected": "Error: list index out of range"
+    },
+    {
+      "case_id": 37,
+      "input": {
+        "s": "abcdefghijklmnopqrstuvwxyzzyxwvutsrqponmlkjihgfedcba",
+        "queries": [
+          [0, 12, 12, 24],
+          [5, 9, 15, 19]
+        ]
+      },
+      "expected": "Error: list index out of range"
+    },
+    {
+      "case_id": 38,
+      "input": {
+        "s": "racecarannakayak",
+        "queries": [
+          [0, 6, 8, 13],
+          [1, 5, 9, 12]
+        ]
+      },
+      "expected": [false, false]
+    },
+    {
+      "case_id": 39,
+      "input": {
+        "s": "noonnoon",
+        "queries": [
+          [0, 2, 5, 7],
+          [1, 3, 4, 6]
+        ]
+      },
+      "expected": [true, true]
+    },
+    {
+      "case_id": 40,
+      "input": {
+        "s": "abcdeedcba",
+        "queries": [
+          [0, 4, 5, 9],
+          [1, 3, 6, 8],
+          [2, 2, 7, 7]
+        ]
+      },
+      "expected": [true, true, true]
+    },
+    {
+      "case_id": 41,
+      "input": {
+        "s": "xyzxyzxyzxyzxyzxyzxyzxyzxyzxyz",
+        "queries": [
+          [0, 3, 15, 18],
+          [1, 4, 14, 17],
+          [2, 5, 13, 16],
+          [3, 6, 12, 15],
+          [4, 7, 11, 14]
+        ]
+      },
+      "expected": [false, false, false, false, false]
+    },
+    {
+      "case_id": 42,
+      "input": {
+        "s": "mississippiissippi",
+        "queries": [
+          [0, 2, 9, 11],
+          [1, 3, 8, 10],
+          [2, 4, 7, 9]
+        ]
+      },
+      "expected": [false, false, false]
+    },
+    {
+      "case_id": 43,
+      "input": {
+        "s": "zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz",
+        "queries": [
+          [0, 5, 26, 31],
+          [6, 10, 22, 26],
+          [11, 15, 17, 21],
+          [16, 20, 12, 16]
+        ]
+      },
+      "expected": "Error: list index out of range"
+    },
+    {
+      "case_id": 44,
+      "input": {
+        "s": "rotorrotorrotorrotor",
+        "queries": [
+          [0, 4, 12, 16],
+          [2, 5, 10, 14],
+          [3, 6, 11, 15]
+        ]
+      },
+      "expected": [true, true, true]
+    },
+    {
+      "case_id": 45,
+      "input": {
+        "s": "abacabadabacabad",
+        "queries": [
+          [0, 7, 8, 15],
+          [1, 6, 9, 14],
+          [2, 5, 10, 13],
+          [3, 4, 11, 12]
+        ]
+      },
+      "expected": [true, false, false, false]
+    },
+    {
+      "case_id": 46,
+      "input": {
+        "s": "abcdefghijzyxwvutsrqponmlkjihgfedcba",
+        "queries": [
+          [0, 9, 20, 29],
+          [1, 8, 21, 28],
+          [2, 7, 22, 27],
+          [3, 6, 23, 26],
+          [4, 5, 24, 25]
+        ]
+      },
+      "expected": [false, false, false, false, false]
+    },
+    {
+      "case_id": 47,
+      "input": {
+        "s": "rotorrotor",
+        "queries": [
+          [0, 2, 7, 9],
+          [3, 5, 4, 6]
+        ]
+      },
+      "expected": "Error: list index out of range"
+    },
+    {
+      "case_id": 48,
+      "input": {
+        "s": "rotorrotor",
+        "queries": [
+          [0, 2, 6, 8],
+          [1, 4, 5, 7]
+        ]
+      },
+      "expected": [true, true]
+    },
+    {
+      "case_id": 49,
+      "input": {
+        "s": "levellevel",
+        "queries": [
+          [0, 1, 6, 7],
+          [2, 3, 4, 5],
+          [1, 2, 5, 6]
+        ]
+      },
+      "expected": "Error: list index out of range"
+    },
+    {
+      "case_id": 50,
+      "input": {
+        "s": "racecar",
+        "queries": [
+          [1, 3, 2, 4]
+        ]
+      },
+      "expected": "Error: list index out of range"
+    },
+    {
+      "case_id": 51,
+      "input": {
+        "s": "thisisanoddlengthstring",
+        "queries": [
+          [0, 4, 14, 19]
+        ]
+      },
+      "expected": [false]
+    },
+    {
+      "case_id": 52,
+      "input": {
+        "s": "abcdeffedcba",
+        "queries": [
+          [0, 2, 7, 9],
+          [1, 3, 6, 8],
+          [2, 4, 5, 7]
+        ]
+      },
+      "expected": "Error: list index out of range"
+    },
+    {
+      "case_id": 53,
+      "input": {
+        "s": "abcdefghijklmnoponmlkjihgfedcba",
+        "queries": [
+          [0, 15, 15, 30],
+          [10, 20, 10, 20]
+        ]
+      },
+      "expected": "Error: list index out of range"
+    },
+    {
+      "case_id": 54,
+      "input": {
+        "s": "aabbccddeeff",
+        "queries": [
+          [0, 2, 9, 11],
+          [1, 3, 8, 10],
+          [2, 4, 7, 9]
+        ]
+      },
+      "expected": [false, false, false]
+    },
+    {
+      "case_id": 55,
+      "input": {
+        "s": "abcdefghihgfedcba",
+        "queries": [
+          [0, 1, 12, 13],
+          [3, 3, 8, 8],
+          [5, 5, 6, 6]
+        ]
+      },
+      "expected": "Error: list index out of range"
+    },
+    {
+      "case_id": 56,
+      "input": {
+        "s": "aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz",
+        "queries": [
+          [0, 20, 21, 41],
+          [1, 19, 22, 40]
+        ]
+      },
+      "expected": "Error: list index out of range"
+    },
+    {
+      "case_id": 57,
+      "input": {
+        "s": "mississippiissim",
+        "queries": [
+          [0, 3, 11, 14],
+          [2, 4, 9, 12],
+          [1, 5, 8, 11]
+        ]
+      },
+      "expected": [false, false, false]
+    },
+    {
+      "case_id": 58,
+      "input": {
+        "s": "abcdefghijklmnopqrstuvwxyzzyxwvutsrqponmlkjihgfedcba",
+        "queries": [
+          [0, 12, 13, 25],
+          [6, 18, 7, 19]
+        ]
+      },
+      "expected": "Error: list index out of range"
+    },
+    {
+      "case_id": 59,
+      "input": {
+        "s": "abacabadabacabad",
+        "queries": [
+          [0, 3, 8, 11],
+          [1, 2, 6, 7],
+          [4, 5, 12, 13]
+        ]
+      },
+      "expected": [false, false, false]
+    },
+    {
+      "case_id": 60,
+      "input": {
+        "s": "abcdefghihgfedcba",
+        "queries": [
+          [0, 4, 7, 10],
+          [2, 3, 6, 7],
+          [1, 3, 5, 8]
+        ]
+      },
+      "expected": "Error: list index out of range"
+    },
+    {
+      "case_id": 61,
+      "input": {
+        "s": "mississippi",
+        "queries": [
+          [1, 2, 7, 8],
+          [0, 1, 10, 11],
+          [3, 4, 6, 7]
+        ]
+      },
+      "expected": [false, false, false]
+    },
+    {
+      "case_id": 62,
+      "input": {
+        "s": "aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz",
+        "queries": [
+          [0, 20, 21, 40],
+          [5, 15, 26, 36]
+        ]
+      },
+      "expected": "Error: list index out of range"
+    },
+    {
+      "case_id": 63,
+      "input": {
+        "s": "abcdedcbaabcdedcba",
+        "queries": [
+          [0, 4, 9, 13],
+          [2, 5, 8, 12],
+          [1, 3, 7, 11]
+        ]
+      },
+      "expected": "Error: list index out of range"
+    },
+    {
+      "case_id": 64,
+      "input": {
+        "s": "rotorrotor",
+        "queries": [
+          [0, 2, 5, 7],
+          [1, 3, 4, 6],
+          [2, 4, 3, 5]
+        ]
+      },
+      "expected": "Error: list index out of range"
+    },
+    {
+      "case_id": 65,
+      "input": {
+        "s": "abcdedcbaa",
+        "queries": [
+          [0, 1, 8, 9],
+          [2, 3, 6, 7],
+          [1, 4, 5, 8]
+        ]
+      },
+      "expected": [false, false, false]
+    },
+    {
+      "case_id": 66,
+      "input": {
+        "s": "zzzzzzzzzz",
+        "queries": [
+          [0, 4, 5, 9],
+          [1, 3, 6, 8],
+          [2, 2, 7, 7]
+        ]
+      },
+      "expected": [true, true, true]
+    },
+    {
+      "case_id": 67,
+      "input": {
+        "s": "abcabcabcabcabcabcabcabcabcabc",
+        "queries": [
+          [0, 1, 28, 29],
+          [1, 2, 27, 28],
+          [2, 3, 26, 27],
+          [3, 4, 25, 26],
+          [4, 5, 24, 25],
+          [5, 6, 23, 24]
+        ]
+      },
+      "expected": [false, false, false, false, false, false]
+    },
+    {
+      "case_id": 68,
+      "input": {
+        "s": "abcdefghijklmnopqrstuvwxyzzyxwvutsrqponmlkjihgfedcba",
+        "queries": [
+          [0, 12, 12, 24],
+          [5, 10, 14, 19]
+        ]
+      },
+      "expected": "Error: list index out of range"
+    },
+    {
+      "case_id": 69,
+      "input": {
+        "s": "qwertyuiopasdfghjklzxcvbnmlkjhgfdsapoiuytrewq",
+        "queries": [
+          [0, 9, 12, 21],
+          [3, 6, 18, 23],
+          [5, 8, 14, 19]
+        ]
+      },
+      "expected": "Error: list index out of range"
+    },
+    {
+      "case_id": 70,
+      "input": {
+        "s": "abacabadabacabad",
+        "queries": [
+          [0, 3, 8, 11],
+          [1, 4, 9, 12],
+          [2, 5, 10, 13]
+        ]
+      },
+      "expected": [false, false, false]
+    },
+    {
+      "case_id": 71,
+      "input": {
+        "s": "abcdefghijklmnopqrstuvwxyzyxwvutsrqponmlkjihgfedcba",
+        "queries": [
+          [0, 9, 20, 29],
+          [1, 8, 21, 28]
+        ]
+      },
+      "expected": "Error: list index out of range"
+    },
+    {
+      "case_id": 72,
+      "input": {
+        "s": "amanaplanacanalpanama",
+        "queries": [
+          [0, 4, 23, 27],
+          [5, 9, 17, 21],
+          [10, 14, 13, 18]
+        ]
+      },
+      "expected": "Error: list index out of range"
+    },
+    {
+      "case_id": 73,
+      "input": {
+        "s": "abcdefghijklmnopqrstuvwxyzzyxwvutsrqponmlkjihgfedcba",
+        "queries": [
+          [0, 25, 25, 0],
+          [10, 15, 10, 15]
+        ]
+      },
+      "expected": "Error: list index out of range"
+    },
+    {
+      "case_id": 74,
+      "input": {
+        "s": "noonnoon",
+        "queries": [
+          [0, 2, 3, 5],
+          [1, 3, 2, 4],
+          [0, 1, 4, 5]
+        ]
+      },
+      "expected": "Error: list index out of range"
+    },
+    {
+      "case_id": 75,
+      "input": {
+        "s": "aaabbbcccdddeeefffggg",
+        "queries": [
+          [0, 4, 11, 15],
+          [1, 2, 9, 10]
+        ]
+      },
+      "expected": [false, false]
+    },
+    {
+      "case_id": 76,
+      "input": {
+        "s": "aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz",
+        "queries": [
+          [0, 24, 25, 49],
+          [1, 23, 26, 48],
+          [2, 22, 27, 47]
+        ]
+      },
+      "expected": "Error: list index out of range"
+    },
+    {
+      "case_id": 77,
+      "input": {
+        "s": "racecarannakayak",
+        "queries": [
+          [0, 2, 9, 11],
+          [1, 3, 8, 10],
+          [2, 4, 7, 9]
+        ]
+      },
+      "expected": [false, false, false]
+    },
+    {
+      "case_id": 78,
+      "input": {
+        "s": "aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz",
+        "queries": [
+          [0, 5, 26, 31],
+          [6, 10, 22, 26],
+          [11, 15, 17, 21]
+        ]
+      },
+      "expected": [false, false, false]
+    },
+    {
+      "case_id": 79,
+      "input": {
+        "s": "noonnoon",
+        "queries": [
+          [0, 1, 5, 6],
+          [2, 3, 4, 5]
+        ]
+      },
+      "expected": [true, true]
+    },
+    {
+      "case_id": 80,
+      "input": {
+        "s": "zyxzyxzyxzyx",
+        "queries": [
+          [0, 2, 9, 11],
+          [3, 5, 6, 8]
+        ]
+      },
+      "expected": [false, false]
+    },
+    {
+      "case_id": 81,
+      "input": {
+        "s": "ababababababababab",
+        "queries": [
+          [0, 1, 8, 9],
+          [2, 3, 10, 11],
+          [4, 5, 12, 13]
+        ]
+      },
+      "expected": "Error: list index out of range"
+    },
+    {
+      "case_id": 82,
+      "input": {
+        "s": "aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz",
+        "queries": [
+          [0, 12, 13, 25],
+          [1, 11, 14, 24],
+          [2, 10, 15, 23]
+        ]
+      },
+      "expected": "Error: list index out of range"
+    },
+    {
+      "case_id": 83,
+      "input": {
+        "s": "abcabcabcabcabcabcabcabc",
+        "queries": [
+          [0, 5, 21, 26],
+          [6, 11, 15, 20],
+          [12, 17, 9, 14]
+        ]
+      },
+      "expected": [false, false, false]
+    },
+    {
+      "case_id": 84,
+      "input": {
+        "s": "noonnoonnoon",
+        "queries": [
+          [1, 3, 9, 11],
+          [2, 4, 8, 10],
+          [0, 2, 6, 8]
+        ]
+      },
+      "expected": [true, true, true]
+    },
+    {
+      "case_id": 85,
+      "input": {
+        "s": "abacabadabacaba",
+        "queries": [
+          [0, 3, 10, 13],
+          [1, 4, 9, 12],
+          [2, 5, 8, 11],
+          [3, 6, 7, 10]
+        ]
+      },
+      "expected": "Error: list index out of range"
+    },
+    {
+      "case_id": 86,
+      "input": {
+        "s": "abcdefghihgfedcba",
+        "queries": [
+          [1, 3, 6, 8],
+          [2, 4, 5, 7]
+        ]
+      },
+      "expected": "Error: list index out of range"
+    },
+    {
+      "case_id": 87,
+      "input": {
+        "s": "abacaxabacax",
+        "queries": [
+          [0, 2, 8, 10],
+          [1, 3, 6, 8]
+        ]
+      },
+      "expected": [false, false]
+    },
+    {
+      "case_id": 88,
+      "input": {
+        "s": "abcdefghijkzyxwvutsrqponml",
+        "queries": [
+          [0, 4, 19, 23],
+          [2, 3, 17, 18]
+        ]
+      },
+      "expected": [false, false]
+    },
+    {
+      "case_id": 89,
+      "input": {
+        "s": "noonnoonnoonnoon",
+        "queries": [
+          [0, 3, 12, 15],
+          [1, 2, 13, 14]
+        ]
+      },
+      "expected": [true, true]
+    },
+    {
+      "case_id": 90,
+      "input": {
+        "s": "mississippiississippi",
+        "queries": [
+          [0, 5, 10, 15],
+          [3, 8, 7, 12]
+        ]
+      },
+      "expected": "Error: list index out of range"
+    },
+    {
+      "case_id": 91,
+      "input": {
+        "s": "xyzzyxzyxzyx",
+        "queries": [
+          [0, 1, 10, 11],
+          [2, 3, 8, 9],
+          [4, 5, 6, 7]
+        ]
+      },
+      "expected": [false, false, false]
+    },
+    {
+      "case_id": 92,
+      "input": {
+        "s": "aabccbaabccba",
+        "queries": [
+          [0, 2, 7, 9],
+          [1, 3, 6, 8],
+          [2, 4, 5, 7]
+        ]
+      },
+      "expected": "Error: list index out of range"
+    },
+    {
+      "case_id": 93,
+      "input": {
+        "s": "abacabadabacaba",
+        "queries": [
+          [0, 2, 9, 11],
+          [1, 3, 10, 12],
+          [2, 4, 8, 10]
+        ]
+      },
+      "expected": [true, true, true]
+    },
+    {
+      "case_id": 94,
+      "input": {
+        "s": "abababababab",
+        "queries": [
+          [0, 1, 5, 6],
+          [2, 3, 4, 5],
+          [1, 2, 3, 4]
+        ]
+      },
+      "expected": "Error: list index out of range"
+    }
+  ]
+}

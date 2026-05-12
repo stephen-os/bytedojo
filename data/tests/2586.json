@@ -1,0 +1,925 @@
+{
+  "schema_version": 1,
+  "problem_id": 2586,
+  "title": "Count the Number of Vowel Strings in Range",
+  "method": "vowelStrings",
+  "signature": {
+    "params": [
+      {
+        "name": "words",
+        "type": "STRING_ARRAY"
+      },
+      {
+        "name": "left",
+        "type": "INT32"
+      },
+      {
+        "name": "right",
+        "type": "INT32"
+      }
+    ],
+    "returns": "INT32"
+  },
+  "cases": [
+    {
+      "case_id": 1,
+      "input": {
+        "words": ["sky", "fly", "why"],
+        "left": 0,
+        "right": 2
+      },
+      "expected": 0
+    },
+    {
+      "case_id": 2,
+      "input": {
+        "words": ["apple", "banana", "orange", "umbrella"],
+        "left": 0,
+        "right": 3
+      },
+      "expected": 3
+    },
+    {
+      "case_id": 3,
+      "input": {
+        "words": ["are", "amy", "u"],
+        "left": 0,
+        "right": 2
+      },
+      "expected": 2
+    },
+    {
+      "case_id": 4,
+      "input": {
+        "words": ["hey", "aeo", "mu", "ooo", "artro"],
+        "left": 1,
+        "right": 4
+      },
+      "expected": 3
+    },
+    {
+      "case_id": 5,
+      "input": {
+        "words": ["up", "open", "over"],
+        "left": 1,
+        "right": 2
+      },
+      "expected": 0
+    },
+    {
+      "case_id": 6,
+      "input": {
+        "words": ["ae", "ea", "ei", "ie", "ou"],
+        "left": 0,
+        "right": 4
+      },
+      "expected": 5
+    },
+    {
+      "case_id": 7,
+      "input": {
+        "words": ["aeiou", "uoiea", "aeiou", "uoiea", "aeiou", "uoiea"],
+        "left": 0,
+        "right": 5
+      },
+      "expected": 6
+    },
+    {
+      "case_id": 8,
+      "input": {
+        "words": ["sky", "fly", "why", "a", "e"],
+        "left": 0,
+        "right": 4
+      },
+      "expected": 2
+    },
+    {
+      "case_id": 9,
+      "input": {
+        "words": ["umbrella", "encyclopedia", "analysis", "outstanding", "initiative"],
+        "left": 1,
+        "right": 3
+      },
+      "expected": 1
+    },
+    {
+      "case_id": 10,
+      "input": {
+        "words": ["ocean", "mountain", "forest", "desert", "rain"],
+        "left": 0,
+        "right": 4
+      },
+      "expected": 0
+    },
+    {
+      "case_id": 11,
+      "input": {
+        "words": ["beautiful", "world", "with", "diverse", "languages"],
+        "left": 2,
+        "right": 4
+      },
+      "expected": 0
+    },
+    {
+      "case_id": 12,
+      "input": {
+        "words": ["aeiou", "uoiea", "uiaeou", "ouaei", "eioua"],
+        "left": 0,
+        "right": 4
+      },
+      "expected": 5
+    },
+    {
+      "case_id": 13,
+      "input": {
+        "words": ["xylophone", "zephyr", "orchestra", "xylophone", "aeiou", "uoiea", "uoiea"],
+        "left": 0,
+        "right": 6
+      },
+      "expected": 4
+    },
+    {
+      "case_id": 14,
+      "input": {
+        "words": ["aaa", "eee", "iii", "ooo", "uuu", "aaee", "eeaa", "aeea", "aaea", "eeea", "eaae", "eaeaa", "aeaae", "aaeae"],
+        "left": 0,
+        "right": 13
+      },
+      "expected": 14
+    },
+    {
+      "case_id": 15,
+      "input": {
+        "words": ["queue", "adieu", "ice", "ocean", "earth"],
+        "left": 0,
+        "right": 3
+      },
+      "expected": 2
+    },
+    {
+      "case_id": 16,
+      "input": {
+        "words": ["umbrella", "moon", "noon", "noon", "moon"],
+        "left": 2,
+        "right": 4
+      },
+      "expected": 0
+    },
+    {
+      "case_id": 17,
+      "input": {
+        "words": ["algorithm", "education", "umbrella", "icecream", "operation", "university"],
+        "left": 1,
+        "right": 5
+      },
+      "expected": 1
+    },
+    {
+      "case_id": 18,
+      "input": {
+        "words": ["umbrella", "opposite", "idea", "encyclopedia", "algorithm", "umbrella", "opposite", "idea", "encyclopedia", "algorithm"],
+        "left": 3,
+        "right": 7
+      },
+      "expected": 4
+    },
+    {
+      "case_id": 19,
+      "input": {
+        "words": ["elephant", "umbrella", "apple", "orange", "ice", "echo", "umbrella"],
+        "left": 1,
+        "right": 6
+      },
+      "expected": 6
+    },
+    {
+      "case_id": 20,
+      "input": {
+        "words": ["aviation", "exhibition", "occasion", "environment", "instrumentation"],
+        "left": 1,
+        "right": 3
+      },
+      "expected": 0
+    },
+    {
+      "case_id": 21,
+      "input": {
+        "words": ["vowel", "nonvowel", "aeiou", "bvowel", "endvowel"],
+        "left": 0,
+        "right": 4
+      },
+      "expected": 1
+    },
+    {
+      "case_id": 22,
+      "input": {
+        "words": ["aabb", "abba", "baab", "baba", "abab"],
+        "left": 0,
+        "right": 4
+      },
+      "expected": 1
+    },
+    {
+      "case_id": 23,
+      "input": {
+        "words": ["example", "samples", "tests", "inputs", "outputs"],
+        "left": 0,
+        "right": 4
+      },
+      "expected": 1
+    },
+    {
+      "case_id": 24,
+      "input": {
+        "words": ["xyz", "uvw", "qwe", "rty", "poi"],
+        "left": 0,
+        "right": 4
+      },
+      "expected": 0
+    },
+    {
+      "case_id": 25,
+      "input": {
+        "words": ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"],
+        "left": 0,
+        "right": 24
+      },
+      "expected": 5
+    },
+    {
+      "case_id": 26,
+      "input": {
+        "words": ["environment", "umbrella", "education", "algorithm", "university", "encyclopedia"],
+        "left": 2,
+        "right": 5
+      },
+      "expected": 1
+    },
+    {
+      "case_id": 27,
+      "input": {
+        "words": ["beautiful", "enormous", "interesting", "unexpected", "odd"],
+        "left": 2,
+        "right": 4
+      },
+      "expected": 0
+    },
+    {
+      "case_id": 28,
+      "input": {
+        "words": ["sequence", "equal", "education", "algorithm", "encyclopedia"],
+        "left": 0,
+        "right": 3
+      },
+      "expected": 0
+    },
+    {
+      "case_id": 29,
+      "input": {
+        "words": ["eeeee", "aaaaa", "iiiii", "ooooo", "uuuuu", "auaeu", "eiaie", "ouioo", "uaeuu", "ieoia"],
+        "left": 2,
+        "right": 9
+      },
+      "expected": 8
+    },
+    {
+      "case_id": 30,
+      "input": {
+        "words": ["abcdefgh", "ijklmnop", "qrstuvwxyz", "zyxwvutsr", "qrstponmlkjihgfedcba"],
+        "left": 0,
+        "right": 4
+      },
+      "expected": 0
+    },
+    {
+      "case_id": 31,
+      "input": {
+        "words": ["banana", "orange", "grape", "kiwi", "pear", "peach", "plum", "grapefruit", "blueberry", "cherry"],
+        "left": 3,
+        "right": 9
+      },
+      "expected": 0
+    },
+    {
+      "case_id": 32,
+      "input": {
+        "words": ["racecar", "level", "rotor", "kayak", "reviler"],
+        "left": 1,
+        "right": 4
+      },
+      "expected": 0
+    },
+    {
+      "case_id": 33,
+      "input": {
+        "words": ["aerodynamic", "encyclopedia", "umbrella", "idea", "audio"],
+        "left": 1,
+        "right": 4
+      },
+      "expected": 4
+    },
+    {
+      "case_id": 34,
+      "input": {
+        "words": ["umbrella", "map", "python", "algorithm", "encyclopedia"],
+        "left": 1,
+        "right": 4
+      },
+      "expected": 1
+    },
+    {
+      "case_id": 35,
+      "input": {
+        "words": ["umbrella", "opposite", "idea", "encyclopedia", "algorithm"],
+        "left": 1,
+        "right": 4
+      },
+      "expected": 3
+    },
+    {
+      "case_id": 36,
+      "input": {
+        "words": ["quick", "brown", "fox", "jumps", "over", "lazy", "dog"],
+        "left": 1,
+        "right": 5
+      },
+      "expected": 0
+    },
+    {
+      "case_id": 37,
+      "input": {
+        "words": ["aardvark", "elephant", "iguana", "okapi", "umbrella"],
+        "left": 0,
+        "right": 4
+      },
+      "expected": 3
+    },
+    {
+      "case_id": 38,
+      "input": {
+        "words": ["vowel", "voewl", "ovwle", "wolve", "volve"],
+        "left": 0,
+        "right": 4
+      },
+      "expected": 1
+    },
+    {
+      "case_id": 39,
+      "input": {
+        "words": ["beautiful", "umbrella", "innovative", "economic", "outstanding", "underwater"],
+        "left": 0,
+        "right": 5
+      },
+      "expected": 2
+    },
+    {
+      "case_id": 40,
+      "input": {
+        "words": ["applepie", "banana", "orangejuice", "grape", "peach"],
+        "left": 1,
+        "right": 3
+      },
+      "expected": 1
+    },
+    {
+      "case_id": 41,
+      "input": {
+        "words": ["ar", "er", "ir", "or", "ur"],
+        "left": 1,
+        "right": 4
+      },
+      "expected": 0
+    },
+    {
+      "case_id": 42,
+      "input": {
+        "words": ["a", "e", "i", "o", "u", "a", "e", "i", "o", "u"],
+        "left": 0,
+        "right": 9
+      },
+      "expected": 10
+    },
+    {
+      "case_id": 43,
+      "input": {
+        "words": ["sequence", "development", "environment", "assignment", "information"],
+        "left": 1,
+        "right": 3
+      },
+      "expected": 0
+    },
+    {
+      "case_id": 44,
+      "input": {
+        "words": ["a", "e", "i", "o", "u", "aeiou"],
+        "left": 0,
+        "right": 5
+      },
+      "expected": 6
+    },
+    {
+      "case_id": 45,
+      "input": {
+        "words": ["racecar", "level", "rotor", "deified", "repaper"],
+        "left": 1,
+        "right": 4
+      },
+      "expected": 0
+    },
+    {
+      "case_id": 46,
+      "input": {
+        "words": ["orchid", "ocean", "octopus", "ostrich", "oak", "oceanography"],
+        "left": 0,
+        "right": 5
+      },
+      "expected": 0
+    },
+    {
+      "case_id": 47,
+      "input": {
+        "words": ["volcano", "trident", "ozone", "ocean", "mountain"],
+        "left": 2,
+        "right": 4
+      },
+      "expected": 1
+    },
+    {
+      "case_id": 48,
+      "input": {
+        "words": ["zzzzz", "yyyyy", "xxxxx", "wwwww", "vvvvv"],
+        "left": 0,
+        "right": 4
+      },
+      "expected": 0
+    },
+    {
+      "case_id": 49,
+      "input": {
+        "words": ["banana", "anana", "nana", "ana", "na", "a"],
+        "left": 0,
+        "right": 9
+      },
+      "expected": 3
+    },
+    {
+      "case_id": 50,
+      "input": {
+        "words": ["education", "university", "algorithm", "openai"],
+        "left": 1,
+        "right": 3
+      },
+      "expected": 1
+    },
+    {
+      "case_id": 51,
+      "input": {
+        "words": ["aeiou", "bcd", "efg", "hij", "klm", "nop", "qrst", "uvw", "xyz"],
+        "left": 2,
+        "right": 7
+      },
+      "expected": 0
+    },
+    {
+      "case_id": 52,
+      "input": {
+        "words": ["aardvark", "algorithm", "antelope", "antenna", "apple", "antiquity", "apricot", "atlas"],
+        "left": 1,
+        "right": 7
+      },
+      "expected": 3
+    },
+    {
+      "case_id": 53,
+      "input": {
+        "words": ["algorithm", "evaluation", "interview", "education", "optimization"],
+        "left": 0,
+        "right": 4
+      },
+      "expected": 0
+    },
+    {
+      "case_id": 54,
+      "input": {
+        "words": ["aeiou", "uoiea", "iouea", "uaieo", "oieau", "aeo", "uoiea", "uoiea", "uoiea", "uoiea", "uoiea", "uoiea"],
+        "left": 0,
+        "right": 11
+      },
+      "expected": 12
+    },
+    {
+      "case_id": 55,
+      "input": {
+        "words": ["abracadabra", "alabama", "alaska", "aerodynamic", "algorithm", "azalea"],
+        "left": 1,
+        "right": 5
+      },
+      "expected": 3
+    },
+    {
+      "case_id": 56,
+      "input": {
+        "words": ["start", "end", "begin", "finish", "conclude"],
+        "left": 0,
+        "right": 4
+      },
+      "expected": 0
+    },
+    {
+      "case_id": 57,
+      "input": {
+        "words": ["education", "is", "awesome", "and", "effective"],
+        "left": 1,
+        "right": 4
+      },
+      "expected": 2
+    },
+    {
+      "case_id": 58,
+      "input": {
+        "words": ["xyz", "uvw", "qrs", "tuv", "lmn", "opq"],
+        "left": 1,
+        "right": 5
+      },
+      "expected": 0
+    },
+    {
+      "case_id": 59,
+      "input": {
+        "words": ["aeiou", "ueiou", "ieoai", "oeuia", "uaeio"],
+        "left": 0,
+        "right": 4
+      },
+      "expected": 5
+    },
+    {
+      "case_id": 60,
+      "input": {
+        "words": ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o"],
+        "left": 0,
+        "right": 14
+      },
+      "expected": 4
+    },
+    {
+      "case_id": 61,
+      "input": {
+        "words": ["xylophone", "xylophones", "xylophonically", "xylophonist", "xylophonists"],
+        "left": 0,
+        "right": 4
+      },
+      "expected": 0
+    },
+    {
+      "case_id": 62,
+      "input": {
+        "words": ["aeiou", "uaeiou", "aeu", "aue", "eua"],
+        "left": 0,
+        "right": 4
+      },
+      "expected": 5
+    },
+    {
+      "case_id": 63,
+      "input": {
+        "words": ["xylophone", "yacht", "gymnymphilia", "hydrangea", "ivory"],
+        "left": 0,
+        "right": 4
+      },
+      "expected": 0
+    },
+    {
+      "case_id": 64,
+      "input": {
+        "words": ["bcd", "efg", "hij", "klm", "nop"],
+        "left": 0,
+        "right": 4
+      },
+      "expected": 0
+    },
+    {
+      "case_id": 65,
+      "input": {
+        "words": ["algorithm", "education", "umbrella", "encyclopedia", "ocean"],
+        "left": 2,
+        "right": 4
+      },
+      "expected": 2
+    },
+    {
+      "case_id": 66,
+      "input": {
+        "words": ["a", "e", "i", "o", "u"],
+        "left": 0,
+        "right": 4
+      },
+      "expected": 5
+    },
+    {
+      "case_id": 67,
+      "input": {
+        "words": ["umbrella", "raincoat", "scarf", "boots", "gloves", "jacket", "shoes", "hat", "mittens", "gloves", "umbrella", "hat"],
+        "left": 0,
+        "right": 11
+      },
+      "expected": 2
+    },
+    {
+      "case_id": 68,
+      "input": {
+        "words": ["a", "a", "a", "a", "a", "a"],
+        "left": 0,
+        "right": 5
+      },
+      "expected": 6
+    },
+    {
+      "case_id": 69,
+      "input": {
+        "words": ["education", "algorithm", "encyclopedia", "under", "umbrella"],
+        "left": 1,
+        "right": 4
+      },
+      "expected": 2
+    },
+    {
+      "case_id": 70,
+      "input": {
+        "words": ["aeiou", "uoiea", "aieou", "euoia", "oueai"],
+        "left": 0,
+        "right": 4
+      },
+      "expected": 5
+    },
+    {
+      "case_id": 71,
+      "input": {
+        "words": ["education", "university", "algorithm", "optimization", "encyclopedia"],
+        "left": 1,
+        "right": 4
+      },
+      "expected": 1
+    },
+    {
+      "case_id": 72,
+      "input": {
+        "words": ["aabbcc", "ddeeff", "gghhii", "jjkkll", "mmnnoo"],
+        "left": 0,
+        "right": 4
+      },
+      "expected": 0
+    },
+    {
+      "case_id": 73,
+      "input": {
+        "words": ["education", "algorithm", "umbrella", "opposite", "idea"],
+        "left": 0,
+        "right": 4
+      },
+      "expected": 3
+    },
+    {
+      "case_id": 74,
+      "input": {
+        "words": ["aeiouaeiou", "uoieauoiea", "aieouaieou", "euoiaeuoia", "oueaioueai"],
+        "left": 1,
+        "right": 3
+      },
+      "expected": 3
+    },
+    {
+      "case_id": 75,
+      "input": {
+        "words": ["aaa", "eee", "iii", "ooo", "uuu"],
+        "left": 0,
+        "right": 4
+      },
+      "expected": 5
+    },
+    {
+      "case_id": 76,
+      "input": {
+        "words": ["education", "umbrella", "idea", "algorithm", "elephant"],
+        "left": 1,
+        "right": 4
+      },
+      "expected": 2
+    },
+    {
+      "case_id": 77,
+      "input": {
+        "words": ["abacaxi", "elderberry", "fig", "grape", "honeydew", "kiwi", "lemon", "mango", "nectarine", "orange", "papaya", "quince"],
+        "left": 0,
+        "right": 11
+      },
+      "expected": 2
+    },
+    {
+      "case_id": 78,
+      "input": {
+        "words": ["sequential", "programming", "leads", "to", "complexity"],
+        "left": 1,
+        "right": 3
+      },
+      "expected": 0
+    },
+    {
+      "case_id": 79,
+      "input": {
+        "words": ["aeiou", "uoiea", "ioeau", "oaeiu", "ueiao"],
+        "left": 0,
+        "right": 4
+      },
+      "expected": 5
+    },
+    {
+      "case_id": 80,
+      "input": {
+        "words": ["aaaaa", "eeeee", "iiiii", "ooooo", "uuuuu"],
+        "left": 1,
+        "right": 3
+      },
+      "expected": 3
+    },
+    {
+      "case_id": 81,
+      "input": {
+        "words": ["sequence", "encounter", "interval", "equation", "occasion"],
+        "left": 2,
+        "right": 4
+      },
+      "expected": 0
+    },
+    {
+      "case_id": 82,
+      "input": {
+        "words": ["acoustic", "analysis", "bassoon", "clarinet", "didgeridoo", "flute", "guitar", "harp", "harp", "piano", "tuba"],
+        "left": 2,
+        "right": 10
+      },
+      "expected": 0
+    },
+    {
+      "case_id": 83,
+      "input": {
+        "words": ["sequence", "sequences", "sequentially", "sequenceable", "sequenceless"],
+        "left": 2,
+        "right": 4
+      },
+      "expected": 0
+    },
+    {
+      "case_id": 84,
+      "input": {
+        "words": ["ae", "ea", "oi", "io", "ou", "uo"],
+        "left": 0,
+        "right": 5
+      },
+      "expected": 6
+    },
+    {
+      "case_id": 85,
+      "input": {
+        "words": ["understanding", "learning", "grows", "every", "day"],
+        "left": 0,
+        "right": 2
+      },
+      "expected": 0
+    },
+    {
+      "case_id": 86,
+      "input": {
+        "words": ["a", "b", "c", "d", "e"],
+        "left": 0,
+        "right": 4
+      },
+      "expected": 2
+    },
+    {
+      "case_id": 87,
+      "input": {
+        "words": ["", "a", "e", "i", "o", "u"],
+        "left": 0,
+        "right": 5
+      },
+      "expected": "Error: string index out of range"
+    },
+    {
+      "case_id": 88,
+      "input": {
+        "words": ["elephant", "giraffe", "hippo", "iguana", "jaguar"],
+        "left": 0,
+        "right": 4
+      },
+      "expected": 1
+    },
+    {
+      "case_id": 89,
+      "input": {
+        "words": ["xylophone", "xylo", "yolo", "mono", "neon"],
+        "left": 1,
+        "right": 4
+      },
+      "expected": 0
+    },
+    {
+      "case_id": 90,
+      "input": {
+        "words": ["sequence", "structure", "synergy", "symmetry", "spectrum", "syzygy"],
+        "left": 2,
+        "right": 5
+      },
+      "expected": 0
+    },
+    {
+      "case_id": 91,
+      "input": {
+        "words": ["vowel", "testing", "algorithm", "education", "umbrella", "sequence", "interview", "exhibition", "occasion", "environment"],
+        "left": 3,
+        "right": 8
+      },
+      "expected": 1
+    },
+    {
+      "case_id": 92,
+      "input": {
+        "words": ["algorithm", "data", "structure", "programming", "language"],
+        "left": 2,
+        "right": 4
+      },
+      "expected": 0
+    },
+    {
+      "case_id": 93,
+      "input": {
+        "words": ["", "a", "e", "i", "o", "u", "aeiou", "uoiea", "euioa", "aoieu"],
+        "left": 1,
+        "right": 9
+      },
+      "expected": 9
+    },
+    {
+      "case_id": 94,
+      "input": {
+        "words": ["vowel", "words", "only", "here", "now"],
+        "left": 0,
+        "right": 4
+      },
+      "expected": 0
+    },
+    {
+      "case_id": 95,
+      "input": {
+        "words": ["aeiou", "eioua", "iouae", "ouaei", "uaeio"],
+        "left": 0,
+        "right": 4
+      },
+      "expected": 5
+    },
+    {
+      "case_id": 96,
+      "input": {
+        "words": ["vowel", "vowels", "vowelstring", "vowelstrings", "vowels", "strings", "string", "vow", "owel", "vowels", "vowel"],
+        "left": 3,
+        "right": 10
+      },
+      "expected": 0
+    },
+    {
+      "case_id": 97,
+      "input": {
+        "words": ["vowel", "start", "end", "middle", "zone", "sequence"],
+        "left": 2,
+        "right": 5
+      },
+      "expected": 0
+    },
+    {
+      "case_id": 98,
+      "input": {
+        "words": ["sequence", "queue", "deque", "peep", "beep", "keel", "heel", "heal", "heap", "heap", "jeep", "weep"],
+        "left": 1,
+        "right": 11
+      },
+      "expected": 0
+    },
+    {
+      "case_id": 99,
+      "input": {
+        "words": ["elephant", "antelope", "giraffe", "hippo", "iguana", "jackal", "kangaroo", "lemur"],
+        "left": 1,
+        "right": 7
+      },
+      "expected": 2
+    },
+    {
+      "case_id": 100,
+      "input": {
+        "words": ["amazing", "algorithm", "umbrella", "opposite", "idea", "beautiful", "enormous", "interesting", "unexpected", "odd"],
+        "left": 0,
+        "right": 9
+      },
+      "expected": 3
+    }
+  ]
+}

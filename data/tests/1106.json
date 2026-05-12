@@ -1,0 +1,962 @@
+{
+  "schema_version": 1,
+  "problem_id": 1106,
+  "title": "Parsing A Boolean Expression",
+  "method": "parseBoolExpr",
+  "signature": {
+    "params": [
+      {
+        "name": "expression",
+        "type": "STRING"
+      }
+    ],
+    "returns": "BOOL"
+  },
+  "cases": [
+    {
+      "case_id": 1,
+      "input": {
+        "expression": "!(!(t))"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 2,
+      "input": {
+        "expression": "|(t,t,t)"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 3,
+      "input": {
+        "expression": "|(f,f,f,t)"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 4,
+      "input": {
+        "expression": "&(t,t,t,t,t,t)"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 5,
+      "input": {
+        "expression": "!(&(&(t,f),|(t,t)))"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 6,
+      "input": {
+        "expression": "&(|(f,t),&(t,f))"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 7,
+      "input": {
+        "expression": "!(|(t,t))"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 8,
+      "input": {
+        "expression": "|(&(t,f),&(f,t))"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 9,
+      "input": {
+        "expression": "!(&(f,t))"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 10,
+      "input": {
+        "expression": "|(f,t,f,t)"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 11,
+      "input": {
+        "expression": "!(f)"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 12,
+      "input": {
+        "expression": "&(f,t)"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 13,
+      "input": {
+        "expression": "&(!(t),f)"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 14,
+      "input": {
+        "expression": "!(&(|(f),&(f,t)))"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 15,
+      "input": {
+        "expression": "&(t,|(f,f,f,t),!(&(f,t)))"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 16,
+      "input": {
+        "expression": "&(t,t,t,t)"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 17,
+      "input": {
+        "expression": "&(|(f))"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 18,
+      "input": {
+        "expression": "!(&(|(t),|(f)),&(t,f))"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 19,
+      "input": {
+        "expression": "|(f,f,f,f,f,f)"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 20,
+      "input": {
+        "expression": "t"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 21,
+      "input": {
+        "expression": "|(t,f)"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 22,
+      "input": {
+        "expression": "f"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 23,
+      "input": {
+        "expression": "|(|(t,f),&(f,f))"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 24,
+      "input": {
+        "expression": "!(t)"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 25,
+      "input": {
+        "expression": "|(&(t,f),t)"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 26,
+      "input": {
+        "expression": "!(!(!(t)))"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 27,
+      "input": {
+        "expression": "|(&(f,t),|(t,f))"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 28,
+      "input": {
+        "expression": "&(|(t,f),&(f,t),|(t,t),&(f,f))"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 29,
+      "input": {
+        "expression": "|(t,f,t,f)"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 30,
+      "input": {
+        "expression": "&(t,t,t)"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 31,
+      "input": {
+        "expression": "&(|(t,f),|(f,t))"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 32,
+      "input": {
+        "expression": "|(f,&(t,f),|(f,f))"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 33,
+      "input": {
+        "expression": "&(|(t,f),&(f,t))"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 34,
+      "input": {
+        "expression": "|(&(t,f),|(t,t))"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 35,
+      "input": {
+        "expression": "|(f,!(t),&(|(f,f),|(t,t)))"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 36,
+      "input": {
+        "expression": "&(|(|(|(t,f),f),t),!(f),&(t,!(f)))"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 37,
+      "input": {
+        "expression": "|(&(t,|(f,f),t),&(f,!(t),t),|(t,f,f))"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 38,
+      "input": {
+        "expression": "!(&(|(f,t,f),&(t,f)),|(t,t,f))"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 39,
+      "input": {
+        "expression": "&(|(t,&(f,f),t),&(f,|(t,f),t),|(&(f,t),f))"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 40,
+      "input": {
+        "expression": "|(&(t,|(f,f,f)),!(|(t,t,t)),&(f,f))"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 41,
+      "input": {
+        "expression": "&(|(&(t,f),&(f,f)),&(t,!(t)),f)"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 42,
+      "input": {
+        "expression": "&(|(f,t),&(t,f),|(f,t),&(t,f),|(f,t),&(t,f),|(f,t),&(t,f))"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 43,
+      "input": {
+        "expression": "&(f,!(t),|(&(t,!(t)),|(t,f,f,t,f)),&(f,f,t,t,t,t,f,t))"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 44,
+      "input": {
+        "expression": "&(t,|(f,!(t),&(t,f,t,t),|(f,f,f,f)),&(f,|(t,f,t,t,t)),!(f,|(t,f,f,f,f)),&(t,t,t),t)"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 45,
+      "input": {
+        "expression": "|(&(t,f),&(f,t),|(t,t),|(f,f),!(t),!(f),&(t,|(t,t)),|(t,&(t,f)))"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 46,
+      "input": {
+        "expression": "|(&(f,t),&(t,f),&(f,t),&(t,f),&(f,t),&(t,f),&(f,t),&(t,f))"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 47,
+      "input": {
+        "expression": "&(&(&(&(&(&(&(&(&(&(&(&(t),t),t),t),t),t),t),t),t),t),t),t),t)"
+      },
+      "expected": "Error: list index out of range"
+    },
+    {
+      "case_id": 48,
+      "input": {
+        "expression": "|(|(|(|(|(|(|(|(t),f),t),f),f),f),&(t,t,t,t,t,t,t,t),|(t,f,f,t,f),&(f,f,t,t,t,t,f,t),f,t)"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 49,
+      "input": {
+        "expression": "|(&(t,!(f)),&(f,!(t)),&(t,t),!(f))"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 50,
+      "input": {
+        "expression": "|(f,!(t),&(t,f),!(f))"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 51,
+      "input": {
+        "expression": "|(&(f,t),|(t,f),!(f))"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 52,
+      "input": {
+        "expression": "!(&(|(f,t),&(f,f)),|(t,t,t))"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 53,
+      "input": {
+        "expression": "&(|(f,f,t),!(t),|(f,f,f),&(|(t,f),f),|(t,t,t))"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 54,
+      "input": {
+        "expression": "!(&(|(t,f,f),f),|(t,t,t))"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 55,
+      "input": {
+        "expression": "&(f,!(t),&(t,!(f)),|(f,t))"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 56,
+      "input": {
+        "expression": "&(|(t,f),|(f,t),&(t,t),|(t,t),&(t,f),|(f,t))"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 57,
+      "input": {
+        "expression": "!(&(|(f,!(t),&(t,f)),!(|(f,f,t)),&(t,f),|(f,t,t,t),&(t,|(f,f,f),t),&(t,f,f,t),|(t,!(f),f),f,!(t),&(f,t,f),|(t,f,t),f,!(t),&(f,t,f),|(t,f,t),f))"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 58,
+      "input": {
+        "expression": "!(&(|(&(f,t),f),f))"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 59,
+      "input": {
+        "expression": "|(f,!(f),&(t,f),|(t,t,f,f),&(t,t,t,t))"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 60,
+      "input": {
+        "expression": "&(|(f,f,t),!(t),|(f,t,f))"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 61,
+      "input": {
+        "expression": "!(&(|(&(t,f),&(f,f)),&(t,t),f))"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 62,
+      "input": {
+        "expression": "&(f,!(t),|(f,f,t),&(t,t,t))"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 63,
+      "input": {
+        "expression": "&(t,|(f,!(t),&(t,f,t),|(f,f,f)),&(f,|(t,f,t,t)),!(f,|(t,f)))"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 64,
+      "input": {
+        "expression": "&(|(|(|(|(|(|(f,t),f),t),t),t),t),t),t),&(f,|(t,!(t),f),&(t,t,t,t,t,t)),!(|(t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t)))"
+      },
+      "expected": "Error: list index out of range"
+    },
+    {
+      "case_id": 65,
+      "input": {
+        "expression": "!(&(|(t,f),f),&(t,t,t))"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 66,
+      "input": {
+        "expression": "&(t,|(f,!(t),&(t,f)),&(f,|(t,f,t)),!(f))"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 67,
+      "input": {
+        "expression": "&(&(t,t),&(t,|(t,t)),&(t,|(t,|(t,t))),&(t,|(t,|(t,|(t,t)))))"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 68,
+      "input": {
+        "expression": "!(&(|(f,t),&(t,f)),|(f,f,f,f))"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 69,
+      "input": {
+        "expression": "&(|(f,f,t),!(t),|(f,f,f))"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 70,
+      "input": {
+        "expression": "&(f,|(&(f,t),f),|(t,t),!(&(f,t)))"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 71,
+      "input": {
+        "expression": "!(&(|(|(f,t),f),&(f,t,f,t)),|(f,f,f,f,f,t,t),&(t,t,t,t,t,t,t,t))"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 72,
+      "input": {
+        "expression": "!(&(|(f,f,f),t),&(|(|(|(|(|(|(f,t),f),t),t),t),t),t),t),&(f,|(t,!(t),f),&(t,t,t,t,t,t)),!(|(t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t)))"
+      },
+      "expected": "Error: list index out of range"
+    },
+    {
+      "case_id": 73,
+      "input": {
+        "expression": "&(f,!(t),|(&(t,!(t)),|(t,f,f,t,f)),&(f,f,t,t,t,t),&(t,t,t,t,t,t,t,t),f)"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 74,
+      "input": {
+        "expression": "&(|(|(|(f),f),t),&(t,f,t),!(f))"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 75,
+      "input": {
+        "expression": "!(&(|(t,f),&(f,t)),|(t,t))"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 76,
+      "input": {
+        "expression": "&(|(t,t,t),&(t,t,t),&(f,f,f),|(t,t,t),|(f,f,f))"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 77,
+      "input": {
+        "expression": "!(&(!(f),t),|(f,&(t,f),f),&(t,f))"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 78,
+      "input": {
+        "expression": "&(|(t,!(f),&(t,f)),!(|(f,f,t)),&(t,f),|(f,t,t,t))"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 79,
+      "input": {
+        "expression": "&(|(t,!(f),&(f,t)),|(t,!(t),&(f,f)),|(t,t))"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 80,
+      "input": {
+        "expression": "|(&(t,!(t)),f,!(f),t)"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 81,
+      "input": {
+        "expression": "!(&(&(t,t),&(f,f)),|(&(t,f),&(t,t)))"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 82,
+      "input": {
+        "expression": "&(f,|(&(f,t),f),|(t,t))"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 83,
+      "input": {
+        "expression": "|(&(t,!(t)),f,!(f),t,!(|(&(f,t),f)))"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 84,
+      "input": {
+        "expression": "!(&(f,|(&(t,f),f),&(t,t,t)))"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 85,
+      "input": {
+        "expression": "|(f,&(|(t,f),&(t,f)),|(t,f))"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 86,
+      "input": {
+        "expression": "&(t,!(f),|(&(t,t),|(f,f)),&(|(t,f),f))"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 87,
+      "input": {
+        "expression": "!(&(|(&(t,f),t),&(f,|(t,f,t))),|(f,!(t),&(t,f,t)),!(f))"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 88,
+      "input": {
+        "expression": "&(|(t,f),&(t,f),|(t,t),|(f,f),&(t,!(f)))"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 89,
+      "input": {
+        "expression": "|(|(|(f),f),f)"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 90,
+      "input": {
+        "expression": "&(|(|(|(|(|(|(|(|(|(|(|(|(f,t),f),t),t),t),t),t),t),t),t),t),t),t),&(f,|(t,!(t),f),&(t,t,t,t,t,t)),!(|(t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t)))"
+      },
+      "expected": "Error: list index out of range"
+    },
+    {
+      "case_id": 91,
+      "input": {
+        "expression": "&(f,!(t),&(t,!(f)),|(f,t),!(&(t,!(t))))"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 92,
+      "input": {
+        "expression": "|(|(|(|(|(t),f),t),f),&(t,!(f)))"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 93,
+      "input": {
+        "expression": "|(|(|(|(|(|(|(|(f),f),f),f),f),f),f),f)"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 94,
+      "input": {
+        "expression": "!(&(|(f,f,f,t),!(t),|(t,t,t)),|(f,&(t,|(f,t),&(f,f)),!(f)))"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 95,
+      "input": {
+        "expression": "&(|(|(|(|(t),f),t),f),&(t,t,t,t,t,t,t,t),|(t,f,f,t,f),&(f,f,t,t,t,t,f,t),f)"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 96,
+      "input": {
+        "expression": "|(f,&(|(f,f),t),&(f,|(t,f),f),!(f))"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 97,
+      "input": {
+        "expression": "&(|(|(t,f),f),&(t,!(f)),!(|(t,f)))"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 98,
+      "input": {
+        "expression": "&(|(f,f,f),|(t,f,t),&(t,t))"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 99,
+      "input": {
+        "expression": "&(|(t,&(f,t)),|(t,|(f,f)),&(t,|(t,|(f,t))),|(t,&(f,|(f,t))))"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 100,
+      "input": {
+        "expression": "!(|(f,&(t,|(t,f)),!(t)))"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 101,
+      "input": {
+        "expression": "!(&(|(|(|(|(f),t),f),t),&(t,f,t),!(f),|(t,f)))"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 102,
+      "input": {
+        "expression": "!(&(|(t,f),&(f,f)),!(|(t,t,t,t)))"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 103,
+      "input": {
+        "expression": "&(|(f,f,t),&(f,f,f),!(t),|(t,f,f,f,t),&(f,t,t,f))"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 104,
+      "input": {
+        "expression": "!(&(|(&(t,|(f,t)),t),&(f,!(t),t)),|(t,!(f),&(f,f)))"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 105,
+      "input": {
+        "expression": "&(|(f,f,f,t),|(t,f,t,f),&(t,t,t,t))"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 106,
+      "input": {
+        "expression": "|(f,&(t,|(f,t),&(f,f)),!(f))"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 107,
+      "input": {
+        "expression": "|(|(|(|(|(|(|(t),f),t),f),f),f),&(t,t,t,t,t,t,t,t),&(t,t,t,t,t,t,t,t))"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 108,
+      "input": {
+        "expression": "&(|(t,f),!(f),&(t,t,t))"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 109,
+      "input": {
+        "expression": "|(t,&(|(f,f),&(t,f)),&(t,|(t,f),&(f,f)))"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 110,
+      "input": {
+        "expression": "!(|(|(|(f,t),t),f),&(f,|(t,!(t),f),&(t,t,t,t,t,t)))"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 111,
+      "input": {
+        "expression": "!(|(&(f,t),|(t,f),&(f,f),|(t,t),&(t,f),|(f,f)))"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 112,
+      "input": {
+        "expression": "|(&(t,t,t,t),|(|(f,f),f),&(t,f,f,t,t),!(t))"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 113,
+      "input": {
+        "expression": "|(&(f,t),&(t,f),|(t,t))"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 114,
+      "input": {
+        "expression": "|(|(f,f,f),&(t,t,t),!(|(f,f)))"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 115,
+      "input": {
+        "expression": "&(|(t,f),&(f,|(t,f)),!(t)),|(&(f,t),&(t,t)))"
+      },
+      "expected": "Error: list index out of range"
+    },
+    {
+      "case_id": 116,
+      "input": {
+        "expression": "!(&(|(&(f,f),t),f),|(f,|(t,f),&(f,t)))"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 117,
+      "input": {
+        "expression": "|(&(t,t,t,t),|(f,f,f,f),&(t,f,t,f))"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 118,
+      "input": {
+        "expression": "|(&(t,f,!(t)),&(t,f,t),&(f,!(t)),!(f),t)"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 119,
+      "input": {
+        "expression": "&(|(|(f,t),t),f),&(f,|(t,!(t),f),&(t,t,t,t,t,t)),!(|(t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t))"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 120,
+      "input": {
+        "expression": "!(&(t,!(f),&(t,t),|(t,f),&(t,!(t),&(f,f))))"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 121,
+      "input": {
+        "expression": "!(&(|(f,f),&(t,t),&(t,f)),|(t,!(t),&(t,f)),&(t,t))"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 122,
+      "input": {
+        "expression": "!(&(|(|(|(|(|(f),t),f),t),&(t,f,t),!(f),|(t,f)),&(f,t,t,f),!(t))"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 123,
+      "input": {
+        "expression": "|(&(t,f),&(t,t,t),!(f),&(f,!(t)))"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 124,
+      "input": {
+        "expression": "!(!(!(!(!(t)))))"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 125,
+      "input": {
+        "expression": "&(|(t,f),|(f,t),&(t,t),|(t,t),&(t,f),|(f,t),!(t),!(f),&(t,|(t,t)),|(t,&(t,f)),&(f,|(t,f)),|(f,|(t,f)))"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 126,
+      "input": {
+        "expression": "&(f,|(t,|(f,!(t))))"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 127,
+      "input": {
+        "expression": "|(|(|(|(|(f),f),t),&(t,f,t),!(f),|(t,f)),&(f,t,t,f))"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 128,
+      "input": {
+        "expression": "!(&(&(t,t),|(f,f),&(f,t)))"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 129,
+      "input": {
+        "expression": "!(&(|(&(t,f),f),&(t,|(t,f))),|(t,!(f),t))"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 130,
+      "input": {
+        "expression": "!(&(|(&(t,f),t),&(f,|(t,f))),|(f,!(t)))"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 131,
+      "input": {
+        "expression": "&(f,&(|(f,f,t),!(t),|(f,f,f)),|(f,&(t,|(f,t),&(f,f)),!(f)),!(&(|(f,f,f,t),!(t),|(t,t,t)),|(f,&(t,|(f,t),&(f,f)),!(f))))"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 132,
+      "input": {
+        "expression": "|(&(f,t,f),|(t,f,t),&(t,t,t,t,t))"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 133,
+      "input": {
+        "expression": "|(|(|(t,f),f),&(|(t,t),&(f,t))),!(t)"
+      },
+      "expected": true
+    },
+    {
+      "case_id": 134,
+      "input": {
+        "expression": "!(|(t,!(t),&(t,!(f))))"
+      },
+      "expected": false
+    },
+    {
+      "case_id": 135,
+      "input": {
+        "expression": "!(|(&(t,!(t)),&(f,!(f)),&(t,t),!(f)))"
+      },
+      "expected": false
+    }
+  ]
+}

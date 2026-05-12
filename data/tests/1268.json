@@ -1,0 +1,1520 @@
+{
+  "schema_version": 1,
+  "problem_id": 1268,
+  "title": "Search Suggestions System",
+  "method": "suggestedProducts",
+  "signature": {
+    "params": [
+      {
+        "name": "products",
+        "type": "STRING_ARRAY"
+      },
+      {
+        "name": "searchWord",
+        "type": "STRING"
+      }
+    ],
+    "returns": "STRING_MATRIX"
+  },
+  "comparison": "unordered_all",
+  "cases": [
+    {
+      "case_id": 1,
+      "input": {
+        "products": ["keyboard", "keypad", "keys", "kick"],
+        "searchWord": "key"
+      },
+      "expected": [
+        ["keyboard", "keypad", "keys"],
+        ["keyboard", "keypad", "keys"],
+        ["keyboard", "keypad", "keys"]
+      ]
+    },
+    {
+      "case_id": 2,
+      "input": {
+        "products": ["keyboard", "keypad", "mousepad"],
+        "searchWord": "key"
+      },
+      "expected": [
+        ["keyboard", "keypad"],
+        ["keyboard", "keypad"],
+        ["keyboard", "keypad"]
+      ]
+    },
+    {
+      "case_id": 3,
+      "input": {
+        "products": ["apple", "banana", "grape", "orange"],
+        "searchWord": "or"
+      },
+      "expected": [
+        ["orange"],
+        ["orange"]
+      ]
+    },
+    {
+      "case_id": 4,
+      "input": {
+        "products": ["aaa", "aaab", "aaac", "aab"],
+        "searchWord": "aa"
+      },
+      "expected": [
+        ["aaa", "aaab", "aaac"],
+        ["aaa", "aaab", "aaac"]
+      ]
+    },
+    {
+      "case_id": 5,
+      "input": {
+        "products": ["charger", "cable", "case"],
+        "searchWord": "ca"
+      },
+      "expected": [
+        ["cable", "case", "charger"],
+        ["cable", "case"]
+      ]
+    },
+    {
+      "case_id": 6,
+      "input": {
+        "products": ["bag", "bags", "banner", "box", "car"],
+        "searchWord": "ba"
+      },
+      "expected": [
+        ["bag", "bags", "banner"],
+        ["bag", "bags", "banner"]
+      ]
+    },
+    {
+      "case_id": 7,
+      "input": {
+        "products": ["aaa", "aab", "aac", "aad", "aae"],
+        "searchWord": "aa"
+      },
+      "expected": [
+        ["aaa", "aab", "aac"],
+        ["aaa", "aab", "aac"]
+      ]
+    },
+    {
+      "case_id": 8,
+      "input": {
+        "products": ["aaa", "aab", "aac", "aad"],
+        "searchWord": "aa"
+      },
+      "expected": [
+        ["aaa", "aab", "aac"],
+        ["aaa", "aab", "aac"]
+      ]
+    },
+    {
+      "case_id": 9,
+      "input": {
+        "products": ["apple", "apples", "application"],
+        "searchWord": "app"
+      },
+      "expected": [
+        ["apple", "apples", "application"],
+        ["apple", "apples", "application"],
+        ["apple", "apples", "application"]
+      ]
+    },
+    {
+      "case_id": 10,
+      "input": {
+        "products": ["apple", "banana", "grape", "orange"],
+        "searchWord": "ba"
+      },
+      "expected": [
+        ["banana"],
+        ["banana"]
+      ]
+    },
+    {
+      "case_id": 11,
+      "input": {
+        "products": ["keyboard", "keypad", "keyboard", "keychain"],
+        "searchWord": "key"
+      },
+      "expected": [
+        ["keyboard", "keyboard", "keychain"],
+        ["keyboard", "keyboard", "keychain"],
+        ["keyboard", "keyboard", "keychain"]
+      ]
+    },
+    {
+      "case_id": 12,
+      "input": {
+        "products": ["havana"],
+        "searchWord": "havana"
+      },
+      "expected": [
+        ["havana"],
+        ["havana"],
+        ["havana"],
+        ["havana"],
+        ["havana"],
+        ["havana"]
+      ]
+    },
+    {
+      "case_id": 13,
+      "input": {
+        "products": ["keyboard", "keypad", "kiosk"],
+        "searchWord": "key"
+      },
+      "expected": [
+        ["keyboard", "keypad", "kiosk"],
+        ["keyboard", "keypad"],
+        ["keyboard", "keypad"]
+      ]
+    },
+    {
+      "case_id": 14,
+      "input": {
+        "products": ["apple", "banana", "grape", "orange", "peach"],
+        "searchWord": "app"
+      },
+      "expected": [
+        ["apple"],
+        ["apple"],
+        ["apple"]
+      ]
+    },
+    {
+      "case_id": 15,
+      "input": {
+        "products": ["apple", "apricot", "banana", "bat", "berry"],
+        "searchWord": "ba"
+      },
+      "expected": [
+        ["banana", "bat", "berry"],
+        ["banana", "bat"]
+      ]
+    },
+    {
+      "case_id": 16,
+      "input": {
+        "products": ["keyboard", "keypad", "keyboardpad"],
+        "searchWord": "key"
+      },
+      "expected": [
+        ["keyboard", "keyboardpad", "keypad"],
+        ["keyboard", "keyboardpad", "keypad"],
+        ["keyboard", "keyboardpad", "keypad"]
+      ]
+    },
+    {
+      "case_id": 17,
+      "input": {
+        "products": ["mobile", "mouse", "moneypot", "monitor", "mousepad"],
+        "searchWord": "mouse"
+      },
+      "expected": [
+        ["mobile", "moneypot", "monitor"],
+        ["mobile", "moneypot", "monitor"],
+        ["mouse", "mousepad"],
+        ["mouse", "mousepad"],
+        ["mouse", "mousepad"]
+      ]
+    },
+    {
+      "case_id": 18,
+      "input": {},
+      "expected": "Error: Solution.suggestedProducts() missing 2 required positional arguments: 'products' and 'searchWord'"
+    },
+    {
+      "case_id": 19,
+      "input": {
+        "products": ["aardvark", "aardwolf", "albatross", "alligator", "alpaca", "antelope", "anteater"],
+        "searchWord": "aa"
+      },
+      "expected": [
+        ["aardvark", "aardwolf", "albatross"],
+        ["aardvark", "aardwolf"]
+      ]
+    },
+    {
+      "case_id": 20,
+      "input": {
+        "products": ["xylophone", "xylography", "xylem", "xenon", "xerox", "xerophyte", "xenodochial"],
+        "searchWord": "xero"
+      },
+      "expected": [
+        ["xenodochial", "xenon", "xerophyte"],
+        ["xenodochial", "xenon", "xerophyte"],
+        ["xerophyte", "xerox"],
+        ["xerophyte", "xerox"]
+      ]
+    },
+    {
+      "case_id": 21,
+      "input": {
+        "products": ["jacket", "jaguar", "jar", "jasmine", "jeep"],
+        "searchWord": "ja"
+      },
+      "expected": [
+        ["jacket", "jaguar", "jar"],
+        ["jacket", "jaguar", "jar"]
+      ]
+    },
+    {
+      "case_id": 22,
+      "input": {},
+      "expected": "Error: Solution.suggestedProducts() missing 2 required positional arguments: 'products' and 'searchWord'"
+    },
+    {
+      "case_id": 23,
+      "input": {
+        "products": ["ant", "anteater", "antelope", "antenna", "antique", "antfarm", "antler"],
+        "searchWord": "ant"
+      },
+      "expected": [
+        ["ant", "anteater", "antelope"],
+        ["ant", "anteater", "antelope"],
+        ["ant", "anteater", "antelope"]
+      ]
+    },
+    {
+      "case_id": 24,
+      "input": {
+        "products": ["television", "telescope", "temperature", "tennis", "tense"],
+        "searchWord": "te"
+      },
+      "expected": [
+        ["telescope", "television", "temperature"],
+        ["telescope", "television", "temperature"]
+      ]
+    },
+    {
+      "case_id": 25,
+      "input": {
+        "products": ["apple", "apricot", "banana", "bat", "berry", "blackberry", "blueberry"],
+        "searchWord": "b"
+      },
+      "expected": [
+        ["banana", "bat", "berry"]
+      ]
+    },
+    {
+      "case_id": 26,
+      "input": {},
+      "expected": "Error: Solution.suggestedProducts() missing 2 required positional arguments: 'products' and 'searchWord'"
+    },
+    {
+      "case_id": 27,
+      "input": {
+        "products": ["grape", "grapefruit", "grapevine", "graph", "grapejuice"],
+        "searchWord": "gr"
+      },
+      "expected": [
+        ["grape", "grapefruit", "grapejuice"],
+        ["grape", "grapefruit", "grapejuice"]
+      ]
+    },
+    {
+      "case_id": 28,
+      "input": {
+        "products": ["dog", "dolphin", "dome", "domestic", "domino"],
+        "searchWord": "dom"
+      },
+      "expected": [
+        ["dog", "dolphin", "dome"],
+        ["dog", "dolphin", "dome"],
+        ["dome", "domestic", "domino"]
+      ]
+    },
+    {
+      "case_id": 29,
+      "input": {
+        "products": ["magnifier", "magnificent", "magnet", "magnolia", "magnitude"],
+        "searchWord": "magn"
+      },
+      "expected": [
+        ["magnet", "magnificent", "magnifier"],
+        ["magnet", "magnificent", "magnifier"],
+        ["magnet", "magnificent", "magnifier"],
+        ["magnet", "magnificent", "magnifier"]
+      ]
+    },
+    {
+      "case_id": 30,
+      "input": {
+        "products": ["apple", "application", "appliance", "appropriate", "appetizer"],
+        "searchWord": "appl"
+      },
+      "expected": [
+        ["appetizer", "apple", "appliance"],
+        ["appetizer", "apple", "appliance"],
+        ["appetizer", "apple", "appliance"],
+        ["apple", "appliance", "application"]
+      ]
+    },
+    {
+      "case_id": 31,
+      "input": {
+        "products": ["grape", "grapefruit", "grapejuice", "graphite", "grapevine", "grapefruitjuice"],
+        "searchWord": "grape"
+      },
+      "expected": [
+        ["grape", "grapefruit", "grapefruitjuice"],
+        ["grape", "grapefruit", "grapefruitjuice"],
+        ["grape", "grapefruit", "grapefruitjuice"],
+        ["grape", "grapefruit", "grapefruitjuice"],
+        ["grape", "grapefruit", "grapefruitjuice"]
+      ]
+    },
+    {
+      "case_id": 32,
+      "input": {
+        "products": ["algorithm", "array", "binary", "bit", "bitset", "bucket", "class", "collection", "datatype", "enumerate", "file", "float", "function", "garbage", "graph", "hash", "id", "implementation", "integer", "java", "keyword", "list", "map", "namespace", "None", "object", "operator", "pair", "pointer", "queue", "range", "reference", "set", "stack", "string", "struct", "template", "typedef", "union", "variable", "while", "xor"],
+        "searchWord": "algo"
+      },
+      "expected": [
+        ["algorithm", "array"],
+        ["algorithm"],
+        ["algorithm"],
+        ["algorithm"]
+      ]
+    },
+    {
+      "case_id": 33,
+      "input": {
+        "products": ["hamburger", "hammock", "hammer", "hammerhead", "handheld"],
+        "searchWord": "ham"
+      },
+      "expected": [
+        ["hamburger", "hammer", "hammerhead"],
+        ["hamburger", "hammer", "hammerhead"],
+        ["hamburger", "hammer", "hammerhead"]
+      ]
+    },
+    {
+      "case_id": 34,
+      "input": {
+        "products": ["watermelon", "water", "wave", "wonder", "wonderland"],
+        "searchWord": "wat"
+      },
+      "expected": [
+        ["water", "watermelon", "wave"],
+        ["water", "watermelon", "wave"],
+        ["water", "watermelon"]
+      ]
+    },
+    {
+      "case_id": 35,
+      "input": {
+        "products": ["amazon", "amazing", "ambassador", "ambient", "amplifier"],
+        "searchWord": "ambi"
+      },
+      "expected": [
+        ["amazing", "amazon", "ambassador"],
+        ["amazing", "amazon", "ambassador"],
+        ["ambassador", "ambient"],
+        ["ambient"]
+      ]
+    },
+    {
+      "case_id": 36,
+      "input": {
+        "products": ["xylophone", "xylography", "xylophone", "xylophone", "xylophone"],
+        "searchWord": "xylo"
+      },
+      "expected": [
+        ["xylography", "xylophone", "xylophone"],
+        ["xylography", "xylophone", "xylophone"],
+        ["xylography", "xylophone", "xylophone"],
+        ["xylography", "xylophone", "xylophone"]
+      ]
+    },
+    {
+      "case_id": 37,
+      "input": {
+        "products": ["car", "card", "cardboard", "cargo", "cartoon"],
+        "searchWord": "car"
+      },
+      "expected": [
+        ["car", "card", "cardboard"],
+        ["car", "card", "cardboard"],
+        ["car", "card", "cardboard"]
+      ]
+    },
+    {
+      "case_id": 38,
+      "input": {
+        "products": ["abcd", "abce", "abcf", "abcg", "abch", "abci", "abcj", "abck", "abcl", "abcm"],
+        "searchWord": "abc"
+      },
+      "expected": [
+        ["abcd", "abce", "abcf"],
+        ["abcd", "abce", "abcf"],
+        ["abcd", "abce", "abcf"]
+      ]
+    },
+    {
+      "case_id": 39,
+      "input": {
+        "products": ["zebra", "zinc", "zoo", "zesty", "zoning", "zest", "zookeeper"],
+        "searchWord": "ze"
+      },
+      "expected": [
+        ["zebra", "zest", "zesty"],
+        ["zebra", "zest", "zesty"]
+      ]
+    },
+    {
+      "case_id": 40,
+      "input": {
+        "products": ["aardvark", "aardwolf", "aardvark", "aardvark", "aardvark"],
+        "searchWord": "aard"
+      },
+      "expected": [
+        ["aardvark", "aardvark", "aardvark"],
+        ["aardvark", "aardvark", "aardvark"],
+        ["aardvark", "aardvark", "aardvark"],
+        ["aardvark", "aardvark", "aardvark"]
+      ]
+    },
+    {
+      "case_id": 41,
+      "input": {},
+      "expected": "Error: Solution.suggestedProducts() missing 2 required positional arguments: 'products' and 'searchWord'"
+    },
+    {
+      "case_id": 42,
+      "input": {},
+      "expected": "Error: Solution.suggestedProducts() missing 2 required positional arguments: 'products' and 'searchWord'"
+    },
+    {
+      "case_id": 43,
+      "input": {
+        "products": ["umbrella", "umber", "umbilical", "umbrella", "umbrella"],
+        "searchWord": "umb"
+      },
+      "expected": [
+        ["umber", "umbilical", "umbrella"],
+        ["umber", "umbilical", "umbrella"],
+        ["umber", "umbilical", "umbrella"]
+      ]
+    },
+    {
+      "case_id": 44,
+      "input": {
+        "products": ["a", "ab", "abc", "abcd", "abcde", "abcdef", "abcdefg", "abcdefgh", "abcdefghi", "abcdefghij"],
+        "searchWord": "abcdefghijk"
+      },
+      "expected": [
+        ["a", "ab", "abc"],
+        ["ab", "abc", "abcd"],
+        ["abc", "abcd", "abcde"],
+        ["abcd", "abcde", "abcdef"],
+        ["abcde", "abcdef", "abcdefg"],
+        ["abcdef", "abcdefg", "abcdefgh"],
+        ["abcdefg", "abcdefgh", "abcdefghi"],
+        ["abcdefgh", "abcdefghi", "abcdefghij"],
+        ["abcdefghi", "abcdefghij"],
+        ["abcdefghij"],
+        []
+      ]
+    },
+    {
+      "case_id": 45,
+      "input": {
+        "products": ["apple", "apricot", "banana", "bat", "berry", "blueberry", "blackberry"],
+        "searchWord": "ba"
+      },
+      "expected": [
+        ["banana", "bat", "berry"],
+        ["banana", "bat"]
+      ]
+    },
+    {
+      "case_id": 46,
+      "input": {
+        "products": ["zebra", "zebrafish", "zebrafly", "zebratail", "zebralight", "zebrashoe", "zebragram", "zebratic", "zebrastriped"],
+        "searchWord": "zebra"
+      },
+      "expected": [
+        ["zebra", "zebrafish", "zebrafly"],
+        ["zebra", "zebrafish", "zebrafly"],
+        ["zebra", "zebrafish", "zebrafly"],
+        ["zebra", "zebrafish", "zebrafly"],
+        ["zebra", "zebrafish", "zebrafly"]
+      ]
+    },
+    {
+      "case_id": 47,
+      "input": {
+        "products": ["infinite", "infinity", "infinitesimal", "infinity", "infinitary"],
+        "searchWord": "inf"
+      },
+      "expected": [
+        ["infinitary", "infinite", "infinitesimal"],
+        ["infinitary", "infinite", "infinitesimal"],
+        ["infinitary", "infinite", "infinitesimal"]
+      ]
+    },
+    {
+      "case_id": 48,
+      "input": {
+        "products": ["orange", "oregano", "organ", "organize", "organism"],
+        "searchWord": "org"
+      },
+      "expected": [
+        ["orange", "oregano", "organ"],
+        ["orange", "oregano", "organ"],
+        ["organ", "organism", "organize"]
+      ]
+    },
+    {
+      "case_id": 49,
+      "input": {
+        "products": ["xenon", "xerox", "xenophobe", "xenial", "xenolith", "xenoliths", "xenonarc", "xenonarcosis", "xenolithologist"],
+        "searchWord": "xen"
+      },
+      "expected": [
+        ["xenial", "xenolith", "xenolithologist"],
+        ["xenial", "xenolith", "xenolithologist"],
+        ["xenial", "xenolith", "xenolithologist"]
+      ]
+    },
+    {
+      "case_id": 50,
+      "input": {},
+      "expected": "Error: Solution.suggestedProducts() missing 2 required positional arguments: 'products' and 'searchWord'"
+    },
+    {
+      "case_id": 51,
+      "input": {},
+      "expected": "Error: Solution.suggestedProducts() missing 2 required positional arguments: 'products' and 'searchWord'"
+    },
+    {
+      "case_id": 52,
+      "input": {
+        "products": ["a", "aa", "aaa", "aaaa", "aaaaa", "aab", "aac", "aad", "aaf", "aag"],
+        "searchWord": "aa"
+      },
+      "expected": [
+        ["a", "aa", "aaa"],
+        ["aa", "aaa", "aaaa"]
+      ]
+    },
+    {
+      "case_id": 53,
+      "input": {
+        "products": ["laptop", "laptopbag", "laser", "lateral", "latitude"],
+        "searchWord": "lap"
+      },
+      "expected": [
+        ["laptop", "laptopbag", "laser"],
+        ["laptop", "laptopbag", "laser"],
+        ["laptop", "laptopbag"]
+      ]
+    },
+    {
+      "case_id": 54,
+      "input": {
+        "products": ["cherry", "cranberry", "cantaloupe", "carrot", "corn", "cucumber"],
+        "searchWord": "car"
+      },
+      "expected": [
+        ["cantaloupe", "carrot", "cherry"],
+        ["cantaloupe", "carrot"],
+        ["carrot"]
+      ]
+    },
+    {
+      "case_id": 55,
+      "input": {
+        "products": ["umbrella", "umbrella", "umbrella", "umbrella", "umbrella", "umbrella", "umbrella", "umbrella", "umbrella", "umbrella"],
+        "searchWord": "umbrella"
+      },
+      "expected": [
+        ["umbrella", "umbrella", "umbrella"],
+        ["umbrella", "umbrella", "umbrella"],
+        ["umbrella", "umbrella", "umbrella"],
+        ["umbrella", "umbrella", "umbrella"],
+        ["umbrella", "umbrella", "umbrella"],
+        ["umbrella", "umbrella", "umbrella"],
+        ["umbrella", "umbrella", "umbrella"],
+        ["umbrella", "umbrella", "umbrella"]
+      ]
+    },
+    {
+      "case_id": 56,
+      "input": {
+        "products": ["umbrella", "umbrella stand", "umbrella frame", "umbrella holder", "umbrella cover"],
+        "searchWord": "umb"
+      },
+      "expected": "Error: list index out of range"
+    },
+    {
+      "case_id": 57,
+      "input": {},
+      "expected": "Error: Solution.suggestedProducts() missing 2 required positional arguments: 'products' and 'searchWord'"
+    },
+    {
+      "case_id": 58,
+      "input": {},
+      "expected": "Error: Solution.suggestedProducts() missing 2 required positional arguments: 'products' and 'searchWord'"
+    },
+    {
+      "case_id": 59,
+      "input": {
+        "products": ["aardvark", "aardwolf", "albatross", "albino", "alligator", "alpaca", "almighty"],
+        "searchWord": "al"
+      },
+      "expected": [
+        ["aardvark", "aardwolf", "albatross"],
+        ["albatross", "albino", "alligator"]
+      ]
+    },
+    {
+      "case_id": 60,
+      "input": {
+        "products": ["zebra", "zealot", "zealous", "zebrafish", "zebra", "zebrahead"],
+        "searchWord": "ze"
+      },
+      "expected": [
+        ["zealot", "zealous", "zebra"],
+        ["zealot", "zealous", "zebra"]
+      ]
+    },
+    {
+      "case_id": 61,
+      "input": {},
+      "expected": "Error: Solution.suggestedProducts() missing 2 required positional arguments: 'products' and 'searchWord'"
+    },
+    {
+      "case_id": 62,
+      "input": {
+        "products": ["navigate", "navigation", "navigator", "navy", "navel"],
+        "searchWord": "nav"
+      },
+      "expected": [
+        ["navel", "navigate", "navigation"],
+        ["navel", "navigate", "navigation"],
+        ["navel", "navigate", "navigation"]
+      ]
+    },
+    {
+      "case_id": 63,
+      "input": {},
+      "expected": "Error: Solution.suggestedProducts() missing 2 required positional arguments: 'products' and 'searchWord'"
+    },
+    {
+      "case_id": 64,
+      "input": {
+        "products": ["electronics", "electric", "elephant", "elbow", "eleven"],
+        "searchWord": "ele"
+      },
+      "expected": [
+        ["elbow", "electric", "electronics"],
+        ["elbow", "electric", "electronics"],
+        ["electric", "electronics", "elephant"]
+      ]
+    },
+    {
+      "case_id": 65,
+      "input": {},
+      "expected": "Error: Solution.suggestedProducts() missing 2 required positional arguments: 'products' and 'searchWord'"
+    },
+    {
+      "case_id": 66,
+      "input": {
+        "products": ["apple", "apricot", "banana", "bat", "berry", "blackberry", "blueberry", "bluebird", "bluetooth"],
+        "searchWord": "bl"
+      },
+      "expected": [
+        ["banana", "bat", "berry"],
+        ["blackberry", "blueberry", "bluebird"]
+      ]
+    },
+    {
+      "case_id": 67,
+      "input": {},
+      "expected": "Error: Solution.suggestedProducts() missing 2 required positional arguments: 'products' and 'searchWord'"
+    },
+    {
+      "case_id": 68,
+      "input": {
+        "products": ["abacaxi", "abalone", "abana", "abanga", "abaperture", "abara", "abaraxas", "abarth", "abart", "abat", "abate", "abati", "abatis", "abator", "abatt", "abature", "abavure", "abaya", "abaze", "abba", "abbe", "abbe", "abbe", "abbe", "abbe", "abbe", "abbe", "abbe", "abbe", "abbe"],
+        "searchWord": "ab"
+      },
+      "expected": [
+        ["abacaxi", "abalone", "abana"],
+        ["abacaxi", "abalone", "abana"]
+      ]
+    },
+    {
+      "case_id": 69,
+      "input": {
+        "products": ["applepie", "applesauce", "appleskin", "apple", "applejack"],
+        "searchWord": "appl"
+      },
+      "expected": [
+        ["apple", "applejack", "applepie"],
+        ["apple", "applejack", "applepie"],
+        ["apple", "applejack", "applepie"],
+        ["apple", "applejack", "applepie"]
+      ]
+    },
+    {
+      "case_id": 70,
+      "input": {},
+      "expected": "Error: Solution.suggestedProducts() missing 2 required positional arguments: 'products' and 'searchWord'"
+    },
+    {
+      "case_id": 71,
+      "input": {},
+      "expected": "Error: Solution.suggestedProducts() missing 2 required positional arguments: 'products' and 'searchWord'"
+    },
+    {
+      "case_id": 72,
+      "input": {
+        "products": ["camera", "camcorder", "cameralens", "cameraman", "cameraobscura", "camouflage", "camcorder", "camera", "camcorder"],
+        "searchWord": "cam"
+      },
+      "expected": [
+        ["camcorder", "camcorder", "camcorder"],
+        ["camcorder", "camcorder", "camcorder"],
+        ["camcorder", "camcorder", "camcorder"]
+      ]
+    },
+    {
+      "case_id": 73,
+      "input": {
+        "products": ["chocolate", "chocolatebar", "chocolatechip", "chocolate", "chocolatefudge"],
+        "searchWord": "chocolate"
+      },
+      "expected": [
+        ["chocolate", "chocolate", "chocolatebar"],
+        ["chocolate", "chocolate", "chocolatebar"],
+        ["chocolate", "chocolate", "chocolatebar"],
+        ["chocolate", "chocolate", "chocolatebar"],
+        ["chocolate", "chocolate", "chocolatebar"],
+        ["chocolate", "chocolate", "chocolatebar"],
+        ["chocolate", "chocolate", "chocolatebar"],
+        ["chocolate", "chocolate", "chocolatebar"],
+        ["chocolate", "chocolate", "chocolatebar"]
+      ]
+    },
+    {
+      "case_id": 74,
+      "input": {
+        "products": ["queen", "queens", "queenship", "queer", "queue"],
+        "searchWord": "quee"
+      },
+      "expected": [
+        ["queen", "queens", "queenship"],
+        ["queen", "queens", "queenship"],
+        ["queen", "queens", "queenship"],
+        ["queen", "queens", "queenship"]
+      ]
+    },
+    {
+      "case_id": 75,
+      "input": {
+        "products": ["apple", "apricot", "avocado", "banana", "bat", "berry", "blackberry", "blueberry", "cherry", "cantaloupe", "cranberry"],
+        "searchWord": "ap"
+      },
+      "expected": [
+        ["apple", "apricot", "avocado"],
+        ["apple", "apricot"]
+      ]
+    },
+    {
+      "case_id": 76,
+      "input": {
+        "products": ["applepie", "applesauce", "apple", "appletart", "apples", "apricot"],
+        "searchWord": "apple"
+      },
+      "expected": [
+        ["apple", "applepie", "apples"],
+        ["apple", "applepie", "apples"],
+        ["apple", "applepie", "apples"],
+        ["apple", "applepie", "apples"],
+        ["apple", "applepie", "apples"]
+      ]
+    },
+    {
+      "case_id": 77,
+      "input": {
+        "products": ["guitar", "guitarcase", "guitarhero", "guitarpick", "guitarstand", "guitartuner", "guitarstring"],
+        "searchWord": "gu"
+      },
+      "expected": [
+        ["guitar", "guitarcase", "guitarhero"],
+        ["guitar", "guitarcase", "guitarhero"]
+      ]
+    },
+    {
+      "case_id": 78,
+      "input": {},
+      "expected": "Error: Solution.suggestedProducts() missing 2 required positional arguments: 'products' and 'searchWord'"
+    },
+    {
+      "case_id": 79,
+      "input": {
+        "products": ["ocean", "ocelot", "octopus", "octagon", "octagonal"],
+        "searchWord": "oct"
+      },
+      "expected": [
+        ["ocean", "ocelot", "octagon"],
+        ["ocean", "ocelot", "octagon"],
+        ["octagon", "octagonal", "octopus"]
+      ]
+    },
+    {
+      "case_id": 80,
+      "input": {
+        "products": ["elephant", "elephant", "elephant", "elephant", "elephant", "elephant", "elephant", "elephant", "elephant", "elephant"],
+        "searchWord": "elephant"
+      },
+      "expected": [
+        ["elephant", "elephant", "elephant"],
+        ["elephant", "elephant", "elephant"],
+        ["elephant", "elephant", "elephant"],
+        ["elephant", "elephant", "elephant"],
+        ["elephant", "elephant", "elephant"],
+        ["elephant", "elephant", "elephant"],
+        ["elephant", "elephant", "elephant"],
+        ["elephant", "elephant", "elephant"]
+      ]
+    },
+    {
+      "case_id": 81,
+      "input": {
+        "products": ["chocolate", "chips", "chipmunk", "cheese", "cherry", "chili"],
+        "searchWord": "ch"
+      },
+      "expected": [
+        ["cheese", "cherry", "chili"],
+        ["cheese", "cherry", "chili"]
+      ]
+    },
+    {
+      "case_id": 82,
+      "input": {
+        "products": ["abcd", "abce", "abcf", "abcg", "abch"],
+        "searchWord": "abc"
+      },
+      "expected": [
+        ["abcd", "abce", "abcf"],
+        ["abcd", "abce", "abcf"],
+        ["abcd", "abce", "abcf"]
+      ]
+    },
+    {
+      "case_id": 83,
+      "input": {
+        "products": ["zebra", "zulu", "zymurgy", "zestful", "zestfully", "zestless", "zippy", "zoo", "zoology", "zucchini"],
+        "searchWord": "zoo"
+      },
+      "expected": [
+        ["zebra", "zestful", "zestfully"],
+        ["zoo", "zoology"],
+        ["zoo", "zoology"]
+      ]
+    },
+    {
+      "case_id": 84,
+      "input": {
+        "products": ["fishing", "fishtank", "fish", "fishmonger", "fisherman", "fishhook", "fishnet"],
+        "searchWord": "fish"
+      },
+      "expected": [
+        ["fish", "fisherman", "fishhook"],
+        ["fish", "fisherman", "fishhook"],
+        ["fish", "fisherman", "fishhook"],
+        ["fish", "fisherman", "fishhook"]
+      ]
+    },
+    {
+      "case_id": 85,
+      "input": {
+        "products": ["watermelon", "water", "waterproof", "watering", "waterfall", "watermelon", "watercolor", "watergun", "watermelon", "watermark"],
+        "searchWord": "waterm"
+      },
+      "expected": [
+        ["water", "watercolor", "waterfall"],
+        ["water", "watercolor", "waterfall"],
+        ["water", "watercolor", "waterfall"],
+        ["water", "watercolor", "waterfall"],
+        ["water", "watercolor", "waterfall"],
+        ["watermark", "watermelon", "watermelon"]
+      ]
+    },
+    {
+      "case_id": 86,
+      "input": {},
+      "expected": "Error: Solution.suggestedProducts() missing 2 required positional arguments: 'products' and 'searchWord'"
+    },
+    {
+      "case_id": 87,
+      "input": {
+        "products": ["banana", "band", "bangalore", "bank", "banner"],
+        "searchWord": "ban"
+      },
+      "expected": [
+        ["banana", "band", "bangalore"],
+        ["banana", "band", "bangalore"],
+        ["banana", "band", "bangalore"]
+      ]
+    },
+    {
+      "case_id": 88,
+      "input": {
+        "products": ["paint", "painter", "painting", "paintball", "paintbrush"],
+        "searchWord": "pain"
+      },
+      "expected": [
+        ["paint", "paintball", "paintbrush"],
+        ["paint", "paintball", "paintbrush"],
+        ["paint", "paintball", "paintbrush"],
+        ["paint", "paintball", "paintbrush"]
+      ]
+    },
+    {
+      "case_id": 89,
+      "input": {
+        "products": ["xyz", "xylophone", "xylography", "xylograph", "xylography", "xylographer", "xylographs", "xylography", "xylography"],
+        "searchWord": "xylo"
+      },
+      "expected": [
+        ["xylograph", "xylographer", "xylographs"],
+        ["xylograph", "xylographer", "xylographs"],
+        ["xylograph", "xylographer", "xylographs"],
+        ["xylograph", "xylographer", "xylographs"]
+      ]
+    },
+    {
+      "case_id": 90,
+      "input": {
+        "products": ["microphone", "microwave", "microscope", "microphone", "micronutrient"],
+        "searchWord": "micr"
+      },
+      "expected": [
+        ["micronutrient", "microphone", "microphone"],
+        ["micronutrient", "microphone", "microphone"],
+        ["micronutrient", "microphone", "microphone"],
+        ["micronutrient", "microphone", "microphone"]
+      ]
+    },
+    {
+      "case_id": 91,
+      "input": {
+        "products": ["flower", "flour", "flow", "flourish", "flourmill"],
+        "searchWord": "flow"
+      },
+      "expected": [
+        ["flour", "flourish", "flourmill"],
+        ["flour", "flourish", "flourmill"],
+        ["flour", "flourish", "flourmill"],
+        ["flow", "flower"]
+      ]
+    },
+    {
+      "case_id": 92,
+      "input": {
+        "products": ["car", "card", "care", "careful", "careless"],
+        "searchWord": "ca"
+      },
+      "expected": [
+        ["car", "card", "care"],
+        ["car", "card", "care"]
+      ]
+    },
+    {
+      "case_id": 93,
+      "input": {
+        "products": ["football", "footwear", "footbridge", "footnote", "footrest", "footlocker", "footrace", "footlight"],
+        "searchWord": "foot"
+      },
+      "expected": [
+        ["football", "footbridge", "footlight"],
+        ["football", "footbridge", "footlight"],
+        ["football", "footbridge", "footlight"],
+        ["football", "footbridge", "footlight"]
+      ]
+    },
+    {
+      "case_id": 94,
+      "input": {},
+      "expected": "Error: Solution.suggestedProducts() missing 2 required positional arguments: 'products' and 'searchWord'"
+    },
+    {
+      "case_id": 95,
+      "input": {
+        "products": ["bicycle", "bicycling", "bicycle", "bicycle", "bicycle"],
+        "searchWord": "bicy"
+      },
+      "expected": [
+        ["bicycle", "bicycle", "bicycle"],
+        ["bicycle", "bicycle", "bicycle"],
+        ["bicycle", "bicycle", "bicycle"],
+        ["bicycle", "bicycle", "bicycle"]
+      ]
+    },
+    {
+      "case_id": 96,
+      "input": {
+        "products": ["giraffe", "giraffe", "giraffe", "giraffe", "giraffe", "giraffe", "giraffe", "giraffe", "giraffe", "giraffe"],
+        "searchWord": "giraff"
+      },
+      "expected": [
+        ["giraffe", "giraffe", "giraffe"],
+        ["giraffe", "giraffe", "giraffe"],
+        ["giraffe", "giraffe", "giraffe"],
+        ["giraffe", "giraffe", "giraffe"],
+        ["giraffe", "giraffe", "giraffe"],
+        ["giraffe", "giraffe", "giraffe"]
+      ]
+    },
+    {
+      "case_id": 97,
+      "input": {
+        "products": ["strawberry", "straw", "stratosphere", "stranger", "strategy"],
+        "searchWord": "stra"
+      },
+      "expected": [
+        ["stranger", "strategy", "stratosphere"],
+        ["stranger", "strategy", "stratosphere"],
+        ["stranger", "strategy", "stratosphere"],
+        ["stranger", "strategy", "stratosphere"]
+      ]
+    },
+    {
+      "case_id": 98,
+      "input": {},
+      "expected": "Error: Solution.suggestedProducts() missing 2 required positional arguments: 'products' and 'searchWord'"
+    },
+    {
+      "case_id": 99,
+      "input": {
+        "products": ["apple", "apricot", "banana", "bat", "berry", "blackberry", "blueberry"],
+        "searchWord": "ba"
+      },
+      "expected": [
+        ["banana", "bat", "berry"],
+        ["banana", "bat"]
+      ]
+    },
+    {
+      "case_id": 100,
+      "input": {
+        "products": ["watermelon", "water", "waterfall", "watershed", "watercolor"],
+        "searchWord": "water"
+      },
+      "expected": [
+        ["water", "watercolor", "waterfall"],
+        ["water", "watercolor", "waterfall"],
+        ["water", "watercolor", "waterfall"],
+        ["water", "watercolor", "waterfall"],
+        ["water", "watercolor", "waterfall"]
+      ]
+    },
+    {
+      "case_id": 101,
+      "input": {
+        "products": ["computer", "computational", "compute", "computing", "computerized"],
+        "searchWord": "compute"
+      },
+      "expected": [
+        ["computational", "compute", "computer"],
+        ["computational", "compute", "computer"],
+        ["computational", "compute", "computer"],
+        ["computational", "compute", "computer"],
+        ["computational", "compute", "computer"],
+        ["computational", "compute", "computer"],
+        ["compute", "computer", "computerized"]
+      ]
+    },
+    {
+      "case_id": 102,
+      "input": {
+        "products": ["photography", "photoalbum", "photobook", "photoframe", "photograph", "photokino", "photocopy", "photography"],
+        "searchWord": "phot"
+      },
+      "expected": [
+        ["photoalbum", "photobook", "photocopy"],
+        ["photoalbum", "photobook", "photocopy"],
+        ["photoalbum", "photobook", "photocopy"],
+        ["photoalbum", "photobook", "photocopy"]
+      ]
+    },
+    {
+      "case_id": 103,
+      "input": {
+        "products": ["strawberry", "straw", "strange", "strategy", "stranger"],
+        "searchWord": "stra"
+      },
+      "expected": [
+        ["strange", "stranger", "strategy"],
+        ["strange", "stranger", "strategy"],
+        ["strange", "stranger", "strategy"],
+        ["strange", "stranger", "strategy"]
+      ]
+    },
+    {
+      "case_id": 104,
+      "input": {
+        "products": ["elephant", "elephantine", "elegant", "elevate", "elementary"],
+        "searchWord": "ele"
+      },
+      "expected": [
+        ["elegant", "elementary", "elephant"],
+        ["elegant", "elementary", "elephant"],
+        ["elegant", "elementary", "elephant"]
+      ]
+    },
+    {
+      "case_id": 105,
+      "input": {
+        "products": ["orange", "ornament", "organ", "orchid", "orchard", "organize"],
+        "searchWord": "or"
+      },
+      "expected": [
+        ["orange", "orchard", "orchid"],
+        ["orange", "orchard", "orchid"]
+      ]
+    },
+    {
+      "case_id": 106,
+      "input": {
+        "products": ["aaab", "aaac", "aaad", "aaae", "aaaf", "aaag", "aaah", "aaai", "aaaj", "aaak", "aaal", "aaam", "aaan", "aaao", "aaap", "aaaq", "aaar", "aaas", "aaat", "aaau", "aaav", "aaaw", "aaax", "aaay", "aaaz"],
+        "searchWord": "aaa"
+      },
+      "expected": [
+        ["aaab", "aaac", "aaad"],
+        ["aaab", "aaac", "aaad"],
+        ["aaab", "aaac", "aaad"]
+      ]
+    },
+    {
+      "case_id": 107,
+      "input": {
+        "products": ["piano", "piano", "piano", "piano", "piano", "piano", "piano", "piano", "piano", "piano"],
+        "searchWord": "piano"
+      },
+      "expected": [
+        ["piano", "piano", "piano"],
+        ["piano", "piano", "piano"],
+        ["piano", "piano", "piano"],
+        ["piano", "piano", "piano"],
+        ["piano", "piano", "piano"]
+      ]
+    },
+    {
+      "case_id": 108,
+      "input": {
+        "products": ["firefly", "fireworks", "firefly", "firearm", "firetruck", "firewall", "firefly", "firefly", "firefly", "firefly"],
+        "searchWord": "fire"
+      },
+      "expected": [
+        ["firearm", "firefly", "firefly"],
+        ["firearm", "firefly", "firefly"],
+        ["firearm", "firefly", "firefly"],
+        ["firearm", "firefly", "firefly"]
+      ]
+    },
+    {
+      "case_id": 109,
+      "input": {
+        "products": ["internet", "interact", "interest", "interior", "interfere"],
+        "searchWord": "inte"
+      },
+      "expected": [
+        ["interact", "interest", "interfere"],
+        ["interact", "interest", "interfere"],
+        ["interact", "interest", "interfere"],
+        ["interact", "interest", "interfere"]
+      ]
+    },
+    {
+      "case_id": 110,
+      "input": {
+        "products": ["computer", "compute", "computation", "compositor", "composite", "compress", "compression", "compressor", "compressed"],
+        "searchWord": "compre"
+      },
+      "expected": [
+        ["composite", "compositor", "compress"],
+        ["composite", "compositor", "compress"],
+        ["composite", "compositor", "compress"],
+        ["composite", "compositor", "compress"],
+        ["compress", "compressed", "compression"],
+        ["compress", "compressed", "compression"]
+      ]
+    },
+    {
+      "case_id": 111,
+      "input": {
+        "": null
+      },
+      "expected": "Error: Solution.suggestedProducts() missing 2 required positional arguments: 'products' and 'searchWord'"
+    },
+    {
+      "case_id": 112,
+      "input": {
+        "products": ["apple", "banana", "cherry", "date", "elderberry", "fig", "grape", "honeydew", "kiwi", "lemon", "mango", "nectarine", "orange", "papaya", "quince", "raspberry", "strawberry", "tangerine", "ugli", "vanilla", "watermelon", "xigua", "yellow", "zucchini"],
+        "searchWord": "a"
+      },
+      "expected": [
+        ["apple"]
+      ]
+    },
+    {
+      "case_id": 113,
+      "input": {
+        "products": ["dog", "doghouse", "dogwood", "dog", "doghouse"],
+        "searchWord": "dog"
+      },
+      "expected": [
+        ["dog", "dog", "doghouse"],
+        ["dog", "dog", "doghouse"],
+        ["dog", "dog", "doghouse"]
+      ]
+    },
+    {
+      "case_id": 114,
+      "input": {
+        "products": ["abcd", "abce", "abcg", "abch", "abci", "abcj", "abck", "abcl", "abcm", "abcn", "abcd", "abce", "abcg", "abch", "abci", "abcj", "abck", "abcl", "abcm", "abcn"],
+        "searchWord": "abc"
+      },
+      "expected": [
+        ["abcd", "abcd", "abce"],
+        ["abcd", "abcd", "abce"],
+        ["abcd", "abcd", "abce"]
+      ]
+    },
+    {
+      "case_id": 115,
+      "input": {},
+      "expected": "Error: Solution.suggestedProducts() missing 2 required positional arguments: 'products' and 'searchWord'"
+    },
+    {
+      "case_id": 116,
+      "input": {
+        "products": ["radio", "radiance", "radiant", "radioactive", "radioactivity"],
+        "searchWord": "radi"
+      },
+      "expected": [
+        ["radiance", "radiant", "radio"],
+        ["radiance", "radiant", "radio"],
+        ["radiance", "radiant", "radio"],
+        ["radiance", "radiant", "radio"]
+      ]
+    },
+    {
+      "case_id": 117,
+      "input": {
+        "products": ["keyboard", "keychain", "keyhole", "keylogger", "keynote"],
+        "searchWord": "key"
+      },
+      "expected": [
+        ["keyboard", "keychain", "keyhole"],
+        ["keyboard", "keychain", "keyhole"],
+        ["keyboard", "keychain", "keyhole"]
+      ]
+    },
+    {
+      "case_id": 118,
+      "input": {},
+      "expected": "Error: Solution.suggestedProducts() missing 2 required positional arguments: 'products' and 'searchWord'"
+    },
+    {
+      "case_id": 119,
+      "input": {},
+      "expected": "Error: Solution.suggestedProducts() missing 2 required positional arguments: 'products' and 'searchWord'"
+    },
+    {
+      "case_id": 120,
+      "input": {},
+      "expected": "Error: Solution.suggestedProducts() missing 2 required positional arguments: 'products' and 'searchWord'"
+    },
+    {
+      "case_id": 121,
+      "input": {
+        "products": ["starship", "stars", "start", "star", "startrek", "starfish"],
+        "searchWord": "star"
+      },
+      "expected": [
+        ["star", "starfish", "stars"],
+        ["star", "starfish", "stars"],
+        ["star", "starfish", "stars"],
+        ["star", "starfish", "stars"]
+      ]
+    },
+    {
+      "case_id": 122,
+      "input": {
+        "products": ["ant", "antelope", "antibody", "antacid", "antaeus", "antarctica", "anteater", "antelope", "antelope", "antler"],
+        "searchWord": "ante"
+      },
+      "expected": [
+        ["ant", "antacid", "antaeus"],
+        ["ant", "antacid", "antaeus"],
+        ["ant", "antacid", "antaeus"],
+        ["anteater", "antelope", "antelope"]
+      ]
+    },
+    {
+      "case_id": 123,
+      "input": {
+        "products": ["dog", "dove", "donkey", "dragon", "drone", "drill", "door"],
+        "searchWord": "dr"
+      },
+      "expected": [
+        ["dog", "donkey", "door"],
+        ["dragon", "drill", "drone"]
+      ]
+    },
+    {
+      "case_id": 124,
+      "input": {},
+      "expected": "Error: Solution.suggestedProducts() missing 2 required positional arguments: 'products' and 'searchWord'"
+    },
+    {
+      "case_id": 125,
+      "input": {
+        "products": ["guitar", "guitarist", "guilt", "guilty", "gully"],
+        "searchWord": "guil"
+      },
+      "expected": [
+        ["guilt", "guilty", "guitar"],
+        ["guilt", "guilty", "guitar"],
+        ["guilt", "guilty", "guitar"],
+        ["guilt", "guilty"]
+      ]
+    },
+    {
+      "case_id": 126,
+      "input": {
+        "products": ["algorithm", "algebra", "alabama", "alaska", "alligator"],
+        "searchWord": "al"
+      },
+      "expected": [
+        ["alabama", "alaska", "algebra"],
+        ["alabama", "alaska", "algebra"]
+      ]
+    },
+    {
+      "case_id": 127,
+      "input": {
+        "products": ["zebra", "zebrafish", "zebra", "zebrahead", "zebra"],
+        "searchWord": "zebra"
+      },
+      "expected": [
+        ["zebra", "zebra", "zebra"],
+        ["zebra", "zebra", "zebra"],
+        ["zebra", "zebra", "zebra"],
+        ["zebra", "zebra", "zebra"],
+        ["zebra", "zebra", "zebra"]
+      ]
+    },
+    {
+      "case_id": 128,
+      "input": {
+        "products": ["abcd", "abce", "abcf", "abcg", "abch", "abci", "abcj", "abck", "abcl", "abcm", "abcn"],
+        "searchWord": "abcd"
+      },
+      "expected": [
+        ["abcd", "abce", "abcf"],
+        ["abcd", "abce", "abcf"],
+        ["abcd", "abce", "abcf"],
+        ["abcd"]
+      ]
+    },
+    {
+      "case_id": 129,
+      "input": {
+        "products": ["zebra", "zeal", "zero", "zone", "zoo", "zap", "zest"],
+        "searchWord": "ze"
+      },
+      "expected": [
+        ["zap", "zeal", "zebra"],
+        ["zeal", "zebra", "zero"]
+      ]
+    },
+    {
+      "case_id": 130,
+      "input": {
+        "products": ["zebra", "zoo", "zoom", "zoning", "zone", "zany", "zap", "zest", "zigzag", "zither"],
+        "searchWord": "z"
+      },
+      "expected": [
+        ["zany", "zap", "zebra"]
+      ]
+    },
+    {
+      "case_id": 131,
+      "input": {
+        "products": ["piano", "piccolo", "pipe", "pipeorgan", "pitchfork"],
+        "searchWord": "pi"
+      },
+      "expected": [
+        ["piano", "piccolo", "pipe"],
+        ["piano", "piccolo", "pipe"]
+      ]
+    },
+    {
+      "case_id": 132,
+      "input": {
+        "products": ["umbrella", "underwear", "universe", "unique", "unit", "unity", "university", "unicycle", "unicorn", "unzip"],
+        "searchWord": "uni"
+      },
+      "expected": [
+        ["umbrella", "underwear", "unicorn"],
+        ["underwear", "unicorn", "unicycle"],
+        ["unicorn", "unicycle", "unique"]
+      ]
+    },
+    {
+      "case_id": 133,
+      "input": {
+        "products": ["product", "produces", "productivity", "productive", "productize", "production", "productivity", "productize", "productivity", "productize"],
+        "searchWord": "product"
+      },
+      "expected": [
+        ["produces", "product", "production"],
+        ["produces", "product", "production"],
+        ["produces", "product", "production"],
+        ["produces", "product", "production"],
+        ["produces", "product", "production"],
+        ["produces", "product", "production"],
+        ["product", "production", "productive"]
+      ]
+    },
+    {
+      "case_id": 134,
+      "input": {},
+      "expected": "Error: Solution.suggestedProducts() missing 2 required positional arguments: 'products' and 'searchWord'"
+    },
+    {
+      "case_id": 135,
+      "input": {
+        "products": ["umbrella", "umbilical", "umbrella", "umbrella", "umbrella"],
+        "searchWord": "umb"
+      },
+      "expected": [
+        ["umbilical", "umbrella", "umbrella"],
+        ["umbilical", "umbrella", "umbrella"],
+        ["umbilical", "umbrella", "umbrella"]
+      ]
+    },
+    {
+      "case_id": 136,
+      "input": {
+        "products": ["banana", "bandanna", "bandage", "band", "bandwidth"],
+        "searchWord": "band"
+      },
+      "expected": [
+        ["banana", "band", "bandage"],
+        ["banana", "band", "bandage"],
+        ["banana", "band", "bandage"],
+        ["band", "bandage", "bandanna"]
+      ]
+    }
+  ]
+}

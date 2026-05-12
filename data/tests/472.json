@@ -1,0 +1,690 @@
+{
+  "schema_version": 1,
+  "problem_id": 472,
+  "title": "Concatenated Words",
+  "method": "findAllConcatenatedWordsInADict",
+  "signature": {
+    "params": [
+      {
+        "name": "words",
+        "type": "STRING_ARRAY"
+      }
+    ],
+    "returns": "STRING_ARRAY"
+  },
+  "comparison": "unordered_all",
+  "cases": [
+    {
+      "case_id": 1,
+      "input": {
+        "words": ["hello", "world", "helloworld", "worldhello"]
+      },
+      "expected": ["helloworld", "worldhello"]
+    },
+    {
+      "case_id": 2,
+      "input": {
+        "words": ["apple", "banana", "appbanana", "banapple", "app", "ban"]
+      },
+      "expected": ["banapple", "appbanana"]
+    },
+    {
+      "case_id": 3,
+      "input": {
+        "words": ["a", "aa", "aaa", "aaaa", "aaaaa", "aaaaaa", "aaaaaaa", "aaaaaaaa", "aaaaaaaaa", "aaaaaaaaaa"]
+      },
+      "expected": ["aa", "aaa", "aaaa", "aaaaa", "aaaaaa", "aaaaaaa", "aaaaaaaa", "aaaaaaaaa", "aaaaaaaaaa"]
+    },
+    {
+      "case_id": 4,
+      "input": {
+        "words": ["cat", "dog", "catdog"]
+      },
+      "expected": ["catdog"]
+    },
+    {
+      "case_id": 5,
+      "input": {
+        "words": ["a", "aa", "aaa", "aaaa", "aaaaa"]
+      },
+      "expected": ["aa", "aaa", "aaaa", "aaaaa"]
+    },
+    {
+      "case_id": 6,
+      "input": {
+        "words": ["fish", "dog", "cat", "dogfishcat"]
+      },
+      "expected": ["dogfishcat"]
+    },
+    {
+      "case_id": 7,
+      "input": {
+        "words": ["a", "aa", "aaa", "aaaa"]
+      },
+      "expected": ["aa", "aaa", "aaaa"]
+    },
+    {
+      "case_id": 8,
+      "input": {
+        "words": ["word", "world", "wordworld", "worldword", "wordworldword"]
+      },
+      "expected": ["wordworld", "worldword", "wordworldword"]
+    },
+    {
+      "case_id": 9,
+      "input": {
+        "words": ["apple", "banana", "applepie", "apples", "pineapple", "pine", "pie"]
+      },
+      "expected": ["applepie", "pineapple"]
+    },
+    {
+      "case_id": 10,
+      "input": {
+        "words": ["ab", "abc", "abcd", "abcde", "abcdef"]
+      },
+      "expected": []
+    },
+    {
+      "case_id": 11,
+      "input": {
+        "words": ["cat", "cats", "catsdogcats", "dog", "dogcatsdog", "hippopotamuses", "rat", "ratcatdogcat"]
+      },
+      "expected": ["dogcatsdog", "catsdogcats", "ratcatdogcat"]
+    },
+    {
+      "case_id": 12,
+      "input": {
+        "words": ["hello", "world", "helloworld"]
+      },
+      "expected": ["helloworld"]
+    },
+    {
+      "case_id": 13,
+      "input": {
+        "words": ["apple", "banana", "appbanana", "banapple"]
+      },
+      "expected": []
+    },
+    {
+      "case_id": 14,
+      "input": {
+        "words": ["apple", "banana", "applebanana", "bananasplit", "applesplit", "splitbananaapple"]
+      },
+      "expected": ["applebanana"]
+    },
+    {
+      "case_id": 15,
+      "input": {
+        "words": ["a", "b", "ab", "abc", "bc", "abcd"]
+      },
+      "expected": ["ab", "abc"]
+    },
+    {
+      "case_id": 16,
+      "input": {
+        "words": ["one", "two", "three", "onetwo", "twotwo", "twoone", "onetwothree", "threetwoone", "onetwoonetwo", "twoonetwoone", "onethree", "threeone", "onethreeone", "threeoneone", "threeonetwo", "twothreeone", "onetwothreeone", "onetwoonetwothree"]
+      },
+      "expected": ["onetwo", "twotwo", "twoone", "onethree", "threeone", "onetwothree", "threetwoone", "onethreeone", "threeoneone", "threeonetwo", "twothreeone", "onetwoonetwo", "twoonetwoone", "onetwothreeone", "onetwoonetwothree"]
+    },
+    {
+      "case_id": 17,
+      "input": {
+        "words": ["car", "race", "racecar", "carrace", "racecarrace", "racecarcar"]
+      },
+      "expected": ["racecar", "carrace", "racecarcar", "racecarrace"]
+    },
+    {
+      "case_id": 18,
+      "input": {
+        "words": ["apple", "banana", "applebanana", "bananaapple", "grape", "pineapple", "pineappleapple", "applegrapebanana"]
+      },
+      "expected": ["applebanana", "bananaapple", "pineappleapple", "applegrapebanana"]
+    },
+    {
+      "case_id": 19,
+      "input": {
+        "words": ["red", "blue", "green", "redblue", "bluegreen", "greenred", "redgreengreen", "blueredblueblue", "greenredblue"]
+      },
+      "expected": ["redblue", "greenred", "bluegreen", "greenredblue", "redgreengreen", "blueredblueblue"]
+    },
+    {
+      "case_id": 20,
+      "input": {
+        "words": ["base", "ball", "baseball", "ballbase", "baseballbase", "basebaseball", "baseballball", "baseballbaseball"]
+      },
+      "expected": ["baseball", "ballbase", "baseballbase", "basebaseball", "baseballball", "baseballbaseball"]
+    },
+    {
+      "case_id": 21,
+      "input": {
+        "words": ["sun", "moon", "sunny", "moonlight", "sunmoon", "moonsun", "sunnyday", "moonlightnight", "sunmoonlight"]
+      },
+      "expected": ["sunmoon", "moonsun", "sunmoonlight"]
+    },
+    {
+      "case_id": 22,
+      "input": {
+        "words": ["one", "two", "three", "onetwo", "twotwo", "threeone", "onetwothree", "twothreeone", "threeonetwo", "onetwothreeone"]
+      },
+      "expected": ["onetwo", "twotwo", "threeone", "onetwothree", "twothreeone", "threeonetwo", "onetwothreeone"]
+    },
+    {
+      "case_id": 23,
+      "input": {
+        "words": ["hello", "world", "helloworld", "worldhello", "hellohello", "worldworld", "hellohellohello", "worldworldworld"]
+      },
+      "expected": ["helloworld", "worldhello", "hellohello", "worldworld", "hellohellohello", "worldworldworld"]
+    },
+    {
+      "case_id": 24,
+      "input": {
+        "words": ["hello", "world", "helloworld", "worldhello", "hellohello", "worldworld", "helloworldhello", "worldhelloworld"]
+      },
+      "expected": ["helloworld", "worldhello", "hellohello", "worldworld", "helloworldhello", "worldhelloworld"]
+    },
+    {
+      "case_id": 25,
+      "input": {
+        "words": ["ab", "abc", "ababc", "abcabc", "aabbcc", "aabbaabb"]
+      },
+      "expected": ["ababc", "abcabc"]
+    },
+    {
+      "case_id": 26,
+      "input": {
+        "words": ["short", "long", "shortlong", "longshort", "shortshortlong", "longlongshort", "shortlongshort", "longshortlong"]
+      },
+      "expected": ["shortlong", "longshort", "longlongshort", "longshortlong", "shortshortlong", "shortlongshort"]
+    },
+    {
+      "case_id": 27,
+      "input": {
+        "words": ["prefix", "suffix", "prefixsuffix", "suffixprefix", "prefixprefix", "suffixsuffix", "prefixprefixsuffix", "suffixprefixprefix"]
+      },
+      "expected": ["prefixsuffix", "suffixprefix", "prefixprefix", "suffixsuffix", "prefixprefixsuffix", "suffixprefixprefix"]
+    },
+    {
+      "case_id": 28,
+      "input": {
+        "words": ["prefix", "suffix", "prefixsuffix", "suffixprefix", "prefixsuffixprefix", "suffixprefixsuffix", "prefixsuffixsuffixprefix", "suffixprefixprefixsuffix"]
+      },
+      "expected": ["prefixsuffix", "suffixprefix", "prefixsuffixprefix", "suffixprefixsuffix", "prefixsuffixsuffixprefix", "suffixprefixprefixsuffix"]
+    },
+    {
+      "case_id": 29,
+      "input": {
+        "words": ["cat", "dog", "catdog", "dogcat", "bird", "catdogbird", "dogcatbird", "catbird", "birdcat", "dogdogcat", "catcatdog", "dogcatdog", "catdogcat", "birdbird", "catbirdcat", "dogcatdogcat", "birdcatdogbird"]
+      },
+      "expected": ["catdog", "dogcat", "catbird", "birdcat", "birdbird", "dogdogcat", "catcatdog", "dogcatdog", "catdogcat", "catdogbird", "dogcatbird", "catbirdcat", "dogcatdogcat", "birdcatdogbird"]
+    },
+    {
+      "case_id": 30,
+      "input": {
+        "words": ["short", "longer", "longerword", "wordlonger", "shortword", "wordshort", "shortshortshort", "longerlongerlonger"]
+      },
+      "expected": ["shortshortshort", "longerlongerlonger"]
+    },
+    {
+      "case_id": 31,
+      "input": {
+        "words": ["repetition", "reprepetition", "prepetition", "rep", "pre", "replication", "prepresentation", "replicationrepetition", "repetitionreplicationrepetition"]
+      },
+      "expected": ["reprepetition", "replicationrepetition", "repetitionreplicationrepetition"]
+    },
+    {
+      "case_id": 32,
+      "input": {
+        "words": ["prefix", "suffix", "prefixsuffix", "suffixprefix", "prefixsuffixprefix", "suffixprefixsuffix", "prefixsuffixsuffixprefix", "prefixprefixsuffix", "suffixsuffixprefix"]
+      },
+      "expected": ["prefixsuffix", "suffixprefix", "prefixsuffixprefix", "suffixprefixsuffix", "prefixprefixsuffix", "suffixsuffixprefix", "prefixsuffixsuffixprefix"]
+    },
+    {
+      "case_id": 33,
+      "input": {
+        "words": ["aaaa", "aaaab", "aaaaba", "aaaabaaa", "aaaabaaaa", "aaaaa", "aaaaaa", "aaaaaaa", "aaaaaaaa", "aaaaaaaaa", "aaaaaaaaaa"]
+      },
+      "expected": ["aaaaaaaa", "aaaabaaaa", "aaaaaaaaa", "aaaaaaaaaa"]
+    },
+    {
+      "case_id": 34,
+      "input": {
+        "words": ["red", "blue", "redblue", "bluered", "redbluered", "blueredblue", "redredblue", "blueredred"]
+      },
+      "expected": ["redblue", "bluered", "redbluered", "redredblue", "blueredred", "blueredblue"]
+    },
+    {
+      "case_id": 35,
+      "input": {
+        "words": ["sun", "moon", "star", "sunnymoon", "moonstar", "star", "sunmoonstar", "moonmoonsun"]
+      },
+      "expected": ["star", "moonstar", "sunmoonstar", "moonmoonsun"]
+    },
+    {
+      "case_id": 36,
+      "input": {
+        "words": ["ab", "abc", "abcd", "abcde", "abcdef", "abcdefg", "abcdefgh", "abcdefghi", "abcdefghij", "abcdefghijk", "abcdefghijkl", "abcdefghijklm"]
+      },
+      "expected": []
+    },
+    {
+      "case_id": 37,
+      "input": {
+        "words": ["a", "b", "ab", "ba", "aba", "baba", "abab", "bababa", "abababa", "babababa"]
+      },
+      "expected": ["ab", "ba", "aba", "baba", "abab", "bababa", "abababa", "babababa"]
+    },
+    {
+      "case_id": 38,
+      "input": {
+        "words": ["abcd", "bcde", "cdef", "defg", "efgh", "fghi", "ghij", "hijk", "ijkl", "jklm", "klmn", "lmno", "mnop", "nopq", "opqr", "pqrs", "qrst", "rstu", "stuv", "tuvw", "uvwx", "vwxy", "wxyz", "xyz", "mnopqr", "qrstuv", "vwxyz", "mnopqrstuv", "mnopqrstuvwxy", "nopqrstuvwxyz"]
+      },
+      "expected": ["mnopqrstuv", "nopqrstuvwxyz"]
+    },
+    {
+      "case_id": 39,
+      "input": {
+        "words": ["tiny", "medium", "mediumtiny", "tinytiny", "tinymedium", "mediummedium", "mediumtinytiny", "tinytinytiny", "tinytinytinytiny", "tinytinytinytinytiny"]
+      },
+      "expected": ["tinytiny", "mediumtiny", "tinymedium", "mediummedium", "tinytinytiny", "mediumtinytiny", "tinytinytinytiny", "tinytinytinytinytiny"]
+    },
+    {
+      "case_id": 40,
+      "input": {
+        "words": ["word", "concatenate", "wordconcatenate", "concatenateword", "wordconcatenateword", "wordwordconcatenate", "concatenatethree", "concatenateconcatenate", "wordconcatenateconcatenate"]
+      },
+      "expected": ["wordconcatenate", "concatenateword", "wordconcatenateword", "wordwordconcatenate", "concatenateconcatenate", "wordconcatenateconcatenate"]
+    },
+    {
+      "case_id": 41,
+      "input": {
+        "words": ["alpha", "beta", "alphabeta", "betabeta", "betaalpha", "alphabetabet", "alphaalphabeta", "betaalphabeta"]
+      },
+      "expected": ["betabeta", "alphabeta", "betaalpha", "betaalphabeta", "alphaalphabeta"]
+    },
+    {
+      "case_id": 42,
+      "input": {
+        "words": ["apple", "banana", "applebanana", "bananaapple", "appleapplebanana", "bananabananaapple"]
+      },
+      "expected": ["applebanana", "bananaapple", "appleapplebanana", "bananabananaapple"]
+    },
+    {
+      "case_id": 43,
+      "input": {
+        "words": ["aabb", "bbaa", "aabbcc", "ccaabb", "aabbaa", "aabbccaabb", "aabbaabbcc", "ccccaabbaabb", "bbccccaabbaabb", "aabbcccaabbcccaabb"]
+      },
+      "expected": ["aabbccaabb", "aabbaabbcc"]
+    },
+    {
+      "case_id": 44,
+      "input": {
+        "words": ["one", "two", "three", "onetwo", "twotwo", "threetwo", "onethree", "twothree", "threethree", "onetwothree", "twothreeone", "threetwoone", "onetwoonetwo", "twotwoonetwo", "threethreethree", "onetwothreeonetwo", "twothreeonethree", "threetwooneonetwo", "onetwoonetwoonetwo"]
+      },
+      "expected": ["onetwo", "twotwo", "threetwo", "onethree", "twothree", "threethree", "onetwothree", "twothreeone", "threetwoone", "onetwoonetwo", "twotwoonetwo", "threethreethree", "twothreeonethree", "onetwothreeonetwo", "threetwooneonetwo", "onetwoonetwoonetwo"]
+    },
+    {
+      "case_id": 45,
+      "input": {
+        "words": ["tiny", "small", "tinysmall", "smallsmall", "tinytiny", "tinysmalltiny"]
+      },
+      "expected": ["tinytiny", "tinysmall", "smallsmall", "tinysmalltiny"]
+    },
+    {
+      "case_id": 46,
+      "input": {
+        "words": ["abc", "def", "abcdef", "defabc", "abcdefg", "abcdefabc", "abcabcabc"]
+      },
+      "expected": ["abcdef", "defabc", "abcdefabc", "abcabcabc"]
+    },
+    {
+      "case_id": 47,
+      "input": {
+        "words": ["prefix", "suffix", "prefixsuffix", "suffixprefix", "prefixsuffixprefix", "suffixprefixsuffix", "prefixsuffixprefixsuffix"]
+      },
+      "expected": ["prefixsuffix", "suffixprefix", "prefixsuffixprefix", "suffixprefixsuffix", "prefixsuffixprefixsuffix"]
+    },
+    {
+      "case_id": 48,
+      "input": {
+        "words": ["aabb", "bbaa", "ab", "ba", "aabbab", "baabaa", "bbaabb", "aabbaa", "ababab", "babaab", "abbaba", "bababb", "aabbaabb", "bbaabaab"]
+      },
+      "expected": ["aabbab", "ababab", "babaab", "abbaba", "aabbaabb", "bbaabaab"]
+    },
+    {
+      "case_id": 49,
+      "input": {
+        "words": ["one", "two", "three", "onetwo", "twotwo", "onetwothree", "threethreeone", "onetwothreeone"]
+      },
+      "expected": ["onetwo", "twotwo", "onetwothree", "threethreeone", "onetwothreeone"]
+    },
+    {
+      "case_id": 50,
+      "input": {
+        "words": ["aabb", "abab", "bbaa", "aabbaa", "ababaa", "baaabb", "aabbab", "bbaaab", "aabbba", "abababab", "baabbaab", "aabbaaba"]
+      },
+      "expected": ["abababab"]
+    },
+    {
+      "case_id": 51,
+      "input": {
+        "words": ["abc", "def", "gh", "abcdefgh", "defgh", "abcdefg", "abcdefghi", "abcdefghij", "abcdefghijk"]
+      },
+      "expected": ["defgh", "abcdefgh"]
+    },
+    {
+      "case_id": 52,
+      "input": {
+        "words": ["abc", "def", "abcdef", "defabc", "abcabcabc", "defdefdef", "abcdefabcdef"]
+      },
+      "expected": ["abcdef", "defabc", "abcabcabc", "defdefdef", "abcdefabcdef"]
+    },
+    {
+      "case_id": 53,
+      "input": {
+        "words": ["hello", "world", "helloworld", "worldhello", "hellotest", "testhello", "hellotesthello"]
+      },
+      "expected": ["helloworld", "worldhello", "hellotesthello"]
+    },
+    {
+      "case_id": 54,
+      "input": {
+        "words": ["apple", "apples", "banana", "bananas", "applesandbananas", "bananaapple"]
+      },
+      "expected": ["bananaapple"]
+    },
+    {
+      "case_id": 55,
+      "input": {
+        "words": ["hello", "world", "helloworld", "hellohello", "worldworldhello"]
+      },
+      "expected": ["helloworld", "hellohello", "worldworldhello"]
+    },
+    {
+      "case_id": 56,
+      "input": {
+        "words": ["one", "onel", "oneone", "two", "twotwo", "onetwo", "twotwoone", "onetwoone", "twoonetwo", "onetwotwo", "twoonetwotwo", "onetwoonetwoone"]
+      },
+      "expected": ["oneone", "twotwo", "onetwo", "twotwoone", "onetwoone", "twoonetwo", "onetwotwo", "twoonetwotwo", "onetwoonetwoone"]
+    },
+    {
+      "case_id": 57,
+      "input": {
+        "words": ["one", "two", "onetwo", "twotwo", "twoone", "onetwoone", "twoonetwo", "onetwoonetwo"]
+      },
+      "expected": ["onetwo", "twotwo", "twoone", "onetwoone", "twoonetwo", "onetwoonetwo"]
+    },
+    {
+      "case_id": 58,
+      "input": {
+        "words": ["apple", "banana", "applebanana", "bananaapple", "grape", "grapeapple", "pineapple"]
+      },
+      "expected": ["grapeapple", "applebanana", "bananaapple"]
+    },
+    {
+      "case_id": 59,
+      "input": {
+        "words": ["happy", "sad", "happysad", "sadhappy", "happyhappy", "sadsad", "happyhappysad", "sadhappyhappy", "happysadsad"]
+      },
+      "expected": ["sadsad", "happysad", "sadhappy", "happyhappy", "happysadsad", "happyhappysad", "sadhappyhappy"]
+    },
+    {
+      "case_id": 60,
+      "input": {
+        "words": ["apple", "banana", "peach", "applepie", "bananapeach", "peachapple"]
+      },
+      "expected": ["peachapple", "bananapeach"]
+    },
+    {
+      "case_id": 61,
+      "input": {
+        "words": ["prefix", "suffix", "prefixsuffix", "suffixprefix", "prefixprefix", "suffixsuffix", "prefixsuffixprefix", "suffixprefixsuffix"]
+      },
+      "expected": ["prefixsuffix", "suffixprefix", "prefixprefix", "suffixsuffix", "prefixsuffixprefix", "suffixprefixsuffix"]
+    },
+    {
+      "case_id": 62,
+      "input": {
+        "words": ["apple", "banana", "applebanana", "bananasplit", "split", "applebananasplit"]
+      },
+      "expected": ["applebanana", "bananasplit", "applebananasplit"]
+    },
+    {
+      "case_id": 63,
+      "input": {
+        "words": ["abc", "ab", "bc", "abcabc", "abcab", "ababc", "aabbc", "abcababc"]
+      },
+      "expected": ["abcab", "ababc", "abcabc", "abcababc"]
+    },
+    {
+      "case_id": 64,
+      "input": {
+        "words": ["abc", "def", "abcdef", "defabc", "abcdefdef", "abcabcabc"]
+      },
+      "expected": ["abcdef", "defabc", "abcdefdef", "abcabcabc"]
+    },
+    {
+      "case_id": 65,
+      "input": {
+        "words": ["quick", "brown", "fox", "quickbrown", "brownfox", "foxquick", "quickbrownfox", "brownfoxquick"]
+      },
+      "expected": ["brownfox", "foxquick", "quickbrown", "quickbrownfox", "brownfoxquick"]
+    },
+    {
+      "case_id": 66,
+      "input": {
+        "words": ["tiny", "small", "tinytiny", "tinysmall", "smalltiny", "smallsmall", "tinytinysmall", "tinytinysmalltiny", "smallsml", "tinysmalltinytiny", "smalltinytiny", "tinytinytiny", "tinysmallsmallsml"]
+      },
+      "expected": ["tinytiny", "tinysmall", "smalltiny", "smallsmall", "tinytinytiny", "tinytinysmall", "smalltinytiny", "tinytinysmalltiny", "tinysmalltinytiny", "tinysmallsmallsml"]
+    },
+    {
+      "case_id": 67,
+      "input": {
+        "words": ["apple", "banana", "applebanana", "bananaapple", "appleapplebanana"]
+      },
+      "expected": ["applebanana", "bananaapple", "appleapplebanana"]
+    },
+    {
+      "case_id": 68,
+      "input": {
+        "words": ["hello", "world", "helloworld", "worldhello", "hellohello", "worldworld"]
+      },
+      "expected": ["helloworld", "worldhello", "hellohello", "worldworld"]
+    },
+    {
+      "case_id": 69,
+      "input": {
+        "words": ["repeat", "repeated", "repeatrepeat", "repeatedrepeat", "repeatrepeatedrepeat", "repeatedrepeatrepeatedrepeat", "repeatedrepeated", "repeatrepeatrepeat"]
+      },
+      "expected": ["repeatrepeat", "repeatedrepeat", "repeatedrepeated", "repeatrepeatrepeat", "repeatrepeatedrepeat", "repeatedrepeatrepeatedrepeat"]
+    },
+    {
+      "case_id": 70,
+      "input": {
+        "words": ["cat", "cats", "catsdogcats", "dog", "dogcatsdog", "hippopotamuses", "rat", "ratcatdogcat", "hippo", "popo", "hippopop"]
+      },
+      "expected": ["dogcatsdog", "catsdogcats", "ratcatdogcat"]
+    },
+    {
+      "case_id": 71,
+      "input": {
+        "words": ["hello", "world", "helloworld", "hellohello", "worldworld", "hellohelloworld"]
+      },
+      "expected": ["helloworld", "hellohello", "worldworld", "hellohelloworld"]
+    },
+    {
+      "case_id": 72,
+      "input": {
+        "words": ["sun", "moon", "sunmoon", "moonsun", "sunsunmoon", "moonmoonsun", "sunmoonsunsun"]
+      },
+      "expected": ["sunmoon", "moonsun", "sunsunmoon", "moonmoonsun", "sunmoonsunsun"]
+    },
+    {
+      "case_id": 73,
+      "input": {
+        "words": ["one", "two", "three", "onetwo", "twotwo", "onethree", "threeone", "onetwothree", "twothreeone"]
+      },
+      "expected": ["onetwo", "twotwo", "onethree", "threeone", "onetwothree", "twothreeone"]
+    },
+    {
+      "case_id": 74,
+      "input": {
+        "words": ["abc", "def", "abcdef", "defabc", "ghijkl", "mnop", "mnopqrst", "qrst", "mnopqrstmnopqrst", "nopqrst", "nopqr", "mnopq"]
+      },
+      "expected": ["abcdef", "defabc", "mnopqrst", "mnopqrstmnopqrst"]
+    },
+    {
+      "case_id": 75,
+      "input": {
+        "words": ["red", "blue", "green", "redblue", "bluegreen", "greenred", "redbluegreen", "bluegreenred", "greenredblue", "redgreenred", "bluegreenblue", "greenredgreen", "redgreenbluegreen", "bluegreenredblue", "greenredbluegreenred"]
+      },
+      "expected": ["redblue", "greenred", "bluegreen", "redgreenred", "redbluegreen", "bluegreenred", "greenredblue", "bluegreenblue", "greenredgreen", "bluegreenredblue", "redgreenbluegreen", "greenredbluegreenred"]
+    },
+    {
+      "case_id": 76,
+      "input": {
+        "words": ["base", "ball", "baseball", "ballbase", "baseballbase", "ballbaseball", "baseballball", "baseballbaseball"]
+      },
+      "expected": ["baseball", "ballbase", "baseballbase", "ballbaseball", "baseballball", "baseballbaseball"]
+    },
+    {
+      "case_id": 77,
+      "input": {
+        "words": ["one", "two", "three", "onetwo", "twothree", "threeone", "onetwothree", "twothreeone", "threeonetwo"]
+      },
+      "expected": ["onetwo", "twothree", "threeone", "onetwothree", "twothreeone", "threeonetwo"]
+    },
+    {
+      "case_id": 78,
+      "input": {
+        "words": ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", "abcdefghijklmnopqrstuvwxyz"]
+      },
+      "expected": ["abcdefghijklmnopqrstuvwxyz"]
+    },
+    {
+      "case_id": 79,
+      "input": {
+        "words": ["apple", "banana", "applebanana", "bananapple", "bananaapplebanana"]
+      },
+      "expected": ["applebanana", "bananaapplebanana"]
+    },
+    {
+      "case_id": 80,
+      "input": {
+        "words": ["small", "medium", "large", "smallmedium", "mediumlarge", "largesmall", "smallmediumlarge", "mediumlargesmall", "largesmallmedium", "smallmediumlargesmall"]
+      },
+      "expected": ["largesmall", "smallmedium", "mediumlarge", "smallmediumlarge", "mediumlargesmall", "largesmallmedium", "smallmediumlargesmall"]
+    },
+    {
+      "case_id": 81,
+      "input": {
+        "words": ["a", "ab", "abc", "abcd", "abcde", "abcdef", "abcdefg", "abcdefgh", "abcdefghi", "abcdefghij", "abcdefghijk", "abcdefghijkl", "abcdefghijklm", "abcdefghijklmn", "abcdefghijklmno", "abcdefghijklmnop", "abcdefghijklmnopq", "abcdefghijklmnopqr", "abcdefghijklmnopqrs", "abcdefghijklmnopqrst", "abcdefghijklmnopqrstu", "abcdefghijklmnopqrstuv", "abcdefghijklmnopqrstuvw", "abcdefghijklmnopqrstuvwx", "abcdefghijklmnopqrstuvwxy", "abcdefghijklmnopqrstuvwxyz"]
+      },
+      "expected": []
+    },
+    {
+      "case_id": 82,
+      "input": {
+        "words": ["bat", "ball", "batball", "ballbat", "batbatbat", "ballballball", "batballbat"]
+      },
+      "expected": ["batball", "ballbat", "batbatbat", "batballbat", "ballballball"]
+    },
+    {
+      "case_id": 83,
+      "input": {
+        "words": ["partone", "parttwo", "partthree", "onetwo", "twothree", "onetwothree", "threeonetwo", "twopartone", "threeparttwo", "onetwothreeonetwo"]
+      },
+      "expected": ["onetwothreeonetwo"]
+    },
+    {
+      "case_id": 84,
+      "input": {
+        "words": ["x", "xx", "xxx", "xxxx", "xxxxx", "xxxxxx", "xxxxxxx", "xxxxxxxx", "xxxxxxxxx", "xxxxxxxxxx"]
+      },
+      "expected": ["xx", "xxx", "xxxx", "xxxxx", "xxxxxx", "xxxxxxx", "xxxxxxxx", "xxxxxxxxx", "xxxxxxxxxx"]
+    },
+    {
+      "case_id": 85,
+      "input": {
+        "words": ["alpha", "beta", "gamma", "alphabeta", "betagamma", "alphagamma", "betaalpha", "gammaalpha", "betagammabetagamma", "gammabetagammaalpha"]
+      },
+      "expected": ["alphabeta", "betagamma", "betaalpha", "alphagamma", "gammaalpha", "betagammabetagamma", "gammabetagammaalpha"]
+    },
+    {
+      "case_id": 86,
+      "input": {
+        "words": ["abc", "def", "abcdef", "defabc", "abcdefabc", "abcabcabc", "defdefdef", "abcdefdef", "defabcdef"]
+      },
+      "expected": ["abcdef", "defabc", "abcdefabc", "abcabcabc", "defdefdef", "abcdefdef", "defabcdef"]
+    },
+    {
+      "case_id": 87,
+      "input": {
+        "words": ["apple", "banana", "appbanana", "bananapple", "applebananaapple"]
+      },
+      "expected": ["applebananaapple"]
+    },
+    {
+      "case_id": 88,
+      "input": {
+        "words": ["sun", "moon", "star", "sunset", "moonlight", "starlight", "sunmoon", "moonstar", "sunmoonstar", "moonstarsun"]
+      },
+      "expected": ["sunmoon", "moonstar", "sunmoonstar", "moonstarsun"]
+    },
+    {
+      "case_id": 89,
+      "input": {
+        "words": ["panda", "bear", "pandabear", "bearpanda", "pandapandabear", "bearpandapanda", "pandabearbear", "bearbearpanda", "pandapandapandabear", "bearpandapandapanda"]
+      },
+      "expected": ["pandabear", "bearpanda", "pandabearbear", "bearbearpanda", "pandapandabear", "bearpandapanda", "pandapandapandabear", "bearpandapandapanda"]
+    },
+    {
+      "case_id": 90,
+      "input": {
+        "words": ["a", "ab", "abc", "abcd", "abcde", "abcdef", "abcdefg", "abcdefgh", "abcdefghi", "abcdefghij", "abcdefghijk", "abcdefghijkl", "abcdefghijklm", "abcdefghijklmn", "abcdefghijklmno", "abcdefghijklmnop", "abcdefghijklmnopq", "abcdefghijklmnopqr", "abcdefghijklmnopqrs", "abcdefghijklmnopqrst"]
+      },
+      "expected": []
+    },
+    {
+      "case_id": 91,
+      "input": {
+        "words": ["abc", "def", "ghi", "abcd", "bcde", "cdef", "defg", "efgh", "fghi", "ghij", "hijk", "ijkl", "jklm", "klmn", "lmno", "mnop", "nopq", "opqr", "pqrs", "qrst", "rstu", "stuv", "tuvw", "uvwxy", "vwxyz", "wxyzabc", "xyzabcd", "zabcde"]
+      },
+      "expected": []
+    },
+    {
+      "case_id": 92,
+      "input": {
+        "words": ["foo", "bar", "foobar", "barfoo", "foofoobar", "barfoobaz", "baz", "foobazbar"]
+      },
+      "expected": ["foobar", "barfoo", "foofoobar", "barfoobaz", "foobazbar"]
+    },
+    {
+      "case_id": 93,
+      "input": {
+        "words": ["abc", "def", "abcdef", "defabc", "ab", "bc", "de", "f", "abcd", "cdef"]
+      },
+      "expected": ["def", "abcdef", "defabc"]
+    },
+    {
+      "case_id": 94,
+      "input": {
+        "words": ["hello", "world", "helloworld", "worldhello", "hellohellohello", "helloworldworld"]
+      },
+      "expected": ["helloworld", "worldhello", "hellohellohello", "helloworldworld"]
+    },
+    {
+      "case_id": 95,
+      "input": {
+        "words": ["apple", "banana", "cherry", "applebanana", "bananaapple", "cherryapple", "applecherry", "bananaapplebanana"]
+      },
+      "expected": ["applebanana", "bananaapple", "cherryapple", "applecherry", "bananaapplebanana"]
+    },
+    {
+      "case_id": 96,
+      "input": {
+        "words": ["abc", "def", "abcdef", "defabc", "fedcba", "cab", "bac", "abcabc", "defdef", "ababab", "defdefdef", "abcdefgh", "ghijklmn", "opqrstuv", "wxyz", "abcdefghijk", "lmnopqrstuv", "wxyzabcd", "efghijklmnopqr", "stuvwxyzabcd"]
+      },
+      "expected": ["abcdef", "defabc", "abcabc", "defdef", "defdefdef"]
+    }
+  ]
+}

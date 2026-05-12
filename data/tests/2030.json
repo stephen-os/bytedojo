@@ -1,0 +1,479 @@
+{
+  "schema_version": 1,
+  "problem_id": 2030,
+  "title": "Smallest K-Length Subsequence With Occurrences of a Letter",
+  "method": "smallestSubsequence",
+  "signature": {
+    "params": [
+      {
+        "name": "s",
+        "type": "STRING"
+      },
+      {
+        "name": "k",
+        "type": "INT32"
+      },
+      {
+        "name": "letter",
+        "type": "STRING"
+      },
+      {
+        "name": "repetition",
+        "type": "INT32"
+      }
+    ],
+    "returns": "STRING"
+  },
+  "cases": [
+    {
+      "case_id": 1,
+      "input": {
+        "s": "bb",
+        "k": 2,
+        "letter": "b",
+        "repetition": 2
+      },
+      "expected": "bb"
+    },
+    {
+      "case_id": 2,
+      "input": {
+        "s": "leetcode",
+        "k": 4,
+        "letter": "e",
+        "repetition": 2
+      },
+      "expected": "ecde"
+    },
+    {
+      "case_id": 3,
+      "input": {
+        "s": "leet",
+        "k": 3,
+        "letter": "e",
+        "repetition": 1
+      },
+      "expected": "eet"
+    },
+    {
+      "case_id": 4,
+      "input": {
+        "s": "aabbc",
+        "k": 3,
+        "letter": "a",
+        "repetition": 1
+      },
+      "expected": "aab"
+    },
+    {
+      "case_id": 5,
+      "input": {
+        "s": "abacabad",
+        "k": 4,
+        "letter": "a",
+        "repetition": 2
+      },
+      "expected": "aaaa"
+    },
+    {
+      "case_id": 6,
+      "input": {
+        "s": "zzzzz",
+        "k": 3,
+        "letter": "z",
+        "repetition": 3
+      },
+      "expected": "zzz"
+    },
+    {
+      "case_id": 7,
+      "input": {
+        "s": "abcdedcba",
+        "k": 5,
+        "letter": "d",
+        "repetition": 1
+      },
+      "expected": "abcda"
+    },
+    {
+      "case_id": 8,
+      "input": {
+        "s": "zzzzzaaaaa",
+        "k": 5,
+        "letter": "a",
+        "repetition": 3
+      },
+      "expected": "aaaaa"
+    },
+    {
+      "case_id": 9,
+      "input": {
+        "s": "apple",
+        "k": 3,
+        "letter": "p",
+        "repetition": 1
+      },
+      "expected": "ape"
+    },
+    {
+      "case_id": 10,
+      "input": {
+        "s": "abacabadabacaba",
+        "k": 7,
+        "letter": "a",
+        "repetition": 3
+      },
+      "expected": "aaaaaaa"
+    },
+    {
+      "case_id": 11,
+      "input": {
+        "s": "azbzczdz",
+        "k": 4,
+        "letter": "z",
+        "repetition": 2
+      },
+      "expected": "abzz"
+    },
+    {
+      "case_id": 12,
+      "input": {
+        "s": "abcdedcba",
+        "k": 5,
+        "letter": "c",
+        "repetition": 1
+      },
+      "expected": "abcba"
+    },
+    {
+      "case_id": 13,
+      "input": {
+        "s": "xyzxyzxyz",
+        "k": 5,
+        "letter": "z",
+        "repetition": 2
+      },
+      "expected": "xxyzz"
+    },
+    {
+      "case_id": 14,
+      "input": {
+        "s": "abcdedcba",
+        "k": 5,
+        "letter": "c",
+        "repetition": 2
+      },
+      "expected": "abcca"
+    },
+    {
+      "case_id": 15,
+      "input": {
+        "s": "zzzz",
+        "k": 2,
+        "letter": "z",
+        "repetition": 2
+      },
+      "expected": "zz"
+    },
+    {
+      "case_id": 16,
+      "input": {
+        "s": "abcabcabc",
+        "k": 6,
+        "letter": "a",
+        "repetition": 2
+      },
+      "expected": "aababc"
+    },
+    {
+      "case_id": 17,
+      "input": {
+        "s": "abcdabcdabcd",
+        "k": 9,
+        "letter": "b",
+        "repetition": 3
+      },
+      "expected": "ababcabcd"
+    },
+    {
+      "case_id": 18,
+      "input": {
+        "s": "elephant",
+        "k": 4,
+        "letter": "e",
+        "repetition": 1
+      },
+      "expected": "eant"
+    },
+    {
+      "case_id": 19,
+      "input": {
+        "s": "zazbzazbzazb",
+        "k": 8,
+        "letter": "z",
+        "repetition": 4
+      },
+      "expected": "abzazbzz"
+    },
+    {
+      "case_id": 20,
+      "input": {
+        "s": "babcbabcbabc",
+        "k": 5,
+        "letter": "b",
+        "repetition": 3
+      },
+      "expected": "aabbb"
+    },
+    {
+      "case_id": 21,
+      "input": {
+        "s": "abcdedcbaabcdedcbaabcdedcba",
+        "k": 15,
+        "letter": "c",
+        "repetition": 3
+      },
+      "expected": "aaabcaabcdedcba"
+    },
+    {
+      "case_id": 22,
+      "input": {
+        "s": "aaaaaaaaaaaabbbbbbbbbbccccccccccdddddddddd",
+        "k": 20,
+        "letter": "c",
+        "repetition": 4
+      },
+      "expected": "aaaaaaaaaaaabbbbcccc"
+    },
+    {
+      "case_id": 23,
+      "input": {
+        "s": "aaaaaabbbbbbcccccc",
+        "k": 12,
+        "letter": "b",
+        "repetition": 4
+      },
+      "expected": "aaaaaabbbbbb"
+    },
+    {
+      "case_id": 24,
+      "input": {
+        "s": "abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz",
+        "k": 26,
+        "letter": "z",
+        "repetition": 1
+      },
+      "expected": "aabcdefghijklmnopqrstuvwxz"
+    },
+    {
+      "case_id": 25,
+      "input": {
+        "s": "abcdefghijklmnopqrstuvwxyz",
+        "k": 13,
+        "letter": "m",
+        "repetition": 1
+      },
+      "expected": "abcdefghijklm"
+    },
+    {
+      "case_id": 26,
+      "input": {
+        "s": "mississippi",
+        "k": 5,
+        "letter": "i",
+        "repetition": 2
+      },
+      "expected": "iiipi"
+    },
+    {
+      "case_id": 27,
+      "input": {
+        "s": "zyxwvutsrqponmlkjihgfedcbazyxwvutsrqponmlkjihgfedcba",
+        "k": 26,
+        "letter": "a",
+        "repetition": 2
+      },
+      "expected": "ayxwvutsrqponmlkjihgfedcba"
+    },
+    {
+      "case_id": 28,
+      "input": {
+        "s": "ababababababababababababababababababababababab",
+        "k": 10,
+        "letter": "a",
+        "repetition": 3
+      },
+      "expected": "aaaaaaaaaa"
+    },
+    {
+      "case_id": 29,
+      "input": {
+        "s": "xyzyxyzyxyzyxyzyzyzyxyzyzyzyzyzyxyzyxyzyzyzyzyzy",
+        "k": 15,
+        "letter": "x",
+        "repetition": 3
+      },
+      "expected": "xxxxxxxyyyyzyzy"
+    },
+    {
+      "case_id": 30,
+      "input": {
+        "s": "aabbccddeeff",
+        "k": 8,
+        "letter": "c",
+        "repetition": 3
+      },
+      "expected": "aabbccd"
+    },
+    {
+      "case_id": 31,
+      "input": {
+        "s": "zzzzzaaaaabbbb",
+        "k": 10,
+        "letter": "a",
+        "repetition": 4
+      },
+      "expected": "zaaaaabbbb"
+    },
+    {
+      "case_id": 32,
+      "input": {
+        "s": "mississippi",
+        "k": 4,
+        "letter": "i",
+        "repetition": 2
+      },
+      "expected": "iiii"
+    },
+    {
+      "case_id": 33,
+      "input": {
+        "s": "mississippi",
+        "k": 6,
+        "letter": "i",
+        "repetition": 2
+      },
+      "expected": "iiippi"
+    },
+    {
+      "case_id": 34,
+      "input": {
+        "s": "zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz",
+        "k": 50,
+        "letter": "z",
+        "repetition": 10
+      },
+      "expected": "zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+    },
+    {
+      "case_id": 35,
+      "input": {
+        "s": "aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz",
+        "k": 20,
+        "letter": "a",
+        "repetition": 2
+      },
+      "expected": "aabbccddeeffgghhiijj"
+    },
+    {
+      "case_id": 36,
+      "input": {
+        "s": "banana",
+        "k": 4,
+        "letter": "a",
+        "repetition": 2
+      },
+      "expected": "aana"
+    },
+    {
+      "case_id": 37,
+      "input": {
+        "s": "abcdabcdabcd",
+        "k": 8,
+        "letter": "b",
+        "repetition": 3
+      },
+      "expected": "abababcd"
+    },
+    {
+      "case_id": 38,
+      "input": {
+        "s": "abcdefghijklmnopqrstuvwxyz",
+        "k": 10,
+        "letter": "m",
+        "repetition": 2
+      },
+      "expected": "abcdefghm"
+    },
+    {
+      "case_id": 39,
+      "input": {
+        "s": "abracadabra",
+        "k": 7,
+        "letter": "a",
+        "repetition": 3
+      },
+      "expected": "aaaabra"
+    },
+    {
+      "case_id": 40,
+      "input": {
+        "s": "zyxzyxzyx",
+        "k": 5,
+        "letter": "x",
+        "repetition": 2
+      },
+      "expected": "xxzyx"
+    },
+    {
+      "case_id": 41,
+      "input": {
+        "s": "abracadabraabracadabra",
+        "k": 12,
+        "letter": "a",
+        "repetition": 4
+      },
+      "expected": "aaaaaaaaabra"
+    },
+    {
+      "case_id": 42,
+      "input": {
+        "s": "racecar",
+        "k": 5,
+        "letter": "e",
+        "repetition": 1
+      },
+      "expected": "acear"
+    },
+    {
+      "case_id": 43,
+      "input": {
+        "s": "abcdabcabcabc",
+        "k": 9,
+        "letter": "c",
+        "repetition": 3
+      },
+      "expected": "aabcabcac"
+    },
+    {
+      "case_id": 44,
+      "input": {
+        "s": "qwertyuiopasdfghjklzxcvbnmqwerty",
+        "k": 12,
+        "letter": "r",
+        "repetition": 2
+      },
+      "expected": "erabnmqwerty"
+    },
+    {
+      "case_id": 45,
+      "input": {
+        "s": "xyzyzyzyzyx",
+        "k": 7,
+        "letter": "y",
+        "repetition": 3
+      },
+      "expected": "xyyyyyx"
+    }
+  ]
+}

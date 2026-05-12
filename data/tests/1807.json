@@ -1,0 +1,1509 @@
+{
+  "schema_version": 1,
+  "problem_id": 1807,
+  "title": "Evaluate the Bracket Pairs of a String",
+  "method": "evaluate",
+  "signature": {
+    "params": [
+      {
+        "name": "s",
+        "type": "STRING"
+      },
+      {
+        "name": "knowledge",
+        "type": "STRING_MATRIX"
+      }
+    ],
+    "returns": "STRING"
+  },
+  "cases": [
+    {
+      "case_id": 1,
+      "input": {
+        "s": "(a)(a)(a)aaa",
+        "knowledge": [
+          ["a", "yes"]
+        ]
+      },
+      "expected": "yesyesyesaaa"
+    },
+    {
+      "case_id": 2,
+      "input": {
+        "s": "(a)(b)(c)(d)",
+        "knowledge": [
+          ["a", "1"],
+          ["b", "2"],
+          ["c", "3"]
+        ]
+      },
+      "expected": "123?"
+    },
+    {
+      "case_id": 3,
+      "input": {
+        "s": "hi(name)",
+        "knowledge": [
+          ["a", "b"]
+        ]
+      },
+      "expected": "hi?"
+    },
+    {
+      "case_id": 4,
+      "input": {
+        "s": "(a)(a)(a)aaa",
+        "knowledge": [
+          ["a", "yes"]
+        ]
+      },
+      "expected": "yesyesyesaaa"
+    },
+    {
+      "case_id": 5,
+      "input": {
+        "s": "",
+        "knowledge": []
+      },
+      "expected": null
+    },
+    {
+      "case_id": 6,
+      "input": {
+        "s": "noknowledgehere",
+        "knowledge": []
+      },
+      "expected": "noknowledgehere"
+    },
+    {
+      "case_id": 7,
+      "input": {
+        "s": "no(brackets)here",
+        "knowledge": []
+      },
+      "expected": "no?here"
+    },
+    {
+      "case_id": 8,
+      "input": {
+        "s": "hi(name)",
+        "knowledge": [
+          ["a", "b"]
+        ]
+      },
+      "expected": "hi?"
+    },
+    {
+      "case_id": 9,
+      "input": {
+        "s": "(nested)but(not)really",
+        "knowledge": [
+          ["nested", "nested"],
+          ["not", "not"]
+        ]
+      },
+      "expected": "nestedbutnotreally"
+    },
+    {
+      "case_id": 10,
+      "input": {
+        "s": "(key1)(key2)(key3)",
+        "knowledge": [
+          ["key1", "value1"],
+          ["key2", "value2"]
+        ]
+      },
+      "expected": "value1value2?"
+    },
+    {
+      "case_id": 11,
+      "input": {
+        "s": "this(is)a(test)",
+        "knowledge": [
+          ["is", "was"],
+          ["test", "trial"]
+        ]
+      },
+      "expected": "thiswasatrial"
+    },
+    {
+      "case_id": 12,
+      "input": {
+        "s": "(name)is(age)yearsold",
+        "knowledge": [
+          ["name", "bob"],
+          ["age", "two"]
+        ]
+      },
+      "expected": "bobistwoyearsold"
+    },
+    {
+      "case_id": 13,
+      "input": {
+        "s": "(key1)(key2)",
+        "knowledge": [
+          ["key1", "value1"],
+          ["key2", "value2"]
+        ]
+      },
+      "expected": "value1value2"
+    },
+    {
+      "case_id": 14,
+      "input": {
+        "s": "(single)",
+        "knowledge": [
+          ["single", "one"]
+        ]
+      },
+      "expected": "one"
+    },
+    {
+      "case_id": 15,
+      "input": {
+        "s": "(last)one",
+        "knowledge": [
+          ["last", "final"]
+        ]
+      },
+      "expected": "finalone"
+    },
+    {
+      "case_id": 16,
+      "input": {
+        "s": "single",
+        "knowledge": [
+          ["single", "word"]
+        ]
+      },
+      "expected": "single"
+    },
+    {
+      "case_id": 17,
+      "input": {
+        "s": "hello",
+        "knowledge": []
+      },
+      "expected": "hello"
+    },
+    {
+      "case_id": 18,
+      "input": {
+        "s": "(unknown)key",
+        "knowledge": [
+          ["known", "value"]
+        ]
+      },
+      "expected": "?key"
+    },
+    {
+      "case_id": 19,
+      "input": {
+        "s": "(name)is(age)yearsold",
+        "knowledge": [
+          ["name", "bob"],
+          ["age", "two"]
+        ]
+      },
+      "expected": "bobistwoyearsold"
+    },
+    {
+      "case_id": 20,
+      "input": {
+        "s": "(key1)(key2)(key3)",
+        "knowledge": [
+          ["key1", "val1"],
+          ["key2", "val2"],
+          ["key3", "val3"]
+        ]
+      },
+      "expected": "val1val2val3"
+    },
+    {
+      "case_id": 21,
+      "input": {
+        "s": "(book)written(by)(author)",
+        "knowledge": [
+          ["book", "1984"],
+          ["author", "George"]
+        ]
+      },
+      "expected": "1984written?George"
+    },
+    {
+      "case_id": 22,
+      "input": {
+        "s": "(x)(y)(z)(w)",
+        "knowledge": "[[\"x\",\"one\"],[\"y\",\"two\"],[\"z\",\"three\"],[\"a\",\"four\"]]\""
+      },
+      "expected": "Error: Solution.evaluate() missing 1 required positional argument: 'knowledge'"
+    },
+    {
+      "case_id": 23,
+      "input": {
+        "s": "(city)(in)(country)",
+        "knowledge": [
+          ["city", "Tokyo"],
+          ["country", "Japan"]
+        ]
+      },
+      "expected": "Tokyo?Japan"
+    },
+    {
+      "case_id": 24,
+      "input": {
+        "s": "(country)(capital)",
+        "knowledge": "[[\"country\",\"France\"],[\"capital\",\"Paris\"]"
+      },
+      "expected": "Error: Solution.evaluate() missing 1 required positional argument: 'knowledge'"
+    },
+    {
+      "case_id": 25,
+      "input": {
+        "s": "(nested)(key)(nested)",
+        "knowledge": [
+          ["key", "value"],
+          ["nested", "deep"]
+        ]
+      },
+      "expected": "deepvaluedeep"
+    },
+    {
+      "case_id": 26,
+      "input": {
+        "s": "(ingredient)requiresto(cooktime)mins",
+        "knowledge": [
+          ["ingredient", "Cookies"],
+          ["cooktime", "15"]
+        ]
+      },
+      "expected": "Cookiesrequiresto15mins"
+    },
+    {
+      "case_id": 27,
+      "input": {
+        "s": "(one)(two)(three)(four)(five)",
+        "knowledge": [
+          ["one", "1"],
+          ["two", "2"],
+          ["three", "3"],
+          ["four", "4"]
+        ]
+      },
+      "expected": "1234?"
+    },
+    {
+      "case_id": 28,
+      "input": {
+        "s": "(customer)(order)at(store)",
+        "knowledge": [
+          ["customer", "Alice"],
+          ["order", "Order123"]
+        ]
+      },
+      "expected": "AliceOrder123at?"
+    },
+    {
+      "case_id": 29,
+      "input": {
+        "s": "(keyA)and(keyB)and(keyC)and(keyD)",
+        "knowledge": [
+          ["keyA", "valA"],
+          ["keyB", "valB"]
+        ]
+      },
+      "expected": "valAandvalBand?and?"
+    },
+    {
+      "case_id": 30,
+      "input": {
+        "s": "(a)bc(d)efg(h)ij(k)lmn(o)",
+        "knowledge": "[[\"a\",\"x\"],[\"d\",\"y\"],[\"h\",\"z\"],[\"k\",\"w\"],[\"o\",\"v\"]]\""
+      },
+      "expected": "Error: Solution.evaluate() missing 1 required positional argument: 'knowledge'"
+    },
+    {
+      "case_id": 31,
+      "input": {
+        "s": "(key)with(missing)knowledge",
+        "knowledge": [
+          ["key", "value1"],
+          ["missing", "value2"],
+          ["knowledge", "value3"]
+        ]
+      },
+      "expected": "value1withvalue2knowledge"
+    },
+    {
+      "case_id": 32,
+      "input": {
+        "s": "(greeting)(world)(planet)",
+        "knowledge": [
+          ["greeting", "hello"],
+          ["world", "earth"],
+          ["planet", "mars"]
+        ]
+      },
+      "expected": "helloearthmars"
+    },
+    {
+      "case_id": 33,
+      "input": {
+        "s": "(this)(is)(a)(test)(string)(with)(multiple)(keys)",
+        "knowledge": [
+          ["this", "it"],
+          ["is", "be"],
+          ["a", "an"],
+          ["test", "example"],
+          ["string", "sequence"],
+          ["with", "having"],
+          ["multiple", "several"],
+          ["keys", "identifiers"]
+        ]
+      },
+      "expected": "itbeanexamplesequencehavingseveralidentifiers"
+    },
+    {
+      "case_id": 34,
+      "input": {
+        "s": "(language)programmingis(fun)",
+        "knowledge": [
+          ["language", "python"],
+          ["fun", "awesome"]
+        ]
+      },
+      "expected": "pythonprogrammingisawesome"
+    },
+    {
+      "case_id": 35,
+      "input": {
+        "s": "(fruit)(vegetable)",
+        "knowledge": [
+          ["fruit", "apple"],
+          ["vegetable", "carrot"]
+        ]
+      },
+      "expected": "applecarrot"
+    },
+    {
+      "case_id": 36,
+      "input": {
+        "s": "(animal)lives(in)(habitat)",
+        "knowledge": [
+          ["animal", "tiger"],
+          ["habitat", "jungle"]
+        ]
+      },
+      "expected": "tigerlives?jungle"
+    },
+    {
+      "case_id": 37,
+      "input": {
+        "s": "nested(brackets)are(not)allowed(but)we(have)multiple(keys)here",
+        "knowledge": "[[\"brackets\",\"bracketValue\"],[\"allowed\",\"allowedValue\"],[\"but\",\"butValue\"],[\"we\",\"weValue\"],[\"have\",\"haveValue\"],[\"multiple\",\"multipleValue\"],[\"keys\",\"keysValue\"]]\""
+      },
+      "expected": "Error: Solution.evaluate() missing 1 required positional argument: 'knowledge'"
+    },
+    {
+      "case_id": 38,
+      "input": {
+        "s": "(name)has(age)yearsand(occupation)",
+        "knowledge": [
+          ["name", "Alice"],
+          ["age", "30"]
+        ]
+      },
+      "expected": "Alicehas30yearsand?"
+    },
+    {
+      "case_id": 39,
+      "input": {
+        "s": "(longkey)(anotherkey)(yetanotherkey)",
+        "knowledge": [
+          ["longkey", "averylongvalue"],
+          ["anotherkey", "shortval"],
+          ["yetanotherkey", "value"]
+        ]
+      },
+      "expected": "averylongvalueshortvalvalue"
+    },
+    {
+      "case_id": 40,
+      "input": {
+        "s": "(language)is(cool)",
+        "knowledge": [
+          ["language", "Python"],
+          ["cool", "awesome"]
+        ]
+      },
+      "expected": "Pythonisawesome"
+    },
+    {
+      "case_id": 41,
+      "input": {
+        "s": "(first)and(last)name",
+        "knowledge": [
+          ["first", "john"],
+          ["last", "doe"]
+        ]
+      },
+      "expected": "johnanddoename"
+    },
+    {
+      "case_id": 42,
+      "input": {
+        "s": "(name)is(living)(in)(city)",
+        "knowledge": [
+          ["name", "bob"],
+          ["in", "at"],
+          ["city", "london"]
+        ]
+      },
+      "expected": "bobis?atlondon"
+    },
+    {
+      "case_id": 43,
+      "input": {
+        "s": "(animal)(eats)(food)",
+        "knowledge": [
+          ["animal", "lion"],
+          ["food", "meat"]
+        ]
+      },
+      "expected": "lion?meat"
+    },
+    {
+      "case_id": 44,
+      "input": {
+        "s": "(user)likes(to)(eat)(food)",
+        "knowledge": [
+          ["user", "alice"],
+          ["eat", "enjoy"],
+          ["food", "pizza"]
+        ]
+      },
+      "expected": "alicelikes?enjoypizza"
+    },
+    {
+      "case_id": 45,
+      "input": {
+        "s": "(prefix)middle(suffix)",
+        "knowledge": [
+          ["prefix", "start"],
+          ["suffix", "end"]
+        ]
+      },
+      "expected": "startmiddleend"
+    },
+    {
+      "case_id": 46,
+      "input": {
+        "s": "(flower)grows(in)(soil)",
+        "knowledge": [
+          ["flower", "rose"],
+          ["soil", "dirt"]
+        ]
+      },
+      "expected": "rosegrows?dirt"
+    },
+    {
+      "case_id": 47,
+      "input": {
+        "s": "(first)nameis(last)name",
+        "knowledge": [
+          ["first", "john"],
+          ["last", "doe"]
+        ]
+      },
+      "expected": "johnnameisdoename"
+    },
+    {
+      "case_id": 48,
+      "input": {
+        "s": "(longkey1)and(longkey2)and(longkey3)and(longkey4)",
+        "knowledge": [
+          ["longkey1", "value1"],
+          ["longkey2", "value2"],
+          ["longkey3", "value3"],
+          ["longkey4", "value4"]
+        ]
+      },
+      "expected": "value1andvalue2andvalue3andvalue4"
+    },
+    {
+      "case_id": 49,
+      "input": {
+        "s": "(first)(second)(third)(fourth)(fifth)",
+        "knowledge": "[[\"first\",\"one\"],[\"second\",\"two\"],[\"third\",\"three\"]"
+      },
+      "expected": "Error: Solution.evaluate() missing 1 required positional argument: 'knowledge'"
+    },
+    {
+      "case_id": 50,
+      "input": {
+        "s": "(department)islocatedat(address)",
+        "knowledge": [
+          ["department", "Sales"],
+          ["address", "123BusinessSt"]
+        ]
+      },
+      "expected": "Salesislocatedat123BusinessSt"
+    },
+    {
+      "case_id": 51,
+      "input": {
+        "s": "(key1)(key2)(key3)(key4)(key5)",
+        "knowledge": "[[\"key1\",\"val1\"],[\"key3\",\"val3\"]]\""
+      },
+      "expected": "Error: Solution.evaluate() missing 1 required positional argument: 'knowledge'"
+    },
+    {
+      "case_id": 52,
+      "input": {
+        "s": "(name)has(a)(pet)",
+        "knowledge": [
+          ["name", "Mary"],
+          ["pet", "dog"]
+        ]
+      },
+      "expected": "Maryhas?dog"
+    },
+    {
+      "case_id": 53,
+      "input": {
+        "s": "(drink)is(served)in(glass)",
+        "knowledge": [
+          ["drink", "water"],
+          ["glass", "big"]
+        ]
+      },
+      "expected": "wateris?inbig"
+    },
+    {
+      "case_id": 54,
+      "input": {
+        "s": "prefix(key1)middle(key2)suffix",
+        "knowledge": [
+          ["key1", "value1"],
+          ["key2", "value2"]
+        ]
+      },
+      "expected": "prefixvalue1middlevalue2suffix"
+    },
+    {
+      "case_id": 55,
+      "input": {
+        "s": "(key1)(key2)(key1)",
+        "knowledge": [
+          ["key1", "value1"],
+          ["key2", "value2"]
+        ]
+      },
+      "expected": "value1value2value1"
+    },
+    {
+      "case_id": 56,
+      "input": {
+        "s": "(item1)(item2)(item3)(item4)",
+        "knowledge": [
+          ["item1", "itemA"],
+          ["item2", "itemB"],
+          ["item4", "itemD"]
+        ]
+      },
+      "expected": "itemAitemB?itemD"
+    },
+    {
+      "case_id": 57,
+      "input": {
+        "s": "(greeting)world",
+        "knowledge": [
+          ["greeting", "hello"],
+          ["farewell", "bye"]
+        ]
+      },
+      "expected": "helloworld"
+    },
+    {
+      "case_id": 58,
+      "input": {
+        "s": "(user)(name)livesin(city)with(zip)",
+        "knowledge": [
+          ["user", "John"],
+          ["city", "San Francisco"],
+          ["zip", "94111"]
+        ]
+      },
+      "expected": "John?livesinSan Franciscowith94111"
+    },
+    {
+      "case_id": 59,
+      "input": {
+        "s": "(person)(from)(place)isvisiting(placeofinterest)",
+        "knowledge": [
+          ["person", "Bob"],
+          ["from", "LosAngeles"],
+          ["place", "SanFrancisco"],
+          ["placeofinterest", "Alcatraz"]
+        ]
+      },
+      "expected": "BobLosAngelesSanFranciscoisvisitingAlcatraz"
+    },
+    {
+      "case_id": 60,
+      "input": {
+        "s": "(longkeyname)is(longervaluename)",
+        "knowledge": [
+          ["longkeyname", "longervaluename"]
+        ]
+      },
+      "expected": "longervaluenameis?"
+    },
+    {
+      "case_id": 61,
+      "input": {
+        "s": "(name)has(a)(pet)(dog)",
+        "knowledge": [
+          ["name", "john"],
+          ["pet", "dog"],
+          ["dog", "buddy"]
+        ]
+      },
+      "expected": "johnhas?dogbuddy"
+    },
+    {
+      "case_id": 62,
+      "input": {
+        "s": "(key1)and(key2)and(key3)and(key4)and(key5)",
+        "knowledge": [
+          ["key1", "value1"],
+          ["key2", "value2"],
+          ["key3", "value3"],
+          ["key4", "value4"]
+        ]
+      },
+      "expected": "value1andvalue2andvalue3andvalue4and?"
+    },
+    {
+      "case_id": 63,
+      "input": {
+        "s": "(prefix)and(suffix)and(middle)",
+        "knowledge": "[[\"prefix\",\"pre\"],[\"suffix\",\"suf\"],[\"middle\",\"mid\"]]\""
+      },
+      "expected": "Error: Solution.evaluate() missing 1 required positional argument: 'knowledge'"
+    },
+    {
+      "case_id": 64,
+      "input": {
+        "s": "(prefix)_(suffix)",
+        "knowledge": [
+          ["prefix", "start"],
+          ["suffix", "end"]
+        ]
+      },
+      "expected": "start_end"
+    },
+    {
+      "case_id": 65,
+      "input": {
+        "s": "(number)plus(number)equals(twice_number)",
+        "knowledge": [
+          ["number", "10"],
+          ["twice_number", "20"]
+        ]
+      },
+      "expected": "10plus10equals20"
+    },
+    {
+      "case_id": 66,
+      "input": {
+        "s": "(name)livesat(address)andworksat(company)",
+        "knowledge": [
+          ["name", "Alice"],
+          ["address", "Wonderland"],
+          ["company", "TechCorp"]
+        ]
+      },
+      "expected": "AlicelivesatWonderlandandworksatTechCorp"
+    },
+    {
+      "case_id": 67,
+      "input": {
+        "s": "(repeated)(key)(repeated)(key)",
+        "knowledge": [
+          ["key", "value"]
+        ]
+      },
+      "expected": "?value?value"
+    },
+    {
+      "case_id": 68,
+      "input": {
+        "s": "(planet)(orbits)around(star)",
+        "knowledge": [
+          ["planet", "Earth"],
+          ["star", "Sun"]
+        ]
+      },
+      "expected": "Earth?aroundSun"
+    },
+    {
+      "case_id": 69,
+      "input": {
+        "s": "(user)likes(to)play(games)",
+        "knowledge": "[[\"user\",\"Alice\"],[\"to\",\"really\"],[\"games\",\"chess\"]]\""
+      },
+      "expected": "Error: Solution.evaluate() missing 1 required positional argument: 'knowledge'"
+    },
+    {
+      "case_id": 70,
+      "input": {
+        "s": "(item)isavaliablefrom(date)",
+        "knowledge": [
+          ["item", "Smartphone"],
+          ["date", "2023-12-15"]
+        ]
+      },
+      "expected": "Smartphoneisavaliablefrom2023-12-15"
+    },
+    {
+      "case_id": 71,
+      "input": {
+        "s": "(animal)(color)(size)",
+        "knowledge": "[[\"animal\",\"dog\"],[\"color\",\"black\"],[\"size\",\"big\"],[\"weight\",\"10kg\"]"
+      },
+      "expected": "Error: Solution.evaluate() missing 1 required positional argument: 'knowledge'"
+    },
+    {
+      "case_id": 72,
+      "input": {
+        "s": "(conference)heldon(date)",
+        "knowledge": [
+          ["conference", "GDC"],
+          ["date", "2024-03-19"]
+        ]
+      },
+      "expected": "GDCheldon2024-03-19"
+    },
+    {
+      "case_id": 73,
+      "input": {
+        "s": "(first)(second)(third)(fourth)",
+        "knowledge": [
+          ["first", "one"],
+          ["second", "two"],
+          ["third", "three"]
+        ]
+      },
+      "expected": "onetwothree?"
+    },
+    {
+      "case_id": 74,
+      "input": {
+        "s": "(color)(animal)",
+        "knowledge": [
+          ["color", "blue"],
+          ["animal", "dog"],
+          ["bird", "sparrow"]
+        ]
+      },
+      "expected": "bluedog"
+    },
+    {
+      "case_id": 75,
+      "input": {
+        "s": "(name)isfrom(city)andworksas(job)",
+        "knowledge": "[[\"name\",\"alice\"],[\"city\",\"newyork\"],[\"job\",\"engineer\"]]\""
+      },
+      "expected": "Error: Solution.evaluate() missing 1 required positional argument: 'knowledge'"
+    },
+    {
+      "case_id": 76,
+      "input": {
+        "s": "(firstName)(lastName)isfrom(city)in(country)",
+        "knowledge": [
+          ["firstName", "Alice"],
+          ["lastName", "Wonderland"],
+          ["city", "Wonderland"],
+          ["country", "Fantasia"]
+        ]
+      },
+      "expected": "AliceWonderlandisfromWonderlandinFantasia"
+    },
+    {
+      "case_id": 77,
+      "input": {
+        "s": "(product)costs(dollars)and(euros)",
+        "knowledge": [
+          ["product", "Laptop"],
+          ["dollars", "1200"],
+          ["euros", "1020"]
+        ]
+      },
+      "expected": "Laptopcosts1200and1020"
+    },
+    {
+      "case_id": 78,
+      "input": {
+        "s": "(nested)but(notreally)nested",
+        "knowledge": [
+          ["nested", "deep"],
+          ["notreally", "shallow"]
+        ]
+      },
+      "expected": "deepbutshallownested"
+    },
+    {
+      "case_id": 79,
+      "input": {
+        "s": "(first)(last)(age)",
+        "knowledge": [
+          ["first", "john"],
+          ["last", "doe"],
+          ["age", "thirty"]
+        ]
+      },
+      "expected": "johndoethirty"
+    },
+    {
+      "case_id": 80,
+      "input": {
+        "s": "(city)(has)(many)(buildings)",
+        "knowledge": [
+          ["city", "newyork"],
+          ["many", "lots"]
+        ]
+      },
+      "expected": "newyork?lots?"
+    },
+    {
+      "case_id": 81,
+      "input": {
+        "s": "(language)(framework)",
+        "knowledge": [
+          ["language", "Python"],
+          ["framework", "Django"],
+          ["version", "3.9"]
+        ]
+      },
+      "expected": "PythonDjango"
+    },
+    {
+      "case_id": 82,
+      "input": {
+        "s": "(model)releasedon(year)",
+        "knowledge": [
+          ["model", "iPhone15"],
+          ["year", "2023"]
+        ]
+      },
+      "expected": "iPhone15releasedon2023"
+    },
+    {
+      "case_id": 83,
+      "input": {
+        "s": "(multiple)(keys)(here)",
+        "knowledge": [
+          ["multiple", "many"],
+          ["keys", "some"],
+          ["here", "there"]
+        ]
+      },
+      "expected": "manysomethere"
+    },
+    {
+      "case_id": 84,
+      "input": {
+        "s": "(key1)and(key2)and(key3)and(key4)",
+        "knowledge": "[[\"key1\",\"value1\"],[\"key2\",\"value2\"]]\""
+      },
+      "expected": "Error: Solution.evaluate() missing 1 required positional argument: 'knowledge'"
+    },
+    {
+      "case_id": 85,
+      "input": {
+        "s": "(planet)(moon)",
+        "knowledge": "[[\"planet\",\"Earth\"],[\"moon\",\"Moon\"]"
+      },
+      "expected": "Error: Solution.evaluate() missing 1 required positional argument: 'knowledge'"
+    },
+    {
+      "case_id": 86,
+      "input": {
+        "s": "(username)lastloggedin(on)",
+        "knowledge": [
+          ["username", "Alice"],
+          ["on", "2023-10-01"]
+        ]
+      },
+      "expected": "Alicelastloggedin2023-10-01"
+    },
+    {
+      "case_id": 87,
+      "input": {
+        "s": "(planet)is(almost)full",
+        "knowledge": [
+          ["planet", "Earth"],
+          ["almost", "not"],
+          ["full", "occupied"]
+        ]
+      },
+      "expected": "Earthisnotfull"
+    },
+    {
+      "case_id": 88,
+      "input": {
+        "s": "(person)loves(to)(eat)",
+        "knowledge": [
+          ["person", "John"],
+          ["eat", "pizza"]
+        ]
+      },
+      "expected": "Johnloves?pizza"
+    },
+    {
+      "case_id": 89,
+      "input": {
+        "s": "(name)isfrom(city)andlivesin(state)",
+        "knowledge": "[[\"name\",\"John\"],[\"city\",\"NewYork\"],[\"state\",\"NY\"]]\""
+      },
+      "expected": "Error: Solution.evaluate() missing 1 required positional argument: 'knowledge'"
+    },
+    {
+      "case_id": 90,
+      "input": {
+        "s": "(car)is(fast)and(economical)",
+        "knowledge": [
+          ["car", "Ferrari"],
+          ["fast", "very"],
+          ["economical", "not"]
+        ]
+      },
+      "expected": "Ferrariisveryandnot"
+    },
+    {
+      "case_id": 91,
+      "input": {
+        "s": "(key1)and(key2)and(key3)and(key4)",
+        "knowledge": [
+          ["key1", "value1"],
+          ["key2", "value2"],
+          ["key4", "value4"]
+        ]
+      },
+      "expected": "value1andvalue2and?andvalue4"
+    },
+    {
+      "case_id": 92,
+      "input": {
+        "s": "(part1)(part2)(part3)",
+        "knowledge": [
+          ["part1", "first"],
+          ["part2", "second"],
+          ["part3", "third"]
+        ]
+      },
+      "expected": "firstsecondthird"
+    },
+    {
+      "case_id": 93,
+      "input": {
+        "s": "(color)(is)(used)in(art)",
+        "knowledge": [
+          ["color", "red"],
+          ["used", "frequently"]
+        ]
+      },
+      "expected": "red?frequentlyin?"
+    },
+    {
+      "case_id": 94,
+      "input": {
+        "s": "(key1)is(key2)and(key3)is(key4)",
+        "knowledge": [
+          ["key1", "value1"],
+          ["key2", "value2"],
+          ["key3", "value3"]
+        ]
+      },
+      "expected": "value1isvalue2andvalue3is?"
+    },
+    {
+      "case_id": 95,
+      "input": {
+        "s": "(a)(b)(c)(d)(e)(f)(g)(h)(i)(j)",
+        "knowledge": "[[\"a\",\"A\"],[\"b\",\"B\"],[\"c\",\"C\"],[\"d\",\"D\"],[\"e\",\"E\"],[\"f\",\"F\"],[\"g\",\"G\"],[\"h\",\"H\"],[\"i\",\"I\"],[\"j\",\"J\"]]\""
+      },
+      "expected": "Error: Solution.evaluate() missing 1 required positional argument: 'knowledge'"
+    },
+    {
+      "case_id": 96,
+      "input": {
+        "s": "(name)from(country)is(visitor)",
+        "knowledge": [
+          ["name", "Bob"],
+          ["country", "USA"]
+        ]
+      },
+      "expected": "BobfromUSAis?"
+    },
+    {
+      "case_id": 97,
+      "input": {
+        "s": "(prefix)example(suffix)",
+        "knowledge": [
+          ["prefix", "pre"],
+          ["suffix", "post"]
+        ]
+      },
+      "expected": "preexamplepost"
+    },
+    {
+      "case_id": 98,
+      "input": {
+        "s": "(unknown)(key)(not)(present)",
+        "knowledge": [
+          ["present", "available"]
+        ]
+      },
+      "expected": "???available"
+    },
+    {
+      "case_id": 99,
+      "input": {
+        "s": "(unknown)(key1)(unknown)(key2)(unknown)",
+        "knowledge": [
+          ["key1", "value1"],
+          ["key2", "value2"]
+        ]
+      },
+      "expected": "?value1?value2?"
+    },
+    {
+      "case_id": 100,
+      "input": {
+        "s": "(book)writtenby(author)publishedby(publisher)",
+        "knowledge": [
+          ["book", "GreatExpectations"],
+          ["author", "CharlesDickens"],
+          ["publisher", "ChapmanandHall"]
+        ]
+      },
+      "expected": "GreatExpectationswrittenbyCharlesDickenspublishedbyChapmanandHall"
+    },
+    {
+      "case_id": 101,
+      "input": {
+        "s": "(user)likes(to)(eat)(food)",
+        "knowledge": "[[\"user\",\"Alice\"],[\"food\",\"pizza\"]"
+      },
+      "expected": "Error: Solution.evaluate() missing 1 required positional argument: 'knowledge'"
+    },
+    {
+      "case_id": 102,
+      "input": {
+        "s": "(instrument)plays(music)",
+        "knowledge": [
+          ["instrument", "guitar"],
+          ["music", "beautiful"]
+        ]
+      },
+      "expected": "guitarplaysbeautiful"
+    },
+    {
+      "case_id": 103,
+      "input": {
+        "s": "(prefix)(middle)(suffix)",
+        "knowledge": [
+          ["prefix", "pre"],
+          ["middle", "mid"],
+          ["suffix", "suf"]
+        ]
+      },
+      "expected": "premidsuf"
+    },
+    {
+      "case_id": 104,
+      "input": {
+        "s": "(fruit)are(sweet)and(healthy)",
+        "knowledge": [
+          ["fruit", "apples"],
+          ["sweet", "very"],
+          ["healthy", "indeed"]
+        ]
+      },
+      "expected": "applesareveryandindeed"
+    },
+    {
+      "case_id": 105,
+      "input": {
+        "s": "(repeated)repeated(repeated)",
+        "knowledge": [
+          ["repeated", "again"]
+        ]
+      },
+      "expected": "againrepeatedagain"
+    },
+    {
+      "case_id": 106,
+      "input": {
+        "s": "(planet)(moon)orbiting(planet)",
+        "knowledge": [
+          ["planet", "Earth"],
+          ["moon", "Moon"]
+        ]
+      },
+      "expected": "EarthMoonorbitingEarth"
+    },
+    {
+      "case_id": 107,
+      "input": {
+        "s": "(key1)(key1)(key1)(key1)(key1)",
+        "knowledge": [
+          ["key1", "repeat"]
+        ]
+      },
+      "expected": "repeatrepeatrepeatrepeatrepeat"
+    },
+    {
+      "case_id": 108,
+      "input": {
+        "s": "(product)(model)(year)",
+        "knowledge": "[[\"product\",\"laptop\"],[\"model\",\"XPS13\"]"
+      },
+      "expected": "Error: Solution.evaluate() missing 1 required positional argument: 'knowledge'"
+    },
+    {
+      "case_id": 109,
+      "input": {
+        "s": "(repeated)(repeated)(repeated)",
+        "knowledge": "[[\"repeated\",\"yes\"]]\""
+      },
+      "expected": "Error: Solution.evaluate() missing 1 required positional argument: 'knowledge'"
+    },
+    {
+      "case_id": 110,
+      "input": {
+        "s": "(key1)is(key2)yearsold(key3)",
+        "knowledge": [
+          ["key1", "bob"],
+          ["key2", "two"]
+        ]
+      },
+      "expected": "bobistwoyearsold?"
+    },
+    {
+      "case_id": 111,
+      "input": {
+        "s": "(greeting)everyone(my)name(is)(unknown)",
+        "knowledge": [
+          ["greeting", "hi"],
+          ["my", "my"]
+        ]
+      },
+      "expected": "hieveryonemyname??"
+    },
+    {
+      "case_id": 112,
+      "input": {
+        "s": "(bird)can(fly)high",
+        "knowledge": [
+          ["bird", "eagle"],
+          ["fly", "soar"]
+        ]
+      },
+      "expected": "eaglecansoarhigh"
+    },
+    {
+      "case_id": 113,
+      "input": {
+        "s": "(country)has(a)(capital)",
+        "knowledge": [
+          ["country", "India"],
+          ["capital", "Delhi"]
+        ]
+      },
+      "expected": "Indiahas?Delhi"
+    },
+    {
+      "case_id": 114,
+      "input": {
+        "s": "(a)(b)(c)(d)(e)(f)",
+        "knowledge": [
+          ["a", "one"],
+          ["b", "two"],
+          ["c", "three"],
+          ["d", "four"],
+          ["e", "five"],
+          ["f", "six"]
+        ]
+      },
+      "expected": "onetwothreefourfivesix"
+    },
+    {
+      "case_id": 115,
+      "input": {
+        "s": "(a)(b)(c)(d)(e)(f)(g)(h)(i)(j)(k)(l)(m)(n)(o)(p)(q)(r)(s)(t)(u)(v)(w)(x)(y)(z)",
+        "knowledge": [
+          ["a", "A"],
+          ["b", "B"],
+          ["c", "C"],
+          ["d", "D"],
+          ["e", "E"],
+          ["f", "F"],
+          ["g", "G"],
+          ["h", "H"],
+          ["i", "I"],
+          ["j", "J"],
+          ["k", "K"],
+          ["l", "L"],
+          ["m", "M"],
+          ["n", "N"],
+          ["o", "O"],
+          ["p", "P"],
+          ["q", "Q"],
+          ["r", "R"],
+          ["s", "S"],
+          ["t", "T"],
+          ["u", "U"],
+          ["v", "V"],
+          ["w", "W"],
+          ["x", "X"],
+          ["y", "Y"],
+          ["z", "Z"]
+        ]
+      },
+      "expected": "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+    },
+    {
+      "case_id": 116,
+      "input": {
+        "s": "(color)(of)the(sky)",
+        "knowledge": [
+          ["color", "blue"],
+          ["sky", "beautiful"]
+        ]
+      },
+      "expected": "blue?thebeautiful"
+    },
+    {
+      "case_id": 117,
+      "input": {
+        "s": "(name)is(unknown)but(age)yearsold",
+        "knowledge": [
+          ["name", "alice"],
+          ["age", "30"]
+        ]
+      },
+      "expected": "aliceis?but30yearsold"
+    },
+    {
+      "case_id": 118,
+      "input": {
+        "s": "(product)priceis(price)and(quantity)itemsareavailable",
+        "knowledge": [
+          ["product", "laptop"],
+          ["price", "1000"],
+          ["quantity", "5"]
+        ]
+      },
+      "expected": "laptoppriceis1000and5itemsareavailable"
+    },
+    {
+      "case_id": 119,
+      "input": {
+        "s": "(item)costs(amount)currency",
+        "knowledge": [
+          ["item", "book"],
+          ["amount", "10"],
+          ["currency", "dollars"]
+        ]
+      },
+      "expected": "bookcosts10currency"
+    },
+    {
+      "case_id": 120,
+      "input": {
+        "s": "(a)(b)(c)(d)(e)",
+        "knowledge": [
+          ["a", "alpha"],
+          ["b", "beta"],
+          ["c", "gamma"],
+          ["d", "delta"],
+          ["e", "epsilon"]
+        ]
+      },
+      "expected": "alphabetagammadeltaepsilon"
+    },
+    {
+      "case_id": 121,
+      "input": {
+        "s": "(a)(b)(c)(d)(e)(f)(g)(h)(i)(j)(k)(l)(m)(n)(o)(p)(q)(r)(s)(t)(u)(v)(w)(x)(y)(z)",
+        "knowledge": [
+          ["a", "a"],
+          ["b", "b"],
+          ["c", "c"],
+          ["d", "d"],
+          ["e", "e"],
+          ["f", "f"],
+          ["g", "g"],
+          ["h", "h"],
+          ["i", "i"],
+          ["j", "j"],
+          ["k", "k"],
+          ["l", "l"],
+          ["m", "m"],
+          ["n", "n"],
+          ["o", "o"],
+          ["p", "p"],
+          ["q", "q"],
+          ["r", "r"],
+          ["s", "s"],
+          ["t", "t"],
+          ["u", "u"],
+          ["v", "v"],
+          ["w", "w"],
+          ["x", "x"],
+          ["y", "y"],
+          ["z", "z"]
+        ]
+      },
+      "expected": "abcdefghijklmnopqrstuvwxyz"
+    },
+    {
+      "case_id": 122,
+      "input": {
+        "s": "(repeated)(repeated)(repeated)",
+        "knowledge": [
+          ["repeated", "rep"]
+        ]
+      },
+      "expected": "repreprep"
+    },
+    {
+      "case_id": 123,
+      "input": {
+        "s": "(key1)and(key2)and(key3)and(key4)and(key5)and(key6)and(key7)",
+        "knowledge": [
+          ["key1", "value1"],
+          ["key2", "value2"],
+          ["key3", "value3"],
+          ["key4", "value4"],
+          ["key5", "value5"],
+          ["key6", "value6"],
+          ["key7", "value7"]
+        ]
+      },
+      "expected": "value1andvalue2andvalue3andvalue4andvalue5andvalue6andvalue7"
+    },
+    {
+      "case_id": 124,
+      "input": {
+        "s": "(a)(b)(c)(d)(e)(f)(g)(h)(i)(j)",
+        "knowledge": [
+          ["a", "one"],
+          ["b", "two"],
+          ["c", "three"],
+          ["d", "four"],
+          ["e", "five"],
+          ["f", "six"],
+          ["g", "seven"],
+          ["h", "eight"],
+          ["i", "nine"],
+          ["j", "ten"]
+        ]
+      },
+      "expected": "onetwothreefourfivesixseveneightnineten"
+    },
+    {
+      "case_id": 125,
+      "input": {
+        "s": "(a)(b)(c)(d)(e)(f)(g)(h)(i)(j)",
+        "knowledge": [
+          ["a", "yes"],
+          ["b", "no"],
+          ["c", "maybe"],
+          ["d", "sure"],
+          ["e", "never"],
+          ["f", "always"],
+          ["g", "often"],
+          ["h", "rarely"],
+          ["i", "sometimes"],
+          ["j", "usually"]
+        ]
+      },
+      "expected": "yesnomaybesureneveralwaysoftenrarelysometimesusually"
+    },
+    {
+      "case_id": 126,
+      "input": {
+        "s": "(user)hasposted(numberofposts)times",
+        "knowledge": [
+          ["user", "Charlie"],
+          ["numberofposts", "250"]
+        ]
+      },
+      "expected": "Charliehasposted250times"
+    },
+    {
+      "case_id": 127,
+      "input": {
+        "s": "(complex)(string)(with)(multiple)(keys)",
+        "knowledge": [
+          ["complex", "com"],
+          ["string", "str"],
+          ["with", "wi"],
+          ["multiple", "mul"],
+          ["keys", "ke"]
+        ]
+      },
+      "expected": "comstrwimulke"
+    },
+    {
+      "case_id": 128,
+      "input": {
+        "s": "(key1)is(key2)yearsold(key3)and(key4)livesin(key5)",
+        "knowledge": [
+          ["key1", "bob"],
+          ["key2", "two"],
+          ["key5", "NYC"]
+        ]
+      },
+      "expected": "bobistwoyearsold?and?livesinNYC"
+    },
+    {
+      "case_id": 129,
+      "input": {
+        "s": "(a)(b)(c)(d)(e)(f)",
+        "knowledge": [
+          ["a", "alpha"],
+          ["b", "beta"],
+          ["c", "gamma"],
+          ["d", "delta"],
+          ["e", "epsilon"]
+        ]
+      },
+      "expected": "alphabetagammadeltaepsilon?"
+    },
+    {
+      "case_id": 130,
+      "input": {
+        "s": "(nested)brackets(are)not(allowed)",
+        "knowledge": [
+          ["nested", "nested"],
+          ["brackets", "brackets"],
+          ["not", "not"]
+        ]
+      },
+      "expected": "nestedbrackets?not?"
+    },
+    {
+      "case_id": 131,
+      "input": {
+        "s": "(first)(second)(third)(fourth)",
+        "knowledge": "[[\"third\",\"thirdValue\"],[\"fourth\",\"fourthValue\"]]\""
+      },
+      "expected": "Error: Solution.evaluate() missing 1 required positional argument: 'knowledge'"
+    }
+  ]
+}

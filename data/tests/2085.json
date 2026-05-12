@@ -1,0 +1,845 @@
+{
+  "schema_version": 1,
+  "problem_id": 2085,
+  "title": "Count Common Words With One Occurrence",
+  "method": "countWords",
+  "signature": {
+    "params": [
+      {
+        "name": "words1",
+        "type": "STRING_ARRAY"
+      },
+      {
+        "name": "words2",
+        "type": "STRING_ARRAY"
+      }
+    ],
+    "returns": "INT32"
+  },
+  "cases": [
+    {
+      "case_id": 1,
+      "input": {
+        "words1": ["one"],
+        "words2": ["two"]
+      },
+      "expected": 0
+    },
+    {
+      "case_id": 2,
+      "input": {
+        "words1": ["unique"],
+        "words2": ["unique"]
+      },
+      "expected": 1
+    },
+    {
+      "case_id": 3,
+      "input": {
+        "words1": ["b", "bb", "bbb"],
+        "words2": ["a", "aa", "aaa"]
+      },
+      "expected": 0
+    },
+    {
+      "case_id": 4,
+      "input": {
+        "words1": ["distinct"],
+        "words2": ["distinct", "distinct"]
+      },
+      "expected": 0
+    },
+    {
+      "case_id": 5,
+      "input": {
+        "words1": ["a", "b", "c"],
+        "words2": ["c", "b", "a"]
+      },
+      "expected": 3
+    },
+    {
+      "case_id": 6,
+      "input": {
+        "words1": ["same", "same"],
+        "words2": ["same", "same", "same"]
+      },
+      "expected": 0
+    },
+    {
+      "case_id": 7,
+      "input": {
+        "words1": ["a", "ab"],
+        "words2": ["a", "a", "a", "ab"]
+      },
+      "expected": 1
+    },
+    {
+      "case_id": 8,
+      "input": {
+        "words1": ["hello", "world"],
+        "words2": ["hello", "world", "hello"]
+      },
+      "expected": 1
+    },
+    {
+      "case_id": 9,
+      "input": {
+        "words1": ["hello", "world"],
+        "words2": ["hello", "world"]
+      },
+      "expected": 2
+    },
+    {
+      "case_id": 10,
+      "input": {
+        "words1": ["apple", "banana", "cherry"],
+        "words2": ["banana", "apple", "date"]
+      },
+      "expected": 2
+    },
+    {
+      "case_id": 11,
+      "input": {
+        "words1": ["leetcode", "is", "amazing", "as", "is"],
+        "words2": ["amazing", "leetcode", "is"]
+      },
+      "expected": 2
+    },
+    {
+      "case_id": 12,
+      "input": {
+        "words1": ["repeat", "repeat"],
+        "words2": ["repeat", "repeat"]
+      },
+      "expected": 0
+    },
+    {
+      "case_id": 13,
+      "input": {
+        "words1": ["python", "java", "c++", "javascript"],
+        "words2": ["c++", "java", "python", "python", "javascript", "java", "c++", "javascript", "c++", "javascript"]
+      },
+      "expected": 0
+    },
+    {
+      "case_id": 14,
+      "input": {
+        "words1": ["abc", "def", "ghi", "jkl"],
+        "words2": ["def", "ghi", "jkl", "mno", "pqr", "abc", "def", "ghi", "jkl"]
+      },
+      "expected": 1
+    },
+    {
+      "case_id": 15,
+      "input": {
+        "words1": ["python", "java", "c++", "ruby"],
+        "words2": ["java", "c++", "ruby", "python", "python", "java"]
+      },
+      "expected": 2
+    },
+    {
+      "case_id": 16,
+      "input": {
+        "words1": ["alpha", "beta", "gamma", "delta"],
+        "words2": ["delta", "gamma", "beta", "alpha", "alpha", "beta", "gamma", "delta"]
+      },
+      "expected": 0
+    },
+    {
+      "case_id": 17,
+      "input": {
+        "words1": ["x", "y", "z", "x", "y", "z", "x", "y", "z"],
+        "words2": ["x", "y", "z", "x", "y", "z", "x", "y", "z", "x", "y", "z"]
+      },
+      "expected": 0
+    },
+    {
+      "case_id": 18,
+      "input": {
+        "words1": ["one", "two", "three", "four", "five"],
+        "words2": ["two", "three", "four", "five", "six", "seven", "eight"]
+      },
+      "expected": 4
+    },
+    {
+      "case_id": 19,
+      "input": {
+        "words1": ["hello", "world", "hello"],
+        "words2": ["world", "hello", "hello", "world"]
+      },
+      "expected": 0
+    },
+    {
+      "case_id": 20,
+      "input": {
+        "words1": ["cat", "dog", "bird", "fish"],
+        "words2": ["cat", "dog", "bird", "fish", "dog", "bird"]
+      },
+      "expected": 2
+    },
+    {
+      "case_id": 21,
+      "input": {
+        "words1": ["hello", "hello", "world"],
+        "words2": ["hello", "world", "world", "world"]
+      },
+      "expected": 0
+    },
+    {
+      "case_id": 22,
+      "input": {
+        "words1": ["cat", "dog", "fish"],
+        "words2": ["dog", "cat", "bird", "fish", "dog", "fish"]
+      },
+      "expected": 1
+    },
+    {
+      "case_id": 23,
+      "input": {
+        "words1": ["a", "b", "c", "d", "e"],
+        "words2": ["f", "g", "h", "i", "j"]
+      },
+      "expected": 0
+    },
+    {
+      "case_id": 24,
+      "input": {
+        "words1": ["alpha", "beta", "gamma", "delta"],
+        "words2": ["alpha", "beta", "gamma", "delta", "delta"]
+      },
+      "expected": 3
+    },
+    {
+      "case_id": 25,
+      "input": {
+        "words1": ["one", "two", "three", "four", "five", "six"],
+        "words2": ["three", "four", "seven", "eight", "nine", "one", "two"]
+      },
+      "expected": 4
+    },
+    {
+      "case_id": 26,
+      "input": {
+        "words1": ["one", "two", "three", "four"],
+        "words2": ["four", "three", "two", "one", "one", "two", "three", "four", "four", "three", "two", "one"]
+      },
+      "expected": 0
+    },
+    {
+      "case_id": 27,
+      "input": {
+        "words1": ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j"],
+        "words2": ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "a", "b", "c", "d", "e", "f", "g", "h", "i", "j"]
+      },
+      "expected": 0
+    },
+    {
+      "case_id": 28,
+      "input": {
+        "words1": ["same", "word", "multiple"],
+        "words2": ["same", "word", "multiple", "same", "word", "multiple"]
+      },
+      "expected": 0
+    },
+    {
+      "case_id": 29,
+      "input": {
+        "words1": ["test", "case", "one"],
+        "words2": ["case", "test", "one", "one", "test", "case"]
+      },
+      "expected": 0
+    },
+    {
+      "case_id": 30,
+      "input": {
+        "words1": ["same", "word", "repeated"],
+        "words2": ["same", "word", "repeated", "same", "word", "repeated"]
+      },
+      "expected": 0
+    },
+    {
+      "case_id": 31,
+      "input": {
+        "words1": ["hello", "world", "hello", "world"],
+        "words2": ["hello", "world", "hello", "world", "hello", "world"]
+      },
+      "expected": 0
+    },
+    {
+      "case_id": 32,
+      "input": {
+        "words1": ["x", "y", "z"],
+        "words2": ["x", "y", "z", "x", "y", "z"]
+      },
+      "expected": 0
+    },
+    {
+      "case_id": 33,
+      "input": {
+        "words1": ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j"],
+        "words2": ["a", "b", "b", "c", "d", "d", "e", "f", "f", "g"]
+      },
+      "expected": 4
+    },
+    {
+      "case_id": 34,
+      "input": {
+        "words1": ["car", "truck", "bus", "van", "car", "truck"],
+        "words2": ["bus", "van", "motorcycle", "bicycle", "bus", "van", "truck"]
+      },
+      "expected": 0
+    },
+    {
+      "case_id": 35,
+      "input": {
+        "words1": ["cat", "dog", "fish", "bird"],
+        "words2": ["dog", "cat", "cat", "fish", "dog", "bird"]
+      },
+      "expected": 2
+    },
+    {
+      "case_id": 36,
+      "input": {
+        "words1": ["a", "b", "c", "d", "e"],
+        "words2": ["f", "g", "h", "i", "j", "a", "b", "c", "d", "e"]
+      },
+      "expected": 5
+    },
+    {
+      "case_id": 37,
+      "input": {
+        "words1": ["one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten"],
+        "words2": ["one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten"]
+      },
+      "expected": 0
+    },
+    {
+      "case_id": 38,
+      "input": {
+        "words1": ["same", "word", "repeated", "multiple", "times"],
+        "words2": ["times", "repeated", "multiple", "same", "word", "word"]
+      },
+      "expected": 4
+    },
+    {
+      "case_id": 39,
+      "input": {
+        "words1": ["one", "two", "three", "four"],
+        "words2": ["four", "three", "two", "one", "one", "two", "three", "four"]
+      },
+      "expected": 0
+    },
+    {
+      "case_id": 40,
+      "input": {
+        "words1": ["apple", "banana", "cherry"],
+        "words2": ["banana", "apple", "cherry", "apple"]
+      },
+      "expected": 2
+    },
+    {
+      "case_id": 41,
+      "input": {
+        "words1": ["a", "b", "c", "d"],
+        "words2": ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j"]
+      },
+      "expected": 4
+    },
+    {
+      "case_id": 42,
+      "input": {
+        "words1": ["a", "b", "c", "d"],
+        "words2": ["a", "b", "c", "d", "a", "b", "c", "d"]
+      },
+      "expected": 0
+    },
+    {
+      "case_id": 43,
+      "input": {
+        "words1": ["x", "y", "z", "w", "v"],
+        "words2": ["x", "y", "z", "w", "v", "x", "y", "z", "w", "v", "x", "y", "z", "w", "v", "x", "y", "z", "w", "v"]
+      },
+      "expected": 0
+    },
+    {
+      "case_id": 44,
+      "input": {
+        "words1": ["a", "b", "c", "d", "e"],
+        "words2": ["e", "d", "c", "b", "a", "a", "b", "c", "d", "e"]
+      },
+      "expected": 0
+    },
+    {
+      "case_id": 45,
+      "input": {
+        "words1": ["unique", "words", "only", "once", "here"],
+        "words2": ["words", "only", "once", "here", "unique", "twice", "unique"]
+      },
+      "expected": 4
+    },
+    {
+      "case_id": 46,
+      "input": {
+        "words1": ["x", "y", "z"],
+        "words2": ["x", "y", "z", "x", "y", "z", "x", "y", "z", "x", "y", "z"]
+      },
+      "expected": 0
+    },
+    {
+      "case_id": 47,
+      "input": {
+        "words1": ["cat", "dog", "elephant", "frog", "cat"],
+        "words2": ["dog", "frog", "giraffe", "elephant", "hippo"]
+      },
+      "expected": 3
+    },
+    {
+      "case_id": 48,
+      "input": {
+        "words1": ["cat", "dog", "fish"],
+        "words2": ["fish", "dog", "cat", "dog", "cat"]
+      },
+      "expected": 1
+    },
+    {
+      "case_id": 49,
+      "input": {
+        "words1": ["python", "java", "c", "cpp"],
+        "words2": ["python", "java", "java", "csharp"]
+      },
+      "expected": 1
+    },
+    {
+      "case_id": 50,
+      "input": {
+        "words1": ["unique", "words", "only", "here"],
+        "words2": ["here", "only", "words", "unique", "unique"]
+      },
+      "expected": 3
+    },
+    {
+      "case_id": 51,
+      "input": {
+        "words1": ["hello", "world", "hello"],
+        "words2": ["world", "hello", "world", "hello", "world", "hello"]
+      },
+      "expected": 0
+    },
+    {
+      "case_id": 52,
+      "input": {
+        "words1": ["hello", "world", "python", "java", "csharp"],
+        "words2": ["python", "java", "csharp", "hello", "ruby", "scala", "world", "python", "java"]
+      },
+      "expected": 3
+    },
+    {
+      "case_id": 53,
+      "input": {
+        "words1": ["x", "y", "z"],
+        "words2": ["x", "y", "z", "x", "y", "z", "x", "y", "z"]
+      },
+      "expected": 0
+    },
+    {
+      "case_id": 54,
+      "input": {
+        "words1": ["unique", "word", "only", "in", "this", "array"],
+        "words2": ["unique", "only", "word", "in", "that", "array"]
+      },
+      "expected": 5
+    },
+    {
+      "case_id": 55,
+      "input": {
+        "words1": ["apple", "banana", "cherry"],
+        "words2": ["banana", "cherry", "apple", "apple"]
+      },
+      "expected": 2
+    },
+    {
+      "case_id": 56,
+      "input": {
+        "words1": ["apple", "banana", "cherry", "date"],
+        "words2": ["banana", "cherry", "fig", "grape"]
+      },
+      "expected": 2
+    },
+    {
+      "case_id": 57,
+      "input": {
+        "words1": ["apple", "banana", "cherry"],
+        "words2": ["banana", "apple", "apple", "cherry", "date"]
+      },
+      "expected": 2
+    },
+    {
+      "case_id": 58,
+      "input": {
+        "words1": ["abc", "def", "ghi", "jkl", "mno", "pqr", "stu", "vwx", "yz", "abc"],
+        "words2": ["mno", "pqr", "stu", "vwx", "yz", "abc", "def", "ghi", "jkl", "mno"]
+      },
+      "expected": 7
+    },
+    {
+      "case_id": 59,
+      "input": {
+        "words1": ["apple", "banana", "cherry", "date"],
+        "words2": ["banana", "date", "fig", "grape", "apple"]
+      },
+      "expected": 3
+    },
+    {
+      "case_id": 60,
+      "input": {
+        "words1": ["apple", "banana", "cherry", "date", "elderberry"],
+        "words2": ["banana", "cherry", "elderberry", "fig", "grape", "apple", "date"]
+      },
+      "expected": 5
+    },
+    {
+      "case_id": 61,
+      "input": {
+        "words1": ["a", "b", "c", "a", "b", "c"],
+        "words2": ["a", "b", "c", "a", "b", "c", "a", "b", "c"]
+      },
+      "expected": 0
+    },
+    {
+      "case_id": 62,
+      "input": {
+        "words1": ["x", "y", "z", "x", "y", "z", "x", "y", "z"],
+        "words2": ["x", "y", "z", "x", "y", "z", "x", "y", "z", "x", "y", "z", "x", "y", "z"]
+      },
+      "expected": 0
+    },
+    {
+      "case_id": 63,
+      "input": {
+        "words1": ["sun", "moon", "star", "planet", "sun", "moon"],
+        "words2": ["star", "planet", "comet", "asteroid", "planet", "star"]
+      },
+      "expected": 0
+    },
+    {
+      "case_id": 64,
+      "input": {
+        "words1": ["alpha", "beta", "gamma", "delta", "epsilon"],
+        "words2": ["gamma", "delta", "zeta", "eta", "theta", "epsilon", "delta"]
+      },
+      "expected": 2
+    },
+    {
+      "case_id": 65,
+      "input": {
+        "words1": ["python", "java", "csharp"],
+        "words2": ["java", "csharp", "python", "python"]
+      },
+      "expected": 2
+    },
+    {
+      "case_id": 66,
+      "input": {
+        "words1": ["python", "java", "c++"],
+        "words2": ["c++", "java", "python", "java", "python", "c++", "python"]
+      },
+      "expected": 0
+    },
+    {
+      "case_id": 67,
+      "input": {
+        "words1": ["cat", "dog", "mouse"],
+        "words2": ["dog", "cat", "cat", "mouse", "dog"]
+      },
+      "expected": 1
+    },
+    {
+      "case_id": 68,
+      "input": {
+        "words1": ["apple", "banana", "cherry"],
+        "words2": ["banana", "cherry", "apple", "banana"]
+      },
+      "expected": 2
+    },
+    {
+      "case_id": 69,
+      "input": {
+        "words1": ["same", "words", "in", "both", "arrays"],
+        "words2": ["same", "words", "in", "both", "arrays"]
+      },
+      "expected": 5
+    },
+    {
+      "case_id": 70,
+      "input": {
+        "words1": ["single"],
+        "words2": ["single", "single", "single", "single"]
+      },
+      "expected": 0
+    },
+    {
+      "case_id": 71,
+      "input": {
+        "words1": ["apple", "banana", "cherry"],
+        "words2": ["cherry", "banana", "apple", "apple"]
+      },
+      "expected": 2
+    },
+    {
+      "case_id": 72,
+      "input": {
+        "words1": ["abc", "def", "ghi"],
+        "words2": ["def", "ghi", "jkl", "def", "ghi"]
+      },
+      "expected": 0
+    },
+    {
+      "case_id": 73,
+      "input": {
+        "words1": ["foo", "bar", "baz", "qux", "quux", "corge", "grault"],
+        "words2": ["foo", "bar", "baz", "qux", "quux", "corge", "grault", "grault"]
+      },
+      "expected": 6
+    },
+    {
+      "case_id": 74,
+      "input": {
+        "words1": ["foo", "bar", "baz", "qux"],
+        "words2": ["foo", "bar", "qux", "quux"]
+      },
+      "expected": 3
+    },
+    {
+      "case_id": 75,
+      "input": {
+        "words1": ["apple", "banana", "cherry"],
+        "words2": ["banana", "apple", "cherry", "banana"]
+      },
+      "expected": 2
+    },
+    {
+      "case_id": 76,
+      "input": {
+        "words1": ["hello", "hello", "world"],
+        "words2": ["world", "world", "hello", "hello", "hello"]
+      },
+      "expected": 0
+    },
+    {
+      "case_id": 77,
+      "input": {
+        "words1": ["one", "two", "three", "four", "five"],
+        "words2": ["five", "four", "three", "two", "one"]
+      },
+      "expected": 5
+    },
+    {
+      "case_id": 78,
+      "input": {
+        "words1": ["apple", "banana", "cherry"],
+        "words2": ["banana", "apple", "cherry", "cherry"]
+      },
+      "expected": 2
+    },
+    {
+      "case_id": 79,
+      "input": {
+        "words1": ["unique", "words", "only"],
+        "words2": ["only", "words", "unique", "words"]
+      },
+      "expected": 2
+    },
+    {
+      "case_id": 80,
+      "input": {
+        "words1": ["red", "blue", "green"],
+        "words2": ["red", "red", "blue", "green", "blue", "green"]
+      },
+      "expected": 0
+    },
+    {
+      "case_id": 81,
+      "input": {
+        "words1": ["cat", "dog", "mouse", "elephant"],
+        "words2": ["dog", "mouse", "cat", "tiger", "elephant", "dog"]
+      },
+      "expected": 3
+    },
+    {
+      "case_id": 82,
+      "input": {
+        "words1": ["test", "case", "input"],
+        "words2": ["input", "test", "case", "input", "test", "case", "input", "test", "case"]
+      },
+      "expected": 0
+    },
+    {
+      "case_id": 83,
+      "input": {
+        "words1": ["hello", "world", "hello", "world"],
+        "words2": ["hello", "world", "world", "hello"]
+      },
+      "expected": 0
+    },
+    {
+      "case_id": 84,
+      "input": {
+        "words1": ["first", "second", "third", "fourth"],
+        "words2": ["fourth", "third", "second", "first", "first", "second", "third", "fourth", "first", "second", "third", "fourth"]
+      },
+      "expected": 0
+    },
+    {
+      "case_id": 85,
+      "input": {
+        "words1": ["one", "two", "three", "four", "five"],
+        "words2": ["two", "three", "five", "six", "seven", "eight", "nine", "one", "four"]
+      },
+      "expected": 5
+    },
+    {
+      "case_id": 86,
+      "input": {
+        "words1": ["repeated", "repeated", "words", "in", "both", "arrays"],
+        "words2": ["repeated", "words", "in", "both", "arrays", "arrays"]
+      },
+      "expected": 3
+    },
+    {
+      "case_id": 87,
+      "input": {
+        "words1": ["x", "y", "z"],
+        "words2": ["z", "y", "x"]
+      },
+      "expected": 3
+    },
+    {
+      "case_id": 88,
+      "input": {
+        "words1": ["a", "b", "c", "d"],
+        "words2": ["a", "a", "b", "c", "c", "d", "d", "d"]
+      },
+      "expected": 1
+    },
+    {
+      "case_id": 89,
+      "input": {
+        "words1": ["single"],
+        "words2": ["single"]
+      },
+      "expected": 1
+    },
+    {
+      "case_id": 90,
+      "input": {
+        "words1": ["hello", "world", "python", "java"],
+        "words2": ["python", "java", "hello", "world", "world", "hello"]
+      },
+      "expected": 2
+    },
+    {
+      "case_id": 91,
+      "input": {
+        "words1": ["a", "b", "c", "d", "e"],
+        "words2": ["a", "a", "b", "c", "c", "d", "e", "e"]
+      },
+      "expected": 2
+    },
+    {
+      "case_id": 92,
+      "input": {
+        "words1": ["python", "java", "c", "cpp"],
+        "words2": ["java", "c", "cpp", "ruby"]
+      },
+      "expected": 3
+    },
+    {
+      "case_id": 93,
+      "input": {
+        "words1": ["unique", "string", "in", "each", "array"],
+        "words2": ["different", "string", "in", "each", "array"]
+      },
+      "expected": 4
+    },
+    {
+      "case_id": 94,
+      "input": {
+        "words1": ["single"],
+        "words2": ["single", "single", "single"]
+      },
+      "expected": 0
+    },
+    {
+      "case_id": 95,
+      "input": {
+        "words1": ["apple", "banana", "cherry"],
+        "words2": ["banana", "cherry", "date"]
+      },
+      "expected": 2
+    },
+    {
+      "case_id": 96,
+      "input": {
+        "words1": ["repeat", "repeat", "repeat"],
+        "words2": ["repeat", "repeat", "repeat", "repeat"]
+      },
+      "expected": 0
+    },
+    {
+      "case_id": 97,
+      "input": {
+        "words1": ["red", "blue", "green", "yellow", "red"],
+        "words2": ["blue", "green", "purple", "yellow", "blue", "green"]
+      },
+      "expected": 1
+    },
+    {
+      "case_id": 98,
+      "input": {
+        "words1": ["foo", "bar", "baz", "qux", "quux"],
+        "words2": ["qux", "quux", "foo", "bar", "baz", "corge", "grault", "foo"]
+      },
+      "expected": 4
+    },
+    {
+      "case_id": 99,
+      "input": {
+        "words1": ["example", "test", "case"],
+        "words2": ["test", "case", "example", "example", "test", "case"]
+      },
+      "expected": 0
+    },
+    {
+      "case_id": 100,
+      "input": {
+        "words1": ["unique"],
+        "words2": ["unique", "unique", "unique"]
+      },
+      "expected": 0
+    },
+    {
+      "case_id": 101,
+      "input": {
+        "words1": ["x", "y", "z", "w", "v", "u", "t", "s", "r", "q", "p", "o", "n", "m", "l", "k", "j", "i", "h", "g", "f", "e", "d", "c", "b", "a"],
+        "words2": ["x", "y", "z", "w", "v", "u", "t", "s", "r", "q", "p", "o", "n", "m", "l", "k", "j", "i", "h", "g", "f", "e", "d", "c", "b", "a", "x", "y", "z"]
+      },
+      "expected": 23
+    },
+    {
+      "case_id": 102,
+      "input": {
+        "words1": ["a", "b", "c", "d", "e", "f", "g"],
+        "words2": ["a", "b", "c", "d", "e", "f", "g", "a", "b", "c", "d", "e", "f", "g"]
+      },
+      "expected": 0
+    },
+    {
+      "case_id": 103,
+      "input": {
+        "words1": ["unique"],
+        "words2": ["unique", "unique", "unique", "unique"]
+      },
+      "expected": 0
+    }
+  ]
+}

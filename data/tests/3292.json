@@ -1,0 +1,1373 @@
+{
+  "schema_version": 1,
+  "problem_id": 3292,
+  "title": "Minimum Number of Valid Strings to Form Target II",
+  "method": "minValidStrings",
+  "signature": {
+    "params": [
+      {
+        "name": "words",
+        "type": "STRING_ARRAY"
+      },
+      {
+        "name": "target",
+        "type": "STRING"
+      }
+    ],
+    "returns": "INT32"
+  },
+  "cases": [
+    {
+      "case_id": 1,
+      "input": {
+        "words": ["abc"],
+        "target": "abcabc"
+      },
+      "expected": 2
+    },
+    {
+      "case_id": 2,
+      "input": {
+        "words": ["a"],
+        "target": "a"
+      },
+      "expected": 1
+    },
+    {
+      "case_id": 3,
+      "input": {
+        "words": ["a", "aa", "aaa"],
+        "target": "aaaaaaaa"
+      },
+      "expected": 3
+    },
+    {
+      "case_id": 4,
+      "input": {
+        "words": ["xyz"],
+        "target": "xyz"
+      },
+      "expected": 1
+    },
+    {
+      "case_id": 5,
+      "input": {
+        "words": ["a", "aa", "aaa"],
+        "target": "aaaaaaaaa"
+      },
+      "expected": 3
+    },
+    {
+      "case_id": 6,
+      "input": {
+        "words": ["a"],
+        "target": "aaaaaaaaaa"
+      },
+      "expected": 10
+    },
+    {
+      "case_id": 7,
+      "input": {
+        "words": ["abababab", "ab"],
+        "target": "ababaababa"
+      },
+      "expected": 2
+    },
+    {
+      "case_id": 8,
+      "input": {
+        "words": ["abcde"],
+        "target": "abcde"
+      },
+      "expected": 1
+    },
+    {
+      "case_id": 9,
+      "input": {
+        "words": ["abc", "aaaaa", "bcdef"],
+        "target": "aabcdabc"
+      },
+      "expected": 3
+    },
+    {
+      "case_id": 10,
+      "input": {
+        "words": ["hello", "world"],
+        "target": "hello"
+      },
+      "expected": 1
+    },
+    {
+      "case_id": 11,
+      "input": {
+        "words": ["abcd", "efgh", "ijkl"],
+        "target": "abcdefghij"
+      },
+      "expected": 3
+    },
+    {
+      "case_id": 12,
+      "input": {
+        "words": ["abcdef"],
+        "target": "xyz"
+      },
+      "expected": -1
+    },
+    {
+      "case_id": 13,
+      "input": {
+        "words": ["abc", "abc", "abc"],
+        "target": "abcabc"
+      },
+      "expected": 2
+    },
+    {
+      "case_id": 14,
+      "input": {
+        "words": ["z", "y", "x"],
+        "target": "zyxzyxzyx"
+      },
+      "expected": 9
+    },
+    {
+      "case_id": 15,
+      "input": {
+        "words": ["abcdef", "ghijkl"],
+        "target": "abcdefghijkl"
+      },
+      "expected": 2
+    },
+    {
+      "case_id": 16,
+      "input": {
+        "words": ["abc", "def", "ghi"],
+        "target": "abcdefghi"
+      },
+      "expected": 3
+    },
+    {
+      "case_id": 17,
+      "input": {
+        "words": ["hello", "world"],
+        "target": "helloworld"
+      },
+      "expected": 2
+    },
+    {
+      "case_id": 18,
+      "input": {
+        "words": ["abc", "def", "ghi"],
+        "target": "abcdef"
+      },
+      "expected": 2
+    },
+    {
+      "case_id": 19,
+      "input": {
+        "words": ["a", "b", "c"],
+        "target": "abc"
+      },
+      "expected": 3
+    },
+    {
+      "case_id": 20,
+      "input": {
+        "words": ["abc", "def", "ghi", "jkl"],
+        "target": "abcdefghijklop"
+      },
+      "expected": -1
+    },
+    {
+      "case_id": 21,
+      "input": {
+        "words": ["z"],
+        "target": "zzzzz"
+      },
+      "expected": 5
+    },
+    {
+      "case_id": 22,
+      "input": {
+        "words": ["abcd", "efgh", "ijkl"],
+        "target": "abcdefghijklijkl"
+      },
+      "expected": 4
+    },
+    {
+      "case_id": 23,
+      "input": {
+        "words": ["hello", "helloo", "hellooo", "helloooo"],
+        "target": "helloooohelloooohelloooohelloooo"
+      },
+      "expected": 4
+    },
+    {
+      "case_id": 24,
+      "input": {
+        "words": ["mnop", "mnopqr", "mnopqrst", "mnopqrstu", "mnopqrstuv"],
+        "target": "mnopqrstuvmnopqrstuvmnopqrstuvmnopqrstu"
+      },
+      "expected": 4
+    },
+    {
+      "case_id": 25,
+      "input": {
+        "words": ["z", "zz", "zzz", "zzzz", "zzzzz"],
+        "target": "zzzzzzzzzzzzzz"
+      },
+      "expected": 3
+    },
+    {
+      "case_id": 26,
+      "input": {
+        "words": ["zzzzz", "zzzz", "zzz", "zz", "z"],
+        "target": "zzzzzzzzzzzzzzzzzzzzzz"
+      },
+      "expected": 5
+    },
+    {
+      "case_id": 27,
+      "input": {
+        "words": ["hello", "world", "hel", "wor"],
+        "target": "helloworldhelloworld"
+      },
+      "expected": 4
+    },
+    {
+      "case_id": 28,
+      "input": {
+        "words": ["abcd", "bcde", "cdef", "defg"],
+        "target": "abcdefghijklmnop"
+      },
+      "expected": -1
+    },
+    {
+      "case_id": 29,
+      "input": {
+        "words": ["abcdef", "bcdef", "cdef", "def", "ef", "f"],
+        "target": "abcdefbcdefcdef"
+      },
+      "expected": 3
+    },
+    {
+      "case_id": 30,
+      "input": {
+        "words": ["xyz", "xy", "x"],
+        "target": "xyzxyxyxzyzyx"
+      },
+      "expected": -1
+    },
+    {
+      "case_id": 31,
+      "input": {
+        "words": ["start", "startstart", "startstartstart"],
+        "target": "startstartstart"
+      },
+      "expected": 1
+    },
+    {
+      "case_id": 32,
+      "input": {
+        "words": ["example", "sample", "exam", "ple", "samplesample"],
+        "target": "examplesamplesampleple"
+      },
+      "expected": 3
+    },
+    {
+      "case_id": 33,
+      "input": {
+        "words": ["z", "zy", "zyx", "zyxw"],
+        "target": "zyxwzyxwzyxwzyxw"
+      },
+      "expected": 4
+    },
+    {
+      "case_id": 34,
+      "input": {
+        "words": ["abcdef", "fedcba", "abc", "cba", "def", "efd"],
+        "target": "abcdefcbaefdefabc"
+      },
+      "expected": 5
+    },
+    {
+      "case_id": 35,
+      "input": {
+        "words": ["abcd", "efgh", "ijkl"],
+        "target": "abcdefghijklijk"
+      },
+      "expected": 4
+    },
+    {
+      "case_id": 36,
+      "input": {
+        "words": ["aabbcc", "bbaacc", "ccaabb", "aabbbccc", "abbcccaab"],
+        "target": "aabbccbbcccaababbcccaab"
+      },
+      "expected": 5
+    },
+    {
+      "case_id": 37,
+      "input": {
+        "words": ["xy", "xyz", "xyza", "xyzab", "xyzabc"],
+        "target": "xyzabcxyzabcxyzabcxyzabcxyzabc"
+      },
+      "expected": 5
+    },
+    {
+      "case_id": 38,
+      "input": {
+        "words": ["a", "aa", "aaa", "aaaa", "aaaaa"],
+        "target": "aaaaaaaaaaaaaaaaaa"
+      },
+      "expected": 4
+    },
+    {
+      "case_id": 39,
+      "input": {
+        "words": ["mnopqr", "nopqr", "opqr", "pqr", "qr", "r"],
+        "target": "mnopqrnopqr"
+      },
+      "expected": 2
+    },
+    {
+      "case_id": 40,
+      "input": {
+        "words": ["ab", "bc", "cd", "de", "ef"],
+        "target": "abcdefabcdefabcdef"
+      },
+      "expected": 9
+    },
+    {
+      "case_id": 41,
+      "input": {
+        "words": ["quick", "brown", "fox", "jumps"],
+        "target": "quickbrownfoxjumpsquick"
+      },
+      "expected": 5
+    },
+    {
+      "case_id": 42,
+      "input": {
+        "words": ["a", "aa", "aaa", "aaaa"],
+        "target": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      },
+      "expected": 8
+    },
+    {
+      "case_id": 43,
+      "input": {
+        "words": ["x", "xy", "xyz", "xyza"],
+        "target": "xyza"
+      },
+      "expected": 1
+    },
+    {
+      "case_id": 44,
+      "input": {
+        "words": ["abcd", "abcde", "abcdef"],
+        "target": "abcdefabcdefabcdef"
+      },
+      "expected": 3
+    },
+    {
+      "case_id": 45,
+      "input": {
+        "words": ["quick", "brown", "fox", "jumps", "over"],
+        "target": "quickbrownfoxjumpsoverquick"
+      },
+      "expected": 6
+    },
+    {
+      "case_id": 46,
+      "input": {
+        "words": ["xyz", "xyzz", "zzzz", "zzzzy", "zzzzz"],
+        "target": "xyzzzzzzzzzzzzzy"
+      },
+      "expected": 4
+    },
+    {
+      "case_id": 47,
+      "input": {
+        "words": ["prefix", "pre", "fix", "suffix"],
+        "target": "prefixsuffix"
+      },
+      "expected": 2
+    },
+    {
+      "case_id": 48,
+      "input": {
+        "words": ["abc", "abcabc", "abcabcabc"],
+        "target": "abcabcabcabcabcabc"
+      },
+      "expected": 2
+    },
+    {
+      "case_id": 49,
+      "input": {
+        "words": ["x", "xy", "xyz", "xyza", "xyzab"],
+        "target": "xyzabxyzabxyzab"
+      },
+      "expected": 3
+    },
+    {
+      "case_id": 50,
+      "input": {
+        "words": ["pqr", "pqrs", "pqrs", "pqrstu", "pqrstuv"],
+        "target": "pqrstuvpqrstuvpqrstuvpqrstuvpqrstu"
+      },
+      "expected": 5
+    },
+    {
+      "case_id": 51,
+      "input": {
+        "words": ["one", "two", "three", "four", "five"],
+        "target": "onetwothreefourfivetwothreefourfivefourfive"
+      },
+      "expected": 11
+    },
+    {
+      "case_id": 52,
+      "input": {
+        "words": ["a", "b", "c", "d", "e"],
+        "target": "abcdeabcdeabcdeabcdeabcde"
+      },
+      "expected": 25
+    },
+    {
+      "case_id": 53,
+      "input": {
+        "words": ["abcd", "ab", "a"],
+        "target": "abcdabcdabcdabcd"
+      },
+      "expected": 4
+    },
+    {
+      "case_id": 54,
+      "input": {
+        "words": ["abcdefg", "hijklmn", "opqrstu", "vwxyz"],
+        "target": "abcdefghijklmnopqrstuvwxyzzzz"
+      },
+      "expected": -1
+    },
+    {
+      "case_id": 55,
+      "input": {
+        "words": ["unique", "words", "only"],
+        "target": "uniquewordsonly"
+      },
+      "expected": 3
+    },
+    {
+      "case_id": 56,
+      "input": {
+        "words": ["abcdefg", "abcdefgh", "abcdefghi"],
+        "target": "abcdefghiabcdefghiabcdefghi"
+      },
+      "expected": 3
+    },
+    {
+      "case_id": 57,
+      "input": {
+        "words": ["abc", "bcd", "cde", "def"],
+        "target": "abcdefabcdef"
+      },
+      "expected": 4
+    },
+    {
+      "case_id": 58,
+      "input": {
+        "words": ["a", "b", "c", "d", "e", "f", "g"],
+        "target": "abcdefg"
+      },
+      "expected": 7
+    },
+    {
+      "case_id": 59,
+      "input": {
+        "words": ["abc", "def", "ghi", "jkl", "mno", "pqr", "stu", "vwx", "yz"],
+        "target": "mnopqrstuvwx"
+      },
+      "expected": 4
+    },
+    {
+      "case_id": 60,
+      "input": {
+        "words": ["abc", "def", "ghi", "jkl", "mno", "pqr"],
+        "target": "abcdefghijklmnopqr"
+      },
+      "expected": 6
+    },
+    {
+      "case_id": 61,
+      "input": {
+        "words": ["overlap", "lap", "laplap", "aplap"],
+        "target": "overlaplaplaplaplap"
+      },
+      "expected": 3
+    },
+    {
+      "case_id": 62,
+      "input": {
+        "words": ["abcdef", "bcdefg", "cdefgh", "defghi", "efghij", "fghijk"],
+        "target": "abcdefbcdefgcdefghdefghiefghijfghijk"
+      },
+      "expected": 6
+    },
+    {
+      "case_id": 63,
+      "input": {
+        "words": ["prefix", "suffix", "pre", "suf"],
+        "target": "prefixsuffixprefixsuffix"
+      },
+      "expected": 4
+    },
+    {
+      "case_id": 64,
+      "input": {
+        "words": ["a", "b", "c", "d", "e", "f"],
+        "target": "fedcbafedcba"
+      },
+      "expected": 12
+    },
+    {
+      "case_id": 65,
+      "input": {
+        "words": ["abc", "def", "ghi", "jkl"],
+        "target": "abcdefghijkla"
+      },
+      "expected": 5
+    },
+    {
+      "case_id": 66,
+      "input": {
+        "words": ["xyz", "xy", "x"],
+        "target": "xyzyxzyx"
+      },
+      "expected": -1
+    },
+    {
+      "case_id": 67,
+      "input": {
+        "words": ["one", "two", "three", "four", "five"],
+        "target": "onetwothreefourfive"
+      },
+      "expected": 5
+    },
+    {
+      "case_id": 68,
+      "input": {
+        "words": ["one", "onetwo", "onetwothree"],
+        "target": "onetwothreeonetwothreeonetwothree"
+      },
+      "expected": 3
+    },
+    {
+      "case_id": 69,
+      "input": {
+        "words": ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j"],
+        "target": "abcdefghijabcdefghijabcdefghij"
+      },
+      "expected": 30
+    },
+    {
+      "case_id": 70,
+      "input": {
+        "words": ["abababab", "bababa", "ab", "ba", "a", "b"],
+        "target": "ababababababababab"
+      },
+      "expected": 3
+    },
+    {
+      "case_id": 71,
+      "input": {
+        "words": ["a", "aa", "aaa", "aaaa", "aaaaa", "aaaaaa", "aaaaaaa", "aaaaaaaa", "aaaaaaaaa", "aaaaaaaaaa"],
+        "target": "aaaaaaaaaaaaaaaaaaa"
+      },
+      "expected": 2
+    },
+    {
+      "case_id": 72,
+      "input": {
+        "words": ["aaaa", "aaaaa", "aaaaaa"],
+        "target": "aaaaaaaaaaaaaaaa"
+      },
+      "expected": 3
+    },
+    {
+      "case_id": 73,
+      "input": {
+        "words": ["hello", "hell", "he", "h"],
+        "target": "hellohello"
+      },
+      "expected": 2
+    },
+    {
+      "case_id": 74,
+      "input": {
+        "words": ["a", "aa", "aaa", "aaaa"],
+        "target": "aaaaaaaaaa"
+      },
+      "expected": 3
+    },
+    {
+      "case_id": 75,
+      "input": {
+        "words": ["z", "zz", "zzz", "zzzz"],
+        "target": "zzzzzzzzzzzzzzzzzzzz"
+      },
+      "expected": 5
+    },
+    {
+      "case_id": 76,
+      "input": {
+        "words": ["overlap", "over", "lap", "laplap"],
+        "target": "overlaplaplap"
+      },
+      "expected": 2
+    },
+    {
+      "case_id": 77,
+      "input": {
+        "words": ["abc", "bcd", "cde"],
+        "target": "abcbcdcdedef"
+      },
+      "expected": -1
+    },
+    {
+      "case_id": 78,
+      "input": {
+        "words": ["abcdefg", "abcdefgh", "abcdefghi"],
+        "target": "abcdefghiabcdefghiabcdefghi"
+      },
+      "expected": 3
+    },
+    {
+      "case_id": 79,
+      "input": {
+        "words": ["aabbcc", "bbccdd", "ccddeeff"],
+        "target": "aabbccddeeff"
+      },
+      "expected": 2
+    },
+    {
+      "case_id": 80,
+      "input": {
+        "words": ["hello", "world", "hi"],
+        "target": "helloworld"
+      },
+      "expected": 2
+    },
+    {
+      "case_id": 81,
+      "input": {
+        "words": ["short", "longstringthatgoesonand", "onand", "and"],
+        "target": "longstringthatgoesonandonandonand"
+      },
+      "expected": 3
+    },
+    {
+      "case_id": 82,
+      "input": {
+        "words": ["xyz", "xy", "x"],
+        "target": "xyzxyzz"
+      },
+      "expected": -1
+    },
+    {
+      "case_id": 83,
+      "input": {
+        "words": ["aaa", "aab", "aac", "aba", "abb", "abc"],
+        "target": "aabacbaabbac"
+      },
+      "expected": -1
+    },
+    {
+      "case_id": 84,
+      "input": {
+        "words": ["aabbcc", "bbccdd", "ccddeeff"],
+        "target": "aabbccbbccddeeffccddeeff"
+      },
+      "expected": 4
+    },
+    {
+      "case_id": 85,
+      "input": {
+        "words": ["a", "aa", "aaa", "aaaa"],
+        "target": "aaaaaaaaaaaaaaaaaaaaaaaaa"
+      },
+      "expected": 7
+    },
+    {
+      "case_id": 86,
+      "input": {
+        "words": ["x", "y", "z"],
+        "target": "xyzxyzxyzxyzxyz"
+      },
+      "expected": 15
+    },
+    {
+      "case_id": 87,
+      "input": {
+        "words": ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"],
+        "target": "abcdefghijklmnopqrstuvwxyz"
+      },
+      "expected": 26
+    },
+    {
+      "case_id": 88,
+      "input": {
+        "words": ["word", "wordword", "wordwordword"],
+        "target": "wordwordwordwordwordwordwordwordwordword"
+      },
+      "expected": 4
+    },
+    {
+      "case_id": 89,
+      "input": {
+        "words": ["aabb", "bbaa", "abab"],
+        "target": "aabbaabbaabbabab"
+      },
+      "expected": 4
+    },
+    {
+      "case_id": 90,
+      "input": {
+        "words": ["longwordprefix", "prefix", "word", "prefixword"],
+        "target": "longwordprefixprefixwordprefixwordprefix"
+      },
+      "expected": 4
+    },
+    {
+      "case_id": 91,
+      "input": {
+        "words": ["a", "b", "c", "d", "e"],
+        "target": "abcdeabcdeabcde"
+      },
+      "expected": 15
+    },
+    {
+      "case_id": 92,
+      "input": {
+        "words": ["pqrst", "pqrstu", "pqrstuv"],
+        "target": "pqrstpqrstu"
+      },
+      "expected": 2
+    },
+    {
+      "case_id": 93,
+      "input": {
+        "words": ["ab", "bc", "cd"],
+        "target": "abcdabcdabcd"
+      },
+      "expected": 6
+    },
+    {
+      "case_id": 94,
+      "input": {
+        "words": ["abc", "bcd", "cde", "def", "efg"],
+        "target": "abcdefg"
+      },
+      "expected": 3
+    },
+    {
+      "case_id": 95,
+      "input": {
+        "words": ["aaa", "aa", "a"],
+        "target": "aaaaaaaaaaaaaaaaaaaa"
+      },
+      "expected": 7
+    },
+    {
+      "case_id": 96,
+      "input": {
+        "words": ["abc", "ab", "a"],
+        "target": "ababababab"
+      },
+      "expected": 5
+    },
+    {
+      "case_id": 97,
+      "input": {
+        "words": ["abc", "def", "ghi", "jkl", "mno"],
+        "target": "abcdefghijklmno"
+      },
+      "expected": 5
+    },
+    {
+      "case_id": 98,
+      "input": {
+        "words": ["aaa", "aa", "a"],
+        "target": "aaaaaaaaa"
+      },
+      "expected": 3
+    },
+    {
+      "case_id": 99,
+      "input": {
+        "words": ["abcd", "abcde", "abcdef"],
+        "target": "abcdefabcdef"
+      },
+      "expected": 2
+    },
+    {
+      "case_id": 100,
+      "input": {
+        "words": ["abc", "abcd", "abcde"],
+        "target": "abcdeabcdabc"
+      },
+      "expected": 3
+    },
+    {
+      "case_id": 101,
+      "input": {
+        "words": ["abcabcabcabcabcabcabcabcabcabc"],
+        "target": "abcabcabcabcabcabcabcabcabcabc"
+      },
+      "expected": 1
+    },
+    {
+      "case_id": 102,
+      "input": {
+        "words": ["aaa", "bbb", "ccc"],
+        "target": "aaabbbccc"
+      },
+      "expected": 3
+    },
+    {
+      "case_id": 103,
+      "input": {
+        "words": ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j"],
+        "target": "abcdefghijabcdefghij"
+      },
+      "expected": 20
+    },
+    {
+      "case_id": 104,
+      "input": {
+        "words": ["complex", "complexity", "complexities", "complexitytest"],
+        "target": "complexcomplexitycomplexitiescomplexitytest"
+      },
+      "expected": 4
+    },
+    {
+      "case_id": 105,
+      "input": {
+        "words": ["abcd", "dcba", "ab", "ba", "abc", "cba", "abcdcba", "bacd"],
+        "target": "abcdabcbaabcd"
+      },
+      "expected": 4
+    },
+    {
+      "case_id": 106,
+      "input": {
+        "words": ["abc", "bcd", "cde"],
+        "target": "abcdexyz"
+      },
+      "expected": -1
+    },
+    {
+      "case_id": 107,
+      "input": {
+        "words": ["overlap", "laplap", "lap"],
+        "target": "overlapproverlap"
+      },
+      "expected": -1
+    },
+    {
+      "case_id": 108,
+      "input": {
+        "words": ["one", "two", "three"],
+        "target": "onetwothreeonetwothreeone"
+      },
+      "expected": 7
+    },
+    {
+      "case_id": 109,
+      "input": {
+        "words": ["abcd", "ab", "c", "d"],
+        "target": "ababcdabcd"
+      },
+      "expected": 3
+    },
+    {
+      "case_id": 110,
+      "input": {
+        "words": ["abc", "abc", "abc"],
+        "target": "abcabcabc"
+      },
+      "expected": 3
+    },
+    {
+      "case_id": 111,
+      "input": {
+        "words": ["abc", "abcabcabc", "bcdef", "ghijkl"],
+        "target": "abcabcabcghijkl"
+      },
+      "expected": 2
+    },
+    {
+      "case_id": 112,
+      "input": {
+        "words": ["a", "aa", "aaa", "aaaa"],
+        "target": "aaaaaaaaaaaa"
+      },
+      "expected": 3
+    },
+    {
+      "case_id": 113,
+      "input": {
+        "words": ["ab", "abc", "abcd", "abcde"],
+        "target": "abcdeabcdeabcde"
+      },
+      "expected": 3
+    },
+    {
+      "case_id": 114,
+      "input": {
+        "words": ["abcdef", "abcde", "abcd", "abc", "ab", "a"],
+        "target": "abcdef"
+      },
+      "expected": 1
+    },
+    {
+      "case_id": 115,
+      "input": {
+        "words": ["aaa", "aaaa", "aaaaa"],
+        "target": "aaaaaaaaaaaa"
+      },
+      "expected": 3
+    },
+    {
+      "case_id": 116,
+      "input": {
+        "words": ["quick", "brown", "fox", "jumps", "over", "lazy", "dog"],
+        "target": "quickbrownfoxjumpsoverlazydog"
+      },
+      "expected": 7
+    },
+    {
+      "case_id": 117,
+      "input": {
+        "words": ["xyz", "xy", "x"],
+        "target": "xyzyzyzyzy"
+      },
+      "expected": -1
+    },
+    {
+      "case_id": 118,
+      "input": {
+        "words": ["abc", "bcd", "cde", "def"],
+        "target": "abcdeabcdef"
+      },
+      "expected": 4
+    },
+    {
+      "case_id": 119,
+      "input": {
+        "words": ["abcd", "abcde", "abcdef", "abcdefg"],
+        "target": "abcdefgabcdefg"
+      },
+      "expected": 2
+    },
+    {
+      "case_id": 120,
+      "input": {
+        "words": ["abc", "abcd", "abcde"],
+        "target": "abcdeabcde"
+      },
+      "expected": 2
+    },
+    {
+      "case_id": 121,
+      "input": {
+        "words": ["ab", "cde", "fgh"],
+        "target": "abcdefg"
+      },
+      "expected": 3
+    },
+    {
+      "case_id": 122,
+      "input": {
+        "words": ["abc", "acb", "bac", "bca", "cab", "cba"],
+        "target": "abcacbac"
+      },
+      "expected": 3
+    },
+    {
+      "case_id": 123,
+      "input": {
+        "words": ["abc", "ab", "a"],
+        "target": "abaababababababab"
+      },
+      "expected": 9
+    },
+    {
+      "case_id": 124,
+      "input": {
+        "words": ["test", "testing", "testcase", "case"],
+        "target": "testtestingtestcasetestcase"
+      },
+      "expected": 4
+    },
+    {
+      "case_id": 125,
+      "input": {
+        "words": ["one", "two", "three"],
+        "target": "onetwothreeonetwothree"
+      },
+      "expected": 6
+    },
+    {
+      "case_id": 126,
+      "input": {
+        "words": ["z", "zz", "zzz", "zzzz"],
+        "target": "zzzzzzzzzzzzzzzzzz"
+      },
+      "expected": 5
+    },
+    {
+      "case_id": 127,
+      "input": {
+        "words": ["a", "ab", "abc", "abcd", "abcde"],
+        "target": "abcdeabcdeabcde"
+      },
+      "expected": 3
+    },
+    {
+      "case_id": 128,
+      "input": {
+        "words": ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"],
+        "target": "zzzzzzzzzz"
+      },
+      "expected": 10
+    },
+    {
+      "case_id": 129,
+      "input": {
+        "words": ["a", "aa", "aaa", "aaaa"],
+        "target": "aaaaaaaaaa"
+      },
+      "expected": 3
+    },
+    {
+      "case_id": 130,
+      "input": {
+        "words": ["aaaa", "bbbb", "cccc", "dddd", "eeee"],
+        "target": "abcdedcba"
+      },
+      "expected": 9
+    },
+    {
+      "case_id": 131,
+      "input": {
+        "words": ["longprefix", "short", "prefix", "longerprefix", "evenlongerprefix"],
+        "target": "longprefixlongerprefixevenlongerprefix"
+      },
+      "expected": 3
+    },
+    {
+      "case_id": 132,
+      "input": {
+        "words": ["prefix", "suffix", "infix", "prefixsuffix", "suffixprefix"],
+        "target": "prefixsuffixsuffixprefixprefix"
+      },
+      "expected": 3
+    },
+    {
+      "case_id": 133,
+      "input": {
+        "words": ["abcd", "bcd", "cd", "d"],
+        "target": "abcdabcdabcdabcd"
+      },
+      "expected": 4
+    },
+    {
+      "case_id": 134,
+      "input": {
+        "words": ["abc", "def", "ghi", "jkl", "mno", "pqr", "stu", "vwx", "yz", "abcdefghijklmnopqrstuvwxyz"],
+        "target": "abcdefghijklmnopqrstuvwxyz"
+      },
+      "expected": 1
+    },
+    {
+      "case_id": 135,
+      "input": {
+        "words": ["same", "same", "same"],
+        "target": "samethatsame"
+      },
+      "expected": -1
+    },
+    {
+      "case_id": 136,
+      "input": {
+        "words": ["small", "smal", "sma", "sm"],
+        "target": "smallsmallsmallsmall"
+      },
+      "expected": 4
+    },
+    {
+      "case_id": 137,
+      "input": {
+        "words": ["abc", "abcd", "abcde", "abcdef"],
+        "target": "abcdefabcdefabcdef"
+      },
+      "expected": 3
+    },
+    {
+      "case_id": 138,
+      "input": {
+        "words": ["xyz", "abc", "def"],
+        "target": "xyzabcxyzdef"
+      },
+      "expected": 4
+    },
+    {
+      "case_id": 139,
+      "input": {
+        "words": ["a", "aa", "aaa", "aaaa"],
+        "target": "aaaaaaaa"
+      },
+      "expected": 2
+    },
+    {
+      "case_id": 140,
+      "input": {
+        "words": ["a", "ab", "abc", "abcd"],
+        "target": "abcdabcd"
+      },
+      "expected": 2
+    },
+    {
+      "case_id": 141,
+      "input": {
+        "words": ["hello", "world", "helloworld"],
+        "target": "helloworldhelloworld"
+      },
+      "expected": 2
+    },
+    {
+      "case_id": 142,
+      "input": {
+        "words": ["aabb", "bbcc", "ccdd", "aabbcc", "bbccdd"],
+        "target": "aabbccdd"
+      },
+      "expected": 2
+    },
+    {
+      "case_id": 143,
+      "input": {
+        "words": ["xy", "yz", "xyz", "zxy", "zyx"],
+        "target": "xyzxyzxyzxyzxyzxyzxyzxyzxyzxyzxyz"
+      },
+      "expected": 11
+    },
+    {
+      "case_id": 144,
+      "input": {
+        "words": ["abc", "abcd", "abcde", "abcdef"],
+        "target": "abcdefabcdef"
+      },
+      "expected": 2
+    },
+    {
+      "case_id": 145,
+      "input": {
+        "words": ["aaa", "aa", "a"],
+        "target": "aaaaaaaaaa"
+      },
+      "expected": 4
+    },
+    {
+      "case_id": 146,
+      "input": {
+        "words": ["abcd", "bcde", "cdef", "defg"],
+        "target": "abcdabcdabcdabcd"
+      },
+      "expected": 4
+    },
+    {
+      "case_id": 147,
+      "input": {
+        "words": ["abc", "abcabc", "abcabcabc"],
+        "target": "abcabcabcabcabc"
+      },
+      "expected": 2
+    },
+    {
+      "case_id": 148,
+      "input": {
+        "words": ["one", "two", "three", "four", "five"],
+        "target": "onetwothreefourfiveonetwothreefourfive"
+      },
+      "expected": 10
+    },
+    {
+      "case_id": 149,
+      "input": {
+        "words": ["longword", "longwo", "longw", "long"],
+        "target": "longwordlongwordlongword"
+      },
+      "expected": 3
+    },
+    {
+      "case_id": 150,
+      "input": {
+        "words": ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j"],
+        "target": "abcdefghij"
+      },
+      "expected": 10
+    },
+    {
+      "case_id": 151,
+      "input": {
+        "words": ["longword", "another", "short"],
+        "target": "longwordanotherlongword"
+      },
+      "expected": 3
+    },
+    {
+      "case_id": 152,
+      "input": {
+        "words": ["a", "b", "c", "d", "e"],
+        "target": "abcde"
+      },
+      "expected": 5
+    },
+    {
+      "case_id": 153,
+      "input": {
+        "words": ["abcdef", "ghijkl", "mnopqr", "stuvwx", "yz", "abc", "def", "ghi", "jkl", "mno", "pqr", "stu", "vwx", "yz"],
+        "target": "abcdefghijklmnopqrstuvwxyzyzyz"
+      },
+      "expected": 7
+    },
+    {
+      "case_id": 154,
+      "input": {
+        "words": ["abcdef", "defghi", "ghijkl"],
+        "target": "abcdefghijkl"
+      },
+      "expected": 2
+    },
+    {
+      "case_id": 155,
+      "input": {
+        "words": ["xyz", "yz", "z"],
+        "target": "xyzxyzxyzxyz"
+      },
+      "expected": 4
+    },
+    {
+      "case_id": 156,
+      "input": {
+        "words": ["prefix", "suffix"],
+        "target": "prefixprefixsuffix"
+      },
+      "expected": 3
+    },
+    {
+      "case_id": 157,
+      "input": {
+        "words": ["hello", "world", "hell", "worl"],
+        "target": "helloworld"
+      },
+      "expected": 2
+    },
+    {
+      "case_id": 158,
+      "input": {
+        "words": ["xyz", "xy", "x"],
+        "target": "xyzyxyzyx"
+      },
+      "expected": -1
+    },
+    {
+      "case_id": 159,
+      "input": {
+        "words": ["prefix", "pre", "fix", "word"],
+        "target": "prefixprefixfix"
+      },
+      "expected": 3
+    },
+    {
+      "case_id": 160,
+      "input": {
+        "words": ["abcdef", "defgh", "efghi"],
+        "target": "abcdefghigfedcba"
+      },
+      "expected": -1
+    },
+    {
+      "case_id": 161,
+      "input": {
+        "words": ["abcde", "bcde", "cde", "de", "e"],
+        "target": "abcdebcdecde"
+      },
+      "expected": 3
+    },
+    {
+      "case_id": 162,
+      "input": {
+        "words": ["short", "shor", "sh", "s"],
+        "target": "shortshortshortshortshort"
+      },
+      "expected": 5
+    },
+    {
+      "case_id": 163,
+      "input": {
+        "words": ["prefix", "pre", "fix", "fi", "ix"],
+        "target": "prefixprefix"
+      },
+      "expected": 2
+    },
+    {
+      "case_id": 164,
+      "input": {
+        "words": ["a", "aa", "aaa", "aaaa", "aaaaa"],
+        "target": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      },
+      "expected": 8
+    },
+    {
+      "case_id": 165,
+      "input": {
+        "words": ["abc", "abcd", "abce"],
+        "target": "abcdeabcde"
+      },
+      "expected": -1
+    },
+    {
+      "case_id": 166,
+      "input": {
+        "words": ["abcabc", "abc", "ab"],
+        "target": "abcabcabcabc"
+      },
+      "expected": 2
+    },
+    {
+      "case_id": 167,
+      "input": {
+        "words": ["repeated", "repeate", "repeat", "repe", "rep", "re", "r"],
+        "target": "repeatedrepeatedrepeatedrepeated"
+      },
+      "expected": 4
+    },
+    {
+      "case_id": 168,
+      "input": {
+        "words": ["aaa", "aa", "a"],
+        "target": "aaaaaaaaaa"
+      },
+      "expected": 4
+    },
+    {
+      "case_id": 169,
+      "input": {
+        "words": ["prefix", "prefi", "pref", "pre"],
+        "target": "prefixprefiprefpre"
+      },
+      "expected": 4
+    }
+  ]
+}

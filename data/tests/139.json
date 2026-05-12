@@ -1,0 +1,717 @@
+{
+  "schema_version": 1,
+  "problem_id": 139,
+  "title": "Word Break",
+  "method": "wordBreak",
+  "signature": {
+    "params": [
+      {
+        "name": "s",
+        "type": "STRING"
+      },
+      {
+        "name": "wordDict",
+        "type": "STRING_ARRAY"
+      }
+    ],
+    "returns": "BOOL"
+  },
+  "cases": [
+    {
+      "case_id": 1,
+      "input": {
+        "s": "cars",
+        "wordDict": ["car", "ca", "rs"]
+      },
+      "expected": true
+    },
+    {
+      "case_id": 2,
+      "input": {
+        "s": "goals",
+        "wordDict": ["go", "goal", "goals"]
+      },
+      "expected": true
+    },
+    {
+      "case_id": 3,
+      "input": {
+        "s": "pineapplepenapple",
+        "wordDict": ["apple", "pen", "applepen", "pine", "pineapple"]
+      },
+      "expected": true
+    },
+    {
+      "case_id": 4,
+      "input": {
+        "s": "leetcode",
+        "wordDict": ["leet", "code"]
+      },
+      "expected": true
+    },
+    {
+      "case_id": 5,
+      "input": {
+        "s": "applepenapple",
+        "wordDict": ["apple", "pen"]
+      },
+      "expected": true
+    },
+    {
+      "case_id": 6,
+      "input": {
+        "s": "catsandog",
+        "wordDict": ["cats", "dog", "sand", "and", "cat"]
+      },
+      "expected": false
+    },
+    {
+      "case_id": 7,
+      "input": {
+        "s": "abcd",
+        "wordDict": ["a", "abc", "b", "cd"]
+      },
+      "expected": true
+    },
+    {
+      "case_id": 8,
+      "input": {
+        "s": "supercalifragilisticexpialidocious",
+        "wordDict": ["super", "cali", "fragi", "listic", "expi", "ali", "docious"]
+      },
+      "expected": true
+    },
+    {
+      "case_id": 9,
+      "input": {
+        "s": "skyscraper",
+        "wordDict": ["sky", "sc", "raper", "scra", "per"]
+      },
+      "expected": true
+    },
+    {
+      "case_id": 10,
+      "input": {
+        "s": "wordbreakproblem",
+        "wordDict": ["word", "break", "problem", "wordbreak", "breakproblem", "wordbreakproblem", "wordbreakpro", "blem", "wordprob", "lem", "wordb", "reak", "breakpro", "brea", "kprob", "wordbre", "akprob", "wordbreakp", "rob", "reakp", "reakpro", "wordbre", "reakproblem"]
+      },
+      "expected": true
+    },
+    {
+      "case_id": 11,
+      "input": {
+        "s": "cascadingsubstrings",
+        "wordDict": ["cascade", "sub", "strings", "cascade", "ing", "substring"]
+      },
+      "expected": false
+    },
+    {
+      "case_id": 12,
+      "input": {
+        "s": "breaktheglassceiling",
+        "wordDict": ["break", "the", "glass", "ceiling", "breaks", "theglass", "ceiling"]
+      },
+      "expected": true
+    },
+    {
+      "case_id": 13,
+      "input": {
+        "s": "aquickbrownfoxjumpsoverthelazydog",
+        "wordDict": ["a", "quick", "brown", "fox", "jumps", "over", "the", "lazy", "dog"]
+      },
+      "expected": true
+    },
+    {
+      "case_id": 14,
+      "input": {
+        "s": "abcdabcdabcd",
+        "wordDict": ["a", "ab", "abc", "abcd"]
+      },
+      "expected": true
+    },
+    {
+      "case_id": 15,
+      "input": {
+        "s": "abcd",
+        "wordDict": ["a", "b", "c", "d", "abc", "bc", "abcd", "cd"]
+      },
+      "expected": true
+    },
+    {
+      "case_id": 16,
+      "input": {
+        "s": "wordbreakproblem",
+        "wordDict": ["word", "break", "problem", "pro", "gram", "wordbreak", "breakprob"]
+      },
+      "expected": true
+    },
+    {
+      "case_id": 17,
+      "input": {
+        "s": "aaaaaaaaaaaaaab",
+        "wordDict": ["a", "aa", "aaa", "aaaa", "aaaaa", "aaaaaa", "aaaaaaa", "aaaaaaaa", "aaaaaaaaa", "aaaaaaaaaa"]
+      },
+      "expected": false
+    },
+    {
+      "case_id": 18,
+      "input": {
+        "s": "interviewquestionsarehard",
+        "wordDict": ["interview", "questions", "are", "hard", "inter", "view", "quest", "ions", "ques", "tionsare", "arehard"]
+      },
+      "expected": true
+    },
+    {
+      "case_id": 19,
+      "input": {
+        "s": "mississippi",
+        "wordDict": ["mis", "is", "sip", "i", "pi", "p", "mississipp", "missis", "miss", "issi", "ippi", "ssippi", "ssipp", "ssip", "ssips", "ssip", "issipi", "issipp", "issip", "issips", "issip", "issipp", "issip", "issips", "issip", "issipp", "issip", "issips", "issip", "issipp", "issip", "issips", "issip", "issipp", "issip", "issips", "issip", "issipp", "issip", "issips", "issip", "issipp", "issip", "issips", "issip", "issipp", "issip", "issips", "issip", "issipp", "issip", "issips", "issip", "issipp", "issip", "issips", "issip", "issipp", "issip", "issips", "issip", "issipp", "issip", "issips", "issip", "issipp", "issip", "issips", "issip", "issipp", "issip", "issips"]
+      },
+      "expected": true
+    },
+    {
+      "case_id": 20,
+      "input": {
+        "s": "complexwordbreakproblem",
+        "wordDict": ["complex", "word", "break", "problem", "wordbreak", "breakprob", "lem", "prob", "lemp", "complexword"]
+      },
+      "expected": true
+    },
+    {
+      "case_id": 21,
+      "input": {
+        "s": "mississippi",
+        "wordDict": ["mis", "issi", "ppi", "issip", "ippi", "missis", "sip", "pi", "ssippi", "is", "ip", "sipi", "issipp", "ippi", "ippi", "mississi", "ppis", "ippii", "missi", "mississipp", "i", "p", "issippip", "issiippi", "mississippi"]
+      },
+      "expected": true
+    },
+    {
+      "case_id": 22,
+      "input": {
+        "s": "abracadabra",
+        "wordDict": ["abra", "cad", "abra", "cadabra", "ra", "dab", "ra", "cadabra"]
+      },
+      "expected": true
+    },
+    {
+      "case_id": 23,
+      "input": {
+        "s": "supercalifragilisticexpialidocious",
+        "wordDict": ["super", "cali", "fragilistic", "expiali", "docious", "superca", "li", "fragi", "listicex", "piali", "do"]
+      },
+      "expected": true
+    },
+    {
+      "case_id": 24,
+      "input": {
+        "s": "abrakadabra",
+        "wordDict": ["abra", "kadabra", "abra", "ka", "da", "bra"]
+      },
+      "expected": true
+    },
+    {
+      "case_id": 25,
+      "input": {
+        "s": "aabbccddeeff",
+        "wordDict": ["aa", "bb", "cc", "dd", "ee", "ff", "abc", "def", "ef", "fe", "efg", "gh", "abcdefgh"]
+      },
+      "expected": true
+    },
+    {
+      "case_id": 26,
+      "input": {
+        "s": "helplineshorthelpline",
+        "wordDict": ["help", "line", "short", "helpline"]
+      },
+      "expected": true
+    },
+    {
+      "case_id": 27,
+      "input": {
+        "s": "leetleetcodeleet",
+        "wordDict": ["leet", "code", "leetcode"]
+      },
+      "expected": true
+    },
+    {
+      "case_id": 28,
+      "input": {
+        "s": "racecar",
+        "wordDict": ["race", "car", "racec", "arc", "cec", "er", "c", "ra", "ec", "ce"]
+      },
+      "expected": true
+    },
+    {
+      "case_id": 29,
+      "input": {
+        "s": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaab",
+        "wordDict": ["a", "aa", "aaa", "aaaa", "aaaaa", "ba"]
+      },
+      "expected": false
+    },
+    {
+      "case_id": 30,
+      "input": {
+        "s": "mississippi",
+        "wordDict": ["mis", "sis", "ip", "is"]
+      },
+      "expected": false
+    },
+    {
+      "case_id": 31,
+      "input": {
+        "s": "aaaaaaa",
+        "wordDict": ["aa", "aaa"]
+      },
+      "expected": true
+    },
+    {
+      "case_id": 32,
+      "input": {
+        "s": "mississippi",
+        "wordDict": ["mis", "is", "ip", "i", "ssip"]
+      },
+      "expected": false
+    },
+    {
+      "case_id": 33,
+      "input": {
+        "s": "supercalifragilisticexpialidocious",
+        "wordDict": ["super", "cali", "fragilistic", "expiali", "docious", "superfragilisticexpialidocious"]
+      },
+      "expected": true
+    },
+    {
+      "case_id": 34,
+      "input": {
+        "s": "banana",
+        "wordDict": ["ba", "na", "nan", "ban", "nana", "an"]
+      },
+      "expected": true
+    },
+    {
+      "case_id": 35,
+      "input": {
+        "s": "thisisatest",
+        "wordDict": ["this", "is", "a", "test", "thisis", "isatest"]
+      },
+      "expected": true
+    },
+    {
+      "case_id": 36,
+      "input": {
+        "s": "abcdefgh",
+        "wordDict": ["a", "abc", "abcd", "efg", "h"]
+      },
+      "expected": true
+    },
+    {
+      "case_id": 37,
+      "input": {
+        "s": "abcdabcdeabcdabcde",
+        "wordDict": ["abc", "abcd", "abcde", "de", "abcdabcde"]
+      },
+      "expected": true
+    },
+    {
+      "case_id": 38,
+      "input": {
+        "s": "ababcabcabcabab",
+        "wordDict": ["ab", "abc", "ababc", "ababcabc", "ababcabcabc", "abab"]
+      },
+      "expected": true
+    },
+    {
+      "case_id": 39,
+      "input": {
+        "s": "ababababab",
+        "wordDict": ["ab", "aba", "bab", "baba"]
+      },
+      "expected": true
+    },
+    {
+      "case_id": 40,
+      "input": {
+        "s": "aaaaaaa",
+        "wordDict": ["aa", "aaa", "aaaa", "aaaaa", "aaaaaa", "aaaaaaa"]
+      },
+      "expected": true
+    },
+    {
+      "case_id": 41,
+      "input": {
+        "s": "dynamicprogramming",
+        "wordDict": ["dynamic", "programming", "dyna", "mic", "prog", "gram", "ming"]
+      },
+      "expected": true
+    },
+    {
+      "case_id": 42,
+      "input": {
+        "s": "aquickbrownfoxjumpsoverthelazydog",
+        "wordDict": ["a", "quick", "brown", "fox", "jumps", "over", "the", "lazy", "dog", "aquick", "brownfox", "jump", "sover", "thelazy", "zydog", "quickbr", "ownfo", "xjump", "soverth"]
+      },
+      "expected": true
+    },
+    {
+      "case_id": 43,
+      "input": {
+        "s": "thisisaverylongstringthatisdifficulttobreak",
+        "wordDict": ["this", "is", "a", "very", "long", "string", "that", "is", "difficult", "to", "break", "avery", "longstring", "isdifficult"]
+      },
+      "expected": true
+    },
+    {
+      "case_id": 44,
+      "input": {
+        "s": "aabbccddeeff",
+        "wordDict": ["aa", "bb", "cc", "dd", "ee", "ff", "abc", "def", "ef", "cd", "ab", "de", "fe", "bc", "dc", "ad", "da", "fb", "bf", "ba", "ac", "ca", "ea", "ae", "be", "eb"]
+      },
+      "expected": true
+    },
+    {
+      "case_id": 45,
+      "input": {
+        "s": "programmingisfun",
+        "wordDict": ["pro", "gram", "ming", "is", "fun", "grammi", "ngis", "funny", "progr", "amming", "isfun", "ogramming", "grammi", "ngisfu", "n"]
+      },
+      "expected": true
+    },
+    {
+      "case_id": 46,
+      "input": {
+        "s": "mississippi",
+        "wordDict": ["missi", "pi", "ssippi", "issipi", "ippi"]
+      },
+      "expected": true
+    },
+    {
+      "case_id": 47,
+      "input": {
+        "s": "abcdefghij",
+        "wordDict": ["a", "ab", "abc", "abcd", "abcde", "abcdef", "abcdefg", "abcdefgh", "abcdefghi", "abcdefghij"]
+      },
+      "expected": true
+    },
+    {
+      "case_id": 48,
+      "input": {
+        "s": "abcdefghijk",
+        "wordDict": ["abc", "def", "ghi", "jkl"]
+      },
+      "expected": false
+    },
+    {
+      "case_id": 49,
+      "input": {
+        "s": "thefastbrownfoxjumpedoverthelazydog",
+        "wordDict": ["the", "fast", "brown", "fox", "jumped", "over", "lazy", "dog"]
+      },
+      "expected": true
+    },
+    {
+      "case_id": 50,
+      "input": {
+        "s": "solutionsarefun",
+        "wordDict": ["solution", "solutions", "are", "fun", "solu", "tions", "sol", "u", "n"]
+      },
+      "expected": true
+    },
+    {
+      "case_id": 51,
+      "input": {
+        "s": "thelongestword",
+        "wordDict": ["the", "long", "longest", "word", "lon", "gest", "longes", "estword", "longestwo", "longestwo", "longes", "gestwo", "est", "wordwo", "rdwo", "rdo", "wo", "o"]
+      },
+      "expected": true
+    },
+    {
+      "case_id": 52,
+      "input": {
+        "s": "bcbcbc",
+        "wordDict": ["b", "c", "bc", "cb"]
+      },
+      "expected": true
+    },
+    {
+      "case_id": 53,
+      "input": {
+        "s": "programming",
+        "wordDict": ["pro", "gram", "ming", "gramm", "ing", "program"]
+      },
+      "expected": true
+    },
+    {
+      "case_id": 54,
+      "input": {
+        "s": "xyzzyzyxzyzyzyzyxzyz",
+        "wordDict": ["xyz", "zyz", "zx", "zyxzy", "zyzyz", "zyzyzy"]
+      },
+      "expected": false
+    },
+    {
+      "case_id": 55,
+      "input": {
+        "s": "theskyisblue",
+        "wordDict": ["the", "sky", "is", "blue", "thesky", "isblue", "theskyisblue", "theblue", "theskyblue", "blueis", "isblue", "blueisblue", "theskyis"]
+      },
+      "expected": true
+    },
+    {
+      "case_id": 56,
+      "input": {
+        "s": "mississippi",
+        "wordDict": ["miss", "issi", "ssippi", "ppi", "ipi", "i"]
+      },
+      "expected": true
+    },
+    {
+      "case_id": 57,
+      "input": {
+        "s": "sheisbeautiful",
+        "wordDict": ["she", "is", "beau", "tiful", "beauti", "ful", "be", "auti", "ful", "ti", "ful", "shi", "bea", "autiful", "sheis"]
+      },
+      "expected": true
+    },
+    {
+      "case_id": 58,
+      "input": {
+        "s": "exampleexampleexampleexample",
+        "wordDict": ["ex", "ample", "example", "pleexam", "ampleex"]
+      },
+      "expected": true
+    },
+    {
+      "case_id": 59,
+      "input": {
+        "s": "abcdefgh",
+        "wordDict": ["ab", "abc", "cd", "efgh", "abcd"]
+      },
+      "expected": true
+    },
+    {
+      "case_id": 60,
+      "input": {
+        "s": "abcdefghijklmnopqrstuvwxyz",
+        "wordDict": ["abcdefgh", "ijklmnop", "qrstuvwx", "yz", "mnopqr", "stuvwx", "yzab", "cdefghijklmnop", "qrstuvwxyza", "bcdefghijklmnopq", "rstuvwxyzabcde"]
+      },
+      "expected": true
+    },
+    {
+      "case_id": 61,
+      "input": {
+        "s": "supercalifragilisticexpialidocious",
+        "wordDict": ["super", "cali", "fragilistic", "expiali", "docious", "superfragilistic"]
+      },
+      "expected": true
+    },
+    {
+      "case_id": 62,
+      "input": {
+        "s": "ababababab",
+        "wordDict": ["a", "ab", "aba", "ababa"]
+      },
+      "expected": true
+    },
+    {
+      "case_id": 63,
+      "input": {
+        "s": "thisisaverylongwordthatcanbebrokenintomultiplesubwords",
+        "wordDict": ["this", "is", "a", "very", "long", "word", "that", "can", "be", "broken", "into", "multiple", "sub", "words", "averylong", "bebroken"]
+      },
+      "expected": true
+    },
+    {
+      "case_id": 64,
+      "input": {
+        "s": "interview",
+        "wordDict": ["in", "ter", "view", "int", "ent", "rview", "terview", "erview"]
+      },
+      "expected": true
+    },
+    {
+      "case_id": 65,
+      "input": {
+        "s": "abcdefghij",
+        "wordDict": ["ab", "abc", "cd", "efg", "hij", "abcdefghij"]
+      },
+      "expected": true
+    },
+    {
+      "case_id": 66,
+      "input": {
+        "s": "thisisatutorial",
+        "wordDict": ["this", "is", "a", "tu", "torial", "tuto", "rial", "ial", "al"]
+      },
+      "expected": true
+    },
+    {
+      "case_id": 67,
+      "input": {
+        "s": "abcdabcde",
+        "wordDict": ["ab", "cd", "ef", "de", "abcde", "abcd"]
+      },
+      "expected": true
+    },
+    {
+      "case_id": 68,
+      "input": {
+        "s": "mississippi",
+        "wordDict": ["mis", "is", "is", "ppi", "issi", "ippi", "pp", "miss", "mis", "ippi"]
+      },
+      "expected": true
+    },
+    {
+      "case_id": 69,
+      "input": {
+        "s": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaab",
+        "wordDict": ["a", "aa", "aaa", "aaaa", "aaaaa", "aaaaaa", "aaaaaaa"]
+      },
+      "expected": false
+    },
+    {
+      "case_id": 70,
+      "input": {
+        "s": "findingthesolutionisfun",
+        "wordDict": ["find", "finding", "the", "solution", "is", "fun", "solutions", "funny"]
+      },
+      "expected": true
+    },
+    {
+      "case_id": 71,
+      "input": {
+        "s": "thelongestword",
+        "wordDict": ["the", "long", "longest", "word", "longestword", "oneword", "endword", "word", "one"]
+      },
+      "expected": true
+    },
+    {
+      "case_id": 72,
+      "input": {
+        "s": "abcd",
+        "wordDict": ["a", "ab", "abc", "abcd", "abcde"]
+      },
+      "expected": true
+    },
+    {
+      "case_id": 73,
+      "input": {
+        "s": "xxyzzyyx",
+        "wordDict": ["xy", "xyz", "zy", "zyx", "yx", "xx", "zz", "zyxzyx"]
+      },
+      "expected": false
+    },
+    {
+      "case_id": 74,
+      "input": {
+        "s": "supercalifragilisticexpialidocious",
+        "wordDict": ["super", "cali", "fragi", "listic", "expi", "ali", "docious", "supercalifragilisticexpialidoci"]
+      },
+      "expected": true
+    },
+    {
+      "case_id": 75,
+      "input": {
+        "s": "thelongestword",
+        "wordDict": ["the", "long", "est", "word", "longest", "estword", "ongestwor", "ngestwo", "gestw", "estwo", "stwo", "two", "thelo", "hello", "world"]
+      },
+      "expected": true
+    },
+    {
+      "case_id": 76,
+      "input": {
+        "s": "programmingisawesome",
+        "wordDict": ["pro", "gram", "ming", "is", "awe", "some", "awesome", "awe", "so", "me"]
+      },
+      "expected": true
+    },
+    {
+      "case_id": 77,
+      "input": {
+        "s": "thecodecanbeanything",
+        "wordDict": ["the", "code", "can", "be", "anything", "any", "thing"]
+      },
+      "expected": true
+    },
+    {
+      "case_id": 78,
+      "input": {
+        "s": "a",
+        "wordDict": ["a", "aa", "aaa", "aaaa", "aaaaa", "aaaaaa", "aaaaaaa", "aaaaaaaa", "aaaaaaaaa", "aaaaaaaaaa"]
+      },
+      "expected": true
+    },
+    {
+      "case_id": 79,
+      "input": {
+        "s": "abcdabcd",
+        "wordDict": ["ab", "abcd", "cd"]
+      },
+      "expected": true
+    },
+    {
+      "case_id": 80,
+      "input": {
+        "s": "thisisaverylongstringthatshouldnotmatch",
+        "wordDict": ["this", "is", "very", "long", "string", "that", "should", "not", "match"]
+      },
+      "expected": false
+    },
+    {
+      "case_id": 81,
+      "input": {
+        "s": "programmingproblemsolver",
+        "wordDict": ["pro", "gram", "ming", "problem", "problemsolver", "solver"]
+      },
+      "expected": true
+    },
+    {
+      "case_id": 82,
+      "input": {
+        "s": "aaaaaaa",
+        "wordDict": ["aaa", "aaaa", "aa"]
+      },
+      "expected": true
+    },
+    {
+      "case_id": 83,
+      "input": {
+        "s": "skilfullyskilled",
+        "wordDict": ["skill", "ful", "ly", "ski", "lly", "ed"]
+      },
+      "expected": false
+    },
+    {
+      "case_id": 84,
+      "input": {
+        "s": "internationalization",
+        "wordDict": ["inter", "national", "ization", "inter", "nationalization"]
+      },
+      "expected": true
+    },
+    {
+      "case_id": 85,
+      "input": {
+        "s": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaab",
+        "wordDict": ["a", "aa", "aaa", "aaaa", "aaaaa", "aaaaaa", "aaaaaaa", "aaaaaaaa", "aaaaaaaaa", "aaaaaaaaaa"]
+      },
+      "expected": false
+    },
+    {
+      "case_id": 86,
+      "input": {
+        "s": "abracadabra",
+        "wordDict": ["abra", "cad", "bra", "a", "ab", "rac"]
+      },
+      "expected": true
+    },
+    {
+      "case_id": 87,
+      "input": {
+        "s": "complexstringwithwords",
+        "wordDict": ["complex", "string", "with", "words", "complexstring", "stringwith", "withwords"]
+      },
+      "expected": true
+    }
+  ]
+}

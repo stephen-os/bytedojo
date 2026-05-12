@@ -1,0 +1,612 @@
+{
+  "schema_version": 1,
+  "problem_id": 2746,
+  "title": "Decremental String Concatenation",
+  "method": "minimizeConcatenatedLength",
+  "signature": {
+    "params": [
+      {
+        "name": "words",
+        "type": "STRING_ARRAY"
+      }
+    ],
+    "returns": "INT32"
+  },
+  "cases": [
+    {
+      "case_id": 1,
+      "input": {
+        "words": ["abcd", "de", "efg", "gh"]
+      },
+      "expected": 8
+    },
+    {
+      "case_id": 2,
+      "input": {
+        "words": ["abcd", "dcba", "abdc", "cdab"]
+      },
+      "expected": 13
+    },
+    {
+      "case_id": 3,
+      "input": {
+        "words": ["x", "y", "z", "x", "y", "z"]
+      },
+      "expected": 4
+    },
+    {
+      "case_id": 4,
+      "input": {
+        "words": ["ab", "bc", "cd", "da"]
+      },
+      "expected": 5
+    },
+    {
+      "case_id": 5,
+      "input": {
+        "words": ["aaaa", "bbbb", "cccc", "dddd"]
+      },
+      "expected": 16
+    },
+    {
+      "case_id": 6,
+      "input": {
+        "words": ["abc", "cba", "bca", "acb"]
+      },
+      "expected": 9
+    },
+    {
+      "case_id": 7,
+      "input": {
+        "words": ["abc", "cba", "bac", "bca"]
+      },
+      "expected": 10
+    },
+    {
+      "case_id": 8,
+      "input": {
+        "words": ["a", "b", "c", "d", "e"]
+      },
+      "expected": 5
+    },
+    {
+      "case_id": 9,
+      "input": {
+        "words": ["ab", "b"]
+      },
+      "expected": 2
+    },
+    {
+      "case_id": 10,
+      "input": {
+        "words": ["aabb", "bbaa", "abab", "baba"]
+      },
+      "expected": 13
+    },
+    {
+      "case_id": 11,
+      "input": {
+        "words": ["zz", "za", "az", "zzz"]
+      },
+      "expected": 6
+    },
+    {
+      "case_id": 12,
+      "input": {
+        "words": ["xyz", "zyx", "xyz"]
+      },
+      "expected": 7
+    },
+    {
+      "case_id": 13,
+      "input": {
+        "words": ["one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten"]
+      },
+      "expected": 35
+    },
+    {
+      "case_id": 14,
+      "input": {
+        "words": ["a", "a", "a", "a"]
+      },
+      "expected": 1
+    },
+    {
+      "case_id": 15,
+      "input": {
+        "words": ["abc", "acb", "bac", "bca", "cab", "cba"]
+      },
+      "expected": 14
+    },
+    {
+      "case_id": 16,
+      "input": {
+        "words": ["same", "emag", "game", "emerge", "merge"]
+      },
+      "expected": 20
+    },
+    {
+      "case_id": 17,
+      "input": {
+        "words": ["hello", "ollie", "elephant"]
+      },
+      "expected": 16
+    },
+    {
+      "case_id": 18,
+      "input": {
+        "words": ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j"]
+      },
+      "expected": 10
+    },
+    {
+      "case_id": 19,
+      "input": {
+        "words": ["abc", "abc", "abc", "abc"]
+      },
+      "expected": 12
+    },
+    {
+      "case_id": 20,
+      "input": {
+        "words": ["abc", "bcd", "cde"]
+      },
+      "expected": 8
+    },
+    {
+      "case_id": 21,
+      "input": {
+        "words": ["xyz", "zyx", "abc"]
+      },
+      "expected": 8
+    },
+    {
+      "case_id": 22,
+      "input": {
+        "words": ["aa", "ab", "bc"]
+      },
+      "expected": 4
+    },
+    {
+      "case_id": 23,
+      "input": {
+        "words": ["abc", "cba", "bac", "bca", "cab", "acb"]
+      },
+      "expected": 14
+    },
+    {
+      "case_id": 24,
+      "input": {
+        "words": ["zzzz", "zzz", "zz", "z"]
+      },
+      "expected": 7
+    },
+    {
+      "case_id": 25,
+      "input": {
+        "words": ["hello", "ocean", "nest"]
+      },
+      "expected": 12
+    },
+    {
+      "case_id": 26,
+      "input": {
+        "words": ["aaa", "c", "aba"]
+      },
+      "expected": 6
+    },
+    {
+      "case_id": 27,
+      "input": {
+        "words": ["abc", "cab", "bca", "acb", "bac", "cba", "abc", "cab", "bca", "acb", "bac", "cba", "abc", "cab", "bca", "acb", "bac", "cba", "abc", "cab", "bca", "acb", "bac", "cba"]
+      },
+      "expected": 49
+    },
+    {
+      "case_id": 28,
+      "input": {
+        "words": ["abc", "cab", "bac", "acb", "bca", "cba", "abc", "cab", "bac", "acb", "bca", "cba", "abc", "cab", "bac", "acb", "bca", "cba", "abc", "cab", "bac", "acb", "bca", "cba", "abc", "cab", "bac", "acb", "bca", "cba"]
+      },
+      "expected": 62
+    },
+    {
+      "case_id": 29,
+      "input": {
+        "words": ["abcde", "edcba", "bcdea", "aebcd", "defab", "baced", "cdefa", "abced", "decba", "edabc"]
+      },
+      "expected": 43
+    },
+    {
+      "case_id": 30,
+      "input": {
+        "words": ["zzzz", "zzzz", "zzzz", "zzzz", "zzzz"]
+      },
+      "expected": 16
+    },
+    {
+      "case_id": 31,
+      "input": {
+        "words": ["zzz", "zyz", "yzy", "xyx", "wxw", "vuw", "utv", "tsu", "rtr", "qsp", "pon", "omn", "nml", "lmk", "kjl", "jik", "ihg", "hgf", "ged", "fcd", "ebc", "dad", "cac", "bcb", "aba", "aaa"]
+      },
+      "expected": 67
+    },
+    {
+      "case_id": 32,
+      "input": {
+        "words": ["aaaa", "aaab", "aaba", "abaa", "abab", "baba", "bbaa", "bbba", "bbbb", "baaa"]
+      },
+      "expected": 34
+    },
+    {
+      "case_id": 33,
+      "input": {
+        "words": ["abc", "cba", "bca", "acb", "cab", "bac", "aab", "abb", "bab", "bba", "aba", "baa"]
+      },
+      "expected": 26
+    },
+    {
+      "case_id": 34,
+      "input": {
+        "words": ["aaaaabbbbbcccccdddddeeeee", "eeeeedddddccccbbbbbaaaaa", "ffffffffgggggghhhhhiiiii", "iiiiihihhhhgggggffffffff"]
+      },
+      "expected": 95
+    },
+    {
+      "case_id": 35,
+      "input": {
+        "words": ["ab", "ba", "ac", "ca", "ad", "da", "ae", "ea", "af", "fa", "ag", "ga", "ah", "ha", "ai", "ia", "aj", "ja", "ak", "ka"]
+      },
+      "expected": 21
+    },
+    {
+      "case_id": 36,
+      "input": {
+        "words": ["aaaaa", "aaabb", "aabbb", "abbbb", "bbbbb", "bbbb", "bbb", "bb", "b", "a", "aaaab", "aaabb", "aabbb", "abbbb", "bbbbb"]
+      },
+      "expected": 53
+    },
+    {
+      "case_id": 37,
+      "input": {
+        "words": ["abcdef", "fedcba", "ghijkl", "lkjihg", "mnopqr", "rqponm", "stuvwx", "xwvuts", "yzabcd", "dcba"]
+      },
+      "expected": 53
+    },
+    {
+      "case_id": 38,
+      "input": {
+        "words": ["aabbcc", "ccbbcc", "ddccbb", "bbaadd", "aaddcc", "ccddaabb", "bbccddaa", "aaddbbcc", "ccddaabb", "bbaadddc", "ccbbccaa", "aaddbbcc", "ccbbccdd", "ddeebbaa", "aabbccdd", "bbccddeea", "aaddccdde", "bbccddeea", "aadddccb", "bbccddeea", "ccdddeebb", "ddeebbaac", "aaddccdde", "bbccddeea", "ccdddeebb", "ddeebbaac", "aaddccdde", "bbccddeea", "ccdddeebb", "ddeebbaac"]
+      },
+      "expected": 220
+    },
+    {
+      "case_id": 39,
+      "input": {
+        "words": ["abcde", "edcba", "abc", "cba", "a", "b", "c", "d", "e"]
+      },
+      "expected": 17
+    },
+    {
+      "case_id": 40,
+      "input": {
+        "words": ["xyzz", "zzyx", "yxzz", "zzzy", "xyyx", "yxyx", "xzyx", "zyxy", "zzxx", "xxzz", "xyxy", "yxyy", "yyxy", "xyxy", "zyyx", "xzyz", "zzyz", "yzyz", "zyzy", "xyzx", "yxzx", "xzyy", "yzyx", "xyyz", "zyzy"]
+      },
+      "expected": 82
+    },
+    {
+      "case_id": 41,
+      "input": {
+        "words": ["repeat", "eatrep", "peatre", "eatrep", "peatre", "eatrep", "peatre", "eatrep", "peatre", "eatrep", "peatre"]
+      },
+      "expected": 57
+    },
+    {
+      "case_id": 42,
+      "input": {
+        "words": ["aaaaa", "aaaaa", "aaaaa", "aaaaa", "aaaaa", "aaaaa", "aaaaa", "aaaaa", "aaaaa", "aaaaa", "aaaaa", "aaaaa", "aaaaa", "aaaaa", "aaaaa", "aaaaa", "aaaaa", "aaaaa", "aaaaa", "aaaaa", "aaaaa", "aaaaa", "aaaaa", "aaaaa", "aaaaa", "aaaaa", "aaaaa", "aaaaa", "aaaaa", "aaaaa", "aaaaa", "aaaaa", "aaaaa", "aaaaa", "aaaaa", "aaaaa", "aaaaa", "aaaaa", "aaaaa", "aaaaa", "aaaaa", "aaaaa", "aaaaa", "aaaaa", "aaaaa", "aaaaa", "aaaaa", "aaaaa", "aaaaa", "aaaaa", "aaaaa", "aaaaa", "aaaaa", "aaaaa", "aaaaa", "aaaaa", "aaaaa", "aaaaa", "aaaaa", "aaaaa", "aaaaa", "aaaaa", "aaaaa", "aaaaa", "aaaaa", "aaaaa", "aaaaa", "aaaaa", "aaaaa", "aaaaa", "aaaaa", "aaaaa"]
+      },
+      "expected": 289
+    },
+    {
+      "case_id": 43,
+      "input": {
+        "words": ["aaaa", "bbbb", "cccc", "dddd", "eeee", "ffff", "gggg", "hhhh", "iiii", "jjjj", "kkkk", "llll", "mmmm", "nnnn", "oooo", "pppp", "qqqq", "rrrr", "ssss", "tttt", "uuuu", "vvvv", "wwww", "xxxx", "yyyy", "zzzz", "aaab", "bbac", "ccad", "ddae", "eeaf", "ffag", "ggbh", "hhih", "iiji", "jjik", "kkil", "llim", "mmim", "njin", "okin", "plin", "qlin", "rlin", "slin", "tlia", "ulia", "vlia", "wlia", "xlia", "ylia", "zlkb", "alib", "blib", "clib", "dlib", "elib", "flib", "glib", "hlid", "ilid", "jlid", "klid", "llie", "mlie", "nlie", "olie", "plie", "qlie", "rlie", "slie", "tlif", "ulif", "vlif", "wlif", "xlif", "ylif", "zlif", "almg", "blmg", "clmg", "dlog", "elog", "flmg", "glog", "hlmg", "ilmg", "jlog", "klmg", "llmg", "mlmh", "nlmh", "olmh", "plmh", "qlmh", "rlmh", "slmh", "tlmh", "ulmh", "vlim", "wlim", "xlmn", "ylmn", "zlmn", "amno", "bmno", "cmno", "dmno", "emno", "fmno", "gmno", "hmno", "imno", "jmno", "kmno", "lmno", "mmnp", "nmnp", "omnp", "pmnp", "qmnp", "rmnp", "smnp", "tmnp", "umnp", "vmno", "wmno", "xmno", "ymno", "zmno", "anop", "bnop", "cnop", "dnop", "enop", "fnop", "gnop", "hnop", "inop", "jnop", "knop", "lnop", "mnop", "mnoq", "nnoq", "onno", "pnno", "qnno", "rnno", "snno", "tnno", "unno", "vnno", "wnno", "xnno", "ynno", "znno", "aonr", "bonr", "conr", "donr", "eonr", "fonr", "gonr", "honr", "ionr", "jonr", "konr", "lonr", "monr", "nonr", "onrs", "pnrs", "qnrs", "rnrs", "snrs", "tnrs", "unrs", "vnrs", "wnrs", "xnrs", "ynrs", "znrs", "aors", "bors", "cors", "dors", "eors", "fors", "gors", "hors", "iors", "jors", "kors", "lors", "mors", "nors", "orsp", "nosp", "ospp", "pspq", "qspq", "rspq", "sspq", "tspq", "uspq", "vspq", "wspq", "xspq", "yspq", "zspq", "atpq", "btpq", "ctpq", "dtpq", "etpq", "ftpq", "gtpq", "htpq", "itpq", "jtpq", "ktpq", "ltpq", "mtpq", "nspq", "ntpq", "optq", "ptpr", "qtpr", "rtpr", "stpr", "ttpr", "utpr", "vtpr", "wtpr", "xtpr", "ytpr", "ztpr", "aotr", "botr", "cotr", "dotr", "eotr", "fotr", "gotr", "hotr", "iotr", "jotr", "kotr", "lotr", "motr", "notr", "ootr", "potr", "qotr", "rotr", "sotr", "totr", "uotr", "votr", "wotr", "xotr", "yotr", "zotr", "aupt", "bupt", "aupt", "cutr", "dutr", "eutr", "futr", "gutr", "hutr", "iutr", "jutr", "kutr", "lutr", "mutr", "nctr", "nutr", "outr", "pout", "qout", "rout", "sout", "tout", "uout", "vout", "wout", "xout", "yout", "zout"]
+      },
+      "expected": 1130
+    },
+    {
+      "case_id": 44,
+      "input": {
+        "words": ["zzzz", "zzz", "zz", "z", "z", "zz", "zzz", "zzzz"]
+      },
+      "expected": 13
+    },
+    {
+      "case_id": 45,
+      "input": {
+        "words": ["aaaaaab", "baaaaaa", "aaabaaa", "aaaabaa", "aaaaaba", "aaaaaab", "baaaaaa", "aaabaaa", "aaaabaa", "aaaaaba"]
+      },
+      "expected": 61
+    },
+    {
+      "case_id": 46,
+      "input": {
+        "words": ["abcde", "edcba", "fghij", "jihgf", "klmno", "onmlk", "pqrst", "tsrqp", "uvwxy", "yxwvu", "zyxwv", "vwxyz", "utsrq", "qponm", "lkjih", "ihgfe", "edcba"]
+      },
+      "expected": 76
+    },
+    {
+      "case_id": 47,
+      "input": {
+        "words": ["pqr", "rst", "tuv", "vwx", "xyz", "zyx", "wxy", "uvw", "tsr", "qrp", "pqr", "rst", "tuv", "vwx", "xyz"]
+      },
+      "expected": 34
+    },
+    {
+      "case_id": 48,
+      "input": {
+        "words": ["abcdefghijklmnopqrstuvwxyz", "zyxwvutsrqponmlkjihgfedcba", "abcdefghijklmnopqrstuvwxyza", "zyxwvutsrqponmlkjihgfedcbaz", "abcdefghijklmnopqrstuvwxy", "zyxwvutsrqponmlkjihgfedcba"]
+      },
+      "expected": 154
+    },
+    {
+      "case_id": 49,
+      "input": {
+        "words": ["aaaabbbb", "bbbbcccc", "ccccdddd", "ddddaaaa"]
+      },
+      "expected": 29
+    },
+    {
+      "case_id": 50,
+      "input": {
+        "words": ["xyz", "zyx", "yzx", "xyz", "zyx", "xyz", "zyx", "xyz", "zyx", "xyz"]
+      },
+      "expected": 21
+    },
+    {
+      "case_id": 51,
+      "input": {
+        "words": ["abcdefg", "ghijklm", "mnopqr", "rstuvw", "wxyzabc", "defghij", "klmnopq", "rstuvwx", "yzabcd", "efghijk", "lmnopqr"]
+      },
+      "expected": 69
+    },
+    {
+      "case_id": 52,
+      "input": {
+        "words": ["aabb", "bbaa", "abab", "baba", "aabb", "bbaa", "abab", "baba", "aabb", "bbaa", "abab", "baba", "aabb", "bbaa", "abab", "baba", "aabb", "bbaa", "abab", "baba"]
+      },
+      "expected": 61
+    },
+    {
+      "case_id": 53,
+      "input": {
+        "words": ["abcde", "edcba", "bcdef", "fedcb", "cdefg", "gfedc", "defgh", "hgfed", "efghi", "ihgfe"]
+      },
+      "expected": 44
+    },
+    {
+      "case_id": 54,
+      "input": {
+        "words": ["abc", "cba", "bac", "cab", "acb", "bca", "xyz", "zyx", "yxz", "zxy", "yzx", "xzy", "uvw", "vwu", "wuv", "uwv"]
+      },
+      "expected": 37
+    },
+    {
+      "case_id": 55,
+      "input": {
+        "words": ["ab", "bc", "cd", "de", "ef", "fg", "gh", "hi", "ij", "jk", "kl", "lm", "mn", "no", "op", "pq", "qr", "rs", "st", "tu", "uv", "vw", "wx", "xy", "yz", "za"]
+      },
+      "expected": 27
+    },
+    {
+      "case_id": 56,
+      "input": {
+        "words": ["zzzz", "zzz", "zz", "z", "z"]
+      },
+      "expected": 7
+    },
+    {
+      "case_id": 57,
+      "input": {
+        "words": ["abcdefghij", "jihgfedcba", "mnopqrstuv", "vutsrqponm", "wxyzabcd", "dcbaefgh", "ijklmnop", "ponmlkji", "qrstuvwxyz", "zyxwvutsrq"]
+      },
+      "expected": 87
+    },
+    {
+      "case_id": 58,
+      "input": {
+        "words": ["aabb", "bbcc", "ccdd", "ddee", "eemm", "mmnn", "nnoo", "oopp", "ppqq", "qqrr", "rrss", "sstt", "ttuu", "uuvv", "vvww", "wwxx", "xxyy", "yyzz", "zzaa", "aabb"]
+      },
+      "expected": 61
+    },
+    {
+      "case_id": 59,
+      "input": {
+        "words": ["aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz", "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb", "tttttttttttttttttttttttttttttttttttttttt", "qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq"]
+      },
+      "expected": 198
+    },
+    {
+      "case_id": 60,
+      "input": {
+        "words": ["ab", "ba", "ac", "ca", "ad", "da", "ae", "ea", "af", "fa"]
+      },
+      "expected": 11
+    },
+    {
+      "case_id": 61,
+      "input": {
+        "words": ["ababab", "bababa", "ababab", "bababa", "ababab", "bababa", "ababab", "bababa", "ababab", "bababa"]
+      },
+      "expected": 51
+    },
+    {
+      "case_id": 62,
+      "input": {
+        "words": ["aabbcc", "ccbbaa", "aabbaa", "bbaacc", "ccabba", "baacca", "abbccc", "ccabbb", "bbbaac", "acccbb"]
+      },
+      "expected": 52
+    },
+    {
+      "case_id": 63,
+      "input": {
+        "words": ["xyzz", "zzxy", "yzzx", "zxyy", "xyyx", "yxzx", "xzyz", "zyzx", "zyxz", "yzzx", "xyzz", "zzxy"]
+      },
+      "expected": 39
+    },
+    {
+      "case_id": 64,
+      "input": {
+        "words": ["xy", "yx", "xz", "zx", "xw", "wx", "xv", "vx", "xu", "ux", "xt", "tx", "xs", "sx", "xr", "rx", "xq", "qx", "xp", "px", "xo", "ox", "xn", "nx", "xm", "mx", "xl", "lx", "xk", "kx", "xj", "jx", "xi", "ix", "xh", "hx", "xg", "gx", "xf", "fx", "xe", "ex", "xd", "dx", "xc", "cx", "xb", "bx", "xa", "ax"]
+      },
+      "expected": 51
+    },
+    {
+      "case_id": 65,
+      "input": {
+        "words": ["aaaa", "aaab", "aaba", "abaa", "baaa"]
+      },
+      "expected": 16
+    },
+    {
+      "case_id": 66,
+      "input": {
+        "words": ["abcabcabc", "cbacbacba", "bcabcbcab", "abcbabcbc", "cbacbacba", "bcabcbcab", "abcbabcbc", "cbacbacba", "bcabcbcab", "abcbabcbc", "cbacbacba", "bcabcbcab", "abcbabcbc", "cbacbacba", "bcabcbcab", "abcbabcbc"]
+      },
+      "expected": 130
+    },
+    {
+      "case_id": 67,
+      "input": {
+        "words": ["abc", "cba", "bac", "acb", "cab", "bca"]
+      },
+      "expected": 13
+    },
+    {
+      "case_id": 68,
+      "input": {
+        "words": ["abcdabcdabcd", "dcbaabcdabcd", "abcdabcdabcd", "dcbaabcdabcd", "abcdabcdabcd", "dcbaabcdabcd", "abcdabcdabcd", "dcbaabcdabcd", "abcdabcdabcd", "dcbaabcdabcd", "abcdabcdabcd", "dcbaabcdabcd"]
+      },
+      "expected": 138
+    },
+    {
+      "case_id": 69,
+      "input": {
+        "words": ["abcabc", "bcbcbc", "cbacba", "bababa", "acbacb", "bacbac", "cabacb", "bcbacb", "cbacba", "abcabc", "bcbcbc"]
+      },
+      "expected": 58
+    },
+    {
+      "case_id": 70,
+      "input": {
+        "words": ["a", "b", "a", "b", "a", "b", "a", "b", "a", "b", "a", "b", "a", "b", "a", "b", "a", "b", "a", "b"]
+      },
+      "expected": 2
+    },
+    {
+      "case_id": 71,
+      "input": {
+        "words": ["abcdefghijklmnopqrstuvwxy", "zyxwvutsrqponmlkjihgfedcba", "abcdefghijklmnopqrstuvwxy", "zyxwvutsrqponmlkjihgfedcba", "abcdefghijklmnopqrstuvwxy", "zyxwvutsrqponmlkjihgfedcba"]
+      },
+      "expected": 150
+    },
+    {
+      "case_id": 72,
+      "input": {
+        "words": ["aaaaa", "bbbbb", "ccccc", "ddddd", "eeeee", "fffff", "ggggg", "hhhhh", "iiiii", "jjjjj"]
+      },
+      "expected": 50
+    },
+    {
+      "case_id": 73,
+      "input": {
+        "words": ["a", "ab", "abc", "abcd", "abcde", "abcdef", "abcdefg", "abcdefgh", "abcdefghi", "abcdefghij", "abcdefghijk", "abcdefghijkl", "abcdefghijklm", "abcdefghijklmn", "abcdefghijklmno", "abcdefghijklmnop", "abcdefghijklmnopq", "abcdefghijklmnopqr", "abcdefghijklmnopqrs", "abcdefghijklmnopqrst"]
+      },
+      "expected": 209
+    },
+    {
+      "case_id": 74,
+      "input": {
+        "words": ["zzzzz", "zzzz", "zzz", "zz", "z"]
+      },
+      "expected": 11
+    },
+    {
+      "case_id": 75,
+      "input": {
+        "words": ["abac", "bcad", "cada", "dadb", "babc", "acab", "baca", "caba", "abcd", "dcba", "fedc", "dcfe", "dcde", "edcd", "dede", "eeee", "ee", "e", "a"]
+      },
+      "expected": 54
+    },
+    {
+      "case_id": 76,
+      "input": {
+        "words": ["abcdefghijklmnopqrstuvwxyz", "zyxwvutsrqponmlkjihgfedcba", "mnopqrstuvwxyzabcdefghijkl", "pqonmlkjihgfedcbazyxwvutsr"]
+      },
+      "expected": 103
+    },
+    {
+      "case_id": 77,
+      "input": {
+        "words": ["aaaaab", "bbbbb", "ccccc", "ddddd", "eeeee", "fffff", "ggggg", "hhhhh", "iiiii", "jjjjj", "kkkkk", "lllll", "mmmmm", "nnnnn", "ooooo", "ppppp", "qqqqq", "rrrrr", "sssss", "ttttt"]
+      },
+      "expected": 100
+    },
+    {
+      "case_id": 78,
+      "input": {
+        "words": ["zzzz", "zzzz", "zzzz", "zzzz", "zzzz", "zzzz", "zzzz", "zzzz", "zzzz", "zzzz"]
+      },
+      "expected": 31
+    },
+    {
+      "case_id": 79,
+      "input": {
+        "words": ["abcdabcdabcdabcdabcd", "abcdeabcdeabcdeabcde", "ababcababcababcab", "abacabadabacabadaba", "abacabadabacabadaba", "abacabadabacabadaba", "abacabadabacabadaba", "abacabadabacabadaba"]
+      },
+      "expected": 147
+    },
+    {
+      "case_id": 80,
+      "input": {
+        "words": ["abcdef", "fedcba", "bcdefa", "afedcb", "cdefab", "bafedc", "defabc", "cbafed", "efabcd", "dcbafe"]
+      },
+      "expected": 51
+    },
+    {
+      "case_id": 81,
+      "input": {
+        "words": ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
+      },
+      "expected": 26
+    },
+    {
+      "case_id": 82,
+      "input": {
+        "words": ["abc", "cab", "bac", "bca", "acb", "cba", "aba", "bab", "aab", "abb", "bba", "baa", "aba", "abb", "bab", "aab", "abb", "bba", "baa", "aba", "abb", "bab", "aab", "abb", "bba", "baa", "aba", "abb", "bab", "aab", "abb", "bba", "baa", "aba", "abb", "bab", "aab", "abb", "bba", "baa", "aba", "abb", "bab"]
+      },
+      "expected": 92
+    },
+    {
+      "case_id": 83,
+      "input": {
+        "words": ["abc", "bcd", "cde", "def", "efg", "fgh", "ghi", "hij", "ijk", "jkl", "klm", "lmn", "mno", "nop", "opq", "pqr", "qrs", "rst", "stu", "tuv", "uvw", "vwx", "wxy", "xyz"]
+      },
+      "expected": 61
+    },
+    {
+      "case_id": 84,
+      "input": {
+        "words": ["abc", "cab", "bac", "acb", "bca", "cba"]
+      },
+      "expected": 14
+    },
+    {
+      "case_id": 85,
+      "input": {
+        "words": ["abcde", "edcba", "bcdea", "aecdb", "dbeca", "cedba", "bedca", "aebcd", "decba", "cbade", "bacde", "acdeb"]
+      },
+      "expected": 53
+    }
+  ]
+}
