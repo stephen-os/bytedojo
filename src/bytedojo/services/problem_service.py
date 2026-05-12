@@ -450,7 +450,9 @@ def resolve_solution_path(
         SolutionPathResult with the resolved path or enough context to
         build an actionable error.
     """
-    # "Latest" — use the file_path stored on the registered problem
+    # "Latest" — use the file_path stored on the registered problem,
+    # but determine which version that corresponds to so callers (TestService)
+    # can record per-version results.
     if version is None:
         if not problem.file_path:
             return SolutionPathResult(error="Problem has no associated file path")
@@ -461,7 +463,14 @@ def resolve_solution_path(
             return SolutionPathResult(
                 error=f"Solution file not found: {file_path}",
             )
-        return SolutionPathResult(path=file_path)
+
+        # Look up the latest registered version so the result carries it.
+        with repo.open_db() as db:
+            attempts = db.list_attempts(
+                problem.source, problem.problem_id, problem.language.value
+            )
+        latest_version = max((a.version for a in attempts), default=None)
+        return SolutionPathResult(path=file_path, version=latest_version)
 
     # Specific version requested — look up the attempt
     with repo.open_db() as db:

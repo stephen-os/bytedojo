@@ -143,11 +143,14 @@ class TestService:
             f"timeout={timeout}s"
         )
 
-        # Resolve the solution file (latest, or a specific version)
+        # Resolve the solution file (latest, or a specific version).
+        # `resolved.version` is the version that will actually be tested —
+        # populated whether or not the caller passed --version.
         resolved = resolve_solution_path(repo, problem, version=version)
         if not resolved.found:
             return self._error(problem, _format_path_error(resolved, version))
         file_path = resolved.path
+        tested_version = resolved.version
 
         # Resolve the toolchain
         toolchain = get_toolchain(problem.language)
@@ -217,11 +220,12 @@ class TestService:
         except OSError as e:
             return self._error(problem, f"Test execution failed: {e}")
 
-        # Persist the resulting status
-        self._record_status(repo, problem, run_result)
+        # Persist the resulting status (per-version + the legacy summary on
+        # `problems.test_status` so grade.py's display stays accurate).
+        self._record_status(repo, problem, run_result, version=tested_version)
 
         self.logger.info(
-            f"test_service: #{problem.problem_id} "
+            f"test_service: #{problem.problem_id} v{tested_version} "
             f"status={run_result.status} "
             f"({run_result.passed_count}/{run_result.total_cases})"
         )
@@ -345,13 +349,32 @@ class TestService:
         repo: Repository,
         problem: RegisteredProblem,
         run_result: TestRunResult,
+        *,
+        version: Optional[int] = None,
     ) -> None:
+        """
+        Persist test results both:
+          - on `versioned_attempts` for the specific version that ran (so
+            v1 / v2 keep their distinct outcomes), and
+          - on `problems.test_status` for the latest-summary display that
+            grade.py and friends still read.
+        """
+        output = f"Passed: {run_result.passed_count}/{run_result.total_cases}"
         with repo.open_db() as db:
             db.update_problem_status(
                 problem_db_id=problem.id,
                 status=run_result.status,
-                output=f"Passed: {run_result.passed_count}/{run_result.total_cases}",
+                output=output,
             )
+            if version is not None:
+                db.update_attempt_test_status(
+                    source=problem.source,
+                    problem_id=problem.problem_id,
+                    language=problem.language.value,
+                    version=version,
+                    status=run_result.status,
+                    output=output,
+                )
 
 
 # ----------------------------------------------------------------------------
