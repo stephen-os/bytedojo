@@ -9,17 +9,13 @@ import click
 from pathlib import Path
 from typing import Optional, List
 
+from bytedojo.commands._resolve import resolve_problem
 from bytedojo.core.logger import Theme
 from bytedojo.core.models.code_language import CodeLanguage
 from bytedojo.core.models.problem_status import ProblemStatus
 from bytedojo.core.models.registered_problem import RegisteredProblem
 from bytedojo.core.repository import Repository
-from bytedojo.core.search import select_problem
 from bytedojo.services import GradingService, GradeResult
-from bytedojo.services.problem_service import (
-    find_registered_problems,
-    get_last_registered_problem,
-)
 
 
 def _display_problem_status(problem: RegisteredProblem, show_test_hint: bool = True):
@@ -293,64 +289,6 @@ def _batch_view_loop(repo: Repository, problems: List[RegisteredProblem], per_pa
                 click.echo("  Invalid input. Use number/n/p/q.")
 
 
-def _resolve_problem(
-    repo: Repository,
-    language: str,
-    *,
-    identifier: Optional[str],
-    name: Optional[str],
-    desc: Optional[str],
-    last: bool,
-) -> RegisteredProblem:
-    """
-    Resolve the problem to grade, prompting if multiple match.
-
-    Raises click.ClickException on no match, click.Abort on user cancel.
-    """
-    if last:
-        # Use whichever language fetched most recently when --last is paired
-        # with a language flag; otherwise list_problems(limit=1) most-recent.
-        problem = get_last_registered_problem(repo, language=language)
-        if problem is None:
-            lang_flag = language if language != 'python3' else 'python'
-            raise click.ClickException(
-                f"No {language} problems found. "
-                f"Fetch one first with: dojo fetch <id> --{lang_flag}"
-            )
-        return problem
-
-    lookup = find_registered_problems(
-        repo,
-        identifier=identifier,
-        name=name,
-        desc=desc,
-        language=language,
-    )
-
-    if lookup.is_empty:
-        criteria = []
-        if identifier:
-            criteria.append(f"ID '{identifier}'")
-        if name:
-            criteria.append(f"name '{name}'")
-        if desc:
-            criteria.append(f"description '{desc}'")
-        criteria_str = ", ".join(criteria) if criteria else "given criteria"
-        raise click.ClickException(
-            f"No {language} problems found matching {criteria_str}. "
-            f"Fetch one first with: dojo fetch <id>"
-        )
-
-    if lookup.is_unique:
-        return lookup.unique
-
-    # Multiple matches — interactive disambiguation (CLI only)
-    chosen = select_problem(lookup.matches)
-    if chosen is None:
-        raise click.Abort()
-    return chosen
-
-
 @click.command()
 @click.argument('identifier', required=False)
 @click.option('--name', '-n', 'name_search', help='Search by problem name')
@@ -426,9 +364,10 @@ def grade(
         return
 
     # Single-problem mode: resolve, then view / grade
-    problem = _resolve_problem(
+    problem = resolve_problem(
         repo, language,
         identifier=identifier, name=name_search, desc=desc_search, last=last,
+        command_name="grade",
     )
     _view_and_grade_problem(
         repo, problem, status, notes, manual=manual or status is not None,

@@ -6,16 +6,12 @@ import click
 from pathlib import Path
 from typing import Optional
 
+from bytedojo.commands._resolve import resolve_problem
 from bytedojo.core.models.code_language import CodeLanguage
 from bytedojo.core.models.registered_problem import RegisteredProblem
 from bytedojo.core.repository import Repository
-from bytedojo.core.search import select_problem
 from bytedojo.services.test_service import TestRunResult
 from bytedojo.services import TestService
-from bytedojo.services.problem_service import (
-    find_registered_problems,
-    get_last_registered_problem,
-)
 
 
 def _display_test_header(problem: RegisteredProblem):
@@ -111,71 +107,6 @@ def _truncate(s: str, max_len: int) -> str:
     return s[:max_len - 3] + "..."
 
 
-def _resolve_problem(
-    repo: Repository,
-    language: str,
-    *,
-    identifier: Optional[str],
-    name: Optional[str],
-    desc: Optional[str],
-    last: bool,
-) -> RegisteredProblem:
-    """
-    Resolve the problem to test, prompting if multiple match.
-
-    Raises click.ClickException on no match, click.Abort on user cancel.
-    """
-    if last:
-        problem = get_last_registered_problem(repo, language=language)
-        if problem is None:
-            lang_flag = language if language != 'python3' else 'python'
-            raise click.ClickException(
-                f"No {language} problems found. "
-                f"Fetch one first with: dojo fetch <id> --{lang_flag}"
-            )
-        return problem
-
-    if not identifier and not name and not desc:
-        raise click.ClickException(
-            "Please specify a problem ID, --name, --desc, or --last\n"
-            "Examples:\n"
-            "  dojo test 1\n"
-            "  dojo test --name 'Two Sum'\n"
-            "  dojo test --last"
-        )
-
-    lookup = find_registered_problems(
-        repo,
-        identifier=identifier,
-        name=name,
-        desc=desc,
-        language=language,
-    )
-
-    if lookup.is_empty:
-        criteria = []
-        if identifier:
-            criteria.append(f"ID '{identifier}'")
-        if name:
-            criteria.append(f"name '{name}'")
-        if desc:
-            criteria.append(f"description '{desc}'")
-        criteria_str = ", ".join(criteria) if criteria else "given criteria"
-        raise click.ClickException(
-            f"No {language} problems found matching {criteria_str}. "
-            f"Fetch one first with: dojo fetch <id>"
-        )
-
-    if lookup.is_unique:
-        return lookup.unique
-
-    # Multiple matches — interactive disambiguation (CLI only)
-    chosen = select_problem(lookup.matches)
-    if chosen is None:
-        raise click.Abort()
-    return chosen
-
-
 # ============================================================================
 # CLI COMMANDS
 # ============================================================================
@@ -225,9 +156,10 @@ def test(
         language = CodeLanguage.default().value
 
     # Resolve the problem (handles --last, lookup, and disambiguation)
-    problem = _resolve_problem(
+    problem = resolve_problem(
         repo, language,
         identifier=identifier, name=name_search, desc=desc_search, last=last,
+        command_name="test",
     )
 
     # Display problem details, then run tests via the service

@@ -55,18 +55,18 @@ def _show_summary(db):
 
     click.echo("Repository Statistics")
     click.echo("")
-    click.echo(f"Total problems: {stats['total_problems']}")
+    click.echo(f"Total problems: {stats.total_problems}")
 
-    if stats['by_difficulty']:
+    if stats.by_difficulty:
         click.echo("")
         click.echo("By difficulty:")
-        for diff, count in sorted(stats['by_difficulty'].items()):
+        for diff, count in sorted(stats.by_difficulty.items()):
             click.echo(f"  {diff:10s}: {count}")
 
-    if stats['by_source']:
+    if stats.by_source:
         click.echo("")
         click.echo("By source:")
-        for src, count in sorted(stats['by_source'].items()):
+        for src, count in sorted(stats.by_source.items()):
             click.echo(f"  {src:10s}: {count}")
 
 
@@ -82,29 +82,25 @@ def _list_problems(db, verbose: bool, source: str | None, difficulty: str | None
     click.echo("")
 
     for problem in problems:
-        _print_problem(db, problem, verbose)
+        _print_problem(problem, verbose)
         click.echo("")
 
 
-def _print_problem(db, problem: dict, verbose: bool):
-    """Print a single problem."""
+def _print_problem(problem, verbose: bool):
+    """Print a single problem (RegisteredProblem)."""
     # Basic info
-    click.echo(f"#{problem['problem_id']} {problem['title']}")
-    click.echo(f"  source: {problem['source']}")
-    click.echo(f"  difficulty: {problem['difficulty']}")
-    click.echo(f"  fetched: {problem['fetched_at']}")
+    click.echo(f"#{problem.problem_id} {problem.title}")
+    click.echo(f"  source: {problem.source}")
+    click.echo(f"  difficulty: {problem.difficulty.value if problem.difficulty else 'Unknown'}")
+    click.echo(f"  language: {problem.language.value if problem.language else 'unknown'}")
+    click.echo(f"  fetched: {problem.fetched_at}")
 
-    if problem['file_path']:
-        click.echo(f"  file: {problem['file_path']}")
+    if problem.file_path:
+        click.echo(f"  file: {problem.file_path}")
 
-    # Verbose info - show attempt statistics
+    # Verbose attempt stats are temporarily unavailable — the old
+    # db.get_problem_stats() was removed during the dict→model refactor.
+    # AttemptService.get_stats() exposes per-language stats and is the
+    # right path to rebuild this on.
     if verbose:
-        attempt_stats = db.get_problem_stats(problem['id'])
-
-        if attempt_stats['total_attempts'] > 0:
-            click.echo(f"  attempts: {attempt_stats['total_attempts']}")
-            click.echo(f"    passed: {attempt_stats['passed_attempts']}")
-            click.echo(f"    failed: {attempt_stats['failed_attempts']}")
-            click.echo(f"    last: {attempt_stats['last_attempt']}")
-        else:
-            click.echo("  attempts: none")
+        click.echo("  attempts: (verbose stats temporarily unavailable)")
