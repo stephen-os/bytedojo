@@ -14,6 +14,7 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Optional, List
 
+from bytedojo.core.models.canonical_type import CanonicalType
 from bytedojo.core.models.code_language import CodeLanguage
 from bytedojo.core.models.code_parameters import CodeParameters
 from bytedojo.core.models.code_snippet import CodeSnippet
@@ -25,6 +26,7 @@ from bytedojo.core.models.problem_code import ProblemCode
 from bytedojo.core.models.problem_detail import ProblemDetail
 from bytedojo.core.models.problem_difficulty import ProblemDifficulty
 from bytedojo.core.models.problem_tag import ProblemTag
+from bytedojo.core.models.problem_types import CanonicalParameter, ProblemTypes
 from bytedojo.core.models.registered_problem import RegisteredProblem
 from bytedojo.core.models.test_case import TestCase
 from bytedojo.core.paths import PROBLEMS_INDEX, get_problem_file
@@ -133,6 +135,24 @@ def _build_problem(data: dict) -> Problem:
             test_code=test_code_snippet,
         ))
 
+    # Canonical types (post B1 migration). Older repos may not have them.
+    types_canonical = data.get("types_canonical")
+    canonical_types: Optional[ProblemTypes] = None
+    if types_canonical:
+        input_params = []
+        for slot in types_canonical.get("input", []):
+            for name, type_str in slot.items():
+                input_params.append(CanonicalParameter(
+                    name=name,
+                    type=CanonicalType.from_string(type_str),
+                ))
+        canonical_types = ProblemTypes(
+            input_params=input_params,
+            output_type=CanonicalType.from_string(
+                types_canonical.get("output", "")
+            ),
+        )
+
     return Problem(
         problem_detail=problem_detail,
         problem_codes=problem_codes,
@@ -140,6 +160,7 @@ def _build_problem(data: dict) -> Problem:
         constraints=data.get("constraints", []),
         hints=data.get("hints", []),
         test_cases=test_cases,
+        types=canonical_types,
     )
 
 def get_problem(problem_id: int) -> Optional[Problem]:

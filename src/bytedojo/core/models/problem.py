@@ -7,6 +7,7 @@ from bytedojo.core.models.entry_point import EntryPoint
 from bytedojo.core.models.example import Example
 from bytedojo.core.models.problem_code import ProblemCode
 from bytedojo.core.models.problem_detail import ProblemDetail
+from bytedojo.core.models.problem_types import ProblemTypes
 from bytedojo.core.models.test_case import TestCase
 
 
@@ -19,6 +20,7 @@ class Problem:
     constraints: List[str] = field(default_factory=list)
     hints: List[str] = field(default_factory=list)
     test_cases: List[TestCase] = field(default_factory=list)
+    types: Optional[ProblemTypes] = None  # canonical types (post B1 migration)
 
     def get_problem_code(self, language: CodeLanguage) -> Optional[ProblemCode]:
         """Get the per-language code package for a specific language."""

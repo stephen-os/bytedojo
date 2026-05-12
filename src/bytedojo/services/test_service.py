@@ -12,6 +12,7 @@ The caller is responsible for problem lookup / disambiguation
 """
 
 import json
+import subprocess
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Callable, List, Optional
@@ -28,6 +29,7 @@ from bytedojo.core.models.code_language import CodeLanguage
 from bytedojo.core.models.registered_problem import RegisteredProblem
 from bytedojo.core.models.test_case import TestCase
 from bytedojo.core.repository import Repository
+from bytedojo.core.test_codegen import generate_runner_for_source, supports_codegen
 from bytedojo.core.toolchains import get_toolchain
 from bytedojo.services import problem_service
 from bytedojo.services.problem_service import resolve_solution_path
@@ -175,10 +177,9 @@ class TestService:
                 **ctx,
             )
 
-        # Tests for compiled languages need their own harnesses (real JSON
-        # parsing inside the language). Until those land, the test path is
-        # Python-only. `dojo run` works for all registered toolchains.
-        if problem.language != CodeLanguage.PYTHON:
+        # Python uses the runtime harness; Java/C++ use per-problem codegen.
+        # Any other language without a registered codegen path errors here.
+        if problem.language != CodeLanguage.PYTHON and not supports_codegen(problem.language):
             return self._error(
                 problem,
                 f"The test harness for {problem.language.value} is not yet "
@@ -273,13 +274,49 @@ class TestService:
         toolchain,
     ) -> TestRunResult:
         """
-        Generate the test harness, write it to repo.build_dir, run it via
-        the toolchain, and parse the results.
+        Generate the test runner, run it, and parse the results.
 
-        Currently only the Python harness (sentinel-marked JSON output) is
-        wired up — other languages will need their own parsing once their
-        toolchains land.
+        Python uses the runtime harness (dynamic dispatch via getattr,
+        sentinel-marked output). Java/C++ use per-problem codegen — the
+        runner is a complete .java/.cpp file with the user's Solution
+        embedded and all test cases baked in as literals.
         """
+        language = problem.language
+        build_dir = repo.build_dir / f"{problem.problem_id}_{language.value}"
+        build_dir.mkdir(parents=True, exist_ok=True)
+
+        if language == CodeLanguage.PYTHON:
+            return self._run_python_tests(
+                problem=problem,
+                solution_path=solution_path,
+                method_name=method_name,
+                test_cases=test_cases,
+                timeout=timeout,
+                toolchain=toolchain,
+                build_dir=build_dir,
+            )
+
+        return self._run_codegen_tests(
+            problem=problem,
+            solution_path=solution_path,
+            method_name=method_name,
+            test_cases=test_cases,
+            timeout=timeout,
+            build_dir=build_dir,
+        )
+
+    def _run_python_tests(
+        self,
+        *,
+        problem: RegisteredProblem,
+        solution_path: Path,
+        method_name: str,
+        test_cases: List[TestCase],
+        timeout: int,
+        toolchain,
+        build_dir: Path,
+    ) -> TestRunResult:
+        """The original Python harness path — dynamic dispatch + sentinels."""
         language = problem.language
 
         solution_code = solution_path.read_text(encoding="utf-8")
@@ -290,72 +327,151 @@ class TestService:
             test_data=test_input,
         )
 
-        # Write the generated harness to the build dir so it can be inspected
-        # after the run (helpful for debugging mismatched outputs).
-        build_dir = repo.build_dir / f"{problem.problem_id}_{language.value}"
-        build_dir.mkdir(parents=True, exist_ok=True)
         suffix = _harness_filename(language)
         harness_path = build_dir / suffix
         harness_path.write_text(full_code, encoding="utf-8")
 
-        # Execute via the toolchain (Python ignores build_dir; compiled
-        # languages will use it once their test harnesses are wired up).
         execution = toolchain.execute(
             harness_path, build_dir=build_dir, timeout=timeout,
         )
 
-        # If the run timed out before producing any output, emit per-case
-        # timed-out results so the CLI can show which cases didn't finish.
         if execution.timed_out:
-            return TestRunResult(
-                problem_id=problem.problem_id,
-                language=language.value,
-                total_cases=len(test_cases),
-                passed_count=0,
-                failed_count=0,
-                error_count=len(test_cases),
-                case_results=[
-                    TestCaseResult(
-                        case_number=i + 1,
-                        passed=False,
-                        input_str=tc.input,
-                        expected=tc.output,
-                        actual="",
-                        timed_out=True,
-                    )
-                    for i, tc in enumerate(test_cases)
-                ],
-                runtime_error=f"Execution timed out after {timeout} seconds",
-            )
-
-        # Compile errors (none for Python; populated when Java/C++ land)
+            return _all_timed_out(problem, test_cases, timeout)
         if execution.compile_error:
-            return TestRunResult(
-                problem_id=problem.problem_id,
-                language=language.value,
-                total_cases=len(test_cases),
-                passed_count=0,
-                failed_count=0,
-                error_count=len(test_cases),
-                compile_error=execution.compile_error,
-            )
-
-        # Runtime error before any results were emitted
+            return _compile_error_result(problem, test_cases, execution.compile_error)
         if execution.exit_code != 0 and PYTHON_RESULTS_BEGIN not in execution.stdout:
-            return TestRunResult(
-                problem_id=problem.problem_id,
-                language=language.value,
-                total_cases=len(test_cases),
-                passed_count=0,
-                failed_count=0,
-                error_count=len(test_cases),
-                runtime_error=execution.stderr.strip() or "Unknown runtime error",
-            )
+            return _runtime_error_result(problem, test_cases, execution.stderr)
 
-        # Happy path: parse the JSON between the sentinel markers
         return _parse_python_output(
             execution.stdout, test_cases, problem.problem_id, language.value
         )
+
+    def _run_codegen_tests(
+        self,
+        *,
+        problem: RegisteredProblem,
+        solution_path: Path,
+        method_name: str,
+        test_cases: List[TestCase],
+        timeout: int,
+        build_dir: Path,
+    ) -> TestRunResult:
+        """
+        Generate a per-problem test runner that embeds the user's solution,
+        compile + run it, parse the JSON output.
+
+        Used for Java + C++ where the language can't dynamically dispatch a
+        method by name with arbitrary arg types.
+        """
+        language = problem.language
+
+        # Load full problem for canonical types + test data.
+        full_problem = problem_service.get_problem(problem.problem_id)
+        if full_problem is None or full_problem.types is None:
+            return _runtime_error_result(
+                problem,
+                test_cases,
+                f"Problem #{problem.problem_id} missing canonical types — "
+                f"run scripts/migrate_problem_types.py.",
+            )
+
+        # Read the user's actual solution file and generate the runner.
+        user_source = solution_path.read_text(encoding="utf-8")
+        try:
+            runner_source = generate_runner_for_source(
+                full_problem, language, method_name, user_source,
+            )
+        except Exception as e:  # CodegenError, parsing failures, etc.
+            return _runtime_error_result(problem, test_cases, f"Codegen failed: {e}")
+
+        if runner_source is None:
+            return _runtime_error_result(
+                problem, test_cases,
+                f"No codegen registered for {language.value}",
+            )
+
+        # Write the runner alongside the user's solution under .dojo/build/.
+        runner_path = build_dir / _runner_filename(language)
+        runner_path.write_text(runner_source, encoding="utf-8")
+
+        # Compile + run. Custom per-language because the existing
+        # Toolchain.execute() is set up for "run the file as the user's code,"
+        # not "compile a separately-named test runner and invoke its entry."
+        try:
+            stdout = self._compile_and_run_runner(
+                language=language,
+                runner_path=runner_path,
+                build_dir=build_dir,
+                timeout=timeout,
+            )
+        except _CompileError as e:
+            return _compile_error_result(problem, test_cases, str(e))
+        except _RunError as e:
+            return _runtime_error_result(problem, test_cases, str(e))
+        except subprocess.TimeoutExpired:
+            return _all_timed_out(problem, test_cases, timeout)
+
+        return _parse_codegen_output(
+            stdout, test_cases, problem.problem_id, language.value
+        )
+
+    def _compile_and_run_runner(
+        self,
+        *,
+        language: CodeLanguage,
+        runner_path: Path,
+        build_dir: Path,
+        timeout: int,
+    ) -> str:
+        """Compile the generated runner and return its stdout."""
+        if language == CodeLanguage.JAVA:
+            compile_proc = subprocess.run(
+                ["javac", "-d", str(build_dir), str(runner_path)],
+                capture_output=True, text=True,
+            )
+            if compile_proc.returncode != 0:
+                raise _CompileError(compile_proc.stderr.strip())
+            run_proc = subprocess.run(
+                ["java", "-cp", str(build_dir), "BytedojoTestRunner"],
+                capture_output=True, text=True, timeout=timeout,
+            )
+            if run_proc.returncode != 0 and not run_proc.stdout.strip():
+                raise _RunError(run_proc.stderr.strip() or "non-zero exit")
+            return run_proc.stdout
+
+        if language == CodeLanguage.CPP:
+            import os
+            from bytedojo.core.toolchains.cpp import (
+                build_cpp_compile_command,
+                find_cpp_compiler,
+            )
+
+            found = find_cpp_compiler()
+            if not found:
+                raise _CompileError(
+                    "No C++ compiler found on PATH (looked for g++, clang++, cl)."
+                )
+            compiler_name, _ = found
+
+            output_name = "test_runner.exe" if os.name == "nt" else "test_runner"
+            output_path = build_dir / output_name
+            compile_proc = subprocess.run(
+                build_cpp_compile_command(compiler_name, runner_path, output_path),
+                cwd=build_dir,
+                capture_output=True, text=True,
+            )
+            if compile_proc.returncode != 0:
+                raise _CompileError(compile_proc.stderr.strip())
+            run_proc = subprocess.run(
+                [str(output_path)],
+                cwd=build_dir,
+                capture_output=True, text=True, timeout=timeout,
+            )
+            if run_proc.returncode != 0 and not run_proc.stdout.strip():
+                raise _RunError(run_proc.stderr.strip() or "non-zero exit")
+            return run_proc.stdout
+
+        raise _RunError(f"Unsupported codegen language: {language.value}")
 
     def _skip(
         self,
@@ -430,6 +546,157 @@ class TestService:
 # ----------------------------------------------------------------------------
 # Output parsing (Python harness with sentinel markers).
 # ----------------------------------------------------------------------------
+
+class _CompileError(Exception):
+    """Raised internally when a generated runner fails to compile."""
+
+
+class _RunError(Exception):
+    """Raised internally when a generated runner exits with no output."""
+
+
+def _runner_filename(language: CodeLanguage) -> str:
+    """Filename for the generated test runner, by language."""
+    return {
+        CodeLanguage.JAVA: "BytedojoTestRunner.java",
+        CodeLanguage.CPP:  "bytedojo_test_runner.cpp",
+    }.get(language, f"test_runner{language.extension}")
+
+
+def _all_timed_out(
+    problem: RegisteredProblem,
+    test_cases: List[TestCase],
+    timeout: int,
+) -> TestRunResult:
+    """Build a TestRunResult for "execution timed out before any cases finished"."""
+    return TestRunResult(
+        problem_id=problem.problem_id,
+        language=problem.language.value,
+        total_cases=len(test_cases),
+        passed_count=0,
+        failed_count=0,
+        error_count=len(test_cases),
+        case_results=[
+            TestCaseResult(
+                case_number=i + 1,
+                passed=False,
+                input_str=tc.input,
+                expected=tc.output,
+                actual="",
+                timed_out=True,
+            )
+            for i, tc in enumerate(test_cases)
+        ],
+        runtime_error=f"Execution timed out after {timeout} seconds",
+    )
+
+
+def _compile_error_result(
+    problem: RegisteredProblem,
+    test_cases: List[TestCase],
+    message: str,
+) -> TestRunResult:
+    return TestRunResult(
+        problem_id=problem.problem_id,
+        language=problem.language.value,
+        total_cases=len(test_cases),
+        passed_count=0,
+        failed_count=0,
+        error_count=len(test_cases),
+        compile_error=message,
+    )
+
+
+def _runtime_error_result(
+    problem: RegisteredProblem,
+    test_cases: List[TestCase],
+    message: str,
+) -> TestRunResult:
+    return TestRunResult(
+        problem_id=problem.problem_id,
+        language=problem.language.value,
+        total_cases=len(test_cases),
+        passed_count=0,
+        failed_count=0,
+        error_count=len(test_cases),
+        runtime_error=(message or "Unknown runtime error").strip(),
+    )
+
+
+def _parse_codegen_output(
+    stdout: str,
+    test_cases: List[TestCase],
+    problem_id: int,
+    language: str,
+) -> TestRunResult:
+    """
+    Parse a generated runner's stdout — expected to be a JSON array of
+    case-result objects {case, passed, expected, actual, error}.
+    """
+    s = stdout.strip()
+    # The runner may print other things first (debug prints from user code).
+    # Find the last JSON array in the output.
+    begin = s.find("[")
+    end = s.rfind("]") + 1
+    if begin < 0 or end <= begin:
+        return TestRunResult(
+            problem_id=problem_id,
+            language=language,
+            total_cases=len(test_cases),
+            passed_count=0,
+            failed_count=0,
+            error_count=len(test_cases),
+            runtime_error=(
+                f"No JSON results in runner output. First 200 chars: {s[:200]}"
+            ),
+        )
+
+    try:
+        results_data = json.loads(s[begin:end])
+    except json.JSONDecodeError as e:
+        return TestRunResult(
+            problem_id=problem_id,
+            language=language,
+            total_cases=len(test_cases),
+            passed_count=0,
+            failed_count=0,
+            error_count=len(test_cases),
+            runtime_error=f"Failed to parse test output: {e}",
+        )
+
+    case_results = []
+    passed_count = 0
+    failed_count = 0
+    error_count = 0
+
+    for i, res in enumerate(results_data):
+        test_case = test_cases[i] if i < len(test_cases) else None
+        case_result = TestCaseResult(
+            case_number=res.get("case", i + 1),
+            passed=res.get("passed", False),
+            input_str=test_case.input if test_case else "",
+            expected=res.get("expected", ""),
+            actual=res.get("actual", ""),
+            error=res.get("error"),
+        )
+        case_results.append(case_result)
+        if res.get("error"):
+            error_count += 1
+        elif res.get("passed"):
+            passed_count += 1
+        else:
+            failed_count += 1
+
+    return TestRunResult(
+        problem_id=problem_id,
+        language=language,
+        total_cases=len(test_cases),
+        passed_count=passed_count,
+        failed_count=failed_count,
+        error_count=error_count,
+        case_results=case_results,
+    )
+
 
 def _format_path_error(resolved, requested_version: Optional[int]) -> str:
     """Render a SolutionPathResult error, listing available versions if relevant."""
