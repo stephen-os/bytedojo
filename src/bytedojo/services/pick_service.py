@@ -11,7 +11,7 @@ from dataclasses import dataclass, field
 from enum import Enum
 from typing import List, Optional
 
-from bytedojo.core import problem_service
+from bytedojo.services import problem_service
 from bytedojo.core.logger import get_logger
 from bytedojo.core.models.problem_detail import ProblemDetail
 from bytedojo.core.models.problem_difficulty import ProblemDifficulty

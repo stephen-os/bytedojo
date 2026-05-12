@@ -11,7 +11,7 @@ from typing import List, Optional, Dict
 
 from bytedojo.core.repository import Repository
 from bytedojo.core.database import Database
-from bytedojo.core import problem_service
+from bytedojo.services import problem_service
 from bytedojo.core.models.attempt import Attempt
 from bytedojo.core.models.attempt_stats import AttemptStats
 from bytedojo.core.models.code_language import CodeLanguage

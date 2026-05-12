@@ -17,7 +17,7 @@ from typing import List, Optional
 from bytedojo.core.models.code_language import CodeLanguage
 from bytedojo.core.models.test_case import TestCase
 from bytedojo.core.test_fetcher import fetch_test_cases
-from bytedojo.core.problem_service import get_problem
+from bytedojo.services.problem_service import get_problem
 from bytedojo.core.container import PodmanManager, PodmanNotFoundError, ContainerError
 from bytedojo.core.harness import (
     load_language_config,

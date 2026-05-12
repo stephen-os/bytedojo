@@ -2,13 +2,15 @@
 Problem service - read-side API for problem data.
 
 This module provides problem-related read operations:
-- GET: Load problem data from local JSON files
-- QUERY: Search/filter problems from index
+- GET:    Load problem data from local JSON files
+- QUERY:  Search/filter problems from the local index
+- LOOKUP: Find problems registered in a repository's database
 
 Placement (writing problems into a repo) lives on Repository.place_problem.
 """
 
 import json
+from dataclasses import dataclass, field
 from typing import Optional, List
 
 from bytedojo.core.models.code_language import CodeLanguage
@@ -22,8 +24,11 @@ from bytedojo.core.models.problem_code import ProblemCode
 from bytedojo.core.models.problem_detail import ProblemDetail
 from bytedojo.core.models.problem_difficulty import ProblemDifficulty
 from bytedojo.core.models.problem_tag import ProblemTag
+from bytedojo.core.models.registered_problem import RegisteredProblem
 from bytedojo.core.models.test_case import TestCase
 from bytedojo.core.paths import PROBLEMS_INDEX, get_problem_file
+from bytedojo.core.repository import Repository
+from bytedojo.core.search import find_problems as _find_problems
 
 
 def _load_index() -> list:
@@ -323,3 +328,101 @@ def parse_problem_ids(arguments: tuple) -> List[int]:
             unique_ids.append(pid)
 
     return unique_ids
+
+
+# ----------------------------------------------------------------------------
+# LOOKUP: find problems registered in a repository's database
+# ----------------------------------------------------------------------------
+
+@dataclass
+class LookupResult:
+    """
+    Result of looking up registered problems by criteria.
+
+    Convenience predicates let the caller decide how to handle the three
+    cases (none / one / many) without rewriting boilerplate.
+    """
+    matches: List[RegisteredProblem] = field(default_factory=list)
+
+    @property
+    def count(self) -> int:
+        return len(self.matches)
+
+    @property
+    def is_empty(self) -> bool:
+        return not self.matches
+
+    @property
+    def is_unique(self) -> bool:
+        return len(self.matches) == 1
+
+    @property
+    def is_ambiguous(self) -> bool:
+        return len(self.matches) > 1
+
+    @property
+    def unique(self) -> Optional[RegisteredProblem]:
+        """The single match if unique, else None."""
+        return self.matches[0] if self.is_unique else None
+
+
+def find_registered_problems(
+    repo: Repository,
+    *,
+    identifier: Optional[str] = None,
+    name: Optional[str] = None,
+    desc: Optional[str] = None,
+    language: Optional[str] = None,
+    source: str = "leetcode",
+) -> LookupResult:
+    """
+    Find registered problems in `repo` matching the given criteria.
+
+    Wraps the fuzzy-matching logic in core/search.py and returns a struct
+    so the caller can drive its own disambiguation UI (CLI prompt, TUI list).
+
+    Args:
+        repo: Repository to search.
+        identifier: Numeric problem ID (exact match).
+        name: Fuzzy match on title.
+        desc: Keyword search in description.
+        language: Filter by language.
+        source: Problem source (default: 'leetcode').
+
+    Returns:
+        LookupResult containing the matches and convenience predicates.
+    """
+    if not repo.is_initialized:
+        return LookupResult()
+
+    with repo.open_db() as db:
+        matches = _find_problems(
+            db,
+            identifier=identifier,
+            name=name,
+            desc=desc,
+            language=language,
+            source=source,
+        )
+    return LookupResult(matches=matches)
+
+
+def get_last_registered_problem(
+    repo: Repository,
+    language: str,
+    source: Optional[str] = None,
+) -> Optional[RegisteredProblem]:
+    """
+    Return the most-recently-fetched registered problem for `language`,
+    or None if no problems are registered.
+
+    Args:
+        repo: Repository to query.
+        language: Language to filter by (e.g. "python3").
+        source: Optional source filter. None means any source.
+    """
+    if not repo.is_initialized:
+        return None
+    with repo.open_db() as db:
+        problems = db.list_problems(source=source, language=language, limit=1)
+    return problems[0] if problems else None

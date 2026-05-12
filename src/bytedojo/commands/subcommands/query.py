@@ -11,7 +11,7 @@ from bytedojo.core.attempt_service import AttemptService
 from bytedojo.core.models.problem_difficulty import ProblemDifficulty
 from bytedojo.core.models.problem_status import ProblemStatus
 from bytedojo.core.models.problem_tag import ProblemTag
-from bytedojo.core import problem_service
+from bytedojo.services import problem_service
 
 
 # Status indicators for CLI display

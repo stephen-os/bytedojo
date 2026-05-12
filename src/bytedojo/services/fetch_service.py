@@ -9,7 +9,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Optional, List
 
-from bytedojo.core import problem_service
+from bytedojo.services import problem_service
 from bytedojo.core.logger import get_logger
 from bytedojo.core.models.attempt import Attempt
 from bytedojo.core.models.code_language import CodeLanguage

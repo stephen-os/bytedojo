@@ -5,7 +5,7 @@ fetch - Fetch LeetCode problems.
 import click
 from pathlib import Path
 
-from bytedojo.core import problem_service
+from bytedojo.services import problem_service
 from bytedojo.core.repository import Repository
 from bytedojo.core.logger import get_logger
 from bytedojo.core.models.code_language import CodeLanguage, resolve as resolve_language
