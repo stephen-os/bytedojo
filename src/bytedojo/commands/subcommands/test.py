@@ -6,15 +6,19 @@ import click
 from pathlib import Path
 from typing import Optional
 
-from bytedojo.core.database import Database
 from bytedojo.core.models.code_language import CodeLanguage
 from bytedojo.core.models.registered_problem import RegisteredProblem
 from bytedojo.core.repository import Repository
-from bytedojo.core.search import find_problems, select_problem
-from bytedojo.core.test_runner import run_tests, TestRunResult
+from bytedojo.core.search import select_problem
+from bytedojo.core.test_runner import TestRunResult
+from bytedojo.services import TestService
+from bytedojo.services.problem_service import (
+    find_registered_problems,
+    get_last_registered_problem,
+)
 
 
-def _display_test_header(problem: RegisteredProblem, total_cases: int):
+def _display_test_header(problem: RegisteredProblem):
     """Display problem details before running tests."""
     click.echo("")
     click.echo(click.style("=" * 70, fg='bright_black'))
@@ -25,7 +29,6 @@ def _display_test_header(problem: RegisteredProblem, total_cases: int):
     click.echo(f"  Language: {problem.language.value.upper()}")
     click.echo(f"  Difficulty: {problem.difficulty.value if problem.difficulty else 'Unknown'}")
     click.echo(f"  File: {problem.file_path or ''}")
-    click.echo(f"  Test Cases: {total_cases}")
     click.echo("")
 
 
@@ -108,6 +111,71 @@ def _truncate(s: str, max_len: int) -> str:
     return s[:max_len - 3] + "..."
 
 
+def _resolve_problem(
+    repo: Repository,
+    language: str,
+    *,
+    identifier: Optional[str],
+    name: Optional[str],
+    desc: Optional[str],
+    last: bool,
+) -> RegisteredProblem:
+    """
+    Resolve the problem to test, prompting if multiple match.
+
+    Raises click.ClickException on no match, click.Abort on user cancel.
+    """
+    if last:
+        problem = get_last_registered_problem(repo, language=language)
+        if problem is None:
+            lang_flag = language if language != 'python3' else 'python'
+            raise click.ClickException(
+                f"No {language} problems found. "
+                f"Fetch one first with: dojo fetch <id> --{lang_flag}"
+            )
+        return problem
+
+    if not identifier and not name and not desc:
+        raise click.ClickException(
+            "Please specify a problem ID, --name, --desc, or --last\n"
+            "Examples:\n"
+            "  dojo test 1\n"
+            "  dojo test --name 'Two Sum'\n"
+            "  dojo test --last"
+        )
+
+    lookup = find_registered_problems(
+        repo,
+        identifier=identifier,
+        name=name,
+        desc=desc,
+        language=language,
+    )
+
+    if lookup.is_empty:
+        criteria = []
+        if identifier:
+            criteria.append(f"ID '{identifier}'")
+        if name:
+            criteria.append(f"name '{name}'")
+        if desc:
+            criteria.append(f"description '{desc}'")
+        criteria_str = ", ".join(criteria) if criteria else "given criteria"
+        raise click.ClickException(
+            f"No {language} problems found matching {criteria_str}. "
+            f"Fetch one first with: dojo fetch <id>"
+        )
+
+    if lookup.is_unique:
+        return lookup.unique
+
+    # Multiple matches — interactive disambiguation (CLI only)
+    chosen = select_problem(lookup.matches)
+    if chosen is None:
+        raise click.Abort()
+    return chosen
+
+
 # ============================================================================
 # CLI COMMANDS
 # ============================================================================
@@ -153,105 +221,37 @@ def test(
     if language is None:
         language = CodeLanguage.default().value
 
-    with Database(repo.db_path) as db:
-        # Handle --last flag
-        if last:
-            problems = db.list_problems(language=language, limit=1)
-            if not problems:
-                raise click.ClickException(
-                    f"No {language} problems found. "
-                    f"Fetch one first with: dojo fetch <id> --{language if language != 'python3' else 'python'}"
-                )
-            problem_data = problems[0]
-        else:
-            # Require either identifier, name, or desc
-            if not identifier and not name_search and not desc_search:
-                raise click.ClickException(
-                    "Please specify a problem ID, --name, --desc, or --last\n"
-                    "Examples:\n"
-                    "  dojo test 1\n"
-                    "  dojo test --name 'Two Sum'\n"
-                    "  dojo test --last"
-                )
+    # Resolve the problem (handles --last, lookup, and disambiguation)
+    problem = _resolve_problem(
+        repo, language,
+        identifier=identifier, name=name_search, desc=desc_search, last=last,
+    )
 
-            # Find matching problems
-            matches = find_problems(
-                db,
-                identifier=identifier,
-                name=name_search,
-                desc=desc_search,
-                language=language
-            )
+    # Display problem details, then run tests via the service
+    _display_test_header(problem)
+    click.echo("  Running tests...")
+    click.echo("")
 
-            if not matches:
-                criteria = []
-                if identifier:
-                    criteria.append(f"ID '{identifier}'")
-                if name_search:
-                    criteria.append(f"name '{name_search}'")
-                if desc_search:
-                    criteria.append(f"description '{desc_search}'")
+    service = TestService()
+    result = service.test_problem(repo, problem, timeout=timeout)
 
-                criteria_str = ", ".join(criteria) if criteria else "given criteria"
-                raise click.ClickException(
-                    f"No {language} problems found matching {criteria_str}. "
-                    f"Fetch one first with: dojo fetch <id>"
-                )
+    # Hard failure (missing file etc.)
+    if result.failed:
+        raise click.ClickException(result.error)
 
-            # Select problem (interactive if multiple)
-            problem_data = select_problem(matches)
-            if not problem_data:
-                raise click.Abort()
-
-        # Get file path
-        if not problem_data.file_path:
-            raise click.ClickException("Problem has no associated file path")
-
-        file_path = Path(problem_data.file_path)
-        if not file_path.is_absolute():
-            file_path = Path.cwd() / file_path
-
-        if not file_path.exists():
-            raise click.ClickException(f"Solution file not found: {file_path}")
-
-        # Import here to avoid circular imports
-        from bytedojo.core.test_fetcher import fetch_test_cases
-        test_cases = fetch_test_cases(problem_data.problem_id)
-
-        # Display header
-        _display_test_header(problem_data, len(test_cases))
-
-        if not test_cases:
-            click.echo(click.style("  No test cases available for this problem.", fg='yellow'))
-            click.echo("")
-            return
-
-        # Run tests
-        click.echo("  Running tests...")
+    # Soft skip (no test cases for this problem)
+    if result.skipped:
+        click.echo(click.style(f"  {result.skip_reason}", fg='yellow'))
         click.echo("")
+        return
 
-        result = run_tests(
-            solution_path=file_path,
-            problem_id=problem_data.problem_id,
-            language=language,
-            timeout=timeout
-        )
+    # Tests ran — display results and final recorded status
+    _display_test_results(result.run_result, verbose)
 
-        # Display results
-        _display_test_results(result, verbose)
-
-        # Update database with test status
-        db.update_problem_status(
-            problem_db_id=problem_data.id,
-            status=result.status,
-            output=f"Passed: {result.passed_count}/{result.total_cases}"
-        )
-
-        # Show final status
-        if result.all_passed:
-            click.echo(click.style("  Solution recorded as PASSED", fg='green'))
-        elif result.status == 'error':
-            click.echo(click.style("  Solution recorded as ERROR", fg='yellow'))
-        else:
-            click.echo(click.style("  Solution recorded as FAILED", fg='red'))
-        click.echo("")
+    if result.run_result.all_passed:
+        click.echo(click.style("  Solution recorded as PASSED", fg='green'))
+    elif result.run_result.status == 'error':
+        click.echo(click.style("  Solution recorded as ERROR", fg='yellow'))
+    else:
+        click.echo(click.style("  Solution recorded as FAILED", fg='red'))
+    click.echo("")
