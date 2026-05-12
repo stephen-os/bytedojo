@@ -27,11 +27,9 @@ _LANGUAGES_DIR = _DATA_DIR / "languages"
 
 @dataclass
 class LanguageConfig:
-    """Configuration for a programming language."""
+    """Configuration for a programming language harness."""
     language: str           # Display name (e.g., "python3")
     extension: str          # File extension (e.g., ".py")
-    image: str              # Container image (e.g., "python:3.11-slim")
-    run_command: List[str]  # Command to run code (e.g., ["python"])
     solution_placeholder: str = "{{SOLUTION}}"  # Placeholder in harness template
 
 
@@ -73,8 +71,6 @@ def load_language_config(language: str) -> LanguageConfig:
             return LanguageConfig(
                 language=data.get("language", language),
                 extension=data.get("extension", ".txt"),
-                image=data.get("image", "python:3.11-slim"),
-                run_command=data.get("run_command", ["python"]),
                 solution_placeholder=data.get("solution_placeholder", "{{SOLUTION}}"),
             )
 
@@ -112,16 +108,16 @@ def _normalize_language(language: str) -> str:
 def _get_default_config(language: str) -> LanguageConfig:
     """Get default configuration for a language."""
     defaults = {
-        "python3": LanguageConfig("python3", ".py", "python:3.11-slim", ["python"]),
-        "java": LanguageConfig("java", ".java", "openjdk:17-slim", ["java"]),
-        "cpp": LanguageConfig("cpp", ".cpp", "gcc:latest", ["g++"]),
-        "javascript": LanguageConfig("javascript", ".js", "node:20-slim", ["node"]),
-        "typescript": LanguageConfig("typescript", ".ts", "node:20-slim", ["npx", "ts-node"]),
-        "go": LanguageConfig("go", ".go", "golang:1.21-alpine", ["go", "run"]),
-        "rust": LanguageConfig("rust", ".rs", "rust:1.75-slim", ["rustc"]),
-        "ruby": LanguageConfig("ruby", ".rb", "ruby:3.2-slim", ["ruby"]),
+        "python3": LanguageConfig("python3", ".py"),
+        "java": LanguageConfig("java", ".java"),
+        "cpp": LanguageConfig("cpp", ".cpp"),
+        "javascript": LanguageConfig("javascript", ".js"),
+        "typescript": LanguageConfig("typescript", ".ts"),
+        "go": LanguageConfig("go", ".go"),
+        "rust": LanguageConfig("rust", ".rs"),
+        "ruby": LanguageConfig("ruby", ".rb"),
     }
-    return defaults.get(language, LanguageConfig(language, ".txt", "python:3.11-slim", ["python"]))
+    return defaults.get(language, LanguageConfig(language, ".txt"))
 
 
 def load_harness_template(language: str) -> str:
@@ -403,33 +399,39 @@ def parse_method_name(code_snippet: str, language: str) -> Optional[str]:
 # These are fallbacks when template files don't exist
 # ============================================================================
 
+PYTHON_RESULTS_BEGIN = "###BYTEDOJO_RESULTS_BEGIN###"
+PYTHON_RESULTS_END = "###BYTEDOJO_RESULTS_END###"
+
 _PYTHON_HARNESS = '''
-import json
+import json as _bytedojo_json
 
 {{SOLUTION}}
 
 # Test data is embedded here by the harness generator
-_TEST_DATA = {{TEST_DATA}}
+_BYTEDOJO_TEST_DATA = {{TEST_DATA}}
 
-def normalize(val):
+
+def _bytedojo_normalize(val):
     """Normalize value for comparison."""
     if val is None:
         return None
     if isinstance(val, (list, tuple)):
-        return [normalize(v) for v in val]
+        return [_bytedojo_normalize(v) for v in val]
     if isinstance(val, dict):
-        return {k: normalize(v) for k, v in val.items()}
+        return {k: _bytedojo_normalize(v) for k, v in val.items()}
     return val
 
-def display(val):
+
+def _bytedojo_display(val):
     """Format value for display."""
     if val is None:
         return "None"
     return repr(val)
 
-def main():
-    method_name = _TEST_DATA["method"]
-    cases = _TEST_DATA["cases"]
+
+def _bytedojo_run():
+    method_name = _BYTEDOJO_TEST_DATA["method"]
+    cases = _BYTEDOJO_TEST_DATA["cases"]
 
     solution = Solution()
     method = getattr(solution, method_name)
@@ -438,15 +440,15 @@ def main():
     for i, case in enumerate(cases):
         try:
             result = method(**case["args"])
-            actual_norm = normalize(result)
-            expected_norm = normalize(case["expected"])
+            actual_norm = _bytedojo_normalize(result)
+            expected_norm = _bytedojo_normalize(case["expected"])
             passed = actual_norm == expected_norm
 
             results.append({
                 "case": i + 1,
                 "passed": passed,
                 "expected": case["expected_str"],
-                "actual": display(result),
+                "actual": _bytedojo_display(result),
                 "error": None
             })
         except Exception as e:
@@ -458,10 +460,15 @@ def main():
                 "error": str(e)
             })
 
-    print(json.dumps(results))
+    # Wrap output in sentinels so the parent parser isn't confused by any
+    # output the user's solution (e.g. an `if __name__ == "__main__":` block)
+    # may have produced earlier in the run.
+    print("###BYTEDOJO_RESULTS_BEGIN###")
+    print(_bytedojo_json.dumps(results))
+    print("###BYTEDOJO_RESULTS_END###")
 
-if __name__ == "__main__":
-    main()
+
+_bytedojo_run()
 '''
 
 _JAVA_HARNESS = '''

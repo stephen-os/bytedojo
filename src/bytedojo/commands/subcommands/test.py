@@ -10,7 +10,7 @@ from bytedojo.core.models.code_language import CodeLanguage
 from bytedojo.core.models.registered_problem import RegisteredProblem
 from bytedojo.core.repository import Repository
 from bytedojo.core.search import select_problem
-from bytedojo.core.test_runner import TestRunResult
+from bytedojo.services.test_service import TestRunResult
 from bytedojo.services import TestService
 from bytedojo.services.problem_service import (
     find_registered_problems,
@@ -188,6 +188,8 @@ def _resolve_problem(
 @click.option('--java', 'language', flag_value='java', help='Test Java version')
 @click.option('--cpp', 'language', flag_value='cpp', help='Test C++ version')
 @click.option('--last', is_flag=True, help='Test most recently fetched problem')
+@click.option('--version', 'version', type=int, default=None,
+              help='Test a specific version (default: latest)')
 @click.option('--verbose', '-v', is_flag=True, help='Show all test case results')
 @click.option('--timeout', '-t', type=int, default=60, help='Timeout in seconds (default: 60)')
 def test(
@@ -196,6 +198,7 @@ def test(
     desc_search: Optional[str],
     language: str | None,
     last: bool,
+    version: int | None,
     verbose: bool,
     timeout: int
 ):
@@ -233,7 +236,7 @@ def test(
     click.echo("")
 
     service = TestService()
-    result = service.test_problem(repo, problem, timeout=timeout)
+    result = service.test_problem(repo, problem, version=version, timeout=timeout)
 
     # Hard failure (missing file etc.)
     if result.failed:

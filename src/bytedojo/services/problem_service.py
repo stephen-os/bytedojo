@@ -11,6 +11,7 @@ Placement (writing problems into a repo) lives on Repository.place_problem.
 
 import json
 from dataclasses import dataclass, field
+from pathlib import Path
 from typing import Optional, List
 
 from bytedojo.core.models.code_language import CodeLanguage
@@ -405,6 +406,97 @@ def find_registered_problems(
             source=source,
         )
     return LookupResult(matches=matches)
+
+
+@dataclass
+class SolutionPathResult:
+    """
+    Result of resolving a solution file path for a registered problem.
+
+    When `version` is None on the request, the caller is asking for "latest"
+    and we use the file_path stored on the RegisteredProblem. When `version`
+    is given, we look up the specific attempt and compute its path.
+
+    `available_versions` is always populated when a specific version was
+    requested, so the caller can render an actionable error if the version
+    doesn't exist (e.g. "v3 not found. Available: v1, v2.").
+    """
+    path: Optional[Path] = None
+    version: Optional[int] = None
+    available_versions: List[int] = field(default_factory=list)
+    error: Optional[str] = None
+
+    @property
+    def found(self) -> bool:
+        return self.path is not None
+
+
+def resolve_solution_path(
+    repo: Repository,
+    problem: RegisteredProblem,
+    *,
+    version: Optional[int] = None,
+) -> SolutionPathResult:
+    """
+    Resolve the absolute path to a registered problem's solution file.
+
+    Args:
+        repo: Repository (for build paths and DB queries).
+        problem: The registered problem.
+        version: Specific version to resolve, or None for the latest
+            (which uses problem.file_path).
+
+    Returns:
+        SolutionPathResult with the resolved path or enough context to
+        build an actionable error.
+    """
+    # "Latest" — use the file_path stored on the registered problem
+    if version is None:
+        if not problem.file_path:
+            return SolutionPathResult(error="Problem has no associated file path")
+        file_path = Path(problem.file_path)
+        if not file_path.is_absolute():
+            file_path = repo.root_dir / file_path
+        if not file_path.exists():
+            return SolutionPathResult(
+                error=f"Solution file not found: {file_path}",
+            )
+        return SolutionPathResult(path=file_path)
+
+    # Specific version requested — look up the attempt
+    with repo.open_db() as db:
+        attempts = db.list_attempts(
+            problem.source, problem.problem_id, problem.language.value
+        )
+    available = [a.version for a in attempts]
+
+    if version not in available:
+        return SolutionPathResult(
+            available_versions=available,
+            error=f"Version {version} not found",
+        )
+
+    # Need the full Problem for the slug-based folder name
+    full_problem = get_problem(problem.problem_id)
+    if full_problem is None:
+        return SolutionPathResult(
+            available_versions=available,
+            error=f"Problem #{problem.problem_id} data not found",
+        )
+
+    file_path = repo.attempt_path(full_problem, problem.language, version)
+    if not file_path.exists():
+        return SolutionPathResult(
+            version=version,
+            available_versions=available,
+            error=f"Version {version} registered but file missing at {file_path}",
+        )
+
+    return SolutionPathResult(
+        path=file_path,
+        version=version,
+        available_versions=available,
+    )
 
 
 def get_last_registered_problem(

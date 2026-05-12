@@ -6,7 +6,7 @@ import click
 from pathlib import Path
 from typing import Optional
 
-from bytedojo.core.execution import ExecutionResult
+from bytedojo.core.toolchains import ExecutionResult
 from bytedojo.core.models.code_language import CodeLanguage
 from bytedojo.core.models.registered_problem import RegisteredProblem
 from bytedojo.core.repository import Repository
@@ -151,6 +151,10 @@ def _resolve_problem(
 # Description search
 @click.option('--desc', '-d', 'desc_search', help='Search by description keywords')
 
+# Run a specific version (default: latest)
+@click.option('--version', 'version', type=int, default=None,
+              help='Run a specific version (default: latest)')
+
 # Language flags (mutually exclusive)
 @click.option('--python', '-py', 'language', flag_value='python3', help='Run Python version')
 @click.option('--java', 'language', flag_value='java', help='Run Java version')
@@ -163,6 +167,7 @@ def run(
     identifier: Optional[str],
     name_search: Optional[str],
     desc_search: Optional[str],
+    version: int | None,
     language: str | None,
     last: bool,
 ):
@@ -196,7 +201,7 @@ def run(
     _display_run_header(problem)
 
     service = RunService()
-    result = service.run_problem(repo, problem)
+    result = service.run_problem(repo, problem, version=version)
 
     # Hard failure (missing file etc.)
     if result.failed:
