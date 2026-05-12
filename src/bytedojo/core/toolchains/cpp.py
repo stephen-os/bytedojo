@@ -41,23 +41,130 @@ _INSTALL_HINTS = {
 _COMPILER_CANDIDATES: Tuple[str, ...] = ("g++", "clang++", "cl")
 
 
+#: Standard install location for vswhere.exe (ships with the Visual Studio Installer).
+_VSWHERE_PATH = Path(
+    r"C:\Program Files (x86)\Microsoft Visual Studio\Installer\vswhere.exe"
+)
+
+
+def _vswhere_install_version() -> Optional[str]:
+    """Return the installed VS version (e.g. '17.8.0'), or None."""
+    if not _VSWHERE_PATH.exists():
+        return None
+    try:
+        proc = subprocess.run(
+            [str(_VSWHERE_PATH), "-latest", "-property", "installationVersion"],
+            capture_output=True, text=True, timeout=10,
+        )
+    except (OSError, subprocess.TimeoutExpired):
+        return None
+    if proc.returncode != 0:
+        return None
+    raw = proc.stdout.strip()
+    return f"MSVC (Visual Studio {raw})" if raw else None
+
+
+def find_msvc_vcvars() -> Optional[Path]:
+    """
+    Locate a Visual Studio install via vswhere and return the path to its
+    `vcvars64.bat`, or None if none of: vswhere isn't installed, no VS
+    with the VC++ workload is present, or the bat file is missing.
+
+    This is how we make MSVC work from a *plain* shell — running cl.exe
+    directly requires INCLUDE/LIB env vars that only vcvars64.bat sets.
+    """
+    if not _VSWHERE_PATH.exists():
+        return None
+    try:
+        proc = subprocess.run(
+            [
+                str(_VSWHERE_PATH),
+                "-latest", "-products", "*",
+                "-requires", "Microsoft.VisualStudio.Component.VC.Tools.x86.x64",
+                "-property", "installationPath",
+            ],
+            capture_output=True, text=True, timeout=10,
+        )
+    except (OSError, subprocess.TimeoutExpired):
+        return None
+    if proc.returncode != 0:
+        return None
+    install_path = proc.stdout.strip()
+    if not install_path:
+        return None
+    vcvars = Path(install_path) / "VC" / "Auxiliary" / "Build" / "vcvars64.bat"
+    return vcvars if vcvars.exists() else None
+
+
 def find_cpp_compiler() -> Optional[Tuple[str, str]]:
     """
-    Return (compiler name, full path) of the first available C++ compiler.
+    Return (compiler kind, full path / vcvars path) for the first
+    available C++ compiler.
 
-    Probes PATH for g++, clang++, then cl (MSVC) — in that order. Returns
-    None if none are found.
+    Probe order:
+      1. g++         on PATH
+      2. clang++     on PATH
+      3. cl          on PATH (already in a Developer Command Prompt)
+      4. MSVC        via vswhere — returned as ("msvc", <vcvars64.bat>)
 
-    Note for MSVC: cl.exe lives in Visual Studio's bin dirs, which are
-    only added to PATH inside a "Developer Command Prompt for VS" (or
-    after running vcvarsall.bat). If the user runs dojo from a plain
-    shell, cl won't be detected here even with VS installed.
+    The "msvc" kind tells callers to wrap the compile in a vcvars
+    activation; the others are invoked directly.
     """
     for name in _COMPILER_CANDIDATES:
         path = shutil.which(name)
         if path:
             return name, path
+    vcvars = find_msvc_vcvars()
+    if vcvars is not None:
+        return "msvc", str(vcvars)
     return None
+
+
+def compile_cpp_source(
+    source: Path,
+    output: Path,
+    *,
+    build_dir: Path,
+) -> "subprocess.CompletedProcess[str]":
+    """
+    Compile a single .cpp file to an executable. Returns the subprocess
+    result so callers can read returncode / stderr.
+
+    Handles all three compiler shapes: GCC-style flags for g++ / clang++,
+    MSVC syntax for `cl`, and shell-wrapped vcvars-activation for MSVC
+    discovered via vswhere. `build_dir` becomes the cwd so MSVC's .obj /
+    .pdb spillover stays contained.
+    """
+    found = find_cpp_compiler()
+    if not found:
+        raise FileNotFoundError(
+            "No C++ compiler available (looked for g++, clang++, cl, then vswhere)."
+        )
+    name, location = found
+
+    if name == "msvc":
+        # vcvars64.bat sets INCLUDE / LIB / PATH for the cl.exe in that VS
+        # install. Chain it with cl via cmd's `&&`.
+        cmd_str = (
+            f'call "{location}" >NUL 2>&1 && '
+            f'cl /nologo /std:c++17 /O2 /EHsc /Fe:"{output}" "{source}"'
+        )
+        return subprocess.run(
+            cmd_str, cwd=build_dir,
+            capture_output=True, text=True, shell=True,
+        )
+
+    if name == "cl":
+        cmd = [
+            "cl", "/nologo", "/std:c++17", "/O2", "/EHsc",
+            f"/Fe:{output}", str(source),
+        ]
+    else:  # g++ / clang++
+        cmd = [name, "-std=c++17", "-O2", "-o", str(output), str(source)]
+
+    return subprocess.run(
+        cmd, cwd=build_dir, capture_output=True, text=True,
+    )
 
 
 def build_cpp_compile_command(
@@ -65,15 +172,20 @@ def build_cpp_compile_command(
     source: Path,
     output: Path,
 ) -> List[str]:
-    """Compile command line for the detected compiler."""
+    """
+    Compile command line for a directly-invokable compiler.
+
+    Kept as a thin shim for callers that don't need the vcvars wrapping
+    (raises if invoked for "msvc" — those callers should use
+    compile_cpp_source() instead).
+    """
+    if compiler == "msvc":
+        raise ValueError("Use compile_cpp_source() for MSVC-via-vswhere compilation.")
     if compiler == "cl":
-        # MSVC syntax: /Fe sets exe output, /EHsc enables C++ exceptions,
-        # /nologo suppresses the startup banner.
         return [
             "cl", "/nologo", "/std:c++17", "/O2", "/EHsc",
             f"/Fe:{output}", str(source),
         ]
-    # GCC-style (g++ / clang++)
     return [compiler, "-std=c++17", "-O2", "-o", str(output), str(source)]
 
 
@@ -97,19 +209,22 @@ class CppToolchain(Toolchain):
 
         name, path = found
         version: Optional[str] = None
-        try:
-            version_arg = "/?" if name == "cl" else "--version"
-            proc = subprocess.run(
-                [path, version_arg],
-                capture_output=True,
-                text=True,
-                timeout=10,
-            )
-            raw = (proc.stdout or proc.stderr or "").splitlines()
-            if raw:
-                version = raw[0].strip()
-        except (OSError, subprocess.TimeoutExpired):
-            pass
+
+        if name == "msvc":
+            # `path` here is vcvars64.bat, which doesn't accept --version.
+            # Ask vswhere for the install version instead.
+            version = _vswhere_install_version() or "MSVC (via vswhere)"
+        else:
+            try:
+                proc = subprocess.run(
+                    [path, "--version"],
+                    capture_output=True, text=True, timeout=10,
+                )
+                raw = (proc.stdout or proc.stderr or "").splitlines()
+                if raw:
+                    version = raw[0].strip()
+            except (OSError, subprocess.TimeoutExpired):
+                pass
 
         return ToolchainStatus(
             language=self.language,
@@ -138,28 +253,19 @@ class CppToolchain(Toolchain):
             )
         build_dir.mkdir(parents=True, exist_ok=True)
 
-        found = find_cpp_compiler()
-        if not found:
-            return self._error(
-                source_path,
-                "No C++ compiler found (looked for g++, clang++, cl).",
-            )
-        compiler_name, _ = found
-
         # Determine output path (.exe suffix on Windows)
         output_name = "solution.exe" if os.name == "nt" else "solution"
         output_path = build_dir / output_name
 
-        # Compile. cwd=build_dir keeps cl.exe's .obj/.pdb spillover contained.
+        # Compile (handles g++ / clang++ / cl on PATH / MSVC via vswhere).
         try:
-            compile_proc = subprocess.run(
-                build_cpp_compile_command(compiler_name, source_path, output_path),
-                cwd=build_dir,
-                capture_output=True,
-                text=True,
+            compile_proc = compile_cpp_source(
+                source_path, output_path, build_dir=build_dir,
             )
+        except FileNotFoundError as e:
+            return self._error(source_path, str(e))
         except OSError as e:
-            return self._error(source_path, f"{compiler_name} not runnable: {e}")
+            return self._error(source_path, f"C++ compile failed to launch: {e}")
 
         if compile_proc.returncode != 0:
             return ExecutionResult(

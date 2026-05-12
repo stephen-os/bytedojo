@@ -62,12 +62,27 @@ def _display_test_results(result: TestRunResult, verbose: bool = False):
 
     # Display summary
     if result.all_passed:
-        click.echo(click.style(f"  ALL TESTS PASSED ({result.passed_count}/{result.total_cases})", fg='green', bold=True))
+        click.echo(click.style(
+            f"  ALL TESTS PASSED ({result.passed_count}/{result.runnable_count})",
+            fg='green', bold=True,
+        ))
     else:
         passed_str = click.style(str(result.passed_count), fg='green')
         failed_str = click.style(str(result.failed_count), fg='red')
         error_str = click.style(str(result.error_count), fg='yellow')
-        click.echo(f"  Passed: {passed_str}  Failed: {failed_str}  Error: {error_str}  (Total: {result.total_cases})")
+        skipped_part = ""
+        if result.skipped_count:
+            skipped_str = click.style(str(result.skipped_count), fg='bright_black')
+            skipped_part = f"  Skipped: {skipped_str}"
+        click.echo(
+            f"  Passed: {passed_str}  Failed: {failed_str}  Error: {error_str}"
+            f"{skipped_part}  (Total: {result.total_cases})"
+        )
+    if result.skipped_count:
+        click.echo(click.style(
+            f"  ({result.skipped_count} case(s) skipped — values outside int32 range)",
+            fg='bright_black',
+        ))
 
     click.echo("")
 
@@ -197,10 +212,13 @@ def test(
     # Tests ran — display results and final recorded status
     _display_test_results(result.run_result, verbose)
 
-    if result.run_result.all_passed:
+    status = result.run_result.status
+    if status == 'passed':
         click.echo(click.style("  Solution recorded as PASSED", fg='green'))
-    elif result.run_result.status == 'error':
+    elif status == 'error':
         click.echo(click.style("  Solution recorded as ERROR", fg='yellow'))
-    else:
+    elif status == 'failed':
         click.echo(click.style("  Solution recorded as FAILED", fg='red'))
+    else:  # untested — ran a subset, all passed, but some were skipped
+        click.echo(click.style("  Solution recorded as UNTESTED", fg='yellow'))
     click.echo("")

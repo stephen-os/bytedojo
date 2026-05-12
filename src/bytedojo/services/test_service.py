@@ -56,17 +56,23 @@ class TestRunResult:
     """Result of running all test cases for a problem."""
     problem_id: int
     language: str
-    total_cases: int
+    total_cases: int                # total in the problem's test suite
     passed_count: int
     failed_count: int
     error_count: int
+    skipped_count: int = 0          # cases filtered before running (e.g. int32 overflow)
     case_results: List[TestCaseResult] = field(default_factory=list)
     compile_error: Optional[str] = None
     runtime_error: Optional[str] = None
 
     @property
+    def runnable_count(self) -> int:
+        """Cases that actually ran (excludes filtered/skipped)."""
+        return self.total_cases - self.skipped_count
+
+    @property
     def all_passed(self) -> bool:
-        return self.passed_count == self.total_cases and self.total_cases > 0
+        return self.runnable_count > 0 and self.passed_count == self.runnable_count
 
     @property
     def status(self) -> str:
@@ -441,27 +447,21 @@ class TestService:
 
         if language == CodeLanguage.CPP:
             import os
-            from bytedojo.core.toolchains.cpp import (
-                build_cpp_compile_command,
-                find_cpp_compiler,
-            )
-
-            found = find_cpp_compiler()
-            if not found:
-                raise _CompileError(
-                    "No C++ compiler found on PATH (looked for g++, clang++, cl)."
-                )
-            compiler_name, _ = found
+            from bytedojo.core.toolchains.cpp import compile_cpp_source
 
             output_name = "test_runner.exe" if os.name == "nt" else "test_runner"
             output_path = build_dir / output_name
-            compile_proc = subprocess.run(
-                build_cpp_compile_command(compiler_name, runner_path, output_path),
-                cwd=build_dir,
-                capture_output=True, text=True,
-            )
+            try:
+                compile_proc = compile_cpp_source(
+                    runner_path, output_path, build_dir=build_dir,
+                )
+            except FileNotFoundError as e:
+                raise _CompileError(str(e))
             if compile_proc.returncode != 0:
-                raise _CompileError(compile_proc.stderr.strip())
+                # Both stderr and stdout can carry diagnostics depending on
+                # the compiler (cl writes errors to stdout by default).
+                msg = (compile_proc.stderr or compile_proc.stdout or "").strip()
+                raise _CompileError(msg or f"compiler exited with code {compile_proc.returncode}")
             run_proc = subprocess.run(
                 [str(output_path)],
                 cwd=build_dir,
@@ -687,6 +687,8 @@ def _parse_codegen_output(
         else:
             failed_count += 1
 
+    skipped_count = max(0, len(test_cases) - len(results_data))
+
     return TestRunResult(
         problem_id=problem_id,
         language=language,
@@ -694,6 +696,7 @@ def _parse_codegen_output(
         passed_count=passed_count,
         failed_count=failed_count,
         error_count=error_count,
+        skipped_count=skipped_count,
         case_results=case_results,
     )
 
