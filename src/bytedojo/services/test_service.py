@@ -91,8 +91,14 @@ class TestServiceResult:
       - skipped: no test cases available (soft outcome, no DB update)
       - failed:  pre-flight check failed (missing file, missing toolchain,
                  unsupported language, no starter snippet); `error` set
+
+    `version` and `file_path` reflect what was actually tested — useful for
+    the CLI/TUI header so it shows the v1 path when `--version 1` was used
+    even though the `problem` argument carries the latest path.
     """
     problem: RegisteredProblem
+    version: Optional[int] = None
+    file_path: Optional[Path] = None
     run_result: Optional[TestRunResult] = None
     skipped: bool = False
     skip_reason: Optional[str] = None
@@ -148,9 +154,17 @@ class TestService:
         # populated whether or not the caller passed --version.
         resolved = resolve_solution_path(repo, problem, version=version)
         if not resolved.found:
-            return self._error(problem, _format_path_error(resolved, version))
+            return self._error(
+                problem,
+                _format_path_error(resolved, version),
+                version=resolved.version,
+            )
         file_path = resolved.path
         tested_version = resolved.version
+
+        # Carry version/path through to every early-return so the CLI/TUI
+        # header can show what was actually tested.
+        ctx = {"version": tested_version, "file_path": file_path}
 
         # Resolve the toolchain
         toolchain = get_toolchain(problem.language)
@@ -158,6 +172,7 @@ class TestService:
             return self._error(
                 problem,
                 f"{problem.language.value} toolchain is not registered.",
+                **ctx,
             )
 
         # Tests for compiled languages need their own harnesses (real JSON
@@ -168,6 +183,7 @@ class TestService:
                 problem,
                 f"The test harness for {problem.language.value} is not yet "
                 f"implemented. `dojo run` works; use Python for `dojo test`.",
+                **ctx,
             )
 
         # Confirm the toolchain is actually present on this machine
@@ -178,18 +194,20 @@ class TestService:
                 lines.append(f"  Missing: {', '.join(status.missing)}")
             if status.install_hint:
                 lines.append(f"  Install: {status.install_hint}")
-            return self._error(problem, "\n".join(lines))
+            return self._error(problem, "\n".join(lines), **ctx)
 
         # Load the full Problem (for test cases + starter snippet)
         full_problem = problem_service.get_problem(problem.problem_id)
         if full_problem is None:
             return self._error(
-                problem, f"Problem #{problem.problem_id} data not found"
+                problem, f"Problem #{problem.problem_id} data not found", **ctx,
             )
 
         test_cases = full_problem.test_cases
         if not test_cases:
-            return self._skip(problem, "No test cases available for this problem")
+            return self._skip(
+                problem, "No test cases available for this problem", **ctx,
+            )
 
         # Need the starter snippet to parse the method name
         code_snippet = full_problem.get_snippet(problem.language)
@@ -197,6 +215,7 @@ class TestService:
             return self._error(
                 problem,
                 f"No starter snippet for {problem.language.value} in problem data",
+                **ctx,
             )
 
         method_name = parse_method_name(code_snippet, problem.language.value)
@@ -204,6 +223,7 @@ class TestService:
             return self._error(
                 problem,
                 "Could not parse method name from starter snippet",
+                **ctx,
             )
 
         # Generate and run the test harness
@@ -218,7 +238,7 @@ class TestService:
                 toolchain=toolchain,
             )
         except OSError as e:
-            return self._error(problem, f"Test execution failed: {e}")
+            return self._error(problem, f"Test execution failed: {e}", **ctx)
 
         # Persist the resulting status (per-version + the legacy summary on
         # `problems.test_status` so grade.py's display stays accurate).
@@ -230,7 +250,12 @@ class TestService:
             f"({run_result.passed_count}/{run_result.total_cases})"
         )
 
-        return TestServiceResult(problem=problem, run_result=run_result)
+        return TestServiceResult(
+            problem=problem,
+            version=tested_version,
+            file_path=file_path,
+            run_result=run_result,
+        )
 
     # ------------------------------------------------------------------
     # Private helpers
@@ -332,17 +357,42 @@ class TestService:
             execution.stdout, test_cases, problem.problem_id, language.value
         )
 
-    def _skip(self, problem: RegisteredProblem, reason: str) -> TestServiceResult:
+    def _skip(
+        self,
+        problem: RegisteredProblem,
+        reason: str,
+        *,
+        version: Optional[int] = None,
+        file_path: Optional[Path] = None,
+    ) -> TestServiceResult:
         self.logger.info(
             f"test_service: skipped #{problem.problem_id} — {reason}"
         )
-        return TestServiceResult(problem=problem, skipped=True, skip_reason=reason)
+        return TestServiceResult(
+            problem=problem,
+            version=version,
+            file_path=file_path,
+            skipped=True,
+            skip_reason=reason,
+        )
 
-    def _error(self, problem: RegisteredProblem, message: str) -> TestServiceResult:
+    def _error(
+        self,
+        problem: RegisteredProblem,
+        message: str,
+        *,
+        version: Optional[int] = None,
+        file_path: Optional[Path] = None,
+    ) -> TestServiceResult:
         self.logger.warning(
             f"test_service: failed #{problem.problem_id} — {message}"
         )
-        return TestServiceResult(problem=problem, error=message)
+        return TestServiceResult(
+            problem=problem,
+            version=version,
+            file_path=file_path,
+            error=message,
+        )
 
     def _record_status(
         self,

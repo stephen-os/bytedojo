@@ -10,12 +10,22 @@ from bytedojo.commands._resolve import resolve_problem
 from bytedojo.core.models.code_language import CodeLanguage
 from bytedojo.core.models.registered_problem import RegisteredProblem
 from bytedojo.core.repository import Repository
-from bytedojo.services.test_service import TestRunResult
+from bytedojo.services.test_service import TestRunResult, TestServiceResult
 from bytedojo.services import TestService
 
 
-def _display_test_header(problem: RegisteredProblem):
-    """Display problem details before running tests."""
+def _display_test_header(result: TestServiceResult):
+    """
+    Display problem details after the service ran.
+
+    Pulls file path and version from the service result so the header shows
+    what was *actually* tested (i.e. respects --version N) instead of the
+    latest path baked into the RegisteredProblem from the lookup.
+    """
+    problem = result.problem
+    file_path = str(result.file_path) if result.file_path else (problem.file_path or "")
+    version_label = f"v{result.version}" if result.version is not None else "?"
+
     click.echo("")
     click.echo(click.style("=" * 70, fg='bright_black'))
     click.echo(click.style("  TEST PROBLEM", fg='cyan', bold=True))
@@ -24,7 +34,8 @@ def _display_test_header(problem: RegisteredProblem):
     click.echo(f"  {problem.problem_id}: {click.style(problem.title, bold=True)}")
     click.echo(f"  Language: {problem.language.value.upper()}")
     click.echo(f"  Difficulty: {problem.difficulty.value if problem.difficulty else 'Unknown'}")
-    click.echo(f"  File: {problem.file_path or ''}")
+    click.echo(f"  Version:  {version_label}")
+    click.echo(f"  File:     {file_path}")
     click.echo("")
 
 
@@ -162,15 +173,18 @@ def test(
         command_name="test",
     )
 
-    # Display problem details, then run tests via the service
-    _display_test_header(problem)
-    click.echo("  Running tests...")
+    # Quick pre-message — header comes after the service runs so it can show
+    # the version-aware path. Without it the user would wait silently.
     click.echo("")
+    click.echo(f"  Testing #{problem.problem_id} {problem.title}...")
 
     service = TestService()
     result = service.test_problem(repo, problem, version=version, timeout=timeout)
 
-    # Hard failure (missing file etc.)
+    # Header (now with the resolved version + file path from the service)
+    _display_test_header(result)
+
+    # Hard failure (missing file, missing toolchain, language not supported)
     if result.failed:
         raise click.ClickException(result.error)
 
