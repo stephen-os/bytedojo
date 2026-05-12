@@ -10,6 +10,7 @@ from bytedojo.services.pick_service import PickService, PickResult, PickScope
 from bytedojo.services.problem_service import LookupResult
 from bytedojo.services.test_service import TestService, TestServiceResult
 from bytedojo.services.run_service import RunService, RunServiceResult
+from bytedojo.services.grading_service import GradingService, GradeResult
 
 __all__ = [
     "FetchService", "FetchResult", "FetchBatchResult",
@@ -17,4 +18,5 @@ __all__ = [
     "LookupResult",
     "TestService", "TestServiceResult",
     "RunService", "RunServiceResult",
+    "GradingService", "GradeResult",
 ]

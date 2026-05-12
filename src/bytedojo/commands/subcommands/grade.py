@@ -9,14 +9,17 @@ import click
 from pathlib import Path
 from typing import Optional, List
 
-from bytedojo.core.database import Database
-from bytedojo.core.grading import GradingService, GradeResult
-from bytedojo.core.logger import get_logger, Theme
+from bytedojo.core.logger import Theme
 from bytedojo.core.models.code_language import CodeLanguage
 from bytedojo.core.models.problem_status import ProblemStatus
 from bytedojo.core.models.registered_problem import RegisteredProblem
 from bytedojo.core.repository import Repository
-from bytedojo.core.search import find_problems, select_problem
+from bytedojo.core.search import select_problem
+from bytedojo.services import GradingService, GradeResult
+from bytedojo.services.problem_service import (
+    find_registered_problems,
+    get_last_registered_problem,
+)
 
 
 def _display_problem_status(problem: RegisteredProblem, show_test_hint: bool = True):
@@ -109,21 +112,22 @@ def _prompt_for_manual_grade() -> tuple[Optional[str], Optional[str]]:
     return status, notes if notes else None
 
 
-def _apply_grade(db: Database, problem: RegisteredProblem, status: str, notes: str = None):
-    """
-    Apply a grade to a problem and display the result.
+def _apply_grade(
+    repo: Repository,
+    problem: RegisteredProblem,
+    status: str,
+    notes: Optional[str] = None,
+):
+    """Apply a grade via the service and display the result."""
+    service = GradingService()
+    result = service.grade(repo, problem, status=status, notes=notes)
 
-    Args:
-        db: Database instance
-        problem: RegisteredProblem object
-        status: Grade status ('passed', 'failed', 'skipped')
-        notes: Optional notes
-    """
-    # Use grading service for business logic
-    service = GradingService(db)
-    result = service.grade_problem(problem.id, status, notes)
+    if result.failed:
+        click.echo("")
+        click.echo(click.style(f"  {result.error}", fg='red'))
+        click.echo("")
+        return
 
-    # Display the result
     _display_grade_result(result)
 
 
@@ -147,55 +151,50 @@ def _display_grade_result(result: GradeResult):
     click.echo("")
 
 
-def _view_and_grade_problem(problem: RegisteredProblem, status: str = None, notes: str = None, manual: bool = False):
+def _view_and_grade_problem(
+    repo: Repository,
+    problem: RegisteredProblem,
+    status: Optional[str] = None,
+    notes: Optional[str] = None,
+    manual: bool = False,
+):
     """
     View problem status and optionally apply a manual grade.
 
-    Args:
-        problem: RegisteredProblem object
-        status: Optional status ('passed', 'failed', 'skipped')
-        notes: Optional notes
-        manual: If True, prompt for manual grade
-
-    Returns:
-        True if action completed, False if cancelled
+    Returns True if action completed, False if cancelled.
     """
-    repo = Repository.open(Path.cwd())
-    if repo is None:
-        raise click.ClickException("Not inside a .dojo repository. Please run 'dojo init' first.")
-
-    with Database(repo.db_path) as db:
-        # Refresh problem data
+    # Refresh problem data so we display the latest test status
+    with repo.open_db() as db:
         refreshed = db.get_problem(problem.source, problem.problem_id, problem.language.value)
-        if refreshed:
-            problem = refreshed
+    if refreshed:
+        problem = refreshed
 
-        _display_problem_status(problem, show_test_hint=(status is None and not manual))
+    _display_problem_status(problem, show_test_hint=(status is None and not manual))
 
-        # If status provided via flags, apply it directly
-        if status is not None:
-            _apply_grade(db, problem, status, notes)
-            return True
-
-        # If manual flag, prompt for grade
-        if manual:
-            status, notes = _prompt_for_manual_grade()
-            if status is None:
-                click.echo("  Cancelled.")
-                return False
-            _apply_grade(db, problem, status, notes)
-            return True
-
+    # If status provided via flags, apply it directly
+    if status is not None:
+        _apply_grade(repo, problem, status, notes)
         return True
 
+    # If manual flag, prompt for grade
+    if manual:
+        status, notes = _prompt_for_manual_grade()
+        if status is None:
+            click.echo("  Cancelled.")
+            return False
+        _apply_grade(repo, problem, status, notes)
+        return True
 
-def _display_problems_page(problems: List[RegisteredProblem], page: int, per_page: int, title: str) -> tuple[int, int, List[RegisteredProblem]]:
-    """
-    Display a page of problems.
+    return True
 
-    Returns:
-        Tuple of (current_page, total_pages, page_problems)
-    """
+
+def _display_problems_page(
+    problems: List[RegisteredProblem],
+    page: int,
+    per_page: int,
+    title: str,
+) -> tuple[int, int, List[RegisteredProblem]]:
+    """Display a page of problems. Returns (current_page, total_pages, page_problems)."""
     total = len(problems)
     total_pages = max(1, (total + per_page - 1) // per_page)
     page = max(1, min(page, total_pages))
@@ -229,7 +228,7 @@ def _display_problems_page(problems: List[RegisteredProblem], page: int, per_pag
     return page, total_pages, page_problems
 
 
-def _batch_view_loop(problems: List[RegisteredProblem], per_page: int = 10):
+def _batch_view_loop(repo: Repository, problems: List[RegisteredProblem], per_page: int = 10):
     """Run interactive problem status viewing loop."""
     if not problems:
         click.echo("")
@@ -280,13 +279,10 @@ def _batch_view_loop(problems: List[RegisteredProblem], per_page: int = 10):
                 selection = int(user_input)
                 if 1 <= selection <= len(page_problems):
                     selected_problem = page_problems[selection - 1]
-                    _view_and_grade_problem(selected_problem, manual=True)
+                    _view_and_grade_problem(repo, selected_problem, manual=True)
 
-                    # Refresh problems list
-                    repo = Repository.open(Path.cwd())
-                    if repo is None:
-                        raise click.ClickException("Not inside a .dojo repository. Please run 'dojo init' first.")
-                    with Database(repo.db_path) as db:
+                    # Refresh problems list after grading
+                    with repo.open_db() as db:
                         problems = db.list_problems()
 
                     # Pause before returning to list
@@ -295,6 +291,64 @@ def _batch_view_loop(problems: List[RegisteredProblem], per_page: int = 10):
                     click.echo(f"  Invalid selection. Enter 1-{len(page_problems)}.")
             except ValueError:
                 click.echo("  Invalid input. Use number/n/p/q.")
+
+
+def _resolve_problem(
+    repo: Repository,
+    language: str,
+    *,
+    identifier: Optional[str],
+    name: Optional[str],
+    desc: Optional[str],
+    last: bool,
+) -> RegisteredProblem:
+    """
+    Resolve the problem to grade, prompting if multiple match.
+
+    Raises click.ClickException on no match, click.Abort on user cancel.
+    """
+    if last:
+        # Use whichever language fetched most recently when --last is paired
+        # with a language flag; otherwise list_problems(limit=1) most-recent.
+        problem = get_last_registered_problem(repo, language=language)
+        if problem is None:
+            lang_flag = language if language != 'python3' else 'python'
+            raise click.ClickException(
+                f"No {language} problems found. "
+                f"Fetch one first with: dojo fetch <id> --{lang_flag}"
+            )
+        return problem
+
+    lookup = find_registered_problems(
+        repo,
+        identifier=identifier,
+        name=name,
+        desc=desc,
+        language=language,
+    )
+
+    if lookup.is_empty:
+        criteria = []
+        if identifier:
+            criteria.append(f"ID '{identifier}'")
+        if name:
+            criteria.append(f"name '{name}'")
+        if desc:
+            criteria.append(f"description '{desc}'")
+        criteria_str = ", ".join(criteria) if criteria else "given criteria"
+        raise click.ClickException(
+            f"No {language} problems found matching {criteria_str}. "
+            f"Fetch one first with: dojo fetch <id>"
+        )
+
+    if lookup.is_unique:
+        return lookup.unique
+
+    # Multiple matches — interactive disambiguation (CLI only)
+    chosen = select_problem(lookup.matches)
+    if chosen is None:
+        raise click.Abort()
+    return chosen
 
 
 @click.command()
@@ -350,7 +404,7 @@ def grade(
     if language is None:
         language = CodeLanguage.default().value
 
-    # Determine status from flags
+    # Determine status from flags (mutually exclusive)
     status = None
     flag_count = sum([status_pass, status_fail, status_skip])
 
@@ -364,51 +418,18 @@ def grade(
     elif status_skip:
         status = 'skipped'
 
-    with Database(repo.db_path) as db:
-        # Batch mode: no identifier, name, desc, or last
-        if not identifier and not name_search and not desc_search and not last:
+    # Batch mode: no identifier, name, desc, or last → browse all problems
+    if not identifier and not name_search and not desc_search and not last:
+        with repo.open_db() as db:
             problems = db.list_problems()
-            _batch_view_loop(problems, per_page)
-            return
+        _batch_view_loop(repo, problems, per_page)
+        return
 
-        # Handle --last flag
-        if last:
-            problems = db.list_problems(language=language, limit=1)
-            if not problems:
-                raise click.ClickException(
-                    f"No {language} problems found. "
-                    f"Fetch one first with: dojo fetch <id> --{language if language != 'python3' else 'python'}"
-                )
-            # Get most recent by fetched_at
-            problem_data = max(problems, key=lambda p: p.fetched_at)
-        else:
-            # Find matching problems
-            matches = find_problems(
-                db,
-                identifier=identifier,
-                name=name_search,
-                desc=desc_search,
-                language=language
-            )
-
-            if not matches:
-                criteria = []
-                if identifier:
-                    criteria.append(f"ID '{identifier}'")
-                if name_search:
-                    criteria.append(f"name '{name_search}'")
-                if desc_search:
-                    criteria.append(f"description '{desc_search}'")
-
-                criteria_str = ", ".join(criteria) if criteria else "given criteria"
-                raise click.ClickException(
-                    f"No {language} problems found matching {criteria_str}. "
-                    f"Fetch one first with: dojo fetch <id>"
-                )
-
-            # Select problem (interactive if multiple)
-            problem_data = select_problem(matches)
-            if not problem_data:
-                raise click.Abort()
-
-    _view_and_grade_problem(problem_data, status, notes, manual=manual or status is not None)
+    # Single-problem mode: resolve, then view / grade
+    problem = _resolve_problem(
+        repo, language,
+        identifier=identifier, name=name_search, desc=desc_search, last=last,
+    )
+    _view_and_grade_problem(
+        repo, problem, status, notes, manual=manual or status is not None,
+    )
