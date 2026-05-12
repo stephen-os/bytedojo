@@ -99,10 +99,16 @@ class RunService:
         if not status.found:
             return self._error(problem, _format_missing_toolchain(status))
 
+        # Build dir for compiled artifacts (Java .class, C++ binary).
+        # Interpreted toolchains (Python) ignore this argument.
+        build_dir = repo.build_dir / f"{problem.problem_id}_{problem.language.value}"
+
         # Execute. Defensive OSError catch in case a Toolchain implementation
         # forgets to handle a binary that vanishes between detect() and run.
         try:
-            execution = toolchain.execute(file_path, timeout=timeout)
+            execution = toolchain.execute(
+                file_path, build_dir=build_dir, timeout=timeout,
+            )
         except OSError as e:
             return self._error(problem, f"Execution failed: {e}")
 

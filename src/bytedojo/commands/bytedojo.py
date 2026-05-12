@@ -21,6 +21,7 @@ from bytedojo.commands.subcommands import review
 from bytedojo.commands.subcommands import run
 from bytedojo.commands.subcommands import enter
 from bytedojo.commands.subcommands import test
+from bytedojo.commands.subcommands import support
 
 # Helper functions for printing the version of bytedojo. 
 def print_version(ctx, _, value):
@@ -98,3 +99,4 @@ bytedojo.add_command(run)
 bytedojo.add_command(settings)
 bytedojo.add_command(stats)
 bytedojo.add_command(test)
+bytedojo.add_command(support)

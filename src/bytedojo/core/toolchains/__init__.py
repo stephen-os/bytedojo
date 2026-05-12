@@ -17,11 +17,15 @@ from bytedojo.core.toolchains.base import (
     Toolchain,
     ToolchainStatus,
 )
+from bytedojo.core.toolchains.cpp import CppToolchain
+from bytedojo.core.toolchains.java import JavaToolchain
 from bytedojo.core.toolchains.python import PythonToolchain
 
 
 _REGISTRY: dict[CodeLanguage, type[Toolchain]] = {
     CodeLanguage.PYTHON: PythonToolchain,
+    CodeLanguage.JAVA:   JavaToolchain,
+    CodeLanguage.CPP:    CppToolchain,
 }
 
 
@@ -42,6 +46,8 @@ __all__ = [
     "Toolchain",
     "ToolchainStatus",
     "PythonToolchain",
+    "JavaToolchain",
+    "CppToolchain",
     "get_toolchain",
     "all_toolchains",
 ]

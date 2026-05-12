@@ -16,6 +16,7 @@ from bytedojo.services.test_service import (
 )
 from bytedojo.services.run_service import RunService, RunServiceResult
 from bytedojo.services.grading_service import GradingService, GradeResult
+from bytedojo.services.system_service import SystemService, SystemReport
 
 __all__ = [
     "FetchService", "FetchResult", "FetchBatchResult",
@@ -24,4 +25,5 @@ __all__ = [
     "TestService", "TestServiceResult", "TestRunResult", "TestCaseResult",
     "RunService", "RunServiceResult",
     "GradingService", "GradeResult",
+    "SystemService", "SystemReport",
 ]

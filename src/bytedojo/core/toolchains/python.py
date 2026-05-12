@@ -9,6 +9,7 @@ on. Same Python, same packages, same surprises — no PATH drift.
 import subprocess
 import sys
 from pathlib import Path
+from typing import Optional
 
 from bytedojo.core.logger import get_logger
 from bytedojo.core.models.code_language import CodeLanguage
@@ -38,7 +39,14 @@ class PythonToolchain(Toolchain):
             version=f"{info.major}.{info.minor}.{info.micro}",
         )
 
-    def execute(self, source_path: Path, *, timeout: int) -> ExecutionResult:
+    def execute(
+        self,
+        source_path: Path,
+        *,
+        build_dir: Optional[Path] = None,
+        timeout: int,
+    ) -> ExecutionResult:
+        # Python doesn't compile — `build_dir` is accepted for ABC parity.
         self.logger.debug(
             f"python_toolchain: executing {source_path} (timeout={timeout}s)"
         )

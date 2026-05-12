@@ -62,9 +62,19 @@ class Toolchain(ABC):
         """Probe the local environment. Cheap to call (used by doctor + pre-flight)."""
 
     @abstractmethod
-    def execute(self, source_path: Path, *, timeout: int) -> ExecutionResult:
+    def execute(
+        self,
+        source_path: Path,
+        *,
+        build_dir: Optional[Path] = None,
+        timeout: int,
+    ) -> ExecutionResult:
         """
         Compile (if needed) and run `source_path`, capturing stdout/stderr.
+
+        Compiled toolchains (Java, C++) place build artifacts into
+        `build_dir` so they persist for inspection / caching; interpreted
+        toolchains (Python) ignore the argument.
 
         Implementations should never raise on missing binaries — they should
         either be guarded by a `detect()` pre-flight at the call site, or

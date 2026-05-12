@@ -149,13 +149,22 @@ class TestService:
             return self._error(problem, _format_path_error(resolved, version))
         file_path = resolved.path
 
-        # Resolve the toolchain (Java/C++ return None today — clean error path)
+        # Resolve the toolchain
         toolchain = get_toolchain(problem.language)
         if toolchain is None:
             return self._error(
                 problem,
-                f"{problem.language.value} is not yet supported. "
-                f"Only Python is implemented at this time.",
+                f"{problem.language.value} toolchain is not registered.",
+            )
+
+        # Tests for compiled languages need their own harnesses (real JSON
+        # parsing inside the language). Until those land, the test path is
+        # Python-only. `dojo run` works for all registered toolchains.
+        if problem.language != CodeLanguage.PYTHON:
+            return self._error(
+                problem,
+                f"The test harness for {problem.language.value} is not yet "
+                f"implemented. `dojo run` works; use Python for `dojo test`.",
             )
 
         # Confirm the toolchain is actually present on this machine
@@ -260,8 +269,11 @@ class TestService:
         harness_path = build_dir / suffix
         harness_path.write_text(full_code, encoding="utf-8")
 
-        # Execute via the toolchain
-        execution = toolchain.execute(harness_path, timeout=timeout)
+        # Execute via the toolchain (Python ignores build_dir; compiled
+        # languages will use it once their test harnesses are wired up).
+        execution = toolchain.execute(
+            harness_path, build_dir=build_dir, timeout=timeout,
+        )
 
         # If the run timed out before producing any output, emit per-case
         # timed-out results so the CLI can show which cases didn't finish.
