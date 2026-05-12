@@ -511,7 +511,13 @@ class Database:
     # ------------------------------------------------------------------
 
     def schedule_review(self, problem_db_id: int, days_from_now: int) -> None:
-        """Schedule or update a review."""
+        """
+        Schedule or reset a review at a fixed interval.
+
+        Used by the initial-schedule path (e.g. on `dojo grade --pass` before
+        an SRS track exists). For SM-2-style progression after a review,
+        use upsert_review() with computed interval/ease/repetitions.
+        """
         cursor = self.conn.cursor()
         next_review = date.today() + timedelta(days=days_from_now)
 
@@ -529,6 +535,59 @@ class Database:
                 INSERT INTO reviews (problem_id, next_review_date, interval_days, repetitions)
                 VALUES (?, ?, ?, 1)
             """, (problem_db_id, next_review.isoformat(), days_from_now))
+
+        self.conn.commit()
+
+    def get_review(self, problem_db_id: int) -> Optional[ReviewSchedule]:
+        """Fetch the review row for a problem (or None if no track exists)."""
+        cursor = self.conn.cursor()
+        cursor.execute("""
+            SELECT
+                r.problem_id, r.next_review_date, r.interval_days, r.ease_factor, r.repetitions,
+                p.problem_id as problem_num, p.source, p.title, p.difficulty, p.language, p.file_path
+            FROM reviews r
+            LEFT JOIN problems p ON r.problem_id = p.id
+            WHERE r.problem_id = ?
+        """, (problem_db_id,))
+        row = cursor.fetchone()
+        return ReviewSchedule.from_row(dict(row)) if row else None
+
+    def upsert_review(
+        self,
+        problem_db_id: int,
+        *,
+        interval_days: int,
+        ease_factor: float,
+        repetitions: int,
+    ) -> None:
+        """
+        Insert or update a review row with the exact SRS state to persist.
+
+        Unlike schedule_review() which is fixed-interval, this lets the
+        ReviewService apply the SM-2 algorithm and store the computed
+        next_review_date / interval / ease / repetitions.
+        """
+        cursor = self.conn.cursor()
+        next_review = date.today() + timedelta(days=interval_days)
+
+        cursor.execute("SELECT id FROM reviews WHERE problem_id = ?", (problem_db_id,))
+        existing = cursor.fetchone()
+
+        if existing:
+            cursor.execute("""
+                UPDATE reviews
+                SET next_review_date = ?,
+                    interval_days = ?,
+                    ease_factor = ?,
+                    repetitions = ?
+                WHERE problem_id = ?
+            """, (next_review.isoformat(), interval_days, ease_factor, repetitions, problem_db_id))
+        else:
+            cursor.execute("""
+                INSERT INTO reviews
+                    (problem_id, next_review_date, interval_days, ease_factor, repetitions)
+                VALUES (?, ?, ?, ?, ?)
+            """, (problem_db_id, next_review.isoformat(), interval_days, ease_factor, repetitions))
 
         self.conn.commit()
 

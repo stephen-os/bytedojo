@@ -80,12 +80,15 @@ class GradingService:
 
         with repo.open_db() as db:
             db.update_problem_status(problem.id, status, notes)
-
             review_freq = int(db.get_config('review_frequency_days', '7'))
-            scheduled = False
-            if status == 'passed':
-                db.schedule_review(problem.id, review_freq)
-                scheduled = True
+
+        scheduled = False
+        if status == 'passed':
+            # Start (or reset) the SRS track at the base interval. Future
+            # SM-2 progression happens through ReviewService.complete_review.
+            from bytedojo.services.review_service import ReviewService
+            ReviewService().initial_schedule(repo, problem.id)
+            scheduled = True
 
         self.logger.info(
             f"grading_service: graded #{problem.problem_id} as {status} "
