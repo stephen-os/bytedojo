@@ -29,3 +29,8 @@ class ProblemDifficulty(str, Enum):
     
     def __repr__(self):
         return f"ProblemDifficulty.{self.name}"
+    
+
+def resolve(difficulty: str) -> ProblemDifficulty:
+    """Resolve difficulty from string."""
+    return ProblemDifficulty.from_string(difficulty)

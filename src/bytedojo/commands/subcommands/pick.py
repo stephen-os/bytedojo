@@ -2,16 +2,14 @@
 pick - Pick a random problem.
 """
 
-import random
 import click
 from pathlib import Path
 
-from bytedojo.core import problem_service
 from bytedojo.core.repository import Repository
 from bytedojo.core.logger import get_logger
-
-from bytedojo.core.models.problem_difficulty import ProblemDifficulty
+from bytedojo.core.models.problem_difficulty import ProblemDifficulty, resolve as resolve_difficulty
 from bytedojo.core.models.problem_tag import ProblemTag
+from bytedojo.services import PickService, PickScope
 
 
 # Define pick command
@@ -57,21 +55,16 @@ def pick(ctx, difficulty: str | None, tags: tuple, scope: str | None):
     logger = get_logger()
     logger.debug(f"pick: difficulty={difficulty} tags={tags} scope={scope}")
 
-    # Resolve repo
     repo = Repository.open(Path.cwd())
     if repo is None:
         raise click.ClickException("Not inside a .dojo repository. Please run 'dojo init' first.")
 
     # Resolve difficulty
-    if difficulty is None:
-        diff = ProblemDifficulty.NONE
-    else:
-        diff = ProblemDifficulty.from_string(difficulty)
-        if diff == ProblemDifficulty.NONE:
-            raise click.ClickException(f"Unknown difficulty: {difficulty}")
-    logger.debug(f"pick: resolved difficulty={diff}")
+    diff = resolve_difficulty(difficulty) if difficulty else ProblemDifficulty.NONE
+    if difficulty and diff == ProblemDifficulty.NONE:
+        raise click.ClickException(f"Unknown difficulty: {difficulty}")
 
-    # Resolve tags
+    # Resolve tags (drop UNKNOWN with a warning; fail if none are valid)
     parsed_tags = None
     if tags:
         parsed_tags = []
@@ -83,56 +76,34 @@ def pick(ctx, difficulty: str | None, tags: tuple, scope: str | None):
             parsed_tags.append(tag)
         if not parsed_tags:
             raise click.ClickException(f"No valid tags found in: {list(tags)}")
-    logger.debug(f"pick: resolved tags={parsed_tags}")
 
-    # Query all matching problems from local index
-    all_problems = problem_service.query_problems(
-        difficulty=diff,
-        tags=parsed_tags
-    )
+    # Resolve scope
+    pick_scope = {
+        'all': PickScope.ALL,
+        'solved': PickScope.SOLVED,
+    }.get(scope, PickScope.UNSOLVED)
 
-    if not all_problems:
+    # Pick
+    service = PickService()
+    result = service.pick(repo, difficulty=diff, tags=parsed_tags, scope=pick_scope)
+
+    # Display
+    if result.total_count == 0:
         click.echo("No problems found matching your criteria.")
-        logger.warning("pick: no problems found matching criteria")
         return
 
-    # Get already-registered problem IDs from repo
-    registered_problems = repo.get_registered_problems()
-    registered_ids = {p.problem_id for p in registered_problems}
-    logger.debug(f"pick: {len(registered_ids)} problems already registered")
-
-    # Filter based on scope
-    registered_count = len([p for p in all_problems if p.id in registered_ids])
-
-    if scope == 'all':
-        # Pick from all problems
-        candidates = all_problems
-        scope_label = "all"
-    elif scope == 'solved':
-        # Pick from registered only
-        candidates = [p for p in all_problems if p.id in registered_ids]
-        scope_label = "registered"
-    else:
-        # Default: pick from unsolved only
-        candidates = [p for p in all_problems if p.id not in registered_ids]
-        scope_label = "unsolved"
-
-    if not candidates:
-        if scope == 'solved':
+    if not result.has_pick:
+        if result.scope == PickScope.SOLVED:
             click.echo("No registered problems matching your criteria.")
-            logger.info("pick: no registered problems matching criteria")
         else:
             click.echo("All matching problems already registered.")
-            click.echo(f"  total: {len(all_problems)}, registered: {registered_count}")
-            logger.info("pick: all matching problems already registered")
+            click.echo(f"  total: {result.total_count}, registered: {result.registered_count}")
         return
 
-    # Pick a random problem
-    picked = random.choice(candidates)
-    logger.info(f"pick: selected #{picked.id} {picked.slug} (scope={scope_label})")
+    picked = result.picked
+    label = result.scope.display_label
 
-    # Display result
-    click.echo(f"Picking from {len(candidates)} {scope_label} problem(s)")
+    click.echo(f"Picking from {result.pool_size} {label} problem(s)")
     click.echo(f"  #{picked.id} {picked.title} [{picked.difficulty.value}]")
 
     if picked.tags:
@@ -142,6 +113,8 @@ def pick(ctx, difficulty: str | None, tags: tuple, scope: str | None):
         click.echo(f"  tags: {tags_display}")
 
     click.echo("")
-    click.echo(f"Done: pool={len(candidates)} ({scope_label}), registered={registered_count}, total={len(all_problems)}")
+    click.echo(
+        f"Done: pool={result.pool_size} ({label}), "
+        f"registered={result.registered_count}, total={result.total_count}"
+    )
     click.echo(f"Fetch with: dojo fetch {picked.id}")
-    logger.info(f"pick: complete — picked #{picked.id} from {scope_label}")
