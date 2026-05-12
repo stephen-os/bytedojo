@@ -10,6 +10,7 @@ from pathlib import Path
 from typing import Optional, List
 
 from bytedojo.services import problem_service
+from bytedojo.core.formatters import format_problem
 from bytedojo.core.logger import get_logger
 from bytedojo.core.models.attempt import Attempt
 from bytedojo.core.models.code_language import CodeLanguage
@@ -199,7 +200,7 @@ class FetchService:
         target = custom_path / problem.get_folder_name()
         solution_path = target / problem.get_solution_filename(language)
 
-        repo.place_problem(problem, language, solution_path)
+        repo.place_problem(solution_path, format_problem(problem, language))
 
         self.logger.info(
             f"fetch_service: placed #{problem.problem_detail.id} "
@@ -236,7 +237,7 @@ class FetchService:
                 skip_reason=f"v{version} not found at {target}",
             )
 
-        repo.place_problem(problem, language, target)
+        repo.place_problem(target, format_problem(problem, language))
 
         self.logger.info(
             f"fetch_service: refetched #{problem.problem_detail.id} "
@@ -277,7 +278,7 @@ class FetchService:
         # Register and place
         attempt: Attempt = repo.register_attempt(problem, language)
         target = repo.attempt_path(problem, language, attempt.version)
-        repo.place_problem(problem, language, target)
+        repo.place_problem(target, format_problem(problem, language))
 
         self.logger.info(
             f"fetch_service: placed #{problem_id} ({language.value}) "

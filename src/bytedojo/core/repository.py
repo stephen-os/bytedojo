@@ -187,20 +187,17 @@ class Repository:
             / problem.get_solution_filename(language)
         )
 
-    def place_problem(
-        self,
-        problem: Problem,
-        language: CodeLanguage,
-        path: Path,
-    ) -> None:
+    def place_problem(self, path: Path, content: str) -> None:
         """
-        Write the starter code for `problem` in `language` to `path`.
-        Filesystem only — no DB writes. Caller decides the destination.
+        Write `content` to `path`, creating parent directories.
+
+        Filesystem only — no DB writes. The caller (FetchService) decides
+        both the destination and what content goes in the file (raw
+        snippet, formatter output, etc.).
         """
         path.parent.mkdir(parents=True, exist_ok=True)
-        starter_code = problem.get_snippet(language)
-        if starter_code:
-            path.write_text(starter_code, encoding="utf-8")
+        if content:
+            path.write_text(content, encoding="utf-8")
 
     # ------------------------------------------------------------------
     # Internal helpers

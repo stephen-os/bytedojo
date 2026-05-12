@@ -349,8 +349,9 @@ Difficulty: {detail.difficulty}
         lines.append('')
 
         if ctx.test_cases:
-            for i, example in enumerate(ctx.test_cases, 1):
-                lines.append(f'    # Example {i}')
+            # Show just the first case as a starter; the full suite runs via `dojo test`.
+            for i, example in enumerate(ctx.test_cases[:1], 1):
+                lines.append(f'    # Example {i} (edit me, or run `dojo test` for the full suite)')
                 test_call = self._generate_test_call(ctx, example.input, example.output, i)
                 lines.extend(test_call)
                 lines.append('')
