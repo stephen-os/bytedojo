@@ -12,10 +12,21 @@ from bytedojo.core.models.code_language import CodeLanguage
 from bytedojo.core.models.registered_problem import RegisteredProblem
 from bytedojo.core.repository import Repository
 from bytedojo.services import RunService
+from bytedojo.services.run_service import RunServiceResult
 
 
-def _display_run_header(problem: RegisteredProblem):
-    """Display problem details before running."""
+def _display_run_header(result: RunServiceResult):
+    """
+    Display problem details after the service ran.
+
+    Pulls file path and version from the service result so the header shows
+    what was *actually* run (i.e. respects --version N) instead of the
+    latest path baked into the RegisteredProblem from the lookup.
+    """
+    problem = result.problem
+    file_path = str(result.file_path) if result.file_path else (problem.file_path or "")
+    version_label = f"v{result.version}" if result.version is not None else "?"
+
     click.echo("")
     click.echo(click.style("=" * 60, fg='bright_black'))
     click.echo(click.style("  RUN PROBLEM", fg='cyan', bold=True))
@@ -23,7 +34,8 @@ def _display_run_header(problem: RegisteredProblem):
     click.echo("")
     click.echo(f"  {problem.problem_id}: {click.style(problem.title, bold=True)}")
     click.echo(f"  Language: {problem.language.value.upper()}")
-    click.echo(f"  File: {problem.file_path or ''}")
+    click.echo(f"  Version:  {version_label}")
+    click.echo(f"  File:     {file_path}")
     click.echo("")
     click.echo(click.style("-" * 60, fg='bright_black'))
     click.echo(click.style("  OUTPUT", fg='cyan'))
@@ -130,13 +142,18 @@ def run(
         command_name="run",
     )
 
-    # Display header, then run via the service
-    _display_run_header(problem)
+    # Quick pre-message — header comes after the service runs so it can show
+    # the version-aware path.
+    click.echo("")
+    click.echo(f"  Running #{problem.problem_id} {problem.title}...")
 
     service = RunService()
     result = service.run_problem(repo, problem, version=version)
 
-    # Hard failure (missing file etc.)
+    # Header (now with the resolved version + file path from the service)
+    _display_run_header(result)
+
+    # Hard failure (missing file, missing toolchain, etc.)
     if result.failed:
         raise click.ClickException(result.error)
 

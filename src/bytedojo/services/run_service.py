@@ -33,8 +33,14 @@ class RunServiceResult:
       - success: execution finished (regardless of exit code); `execution` set
       - failed:  pre-flight check failed (e.g. missing file, missing
                  toolchain, unsupported language); `error` set
+
+    `version` and `file_path` reflect what was actually run — useful for
+    the CLI/TUI header so it shows the v1 path when `--version 1` was used
+    even though the `problem` argument carries the latest path.
     """
     problem: RegisteredProblem
+    version: Optional[int] = None
+    file_path: Optional[Path] = None
     execution: Optional[ExecutionResult] = None
     error: Optional[str] = None
 
@@ -82,8 +88,17 @@ class RunService:
         # Resolve the solution file (latest, or a specific version)
         resolved = resolve_solution_path(repo, problem, version=version)
         if not resolved.found:
-            return self._error(problem, _format_path_error(resolved, version))
+            return self._error(
+                problem,
+                _format_path_error(resolved, version),
+                version=resolved.version,
+            )
         file_path = resolved.path
+        run_version = resolved.version
+
+        # Carry version/path through to every early-return so the CLI/TUI
+        # header can show what was actually run.
+        ctx = {"version": run_version, "file_path": file_path}
 
         # Resolve the toolchain
         toolchain = get_toolchain(problem.language)
@@ -92,12 +107,13 @@ class RunService:
                 problem,
                 f"{problem.language.value} is not yet supported. "
                 f"Only Python is implemented at this time.",
+                **ctx,
             )
 
         # Pre-flight: confirm the local toolchain is available
         status = toolchain.detect()
         if not status.found:
-            return self._error(problem, _format_missing_toolchain(status))
+            return self._error(problem, _format_missing_toolchain(status), **ctx)
 
         # Build dir for compiled artifacts (Java .class, C++ binary).
         # Interpreted toolchains (Python) ignore this argument.
@@ -110,20 +126,37 @@ class RunService:
                 file_path, build_dir=build_dir, timeout=timeout,
             )
         except OSError as e:
-            return self._error(problem, f"Execution failed: {e}")
+            return self._error(problem, f"Execution failed: {e}", **ctx)
 
         self.logger.info(
-            f"run_service: #{problem.problem_id} "
+            f"run_service: #{problem.problem_id} v{run_version} "
             f"exit_code={execution.exit_code} timed_out={execution.timed_out}"
         )
 
-        return RunServiceResult(problem=problem, execution=execution)
+        return RunServiceResult(
+            problem=problem,
+            version=run_version,
+            file_path=file_path,
+            execution=execution,
+        )
 
-    def _error(self, problem: RegisteredProblem, message: str) -> RunServiceResult:
+    def _error(
+        self,
+        problem: RegisteredProblem,
+        message: str,
+        *,
+        version: Optional[int] = None,
+        file_path: Optional[Path] = None,
+    ) -> RunServiceResult:
         self.logger.warning(
             f"run_service: failed #{problem.problem_id} — {message}"
         )
-        return RunServiceResult(problem=problem, error=message)
+        return RunServiceResult(
+            problem=problem,
+            version=version,
+            file_path=file_path,
+            error=message,
+        )
 
 
 def _format_missing_toolchain(status) -> str:
