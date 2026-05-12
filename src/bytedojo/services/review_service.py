@@ -68,6 +68,29 @@ class ReviewCompletionResult:
         return self.error is not None
 
 
+@dataclass
+class ReviewActionResult:
+    """
+    Outcome of a non-completion review action (add / snooze / remove).
+
+    `action` is one of "add", "snooze", "remove". `interval_days` and
+    `next_review_date` are populated when relevant for display.
+    """
+    problem_db_id: int
+    action: str
+    interval_days: Optional[int] = None
+    next_review_date: Optional[date] = None
+    error: Optional[str] = None
+
+    @property
+    def success(self) -> bool:
+        return self.error is None
+
+    @property
+    def failed(self) -> bool:
+        return self.error is not None
+
+
 class ReviewService:
     """Spaced repetition review management with SM-2-style scheduling."""
 
@@ -111,23 +134,119 @@ class ReviewService:
     # Writes
     # ------------------------------------------------------------------
 
-    def initial_schedule(self, repo: Repository, problem_db_id: int) -> int:
+    def initial_schedule(
+        self,
+        repo: Repository,
+        problem_db_id: int,
+        *,
+        days: Optional[int] = None,
+    ) -> int:
         """
-        Start (or reset) a review track at the configured base interval.
+        Start (or reset) a review track.
 
-        Used on `dojo grade --pass`. Subsequent SRS progression happens via
-        complete_review().
+        Used on `dojo grade --pass` (days=None → configured base) and on
+        `dojo review add` (days=N → caller-chosen initial interval).
+        Subsequent SRS progression happens via complete_review().
 
         Returns the interval (days) that was scheduled.
         """
         with repo.open_db() as db:
-            interval = int(db.get_config('review_frequency_days', '7'))
+            interval = days if days is not None else int(
+                db.get_config('review_frequency_days', '7')
+            )
             db.schedule_review(problem_db_id, interval)
         self.logger.info(
             f"review_service: initial schedule for problem_db_id={problem_db_id} "
             f"at {interval} days"
         )
         return interval
+
+    def add_review(
+        self,
+        repo: Repository,
+        problem_db_id: int,
+        *,
+        days: Optional[int] = None,
+    ) -> ReviewActionResult:
+        """
+        Manually queue a problem for review.
+
+        Errors if a review track already exists — `dojo review snooze` is
+        the right tool to push out an existing review, or `remove` first
+        to reset.
+        """
+        with repo.open_db() as db:
+            if db.get_review(problem_db_id) is not None:
+                return ReviewActionResult(
+                    problem_db_id=problem_db_id,
+                    action="add",
+                    error=(
+                        "Already in review queue. Use `dojo review snooze` "
+                        "to delay, or `dojo review remove` to reset."
+                    ),
+                )
+
+        interval = self.initial_schedule(repo, problem_db_id, days=days)
+        with repo.open_db() as db:
+            row = db.get_review(problem_db_id)
+        return ReviewActionResult(
+            problem_db_id=problem_db_id,
+            action="add",
+            interval_days=interval,
+            next_review_date=row.next_review_date if row else None,
+        )
+
+    def snooze_review(
+        self,
+        repo: Repository,
+        problem_db_id: int,
+        *,
+        days: int = 1,
+    ) -> ReviewActionResult:
+        """
+        Push `next_review_date` out without touching SRS state.
+
+        Errors if no track exists for this problem.
+        """
+        with repo.open_db() as db:
+            if db.get_review(problem_db_id) is None:
+                return ReviewActionResult(
+                    problem_db_id=problem_db_id,
+                    action="snooze",
+                    error="No review scheduled for this problem.",
+                )
+            db.snooze_review(problem_db_id, days)
+            row = db.get_review(problem_db_id)
+
+        self.logger.info(
+            f"review_service: snoozed problem_db_id={problem_db_id} by {days} days"
+        )
+        return ReviewActionResult(
+            problem_db_id=problem_db_id,
+            action="snooze",
+            interval_days=days,
+            next_review_date=row.next_review_date if row else None,
+        )
+
+    def remove_review(
+        self,
+        repo: Repository,
+        problem_db_id: int,
+    ) -> ReviewActionResult:
+        """Drop the review track for a problem. Errors if no track exists."""
+        with repo.open_db() as db:
+            if db.get_review(problem_db_id) is None:
+                return ReviewActionResult(
+                    problem_db_id=problem_db_id,
+                    action="remove",
+                    error="No review scheduled for this problem.",
+                )
+            db.delete_review(problem_db_id)
+
+        self.logger.info(
+            f"review_service: removed problem_db_id={problem_db_id} from review queue"
+        )
+        return ReviewActionResult(problem_db_id=problem_db_id, action="remove")
 
     def complete_review(
         self,

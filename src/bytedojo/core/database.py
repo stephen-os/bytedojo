@@ -538,6 +538,28 @@ class Database:
 
         self.conn.commit()
 
+    def snooze_review(self, problem_db_id: int, days: int) -> bool:
+        """
+        Push `next_review_date` out to `today + days` without touching
+        the SRS state (interval / ease / repetitions). Returns True if a
+        row was updated.
+        """
+        cursor = self.conn.cursor()
+        next_date = (date.today() + timedelta(days=days)).isoformat()
+        cursor.execute(
+            "UPDATE reviews SET next_review_date = ? WHERE problem_id = ?",
+            (next_date, problem_db_id),
+        )
+        self.conn.commit()
+        return cursor.rowcount > 0
+
+    def delete_review(self, problem_db_id: int) -> bool:
+        """Drop the review track for a problem. Returns True if a row was deleted."""
+        cursor = self.conn.cursor()
+        cursor.execute("DELETE FROM reviews WHERE problem_id = ?", (problem_db_id,))
+        self.conn.commit()
+        return cursor.rowcount > 0
+
     def get_review(self, problem_db_id: int) -> Optional[ReviewSchedule]:
         """Fetch the review row for a problem (or None if no track exists)."""
         cursor = self.conn.cursor()

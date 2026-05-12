@@ -10,7 +10,12 @@ from bytedojo.commands._resolve import resolve_problem
 from bytedojo.core.logger import Theme
 from bytedojo.core.models.code_language import CodeLanguage
 from bytedojo.core.repository import Repository
-from bytedojo.services import ReviewService, ReviewQuality, ReviewCompletionResult
+from bytedojo.services import (
+    ReviewService,
+    ReviewQuality,
+    ReviewCompletionResult,
+    ReviewActionResult,
+)
 
 
 @click.group(invoke_without_command=True)
@@ -264,6 +269,170 @@ def _display_completion(title: str, r: ReviewCompletionResult) -> None:
     )
     if r.next_review_date:
         click.echo(f"  Next review:  {r.next_review_date}")
+    click.echo("")
+
+
+# ============================================================================
+# add - manually queue a problem for review
+# ============================================================================
+
+@review.command()
+@click.argument('identifier', required=False)
+@click.option('--days', type=int, default=None,
+              help='Initial interval in days (default: review-frequency setting)')
+@click.option('--name', '-n', 'name_search', help='Search by problem name')
+@click.option('--desc', '-d', 'desc_search', help='Search by description keywords')
+@click.option('--last', is_flag=True, help='Most recently fetched problem')
+@click.option('--python', '-py', 'language', flag_value='python3', help='Python version')
+@click.option('--java', 'language', flag_value='java', help='Java version')
+@click.option('--cpp', 'language', flag_value='cpp', help='C++ version')
+def add(
+    identifier: Optional[str],
+    days: Optional[int],
+    name_search: Optional[str],
+    desc_search: Optional[str],
+    last: bool,
+    language: Optional[str],
+):
+    """
+    Manually queue a problem for review without grading it as passed.
+
+    Errors if the problem is already in the review queue — use
+    `dojo review snooze` to delay an existing review or
+    `dojo review remove` then `dojo review add` to reset.
+
+    Examples:
+      dojo review add 1 --python
+      dojo review add 1 --python --days 3
+    """
+    repo, problem = _resolve(language, identifier, name_search, desc_search, last)
+    result = ReviewService().add_review(repo, problem.id, days=days)
+    if result.failed:
+        raise click.ClickException(result.error)
+    _display_action(problem.title, result)
+
+
+# ============================================================================
+# snooze - push out a scheduled review
+# ============================================================================
+
+@review.command()
+@click.argument('identifier', required=False)
+@click.option('--days', type=int, default=1,
+              help='Snooze duration in days from today (default: 1)')
+@click.option('--name', '-n', 'name_search', help='Search by problem name')
+@click.option('--desc', '-d', 'desc_search', help='Search by description keywords')
+@click.option('--last', is_flag=True, help='Most recently fetched problem')
+@click.option('--python', '-py', 'language', flag_value='python3', help='Python version')
+@click.option('--java', 'language', flag_value='java', help='Java version')
+@click.option('--cpp', 'language', flag_value='cpp', help='C++ version')
+def snooze(
+    identifier: Optional[str],
+    days: int,
+    name_search: Optional[str],
+    desc_search: Optional[str],
+    last: bool,
+    language: Optional[str],
+):
+    """
+    Push a scheduled review out to N days from today.
+
+    Doesn't touch the SRS state (interval / ease / repetitions) — only
+    the next review date moves. Useful when you know you can't get to a
+    review today.
+
+    Examples:
+      dojo review snooze 1 --python              # push to tomorrow
+      dojo review snooze 1 --python --days 3     # push 3 days out
+    """
+    repo, problem = _resolve(language, identifier, name_search, desc_search, last)
+    result = ReviewService().snooze_review(repo, problem.id, days=days)
+    if result.failed:
+        raise click.ClickException(result.error)
+    _display_action(problem.title, result)
+
+
+# ============================================================================
+# remove - drop a problem from the review queue
+# ============================================================================
+
+@review.command()
+@click.argument('identifier', required=False)
+@click.option('--name', '-n', 'name_search', help='Search by problem name')
+@click.option('--desc', '-d', 'desc_search', help='Search by description keywords')
+@click.option('--last', is_flag=True, help='Most recently fetched problem')
+@click.option('--python', '-py', 'language', flag_value='python3', help='Python version')
+@click.option('--java', 'language', flag_value='java', help='Java version')
+@click.option('--cpp', 'language', flag_value='cpp', help='C++ version')
+def remove(
+    identifier: Optional[str],
+    name_search: Optional[str],
+    desc_search: Optional[str],
+    last: bool,
+    language: Optional[str],
+):
+    """
+    Drop a problem from the review queue entirely.
+
+    Examples:
+      dojo review remove 1 --python
+    """
+    repo, problem = _resolve(language, identifier, name_search, desc_search, last)
+    result = ReviewService().remove_review(repo, problem.id)
+    if result.failed:
+        raise click.ClickException(result.error)
+    _display_action(problem.title, result)
+
+
+# ============================================================================
+# Shared helpers for add / snooze / remove
+# ============================================================================
+
+def _resolve(
+    language: Optional[str],
+    identifier: Optional[str],
+    name_search: Optional[str],
+    desc_search: Optional[str],
+    last: bool,
+):
+    """Repo + problem lookup shared by add / snooze / remove."""
+    repo = Repository.open(Path.cwd())
+    if repo is None:
+        raise click.ClickException("Not inside a .dojo repository. Please run 'dojo init' first.")
+    if language is None:
+        language = CodeLanguage.default().value
+    problem = resolve_problem(
+        repo, language,
+        identifier=identifier, name=name_search, desc=desc_search, last=last,
+        command_name="review",
+    )
+    return repo, problem
+
+
+def _display_action(title: str, r: ReviewActionResult) -> None:
+    """Render a ReviewActionResult (add / snooze / remove) to the terminal."""
+    headers = {
+        "add":    ("ADDED TO REVIEW QUEUE", "green"),
+        "snooze": ("REVIEW SNOOZED",        "yellow"),
+        "remove": ("REMOVED FROM QUEUE",    "bright_black"),
+    }
+    headline, color = headers.get(r.action, (r.action.upper(), "cyan"))
+
+    click.echo("")
+    click.echo(click.style("=" * 60, fg='bright_black'))
+    click.echo(click.style(f"  {headline}", fg=color, bold=True))
+    click.echo(click.style("=" * 60, fg='bright_black'))
+    click.echo("")
+    click.echo(f"  {title}")
+    click.echo("")
+
+    if r.action == "add" and r.interval_days is not None:
+        click.echo(f"  Initial interval:  {r.interval_days} days")
+    if r.action == "snooze" and r.interval_days is not None:
+        click.echo(f"  Snoozed by:        {r.interval_days} days")
+    if r.next_review_date is not None:
+        click.echo(f"  Next review:       {r.next_review_date}")
+
     click.echo("")
 
 
