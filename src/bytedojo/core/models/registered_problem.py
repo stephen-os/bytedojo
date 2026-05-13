@@ -43,7 +43,7 @@ class RegisteredProblem:
             difficulty=ProblemDifficulty.from_string(row.get("difficulty", "")),
             description=row.get("description", ""),
             file_path=row.get("file_path"),
-            status=ProblemStatus.from_string(row.get("test_status", "ungraded")),
+            status=ProblemStatus.from_string(row["test_status"]),
             fetched_at=datetime.fromisoformat(row["fetched_at"]) if row.get("fetched_at") else datetime.now(),
             last_test_run=last_run,
             test_output=row.get("test_output"),

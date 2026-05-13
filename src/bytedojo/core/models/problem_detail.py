@@ -1,3 +1,16 @@
+"""
+ProblemDetail - core problem metadata used for listings and queries.
+
+The light-weight projection of a problem: just enough to identify it,
+filter it by difficulty / tags, and render it in a list. The heavy
+parts (description body, code snippets, examples) live on `Problem`,
+which composes a ProblemDetail with the rest.
+
+`__post_init__` coerces raw strings into the typed enum fields so the
+class can be constructed straight from a dict (JSON / DB row) without
+the caller pre-converting.
+"""
+
 from dataclasses import dataclass, field
 from typing import List
 
@@ -7,7 +20,7 @@ from bytedojo.core.models.problem_tag import ProblemTag
 
 @dataclass
 class ProblemDetail:
-    """Core problem metadata used for listings and queries."""
+    """Light-weight problem metadata for listings and queries."""
     id: int
     title: str
     slug: str

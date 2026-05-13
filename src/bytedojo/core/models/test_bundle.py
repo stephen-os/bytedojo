@@ -22,6 +22,7 @@ from bytedojo.core.paths import get_test_file
 
 class TestComparison(str, Enum):
     """How a test runner compares actual vs expected for a problem."""
+    __test__ = False    # don't let pytest mistake this for a test class
 
     #: Element-by-element equality. The default; omitted from the JSON.
     EXACT = "exact"
