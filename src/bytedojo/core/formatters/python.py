@@ -22,6 +22,18 @@ _PYTHON_NODE_MODULES: Dict[str, str] = {
     "Node":     "node",
 }
 
+#: Baseline stdlib imports preincluded in every fetched solution.py.
+#: Matches the "kitchen sink" Python LeetCode users come from — the
+#: friction of remembering which module has `defaultdict` vs `Counter`
+#: vs `deque` doesn't add learning value, just yak-shaving.
+_PYTHON_BASELINE_IMPORTS: Tuple[str, ...] = (
+    "from collections import Counter, defaultdict, deque",
+    "from functools import lru_cache",
+    "from heapq import heappop, heappush",
+    "from math import inf",
+    "from typing import Dict, List, Optional, Set, Tuple",
+)
+
 # =========================================================================
 # Format Context
 # ==========================================================================
@@ -296,33 +308,45 @@ class PythonFormatter(BaseFormatter):
         self.logger.debug(f"Starting format for problem #{detail.id}: {detail.title}")
 
         try:
-            # Extract and process code
-            code_template = self._get_python_code(problem)
+            class_body = self._get_class_body(problem)
+            imports_section = self._compute_imports_section(problem)
             description = self._format_description(detail.description)
 
-            # Create context with all metadata extracted from the code
+            # Context inspects the class body for metadata (class name, method
+            # name, param info). Imports aren't relevant to its analysis.
             ctx = FormatContext(
-                code=code_template,
+                code=class_body,
                 description=detail.description,
                 _logger=self.logger,
             )
 
-            # Build final content
-            content = self._build_file_content(problem, description, code_template, ctx)
-
+            content = self._build_file_content(
+                problem, description, imports_section, class_body, ctx,
+            )
             self.logger.debug(f"Successfully formatted problem #{detail.id}")
             return content
 
         except Exception as e:
             self.logger.error(f"Error formatting problem #{detail.id}: {e}", exc_info=True)
             raise
-    
+
     # ========================================================================
     # Main Content Building
     # ========================================================================
-    
-    def _build_file_content(self, problem: Problem, description: str, code_template: str, ctx: FormatContext) -> str:
-        """Build the complete file content from components."""
+
+    def _build_file_content(
+        self, problem: Problem, description: str,
+        imports_section: str, class_body: str, ctx: FormatContext,
+    ) -> str:
+        """Assemble the placed solution.py:
+
+        docstring -> PROBLEM DESCRIPTION -> imports -> SOLUTION -> TEST.
+
+        Imports sit between description and solution so the user reads
+        the problem, sees what stdlib is available, then dives into the
+        class. Matches the convention requested for cross-language
+        consistency (Java + C++ get the same layout).
+        """
         main_block = self._generate_main_block(ctx)
         detail = problem.problem_detail
 
@@ -336,11 +360,13 @@ Difficulty: {detail.difficulty}
 # ============================================================================
 {description}
 
+{imports_section}
+
 # ============================================================================
 # SOLUTION
 # ============================================================================
 
-{code_template}
+{class_body}
 
 # ============================================================================
 # TEST
@@ -388,44 +414,59 @@ Difficulty: {detail.difficulty}
     # Code Extraction and Processing
     # ========================================================================
     
-    def _get_python_code(self, problem: Problem) -> str:
-        """Extract and process Python code.
+    def _get_class_body(self, problem: Problem) -> str:
+        """Extract the `class Solution:` body, sans imports and node classes.
 
         Node-class comment blocks (`# class TreeNode:` / `# class ListNode:`)
-        are *pulled out* of the snippet and replaced with an explicit
-        `from <module> import <ClassName>` line. The extracted bodies are
-        emitted as sibling files by `extra_files()`.
+        are pulled out — they become sibling modules via `extra_files()`.
+        Any inline import lines from the snippet are stripped so the
+        imports section owns them all; the typical LeetCode Python
+        snippet doesn't have any, but be defensive.
         """
         detail = problem.problem_detail
-        self.logger.debug(f"Extracting Python code for problem #{detail.id}")
+        self.logger.debug(f"Extracting Python class body for problem #{detail.id}")
 
         code = problem.get_snippet(CodeLanguage.PYTHON)
         if not code:
             self.logger.warning(f"No Python3 snippet found for problem #{detail.id}")
             return "# No Python template available"
 
-        self.logger.debug("Processing code: extracting node classes, gathering imports")
-        code, extracted = self._extract_node_classes(code)
-        imports = self._extract_imports(code)
+        code, _ = self._extract_node_classes(code)
         code = self._ensure_pass_in_methods(code)
+        code = self._strip_top_level_imports(code)
+        return code.strip("\n") + "\n"
 
-        node_import_lines = [
+    def _compute_imports_section(self, problem: Problem) -> str:
+        """Build the import block placed between description and SOLUTION.
+
+        Order:
+          1. Baseline stdlib (`typing`, `collections`, `heapq`, ...)
+          2. Sibling node modules (`from tree_node import TreeNode`, etc.)
+
+        The baseline covers every typing name the LeetCode snippets
+        actually reference, so we no longer need the regex-driven
+        `_extract_imports` pass — it would only duplicate what's
+        already there.
+        """
+        snippet = problem.get_snippet(CodeLanguage.PYTHON) or ""
+        _, extracted = self._extract_node_classes(snippet)
+
+        node_imports = [
             f"from {_PYTHON_NODE_MODULES.get(name, name.lower())} import {name}"
             for name in extracted
         ]
-        node_imports = "\n".join(node_import_lines)
+        lines = list(_PYTHON_BASELINE_IMPORTS) + node_imports
+        return "\n".join(lines)
 
-        preamble = imports
-        if node_imports:
-            preamble = (preamble + "\n" + node_imports) if preamble else node_imports
-
-        if preamble:
-            self.logger.debug(
-                f"Adding imports: {preamble.replace(chr(10), ' | ')}"
-            )
-            code = preamble + "\n\n" + code
-
-        return code
+    def _strip_top_level_imports(self, code: str) -> str:
+        """Remove any `import`/`from ... import` lines at top level."""
+        out = []
+        for line in code.split("\n"):
+            stripped = line.lstrip()
+            if stripped.startswith("import ") or stripped.startswith("from "):
+                continue
+            out.append(line)
+        return "\n".join(out)
 
     def extra_files(self, problem: Problem) -> Dict[str, str]:
         """Sibling files: one per extracted node class."""

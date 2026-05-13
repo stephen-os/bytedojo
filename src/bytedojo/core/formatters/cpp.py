@@ -24,6 +24,29 @@ _CPP_NODE_HEADER: Dict[str, str] = {
     "Node":     "node",
 }
 
+#: Baseline stdlib includes preincluded in every fetched solution.cpp.
+#: Matches the LeetCode "kitchen sink" UX so users don't have to
+#: remember which header has `unordered_map` vs `queue` vs `priority_queue`.
+#: ~1s of extra compile cost; well worth the friction reduction.
+_CPP_BASELINE_INCLUDES: Tuple[str, ...] = (
+    "#include <algorithm>",
+    "#include <climits>",
+    "#include <cmath>",
+    "#include <cstdint>",
+    "#include <deque>",
+    "#include <functional>",
+    "#include <iostream>",
+    "#include <map>",
+    "#include <queue>",
+    "#include <set>",
+    "#include <stack>",
+    "#include <string>",
+    "#include <unordered_map>",
+    "#include <unordered_set>",
+    "#include <utility>",
+    "#include <vector>",
+)
+
 
 # =========================================================================
 # Format Context
@@ -269,25 +292,29 @@ class CppFormatter(BaseFormatter):
     # ========================================================================
 
     def _build_file_content(self, problem: Problem, code_template: str, ctx: CppFormatContext) -> str:
-        """Build the complete C++ file content."""
+        """Assemble the placed solution.cpp.
+
+        Layout: file docstring -> PROBLEM DESCRIPTION -> includes (with
+        `using namespace std;`) -> SOLUTION -> TEST. C++ allows includes
+        anywhere before use, so placing them between description and
+        the class is fine and matches the Python / Java convention.
+        """
         detail = problem.problem_detail
-        includes = self._generate_includes(ctx)
         description = self._format_description(detail.description)
         main_function = self._generate_main_function(ctx)
+        includes_section = self._compute_includes_section(problem)
 
         return f'''/**
  * LeetCode Problem #{detail.id}: {detail.title}
  * Difficulty: {detail.difficulty}
  */
 
-{includes}
-
-using namespace std;
-
 // ============================================================================
 // PROBLEM DESCRIPTION
 // ============================================================================
 {description}
+
+{includes_section}
 
 // ============================================================================
 // SOLUTION
@@ -302,10 +329,23 @@ using namespace std;
 {main_function}
 '''
 
-    def _generate_includes(self, ctx: CppFormatContext) -> str:
-        """Generate required C++ includes."""
-        includes = sorted(ctx.includes_needed)
-        return '\n'.join(f'#include {inc}' for inc in includes)
+    def _compute_includes_section(self, problem: Problem) -> str:
+        """Build the include block placed between description and SOLUTION.
+
+        Order:
+          1. Baseline stdlib (vector, queue, unordered_map, ...)
+          2. Sibling node headers (`#include "list_node.hpp"`, etc.)
+          3. `using namespace std;` (LeetCode-style, matches user's habits)
+        """
+        snippet = problem.get_snippet(CodeLanguage.CPP) or ""
+        _, extracted = self._extract_node_classes(snippet)
+
+        node_includes = [
+            f'#include "{_CPP_NODE_HEADER.get(name, name.lower())}.hpp"'
+            for name in extracted
+        ]
+        lines = list(_CPP_BASELINE_INCLUDES) + node_includes
+        return "\n".join(lines) + "\n\nusing namespace std;"
 
     def _generate_main_function(self, ctx: CppFormatContext) -> str:
         """Generate the main function with a TODO placeholder call.
@@ -363,13 +403,12 @@ using namespace std;
     # ========================================================================
 
     def _get_cpp_code(self, problem: Problem) -> str:
-        """Extract C++ code, lifting embedded node structs into siblings.
+        """Extract just the class body — includes + `using` move out.
 
-        LeetCode wraps `TreeNode` / `ListNode` definitions in Doxygen
-        blocks at the top of the snippet. We *remove* those blocks from
-        the snippet (they become `tree_node.hpp` / `list_node.hpp`
-        siblings via `extra_files()`) and prepend `#include "..."`
-        directives so the user's solution.cpp wires up.
+        Doxygen-wrapped node structs are pulled into sibling .hpp files
+        via `extra_files()`. Any `#include` / `using namespace` lines
+        from the snippet are stripped so the includes section owns
+        them all (it has the baseline anyway).
         """
         detail = problem.problem_detail
         self.logger.debug(f"Extracting C++ code for problem #{detail.id}")
@@ -379,14 +418,22 @@ using namespace std;
             self.logger.warning(f"No C++ snippet found for problem #{detail.id}")
             return "// No C++ template available"
 
-        stripped, extracted = self._extract_node_classes(code)
-        if extracted:
-            include_lines = [
-                f'#include "{_CPP_NODE_HEADER.get(name, name.lower())}.hpp"'
-                for name in extracted
-            ]
-            stripped = self._inject_node_includes(stripped, include_lines)
-        return stripped
+        stripped, _ = self._extract_node_classes(code)
+        return self._strip_top_level_directives(stripped)
+
+    def _strip_top_level_directives(self, code: str) -> str:
+        """Drop top-level `#include ...` and `using ...;` lines from the snippet."""
+        out = []
+        for line in code.split("\n"):
+            stripped = line.lstrip()
+            if stripped.startswith("#include"):
+                continue
+            if stripped.startswith("using ") and stripped.rstrip().endswith(";"):
+                continue
+            out.append(line)
+        # Trim leading blank lines that get left behind.
+        result = "\n".join(out)
+        return result.lstrip("\n")
 
     def extra_files(self, problem: Problem) -> Dict[str, str]:
         """Emit one `<snake>.hpp` per node struct found in the snippet."""
@@ -445,18 +492,6 @@ using namespace std;
         new_code = block_re.sub(replacer, code)
         return new_code, extracted
 
-    def _inject_node_includes(self, code: str, include_lines: List[str]) -> str:
-        """Drop node-class #include directives in after the existing #include block."""
-        lines = code.split('\n')
-        last_include_idx = -1
-        for i, line in enumerate(lines):
-            if line.lstrip().startswith('#include'):
-                last_include_idx = i
-        if last_include_idx >= 0:
-            lines[last_include_idx + 1:last_include_idx + 1] = include_lines
-        else:
-            lines = include_lines + lines
-        return '\n'.join(lines)
 
     def _inject_default_return(self, code: str, return_type: str) -> str:
         """

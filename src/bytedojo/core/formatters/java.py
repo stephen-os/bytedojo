@@ -16,6 +16,16 @@ from bytedojo.core.formatters.utils import (
 from bytedojo.core.logger import get_logger
 
 
+#: Baseline imports preincluded in every fetched solution.java. The
+#: single `java.util.*` import covers List, ArrayList, HashMap, HashSet,
+#: LinkedList, Queue, Deque, ArrayDeque, Map, Set, Stack, PriorityQueue,
+#: Collections, Arrays, Comparator, etc. — everything a typical
+#: LeetCode Java solution reaches for.
+_JAVA_BASELINE_IMPORTS: Tuple[str, ...] = (
+    "import java.util.*;",
+)
+
+
 # =========================================================================
 # Format Context
 # ==========================================================================
@@ -214,23 +224,29 @@ class JavaFormatter(BaseFormatter):
     # ========================================================================
 
     def _build_file_content(self, problem: Problem, code_template: str, ctx: JavaFormatContext) -> str:
-        """Build the complete Java file content."""
+        """Assemble the placed solution.java.
+
+        Layout: file docstring -> PROBLEM DESCRIPTION -> imports ->
+        SOLUTION -> TEST. Java's grammar allows imports anywhere before
+        the first type declaration, so placing them between the
+        description block and the class works cleanly.
+        """
         detail = problem.problem_detail
-        imports = self._generate_imports(ctx)
         description = self._format_description(detail.description)
         main_class = self._generate_main_class(ctx)
-
-        imports_section = '\n'.join(imports) + '\n\n' if imports else ''
+        imports_section = self._compute_imports_section()
 
         return f'''/**
  * LeetCode Problem #{detail.id}: {detail.title}
  * Difficulty: {detail.difficulty}
  */
 
-{imports_section}// ============================================================================
+// ============================================================================
 // PROBLEM DESCRIPTION
 // ============================================================================
 {description}
+
+{imports_section}
 
 // ============================================================================
 // SOLUTION
@@ -245,37 +261,13 @@ class JavaFormatter(BaseFormatter):
 {main_class}
 '''
 
-    def _generate_imports(self, ctx: JavaFormatContext) -> List[str]:
-        """Generate required Java imports."""
-        imports = []
+    def _compute_imports_section(self) -> str:
+        """Baseline `java.util.*` covers everything LeetCode-style needs.
 
-        if ctx.needs_arrays_import:
-            imports.append('import java.util.Arrays;')
-
-        if ctx.needs_list_import:
-            imports.append('import java.util.ArrayList;')
-            imports.append('import java.util.List;')
-
-        # Check for other common types in code
-        if 'Map<' in ctx.code or 'HashMap' in ctx.code:
-            imports.append('import java.util.HashMap;')
-            imports.append('import java.util.Map;')
-
-        if 'Set<' in ctx.code or 'HashSet' in ctx.code:
-            imports.append('import java.util.HashSet;')
-            imports.append('import java.util.Set;')
-
-        if 'Queue<' in ctx.code or 'LinkedList' in ctx.code:
-            imports.append('import java.util.LinkedList;')
-            imports.append('import java.util.Queue;')
-
-        if 'Stack<' in ctx.code:
-            imports.append('import java.util.Stack;')
-
-        if 'PriorityQueue<' in ctx.code:
-            imports.append('import java.util.PriorityQueue;')
-
-        return sorted(set(imports))
+        TreeNode / ListNode siblings live in the same default package, so
+        no explicit imports are needed for those — they just resolve.
+        """
+        return "\n".join(_JAVA_BASELINE_IMPORTS)
 
     def _generate_main_class(self, ctx: JavaFormatContext) -> str:
         """Generate the Main class with a TODO placeholder call.
