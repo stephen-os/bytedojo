@@ -10,11 +10,21 @@ from dataclasses import dataclass
 from typing import List, Optional
 
 from bytedojo.core.logger import get_logger
+from bytedojo.core.models.problem_status import ProblemStatus
 from bytedojo.core.models.registered_problem import RegisteredProblem
 from bytedojo.core.repository import Repository
 
 
-VALID_STATUSES = ('passed', 'failed', 'skipped')
+#: The statuses a user can manually apply via `dojo grade` — derived from
+#: ProblemStatus so the canonical vocabulary stays single-sourced.
+#: UNGRADED is a state (not yet graded), not a grade you apply, so it's
+#: excluded; UNKNOWN is the unrecognized-input fallback.
+_VALID_GRADE_STATUSES = (
+    ProblemStatus.PASSED,
+    ProblemStatus.FAILED,
+    ProblemStatus.SKIPPED,
+)
+_VALID_GRADE_VALUES = tuple(s.value for s in _VALID_GRADE_STATUSES)
 
 
 @dataclass
@@ -69,12 +79,12 @@ class GradingService:
             GradeResult with the applied status and review scheduling info,
             or an error if the status string is invalid.
         """
-        if status not in VALID_STATUSES:
+        if status not in _VALID_GRADE_VALUES:
             return GradeResult(
                 problem=problem,
                 error=(
                     f"Invalid status '{status}'. "
-                    f"Must be one of: {', '.join(VALID_STATUSES)}"
+                    f"Must be one of: {', '.join(_VALID_GRADE_VALUES)}"
                 ),
             )
 

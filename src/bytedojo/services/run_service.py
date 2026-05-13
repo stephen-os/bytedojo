@@ -105,8 +105,7 @@ class RunService:
         if toolchain is None:
             return self._error(
                 problem,
-                f"{problem.language.value} is not yet supported. "
-                f"Only Python is implemented at this time.",
+                f"{problem.language.value} has no registered toolchain.",
                 **ctx,
             )
 
