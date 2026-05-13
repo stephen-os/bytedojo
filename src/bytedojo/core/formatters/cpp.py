@@ -65,12 +65,21 @@ class CppFormatContext:
     # ========================================================================
 
     def _extract_class_name(self) -> str:
-        """Extract the main class name."""
-        match = re.search(r'class\s+(\w+)\s*\{', self.code)
-        if match:
-            class_name = match.group(1)
-            self._logger.debug(f"Found class name: {class_name}")
-            return class_name
+        """Extract the main class name — prefer Solution, skip node helpers.
+
+        After _uncomment_node_classes runs, TreeNode/ListNode appear as real
+        struct declarations near the top of the file. A naive `class X` regex
+        would otherwise pick one of those over the user's Solution.
+        """
+        if re.search(r'\bclass\s+Solution\b', self.code):
+            self._logger.debug("Found class name: Solution")
+            return 'Solution'
+        for match in re.finditer(r'\b(?:class|struct)\s+(\w+)\s*[{:<]', self.code):
+            name = match.group(1)
+            if name not in ('TreeNode', 'ListNode', 'Node'):
+                self._logger.debug(f"Found class name: {name}")
+                return name
+        self._logger.warning("No primary class found, defaulting to 'Solution'")
         return 'Solution'
 
     def _extract_method_name(self) -> str:
@@ -362,7 +371,52 @@ using namespace std;
             self.logger.warning(f"No C++ snippet found for problem #{detail.id}")
             return "// No C++ template available"
 
-        return code
+        return self._uncomment_node_classes(code)
+
+    def _uncomment_node_classes(self, code: str) -> str:
+        """Unwrap LeetCode-style Doxygen blocks that embed node-struct defs.
+
+        LeetCode C++ starter snippets wrap TreeNode / ListNode like::
+
+            /**
+             * Definition for singly-linked list.
+             * struct ListNode {
+             *     int val;
+             *     ListNode *next;
+             *     ListNode() : val(0), next(nullptr) {}
+             *     ...
+             * };
+             */
+
+        Becomes a bare `struct ListNode { ... };`. Only blocks whose body
+        actually contains `* struct X { ... }` are unwrapped — plain
+        Doxygen describing the user's Solution stays untouched.
+        """
+        block_re = re.compile(r'/\*\*(.*?)\*/', re.DOTALL)
+
+        def replacer(match):
+            body = match.group(1)
+            if not re.search(r'^\s*\*\s*(?:struct|class)\s+\w+', body, re.MULTILINE):
+                return match.group(0)
+
+            out_lines = []
+            for raw in body.split('\n'):
+                stripped = raw.lstrip()
+                if not stripped.startswith('*'):
+                    continue
+                content = stripped[1:]
+                if content.startswith(' '):
+                    content = content[1:]
+                if content.startswith('Definition for') or not content.strip():
+                    continue
+                out_lines.append(content.rstrip())
+
+            self.logger.debug(
+                f"Uncommented C++ Doxygen node-class block ({len(out_lines)} lines)"
+            )
+            return '\n'.join(out_lines)
+
+        return block_re.sub(replacer, code)
 
     def _inject_default_return(self, code: str, return_type: str) -> str:
         """

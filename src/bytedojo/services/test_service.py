@@ -6,11 +6,12 @@ runner into a per-problem build directory alongside the user's solution,
 invokes the language runtime, parses the JSON results envelope, and
 updates the database with the pass/fail status.
 
-Phase 2 supports Python + Java. C++ still returns a clean "not yet
-supported" error until its universal runner lands.
+Phase 3 supports Python, Java, and C++. Other languages return a clean
+"not yet supported" error.
 """
 
 import json
+import os
 import shutil
 import subprocess
 import sys
@@ -26,6 +27,15 @@ from bytedojo.core.models.test_bundle import TestBundle
 from bytedojo.core.paths import get_test_file
 from bytedojo.core.repository import Repository
 from bytedojo.core.toolchains import get_toolchain
+from bytedojo.core.toolchains.cpp import compile_cpp_source
+from bytedojo.runtime.cpp import (
+    RUNTIME_DIR as CPP_RUNTIME_DIR,
+    TEMPLATE_NAME as CPP_TEMPLATE_NAME,
+)
+from bytedojo.runtime.cpp._assembly import (
+    AssemblyError as CppAssemblyError,
+    assemble as assemble_cpp,
+)
 from bytedojo.runtime.java import (
     RUNTIME_DIR as JAVA_RUNTIME_DIR,
     TEMPLATE_NAME as JAVA_TEMPLATE_NAME,
@@ -36,7 +46,9 @@ from bytedojo.services.problem_service import resolve_solution_path
 
 
 #: Languages whose universal runner is wired into TestService.
-_SUPPORTED_LANGUAGES = frozenset({CodeLanguage.PYTHON, CodeLanguage.JAVA})
+_SUPPORTED_LANGUAGES = frozenset({
+    CodeLanguage.PYTHON, CodeLanguage.JAVA, CodeLanguage.CPP,
+})
 
 
 #: Sentinels the universal Python runner wraps around its JSON output.
@@ -219,7 +231,7 @@ class TestService:
                 solution_src=file_path,
                 problem_id=problem.problem_id,
             )
-        except (OSError, AssemblyError) as e:
+        except (OSError, AssemblyError, CppAssemblyError) as e:
             return self._error(problem, f"Failed to prepare build dir: {e}", **ctx)
 
         # Compile (if needed) and invoke the language runtime
@@ -291,8 +303,10 @@ class TestService:
         """Stage solution + universal runner + cases.json into build_dir.
 
         Python: copy solution.py + runner.py + converters.py + cases.json.
-        Java:   substitute user's classes into BytedojoRunner.java template,
-                drop cases.json. Compilation happens during _invoke_runner.
+        Java:   substitute user's classes into BytedojoRunner.java template.
+        C++:    substitute user's class blocks + a per-problem run_case body
+                (generated from the bundle's signature) into the
+                bytedojo_runner.cpp template.
         """
         shutil.copyfile(get_test_file(problem_id), build_dir / "cases.json")
 
@@ -307,6 +321,14 @@ class TestService:
             user_source = solution_src.read_text(encoding="utf-8")
             assembled = assemble_java(template, user_source)
             (build_dir / "BytedojoRunner.java").write_text(assembled, encoding="utf-8")
+            return
+
+        if language == CodeLanguage.CPP:
+            template = (CPP_RUNTIME_DIR / CPP_TEMPLATE_NAME).read_text(encoding="utf-8")
+            user_source = solution_src.read_text(encoding="utf-8")
+            bundle = json.loads(get_test_file(problem_id).read_text(encoding="utf-8"))
+            assembled = assemble_cpp(template, user_source, bundle)
+            (build_dir / "bytedojo_runner.cpp").write_text(assembled, encoding="utf-8")
             return
 
         raise RuntimeError(f"_stage_runtime called for unsupported language: {language}")
@@ -340,6 +362,26 @@ class TestService:
             # Then run
             run_proc = subprocess.run(
                 ["java", "-cp", str(build_dir), "BytedojoRunner"],
+                cwd=build_dir,
+                capture_output=True, text=True, timeout=timeout,
+            )
+            return run_proc.stdout, run_proc.stderr, None
+
+        if language == CodeLanguage.CPP:
+            source = build_dir / "bytedojo_runner.cpp"
+            exe_name = "bytedojo_runner.exe" if os.name == "nt" else "bytedojo_runner"
+            output = build_dir / exe_name
+            try:
+                compile_proc = compile_cpp_source(source, output, build_dir=build_dir)
+            except FileNotFoundError as e:
+                return "", "", str(e)
+            if compile_proc.returncode != 0:
+                # MSVC writes diagnostics to stdout, gcc/clang to stderr — take whichever is non-empty.
+                msg = (compile_proc.stderr or compile_proc.stdout or "").strip()
+                return "", compile_proc.stderr, msg or f"compiler exited {compile_proc.returncode}"
+
+            run_proc = subprocess.run(
+                [str(output)],
                 cwd=build_dir,
                 capture_output=True, text=True, timeout=timeout,
             )

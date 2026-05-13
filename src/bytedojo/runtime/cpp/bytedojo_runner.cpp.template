@@ -1,0 +1,759 @@
+// Universal C++17 test runner for ByteDojo.
+//
+// Single-file: TestService substitutes the user's Solution (and any
+// TreeNode/ListNode they have) into the SOLUTION marker below, and a
+// per-problem run_case body — generated from the bundle's signature —
+// into the RUN_CASE marker. Reads cases.json from cwd, dispatches each
+// case, emits a sentinel-wrapped JSON envelope.
+//
+// C++ has no runtime reflection, so the call site can't be universal
+// the way it is in Java. The universal pieces (JSON parser, type
+// helpers, compare, display) live in this template; per-problem
+// dispatch is a small generated function.
+//
+// TreeNode / ListNode helpers are C++ templates, so they're only
+// instantiated when a problem's signature actually uses them. The
+// user's solution.cpp owns the node class definitions; the runner
+// references them via the template parameter.
+
+#include <algorithm>
+#include <cctype>
+#include <cstdint>
+#include <cmath>
+#include <deque>
+#include <exception>
+#include <fstream>
+#include <iostream>
+#include <map>
+#include <memory>
+#include <queue>
+#include <sstream>
+#include <stdexcept>
+#include <string>
+#include <type_traits>
+#include <variant>
+#include <vector>
+
+using std::string;
+using std::vector;
+
+namespace bj {
+
+constexpr const char* RESULTS_BEGIN = "<<<BYTEDOJO_RESULTS_BEGIN>>>";
+constexpr const char* RESULTS_END   = "<<<BYTEDOJO_RESULTS_END>>>";
+constexpr double FLOAT_EPS = 1e-5;
+
+// ============================================================================
+// Minimal JSON value type + recursive-descent parser. Zero deps.
+//
+// Value variants:
+//   null     -> Json::Null
+//   true/false -> Json::Bool
+//   integer  -> Json::Int     (int64_t)
+//   float    -> Json::Float   (double)
+//   "s"      -> Json::Str     (std::string)
+//   [..]     -> Json::Arr     (std::vector<Json>)
+//   {..}     -> Json::Obj     (std::map<std::string, Json>, preserves nothing
+//                              about insertion order — we sort on read which
+//                              is fine for cases.json since order doesn't
+//                              affect correctness)
+// ============================================================================
+
+struct Json {
+    enum class Kind { Null, Bool, Int, Float, Str, Arr, Obj };
+
+    Kind kind = Kind::Null;
+    bool b = false;
+    int64_t i = 0;
+    double f = 0.0;
+    string s;
+    vector<Json> arr;
+    std::map<string, Json> obj;
+
+    bool is_null()  const { return kind == Kind::Null; }
+    bool is_bool()  const { return kind == Kind::Bool; }
+    bool is_int()   const { return kind == Kind::Int; }
+    bool is_float() const { return kind == Kind::Float; }
+    bool is_num()   const { return is_int() || is_float(); }
+    bool is_str()   const { return kind == Kind::Str; }
+    bool is_arr()   const { return kind == Kind::Arr; }
+    bool is_obj()   const { return kind == Kind::Obj; }
+
+    int64_t as_int() const {
+        if (kind == Kind::Int)   return i;
+        if (kind == Kind::Float) return static_cast<int64_t>(f);
+        if (kind == Kind::Bool)  return b ? 1 : 0;
+        throw std::runtime_error("Json: not a number");
+    }
+    double as_float() const {
+        if (kind == Kind::Float) return f;
+        if (kind == Kind::Int)   return static_cast<double>(i);
+        if (kind == Kind::Bool)  return b ? 1.0 : 0.0;
+        throw std::runtime_error("Json: not a number");
+    }
+    const string& as_str() const {
+        if (kind == Kind::Str) return s;
+        throw std::runtime_error("Json: not a string");
+    }
+    const vector<Json>& as_arr() const {
+        if (kind == Kind::Arr) return arr;
+        throw std::runtime_error("Json: not an array");
+    }
+    const Json& at(const string& key) const {
+        auto it = obj.find(key);
+        if (it == obj.end()) throw std::runtime_error("Json: missing key " + key);
+        return it->second;
+    }
+    bool has(const string& key) const { return obj.find(key) != obj.end(); }
+};
+
+class JsonParser {
+public:
+    explicit JsonParser(const string& src) : src_(src), pos_(0) {}
+
+    Json parse() {
+        skip_ws();
+        Json v = parse_value();
+        return v;
+    }
+
+private:
+    const string& src_;
+    size_t pos_;
+
+    void skip_ws() {
+        while (pos_ < src_.size() && std::isspace(static_cast<unsigned char>(src_[pos_]))) ++pos_;
+    }
+
+    char peek() {
+        if (pos_ >= src_.size()) throw std::runtime_error("Json: unexpected EOF");
+        return src_[pos_];
+    }
+
+    bool starts_with(const char* lit) {
+        size_t n = std::strlen(lit);
+        if (pos_ + n > src_.size()) return false;
+        for (size_t i = 0; i < n; ++i) if (src_[pos_ + i] != lit[i]) return false;
+        return true;
+    }
+
+    Json parse_value() {
+        skip_ws();
+        char c = peek();
+        if (c == '{') return parse_obj();
+        if (c == '[') return parse_arr();
+        if (c == '"') return parse_str();
+        if (c == 't' || c == 'f') return parse_bool();
+        if (c == 'n') return parse_null();
+        return parse_num();
+    }
+
+    Json parse_obj() {
+        Json v; v.kind = Json::Kind::Obj;
+        ++pos_;  // {
+        skip_ws();
+        if (peek() == '}') { ++pos_; return v; }
+        while (true) {
+            skip_ws();
+            Json k = parse_str();
+            skip_ws();
+            if (peek() != ':') throw std::runtime_error("Json: expected :");
+            ++pos_;
+            Json val = parse_value();
+            v.obj[k.s] = std::move(val);
+            skip_ws();
+            char c = peek();
+            if (c == ',') { ++pos_; continue; }
+            if (c == '}') { ++pos_; break; }
+            throw std::runtime_error("Json: expected , or }");
+        }
+        return v;
+    }
+
+    Json parse_arr() {
+        Json v; v.kind = Json::Kind::Arr;
+        ++pos_;  // [
+        skip_ws();
+        if (peek() == ']') { ++pos_; return v; }
+        while (true) {
+            v.arr.push_back(parse_value());
+            skip_ws();
+            char c = peek();
+            if (c == ',') { ++pos_; continue; }
+            if (c == ']') { ++pos_; break; }
+            throw std::runtime_error("Json: expected , or ]");
+        }
+        return v;
+    }
+
+    Json parse_str() {
+        Json v; v.kind = Json::Kind::Str;
+        ++pos_;  // "
+        std::ostringstream out;
+        while (pos_ < src_.size()) {
+            char c = src_[pos_++];
+            if (c == '"') { v.s = out.str(); return v; }
+            if (c == '\\') {
+                if (pos_ >= src_.size()) throw std::runtime_error("Json: bad escape");
+                char esc = src_[pos_++];
+                switch (esc) {
+                    case '"':  out << '"'; break;
+                    case '\\': out << '\\'; break;
+                    case '/':  out << '/'; break;
+                    case 'n':  out << '\n'; break;
+                    case 't':  out << '\t'; break;
+                    case 'r':  out << '\r'; break;
+                    case 'b':  out << '\b'; break;
+                    case 'f':  out << '\f'; break;
+                    case 'u': {
+                        if (pos_ + 4 > src_.size()) throw std::runtime_error("Json: bad \\u");
+                        int code = std::stoi(src_.substr(pos_, 4), nullptr, 16);
+                        pos_ += 4;
+                        out << static_cast<char>(code);
+                        break;
+                    }
+                    default: out << esc;
+                }
+            } else {
+                out << c;
+            }
+        }
+        throw std::runtime_error("Json: unterminated string");
+    }
+
+    Json parse_bool() {
+        Json v; v.kind = Json::Kind::Bool;
+        if (starts_with("true"))  { pos_ += 4; v.b = true;  return v; }
+        if (starts_with("false")) { pos_ += 5; v.b = false; return v; }
+        throw std::runtime_error("Json: expected true/false");
+    }
+
+    Json parse_null() {
+        if (starts_with("null")) { pos_ += 4; Json v; v.kind = Json::Kind::Null; return v; }
+        throw std::runtime_error("Json: expected null");
+    }
+
+    Json parse_num() {
+        size_t start = pos_;
+        if (peek() == '-') ++pos_;
+        bool is_float = false;
+        while (pos_ < src_.size()) {
+            char c = src_[pos_];
+            if (c == '.' || c == 'e' || c == 'E' || c == '+') { is_float = true; ++pos_; }
+            else if (std::isdigit(static_cast<unsigned char>(c)) || c == '-') ++pos_;
+            else break;
+        }
+        string num = src_.substr(start, pos_ - start);
+        Json v;
+        if (is_float) {
+            v.kind = Json::Kind::Float;
+            v.f = std::stod(num);
+        } else {
+            v.kind = Json::Kind::Int;
+            try { v.i = std::stoll(num); }
+            catch (...) { v.kind = Json::Kind::Float; v.f = std::stod(num); }
+        }
+        return v;
+    }
+};
+
+inline Json parse_json(const string& src) {
+    return JsonParser(src).parse();
+}
+
+// ============================================================================
+// JSON writer for the results envelope
+// ============================================================================
+
+inline void write_string(std::ostream& os, const string& s) {
+    os << '"';
+    for (char c : s) {
+        switch (c) {
+            case '"':  os << "\\\""; break;
+            case '\\': os << "\\\\"; break;
+            case '\n': os << "\\n"; break;
+            case '\t': os << "\\t"; break;
+            case '\r': os << "\\r"; break;
+            case '\b': os << "\\b"; break;
+            case '\f': os << "\\f"; break;
+            default:
+                if (static_cast<unsigned char>(c) < 0x20) {
+                    char buf[8];
+                    std::snprintf(buf, sizeof(buf), "\\u%04x", c);
+                    os << buf;
+                } else {
+                    os << c;
+                }
+        }
+    }
+    os << '"';
+}
+
+// ============================================================================
+// Canonical-type → native parse_value<T> family
+// ============================================================================
+
+// Primary template undefined; specializations below cover every type the
+// run_case code emits. Anything missed becomes a clean compile error.
+template <typename T> T parse_value(const Json& v);
+
+template <> inline int parse_value<int>(const Json& v) {
+    return static_cast<int>(v.as_int());
+}
+template <> inline long long parse_value<long long>(const Json& v) {
+    return v.as_int();
+}
+template <> inline double parse_value<double>(const Json& v) {
+    return v.as_float();
+}
+template <> inline bool parse_value<bool>(const Json& v) {
+    if (v.is_bool()) return v.b;
+    if (v.is_int())  return v.i != 0;
+    throw std::runtime_error("parse_value<bool>: not a boolean");
+}
+template <> inline char parse_value<char>(const Json& v) {
+    const auto& s = v.as_str();
+    if (s.empty()) throw std::runtime_error("parse_value<char>: empty string");
+    return s[0];
+}
+template <> inline string parse_value<string>(const Json& v) {
+    return v.as_str();
+}
+
+// Array specializations: vector<T> built from Json::Arr.
+//
+// JSON null is accepted as an empty container — LeetCode's convention for
+// `vector<int>`-typed returns is `{}` when "no answer exists" (the underlying
+// dataset records null for those, since the scrape source was Python and
+// uses None as the sentinel). Treating null as empty here keeps the C++
+// runner symmetric with the Python and Java pipelines.
+template <typename T>
+inline vector<T> parse_array_of(const Json& v) {
+    if (v.is_null()) return {};
+    vector<T> out;
+    out.reserve(v.as_arr().size());
+    for (const auto& e : v.as_arr()) out.push_back(parse_value<T>(e));
+    return out;
+}
+
+template <> inline vector<int> parse_value<vector<int>>(const Json& v) {
+    return parse_array_of<int>(v);
+}
+template <> inline vector<long long> parse_value<vector<long long>>(const Json& v) {
+    return parse_array_of<long long>(v);
+}
+template <> inline vector<double> parse_value<vector<double>>(const Json& v) {
+    return parse_array_of<double>(v);
+}
+template <> inline vector<bool> parse_value<vector<bool>>(const Json& v) {
+    if (v.is_null()) return {};
+    vector<bool> out;
+    out.reserve(v.as_arr().size());
+    for (const auto& e : v.as_arr()) out.push_back(parse_value<bool>(e));
+    return out;
+}
+template <> inline vector<char> parse_value<vector<char>>(const Json& v) {
+    return parse_array_of<char>(v);
+}
+template <> inline vector<string> parse_value<vector<string>>(const Json& v) {
+    return parse_array_of<string>(v);
+}
+
+template <> inline vector<vector<int>> parse_value<vector<vector<int>>>(const Json& v) {
+    return parse_array_of<vector<int>>(v);
+}
+template <> inline vector<vector<long long>> parse_value<vector<vector<long long>>>(const Json& v) {
+    return parse_array_of<vector<long long>>(v);
+}
+template <> inline vector<vector<char>> parse_value<vector<vector<char>>>(const Json& v) {
+    return parse_array_of<vector<char>>(v);
+}
+template <> inline vector<vector<string>> parse_value<vector<vector<string>>>(const Json& v) {
+    return parse_array_of<vector<string>>(v);
+}
+
+// ============================================================================
+// TreeNode / ListNode helpers — templated on the node type so they're only
+// instantiated for problems that actually use them. The user's solution.cpp
+// owns the node struct definitions.
+// ============================================================================
+
+template <typename Node>
+Node* build_tree(const Json& level_order) {
+    if (level_order.is_null() || !level_order.is_arr() || level_order.as_arr().empty()) {
+        return nullptr;
+    }
+    const auto& a = level_order.as_arr();
+    if (a[0].is_null()) return nullptr;
+
+    Node* root = new Node(static_cast<int>(a[0].as_int()));
+    std::queue<Node*> q;
+    q.push(root);
+    size_t i = 1;
+    while (!q.empty() && i < a.size()) {
+        Node* node = q.front(); q.pop();
+        if (i < a.size()) {
+            if (!a[i].is_null()) {
+                node->left = new Node(static_cast<int>(a[i].as_int()));
+                q.push(node->left);
+            }
+            ++i;
+        }
+        if (i < a.size()) {
+            if (!a[i].is_null()) {
+                node->right = new Node(static_cast<int>(a[i].as_int()));
+                q.push(node->right);
+            }
+            ++i;
+        }
+    }
+    return root;
+}
+
+// Serialize back to a level-order list of (int or std::nullopt) for compare.
+template <typename Node>
+vector<std::variant<std::monostate, int64_t>> serialize_tree(Node* root) {
+    using Cell = std::variant<std::monostate, int64_t>;
+    vector<Cell> out;
+    if (!root) return out;
+    std::deque<Node*> q;
+    q.push_back(root);
+    while (!q.empty()) {
+        Node* node = q.front(); q.pop_front();
+        if (!node) {
+            out.emplace_back(std::monostate{});
+            continue;
+        }
+        out.emplace_back(static_cast<int64_t>(node->val));
+        q.push_back(node->left);
+        q.push_back(node->right);
+    }
+    while (!out.empty() && std::holds_alternative<std::monostate>(out.back())) out.pop_back();
+    return out;
+}
+
+template <typename Node>
+Node* build_list(const Json& flat) {
+    if (flat.is_null() || !flat.is_arr() || flat.as_arr().empty()) return nullptr;
+    const auto& a = flat.as_arr();
+    Node* head = new Node(static_cast<int>(a[0].as_int()));
+    Node* cur = head;
+    for (size_t i = 1; i < a.size(); ++i) {
+        cur->next = new Node(static_cast<int>(a[i].as_int()));
+        cur = cur->next;
+    }
+    return head;
+}
+
+template <typename Node>
+vector<int64_t> serialize_list(Node* head) {
+    vector<int64_t> out;
+    while (head) {
+        out.push_back(static_cast<int64_t>(head->val));
+        head = head->next;
+    }
+    return out;
+}
+
+// ============================================================================
+// Comparison
+// ============================================================================
+
+inline bool float_equal(double a, double b) {
+    if (std::isnan(a) && std::isnan(b)) return true;
+    return std::abs(a - b) <= FLOAT_EPS;
+}
+
+// Recursive sort helper for unordered_all on nested vectors.
+template <typename T>
+void sort_recursive(vector<T>& v) {
+    std::sort(v.begin(), v.end());
+}
+
+template <typename T>
+void sort_recursive(vector<vector<T>>& v) {
+    for (auto& row : v) sort_recursive(row);
+    std::sort(v.begin(), v.end());
+}
+
+// Generic equality for primitive scalars and vectors of primitives.
+template <typename T>
+bool compare_value(T a, T b, const string& mode) {
+    (void)mode;
+    return a == b;
+}
+
+inline bool compare_value(double a, double b, const string& mode) {
+    (void)mode;
+    return float_equal(a, b);
+}
+
+template <typename T>
+bool compare_value(vector<T> a, vector<T> b, const string& mode) {
+    if (mode == "unordered_all") {
+        sort_recursive(a);
+        sort_recursive(b);
+    }
+    return a == b;
+}
+
+inline bool compare_value(vector<double> a, vector<double> b, const string& mode) {
+    if (mode == "unordered_all") {
+        std::sort(a.begin(), a.end());
+        std::sort(b.begin(), b.end());
+    }
+    if (a.size() != b.size()) return false;
+    for (size_t i = 0; i < a.size(); ++i) {
+        if (!float_equal(a[i], b[i])) return false;
+    }
+    return true;
+}
+
+template <typename T>
+bool compare_value(vector<vector<T>> a, vector<vector<T>> b, const string& mode) {
+    if (mode == "unordered_all") {
+        sort_recursive(a);
+        sort_recursive(b);
+    }
+    return a == b;
+}
+
+// Tree / list compare via re-serialization
+template <typename Node>
+bool compare_tree(Node* a, Node* b, const string& /*mode*/) {
+    return serialize_tree(a) == serialize_tree(b);
+}
+
+template <typename Node>
+bool compare_list(Node* a, Node* b, const string& /*mode*/) {
+    return serialize_list(a) == serialize_list(b);
+}
+
+// ============================================================================
+// Display
+// ============================================================================
+
+template <typename T> string display(const T& v);
+
+template <> inline string display<int>(const int& v)               { return std::to_string(v); }
+template <> inline string display<long long>(const long long& v)   { return std::to_string(v); }
+template <> inline string display<double>(const double& v)         { std::ostringstream s; s << v; return s.str(); }
+template <> inline string display<bool>(const bool& v)             { return v ? "true" : "false"; }
+template <> inline string display<char>(const char& v)             { return string("\"") + v + "\""; }
+template <> inline string display<string>(const string& v)         { return "\"" + v + "\""; }
+
+template <typename T>
+inline string display_vec(const vector<T>& v) {
+    std::ostringstream out;
+    out << "[";
+    for (size_t i = 0; i < v.size(); ++i) {
+        if (i) out << ", ";
+        out << display<T>(v[i]);
+    }
+    out << "]";
+    return out.str();
+}
+
+template <> inline string display<vector<int>>(const vector<int>& v)               { return display_vec(v); }
+template <> inline string display<vector<long long>>(const vector<long long>& v)   { return display_vec(v); }
+template <> inline string display<vector<double>>(const vector<double>& v)         { return display_vec(v); }
+template <> inline string display<vector<char>>(const vector<char>& v)             { return display_vec(v); }
+template <> inline string display<vector<string>>(const vector<string>& v)         { return display_vec(v); }
+template <> inline string display<vector<vector<int>>>(const vector<vector<int>>& v)             { return display_vec(v); }
+template <> inline string display<vector<vector<long long>>>(const vector<vector<long long>>& v) { return display_vec(v); }
+template <> inline string display<vector<vector<char>>>(const vector<vector<char>>& v)           { return display_vec(v); }
+template <> inline string display<vector<vector<string>>>(const vector<vector<string>>& v)       { return display_vec(v); }
+
+// vector<bool>'s proxy reference makes the generic display_vec awkward; use a dedicated overload.
+template <> inline string display<vector<bool>>(const vector<bool>& v) {
+    std::ostringstream out;
+    out << "[";
+    for (size_t i = 0; i < v.size(); ++i) {
+        if (i) out << ", ";
+        out << (v[i] ? "true" : "false");
+    }
+    out << "]";
+    return out.str();
+}
+
+// Tree / list display via re-serialization
+template <typename Node>
+inline string display_tree(Node* root) {
+    auto ser = serialize_tree(root);
+    std::ostringstream out;
+    out << "[";
+    for (size_t i = 0; i < ser.size(); ++i) {
+        if (i) out << ", ";
+        if (std::holds_alternative<std::monostate>(ser[i])) out << "null";
+        else out << std::get<int64_t>(ser[i]);
+    }
+    out << "]";
+    return out.str();
+}
+
+template <typename Node>
+inline string display_list(Node* head) {
+    auto ser = serialize_list(head);
+    std::ostringstream out;
+    out << "[";
+    for (size_t i = 0; i < ser.size(); ++i) {
+        if (i) out << ", ";
+        out << ser[i];
+    }
+    out << "]";
+    return out.str();
+}
+
+// ============================================================================
+// Format the per-case input dict for CLI failure display
+// ============================================================================
+
+inline string format_json_value(const Json& v) {
+    if (v.is_null())  return "null";
+    if (v.is_bool())  return v.b ? "true" : "false";
+    if (v.is_int())   return std::to_string(v.i);
+    if (v.is_float()) { std::ostringstream s; s << v.f; return s.str(); }
+    if (v.is_str())   return "\"" + v.s + "\"";
+    if (v.is_arr()) {
+        std::ostringstream s;
+        s << "[";
+        for (size_t i = 0; i < v.arr.size(); ++i) {
+            if (i) s << ", ";
+            s << format_json_value(v.arr[i]);
+        }
+        s << "]";
+        return s.str();
+    }
+    if (v.is_obj()) {
+        std::ostringstream s;
+        s << "{";
+        bool first = true;
+        for (const auto& kv : v.obj) {
+            if (!first) s << ", ";
+            s << "\"" << kv.first << "\": " << format_json_value(kv.second);
+            first = false;
+        }
+        s << "}";
+        return s.str();
+    }
+    return "";
+}
+
+inline string format_input(const Json& input_obj, const vector<string>& names) {
+    std::ostringstream s;
+    bool first = true;
+    for (const auto& name : names) {
+        if (!first) s << ", ";
+        s << name << " = " << format_json_value(input_obj.at(name));
+        first = false;
+    }
+    return s.str();
+}
+
+// ============================================================================
+// Results emitter
+// ============================================================================
+
+struct CaseResult {
+    int64_t case_id = 0;
+    bool passed = false;
+    string input_str;
+    string expected_str;
+    string actual_str;
+    string error;  // empty => no error
+};
+
+inline void emit_results(const vector<CaseResult>& results) {
+    std::cout << RESULTS_BEGIN << "\n";
+    std::cout << "[";
+    for (size_t i = 0; i < results.size(); ++i) {
+        const auto& r = results[i];
+        if (i) std::cout << ",";
+        std::cout << "{";
+        std::cout << "\"case\":" << r.case_id << ",";
+        std::cout << "\"passed\":" << (r.passed ? "true" : "false") << ",";
+        std::cout << "\"input\":";  write_string(std::cout, r.input_str);    std::cout << ",";
+        std::cout << "\"expected\":"; write_string(std::cout, r.expected_str); std::cout << ",";
+        std::cout << "\"actual\":";   write_string(std::cout, r.actual_str);   std::cout << ",";
+        if (r.error.empty()) std::cout << "\"error\":null";
+        else { std::cout << "\"error\":"; write_string(std::cout, r.error); }
+        std::cout << "}";
+    }
+    std::cout << "]\n";
+    std::cout << RESULTS_END << "\n";
+}
+
+// ============================================================================
+// File reader
+// ============================================================================
+
+inline string read_file(const string& path) {
+    std::ifstream f(path, std::ios::binary);
+    if (!f) throw std::runtime_error("cannot open " + path);
+    std::ostringstream ss;
+    ss << f.rdbuf();
+    return ss.str();
+}
+
+}  // namespace bj
+
+// ============================================================================
+// Solution marker below: TestService substitutes the user's
+// class Solution {...}; and any TreeNode / ListNode struct definitions
+// they have alongside it. Their main() (if present) is dropped.
+// ============================================================================
+
+{{BYTEDOJO_SOLUTION}}
+
+// ============================================================================
+// run_case marker below: TestService substitutes a per-problem function
+// whose signature is
+//     static bj::CaseResult run_case(int64_t case_id,
+//                                    const bj::Json& input,
+//                                    const bj::Json& expected_raw);
+// The body is generated from the bundle's signature + comparison.
+// ============================================================================
+
+{{BYTEDOJO_RUN_CASE}}
+
+// ============================================================================
+// main()
+// ============================================================================
+
+int main() {
+    using namespace bj;
+    try {
+        string content = read_file("cases.json");
+        Json bundle = parse_json(content);
+        const auto& cases = bundle.at("cases").as_arr();
+
+        vector<CaseResult> results;
+        results.reserve(cases.size());
+        for (const auto& c : cases) {
+            int64_t case_id = c.at("case_id").as_int();
+            const Json& input = c.at("input");
+            const Json& expected = c.at("expected");
+            try {
+                results.push_back(run_case(case_id, input, expected));
+            } catch (const std::exception& e) {
+                CaseResult r;
+                r.case_id = case_id;
+                r.passed = false;
+                r.error = string(typeid(e).name()) + ": " + e.what();
+                results.push_back(std::move(r));
+            }
+        }
+
+        emit_results(results);
+        return 0;
+    } catch (const std::exception& e) {
+        // Catastrophic failure — emit a single case-0 envelope so the caller
+        // still gets a well-formed payload.
+        CaseResult r;
+        r.case_id = 0;
+        r.passed = false;
+        r.error = string("runner crash: ") + e.what();
+        emit_results({r});
+        return 1;
+    }
+}
