@@ -63,6 +63,8 @@ _RESULTS_END = "<<<BYTEDOJO_RESULTS_END>>>"
 @dataclass
 class TestCaseResult:
     """Result of running a single test case."""
+    __test__ = False    # don't let pytest mistake this for a test class
+
     case_number: int
     passed: bool
     input_str: str
@@ -75,6 +77,8 @@ class TestCaseResult:
 @dataclass
 class TestRunResult:
     """Result of running all test cases for a problem."""
+    __test__ = False    # don't let pytest mistake this for a test class
+
     problem_id: int
     language: str
     total_cases: int
@@ -117,6 +121,8 @@ class TestServiceResult:
       - failed:  pre-flight check failed (missing file, missing toolchain,
                  unsupported language); `error` set
     """
+    __test__ = False    # don't let pytest mistake this for a test class
+
     problem: RegisteredProblem
     version: Optional[int] = None
     file_path: Optional[Path] = None
@@ -140,6 +146,7 @@ class TestServiceResult:
 
 class TestService:
     """Orchestrate test runs against the typed TestBundle pipeline."""
+    __test__ = False    # don't let pytest mistake this for a test class
 
     def __init__(self):
         self.logger = get_logger()
