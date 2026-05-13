@@ -1,3 +1,13 @@
+"""
+BaseFormatter - abstract base for language-specific problem formatters.
+
+Each subclass renders a `Problem` into the placement-ready content of
+the main solution file for its language and may emit sibling files
+(node-class modules, header files) via `extra_files`. Lookup of the
+right subclass is centralised in the `core.formatters` package
+registry; callers never branch on `CodeLanguage` themselves.
+"""
+
 from abc import ABC, abstractmethod
 from typing import Dict
 
@@ -5,7 +15,7 @@ from bytedojo.core.models.problem import Problem
 
 
 class BaseFormatter(ABC):
-    """Base formatter for problem files."""
+    """Abstract base for language-specific problem formatters."""
 
     @abstractmethod
     def format(self, problem: Problem) -> str:

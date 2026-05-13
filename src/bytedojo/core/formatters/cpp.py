@@ -4,7 +4,7 @@ C++ formatter for LeetCode problems with intelligent test generation.
 
 import re
 from dataclasses import dataclass, field
-from typing import Dict, List, Tuple, Optional, Set
+from typing import Dict, List, Tuple, Optional
 
 from bytedojo.core.models.code_language import CodeLanguage
 from bytedojo.core.models.problem import Problem
@@ -66,30 +66,25 @@ class CppFormatContext:
     method_name: Optional[str] = None
     param_info: List[Tuple[str, str]] = field(default_factory=list)  # [(name, type), ...]
     return_type: Optional[str] = None
-    includes_needed: Set[str] = field(default_factory=set)
 
     _logger: Optional[object] = field(default=None, repr=False)
 
     def __post_init__(self):
-        """Initialize logger and extract metadata."""
+        """Initialise the logger handle and populate the metadata fields."""
         if self._logger is None:
             self._logger = get_logger()
-
         self._extract_metadata()
 
     def _extract_metadata(self):
-        """Extract all metadata from code in one pass."""
-        self._logger.debug("Extracting metadata from C++ code")
-
+        """Populate every metadata field in one pass over the code."""
         self.class_name = self._extract_class_name()
         self.method_name = self._extract_method_name()
         self.param_info = self._extract_parameter_info()
         self.return_type = self._extract_return_type()
-        self.includes_needed = self._detect_includes_needed()
 
         self._logger.debug(
-            f"Metadata extracted: class={self.class_name}, method={self.method_name}, "
-            f"params={len(self.param_info)}, return_type={self.return_type}"
+            f"C++ metadata: class={self.class_name} method={self.method_name} "
+            f"params={len(self.param_info)} returns={self.return_type}"
         )
 
     # ========================================================================
@@ -97,33 +92,24 @@ class CppFormatContext:
     # ========================================================================
 
     def _extract_class_name(self) -> str:
-        """Extract the main class name from the snippet."""
+        """Extract the main class / struct name from the snippet."""
         match = re.search(r'\b(?:class|struct)\s+(\w+)\s*[{:<]', self.code)
         if match:
-            class_name = match.group(1)
-            self._logger.debug(f"Found class name: {class_name}")
-            return class_name
-        self._logger.warning("No primary class found, defaulting to 'Solution'")
+            return match.group(1)
+        self._logger.warning("No primary class found; defaulting to 'Solution'")
         return 'Solution'
 
     def _extract_method_name(self) -> str:
-        """Extract the main method name from the class."""
-        # Pattern for C++ public method
-        # Look for method after "public:" section
+        """Extract the main method name from the `public:` section."""
         public_section = re.search(r'public:\s*(.*)', self.code, re.DOTALL)
         if public_section:
-            section = public_section.group(1)
-            # Find first method: returnType methodName(params)
             match = re.search(
-                r'(?:[\w<>&*,\s]+)\s+(\w+)\s*\([^)]*\)',
-                section
+                r'(?:[\w<>&*,\s]+)\s+(\w+)\s*\([^)]*\)', public_section.group(1)
             )
             if match:
-                method_name = match.group(1)
-                self._logger.debug(f"Found method name: {method_name}")
-                return method_name
+                return match.group(1)
 
-        self._logger.warning("Could not find method name, using 'solve'")
+        self._logger.warning("No method found; defaulting to 'solve'")
         return 'solve'
 
     def _extract_parameter_info(self) -> List[Tuple[str, str]]:
@@ -169,7 +155,6 @@ class CppFormatContext:
             else:
                 current_param += char
 
-        self._logger.debug(f"Extracted {len(params)} parameters: {params}")
         return params
 
     def _parse_cpp_parameter(self, param_str: str) -> Optional[Tuple[str, str]]:
@@ -188,57 +173,16 @@ class CppFormatContext:
         return None
 
     def _extract_return_type(self) -> str:
-        """Extract return type from method signature."""
+        """Extract return type from method signature; 'void' when absent."""
         public_section = re.search(r'public:\s*(.*)', self.code, re.DOTALL)
         if not public_section:
             return 'void'
-
-        section = public_section.group(1)
-
-        # Match return type before method name
         match = re.search(
-            r'([\w<>&*,\s]+)\s+\w+\s*\([^)]*\)',
-            section
+            r'([\w<>&*,\s]+)\s+\w+\s*\([^)]*\)', public_section.group(1)
         )
         if match:
-            return_type = match.group(1).strip()
-            self._logger.debug(f"Found return type: {return_type}")
-            return return_type
-
+            return match.group(1).strip()
         return 'void'
-
-    def _detect_includes_needed(self) -> Set[str]:
-        """Detect what #includes are needed based on code and types."""
-        includes = set()
-        all_code = self.code
-
-        # Standard type checks
-        type_to_include = {
-            'vector': '<vector>',
-            'string': '<string>',
-            'map': '<map>',
-            'unordered_map': '<unordered_map>',
-            'set': '<set>',
-            'unordered_set': '<unordered_set>',
-            'queue': '<queue>',
-            'stack': '<stack>',
-            'deque': '<deque>',
-            'priority_queue': '<queue>',
-            'pair': '<utility>',
-            'algorithm': '<algorithm>',
-            'numeric_limits': '<limits>',
-            'INT_MAX': '<climits>',
-            'INT_MIN': '<climits>',
-        }
-
-        for type_name, include in type_to_include.items():
-            if type_name in all_code:
-                includes.add(include)
-
-        # Always need iostream for main
-        includes.add('<iostream>')
-
-        return includes
 
     # ========================================================================
     # Helper Properties
@@ -262,10 +206,8 @@ class CppFormatter(BaseFormatter):
         self.logger = get_logger()
 
     def format(self, problem: Problem) -> str:
-        """Generate complete C++ file content."""
+        """Generate the complete content of a C++ solution.cpp for `problem`."""
         detail = problem.problem_detail
-        self.logger.debug(f"Starting C++ format for problem #{detail.id}: {detail.title}")
-
         try:
             code_template = self._get_cpp_code(problem)
 
@@ -275,14 +217,10 @@ class CppFormatter(BaseFormatter):
                 _logger=self.logger,
             )
 
-            # Inject default return statement if needed
+            # Inject default return statement if the snippet has an empty body.
             code_template = self._inject_default_return(code_template, ctx.return_type)
 
-            content = self._build_file_content(problem, code_template, ctx)
-
-            self.logger.debug(f"Successfully formatted problem #{detail.id} as C++")
-            return content
-
+            return self._build_file_content(problem, code_template, ctx)
         except Exception as e:
             self.logger.error(f"Error formatting problem #{detail.id}: {e}", exc_info=True)
             raise
@@ -410,12 +348,11 @@ class CppFormatter(BaseFormatter):
         from the snippet are stripped so the includes section owns
         them all (it has the baseline anyway).
         """
-        detail = problem.problem_detail
-        self.logger.debug(f"Extracting C++ code for problem #{detail.id}")
-
         code = problem.get_snippet(CodeLanguage.CPP)
         if not code:
-            self.logger.warning(f"No C++ snippet found for problem #{detail.id}")
+            self.logger.warning(
+                f"No C++ snippet for problem #{problem.problem_detail.id}"
+            )
             return "// No C++ template available"
 
         stripped, _ = self._extract_node_classes(code)
@@ -483,10 +420,6 @@ class CppFormatter(BaseFormatter):
                 out_lines.append(content.rstrip())
 
             extracted[class_name] = '\n'.join(out_lines).rstrip() + '\n'
-            self.logger.debug(
-                f"Extracted Doxygen node-class block: {class_name} "
-                f"({len(out_lines)} lines)"
-            )
             return ''
 
         new_code = block_re.sub(replacer, code)
@@ -526,9 +459,7 @@ class CppFormatter(BaseFormatter):
     # ========================================================================
 
     def _format_description(self, html_content: str) -> str:
-        """Convert HTML to C++ comments."""
-        self.logger.debug("Formatting problem description for C++")
-
+        """Convert problem HTML into `//`-prefixed C++ comments."""
         try:
             text = html_to_text(html_content)
             lines = text.strip().split('\n')

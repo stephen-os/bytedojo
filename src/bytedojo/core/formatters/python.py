@@ -5,11 +5,11 @@ Python formatter for LeetCode problems with intelligent test generation.
 import re
 from dataclasses import dataclass, field
 from typing import List, Tuple, Optional, Dict
-from html import unescape
 
 from bytedojo.core.models.code_language import CodeLanguage
 from bytedojo.core.models.problem import Problem
 from bytedojo.core.formatters.base import BaseFormatter
+from bytedojo.core.formatters.utils import html_to_text
 from bytedojo.core.logger import get_logger
 
 
@@ -66,21 +66,18 @@ class FormatContext:
         self._extract_metadata()
 
     def _extract_metadata(self):
-        """Extract all metadata from code in one pass."""
-        self._logger.debug("Extracting metadata from code")
-
-        # Extract class and method information
+        """Populate every metadata field in one pass over the code."""
         self.class_name = self._extract_class_name()
         self.method_name = self._extract_method_name()
         self.param_info = self._extract_parameter_info()
         self.return_type = self._extract_return_type()
         self.param_count = self._count_method_params()
-
-        # Detect helper functions needed
         self.helpers_needed = self._detect_helpers_needed()
 
-        self._logger.debug(f"Metadata extracted: class={self.class_name}, method={self.method_name}, "
-                          f"params={len(self.param_info)}, helpers={list(self.helpers_needed.keys())}")
+        self._logger.debug(
+            f"Python metadata: class={self.class_name} method={self.method_name} "
+            f"params={len(self.param_info)} returns={self.return_type}"
+        )
     
     # ========================================================================
     # Class and Method Extraction
@@ -89,54 +86,49 @@ class FormatContext:
     def _extract_class_name(self) -> str:
         """Extract the main class name (Solution, Codec, etc.)."""
         lines = self.code.split('\n')
-        
+
         # Priority: Solution class first
         for line in lines:
             if 'class Solution' in line:
                 return 'Solution'
-        
+
         # Otherwise find first non-node class
         for line in lines:
             match = re.match(r'^\s*class\s+(\w+)', line)
             if match:
                 class_name = match.group(1)
-                # Skip node/data structure classes
-                if class_name not in ['TreeNode', 'ListNode', 'Node']:
-                    self._logger.debug(f"Found main class: {class_name}")
+                if class_name not in ('TreeNode', 'ListNode', 'Node'):
                     return class_name
-        
-        self._logger.warning("No main class found, defaulting to 'Solution'")
+
+        self._logger.warning("No main class found; defaulting to 'Solution'")
         return 'Solution'
-    
+
     def _extract_method_name(self) -> str:
         """Extract the method name from the main class."""
         lines = self.code.split('\n')
         in_target_class = False
-        
+
         for line in lines:
             if f'class {self.class_name}' in line:
                 in_target_class = True
                 continue
-            
+
             if in_target_class and line and not line[0].isspace() and 'class' in line:
                 in_target_class = False
-            
+
             if in_target_class:
                 match = re.search(r'def\s+(\w+)\s*\(', line)
                 if match:
                     method = match.group(1)
                     if not method.startswith('__'):
-                        self._logger.debug(f"Found method name: {method}")
                         return method
-        
-        # Fallback: find any non-dunder method
+
+        # Fallback: any non-dunder method anywhere in the code
         match = re.search(r'def\s+(?!__)(\w+)\s*\(', self.code)
         if match:
-            method = match.group(1)
-            self._logger.debug(f"Found fallback method name: {method}")
-            return method
-        
-        self._logger.warning("Could not find method name, using default 'solve'")
+            return match.group(1)
+
+        self._logger.warning("No method found; defaulting to 'solve'")
         return 'solve'
     
     def _extract_parameter_info(self) -> List[Tuple[str, str]]:
@@ -156,9 +148,8 @@ class FormatContext:
             if in_target_class and 'def ' in line and '__' not in line:
                 params = self._parse_method_signature(line)
                 if params is not None:
-                    self._logger.debug(f"Extracted {len(params)} parameters")
                     return params
-        
+
         self._logger.warning("Could not extract parameter info")
         return []
     
@@ -206,14 +197,10 @@ class FormatContext:
             return (param_clean, 'Any')
     
     def _extract_return_type(self) -> str:
-        """Extract return type from method signature."""
+        """Extract return type from method signature; 'Any' when absent."""
         match = re.search(r'->\s*([^:]+):', self.code)
         if match:
-            return_type = match.group(1).strip()
-            self._logger.debug(f"Found return type: {return_type}")
-            return return_type
-        
-        self._logger.debug("No return type found, using 'Any'")
+            return match.group(1).strip()
         return 'Any'
     
     def _count_method_params(self) -> int:
@@ -244,9 +231,7 @@ class FormatContext:
                 params.append(current.strip())
             
             # Exclude 'self' parameter
-            count = len([p for p in params if 'self' not in p.strip()])
-            self._logger.debug(f"Method has {count} parameters")
-            return count
+            return len([p for p in params if 'self' not in p.strip()])
         return 0
     
     # ========================================================================
@@ -254,17 +239,11 @@ class FormatContext:
     # ========================================================================
     
     def _detect_helpers_needed(self) -> Dict[str, bool]:
-        """Detect what helper functions are needed by analyzing the code."""
-        helpers = {
+        """Flag which node helpers the snippet declares (listnode / treenode)."""
+        return {
             'listnode': 'ListNode' in self.code and 'class ListNode' in self.code,
             'treenode': 'TreeNode' in self.code and 'class TreeNode' in self.code,
         }
-
-        needed = [k for k, v in helpers.items() if v]
-        if needed:
-            self._logger.debug(f"Helpers needed: {needed}")
-
-        return helpers
     
     # ========================================================================
     # Helper Methods
@@ -303,10 +282,8 @@ class PythonFormatter(BaseFormatter):
         self.logger = get_logger()
 
     def format(self, problem: Problem) -> str:
-        """Generate complete Python file content."""
+        """Generate the complete content of a Python solution.py for `problem`."""
         detail = problem.problem_detail
-        self.logger.debug(f"Starting format for problem #{detail.id}: {detail.title}")
-
         try:
             class_body = self._get_class_body(problem)
             imports_section = self._compute_imports_section(problem)
@@ -320,12 +297,9 @@ class PythonFormatter(BaseFormatter):
                 _logger=self.logger,
             )
 
-            content = self._build_file_content(
+            return self._build_file_content(
                 problem, description, imports_section, class_body, ctx,
             )
-            self.logger.debug(f"Successfully formatted problem #{detail.id}")
-            return content
-
         except Exception as e:
             self.logger.error(f"Error formatting problem #{detail.id}: {e}", exc_info=True)
             raise
@@ -423,12 +397,11 @@ Difficulty: {detail.difficulty}
         imports section owns them all; the typical LeetCode Python
         snippet doesn't have any, but be defensive.
         """
-        detail = problem.problem_detail
-        self.logger.debug(f"Extracting Python class body for problem #{detail.id}")
-
         code = problem.get_snippet(CodeLanguage.PYTHON)
         if not code:
-            self.logger.warning(f"No Python3 snippet found for problem #{detail.id}")
+            self.logger.warning(
+                f"No Python3 snippet for problem #{problem.problem_detail.id}"
+            )
             return "# No Python template available"
 
         code, _ = self._extract_node_classes(code)
@@ -486,8 +459,6 @@ Difficulty: {detail.difficulty}
         blocks removed entirely (replaced by an `import` line back in the
         caller).
         """
-        self.logger.debug("Extracting commented node-class definitions")
-
         lines = code.split("\n")
         result: List[str] = []
         extracted: Dict[str, str] = {}
@@ -506,7 +477,6 @@ Difficulty: {detail.difficulty}
                 uncommented = line[base_indent:].lstrip("#").lstrip()
                 match = re.match(r"class\s+(\w+)", uncommented)
                 block_class = match.group(1) if match else "UnknownNode"
-                self.logger.debug(f"Found commented node class: {block_class}")
                 block_lines = [uncommented]
                 # Drop a leading "# Definition for ..." comment that
                 # belongs to this block — it's a leader, not part of
@@ -542,57 +512,28 @@ Difficulty: {detail.difficulty}
 
         return "\n".join(result), extracted
     
-    def _extract_imports(self, code: str) -> str:
-        """Extract required typing imports."""
-        import_types = {
-            'List[': 'List',
-            'Optional[': 'Optional',
-            'Dict[': 'Dict',
-            'Dictionary[': 'Dict',
-            'Set[': 'Set',
-            'Tuple[': 'Tuple',
-            'Union[': 'Union',
-            'Deque[': 'Deque',
-            'deque': 'Deque',
-        }
-        
-        imports = set()
-        for pattern, import_name in import_types.items():
-            if pattern in code:
-                imports.add(import_name)
-        
-        if imports:
-            typing_imports = sorted(imports)
-            self.logger.debug(f"Found typing imports: {typing_imports}")
-            return f"from typing import {', '.join(typing_imports)}"
-        
-        return ""
-    
     def _ensure_pass_in_methods(self, code: str) -> str:
-        """Add pass to empty methods."""
-        self.logger.debug("Ensuring pass statements in empty methods")
-        
+        """Insert `pass` into empty method bodies so the snippet parses."""
         lines = code.split('\n')
         result = []
         i = 0
-        
+
         while i < len(lines):
             line = lines[i]
             result.append(line)
-            
+
             stripped = line.strip()
             if stripped.startswith('#'):
                 i += 1
                 continue
-            
+
             if 'def ' in line and line.strip().endswith(':'):
                 if self._is_empty_method(lines, i):
                     current_indent = len(line) - len(line.lstrip())
                     result.append(' ' * (current_indent + 4) + 'pass')
-                    self.logger.debug(f"Added pass to empty method: {stripped}")
-            
+
             i += 1
-        
+
         return '\n'.join(result)
     
     def _is_empty_method(self, lines: List[str], method_line_idx: int) -> bool:
@@ -616,19 +557,11 @@ Difficulty: {detail.difficulty}
     # ========================================================================
     
     def _format_description(self, html_content: str) -> str:
-        """Convert HTML to commented text."""
-        self.logger.debug("Formatting problem description")
-        
+        """Convert problem HTML into `#`-prefixed Python comments."""
         try:
-            text = self._html_to_text(html_content)
+            text = html_to_text(html_content)
             lines = text.strip().split('\n')
             return '\n'.join(f"# {line}" if line else "#" for line in lines)
         except Exception as e:
             self.logger.error(f"Error formatting description: {e}")
             return "# Error formatting description"
-    
-    def _html_to_text(self, html_content: str) -> str:
-        """Convert HTML content to plain text."""
-        text = re.sub(r'<[^>]+>', '', html_content)
-        text = unescape(text)
-        return text

@@ -44,31 +44,25 @@ class JavaFormatContext:
     method_name: Optional[str] = None
     param_info: List[Tuple[str, str]] = field(default_factory=list)  # [(name, type), ...]
     return_type: Optional[str] = None
-    needs_arrays_import: bool = False
-    needs_list_import: bool = False
 
     _logger: Optional[object] = field(default=None, repr=False)
 
     def __post_init__(self):
-        """Initialize logger and extract metadata."""
+        """Initialise the logger handle and populate the metadata fields."""
         if self._logger is None:
             self._logger = get_logger()
-
         self._extract_metadata()
 
     def _extract_metadata(self):
-        """Extract all metadata from code in one pass."""
-        self._logger.debug("Extracting metadata from Java code")
-
+        """Populate every metadata field in one pass over the code."""
         self.class_name = self._extract_class_name()
         self.method_name = self._extract_method_name()
         self.param_info = self._extract_parameter_info()
         self.return_type = self._extract_return_type()
-        self._detect_imports_needed()
 
         self._logger.debug(
-            f"Metadata extracted: class={self.class_name}, method={self.method_name}, "
-            f"params={len(self.param_info)}, return_type={self.return_type}"
+            f"Java metadata: class={self.class_name} method={self.method_name} "
+            f"params={len(self.param_info)} returns={self.return_type}"
         )
 
     # ========================================================================
@@ -79,25 +73,16 @@ class JavaFormatContext:
         """Extract the main class name from the snippet."""
         match = re.search(r'\bclass\s+(\w+)\s*[{<]', self.code)
         if match:
-            class_name = match.group(1)
-            self._logger.debug(f"Found class name: {class_name}")
-            return class_name
-        self._logger.warning("No class found, defaulting to 'Solution'")
+            return match.group(1)
+        self._logger.warning("No class found; defaulting to 'Solution'")
         return 'Solution'
 
     def _extract_method_name(self) -> str:
         """Extract the main method name from the class."""
-        # Pattern for Java method: public returnType methodName(params)
-        match = re.search(
-            r'public\s+[\w<>\[\],\s]+\s+(\w+)\s*\(',
-            self.code
-        )
+        match = re.search(r'public\s+[\w<>\[\],\s]+\s+(\w+)\s*\(', self.code)
         if match:
-            method_name = match.group(1)
-            self._logger.debug(f"Found method name: {method_name}")
-            return method_name
-
-        self._logger.warning("Could not find method name, using 'solve'")
+            return match.group(1)
+        self._logger.warning("No method found; defaulting to 'solve'")
         return 'solve'
 
     def _extract_parameter_info(self) -> List[Tuple[str, str]]:
@@ -136,7 +121,6 @@ class JavaFormatContext:
             else:
                 current_param += char
 
-        self._logger.debug(f"Extracted {len(params)} parameters: {params}")
         return params
 
     def _parse_java_parameter(self, param_str: str) -> Optional[Tuple[str, str]]:
@@ -149,28 +133,11 @@ class JavaFormatContext:
         return None
 
     def _extract_return_type(self) -> str:
-        """Extract return type from method signature."""
-        match = re.search(
-            r'public\s+([\w<>\[\],\s]+)\s+\w+\s*\(',
-            self.code
-        )
+        """Extract return type from method signature; 'void' when absent."""
+        match = re.search(r'public\s+([\w<>\[\],\s]+)\s+\w+\s*\(', self.code)
         if match:
-            return_type = match.group(1).strip()
-            self._logger.debug(f"Found return type: {return_type}")
-            return return_type
+            return match.group(1).strip()
         return 'void'
-
-    def _detect_imports_needed(self):
-        """Detect what imports are needed based on code and types."""
-        all_types = self.code + self.return_type + ' '.join(t for _, t in self.param_info)
-
-        # Check for array types that might need Arrays.toString()
-        if '[]' in self.return_type or any('[]' in t for _, t in self.param_info):
-            self.needs_arrays_import = True
-
-        # Check for List types
-        if 'List<' in all_types:
-            self.needs_list_import = True
 
     # ========================================================================
     # Helper Properties
@@ -194,10 +161,8 @@ class JavaFormatter(BaseFormatter):
         self.logger = get_logger()
 
     def format(self, problem: Problem) -> str:
-        """Generate complete Java file content."""
+        """Generate the complete content of a Java solution.java for `problem`."""
         detail = problem.problem_detail
-        self.logger.debug(f"Starting Java format for problem #{detail.id}: {detail.title}")
-
         try:
             code_template = self._get_java_code(problem)
 
@@ -207,14 +172,10 @@ class JavaFormatter(BaseFormatter):
                 _logger=self.logger,
             )
 
-            # Inject default return statement if needed
+            # Inject default return statement if the snippet has an empty body.
             code_template = self._inject_default_return(code_template, ctx.return_type)
 
-            content = self._build_file_content(problem, code_template, ctx)
-
-            self.logger.debug(f"Successfully formatted problem #{detail.id} as Java")
-            return content
-
+            return self._build_file_content(problem, code_template, ctx)
         except Exception as e:
             self.logger.error(f"Error formatting problem #{detail.id}: {e}", exc_info=True)
             raise
@@ -313,12 +274,11 @@ class JavaFormatter(BaseFormatter):
         focused on Solution; node classes follow Java's one-public-class-
         per-file convention and `javac *.java` picks them up alongside.
         """
-        detail = problem.problem_detail
-        self.logger.debug(f"Extracting Java code for problem #{detail.id}")
-
         code = problem.get_snippet(CodeLanguage.JAVA)
         if not code:
-            self.logger.warning(f"No Java snippet found for problem #{detail.id}")
+            self.logger.warning(
+                f"No Java snippet for problem #{problem.problem_detail.id}"
+            )
             return "// No Java template available"
 
         stripped, _ = self._extract_node_classes(code)
@@ -364,10 +324,6 @@ class JavaFormatter(BaseFormatter):
                 out_lines.append(content.rstrip())
 
             extracted[class_name] = '\n'.join(out_lines).rstrip() + '\n'
-            self.logger.debug(
-                f"Extracted JavaDoc node-class block: {class_name} "
-                f"({len(out_lines)} lines)"
-            )
             # Empty replacement — the block is gone from the source entirely.
             return ''
 
@@ -407,9 +363,7 @@ class JavaFormatter(BaseFormatter):
     # ========================================================================
 
     def _format_description(self, html_content: str) -> str:
-        """Convert HTML to Java comments."""
-        self.logger.debug("Formatting problem description for Java")
-
+        """Convert problem HTML into `//`-prefixed Java comments."""
         try:
             text = html_to_text(html_content)
             lines = text.strip().split('\n')
