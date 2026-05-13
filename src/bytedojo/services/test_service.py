@@ -1,13 +1,13 @@
 """
 Test service - run tests against a registered problem and persist the result.
 
-Loads the typed TestBundle for a problem, copies the universal runner +
-converter library into a per-problem build directory alongside the user's
-solution, invokes the language runtime, parses the JSON results envelope,
-and updates the database with the pass/fail status.
+Loads the typed TestBundle for a problem, stages the language's universal
+runner into a per-problem build directory alongside the user's solution,
+invokes the language runtime, parses the JSON results envelope, and
+updates the database with the pass/fail status.
 
-Phase 1 supports Python only. Java and C++ return a clean "not yet
-supported" error until their universal runners land.
+Phase 2 supports Python + Java. C++ still returns a clean "not yet
+supported" error until its universal runner lands.
 """
 
 import json
@@ -16,7 +16,7 @@ import subprocess
 import sys
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Callable, List, Optional
+from typing import Callable, List, Optional, Tuple
 
 from bytedojo.core.logger import get_logger
 from bytedojo.core.models.code_language import CodeLanguage
@@ -26,8 +26,17 @@ from bytedojo.core.models.test_bundle import TestBundle
 from bytedojo.core.paths import get_test_file
 from bytedojo.core.repository import Repository
 from bytedojo.core.toolchains import get_toolchain
+from bytedojo.runtime.java import (
+    RUNTIME_DIR as JAVA_RUNTIME_DIR,
+    TEMPLATE_NAME as JAVA_TEMPLATE_NAME,
+)
+from bytedojo.runtime.java._assembly import AssemblyError, assemble as assemble_java
 from bytedojo.runtime.python3 import RUNTIME_DIR as PYTHON_RUNTIME_DIR
 from bytedojo.services.problem_service import resolve_solution_path
+
+
+#: Languages whose universal runner is wired into TestService.
+_SUPPORTED_LANGUAGES = frozenset({CodeLanguage.PYTHON, CodeLanguage.JAVA})
 
 
 #: Sentinels the universal Python runner wraps around its JSON output.
@@ -149,13 +158,12 @@ class TestService:
             f"timeout={timeout}s"
         )
 
-        # Phase 1 supports Python only.
-        if problem.language != CodeLanguage.PYTHON:
+        if problem.language not in _SUPPORTED_LANGUAGES:
             return self._error(
                 problem,
                 f"The {problem.language.value} runner has not been ported to the "
-                f"typed test schema yet. Python is the only supported language "
-                f"in this phase.",
+                f"typed test schema yet. Currently supported: "
+                f"{', '.join(sorted(l.value for l in _SUPPORTED_LANGUAGES))}.",
             )
 
         # Resolve the solution file (latest, or a specific version).
@@ -170,15 +178,19 @@ class TestService:
         tested_version = resolved.version
         ctx = {"version": tested_version, "file_path": file_path}
 
-        # Confirm the Python toolchain is available
+        # Confirm the language toolchain is available
         toolchain = get_toolchain(problem.language)
         if toolchain is None:
-            return self._error(problem, "python3 toolchain is not registered.", **ctx)
+            return self._error(
+                problem,
+                f"{problem.language.value} toolchain is not registered.",
+                **ctx,
+            )
         status = toolchain.detect()
         if not status.found:
             return self._error(
                 problem,
-                "python3 toolchain not found.\n"
+                f"{problem.language.value} toolchain not found.\n"
                 + (f"  Missing: {', '.join(status.missing)}\n" if status.missing else "")
                 + (f"  Install: {status.install_hint}" if status.install_hint else ""),
                 **ctx,
@@ -202,18 +214,31 @@ class TestService:
         build_dir = self._prepare_build_dir(repo, problem)
         try:
             self._stage_runtime(
+                language=problem.language,
                 build_dir=build_dir,
                 solution_src=file_path,
                 problem_id=problem.problem_id,
             )
-        except OSError as e:
+        except (OSError, AssemblyError) as e:
             return self._error(problem, f"Failed to prepare build dir: {e}", **ctx)
 
-        # Run the universal Python runner
+        # Compile (if needed) and invoke the language runtime
         try:
-            stdout, stderr = self._invoke_runner(build_dir, timeout)
+            stdout, stderr, compile_error = self._invoke_runner(
+                language=problem.language, build_dir=build_dir, timeout=timeout,
+            )
         except subprocess.TimeoutExpired:
             run_result = _all_timed_out(problem, bundle, timeout)
+            self._record_status(repo, problem, run_result, version=tested_version)
+            return TestServiceResult(
+                problem=problem, version=tested_version,
+                file_path=file_path, run_result=run_result,
+            )
+
+        # Compile-stage failure (Java javac, etc.) — short-circuit before
+        # we try to parse a results envelope that doesn't exist.
+        if compile_error is not None:
+            run_result = _compile_error_result(problem, bundle, compile_error)
             self._record_status(repo, problem, run_result, version=tested_version)
             return TestServiceResult(
                 problem=problem, version=tested_version,
@@ -258,29 +283,69 @@ class TestService:
 
     def _stage_runtime(
         self, *,
+        language: CodeLanguage,
         build_dir: Path,
         solution_src: Path,
         problem_id: int,
     ) -> None:
-        """Copy user solution + universal runner + cases.json into build_dir."""
-        # User solution -> solution.py (imported by runner.py)
-        shutil.copyfile(solution_src, build_dir / "solution.py")
-        # Universal runner files
-        shutil.copyfile(PYTHON_RUNTIME_DIR / "runner.py", build_dir / "runner.py")
-        shutil.copyfile(PYTHON_RUNTIME_DIR / "converters.py", build_dir / "converters.py")
-        # The bundle itself becomes cases.json
+        """Stage solution + universal runner + cases.json into build_dir.
+
+        Python: copy solution.py + runner.py + converters.py + cases.json.
+        Java:   substitute user's classes into BytedojoRunner.java template,
+                drop cases.json. Compilation happens during _invoke_runner.
+        """
         shutil.copyfile(get_test_file(problem_id), build_dir / "cases.json")
 
-    def _invoke_runner(self, build_dir: Path, timeout: int):
-        """Run `python runner.py` inside build_dir; return (stdout, stderr)."""
-        proc = subprocess.run(
-            [sys.executable, str(build_dir / "runner.py")],
-            cwd=build_dir,
-            capture_output=True,
-            text=True,
-            timeout=timeout,
-        )
-        return proc.stdout, proc.stderr
+        if language == CodeLanguage.PYTHON:
+            shutil.copyfile(solution_src, build_dir / "solution.py")
+            shutil.copyfile(PYTHON_RUNTIME_DIR / "runner.py", build_dir / "runner.py")
+            shutil.copyfile(PYTHON_RUNTIME_DIR / "converters.py", build_dir / "converters.py")
+            return
+
+        if language == CodeLanguage.JAVA:
+            template = (JAVA_RUNTIME_DIR / JAVA_TEMPLATE_NAME).read_text(encoding="utf-8")
+            user_source = solution_src.read_text(encoding="utf-8")
+            assembled = assemble_java(template, user_source)
+            (build_dir / "BytedojoRunner.java").write_text(assembled, encoding="utf-8")
+            return
+
+        raise RuntimeError(f"_stage_runtime called for unsupported language: {language}")
+
+    def _invoke_runner(
+        self, *,
+        language: CodeLanguage,
+        build_dir: Path,
+        timeout: int,
+    ) -> Tuple[str, str, Optional[str]]:
+        """Run the language's universal runner; return (stdout, stderr, compile_error)."""
+        if language == CodeLanguage.PYTHON:
+            proc = subprocess.run(
+                [sys.executable, str(build_dir / "runner.py")],
+                cwd=build_dir,
+                capture_output=True, text=True, timeout=timeout,
+            )
+            return proc.stdout, proc.stderr, None
+
+        if language == CodeLanguage.JAVA:
+            # Compile first
+            compile_proc = subprocess.run(
+                ["javac", "-d", str(build_dir), str(build_dir / "BytedojoRunner.java")],
+                cwd=build_dir,
+                capture_output=True, text=True,
+            )
+            if compile_proc.returncode != 0:
+                msg = (compile_proc.stderr or compile_proc.stdout or "").strip()
+                return "", compile_proc.stderr, msg or f"javac exited {compile_proc.returncode}"
+
+            # Then run
+            run_proc = subprocess.run(
+                ["java", "-cp", str(build_dir), "BytedojoRunner"],
+                cwd=build_dir,
+                capture_output=True, text=True, timeout=timeout,
+            )
+            return run_proc.stdout, run_proc.stderr, None
+
+        raise RuntimeError(f"_invoke_runner called for unsupported language: {language}")
 
     def _record_status(
         self,
@@ -425,6 +490,19 @@ def _runtime_error(problem, bundle: TestBundle, message: str, stderr: str) -> Te
         failed_count=0,
         error_count=len(bundle.cases),
         runtime_error=detail,
+    )
+
+
+def _compile_error_result(problem, bundle: TestBundle, message: str) -> TestRunResult:
+    """Build a TestRunResult for a compile-stage failure (e.g. javac)."""
+    return TestRunResult(
+        problem_id=problem.problem_id,
+        language=problem.language.value,
+        total_cases=len(bundle.cases),
+        passed_count=0,
+        failed_count=0,
+        error_count=len(bundle.cases),
+        compile_error=message.strip(),
     )
 
 

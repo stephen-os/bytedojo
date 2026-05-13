@@ -66,12 +66,21 @@ class JavaFormatContext:
     # ========================================================================
 
     def _extract_class_name(self) -> str:
-        """Extract the main class name."""
-        match = re.search(r'class\s+(\w+)\s*\{', self.code)
-        if match:
-            class_name = match.group(1)
-            self._logger.debug(f"Found class name: {class_name}")
-            return class_name
+        """Extract the main class name — prefer Solution, skip node helpers.
+
+        After _uncomment_node_classes runs, TreeNode/ListNode appear as real
+        class declarations near the top of the file. A naive `class X` regex
+        would pick those over the user's Solution class.
+        """
+        if re.search(r'\bclass\s+Solution\b', self.code):
+            self._logger.debug("Found class name: Solution")
+            return 'Solution'
+        for match in re.finditer(r'\bclass\s+(\w+)\s*[{<]', self.code):
+            name = match.group(1)
+            if name not in ('TreeNode', 'ListNode', 'Node'):
+                self._logger.debug(f"Found class name: {name}")
+                return name
+        self._logger.warning("No primary class found, defaulting to 'Solution'")
         return 'Solution'
 
     def _extract_method_name(self) -> str:
@@ -320,7 +329,60 @@ class JavaFormatter(BaseFormatter):
             self.logger.warning(f"No Java snippet found for problem #{detail.id}")
             return "// No Java template available"
 
-        return code
+        return self._uncomment_node_classes(code)
+
+    def _uncomment_node_classes(self, code: str) -> str:
+        """Unwrap LeetCode-style JavaDoc blocks that embed class definitions.
+
+        LeetCode starter snippets wrap TreeNode / ListNode like::
+
+            /**
+             * Definition for a binary tree node.
+             * public class TreeNode {
+             *     int val;
+             *     ...
+             * }
+             */
+
+        Becomes a bare `class TreeNode { ... }`. The `public` modifier is
+        stripped because BytedojoRunner is the file's only public class once
+        the runtime assembles the final source; multiple `public class X`
+        declarations in one file don't compile.
+
+        Plain JavaDoc on the user's Solution is untouched — we only unwrap
+        blocks that actually contain `* public class X` inside.
+        """
+        block_re = re.compile(r'/\*\*(.*?)\*/', re.DOTALL)
+
+        def replacer(match):
+            body = match.group(1)
+            if not re.search(r'^\s*\*\s*public\s+class\s+\w+', body, re.MULTILINE):
+                return match.group(0)
+
+            out_lines = []
+            for raw in body.split('\n'):
+                stripped = raw.lstrip()
+                if not stripped.startswith('*'):
+                    continue
+                content = stripped[1:]
+                if content.startswith(' '):
+                    content = content[1:]
+                # Drop the descriptive header line(s)
+                if content.startswith('Definition for') or not content.strip():
+                    continue
+                # Strip the leading `public ` so we don't conflict with
+                # BytedojoRunner being the file's public class at test time.
+                if content.lstrip().startswith('public class '):
+                    leading = content[:len(content) - len(content.lstrip())]
+                    content = leading + content.lstrip()[len('public '):]
+                out_lines.append(content.rstrip())
+
+            self.logger.debug(
+                f"Uncommented JavaDoc node-class block ({len(out_lines)} lines)"
+            )
+            return '\n'.join(out_lines)
+
+        return block_re.sub(replacer, code)
 
     def _inject_default_return(self, code: str, return_type: str) -> str:
         """
