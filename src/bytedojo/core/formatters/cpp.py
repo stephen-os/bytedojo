@@ -8,12 +8,9 @@ from typing import List, Tuple, Optional, Set
 
 from bytedojo.core.models.code_language import CodeLanguage
 from bytedojo.core.models.problem import Problem
-from bytedojo.core.models.test_case import TestCase
 from bytedojo.core.formatters.base import BaseFormatter
 from bytedojo.core.formatters.utils import (
     html_to_text,
-    parse_input_variables,
-    convert_to_cpp_literal,
     get_cpp_default,
 )
 from bytedojo.core.logger import get_logger
@@ -31,7 +28,6 @@ class CppFormatContext:
     """
     code: str
     description: str
-    test_cases: List[TestCase]  # Pre-parsed test cases
 
     # Extracted metadata (populated lazily)
     class_name: Optional[str] = None
@@ -243,8 +239,7 @@ class CppFormatter(BaseFormatter):
             ctx = CppFormatContext(
                 code=code_template,
                 description=detail.description,
-                test_cases=problem.test_cases,
-                _logger=self.logger
+                _logger=self.logger,
             )
 
             # Inject default return statement if needed
@@ -303,68 +298,24 @@ using namespace std;
         return '\n'.join(f'#include {inc}' for inc in includes)
 
     def _generate_main_function(self, ctx: CppFormatContext) -> str:
-        """Generate the main function with test cases."""
+        """Generate the main function with a TODO placeholder call.
+
+        The full test suite runs via `dojo test`. We only emit a placeholder
+        here so the user has a hook to edit when they want a quick local run.
+        """
         lines = ['int main() {']
         lines.append(f'    {ctx.class_name} {ctx.instance_name};')
         lines.append('')
-
-        if ctx.test_cases:
-            # Show just the first case as a starter; the full suite runs via `dojo test`.
-            for i, example in enumerate(ctx.test_cases[:1], 1):
-                lines.append(f'    // Example {i} (edit me, or run `dojo test` for the full suite)')
-                test_lines = self._generate_test_call(ctx, example, i)
-                lines.extend(test_lines)
-                lines.append('')
-        else:
-            lines.append('    // TODO: Add test cases')
-            self._generate_default_test(ctx, lines)
-
-        lines.append('    return 0;')
-        lines.append('}')
-
-        return '\n'.join(lines)
-
-    def _generate_default_test(self, ctx: CppFormatContext, lines: List[str]):
-        """Generate a default test call when no examples are available."""
+        lines.append('    // TODO: edit me, or run `dojo test` for the full suite')
         args = ', '.join(get_cpp_default(t) for _, t in ctx.param_info)
-
         if ctx.return_type != 'void':
             lines.append(f'    {ctx.return_type} result = {ctx.instance_name}.{ctx.method_name}({args});')
             lines.extend(self._generate_print_code('result', ctx.return_type))
         else:
             lines.append(f'    {ctx.instance_name}.{ctx.method_name}({args});')
-
-    def _generate_test_call(self, ctx: CppFormatContext, example: TestCase, index: int) -> List[str]:
-        """Generate C++ code for a single test case."""
-        lines = []
-        input_vars = parse_input_variables(example.input)
-
-        # Generate variable declarations
-        for param_name, param_type in ctx.param_info:
-            if param_name in input_vars:
-                value = convert_to_cpp_literal(input_vars[param_name], param_type)
-                # Remove reference for variable declaration
-                decl_type = param_type.rstrip('&').strip()
-                lines.append(f'    {decl_type} {param_name}{index} = {value};')
-
-        # Generate method call
-        args = ', '.join(
-            f'{p[0]}{index}' for p in ctx.param_info if p[0] in input_vars
-        )
-        if not args:
-            args = ', '.join(get_cpp_default(t) for _, t in ctx.param_info)
-
-        if ctx.return_type != 'void':
-            lines.append(f'    {ctx.return_type} result{index} = {ctx.instance_name}.{ctx.method_name}({args});')
-            lines.extend(self._generate_print_code(f'result{index}', ctx.return_type))
-        else:
-            lines.append(f'    {ctx.instance_name}.{ctx.method_name}({args});')
-            lines.append(f'    cout << "Example {index} executed" << endl;')
-
-        if example.output:
-            lines.append(f'    // Expected: {example.output}')
-
-        return lines
+        lines.append('    return 0;')
+        lines.append('}')
+        return '\n'.join(lines)
 
     def _generate_print_code(self, var_name: str, cpp_type: str) -> List[str]:
         """Generate appropriate print code for the type."""

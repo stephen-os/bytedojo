@@ -14,21 +14,14 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Optional, List
 
-from bytedojo.core.models.canonical_type import CanonicalType
 from bytedojo.core.models.code_language import CodeLanguage
-from bytedojo.core.models.code_parameters import CodeParameters
 from bytedojo.core.models.code_snippet import CodeSnippet
-from bytedojo.core.models.entry_point import EntryPoint
 from bytedojo.core.models.example import Example
-from bytedojo.core.models.parameter import Parameter
 from bytedojo.core.models.problem import Problem
-from bytedojo.core.models.problem_code import ProblemCode
 from bytedojo.core.models.problem_detail import ProblemDetail
 from bytedojo.core.models.problem_difficulty import ProblemDifficulty
 from bytedojo.core.models.problem_tag import ProblemTag
-from bytedojo.core.models.problem_types import CanonicalParameter, ProblemTypes
 from bytedojo.core.models.registered_problem import RegisteredProblem
-from bytedojo.core.models.test_case import TestCase
 from bytedojo.core.paths import PROBLEMS_INDEX, get_problem_file
 from bytedojo.core.repository import Repository
 from bytedojo.core.search import find_problems as _find_problems
@@ -52,11 +45,13 @@ def _load_problem_file(problem_id: int) -> Optional[dict]:
 
 
 def _build_problem(data: dict) -> Problem:
-    """Build a Problem object from raw data."""
-    # Parse tags
+    """Build a Problem object from raw problem JSON.
+
+    Post-migration shape: catalog metadata only. Test data lives in
+    data/tests/{id}.json — see TestBundle.load(...) for that side.
+    """
     tags = [ProblemTag.from_string(t) for t in data.get("tags", [])]
 
-    # Build the ProblemDetail
     problem_detail = ProblemDetail(
         id=data.get("id", 0),
         title=data.get("title", ""),
@@ -66,101 +61,31 @@ def _build_problem(data: dict) -> Problem:
         tags=tags,
     )
 
-    # Parse examples
     examples = [
         Example(
             example_num=ex.get("example_num", 0),
             example_text=ex.get("example_text", ""),
-            images=ex.get("images", [])
+            images=ex.get("images", []),
         )
         for ex in data.get("examples", [])
     ]
 
-    # Parse test cases (language-agnostic, lives at top level now)
-    test_cases = [
-        TestCase(input=tc.get("input", ""), output=tc.get("output", ""))
-        for tc in data.get("test_cases", [])
-    ]
-
-    # Build per-language ProblemCode bundles by joining the four per-language maps
+    # One CodeSnippet per language present in code_snippets. Skip languages
+    # we don't recognize so the rest of the system stays consistent.
     code_snippets_map = data.get("code_snippets", {}) or {}
-    entry_points_map = data.get("entry_points", {}) or {}
-    types_map = data.get("types", {}) or {}
-    test_snippets_map = data.get("test_snippets", {}) or {}
-
-    # Union of all language keys we have any data for
-    lang_keys = set()
-    lang_keys.update(code_snippets_map.keys())
-    lang_keys.update(entry_points_map.keys())
-    lang_keys.update(types_map.keys())
-    lang_keys.update(test_snippets_map.keys())
-
-    problem_codes: List[ProblemCode] = []
-    for lang_str in lang_keys:
+    code_snippets: List[CodeSnippet] = []
+    for lang_str, code in code_snippets_map.items():
         lang = CodeLanguage.from_string(lang_str)
         if lang == CodeLanguage.UNKNOWN:
             continue
-
-        problem_code_snippet = CodeSnippet(
-            lang=lang,
-            code=code_snippets_map.get(lang_str, ""),
-        )
-
-        entry_point = EntryPoint(
-            lang=lang,
-            expression=entry_points_map.get(lang_str, ""),
-        )
-
-        type_data = types_map.get(lang_str, {}) or {}
-        input_params: List[Parameter] = []
-        for param_dict in type_data.get("input", []):
-            for name, type_str in param_dict.items():
-                input_params.append(Parameter(name=name, type_str=type_str))
-        problem_parameters = CodeParameters(
-            lang=lang,
-            input_params=input_params,
-            output_type=type_data.get("output", "") or "",
-        )
-
-        test_code_snippet = CodeSnippet(
-            lang=lang,
-            code=test_snippets_map.get(lang_str, ""),
-        )
-
-        problem_codes.append(ProblemCode(
-            lang=lang,
-            problem_code=problem_code_snippet,
-            problem_parameters=problem_parameters,
-            entry_point=entry_point,
-            test_code=test_code_snippet,
-        ))
-
-    # Canonical types (post B1 migration). Older repos may not have them.
-    types_canonical = data.get("types_canonical")
-    canonical_types: Optional[ProblemTypes] = None
-    if types_canonical:
-        input_params = []
-        for slot in types_canonical.get("input", []):
-            for name, type_str in slot.items():
-                input_params.append(CanonicalParameter(
-                    name=name,
-                    type=CanonicalType.from_string(type_str),
-                ))
-        canonical_types = ProblemTypes(
-            input_params=input_params,
-            output_type=CanonicalType.from_string(
-                types_canonical.get("output", "")
-            ),
-        )
+        code_snippets.append(CodeSnippet(lang=lang, code=code or ""))
 
     return Problem(
         problem_detail=problem_detail,
-        problem_codes=problem_codes,
+        code_snippets=code_snippets,
         examples=examples,
         constraints=data.get("constraints", []),
         hints=data.get("hints", []),
-        test_cases=test_cases,
-        types=canonical_types,
     )
 
 def get_problem(problem_id: int) -> Optional[Problem]:

@@ -1,47 +1,49 @@
 """
-CanonicalType — the language-agnostic type universe for problem signatures.
+CanonicalType - the language-agnostic type universe for test signatures.
 
-LeetCode encodes the same logical type as different strings per language
-(`int[]` in Java, `vector<int>&` in C++, `List[int]` in Python). For
-codegen we collapse all of those down to a single canonical name and let
-per-language TypeHandlers render the right declaration / literal / etc.
+Each test bundle in data/tests/{id}.json carries a signature whose
+parameter and return types are drawn from this enum. Per-language
+converter libraries (Python/Java/C++ runtimes) map each canonical type
+into the native representation for that language.
 
-The data migration in scripts/migrate_problem_types.py infers these from
-the existing per-language strings; this module is the central registry.
+Bit-width is encoded explicitly in the integer/float types (INT32 vs
+INT64, FLOAT64). Python ints are arbitrary precision so both INT32 and
+INT64 round-trip through the same native `int`; the distinction only
+matters in compiled languages where the converter picks `int`/`long` or
+`int32_t`/`int64_t`.
 
-Reference-type semantics:
-    TreeNode and ListNode are *always nullable* — Python uses
-    Optional[...], C++ uses pointers (which are nullable), Java/JS
-    can hold null, Rust uses Option<...>. We don't model an explicit
-    optional variant; nullability is implicit in the type.
+TREE_NODE / LIST_NODE / LIST_NODE_ARRAY are always nullable in
+semantics — Python uses Optional[...], C++ uses pointers, Java/JS can
+hold null. We don't model an explicit optional variant; nullability is
+implicit in the type.
 """
 
 from enum import Enum
 
 
 class CanonicalType(str, Enum):
-    """Language-agnostic type identifiers used by problem signatures."""
+    """Language-agnostic type identifiers used by test bundle signatures."""
 
     # Primitives
-    INT = "INT"
-    LONG = "LONG"
-    DOUBLE = "DOUBLE"
+    INT32 = "INT32"
+    INT64 = "INT64"
+    FLOAT64 = "FLOAT64"
     BOOL = "BOOL"
     CHAR = "CHAR"
     STRING = "STRING"
     VOID = "VOID"
 
     # 1-D arrays
-    INT_ARRAY = "INT_ARRAY"
-    LONG_ARRAY = "LONG_ARRAY"
-    DOUBLE_ARRAY = "DOUBLE_ARRAY"
+    INT32_ARRAY = "INT32_ARRAY"
+    INT64_ARRAY = "INT64_ARRAY"
+    FLOAT64_ARRAY = "FLOAT64_ARRAY"
     BOOL_ARRAY = "BOOL_ARRAY"
     CHAR_ARRAY = "CHAR_ARRAY"
     STRING_ARRAY = "STRING_ARRAY"
 
     # 2-D arrays (matrices / grids)
-    INT_MATRIX = "INT_MATRIX"
-    LONG_MATRIX = "LONG_MATRIX"
+    INT32_MATRIX = "INT32_MATRIX"
+    INT64_MATRIX = "INT64_MATRIX"
     CHAR_MATRIX = "CHAR_MATRIX"
     STRING_MATRIX = "STRING_MATRIX"
 
@@ -55,6 +57,7 @@ class CanonicalType(str, Enum):
 
     @classmethod
     def _missing_(cls, value):
+        """Return UNKNOWN for unrecognized type strings."""
         return cls.UNKNOWN
 
     @classmethod

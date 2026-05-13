@@ -9,7 +9,6 @@ from html import unescape
 
 from bytedojo.core.models.code_language import CodeLanguage
 from bytedojo.core.models.problem import Problem
-from bytedojo.core.models.test_case import TestCase
 from bytedojo.core.formatters.base import BaseFormatter
 from bytedojo.core.logger import get_logger
 
@@ -25,7 +24,6 @@ class FormatContext:
     """
     code: str
     description: str
-    test_cases: List[TestCase]  # Pre-parsed test cases
 
     # Extracted metadata (populated lazily)
     class_name: Optional[str] = None
@@ -292,12 +290,11 @@ class PythonFormatter(BaseFormatter):
             code_template = self._get_python_code(problem)
             description = self._format_description(detail.description)
 
-            # Create context with all metadata and pre-parsed test examples
+            # Create context with all metadata extracted from the code
             ctx = FormatContext(
                 code=code_template,
                 description=detail.description,
-                test_cases=problem.test_cases,
-                _logger=self.logger
+                _logger=self.logger,
             )
 
             # Build final content
@@ -343,89 +340,19 @@ Difficulty: {detail.difficulty}
 '''
 
     def _generate_main_block(self, ctx: FormatContext) -> str:
-        """Generate main block with test examples."""
+        """Generate the `if __name__ == "__main__":` block with a TODO placeholder.
+
+        The full test suite runs via `dojo test`. We only emit a placeholder
+        here so the user has a hook to edit when they want a quick local run.
+        """
         lines = ['if __name__ == "__main__":']
         lines.append(f'    {ctx.instance_name} = {ctx.class_name}()')
         lines.append('')
-
-        if ctx.test_cases:
-            # Show just the first case as a starter; the full suite runs via `dojo test`.
-            for i, example in enumerate(ctx.test_cases[:1], 1):
-                lines.append(f'    # Example {i} (edit me, or run `dojo test` for the full suite)')
-                test_call = self._generate_test_call(ctx, example.input, example.output, i)
-                lines.extend(test_call)
-                lines.append('')
-        else:
-            # Default placeholder
-            lines.append('    # TODO: Add test cases')
-            args = ', '.join(self._get_default_arg(p[1]) for p in ctx.param_info)
-            lines.append(f'    result = {ctx.instance_name}.{ctx.method_name}({args})')
-            lines.append('    print(result)')
-
+        lines.append('    # TODO: edit me, or run `dojo test` for the full suite')
+        args = ', '.join(self._get_default_arg(p[1]) for p in ctx.param_info)
+        lines.append(f'    result = {ctx.instance_name}.{ctx.method_name}({args})')
+        lines.append('    print(result)')
         return '\n'.join(lines)
-
-    def _generate_test_call(self, ctx: FormatContext, input_text: str, output_text: str, index: int) -> List[str]:
-        """Generate Python code for a single test case."""
-        lines = []
-
-        # Parse input variables
-        input_vars = self._parse_input_variables(input_text)
-
-        # Generate variable assignments
-        for param_name, param_type in ctx.param_info:
-            if param_name in input_vars:
-                value = self._convert_to_python_literal(input_vars[param_name])
-                lines.append(f'    {param_name}{index} = {value}')
-
-        # Generate method call
-        args = ', '.join(f'{p[0]}{index}' for p in ctx.param_info if p[0] in input_vars)
-        if not args:
-            args = ', '.join(self._get_default_arg(p[1]) for p in ctx.param_info)
-
-        lines.append(f'    result{index} = {ctx.instance_name}.{ctx.method_name}({args})')
-        lines.append(f'    print(f"Result {index}: {{result{index}}}")')
-
-        if output_text:
-            lines.append(f'    # Expected: {output_text}')
-
-        return lines
-
-    def _parse_input_variables(self, input_text: str) -> Dict[str, str]:
-        """Parse input line like 'nums = [2,7,11,15], target = 9' into dict."""
-        result = {}
-        pattern = r'(\w+)\s*=\s*'
-        var_matches = list(re.finditer(pattern, input_text))
-
-        for i, match in enumerate(var_matches):
-            var_name = match.group(1)
-            start = match.end()
-
-            if i + 1 < len(var_matches):
-                end = var_matches[i + 1].start()
-                value = input_text[start:end].rstrip().rstrip(',').strip()
-            else:
-                value = input_text[start:].strip()
-
-            value = value.rstrip(',').strip()
-            result[var_name] = value
-
-        return result
-
-    def _convert_to_python_literal(self, value: str) -> str:
-        """Convert LeetCode test case value to Python literal."""
-        value = value.strip()
-
-        # Boolean conversion
-        if value.lower() == 'true':
-            return 'True'
-        if value.lower() == 'false':
-            return 'False'
-
-        # null -> None
-        if value.lower() == 'null':
-            return 'None'
-
-        return value
 
     def _get_default_arg(self, param_type: str) -> str:
         """Get default argument value for a Python type."""
