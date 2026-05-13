@@ -83,18 +83,19 @@ def test_from_row_roundtrip():
     assert a.test_output == "Passed: 50/50"
 
 
-def test_from_row_handles_missing_optional_fields():
-    """Optional fields drop to defaults; unknown language string -> UNKNOWN."""
+def test_from_row_with_schema_defaults():
+    """A row matching the schema's column defaults yields the model's defaults."""
     a = Attempt.from_row({
         "problem_id": 5,
         "language": "java",
         "version": 1,
         "status": "ungraded",
         "created_at": "2025-02-01T00:00:00",
+        "test_status": "ungraded",   # column default — always present in DB rows
     })
     assert a.run_count == 0
     assert a.notes == ""
-    assert a.test_status is ProblemStatus.UNGRADED  # row.get(...) or "ungraded"
+    assert a.test_status is ProblemStatus.UNGRADED
     assert a.last_test_run is None
     assert a.test_output is None
 

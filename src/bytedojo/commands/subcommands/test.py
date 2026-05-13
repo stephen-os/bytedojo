@@ -219,6 +219,6 @@ def test(
         click.echo(click.style("  Solution recorded as ERROR", fg='yellow'))
     elif status == 'failed':
         click.echo(click.style("  Solution recorded as FAILED", fg='red'))
-    else:  # untested — ran a subset, all passed, but some were skipped
-        click.echo(click.style("  Solution recorded as UNTESTED", fg='yellow'))
+    else:  # ungraded — ran a subset, all passed, but some were skipped
+        click.echo(click.style("  Solution recorded as UNGRADED", fg='yellow'))
     click.echo("")

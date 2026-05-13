@@ -103,7 +103,7 @@ class TestRunResult:
             return "passed"
         if self.failed_count > 0 or self.error_count > 0:
             return "failed"
-        return "untested"
+        return "ungraded"
 
 
 @dataclass

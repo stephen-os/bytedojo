@@ -44,7 +44,7 @@ class Attempt:
             created_at=datetime.fromisoformat(row["created_at"]),
             run_count=row.get("run_count", 0),
             notes=row.get("notes", "") or "",
-            test_status=ProblemStatus.from_string(row.get("test_status") or "ungraded"),
+            test_status=ProblemStatus.from_string(row["test_status"]),
             last_test_run=last_run,
             test_output=row.get("test_output"),
         )

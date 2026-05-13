@@ -44,7 +44,7 @@ def _apply_migrations(conn: sqlite3.Connection) -> None:
     if not has_column("versioned_attempts", "test_status"):
         cursor.execute(
             "ALTER TABLE versioned_attempts "
-            "ADD COLUMN test_status TEXT DEFAULT 'untested'"
+            "ADD COLUMN test_status TEXT DEFAULT 'ungraded'"
         )
     if not has_column("versioned_attempts", "last_test_run"):
         cursor.execute(
@@ -99,7 +99,7 @@ def create_database_schema(db_path: Path) -> None:
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
             run_count INTEGER DEFAULT 0,
             notes TEXT,
-            test_status TEXT DEFAULT 'untested',
+            test_status TEXT DEFAULT 'ungraded',
             last_test_run TIMESTAMP,
             test_output TEXT,
             UNIQUE(source, problem_id, language, version)
@@ -238,11 +238,8 @@ class Database:
             query += " AND language = ?"
             params.append(language)
         if status:
-            if status == "ungraded":
-                query += " AND test_status IN ('ungraded', 'untested')"
-            else:
-                query += " AND test_status = ?"
-                params.append(status)
+            query += " AND test_status = ?"
+            params.append(status)
 
         query += " ORDER BY CAST(problem_id AS INTEGER) ASC"
 
