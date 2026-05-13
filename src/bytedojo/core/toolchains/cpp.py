@@ -11,7 +11,7 @@ import shutil
 import subprocess
 import sys
 from pathlib import Path
-from typing import List, Optional, Tuple
+from typing import Optional, Tuple
 
 from bytedojo.core.logger import get_logger
 from bytedojo.core.models.code_language import CodeLanguage
@@ -165,28 +165,6 @@ def compile_cpp_source(
     return subprocess.run(
         cmd, cwd=build_dir, capture_output=True, text=True,
     )
-
-
-def build_cpp_compile_command(
-    compiler: str,
-    source: Path,
-    output: Path,
-) -> List[str]:
-    """
-    Compile command line for a directly-invokable compiler.
-
-    Kept as a thin shim for callers that don't need the vcvars wrapping
-    (raises if invoked for "msvc" — those callers should use
-    compile_cpp_source() instead).
-    """
-    if compiler == "msvc":
-        raise ValueError("Use compile_cpp_source() for MSVC-via-vswhere compilation.")
-    if compiler == "cl":
-        return [
-            "cl", "/nologo", "/std:c++17", "/O2", "/EHsc",
-            f"/Fe:{output}", str(source),
-        ]
-    return [compiler, "-std=c++17", "-O2", "-o", str(output), str(source)]
 
 
 class CppToolchain(Toolchain):
