@@ -1,18 +1,28 @@
 """
 Shared pytest fixtures for the bytedojo test suite.
 
-`get_logger()` raises if the global logger hasn't been initialised yet.
-That contract is right for the CLI (main() always calls setup_logger first)
-but inconvenient for unit tests, which import bytedojo modules directly.
-The autouse fixture below initialises the logger once per session so any
-test that ends up calling get_logger() works without ceremony.
+- `_initialise_logger` (session, autouse): sets up the global logger so
+  `get_logger()` works for direct-import tests. Production callers always
+  go through main()'s explicit setup_logger; this fills the gap for tests.
+
+- `repo` (function): builds a fresh, fully-initialised Repository at
+  tmp_path. Each test gets its own sqlite DB + .dojo / problems / build
+  directories, so service tests can exercise real DB writes and file
+  placement without mocks.
 """
 
 import pytest
 
 from bytedojo.core.logger import setup_logger
+from bytedojo.core.repository import Repository
 
 
 @pytest.fixture(scope="session", autouse=True)
 def _initialise_logger():
     setup_logger(debug=False)
+
+
+@pytest.fixture
+def repo(tmp_path) -> Repository:
+    """Fresh Repository at tmp_path — real sqlite, real filesystem layout."""
+    return Repository.create(tmp_path)
