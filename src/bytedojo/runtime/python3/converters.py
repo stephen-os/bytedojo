@@ -14,29 +14,23 @@ from typing import Any, Dict, List, Optional
 
 
 # ----------------------------------------------------------------------------
-# LeetCode reference types — duck-typed against whatever the user's
-# Solution returns. The user's solution.py often defines its own
-# TreeNode / ListNode with the same shape; both work interchangeably
-# because we only access `.val`, `.left`, `.right`, `.next`.
+# LeetCode reference types — TreeNode / ListNode definitions live in the
+# user's solution.py (placed there by `dojo fetch` from the problem's
+# starter snippet). We lazy-import them only when a case actually needs
+# them so primitive-only problems don't pay for the import. Out-side
+# serialization uses duck typing (`.val`, `.left`, `.right`, `.next`).
 # ----------------------------------------------------------------------------
 
-class TreeNode:
-    """Binary tree node — matches LeetCode's standard shape."""
-
-    def __init__(self, val: int = 0,
-                 left: Optional["TreeNode"] = None,
-                 right: Optional["TreeNode"] = None):
-        self.val = val
-        self.left = left
-        self.right = right
+def _tree_node_cls():
+    """Pull TreeNode from the user's solution. Raises if not defined."""
+    from solution import TreeNode  # noqa: WPS433 — intentional lazy import
+    return TreeNode
 
 
-class ListNode:
-    """Singly-linked list node — matches LeetCode's standard shape."""
-
-    def __init__(self, val: int = 0, next: Optional["ListNode"] = None):
-        self.val = val
-        self.next = next
+def _list_node_cls():
+    """Pull ListNode from the user's solution. Raises if not defined."""
+    from solution import ListNode  # noqa: WPS433 — intentional lazy import
+    return ListNode
 
 
 # ----------------------------------------------------------------------------
@@ -80,13 +74,14 @@ def parse_value(value: Any, canonical_type: str) -> Any:
     raise ValueError(f"Unknown canonical type: {t}")
 
 
-def build_tree(level_order: Optional[List[Any]]) -> Optional[TreeNode]:
-    """Build a binary tree from level-order encoding (null = missing child)."""
+def build_tree(level_order: Optional[List[Any]]) -> Any:
+    """Build a binary tree from level-order encoding using the user's TreeNode."""
     if not level_order:
         return None
     if level_order[0] is None:
         return None
 
+    TreeNode = _tree_node_cls()
     root = TreeNode(level_order[0])
     queue = deque([root])
     i = 1
@@ -108,10 +103,11 @@ def build_tree(level_order: Optional[List[Any]]) -> Optional[TreeNode]:
     return root
 
 
-def build_list(flat: Optional[List[Any]]) -> Optional[ListNode]:
-    """Build a linked list from a flat value list (empty/missing → None)."""
+def build_list(flat: Optional[List[Any]]) -> Any:
+    """Build a linked list from a flat value list using the user's ListNode."""
     if not flat:
         return None
+    ListNode = _list_node_cls()
     head = ListNode(flat[0])
     cur = head
     for v in flat[1:]:
