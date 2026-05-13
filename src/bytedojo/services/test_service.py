@@ -40,7 +40,6 @@ from bytedojo.runtime.java import (
     RUNTIME_DIR as JAVA_RUNTIME_DIR,
     TEMPLATE_NAME as JAVA_TEMPLATE_NAME,
 )
-from bytedojo.runtime.java._assembly import AssemblyError, assemble as assemble_java
 from bytedojo.runtime.python3 import RUNTIME_DIR as PYTHON_RUNTIME_DIR
 from bytedojo.services.problem_service import resolve_solution_path
 
@@ -231,7 +230,7 @@ class TestService:
                 solution_src=file_path,
                 problem_id=problem.problem_id,
             )
-        except (OSError, AssemblyError, CppAssemblyError) as e:
+        except (OSError, CppAssemblyError) as e:
             return self._error(problem, f"Failed to prepare build dir: {e}", **ctx)
 
         # Compile (if needed) and invoke the language runtime
@@ -312,15 +311,26 @@ class TestService:
 
         if language == CodeLanguage.PYTHON:
             shutil.copyfile(solution_src, build_dir / "solution.py")
+            # Carry sibling node-class modules (tree_node.py / list_node.py)
+            # from the solution dir into the build dir so the runner's
+            # converters can `from tree_node import TreeNode` etc.
+            for name in ("tree_node.py", "list_node.py", "node.py"):
+                sibling = solution_src.parent / name
+                if sibling.exists():
+                    shutil.copyfile(sibling, build_dir / name)
             shutil.copyfile(PYTHON_RUNTIME_DIR / "runner.py", build_dir / "runner.py")
             shutil.copyfile(PYTHON_RUNTIME_DIR / "converters.py", build_dir / "converters.py")
             return
 
         if language == CodeLanguage.JAVA:
-            template = (JAVA_RUNTIME_DIR / JAVA_TEMPLATE_NAME).read_text(encoding="utf-8")
-            user_source = solution_src.read_text(encoding="utf-8")
-            assembled = assemble_java(template, user_source)
-            (build_dir / "BytedojoRunner.java").write_text(assembled, encoding="utf-8")
+            # Copy the standalone runner template into the build dir
+            shutil.copyfile(JAVA_RUNTIME_DIR / JAVA_TEMPLATE_NAME, build_dir / "BytedojoRunner.java")
+            # User's solution and any sibling node files compile as siblings
+            shutil.copyfile(solution_src, build_dir / solution_src.name)
+            for name in ("TreeNode.java", "ListNode.java", "Node.java"):
+                sibling = solution_src.parent / name
+                if sibling.exists():
+                    shutil.copyfile(sibling, build_dir / name)
             return
 
         if language == CodeLanguage.CPP:
@@ -329,6 +339,13 @@ class TestService:
             bundle = json.loads(get_test_file(problem_id).read_text(encoding="utf-8"))
             assembled = assemble_cpp(template, user_source, bundle)
             (build_dir / "bytedojo_runner.cpp").write_text(assembled, encoding="utf-8")
+            # Carry sibling node-class headers (tree_node.hpp / list_node.hpp)
+            # into the build dir so the user's #include "list_node.hpp" in
+            # solution.cpp resolves at compile time.
+            for name in ("tree_node.hpp", "list_node.hpp", "node.hpp"):
+                sibling = solution_src.parent / name
+                if sibling.exists():
+                    shutil.copyfile(sibling, build_dir / name)
             return
 
         raise RuntimeError(f"_stage_runtime called for unsupported language: {language}")
@@ -349,9 +366,11 @@ class TestService:
             return proc.stdout, proc.stderr, None
 
         if language == CodeLanguage.JAVA:
-            # Compile first
+            # Compile every .java file in the build dir together — the
+            # runner, the user's solution, and any sibling node classes.
+            java_files = sorted(str(p) for p in build_dir.glob("*.java"))
             compile_proc = subprocess.run(
-                ["javac", "-d", str(build_dir), str(build_dir / "BytedojoRunner.java")],
+                ["javac", "-d", str(build_dir), *java_files],
                 cwd=build_dir,
                 capture_output=True, text=True,
             )
@@ -359,7 +378,6 @@ class TestService:
                 msg = (compile_proc.stderr or compile_proc.stdout or "").strip()
                 return "", compile_proc.stderr, msg or f"javac exited {compile_proc.returncode}"
 
-            # Then run
             run_proc = subprocess.run(
                 ["java", "-cp", str(build_dir), "BytedojoRunner"],
                 cwd=build_dir,

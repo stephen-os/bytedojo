@@ -11,7 +11,7 @@ still gets a placeable file — just without the description header /
 imports / runnable main() the formatted version provides.
 """
 
-from typing import Optional
+from typing import Dict, Optional
 
 from bytedojo.core.formatters.base import BaseFormatter
 from bytedojo.core.formatters.cpp import CppFormatter
@@ -36,7 +36,7 @@ def get_formatter(language: CodeLanguage) -> Optional[BaseFormatter]:
 
 def format_problem(problem: Problem, language: CodeLanguage) -> str:
     """
-    Render a problem to its placement-ready file content for `language`.
+    Render a problem to its placement-ready solution-file content for `language`.
 
     Uses the registered formatter when one exists; otherwise falls back
     to the raw starter snippet from the problem JSON (so Rust / Go / JS
@@ -48,6 +48,21 @@ def format_problem(problem: Problem, language: CodeLanguage) -> str:
     return problem.get_snippet(language) or ""
 
 
+def extra_files_for(problem: Problem, language: CodeLanguage) -> Dict[str, str]:
+    """
+    Sibling files to place alongside the main solution file.
+
+    Returns `{filename: content}` — currently used to emit per-language
+    node-class files (e.g. `tree_node.py` / `TreeNode.java` /
+    `tree_node.hpp`) that the user's solution imports/includes. Empty
+    when the problem doesn't need them or the language has no formatter.
+    """
+    formatter = get_formatter(language)
+    if formatter is None:
+        return {}
+    return formatter.extra_files(problem)
+
+
 __all__ = [
     'BaseFormatter',
     'PythonFormatter',
@@ -55,4 +70,5 @@ __all__ = [
     'CppFormatter',
     'get_formatter',
     'format_problem',
+    'extra_files_for',
 ]

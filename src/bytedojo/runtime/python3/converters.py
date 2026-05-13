@@ -14,22 +14,24 @@ from typing import Any, Dict, List, Optional
 
 
 # ----------------------------------------------------------------------------
-# LeetCode reference types — TreeNode / ListNode definitions live in the
-# user's solution.py (placed there by `dojo fetch` from the problem's
-# starter snippet). We lazy-import them only when a case actually needs
-# them so primitive-only problems don't pay for the import. Out-side
-# serialization uses duck typing (`.val`, `.left`, `.right`, `.next`).
+# LeetCode reference types — TreeNode / ListNode definitions live in their
+# own sibling modules (tree_node.py / list_node.py) placed by `dojo fetch`
+# whenever the problem needs them. The user's solution.py imports them the
+# same way we do, so node-class customizations carry across both sides.
+#
+# Lazy-import only fires when a case actually uses TREE_NODE / LIST_NODE;
+# primitive-only problems never resolve the node modules.
 # ----------------------------------------------------------------------------
 
 def _tree_node_cls():
-    """Pull TreeNode from the user's solution. Raises if not defined."""
-    from solution import TreeNode  # noqa: WPS433 — intentional lazy import
+    """Pull TreeNode from the sibling tree_node module. Raises if missing."""
+    from tree_node import TreeNode  # noqa: WPS433 — intentional lazy import
     return TreeNode
 
 
 def _list_node_cls():
-    """Pull ListNode from the user's solution. Raises if not defined."""
-    from solution import ListNode  # noqa: WPS433 — intentional lazy import
+    """Pull ListNode from the sibling list_node module. Raises if missing."""
+    from list_node import ListNode  # noqa: WPS433 — intentional lazy import
     return ListNode
 
 

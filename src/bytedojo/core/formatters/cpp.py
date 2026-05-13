@@ -4,7 +4,7 @@ C++ formatter for LeetCode problems with intelligent test generation.
 
 import re
 from dataclasses import dataclass, field
-from typing import List, Tuple, Optional, Set
+from typing import Dict, List, Tuple, Optional, Set
 
 from bytedojo.core.models.code_language import CodeLanguage
 from bytedojo.core.models.problem import Problem
@@ -14,6 +14,15 @@ from bytedojo.core.formatters.utils import (
     get_cpp_default,
 )
 from bytedojo.core.logger import get_logger
+
+
+#: Map of node class name → C++ header file stem. Determines both the
+#: sibling filename and the `#include` line emitted in solution.cpp.
+_CPP_NODE_HEADER: Dict[str, str] = {
+    "TreeNode": "tree_node",
+    "ListNode": "list_node",
+    "Node":     "node",
+}
 
 
 # =========================================================================
@@ -65,20 +74,12 @@ class CppFormatContext:
     # ========================================================================
 
     def _extract_class_name(self) -> str:
-        """Extract the main class name — prefer Solution, skip node helpers.
-
-        After _uncomment_node_classes runs, TreeNode/ListNode appear as real
-        struct declarations near the top of the file. A naive `class X` regex
-        would otherwise pick one of those over the user's Solution.
-        """
-        if re.search(r'\bclass\s+Solution\b', self.code):
-            self._logger.debug("Found class name: Solution")
-            return 'Solution'
-        for match in re.finditer(r'\b(?:class|struct)\s+(\w+)\s*[{:<]', self.code):
-            name = match.group(1)
-            if name not in ('TreeNode', 'ListNode', 'Node'):
-                self._logger.debug(f"Found class name: {name}")
-                return name
+        """Extract the main class name from the snippet."""
+        match = re.search(r'\b(?:class|struct)\s+(\w+)\s*[{:<]', self.code)
+        if match:
+            class_name = match.group(1)
+            self._logger.debug(f"Found class name: {class_name}")
+            return class_name
         self._logger.warning("No primary class found, defaulting to 'Solution'")
         return 'Solution'
 
@@ -362,7 +363,14 @@ using namespace std;
     # ========================================================================
 
     def _get_cpp_code(self, problem: Problem) -> str:
-        """Extract and process C++ code."""
+        """Extract C++ code, lifting embedded node structs into siblings.
+
+        LeetCode wraps `TreeNode` / `ListNode` definitions in Doxygen
+        blocks at the top of the snippet. We *remove* those blocks from
+        the snippet (they become `tree_node.hpp` / `list_node.hpp`
+        siblings via `extra_files()`) and prepend `#include "..."`
+        directives so the user's solution.cpp wires up.
+        """
         detail = problem.problem_detail
         self.logger.debug(f"Extracting C++ code for problem #{detail.id}")
 
@@ -371,35 +379,51 @@ using namespace std;
             self.logger.warning(f"No C++ snippet found for problem #{detail.id}")
             return "// No C++ template available"
 
-        return self._uncomment_node_classes(code)
+        stripped, extracted = self._extract_node_classes(code)
+        if extracted:
+            include_lines = [
+                f'#include "{_CPP_NODE_HEADER.get(name, name.lower())}.hpp"'
+                for name in extracted
+            ]
+            stripped = self._inject_node_includes(stripped, include_lines)
+        return stripped
 
-    def _uncomment_node_classes(self, code: str) -> str:
-        """Unwrap LeetCode-style Doxygen blocks that embed node-struct defs.
+    def extra_files(self, problem: Problem) -> Dict[str, str]:
+        """Emit one `<snake>.hpp` per node struct found in the snippet."""
+        snippet = problem.get_snippet(CodeLanguage.CPP) or ""
+        _, extracted = self._extract_node_classes(snippet)
+        files: Dict[str, str] = {}
+        for name, body in extracted.items():
+            stem = _CPP_NODE_HEADER.get(name, name.lower())
+            guard = stem.upper() + "_HPP_"
+            files[f"{stem}.hpp"] = (
+                f"#ifndef {guard}\n"
+                f"#define {guard}\n\n"
+                f"{body}\n"
+                f"#endif  // {guard}\n"
+            )
+        return files
 
-        LeetCode C++ starter snippets wrap TreeNode / ListNode like::
+    def _extract_node_classes(self, code: str) -> Tuple[str, Dict[str, str]]:
+        """Pull Doxygen-wrapped node-struct definitions out of the snippet.
 
-            /**
-             * Definition for singly-linked list.
-             * struct ListNode {
-             *     int val;
-             *     ListNode *next;
-             *     ListNode() : val(0), next(nullptr) {}
-             *     ...
-             * };
-             */
-
-        Becomes a bare `struct ListNode { ... };`. Only blocks whose body
-        actually contains `* struct X { ... }` are unwrapped — plain
-        Doxygen describing the user's Solution stays untouched.
+        Returns (stripped_code, {class_name: body}). `body` is the bare
+        `struct X { ... };` declaration ready to drop into its own .hpp
+        file. The stripped code has the Doxygen block removed entirely.
         """
-        block_re = re.compile(r'/\*\*(.*?)\*/', re.DOTALL)
+        block_re = re.compile(r'/\*\*(.*?)\*/\s*\n?', re.DOTALL)
+        extracted: Dict[str, str] = {}
 
         def replacer(match):
             body = match.group(1)
-            if not re.search(r'^\s*\*\s*(?:struct|class)\s+\w+', body, re.MULTILINE):
+            class_match = re.search(
+                r'^\s*\*\s*(?:struct|class)\s+(\w+)\b', body, re.MULTILINE
+            )
+            if not class_match:
                 return match.group(0)
+            class_name = class_match.group(1)
 
-            out_lines = []
+            out_lines: List[str] = []
             for raw in body.split('\n'):
                 stripped = raw.lstrip()
                 if not stripped.startswith('*'):
@@ -411,12 +435,28 @@ using namespace std;
                     continue
                 out_lines.append(content.rstrip())
 
+            extracted[class_name] = '\n'.join(out_lines).rstrip() + '\n'
             self.logger.debug(
-                f"Uncommented C++ Doxygen node-class block ({len(out_lines)} lines)"
+                f"Extracted Doxygen node-class block: {class_name} "
+                f"({len(out_lines)} lines)"
             )
-            return '\n'.join(out_lines)
+            return ''
 
-        return block_re.sub(replacer, code)
+        new_code = block_re.sub(replacer, code)
+        return new_code, extracted
+
+    def _inject_node_includes(self, code: str, include_lines: List[str]) -> str:
+        """Drop node-class #include directives in after the existing #include block."""
+        lines = code.split('\n')
+        last_include_idx = -1
+        for i, line in enumerate(lines):
+            if line.lstrip().startswith('#include'):
+                last_include_idx = i
+        if last_include_idx >= 0:
+            lines[last_include_idx + 1:last_include_idx + 1] = include_lines
+        else:
+            lines = include_lines + lines
+        return '\n'.join(lines)
 
     def _inject_default_return(self, code: str, return_type: str) -> str:
         """

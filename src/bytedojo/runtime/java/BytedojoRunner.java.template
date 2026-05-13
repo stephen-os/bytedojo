@@ -1,16 +1,17 @@
 /*
  * Universal Java test runner for ByteDojo.
  *
- * Single-file: TestService substitutes the user's Solution (and any
- * TreeNode/ListNode they have) into the substitution marker at the
- * bottom of this template, then compiles + runs via
- * `javac BytedojoRunner.java; java BytedojoRunner`. Reads cases.json
- * from the cwd, dispatches each case through reflection, emits a
- * sentinel-wrapped JSON envelope.
+ * Standalone — no substitution at test time. TestService copies this
+ * file into the build dir alongside the user's solution.java and any
+ * sibling node-class files (TreeNode.java / ListNode.java), then
+ * compiles all of them together (`javac *.java`) and launches
+ * `java BytedojoRunner`. Reads cases.json from the cwd, dispatches
+ * each case through reflection, emits a sentinel-wrapped JSON envelope.
  *
- * TreeNode / ListNode access is reflective so the runner compiles
- * cleanly even when the user's solution doesn't declare those
- * classes (primitive-only problems never resolve them).
+ * Solution / TreeNode / ListNode access is reflective so the runner
+ * compiles cleanly even when the user's solution doesn't declare
+ * those classes (primitive-only problems never resolve them at
+ * runtime; the lookup only fires for cases that need them).
  */
 
 import java.io.IOException;
@@ -1003,5 +1004,3 @@ public class BytedojoRunner {
         }
     }
 }
-
-{{BYTEDOJO_SOLUTION}}

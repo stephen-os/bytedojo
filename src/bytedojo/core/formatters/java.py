@@ -66,21 +66,13 @@ class JavaFormatContext:
     # ========================================================================
 
     def _extract_class_name(self) -> str:
-        """Extract the main class name — prefer Solution, skip node helpers.
-
-        After _uncomment_node_classes runs, TreeNode/ListNode appear as real
-        class declarations near the top of the file. A naive `class X` regex
-        would pick those over the user's Solution class.
-        """
-        if re.search(r'\bclass\s+Solution\b', self.code):
-            self._logger.debug("Found class name: Solution")
-            return 'Solution'
-        for match in re.finditer(r'\bclass\s+(\w+)\s*[{<]', self.code):
-            name = match.group(1)
-            if name not in ('TreeNode', 'ListNode', 'Node'):
-                self._logger.debug(f"Found class name: {name}")
-                return name
-        self._logger.warning("No primary class found, defaulting to 'Solution'")
+        """Extract the main class name from the snippet."""
+        match = re.search(r'\bclass\s+(\w+)\s*[{<]', self.code)
+        if match:
+            class_name = match.group(1)
+            self._logger.debug(f"Found class name: {class_name}")
+            return class_name
+        self._logger.warning("No class found, defaulting to 'Solution'")
         return 'Solution'
 
     def _extract_method_name(self) -> str:
@@ -320,7 +312,15 @@ class JavaFormatter(BaseFormatter):
     # ========================================================================
 
     def _get_java_code(self, problem: Problem) -> str:
-        """Extract and process Java code."""
+        """Extract Java code, pulling embedded node classes out.
+
+        LeetCode wraps `TreeNode` / `ListNode` definitions in JavaDoc on
+        top of the starter snippet. We *remove* those blocks from the
+        snippet (they become their own `ListNode.java` / `TreeNode.java`
+        siblings via `extra_files()`). The user's `Solution.java` stays
+        focused on Solution; node classes follow Java's one-public-class-
+        per-file convention and `javac *.java` picks them up alongside.
+        """
         detail = problem.problem_detail
         self.logger.debug(f"Extracting Java code for problem #{detail.id}")
 
@@ -329,37 +329,37 @@ class JavaFormatter(BaseFormatter):
             self.logger.warning(f"No Java snippet found for problem #{detail.id}")
             return "// No Java template available"
 
-        return self._uncomment_node_classes(code)
+        stripped, _ = self._extract_node_classes(code)
+        return stripped
 
-    def _uncomment_node_classes(self, code: str) -> str:
-        """Unwrap LeetCode-style JavaDoc blocks that embed class definitions.
+    def extra_files(self, problem: Problem) -> Dict[str, str]:
+        """Emit one `<ClassName>.java` per node class found in the snippet."""
+        snippet = problem.get_snippet(CodeLanguage.JAVA) or ""
+        _, extracted = self._extract_node_classes(snippet)
+        return {f"{name}.java": body for name, body in extracted.items()}
 
-        LeetCode starter snippets wrap TreeNode / ListNode like::
+    def _extract_node_classes(self, code: str) -> Tuple[str, Dict[str, str]]:
+        """Pull JavaDoc-wrapped node-class definitions out of the snippet.
 
-            /**
-             * Definition for a binary tree node.
-             * public class TreeNode {
-             *     int val;
-             *     ...
-             * }
-             */
-
-        Becomes a bare `class TreeNode { ... }`. The `public` modifier is
-        stripped because BytedojoRunner is the file's only public class once
-        the runtime assembles the final source; multiple `public class X`
-        declarations in one file don't compile.
-
-        Plain JavaDoc on the user's Solution is untouched — we only unwrap
-        blocks that actually contain `* public class X` inside.
+        Returns (stripped_code, {class_name: body}). The `body` is a
+        complete `public class X { ... }` declaration ready to drop into
+        its own .java file. The stripped code has the JavaDoc block
+        replaced by nothing — solution.java becomes Solution-only.
         """
-        block_re = re.compile(r'/\*\*(.*?)\*/', re.DOTALL)
+        block_re = re.compile(r'/\*\*(.*?)\*/\s*\n?', re.DOTALL)
+        extracted: Dict[str, str] = {}
 
         def replacer(match):
             body = match.group(1)
-            if not re.search(r'^\s*\*\s*public\s+class\s+\w+', body, re.MULTILINE):
+            class_match = re.search(
+                r'^\s*\*\s*public\s+class\s+(\w+)\b', body, re.MULTILINE
+            )
+            if not class_match:
+                # Plain JavaDoc — leave it alone.
                 return match.group(0)
+            class_name = class_match.group(1)
 
-            out_lines = []
+            out_lines: List[str] = []
             for raw in body.split('\n'):
                 stripped = raw.lstrip()
                 if not stripped.startswith('*'):
@@ -367,22 +367,20 @@ class JavaFormatter(BaseFormatter):
                 content = stripped[1:]
                 if content.startswith(' '):
                     content = content[1:]
-                # Drop the descriptive header line(s)
                 if content.startswith('Definition for') or not content.strip():
                     continue
-                # Strip the leading `public ` so we don't conflict with
-                # BytedojoRunner being the file's public class at test time.
-                if content.lstrip().startswith('public class '):
-                    leading = content[:len(content) - len(content.lstrip())]
-                    content = leading + content.lstrip()[len('public '):]
                 out_lines.append(content.rstrip())
 
+            extracted[class_name] = '\n'.join(out_lines).rstrip() + '\n'
             self.logger.debug(
-                f"Uncommented JavaDoc node-class block ({len(out_lines)} lines)"
+                f"Extracted JavaDoc node-class block: {class_name} "
+                f"({len(out_lines)} lines)"
             )
-            return '\n'.join(out_lines)
+            # Empty replacement — the block is gone from the source entirely.
+            return ''
 
-        return block_re.sub(replacer, code)
+        new_code = block_re.sub(replacer, code)
+        return new_code, extracted
 
     def _inject_default_return(self, code: str, return_type: str) -> str:
         """

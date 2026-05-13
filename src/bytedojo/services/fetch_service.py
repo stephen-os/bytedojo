@@ -10,7 +10,7 @@ from pathlib import Path
 from typing import Optional, List
 
 from bytedojo.services import problem_service
-from bytedojo.core.formatters import format_problem
+from bytedojo.core.formatters import extra_files_for, format_problem
 from bytedojo.core.logger import get_logger
 from bytedojo.core.models.attempt import Attempt
 from bytedojo.core.models.code_language import CodeLanguage
@@ -189,6 +189,27 @@ class FetchService:
     # Private helpers for each mode
     # ------------------------------------------------------------------
 
+    def _place_with_extras(
+        self,
+        repo: Repository,
+        problem: Problem,
+        language: CodeLanguage,
+        target_path: Path,
+    ) -> None:
+        """
+        Write the formatted solution file + any sibling files the formatter
+        asks for (e.g. `tree_node.py`, `ListNode.java`, `list_node.hpp`).
+
+        Sibling files land next to the solution and follow the same
+        overwrite semantics — fresh version dirs / `--version N`
+        rewrites take care of "don't clobber my work" via the upstream
+        version flow rather than per-file existence checks.
+        """
+        repo.place_problem(target_path, format_problem(problem, language))
+        sibling_dir = target_path.parent
+        for filename, content in extra_files_for(problem, language).items():
+            repo.place_problem(sibling_dir / filename, content)
+
     def _place_scratch(
         self,
         repo: Repository,
@@ -200,7 +221,7 @@ class FetchService:
         target = custom_path / problem.get_folder_name()
         solution_path = target / problem.get_solution_filename(language)
 
-        repo.place_problem(solution_path, format_problem(problem, language))
+        self._place_with_extras(repo, problem, language, solution_path)
 
         self.logger.info(
             f"fetch_service: placed #{problem.problem_detail.id} "
@@ -237,7 +258,7 @@ class FetchService:
                 skip_reason=f"v{version} not found at {target}",
             )
 
-        repo.place_problem(target, format_problem(problem, language))
+        self._place_with_extras(repo, problem, language, target)
 
         self.logger.info(
             f"fetch_service: refetched #{problem.problem_detail.id} "
@@ -278,7 +299,7 @@ class FetchService:
         # Register and place
         attempt: Attempt = repo.register_attempt(problem, language)
         target = repo.attempt_path(problem, language, attempt.version)
-        repo.place_problem(target, format_problem(problem, language))
+        self._place_with_extras(repo, problem, language, target)
 
         self.logger.info(
             f"fetch_service: placed #{problem_id} ({language.value}) "

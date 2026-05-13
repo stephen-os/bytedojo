@@ -12,6 +12,16 @@ from bytedojo.core.models.problem import Problem
 from bytedojo.core.formatters.base import BaseFormatter
 from bytedojo.core.logger import get_logger
 
+
+#: Map of node class name → Python module name (file stem). Determines
+#: where the user's `from X import Y` lands and what the sibling file
+#: gets named.
+_PYTHON_NODE_MODULES: Dict[str, str] = {
+    "TreeNode": "tree_node",
+    "ListNode": "list_node",
+    "Node":     "node",
+}
+
 # =========================================================================
 # Format Context
 # ==========================================================================
@@ -379,7 +389,13 @@ Difficulty: {detail.difficulty}
     # ========================================================================
     
     def _get_python_code(self, problem: Problem) -> str:
-        """Extract and process Python code."""
+        """Extract and process Python code.
+
+        Node-class comment blocks (`# class TreeNode:` / `# class ListNode:`)
+        are *pulled out* of the snippet and replaced with an explicit
+        `from <module> import <ClassName>` line. The extracted bodies are
+        emitted as sibling files by `extra_files()`.
+        """
         detail = problem.problem_detail
         self.logger.debug(f"Extracting Python code for problem #{detail.id}")
 
@@ -387,63 +403,103 @@ Difficulty: {detail.difficulty}
         if not code:
             self.logger.warning(f"No Python3 snippet found for problem #{detail.id}")
             return "# No Python template available"
-        
-        self.logger.debug("Processing code: uncommenting classes, extracting imports")
-        code = self._uncomment_class_definitions(code)
+
+        self.logger.debug("Processing code: extracting node classes, gathering imports")
+        code, extracted = self._extract_node_classes(code)
         imports = self._extract_imports(code)
         code = self._ensure_pass_in_methods(code)
-        
-        if imports:
-            self.logger.debug(f"Adding imports: {imports}")
-            code = imports + '\n\n' + code
-        
+
+        node_import_lines = [
+            f"from {_PYTHON_NODE_MODULES.get(name, name.lower())} import {name}"
+            for name in extracted
+        ]
+        node_imports = "\n".join(node_import_lines)
+
+        preamble = imports
+        if node_imports:
+            preamble = (preamble + "\n" + node_imports) if preamble else node_imports
+
+        if preamble:
+            self.logger.debug(
+                f"Adding imports: {preamble.replace(chr(10), ' | ')}"
+            )
+            code = preamble + "\n\n" + code
+
         return code
+
+    def extra_files(self, problem: Problem) -> Dict[str, str]:
+        """Sibling files: one per extracted node class."""
+        snippet = problem.get_snippet(CodeLanguage.PYTHON) or ""
+        _, extracted = self._extract_node_classes(snippet)
+        return {
+            f"{_PYTHON_NODE_MODULES.get(name, name.lower())}.py": body
+            for name, body in extracted.items()
+        }
     
-    def _uncomment_class_definitions(self, code: str) -> str:
-        """Uncomment ListNode, TreeNode, etc."""
-        self.logger.debug("Uncommenting class definitions")
-        
-        lines = code.split('\n')
-        result = []
-        in_comment_block = False
-        comment_block = []
+    def _extract_node_classes(self, code: str) -> Tuple[str, Dict[str, str]]:
+        """Find `# class X:` comment blocks; pull them out of the snippet.
+
+        Returns a tuple of (stripped_code, {class_name: body}). `body` is
+        the unwrapped class definition, ready to be written to its own
+        module file. `stripped_code` is the snippet with the comment
+        blocks removed entirely (replaced by an `import` line back in the
+        caller).
+        """
+        self.logger.debug("Extracting commented node-class definitions")
+
+        lines = code.split("\n")
+        result: List[str] = []
+        extracted: Dict[str, str] = {}
+
+        in_block = False
+        block_lines: List[str] = []
+        block_class: Optional[str] = None
         base_indent = 0
-        
+
         for line in lines:
             stripped = line.strip()
-            
-            if stripped.startswith('# class ') and ':' in stripped:
-                self.logger.debug(f"Found commented class: {stripped}")
-                in_comment_block = True
+
+            if not in_block and stripped.startswith("# class ") and ":" in stripped:
+                in_block = True
                 base_indent = len(line) - len(line.lstrip())
-                uncommented = line[base_indent:].lstrip('#').lstrip()
-                comment_block = [uncommented]
-            elif in_comment_block and stripped.startswith('#'):
+                uncommented = line[base_indent:].lstrip("#").lstrip()
+                match = re.match(r"class\s+(\w+)", uncommented)
+                block_class = match.group(1) if match else "UnknownNode"
+                self.logger.debug(f"Found commented node class: {block_class}")
+                block_lines = [uncommented]
+                # Drop a leading "# Definition for ..." comment that
+                # belongs to this block — it's a leader, not part of
+                # the class declaration, and looks orphaned otherwise.
+                if result and result[-1].lstrip().startswith("# Definition for"):
+                    result.pop()
+            elif in_block and stripped.startswith("#"):
                 line_indent = len(line) - len(line.lstrip())
                 if line_indent >= base_indent:
-                    uncommented_line = line[base_indent:].lstrip('#')
+                    uncommented_line = line[base_indent:].lstrip("#")
                     if uncommented_line and not uncommented_line.isspace():
-                        if uncommented_line.startswith(' '):
+                        if uncommented_line.startswith(" "):
                             uncommented_line = uncommented_line[1:]
-                        comment_block.append(uncommented_line)
+                        block_lines.append(uncommented_line)
                     else:
-                        comment_block.append('')
+                        block_lines.append("")
                 else:
-                    comment_block.append(line.lstrip('#').lstrip())
-            elif in_comment_block and not stripped.startswith('#'):
-                result.extend(comment_block)
-                result.append('')
-                in_comment_block = False
-                comment_block = []
+                    block_lines.append(line.lstrip("#").lstrip())
+            elif in_block and not stripped.startswith("#"):
+                # Block ends — store the extracted definition; the comment
+                # block itself does NOT go into result.
+                if block_class is not None:
+                    extracted[block_class] = "\n".join(block_lines).rstrip() + "\n"
+                in_block = False
+                block_lines = []
+                block_class = None
                 result.append(line)
             else:
                 result.append(line)
-        
-        if comment_block:
-            result.extend(comment_block)
-            result.append('')
-        
-        return '\n'.join(result)
+
+        if in_block and block_class is not None:
+            extracted[block_class] = "\n".join(block_lines).rstrip() + "\n"
+
+        return "\n".join(result), extracted
     
     def _extract_imports(self, code: str) -> str:
         """Extract required typing imports."""

@@ -3,11 +3,13 @@ C++ source assembly: render bytedojo_runner.cpp from template + bundle + user.
 
 TestService calls `assemble(template, user_source, bundle)`. We:
 
-  1. Extract `class Solution {...};` (plus optional `struct TreeNode`,
-     `struct ListNode`) from the user's solution.cpp, dropping any
-     top-level `int main()` (would conflict with the runner's main).
+  1. Extract `class Solution {...};` from the user's solution.cpp.
+     TreeNode / ListNode definitions live in their own sibling header
+     files (tree_node.hpp / list_node.hpp) and reach the assembled
+     runner via the user's existing `#include "..."` directives.
   2. Pull #include directives + `using` declarations out of the user
-     source and merge them into the template's preamble.
+     source and merge them into the template's preamble — including
+     the `#include "list_node.hpp"` etc. that the formatter emitted.
   3. Generate a `run_case` function body from the bundle's signature —
      this is the per-problem piece that knows how to type the args and
      dispatch to the user's method.
@@ -15,7 +17,9 @@ TestService calls `assemble(template, user_source, bundle)`. We:
      template.
 
 Per-problem run_case generation exists because C++ has no runtime
-reflection — every call site must be typed at compile time.
+reflection — every call site must be typed at compile time. The node
+headers are copied into the build dir by TestService so the `#include
+"list_node.hpp"` directives resolve at compile time.
 """
 
 from __future__ import annotations
@@ -26,9 +30,6 @@ from typing import List, Optional
 #: Markers the template uses for substitution.
 SOLUTION_MARKER = "{{BYTEDOJO_SOLUTION}}"
 RUN_CASE_MARKER = "{{BYTEDOJO_RUN_CASE}}"
-
-#: Class declarations we lift from user source, in this order.
-_USER_CLASS_NAMES = ("TreeNode", "ListNode", "Solution")
 
 #: Canonical type → native C++ type. The native type drives both the
 #: parse_value<T> specialization and the local-variable type in run_case.
@@ -71,14 +72,11 @@ def assemble(template: str, user_source: str, bundle: dict) -> str:
             f"Template is missing {SOLUTION_MARKER} or {RUN_CASE_MARKER}."
         )
 
-    # Extract user class blocks (drop their main() if any).
-    blocks: List[str] = []
-    for name in _USER_CLASS_NAMES:
-        block = extract_class(user_source, name)
-        if block is not None:
-            blocks.append(block)
-
-    if not any("class Solution" in b or "struct Solution" in b for b in blocks):
+    # solution.cpp now contains just `class Solution {...};`. Node-class
+    # definitions live in sibling .hpp files and reach the assembled
+    # runner through the user's `#include "list_node.hpp"` directives.
+    solution_block = extract_class(user_source, "Solution")
+    if solution_block is None:
         raise AssemblyError(
             "Could not locate `class Solution` in user solution.cpp."
         )
@@ -91,10 +89,9 @@ def assemble(template: str, user_source: str, bundle: dict) -> str:
     if user_usings:
         merged = _merge_lines_after_prefix(merged, user_usings, "using ")
 
-    solution_block = "\n\n".join(blocks) + "\n"
     run_case_block = generate_run_case(bundle)
 
-    merged = merged.replace(SOLUTION_MARKER, solution_block, 1)
+    merged = merged.replace(SOLUTION_MARKER, solution_block + "\n", 1)
     merged = merged.replace(RUN_CASE_MARKER, run_case_block, 1)
     return merged
 
