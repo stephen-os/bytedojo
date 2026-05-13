@@ -1,7 +1,17 @@
+"""
+ProblemTag - LeetCode topic / algorithm tags attached to a problem.
+
+Values match LeetCode's lowercase, hyphen-separated slugs (e.g.
+`"hash-table"`, `"two-pointers"`). UNKNOWN is the fallback for slugs
+LeetCode has added since we last refreshed this enum — callers can
+filter UNKNOWN out and continue rather than crashing.
+"""
+
 from enum import Enum
 
+
 class ProblemTag(str, Enum):
-    """Problem tag categories."""
+    """LeetCode topic tags. UNKNOWN is the fallback for unrecognized slugs."""
     UNKNOWN = "unknown"
     ARRAY = "array"
     BACKTRACKING = "backtracking"

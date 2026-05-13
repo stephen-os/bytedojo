@@ -7,7 +7,7 @@ from pathlib import Path
 
 from bytedojo.core.repository import Repository
 from bytedojo.core.logger import get_logger
-from bytedojo.core.models.problem_difficulty import ProblemDifficulty, resolve as resolve_difficulty
+from bytedojo.core.models.problem_difficulty import ProblemDifficulty
 from bytedojo.core.models.problem_tag import ProblemTag
 from bytedojo.services import PickService, PickScope
 
@@ -59,8 +59,8 @@ def pick(ctx, difficulty: str | None, tags: tuple, scope: str | None):
     if repo is None:
         raise click.ClickException("Not inside a .dojo repository. Please run 'dojo init' first.")
 
-    # Resolve difficulty
-    diff = resolve_difficulty(difficulty) if difficulty else ProblemDifficulty.NONE
+    # Resolve difficulty (None / "" -> NONE sentinel; unrecognized -> NONE + error)
+    diff = ProblemDifficulty.from_string(difficulty) if difficulty else ProblemDifficulty.NONE
     if difficulty and diff == ProblemDifficulty.NONE:
         raise click.ClickException(f"Unknown difficulty: {difficulty}")
 

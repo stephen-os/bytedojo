@@ -1,5 +1,13 @@
+"""
+CodeLanguage - programming languages supported by ByteDojo.
+
+Enum values match LeetCode's JSON keys (e.g. "python3", "cpp") so a raw
+LeetCode snippet entry can be parsed straight through `CodeLanguage(value)`.
+Unknown / unsupported strings collapse to `UNKNOWN` via `_missing_` so
+callers don't need to wrap parsing in try/except.
+"""
+
 from enum import Enum
-from bytedojo.core.logger import get_logger
 
 
 class CodeLanguage(str, Enum):
@@ -56,15 +64,3 @@ class CodeLanguage(str, Enum):
 
     def __repr__(self):
         return f"CodeLanguage.{self.name}"
-    
-
-def resolve(language: str) -> CodeLanguage:
-    logger = get_logger()
-    logger.debug(f"Resolving language: {language}")
-
-    if not language:
-        logger.debug("No language specified, defaulting to Python")
-        return CodeLanguage.default()
-    lang = CodeLanguage.from_string(language)
-    logger.debug(f"Resolved language: {lang}")
-    return lang

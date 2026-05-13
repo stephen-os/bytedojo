@@ -1,7 +1,16 @@
+"""
+ProblemStatus - completion / test outcome status for an attempt.
+
+Used both as the user-facing grade (PASSED/FAILED/SKIPPED) and as the
+per-version `dojo test` outcome on Attempt. UNGRADED marks an attempt
+that has not been run yet; UNKNOWN is the unrecognized-input fallback.
+"""
+
 from enum import Enum
 
+
 class ProblemStatus(str, Enum):
-    """Problem completion status."""
+    """Completion / test outcome status. UNKNOWN is the unrecognized fallback."""
     UNKNOWN = "unknown"
     PASSED = "passed"
     FAILED = "failed"

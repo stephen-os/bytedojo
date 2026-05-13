@@ -21,29 +21,9 @@ from bytedojo.core.models.review_stats import ReviewStats
 from bytedojo.core.models.review_schedule import ReviewSchedule
 
 
-def _parse_optional_datetime(value) -> Optional[datetime]:
-    """Parse an ISO datetime string from SQLite, tolerating None / empty."""
-    if value is None or value == "":
-        return None
-    if isinstance(value, datetime):
-        return value
-    return datetime.fromisoformat(value)
-
-
 def _row_to_attempt(row: dict) -> Attempt:
-    """Build an Attempt from a versioned_attempts row dict."""
-    return Attempt(
-        problem_id=row["problem_id"],
-        language=CodeLanguage.from_string(row["language"]),
-        version=row["version"],
-        status=ProblemStatus.from_string(row["status"]),
-        created_at=datetime.fromisoformat(row["created_at"]),
-        run_count=row.get("run_count", 0),
-        notes=row.get("notes", "") or "",
-        test_status=ProblemStatus.from_string(row.get("test_status") or "untested"),
-        last_test_run=_parse_optional_datetime(row.get("last_test_run")),
-        test_output=row.get("test_output"),
-    )
+    """Thin wrapper around Attempt.from_row (kept for call-site clarity)."""
+    return Attempt.from_row(row)
 
 
 def _apply_migrations(conn: sqlite3.Connection) -> None:

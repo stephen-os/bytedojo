@@ -1,3 +1,12 @@
+"""
+CodeSnippet - a starter-code snippet for a problem in a specific language.
+
+LeetCode provides a `codeSnippets` array with one entry per supported
+language. We coerce the language string into a `CodeLanguage` in
+`__post_init__` so callers receive a typed value regardless of whether
+the snippet was constructed from raw JSON or in-process.
+"""
+
 from dataclasses import dataclass
 
 from bytedojo.core.models.code_language import CodeLanguage
@@ -5,7 +14,7 @@ from bytedojo.core.models.code_language import CodeLanguage
 
 @dataclass
 class CodeSnippet:
-    """Code snippet in a specific language."""
+    """Starter code for a problem in a specific language."""
     lang: CodeLanguage
     code: str
 
@@ -15,6 +24,3 @@ class CodeSnippet:
 
     def __str__(self):
         return self.code
-
-    def __repr__(self):
-        return f"CodeSnippet(lang={self.lang!r}, code={self.code!r})"

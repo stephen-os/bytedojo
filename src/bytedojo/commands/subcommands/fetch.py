@@ -8,7 +8,7 @@ from pathlib import Path
 from bytedojo.services import problem_service
 from bytedojo.core.repository import Repository
 from bytedojo.core.logger import get_logger
-from bytedojo.core.models.code_language import CodeLanguage, resolve as resolve_language
+from bytedojo.core.models.code_language import CodeLanguage
 from bytedojo.services import FetchService
 
 # Define fetch command
@@ -68,8 +68,8 @@ def fetch(ctx, arguments: tuple, force: bool, version: int | None,
     if force and custom_path is not None:
         raise click.ClickException("--force has no effect with --path (scratch mode never registers)")
 
-    # Resolve language
-    lang = resolve_language(language)
+    # Resolve language (None / "" -> default; unrecognized -> UNKNOWN)
+    lang = CodeLanguage.from_string(language) if language else CodeLanguage.default()
     if lang == CodeLanguage.UNKNOWN:
         raise click.ClickException(f"Unknown language: {language}")
 
