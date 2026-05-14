@@ -10,6 +10,7 @@
   <a href="#installation">Installation</a> •
   <a href="#quick-start">Quick Start</a> •
   <a href="#commands">Commands</a> •
+  <a href="docs/commands/README.md">CLI Reference</a> •
   <a href="#features">Features</a>
 </p>
 
@@ -71,6 +72,9 @@ dojo review
 ```
 
 ## Commands
+
+> Quick summary below. For every flag, every example, and the full
+> behaviour of each command, see the **[CLI Reference](docs/commands/README.md)**.
 
 ### Initialize
 
@@ -154,6 +158,14 @@ dojo settings review-frequency 14    # Bi-weekly
 dojo stats                   # View progress summary
 dojo stats --list            # List all problems
 ```
+
+### Environment Diagnostics
+
+```bash
+dojo support                 # Environment + toolchain status
+```
+
+➡ **Full per-command reference: [docs/commands/](docs/commands/README.md)**
 
 ## Directory Structure
 
