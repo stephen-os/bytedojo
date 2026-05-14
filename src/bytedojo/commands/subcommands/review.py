@@ -51,7 +51,7 @@ def review(ctx, show_all: bool):
 
 def _show_due_reviews(show_all: bool = False):
     """Show problems due for review."""
-    repo = Repository.open(Path.cwd())
+    repo = Repository.find(Path.cwd())
     if repo is None:
         raise click.ClickException("Not inside a .dojo repository. Please run 'dojo init' first.")
 
@@ -127,7 +127,7 @@ def pick(ctx):
     Examples:
       dojo review pick
     """
-    repo = Repository.open(Path.cwd())
+    repo = Repository.find(Path.cwd())
     if repo is None:
         raise click.ClickException("Not inside a .dojo repository. Please run 'dojo init' first.")
 
@@ -225,7 +225,7 @@ def complete(
             "Specify a quality rating: --easy, --good, or --hard"
         )
 
-    repo = Repository.open(Path.cwd())
+    repo = Repository.find(Path.cwd())
     if repo is None:
         raise click.ClickException("Not inside a .dojo repository. Please run 'dojo init' first.")
 
@@ -396,7 +396,7 @@ def _resolve(
     last: bool,
 ):
     """Repo + problem lookup shared by add / snooze / remove."""
-    repo = Repository.open(Path.cwd())
+    repo = Repository.find(Path.cwd())
     if repo is None:
         raise click.ClickException("Not inside a .dojo repository. Please run 'dojo init' first.")
     if language is None:
@@ -448,7 +448,7 @@ def stats():
     Examples:
       dojo review stats
     """
-    repo = Repository.open(Path.cwd())
+    repo = Repository.find(Path.cwd())
     if repo is None:
         raise click.ClickException("Not inside a .dojo repository. Please run 'dojo init' first.")
 

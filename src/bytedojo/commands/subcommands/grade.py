@@ -334,7 +334,7 @@ def grade(
       dojo grade --last                # View/grade last fetched problem
       dojo grade 1 -f --notes "TLE"    # Fail with notes
     """
-    repo = Repository.open(Path.cwd())
+    repo = Repository.find(Path.cwd())
     if repo is None:
         raise click.ClickException("Not inside a .dojo repository. Please run 'dojo init' first.")
 

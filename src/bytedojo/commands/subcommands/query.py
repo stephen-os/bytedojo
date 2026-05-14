@@ -193,7 +193,7 @@ def query(ctx, problem_ids: tuple, difficulty: str, tag: tuple, search: str, pag
                  f"search={search} page={page} per_page={per_page} list_tags={list_tags}")
 
     # Resolve repo
-    repo = Repository.open(Path.cwd())
+    repo = Repository.find(Path.cwd())
     if repo is None:
         raise click.ClickException("Not inside a .dojo repository. Please run 'dojo init' first.")
 

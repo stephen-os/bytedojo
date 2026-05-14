@@ -173,7 +173,7 @@ def test(
       dojo test --name "Two Sum"     # Search by name
       dojo test --last               # Test last fetched problem
     """
-    repo = Repository.open(Path.cwd())
+    repo = Repository.find(Path.cwd())
     if repo is None:
         raise click.ClickException("Not inside a .dojo repository. Please run 'dojo init' first.")
 

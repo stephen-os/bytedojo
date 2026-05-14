@@ -55,7 +55,7 @@ def pick(ctx, difficulty: str | None, tags: tuple, scope: str | None):
     logger = get_logger()
     logger.debug(f"pick: difficulty={difficulty} tags={tags} scope={scope}")
 
-    repo = Repository.open(Path.cwd())
+    repo = Repository.find(Path.cwd())
     if repo is None:
         raise click.ClickException("Not inside a .dojo repository. Please run 'dojo init' first.")
 

@@ -35,7 +35,7 @@ def settings(ctx):
 def _show_settings():
     """Display all current settings."""
     logger = get_logger()
-    repo = Repository.open(Path.cwd())
+    repo = Repository.find(Path.cwd())
     if repo is None:
         raise click.ClickException("Not inside a .dojo repository. Please run 'dojo init' first.")
 
@@ -98,7 +98,7 @@ def default_language(language: str):
       dojo settings default-language cpp       # Use C++ by default
     """
     logger = get_logger()
-    repo = Repository.open(Path.cwd())
+    repo = Repository.find(Path.cwd())
     if repo is None:
         raise click.ClickException("Not inside a .dojo repository. Please run 'dojo init' first.")
 
@@ -123,7 +123,7 @@ def set(key: str, value: str):
       dojo settings set leetcode.organization difficulty
     """
     logger = get_logger()
-    repo = Repository.open(Path.cwd())
+    repo = Repository.find(Path.cwd())
     if repo is None:
         raise click.ClickException("Not inside a .dojo repository. Please run 'dojo init' first.")
 
@@ -163,7 +163,7 @@ def get(key: str):
       dojo settings get leetcode.organization
     """
     logger = get_logger()
-    repo = Repository.open(Path.cwd())
+    repo = Repository.find(Path.cwd())
     if repo is None:
         raise click.ClickException("Not inside a .dojo repository. Please run 'dojo init' first.")
 
@@ -200,7 +200,7 @@ def review_frequency(days: int):
     if days > 365:
         raise click.ClickException("Review frequency cannot exceed 365 days")
 
-    repo = Repository.open(Path.cwd())
+    repo = Repository.find(Path.cwd())
     if repo is None:
         raise click.ClickException("Not inside a .dojo repository. Please run 'dojo init' first.")
 
