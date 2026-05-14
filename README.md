@@ -59,15 +59,18 @@ dojo init
 dojo fetch 1
 
 # 3. Solve the problem in the generated file
-#    problems/0001-two-sum/solution.py
+#    problems/0001-two-sum/python3/v001/solution.py
 
 # 4. Run your solution locally
 dojo run 1
 
-# 5. Submit to LeetCode, then grade your solution
+# 5. Run the bundled test cases
+dojo test 1
+
+# 6. Grade your solution (passing schedules a review)
 dojo grade 1 --pass
 
-# 6. Review problems on schedule
+# 7. Review problems on schedule
 dojo review
 ```
 
@@ -172,18 +175,34 @@ dojo support                 # Environment + toolchain status
 ```
 your-project/
 ├── .dojo/
-│   ├── db.sqlite            # Progress database
-│   ├── settings.json        # Configuration
-│   └── build/               # Compiled artifacts (Java/C++)
-│       └── 0001/
-│           └── Main.class
+│   ├── db.sqlite            # Progress + attempts + reviews
+│   ├── settings.json        # Local preferences
+│   ├── .gitignore           # Excludes build artefacts
+│   ├── README.md            # Describes the layout
+│   └── build/               # Per-problem compile cache (Java/C++)
+│       └── 200_cpp/
+│           └── ...
 ├── problems/
 │   └── 0001-two-sum/
-│       ├── solution.py
-│       ├── solution.java
-│       └── solution.cpp
+│       ├── python3/
+│       │   └── v001/
+│       │       ├── solution.py
+│       │       └── tree_node.py   # sibling files when needed
+│       ├── java/
+│       │   └── v001/
+│       │       ├── Solution.java
+│       │       └── TreeNode.java
+│       └── cpp/
+│           └── v001/
+│               ├── solution.cpp
+│               └── tree_node.hpp
 └── README.md
 ```
+
+Each `dojo fetch` registers a new versioned attempt under
+`problems/<id>-<slug>/<lang>/v{NNN}/`. Refetching with `--version N`
+rewrites that specific version in place; refetching with `--force`
+bumps to the next version so v1's recorded test outcome stays intact.
 
 ## Development
 
