@@ -7,8 +7,8 @@ import click
 from pathlib import Path
 from typing import Optional
 
+from bytedojo import __author__, __version__
 from bytedojo.core.logger import get_logger, setup_logger
-from bytedojo.__init__ import __version__, __author__
 
 from bytedojo.commands.subcommands import init
 from bytedojo.commands.subcommands import stats

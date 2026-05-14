@@ -72,7 +72,13 @@ def _show_summary(db):
 
 def _list_problems(db, verbose: bool, source: str | None, difficulty: str | None):
     """List problems with optional verbosity."""
-    problems = db.list_problems(source=source, difficulty=difficulty)
+    # ProblemDifficulty stores the capitalised form ("Easy"/"Medium"/"Hard");
+    # the CLI accepts lowercase. Normalise here so db.list_problems' exact-
+    # match WHERE clause hits.
+    problems = db.list_problems(
+        source=source,
+        difficulty=difficulty.capitalize() if difficulty else None,
+    )
 
     if not problems:
         click.echo("No problems found matching criteria.")

@@ -21,8 +21,9 @@ def init(ctx, path: Path, force: bool):
     - settings.json for configuration
     - .gitignore to exclude build artifacts
     """
-    if Repository.create(path=Path.cwd(), force=force) is not None:
-        click.secho("Repository initialized successfully.", fg="green")
+    target = path if path is not None else Path.cwd()
+    if Repository.create(path=target, force=force) is not None:
+        click.secho(f"Repository initialized at {target}.", fg="green")
     else:
-        click.secho("Failed to initialize repository.", fg="red")
+        click.secho(f"Failed to initialize repository at {target}.", fg="red")
         raise SystemExit(1)
