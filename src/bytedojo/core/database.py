@@ -612,12 +612,6 @@ class Database:
 
         return [ReviewSchedule.from_row(dict(row)) for row in cursor.fetchall()]
 
-    def remove_review(self, problem_db_id: int) -> None:
-        """Remove a problem from review schedule."""
-        cursor = self.conn.cursor()
-        cursor.execute("DELETE FROM reviews WHERE problem_id = ?", (problem_db_id,))
-        self.conn.commit()
-
     def get_review_stats(self) -> ReviewStats:
         """Get review statistics."""
         cursor = self.conn.cursor()

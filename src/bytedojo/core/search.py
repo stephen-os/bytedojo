@@ -229,9 +229,8 @@ def resolve_problem(
     Raises:
         click.ClickException: If no problems found or repo not initialized
     """
-    repo = Repository(Path.cwd())
-
-    if not repo.is_initialized:
+    repo = Repository.find(Path.cwd())
+    if repo is None or not repo.is_initialized:
         raise click.ClickException("No .dojo repository found. Run 'dojo init' first.")
 
     with Database(repo.db_path) as db:
