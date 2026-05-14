@@ -25,7 +25,6 @@ import traceback
 from pathlib import Path
 
 from converters import compare, display, format_input, parse_value
-from solution import Solution
 
 
 BEGIN = "<<<BYTEDOJO_RESULTS_BEGIN>>>"
@@ -58,7 +57,10 @@ def run():
     return_type = bundle["signature"]["returns"]
     comparison = bundle.get("comparison", "exact")
 
-    # Construct the user's Solution and resolve the target method.
+    # Import the user's solution lazily so SyntaxError / ImportError on the
+    # user side gets caught by the top-level except below and reported
+    # through the results envelope (instead of crashing the module load).
+    from solution import Solution
     solution = Solution()
     if not hasattr(solution, method_name):
         _emit([{
