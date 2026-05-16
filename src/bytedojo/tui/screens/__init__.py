@@ -1,8 +1,7 @@
-"""
-ByteDojo TUI screens.
-"""
+"""ByteDojo TUI screens — one per top-level mode (see docs/tui/design.md)."""
 
-from bytedojo.tui.screens.init_screen import InitScreen
-from bytedojo.tui.screens.main_screen import MainScreen
+from bytedojo.tui.screens.discover import DiscoverScreen
+from bytedojo.tui.screens.health import HealthScreen
+from bytedojo.tui.screens.practise import PractiseScreen
 
-__all__ = ['InitScreen', 'MainScreen']
+__all__ = ["DiscoverScreen", "HealthScreen", "PractiseScreen"]
