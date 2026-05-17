@@ -16,7 +16,8 @@ from enum import Enum
 from typing import Any, Dict, List, Optional
 
 from bytedojo.core.logger import get_logger
-from bytedojo.core.models.canonical_type import CanonicalType
+from bytedojo.core.models.signature import Signature
+from bytedojo.core.models.primitive import Primitive
 from bytedojo.core.paths import get_test_file
 
 
@@ -55,15 +56,17 @@ class TestComparison(str, Enum):
 
 @dataclass
 class TestParam:
-    """A method parameter with its canonical type."""
+    """A method parameter with its type signature."""
     __test__ = False
 
     name: str
-    type: CanonicalType
+    type: Signature
 
     def __post_init__(self):
         if isinstance(self.type, str):
-            self.type = CanonicalType.from_string(self.type)
+            self.type = Signature(base=self.type)
+        elif isinstance(self.type, dict):
+            self.type = Signature.from_dict(self.type)
 
     def __str__(self):
         return f"{self.name}: {self.type}"
@@ -78,12 +81,13 @@ class TestSignature:
     __test__ = False
 
     params: List[TestParam] = field(default_factory=list)
-    returns: CanonicalType = CanonicalType.UNKNOWN
+    returns: Signature = field(default_factory=lambda: Signature(base=Primitive.UNKNOWN))
 
     def __post_init__(self):
         if isinstance(self.returns, str):
-            self.returns = CanonicalType.from_string(self.returns)
-        # Coerce dict entries into TestParam objects
+            self.returns = Signature(base=self.returns)
+        elif isinstance(self.returns, dict):
+            self.returns = Signature.from_dict(self.returns)
         self.params = [
             TestParam(**p) if isinstance(p, dict) else p
             for p in self.params

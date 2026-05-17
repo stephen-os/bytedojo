@@ -16,12 +16,14 @@ from typing import Optional, List
 
 from bytedojo.core.models.code_language import CodeLanguage
 from bytedojo.core.models.code_snippet import CodeSnippet
+from bytedojo.core.models.data_structure import DataStructure
 from bytedojo.core.models.example import Example
 from bytedojo.core.models.problem import Problem
 from bytedojo.core.models.problem_detail import ProblemDetail
 from bytedojo.core.models.problem_difficulty import ProblemDifficulty
 from bytedojo.core.models.problem_tag import ProblemTag
 from bytedojo.core.models.registered_problem import RegisteredProblem
+from bytedojo.core.models.test_bundle import TestSignature
 from bytedojo.core.paths import PROBLEMS_INDEX, get_problem_file
 from bytedojo.core.repository import Repository
 from bytedojo.core.search import find_problems as _find_problems
@@ -80,12 +82,22 @@ def _build_problem(data: dict) -> Problem:
             continue
         code_snippets.append(CodeSnippet(lang=lang, code=code or ""))
 
+    data_structures = [
+        ds for ds in (DataStructure.from_string(d) for d in data.get("data_structures", []))
+        if ds is not None
+    ]
+
+    sig_data = data.get("signature")
+    signature = TestSignature(**sig_data) if sig_data else None
+
     return Problem(
         problem_detail=problem_detail,
         code_snippets=code_snippets,
         examples=examples,
         constraints=data.get("constraints", []),
         hints=data.get("hints", []),
+        data_structures=data_structures,
+        signature=signature,
     )
 
 def get_problem(problem_id: int) -> Optional[Problem]:

@@ -13,8 +13,10 @@ from typing import List, Optional
 
 from bytedojo.core.models.code_language import CodeLanguage
 from bytedojo.core.models.code_snippet import CodeSnippet
+from bytedojo.core.models.data_structure import DataStructure
 from bytedojo.core.models.example import Example
 from bytedojo.core.models.problem_detail import ProblemDetail
+from bytedojo.core.models.test_bundle import TestSignature
 
 
 @dataclass
@@ -25,6 +27,8 @@ class Problem:
     examples: List[Example] = field(default_factory=list)
     constraints: List[str] = field(default_factory=list)
     hints: List[str] = field(default_factory=list)
+    data_structures: List[DataStructure] = field(default_factory=list)
+    signature: Optional[TestSignature] = None
 
     def get_code_snippet(self, language: CodeLanguage) -> Optional[CodeSnippet]:
         """Return the CodeSnippet for a language, or None if missing."""
@@ -45,3 +49,4 @@ class Problem:
     def get_solution_filename(self, language: CodeLanguage) -> str:
         """Return the solution filename for a language (e.g. `solution.py`)."""
         return f"solution{language.extension}"
+    
