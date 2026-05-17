@@ -7,571 +7,411 @@
     "params": [
       {
         "name": "s",
-        "type": "STRING"
+        "type": {"base": "STRING"}
       }
     ],
-    "returns": "STRING"
+    "returns": {"base": "STRING"}
   },
   "comparison": "unordered_all",
   "cases": [
     {
       "case_id": 1,
-      "input": {
-        "s": "(a(b)c)d(e(fg)h"
-      },
+      "input": {"s": "(a(b)c)d(e(fg)h"},
       "expected": "(a(b)c)de(fg)h"
     },
     {
       "case_id": 2,
-      "input": {
-        "s": "()"
-      },
+      "input": {"s": "()"},
       "expected": []
     },
     {
       "case_id": 3,
-      "input": {
-        "s": "))(()"
-      },
+      "input": {"s": "))(()"},
       "expected": []
     },
     {
       "case_id": 4,
-      "input": {
-        "s": "ab(c(d)e)f(g(h)i)j(kl)"
-      },
+      "input": {"s": "ab(c(d)e)f(g(h)i)j(kl)"},
       "expected": "ab(c(d)e)f(g(h)i)j(kl)"
     },
     {
       "case_id": 5,
-      "input": {
-        "s": "a)b(c)d"
-      },
+      "input": {"s": "a)b(c)d"},
       "expected": "ab(c)d"
     },
     {
       "case_id": 6,
-      "input": {
-        "s": "()()"
-      },
+      "input": {"s": "()()"},
       "expected": "()()"
     },
     {
       "case_id": 7,
-      "input": {
-        "s": ""
-      },
+      "input": {"s": ""},
       "expected": null
     },
     {
       "case_id": 8,
-      "input": {
-        "s": "(a(b)c)d(e(f)g)h(i)"
-      },
+      "input": {"s": "(a(b)c)d(e(f)g)h(i)"},
       "expected": "(a(b)c)d(e(f)g)h(i)"
     },
     {
       "case_id": 9,
-      "input": {
-        "s": "))(())"
-      },
+      "input": {"s": "))(())"},
       "expected": []
     },
     {
       "case_id": 10,
-      "input": {
-        "s": "(a(b)c)d(e(f)g)h"
-      },
+      "input": {"s": "(a(b)c)d(e(f)g)h"},
       "expected": "(a(b)c)d(e(f)g)h"
     },
     {
       "case_id": 11,
-      "input": {
-        "s": "lee(t(c)o)de)"
-      },
+      "input": {"s": "lee(t(c)o)de)"},
       "expected": "lee(t(c)o)de"
     },
     {
       "case_id": 12,
-      "input": {
-        "s": "a(b)c)d(e(fg)h)i(j(k(l)m)n)o(pq(r)s)t(uv(w)x)y(z)"
-      },
+      "input": {"s": "a(b)c)d(e(fg)h)i(j(k(l)m)n)o(pq(r)s)t(uv(w)x)y(z)"},
       "expected": "a(b)cd(e(fg)h)i(j(k(l)m)n)o(pq(r)s)t(uv(w)x)y(z)"
     },
     {
       "case_id": 13,
-      "input": {
-        "s": "a(b(c)d)e(f(g(h)i)j)k(l(m)n)o(p)q(r)s)t(u)v(w(x)y)z(((())"
-      },
+      "input": {"s": "a(b(c)d)e(f(g(h)i)j)k(l(m)n)o(p)q(r)s)t(u)v(w(x)y)z(((())"},
       "expected": "a(b(c)d)e(f(g(h)i)j)k(l(m)n)o(p)q(r)st(u)v(w(x)y)z(())"
     },
     {
       "case_id": 14,
-      "input": {
-        "s": "a(b(c(d(e(f(g(h)i)j)k)l)m)n)o(p)q(r)s)t(u)v(w(x)y)z"
-      },
+      "input": {"s": "a(b(c(d(e(f(g(h)i)j)k)l)m)n)o(p)q(r)s)t(u)v(w(x)y)z"},
       "expected": "a(b(c(d(e(f(g(h)i)j)k)l)m)n)o(p)q(r)st(u)v(w(x)y)z"
     },
     {
       "case_id": 15,
-      "input": {
-        "s": "a((b)c)d(e(f)g)h(i(j(k(l)m)n)o(p(q(r)s)t(uv(w)x)y(z))))"
-      },
+      "input": {"s": "a((b)c)d(e(f)g)h(i(j(k(l)m)n)o(p(q(r)s)t(uv(w)x)y(z))))"},
       "expected": "a((b)c)d(e(f)g)h(i(j(k(l)m)n)o(p(q(r)s)t(uv(w)x)y(z)))"
     },
     {
       "case_id": 16,
-      "input": {
-        "s": "a(b(c)d(e(f)g)h)i(j(k(l)m)n)o(p)q(r)s)t(u)v(w)x(y(z)"
-      },
+      "input": {"s": "a(b(c)d(e(f)g)h)i(j(k(l)m)n)o(p)q(r)s)t(u)v(w)x(y(z)"},
       "expected": "a(b(c)d(e(f)g)h)i(j(k(l)m)n)o(p)q(r)st(u)v(w)xy(z)"
     },
     {
       "case_id": 17,
-      "input": {
-        "s": "a(b(c)d(e(f)g(h)i)j)k"
-      },
+      "input": {"s": "a(b(c)d(e(f)g(h)i)j)k"},
       "expected": "a(b(c)d(e(f)g(h)i)j)k"
     },
     {
       "case_id": 18,
-      "input": {
-        "s": "(())((()())())(()(()))(()(()())())(()(()))(()(()())())"
-      },
+      "input": {"s": "(())((()())())(()(()))(()(()())())(()(()))(()(()())())"},
       "expected": "(())((()())())(()(()))(()(()())())(()(()))(()(()())())"
     },
     {
       "case_id": 19,
-      "input": {
-        "s": "a(b(c)d(e(f(g(h)i(j(k(l)m)n)o(p)q(r)s)t(u)v(w)x(y)z))))"
-      },
+      "input": {"s": "a(b(c)d(e(f(g(h)i(j(k(l)m)n)o(p)q(r)s)t(u)v(w)x(y)z))))"},
       "expected": "a(b(c)d(e(f(g(h)i(j(k(l)m)n)o(p)q(r)s)t(u)v(w)x(y)z)))"
     },
     {
       "case_id": 20,
-      "input": {
-        "s": "(a(b(c(d(e(f(g(h)i)j)k)l)m)n)o(p)"
-      },
+      "input": {"s": "(a(b(c(d(e(f(g(h)i)j)k)l)m)n)o(p)"},
       "expected": "a(b(c(d(e(f(g(h)i)j)k)l)m)n)o(p)"
     },
     {
       "case_id": 21,
-      "input": {
-        "s": "(x(y(z)))a(b(c)d(e(f)g)h)i)j)k"
-      },
+      "input": {"s": "(x(y(z)))a(b(c)d(e(f)g)h)i)j)k"},
       "expected": "(x(y(z)))a(b(c)d(e(f)g)h)ijk"
     },
     {
       "case_id": 22,
-      "input": {
-        "s": "a(b)c(d(e(f)g(h)i(j(k(l)m)n)o(p)q(r)s)t(u)v(w)x(y)z)"
-      },
+      "input": {"s": "a(b)c(d(e(f)g(h)i(j(k(l)m)n)o(p)q(r)s)t(u)v(w)x(y)z)"},
       "expected": "a(b)c(d(e(f)g(h)i(j(k(l)m)n)o(p)q(r)s)t(u)v(w)x(y)z)"
     },
     {
       "case_id": 23,
-      "input": {
-        "s": "(a(b(c)d(e(f(g(h)i)j)k)l)m)n)o)p)q)r)s)t)u)v)w)x)y)z"
-      },
+      "input": {"s": "(a(b(c)d(e(f(g(h)i)j)k)l)m)n)o)p)q)r)s)t)u)v)w)x)y)z"},
       "expected": "(a(b(c)d(e(f(g(h)i)j)k)l)m)nopqrstuvwxyz"
     },
     {
       "case_id": 24,
-      "input": {
-        "s": "\"abc(def(ghi)jkl(mno)pqr(stu)vwx(yz)\"\""
-      },
+      "input": {"s": "\"abc(def(ghi)jkl(mno)pqr(stu)vwx(yz)\"\""},
       "expected": "Error: Solution.minRemoveToMakeValid() missing 1 required positional argument: 's'"
     },
     {
       "case_id": 25,
-      "input": {
-        "s": "((((((((((a))))))))))"
-      },
+      "input": {"s": "((((((((((a))))))))))"},
       "expected": "((((((((((a))))))))))"
     },
     {
       "case_id": 26,
-      "input": {
-        "s": "a(b(c)d(e(f)g)h)i(j(k(l)m)n)o"
-      },
+      "input": {"s": "a(b(c)d(e(f)g)h)i(j(k(l)m)n)o"},
       "expected": "a(b(c)d(e(f)g)h)i(j(k(l)m)n)o"
     },
     {
       "case_id": 27,
-      "input": {
-        "s": "a(b(c(d(e(f(g(h)i)j)k)l)m)n)o)p(q(r)s)t(u(v(w)x)y(z))"
-      },
+      "input": {"s": "a(b(c(d(e(f(g(h)i)j)k)l)m)n)o)p(q(r)s)t(u(v(w)x)y(z))"},
       "expected": "a(b(c(d(e(f(g(h)i)j)k)l)m)n)op(q(r)s)t(u(v(w)x)y(z))"
     },
     {
       "case_id": 28,
-      "input": {
-        "s": "a(b(c(d(e(f(g(h)i)j)k)l)m)n)o)p(q(r)s)t(u(v(w)x)y(z)))"
-      },
+      "input": {"s": "a(b(c(d(e(f(g(h)i)j)k)l)m)n)o)p(q(r)s)t(u(v(w)x)y(z)))"},
       "expected": "a(b(c(d(e(f(g(h)i)j)k)l)m)n)op(q(r)s)t(u(v(w)x)y(z))"
     },
     {
       "case_id": 29,
-      "input": {
-        "s": "a(b(c(d(e(f(g(h)i(j(k(l)m)n)o(p)q(r)s)t(u)v(w)x(y)z)"
-      },
+      "input": {"s": "a(b(c(d(e(f(g(h)i(j(k(l)m)n)o(p)q(r)s)t(u)v(w)x(y)z)"},
       "expected": "abcde(f(g(h)i(j(k(l)m)n)o(p)q(r)s)t(u)v(w)x(y)z)"
     },
     {
       "case_id": 30,
-      "input": {
-        "s": "a(b(c)d(e(f(g(h)i)j)k)l)m)n)o)p)q)r)s)t)u)v)w)x)y)z"
-      },
+      "input": {"s": "a(b(c)d(e(f(g(h)i)j)k)l)m)n)o)p)q)r)s)t)u)v)w)x)y)z"},
       "expected": "a(b(c)d(e(f(g(h)i)j)k)l)mnopqrstuvwxyz"
     },
     {
       "case_id": 31,
-      "input": {
-        "s": "a(b(c)d(e(f(g(h)i)j)k)l)m)n)o)p)q)r)s)t)u)v)w)x)y)z)"
-      },
+      "input": {"s": "a(b(c)d(e(f(g(h)i)j)k)l)m)n)o)p)q)r)s)t)u)v)w)x)y)z)"},
       "expected": "a(b(c)d(e(f(g(h)i)j)k)l)mnopqrstuvwxyz"
     },
     {
       "case_id": 32,
-      "input": {
-        "s": "((abc)(def))ghi(jkl(mno)pqr)stu(vwx(yz)"
-      },
+      "input": {"s": "((abc)(def))ghi(jkl(mno)pqr)stu(vwx(yz)"},
       "expected": "((abc)(def))ghi(jkl(mno)pqr)stuvwx(yz)"
     },
     {
       "case_id": 33,
-      "input": {
-        "s": "((a(b)c)d)e(f(g(h)i)j)k(lmno)p(q(rst)uvw)x(y(z))"
-      },
+      "input": {"s": "((a(b)c)d)e(f(g(h)i)j)k(lmno)p(q(rst)uvw)x(y(z))"},
       "expected": "((a(b)c)d)e(f(g(h)i)j)k(lmno)p(q(rst)uvw)x(y(z))"
     },
     {
       "case_id": 34,
-      "input": {
-        "s": "((((((((a))))))))"
-      },
+      "input": {"s": "((((((((a))))))))"},
       "expected": "((((((((a))))))))"
     },
     {
       "case_id": 35,
-      "input": {
-        "s": "(a(b(c)d(e(f)g(h)i(j(k(l)m)n)o(p)q(r)s)t(u)v(w)x(y)z))))"
-      },
+      "input": {"s": "(a(b(c)d(e(f)g(h)i(j(k(l)m)n)o(p)q(r)s)t(u)v(w)x(y)z))))"},
       "expected": "(a(b(c)d(e(f)g(h)i(j(k(l)m)n)o(p)q(r)s)t(u)v(w)x(y)z))"
     },
     {
       "case_id": 36,
-      "input": {
-        "s": "(())((())())(((())))"
-      },
+      "input": {"s": "(())((())())(((())))"},
       "expected": "(())((())())(((())))"
     },
     {
       "case_id": 37,
-      "input": {
-        "s": "a((((((((((b))))))))))"
-      },
+      "input": {"s": "a((((((((((b))))))))))"},
       "expected": "a((((((((((b))))))))))"
     },
     {
       "case_id": 38,
-      "input": {
-        "s": "((((a)bb)ccc)d)eeee(f)ggg(h)iii"
-      },
+      "input": {"s": "((((a)bb)ccc)d)eeee(f)ggg(h)iii"},
       "expected": "((((a)bb)ccc)d)eeee(f)ggg(h)iii"
     },
     {
       "case_id": 39,
-      "input": {
-        "s": "(a(b(c(d(e(f(g(h)i)j)k)l)m)n)o(p)q(r)s)t(u)v(w)x(y)z"
-      },
+      "input": {"s": "(a(b(c(d(e(f(g(h)i)j)k)l)m)n)o(p)q(r)s)t(u)v(w)x(y)z"},
       "expected": "(a(b(c(d(e(f(g(h)i)j)k)l)m)n)o(p)q(r)s)t(u)v(w)x(y)z"
     },
     {
       "case_id": 40,
-      "input": {
-        "s": "a(b)c)d(e(f(g)h)i(j(k(l)m)n)o(p)q(r)s)t(u)v(w)x(y)z"
-      },
+      "input": {"s": "a(b)c)d(e(f(g)h)i(j(k(l)m)n)o(p)q(r)s)t(u)v(w)x(y)z"},
       "expected": "a(b)cd(e(f(g)h)i(j(k(l)m)n)o(p)q(r)s)t(u)v(w)x(y)z"
     },
     {
       "case_id": 41,
-      "input": {
-        "s": "abc(def(ghi)jkl)mno(pqr)stu(vwxyz)"
-      },
+      "input": {"s": "abc(def(ghi)jkl)mno(pqr)stu(vwxyz)"},
       "expected": "abc(def(ghi)jkl)mno(pqr)stu(vwxyz)"
     },
     {
       "case_id": 42,
-      "input": {
-        "s": "((a(b)c)d(e(f)g)h(i)j)k(l(m)n)o(p)q(r)s)t"
-      },
+      "input": {"s": "((a(b)c)d(e(f)g)h(i)j)k(l(m)n)o(p)q(r)s)t"},
       "expected": "((a(b)c)d(e(f)g)h(i)j)k(l(m)n)o(p)q(r)st"
     },
     {
       "case_id": 43,
-      "input": {
-        "s": "a(b(c)d)e(f(g(h)i)j)k(l(m)n)o(p)q(r)s)t(u)v(w(x)y)z)()(()"
-      },
+      "input": {"s": "a(b(c)d)e(f(g(h)i)j)k(l(m)n)o(p)q(r)s)t(u)v(w(x)y)z)()(()"},
       "expected": "a(b(c)d)e(f(g(h)i)j)k(l(m)n)o(p)q(r)st(u)v(w(x)y)z()()"
     },
     {
       "case_id": 44,
-      "input": {
-        "s": "a(b(c)d(e(f)g)h)i(j(k(l)m)n)o(p)q(r)s)t(u)v(w)x(y)z)"
-      },
+      "input": {"s": "a(b(c)d(e(f)g)h)i(j(k(l)m)n)o(p)q(r)s)t(u)v(w)x(y)z)"},
       "expected": "a(b(c)d(e(f)g)h)i(j(k(l)m)n)o(p)q(r)st(u)v(w)x(y)z"
     },
     {
       "case_id": 45,
-      "input": {
-        "s": "\"a(b(c)d(e)f(g(h)i)j)k\"\""
-      },
+      "input": {"s": "\"a(b(c)d(e)f(g(h)i)j)k\"\""},
       "expected": "Error: Solution.minRemoveToMakeValid() missing 1 required positional argument: 's'"
     },
     {
       "case_id": 46,
-      "input": {
-        "s": "(abc(def(ghi(jkl(mnopqr(stu(vwx(yz)))))))"
-      },
+      "input": {"s": "(abc(def(ghi(jkl(mnopqr(stu(vwx(yz)))))))"},
       "expected": "abc(def(ghi(jkl(mnopqr(stu(vwx(yz)))))))"
     },
     {
       "case_id": 47,
-      "input": {
-        "s": "(a(b(c(d(e(f(g(h)i)j)k)l)m)n)o(p(q)r)s)t(u)v(w)x(y)z)))"
-      },
+      "input": {"s": "(a(b(c(d(e(f(g(h)i)j)k)l)m)n)o(p(q)r)s)t(u)v(w)x(y)z)))"},
       "expected": "(a(b(c(d(e(f(g(h)i)j)k)l)m)n)o(p(q)r)s)t(u)v(w)x(y)z"
     },
     {
       "case_id": 48,
-      "input": {
-        "s": "\"(a(b(c(d(e(f(g(h)i)j)k)l)m)n)o)p(q(r)s)t(u(v(w)x)y(z)\"\""
-      },
+      "input": {"s": "\"(a(b(c(d(e(f(g(h)i)j)k)l)m)n)o)p(q(r)s)t(u(v(w)x)y(z)\"\""},
       "expected": "Error: Solution.minRemoveToMakeValid() missing 1 required positional argument: 's'"
     },
     {
       "case_id": 49,
-      "input": {
-        "s": "a(b(c(d(e(f(g(h)i(j)k)l)m)n)o(p)q(r)s)t(u)v(w)x(y)z)"
-      },
+      "input": {"s": "a(b(c(d(e(f(g(h)i(j)k)l)m)n)o(p)q(r)s)t(u)v(w)x(y)z)"},
       "expected": "a(b(c(d(e(f(g(h)i(j)k)l)m)n)o(p)q(r)s)t(u)v(w)x(y)z)"
     },
     {
       "case_id": 50,
-      "input": {
-        "s": "((((((((((((((((((((((()))))))))))))))))))))))))"
-      },
+      "input": {"s": "((((((((((((((((((((((()))))))))))))))))))))))))"},
       "expected": []
     },
     {
       "case_id": 51,
-      "input": {
-        "s": "(((((a(b)c)d)e)f)g)h)i(j(k(l)m)n)o(p)q(r)s)t(u)v(w(x)y)z"
-      },
+      "input": {"s": "(((((a(b)c)d)e)f)g)h)i(j(k(l)m)n)o(p)q(r)s)t(u)v(w(x)y)z"},
       "expected": "(((((a(b)c)d)e)f)g)hi(j(k(l)m)n)o(p)q(r)st(u)v(w(x)y)z"
     },
     {
       "case_id": 52,
-      "input": {
-        "s": "((((((((((a))))))))))b"
-      },
+      "input": {"s": "((((((((((a))))))))))b"},
       "expected": "((((((((((a))))))))))b"
     },
     {
       "case_id": 53,
-      "input": {
-        "s": "()()()((()))(())(((()))(()(()))(())(()))"
-      },
+      "input": {"s": "()()()((()))(())(((()))(()(()))(())(()))"},
       "expected": "()()()((()))(())(((()))(()(()))(())(()))"
     },
     {
       "case_id": 54,
-      "input": {
-        "s": "((((((((((()))))))))))"
-      },
+      "input": {"s": "((((((((((()))))))))))"},
       "expected": []
     },
     {
       "case_id": 55,
-      "input": {
-        "s": "(((abc)def)ghijklmnopqrst)uv(wxyz)"
-      },
+      "input": {"s": "(((abc)def)ghijklmnopqrst)uv(wxyz)"},
       "expected": "(((abc)def)ghijklmnopqrst)uv(wxyz)"
     },
     {
       "case_id": 56,
-      "input": {
-        "s": "abc)def(ghi)jkl(mno)pqr(stu)vwx(yz"
-      },
+      "input": {"s": "abc)def(ghi)jkl(mno)pqr(stu)vwx(yz"},
       "expected": "abcdef(ghi)jkl(mno)pqr(stu)vwxyz"
     },
     {
       "case_id": 57,
-      "input": {
-        "s": "((a)(b)(c)(d))"
-      },
+      "input": {"s": "((a)(b)(c)(d))"},
       "expected": "((a)(b)(c)(d))"
     },
     {
       "case_id": 58,
-      "input": {
-        "s": "abcdefghijklmnopqrstuvwxyz(abcdefghijklmnopqrstuvwxyz)"
-      },
+      "input": {"s": "abcdefghijklmnopqrstuvwxyz(abcdefghijklmnopqrstuvwxyz)"},
       "expected": "abcdefghijklmnopqrstuvwxyz(abcdefghijklmnopqrstuvwxyz)"
     },
     {
       "case_id": 59,
-      "input": {
-        "s": "((((((((((((((((((((()))))))))))))))))))))))))))))()"
-      },
+      "input": {"s": "((((((((((((((((((((()))))))))))))))))))))))))))))()"},
       "expected": "((((((((((((((((((((()))))))))))))))))))))()"
     },
     {
       "case_id": 60,
-      "input": {
-        "s": "((((a(b)c)d(e(f)g)h)i(j(k(l)m)n)o(p)q(r)s)t(u)v(w)x(y)z))))"
-      },
+      "input": {"s": "((((a(b)c)d(e(f)g)h)i(j(k(l)m)n)o(p)q(r)s)t(u)v(w)x(y)z))))"},
       "expected": "((((a(b)c)d(e(f)g)h)i(j(k(l)m)n)o(p)q(r)s)t(u)v(w)x(y)z)"
     },
     {
       "case_id": 61,
-      "input": {
-        "s": "(a(b)c)d(e(f(g)h)i(j(k(l)m)n)o)p(q(r)s)t(u(v(w)x)y(z)))"
-      },
+      "input": {"s": "(a(b)c)d(e(f(g)h)i(j(k(l)m)n)o)p(q(r)s)t(u(v(w)x)y(z)))"},
       "expected": "(a(b)c)d(e(f(g)h)i(j(k(l)m)n)o)p(q(r)s)t(u(v(w)x)y(z))"
     },
     {
       "case_id": 62,
-      "input": {
-        "s": "(a(b(c(d(e(f(g(h)i)j)k)l)m)n)o(p(q)r)s)t(u)v(w)x(y)z)"
-      },
+      "input": {"s": "(a(b(c(d(e(f(g(h)i)j)k)l)m)n)o(p(q)r)s)t(u)v(w)x(y)z)"},
       "expected": "(a(b(c(d(e(f(g(h)i)j)k)l)m)n)o(p(q)r)s)t(u)v(w)x(y)z"
     },
     {
       "case_id": 63,
-      "input": {
-        "s": "a(b(c(d(e(f(g(h)i(j)k)l)m)n)o(p(q(r)s)t)u(v(w(x)y(z)u)v)w)x)y)z"
-      },
+      "input": {"s": "a(b(c(d(e(f(g(h)i(j)k)l)m)n)o(p(q(r)s)t)u(v(w(x)y(z)u)v)w)x)y)z"},
       "expected": "a(b(c(d(e(f(g(h)i(j)k)l)m)n)o(p(q(r)s)t)u(v(w(x)y(z)u)v)w)x)yz"
     },
     {
       "case_id": 64,
-      "input": {
-        "s": "((((((a(b)c)d))))))"
-      },
+      "input": {"s": "((((((a(b)c)d))))))"},
       "expected": "((((((a(b)c)d)))))"
     },
     {
       "case_id": 65,
-      "input": {
-        "s": "a(b(c)d(e(f(g(h)i(j(k(l)m)n)o(p)q(r)s)t(u)v(w)x(y(z))))"
-      },
+      "input": {"s": "a(b(c)d(e(f(g(h)i(j(k(l)m)n)o(p)q(r)s)t(u)v(w)x(y(z))))"},
       "expected": "ab(c)d(e(f(g(h)i(j(k(l)m)n)o(p)q(r)s)t(u)v(w)x(y(z))))"
     },
     {
       "case_id": 66,
-      "input": {
-        "s": "((((((((((((((((((((((()"
-      },
+      "input": {"s": "((((((((((((((((((((((()"},
       "expected": []
     },
     {
       "case_id": 67,
-      "input": {
-        "s": "a(b)c)d(e(f)g(h)i(j(k(l)m)n)o(p)q(r)s)t(u)v(w)x(y)z"
-      },
+      "input": {"s": "a(b)c)d(e(f)g(h)i(j(k(l)m)n)o(p)q(r)s)t(u)v(w)x(y)z"},
       "expected": "a(b)cd(e(f)g(h)i(j(k(l)m)n)o(p)q(r)s)t(u)v(w)x(y)z"
     },
     {
       "case_id": 68,
-      "input": {
-        "s": "(a(b)c)d(e(f(g)h)i(j(k(l)m)n)o)p(q(r)s)t(u(v)w)x(y(z)))"
-      },
+      "input": {"s": "(a(b)c)d(e(f(g)h)i(j(k(l)m)n)o)p(q(r)s)t(u(v)w)x(y(z)))"},
       "expected": "(a(b)c)d(e(f(g)h)i(j(k(l)m)n)o)p(q(r)s)t(u(v)w)x(y(z))"
     },
     {
       "case_id": 69,
-      "input": {
-        "s": "a(b(c)d)e(f(g)h)i(j(k(l)m)n)o(p)q(r)s)t(u)v(w(x)y)z"
-      },
+      "input": {"s": "a(b(c)d)e(f(g)h)i(j(k(l)m)n)o(p)q(r)s)t(u)v(w(x)y)z"},
       "expected": "a(b(c)d)e(f(g)h)i(j(k(l)m)n)o(p)q(r)st(u)v(w(x)y)z"
     },
     {
       "case_id": 70,
-      "input": {
-        "s": "a(b(c)d(e(f(g(h)i)j)k)l)m)n)o)p)q)r)s)t)u)v)w)x)y)z(abc)"
-      },
+      "input": {"s": "a(b(c)d(e(f(g(h)i)j)k)l)m)n)o)p)q)r)s)t)u)v)w)x)y)z(abc)"},
       "expected": "a(b(c)d(e(f(g(h)i)j)k)l)mnopqrstuvwxyz(abc)"
     },
     {
       "case_id": 71,
-      "input": {
-        "s": "((a(b)c)d(e(f)g)h)i(j(k(l)m)n)o(p)"
-      },
+      "input": {"s": "((a(b)c)d(e(f)g)h)i(j(k(l)m)n)o(p)"},
       "expected": "((a(b)c)d(e(f)g)h)i(j(k(l)m)n)o(p)"
     },
     {
       "case_id": 72,
-      "input": {
-        "s": "(a(b(c)d(e(f(g(h)i)j)k)l)m)n)o)p)q)r)s)t)u)v)w)x)y)z)"
-      },
+      "input": {"s": "(a(b(c)d(e(f(g(h)i)j)k)l)m)n)o)p)q)r)s)t)u)v)w)x)y)z)"},
       "expected": "(a(b(c)d(e(f(g(h)i)j)k)l)m)nopqrstuvwxyz"
     },
     {
       "case_id": 73,
-      "input": {
-        "s": "a(b(c(d(e(f(g(h)i)j)k)l)m)n)o(p(q(r)s)t)u(v(w(x)y)z)"
-      },
+      "input": {"s": "a(b(c(d(e(f(g(h)i)j)k)l)m)n)o(p(q(r)s)t)u(v(w(x)y)z)"},
       "expected": "a(b(c(d(e(f(g(h)i)j)k)l)m)n)o(p(q(r)s)t)u(v(w(x)y)z)"
     },
     {
       "case_id": 74,
-      "input": {
-        "s": "(a(b(c)d(e(f(g(h)i)j)k)l)m)n)o)p)q)r)s)t)u)v)w)x)y)z)abc(def)"
-      },
+      "input": {"s": "(a(b(c)d(e(f(g(h)i)j)k)l)m)n)o)p)q)r)s)t)u)v)w)x)y)z)abc(def)"},
       "expected": "(a(b(c)d(e(f(g(h)i)j)k)l)m)nopqrstuvwxyzabc(def)"
     },
     {
       "case_id": 75,
-      "input": {
-        "s": "abcdefghijklmnopqrstuvwxyz)abcdefghijklmnopqrstuvwxyz("
-      },
+      "input": {"s": "abcdefghijklmnopqrstuvwxyz)abcdefghijklmnopqrstuvwxyz("},
       "expected": "abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz"
     },
     {
       "case_id": 76,
-      "input": {
-        "s": "(a(b(c(d(e(f(g(h)i)j)k)l)m)n)o(p(q(r)s)t(u(v(w)x)y)z)"
-      },
+      "input": {"s": "(a(b(c(d(e(f(g(h)i)j)k)l)m)n)o(p(q(r)s)t(u(v(w)x)y)z)"},
       "expected": "a(b(c(d(e(f(g(h)i)j)k)l)m)n)o(p(q(r)s)t(u(v(w)x)y)z)"
     },
     {
       "case_id": 77,
-      "input": {
-        "s": "(a(b(c(d(e(f(g(h)i)j)k)l)m)n)o(p(q)r)s)t(u)v(w)x(y)(z)"
-      },
+      "input": {"s": "(a(b(c(d(e(f(g(h)i)j)k)l)m)n)o(p(q)r)s)t(u)v(w)x(y)(z)"},
       "expected": "(a(b(c(d(e(f(g(h)i)j)k)l)m)n)o(p(q)r)s)t(u)v(w)x(y)(z)"
     },
     {
       "case_id": 78,
-      "input": {
-        "s": "a(b(c(d(e(f(g(h)i)j)k)l)m)n)o(p(q)r)s)t(u)v(w)x(y)z)(a(b(c(d(e(f(g(h)i)j)k)l)m)n)o(p(q)r)s)t(u)v(w)x(y)z)"
-      },
+      "input": {"s": "a(b(c(d(e(f(g(h)i)j)k)l)m)n)o(p(q)r)s)t(u)v(w)x(y)z)(a(b(c(d(e(f(g(h)i)j)k)l)m)n)o(p(q)r)s)t(u)v(w)x(y)z)"},
       "expected": "a(b(c(d(e(f(g(h)i)j)k)l)m)n)o(p(q)r)st(u)v(w)x(y)z(a(b(c(d(e(f(g(h)i)j)k)l)m)n)o(p(q)r)s)t(u)v(w)x(y)z"
     },
     {
       "case_id": 79,
-      "input": {
-        "s": "(a(b(c)d(e(f(g(h)i)j)k)l)m)n)o)p)q)r)s)t)u)v)w)x)y)z)abc"
-      },
+      "input": {"s": "(a(b(c)d(e(f(g(h)i)j)k)l)m)n)o)p)q)r)s)t)u)v)w)x)y)z)abc"},
       "expected": "(a(b(c)d(e(f(g(h)i)j)k)l)m)nopqrstuvwxyzabc"
     },
     {
       "case_id": 80,
-      "input": {
-        "s": "a(b(c(d(e(f(g(h)i(j(k(l)m)n)o(p)q(r)s)t(u)v(w)x(y)z))))"
-      },
+      "input": {"s": "a(b(c(d(e(f(g(h)i(j(k(l)m)n)o(p)q(r)s)t(u)v(w)x(y)z))))"},
       "expected": "ab(c(d(e(f(g(h)i(j(k(l)m)n)o(p)q(r)s)t(u)v(w)x(y)z))))"
     }
   ]

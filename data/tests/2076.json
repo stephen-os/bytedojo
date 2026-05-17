@@ -7,18 +7,18 @@
     "params": [
       {
         "name": "n",
-        "type": "INT32"
+        "type": {"base": "INT32"}
       },
       {
         "name": "restrictions",
-        "type": "INT32_MATRIX"
+        "type": {"base": "MATRIX", "element": "INT32"}
       },
       {
         "name": "requests",
-        "type": "INT32_MATRIX"
+        "type": {"base": "MATRIX", "element": "INT32"}
       }
     ],
-    "returns": "BOOL_ARRAY"
+    "returns": {"base": "ARRAY", "element": "BOOL"}
   },
   "cases": [
     {
@@ -316,11 +316,7 @@
     },
     {
       "case_id": 15,
-      "input": {
-        "n": 50,
-        "restrictions": "[[i,i+1] for i in range(0,49,2)]",
-        "requests": "[[i,i+1] for i in range(1,49,2)] + [[i,i+1] for i in range(0,49,2)]"
-      },
+      "input": {"n": 50, "restrictions": "[[i,i+1] for i in range(0,49,2)]", "requests": "[[i,i+1] for i in range(1,49,2)] + [[i,i+1] for i in range(0,49,2)]"},
       "expected": "Error: Solution.friendRequests() missing 2 required positional arguments: 'restrictions' and 'requests'"
     },
     {

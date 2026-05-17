@@ -7,14 +7,14 @@
     "params": [
       {
         "name": "limit",
-        "type": "INT32"
+        "type": {"base": "INT32"}
       },
       {
         "name": "queries",
-        "type": "INT32_MATRIX"
+        "type": {"base": "MATRIX", "element": "INT32"}
       }
     ],
-    "returns": "INT32_ARRAY"
+    "returns": {"base": "ARRAY", "element": "INT32"}
   },
   "cases": [
     {
@@ -126,10 +126,7 @@
     },
     {
       "case_id": 9,
-      "input": {
-        "limit": 100000,
-        "queries": "[[0,1]] * 100000"
-      },
+      "input": {"limit": 100000, "queries": "[[0,1]] * 100000"},
       "expected": "Error: Solution.queryResults() missing 1 required positional argument: 'queries'"
     },
     {
@@ -178,10 +175,7 @@
     },
     {
       "case_id": 13,
-      "input": {
-        "limit": 100000,
-        "queries": "[[i,i] for i in range(100001)]"
-      },
+      "input": {"limit": 100000, "queries": "[[i,i] for i in range(100001)]"},
       "expected": "Error: Solution.queryResults() missing 1 required positional argument: 'queries'"
     },
     {
@@ -249,10 +243,7 @@
     },
     {
       "case_id": 18,
-      "input": {
-        "limit": 10,
-        "queries": "[[i%5,i%5] for i in range(10)]"
-      },
+      "input": {"limit": 10, "queries": "[[i%5,i%5] for i in range(10)]"},
       "expected": "Error: Solution.queryResults() missing 1 required positional argument: 'queries'"
     },
     {
@@ -276,10 +267,7 @@
     },
     {
       "case_id": 20,
-      "input": {
-        "limit": 5,
-        "queries": "[[i, 5] for i in range(5)]"
-      },
+      "input": {"limit": 5, "queries": "[[i, 5] for i in range(5)]"},
       "expected": "Error: Solution.queryResults() missing 1 required positional argument: 'queries'"
     },
     {
@@ -304,10 +292,7 @@
     },
     {
       "case_id": 22,
-      "input": {
-        "limit": 100000,
-        "queries": "[[i, (i * 1000) % 100000] for i in range(100000)]"
-      },
+      "input": {"limit": 100000, "queries": "[[i, (i * 1000) % 100000] for i in range(100000)]"},
       "expected": "Error: Solution.queryResults() missing 1 required positional argument: 'queries'"
     },
     {
@@ -358,58 +343,37 @@
     },
     {
       "case_id": 25,
-      "input": {
-        "limit": 100000,
-        "queries": "[[i, i % 10000] for i in range(100001)]"
-      },
+      "input": {"limit": 100000, "queries": "[[i, i % 10000] for i in range(100001)]"},
       "expected": "Error: Solution.queryResults() missing 1 required positional argument: 'queries'"
     },
     {
       "case_id": 26,
-      "input": {
-        "limit": 50,
-        "queries": "[[i, i+1] for i in range(50)] + [[i, i+2] for i in range(0, 50, 2)]"
-      },
+      "input": {"limit": 50, "queries": "[[i, i+1] for i in range(50)] + [[i, i+2] for i in range(0, 50, 2)]"},
       "expected": "Error: Solution.queryResults() missing 1 required positional argument: 'queries'"
     },
     {
       "case_id": 27,
-      "input": {
-        "limit": 100,
-        "queries": "[[i, i % 10 + 1] for i in range(100)]"
-      },
+      "input": {"limit": 100, "queries": "[[i, i % 10 + 1] for i in range(100)]"},
       "expected": "Error: Solution.queryResults() missing 1 required positional argument: 'queries'"
     },
     {
       "case_id": 28,
-      "input": {
-        "limit": 50,
-        "queries": "[[i, i+1] for i in range(50)] + [[i, i+1] for i in range(0, 50, 2)] + [[i, i+1] for i in range(1, 50, 2)]"
-      },
+      "input": {"limit": 50, "queries": "[[i, i+1] for i in range(50)] + [[i, i+1] for i in range(0, 50, 2)] + [[i, i+1] for i in range(1, 50, 2)]"},
       "expected": "Error: Solution.queryResults() missing 1 required positional argument: 'queries'"
     },
     {
       "case_id": 29,
-      "input": {
-        "limit": 1000000,
-        "queries": "[[i, 1000001 + i] for i in range(1000000)]"
-      },
+      "input": {"limit": 1000000, "queries": "[[i, 1000001 + i] for i in range(1000000)]"},
       "expected": "Error: Solution.queryResults() missing 1 required positional argument: 'queries'"
     },
     {
       "case_id": 30,
-      "input": {
-        "limit": 100,
-        "queries": "[[0,1],[0,2],[0,3],[0,4],[0,5],[0,6],[0,7],[0,8],[0,9],[0,10]] + [[i, i+1] for i in range(10, 100)]"
-      },
+      "input": {"limit": 100, "queries": "[[0,1],[0,2],[0,3],[0,4],[0,5],[0,6],[0,7],[0,8],[0,9],[0,10]] + [[i, i+1] for i in range(10, 100)]"},
       "expected": "Error: Solution.queryResults() missing 1 required positional argument: 'queries'"
     },
     {
       "case_id": 31,
-      "input": {
-        "limit": 20,
-        "queries": "[[i, i+1] for i in range(20)]"
-      },
+      "input": {"limit": 20, "queries": "[[i, i+1] for i in range(20)]"},
       "expected": "Error: Solution.queryResults() missing 1 required positional argument: 'queries'"
     },
     {
@@ -433,50 +397,32 @@
     },
     {
       "case_id": 33,
-      "input": {
-        "limit": 100,
-        "queries": "[[i, 1] for i in range(101)] + [[i, 2] for i in range(101)] + [[i, 3] for i in range(101)]"
-      },
+      "input": {"limit": 100, "queries": "[[i, 1] for i in range(101)] + [[i, 2] for i in range(101)] + [[i, 3] for i in range(101)]"},
       "expected": "Error: Solution.queryResults() missing 1 required positional argument: 'queries'"
     },
     {
       "case_id": 34,
-      "input": {
-        "limit": 100,
-        "queries": "[[i,i%10] for i in range(100)]"
-      },
+      "input": {"limit": 100, "queries": "[[i,i%10] for i in range(100)]"},
       "expected": "Error: Solution.queryResults() missing 1 required positional argument: 'queries'"
     },
     {
       "case_id": 35,
-      "input": {
-        "limit": 50,
-        "queries": "[[i, i+1] for i in range(50)] + [[i, i] for i in range(50)]"
-      },
+      "input": {"limit": 50, "queries": "[[i, i+1] for i in range(50)] + [[i, i] for i in range(50)]"},
       "expected": "Error: Solution.queryResults() missing 1 required positional argument: 'queries'"
     },
     {
       "case_id": 36,
-      "input": {
-        "limit": 100000,
-        "queries": "[[i,i%1000] for i in range(100000)]"
-      },
+      "input": {"limit": 100000, "queries": "[[i,i%1000] for i in range(100000)]"},
       "expected": "Error: Solution.queryResults() missing 1 required positional argument: 'queries'"
     },
     {
       "case_id": 37,
-      "input": {
-        "limit": 25,
-        "queries": "[[i, i+1] for i in range(25)] + [[i, i+2] for i in range(25)] + [[i, i+3] for i in range(25)]"
-      },
+      "input": {"limit": 25, "queries": "[[i, i+1] for i in range(25)] + [[i, i+2] for i in range(25)] + [[i, i+3] for i in range(25)]"},
       "expected": "Error: Solution.queryResults() missing 1 required positional argument: 'queries'"
     },
     {
       "case_id": 38,
-      "input": {
-        "limit": 100000,
-        "queries": "[[i, i % 1000] for i in range(100000)]"
-      },
+      "input": {"limit": 100000, "queries": "[[i, i % 1000] for i in range(100000)]"},
       "expected": "Error: Solution.queryResults() missing 1 required positional argument: 'queries'"
     },
     {
@@ -548,26 +494,17 @@
     },
     {
       "case_id": 42,
-      "input": {
-        "limit": 10,
-        "queries": "[[i, i%3+1] for i in range(10)]"
-      },
+      "input": {"limit": 10, "queries": "[[i, i%3+1] for i in range(10)]"},
       "expected": "Error: Solution.queryResults() missing 1 required positional argument: 'queries'"
     },
     {
       "case_id": 43,
-      "input": {
-        "limit": 100,
-        "queries": "[[i%50,i%50] for i in range(100)]"
-      },
+      "input": {"limit": 100, "queries": "[[i%50,i%50] for i in range(100)]"},
       "expected": "Error: Solution.queryResults() missing 1 required positional argument: 'queries'"
     },
     {
       "case_id": 44,
-      "input": {
-        "limit": 1000,
-        "queries": "[[i,i%10] for i in range(1000)]"
-      },
+      "input": {"limit": 1000, "queries": "[[i,i%10] for i in range(1000)]"},
       "expected": "Error: Solution.queryResults() missing 1 required positional argument: 'queries'"
     },
     {
@@ -611,42 +548,27 @@
     },
     {
       "case_id": 47,
-      "input": {
-        "limit": 500,
-        "queries": "[[i, (i*i) % 100] for i in range(500)]"
-      },
+      "input": {"limit": 500, "queries": "[[i, (i*i) % 100] for i in range(500)]"},
       "expected": "Error: Solution.queryResults() missing 1 required positional argument: 'queries'"
     },
     {
       "case_id": 48,
-      "input": {
-        "limit": 1000,
-        "queries": "[[i, (i%50) + 1] for i in range(1000)]"
-      },
+      "input": {"limit": 1000, "queries": "[[i, (i%50) + 1] for i in range(1000)]"},
       "expected": "Error: Solution.queryResults() missing 1 required positional argument: 'queries'"
     },
     {
       "case_id": 49,
-      "input": {
-        "limit": 500,
-        "queries": "[[i, i % 5 + 1] for i in range(500)]"
-      },
+      "input": {"limit": 500, "queries": "[[i, i % 5 + 1] for i in range(500)]"},
       "expected": "Error: Solution.queryResults() missing 1 required positional argument: 'queries'"
     },
     {
       "case_id": 50,
-      "input": {
-        "limit": 5,
-        "queries": "[[i, i] for i in range(6)] + [[i, i+1] for i in range(5)] + [[i, i+2] for i in range(4)]"
-      },
+      "input": {"limit": 5, "queries": "[[i, i] for i in range(6)] + [[i, i+1] for i in range(5)] + [[i, i+2] for i in range(4)]"},
       "expected": "Error: Solution.queryResults() missing 1 required positional argument: 'queries'"
     },
     {
       "case_id": 51,
-      "input": {
-        "limit": 200,
-        "queries": "[[i, i] for i in range(200)] + [[i, i+100] for i in range(100)]"
-      },
+      "input": {"limit": 200, "queries": "[[i, i] for i in range(200)] + [[i, i+100] for i in range(100)]"},
       "expected": "Error: Solution.queryResults() missing 1 required positional argument: 'queries'"
     },
     {
@@ -690,26 +612,17 @@
     },
     {
       "case_id": 54,
-      "input": {
-        "limit": 100,
-        "queries": "[[i,1] for i in range(100)] + [[i,2] for i in range(100)] + [[i,3] for i in range(100)]"
-      },
+      "input": {"limit": 100, "queries": "[[i,1] for i in range(100)] + [[i,2] for i in range(100)] + [[i,3] for i in range(100)]"},
       "expected": "Error: Solution.queryResults() missing 1 required positional argument: 'queries'"
     },
     {
       "case_id": 55,
-      "input": {
-        "limit": 1000,
-        "queries": "[[i, 1] for i in range(500)] + [[i, 2] for i in range(500, 1000)]"
-      },
+      "input": {"limit": 1000, "queries": "[[i, 1] for i in range(500)] + [[i, 2] for i in range(500, 1000)]"},
       "expected": "Error: Solution.queryResults() missing 1 required positional argument: 'queries'"
     },
     {
       "case_id": 56,
-      "input": {
-        "limit": 1000,
-        "queries": "[[i, (i // 10) % 10 + 1] for i in range(1000)]"
-      },
+      "input": {"limit": 1000, "queries": "[[i, (i // 10) % 10 + 1] for i in range(1000)]"},
       "expected": "Error: Solution.queryResults() missing 1 required positional argument: 'queries'"
     },
     {
@@ -733,26 +646,17 @@
     },
     {
       "case_id": 58,
-      "input": {
-        "limit": 100000,
-        "queries": "[[i, i+1] for i in range(0, 100000, 10000)] + [[i, i+2] for i in range(1, 100000, 10000)]"
-      },
+      "input": {"limit": 100000, "queries": "[[i, i+1] for i in range(0, 100000, 10000)] + [[i, i+2] for i in range(1, 100000, 10000)]"},
       "expected": "Error: Solution.queryResults() missing 1 required positional argument: 'queries'"
     },
     {
       "case_id": 59,
-      "input": {
-        "limit": 1000000,
-        "queries": "[[0,1],[1,2],[2,3],[3,4],[4,5],[5,6],[6,7],[7,8],[8,9],[9,10]] * 10000"
-      },
+      "input": {"limit": 1000000, "queries": "[[0,1],[1,2],[2,3],[3,4],[4,5],[5,6],[6,7],[7,8],[8,9],[9,10]] * 10000"},
       "expected": "Error: Solution.queryResults() missing 1 required positional argument: 'queries'"
     },
     {
       "case_id": 60,
-      "input": {
-        "limit": 100,
-        "queries": "[[i, i%10+1] for i in range(100)] + [[i, i%5+1] for i in range(100)]"
-      },
+      "input": {"limit": 100, "queries": "[[i, i%10+1] for i in range(100)] + [[i, i%5+1] for i in range(100)]"},
       "expected": "Error: Solution.queryResults() missing 1 required positional argument: 'queries'"
     },
     {
@@ -776,18 +680,12 @@
     },
     {
       "case_id": 62,
-      "input": {
-        "limit": 100000,
-        "queries": "[[i, (i * i * i) % 100000] for i in range(100000)]"
-      },
+      "input": {"limit": 100000, "queries": "[[i, (i * i * i) % 100000] for i in range(100000)]"},
       "expected": "Error: Solution.queryResults() missing 1 required positional argument: 'queries'"
     },
     {
       "case_id": 63,
-      "input": {
-        "limit": 1000000,
-        "queries": "[[i, i % 100000] for i in range(100001)]"
-      },
+      "input": {"limit": 1000000, "queries": "[[i, i % 100000] for i in range(100001)]"},
       "expected": "Error: Solution.queryResults() missing 1 required positional argument: 'queries'"
     },
     {
@@ -806,18 +704,12 @@
     },
     {
       "case_id": 65,
-      "input": {
-        "limit": 50000,
-        "queries": "[[i, (i%100) + 1] for i in range(50000)]"
-      },
+      "input": {"limit": 50000, "queries": "[[i, (i%100) + 1] for i in range(50000)]"},
       "expected": "Error: Solution.queryResults() missing 1 required positional argument: 'queries'"
     },
     {
       "case_id": 66,
-      "input": {
-        "limit": 1000,
-        "queries": "[[i, i] for i in range(1000)] + [[i, i+1] for i in range(999)] + [[i, i+2] for i in range(998)] + [[i, i+3] for i in range(997)]"
-      },
+      "input": {"limit": 1000, "queries": "[[i, i] for i in range(1000)] + [[i, i+1] for i in range(999)] + [[i, i+2] for i in range(998)] + [[i, i+3] for i in range(997)]"},
       "expected": "Error: Solution.queryResults() missing 1 required positional argument: 'queries'"
     },
     {
@@ -851,34 +743,22 @@
     },
     {
       "case_id": 68,
-      "input": {
-        "limit": 1000,
-        "queries": "[[i, (i%100) + 1] for i in range(1000)]"
-      },
+      "input": {"limit": 1000, "queries": "[[i, (i%100) + 1] for i in range(1000)]"},
       "expected": "Error: Solution.queryResults() missing 1 required positional argument: 'queries'"
     },
     {
       "case_id": 69,
-      "input": {
-        "limit": 100000,
-        "queries": "[[i, (i * i) % 100000] for i in range(100000)]"
-      },
+      "input": {"limit": 100000, "queries": "[[i, (i * i) % 100000] for i in range(100000)]"},
       "expected": "Error: Solution.queryResults() missing 1 required positional argument: 'queries'"
     },
     {
       "case_id": 70,
-      "input": {
-        "limit": 20,
-        "queries": "[[i, i+1] for i in range(11)] + [[i, i+1] for i in range(10, 21)]"
-      },
+      "input": {"limit": 20, "queries": "[[i, i+1] for i in range(11)] + [[i, i+1] for i in range(10, 21)]"},
       "expected": "Error: Solution.queryResults() missing 1 required positional argument: 'queries'"
     },
     {
       "case_id": 71,
-      "input": {
-        "limit": 100000,
-        "queries": "[[0,1]] * 50000 + [[i, i + 1] for i in range(50000)]"
-      },
+      "input": {"limit": 100000, "queries": "[[0,1]] * 50000 + [[i, i + 1] for i in range(50000)]"},
       "expected": "Error: Solution.queryResults() missing 1 required positional argument: 'queries'"
     },
     {
@@ -960,10 +840,7 @@
     },
     {
       "case_id": 74,
-      "input": {
-        "limit": 100,
-        "queries": "[[i, i % 10] * 10 for i in range(10)] + [[i, i % 5] * 5 for i in range(10, 20)]"
-      },
+      "input": {"limit": 100, "queries": "[[i, i % 10] * 10 for i in range(10)] + [[i, i % 5] * 5 for i in range(10, 20)]"},
       "expected": "Error: Solution.queryResults() missing 1 required positional argument: 'queries'"
     },
     {
@@ -989,26 +866,17 @@
     },
     {
       "case_id": 76,
-      "input": {
-        "limit": 50,
-        "queries": "[[i, i+1] for i in range(50)] + [[i, i%5+1] for i in range(50)]"
-      },
+      "input": {"limit": 50, "queries": "[[i, i+1] for i in range(50)] + [[i, i%5+1] for i in range(50)]"},
       "expected": "Error: Solution.queryResults() missing 1 required positional argument: 'queries'"
     },
     {
       "case_id": 77,
-      "input": {
-        "limit": 50,
-        "queries": "[[i,i+1] for i in range(50)]"
-      },
+      "input": {"limit": 50, "queries": "[[i,i+1] for i in range(50)]"},
       "expected": "Error: Solution.queryResults() missing 1 required positional argument: 'queries'"
     },
     {
       "case_id": 78,
-      "input": {
-        "limit": 5,
-        "queries": "[[i, i % 3 + 1] for i in range(6)] + [[i, i % 2 + 1] for i in range(6)]"
-      },
+      "input": {"limit": 5, "queries": "[[i, i % 3 + 1] for i in range(6)] + [[i, i % 2 + 1] for i in range(6)]"},
       "expected": "Error: Solution.queryResults() missing 1 required positional argument: 'queries'"
     },
     {
@@ -1039,34 +907,22 @@
     },
     {
       "case_id": 80,
-      "input": {
-        "limit": 100,
-        "queries": "[[i, (i % 5) + 1] for i in range(101)]"
-      },
+      "input": {"limit": 100, "queries": "[[i, (i % 5) + 1] for i in range(101)]"},
       "expected": "Error: Solution.queryResults() missing 1 required positional argument: 'queries'"
     },
     {
       "case_id": 81,
-      "input": {
-        "limit": 1000,
-        "queries": "[[i%500,i%500] for i in range(1000)]"
-      },
+      "input": {"limit": 1000, "queries": "[[i%500,i%500] for i in range(1000)]"},
       "expected": "Error: Solution.queryResults() missing 1 required positional argument: 'queries'"
     },
     {
       "case_id": 82,
-      "input": {
-        "limit": 1000,
-        "queries": "[[i, 1] for i in range(1001)] + [[i, 2] for i in range(500, 1501) if i <= 1000]"
-      },
+      "input": {"limit": 1000, "queries": "[[i, 1] for i in range(1001)] + [[i, 2] for i in range(500, 1501) if i <= 1000]"},
       "expected": "Error: Solution.queryResults() missing 1 required positional argument: 'queries'"
     },
     {
       "case_id": 83,
-      "input": {
-        "limit": 1000,
-        "queries": "[[i,i] for i in range(500)] + [[i,i+500] for i in range(500)]"
-      },
+      "input": {"limit": 1000, "queries": "[[i,i] for i in range(500)] + [[i,i+500] for i in range(500)]"},
       "expected": "Error: Solution.queryResults() missing 1 required positional argument: 'queries'"
     },
     {
@@ -1091,10 +947,7 @@
     },
     {
       "case_id": 85,
-      "input": {
-        "limit": 500,
-        "queries": "[[i, 1] for i in range(500)] + [[i, 2] for i in range(500)] + [[i, 3] for i in range(500)]"
-      },
+      "input": {"limit": 500, "queries": "[[i, 1] for i in range(500)] + [[i, 2] for i in range(500)] + [[i, 3] for i in range(500)]"},
       "expected": "Error: Solution.queryResults() missing 1 required positional argument: 'queries'"
     },
     {
@@ -1117,10 +970,7 @@
     },
     {
       "case_id": 87,
-      "input": {
-        "limit": 50,
-        "queries": "[[i,i] for i in range(50)]"
-      },
+      "input": {"limit": 50, "queries": "[[i,i] for i in range(50)]"},
       "expected": "Error: Solution.queryResults() missing 1 required positional argument: 'queries'"
     },
     {
@@ -1194,10 +1044,7 @@
     },
     {
       "case_id": 91,
-      "input": {
-        "limit": 100000,
-        "queries": "[[i, i + 1] for i in range(50000)] + [[i, i + 1] for i in range(50000, 100000)]"
-      },
+      "input": {"limit": 100000, "queries": "[[i, i + 1] for i in range(50000)] + [[i, i + 1] for i in range(50000, 100000)]"},
       "expected": "Error: Solution.queryResults() missing 1 required positional argument: 'queries'"
     },
     {
@@ -1221,18 +1068,12 @@
     },
     {
       "case_id": 93,
-      "input": {
-        "limit": 500,
-        "queries": "[[i,i%5] for i in range(500)]"
-      },
+      "input": {"limit": 500, "queries": "[[i,i%5] for i in range(500)]"},
       "expected": "Error: Solution.queryResults() missing 1 required positional argument: 'queries'"
     },
     {
       "case_id": 94,
-      "input": {
-        "limit": 100000,
-        "queries": "[[i, i + 1] for i in range(100000)]"
-      },
+      "input": {"limit": 100000, "queries": "[[i, i + 1] for i in range(100000)]"},
       "expected": "Error: Solution.queryResults() missing 1 required positional argument: 'queries'"
     },
     {
@@ -1262,10 +1103,7 @@
     },
     {
       "case_id": 96,
-      "input": {
-        "limit": 100,
-        "queries": "[[i, i+1] for i in range(50)] + [[i, i+2] for i in range(50, 100)]"
-      },
+      "input": {"limit": 100, "queries": "[[i, i+1] for i in range(50)] + [[i, i+2] for i in range(50, 100)]"},
       "expected": "Error: Solution.queryResults() missing 1 required positional argument: 'queries'"
     },
     {
@@ -1291,18 +1129,12 @@
     },
     {
       "case_id": 98,
-      "input": {
-        "limit": 1000,
-        "queries": "[[1,1001],[100,2002],[200,3003],[300,4004],[400,5005],[500,6006],[600,7007],[700,8008],[800,9009],[900,10010]] * 100"
-      },
+      "input": {"limit": 1000, "queries": "[[1,1001],[100,2002],[200,3003],[300,4004],[400,5005],[500,6006],[600,7007],[700,8008],[800,9009],[900,10010]] * 100"},
       "expected": "Error: Solution.queryResults() missing 1 required positional argument: 'queries'"
     },
     {
       "case_id": 99,
-      "input": {
-        "limit": 100,
-        "queries": "[[i, 100-i] for i in range(100)] + [[i, 101-i] for i in range(100)] + [[i, 102-i] for i in range(100)]"
-      },
+      "input": {"limit": 100, "queries": "[[i, 100-i] for i in range(100)] + [[i, 101-i] for i in range(100)] + [[i, 102-i] for i in range(100)]"},
       "expected": "Error: Solution.queryResults() missing 1 required positional argument: 'queries'"
     },
     {
@@ -1326,58 +1158,37 @@
     },
     {
       "case_id": 101,
-      "input": {
-        "limit": 20,
-        "queries": "[[i%10,i%10] for i in range(20)]"
-      },
+      "input": {"limit": 20, "queries": "[[i%10,i%10] for i in range(20)]"},
       "expected": "Error: Solution.queryResults() missing 1 required positional argument: 'queries'"
     },
     {
       "case_id": 102,
-      "input": {
-        "limit": 1000000,
-        "queries": "[[500000, 1000001],[500001, 1000002],[500002, 1000003],[500003, 1000004],[500004, 1000005]] * 200000"
-      },
+      "input": {"limit": 1000000, "queries": "[[500000, 1000001],[500001, 1000002],[500002, 1000003],[500003, 1000004],[500004, 1000005]] * 200000"},
       "expected": "Error: Solution.queryResults() missing 1 required positional argument: 'queries'"
     },
     {
       "case_id": 103,
-      "input": {
-        "limit": 10000,
-        "queries": "[[i, i % 1000] for i in range(10001)]"
-      },
+      "input": {"limit": 10000, "queries": "[[i, i % 1000] for i in range(10001)]"},
       "expected": "Error: Solution.queryResults() missing 1 required positional argument: 'queries'"
     },
     {
       "case_id": 104,
-      "input": {
-        "limit": 10,
-        "queries": "[[i, i+1] for i in range(10)] + [[i, i+2] for i in range(10)]"
-      },
+      "input": {"limit": 10, "queries": "[[i, i+1] for i in range(10)] + [[i, i+2] for i in range(10)]"},
       "expected": "Error: Solution.queryResults() missing 1 required positional argument: 'queries'"
     },
     {
       "case_id": 105,
-      "input": {
-        "limit": 500,
-        "queries": "[[i, i] for i in range(500)] + [[i, i+1] for i in range(499)] + [[i, i+2] for i in range(498)] + [[i, i+3] for i in range(497)] + [[i, i+4] for i in range(496)]"
-      },
+      "input": {"limit": 500, "queries": "[[i, i] for i in range(500)] + [[i, i+1] for i in range(499)] + [[i, i+2] for i in range(498)] + [[i, i+3] for i in range(497)] + [[i, i+4] for i in range(496)]"},
       "expected": "Error: Solution.queryResults() missing 1 required positional argument: 'queries'"
     },
     {
       "case_id": 106,
-      "input": {
-        "limit": 100,
-        "queries": "[[i, i*2] for i in range(100)]"
-      },
+      "input": {"limit": 100, "queries": "[[i, i*2] for i in range(100)]"},
       "expected": "Error: Solution.queryResults() missing 1 required positional argument: 'queries'"
     },
     {
       "case_id": 107,
-      "input": {
-        "limit": 100,
-        "queries": "[[i, i] for i in range(100)] + [[i, i+1] for i in range(99)] + [[i, i+2] for i in range(98)]"
-      },
+      "input": {"limit": 100, "queries": "[[i, i] for i in range(100)] + [[i, i+1] for i in range(99)] + [[i, i+2] for i in range(98)]"},
       "expected": "Error: Solution.queryResults() missing 1 required positional argument: 'queries'"
     },
     {
@@ -1445,10 +1256,7 @@
     },
     {
       "case_id": 111,
-      "input": {
-        "limit": 200,
-        "queries": "[[i, i%10+1] for i in range(200)]"
-      },
+      "input": {"limit": 200, "queries": "[[i, i%10+1] for i in range(200)]"},
       "expected": "Error: Solution.queryResults() missing 1 required positional argument: 'queries'"
     }
   ]
