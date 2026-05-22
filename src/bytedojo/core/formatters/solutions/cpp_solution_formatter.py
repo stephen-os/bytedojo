@@ -44,8 +44,8 @@ class CppSolutionFormatter(BaseSolutionFormatter):
         return self._helper.files_for(problem)
 
     def format_imports(self, _problem: Problem) -> str:
-        """Baseline stdlib includes and `using namespace std;`."""
-        return "\n".join(_CPP_BASELINE_INCLUDES) + "\n\nusing namespace std;"
+        """Baseline stdlib includes."""
+        return "\n".join(_CPP_BASELINE_INCLUDES)
 
     def format_solution(self, problem: Problem) -> str:
         """Extract the class body from the LeetCode snippet."""
