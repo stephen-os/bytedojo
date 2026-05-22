@@ -155,7 +155,7 @@ class ReviewService:
                 db.get_config('review_frequency_days', '7')
             )
             db.schedule_review(problem_db_id, interval)
-        self.logger.info(
+        self.logger.debug(
             f"review_service: initial schedule for problem_db_id={problem_db_id} "
             f"at {interval} days"
         )
@@ -218,7 +218,7 @@ class ReviewService:
             db.snooze_review(problem_db_id, days)
             row = db.get_review(problem_db_id)
 
-        self.logger.info(
+        self.logger.debug(
             f"review_service: snoozed problem_db_id={problem_db_id} by {days} days"
         )
         return ReviewActionResult(
@@ -243,7 +243,7 @@ class ReviewService:
                 )
             db.delete_review(problem_db_id)
 
-        self.logger.info(
+        self.logger.debug(
             f"review_service: removed problem_db_id={problem_db_id} from review queue"
         )
         return ReviewActionResult(problem_db_id=problem_db_id, action="remove")
@@ -287,7 +287,7 @@ class ReviewService:
             )
             updated = db.get_review(problem_db_id)
 
-        self.logger.info(
+        self.logger.debug(
             f"review_service: completed problem_db_id={problem_db_id} "
             f"quality={quality.value} "
             f"interval {existing.interval_days}->{new_interval} "

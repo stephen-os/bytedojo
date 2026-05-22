@@ -276,7 +276,7 @@ class TestService:
         run_result = _build_run_result(problem, bundle, results_data)
         self._record_status(repo, problem, run_result, version=tested_version)
 
-        self.logger.info(
+        self.logger.debug(
             f"test_service: #{problem.problem_id} v{tested_version} "
             f"status={run_result.status} "
             f"({run_result.passed_count}/{run_result.total_cases})"
@@ -461,7 +461,7 @@ class TestService:
         version: Optional[int] = None,
         file_path: Optional[Path] = None,
     ) -> TestServiceResult:
-        self.logger.info(f"test_service: skipped #{problem.problem_id} — {reason}")
+        self.logger.debug(f"test_service: skipped #{problem.problem_id} — {reason}")
         return TestServiceResult(
             problem=problem, version=version,
             file_path=file_path, skipped=True, skip_reason=reason,

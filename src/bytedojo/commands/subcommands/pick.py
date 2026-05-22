@@ -10,6 +10,7 @@ from bytedojo.core.logger import get_logger
 from bytedojo.core.models.problem_difficulty import ProblemDifficulty
 from bytedojo.core.models.problem_tag import ProblemTag
 from bytedojo.services import PickService, PickScope
+from bytedojo.commands.ui import bold, dim, difficulty_badge, blank, header, footer
 
 
 # Define pick command
@@ -89,32 +90,41 @@ def pick(ctx, difficulty: str | None, tags: tuple, scope: str | None):
 
     # Display
     if result.total_count == 0:
-        click.echo("No problems found matching your criteria.")
+        click.echo(f"  {dim('No problems found matching your criteria.')}")
         return
 
     if not result.has_pick:
         if result.scope == PickScope.SOLVED:
-            click.echo("No registered problems matching your criteria.")
+            click.echo(f"  {dim('No registered problems matching your criteria.')}")
         else:
-            click.echo("All matching problems already registered.")
-            click.echo(f"  total: {result.total_count}, registered: {result.registered_count}")
+            click.echo(f"  {dim('All matching problems already registered.')}")
+            click.echo(
+                f"  {dim('total:')} {bold(str(result.total_count))}  "
+                f"{dim('registered:')} {bold(str(result.registered_count))}"
+            )
         return
 
     picked = result.picked
     label = result.scope.display_label
 
-    click.echo(f"Picking from {result.pool_size} {label} problem(s)")
-    click.echo(f"  #{picked.id} {picked.title} [{picked.difficulty.value}]")
+    header("Selected")
+    blank()
+    click.echo(
+        f"  {bold('#' + str(picked.id))}  {bold(picked.title)}  "
+        f"{difficulty_badge(picked.difficulty.value)}"
+    )
 
     if picked.tags:
-        tags_display = ", ".join(t.value for t in picked.tags[:5])
+        tags_display = "  ".join(dim(t.value) for t in picked.tags[:5])
         if len(picked.tags) > 5:
-            tags_display += f" (+{len(picked.tags) - 5} more)"
-        click.echo(f"  tags: {tags_display}")
+            tags_display += f"  {dim(f'+{len(picked.tags) - 5} more')}"
+        blank()
+        click.echo(f"  {dim('Tags')}   {tags_display}")
 
-    click.echo("")
+    blank()
     click.echo(
-        f"Done: pool={result.pool_size} ({label}), "
-        f"registered={result.registered_count}, total={result.total_count}"
+        f"  {dim('Pool')}   {bold(str(result.pool_size))} {label}  "
+        f"{dim('·')}  {bold(str(result.registered_count))} registered  "
+        f"{dim('·')}  {bold(str(result.total_count))} total"
     )
-    click.echo(f"Fetch with: dojo fetch {picked.id}")
+    footer(f"dojo fetch {picked.id}")

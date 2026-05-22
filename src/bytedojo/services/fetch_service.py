@@ -176,7 +176,7 @@ class FetchService:
             results.append(result)
 
         batch_result = FetchBatchResult(results=results)
-        self.logger.info(
+        self.logger.debug(
             f"fetch_service: batch complete — "
             f"placed={batch_result.placed_count} "
             f"skipped={batch_result.skipped_count} "
@@ -223,7 +223,7 @@ class FetchService:
 
         self._place_with_extras(repo, problem, language, solution_path)
 
-        self.logger.info(
+        self.logger.debug(
             f"fetch_service: placed #{problem.problem_detail.id} "
             f"({language.value}) at {solution_path}, untracked"
         )
@@ -260,7 +260,7 @@ class FetchService:
 
         self._place_with_extras(repo, problem, language, target)
 
-        self.logger.info(
+        self.logger.debug(
             f"fetch_service: refetched #{problem.problem_detail.id} "
             f"({language.value}) v{version} at {target}"
         )
@@ -285,7 +285,7 @@ class FetchService:
 
         # Check if already registered
         if not force and repo.is_problem_registered("leetcode", problem_id, language):
-            self.logger.info(
+            self.logger.debug(
                 f"fetch_service: skipped #{problem_id} ({language.value}), "
                 f"already registered"
             )
@@ -301,7 +301,7 @@ class FetchService:
         target = repo.attempt_path(problem, language, attempt.version)
         self._place_with_extras(repo, problem, language, target)
 
-        self.logger.info(
+        self.logger.debug(
             f"fetch_service: placed #{problem_id} ({language.value}) "
             f"v{attempt.version} at {target}"
         )

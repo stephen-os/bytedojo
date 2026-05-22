@@ -102,12 +102,12 @@ class PickService:
 
         picked = random.choice(candidates) if candidates else None
         if picked is not None:
-            self.logger.info(
+            self.logger.debug(
                 f"pick_service: selected #{picked.id} {picked.slug} "
                 f"(scope={scope.value}, pool={len(candidates)})"
             )
         else:
-            self.logger.info(
+            self.logger.debug(
                 f"pick_service: no candidates (scope={scope.value}, "
                 f"total={total_count}, registered={registered_count})"
             )

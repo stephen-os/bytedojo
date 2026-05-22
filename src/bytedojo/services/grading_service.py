@@ -100,7 +100,7 @@ class GradingService:
             ReviewService().initial_schedule(repo, problem.id)
             scheduled = True
 
-        self.logger.info(
+        self.logger.debug(
             f"grading_service: graded #{problem.problem_id} as {status} "
             f"(scheduled_review={scheduled})"
         )

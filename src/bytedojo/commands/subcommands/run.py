@@ -13,6 +13,7 @@ from bytedojo.core.models.registered_problem import RegisteredProblem
 from bytedojo.core.repository import Repository
 from bytedojo.services import RunService
 from bytedojo.services.run_service import RunServiceResult
+from bytedojo.commands.ui import accent, bold, success, warn, error, dim, problem_line
 
 
 def _display_run_header(result: RunServiceResult):
@@ -27,27 +28,22 @@ def _display_run_header(result: RunServiceResult):
     file_path = str(result.file_path) if result.file_path else (problem.file_path or "")
     version_label = f"v{result.version}" if result.version is not None else "?"
 
-    click.echo("")
-    click.echo(click.style("=" * 60, fg='bright_black'))
-    click.echo(click.style("  RUN PROBLEM", fg='cyan', bold=True))
-    click.echo(click.style("=" * 60, fg='bright_black'))
-    click.echo("")
-    click.echo(f"  {problem.problem_id}: {click.style(problem.title, bold=True)}")
-    click.echo(f"  Language: {problem.language.value.upper()}")
-    click.echo(f"  Version:  {version_label}")
-    click.echo(f"  File:     {file_path}")
-    click.echo("")
-    click.echo(click.style("-" * 60, fg='bright_black'))
-    click.echo(click.style("  OUTPUT", fg='cyan'))
-    click.echo(click.style("-" * 60, fg='bright_black'))
-    click.echo("")
+    click.echo()
+    click.echo(dim("  " + "─" * 60))
+    click.echo(
+        f"  {problem_line(problem.problem_id, problem.title, problem.difficulty.value, problem.language.value)}"
+        f"  {dim(version_label)}"
+    )
+    click.echo(f"  {dim(file_path)}")
+    click.echo(dim("  " + "─" * 60))
+    click.echo()
 
 
 def _display_execution_result(result: ExecutionResult):
     """Display execution output and result."""
     # Show compilation error if applicable
     if result.compile_error:
-        click.echo(click.style("Compilation failed:", fg='red', bold=True))
+        click.echo(error("Compilation failed:"))
         click.echo(result.compile_error)
         return
 
@@ -59,20 +55,20 @@ def _display_execution_result(result: ExecutionResult):
 
     # Show stderr if any (and not a timeout message already shown)
     if result.stderr and not result.timed_out:
-        click.echo(click.style(result.stderr, fg='yellow'), nl=False)
+        click.echo(warn(result.stderr), nl=False)
         if not result.stderr.endswith('\n'):
             click.echo("")
 
     # Show timeout message
     if result.timed_out:
-        click.echo(click.style(result.stderr, fg='red'))
+        click.echo(error(result.stderr))
 
     # Show final status
-    click.echo("")
+    click.echo()
     if result.exit_code == 0:
-        click.echo(click.style("  Execution completed successfully", fg='green'))
+        click.echo(f"  {success('✓ Execution completed successfully')}")
     else:
-        click.echo(click.style(f"  Execution failed (exit code: {result.exit_code})", fg='red'))
+        click.echo(f"  {error(f'✗ Execution failed (exit code: {result.exit_code})')}")
 
 
 # ============================================================================
@@ -144,8 +140,8 @@ def run(
 
     # Quick pre-message — header comes after the service runs so it can show
     # the version-aware path.
-    click.echo("")
-    click.echo(f"  Running #{problem.problem_id} {problem.title}...")
+    click.echo()
+    click.echo(f"  Running {accent('#' + str(problem.problem_id))} {bold(problem.title)}...")
 
     service = RunService()
     result = service.run_problem(repo, problem, version=version)

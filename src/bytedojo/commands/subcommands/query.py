@@ -12,22 +12,7 @@ from bytedojo.core.models.problem_difficulty import ProblemDifficulty
 from bytedojo.core.models.problem_status import ProblemStatus
 from bytedojo.core.models.problem_tag import ProblemTag
 from bytedojo.services import problem_service
-
-
-# Status indicators for CLI display
-STATUS_ICONS = {
-    ProblemStatus.PASSED: click.style('[P]', fg='green'),
-    ProblemStatus.FAILED: click.style('[F]', fg='red'),
-    ProblemStatus.SKIPPED: click.style('[S]', fg='yellow'),
-    ProblemStatus.UNGRADED: click.style('[ ]', fg='bright_black'),
-    ProblemStatus.UNKNOWN: click.style('[ ]', fg='bright_black'),
-}
-
-DIFFICULTY_SHORT = {
-    'Easy': click.style('E', fg='green'),
-    'Medium': click.style('M', fg='yellow'),
-    'Hard': click.style('H', fg='red'),
-}
+from bytedojo.commands.ui import dim, hint, status_short, difficulty_short
 
 
 def _get_best_status(status_map, problem_id):
@@ -61,21 +46,19 @@ def _display_page(all_problems, page, per_page, status_map):
     page_problems = all_problems[start_idx:end_idx]
 
     # Display header
-    click.echo(f"\nProblems (Page {page}/{total_pages}, {total} total)\n")
-    click.echo(f"{'ID':>5}  {'St':3}  {'D'}  Title")
-    click.echo("-" * 60)
+    click.echo(f"\n  Problems {dim(f'(page {page}/{total_pages}, {total} total)')}\n")
 
     # Display results
     for problem in page_problems:
         status = _get_best_status(status_map, problem.id)
-        status_icon = STATUS_ICONS.get(status, STATUS_ICONS[ProblemStatus.UNKNOWN])
-        diff_icon = DIFFICULTY_SHORT.get(problem.difficulty.value, '?')
+        status_icon = status_short(status.value)
+        diff_icon = difficulty_short(problem.difficulty.value)
 
-        click.echo(f"{problem.id:>5}  {status_icon}  {diff_icon}  {problem.title}")
+        click.echo(f"  {problem.id:>5}  {status_icon}  {diff_icon}  {problem.title}")
 
     # Footer with pagination info
-    click.echo("-" * 60)
-    click.echo(f"Page {page}/{total_pages} | Showing {start_idx + 1}-{end_idx} of {total}")
+    click.echo()
+    hint(f"n next  p prev  q quit  ·  page {page} of {total_pages}")
 
     return page, total_pages
 
@@ -173,7 +156,7 @@ def query(ctx, problem_ids: tuple, difficulty: str, tag: tuple, search: str, pag
       dojo query 1,5..10,15         # Mixed format
 
     Status indicators:
-      [P] Passed    [F] Failed    [S] Skipped    [ ] Not graded/fetched
+      ✓ Passed    ✗ Failed    ~ Skipped    · Not graded/fetched
 
     Navigation (after results display):
       n = next page    p = prev page    # = jump to page    q = quit

@@ -7,6 +7,7 @@ from pathlib import Path
 
 from bytedojo.core.logger import get_logger
 from bytedojo.core.repository import Repository
+from bytedojo.commands.ui import accent, bold, dim, difficulty_badge, blank, header, kv
 
 
 # Define stats command
@@ -53,21 +54,21 @@ def _show_summary(db):
     """Show summary statistics."""
     stats = db.get_summary_stats()
 
-    click.echo("Repository Statistics")
-    click.echo("")
-    click.echo(f"Total problems: {stats.total_problems}")
+    header("Problems")
+    blank()
+    kv("Total", f"{stats.total_problems} registered")
 
     if stats.by_difficulty:
-        click.echo("")
-        click.echo("By difficulty:")
+        blank()
+        click.echo(f"  {accent('By difficulty')}")
         for diff, count in sorted(stats.by_difficulty.items()):
-            click.echo(f"  {diff:10s}: {count}")
+            click.echo(f"    {difficulty_badge(diff):<24}  {bold(str(count))}")
 
     if stats.by_source:
-        click.echo("")
-        click.echo("By source:")
+        blank()
+        click.echo(f"  {accent('By source')}")
         for src, count in sorted(stats.by_source.items()):
-            click.echo(f"  {src:10s}: {count}")
+            click.echo(f"    {dim(src):<12}  {bold(str(count))}")
 
 
 def _list_problems(db, verbose: bool, source: str | None, difficulty: str | None):
@@ -81,32 +82,31 @@ def _list_problems(db, verbose: bool, source: str | None, difficulty: str | None
     )
 
     if not problems:
-        click.echo("No problems found matching criteria.")
+        click.echo(f"  {dim('No problems found matching criteria.')}")
         return
 
-    click.echo(f"Found {len(problems)} problem(s)")
-    click.echo("")
+    click.echo(f"  Found {bold(str(len(problems)))} problem(s)")
+    blank()
 
     for problem in problems:
         _print_problem(problem, verbose)
-        click.echo("")
+        blank()
 
 
 def _print_problem(problem, verbose: bool):
     """Print a single problem (RegisteredProblem)."""
-    # Basic info
-    click.echo(f"#{problem.problem_id} {problem.title}")
-    click.echo(f"  source: {problem.source}")
-    click.echo(f"  difficulty: {problem.difficulty.value if problem.difficulty else 'Unknown'}")
-    click.echo(f"  language: {problem.language.value if problem.language else 'unknown'}")
-    click.echo(f"  fetched: {problem.fetched_at}")
+    click.echo(f"  {accent('#' + str(problem.problem_id))}  {bold(problem.title)}")
+    click.echo(f"    {dim('source')}      {problem.source}")
+    click.echo(f"    {dim('difficulty')}  {difficulty_badge(problem.difficulty.value if problem.difficulty else 'Unknown')}")
+    click.echo(f"    {dim('language')}    {problem.language.value if problem.language else 'unknown'}")
+    click.echo(f"    {dim('fetched')}     {problem.fetched_at}")
 
     if problem.file_path:
-        click.echo(f"  file: {problem.file_path}")
+        click.echo(f"    {dim('file')}        {dim(problem.file_path)}")
 
     # Verbose attempt stats are temporarily unavailable — the old
     # db.get_problem_stats() was removed during the dict→model refactor.
     # AttemptService.get_stats() exposes per-language stats and is the
     # right path to rebuild this on.
     if verbose:
-        click.echo("  attempts: (verbose stats temporarily unavailable)")
+        click.echo(f"    {dim('attempts')}    (verbose stats temporarily unavailable)")

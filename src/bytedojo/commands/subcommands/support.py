@@ -5,6 +5,7 @@ support - Show environment and toolchain status.
 import click
 
 from bytedojo.services import SystemService, SystemReport
+from bytedojo.commands.ui import accent, bold, success, warn, error, dim, blank
 
 
 # Define support command
@@ -33,73 +34,63 @@ def support():
 
 def _display(r: SystemReport) -> None:
     """Render a SystemReport to the terminal."""
-    click.echo("")
-    click.echo(click.style("=" * 70, fg='bright_black'))
-    click.echo(click.style("  BYTEDOJO SUPPORT", fg='cyan', bold=True))
-    click.echo(click.style("=" * 70, fg='bright_black'))
-    click.echo("")
+    blank()
+    click.echo(dim("  " + "─" * 70))
+    click.echo(f"  {accent('ByteDojo Support')}")
+    click.echo(dim("  " + "─" * 70))
+    blank()
 
     _display_environment(r)
-    click.echo("")
+    blank()
     _display_toolchains(r)
-    click.echo("")
+    blank()
     _display_summary(r)
-    click.echo("")
+    blank()
 
 
 def _display_environment(r: SystemReport) -> None:
-    click.echo(click.style("  Environment:", fg='cyan'))
-    click.echo(f"    ByteDojo:    {r.bytedojo_version}")
-    click.echo(f"    Python:      {r.python_version}")
-    click.echo(f"                 {click.style(r.python_executable, fg='bright_black')}")
-    click.echo(f"    Platform:    {r.platform_name}  ({r.platform_id})")
+    click.echo(f"  {accent('Environment')}")
+    click.echo(f"    {dim('ByteDojo')}    {r.bytedojo_version}")
+    click.echo(f"    {dim('Python')}      {r.python_version}")
+    click.echo(f"                 {dim(r.python_executable)}")
+    click.echo(f"    {dim('Platform')}    {r.platform_name}  {dim(r.platform_id)}")
     if r.repository_path:
-        click.echo(f"    Repository:  {r.repository_path}")
+        click.echo(f"    {dim('Repository')}  {r.repository_path}")
     else:
         click.echo(
-            f"    Repository:  "
-            f"{click.style('not in a .dojo repository', fg='bright_black')}"
+            f"    {dim('Repository')}  {dim('not in a .dojo repository')}"
         )
 
 
 def _display_toolchains(r: SystemReport) -> None:
-    click.echo(click.style("  Toolchains:", fg='cyan'))
+    click.echo(f"  {accent('Toolchains')}")
     if not r.toolchains:
-        click.echo("    (none registered)")
+        click.echo(f"    {dim('(none registered)')}")
         return
 
     for status in r.toolchains:
         lang = status.language.value
         if status.found:
-            marker = click.style("[OK]", fg='green')
+            marker = success("[OK]")
             version = status.version or "version unknown"
-            # Stable column for the language name regardless of marker color codes
-            click.echo(f"    {marker}  {lang:10}  {version}")
+            click.echo(f"    {marker}  {bold(lang):<14}  {version}")
             for binary, path in status.paths.items():
-                click.echo(
-                    f"              "
-                    f"{click.style(f'{binary}: {path}', fg='bright_black')}"
-                )
+                click.echo(f"              {dim(f'{binary}: {path}')}")
         else:
-            marker = click.style("[NO]", fg='red')
+            marker = error("[NO]")
             missing = ", ".join(status.missing) or "unknown"
-            click.echo(f"    {marker}  {lang:10}  Missing: {missing}")
+            click.echo(f"    {marker}  {bold(lang):<14}  {dim('Missing:')} {missing}")
             if status.install_hint:
-                click.echo(
-                    f"              "
-                    f"{click.style(f'Install: {status.install_hint}', fg='yellow')}"
-                )
+                click.echo(f"              {warn(f'Install: {status.install_hint}')}")
 
 
 def _display_summary(r: SystemReport) -> None:
-    click.echo(click.style("-" * 70, fg='bright_black'))
+    click.echo(dim("  " + "─" * 70))
     if not r.toolchains:
         return
     if r.all_ready:
-        click.echo(click.style(
-            f"  All {r.total_count} toolchains ready.", fg='green'
-        ))
+        click.echo(success(f"  All {r.total_count} toolchains ready."))
     else:
         click.echo(
-            f"  {r.ready_count} of {r.total_count} toolchains ready."
+            f"  {warn(str(r.ready_count))} of {r.total_count} toolchains ready."
         )

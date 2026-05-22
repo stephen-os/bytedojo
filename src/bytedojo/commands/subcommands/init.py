@@ -6,6 +6,8 @@ import click
 from pathlib import Path
 
 from bytedojo.core.repository import Repository
+from bytedojo.commands.ui import success, error, dim, hint
+
 
 @click.command()
 @click.option('--path', '-p', type=click.Path(path_type=Path), default=None,
@@ -23,7 +25,8 @@ def init(ctx, path: Path, force: bool):
     """
     target = path if path is not None else Path.cwd()
     if Repository.create(path=target, force=force) is not None:
-        click.secho(f"Repository initialized at {target}.", fg="green")
+        click.echo(f"  {success('✓')}  Repository initialized at {dim(str(target))}")
     else:
-        click.secho(f"Failed to initialize repository at {target}.", fg="red")
+        click.echo(f"  {error('✗')}  Failed to initialize repository at {dim(str(target))}")
+        hint("Use --force to reinitialize")
         raise SystemExit(1)

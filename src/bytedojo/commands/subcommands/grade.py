@@ -10,57 +10,57 @@ from pathlib import Path
 from typing import Optional, List
 
 from bytedojo.commands._resolve import resolve_problem
-from bytedojo.core.logger import Theme
 from bytedojo.core.models.code_language import CodeLanguage
 from bytedojo.core.models.problem_status import ProblemStatus
 from bytedojo.core.models.registered_problem import RegisteredProblem
 from bytedojo.core.repository import Repository
 from bytedojo.services import GradingService, GradeResult
+from bytedojo.commands.ui import accent, bold, success, warn, error, dim
 
 
 def _display_problem_status(problem: RegisteredProblem, show_test_hint: bool = True):
     """Display problem details and current test status."""
-    click.echo("")
-    click.echo(click.style("=" * 70, fg='bright_black'))
-    click.echo(click.style("  PROBLEM STATUS", fg='cyan', bold=True))
-    click.echo(click.style("=" * 70, fg='bright_black'))
-    click.echo("")
-    click.echo(f"  {problem.problem_id}: {click.style(problem.title, bold=True)}")
-    click.echo(f"  Source: {problem.source.capitalize()}")
-    click.echo(f"  Language: {problem.language.value.upper()}")
-    click.echo(f"  Difficulty: {problem.difficulty.value or 'Unknown'}")
+    click.echo()
+    click.echo(dim("  " + "─" * 70))
+    click.echo(f"  {accent('Problem Status')}")
+    click.echo(dim("  " + "─" * 70))
+    click.echo()
+    click.echo(f"  {accent('#' + str(problem.problem_id))}  {bold(problem.title)}")
+    click.echo(f"  {dim('Source')}      {problem.source.capitalize()}")
+    click.echo(f"  {dim('Language')}    {problem.language.value.upper()}")
+    click.echo(f"  {dim('Difficulty')}  {problem.difficulty.value or 'Unknown'}")
 
     if problem.file_path:
-        click.echo(f"  File: {problem.file_path}")
+        click.echo(f"  {dim('File')}        {dim(problem.file_path)}")
 
-    click.echo("")
-    click.echo(click.style("-" * 70, fg='bright_black'))
-    click.echo(click.style("  TEST RESULTS", fg='cyan'))
-    click.echo(click.style("-" * 70, fg='bright_black'))
-    click.echo("")
+    click.echo()
+    click.echo(dim("  " + "─" * 70))
+    click.echo(f"  {accent('Test Results')}")
+    click.echo(dim("  " + "─" * 70))
+    click.echo()
 
     status = problem.status or ProblemStatus.UNGRADED
 
     if status == ProblemStatus.PASSED:
-        click.echo(f"  Status: {click.style('PASSED', fg='green', bold=True)}")
+        click.echo(f"  Status: {success('PASSED')}")
     elif status == ProblemStatus.FAILED:
-        click.echo(f"  Status: {click.style('FAILED', fg='red', bold=True)}")
+        click.echo(f"  Status: {error('FAILED')}")
     elif status == ProblemStatus.SKIPPED:
-        click.echo(f"  Status: {click.style('SKIPPED', fg='yellow', bold=True)}")
+        click.echo(f"  Status: {warn('SKIPPED')}")
     elif status == ProblemStatus.UNGRADED:
-        click.echo(f"  Status: {click.style('NOT TESTED', fg='bright_black')}")
+        click.echo(f"  Status: {dim('NOT TESTED')}")
         if show_test_hint:
-            click.echo(f"  {click.style('Tip:', fg='cyan')} Run 'dojo test {problem.problem_id}' to test your solution")
+            click.echo(f"  {dim('Tip:')} Run {accent(f'dojo test {problem.problem_id}')} to test your solution")
     else:
         click.echo(f"  Status: {status.value.upper()}")
 
     if problem.last_test_run:
-        click.echo(f"  Last Run: {problem.last_test_run}")
+        click.echo(f"  {dim('Last Run')}  {problem.last_test_run}")
 
     if problem.test_output:
-        click.echo(f"  Results: {problem.test_output}")
+        click.echo(f"  {dim('Results')}   {problem.test_output}")
 
-    click.echo("")
+    click.echo()
 
 
 def _prompt_for_manual_grade() -> tuple[Optional[str], Optional[str]]:
@@ -70,20 +70,19 @@ def _prompt_for_manual_grade() -> tuple[Optional[str], Optional[str]]:
     Returns:
         Tuple of (status, notes) where status is 'passed', 'failed', 'skipped', or None to cancel
     """
-    click.echo(click.style("-" * 70, fg='bright_black'))
-    click.echo(click.style("  MANUAL GRADE", fg='cyan'))
-    click.echo(click.style("-" * 70, fg='bright_black'))
-    click.echo("")
+    click.echo(dim("  " + "─" * 70))
+    click.echo(f"  {accent('Manual Grade')}")
+    click.echo(dim("  " + "─" * 70))
+    click.echo()
     click.echo("  Override test results with a manual grade:")
-    click.echo("")
-    click.echo("  ", nl=False)
+    click.echo()
     click.echo(
-        f"{click.style('[P]', fg='green')}ass  "
-        f"{click.style('[F]', fg='red')}ail  "
-        f"{click.style('[S]', fg='yellow')}kip  "
-        f"{click.style('[Q]', fg='bright_black')}uit"
+        f"  {success('[P]')}ass  "
+        f"{error('[F]')}ail  "
+        f"{warn('[S]')}kip  "
+        f"{dim('[Q]')}uit"
     )
-    click.echo("")
+    click.echo()
 
     while True:
         choice = click.prompt("  Select", default="q", show_default=False).strip().lower()
@@ -119,9 +118,9 @@ def _apply_grade(
     result = service.grade(repo, problem, status=status, notes=notes)
 
     if result.failed:
-        click.echo("")
-        click.echo(click.style(f"  {result.error}", fg='red'))
-        click.echo("")
+        click.echo()
+        click.echo(f"  {error(result.error)}")
+        click.echo()
         return
 
     _display_grade_result(result)
@@ -129,22 +128,24 @@ def _apply_grade(
 
 def _display_grade_result(result: GradeResult):
     """Display the grading result to the user."""
-    click.echo("")
+    click.echo()
 
     if result.status == 'passed':
-        click.echo(f"  {click.style('MARKED AS PASSED', fg='green', bold=True)}")
+        click.echo(f"  {success('MARKED AS PASSED')}")
         if result.scheduled_review:
-            click.echo(f"  {Theme.AQUA}Scheduled for review in {result.review_frequency_days} days{Theme.RESET}")
+            click.echo(
+                f"  {accent(f'Scheduled for review in {result.review_frequency_days} days')}"
+            )
     elif result.status == 'failed':
-        click.echo(f"  {click.style('MARKED AS FAILED', fg='red', bold=True)}")
+        click.echo(f"  {error('MARKED AS FAILED')}")
         if result.notes:
-            click.echo(f"  Notes: {result.notes}")
+            click.echo(f"  {dim('Notes')}  {result.notes}")
     elif result.status == 'skipped':
-        click.echo(f"  {click.style('MARKED AS SKIPPED', fg='yellow', bold=True)}")
+        click.echo(f"  {warn('MARKED AS SKIPPED')}")
         if result.notes:
-            click.echo(f"  Notes: {result.notes}")
+            click.echo(f"  {dim('Notes')}  {result.notes}")
 
-    click.echo("")
+    click.echo()
 
 
 def _view_and_grade_problem(
@@ -176,7 +177,7 @@ def _view_and_grade_problem(
     if manual:
         status, notes = _prompt_for_manual_grade()
         if status is None:
-            click.echo("  Cancelled.")
+            click.echo(f"  {dim('Cancelled.')}")
             return False
         _apply_grade(repo, problem, status, notes)
         return True
@@ -199,13 +200,13 @@ def _display_problems_page(
     end_idx = min(start_idx + per_page, total)
     page_problems = problems[start_idx:end_idx]
 
-    click.echo("")
-    click.echo(click.style("=" * 70, fg='bright_black'))
-    click.echo(click.style(f"  {title} (Page {page}/{total_pages})", fg='cyan', bold=True))
-    click.echo(click.style("=" * 70, fg='bright_black'))
-    click.echo("")
+    click.echo()
+    click.echo(dim("  " + "─" * 70))
+    click.echo(f"  {accent(title)}  {dim(f'(page {page}/{total_pages})')}")
+    click.echo(dim("  " + "─" * 70))
+    click.echo()
     click.echo(f"  {'#':>3}  {'ID':>8}  {'Status':8}  {'Lang':6}  {'Diff':6}  Title")
-    click.echo(f"  {'-' * 3}  {'-' * 8}  {'-' * 8}  {'-' * 6}  {'-' * 6}  {'-' * 25}")
+    click.echo(f"  {dim('-' * 3)}  {dim('-' * 8)}  {dim('-' * 8)}  {dim('-' * 6)}  {dim('-' * 6)}  {dim('-' * 25)}")
 
     for i, problem in enumerate(page_problems, start=1):
         status = problem.status or ProblemStatus.UNGRADED
@@ -214,12 +215,14 @@ def _display_problems_page(
         diff_val = (problem.difficulty.value if problem.difficulty else '?')[:6]
         title_text = problem.title[:25] + ('...' if len(problem.title) > 25 else '')
 
-        click.echo(f"  {i:>3}  {problem.problem_id:>8}  {status_val:8}  {lang_val:6}  {diff_val:6}  {title_text}")
+        click.echo(
+            f"  {i:>3}  {problem.problem_id:>8}  {status_val:8}  {lang_val:6}  {diff_val:6}  {title_text}"
+        )
 
-    click.echo("")
-    click.echo(click.style("-" * 70, fg='bright_black'))
-    click.echo(f"  Showing {start_idx + 1}-{end_idx} of {total}")
-    click.echo(click.style("-" * 70, fg='bright_black'))
+    click.echo()
+    click.echo(dim("  " + "─" * 70))
+    click.echo(f"  {dim(f'Showing {start_idx + 1}-{end_idx} of {total}')}")
+    click.echo(dim("  " + "─" * 70))
 
     return page, total_pages, page_problems
 
@@ -227,17 +230,17 @@ def _display_problems_page(
 def _batch_view_loop(repo: Repository, problems: List[RegisteredProblem], per_page: int = 10):
     """Run interactive problem status viewing loop."""
     if not problems:
-        click.echo("")
-        click.echo(click.style("  No problems found!", fg='yellow'))
-        click.echo("  Use 'dojo fetch <id>' to add problems.")
-        click.echo("")
+        click.echo()
+        click.echo(f"  {warn('No problems found!')}")
+        click.echo(f"  {dim('Use dojo fetch <id> to add problems.')}")
+        click.echo()
         return
 
     current_page = 1
 
     while True:
         current_page, total_pages, page_problems = _display_problems_page(
-            problems, current_page, per_page, "PROBLEM STATUS"
+            problems, current_page, per_page, "Problem Status"
         )
 
         # Navigation prompt
@@ -249,7 +252,7 @@ def _batch_view_loop(repo: Repository, problems: List[RegisteredProblem], per_pa
             nav_hints.append("n=next")
         nav_hints.append("q=quit")
 
-        click.echo("")
+        click.echo()
         prompt = f"  [{' | '.join(nav_hints)}]: "
 
         try:
@@ -263,12 +266,12 @@ def _batch_view_loop(repo: Repository, problems: List[RegisteredProblem], per_pa
             if current_page < total_pages:
                 current_page += 1
             else:
-                click.echo("  Already on last page.")
+                click.echo(f"  {dim('Already on last page.')}")
         elif user_input in ('p', 'prev', '<'):
             if current_page > 1:
                 current_page -= 1
             else:
-                click.echo("  Already on first page.")
+                click.echo(f"  {dim('Already on first page.')}")
         else:
             # Try to parse as selection number
             try:
@@ -284,9 +287,9 @@ def _batch_view_loop(repo: Repository, problems: List[RegisteredProblem], per_pa
                     # Pause before returning to list
                     click.prompt("  Press Enter to continue", default="", show_default=False)
                 else:
-                    click.echo(f"  Invalid selection. Enter 1-{len(page_problems)}.")
+                    click.echo(f"  {dim(f'Invalid selection. Enter 1-{len(page_problems)}.')}")
             except ValueError:
-                click.echo("  Invalid input. Use number/n/p/q.")
+                click.echo(f"  {dim('Invalid input. Use number/n/p/q.')}")
 
 
 @click.command()

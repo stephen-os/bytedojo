@@ -10,6 +10,8 @@ from bytedojo.core.repository import Repository
 from bytedojo.core.logger import get_logger
 from bytedojo.core.models.code_language import CodeLanguage
 from bytedojo.services import FetchService
+from bytedojo.commands.ui import bold, success, warn, error, dim, problem_id
+
 
 # Define fetch command
 @click.command()
@@ -85,11 +87,13 @@ def fetch(ctx, arguments: tuple, force: bool, version: int | None,
 
     # Mode banner
     if custom_path is not None:
-        click.echo(f"Fetching {len(problem_ids)} problem(s) in {lang} into {custom_path} (untracked)")
+        click.echo(f"  Fetching {bold(str(len(problem_ids)))} problem(s) in {bold(str(lang))} "
+                   f"into {dim(str(custom_path))} {dim('(untracked)')}")
     elif version is not None:
-        click.echo(f"Refetching {len(problem_ids)} problem(s) in {lang} at v{version}")
+        click.echo(f"  Fetching {bold(str(len(problem_ids)))} problem(s) in {bold(str(lang))} "
+                   f"at {dim('v' + str(version))}")
     else:
-        click.echo(f"Fetching {len(problem_ids)} problem(s) in {lang}")
+        click.echo(f"  Fetching {bold(str(len(problem_ids)))} problem(s) in {bold(str(lang))}")
 
     # Fetch problems
     service = FetchService()
@@ -103,24 +107,50 @@ def fetch(ctx, arguments: tuple, force: bool, version: int | None,
     )
 
     # Display results
+    click.echo()
     for result in batch.results:
         if result.success:
             if custom_path is not None:
-                click.echo(f"  #{result.problem_id} {result.title}: placed at {result.target_path} (untracked)")
+                click.echo(
+                    f"  {problem_id(result.problem_id)}  {bold(result.title)}  "
+                    f"{success('✓ placed')}  {dim(str(result.target_path))}"
+                )
             elif version is not None:
-                click.echo(f"  #{result.problem_id} {result.title}: refetched v{version} at {result.target_path}")
+                click.echo(
+                    f"  {problem_id(result.problem_id)}  {bold(result.title)}  "
+                    f"{success('✓ refetched')}  {dim('v' + str(version))}"
+                )
             else:
-                click.echo(f"  #{result.problem_id} {result.title}: placed v{result.version} at {result.target_path}")
+                click.echo(
+                    f"  {problem_id(result.problem_id)}  {bold(result.title)}  "
+                    f"{success('✓ placed')}  {dim('v' + str(result.version))}"
+                )
         elif result.skipped:
             if result.skip_reason == "already registered":
-                click.echo(f"  #{result.problem_id}: already registered (use --force for new attempt, "
-                           f"--version N to rewrite)")
+                click.echo(
+                    f"  {problem_id(result.problem_id)}  {warn('~ skipped')}  "
+                    f"{dim('already registered — use --force or --version N')}"
+                )
             else:
-                click.echo(f"  #{result.problem_id}: {result.skip_reason}", err=True)
+                click.echo(
+                    f"  {problem_id(result.problem_id)}  {warn('~ skipped')}  "
+                    f"{dim(result.skip_reason)}",
+                    err=True,
+                )
         elif result.failed:
-            click.echo(f"  #{result.problem_id}: {result.error}", err=True)
+            click.echo(
+                f"  {problem_id(result.problem_id)}  {error('✗ failed')}  {dim(result.error)}",
+                err=True,
+            )
 
     # Summary
-    click.echo("")
-    click.echo(f"Done: {batch.placed_count} placed, {batch.skipped_count} skipped, {batch.failed_count} failed")
-    logger.info(f"fetch: complete — placed={batch.placed_count} skipped={batch.skipped_count} failed={batch.failed_count}")
+    click.echo()
+    click.echo(
+        f"  {success(str(batch.placed_count) + ' placed')}  "
+        f"{warn(str(batch.skipped_count) + ' skipped')}  "
+        f"{dim(str(batch.failed_count) + ' failed')}"
+    )
+    logger.debug(
+        f"fetch: complete — placed={batch.placed_count} "
+        f"skipped={batch.skipped_count} failed={batch.failed_count}"
+    )

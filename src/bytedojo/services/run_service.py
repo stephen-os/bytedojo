@@ -127,7 +127,7 @@ class RunService:
         except OSError as e:
             return self._error(problem, f"Execution failed: {e}", **ctx)
 
-        self.logger.info(
+        self.logger.debug(
             f"run_service: #{problem.problem_id} v{run_version} "
             f"exit_code={execution.exit_code} timed_out={execution.timed_out}"
         )

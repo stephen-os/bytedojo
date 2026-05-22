@@ -12,6 +12,7 @@ from bytedojo.core.models.registered_problem import RegisteredProblem
 from bytedojo.core.repository import Repository
 from bytedojo.services.test_service import TestRunResult, TestServiceResult
 from bytedojo.services import TestService
+from bytedojo.commands.ui import accent, bold, success, warn, error, dim, problem_line
 
 
 def _display_test_header(result: TestServiceResult):
@@ -26,104 +27,99 @@ def _display_test_header(result: TestServiceResult):
     file_path = str(result.file_path) if result.file_path else (problem.file_path or "")
     version_label = f"v{result.version}" if result.version is not None else "?"
 
-    click.echo("")
-    click.echo(click.style("=" * 70, fg='bright_black'))
-    click.echo(click.style("  TEST PROBLEM", fg='cyan', bold=True))
-    click.echo(click.style("=" * 70, fg='bright_black'))
-    click.echo("")
-    click.echo(f"  {problem.problem_id}: {click.style(problem.title, bold=True)}")
-    click.echo(f"  Language: {problem.language.value.upper()}")
-    click.echo(f"  Difficulty: {problem.difficulty.value if problem.difficulty else 'Unknown'}")
-    click.echo(f"  Version:  {version_label}")
-    click.echo(f"  File:     {file_path}")
-    click.echo("")
+    click.echo()
+    click.echo(dim("  " + "─" * 70))
+    click.echo(
+        f"  {problem_line(problem.problem_id, problem.title, problem.difficulty.value, problem.language.value)}"
+        f"  {dim(version_label)}"
+    )
+    click.echo(f"  {dim(file_path)}")
+    click.echo()
 
 
 def _display_test_results(result: TestRunResult, verbose: bool = False):
     """Display test execution results."""
-    click.echo(click.style("-" * 70, fg='bright_black'))
-    click.echo(click.style("  RESULTS", fg='cyan'))
-    click.echo(click.style("-" * 70, fg='bright_black'))
-    click.echo("")
+    click.echo(dim("  " + "─" * 70))
+    click.echo(f"  {accent('Results')}")
+    click.echo(dim("  " + "─" * 70))
+    click.echo()
 
     # Check for compile/runtime errors first
     if result.compile_error:
-        click.echo(click.style("  COMPILE ERROR", fg='red', bold=True))
-        click.echo("")
+        click.echo(f"  {error('COMPILE ERROR')}")
+        click.echo()
         click.echo(result.compile_error)
-        click.echo("")
+        click.echo()
         return
 
     if result.runtime_error and not result.case_results:
-        click.echo(click.style("  ERROR", fg='red', bold=True))
+        click.echo(f"  {error('ERROR')}")
         click.echo(f"  {result.runtime_error}")
-        click.echo("")
+        click.echo()
         return
 
     # Display summary
     if result.all_passed:
-        click.echo(click.style(
-            f"  ALL TESTS PASSED ({result.passed_count}/{result.runnable_count})",
-            fg='green', bold=True,
+        click.echo(success(
+            f"  ALL TESTS PASSED ({result.passed_count}/{result.runnable_count})"
         ))
     else:
-        passed_str = click.style(str(result.passed_count), fg='green')
-        failed_str = click.style(str(result.failed_count), fg='red')
-        error_str = click.style(str(result.error_count), fg='yellow')
+        passed_str = success(str(result.passed_count))
+        failed_str = error(str(result.failed_count))
+        error_str = warn(str(result.error_count))
         skipped_part = ""
         if result.skipped_count:
-            skipped_str = click.style(str(result.skipped_count), fg='bright_black')
+            skipped_str = dim(str(result.skipped_count))
             skipped_part = f"  Skipped: {skipped_str}"
         click.echo(
             f"  Passed: {passed_str}  Failed: {failed_str}  Error: {error_str}"
-            f"{skipped_part}  (Total: {result.total_cases})"
+            f"{skipped_part}  {dim(f'(Total: {result.total_cases})')}"
         )
     if result.skipped_count:
-        click.echo(click.style(
-            f"  ({result.skipped_count} case(s) skipped — values outside int32 range)",
-            fg='bright_black',
+        click.echo(dim(
+            f"  ({result.skipped_count} case(s) skipped — values outside int32 range)"
         ))
 
-    click.echo("")
+    click.echo()
 
     # Show failed/error cases (or all if verbose)
     failed_cases = [c for c in result.case_results if not c.passed]
 
     if failed_cases:
-        click.echo(click.style("  Failed Test Cases:", fg='red'))
-        click.echo(click.style("-" * 70, fg='bright_black'))
+        click.echo(f"  {error('Failed Test Cases:')}")
+        click.echo(dim("  " + "─" * 70))
 
         # Limit displayed failures unless verbose
         display_cases = failed_cases if verbose else failed_cases[:5]
 
         for case in display_cases:
-            click.echo("")
-            click.echo(f"  Case #{case.case_number}:")
-            click.echo(f"    Input:    {_truncate(case.input_str, 60)}")
-            click.echo(f"    Expected: {click.style(_truncate(case.expected, 50), fg='green')}")
+            click.echo()
+            click.echo(f"  {accent('Case #' + str(case.case_number))}")
+            click.echo(f"    {dim('Input')}     {_truncate(case.input_str, 60)}")
+            click.echo(f"    {dim('Expected')}  {success(_truncate(case.expected, 50))}")
             if case.error:
-                click.echo(f"    Error:    {click.style(_truncate(case.error, 50), fg='yellow')}")
+                click.echo(f"    {dim('Error')}     {warn(_truncate(case.error, 50))}")
             elif case.timed_out:
-                click.echo(f"    Actual:   {click.style('TIMEOUT', fg='red')}")
+                click.echo(f"    {dim('Actual')}    {error('TIMEOUT')}")
             else:
-                click.echo(f"    Actual:   {click.style(_truncate(case.actual, 50), fg='red')}")
+                click.echo(f"    {dim('Actual')}    {error(_truncate(case.actual, 50))}")
 
         if len(failed_cases) > 5 and not verbose:
-            click.echo("")
-            click.echo(f"  ... and {len(failed_cases) - 5} more failures")
-            click.echo("  Use --verbose to see all failures")
+            click.echo()
+            click.echo(f"  {dim(f'... and {len(failed_cases) - 5} more failures')}")
+            click.echo(f"  {dim('Use --verbose to see all failures')}")
 
-    click.echo("")
+    click.echo()
 
     # Show passed cases if verbose
     if verbose:
         passed_cases = [c for c in result.case_results if c.passed]
         if passed_cases:
-            click.echo(click.style("  Passed Test Cases:", fg='green'))
-            click.echo(click.style("-" * 70, fg='bright_black'))
+            click.echo(f"  {success('Passed Test Cases:')}")
+            click.echo(dim("  " + "─" * 70))
             for case in passed_cases:
                 click.echo(f"  Case #{case.case_number}: {_truncate(case.input_str, 50)}")
-            click.echo("")
+            click.echo()
 
 
 def _truncate(s: str, max_len: int) -> str:
@@ -190,8 +186,8 @@ def test(
 
     # Quick pre-message — header comes after the service runs so it can show
     # the version-aware path. Without it the user would wait silently.
-    click.echo("")
-    click.echo(f"  Testing #{problem.problem_id} {problem.title}...")
+    click.echo()
+    click.echo(f"  Testing {accent('#' + str(problem.problem_id))} {bold(problem.title)}...")
 
     service = TestService()
     result = service.test_problem(repo, problem, version=version, timeout=timeout)
@@ -205,8 +201,8 @@ def test(
 
     # Soft skip (no test cases for this problem)
     if result.skipped:
-        click.echo(click.style(f"  {result.skip_reason}", fg='yellow'))
-        click.echo("")
+        click.echo(warn(f"  {result.skip_reason}"))
+        click.echo()
         return
 
     # Tests ran — display results and final recorded status
@@ -214,11 +210,11 @@ def test(
 
     status = result.run_result.status
     if status == 'passed':
-        click.echo(click.style("  Solution recorded as PASSED", fg='green'))
+        click.echo(success("  ✓ Solution recorded as PASSED"))
     elif status == 'error':
-        click.echo(click.style("  Solution recorded as ERROR", fg='yellow'))
+        click.echo(warn("  Solution recorded as ERROR"))
     elif status == 'failed':
-        click.echo(click.style("  Solution recorded as FAILED", fg='red'))
+        click.echo(error("  ✗ Solution recorded as FAILED"))
     else:  # ungraded — ran a subset, all passed, but some were skipped
-        click.echo(click.style("  Solution recorded as UNGRADED", fg='yellow'))
-    click.echo("")
+        click.echo(warn("  Solution recorded as UNGRADED"))
+    click.echo()

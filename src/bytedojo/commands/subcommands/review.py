@@ -7,7 +7,6 @@ from pathlib import Path
 from typing import Optional
 
 from bytedojo.commands._resolve import resolve_problem
-from bytedojo.core.logger import Theme
 from bytedojo.core.models.code_language import CodeLanguage
 from bytedojo.core.repository import Repository
 from bytedojo.services import (
@@ -16,6 +15,7 @@ from bytedojo.services import (
     ReviewCompletionResult,
     ReviewActionResult,
 )
+from bytedojo.commands.ui import accent, bold, success, warn, error, dim
 
 
 @click.group(invoke_without_command=True)
@@ -61,31 +61,34 @@ def _show_due_reviews(show_all: bool = False):
 
     if not reviews:
         if show_all:
-            click.echo("\nNo problems scheduled for review yet.")
-            click.echo("Problems are added to review when you grade them as passed.")
+            click.echo()
+            click.echo(f"  {dim('No problems scheduled for review yet.')}")
+            click.echo(f"  {dim('Problems are added to review when you grade them as passed.')}")
         else:
-            click.echo(click.style("\nNo problems due for review!", fg='green'))
-            click.echo("Great job staying on top of your reviews.")
+            click.echo()
+            click.echo(f"  {success('No problems due for review!')}")
+            click.echo(f"  {dim('Great job staying on top of your reviews.')}")
 
-        click.echo(f"\nCurrent review frequency: {review_freq} days")
-        click.echo("Change with: dojo settings review-frequency <days>")
+        click.echo()
+        click.echo(f"  {dim('Current review frequency:')} {bold(str(review_freq))} days")
+        click.echo(f"  {dim('Change with: dojo settings review-frequency <days>')}")
         return
 
     # Count due vs upcoming
     due_count = sum(1 for r in reviews if r.days_until_due <= 0)
 
     # Header
-    click.echo("")
-    click.echo(click.style("=" * 60, fg='bright_black'))
+    click.echo()
+    click.echo(dim("  " + "─" * 60))
     if show_all:
-        click.echo(click.style("  ALL SCHEDULED REVIEWS", fg='cyan', bold=True))
+        click.echo(f"  {accent('All Scheduled Reviews')}")
     else:
-        click.echo(click.style(f"  PROBLEMS DUE FOR REVIEW ({due_count})", fg='yellow', bold=True))
-    click.echo(click.style("=" * 60, fg='bright_black'))
+        click.echo(f"  {warn(f'Problems Due for Review ({due_count})')}")
+    click.echo(dim("  " + "─" * 60))
 
-    click.echo("")
+    click.echo()
     click.echo(f"  {'ID':>8}  {'Source':10}  {'Due':15}  {'Reviews':>7}  Title")
-    click.echo(f"  {'-' * 8}  {'-' * 10}  {'-' * 15}  {'-' * 7}  {'-' * 20}")
+    click.echo(f"  {dim('-' * 8)}  {dim('-' * 10)}  {dim('-' * 15)}  {dim('-' * 7)}  {dim('-' * 20)}")
 
     for r in reviews:
         title = r.title[:30] + '...' if len(r.title) > 30 else r.title
@@ -94,24 +97,24 @@ def _show_due_reviews(show_all: bool = False):
 
         # Color based on due status
         if r.is_overdue:
-            due_styled = click.style(f"{due_date:15}", fg='red')
+            due_styled = error(f"{due_date:15}")
         elif r.is_due_today:
-            due_styled = click.style(f"{due_date:15}", fg='yellow')
+            due_styled = warn(f"{due_date:15}")
         else:
-            due_styled = click.style(f"{due_date:15}", fg='green')
+            due_styled = success(f"{due_date:15}")
 
         click.echo(f"  {display_id:>8}  {r.source:10}  {due_styled}  {r.repetitions:>7}  {title}")
 
-    click.echo("")
-    click.echo(click.style("-" * 60, fg='bright_black'))
-    click.echo(f"  Review frequency: {review_freq} days")
-    click.echo(click.style("-" * 60, fg='bright_black'))
-    click.echo("")
+    click.echo()
+    click.echo(dim("  " + "─" * 60))
+    click.echo(f"  {dim('Review frequency:')} {review_freq} days")
+    click.echo(dim("  " + "─" * 60))
+    click.echo()
 
     if due_count > 0:
-        click.echo("  Start reviewing with: dojo review pick")
-        click.echo("  Mark complete with:   dojo review complete <id> --[easy|good|hard]")
-        click.echo("")
+        click.echo(f"  {dim('Start reviewing with:')}  dojo review pick")
+        click.echo(f"  {dim('Mark complete with:')}    dojo review complete <id> --[easy|good|hard]")
+        click.echo()
 
 
 # ============================================================================
@@ -135,45 +138,48 @@ def pick(ctx):
     problem = service.pick_random_due(repo)
 
     if not problem:
-        click.echo(click.style("\nNo problems due for review!", fg='green'))
-        click.echo("You're all caught up. Check back later.")
+        click.echo()
+        click.echo(f"  {success('No problems due for review!')}")
+        click.echo(f"  {dim('You are all caught up. Check back later.')}")
         return
 
     due_date = ReviewService.format_due_date(problem.next_review_date)
     display_id = problem.problem_num if problem.problem_num else problem.problem_id
 
-    click.echo("")
-    click.echo(click.style("=" * 60, fg='bright_black'))
-    click.echo(click.style("  REVIEW THIS PROBLEM", fg='yellow', bold=True))
-    click.echo(click.style("=" * 60, fg='bright_black'))
-    click.echo("")
-    click.echo(f"  {display_id}: {click.style(problem.title, bold=True)}")
-    click.echo(f"  Source: {problem.source.capitalize()}")
-    click.echo(f"  Language: {problem.language.upper()}")
-    click.echo(f"  Difficulty: {problem.difficulty or 'Unknown'}")
-    click.echo(f"  Times Reviewed: {problem.repetitions}")
-    click.echo(f"  Current interval: {problem.interval_days} days  "
-               f"({Theme.AQUA}ease {problem.ease_factor:.2f}{Theme.RESET})")
-    click.echo(f"  Due: {due_date}")
+    click.echo()
+    click.echo(dim("  " + "─" * 60))
+    click.echo(f"  {warn('Review This Problem')}")
+    click.echo(dim("  " + "─" * 60))
+    click.echo()
+    click.echo(f"  {accent('#' + str(display_id))}  {bold(problem.title)}")
+    click.echo(f"  {dim('Source')}          {problem.source.capitalize()}")
+    click.echo(f"  {dim('Language')}        {problem.language.upper()}")
+    click.echo(f"  {dim('Difficulty')}      {problem.difficulty or 'Unknown'}")
+    click.echo(f"  {dim('Times Reviewed')}  {problem.repetitions}")
+    click.echo(
+        f"  {dim('Interval')}        {problem.interval_days} days  "
+        f"{dim(f'ease {problem.ease_factor:.2f}')}"
+    )
+    click.echo(f"  {dim('Due')}             {due_date}")
 
     if problem.file_path:
-        click.echo(f"  File: {problem.file_path}")
+        click.echo(f"  {dim('File')}            {dim(problem.file_path)}")
 
-    click.echo("")
-    click.echo(click.style("-" * 60, fg='bright_black'))
+    click.echo()
+    click.echo(dim("  " + "─" * 60))
 
     due_count = service.get_due_count(repo)
-    click.echo(f"  Due for review: {due_count} problem(s)")
-    click.echo(click.style("-" * 60, fg='bright_black'))
-    click.echo("")
+    click.echo(f"  {dim('Due for review:')} {bold(str(due_count))} problem(s)")
+    click.echo(dim("  " + "─" * 60))
+    click.echo()
 
     if problem.file_path:
         lang_flag = "--python" if problem.language == "python3" else f"--{problem.language}"
         click.echo(f"  1. Open the file and solve it again")
-        click.echo(f"  2. Verify your solution (e.g. `dojo test {display_id} {lang_flag}`)")
-        click.echo(f"  3. Mark complete: `dojo review complete {display_id} {lang_flag} --good`")
-        click.echo(f"     (use --easy / --good / --hard to grade how well you recalled)")
-    click.echo("")
+        click.echo(f"  2. Verify your solution {dim(f'(e.g. dojo test {display_id} {lang_flag})')}")
+        click.echo(f"  3. Mark complete: {accent(f'dojo review complete {display_id} {lang_flag} --good')}")
+        click.echo(f"     {dim('(use --easy / --good / --hard to grade how well you recalled)')}")
+    click.echo()
 
 
 # ============================================================================
@@ -249,27 +255,27 @@ def complete(
 
 
 def _display_completion(title: str, r: ReviewCompletionResult) -> None:
-    click.echo("")
-    click.echo(click.style("=" * 60, fg='bright_black'))
-    click.echo(click.style(f"  REVIEW COMPLETE - {r.quality.value.upper()}", fg='green', bold=True))
-    click.echo(click.style("=" * 60, fg='bright_black'))
-    click.echo("")
-    click.echo(f"  {title}")
-    click.echo("")
+    click.echo()
+    click.echo(dim("  " + "─" * 60))
+    click.echo(f"  {success(f'Review Complete — {r.quality.value.upper()}')}")
+    click.echo(dim("  " + "─" * 60))
+    click.echo()
+    click.echo(f"  {bold(title)}")
+    click.echo()
     click.echo(
-        f"  Interval:     {r.previous_interval} days  ->  "
-        f"{click.style(str(r.next_interval) + ' days', fg='cyan', bold=True)}"
+        f"  {dim('Interval')}      {r.previous_interval} days  →  "
+        f"{accent(str(r.next_interval) + ' days')}"
     )
     click.echo(
-        f"  Ease factor:  {r.previous_ease:.2f}  ->  "
-        f"{click.style(f'{r.next_ease:.2f}', fg='cyan')}"
+        f"  {dim('Ease factor')}   {r.previous_ease:.2f}  →  "
+        f"{accent(f'{r.next_ease:.2f}')}"
     )
     click.echo(
-        f"  Repetitions:  {r.previous_repetitions}  ->  {r.next_repetitions}"
+        f"  {dim('Repetitions')}   {r.previous_repetitions}  →  {r.next_repetitions}"
     )
     if r.next_review_date:
-        click.echo(f"  Next review:  {r.next_review_date}")
-    click.echo("")
+        click.echo(f"  {dim('Next review')}   {r.next_review_date}")
+    click.echo()
 
 
 # ============================================================================
@@ -411,29 +417,29 @@ def _resolve(
 
 def _display_action(title: str, r: ReviewActionResult) -> None:
     """Render a ReviewActionResult (add / snooze / remove) to the terminal."""
-    headers = {
-        "add":    ("ADDED TO REVIEW QUEUE", "green"),
-        "snooze": ("REVIEW SNOOZED",        "yellow"),
-        "remove": ("REMOVED FROM QUEUE",    "bright_black"),
+    headlines = {
+        "add":    (success, "Added to Review Queue"),
+        "snooze": (warn,    "Review Snoozed"),
+        "remove": (dim,     "Removed from Queue"),
     }
-    headline, color = headers.get(r.action, (r.action.upper(), "cyan"))
+    style_fn, headline = headlines.get(r.action, (accent, r.action.upper()))
 
-    click.echo("")
-    click.echo(click.style("=" * 60, fg='bright_black'))
-    click.echo(click.style(f"  {headline}", fg=color, bold=True))
-    click.echo(click.style("=" * 60, fg='bright_black'))
-    click.echo("")
-    click.echo(f"  {title}")
-    click.echo("")
+    click.echo()
+    click.echo(dim("  " + "─" * 60))
+    click.echo(f"  {style_fn(headline)}")
+    click.echo(dim("  " + "─" * 60))
+    click.echo()
+    click.echo(f"  {bold(title)}")
+    click.echo()
 
     if r.action == "add" and r.interval_days is not None:
-        click.echo(f"  Initial interval:  {r.interval_days} days")
+        click.echo(f"  {dim('Initial interval')}  {r.interval_days} days")
     if r.action == "snooze" and r.interval_days is not None:
-        click.echo(f"  Snoozed by:        {r.interval_days} days")
+        click.echo(f"  {dim('Snoozed by')}        {r.interval_days} days")
     if r.next_review_date is not None:
-        click.echo(f"  Next review:       {r.next_review_date}")
+        click.echo(f"  {dim('Next review')}       {r.next_review_date}")
 
-    click.echo("")
+    click.echo()
 
 
 # ============================================================================
@@ -456,18 +462,19 @@ def stats():
     review_stats = service.get_stats(repo)
     review_freq = service.get_review_frequency(repo)
 
-    click.echo("")
-    click.echo(click.style("=" * 60, fg='bright_black'))
-    click.echo(click.style("  REVIEW STATISTICS", fg='cyan', bold=True))
-    click.echo(click.style("=" * 60, fg='bright_black'))
-    click.echo("")
+    click.echo()
+    click.echo(dim("  " + "─" * 60))
+    click.echo(f"  {accent('Review Statistics')}")
+    click.echo(dim("  " + "─" * 60))
+    click.echo()
 
-    click.echo(f"  Review Frequency: {review_freq} days")
-    click.echo("")
-    click.echo(f"  Due Today:        {click.style(str(review_stats.due_today), fg='yellow' if review_stats.due_today > 0 else 'green')}")
-    click.echo(f"  Due This Week:    {review_stats.due_this_week}")
-    click.echo(f"  Total in Review:  {review_stats.total_in_review}")
+    click.echo(f"  {dim('Review Frequency')}  {review_freq} days")
+    click.echo()
+    due_styled = warn(str(review_stats.due_today)) if review_stats.due_today > 0 else success(str(review_stats.due_today))
+    click.echo(f"  {dim('Due Today')}         {due_styled}")
+    click.echo(f"  {dim('Due This Week')}      {review_stats.due_this_week}")
+    click.echo(f"  {dim('Total in Review')}    {review_stats.total_in_review}")
 
-    click.echo("")
-    click.echo(click.style("=" * 60, fg='bright_black'))
-    click.echo("")
+    click.echo()
+    click.echo(dim("  " + "─" * 60))
+    click.echo()

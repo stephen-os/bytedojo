@@ -9,6 +9,7 @@ from bytedojo.core.logger import get_logger
 from bytedojo.core.settings import SettingsManager
 from bytedojo.core.database import Database
 from bytedojo.core.repository import Repository
+from bytedojo.commands.ui import accent, bold, success, error, dim, blank, kv, hint
 
 
 # Languages supported by CLI (user-facing names)
@@ -34,7 +35,6 @@ def settings(ctx):
 
 def _show_settings():
     """Display all current settings."""
-    logger = get_logger()
     repo = Repository.find(Path.cwd())
     if repo is None:
         raise click.ClickException("Not inside a .dojo repository. Please run 'dojo init' first.")
@@ -49,27 +49,26 @@ def _show_settings():
         default_lang = db.get_config('default_language', 'python')
         default_source = db.get_config('default_source', 'leetcode')
 
-    click.echo("")
-    click.echo(click.style("=" * 50, fg='bright_black'))
-    click.echo(click.style("  BYTEDOJO SETTINGS", fg='cyan', bold=True))
-    click.echo(click.style("=" * 50, fg='bright_black'))
-    click.echo("")
-    click.echo("  defaults:")
-    click.echo(f"    language:     {click.style(default_lang, fg='blue', bold=True)}")
-    click.echo(f"    source:       {default_source}")
-    click.echo("")
-    click.echo("  review:")
-    click.echo(f"    frequency:    {review_freq} days")
-    click.echo("")
-    click.echo("  leetcode:")
-    click.echo(f"    organization: {current_settings.leetcode.organization}")
-    click.echo("")
-    click.echo(click.style("-" * 50, fg='bright_black'))
-    click.echo("  Change with:")
-    click.echo("    dojo settings default-language <python|java|cpp>")
-    click.echo("    dojo settings review-frequency <days>")
-    click.echo(click.style("-" * 50, fg='bright_black'))
-    click.echo("")
+    blank()
+    click.echo(dim("  " + "─" * 50))
+    click.echo(f"  {accent('ByteDojo Settings')}")
+    click.echo(dim("  " + "─" * 50))
+    blank()
+    click.echo(f"  {dim('defaults')}")
+    click.echo(f"    {dim('language')}     {bold(default_lang)}")
+    click.echo(f"    {dim('source')}       {default_source}")
+    blank()
+    click.echo(f"  {dim('review')}")
+    click.echo(f"    {dim('frequency')}    {review_freq} days")
+    blank()
+    click.echo(f"  {dim('leetcode')}")
+    click.echo(f"    {dim('organization')} {current_settings.leetcode.organization}")
+    blank()
+    click.echo(dim("  " + "─" * 50))
+    hint("dojo settings default-language <python|java|cpp>")
+    hint("dojo settings review-frequency <days>")
+    click.echo(dim("  " + "─" * 50))
+    blank()
 
 
 @settings.command('list')
@@ -107,8 +106,8 @@ def default_language(language: str):
         new_value = language.lower()
         db.set_config('default_language', new_value)
 
-        logger.info(f"Default language updated: {old_value} -> {new_value}")
-        logger.info(f"Commands like 'dojo fetch 1' will now use {new_value.upper()}.")
+        click.echo(f"  {success('✓')}  Default language set to {bold(new_value)}")
+        logger.debug(f"settings: default_language {old_value} -> {new_value}")
 
 
 @settings.command()
@@ -122,7 +121,6 @@ def set(key: str, value: str):
       dojo settings set leetcode.organization flat
       dojo settings set leetcode.organization difficulty
     """
-    logger = get_logger()
     repo = Repository.find(Path.cwd())
     if repo is None:
         raise click.ClickException("Not inside a .dojo repository. Please run 'dojo init' first.")
@@ -133,22 +131,22 @@ def set(key: str, value: str):
     }
 
     if key not in valid_settings:
-        logger.error(f"Unknown setting: {key}")
-        logger.info("")
-        logger.info("Available settings:")
+        click.echo()
+        click.echo(f"  {error('Unknown setting:')} {bold(key)}")
+        click.echo(f"  {dim('Available settings:')}")
         for setting_key, valid_values in valid_settings.items():
-            logger.info(f"  {setting_key}: {', '.join(valid_values)}")
+            click.echo(f"    {dim(setting_key)}  {', '.join(valid_values)}")
         raise click.ClickException(f"Unknown setting: {key}")
 
     if value not in valid_settings[key]:
-        logger.error(f"Invalid value '{value}' for {key}")
-        logger.info(f"Valid values: {', '.join(valid_settings[key])}")
+        click.echo(f"  {error('Invalid value')} {bold(repr(value))} {dim('for')} {bold(key)}")
+        click.echo(f"  {dim('Valid values:')} {', '.join(valid_settings[key])}")
         raise click.ClickException(f"Invalid value: {value}")
 
     # Set the value
     settings_manager = SettingsManager(repo.dojo_dir)
     if settings_manager.set(key, value):
-        logger.info(f"Set {key} = {value}")
+        click.echo(f"  {success('✓')}  {bold(key)} set to {bold(value)}")
     else:
         raise click.ClickException(f"Failed to set {key}")
 
@@ -162,7 +160,6 @@ def get(key: str):
     Examples:
       dojo settings get leetcode.organization
     """
-    logger = get_logger()
     repo = Repository.find(Path.cwd())
     if repo is None:
         raise click.ClickException("Not inside a .dojo repository. Please run 'dojo init' first.")
@@ -172,10 +169,9 @@ def get(key: str):
     value = settings_manager.get(key)
 
     if value is None:
-        logger.error(f"Unknown setting: {key}")
         raise click.ClickException(f"Unknown setting: {key}")
 
-    logger.info(f"{key} = {value}")
+    click.echo(f"  {dim(key)} = {bold(value)}")
 
 
 @settings.command('review-frequency')
@@ -192,8 +188,6 @@ def review_frequency(days: int):
       dojo settings review-frequency 3     # Review every 3 days
       dojo settings review-frequency 14    # Review bi-weekly
     """
-    logger = get_logger()
-
     if days < 1:
         raise click.ClickException("Review frequency must be at least 1 day")
 
@@ -208,5 +202,4 @@ def review_frequency(days: int):
         old_value = db.get_config('review_frequency_days', '7')
         db.set_config('review_frequency_days', str(days))
 
-        logger.info(f"Review frequency updated: {old_value} days -> {days} days")
-        logger.info("New problems will be scheduled for review after this interval.")
+        click.echo(f"  {success('✓')}  Review frequency set to {bold(str(days))} days  {dim(f'(was {old_value})')}")
