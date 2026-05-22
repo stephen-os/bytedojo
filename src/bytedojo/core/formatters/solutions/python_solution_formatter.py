@@ -33,9 +33,11 @@ class PythonSolutionFormatter(BaseSolutionFormatter):
     def extra_files(self, problem: Problem) -> Dict[str, str]:
         return self._helper.files_for(problem)
 
-    def format_imports(self, _problem: Problem) -> str:
-        """Baseline stdlib imports."""
-        return "\n".join(_PYTHON_BASELINE_IMPORTS)
+    def format_imports(self, problem: Problem) -> str:
+        """Baseline stdlib imports plus companion imports for any helper types."""
+        companions = self._helper.companion_imports(problem)
+        companion_block = ("\n" + "\n".join(companions)) if companions else ""
+        return "\n".join(_PYTHON_BASELINE_IMPORTS) + companion_block
 
     def format_solution(self, problem: Problem) -> str:
         """Extract and clean the starter class body from the LeetCode snippet."""

@@ -48,3 +48,11 @@ class BaseHelperFormatter(ABC):
             for ds in problem.data_structures
             if self.requires_helper(ds)
         }
+
+    def companion_imports(self, problem: Problem) -> list[str]:
+        """Return import/include lines for companion files needed by this problem.
+
+        Default: none. Override in languages where companion files must be
+        explicitly referenced in the solution (C++, Python).
+        """
+        return []

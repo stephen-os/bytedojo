@@ -7,6 +7,12 @@ from bytedojo.core.formatters.helpers.base_helper_formatter import BaseHelperFor
 from bytedojo.core.models.data_structure import DataStructure
 
 
+_IMPORTS = {
+    DataStructure.BINARY_TREE: "from tree_node import TreeNode",
+    DataStructure.LINKED_LIST: "from list_node import ListNode",
+    DataStructure.N_ARY_TREE:  "from node import Node",
+}
+
 _FILENAMES = {
     DataStructure.BINARY_TREE: "tree_node.py",
     DataStructure.LINKED_LIST: "list_node.py",
@@ -43,3 +49,10 @@ class PythonHelperFormatter(BaseHelperFormatter):
 
     def build_file(self, ds: DataStructure) -> str:
         return _TEMPLATES[ds]
+
+    def companion_imports(self, problem) -> list[str]:
+        return [
+            _IMPORTS[ds]
+            for ds in problem.data_structures
+            if self.requires_helper(ds)
+        ]

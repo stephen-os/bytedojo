@@ -43,9 +43,11 @@ class CppSolutionFormatter(BaseSolutionFormatter):
     def extra_files(self, problem: Problem) -> Dict[str, str]:
         return self._helper.files_for(problem)
 
-    def format_imports(self, _problem: Problem) -> str:
-        """Baseline stdlib includes."""
-        return "\n".join(_CPP_BASELINE_INCLUDES) + "\n\nusing namespace std;"
+    def format_imports(self, problem: Problem) -> str:
+        """Baseline stdlib includes plus companion headers for any helper types."""
+        companions = self._helper.companion_imports(problem)
+        companion_block = ("\n" + "\n".join(companions)) if companions else ""
+        return "\n".join(_CPP_BASELINE_INCLUDES) + "\n\nusing namespace std;" + companion_block
 
     def format_solution(self, problem: Problem) -> str:
         """Extract the class body from the LeetCode snippet."""

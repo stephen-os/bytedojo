@@ -63,3 +63,10 @@ class CppHelperFormatter(BaseHelperFormatter):
 
     def build_file(self, ds: DataStructure) -> str:
         return _TEMPLATES[ds]
+
+    def companion_imports(self, problem) -> list[str]:
+        return [
+            f'#include "{self.filename(ds)}"'
+            for ds in problem.data_structures
+            if self.requires_helper(ds)
+        ]
