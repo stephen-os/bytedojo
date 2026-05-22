@@ -71,11 +71,13 @@ def _display_toolchains(r: SystemReport) -> None:
     for status in r.toolchains:
         lang = status.language.value
         if status.found:
-            marker = success("[OK]")
+            marker = success("[OK]") if not status.warning else warn("[WARN]")
             version = status.version or "version unknown"
             click.echo(f"    {marker}  {bold(lang):<14}  {version}")
             for binary, path in status.paths.items():
                 click.echo(f"              {dim(f'{binary}: {path}')}")
+            if status.warning:
+                click.echo(f"              {warn(status.warning)}")
         else:
             marker = error("[NO]")
             missing = ", ".join(status.missing) or "unknown"

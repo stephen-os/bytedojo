@@ -30,7 +30,7 @@ class SystemReport:
 
     @property
     def ready_count(self) -> int:
-        return sum(1 for s in self.toolchains if s.found)
+        return sum(1 for s in self.toolchains if s.found and not s.warning)
 
     @property
     def total_count(self) -> int:

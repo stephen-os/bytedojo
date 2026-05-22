@@ -30,6 +30,7 @@ class ToolchainStatus:
     paths: Dict[str, str] = field(default_factory=dict)
     version: Optional[str] = None
     install_hint: Optional[str] = None
+    warning: Optional[str] = None
 
 
 @dataclass

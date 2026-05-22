@@ -7,6 +7,7 @@ caller (typically `.dojo/build/{problem_id}_cpp/`). The binary is named
 """
 
 import os
+import re
 import shutil
 import subprocess
 import sys
@@ -167,6 +168,28 @@ def compile_cpp_source(
     )
 
 
+#: Minimum major versions that reliably support -std=c++17.
+_MIN_MAJOR = {"g++": 7, "clang++": 5}
+
+
+def _check_min_version(name: str, version_str: str) -> Optional[str]:
+    """Return a warning string if the compiler is too old for C++17, else None."""
+    required = _MIN_MAJOR.get(name)
+    if required is None:
+        return None
+    m = re.search(r"(\d+)\.\d+", version_str)
+    if m is None:
+        return None
+    major = int(m.group(1))
+    if major < required:
+        return (
+            f"{name} {major}.x is too old for C++17 — "
+            f"upgrade to {name} {required}+ "
+            f"(bytedojo uses -std=c++17)"
+        )
+    return None
+
+
 class CppToolchain(Toolchain):
     """C++ toolchain — prefers g++ / clang++ / cl.exe in that order."""
 
@@ -188,6 +211,8 @@ class CppToolchain(Toolchain):
         name, path = found
         version: Optional[str] = None
 
+        warning: Optional[str] = None
+
         if name == "msvc":
             # `path` here is vcvars64.bat, which doesn't accept --version.
             # Ask vswhere for the install version instead.
@@ -201,6 +226,7 @@ class CppToolchain(Toolchain):
                 raw = (proc.stdout or proc.stderr or "").splitlines()
                 if raw:
                     version = raw[0].strip()
+                    warning = _check_min_version(name, version)
             except (OSError, subprocess.TimeoutExpired):
                 pass
 
@@ -210,6 +236,7 @@ class CppToolchain(Toolchain):
             paths={name: path},
             version=version,
             install_hint=_INSTALL_HINTS.get(sys.platform),
+            warning=warning,
         )
 
     def execute(

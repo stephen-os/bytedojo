@@ -201,6 +201,31 @@ _TREE_TYPES = {"TREE_NODE"}
 _LIST_TYPES = {"LIST_NODE", "LIST_NODE_ARRAY"}
 
 
+def _resolve_canonical(type_spec) -> str:
+    """Convert a type field (old string or new {base, element} dict) to a CPP_TYPE key."""
+    if isinstance(type_spec, str):
+        return type_spec
+
+    base = type_spec["base"]
+    element = type_spec.get("element")
+
+    if base == "LINKED_LIST":
+        return "LIST_NODE"
+    if base in ("BINARY_TREE", "BINARY_SEARCH_TREE"):
+        return "TREE_NODE"
+    if base == "ARRAY":
+        elem_key = _resolve_canonical(element) if element else "VOID"
+        if elem_key == "LIST_NODE":
+            return "LIST_NODE_ARRAY"
+        return f"{elem_key}_ARRAY"
+    if base == "MATRIX":
+        elem_key = _resolve_canonical(element) if element else "VOID"
+        return f"{elem_key}_MATRIX"
+
+    # Primitives (INT32, INT64, STRING, VOID, …) — base IS the CPP_TYPE key
+    return base
+
+
 def _parse_call(canonical: str, json_expr: str) -> str:
     """C++ expression that converts `json_expr` into the native type."""
     if canonical == "TREE_NODE":
@@ -260,9 +285,11 @@ def generate_run_case(bundle: dict) -> str:
     """Emit the per-problem run_case() function body as C++ source."""
     sig = bundle["signature"]
     method = bundle["method"]
-    params = sig["params"]
-    returns = sig["returns"]
     comparison = bundle.get("comparison", "exact")
+
+    # Resolve types from either the old string format or the new {base, element} dict.
+    returns = _resolve_canonical(sig["returns"])
+    params = [{"name": p["name"], "type": _resolve_canonical(p["type"])} for p in sig["params"]]
 
     # Validate every type appears in CPP_TYPE so we get a Python-side
     # error rather than a C++ compile error if something's wrong.
