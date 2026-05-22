@@ -27,10 +27,8 @@ class BaseSolutionFormatter(ABC):
         imports, solution, test. Subclasses fill in the three language-
         specific sections via the abstract methods below.
         """
-        sep = "=" * 76
-
         def _section(title: str) -> str:
-            return self.comment_formatter.format_single_line(f"{sep}\n{title}\n{sep}")
+            return self.comment_formatter.format_single_line(f"--- {title} ---")
 
         return "".join([
             self.format_header(problem),
@@ -38,11 +36,11 @@ class BaseSolutionFormatter(ABC):
             "\n\n",
             self.format_imports(problem),
             "\n\n",
-            _section("SOLUTION"),
+            _section("solution"),
             "\n\n",
             self.format_solution(problem),
             "\n\n",
-            _section("TEST"),
+            _section("main"),
             "\n\n",
             self.format_main_block(problem),
             "\n",
@@ -90,9 +88,7 @@ class BaseSolutionFormatter(ABC):
         detail = problem.problem_detail
 
         description = "\n".join([
-            "============================================================================",
-            "PROBLEM DESCRIPTION",
-            "============================================================================",
+            "--- description ---",
             "",
             detail.description,
             "",
