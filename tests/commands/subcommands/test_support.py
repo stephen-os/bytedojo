@@ -59,7 +59,7 @@ def test_support_renders_environment_block(monkeypatch):
     )
     result = CliRunner().invoke(support, [])
     assert result.exit_code == 0
-    assert "BYTEDOJO SUPPORT" in result.output
+    assert "ByteDojo Support" in result.output
     assert "Environment" in result.output
     assert "0.1.0" in result.output       # bytedojo version
     assert "3.12.0" in result.output      # python version

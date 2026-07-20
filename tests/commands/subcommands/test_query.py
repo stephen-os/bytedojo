@@ -100,7 +100,7 @@ def test_query_renders_pagination_header(repo, monkeypatch, stub_query):
     # 'q' to exit the prompt loop immediately after the first render.
     result = CliRunner().invoke(query, [], input="q\n")
     assert result.exit_code == 0
-    assert "Problems (Page 1/1, 5 total)" in result.output
+    assert "Problems (page 1/1, 5 total)" in result.output
 
 
 def test_query_passes_difficulty_filter(repo, monkeypatch, stub_query):
@@ -152,7 +152,7 @@ def test_query_navigates_to_next_page(repo, monkeypatch, stub_query):
     result = CliRunner().invoke(
         query, ["--per-page", "20"], input="n\nq\n",
     )
-    assert "Page 2/3" in result.output
+    assert "page 2 of 3" in result.output
 
 
 def test_query_jump_to_invalid_page_reports_error(repo, monkeypatch, stub_query):

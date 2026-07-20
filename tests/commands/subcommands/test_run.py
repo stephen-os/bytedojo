@@ -77,9 +77,9 @@ def test_run_renders_header_with_problem_details(repo, registered_problem, monke
     monkeypatch.chdir(repo.root_dir)
     result = CliRunner().invoke(run, ["1"])
     assert result.exit_code == 0
-    assert "RUN PROBLEM" in result.output
+    assert "Running" in result.output
     assert "Two Sum" in result.output
-    assert "PYTHON3" in result.output
+    assert "[python3]" in result.output
     assert "v1" in result.output
 
 

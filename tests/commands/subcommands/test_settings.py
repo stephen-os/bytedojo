@@ -1,8 +1,19 @@
 """Tests for `dojo settings` (group + every subcommand)."""
 
+import re
+
 from click.testing import CliRunner
 
 from bytedojo.commands.subcommands.settings import settings
+
+# Setting rows render as `key<padding>value`. Match the pair, not the bare key —
+# the usage footer also mentions `default-language` and `review-frequency`.
+_ROWS = (
+    r"language\s+python",
+    r"source\s+leetcode",
+    r"frequency\s+7 days",
+    r"organization\s+flat",
+)
 
 
 # --------------------------------------------------------------------------- #
@@ -24,21 +35,20 @@ def test_settings_default_view_shows_all(repo, monkeypatch):
     monkeypatch.chdir(repo.root_dir)
     result = CliRunner().invoke(settings, [])
     assert result.exit_code == 0
-    assert "BYTEDOJO SETTINGS" in result.output
-    assert "language:" in result.output
-    assert "frequency:" in result.output
-    assert "organization:" in result.output
+    assert "ByteDojo Settings" in result.output
+    for row in _ROWS:
+        assert re.search(row, result.output), f"missing settings row: {row}"
 
 
 def test_settings_list_matches_default_view(repo, monkeypatch):
     monkeypatch.chdir(repo.root_dir)
     direct = CliRunner().invoke(settings, []).output
     via_list = CliRunner().invoke(settings, ["list"]).output
-    assert "BYTEDOJO SETTINGS" in via_list
+    assert "ByteDojo Settings" in via_list
     # Both render the same fields.
-    for key in ("language:", "source:", "frequency:", "organization:"):
-        assert key in direct
-        assert key in via_list
+    for row in _ROWS:
+        assert re.search(row, direct), f"missing from default view: {row}"
+        assert re.search(row, via_list), f"missing from `list`: {row}"
 
 
 # --------------------------------------------------------------------------- #

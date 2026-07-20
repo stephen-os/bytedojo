@@ -165,7 +165,7 @@ def test_fetch_default_mode_banner(repo, monkeypatch, captured):
 def test_fetch_version_mode_banner(repo, monkeypatch, captured):
     monkeypatch.chdir(repo.root_dir)
     result = CliRunner().invoke(fetch, ["1", "--version", "3"])
-    assert "Refetching" in result.output
+    assert "refetched" in result.output
     assert "v3" in result.output
 
 
@@ -178,8 +178,9 @@ def test_fetch_path_mode_banner(repo, monkeypatch, captured, tmp_path):
 def test_fetch_summary_line(repo, monkeypatch, captured):
     monkeypatch.chdir(repo.root_dir)
     result = CliRunner().invoke(fetch, ["1,2"])
-    assert "Done:" in result.output
     assert "2 placed" in result.output
+    assert "0 skipped" in result.output
+    assert "0 failed" in result.output
 
 
 # --------------------------------------------------------------------------- #

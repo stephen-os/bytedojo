@@ -63,7 +63,7 @@ def test_review_default_renders_due_reviews(repo, monkeypatch):
     monkeypatch.chdir(repo.root_dir)
     result = CliRunner().invoke(review, [])
     assert result.exit_code == 0
-    assert "DUE FOR REVIEW" in result.output
+    assert "Problems Due for Review" in result.output
     assert "Two Sum" in result.output
     assert "42" in result.output      # display_id from problem_num
 
@@ -102,7 +102,7 @@ def test_review_pick_renders_chosen_problem(repo, monkeypatch):
     monkeypatch.chdir(repo.root_dir)
     result = CliRunner().invoke(review, ["pick"])
     assert result.exit_code == 0
-    assert "REVIEW THIS PROBLEM" in result.output
+    assert "Review This Problem" in result.output
     assert "Two Sum" in result.output
     assert "14 days" in result.output
     assert "ease 2.60" in result.output
@@ -159,7 +159,7 @@ def test_review_complete_quality_flags(
 def test_review_complete_renders_before_after(repo, registered_problem, monkeypatch, stub_complete):
     monkeypatch.chdir(repo.root_dir)
     result = CliRunner().invoke(review, ["complete", "1", "--good"])
-    assert "REVIEW COMPLETE - GOOD" in result.output
+    assert "Review Complete — GOOD" in result.output
     assert "7 days" in result.output
     assert "18 days" in result.output
 
@@ -222,7 +222,7 @@ def test_review_add_propagates_days_flag(repo, registered_problem, monkeypatch):
     result = CliRunner().invoke(review, ["add", "1", "--days", "3"])
     assert result.exit_code == 0
     assert state["calls"][0]["days"] == 3
-    assert "ADDED TO REVIEW QUEUE" in result.output
+    assert "Added to Review Queue" in result.output
 
 
 def test_review_add_service_error_raises(repo, registered_problem, monkeypatch):
@@ -262,7 +262,7 @@ def test_review_snooze_default_days_is_one(repo, registered_problem, monkeypatch
     result = CliRunner().invoke(review, ["snooze", "1"])
     assert result.exit_code == 0
     assert state["calls"][0]["days"] == 1
-    assert "REVIEW SNOOZED" in result.output
+    assert "Review Snoozed" in result.output
 
 
 def test_review_snooze_with_days(repo, registered_problem, monkeypatch):
@@ -313,7 +313,7 @@ def test_review_remove_happy_path(repo, registered_problem, monkeypatch):
     monkeypatch.chdir(repo.root_dir)
     result = CliRunner().invoke(review, ["remove", "1"])
     assert result.exit_code == 0
-    assert "REMOVED FROM QUEUE" in result.output
+    assert "Removed from Queue" in result.output
 
 
 def test_review_remove_service_error_raises(repo, registered_problem, monkeypatch):
@@ -353,9 +353,9 @@ def test_review_stats_renders_counts(repo, monkeypatch):
     monkeypatch.chdir(repo.root_dir)
     result = CliRunner().invoke(review, ["stats"])
     assert result.exit_code == 0
-    assert "REVIEW STATISTICS" in result.output
+    assert "Review Statistics" in result.output
     assert "10 days" in result.output
-    assert "Due Today:" in result.output
+    assert "Due Today" in result.output
     assert "2" in result.output
     assert "5" in result.output
     assert "12" in result.output

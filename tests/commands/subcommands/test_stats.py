@@ -26,8 +26,8 @@ def test_stats_empty_summary(repo, monkeypatch):
     monkeypatch.chdir(repo.root_dir)
     result = CliRunner().invoke(stats, [])
     assert result.exit_code == 0
-    assert "Repository Statistics" in result.output
-    assert "Total problems: 0" in result.output
+    assert "Problems" in result.output
+    assert "0 registered" in result.output
 
 
 def test_stats_summary_with_problems(repo, monkeypatch):
@@ -37,9 +37,9 @@ def test_stats_summary_with_problems(repo, monkeypatch):
 
     result = CliRunner().invoke(stats, [])
     assert result.exit_code == 0
-    assert "Total problems: 2" in result.output
-    assert "By difficulty:" in result.output
-    assert "By source:" in result.output
+    assert "2 registered" in result.output
+    assert "By difficulty" in result.output
+    assert "By source" in result.output
 
 
 # --------------------------------------------------------------------------- #
@@ -83,7 +83,8 @@ def test_stats_list_verbose_shows_attempt_placeholder(repo, monkeypatch):
     monkeypatch.chdir(repo.root_dir)
     result = CliRunner().invoke(stats, ["--list", "--verbose"])
     assert result.exit_code == 0
-    assert "attempts:" in result.output
+    assert "attempts" in result.output
+    assert "verbose stats temporarily unavailable" in result.output
 
 
 def test_stats_invalid_difficulty_rejected(repo, monkeypatch):

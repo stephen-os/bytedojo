@@ -102,11 +102,11 @@ def test_grade_pass_displays_review_scheduled(repo, registered_problem, monkeypa
 # --------------------------------------------------------------------------- #
 
 def test_grade_view_only_shows_problem_status(repo, registered_problem, monkeypatch):
-    """No status flag + no --manual -> renders PROBLEM STATUS and exits."""
+    """No status flag + no --manual -> renders the Problem Status block and exits."""
     monkeypatch.chdir(repo.root_dir)
     result = CliRunner().invoke(grade, ["1"])
     assert result.exit_code == 0
-    assert "PROBLEM STATUS" in result.output
+    assert "Problem Status" in result.output
     assert "Two Sum" in result.output
 
 
