@@ -1,6 +1,6 @@
 # `dojo grade`
 
-> View test results and manually apply pass/fail/skip.
+> View solution status and manually apply pass/fail/skip.
 
 ## Synopsis
 
@@ -17,9 +17,9 @@ dojo grade [IDENTIFIER] [--name TEXT | --desc TEXT | --last]
 This command has two flavours:
 
 1. **View mode** — without a status flag and without `--manual`, it
-   simply renders the current test status for a problem (`PASSED` /
-   `FAILED` / `SKIPPED` / `NOT TESTED`) along with its last test run
-   timestamp and recorded output.
+   simply renders the current grade for a problem (`PASSED` /
+   `FAILED` / `SKIPPED` / `UNGRADED`) along with the timestamp it was
+   last graded and any notes recorded with the grade.
 
 2. **Grade mode** — apply a grade. Either:
    - Pass a status flag directly: `--pass` / `--fail` / `--skip`

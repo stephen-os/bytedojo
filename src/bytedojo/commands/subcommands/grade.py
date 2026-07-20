@@ -1,8 +1,8 @@
 """
-Grade command - View test results and manually grade problems.
+Grade command - View solution status and manually grade problems.
 
-This command is primarily for viewing test results. Manual grading is available
-as a backup when tests haven't been run or when you want to override the result.
+Grades are applied by hand: pass, fail or skip. Passing a problem schedules
+it for spaced-repetition review.
 """
 
 import click
@@ -19,7 +19,7 @@ from bytedojo.commands.ui import accent, bold, success, warn, error, dim
 
 
 def _display_problem_status(problem: RegisteredProblem, show_test_hint: bool = True):
-    """Display problem details and current test status."""
+    """Display problem details and current grade."""
     click.echo()
     click.echo(dim("  " + "─" * 70))
     click.echo(f"  {accent('Problem Status')}")
@@ -35,7 +35,7 @@ def _display_problem_status(problem: RegisteredProblem, show_test_hint: bool = T
 
     click.echo()
     click.echo(dim("  " + "─" * 70))
-    click.echo(f"  {accent('Test Results')}")
+    click.echo(f"  {accent('Grade')}")
     click.echo(dim("  " + "─" * 70))
     click.echo()
 
@@ -48,17 +48,17 @@ def _display_problem_status(problem: RegisteredProblem, show_test_hint: bool = T
     elif status == ProblemStatus.SKIPPED:
         click.echo(f"  Status: {warn('SKIPPED')}")
     elif status == ProblemStatus.UNGRADED:
-        click.echo(f"  Status: {dim('NOT TESTED')}")
+        click.echo(f"  Status: {dim('UNGRADED')}")
         if show_test_hint:
             click.echo(f"  {dim('Tip:')} Run {accent(f'dojo grade {problem.problem_id} --pass')} once you have solved it")
     else:
         click.echo(f"  Status: {status.value.upper()}")
 
     if problem.last_test_run:
-        click.echo(f"  {dim('Last Run')}  {problem.last_test_run}")
+        click.echo(f"  {dim('Last Graded')}  {problem.last_test_run}")
 
     if problem.test_output:
-        click.echo(f"  {dim('Results')}   {problem.test_output}")
+        click.echo(f"  {dim('Notes')}        {problem.test_output}")
 
     click.echo()
 
