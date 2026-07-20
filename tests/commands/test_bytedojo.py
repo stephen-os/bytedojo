@@ -16,7 +16,7 @@ def test_dojo_help_lists_every_subcommand():
     assert result.exit_code == 0
     for cmd in (
         "fetch", "grade", "init", "pick", "query",
-        "review", "run", "settings", "stats", "test", "support",
+        "review", "settings",
     ):
         assert cmd in result.output, f"{cmd!r} missing from --help"
 
@@ -56,11 +56,11 @@ def test_desc_flag_prints_description_and_exits():
 
 def test_eager_flag_skips_subcommand_invocation():
     """--version short-circuits before the registered subcommand runs."""
-    result = CliRunner().invoke(bytedojo, ["--version", "stats"])
+    result = CliRunner().invoke(bytedojo, ["--version", "query"])
     assert result.exit_code == 0
     assert __version__ in result.output
-    # If stats had run we'd see "Repository Statistics" or an init error.
-    assert "Repository" not in result.output
+    # If query had run we'd see its output or a "not inside a repository" error.
+    assert "repository" not in result.output.lower()
 
 
 # --------------------------------------------------------------------------- #
@@ -77,7 +77,7 @@ def test_debug_flag_initialises_debug_logger(monkeypatch):
     monkeypatch.setattr("bytedojo.commands.bytedojo.setup_logger", fake_setup)
     # Re-initialise via a noop subcommand path: --help exits before the
     # subcommand body, but the group callback still runs first.
-    CliRunner().invoke(bytedojo, ["--debug", "support"])
+    CliRunner().invoke(bytedojo, ["--debug", "init", "--help"])
     assert captured["debug"] is True
 
 
@@ -88,5 +88,5 @@ def test_no_debug_flag_initialises_info_logger(monkeypatch):
         captured["debug"] = debug
 
     monkeypatch.setattr("bytedojo.commands.bytedojo.setup_logger", fake_setup)
-    CliRunner().invoke(bytedojo, ["support"])
+    CliRunner().invoke(bytedojo, ["init", "--help"])
     assert captured["debug"] is False

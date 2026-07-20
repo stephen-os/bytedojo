@@ -53,14 +53,11 @@ This directory contains your ByteDojo data:
 # Fetch problems
 dojo fetch 1
 
-# Run your solution
-dojo run 1
-
 # Grade your solutions
 dojo grade 1 --pass
 
-# View stats
-dojo stats
+# Review problems that are due
+dojo review
 ```
 
 ## Tip

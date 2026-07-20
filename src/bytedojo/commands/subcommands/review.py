@@ -176,8 +176,7 @@ def pick(ctx):
     if problem.file_path:
         lang_flag = "--python" if problem.language == "python3" else f"--{problem.language}"
         click.echo(f"  1. Open the file and solve it again")
-        click.echo(f"  2. Verify your solution {dim(f'(e.g. dojo test {display_id} {lang_flag})')}")
-        click.echo(f"  3. Mark complete: {accent(f'dojo review complete {display_id} {lang_flag} --good')}")
+        click.echo(f"  2. Mark complete: {accent(f'dojo review complete {display_id} {lang_flag} --good')}")
         click.echo(f"     {dim('(use --easy / --good / --hard to grade how well you recalled)')}")
     click.echo()
 

@@ -86,5 +86,4 @@ dojo fetch 1,2,5..10 --cpp
 ## See also
 
 - [`init`](init.md) — required first
-- [`run`](run.md) — execute the placed solution
-- [`test`](test.md) — run the bundled test cases
+- [`grade`](grade.md) — record pass/fail once you've solved it

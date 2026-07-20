@@ -11,16 +11,12 @@ from bytedojo import __author__, __version__
 from bytedojo.core.logger import get_logger, setup_logger
 
 from bytedojo.commands.subcommands import init
-from bytedojo.commands.subcommands import stats
 from bytedojo.commands.subcommands import grade
 from bytedojo.commands.subcommands import settings
 from bytedojo.commands.subcommands import fetch
 from bytedojo.commands.subcommands import query
 from bytedojo.commands.subcommands import pick
 from bytedojo.commands.subcommands import review
-from bytedojo.commands.subcommands import run
-from bytedojo.commands.subcommands import test
-from bytedojo.commands.subcommands import support
 
 # Helper functions for printing the version of bytedojo. 
 def print_version(ctx, _, value):
@@ -93,8 +89,4 @@ bytedojo.add_command(init)
 bytedojo.add_command(pick)
 bytedojo.add_command(query)
 bytedojo.add_command(review)
-bytedojo.add_command(run)
 bytedojo.add_command(settings)
-bytedojo.add_command(stats)
-bytedojo.add_command(test)
-bytedojo.add_command(support)

@@ -50,7 +50,7 @@ def _display_problem_status(problem: RegisteredProblem, show_test_hint: bool = T
     elif status == ProblemStatus.UNGRADED:
         click.echo(f"  Status: {dim('NOT TESTED')}")
         if show_test_hint:
-            click.echo(f"  {dim('Tip:')} Run {accent(f'dojo test {problem.problem_id}')} to test your solution")
+            click.echo(f"  {dim('Tip:')} Run {accent(f'dojo grade {problem.problem_id} --pass')} once you have solved it")
     else:
         click.echo(f"  Status: {status.value.upper()}")
 
@@ -320,10 +320,10 @@ def grade(
     per_page: int
 ):
     """
-    View test results and optionally manually grade problems.
+    View solution status and manually grade problems.
 
-    This command shows the current test status of problems. Use 'dojo test' to run
-    tests first. Manual grading is available as a backup via --manual or status flags.
+    This command shows the current status of problems. Grade them with
+    --manual or the status flags.
 
     When a problem is marked as passed, it gets scheduled for spaced repetition review.
     Uses configured default language (see: dojo settings default-language).

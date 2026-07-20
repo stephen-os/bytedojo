@@ -106,7 +106,6 @@ def test_review_pick_renders_chosen_problem(repo, monkeypatch):
     assert "Two Sum" in result.output
     assert "14 days" in result.output
     assert "ease 2.60" in result.output
-    assert "dojo test 42 --python" in result.output
     assert "dojo review complete 42 --python --good" in result.output
 
 

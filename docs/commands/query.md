@@ -82,4 +82,3 @@ dojo query --list-tags
 ## See also
 
 - [`pick`](pick.md) — random selection from the same filters
-- [`stats`](stats.md) — repository-level summary instead of per-problem listing

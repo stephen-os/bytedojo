@@ -87,6 +87,5 @@ dojo grade --last --skip
 
 ## See also
 
-- [`test`](test.md) — record test results automatically
 - [`review`](review.md) — track scheduled reviews after passing
-- [`stats`](stats.md) — see overall pass/fail counts
+- [`query`](query.md) — browse problems with their current status

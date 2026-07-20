@@ -409,8 +409,8 @@ def resolve_solution_path(
         build an actionable error.
     """
     # "Latest" — use the file_path stored on the registered problem,
-    # but determine which version that corresponds to so callers (TestService)
-    # can record per-version results.
+    # but determine which version that corresponds to so callers can
+    # record per-version results.
     if version is None:
         if not problem.file_path:
             return SolutionPathResult(error="Problem has no associated file path")

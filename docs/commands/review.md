@@ -29,7 +29,7 @@ ByteDojo uses an SM-2-style spaced-repetition system:
   queue manually.
 
 All selectors and language flags work the same way as
-[`run`](run.md) / [`test`](test.md) / [`grade`](grade.md).
+[`grade`](grade.md).
 
 ## Subcommands
 
@@ -46,8 +46,8 @@ Shows ID, source, due-date label (`Today` / `Tomorrow` / `In N days` /
 ### `pick` — pick a random due review
 
 Picks one due review at random and renders the problem details plus
-the SM-2 state (`current interval`, `ease`) and the next-step commands
-(`dojo test` / `dojo review complete`).
+the SM-2 state (`current interval`, `ease`) and the next-step command
+(`dojo review complete`).
 
 ### `complete IDENTIFIER` — apply SM-2 update
 
@@ -106,7 +106,6 @@ dojo review
 dojo review pick
 
 # Solve it, then mark complete.
-dojo test 1 --python                  # verify
 dojo review complete 1 --python --good
 
 # Manually queue a problem (3 days out).

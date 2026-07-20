@@ -13,8 +13,5 @@ def test_service_classes_are_constructible():
     """Each *Service class can be instantiated with no args (DI by call site)."""
     services.FetchService()
     services.PickService()
-    services.TestService()
-    services.RunService()
     services.GradingService()
     services.ReviewService()
-    services.SystemService()

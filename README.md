@@ -25,7 +25,6 @@
 - **Scheduled Review** - Passed problems are scheduled for periodic review
 - **Progress Tracking** - Track solved problems with pass/fail/skip status
 - **Interactive Grading** - Browse and grade problems with pagination
-- **Build Directory** - Compiled artifacts kept separate in `.dojo/build/`
 
 ## Installation
 
@@ -61,16 +60,10 @@ dojo fetch 1
 # 3. Solve the problem in the generated file
 #    problems/0001-two-sum/python3/v001/solution.py
 
-# 4. Run your solution locally
-dojo run 1
-
-# 5. Run the bundled test cases
-dojo test 1
-
-# 6. Grade your solution (passing schedules a review)
+# 4. Grade your solution (passing schedules a review)
 dojo grade 1 --pass
 
-# 7. Review problems on schedule
+# 5. Review problems on schedule
 dojo review
 ```
 
@@ -95,15 +88,6 @@ dojo fetch 1 --cpp           # Fetch as C++
 dojo fetch 1,2,3             # Fetch multiple
 dojo fetch 1..10             # Fetch range
 dojo fetch 1 --force         # Overwrite existing
-```
-
-### Run Solutions
-
-```bash
-dojo run 1                   # Run problem #1
-dojo run 1 --java            # Run Java version
-dojo run --name "Two Sum"    # Search by name
-dojo run --last              # Run most recent
 ```
 
 ### Grade Solutions
@@ -155,19 +139,6 @@ dojo settings review-frequency 7     # Weekly (default)
 dojo settings review-frequency 14    # Bi-weekly
 ```
 
-### Statistics
-
-```bash
-dojo stats                   # View progress summary
-dojo stats --list            # List all problems
-```
-
-### Environment Diagnostics
-
-```bash
-dojo support                 # Environment + toolchain status
-```
-
 ➡ **Full per-command reference: [docs/commands/](docs/commands/README.md)**
 
 ## Directory Structure
@@ -178,10 +149,7 @@ your-project/
 │   ├── db.sqlite            # Progress + attempts + reviews
 │   ├── settings.json        # Local preferences
 │   ├── .gitignore           # Excludes build artefacts
-│   ├── README.md            # Describes the layout
-│   └── build/               # Per-problem compile cache (Java/C++)
-│       └── 200_cpp/
-│           └── ...
+│   └── README.md            # Describes the layout
 ├── problems/
 │   └── 0001-two-sum/
 │       ├── python3/

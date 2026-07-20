@@ -110,11 +110,11 @@ def test_grade_view_only_shows_problem_status(repo, registered_problem, monkeypa
     assert "Two Sum" in result.output
 
 
-def test_grade_view_only_renders_test_hint_when_ungraded(repo, registered_problem, monkeypatch):
-    """Ungraded problems get a 'dojo test' hint."""
+def test_grade_view_only_renders_grade_hint_when_ungraded(repo, registered_problem, monkeypatch):
+    """Ungraded problems get a 'dojo grade --pass' hint."""
     monkeypatch.chdir(repo.root_dir)
     result = CliRunner().invoke(grade, ["1"])
-    assert "dojo test 1" in result.output
+    assert "dojo grade 1 --pass" in result.output
 
 
 # --------------------------------------------------------------------------- #

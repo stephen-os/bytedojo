@@ -9,19 +9,15 @@ Every command available under `dojo`. Each page has the same shape:
 | --- | --- |
 | [`init`](init.md) | Create a `.dojo/` repository in the current (or chosen) directory |
 | [`fetch`](fetch.md) | Pull a LeetCode problem and place the starter solution on disk |
-| [`run`](run.md) | Execute a problem's solution and capture its output |
-| [`test`](test.md) | Run the bundled test cases against a solution |
-| [`grade`](grade.md) | View test results and manually apply pass/fail/skip |
+| [`grade`](grade.md) | Manually apply pass/fail/skip to a solution |
 | [`pick`](pick.md) | Pick a random problem matching difficulty / tag filters |
 | [`query`](query.md) | Browse / filter the local problem catalog |
 | [`review`](review.md) | Spaced-repetition review system (group with subcommands) |
 | [`settings`](settings.md) | View and modify dojo settings (group with subcommands) |
-| [`stats`](stats.md) | Repository statistics |
-| [`support`](support.md) | Environment + toolchain diagnostic report |
 
 ## Common patterns
 
-**Selectors.** `run`, `test`, and `grade` accept the same set of selectors
+**Selectors.** `grade` and `review` accept the same set of selectors
 to identify which registered problem to act on:
 
 - Positional `IDENTIFIER` — a numeric problem ID

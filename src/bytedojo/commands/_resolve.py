@@ -2,9 +2,9 @@
 Shared CLI helper — resolve a registered problem from the standard
 identifier / name / desc / last selectors.
 
-Used by `dojo test`, `dojo run`, and `dojo grade`. All three commands take
-the same selector flags and do the same find + disambiguate dance; this
-helper is the single source of truth for that flow.
+Used by `dojo grade` and `dojo review`. Both take the same selector flags
+and do the same find + disambiguate dance; this helper is the single
+source of truth for that flow.
 
 Disambiguation uses the interactive prompt in core.search.select_problem,
 which is CLI-only. The TUI calls find_registered_problems directly and
