@@ -90,6 +90,11 @@ class GradingService:
 
         with repo.open_db() as db:
             db.update_problem_status(problem.id, status, notes)
+            # The attempt row is what `dojo query` reads for its status badge,
+            # so the grade has to land on both or the two disagree.
+            db.update_latest_attempt_status(
+                problem.source, problem.problem_id, problem.language.value, status
+            )
             review_freq = int(db.get_config('review_frequency_days', '7'))
 
         scheduled = False

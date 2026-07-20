@@ -71,6 +71,42 @@ def test_grade_failed_records_status_in_db(repo, registered_problem):
     assert fresh.status is ProblemStatus.FAILED
 
 
+def test_grade_records_status_on_the_latest_attempt(repo, registered_problem):
+    """`dojo query` reads the attempt row, so the grade has to land there too."""
+    with repo.open_db() as db:
+        db.create_attempt("leetcode", 1, "python3")
+
+    GradingService().grade(repo, registered_problem, status="passed")
+
+    with repo.open_db() as db:
+        attempt = db.get_attempt("leetcode", 1, "python3", 1)
+    assert attempt.status is ProblemStatus.PASSED
+
+
+def test_grade_leaves_older_attempt_versions_alone(repo, registered_problem):
+    """Grading v2 must not rewrite the grade v1 was given."""
+    with repo.open_db() as db:
+        db.create_attempt("leetcode", 1, "python3")
+        db.create_attempt("leetcode", 1, "python3")
+        db.update_attempt_status("leetcode", 1, "python3", 1, "passed")
+
+    GradingService().grade(repo, registered_problem, status="failed")
+
+    with repo.open_db() as db:
+        v1 = db.get_attempt("leetcode", 1, "python3", 1)
+        v2 = db.get_attempt("leetcode", 1, "python3", 2)
+    assert v1.status is ProblemStatus.PASSED
+    assert v2.status is ProblemStatus.FAILED
+
+
+def test_grade_succeeds_when_the_problem_has_no_attempt_row(repo, registered_problem):
+    """A registered problem with no recorded attempt still grades cleanly."""
+    result = GradingService().grade(repo, registered_problem, status="passed")
+    assert result.success
+    with repo.open_db() as db:
+        assert db.get_problem("leetcode", 1, "python3").status is ProblemStatus.PASSED
+
+
 def test_grade_passed_schedules_a_review(repo, registered_problem):
     result = GradingService().grade(repo, registered_problem, status="passed")
     assert result.success

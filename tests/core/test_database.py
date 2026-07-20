@@ -248,6 +248,39 @@ def test_increment_run_count_returns_false_when_no_row(db_path):
         assert db.increment_run_count("leetcode", 1, "python3", 99) is False
 
 
+def test_update_latest_attempt_status_grades_only_the_newest_version(db_path):
+    """Grading v2 must leave v1's recorded grade alone."""
+    with Database(db_path) as db:
+        db.create_attempt("leetcode", 1, "python3")
+        db.create_attempt("leetcode", 1, "python3")
+        db.update_attempt_status("leetcode", 1, "python3", 1, "passed")
+
+        assert db.update_latest_attempt_status("leetcode", 1, "python3", "failed") is True
+
+        v1 = db.get_attempt("leetcode", 1, "python3", 1)
+        v2 = db.get_attempt("leetcode", 1, "python3", 2)
+    assert v1.status is ProblemStatus.PASSED
+    assert v2.status is ProblemStatus.FAILED
+
+
+def test_update_latest_attempt_status_is_scoped_to_the_language(db_path):
+    with Database(db_path) as db:
+        db.create_attempt("leetcode", 1, "python3")
+        db.create_attempt("leetcode", 1, "java")
+
+        db.update_latest_attempt_status("leetcode", 1, "python3", "passed")
+
+        py = db.get_attempt("leetcode", 1, "python3", 1)
+        java = db.get_attempt("leetcode", 1, "java", 1)
+    assert py.status is ProblemStatus.PASSED
+    assert java.status is ProblemStatus.UNGRADED
+
+
+def test_update_latest_attempt_status_returns_false_when_no_attempts(db_path):
+    with Database(db_path) as db:
+        assert db.update_latest_attempt_status("leetcode", 99, "python3", "passed") is False
+
+
 # --------------------------------------------------------------------------- #
 # Attempt stats                                                               #
 # --------------------------------------------------------------------------- #

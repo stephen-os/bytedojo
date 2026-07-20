@@ -313,6 +313,27 @@ class Database:
         self.conn.commit()
         return cursor.rowcount > 0
 
+    def update_latest_attempt_status(self, source: str, problem_id: int, language: str, status: str) -> bool:
+        """
+        Grade the newest attempt version for a problem+language.
+
+        `dojo grade` has no version selector — it grades the solution on disk,
+        which is always the latest version. Older versions keep the grade they
+        were given.
+        """
+        cursor = self.conn.cursor()
+        cursor.execute("""
+            UPDATE versioned_attempts
+            SET status = ?
+            WHERE source = ? AND problem_id = ? AND language = ?
+              AND version = (
+                  SELECT MAX(version) FROM versioned_attempts
+                  WHERE source = ? AND problem_id = ? AND language = ?
+              )
+        """, (status, source, problem_id, language, source, problem_id, language))
+        self.conn.commit()
+        return cursor.rowcount > 0
+
     def increment_run_count(self, source: str, problem_id: int, language: str, version: int) -> bool:
         """Increment run count for an attempt."""
         cursor = self.conn.cursor()
