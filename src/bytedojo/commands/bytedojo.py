@@ -41,8 +41,8 @@ def print_description(ctx, _, value):
         return
     click.echo(
         "ByteDojo is a CLI tool for practicing LeetCode problems.\n"
-        "Fetch, run, and grade problems, review solutions, and track\n"
-        "progress—all from the command line."
+        "Fetch and grade problems, review solutions on a schedule, and\n"
+        "track progress—all from the command line."
     )
     ctx.exit()
 
@@ -71,8 +71,8 @@ def print_description(ctx, _, value):
 def bytedojo(ctx, debug: bool, config: Optional[Path]):
     """
     ByteDojo is a CLI tool for practicing LeetCode problems.
-    Fetch, run, and grade problems, review solutions, and track
-    progress—all from the command line.
+    Fetch and grade problems, review solutions on a schedule, and
+    track progress—all from the command line.
     """
 
     setup_logger(debug=debug)
