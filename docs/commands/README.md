@@ -3,9 +3,6 @@
 Every command available under `dojo`. Each page has the same shape:
 **Synopsis → Description → Arguments → Options → Examples → See also**.
 
-The TUI (`dojo enter`) is intentionally not documented here; launch it
-and the UI is self-describing.
-
 ## Quick reference
 
 | Command | One-liner |

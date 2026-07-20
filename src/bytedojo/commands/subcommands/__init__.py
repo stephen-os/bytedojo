@@ -11,7 +11,6 @@ from bytedojo.commands.subcommands.pick import pick
 from bytedojo.commands.subcommands.run import run
 from bytedojo.commands.subcommands.review import review
 from bytedojo.commands.subcommands.settings import settings
-from bytedojo.commands.subcommands.enter import enter
 from bytedojo.commands.subcommands.test import test
 from bytedojo.commands.subcommands.support import support
 
@@ -25,7 +24,6 @@ __all__ = [
     'run',
     'review',
     'settings',
-    'enter',
     'test',
     'support',
 ]

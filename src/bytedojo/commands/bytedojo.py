@@ -19,7 +19,6 @@ from bytedojo.commands.subcommands import query
 from bytedojo.commands.subcommands import pick
 from bytedojo.commands.subcommands import review
 from bytedojo.commands.subcommands import run
-from bytedojo.commands.subcommands import enter
 from bytedojo.commands.subcommands import test
 from bytedojo.commands.subcommands import support
 
@@ -88,7 +87,6 @@ def bytedojo(ctx, debug: bool, config: Optional[Path]):
     ctx.ensure_object(dict)
     # ctx.obj = Context(debug=debug, config_path=config)
 
-bytedojo.add_command(enter)
 bytedojo.add_command(fetch)
 bytedojo.add_command(grade)
 bytedojo.add_command(init)

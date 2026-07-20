@@ -15,7 +15,7 @@ def test_dojo_help_lists_every_subcommand():
     result = CliRunner().invoke(bytedojo, ["--help"])
     assert result.exit_code == 0
     for cmd in (
-        "enter", "fetch", "grade", "init", "pick", "query",
+        "fetch", "grade", "init", "pick", "query",
         "review", "run", "settings", "stats", "test", "support",
     ):
         assert cmd in result.output, f"{cmd!r} missing from --help"

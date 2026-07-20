@@ -25,7 +25,6 @@ setup(
         "beautifulsoup4>=4.11.0",
         "sqlalchemy>=2.0.0",
         "pyyaml>=6.0",
-        "textual>=0.50.0",
     ],
     extras_require={
         "dev": [
