@@ -5,7 +5,9 @@ import json
 
 import pytest
 
-from bytedojo.core.models.canonical_type import CanonicalType
+from bytedojo.core.models.data_structure import DataStructure
+from bytedojo.core.models.primitive import Primitive
+from bytedojo.core.models.signature import Signature
 from bytedojo.core.models.test_bundle import (
     TestBundle,
     TestCase,
@@ -44,47 +46,68 @@ def test_comparison_str_and_repr():
 # TestParam                                                                   #
 # --------------------------------------------------------------------------- #
 
-def test_param_coerces_string_type_to_enum():
-    p = TestParam(name="nums", type="INT32_ARRAY")
-    assert p.type is CanonicalType.INT32_ARRAY
+def test_param_coerces_string_type_to_signature():
+    p = TestParam(name="target", type="INT32")
+    assert p.type == Signature(base=Primitive.INT32)
 
 
-def test_param_enum_type_passes_through():
-    p = TestParam(name="grid", type=CanonicalType.CHAR_MATRIX)
-    assert p.type is CanonicalType.CHAR_MATRIX
+def test_param_coerces_dict_type_to_parameterized_signature():
+    """The on-disk form for containers is {"base": ..., "element": ...}."""
+    p = TestParam(name="nums", type={"base": "ARRAY", "element": "INT32"})
+    assert p.type == Signature(base=DataStructure.ARRAY, element=Primitive.INT32)
+
+
+def test_param_signature_type_passes_through():
+    sig = Signature(base=DataStructure.MATRIX, element=Primitive.CHAR)
+    p = TestParam(name="grid", type=sig)
+    assert p.type is sig
 
 
 def test_param_str_format():
-    p = TestParam(name="target", type=CanonicalType.INT32)
+    p = TestParam(name="target", type=Signature(base=Primitive.INT32))
     assert str(p) == "target: INT32"
+
+
+def test_param_str_format_parameterized():
+    p = TestParam(name="nums", type=Signature(base=DataStructure.ARRAY, element=Primitive.INT32))
+    assert str(p) == "nums: ARRAY<INT32>"
 
 
 # --------------------------------------------------------------------------- #
 # TestSignature                                                               #
 # --------------------------------------------------------------------------- #
 
-def test_signature_coerces_returns_string_to_enum():
+def test_signature_coerces_returns_string_to_signature():
     sig = TestSignature(params=[], returns="INT32")
-    assert sig.returns is CanonicalType.INT32
+    assert sig.returns == Signature(base=Primitive.INT32)
+
+
+def test_signature_returns_defaults_to_unknown():
+    """An omitted return type is UNKNOWN, not None."""
+    assert TestSignature().returns == Signature(base=Primitive.UNKNOWN)
 
 
 def test_signature_coerces_dict_params_to_test_params():
     sig = TestSignature(
-        params=[{"name": "nums", "type": "INT32_ARRAY"}, {"name": "target", "type": "INT32"}],
-        returns="INT32_ARRAY",
+        params=[
+            {"name": "nums", "type": {"base": "ARRAY", "element": "INT32"}},
+            {"name": "target", "type": "INT32"},
+        ],
+        returns={"base": "ARRAY", "element": "INT32"},
     )
     assert all(isinstance(p, TestParam) for p in sig.params)
     assert sig.params[0].name == "nums"
-    assert sig.params[0].type is CanonicalType.INT32_ARRAY
-    assert sig.params[1].type is CanonicalType.INT32
+    assert sig.params[0].type == Signature(base=DataStructure.ARRAY, element=Primitive.INT32)
+    assert sig.params[1].type == Signature(base=Primitive.INT32)
+    assert sig.returns == Signature(base=DataStructure.ARRAY, element=Primitive.INT32)
 
 
 def test_signature_str_format():
     sig = TestSignature(
-        params=[TestParam(name="nums", type=CanonicalType.INT32_ARRAY)],
-        returns=CanonicalType.INT32,
+        params=[TestParam(name="nums", type=Signature(base=DataStructure.ARRAY, element=Primitive.INT32))],
+        returns=Signature(base=Primitive.INT32),
     )
-    assert str(sig) == "(nums: INT32_ARRAY) -> INT32"
+    assert str(sig) == "(nums: ARRAY<INT32>) -> INT32"
 
 
 # --------------------------------------------------------------------------- #
@@ -118,10 +141,10 @@ def _bundle_dict(**overrides) -> dict:
         "method": "twoSum",
         "signature": {
             "params": [
-                {"name": "nums", "type": "INT32_ARRAY"},
-                {"name": "target", "type": "INT32"},
+                {"name": "nums", "type": {"base": "ARRAY", "element": "INT32"}},
+                {"name": "target", "type": {"base": "INT32"}},
             ],
-            "returns": "INT32_ARRAY",
+            "returns": {"base": "ARRAY", "element": "INT32"},
         },
         "cases": [
             {"case_id": 1, "input": {"nums": [2, 7, 11, 15], "target": 9}, "expected": [0, 1]},
@@ -139,7 +162,7 @@ def test_bundle_construct_from_dict():
     assert b.title == "Two Sum"
     assert b.method == "twoSum"
     assert isinstance(b.signature, TestSignature)
-    assert b.signature.returns is CanonicalType.INT32_ARRAY
+    assert b.signature.returns == Signature(base=DataStructure.ARRAY, element=Primitive.INT32)
     assert all(isinstance(c, TestCase) for c in b.cases)
     assert b.comparison is TestComparison.EXACT     # default when omitted
 
@@ -150,7 +173,7 @@ def test_bundle_comparison_string_is_coerced():
 
 
 def test_bundle_already_typed_signature_passes_through():
-    sig = TestSignature(params=[], returns=CanonicalType.VOID)
+    sig = TestSignature(params=[], returns=Signature(base=Primitive.VOID))
     b = TestBundle(
         schema_version=1, problem_id=1, title="X", method="x",
         signature=sig, cases=[],
@@ -166,7 +189,7 @@ def test_get_param_returns_match_by_name():
     b = TestBundle(**_bundle_dict())
     p = b.get_param("target")
     assert p is not None
-    assert p.type is CanonicalType.INT32
+    assert p.type == Signature(base=Primitive.INT32)
 
 
 def test_get_param_missing_returns_none():
@@ -210,4 +233,5 @@ def test_load_roundtrip_from_disk(monkeypatch, tmp_path):
     assert b is not None
     assert b.problem_id == 1
     assert b.signature.params[0].name == "nums"
+    assert b.signature.params[0].type == Signature(base=DataStructure.ARRAY, element=Primitive.INT32)
     assert len(b.cases) == 2
