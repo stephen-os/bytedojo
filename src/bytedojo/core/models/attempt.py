@@ -10,7 +10,6 @@ in place rather than incrementing. Attempts are stored in the
 
 from dataclasses import dataclass
 from datetime import datetime
-from typing import Optional
 
 from bytedojo.core.models.code_language import CodeLanguage
 from bytedojo.core.models.problem_status import ProblemStatus
@@ -26,16 +25,10 @@ class Attempt:
     created_at: datetime
     run_count: int = 0
     notes: str = ""
-    test_status: ProblemStatus = ProblemStatus.UNGRADED  # per-version `dojo test` outcome
-    last_test_run: Optional[datetime] = None
-    test_output: Optional[str] = None   # e.g. "Passed: 72/80"
 
     @classmethod
     def from_row(cls, row: dict) -> "Attempt":
         """Build an Attempt from a versioned_attempts row dict."""
-        last_run = row.get("last_test_run")
-        if isinstance(last_run, str):
-            last_run = datetime.fromisoformat(last_run)
         return cls(
             problem_id=row["problem_id"],
             language=CodeLanguage.from_string(row["language"]),
@@ -44,9 +37,6 @@ class Attempt:
             created_at=datetime.fromisoformat(row["created_at"]),
             run_count=row.get("run_count", 0),
             notes=row.get("notes", "") or "",
-            test_status=ProblemStatus.from_string(row["test_status"]),
-            last_test_run=last_run,
-            test_output=row.get("test_output"),
         )
 
     def get_version_string(self) -> str:

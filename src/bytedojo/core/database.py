@@ -26,38 +26,6 @@ def _row_to_attempt(row: dict) -> Attempt:
     return Attempt.from_row(row)
 
 
-def _apply_migrations(conn: sqlite3.Connection) -> None:
-    """
-    Idempotently add columns that recent versions of the schema require.
-
-    Existing .dojo databases were created with an older schema; running this
-    on every connection (cheap — one PRAGMA per table) keeps them in sync
-    without requiring the user to run an explicit `dojo migrate` command.
-    """
-    cursor = conn.cursor()
-
-    def has_column(table: str, column: str) -> bool:
-        cursor.execute(f"PRAGMA table_info({table})")
-        return any(row[1] == column for row in cursor.fetchall())
-
-    # Per-version test results on versioned_attempts.
-    if not has_column("versioned_attempts", "test_status"):
-        cursor.execute(
-            "ALTER TABLE versioned_attempts "
-            "ADD COLUMN test_status TEXT DEFAULT 'ungraded'"
-        )
-    if not has_column("versioned_attempts", "last_test_run"):
-        cursor.execute(
-            "ALTER TABLE versioned_attempts ADD COLUMN last_test_run TIMESTAMP"
-        )
-    if not has_column("versioned_attempts", "test_output"):
-        cursor.execute(
-            "ALTER TABLE versioned_attempts ADD COLUMN test_output TEXT"
-        )
-
-    conn.commit()
-
-
 def create_database_schema(db_path: Path) -> None:
     """Create SQLite database with schema for tracking problems and stats."""
     conn = sqlite3.connect(db_path)
@@ -76,18 +44,17 @@ def create_database_schema(db_path: Path) -> None:
             tags TEXT,
             description TEXT,
             file_path TEXT,
-            test_status TEXT DEFAULT 'ungraded',
-            last_test_run TIMESTAMP,
-            test_output TEXT,
+            status TEXT DEFAULT 'ungraded',
+            last_graded TIMESTAMP,
+            notes TEXT,
             fetched_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
             UNIQUE(source, problem_id, language)
         )
     """)
 
     # Versioned attempts table - tracks solution versions per problem/language.
-    # `status` is the manual grade (passed/failed/skipped/ungraded).
-    # `test_status` / `last_test_run` / `test_output` capture per-version
-    # `dojo test` results so testing v2 doesn't overwrite v1's recorded outcome.
+    # `status` is the manual grade (passed/failed/skipped/ungraded), recorded
+    # per version so grading v2 doesn't overwrite v1's outcome.
     cursor.execute("""
         CREATE TABLE IF NOT EXISTS versioned_attempts (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -99,9 +66,6 @@ def create_database_schema(db_path: Path) -> None:
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
             run_count INTEGER DEFAULT 0,
             notes TEXT,
-            test_status TEXT DEFAULT 'ungraded',
-            last_test_run TIMESTAMP,
-            test_output TEXT,
             UNIQUE(source, problem_id, language, version)
         )
     """)
@@ -155,7 +119,6 @@ class Database:
     def __enter__(self) -> "Database":
         self.conn = sqlite3.connect(self.db_path)
         self.conn.row_factory = sqlite3.Row
-        _apply_migrations(self.conn)
         return self
 
     def __exit__(self, exc_type, exc_val, exc_tb) -> None:
@@ -238,7 +201,7 @@ class Database:
             query += " AND language = ?"
             params.append(language)
         if status:
-            query += " AND test_status = ?"
+            query += " AND status = ?"
             params.append(status)
 
         query += " ORDER BY CAST(problem_id AS INTEGER) ASC"
@@ -250,14 +213,14 @@ class Database:
         cursor.execute(query, params)
         return [RegisteredProblem.from_row(dict(row)) for row in cursor.fetchall()]
 
-    def update_problem_status(self, problem_db_id: int, status: str, output: Optional[str] = None) -> None:
-        """Update the status of a problem."""
+    def update_problem_status(self, problem_db_id: int, status: str, notes: Optional[str] = None) -> None:
+        """Update the grade of a problem, stamping when it was graded."""
         cursor = self.conn.cursor()
         cursor.execute("""
             UPDATE problems
-            SET test_status = ?, last_test_run = ?, test_output = ?
+            SET status = ?, last_graded = ?, notes = ?
             WHERE id = ?
-        """, (status, datetime.now().isoformat(), output, problem_db_id))
+        """, (status, datetime.now().isoformat(), notes, problem_db_id))
         self.conn.commit()
 
     # ------------------------------------------------------------------
@@ -347,31 +310,6 @@ class Database:
             SET status = ?
             WHERE source = ? AND problem_id = ? AND language = ? AND version = ?
         """, (status, source, problem_id, language, version))
-        self.conn.commit()
-        return cursor.rowcount > 0
-
-    def update_attempt_test_status(
-        self,
-        source: str,
-        problem_id: int,
-        language: str,
-        version: int,
-        status: str,
-        output: Optional[str] = None,
-    ) -> bool:
-        """
-        Persist `dojo test` results for a specific attempt version.
-
-        Independent of `update_attempt_status` (which is for manual grades)
-        — testing v2 no longer overwrites v1's recorded test outcome.
-        """
-        cursor = self.conn.cursor()
-        cursor.execute("""
-            UPDATE versioned_attempts
-            SET test_status = ?, last_test_run = ?, test_output = ?
-            WHERE source = ? AND problem_id = ? AND language = ? AND version = ?
-        """, (status, datetime.now().isoformat(), output,
-              source, problem_id, language, version))
         self.conn.commit()
         return cursor.rowcount > 0
 

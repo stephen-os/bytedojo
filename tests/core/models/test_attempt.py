@@ -23,9 +23,6 @@ def test_construct_with_defaults():
     )
     assert a.run_count == 0
     assert a.notes == ""
-    assert a.test_status is ProblemStatus.UNGRADED
-    assert a.last_test_run is None
-    assert a.test_output is None
 
 
 # --------------------------------------------------------------------------- #
@@ -60,9 +57,6 @@ def _row(**overrides) -> dict:
         "created_at": "2025-01-15T10:30:00",
         "run_count": 4,
         "notes": "first clean pass",
-        "test_status": "passed",
-        "last_test_run": "2025-01-15T10:35:00",
-        "test_output": "Passed: 50/50",
     }
     base.update(overrides)
     return base
@@ -78,9 +72,6 @@ def test_from_row_roundtrip():
     assert a.created_at == datetime(2025, 1, 15, 10, 30, 0)
     assert a.run_count == 4
     assert a.notes == "first clean pass"
-    assert a.test_status is ProblemStatus.PASSED
-    assert a.last_test_run == datetime(2025, 1, 15, 10, 35, 0)
-    assert a.test_output == "Passed: 50/50"
 
 
 def test_from_row_with_schema_defaults():
@@ -91,20 +82,9 @@ def test_from_row_with_schema_defaults():
         "version": 1,
         "status": "ungraded",
         "created_at": "2025-02-01T00:00:00",
-        "test_status": "ungraded",   # column default — always present in DB rows
     })
     assert a.run_count == 0
     assert a.notes == ""
-    assert a.test_status is ProblemStatus.UNGRADED
-    assert a.last_test_run is None
-    assert a.test_output is None
-
-
-def test_from_row_accepts_datetime_for_last_test_run():
-    """Sqlite drivers may already hand back a datetime object."""
-    now = datetime(2025, 3, 1, 9, 0, 0)
-    a = Attempt.from_row(_row(last_test_run=now))
-    assert a.last_test_run == now
 
 
 def test_from_row_treats_none_notes_as_empty_string():

@@ -24,15 +24,15 @@ class RegisteredProblem:
     file_path: Optional[str]
     status: ProblemStatus
     fetched_at: datetime
-    last_test_run: Optional[datetime] = None
-    test_output: Optional[str] = None
+    last_graded: Optional[datetime] = None
+    notes: Optional[str] = None
 
     @classmethod
     def from_row(cls, row: dict) -> "RegisteredProblem":
         """Build from a database row dict."""
-        last_run = row.get("last_test_run")
-        if last_run and isinstance(last_run, str):
-            last_run = datetime.fromisoformat(last_run)
+        last_graded = row.get("last_graded")
+        if last_graded and isinstance(last_graded, str):
+            last_graded = datetime.fromisoformat(last_graded)
 
         return cls(
             id=row["id"],
@@ -43,8 +43,8 @@ class RegisteredProblem:
             difficulty=ProblemDifficulty.from_string(row.get("difficulty", "")),
             description=row.get("description", ""),
             file_path=row.get("file_path"),
-            status=ProblemStatus.from_string(row["test_status"]),
+            status=ProblemStatus.from_string(row["status"]),
             fetched_at=datetime.fromisoformat(row["fetched_at"]) if row.get("fetched_at") else datetime.now(),
-            last_test_run=last_run,
-            test_output=row.get("test_output"),
+            last_graded=last_graded,
+            notes=row.get("notes"),
         )

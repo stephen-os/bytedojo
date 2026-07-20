@@ -54,11 +54,11 @@ def _display_problem_status(problem: RegisteredProblem, show_test_hint: bool = T
     else:
         click.echo(f"  Status: {status.value.upper()}")
 
-    if problem.last_test_run:
-        click.echo(f"  {dim('Last Graded')}  {problem.last_test_run}")
+    if problem.last_graded:
+        click.echo(f"  {dim('Last Graded')}  {problem.last_graded}")
 
-    if problem.test_output:
-        click.echo(f"  {dim('Notes')}        {problem.test_output}")
+    if problem.notes:
+        click.echo(f"  {dim('Notes')}        {problem.notes}")
 
     click.echo()
 

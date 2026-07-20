@@ -75,7 +75,7 @@ def test_create_database_schema_seeds_default_config(tmp_path):
 
 
 def test_create_database_schema_problems_table_defaults(tmp_path):
-    """problems.test_status defaults to 'ungraded' (single canonical vocab)."""
+    """problems.status defaults to 'ungraded' (single canonical vocab)."""
     path = tmp_path / "db.sqlite"
     create_database_schema(path)
     conn = sqlite3.connect(path)
@@ -83,52 +83,9 @@ def test_create_database_schema_problems_table_defaults(tmp_path):
     cursor.execute("PRAGMA table_info(problems)")
     cols = {row[1]: row for row in cursor.fetchall()}
     conn.close()
-    assert "test_status" in cols
+    assert "status" in cols
     # row[4] is the dflt_value column from PRAGMA table_info
-    assert "ungraded" in str(cols["test_status"][4])
-
-
-# --------------------------------------------------------------------------- #
-# Migrations (_apply_migrations)                                              #
-# --------------------------------------------------------------------------- #
-
-def test_migrations_are_idempotent(db_path):
-    """Opening the DB repeatedly does not crash on existing columns."""
-    with Database(db_path):
-        pass
-    with Database(db_path):
-        pass    # second open re-applies migrations, must not raise
-
-
-def test_migrations_add_test_status_to_legacy_table(tmp_path):
-    """A versioned_attempts table from before test_status was added gets the column on open."""
-    path = tmp_path / "legacy.sqlite"
-    conn = sqlite3.connect(path)
-    conn.execute("""
-        CREATE TABLE versioned_attempts (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            source TEXT NOT NULL DEFAULT 'leetcode',
-            problem_id INTEGER NOT NULL,
-            language TEXT NOT NULL,
-            version INTEGER NOT NULL,
-            status TEXT NOT NULL DEFAULT 'ungraded',
-            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-            run_count INTEGER DEFAULT 0,
-            notes TEXT,
-            UNIQUE(source, problem_id, language, version)
-        )
-    """)
-    conn.commit()
-    conn.close()
-
-    with Database(path) as db:
-        # The migration adds test_status / last_test_run / test_output.
-        cursor = db.conn.cursor()
-        cursor.execute("PRAGMA table_info(versioned_attempts)")
-        cols = {row[1] for row in cursor.fetchall()}
-    assert "test_status" in cols
-    assert "last_test_run" in cols
-    assert "test_output" in cols
+    assert "ungraded" in str(cols["status"][4])
 
 
 # --------------------------------------------------------------------------- #
@@ -275,19 +232,6 @@ def test_update_attempt_status_persists(db_path):
 def test_update_attempt_status_returns_false_when_no_row(db_path):
     with Database(db_path) as db:
         assert db.update_attempt_status("leetcode", 1, "python3", 99, "passed") is False
-
-
-def test_update_attempt_test_status_writes_per_version_outcome(db_path):
-    with Database(db_path) as db:
-        db.create_attempt("leetcode", 1, "python3")
-        ok = db.update_attempt_test_status(
-            "leetcode", 1, "python3", 1, "passed", "Passed: 5/5",
-        )
-        assert ok is True
-        attempt = db.get_attempt("leetcode", 1, "python3", 1)
-    assert attempt.test_status is ProblemStatus.PASSED
-    assert attempt.test_output == "Passed: 5/5"
-    assert attempt.last_test_run is not None
 
 
 def test_increment_run_count(db_path):

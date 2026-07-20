@@ -42,9 +42,9 @@ def _registered(pid: int, title: str, description: str = "") -> RegisteredProble
         "id": pid, "source": "leetcode", "problem_id": str(pid),
         "language": "python3", "title": title, "difficulty": "Easy",
         "description": description, "file_path": "x.py",
-        "test_status": "ungraded",
+        "status": "ungraded",
         "fetched_at": "2025-01-01T00:00:00",
-        "last_test_run": None, "test_output": None,
+        "last_graded": None, "notes": None,
     })
 
 
