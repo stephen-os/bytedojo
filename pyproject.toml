@@ -1,0 +1,42 @@
+[build-system]
+requires = ["setuptools>=69"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "bytedojo"
+version = "0.1.0"
+description = "A local-first CLI for practising LeetCode problems with spaced repetition"
+readme = "README.md"
+license = { file = "LICENSE" }
+authors = [{ name = "Stephen Watson" }]
+requires-python = ">=3.10"
+dependencies = [
+    "click>=8.0",
+]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0",
+    "pytest-cov>=5.0",
+    "black>=24.0",
+    "flake8>=7.0",
+    "mypy>=1.10",
+]
+
+[project.scripts]
+bytedojo = "bytedojo.main:main"
+dojo = "bytedojo.main:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+bytedojo = ["data/index.json", "data/problems/*.json", "data/tests/*.json"]
