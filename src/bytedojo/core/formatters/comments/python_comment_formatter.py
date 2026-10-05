@@ -2,7 +2,10 @@
 Python comment formatter
 """
 
-from bytedojo.core.formatters.comments.base_comment_formatter import BaseCommentFormatter
+from bytedojo.core.formatters.comments.base_comment_formatter import (
+    BaseCommentFormatter,
+)
+
 
 class PythonCommentFormatter(BaseCommentFormatter):
     def format_single_line(self, text: str) -> str:

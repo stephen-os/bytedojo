@@ -4,6 +4,7 @@ Primitive - primitive value types used in method signatures.
 
 from enum import Enum
 
+
 class Primitive(str, Enum):
     """Primitive value types."""
 

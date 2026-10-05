@@ -15,6 +15,7 @@ from bytedojo.core.models.problem_status import ProblemStatus
 @dataclass
 class AttemptStats:
     """Aggregated stats across all versions of a problem/language combination."""
+
     problem_id: int
     language: CodeLanguage
     total_attempts: int

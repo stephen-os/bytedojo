@@ -6,10 +6,10 @@ from bytedojo.core.models.data_structure import DataStructure
 from bytedojo.core.models.primitive import Primitive
 from bytedojo.core.models.signature import Signature
 
-
 # --------------------------------------------------------------------------- #
 # String coercion                                                             #
 # --------------------------------------------------------------------------- #
+
 
 def test_string_base_resolving_to_a_primitive():
     assert Signature(base="INT32").base is Primitive.INT32
@@ -73,6 +73,7 @@ def test_nested_data_structures():
 # from_dict                                                                   #
 # --------------------------------------------------------------------------- #
 
+
 def test_from_dict_base_only():
     """The on-disk form for a scalar param: {"base": "INT32"}."""
     sig = Signature.from_dict({"base": "INT32"})
@@ -99,12 +100,16 @@ def test_from_dict_requires_a_base():
 # __str__ / __repr__ / equality                                               #
 # --------------------------------------------------------------------------- #
 
-@pytest.mark.parametrize("sig, text", [
-    (Signature(base="INT32"),                    "INT32"),
-    (Signature(base="LINKED_LIST"),              "LINKED_LIST"),
-    (Signature(base="ARRAY", element="INT32"),   "ARRAY<INT32>"),
-    (Signature(base="MATRIX", element="CHAR"),   "MATRIX<CHAR>"),
-])
+
+@pytest.mark.parametrize(
+    "sig, text",
+    [
+        (Signature(base="INT32"), "INT32"),
+        (Signature(base="LINKED_LIST"), "LINKED_LIST"),
+        (Signature(base="ARRAY", element="INT32"), "ARRAY<INT32>"),
+        (Signature(base="MATRIX", element="CHAR"), "MATRIX<CHAR>"),
+    ],
+)
 def test_str_renders_the_parameterized_form(sig, text):
     assert str(sig) == text
 

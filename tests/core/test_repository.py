@@ -1,17 +1,17 @@
 """Tests for the Repository class."""
 
-from pathlib import Path
-
 import pytest
 
+from bytedojo.core.errors import RepoNotFoundError
 from bytedojo.core.models.code_language import CodeLanguage
 from bytedojo.core.models.problem_difficulty import ProblemDifficulty
-from bytedojo.core.repository import Repository
-
+from bytedojo.core.repository import Repository, Session
+from bytedojo.core.settings import SettingsManager
 
 # --------------------------------------------------------------------------- #
 # open / find / create                                                        #
 # --------------------------------------------------------------------------- #
+
 
 def test_open_returns_none_when_no_dojo(tmp_path):
     """No .dojo directly under `path` -> None (no walking up)."""
@@ -72,6 +72,7 @@ def test_create_force_overrides_existing(tmp_path):
 # Path properties                                                             #
 # --------------------------------------------------------------------------- #
 
+
 def test_paths_relative_to_root(tmp_path):
     repo = Repository(root_dir=tmp_path)
     assert repo.dojo_dir == tmp_path / ".dojo"
@@ -84,6 +85,7 @@ def test_paths_relative_to_root(tmp_path):
 # --------------------------------------------------------------------------- #
 # State predicates                                                            #
 # --------------------------------------------------------------------------- #
+
 
 def test_exists_false_before_create(tmp_path):
     assert Repository(root_dir=tmp_path).exists is False
@@ -110,51 +112,56 @@ def test_is_initialized_true_after_create(repo):
 # Database access                                                             #
 # --------------------------------------------------------------------------- #
 
-def test_open_db_returns_a_database(repo):
-    """open_db hands back a Database bound to this repo's db path."""
-    with repo.open_db() as db:
-        assert db.db_path == repo.db_path
 
-
-def test_open_db_constructs_fresh_each_call(repo):
-    """Two calls return distinct Database objects so connections don't fight."""
-    a = repo.open_db()
-    b = repo.open_db()
-    assert a is not b
+def test_session_exposes_all_aggregates(repo):
+    """session() yields the four aggregate repositories over one connection."""
+    with repo.session() as s:
+        assert isinstance(s, Session)
+        assert s.problems is not None
+        assert s.attempts is not None
+        assert s.reviews is not None
+        assert s.config is not None
+        # They really share the live connection — a write through one
+        # aggregate is visible through another in the same session.
+        s.config.set("probe", "1")
+        assert s.config.get("probe") == "1"
 
 
 # --------------------------------------------------------------------------- #
 # is_problem_registered + register_attempt                                    #
 # --------------------------------------------------------------------------- #
 
+
 def _problem():
     """Build a minimal Problem with the fields register_attempt needs."""
-    from bytedojo.core.models.code_snippet import CodeSnippet
     from bytedojo.core.models.problem import Problem
     from bytedojo.core.models.problem_detail import ProblemDetail
+
     return Problem(
         problem_detail=ProblemDetail(
-            id=1, title="Two Sum", slug="two-sum",
-            difficulty=ProblemDifficulty.EASY, description="",
+            id=1,
+            title="Two Sum",
+            slug="two-sum",
+            difficulty=ProblemDifficulty.EASY,
+            description="",
         ),
-        code_snippets=[CodeSnippet(lang=CodeLanguage.PYTHON, code="pass")],
     )
 
 
 def test_is_problem_registered_raises_without_init(tmp_path):
     """An uninitialised repo can't answer the registration question."""
     bare = Repository(root_dir=tmp_path)
-    with pytest.raises(RuntimeError, match="not initialized"):
-        bare.is_problem_registered("leetcode", 1, CodeLanguage.PYTHON)
+    with pytest.raises(RepoNotFoundError, match="not initialized"):
+        bare.is_problem_registered("leetcode", 1)
 
 
 def test_is_problem_registered_false_when_no_rows(repo):
-    assert repo.is_problem_registered("leetcode", 1, CodeLanguage.PYTHON) is False
+    assert repo.is_problem_registered("leetcode", 1) is False
 
 
 def test_register_attempt_then_is_problem_registered_true(repo):
     repo.register_attempt(_problem(), CodeLanguage.PYTHON)
-    assert repo.is_problem_registered("leetcode", 1, CodeLanguage.PYTHON) is True
+    assert repo.is_problem_registered("leetcode", 1) is True
 
 
 def test_register_attempt_returns_attempt_with_v1(repo):
@@ -172,13 +179,14 @@ def test_register_attempt_twice_bumps_version(repo):
 
 def test_register_attempt_raises_without_init(tmp_path):
     bare = Repository(root_dir=tmp_path)
-    with pytest.raises(RuntimeError, match="not initialized"):
+    with pytest.raises(RepoNotFoundError, match="not initialized"):
         bare.register_attempt(_problem(), CodeLanguage.PYTHON)
 
 
 # --------------------------------------------------------------------------- #
 # get_registered_problems                                                     #
 # --------------------------------------------------------------------------- #
+
 
 def test_get_registered_problems_empty_when_uninitialised(tmp_path):
     """Uninitialised repo gives [] for the listing (no exception)."""
@@ -196,10 +204,22 @@ def test_get_registered_problems_lists_after_register(repo):
 # attempt_path                                                                #
 # --------------------------------------------------------------------------- #
 
-def test_attempt_path_format(repo):
-    """problems/<id>-<slug>/<lang>/v<NNN>/solution.<ext>"""
+
+def test_attempt_path_is_flat_by_default(repo):
+    """problems/<id>-<slug>/v<NNN>/solution.<ext> — no language segment."""
     p = _problem()
     path = repo.attempt_path(p, CodeLanguage.PYTHON, version=1)
+    assert path == (repo.problems_dir / "0001-two-sum" / "v001" / "solution.py")
+
+
+def test_attempt_path_honours_organize_by_language(repo):
+    """The opt-in setting reintroduces the <language>/ segment."""
+    manager = SettingsManager(repo.dojo_dir)
+    settings = manager.load()
+    settings.organize_by_language = True
+    manager.save(settings)
+
+    path = repo.attempt_path(_problem(), CodeLanguage.PYTHON, version=1)
     assert path == (
         repo.problems_dir / "0001-two-sum" / "python3" / "v001" / "solution.py"
     )
@@ -214,6 +234,7 @@ def test_attempt_path_zero_pads_version(repo):
 # --------------------------------------------------------------------------- #
 # place_problem                                                               #
 # --------------------------------------------------------------------------- #
+
 
 def test_place_problem_writes_file_and_creates_parents(repo):
     target = repo.root_dir / "nested" / "deep" / "solution.py"

@@ -23,13 +23,14 @@ from bytedojo.core.models.problem_difficulty import ProblemDifficulty
 @dataclass
 class ReviewSchedule:
     """A scheduled review for a problem, optionally enriched with problem metadata."""
-    problem_id: int                                 # database row id of the problem
+
+    problem_id: int  # database row id of the problem
     next_review_date: date
     interval_days: int
     ease_factor: float
     repetitions: int
     # Joined problem metadata (None / sentinel values when not populated by JOIN).
-    problem_num: Optional[int] = None               # the LeetCode problem number, e.g. 1 for Two Sum
+    problem_num: Optional[int] = None  # the LeetCode problem number, e.g. 1 for Two Sum
     source: str = "leetcode"
     title: str = ""
     difficulty: ProblemDifficulty = ProblemDifficulty.NONE

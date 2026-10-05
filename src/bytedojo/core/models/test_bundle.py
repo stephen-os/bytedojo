@@ -1,29 +1,27 @@
 """
 TestBundle - the typed test data for a problem.
 
-Each bundle is loaded from data/tests/{id}.json (the schema documented in
-data/MIGRATION.md). Universal language runners consume this object to
-dispatch the user's Solution against the bundled cases. Hand-editable;
-not regenerated at test time.
+Bundles ship inside the package at bytedojo/data/tests/{id}.json and
+are loaded through the corpus gateway (core/corpus.py). Universal
+language runners consume this object to dispatch the user's Solution
+against the bundled cases.
 
 The `__test__ = False` flag on each Test* class prevents pytest from
 mistaking them for test fixtures during collection.
 """
 
-import json
 from dataclasses import dataclass, field
 from enum import Enum
 from typing import Any, Dict, List, Optional
 
-from bytedojo.core.logger import get_logger
 from bytedojo.core.models.signature import Signature
 from bytedojo.core.models.primitive import Primitive
-from bytedojo.core.paths import get_test_file
 
 
 class TestComparison(str, Enum):
     """How a test runner compares actual vs expected for a problem."""
-    __test__ = False    # don't let pytest mistake this for a test class
+
+    __test__ = False  # don't let pytest mistake this for a test class
 
     #: Element-by-element equality. The default; omitted from the JSON.
     EXACT = "exact"
@@ -57,6 +55,7 @@ class TestComparison(str, Enum):
 @dataclass
 class TestParam:
     """A method parameter with its type signature."""
+
     __test__ = False
 
     name: str
@@ -78,10 +77,13 @@ class TestParam:
 @dataclass
 class TestSignature:
     """Method signature: ordered params and a return type."""
+
     __test__ = False
 
     params: List[TestParam] = field(default_factory=list)
-    returns: Signature = field(default_factory=lambda: Signature(base=Primitive.UNKNOWN))
+    returns: Signature = field(
+        default_factory=lambda: Signature(base=Primitive.UNKNOWN)
+    )
 
     def __post_init__(self):
         if isinstance(self.returns, str):
@@ -89,8 +91,7 @@ class TestSignature:
         elif isinstance(self.returns, dict):
             self.returns = Signature.from_dict(self.returns)
         self.params = [
-            TestParam(**p) if isinstance(p, dict) else p
-            for p in self.params
+            TestParam(**p) if isinstance(p, dict) else p for p in self.params
         ]
 
     def __str__(self):
@@ -104,6 +105,7 @@ class TestSignature:
 @dataclass
 class TestCase:
     """A single test case: structured input and expected output."""
+
     __test__ = False
 
     case_id: int
@@ -115,13 +117,16 @@ class TestCase:
         return f"case {self.case_id}: ({args}) -> {self.expected!r}"
 
     def __repr__(self):
-        return (f"TestCase(case_id={self.case_id}, "
-                f"input={self.input!r}, expected={self.expected!r})")
+        return (
+            f"TestCase(case_id={self.case_id}, "
+            f"input={self.input!r}, expected={self.expected!r})"
+        )
 
 
 @dataclass
 class TestBundle:
     """The complete typed test data for a single problem."""
+
     __test__ = False
 
     schema_version: int
@@ -138,26 +143,7 @@ class TestBundle:
         if isinstance(self.comparison, str):
             self.comparison = TestComparison.from_string(self.comparison)
         # Coerce dict entries into TestCase objects
-        self.cases = [
-            TestCase(**c) if isinstance(c, dict) else c
-            for c in self.cases
-        ]
-
-    @classmethod
-    def load(cls, problem_id: int) -> Optional["TestBundle"]:
-        """Load a bundle from data/tests/{problem_id}.json, or None if missing."""
-        logger = get_logger()
-        path = get_test_file(problem_id)
-        if not path.exists():
-            logger.debug(f"TestBundle.load: no bundle at {path}")
-            return None
-        try:
-            with open(path, "r", encoding="utf-8") as f:
-                data = json.load(f)
-        except (OSError, json.JSONDecodeError) as e:
-            logger.warning(f"TestBundle.load: failed to parse {path}: {e}")
-            return None
-        return cls(**data)
+        self.cases = [TestCase(**c) if isinstance(c, dict) else c for c in self.cases]
 
     def get_param(self, name: str) -> Optional[TestParam]:
         """Look up a signature param by name."""
@@ -170,8 +156,10 @@ class TestBundle:
         return f"#{self.problem_id} {self.title} {self.signature}"
 
     def __repr__(self):
-        return (f"TestBundle(problem_id={self.problem_id}, "
-                f"title={self.title!r}, method={self.method!r}, "
-                f"signature={self.signature!r}, "
-                f"cases=<{len(self.cases)} cases>, "
-                f"comparison={self.comparison!r})")
+        return (
+            f"TestBundle(problem_id={self.problem_id}, "
+            f"title={self.title!r}, method={self.method!r}, "
+            f"signature={self.signature!r}, "
+            f"cases=<{len(self.cases)} cases>, "
+            f"comparison={self.comparison!r})"
+        )

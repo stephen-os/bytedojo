@@ -11,6 +11,7 @@ from enum import Enum
 
 class ProblemDifficulty(str, Enum):
     """LeetCode difficulty levels. NONE is the sentinel / unrecognized fallback."""
+
     NONE = "None"
     EASY = "Easy"
     MEDIUM = "Medium"

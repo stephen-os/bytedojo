@@ -4,18 +4,21 @@ import pytest
 
 from bytedojo.core.models.problem_status import ProblemStatus
 
-
 # --------------------------------------------------------------------------- #
 # from_string                                                                 #
 # --------------------------------------------------------------------------- #
 
-@pytest.mark.parametrize("raw, expected", [
-    ("passed",   ProblemStatus.PASSED),
-    ("PASSED",   ProblemStatus.PASSED),       # .lower() normalises case
-    ("Failed",   ProblemStatus.FAILED),
-    ("skipped",  ProblemStatus.SKIPPED),
-    ("ungraded", ProblemStatus.UNGRADED),
-])
+
+@pytest.mark.parametrize(
+    "raw, expected",
+    [
+        ("passed", ProblemStatus.PASSED),
+        ("PASSED", ProblemStatus.PASSED),  # .lower() normalises case
+        ("Failed", ProblemStatus.FAILED),
+        ("skipped", ProblemStatus.SKIPPED),
+        ("ungraded", ProblemStatus.UNGRADED),
+    ],
+)
 def test_from_string_known(raw, expected):
     assert ProblemStatus.from_string(raw) is expected
 
@@ -35,12 +38,14 @@ def test_from_string_unknown_falls_back(raw):
 # all                                                                         #
 # --------------------------------------------------------------------------- #
 
+
 def test_all_excludes_unknown_sentinel():
     statuses = ProblemStatus.all()
     assert ProblemStatus.UNKNOWN not in statuses
     assert set(statuses) == {
         ProblemStatus.PASSED,
         ProblemStatus.FAILED,
+        ProblemStatus.ERROR,
         ProblemStatus.SKIPPED,
         ProblemStatus.UNGRADED,
     }
@@ -50,13 +55,17 @@ def test_all_excludes_unknown_sentinel():
 # __str__ / __repr__                                                          #
 # --------------------------------------------------------------------------- #
 
-@pytest.mark.parametrize("status, label", [
-    (ProblemStatus.PASSED,   "Passed"),
-    (ProblemStatus.FAILED,   "Failed"),
-    (ProblemStatus.SKIPPED,  "Skipped"),
-    (ProblemStatus.UNGRADED, "Ungraded"),
-    (ProblemStatus.UNKNOWN,  "Unknown"),
-])
+
+@pytest.mark.parametrize(
+    "status, label",
+    [
+        (ProblemStatus.PASSED, "Passed"),
+        (ProblemStatus.FAILED, "Failed"),
+        (ProblemStatus.SKIPPED, "Skipped"),
+        (ProblemStatus.UNGRADED, "Ungraded"),
+        (ProblemStatus.UNKNOWN, "Unknown"),
+    ],
+)
 def test_str_capitalizes_value(status, label):
     assert str(status) == label
 

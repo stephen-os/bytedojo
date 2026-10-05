@@ -14,15 +14,26 @@ from bytedojo.core.logger import (
     setup_logger,
 )
 
-
 # --------------------------------------------------------------------------- #
 # Theme — ANSI color sentinels                                                #
 # --------------------------------------------------------------------------- #
 
-@pytest.mark.parametrize("attr", [
-    "RED", "GREEN", "YELLOW", "BLUE", "PURPLE", "AQUA", "ORANGE", "GRAY",
-    "BOLD", "RESET",
-])
+
+@pytest.mark.parametrize(
+    "attr",
+    [
+        "RED",
+        "GREEN",
+        "YELLOW",
+        "BLUE",
+        "PURPLE",
+        "AQUA",
+        "ORANGE",
+        "GRAY",
+        "BOLD",
+        "RESET",
+    ],
+)
 def test_theme_constants_are_ansi_strings(attr):
     """Every named attribute is a non-empty ANSI escape sequence."""
     value = getattr(Theme, attr)
@@ -37,6 +48,7 @@ def test_theme_reset_is_ansi_reset():
 # --------------------------------------------------------------------------- #
 # get_config                                                                  #
 # --------------------------------------------------------------------------- #
+
 
 def test_get_config_debug_uses_detailed_format():
     cfg = get_config(debug=True)
@@ -66,6 +78,7 @@ def test_get_config_bytedojo_logger_does_not_propagate():
 # setup_logger / get_logger                                                   #
 # --------------------------------------------------------------------------- #
 
+
 def test_setup_then_get_returns_a_named_logger():
     """The conftest autouse already initialised the logger; get_logger works."""
     log = get_logger()
@@ -92,10 +105,16 @@ def test_setup_logger_can_be_called_twice():
 # LoggerFormatter — colour application                                        #
 # --------------------------------------------------------------------------- #
 
+
 def _make_record(level: int, msg: str, *, name: str = "bytedojo") -> logging.LogRecord:
     return logging.LogRecord(
-        name=name, level=level, pathname="x.py", lineno=1,
-        msg=msg, args=(), exc_info=None,
+        name=name,
+        level=level,
+        pathname="x.py",
+        lineno=1,
+        msg=msg,
+        args=(),
+        exc_info=None,
     )
 
 
@@ -131,14 +150,22 @@ def test_formatter_colorizes_timestamps_in_detailed_format():
     )
     out = fmt.format(_make_record(logging.INFO, "tick"))
     # The detailed-format timestamp pattern is wrapped: [<ORANGE>HH:MM:SS<RESET>]
-    assert re.search(rf"\[{re.escape(Theme.ORANGE)}\d{{2}}:\d{{2}}:\d{{2}}{re.escape(Theme.RESET)}\]", out)
+    assert re.search(
+        rf"\[{re.escape(Theme.ORANGE)}\d{{2}}:\d{{2}}:\d{{2}}{re.escape(Theme.RESET)}\]",
+        out,
+    )
 
 
 def test_formatter_handles_unknown_level_gracefully():
     """A custom level outside the colour map still renders the message."""
     record = logging.LogRecord(
-        name="bytedojo", level=25, pathname="x.py", lineno=1,
-        msg="custom", args=(), exc_info=None,
+        name="bytedojo",
+        level=25,
+        pathname="x.py",
+        lineno=1,
+        msg="custom",
+        args=(),
+        exc_info=None,
     )
     record.levelname = "CUSTOM_LEVEL"
     out = LoggerFormatter("%(message)s").format(record)

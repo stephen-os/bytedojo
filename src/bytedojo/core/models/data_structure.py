@@ -8,7 +8,7 @@ from enum import Enum
 class DataStructure(str, Enum):
     """Structural and reference types used in method signatures."""
 
-    # Sequential 
+    # Sequential
     ARRAY = "ARRAY"
     MATRIX = "MATRIX"
 

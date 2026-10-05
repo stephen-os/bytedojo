@@ -30,13 +30,25 @@ def test_construct_with_all_fields():
 
 def test_equality_by_fields():
     a = AttemptStats(
-        problem_id=1, language=CodeLanguage.PYTHON, total_attempts=1,
-        latest_version=1, latest_status=ProblemStatus.PASSED,
-        pass_count=1, fail_count=0, skip_count=0, total_runs=1,
+        problem_id=1,
+        language=CodeLanguage.PYTHON,
+        total_attempts=1,
+        latest_version=1,
+        latest_status=ProblemStatus.PASSED,
+        pass_count=1,
+        fail_count=0,
+        skip_count=0,
+        total_runs=1,
     )
     b = AttemptStats(
-        problem_id=1, language=CodeLanguage.PYTHON, total_attempts=1,
-        latest_version=1, latest_status=ProblemStatus.PASSED,
-        pass_count=1, fail_count=0, skip_count=0, total_runs=1,
+        problem_id=1,
+        language=CodeLanguage.PYTHON,
+        total_attempts=1,
+        latest_version=1,
+        latest_status=ProblemStatus.PASSED,
+        pass_count=1,
+        fail_count=0,
+        skip_count=0,
+        total_runs=1,
     )
     assert a == b

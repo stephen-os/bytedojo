@@ -11,9 +11,11 @@ from enum import Enum
 
 class ProblemStatus(str, Enum):
     """Grade status for an attempt. UNKNOWN is the unrecognized fallback."""
+
     UNKNOWN = "unknown"
     PASSED = "passed"
     FAILED = "failed"
+    ERROR = "error"
     SKIPPED = "skipped"
     UNGRADED = "ungraded"
 
@@ -28,14 +30,14 @@ class ProblemStatus(str, Enum):
         if not value:
             return cls.UNKNOWN
         return cls(value.lower())
-    
+
     @classmethod
     def all(cls) -> list["ProblemStatus"]:
         """Return all statuses except UNKNOWN."""
         return [s for s in cls if s != cls.UNKNOWN]
-    
+
     def __str__(self):
         return self.value.capitalize()
-    
+
     def __repr__(self):
         return f"ProblemStatus.{self.name}"

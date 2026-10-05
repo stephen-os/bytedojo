@@ -19,7 +19,6 @@ from bytedojo.core.toolchains.base import (
 )
 from bytedojo.core.toolchains.python import PythonToolchain
 
-
 _REGISTRY: dict[CodeLanguage, type[Toolchain]] = {
     CodeLanguage.PYTHON: PythonToolchain,
 }

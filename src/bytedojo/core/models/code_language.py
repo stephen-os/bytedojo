@@ -12,6 +12,7 @@ from enum import Enum
 
 class CodeLanguage(str, Enum):
     """Programming languages supported by ByteDojo. Values match LeetCode JSON keys."""
+
     UNKNOWN = "unknown"
     PYTHON = "python3"
     JAVA = "java"
@@ -28,9 +29,14 @@ class CodeLanguage(str, Enum):
 
     @classmethod
     def from_string(cls, value: str) -> "CodeLanguage":
-        """Parse language from string, returns UNKNOWN if unknown."""
+        """Parse language from string, returns UNKNOWN if unknown.
+
+        Accepts the user-facing alias "python" for PYTHON ("python3").
+        """
         if not value:
             return cls.UNKNOWN
+        if value.lower() == "python":
+            return cls.PYTHON
         return cls(value.lower())
 
     @classmethod

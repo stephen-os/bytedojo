@@ -35,26 +35,25 @@ This directory contains your ByteDojo data:
 .dojo/
 ├── db.sqlite          # Problem tracking database
 ├── settings.json      # User preferences
-├── logs/              # Debug logs (created in --debug mode)
+├── build/             # Test-run staging area (safe to delete)
 ├── .gitignore         # Git ignore rules
 └── README.md          # This file
 ```
 
 ## Database Schema
 
-- **problems**: Fetched problems and metadata
-- **attempts**: Your solution attempts and results
-- **reviews**: Spaced repetition schedule
-- **stats**: Daily statistics
-- **config**: Repository preferences
+- **problems**: Fetched problems and their latest status
+- **attempts**: Versioned solution attempts (v1, v2, ...)
+- **reviews**: Spaced repetition schedule (SM-2)
+- **config**: Internal repository bookkeeping
 
 ## Usage
 ```bash
-# Fetch problems
+# Fetch a problem
 dojo fetch 1
 
-# Grade your solutions
-dojo grade 1 --pass
+# Test your solution (a pass schedules the review)
+dojo test 1
 
 # Review problems that are due
 dojo review
@@ -63,5 +62,5 @@ dojo review
 ## Tip
 
 You can commit the `.dojo/` directory to track your progress across machines.
-Just make sure to add `.dojo/logs/` to your `.gitignore` if you don't want to commit logs.
+The bundled `.gitignore` already excludes build artifacts and logs.
 """.strip()

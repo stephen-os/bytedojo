@@ -1,18 +1,23 @@
 """
 BaseSolutionFormatter - abstract base for language-specific problem formatters.
 
-Each subclass renders a `Problem` into the placement-ready content of
-the main solution file for its language and may emit sibling files
-(node-class modules, header files) via `extra_files`. Lookup of the
-right subclass is centralised in the `core.formatters` package
-registry; callers never branch on `CodeLanguage` themselves.
+Each subclass renders a `Problem` + its `TestBundle` into the
+placement-ready content of the main solution file for its language:
+the stub is synthesised from the bundle's method signature (§11), the
+header from the problem's prose. Subclasses may also emit sibling
+files (node-class modules) via `extra_files`. Lookup of the right
+subclass is centralised in the `core.formatters` package registry;
+callers never branch on `CodeLanguage` themselves.
 """
 
 from abc import ABC, abstractmethod
 from typing import Dict
 
+from bytedojo.core.formatters.comments.base_comment_formatter import (
+    BaseCommentFormatter,
+)
 from bytedojo.core.models.problem import Problem
-from bytedojo.core.formatters.comments.base_comment_formatter import BaseCommentFormatter
+from bytedojo.core.models.test_bundle import TestBundle
 
 
 class BaseSolutionFormatter(ABC):
@@ -20,48 +25,51 @@ class BaseSolutionFormatter(ABC):
 
     comment_formatter: BaseCommentFormatter
 
-    def format(self, problem: Problem) -> str:
+    def format(self, problem: Problem, bundle: TestBundle) -> str:
         """Assemble the complete solution file for `problem`.
 
         Section order is fixed across all languages: header, description,
-        imports, solution, test. Subclasses fill in the three language-
+        imports, solution, main. Subclasses fill in the three language-
         specific sections via the abstract methods below.
         """
+
         def _section(title: str) -> str:
             return self.comment_formatter.format_single_line(f"--- {title} ---")
 
-        return "".join([
-            self.format_header(problem),
-            self.format_description(problem),
-            "\n\n",
-            self.format_imports(problem),
-            "\n\n",
-            _section("solution"),
-            "\n\n",
-            self.format_solution(problem),
-            "\n\n",
-            _section("main"),
-            "\n\n",
-            self.format_main_block(problem),
-            "\n",
-        ])
+        return "".join(
+            [
+                self.format_header(problem),
+                self.format_description(problem),
+                "\n\n",
+                self.format_imports(bundle),
+                "\n\n",
+                _section("solution"),
+                "\n\n",
+                self.format_solution(bundle),
+                "\n\n",
+                _section("main"),
+                "\n\n",
+                self.format_main_block(bundle),
+                "\n",
+            ]
+        )
 
     @abstractmethod
-    def format_imports(self, problem: Problem) -> str:
+    def format_imports(self, bundle: TestBundle) -> str:
         """Return the imports / includes block for this language."""
         ...
 
     @abstractmethod
-    def format_solution(self, problem: Problem) -> str:
-        """Return the starter solution code for this language."""
+    def format_solution(self, bundle: TestBundle) -> str:
+        """Return the solution stub synthesised from the bundle signature."""
         ...
 
     @abstractmethod
-    def format_main_block(self, problem: Problem) -> str:
+    def format_main_block(self, bundle: TestBundle) -> str:
         """Return the runnable entry-point block for this language."""
         ...
 
-    def extra_files(self, _problem: Problem) -> Dict[str, str]:
+    def extra_files(self, _bundle: TestBundle) -> Dict[str, str]:
         """Return sibling files to place alongside the solution file.
 
         Default: none. Override when the language emits node-class modules
@@ -74,26 +82,35 @@ class BaseSolutionFormatter(ABC):
         detail = problem.problem_detail
 
         def format_tags(tags):
-            return ", ".join(tag.value.replace('-', ' ').title() for tag in tags)
+            return ", ".join(tag.value.replace("-", " ").title() for tag in tags)
 
-        header = "\n".join([
-            f"LeetCode Problem #{detail.id}: {detail.title}",
-            f"Difficulty: {detail.difficulty}",
-            f"Tags: {format_tags(detail.tags)}",
-        ])
+        header = "\n".join(
+            [
+                f"LeetCode Problem #{detail.id}: {detail.title}",
+                f"Difficulty: {detail.difficulty}",
+                f"Tags: {format_tags(detail.tags)}",
+            ]
+        )
         return self.comment_formatter.format_multi_line(header) + "\n\n"
 
     def format_description(self, problem: Problem) -> str:
         """Format the problem description, examples, and constraints as comments."""
         detail = problem.problem_detail
 
-        description = "\n".join([
-            "--- description ---",
-            "",
-            detail.description,
-            "",
-            "\n".join([f"Example #{example.example_num}:\n{example.example_text}\n" for example in problem.examples]),
-            "\n".join(problem.constraints),
-        ])
+        description = "\n".join(
+            [
+                "--- description ---",
+                "",
+                detail.description,
+                "",
+                "\n".join(
+                    [
+                        f"Example #{example.example_num}:\n{example.example_text}\n"
+                        for example in problem.examples
+                    ]
+                ),
+                "\n".join(problem.constraints),
+            ]
+        )
 
         return self.comment_formatter.format_single_line(description)

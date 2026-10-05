@@ -4,22 +4,25 @@ import pytest
 
 from bytedojo.core.models.data_structure import DataStructure
 
-
 # --------------------------------------------------------------------------- #
 # from_string                                                                 #
 # --------------------------------------------------------------------------- #
 
-@pytest.mark.parametrize("raw, expected", [
-    ("ARRAY",              DataStructure.ARRAY),
-    ("array",              DataStructure.ARRAY),      # .upper() normalises case
-    ("Matrix",             DataStructure.MATRIX),
-    ("LINKED_LIST",        DataStructure.LINKED_LIST),
-    ("DOUBLY_LINKED_LIST", DataStructure.DOUBLY_LINKED_LIST),
-    ("BINARY_TREE",        DataStructure.BINARY_TREE),
-    ("GRAPH",              DataStructure.GRAPH),
-    ("HASH_MAP",           DataStructure.HASH_MAP),
-    ("HEAP",               DataStructure.HEAP),
-])
+
+@pytest.mark.parametrize(
+    "raw, expected",
+    [
+        ("ARRAY", DataStructure.ARRAY),
+        ("array", DataStructure.ARRAY),  # .upper() normalises case
+        ("Matrix", DataStructure.MATRIX),
+        ("LINKED_LIST", DataStructure.LINKED_LIST),
+        ("DOUBLY_LINKED_LIST", DataStructure.DOUBLY_LINKED_LIST),
+        ("BINARY_TREE", DataStructure.BINARY_TREE),
+        ("GRAPH", DataStructure.GRAPH),
+        ("HASH_MAP", DataStructure.HASH_MAP),
+        ("HEAP", DataStructure.HEAP),
+    ],
+)
 def test_from_string_known(raw, expected):
     assert DataStructure.from_string(raw) is expected
 
@@ -42,6 +45,7 @@ def test_from_string_unrecognized_returns_none(raw):
 # Direct construction                                                         #
 # --------------------------------------------------------------------------- #
 
+
 def test_calling_the_enum_with_a_bad_value_raises():
     """
     `_missing_` returns None here, which Enum turns into ValueError.
@@ -62,11 +66,15 @@ def test_members_compare_equal_to_their_string_value():
 # __str__ / __repr__                                                          #
 # --------------------------------------------------------------------------- #
 
-@pytest.mark.parametrize("member, label", [
-    (DataStructure.ARRAY,       "ARRAY"),
-    (DataStructure.LINKED_LIST, "LINKED_LIST"),
-    (DataStructure.BINARY_TREE, "BINARY_TREE"),
-])
+
+@pytest.mark.parametrize(
+    "member, label",
+    [
+        (DataStructure.ARRAY, "ARRAY"),
+        (DataStructure.LINKED_LIST, "LINKED_LIST"),
+        (DataStructure.BINARY_TREE, "BINARY_TREE"),
+    ],
+)
 def test_str_is_the_canonical_name(member, label):
     assert str(member) == label
 

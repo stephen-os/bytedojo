@@ -12,10 +12,10 @@ from bytedojo.core.toolchains.base import (
     ToolchainStatus,
 )
 
-
 # --------------------------------------------------------------------------- #
 # ToolchainStatus                                                             #
 # --------------------------------------------------------------------------- #
+
 
 def test_toolchain_status_minimal_defaults():
     s = ToolchainStatus(language=CodeLanguage.PYTHON, found=True)
@@ -52,23 +52,33 @@ def test_toolchain_status_default_factories_are_independent_per_instance():
 # ExecutionResult                                                             #
 # --------------------------------------------------------------------------- #
 
+
 def test_execution_result_minimal_defaults():
     r = ExecutionResult(
-        exit_code=0, stdout="hello\n", stderr="", timed_out=False,
-        language="python3", file_path="/tmp/x.py",
+        exit_code=0,
+        stdout="hello\n",
+        stderr="",
+        timed_out=False,
+        language="python3",
+        file_path="/tmp/x.py",
     )
     assert r.exit_code == 0
     assert r.stdout == "hello\n"
     assert r.timed_out is False
-    assert r.compiled is False         # default
-    assert r.compile_error == ""       # default
+    assert r.compiled is False  # default
+    assert r.compile_error == ""  # default
 
 
 def test_execution_result_records_compile_error():
     r = ExecutionResult(
-        exit_code=1, stdout="", stderr="error: expected ';'", timed_out=False,
-        language="cpp", file_path="/tmp/x.cpp",
-        compiled=False, compile_error="error: expected ';'",
+        exit_code=1,
+        stdout="",
+        stderr="error: expected ';'",
+        timed_out=False,
+        language="cpp",
+        file_path="/tmp/x.cpp",
+        compiled=False,
+        compile_error="error: expected ';'",
     )
     assert r.compiled is False
     assert "expected" in r.compile_error
@@ -77,6 +87,7 @@ def test_execution_result_records_compile_error():
 # --------------------------------------------------------------------------- #
 # Toolchain ABC                                                               #
 # --------------------------------------------------------------------------- #
+
 
 def test_toolchain_cannot_be_instantiated_directly():
     """Toolchain.detect and .execute are abstract; ABC blocks instantiation."""
@@ -102,8 +113,12 @@ def test_toolchain_complete_subclass_can_be_instantiated():
 
         def execute(self, source_path: Path, *, build_dir=None, timeout: int = 1):
             return ExecutionResult(
-                exit_code=0, stdout="", stderr="", timed_out=False,
-                language=self.language.value, file_path=str(source_path),
+                exit_code=0,
+                stdout="",
+                stderr="",
+                timed_out=False,
+                language=self.language.value,
+                file_path=str(source_path),
             )
 
     instance = Complete()
@@ -113,6 +128,7 @@ def test_toolchain_complete_subclass_can_be_instantiated():
 # --------------------------------------------------------------------------- #
 # Constants                                                                   #
 # --------------------------------------------------------------------------- #
+
 
 def test_default_timeout_is_five_minutes():
     assert DEFAULT_TIMEOUT_SECONDS == 300

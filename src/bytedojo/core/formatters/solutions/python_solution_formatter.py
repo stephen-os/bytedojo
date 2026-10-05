@@ -1,17 +1,26 @@
 """
-Python formatter for LeetCode solution files.
+Python formatter — synthesises a solution stub from the bundle signature.
+
+No LeetCode snippet is involved (§11): the `class Solution` stub is
+built from the bundle's method name + typed signature, mapping the
+type vocabulary to PEP-484 annotations.
 """
 
-import re
-from typing import List, Dict
+from typing import Dict
 
-from bytedojo.core.models.code_language import CodeLanguage
-from bytedojo.core.models.problem import Problem
-from bytedojo.core.formatters.comments.python_comment_formatter import PythonCommentFormatter
-from bytedojo.core.formatters.helpers.python_helper_formatter import PythonHelperFormatter
-from bytedojo.core.formatters.solutions.base_solution_formatter import BaseSolutionFormatter
-from bytedojo.core.logger import get_logger
-
+from bytedojo.core.formatters.comments.python_comment_formatter import (
+    PythonCommentFormatter,
+)
+from bytedojo.core.formatters.helpers.python_helper_formatter import (
+    PythonHelperFormatter,
+)
+from bytedojo.core.formatters.solutions.base_solution_formatter import (
+    BaseSolutionFormatter,
+)
+from bytedojo.core.models.data_structure import DataStructure
+from bytedojo.core.models.primitive import Primitive
+from bytedojo.core.models.signature import Signature
+from bytedojo.core.models.test_bundle import TestBundle
 
 _PYTHON_BASELINE_IMPORTS: tuple = (
     "from collections import Counter, defaultdict, deque",
@@ -21,95 +30,68 @@ _PYTHON_BASELINE_IMPORTS: tuple = (
     "from typing import Dict, List, Optional, Set, Tuple",
 )
 
+_PRIMITIVE_ANNOTATIONS = {
+    Primitive.INT32: "int",
+    Primitive.INT64: "int",
+    Primitive.FLOAT64: "float",
+    Primitive.BOOL: "bool",
+    Primitive.CHAR: "str",
+    Primitive.STRING: "str",
+    Primitive.VOID: "None",
+}
+
+_NODE_ANNOTATIONS = {
+    DataStructure.BINARY_TREE: "Optional[TreeNode]",
+    DataStructure.LINKED_LIST: "Optional[ListNode]",
+}
+
+
+def annotation(sig: Signature) -> str:
+    """PEP-484 annotation for a type-vocabulary signature."""
+    if sig.base is DataStructure.ARRAY:
+        return f"List[{_base_annotation(sig.element)}]"
+    if sig.base is DataStructure.MATRIX:
+        return f"List[List[{_base_annotation(sig.element)}]]"
+    return _base_annotation(sig.base)
+
+
+def _base_annotation(base) -> str:
+    if base in _NODE_ANNOTATIONS:
+        return _NODE_ANNOTATIONS[base]
+    if base in _PRIMITIVE_ANNOTATIONS:
+        return _PRIMITIVE_ANNOTATIONS[base]
+    return "object"
+
 
 class PythonSolutionFormatter(BaseSolutionFormatter):
-    """Formats LeetCode problems as Python solution files."""
+    """Synthesises Python solution files from bundle signatures."""
 
     def __init__(self):
-        self.logger = get_logger()
         self.comment_formatter = PythonCommentFormatter()
         self._helper = PythonHelperFormatter()
 
-    def extra_files(self, problem: Problem) -> Dict[str, str]:
-        return self._helper.files_for(problem)
+    def extra_files(self, bundle: TestBundle) -> Dict[str, str]:
+        return self._helper.files_for(bundle.signature)
 
-    def format_imports(self, problem: Problem) -> str:
-        """Baseline stdlib imports plus companion imports for any helper types."""
-        companions = self._helper.companion_imports(problem)
+    def format_imports(self, bundle: TestBundle) -> str:
+        """Baseline stdlib imports plus companion imports for node types."""
+        companions = self._helper.companion_imports(bundle.signature)
         companion_block = ("\n" + "\n".join(companions)) if companions else ""
         return "\n".join(_PYTHON_BASELINE_IMPORTS) + companion_block
 
-    def format_solution(self, problem: Problem) -> str:
-        """Extract and clean the starter class body from the LeetCode snippet."""
-        return self._get_class_body(problem)
+    def format_solution(self, bundle: TestBundle) -> str:
+        """Synthesise `class Solution` with a typed method stub."""
+        params = ", ".join(
+            ["self"]
+            + [f"{p.name}: {annotation(p.type)}" for p in bundle.signature.params]
+        )
+        returns = annotation(bundle.signature.returns)
+        return (
+            f"class Solution:\n"
+            f"    def {bundle.method}({params}) -> {returns}:\n"
+            f"        pass\n"
+        )
 
-    def format_main_block(self, _problem: Problem) -> str:
+    def format_main_block(self, _bundle: TestBundle) -> str:
         """Return a minimal `if __name__ == "__main__":` entry point."""
         return 'if __name__ == "__main__":\n    pass\n'
-
-    # ========================================================================
-    # Code Extraction and Processing
-    # ========================================================================
-
-    def _get_class_body(self, problem: Problem) -> str:
-        """Extract the starter class body, stripping top-level imports."""
-        code = problem.get_snippet(CodeLanguage.PYTHON)
-        if not code:
-            self.logger.warning(
-                f"No Python3 snippet for problem #{problem.problem_detail.id}"
-            )
-            return "# No Python template available"
-
-        code = self._ensure_pass_in_methods(code)
-        code = self._strip_top_level_imports(code)
-        return code.strip("\n") + "\n"
-
-    def _strip_top_level_imports(self, code: str) -> str:
-        """Remove any `import`/`from ... import` lines at top level."""
-        out = []
-        for line in code.split("\n"):
-            stripped = line.lstrip()
-            if stripped.startswith("import ") or stripped.startswith("from "):
-                continue
-            out.append(line)
-        return "\n".join(out)
-
-    def _ensure_pass_in_methods(self, code: str) -> str:
-        """Insert `pass` into empty method bodies so the snippet parses."""
-        lines = code.split('\n')
-        result = []
-        i = 0
-
-        while i < len(lines):
-            line = lines[i]
-            result.append(line)
-
-            stripped = line.strip()
-            if stripped.startswith('#'):
-                i += 1
-                continue
-
-            if 'def ' in line and line.strip().endswith(':'):
-                if self._is_empty_method(lines, i):
-                    current_indent = len(line) - len(line.lstrip())
-                    result.append(' ' * (current_indent + 4) + 'pass')
-
-            i += 1
-
-        return '\n'.join(result)
-
-    def _is_empty_method(self, lines: List[str], method_line_idx: int) -> bool:
-        """Check if a method definition is empty."""
-        if method_line_idx + 1 >= len(lines):
-            return True
-
-        next_line = lines[method_line_idx + 1]
-        next_stripped = next_line.strip()
-
-        if next_stripped.startswith('#'):
-            return False
-
-        current_indent = len(lines[method_line_idx]) - len(lines[method_line_idx].lstrip())
-        next_indent = len(next_line) - len(next_line.lstrip()) if next_line.strip() else current_indent
-
-        return next_indent <= current_indent or not next_line.strip()

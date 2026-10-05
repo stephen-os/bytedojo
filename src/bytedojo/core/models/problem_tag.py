@@ -12,6 +12,7 @@ from enum import Enum
 
 class ProblemTag(str, Enum):
     """LeetCode topic tags. UNKNOWN is the fallback for unrecognized slugs."""
+
     UNKNOWN = "unknown"
     ARRAY = "array"
     BACKTRACKING = "backtracking"
@@ -93,9 +94,9 @@ class ProblemTag(str, Enum):
     def all(cls) -> list["ProblemTag"]:
         """Return all tags except UNKNOWN."""
         return [t for t in cls if t != cls.UNKNOWN]
-    
+
     def __str__(self):
         return self.value
-    
+
     def __repr__(self):
         return f"ProblemTag.{self.name}"

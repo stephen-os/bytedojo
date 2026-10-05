@@ -11,10 +11,10 @@ import pytest
 from bytedojo.core.models.code_language import CodeLanguage
 from bytedojo.core.toolchains.python import PythonToolchain
 
-
 # --------------------------------------------------------------------------- #
 # detect                                                                      #
 # --------------------------------------------------------------------------- #
+
 
 @pytest.fixture
 def toolchain() -> PythonToolchain:
@@ -46,6 +46,7 @@ def test_detect_records_version_string(toolchain):
 # execute                                                                     #
 # --------------------------------------------------------------------------- #
 
+
 def test_execute_captures_stdout(toolchain, tmp_path):
     script = tmp_path / "hello.py"
     script.write_text('print("hello")\n', encoding="utf-8")
@@ -61,8 +62,9 @@ def test_execute_captures_stdout(toolchain, tmp_path):
 
 def test_execute_captures_nonzero_exit_and_stderr(toolchain, tmp_path):
     script = tmp_path / "boom.py"
-    script.write_text("import sys; sys.stderr.write('nope'); sys.exit(3)\n",
-                      encoding="utf-8")
+    script.write_text(
+        "import sys; sys.stderr.write('nope'); sys.exit(3)\n", encoding="utf-8"
+    )
 
     result = toolchain.execute(script, timeout=10)
     assert result.exit_code == 3

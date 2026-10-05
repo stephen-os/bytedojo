@@ -4,19 +4,22 @@ import pytest
 
 from bytedojo.core.models.problem_tag import ProblemTag
 
-
 # --------------------------------------------------------------------------- #
 # from_string                                                                 #
 # --------------------------------------------------------------------------- #
 
-@pytest.mark.parametrize("raw, expected", [
-    ("array",          ProblemTag.ARRAY),
-    ("ARRAY",          ProblemTag.ARRAY),         # .lower() normalises case
-    ("hash-table",     ProblemTag.HASH_TABLE),    # hyphenated slug preserved as value
-    ("two-pointers",   ProblemTag.TWO_POINTERS),
-    ("dynamic-programming", ProblemTag.DYNAMIC_PROGRAMMING),
-    ("union-find",     ProblemTag.UNION_FIND),
-])
+
+@pytest.mark.parametrize(
+    "raw, expected",
+    [
+        ("array", ProblemTag.ARRAY),
+        ("ARRAY", ProblemTag.ARRAY),  # .lower() normalises case
+        ("hash-table", ProblemTag.HASH_TABLE),  # hyphenated slug preserved as value
+        ("two-pointers", ProblemTag.TWO_POINTERS),
+        ("dynamic-programming", ProblemTag.DYNAMIC_PROGRAMMING),
+        ("union-find", ProblemTag.UNION_FIND),
+    ],
+)
 def test_from_string_known(raw, expected):
     assert ProblemTag.from_string(raw) is expected
 
@@ -36,6 +39,7 @@ def test_from_string_unknown_falls_back(raw):
 # all                                                                         #
 # --------------------------------------------------------------------------- #
 
+
 def test_all_excludes_unknown_sentinel():
     tags = ProblemTag.all()
     assert ProblemTag.UNKNOWN not in tags
@@ -48,6 +52,7 @@ def test_all_excludes_unknown_sentinel():
 # --------------------------------------------------------------------------- #
 # __str__ / __repr__                                                          #
 # --------------------------------------------------------------------------- #
+
 
 def test_str_returns_slug_verbatim():
     """`__str__` returns the LeetCode slug, hyphens included."""

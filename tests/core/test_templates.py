@@ -35,7 +35,7 @@ def test_readme_documents_the_dojo_layout():
 
 
 def test_readme_includes_usage_examples():
-    """README should show the basic command surface."""
+    """README should show the basic command surface (the fetch→test→review loop)."""
     assert "dojo fetch" in README
-    assert "dojo grade" in README
+    assert "dojo test" in README
     assert "dojo review" in README

@@ -16,7 +16,6 @@ from typing import Dict, List, Optional
 
 from bytedojo.core.models.code_language import CodeLanguage
 
-
 # Default execution timeout (5 minutes)
 DEFAULT_TIMEOUT_SECONDS = 300
 
@@ -24,6 +23,7 @@ DEFAULT_TIMEOUT_SECONDS = 300
 @dataclass
 class ToolchainStatus:
     """Result of probing the local environment for a toolchain."""
+
     language: CodeLanguage
     found: bool
     missing: List[str] = field(default_factory=list)
@@ -36,6 +36,7 @@ class ToolchainStatus:
 @dataclass
 class ExecutionResult:
     """Outcome of compiling + running a single source file."""
+
     exit_code: int
     stdout: str
     stderr: str

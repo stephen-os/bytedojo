@@ -14,6 +14,7 @@ from bytedojo.core.models.problem_status import ProblemStatus
 @dataclass
 class RegisteredProblem:
     """A problem registered in the .dojo database."""
+
     id: int  # database row id
     source: str
     problem_id: int
@@ -44,7 +45,11 @@ class RegisteredProblem:
             description=row.get("description", ""),
             file_path=row.get("file_path"),
             status=ProblemStatus.from_string(row["status"]),
-            fetched_at=datetime.fromisoformat(row["fetched_at"]) if row.get("fetched_at") else datetime.now(),
+            fetched_at=(
+                datetime.fromisoformat(row["fetched_at"])
+                if row.get("fetched_at")
+                else datetime.now()
+            ),
             last_graded=last_graded,
             notes=row.get("notes"),
         )

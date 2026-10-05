@@ -4,22 +4,25 @@ import pytest
 
 from bytedojo.core.models.code_language import CodeLanguage
 
-
 # --------------------------------------------------------------------------- #
 # from_string                                                                 #
 # --------------------------------------------------------------------------- #
 
-@pytest.mark.parametrize("raw, expected", [
-    ("python3", CodeLanguage.PYTHON),
-    ("Python3", CodeLanguage.PYTHON),          # case-insensitive
-    ("PYTHON3", CodeLanguage.PYTHON),
-    ("java", CodeLanguage.JAVA),
-    ("cpp", CodeLanguage.CPP),
-    ("rust", CodeLanguage.RUST),
-    ("golang", CodeLanguage.GO),
-    ("javascript", CodeLanguage.JAVASCRIPT),
-    ("typescript", CodeLanguage.TYPESCRIPT),
-])
+
+@pytest.mark.parametrize(
+    "raw, expected",
+    [
+        ("python3", CodeLanguage.PYTHON),
+        ("Python3", CodeLanguage.PYTHON),  # case-insensitive
+        ("PYTHON3", CodeLanguage.PYTHON),
+        ("java", CodeLanguage.JAVA),
+        ("cpp", CodeLanguage.CPP),
+        ("rust", CodeLanguage.RUST),
+        ("golang", CodeLanguage.GO),
+        ("javascript", CodeLanguage.JAVASCRIPT),
+        ("typescript", CodeLanguage.TYPESCRIPT),
+    ],
+)
 def test_from_string_known(raw, expected):
     assert CodeLanguage.from_string(raw) is expected
 
@@ -39,6 +42,7 @@ def test_from_string_unknown_falls_back(raw):
 # default                                                                     #
 # --------------------------------------------------------------------------- #
 
+
 def test_default_is_python():
     assert CodeLanguage.default() is CodeLanguage.PYTHON
 
@@ -47,15 +51,19 @@ def test_default_is_python():
 # extension                                                                   #
 # --------------------------------------------------------------------------- #
 
-@pytest.mark.parametrize("lang, ext", [
-    (CodeLanguage.PYTHON, ".py"),
-    (CodeLanguage.JAVA, ".java"),
-    (CodeLanguage.CPP, ".cpp"),
-    (CodeLanguage.RUST, ".rs"),
-    (CodeLanguage.GO, ".go"),
-    (CodeLanguage.JAVASCRIPT, ".js"),
-    (CodeLanguage.TYPESCRIPT, ".ts"),
-])
+
+@pytest.mark.parametrize(
+    "lang, ext",
+    [
+        (CodeLanguage.PYTHON, ".py"),
+        (CodeLanguage.JAVA, ".java"),
+        (CodeLanguage.CPP, ".cpp"),
+        (CodeLanguage.RUST, ".rs"),
+        (CodeLanguage.GO, ".go"),
+        (CodeLanguage.JAVASCRIPT, ".js"),
+        (CodeLanguage.TYPESCRIPT, ".ts"),
+    ],
+)
 def test_extension(lang, ext):
     assert lang.extension == ext
 
@@ -68,14 +76,18 @@ def test_extension_unknown_is_empty():
 # __str__ / __repr__                                                          #
 # --------------------------------------------------------------------------- #
 
-@pytest.mark.parametrize("lang, label", [
-    (CodeLanguage.PYTHON, "Python"),
-    (CodeLanguage.JAVA, "Java"),
-    (CodeLanguage.CPP, "C++"),
-    (CodeLanguage.GO, "Go"),
-    (CodeLanguage.JAVASCRIPT, "JavaScript"),
-    (CodeLanguage.TYPESCRIPT, "TypeScript"),
-])
+
+@pytest.mark.parametrize(
+    "lang, label",
+    [
+        (CodeLanguage.PYTHON, "Python"),
+        (CodeLanguage.JAVA, "Java"),
+        (CodeLanguage.CPP, "C++"),
+        (CodeLanguage.GO, "Go"),
+        (CodeLanguage.JAVASCRIPT, "JavaScript"),
+        (CodeLanguage.TYPESCRIPT, "TypeScript"),
+    ],
+)
 def test_str_uses_display_name(lang, label):
     assert str(lang) == label
 
@@ -87,6 +99,7 @@ def test_repr_uses_enum_name():
 # --------------------------------------------------------------------------- #
 # Enum identity                                                               #
 # --------------------------------------------------------------------------- #
+
 
 def test_enum_is_str_subclass():
     """CodeLanguage(str, Enum) lets values compare to raw strings."""

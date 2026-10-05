@@ -1,168 +1,132 @@
-"""Tests for SettingsManager and the Settings dataclasses."""
+"""Tests for Settings + SettingsManager (.dojo/settings.json)."""
 
 import json
 
 import pytest
 
-from bytedojo.core.settings import LeetCodeSettings, Settings, SettingsManager
-
+from bytedojo.core.settings import SETTING_KEYS, Settings, SettingsManager
 
 # --------------------------------------------------------------------------- #
-# Settings / LeetCodeSettings dataclasses                                     #
+# Settings dataclass                                                          #
 # --------------------------------------------------------------------------- #
 
-def test_leetcode_settings_default_organization():
-    assert LeetCodeSettings().organization == "flat"
 
-
-def test_settings_default_factory_creates_leetcode_block():
+def test_defaults():
     s = Settings()
-    assert isinstance(s.leetcode, LeetCodeSettings)
-    assert s.leetcode.organization == "flat"
+    assert s.default_language == "python"
+    assert s.review_frequency_days == 7
+    assert s.organize_by_language is False
 
 
-def test_settings_default_factory_independence():
-    """Two fresh Settings shouldn't share their nested leetcode block."""
-    a = Settings()
-    b = Settings()
-    a.leetcode.organization = "difficulty"
-    assert b.leetcode.organization == "flat"
+def test_to_dict_from_dict_roundtrip():
+    s = Settings(
+        default_language="python", review_frequency_days=14, organize_by_language=True
+    )
+    assert Settings.from_dict(s.to_dict()) == s
 
 
-def test_settings_to_dict_shape():
-    s = Settings()
-    d = s.to_dict()
-    assert d == {"leetcode": {"organization": "flat"}}
-
-
-def test_settings_from_dict_roundtrips():
-    raw = {"leetcode": {"organization": "difficulty"}}
-    s = Settings.from_dict(raw)
-    assert s.leetcode.organization == "difficulty"
-    assert s.to_dict() == raw
-
-
-def test_settings_from_dict_missing_leetcode_block_uses_defaults():
-    """A partial dict (no leetcode key) still produces a valid Settings."""
-    s = Settings.from_dict({})
-    assert s.leetcode.organization == "flat"
+def test_from_dict_ignores_unknown_keys():
+    """Old settings files with retired keys must still load."""
+    s = Settings.from_dict(
+        {"leetcode": {"organization": "flat"}, "review_frequency_days": 3}
+    )
+    assert s.review_frequency_days == 3
+    assert s.default_language == "python"
 
 
 # --------------------------------------------------------------------------- #
-# SettingsManager.load                                                        #
+# SettingsManager — load / save                                               #
 # --------------------------------------------------------------------------- #
 
-def test_load_no_file_returns_defaults(tmp_path):
-    mgr = SettingsManager(tmp_path)
-    assert not mgr.settings_path.exists()
-    assert mgr.load().leetcode.organization == "flat"
+
+def test_load_missing_file_returns_defaults(tmp_path):
+    assert SettingsManager(tmp_path).load() == Settings()
 
 
-def test_load_reads_persisted_settings(tmp_path):
-    payload = {"leetcode": {"organization": "difficulty"}}
-    (tmp_path / "settings.json").write_text(json.dumps(payload), encoding="utf-8")
+def test_load_malformed_file_returns_defaults(tmp_path):
+    (tmp_path / "settings.json").write_text("{ nope", encoding="utf-8")
+    assert SettingsManager(tmp_path).load() == Settings()
 
-    settings = SettingsManager(tmp_path).load()
-    assert settings.leetcode.organization == "difficulty"
-
-
-def test_load_falls_back_to_defaults_on_corrupt_file(tmp_path):
-    """Malformed JSON shouldn't crash the CLI — log error, hand back defaults."""
-    (tmp_path / "settings.json").write_text("{ not valid", encoding="utf-8")
-    settings = SettingsManager(tmp_path).load()
-    assert settings.leetcode.organization == "flat"
-
-
-# --------------------------------------------------------------------------- #
-# SettingsManager.save                                                        #
-# --------------------------------------------------------------------------- #
 
 def test_save_writes_pretty_printed_json(tmp_path):
     mgr = SettingsManager(tmp_path)
-    settings = Settings(leetcode=LeetCodeSettings(organization="difficulty"))
-    mgr.save(settings)
+    mgr.save(Settings(review_frequency_days=14))
 
     raw = (tmp_path / "settings.json").read_text(encoding="utf-8")
-    assert json.loads(raw) == {"leetcode": {"organization": "difficulty"}}
-    # `indent=2` pretty-print: a newline between top-level keys.
-    assert "\n" in raw
+    assert json.loads(raw) == {
+        "default_language": "python",
+        "review_frequency_days": 14,
+        "organize_by_language": False,
+    }
+    assert "\n" in raw  # indent=2 pretty-print
 
 
 def test_save_creates_parent_directory_if_missing(tmp_path):
     nested = tmp_path / "new" / "deep" / ".dojo"
-    mgr = SettingsManager(nested)
-    mgr.save(Settings())
-    assert mgr.settings_path.exists()
+    SettingsManager(nested).save(Settings())
+    assert (nested / "settings.json").exists()
 
 
-def test_save_then_load_roundtrip(tmp_path):
+def test_create_default_does_not_overwrite(tmp_path):
     mgr = SettingsManager(tmp_path)
-    mgr.save(Settings(leetcode=LeetCodeSettings(organization="difficulty")))
-    assert mgr.load().leetcode.organization == "difficulty"
+    mgr.save(Settings(review_frequency_days=3))
+    mgr.create_default()
+    assert mgr.load().review_frequency_days == 3
 
 
 # --------------------------------------------------------------------------- #
-# SettingsManager.get                                                         #
+# SettingsManager — get / set by CLI key                                      #
 # --------------------------------------------------------------------------- #
 
-def test_get_dot_notation_returns_nested_value(tmp_path):
+
+def test_get_known_keys(tmp_path):
     mgr = SettingsManager(tmp_path)
-    mgr.save(Settings(leetcode=LeetCodeSettings(organization="difficulty")))
-    assert mgr.get("leetcode.organization") == "difficulty"
+    assert mgr.get("default-language") == "python"
+    assert mgr.get("review-frequency") == 7
+    assert mgr.get("organize-by-language") is False
 
 
 def test_get_unknown_key_returns_none(tmp_path):
-    assert SettingsManager(tmp_path).get("leetcode.nonexistent") is None
+    assert SettingsManager(tmp_path).get("nope") is None
 
 
-def test_get_unknown_root_returns_none(tmp_path):
-    assert SettingsManager(tmp_path).get("nonexistent.field") is None
-
-
-# --------------------------------------------------------------------------- #
-# SettingsManager.set                                                         #
-# --------------------------------------------------------------------------- #
-
-def test_set_dot_notation_persists_value(tmp_path):
+@pytest.mark.parametrize(
+    "key, raw, expected",
+    [
+        ("default-language", "PYTHON", "python"),
+        ("review-frequency", "14", 14),
+        ("organize-by-language", "true", True),
+        ("organize-by-language", "False", False),
+    ],
+)
+def test_set_parses_and_persists(tmp_path, key, raw, expected):
     mgr = SettingsManager(tmp_path)
-    ok = mgr.set("leetcode.organization", "difficulty")
-    assert ok is True
-    assert mgr.load().leetcode.organization == "difficulty"
+    assert mgr.set(key, raw) == expected
+    assert mgr.get(key) == expected
 
 
-def test_set_unknown_root_returns_false(tmp_path):
-    mgr = SettingsManager(tmp_path)
-    assert mgr.set("unknown.org", "x") is False
+def test_set_unknown_key_raises_keyerror(tmp_path):
+    with pytest.raises(KeyError):
+        SettingsManager(tmp_path).set("nope", "1")
 
 
-def test_set_unknown_leaf_returns_false(tmp_path):
-    """Existing root, unknown field on it -> False, no write."""
-    mgr = SettingsManager(tmp_path)
-    assert mgr.set("leetcode.does_not_exist", "x") is False
-    # The settings file must not have been written for an invalid set.
-    assert mgr.load().leetcode.organization == "flat"
+@pytest.mark.parametrize(
+    "key, raw, msg",
+    [
+        ("default-language", "rust", "Unsupported language"),
+        ("review-frequency", "abc", "must be a number"),
+        ("review-frequency", "0", "at least 1 day"),
+        ("review-frequency", "999", "cannot exceed 365"),
+        ("organize-by-language", "maybe", "true/false"),
+    ],
+)
+def test_set_rejects_invalid_values(tmp_path, key, raw, msg):
+    with pytest.raises(ValueError, match=msg):
+        SettingsManager(tmp_path).set(key, raw)
 
 
-def test_set_single_segment_returns_false(tmp_path):
-    """set() requires dot-notation; bare key like 'organization' is invalid."""
-    assert SettingsManager(tmp_path).set("organization", "x") is False
+def test_setting_keys_cover_all_fields():
+    """Every Settings field is reachable from the CLI."""
+    from dataclasses import fields
 
-
-# --------------------------------------------------------------------------- #
-# SettingsManager.create_default                                              #
-# --------------------------------------------------------------------------- #
-
-def test_create_default_writes_file_when_missing(tmp_path):
-    mgr = SettingsManager(tmp_path)
-    assert not mgr.settings_path.exists()
-    mgr.create_default()
-    assert mgr.settings_path.exists()
-
-
-def test_create_default_is_idempotent(tmp_path):
-    """An existing file is left alone (caller's customisations preserved)."""
-    mgr = SettingsManager(tmp_path)
-    mgr.save(Settings(leetcode=LeetCodeSettings(organization="difficulty")))
-    mgr.create_default()
-    # Existing value preserved, not stomped back to the flat default.
-    assert mgr.load().leetcode.organization == "difficulty"
+    assert set(SETTING_KEYS.values()) == {f.name for f in fields(Settings)}

@@ -1,16 +1,16 @@
 """
 Problem search utilities for bytedojo.
 
-Provides fuzzy matching and interactive selection for problems.
+Provides fuzzy matching and interactive selection for registered
+problems. Problems are unique per (source, problem_id) — language is
+attempt metadata and plays no part in identity here.
 """
 
 import click
 from typing import List, Optional
-from pathlib import Path
 
-from bytedojo.core.database import Database
-from bytedojo.core.repository import Repository
 from bytedojo.core.models.registered_problem import RegisteredProblem
+from bytedojo.core.repositories import ProblemsRepository
 
 
 def _normalize(text: str) -> str:
@@ -69,22 +69,20 @@ def _score_match(query: str, problem: RegisteredProblem) -> int:
 
 
 def find_problems(
-    db: Database,
+    problems: ProblemsRepository,
     identifier: Optional[str] = None,
     name: Optional[str] = None,
     desc: Optional[str] = None,
-    language: Optional[str] = None,
-    source: str = 'leetcode'
+    source: str = "leetcode",
 ) -> List[RegisteredProblem]:
     """
-    Find problems matching criteria.
+    Find registered problems matching criteria.
 
     Args:
-        db: Database instance
+        problems: The problems repository to search.
         identifier: Numeric problem ID (exact match)
         name: Fuzzy match on title
         desc: Keyword search in description
-        language: Filter by programming language
         source: Problem source (default: 'leetcode')
 
     Returns:
@@ -92,19 +90,10 @@ def find_problems(
     """
     # If identifier is numeric, do exact match
     if identifier and identifier.isdigit():
-        problem = db.get_problem(source, int(identifier), language or 'python')
-        if problem:
-            return [problem]
-        # If exact match not found with specified language, try all languages
-        if language:
-            return []
-        # Search across all languages
-        all_problems = db.list_problems(source=source)
-        matches = [p for p in all_problems if p.problem_id == int(identifier)]
-        return matches
+        problem = problems.get(source, int(identifier))
+        return [problem] if problem else []
 
-    # Get all problems
-    all_problems = db.list_problems(source=source, language=language)
+    all_problems = problems.list(source=source)
 
     matches = []
 
@@ -120,7 +109,7 @@ def find_problems(
 
         # Match by description
         if desc:
-            description = problem.description or ''
+            description = problem.description or ""
             if not _fuzzy_match(desc, description):
                 continue
             score = max(score, 30)  # Description match
@@ -139,8 +128,7 @@ def find_problems(
 
 
 def select_problem(
-    problems: List[RegisteredProblem],
-    prompt_text: str = "Select problem"
+    problems: List[RegisteredProblem], prompt_text: str = "Select problem"
 ) -> Optional[RegisteredProblem]:
     """
     Interactive selection when multiple problems match.
@@ -160,20 +148,18 @@ def select_problem(
 
     # Display options
     click.echo("")
-    click.echo(click.style("Multiple problems found:", fg='yellow'))
+    click.echo(click.style("Multiple problems found:", fg="yellow"))
     click.echo("")
 
     for i, problem in enumerate(problems[:10], 1):  # Limit to 10 options
         pid = problem.problem_id
         title = problem.title
-        difficulty = problem.difficulty.value if problem.difficulty else ''
-        language = problem.language.value if problem.language else ''
+        difficulty = problem.difficulty.value if problem.difficulty else ""
+        language = problem.language.value if problem.language else ""
 
-        diff_color = {
-            'easy': 'green',
-            'medium': 'yellow',
-            'hard': 'red'
-        }.get(difficulty.lower(), 'white')
+        diff_color = {"easy": "green", "medium": "yellow", "hard": "red"}.get(
+            difficulty.lower(), "white"
+        )
 
         click.echo(f"  [{i}] {pid} - {title}", nl=False)
         if difficulty:
@@ -191,73 +177,12 @@ def select_problem(
     try:
         choices = [str(i) for i in range(1, min(len(problems), 10) + 1)]
         choice = click.prompt(
-            prompt_text,
-            type=click.Choice(choices + ['q']),
-            default='1'
+            prompt_text, type=click.Choice(choices + ["q"]), default="1"
         )
 
-        if choice == 'q':
+        if choice == "q":
             return None
 
         return problems[int(choice) - 1]
     except (KeyboardInterrupt, EOFError):
         return None
-
-
-def resolve_problem(
-    identifier: Optional[str] = None,
-    name: Optional[str] = None,
-    desc: Optional[str] = None,
-    language: Optional[str] = None,
-    source: str = 'leetcode',
-    auto_select: bool = False
-) -> Optional[RegisteredProblem]:
-    """
-    High-level function to find and select a problem.
-
-    Args:
-        identifier: Numeric problem ID or identifier
-        name: Search by name
-        desc: Search by description
-        language: Filter by language
-        source: Problem source
-        auto_select: If True, auto-select when single match
-
-    Returns:
-        Selected problem or None
-
-    Raises:
-        click.ClickException: If no problems found or repo not initialized
-    """
-    repo = Repository.find(Path.cwd())
-    if repo is None or not repo.is_initialized:
-        raise click.ClickException("No .dojo repository found. Run 'dojo init' first.")
-
-    with Database(repo.db_path) as db:
-        matches = find_problems(
-            db,
-            identifier=identifier,
-            name=name,
-            desc=desc,
-            language=language,
-            source=source
-        )
-
-        if not matches:
-            criteria = []
-            if identifier:
-                criteria.append(f"ID '{identifier}'")
-            if name:
-                criteria.append(f"name '{name}'")
-            if desc:
-                criteria.append(f"description '{desc}'")
-            if language:
-                criteria.append(f"language '{language}'")
-
-            criteria_str = ", ".join(criteria) if criteria else "given criteria"
-            raise click.ClickException(f"No problems found matching {criteria_str}")
-
-        if len(matches) == 1 or auto_select:
-            return matches[0]
-
-        return select_problem(matches)

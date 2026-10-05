@@ -3,19 +3,39 @@ Repository — represents a .dojo repository and the operations on it.
 
 Construct via classmethods (`find`, `open`, `create`) or directly with a
 root path. The Repository owns its location, knows its own state, and
-mediates all operations against its contents (database, problems, etc.).
+wires units of work: `session()` opens one sqlite connection and exposes
+the four per-aggregate repositories over it.
 """
 
+from contextlib import contextmanager
 from pathlib import Path
-from typing import Optional, List
+from sqlite3 import Connection
+from typing import Iterator, List, Optional
 
-from bytedojo.core.database import Database, create_database_schema
+from bytedojo.core.errors import RepoNotFoundError
 from bytedojo.core.logger import get_logger
 from bytedojo.core.models.attempt import Attempt
 from bytedojo.core.models.code_language import CodeLanguage
 from bytedojo.core.models.problem import Problem
 from bytedojo.core.models.registered_problem import RegisteredProblem
+from bytedojo.core.repositories import (
+    AttemptsRepository,
+    ConfigRepository,
+    ProblemsRepository,
+    ReviewsRepository,
+)
+from bytedojo.core.repositories import _db
 from bytedojo.core.templates import GITIGNORE, README
+
+
+class Session:
+    """The four aggregate repositories sharing one open connection."""
+
+    def __init__(self, conn: Connection):
+        self.problems = ProblemsRepository(conn)
+        self.attempts = AttemptsRepository(conn)
+        self.reviews = ReviewsRepository(conn)
+        self.config = ConfigRepository(conn)
 
 
 class Repository:
@@ -68,7 +88,7 @@ class Repository:
             return None
         logger.debug(f"Creating repository at {path} (force={force})")
         repo.dojo_dir.mkdir(exist_ok=True)
-        create_database_schema(repo.db_path)
+        _db.create_schema(repo.db_path)
         repo._write_default_settings()
         repo._write_gitignore()
         repo._write_readme()
@@ -116,32 +136,31 @@ class Repository:
     # Database access
     # ------------------------------------------------------------------
 
-    def open_db(self) -> Database:
-        """Construct a fresh Database bound to this repo's db path."""
-        return Database(self.db_path)
+    @contextmanager
+    def session(self) -> Iterator[Session]:
+        """One unit of work: a Session over a fresh connection."""
+        conn = _db.connect(self.db_path)
+        try:
+            yield Session(conn)
+        finally:
+            conn.close()
 
     # ------------------------------------------------------------------
     # Repo-level operations
     # ------------------------------------------------------------------
 
-    def is_problem_registered(
-        self,
-        source: str,
-        problem_id: int,
-        language: CodeLanguage,
-    ) -> bool:
+    def is_problem_registered(self, source: str, problem_id: int) -> bool:
         """Whether a problem is registered in this repo's database."""
-        if not self.is_initialized:
-            raise RuntimeError("Repository not initialized. Run 'dojo init' first.")
-        with self.open_db() as db:
-            return db.is_problem_registered(source, problem_id, language.value)
+        self._require_initialized()
+        with self.session() as s:
+            return s.problems.is_registered(source, problem_id)
 
     def get_registered_problems(self) -> List[RegisteredProblem]:
         """Get all registered problems from the database."""
         if not self.is_initialized:
             return []
-        with self.open_db() as db:
-            return db.list_problems()
+        with self.session() as s:
+            return s.problems.list()
 
     def register_attempt(
         self,
@@ -150,24 +169,20 @@ class Repository:
         source: str = "leetcode",
     ) -> Attempt:
         """
-        Create a new versioned attempt and register the problem in the DB.
-        Returns the Attempt (problem_id, language, version).
+        Create the next versioned attempt and register/refresh the
+        problem row (pointing at the new attempt's solution file).
         """
-        if not self.is_initialized:
-            raise RuntimeError("Repository not initialized. Run 'dojo init' first.")
-
+        self._require_initialized()
         problem_id = problem.problem_detail.id
 
-        with self.open_db() as db:
-            attempt = db.create_attempt(source, problem_id, language.value)
-
-            db.register_problem(
-                problem=problem,
+        with self.session() as s:
+            attempt = s.attempts.create(source, problem_id, language.value)
+            s.problems.register(
+                problem,
                 source=source,
                 language=language.value,
                 file_path=str(self.attempt_path(problem, language, attempt.version)),
             )
-
             return attempt
 
     def attempt_path(
@@ -176,15 +191,20 @@ class Repository:
         language: CodeLanguage,
         version: int,
     ) -> Path:
-        """Solution file path for a given problem/language/version."""
-        folder_name = problem.get_folder_name()
-        version_str = f"v{version:03d}"
-        return (
-            self.problems_dir
-            / folder_name
-            / language.value
-            / version_str
-            / problem.get_solution_filename(language)
+        """Solution file path for a given problem/language/version.
+
+        Flat by default: problems/<id>-<slug>/v{NNN}/solution.<ext>.
+        The optional `organize_by_language` setting reintroduces a
+        <language>/ segment between the problem folder and the version.
+        """
+        from bytedojo.core.settings import SettingsManager
+
+        parts = [problem.get_folder_name()]
+        if SettingsManager(self.dojo_dir).load().organize_by_language:
+            parts.append(language.value)
+        parts.append(f"v{version:03d}")
+        return self.problems_dir.joinpath(*parts) / problem.get_solution_filename(
+            language
         )
 
     def place_problem(self, path: Path, content: str) -> None:
@@ -203,8 +223,15 @@ class Repository:
     # Internal helpers
     # ------------------------------------------------------------------
 
+    def _require_initialized(self) -> None:
+        if not self.is_initialized:
+            raise RepoNotFoundError(
+                "Repository not initialized. Run 'dojo init' first."
+            )
+
     def _write_default_settings(self) -> None:
         from bytedojo.core.settings import SettingsManager
+
         SettingsManager(self.dojo_dir).create_default()
 
     def _write_gitignore(self) -> None:

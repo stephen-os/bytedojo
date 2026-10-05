@@ -4,21 +4,24 @@ import pytest
 
 from bytedojo.core.models.primitive import Primitive
 
-
 # --------------------------------------------------------------------------- #
 # from_string                                                                 #
 # --------------------------------------------------------------------------- #
 
-@pytest.mark.parametrize("raw, expected", [
-    ("INT32",   Primitive.INT32),
-    ("int32",   Primitive.INT32),        # .upper() normalises case
-    ("Int64",   Primitive.INT64),
-    ("FLOAT64", Primitive.FLOAT64),
-    ("BOOL",    Primitive.BOOL),
-    ("CHAR",    Primitive.CHAR),
-    ("STRING",  Primitive.STRING),
-    ("VOID",    Primitive.VOID),
-])
+
+@pytest.mark.parametrize(
+    "raw, expected",
+    [
+        ("INT32", Primitive.INT32),
+        ("int32", Primitive.INT32),  # .upper() normalises case
+        ("Int64", Primitive.INT64),
+        ("FLOAT64", Primitive.FLOAT64),
+        ("BOOL", Primitive.BOOL),
+        ("CHAR", Primitive.CHAR),
+        ("STRING", Primitive.STRING),
+        ("VOID", Primitive.VOID),
+    ],
+)
 def test_from_string_known(raw, expected):
     assert Primitive.from_string(raw) is expected
 
@@ -44,6 +47,7 @@ def test_from_string_unrecognized_returns_unknown(raw):
 # Direct construction                                                         #
 # --------------------------------------------------------------------------- #
 
+
 def test_calling_the_enum_with_a_bad_value_returns_unknown():
     """Unlike DataStructure, Primitive(...) never raises — `_missing_` absorbs it."""
     assert Primitive("NOPE") is Primitive.UNKNOWN
@@ -58,12 +62,16 @@ def test_members_compare_equal_to_their_string_value():
 # __str__ / __repr__                                                          #
 # --------------------------------------------------------------------------- #
 
-@pytest.mark.parametrize("member, label", [
-    (Primitive.INT32,   "INT32"),
-    (Primitive.STRING,  "STRING"),
-    (Primitive.VOID,    "VOID"),
-    (Primitive.UNKNOWN, "UNKNOWN"),
-])
+
+@pytest.mark.parametrize(
+    "member, label",
+    [
+        (Primitive.INT32, "INT32"),
+        (Primitive.STRING, "STRING"),
+        (Primitive.VOID, "VOID"),
+        (Primitive.UNKNOWN, "UNKNOWN"),
+    ],
+)
 def test_str_is_the_canonical_name(member, label):
     assert str(member) == label
 

@@ -23,6 +23,7 @@ def _schedule(**overrides) -> ReviewSchedule:
 # __post_init__ enum coercion                                                 #
 # --------------------------------------------------------------------------- #
 
+
 def test_string_difficulty_is_coerced_to_enum():
     s = _schedule(difficulty="Medium")
     assert s.difficulty is ProblemDifficulty.MEDIUM
@@ -52,6 +53,7 @@ def test_default_language_is_unknown_sentinel():
 # --------------------------------------------------------------------------- #
 # days_until_due / is_overdue / is_due_today / is_due                         #
 # --------------------------------------------------------------------------- #
+
 
 def test_days_until_due_today_is_zero():
     s = _schedule(next_review_date=date.today())
@@ -90,6 +92,7 @@ def test_is_due_covers_today_and_overdue():
 # from_row                                                                    #
 # --------------------------------------------------------------------------- #
 
+
 def _row(**overrides) -> dict:
     """Build a reviews-row dict (no JOIN columns) with sensible defaults."""
     base = {
@@ -120,14 +123,16 @@ def test_from_row_minimal_no_join():
 
 
 def test_from_row_with_joined_columns():
-    s = ReviewSchedule.from_row(_row(
-        problem_num="1",
-        source="leetcode",
-        title="Two Sum",
-        difficulty="Easy",
-        language="python3",
-        file_path="problems/0001-two-sum/python3/v001/solution.py",
-    ))
+    s = ReviewSchedule.from_row(
+        _row(
+            problem_num="1",
+            source="leetcode",
+            title="Two Sum",
+            difficulty="Easy",
+            language="python3",
+            file_path="problems/0001-two-sum/python3/v001/solution.py",
+        )
+    )
     assert s.problem_num == 1
     assert s.title == "Two Sum"
     assert s.difficulty is ProblemDifficulty.EASY

@@ -9,6 +9,7 @@ from typing import Dict
 @dataclass
 class RepositoryStats:
     """Summary statistics for a .dojo repository."""
+
     total_problems: int
     by_difficulty: Dict[str, int] = field(default_factory=dict)
     by_source: Dict[str, int] = field(default_factory=dict)

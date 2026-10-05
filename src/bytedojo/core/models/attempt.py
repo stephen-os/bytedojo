@@ -18,10 +18,11 @@ from bytedojo.core.models.problem_status import ProblemStatus
 @dataclass
 class Attempt:
     """A single versioned attempt at solving a problem in a language."""
+
     problem_id: int
     language: CodeLanguage
     version: int
-    status: ProblemStatus               # grade status (passed/failed/skipped/ungraded)
+    status: ProblemStatus  # grade status (passed/failed/skipped/ungraded)
     created_at: datetime
     run_count: int = 0
     notes: str = ""

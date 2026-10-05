@@ -8,6 +8,7 @@ from dataclasses import dataclass
 @dataclass
 class ReviewStats:
     """Summary statistics for review scheduling."""
+
     due_today: int
     due_this_week: int
     total_in_review: int

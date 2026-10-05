@@ -33,7 +33,7 @@ def _parse_base(value: str) -> BaseType:
 
 @dataclass
 class Signature:
-    """A single type in a method signature — primitive or data structure, optionally parameterized."""
+    """A type in a method signature — primitive or structure, maybe parameterized."""
 
     base: BaseType
     element: Optional[BaseType] = None

@@ -32,6 +32,7 @@ def _row(**overrides) -> dict:
 # from_row roundtrip                                                          #
 # --------------------------------------------------------------------------- #
 
+
 def test_from_row_roundtrip():
     p = RegisteredProblem.from_row(_row())
     assert p.id == 7
@@ -67,6 +68,13 @@ def test_from_row_accepts_datetime_for_last_graded():
 
 def test_from_row_status_routes_through_problem_status():
     """The status column maps to RegisteredProblem.status via ProblemStatus.from_string."""
-    assert RegisteredProblem.from_row(_row(status="passed")).status is ProblemStatus.PASSED
-    assert RegisteredProblem.from_row(_row(status="failed")).status is ProblemStatus.FAILED
-    assert RegisteredProblem.from_row(_row(status="skipped")).status is ProblemStatus.SKIPPED
+    assert (
+        RegisteredProblem.from_row(_row(status="passed")).status is ProblemStatus.PASSED
+    )
+    assert (
+        RegisteredProblem.from_row(_row(status="failed")).status is ProblemStatus.FAILED
+    )
+    assert (
+        RegisteredProblem.from_row(_row(status="skipped")).status
+        is ProblemStatus.SKIPPED
+    )
