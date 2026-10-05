@@ -1,0 +1,56 @@
+{
+  "id": 2327,
+  "title": "Number of People Aware of a Secret",
+  "slug": "number-of-people-aware-of-a-secret",
+  "difficulty": "Medium",
+  "description": "On day 1, one person discovers a secret.\nYou are given an integer delay, which means that each person will share the secret with a new person every day, starting from delay days after discovering the secret. You are also given an integer forget, which means that each person will forget the secret forget days after discovering it. A person cannot share the secret on the same day they forgot it, or on any day afterwards.\nGiven an integer n, return the number of people who know the secret at the end of day n. Since the answer may be very large, return it modulo 109 + 7.",
+  "examples": [
+    {
+      "example_num": 1,
+      "example_text": "Input: n = 6, delay = 2, forget = 4\nOutput: 5\nExplanation:\nDay 1: Suppose the first person is named A. (1 person)\nDay 2: A is the only person who knows the secret. (1 person)\nDay 3: A shares the secret with a new person, B. (2 people)\nDay 4: A shares the secret with a new person, C. (3 people)\nDay 5: A forgets the secret, and B shares the secret with a new person, D. (3 people)\nDay 6: B shares the secret with E, and C shares the secret with F. (5 people)"
+    },
+    {
+      "example_num": 2,
+      "example_text": "Input: n = 4, delay = 1, forget = 3\nOutput: 6\nExplanation:\nDay 1: The first person is named A. (1 person)\nDay 2: A shares the secret with B. (2 people)\nDay 3: A and B share the secret with 2 new people, C and D. (4 people)\nDay 4: A forgets the secret. B, C, and D share the secret with 3 new people. (6 people)"
+    }
+  ],
+  "constraints": [
+    "2 <= n <= 1000",
+    "1 <= delay < forget <= n"
+  ],
+  "hints": [
+    "Let dp[i][j] be the number of people who have known the secret for exactly j + 1 days, at day i.",
+    "If j > 0, dp[i][j] = dp[i – 1][j – 1].",
+    "dp[i][0] = sum(dp[i – 1][j]) for j in [delay – 1, forget – 2]."
+  ],
+  "tags": [
+    "dynamic-programming",
+    "queue",
+    "simulation"
+  ],
+  "signature": {
+    "params": [
+      {
+        "name": "n",
+        "type": {
+          "base": "INT32"
+        }
+      },
+      {
+        "name": "delay",
+        "type": {
+          "base": "INT32"
+        }
+      },
+      {
+        "name": "forget",
+        "type": {
+          "base": "INT32"
+        }
+      }
+    ],
+    "returns": {
+      "base": "INT32"
+    }
+  }
+}

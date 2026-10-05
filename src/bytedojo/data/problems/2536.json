@@ -1,0 +1,54 @@
+{
+  "id": 2536,
+  "title": "Increment Submatrices by One",
+  "slug": "increment-submatrices-by-one",
+  "difficulty": "Medium",
+  "description": "You are given a positive integer n, indicating that we initially have an n x n 0-indexed integer matrix mat filled with zeroes.\nYou are also given a 2D integer array query. For each query[i] = [row1i, col1i, row2i, col2i], you should do the following operation:\nReturn the matrix mat after performing every query.",
+  "examples": [
+    {
+      "example_num": 1,
+      "example_text": "Input: n = 3, queries = [[1,1,2,2],[0,0,1,1]]\nOutput: [[1,1,0],[1,2,1],[0,1,1]]\nExplanation: The diagram above shows the initial matrix, the matrix after the first query, and the matrix after the second query.\n- In the first query, we add 1 to every element in the submatrix with the top left corner (1, 1) and bottom right corner (2, 2).\n- In the second query, we add 1 to every element in the submatrix with the top left corner (0, 0) and bottom right corner (1, 1)."
+    },
+    {
+      "example_num": 2,
+      "example_text": "Input: n = 2, queries = [[0,0,1,1]]\nOutput: [[1,1],[1,1]]\nExplanation: The diagram above shows the initial matrix and the matrix after the first query.\n- In the first query we add 1 to every element in the matrix."
+    }
+  ],
+  "constraints": [
+    "1 <= n <= 500",
+    "1 <= queries.length <= 104",
+    "0 <= row1i <= row2i < n",
+    "0 <= col1i <= col2i < n"
+  ],
+  "hints": [
+    "Imagine each row as a separate array. Instead of updating the whole submatrix together, we can use prefix sum to update each row separately.",
+    "For each query, iterate over the rows i in the range [row1, row2] and add 1 to prefix sum S[i][col1], and subtract 1 from S[i][col2 + 1].",
+    "After doing this operation for all the queries, update each row separately with S[i][j] = S[i][j] + S[i][j - 1]."
+  ],
+  "tags": [
+    "array",
+    "matrix",
+    "prefix-sum"
+  ],
+  "signature": {
+    "params": [
+      {
+        "name": "n",
+        "type": {
+          "base": "INT32"
+        }
+      },
+      {
+        "name": "queries",
+        "type": {
+          "base": "MATRIX",
+          "element": "INT32"
+        }
+      }
+    ],
+    "returns": {
+      "base": "MATRIX",
+      "element": "INT32"
+    }
+  }
+}

@@ -1,0 +1,57 @@
+{
+  "id": 3480,
+  "title": "Maximize Subarrays After Removing One Conflicting Pair",
+  "slug": "maximize-subarrays-after-removing-one-conflicting-pair",
+  "difficulty": "Hard",
+  "description": "You are given an integer n which represents an array nums containing the numbers from 1 to n in order. Additionally, you are given a 2D array conflictingPairs, where conflictingPairs[i] = [a, b] indicates that a and b form a conflicting pair.\nRemove exactly one element from conflictingPairs. Afterward, count the number of non-empty subarrays of nums which do not contain both a and b for any remaining conflicting pair [a, b].\nReturn the maximum number of subarrays possible after removing exactly one conflicting pair.",
+  "examples": [
+    {
+      "example_num": 1,
+      "example_text": "Input: n = 4, conflictingPairs = [[2,3],[1,4]]\nOutput: 9\nExplanation:"
+    },
+    {
+      "example_num": 2,
+      "example_text": "Input: n = 5, conflictingPairs = [[1,2],[2,5],[3,5]]\nOutput: 12\nExplanation:"
+    }
+  ],
+  "constraints": [
+    "2 <= n <= 105",
+    "1 <= conflictingPairs.length <= 2 * n",
+    "conflictingPairs[i].length == 2",
+    "1 <= conflictingPairs[i][j] <= n",
+    "conflictingPairs[i][0] != conflictingPairs[i][1]"
+  ],
+  "hints": [
+    "Let <code>f[i]</code> (where <code>i = 1, 2, 3, ..., n</code>) be the end index of the longest valid subarray (without any conflicting pair) starting at index <code>i</code>.",
+    "The answer is: <code>sigma(f[i] - i + 1) for i in [1..n]</code>, which simplifies to: <code>sigma(f[i]) - n * (n + 1) / 2 + n</code>.",
+    "Focus on maintaining <code>f[i]</code>.",
+    "If we have a conflicting pair <code>(x, y)</code> with <code>x < y</code>: 1. Sort the conflicting pairs by <code>y</code> values in non-increasing order.  2. Update each prefix of the <code>f</code> array accordingly.",
+    "Use a segment tree or another suitable data structure to maintain the range update and sum query efficiently."
+  ],
+  "tags": [
+    "array",
+    "segment-tree",
+    "enumeration",
+    "prefix-sum"
+  ],
+  "signature": {
+    "params": [
+      {
+        "name": "n",
+        "type": {
+          "base": "INT32"
+        }
+      },
+      {
+        "name": "conflictingPairs",
+        "type": {
+          "base": "MATRIX",
+          "element": "INT32"
+        }
+      }
+    ],
+    "returns": {
+      "base": "INT32"
+    }
+  }
+}

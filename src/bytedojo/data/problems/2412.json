@@ -1,0 +1,46 @@
+{
+  "id": 2412,
+  "title": "Minimum Money Required Before Transactions",
+  "slug": "minimum-money-required-before-transactions",
+  "difficulty": "Hard",
+  "description": "You are given a 0-indexed 2D integer array transactions, where transactions[i] = [costi, cashbacki].\nThe array describes transactions, where each transaction must be completed exactly once in some order. At any given moment, you have a certain amount of money. In order to complete transaction i, money >= costi must hold true. After performing a transaction, money becomes money - costi + cashbacki.\nReturn the minimum amount of money required before any transaction so that all of the transactions can be completed regardless of the order of the transactions.",
+  "examples": [
+    {
+      "example_num": 1,
+      "example_text": "Input: transactions = [[2,1],[5,0],[4,2]]\nOutput: 10\nExplanation:\nStarting with money = 10, the transactions can be performed in any order.\nIt can be shown that starting with money < 10 will fail to complete all transactions in some order."
+    },
+    {
+      "example_num": 2,
+      "example_text": "Input: transactions = [[3,0],[0,3]]\nOutput: 3\nExplanation:\n- If transactions are in the order [[3,0],[0,3]], the minimum money required to complete the transactions is 3.\n- If transactions are in the order [[0,3],[3,0]], the minimum money required to complete the transactions is 0.\nThus, starting with money = 3, the transactions can be performed in any order."
+    }
+  ],
+  "constraints": [
+    "1 <= transactions.length <= 105",
+    "transactions[i].length == 2",
+    "0 <= costi, cashbacki <= 109"
+  ],
+  "hints": [
+    "Split transactions that have cashback greater or equal to cost apart from transactions that have cashback less than cost. You will always <strong>earn</strong> money in the first scenario.",
+    "For transactions that have cashback greater or equal to cost, sort them by cost in descending order.",
+    "For transactions that have cashback less than cost, sort them by cashback in ascending order."
+  ],
+  "tags": [
+    "array",
+    "greedy",
+    "sorting"
+  ],
+  "signature": {
+    "params": [
+      {
+        "name": "transactions",
+        "type": {
+          "base": "MATRIX",
+          "element": "INT32"
+        }
+      }
+    ],
+    "returns": {
+      "base": "INT32"
+    }
+  }
+}

@@ -1,0 +1,59 @@
+{
+  "id": 2867,
+  "title": "Count Valid Paths in a Tree",
+  "slug": "count-valid-paths-in-a-tree",
+  "difficulty": "Hard",
+  "description": "There is an undirected tree with n nodes labeled from 1 to n. You are given the integer n and a 2D integer array edges of length n - 1, where edges[i] = [ui, vi] indicates that there is an edge between nodes ui and vi in the tree.\nReturn the number of valid paths in the tree.\nA path (a, b) is valid if there exists exactly one prime number among the node labels in the path from a to b.\nNote that:",
+  "examples": [
+    {
+      "example_num": 1,
+      "example_text": "Input: n = 5, edges = [[1,2],[1,3],[2,4],[2,5]]\nOutput: 4\nExplanation: The pairs with exactly one prime number on the path between them are: \n- (1, 2) since the path from 1 to 2 contains prime number 2. \n- (1, 3) since the path from 1 to 3 contains prime number 3.\n- (1, 4) since the path from 1 to 4 contains prime number 2.\n- (2, 4) since the path from 2 to 4 contains prime number 2.\nIt can be shown that there are only 4 valid paths."
+    },
+    {
+      "example_num": 2,
+      "example_text": "Input: n = 6, edges = [[1,2],[1,3],[2,4],[3,5],[3,6]]\nOutput: 6\nExplanation: The pairs with exactly one prime number on the path between them are: \n- (1, 2) since the path from 1 to 2 contains prime number 2.\n- (1, 3) since the path from 1 to 3 contains prime number 3.\n- (1, 4) since the path from 1 to 4 contains prime number 2.\n- (1, 6) since the path from 1 to 6 contains prime number 3.\n- (2, 4) since the path from 2 to 4 contains prime number 2.\n- (3, 6) since the path from 3 to 6 contains prime number 3.\nIt can be shown that there are only 6 valid paths."
+    }
+  ],
+  "constraints": [
+    "1 <= n <= 105",
+    "edges.length == n - 1",
+    "edges[i].length == 2",
+    "1 <= ui, vi <= n",
+    "The input is generated such that edges represent a valid tree."
+  ],
+  "hints": [
+    "Use the sieve of Eratosthenes to find all prime numbers in the range <code>[1, n]</code>.****",
+    "Root the tree at any node.",
+    "Let <code>dp[i][0] = the number of vertical paths starting from i containing no prime nodes </code>, and <code>dp[i][1] = the number of vertical paths starting from i containing one prime node </code>.",
+    "If <code>i</code> is not prime, <code>dp[i][0] = sum(dp[child][0]) + 1</code>, and <code>dp[i][1] = sum(dp[child][1])</code> for each <code>child</code> of <code>i</code> in the rooted tree.",
+    "If <code>i</code> is prime, <code>dp[i][0] = 0</code>, and <code>dp[i][1] = sum(dp[child][0]) + 1</code> for each <code>child</code> of <code>i</code> in the rooted tree.",
+    "For each node <code>i</code>, and using the computed <code>dp</code> matrix, count the number of unordered pairs <code>(a,b)</code> such that <code>lca(a,b) = i</code>, and there exists exactly one prime number on the path from <code>a</code> to <code>b</code>."
+  ],
+  "tags": [
+    "math",
+    "dynamic-programming",
+    "tree",
+    "depth-first-search",
+    "number-theory"
+  ],
+  "signature": {
+    "params": [
+      {
+        "name": "n",
+        "type": {
+          "base": "INT32"
+        }
+      },
+      {
+        "name": "edges",
+        "type": {
+          "base": "MATRIX",
+          "element": "INT32"
+        }
+      }
+    ],
+    "returns": {
+      "base": "INT32"
+    }
+  }
+}

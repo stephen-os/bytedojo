@@ -1,0 +1,51 @@
+{
+  "id": 3161,
+  "title": "Block Placement Queries",
+  "slug": "block-placement-queries",
+  "difficulty": "Hard",
+  "description": "There exists an infinite number line, with its origin at 0 and extending towards the positive x-axis.\nYou are given a 2D array queries, which contains two types of queries:\nReturn a boolean array results, where results[i] is true if you can place the block specified in the ith query of type 2, and false otherwise.",
+  "examples": [
+    {
+      "example_num": 1,
+      "example_text": "Input: queries = [[1,2],[2,3,3],[2,3,1],[2,2,2]]\nOutput: [false,true,true]\nExplanation:\n\nFor query 0, place an obstacle at x = 2 . A block of size at most 2 can be placed before x = 3 ."
+    },
+    {
+      "example_num": 2,
+      "example_text": "Input: queries = [[1,7],[2,7,6],[1,2],[2,7,5],[2,7,6]]\nOutput: [true,true,false]\nExplanation:\n"
+    }
+  ],
+  "constraints": [
+    "1 <= queries.length <= 15 * 104",
+    "2 <= queries[i].length <= 3",
+    "1 <= queries[i][0] <= 2",
+    "1 <= x, sz <= min(5 * 104, 3 * queries.length)",
+    "The input is generated such that for queries of type 1, no obstacle exists at distance x when the query is asked.",
+    "The input is generated such that there is at least one query of type 2."
+  ],
+  "hints": [
+    "Let <code>d[x]</code> be the distance of the next obstacle after <code>x</code>.",
+    "For each query of type 2, we just need to check if <code>max(d[0], d[1], d[2], …d[x - sz]) > sz</code>.",
+    "Use segment tree to maintain <code>d[x]</code>."
+  ],
+  "tags": [
+    "array",
+    "binary-search",
+    "binary-indexed-tree",
+    "segment-tree"
+  ],
+  "signature": {
+    "params": [
+      {
+        "name": "queries",
+        "type": {
+          "base": "MATRIX",
+          "element": "INT32"
+        }
+      }
+    ],
+    "returns": {
+      "base": "ARRAY",
+      "element": "BOOL"
+    }
+  }
+}

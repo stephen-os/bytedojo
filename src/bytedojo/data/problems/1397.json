@@ -1,0 +1,69 @@
+{
+  "id": 1397,
+  "title": "Find All Good Strings",
+  "slug": "find-all-good-strings",
+  "difficulty": "Hard",
+  "description": "Given the strings s1 and s2 of size n and the string evil, return the number of good strings.\nA good string has size n, it is alphabetically greater than or equal to s1, it is alphabetically smaller than or equal to s2, and it does not contain the string evil as a substring. Since the answer can be a huge number, return this modulo 109 + 7.",
+  "examples": [
+    {
+      "example_num": 1,
+      "example_text": "Input: n = 2, s1 = \"aa\", s2 = \"da\", evil = \"b\"\nOutput: 51 \nExplanation: There are 25 good strings starting with 'a': \"aa\",\"ac\",\"ad\",...,\"az\". Then there are 25 good strings starting with 'c': \"ca\",\"cc\",\"cd\",...,\"cz\" and finally there is one good string starting with 'd': \"da\"."
+    },
+    {
+      "example_num": 2,
+      "example_text": "Input: n = 8, s1 = \"leetcode\", s2 = \"leetgoes\", evil = \"leet\"\nOutput: 0 \nExplanation: All strings greater than or equal to s1 and smaller than or equal to s2 start with the prefix \"leet\", therefore, there is not any good string."
+    },
+    {
+      "example_num": 3,
+      "example_text": "Input: n = 2, s1 = \"gx\", s2 = \"gz\", evil = \"x\"\nOutput: 2"
+    }
+  ],
+  "constraints": [
+    "s1.length == n",
+    "s2.length == n",
+    "s1 <= s2",
+    "1 <= n <= 500",
+    "1 <= evil.length <= 50",
+    "All strings consist of lowercase English letters."
+  ],
+  "hints": [
+    "Use DP with 4 states (pos: Int, posEvil: Int, equalToS1: Bool, equalToS2: Bool) which compute the number of valid strings of size \"pos\" where the maximum common suffix with string \"evil\" has size \"posEvil\". When \"equalToS1\" is \"true\", the current valid string is equal to \"S1\" otherwise it is greater. In a similar way when equalToS2 is \"true\" the current valid string is equal to \"S2\" otherwise it is smaller.",
+    "To update the maximum common suffix with string \"evil\" use KMP preprocessing."
+  ],
+  "tags": [
+    "string",
+    "dynamic-programming",
+    "string-matching"
+  ],
+  "signature": {
+    "params": [
+      {
+        "name": "n",
+        "type": {
+          "base": "INT32"
+        }
+      },
+      {
+        "name": "s1",
+        "type": {
+          "base": "STRING"
+        }
+      },
+      {
+        "name": "s2",
+        "type": {
+          "base": "STRING"
+        }
+      },
+      {
+        "name": "evil",
+        "type": {
+          "base": "STRING"
+        }
+      }
+    ],
+    "returns": {
+      "base": "INT32"
+    }
+  }
+}

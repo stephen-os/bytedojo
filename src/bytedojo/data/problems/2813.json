@@ -1,0 +1,65 @@
+{
+  "id": 2813,
+  "title": "Maximum Elegance of a K-Length Subsequence",
+  "slug": "maximum-elegance-of-a-k-length-subsequence",
+  "difficulty": "Hard",
+  "description": "You are given a 0-indexed 2D integer array items of length n and an integer k.\nitems[i] = [profiti, categoryi], where profiti and categoryi denote the profit and category of the ith item respectively.\nLet's define the elegance of a subsequence of items as total_profit + distinct_categories2, where total_profit is the sum of all profits in the subsequence, and distinct_categories is the number of distinct categories from all the categories in the selected subsequence.\nYour task is to find the maximum elegance from all subsequences of size k in items.\nReturn an integer denoting the maximum elegance of a subsequence of items with size exactly k.\nNote: A subsequence of an array is a new array generated from the original array by deleting some elements (possibly none) without changing the remaining elements' relative order.",
+  "examples": [
+    {
+      "example_num": 1,
+      "example_text": "Input: items = [[3,2],[5,1],[10,1]], k = 2\nOutput: 17\nExplanation: In this example, we have to select a subsequence of size 2.\nWe can select items[0] = [3,2] and items[2] = [10,1].\nThe total profit in this subsequence is 3 + 10 = 13, and the subsequence contains 2 distinct categories [2,1].\nHence, the elegance is 13 + 22 = 17, and we can show that it is the maximum achievable elegance."
+    },
+    {
+      "example_num": 2,
+      "example_text": "Input: items = [[3,1],[3,1],[2,2],[5,3]], k = 3\nOutput: 19\nExplanation: In this example, we have to select a subsequence of size 3. \nWe can select items[0] = [3,1], items[2] = [2,2], and items[3] = [5,3]. \nThe total profit in this subsequence is 3 + 2 + 5 = 10, and the subsequence contains 3 distinct categories [1,2,3]. \nHence, the elegance is 10 + 32 = 19, and we can show that it is the maximum achievable elegance."
+    },
+    {
+      "example_num": 3,
+      "example_text": "Input: items = [[1,1],[2,1],[3,1]], k = 3\nOutput: 7\nExplanation: In this example, we have to select a subsequence of size 3. \nWe should select all the items. \nThe total profit will be 1 + 2 + 3 = 6, and the subsequence contains 1 distinct category [1]. \nHence, the maximum elegance is 6 + 12 = 7."
+    }
+  ],
+  "constraints": [
+    "1 <= items.length == n <= 105",
+    "items[i].length == 2",
+    "items[i][0] == profiti",
+    "items[i][1] == categoryi",
+    "1 <= profiti <= 109",
+    "1 <= categoryi <= n",
+    "1 <= k <= n"
+  ],
+  "hints": [
+    "<div class=\"_1l1MA\">Greedy algorithm.</div>",
+    "<div class=\"_1l1MA\">Sort items in non-increasing order of profits.</div>",
+    "<div class=\"_1l1MA\">Select the first <code>k</code> items (the top <code>k</code> most profitable items). Keep track of the items as the candidate set.</div>",
+    "<div class=\"_1l1MA\">For the remaining <code>n - k</code> items sorted in non-increasing order of profits, try replacing an item in the candidate set using the current item.</div>",
+    "<div class=\"_1l1MA\">The replacing item should add a new category to the candidate set and should remove the item with the minimum profit that occurs more than once in the candidate set.</div>"
+  ],
+  "tags": [
+    "array",
+    "hash-table",
+    "stack",
+    "greedy",
+    "sorting",
+    "heap"
+  ],
+  "signature": {
+    "params": [
+      {
+        "name": "items",
+        "type": {
+          "base": "MATRIX",
+          "element": "INT32"
+        }
+      },
+      {
+        "name": "k",
+        "type": {
+          "base": "INT32"
+        }
+      }
+    ],
+    "returns": {
+      "base": "INT32"
+    }
+  }
+}

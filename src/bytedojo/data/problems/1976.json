@@ -1,0 +1,57 @@
+{
+  "id": 1976,
+  "title": "Number of Ways to Arrive at Destination",
+  "slug": "number-of-ways-to-arrive-at-destination",
+  "difficulty": "Medium",
+  "description": "You are in a city that consists of n intersections numbered from 0 to n - 1 with bi-directional roads between some intersections. The inputs are generated such that you can reach any intersection from any other intersection and that there is at most one road between any two intersections.\nYou are given an integer n and a 2D integer array roads where roads[i] = [ui, vi, timei] means that there is a road between intersections ui and vi that takes timei minutes to travel. You want to know in how many ways you can travel from intersection 0 to intersection n - 1 in the shortest amount of time.\nReturn the number of ways you can arrive at your destination in the shortest amount of time. Since the answer may be large, return it modulo 109 + 7.",
+  "examples": [
+    {
+      "example_num": 1,
+      "example_text": "Input: n = 7, roads = [[0,6,7],[0,1,2],[1,2,3],[1,3,3],[6,3,3],[3,5,1],[6,5,1],[2,5,1],[0,4,5],[4,6,2]]\nOutput: 4\nExplanation: The shortest amount of time it takes to go from intersection 0 to intersection 6 is 7 minutes.\nThe four ways to get there in 7 minutes are:\n- 0 ➝ 6\n- 0 ➝ 4 ➝ 6\n- 0 ➝ 1 ➝ 2 ➝ 5 ➝ 6\n- 0 ➝ 1 ➝ 3 ➝ 5 ➝ 6"
+    },
+    {
+      "example_num": 2,
+      "example_text": "Input: n = 2, roads = [[1,0,10]]\nOutput: 1\nExplanation: There is only one way to go from intersection 0 to intersection 1, and it takes 10 minutes."
+    }
+  ],
+  "constraints": [
+    "1 <= n <= 200",
+    "n - 1 <= roads.length <= n * (n - 1) / 2",
+    "roads[i].length == 3",
+    "0 <= ui, vi <= n - 1",
+    "1 <= timei <= 109",
+    "ui != vi",
+    "There is at most one road connecting any two intersections.",
+    "You can reach any intersection from any other intersection."
+  ],
+  "hints": [
+    "First use any shortest path algorithm to get edges where dist[u] + weight = dist[v], here dist[x] is the shortest distance between node 0 and x",
+    "Using those edges only the graph turns into a dag now we just need to know the number of ways to get from node 0 to node n - 1 on a dag using dp"
+  ],
+  "tags": [
+    "dynamic-programming",
+    "graph",
+    "topological-sort",
+    "shortest-path"
+  ],
+  "signature": {
+    "params": [
+      {
+        "name": "n",
+        "type": {
+          "base": "INT32"
+        }
+      },
+      {
+        "name": "roads",
+        "type": {
+          "base": "MATRIX",
+          "element": "INT32"
+        }
+      }
+    ],
+    "returns": {
+      "base": "INT32"
+    }
+  }
+}

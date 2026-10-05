@@ -1,0 +1,59 @@
+{
+  "id": 3193,
+  "title": "Count the Number of Inversions",
+  "slug": "count-the-number-of-inversions",
+  "difficulty": "Hard",
+  "description": "You are given an integer n and a 2D array requirements, where requirements[i] = [endi, cnti] represents the end index and the inversion count of each requirement.\nA pair of indices (i, j) from an integer array nums is called an inversion if:\nReturn the number of permutations perm of [0, 1, 2, ..., n - 1] such that for all requirements[i], perm[0..endi] has exactly cnti inversions.\nSince the answer may be very large, return it modulo 109 + 7.",
+  "examples": [
+    {
+      "example_num": 1,
+      "example_text": "Input: n = 3, requirements = [[2,2],[0,0]]\nOutput: 2\nExplanation:\nThe two permutations are:"
+    },
+    {
+      "example_num": 2,
+      "example_text": "Input: n = 3, requirements = [[2,2],[1,1],[0,0]]\nOutput: 1\nExplanation:\nThe only satisfying permutation is [2, 0, 1] :"
+    },
+    {
+      "example_num": 3,
+      "example_text": "Input: n = 2, requirements = [[0,0],[1,0]]\nOutput: 1\nExplanation:\nThe only satisfying permutation is [0, 1] :"
+    }
+  ],
+  "constraints": [
+    "2 <= n <= 300",
+    "1 <= requirements.length <= n",
+    "requirements[i] = [endi, cnti]",
+    "0 <= endi <= n - 1",
+    "0 <= cnti <= 400",
+    "The input is generated such that there is at least one i such that endi == n - 1.",
+    "The input is generated such that all endi are unique."
+  ],
+  "hints": [
+    "Let <code>dp[i][j]</code> denote the number of arrays of length <code>i</code> with <code>j</code> inversions.",
+    "<code>dp[i][j] = dp[i - 1][j] + dp[i - 1][j - 1] + … + dp[i - 1][0]</code>.",
+    "<code>dp[i][j] = 0</code> if for some <code>x</code>, <code>requirements[x][0] == i</code> and <code>requirements[x][1] != j</code>."
+  ],
+  "tags": [
+    "array",
+    "dynamic-programming"
+  ],
+  "signature": {
+    "params": [
+      {
+        "name": "n",
+        "type": {
+          "base": "INT32"
+        }
+      },
+      {
+        "name": "requirements",
+        "type": {
+          "base": "MATRIX",
+          "element": "INT32"
+        }
+      }
+    ],
+    "returns": {
+      "base": "INT32"
+    }
+  }
+}

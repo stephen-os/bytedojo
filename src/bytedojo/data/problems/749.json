@@ -1,0 +1,52 @@
+{
+  "id": 749,
+  "title": "Contain Virus",
+  "slug": "contain-virus",
+  "difficulty": "Hard",
+  "description": "A virus is spreading rapidly, and your task is to quarantine the infected area by installing walls.\nThe world is modeled as an m x n binary grid isInfected, where isInfected[i][j] == 0 represents uninfected cells, and isInfected[i][j] == 1 represents cells contaminated with the virus. A wall (and only one wall) can be installed between any two 4-directionally adjacent cells, on the shared boundary.\nEvery night, the virus spreads to all neighboring cells in all four directions unless blocked by a wall. Resources are limited. Each day, you can install walls around only one region (i.e., the affected area (continuous block of infected cells) that threatens the most uninfected cells the following night). There will never be a tie.\nReturn the number of walls used to quarantine all the infected regions. If the world will become fully infected, return the number of walls used.",
+  "examples": [
+    {
+      "example_num": 1,
+      "example_text": "Input: isInfected = [[0,1,0,0,0,0,0,1],[0,1,0,0,0,0,0,1],[0,0,0,0,0,0,0,1],[0,0,0,0,0,0,0,0]]\nOutput: 10\nExplanation: There are 2 contaminated regions.\nOn the first day, add 5 walls to quarantine the viral region on the left. The board after the virus spreads is:\n\nOn the second day, add 5 walls to quarantine the viral region on the right. The virus is fully contained."
+    },
+    {
+      "example_num": 2,
+      "example_text": "Input: isInfected = [[1,1,1],[1,0,1],[1,1,1]]\nOutput: 4\nExplanation: Even though there is only one cell saved, there are 4 walls built.\nNotice that walls are only built on the shared boundary of two different cells."
+    },
+    {
+      "example_num": 3,
+      "example_text": "Input: isInfected = [[1,1,1,0,0,0,0,0,0],[1,0,1,0,1,1,1,1,1],[1,1,1,0,0,0,0,0,0]]\nOutput: 13\nExplanation: The region on the left only builds two new walls."
+    }
+  ],
+  "constraints": [
+    "m == isInfected.length",
+    "n == isInfected[i].length",
+    "1 <= m, n <= 50",
+    "isInfected[i][j] is either 0 or 1.",
+    "There is always a contiguous viral region throughout the described process that will infect strictly more uncontaminated squares in the next round."
+  ],
+  "hints": [
+    "The implementation is long - we want to perfrom the following steps:\r\n\r\n* Find all viral regions (connected components), additionally for each region keeping track of the frontier (neighboring uncontaminated cells), and the perimeter of the region.\r\n\r\n* Disinfect the most viral region, adding it's perimeter to the answer.\r\n\r\n* Spread the virus in the remaining regions outward by 1 square."
+  ],
+  "tags": [
+    "array",
+    "depth-first-search",
+    "breadth-first-search",
+    "matrix",
+    "simulation"
+  ],
+  "signature": {
+    "params": [
+      {
+        "name": "isInfected",
+        "type": {
+          "base": "MATRIX",
+          "element": "INT32"
+        }
+      }
+    ],
+    "returns": {
+      "base": "INT32"
+    }
+  }
+}

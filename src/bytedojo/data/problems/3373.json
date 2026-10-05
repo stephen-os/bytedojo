@@ -1,0 +1,60 @@
+{
+  "id": 3373,
+  "title": "Maximize the Number of Target Nodes After Connecting Trees II",
+  "slug": "maximize-the-number-of-target-nodes-after-connecting-trees-ii",
+  "difficulty": "Hard",
+  "description": "There exist two undirected trees with n and m nodes, labeled from [0, n - 1] and [0, m - 1], respectively.\nYou are given two 2D integer arrays edges1 and edges2 of lengths n - 1 and m - 1, respectively, where edges1[i] = [ai, bi] indicates that there is an edge between nodes ai and bi in the first tree and edges2[i] = [ui, vi] indicates that there is an edge between nodes ui and vi in the second tree.\nNode u is target to node v if the number of edges on the path from u to v is even. Note that a node is always target to itself.\nReturn an array of n integers answer, where answer[i] is the maximum possible number of nodes that are target to node i of the first tree if you had to connect one node from the first tree to another node in the second tree.\nNote that queries are independent from each other. That is, for every query you will remove the added edge before proceeding to the next query.",
+  "examples": [
+    {
+      "example_num": 1,
+      "example_text": "Input: edges1 = [[0,1],[0,2],[2,3],[2,4]], edges2 = [[0,1],[0,2],[0,3],[2,7],[1,4],[4,5],[4,6]]\nOutput: [8,7,7,8,8]\nExplanation:"
+    },
+    {
+      "example_num": 2,
+      "example_text": "Input: edges1 = [[0,1],[0,2],[0,3],[0,4]], edges2 = [[0,1],[1,2],[2,3]]\nOutput: [3,6,6,6,6]\nExplanation:\nFor every i , connect node i of the first tree with any node of the second tree."
+    }
+  ],
+  "constraints": [
+    "2 <= n, m <= 105",
+    "edges1.length == n - 1",
+    "edges2.length == m - 1",
+    "edges1[i].length == edges2[i].length == 2",
+    "edges1[i] = [ai, bi]",
+    "0 <= ai, bi < n",
+    "edges2[i] = [ui, vi]",
+    "0 <= ui, vi < m",
+    "The input is generated such that edges1 and edges2 represent valid trees."
+  ],
+  "hints": [
+    "Compute an array <code>even</code> where <code>even[u]</code> is the number of nodes at an even distance from node <code>u</code>, for every <code>u</code> of the first tree.",
+    "Compute an array <code>odd</code> where <code>odd[u]</code> is the number of nodes at an odd distance from node <code>u</code>, for every <code>u</code> of the second tree.",
+    "<code>answer[i] = even[i]+ max(odd[1], odd[2], …, odd[m - 1])</code>"
+  ],
+  "tags": [
+    "tree",
+    "depth-first-search",
+    "breadth-first-search"
+  ],
+  "signature": {
+    "params": [
+      {
+        "name": "edges1",
+        "type": {
+          "base": "MATRIX",
+          "element": "INT32"
+        }
+      },
+      {
+        "name": "edges2",
+        "type": {
+          "base": "MATRIX",
+          "element": "INT32"
+        }
+      }
+    ],
+    "returns": {
+      "base": "ARRAY",
+      "element": "INT32"
+    }
+  }
+}

@@ -1,0 +1,51 @@
+{
+  "id": 2866,
+  "title": "Beautiful Towers II",
+  "slug": "beautiful-towers-ii",
+  "difficulty": "Medium",
+  "description": "You are given a 0-indexed array maxHeights of n integers.\nYou are tasked with building n towers in the coordinate line. The ith tower is built at coordinate i and has a height of heights[i].\nA configuration of towers is beautiful if the following conditions hold:\nArray heights is a mountain if there exists an index i such that:\nReturn the maximum possible sum of heights of a beautiful configuration of towers.",
+  "examples": [
+    {
+      "example_num": 1,
+      "example_text": "Input: maxHeights = [5,3,4,1,1]\nOutput: 13\nExplanation: One beautiful configuration with a maximum sum is heights = [5,3,3,1,1]. This configuration is beautiful since:\n- 1 <= heights[i] <= maxHeights[i]  \n- heights is a mountain of peak i = 0.\nIt can be shown that there exists no other beautiful configuration with a sum of heights greater than 13."
+    },
+    {
+      "example_num": 2,
+      "example_text": "Input: maxHeights = [6,5,3,9,2,7]\nOutput: 22\nExplanation: One beautiful configuration with a maximum sum is heights = [3,3,3,9,2,2]. This configuration is beautiful since:\n- 1 <= heights[i] <= maxHeights[i]\n- heights is a mountain of peak i = 3.\nIt can be shown that there exists no other beautiful configuration with a sum of heights greater than 22."
+    },
+    {
+      "example_num": 3,
+      "example_text": "Input: maxHeights = [3,2,5,5,2,3]\nOutput: 18\nExplanation: One beautiful configuration with a maximum sum is heights = [2,2,5,5,2,2]. This configuration is beautiful since:\n- 1 <= heights[i] <= maxHeights[i]\n- heights is a mountain of peak i = 2. \nNote that, for this configuration, i = 3 can also be considered a peak.\nIt can be shown that there exists no other beautiful configuration with a sum of heights greater than 18."
+    }
+  ],
+  "constraints": [
+    "1 <= n == maxHeights.length <= 105",
+    "1 <= maxHeights[i] <= 109"
+  ],
+  "hints": [
+    "Try all the possible indices <code>i</code> as the peak.",
+    "Let <code>left[i]</code> be the maximum sum of heights for the prefix <code>0, …, i</code> when index <code>i</code> is the peak.",
+    "Let <code>right[i]</code> be the maximum sum of heights for suffix <code>i, …, (n - 1)</code> when <code>i</code> is the peak",
+    "Compute values of <code>left[i]</code> from left to right using DP.\r\nFor each <code>i</code> from <code>0</code> to <code>n - 1</code>, <code>left[i] = maxHeights * (i - j) + answer[j]</code>, where <code>j</code> is the rightmost index to the left of <code>i</code> such that <code>maxHeights[j] < maxHeights[i] </code>.",
+    "For each <code>i</code> from <code>n - 1</code> to <code>0</code>, <code>right[i] = maxHeights * (j - i) + answer[j]</code>, where <code>j</code> is the leftmost index to the right of <code>i</code> such that <code>maxHeights[j] < maxHeights[i] </code>."
+  ],
+  "tags": [
+    "array",
+    "stack",
+    "monotonic-stack"
+  ],
+  "signature": {
+    "params": [
+      {
+        "name": "maxHeights",
+        "type": {
+          "base": "ARRAY",
+          "element": "INT32"
+        }
+      }
+    ],
+    "returns": {
+      "base": "INT32"
+    }
+  }
+}

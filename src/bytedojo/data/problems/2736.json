@@ -1,0 +1,77 @@
+{
+  "id": 2736,
+  "title": "Maximum Sum Queries",
+  "slug": "maximum-sum-queries",
+  "difficulty": "Hard",
+  "description": "You are given two 0-indexed integer arrays nums1 and nums2, each of length n, and a 1-indexed 2D array queries where queries[i] = [xi, yi].\nFor the ith query, find the maximum value of nums1[j] + nums2[j] among all indices j (0 <= j < n), where nums1[j] >= xi and nums2[j] >= yi, or -1 if there is no j satisfying the constraints.\nReturn an array answer where answer[i] is the answer to the ith query.",
+  "examples": [
+    {
+      "example_num": 1,
+      "example_text": "Input: nums1 = [4,3,1,2], nums2 = [2,4,9,5], queries = [[4,1],[1,3],[2,5]]\nOutput: [6,10,7]\nExplanation: \nFor the 1st query xi = 4 and yi = 1, we can select index j = 0 since nums1[j] >= 4 and nums2[j] >= 1. The sum nums1[j] + nums2[j] is 6, and we can show that 6 is the maximum we can obtain.\n\nFor the 2nd query xi = 1 and yi = 3, we can select index j = 2 since nums1[j] >= 1 and nums2[j] >= 3. The sum nums1[j] + nums2[j] is 10, and we can show that 10 is the maximum we can obtain. \n\nFor the 3rd query xi = 2 and yi = 5, we can select index j = 3 since nums1[j] >= 2 and nums2[j] >= 5. The sum nums1[j] + nums2[j] is 7, and we can show that 7 is the maximum we can obtain.\n\nTherefore, we return [6,10,7]."
+    },
+    {
+      "example_num": 2,
+      "example_text": "Input: nums1 = [3,2,5], nums2 = [2,3,4], queries = [[4,4],[3,2],[1,1]]\nOutput: [9,9,9]\nExplanation: For this example, we can use index j = 2 for all the queries since it satisfies the constraints for each query."
+    },
+    {
+      "example_num": 3,
+      "example_text": "Input: nums1 = [2,1], nums2 = [2,3], queries = [[3,3]]\nOutput: [-1]\nExplanation: There is one query in this example with xi = 3 and yi = 3. For every index, j, either nums1[j] < xi or nums2[j] < yi. Hence, there is no solution."
+    }
+  ],
+  "constraints": [
+    "nums1.length == nums2.length",
+    "n == nums1.length",
+    "1 <= n <= 105",
+    "1 <= nums1[i], nums2[i] <= 109",
+    "1 <= queries.length <= 105",
+    "queries[i].length == 2",
+    "xi == queries[i][1]",
+    "yi == queries[i][2]",
+    "1 <= xi, yi <= 109"
+  ],
+  "hints": [
+    "Sort (x, y) tuples and queries by x-coordinate descending. Don’t forget to index queries before sorting so that you can answer them in the correct order.",
+    "Before answering a query (min_x, min_y), add all (x, y) pairs with x >= min_x to some data structure.",
+    "Use a monotone descending map to store (y, x + y) pairs. A monotone map has ascending keys and descending values. When inserting a pair (y, x + y), remove all pairs (y', x' + y') with y' < y and x' + y' <= x + y.",
+    "To find the insertion position use binary search (built-in in many languages).",
+    "When querying for max (x + y) over y >= y', use binary search to find the first pair (y, x + y) with y >= y'. It will have the maximum value of x + y because the map has monotone descending values."
+  ],
+  "tags": [
+    "array",
+    "binary-search",
+    "stack",
+    "binary-indexed-tree",
+    "segment-tree",
+    "sorting",
+    "monotonic-stack"
+  ],
+  "signature": {
+    "params": [
+      {
+        "name": "nums1",
+        "type": {
+          "base": "ARRAY",
+          "element": "INT32"
+        }
+      },
+      {
+        "name": "nums2",
+        "type": {
+          "base": "ARRAY",
+          "element": "INT32"
+        }
+      },
+      {
+        "name": "queries",
+        "type": {
+          "base": "MATRIX",
+          "element": "INT32"
+        }
+      }
+    ],
+    "returns": {
+      "base": "ARRAY",
+      "element": "INT32"
+    }
+  }
+}
