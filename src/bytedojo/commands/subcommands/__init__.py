@@ -9,6 +9,10 @@ from bytedojo.commands.subcommands.query import query
 from bytedojo.commands.subcommands.pick import pick
 from bytedojo.commands.subcommands.review import review
 from bytedojo.commands.subcommands.settings import settings
+from bytedojo.commands.subcommands.run import run
+from bytedojo.commands.subcommands.test import test
+from bytedojo.commands.subcommands.stats import stats
+from bytedojo.commands.subcommands.support import support
 
 __all__ = [
     'init',
@@ -18,4 +22,8 @@ __all__ = [
     'pick',
     'review',
     'settings',
+    'run',
+    'test',
+    'stats',
+    'support',
 ]

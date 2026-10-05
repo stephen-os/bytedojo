@@ -7,7 +7,7 @@ from bytedojo.commands import subcommands
 
 _EXPECTED = {
     "init", "grade", "fetch", "query", "pick",
-    "review", "settings",
+    "review", "settings", "run", "test", "stats", "support",
 }
 
 

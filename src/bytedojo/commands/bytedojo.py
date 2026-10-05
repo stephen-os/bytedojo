@@ -17,6 +17,10 @@ from bytedojo.commands.subcommands import fetch
 from bytedojo.commands.subcommands import query
 from bytedojo.commands.subcommands import pick
 from bytedojo.commands.subcommands import review
+from bytedojo.commands.subcommands import run
+from bytedojo.commands.subcommands import test
+from bytedojo.commands.subcommands import stats
+from bytedojo.commands.subcommands import support
 
 # Helper functions for printing the version of bytedojo. 
 def print_version(ctx, _, value):
@@ -41,8 +45,8 @@ def print_description(ctx, _, value):
         return
     click.echo(
         "ByteDojo is a CLI tool for practicing LeetCode problems.\n"
-        "Fetch and grade problems, review solutions on a schedule, and\n"
-        "track progress—all from the command line."
+        "Fetch, run, test, and grade problems, review solutions on a\n"
+        "schedule, and track progress—all from the command line."
     )
     ctx.exit()
 
@@ -71,8 +75,8 @@ def print_description(ctx, _, value):
 def bytedojo(ctx, debug: bool, config: Optional[Path]):
     """
     ByteDojo is a CLI tool for practicing LeetCode problems.
-    Fetch and grade problems, review solutions on a schedule, and
-    track progress—all from the command line.
+    Fetch, run, test, and grade problems, review solutions on a
+    schedule, and track progress—all from the command line.
     """
 
     setup_logger(debug=debug)
@@ -89,4 +93,8 @@ bytedojo.add_command(init)
 bytedojo.add_command(pick)
 bytedojo.add_command(query)
 bytedojo.add_command(review)
+bytedojo.add_command(run)
+bytedojo.add_command(test)
 bytedojo.add_command(settings)
+bytedojo.add_command(stats)
+bytedojo.add_command(support)
