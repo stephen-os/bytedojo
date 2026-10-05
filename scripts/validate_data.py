@@ -47,6 +47,8 @@ _SCALARS = {
     "LIST_NODE",
 }
 _COMPARISONS = {"exact", "unordered_all", "unordered_outer"}
+#: Canonical return types for which a null expected value is legitimate.
+_NULLABLE_RETURNS = {"TREE_NODE", "LIST_NODE", "VOID"}
 _DIFFICULTIES = {"Easy", "Medium", "Hard"}
 _PROBLEM_REQUIRED_FIELDS = (
     "id",
@@ -166,11 +168,21 @@ def _check_bundle(path: Path, errors: list[str]) -> None:
         errors.append(f"{rel}: return type {returns!r} not in vocabulary")
         return
 
+    # Only reference returns (and VOID) may legitimately expect null; a
+    # null expected on a scalar/array return means the generator's
+    # reference solution returned None — an artifact, not a test case.
+    returns_nullable = _canonical(returns) in _NULLABLE_RETURNS
+
     cases = data.get("cases", [])
     if not cases:
         errors.append(f"{rel}: bundle has zero cases")
     for case in cases:
         case_id = case.get("case_id", "?")
+        if case.get("expected") is None and not returns_nullable:
+            errors.append(
+                f"{rel}: case {case_id} expected is null but the "
+                f"return type is not nullable"
+            )
         for param in params:
             value = case.get("input", {}).get(param.get("name"))
             try:
