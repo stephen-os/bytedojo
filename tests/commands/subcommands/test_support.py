@@ -14,13 +14,19 @@ def _report(*, all_ready: bool = True, with_repo: bool = False) -> SystemReport:
     statuses = [
         ToolchainStatus(
             language=CodeLanguage.PYTHON,
-            found=True, version="3.12.0",
+            found=True,
+            version="3.12.0",
             paths={"python": "/usr/bin/python3"},
         ),
         ToolchainStatus(
             language=CodeLanguage.JAVA,
-            found=all_ready, version="OpenJDK 21" if all_ready else None,
-            paths={"javac": "/usr/bin/javac", "java": "/usr/bin/java"} if all_ready else {},
+            found=all_ready,
+            version="OpenJDK 21" if all_ready else None,
+            paths=(
+                {"javac": "/usr/bin/javac", "java": "/usr/bin/java"}
+                if all_ready
+                else {}
+            ),
             missing=[] if all_ready else ["javac", "java"],
             install_hint=None if all_ready else "apt install default-jdk",
         ),
@@ -45,7 +51,8 @@ def test_support_invokes_system_service(monkeypatch):
         return _report()
 
     monkeypatch.setattr(
-        "bytedojo.services.system_service.SystemService.check", fake_check,
+        "bytedojo.services.system_service.SystemService.check",
+        fake_check,
     )
     result = CliRunner().invoke(support, [])
     assert result.exit_code == 0
@@ -61,9 +68,9 @@ def test_support_renders_environment_block(monkeypatch):
     assert result.exit_code == 0
     assert "ByteDojo Support" in result.output
     assert "Environment" in result.output
-    assert "0.1.0" in result.output       # bytedojo version
-    assert "3.12.0" in result.output      # python version
-    assert "Linux 6.6" in result.output   # platform name
+    assert "0.1.0" in result.output  # bytedojo version
+    assert "3.12.0" in result.output  # python version
+    assert "Linux 6.6" in result.output  # platform name
     # Path renders differently on Windows vs POSIX — check the tail segment.
     assert "repo" in result.output
 

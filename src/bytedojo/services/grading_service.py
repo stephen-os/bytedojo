@@ -13,7 +13,8 @@ from bytedojo.core.logger import get_logger
 from bytedojo.core.models.problem_status import ProblemStatus
 from bytedojo.core.models.registered_problem import RegisteredProblem
 from bytedojo.core.repository import Repository
-
+from bytedojo.core.settings import SettingsManager
+from bytedojo.services.review_service import ReviewService, ScheduleEffect
 
 #: The statuses a user can manually apply via `dojo grade` — derived from
 #: ProblemStatus so the canonical vocabulary stays single-sourced.
@@ -36,12 +37,21 @@ class GradeResult:
       - success: grade was applied; `status` reflects what was recorded
       - failed:  pre-flight check failed (e.g. invalid status); `error` set
     """
+
     problem: RegisteredProblem
     status: Optional[str] = None
     notes: Optional[str] = None
-    scheduled_review: bool = False
+    schedule_effect: Optional[ScheduleEffect] = None
     review_frequency_days: int = 0
     error: Optional[str] = None
+
+    @property
+    def scheduled_review(self) -> bool:
+        """Whether this grade created a fresh review track."""
+        return (
+            self.schedule_effect is not None
+            and self.schedule_effect.action == "created"
+        )
 
     @property
     def success(self) -> bool:
@@ -88,33 +98,33 @@ class GradingService:
                 ),
             )
 
-        with repo.open_db() as db:
-            db.update_problem_status(problem.id, status, notes)
+        with repo.session() as s:
+            s.problems.update_status(problem.id, status, notes)
             # The attempt row is what `dojo query` reads for its status badge,
             # so the grade has to land on both or the two disagree.
-            db.update_latest_attempt_status(
-                problem.source, problem.problem_id, problem.language.value, status
-            )
-            review_freq = int(db.get_config('review_frequency_days', '7'))
+            s.attempts.update_latest_status(problem.source, problem.problem_id, status)
+        review_freq = SettingsManager(repo.dojo_dir).load().review_frequency_days
 
-        scheduled = False
-        if status == 'passed':
-            # Start (or reset) the SRS track at the base interval. Future
-            # SM-2 progression happens through ReviewService.complete_review.
-            from bytedojo.services.review_service import ReviewService
-            ReviewService().initial_schedule(repo, problem.id)
-            scheduled = True
+        # Schedule effect per the §9 state machine — manual grades trust
+        # the user the same way a test outcome is trusted.
+        reviews = ReviewService()
+        if status == "passed":
+            effect = reviews.apply_pass(repo, problem.id)
+        elif status == "failed":
+            effect = reviews.apply_fail(repo, problem.id)
+        else:  # skipped — set the problem aside
+            effect = reviews.apply_skip(repo, problem.id)
 
         self.logger.debug(
             f"grading_service: graded #{problem.problem_id} as {status} "
-            f"(scheduled_review={scheduled})"
+            f"(schedule={effect.action})"
         )
 
         return GradeResult(
             problem=problem,
             status=status,
             notes=notes,
-            scheduled_review=scheduled,
+            schedule_effect=effect,
             review_frequency_days=review_freq,
         )
 
@@ -124,9 +134,9 @@ class GradingService:
         status: str,
     ) -> List[RegisteredProblem]:
         """List registered problems with the given status."""
-        with repo.open_db() as db:
-            return db.list_problems(status=status)
+        with repo.session() as s:
+            return s.problems.list(status=status)
 
     def list_ungraded(self, repo: Repository) -> List[RegisteredProblem]:
         """List registered problems that have not been graded yet."""
-        return self.list_by_status(repo, 'ungraded')
+        return self.list_by_status(repo, "ungraded")

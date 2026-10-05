@@ -15,7 +15,6 @@ directly (e.g. in unit tests).
 from collections import deque
 from typing import Any, Dict, List, Optional
 
-
 # ----------------------------------------------------------------------------
 # Type vocabulary
 # ----------------------------------------------------------------------------
@@ -49,21 +48,25 @@ def _canonical(type_spec: Any) -> str:
 # primitive-only problems never resolve the node modules.
 # ----------------------------------------------------------------------------
 
+
 def _tree_node_cls():
     """Pull TreeNode from the sibling tree_node module. Raises if missing."""
     from tree_node import TreeNode  # noqa: WPS433 — intentional lazy import
+
     return TreeNode
 
 
 def _list_node_cls():
     """Pull ListNode from the sibling list_node module. Raises if missing."""
     from list_node import ListNode  # noqa: WPS433 — intentional lazy import
+
     return ListNode
 
 
 # ----------------------------------------------------------------------------
 # Parsing JSON values into native Python / reference types
 # ----------------------------------------------------------------------------
+
 
 def parse_value(value: Any, canonical_type: Any) -> Any:
     """Convert a JSON-loaded value into the canonical type's native shape."""
@@ -84,14 +87,14 @@ def parse_value(value: Any, canonical_type: Any) -> Any:
         return None
 
     if t.endswith("_ARRAY"):
-        element_type = t[:-len("_ARRAY")]
+        element_type = t[: -len("_ARRAY")]
         # LIST_NODE_ARRAY is an array of linked-list heads
         if element_type == "LIST_NODE":
             return [build_list(x) for x in value]
         return [parse_value(x, element_type) for x in value]
 
     if t.endswith("_MATRIX"):
-        element_type = t[:-len("_MATRIX")]
+        element_type = t[: -len("_MATRIX")]
         return [[parse_value(x, element_type) for x in row] for row in value]
 
     if t == "TREE_NODE":
@@ -147,6 +150,7 @@ def build_list(flat: Optional[List[Any]]) -> Any:
 # ----------------------------------------------------------------------------
 # Serialization (output → comparable shape)
 # ----------------------------------------------------------------------------
+
 
 def serialize_tree(root) -> List[Any]:
     """Serialize a tree to level-order with trailing nulls trimmed."""
@@ -257,6 +261,7 @@ def _sort_key(value: Any):
 # ----------------------------------------------------------------------------
 # Display (for failure output)
 # ----------------------------------------------------------------------------
+
 
 def format_input(input_dict: Dict[str, Any]) -> str:
     """Render an input dict as `name = value, name = value` for CLI display."""

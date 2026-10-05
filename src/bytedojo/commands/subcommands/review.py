@@ -3,137 +3,78 @@ review - Spaced repetition review system for problems.
 """
 
 import click
-from pathlib import Path
 from typing import Optional
 
-from bytedojo.commands._resolve import resolve_problem
-from bytedojo.core.models.code_language import CodeLanguage
-from bytedojo.core.repository import Repository
-from bytedojo.services import (
-    ReviewService,
-    ReviewQuality,
-    ReviewCompletionResult,
-    ReviewActionResult,
+from bytedojo.commands._options import selectors
+from bytedojo.commands._resolve import require_repo, resolve_problem
+from bytedojo.commands.ui import dim, success
+from bytedojo.commands.ui.renderers import (
+    render_review_action,
+    render_review_completion,
+    render_review_list,
+    render_review_pick,
+    render_review_stats,
 )
-from bytedojo.commands.ui import accent, bold, success, warn, error, dim
+from bytedojo.services import ReviewQuality, ReviewService
 
 
 @click.group(invoke_without_command=True)
-@click.option('--all', '-a', 'show_all', is_flag=True, help='Show all scheduled reviews, not just due')
+@click.option(
+    "--all",
+    "-a",
+    "show_all",
+    is_flag=True,
+    help="Show all scheduled reviews, not just due",
+)
 @click.pass_context
 def review(ctx, show_all: bool):
     """
     Spaced repetition review system.
 
-    Shows problems that are due for review. When you grade a problem as
-    passed, it gets scheduled at the base interval (`review-frequency`).
-    Reviewing it again with `dojo review complete --easy/--good/--hard`
-    applies an SM-2-style update that grows the interval as the problem
-    becomes more familiar.
+    Problems enter the schedule when they first pass `dojo test` (or
+    `dojo grade --pass`). Testing a due problem again IS completing
+    its review; `review complete` exists to signal --easy or --hard
+    recall explicitly.
 
     Examples:
       dojo review                              # Show problems due for review
       dojo review --all                        # Show all scheduled reviews
       dojo review pick                         # Pick a random problem to review
-      dojo review complete 1 --python --good   # Mark a review as completed
+      dojo review complete 1 --good            # Mark a review as completed
       dojo review stats                        # Show review statistics
     """
-    ctx.ensure_object(dict)
-    ctx.obj['show_all'] = show_all
-
     if ctx.invoked_subcommand is None:
         _show_due_reviews(show_all)
 
 
-# ============================================================================
-# DEFAULT: show due reviews
-# ============================================================================
-
 def _show_due_reviews(show_all: bool = False):
     """Show problems due for review."""
-    repo = Repository.find(Path.cwd())
-    if repo is None:
-        raise click.ClickException("Not inside a .dojo repository. Please run 'dojo init' first.")
-
+    repo = require_repo()
     service = ReviewService()
     reviews = service.get_due_reviews(repo, include_future=show_all)
     review_freq = service.get_review_frequency(repo)
-
-    if not reviews:
-        if show_all:
-            click.echo()
-            click.echo(f"  {dim('No problems scheduled for review yet.')}")
-            click.echo(f"  {dim('Problems are added to review when you grade them as passed.')}")
-        else:
-            click.echo()
-            click.echo(f"  {success('No problems due for review!')}")
-            click.echo(f"  {dim('Great job staying on top of your reviews.')}")
-
-        click.echo()
-        click.echo(f"  {dim('Current review frequency:')} {bold(str(review_freq))} days")
-        click.echo(f"  {dim('Change with: dojo settings review-frequency <days>')}")
-        return
-
-    # Count due vs upcoming
-    due_count = sum(1 for r in reviews if r.days_until_due <= 0)
-
-    # Header
-    click.echo()
-    click.echo(dim("  " + "─" * 60))
-    if show_all:
-        click.echo(f"  {accent('All Scheduled Reviews')}")
-    else:
-        click.echo(f"  {warn(f'Problems Due for Review ({due_count})')}")
-    click.echo(dim("  " + "─" * 60))
-
-    click.echo()
-    click.echo(f"  {'ID':>8}  {'Source':10}  {'Due':15}  {'Reviews':>7}  Title")
-    click.echo(f"  {dim('-' * 8)}  {dim('-' * 10)}  {dim('-' * 15)}  {dim('-' * 7)}  {dim('-' * 20)}")
-
-    for r in reviews:
-        title = r.title[:30] + '...' if len(r.title) > 30 else r.title
-        due_date = ReviewService.format_due_date(r.next_review_date)
-        display_id = r.problem_num if r.problem_num else r.problem_id
-
-        # Color based on due status
-        if r.is_overdue:
-            due_styled = error(f"{due_date:15}")
-        elif r.is_due_today:
-            due_styled = warn(f"{due_date:15}")
-        else:
-            due_styled = success(f"{due_date:15}")
-
-        click.echo(f"  {display_id:>8}  {r.source:10}  {due_styled}  {r.repetitions:>7}  {title}")
-
-    click.echo()
-    click.echo(dim("  " + "─" * 60))
-    click.echo(f"  {dim('Review frequency:')} {review_freq} days")
-    click.echo(dim("  " + "─" * 60))
-    click.echo()
-
-    if due_count > 0:
-        click.echo(f"  {dim('Start reviewing with:')}  dojo review pick")
-        click.echo(f"  {dim('Mark complete with:')}    dojo review complete <id> --[easy|good|hard]")
-        click.echo()
+    render_review_list(
+        reviews,
+        show_all=show_all,
+        review_freq=review_freq,
+        format_due_date=ReviewService.format_due_date,
+    )
 
 
 # ============================================================================
 # pick - pick a random due review
 # ============================================================================
 
+
 @review.command()
-@click.pass_context
-def pick(ctx):
+def pick():
     """
     Pick a random problem due for review.
 
     Examples:
       dojo review pick
     """
-    repo = Repository.find(Path.cwd())
-    if repo is None:
-        raise click.ClickException("Not inside a .dojo repository. Please run 'dojo init' first.")
-
+    repo = require_repo()
     service = ReviewService()
     problem = service.pick_random_due(repo)
 
@@ -143,64 +84,36 @@ def pick(ctx):
         click.echo(f"  {dim('You are all caught up. Check back later.')}")
         return
 
-    due_date = ReviewService.format_due_date(problem.next_review_date)
-    display_id = problem.problem_num if problem.problem_num else problem.problem_id
-
-    click.echo()
-    click.echo(dim("  " + "─" * 60))
-    click.echo(f"  {warn('Review This Problem')}")
-    click.echo(dim("  " + "─" * 60))
-    click.echo()
-    click.echo(f"  {accent('#' + str(display_id))}  {bold(problem.title)}")
-    click.echo(f"  {dim('Source')}          {problem.source.capitalize()}")
-    click.echo(f"  {dim('Language')}        {problem.language.upper()}")
-    click.echo(f"  {dim('Difficulty')}      {problem.difficulty or 'Unknown'}")
-    click.echo(f"  {dim('Times Reviewed')}  {problem.repetitions}")
-    click.echo(
-        f"  {dim('Interval')}        {problem.interval_days} days  "
-        f"{dim(f'ease {problem.ease_factor:.2f}')}"
+    render_review_pick(
+        problem,
+        service.get_due_count(repo),
+        ReviewService.format_due_date,
     )
-    click.echo(f"  {dim('Due')}             {due_date}")
-
-    if problem.file_path:
-        click.echo(f"  {dim('File')}            {dim(problem.file_path)}")
-
-    click.echo()
-    click.echo(dim("  " + "─" * 60))
-
-    due_count = service.get_due_count(repo)
-    click.echo(f"  {dim('Due for review:')} {bold(str(due_count))} problem(s)")
-    click.echo(dim("  " + "─" * 60))
-    click.echo()
-
-    if problem.file_path:
-        lang_flag = "--python" if problem.language == "python3" else f"--{problem.language}"
-        click.echo(f"  1. Open the file and solve it again")
-        click.echo(f"  2. Mark complete: {accent(f'dojo review complete {display_id} {lang_flag} --good')}")
-        click.echo(f"     {dim('(use --easy / --good / --hard to grade how well you recalled)')}")
-    click.echo()
 
 
 # ============================================================================
 # complete - apply SM-2 update after reviewing a problem
 # ============================================================================
 
+
 @review.command()
-@click.argument('identifier', required=False)
-
-# Quality flags (mutually exclusive)
-@click.option('--easy', 'quality', flag_value='easy',
-              help='Recalled effortlessly — interval grows extra')
-@click.option('--good', 'quality', flag_value='good',
-              help='Recalled with effort — interval grows by ease factor')
-@click.option('--hard', 'quality', flag_value='hard',
-              help='Struggled — reset interval, ease decreases')
-
-# Selector flags (same shape as dojo grade / test / run)
-@click.option('--name', '-n', 'name_search', help='Search by problem name')
-@click.option('--desc', '-d', 'desc_search', help='Search by description keywords')
-@click.option('--last', is_flag=True, help='Most recently fetched problem')
-@click.option('--python', '-py', 'language', flag_value='python3', help='Python version')
+@click.argument("identifier", required=False)
+@click.option(
+    "--easy", "quality", flag_value="easy", help="Recalled effortlessly — ease grows"
+)
+@click.option(
+    "--good",
+    "quality",
+    flag_value="good",
+    help="Recalled with effort — standard SM-2 step",
+)
+@click.option(
+    "--hard",
+    "quality",
+    flag_value="hard",
+    help="Struggled — interval resets, ease decreases",
+)
+@selectors
 def complete(
     identifier: Optional[str],
     quality: Optional[str],
@@ -212,81 +125,49 @@ def complete(
     """
     Mark a review as complete with an SM-2 quality rating.
 
-    Use this after reviewing a problem via `dojo review pick`. The quality
-    flag controls how the next interval is computed:
-
-      --easy    interval × ease × 1.3; ease increases (problem feels easy)
-      --good    interval × ease;        ease unchanged (standard recall)
-      --hard    interval reset to 1;    ease decreases (struggled)
+    Use this after reviewing a problem via `dojo review pick`. A plain
+    `dojo test` pass on a due problem records a --good review
+    automatically; this command is for signalling --easy or --hard.
 
     Examples:
-      dojo review complete 1 --python --good
+      dojo review complete 1 --good
       dojo review complete --last --easy
     """
     if quality is None:
-        raise click.ClickException(
-            "Specify a quality rating: --easy, --good, or --hard"
-        )
+        raise click.UsageError("Specify a quality rating: --easy, --good, or --hard")
 
-    repo = Repository.find(Path.cwd())
-    if repo is None:
-        raise click.ClickException("Not inside a .dojo repository. Please run 'dojo init' first.")
-
-    if language is None:
-        language = CodeLanguage.default().value
-
+    repo = require_repo()
     problem = resolve_problem(
-        repo, language,
-        identifier=identifier, name=name_search, desc=desc_search, last=last,
+        repo,
+        identifier=identifier,
+        name=name_search,
+        desc=desc_search,
+        last=last,
         command_name="review complete",
+        language=language,
     )
 
-    quality_enum = ReviewQuality(quality)
-    service = ReviewService()
-    result = service.complete_review(repo, problem.id, quality_enum)
-
+    result = ReviewService().complete_review(repo, problem.id, ReviewQuality(quality))
     if result.failed:
         raise click.ClickException(result.error)
 
-    _display_completion(problem.title, result)
-
-
-def _display_completion(title: str, r: ReviewCompletionResult) -> None:
-    click.echo()
-    click.echo(dim("  " + "─" * 60))
-    click.echo(f"  {success(f'Review Complete — {r.quality.value.upper()}')}")
-    click.echo(dim("  " + "─" * 60))
-    click.echo()
-    click.echo(f"  {bold(title)}")
-    click.echo()
-    click.echo(
-        f"  {dim('Interval')}      {r.previous_interval} days  →  "
-        f"{accent(str(r.next_interval) + ' days')}"
-    )
-    click.echo(
-        f"  {dim('Ease factor')}   {r.previous_ease:.2f}  →  "
-        f"{accent(f'{r.next_ease:.2f}')}"
-    )
-    click.echo(
-        f"  {dim('Repetitions')}   {r.previous_repetitions}  →  {r.next_repetitions}"
-    )
-    if r.next_review_date:
-        click.echo(f"  {dim('Next review')}   {r.next_review_date}")
-    click.echo()
+    render_review_completion(problem.title, result)
 
 
 # ============================================================================
-# add - manually queue a problem for review
+# add / snooze / remove
 # ============================================================================
+
 
 @review.command()
-@click.argument('identifier', required=False)
-@click.option('--days', type=int, default=None,
-              help='Initial interval in days (default: review-frequency setting)')
-@click.option('--name', '-n', 'name_search', help='Search by problem name')
-@click.option('--desc', '-d', 'desc_search', help='Search by description keywords')
-@click.option('--last', is_flag=True, help='Most recently fetched problem')
-@click.option('--python', '-py', 'language', flag_value='python3', help='Python version')
+@click.argument("identifier", required=False)
+@click.option(
+    "--days",
+    type=int,
+    default=None,
+    help="Initial interval in days (default: review-frequency setting)",
+)
+@selectors
 def add(
     identifier: Optional[str],
     days: Optional[int],
@@ -303,28 +184,25 @@ def add(
     `dojo review remove` then `dojo review add` to reset.
 
     Examples:
-      dojo review add 1 --python
-      dojo review add 1 --python --days 3
+      dojo review add 1
+      dojo review add 1 --days 3
     """
     repo, problem = _resolve(language, identifier, name_search, desc_search, last)
     result = ReviewService().add_review(repo, problem.id, days=days)
     if result.failed:
         raise click.ClickException(result.error)
-    _display_action(problem.title, result)
+    render_review_action(problem.title, result)
 
-
-# ============================================================================
-# snooze - push out a scheduled review
-# ============================================================================
 
 @review.command()
-@click.argument('identifier', required=False)
-@click.option('--days', type=int, default=1,
-              help='Snooze duration in days from today (default: 1)')
-@click.option('--name', '-n', 'name_search', help='Search by problem name')
-@click.option('--desc', '-d', 'desc_search', help='Search by description keywords')
-@click.option('--last', is_flag=True, help='Most recently fetched problem')
-@click.option('--python', '-py', 'language', flag_value='python3', help='Python version')
+@click.argument("identifier", required=False)
+@click.option(
+    "--days",
+    type=int,
+    default=1,
+    help="Snooze duration in days from today (default: 1)",
+)
+@selectors
 def snooze(
     identifier: Optional[str],
     days: int,
@@ -341,26 +219,19 @@ def snooze(
     review today.
 
     Examples:
-      dojo review snooze 1 --python              # push to tomorrow
-      dojo review snooze 1 --python --days 3     # push 3 days out
+      dojo review snooze 1              # push to tomorrow
+      dojo review snooze 1 --days 3     # push 3 days out
     """
     repo, problem = _resolve(language, identifier, name_search, desc_search, last)
     result = ReviewService().snooze_review(repo, problem.id, days=days)
     if result.failed:
         raise click.ClickException(result.error)
-    _display_action(problem.title, result)
+    render_review_action(problem.title, result)
 
-
-# ============================================================================
-# remove - drop a problem from the review queue
-# ============================================================================
 
 @review.command()
-@click.argument('identifier', required=False)
-@click.option('--name', '-n', 'name_search', help='Search by problem name')
-@click.option('--desc', '-d', 'desc_search', help='Search by description keywords')
-@click.option('--last', is_flag=True, help='Most recently fetched problem')
-@click.option('--python', '-py', 'language', flag_value='python3', help='Python version')
+@click.argument("identifier", required=False)
+@selectors
 def remove(
     identifier: Optional[str],
     name_search: Optional[str],
@@ -372,18 +243,14 @@ def remove(
     Drop a problem from the review queue entirely.
 
     Examples:
-      dojo review remove 1 --python
+      dojo review remove 1
     """
     repo, problem = _resolve(language, identifier, name_search, desc_search, last)
     result = ReviewService().remove_review(repo, problem.id)
     if result.failed:
         raise click.ClickException(result.error)
-    _display_action(problem.title, result)
+    render_review_action(problem.title, result)
 
-
-# ============================================================================
-# Shared helpers for add / snooze / remove
-# ============================================================================
 
 def _resolve(
     language: Optional[str],
@@ -393,49 +260,23 @@ def _resolve(
     last: bool,
 ):
     """Repo + problem lookup shared by add / snooze / remove."""
-    repo = Repository.find(Path.cwd())
-    if repo is None:
-        raise click.ClickException("Not inside a .dojo repository. Please run 'dojo init' first.")
-    if language is None:
-        language = CodeLanguage.default().value
+    repo = require_repo()
     problem = resolve_problem(
-        repo, language,
-        identifier=identifier, name=name_search, desc=desc_search, last=last,
+        repo,
+        identifier=identifier,
+        name=name_search,
+        desc=desc_search,
+        last=last,
         command_name="review",
+        language=language,
     )
     return repo, problem
-
-
-def _display_action(title: str, r: ReviewActionResult) -> None:
-    """Render a ReviewActionResult (add / snooze / remove) to the terminal."""
-    headlines = {
-        "add":    (success, "Added to Review Queue"),
-        "snooze": (warn,    "Review Snoozed"),
-        "remove": (dim,     "Removed from Queue"),
-    }
-    style_fn, headline = headlines.get(r.action, (accent, r.action.upper()))
-
-    click.echo()
-    click.echo(dim("  " + "─" * 60))
-    click.echo(f"  {style_fn(headline)}")
-    click.echo(dim("  " + "─" * 60))
-    click.echo()
-    click.echo(f"  {bold(title)}")
-    click.echo()
-
-    if r.action == "add" and r.interval_days is not None:
-        click.echo(f"  {dim('Initial interval')}  {r.interval_days} days")
-    if r.action == "snooze" and r.interval_days is not None:
-        click.echo(f"  {dim('Snoozed by')}        {r.interval_days} days")
-    if r.next_review_date is not None:
-        click.echo(f"  {dim('Next review')}       {r.next_review_date}")
-
-    click.echo()
 
 
 # ============================================================================
 # stats - review statistics
 # ============================================================================
+
 
 @review.command()
 def stats():
@@ -445,27 +286,6 @@ def stats():
     Examples:
       dojo review stats
     """
-    repo = Repository.find(Path.cwd())
-    if repo is None:
-        raise click.ClickException("Not inside a .dojo repository. Please run 'dojo init' first.")
-
+    repo = require_repo()
     service = ReviewService()
-    review_stats = service.get_stats(repo)
-    review_freq = service.get_review_frequency(repo)
-
-    click.echo()
-    click.echo(dim("  " + "─" * 60))
-    click.echo(f"  {accent('Review Statistics')}")
-    click.echo(dim("  " + "─" * 60))
-    click.echo()
-
-    click.echo(f"  {dim('Review Frequency')}  {review_freq} days")
-    click.echo()
-    due_styled = warn(str(review_stats.due_today)) if review_stats.due_today > 0 else success(str(review_stats.due_today))
-    click.echo(f"  {dim('Due Today')}         {due_styled}")
-    click.echo(f"  {dim('Due This Week')}      {review_stats.due_this_week}")
-    click.echo(f"  {dim('Total in Review')}    {review_stats.total_in_review}")
-
-    click.echo()
-    click.echo(dim("  " + "─" * 60))
-    click.echo()
+    render_review_stats(service.get_stats(repo), service.get_review_frequency(repo))

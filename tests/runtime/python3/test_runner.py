@@ -12,10 +12,8 @@ import subprocess
 import sys
 from pathlib import Path
 
-import pytest
 
 from bytedojo.runtime.python3 import RUNTIME_DIR
-
 
 # --------------------------------------------------------------------------- #
 # Sentinels match runner.py + test_service.py.                                #
@@ -59,7 +57,7 @@ def _parse_envelope(stdout: str) -> list:
     begin = stdout.find(_BEGIN)
     end = stdout.find(_END)
     assert begin >= 0 and end > begin, f"no envelope in: {stdout!r}"
-    payload = stdout[begin + len(_BEGIN):end].strip()
+    payload = stdout[begin + len(_BEGIN) : end].strip()
     return json.loads(payload)
 
 
@@ -67,16 +65,17 @@ def _parse_envelope(stdout: str) -> list:
 # Happy path: a primitive-only solution                                       #
 # --------------------------------------------------------------------------- #
 
+
 def test_runner_emits_sentinel_envelope(tmp_path):
     _stage(
         tmp_path,
         solution=(
-            "class Solution:\n"
-            "    def add(self, a, b):\n"
-            "        return a + b\n"
+            "class Solution:\n" "    def add(self, a, b):\n" "        return a + b\n"
         ),
         cases={
-            "schema_version": 1, "problem_id": 1, "title": "Add",
+            "schema_version": 1,
+            "problem_id": 1,
+            "title": "Add",
             "method": "add",
             "signature": {
                 "params": [
@@ -107,13 +106,18 @@ def test_runner_reports_failing_cases(tmp_path):
         solution=(
             "class Solution:\n"
             "    def add(self, a, b):\n"
-            "        return a - b\n"   # buggy
+            "        return a - b\n"  # buggy
         ),
         cases={
-            "schema_version": 1, "problem_id": 1, "title": "Add",
+            "schema_version": 1,
+            "problem_id": 1,
+            "title": "Add",
             "method": "add",
             "signature": {
-                "params": [{"name": "a", "type": "INT32"}, {"name": "b", "type": "INT32"}],
+                "params": [
+                    {"name": "a", "type": "INT32"},
+                    {"name": "b", "type": "INT32"},
+                ],
                 "returns": "INT32",
             },
             "cases": [{"case_id": 1, "input": {"a": 1, "b": 2}, "expected": 3}],
@@ -137,15 +141,20 @@ def test_runner_captures_exception_per_case(tmp_path):
             "        return a // b\n"
         ),
         cases={
-            "schema_version": 1, "problem_id": 1, "title": "Divide",
+            "schema_version": 1,
+            "problem_id": 1,
+            "title": "Divide",
             "method": "divide",
             "signature": {
-                "params": [{"name": "a", "type": "INT32"}, {"name": "b", "type": "INT32"}],
+                "params": [
+                    {"name": "a", "type": "INT32"},
+                    {"name": "b", "type": "INT32"},
+                ],
                 "returns": "INT32",
             },
             "cases": [
-                {"case_id": 1, "input": {"a": 10, "b": 0}, "expected": 0},   # zero-div
-                {"case_id": 2, "input": {"a": 6, "b": 2}, "expected": 3},    # passes
+                {"case_id": 1, "input": {"a": 10, "b": 0}, "expected": 0},  # zero-div
+                {"case_id": 2, "input": {"a": 6, "b": 2}, "expected": 3},  # passes
             ],
         },
     )
@@ -166,18 +175,22 @@ def test_runner_supports_unordered_all(tmp_path):
             "        return [[-1, -1, 2], [-1, 0, 1]]\n"
         ),
         cases={
-            "schema_version": 1, "problem_id": 15, "title": "3Sum",
+            "schema_version": 1,
+            "problem_id": 15,
+            "title": "3Sum",
             "method": "threeSum",
             "signature": {
                 "params": [{"name": "nums", "type": "INT32_ARRAY"}],
                 "returns": "INT32_MATRIX",
             },
-            "cases": [{
-                "case_id": 1,
-                "input": {"nums": [-1, 0, 1, 2, -1, -4]},
-                # Same set of triples, different ordering.
-                "expected": [[-1, 0, 1], [2, -1, -1]],
-            }],
+            "cases": [
+                {
+                    "case_id": 1,
+                    "input": {"nums": [-1, 0, 1, 2, -1, -4]},
+                    # Same set of triples, different ordering.
+                    "expected": [[-1, 0, 1], [2, -1, -1]],
+                }
+            ],
             "comparison": "unordered_all",
         },
     )
@@ -191,20 +204,23 @@ def test_runner_supports_unordered_all(tmp_path):
 # Solution / method shape errors                                              #
 # --------------------------------------------------------------------------- #
 
+
 def test_runner_missing_method_reports_clean_error(tmp_path):
     """Solution exists but lacks the method bundle.method references."""
     _stage(
         tmp_path,
         solution="class Solution:\n    def somethingElse(self): pass\n",
         cases={
-            "schema_version": 1, "problem_id": 1, "title": "X",
+            "schema_version": 1,
+            "problem_id": 1,
+            "title": "X",
             "method": "missingMethod",
             "signature": {"params": [], "returns": "VOID"},
             "cases": [{"case_id": 1, "input": {}, "expected": None}],
         },
     )
     code, stdout, _ = _invoke(tmp_path)
-    assert code == 0   # not a crash — envelope still emitted
+    assert code == 0  # not a crash — envelope still emitted
     envelope = _parse_envelope(stdout)
     assert envelope[0]["passed"] is False
     assert "missingMethod" in envelope[0]["error"]
@@ -226,9 +242,11 @@ def test_runner_solution_import_error_is_surfaced(tmp_path):
     """A solution.py with a SyntaxError -> runner's top-level catch reports it."""
     _stage(
         tmp_path,
-        solution="class Solution\n",     # missing colon
+        solution="class Solution\n",  # missing colon
         cases={
-            "schema_version": 1, "problem_id": 1, "title": "X",
+            "schema_version": 1,
+            "problem_id": 1,
+            "title": "X",
             "method": "x",
             "signature": {"params": [], "returns": "VOID"},
             "cases": [],
@@ -271,17 +289,21 @@ def test_runner_tree_node_problem(tmp_path):
             "        return root\n"
         ),
         cases={
-            "schema_version": 1, "problem_id": 1, "title": "T",
+            "schema_version": 1,
+            "problem_id": 1,
+            "title": "T",
             "method": "identity",
             "signature": {
                 "params": [{"name": "root", "type": "TREE_NODE"}],
                 "returns": "TREE_NODE",
             },
-            "cases": [{
-                "case_id": 1,
-                "input": {"root": [1, 2, 3]},
-                "expected": [1, 2, 3],
-            }],
+            "cases": [
+                {
+                    "case_id": 1,
+                    "input": {"root": [1, 2, 3]},
+                    "expected": [1, 2, 3],
+                }
+            ],
         },
         extras={"tree_node.py": _TREE_NODE_SRC},
     )
@@ -308,17 +330,21 @@ def test_runner_list_node_problem(tmp_path):
             "        return prev\n"
         ),
         cases={
-            "schema_version": 1, "problem_id": 206, "title": "Reverse LL",
+            "schema_version": 1,
+            "problem_id": 206,
+            "title": "Reverse LL",
             "method": "reverse",
             "signature": {
                 "params": [{"name": "head", "type": "LIST_NODE"}],
                 "returns": "LIST_NODE",
             },
-            "cases": [{
-                "case_id": 1,
-                "input": {"head": [1, 2, 3]},
-                "expected": [3, 2, 1],
-            }],
+            "cases": [
+                {
+                    "case_id": 1,
+                    "input": {"head": [1, 2, 3]},
+                    "expected": [3, 2, 1],
+                }
+            ],
         },
         extras={"list_node.py": _LIST_NODE_SRC},
     )
@@ -332,20 +358,24 @@ def test_runner_list_node_problem(tmp_path):
 # format_input / display flow through to the envelope                         #
 # --------------------------------------------------------------------------- #
 
+
 def test_runner_envelope_contains_input_and_expected_strings(tmp_path):
     """`input` and `expected` are stringified for display in failures."""
     _stage(
         tmp_path,
         solution=(
-            "class Solution:\n"
-            "    def add(self, a, b):\n"
-            "        return a + b\n"
+            "class Solution:\n" "    def add(self, a, b):\n" "        return a + b\n"
         ),
         cases={
-            "schema_version": 1, "problem_id": 1, "title": "Add",
+            "schema_version": 1,
+            "problem_id": 1,
+            "title": "Add",
             "method": "add",
             "signature": {
-                "params": [{"name": "a", "type": "INT32"}, {"name": "b", "type": "INT32"}],
+                "params": [
+                    {"name": "a", "type": "INT32"},
+                    {"name": "b", "type": "INT32"},
+                ],
                 "returns": "INT32",
             },
             "cases": [{"case_id": 1, "input": {"a": 1, "b": 2}, "expected": 3}],

@@ -1,6 +1,5 @@
 """Tests for `dojo init`."""
 
-import pytest
 from click.testing import CliRunner
 
 from bytedojo.commands.subcommands.init import init

@@ -2,25 +2,27 @@
 
 from click.testing import CliRunner
 
+from bytedojo.core.errors import RepoNotFoundError
 from bytedojo.commands.subcommands.stats import stats
 
 from tests.services.conftest import insert_registered_problem
-
 
 # --------------------------------------------------------------------------- #
 # No repo                                                                     #
 # --------------------------------------------------------------------------- #
 
+
 def test_stats_outside_repo_errors(tmp_path, monkeypatch):
     monkeypatch.chdir(tmp_path)
     result = CliRunner().invoke(stats, [])
     assert result.exit_code != 0
-    assert "Not inside a .dojo repository" in result.output
+    assert isinstance(result.exception, RepoNotFoundError)
 
 
 # --------------------------------------------------------------------------- #
 # Summary mode (default)                                                      #
 # --------------------------------------------------------------------------- #
+
 
 def test_stats_empty_summary(repo, monkeypatch):
     monkeypatch.chdir(repo.root_dir)
@@ -46,6 +48,7 @@ def test_stats_summary_with_problems(repo, monkeypatch):
 # --list mode                                                                 #
 # --------------------------------------------------------------------------- #
 
+
 def test_stats_list_empty_shows_friendly_message(repo, monkeypatch):
     monkeypatch.chdir(repo.root_dir)
     result = CliRunner().invoke(stats, ["--list"])
@@ -66,10 +69,8 @@ def test_stats_list_renders_per_problem_rows(repo, monkeypatch):
 
 
 def test_stats_list_difficulty_filter(repo, monkeypatch):
-    insert_registered_problem(repo, pid=1, slug="a", title="A",
-                              difficulty="Easy")
-    insert_registered_problem(repo, pid=2, slug="b", title="B",
-                              difficulty="Hard")
+    insert_registered_problem(repo, pid=1, slug="a", title="A", difficulty="Easy")
+    insert_registered_problem(repo, pid=2, slug="b", title="B", difficulty="Hard")
     monkeypatch.chdir(repo.root_dir)
 
     result = CliRunner().invoke(stats, ["--list", "-d", "easy"])
@@ -89,9 +90,9 @@ def test_stats_list_verbose_no_attempts_shows_none(repo, monkeypatch):
 
 def test_stats_list_verbose_shows_attempt_counts(repo, monkeypatch):
     insert_registered_problem(repo, pid=1, slug="a", title="A")
-    with repo.open_db() as db:
-        db.create_attempt("leetcode", 1, "python3")
-        db.update_attempt_status("leetcode", 1, "python3", 1, "passed")
+    with repo.session() as s:
+        s.attempts.create("leetcode", 1, "python3")
+        s.attempts.update_status("leetcode", 1, 1, "passed")
     monkeypatch.chdir(repo.root_dir)
     result = CliRunner().invoke(stats, ["--list", "--verbose"])
     assert result.exit_code == 0

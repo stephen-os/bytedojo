@@ -9,12 +9,13 @@ keeps the tests free of build-dir setup.
 
 import math
 from dataclasses import dataclass, field
-from typing import Any, List, Optional
+from typing import Any, Optional
 
 import pytest
 
 from bytedojo.runtime.python3 import converters
 from bytedojo.runtime.python3.converters import (
+    _canonical,
     build_list,
     build_tree,
     compare,
@@ -29,10 +30,10 @@ from bytedojo.runtime.python3.converters import (
     _sort_recursive,
 )
 
-
 # --------------------------------------------------------------------------- #
 # Test node stand-ins                                                         #
 # --------------------------------------------------------------------------- #
+
 
 @dataclass
 class _TreeNode:
@@ -58,6 +59,7 @@ def patch_node_class_lookup(monkeypatch):
 # parse_value — primitives                                                    #
 # --------------------------------------------------------------------------- #
 
+
 def test_parse_value_none_passes_through():
     assert parse_value(None, "INT32") is None
     assert parse_value(None, "STRING") is None
@@ -67,7 +69,7 @@ def test_parse_value_none_passes_through():
 @pytest.mark.parametrize("t", ["INT32", "INT64"])
 def test_parse_value_int_types(t):
     assert parse_value(42, t) == 42
-    assert parse_value("17", t) == 17        # coerces strings
+    assert parse_value("17", t) == 17  # coerces strings
 
 
 def test_parse_value_float():
@@ -98,6 +100,7 @@ def test_parse_value_unknown_type_raises():
 # parse_value — arrays / matrices                                             #
 # --------------------------------------------------------------------------- #
 
+
 def test_parse_value_int_array():
     assert parse_value([1, 2, 3], "INT32_ARRAY") == [1, 2, 3]
 
@@ -127,6 +130,7 @@ def test_parse_value_list_node_array_builds_each():
 # parse_value — reference types (delegates to build_tree / build_list)        #
 # --------------------------------------------------------------------------- #
 
+
 def test_parse_value_tree_node():
     root = parse_value([1, 2, 3], "TREE_NODE")
     assert root.val == 1
@@ -142,6 +146,7 @@ def test_parse_value_list_node():
 # --------------------------------------------------------------------------- #
 # build_tree / serialize_tree                                                 #
 # --------------------------------------------------------------------------- #
+
 
 def test_build_tree_empty_inputs_return_none():
     assert build_tree([]) is None
@@ -181,6 +186,7 @@ def test_build_then_serialize_roundtrip():
 # build_list / serialize_list                                                 #
 # --------------------------------------------------------------------------- #
 
+
 def test_build_list_empty():
     assert build_list([]) is None
     assert build_list(None) is None
@@ -218,6 +224,7 @@ def test_list_roundtrip():
 # compare — primitive / array equality                                        #
 # --------------------------------------------------------------------------- #
 
+
 def test_compare_void_always_passes():
     """A void method has no return value to compare; the case is always passing."""
     assert compare("anything", None, "VOID", "exact") is True
@@ -240,6 +247,7 @@ def test_compare_array_exact():
 # compare — unordered_all                                                     #
 # --------------------------------------------------------------------------- #
 
+
 def test_compare_unordered_all_flat_array():
     assert compare([3, 1, 2], [1, 2, 3], "INT32_ARRAY", "unordered_all") is True
 
@@ -258,6 +266,7 @@ def test_compare_unordered_all_does_not_help_with_value_differences():
 # --------------------------------------------------------------------------- #
 # compare — float tolerance                                                   #
 # --------------------------------------------------------------------------- #
+
 
 def test_compare_float_within_tolerance():
     assert compare(1.0000001, 1.0, "FLOAT64", "exact") is True
@@ -279,6 +288,7 @@ def test_compare_float_array_length_mismatch():
 # compare — reference types                                                   #
 # --------------------------------------------------------------------------- #
 
+
 def test_compare_tree_node_via_serialize():
     actual = _TreeNode(1, _TreeNode(2), _TreeNode(3))
     expected = _TreeNode(1, _TreeNode(2), _TreeNode(3))
@@ -292,19 +302,27 @@ def test_compare_tree_node_different_shape():
 
 
 def test_compare_list_node_via_serialize():
-    assert compare(
-        _ListNode(1, _ListNode(2)),
-        _ListNode(1, _ListNode(2)),
-        "LIST_NODE", "exact",
-    ) is True
+    assert (
+        compare(
+            _ListNode(1, _ListNode(2)),
+            _ListNode(1, _ListNode(2)),
+            "LIST_NODE",
+            "exact",
+        )
+        is True
+    )
 
 
 def test_compare_list_node_different_lengths():
-    assert compare(
-        _ListNode(1, _ListNode(2)),
-        _ListNode(1),
-        "LIST_NODE", "exact",
-    ) is False
+    assert (
+        compare(
+            _ListNode(1, _ListNode(2)),
+            _ListNode(1),
+            "LIST_NODE",
+            "exact",
+        )
+        is False
+    )
 
 
 def test_compare_list_node_array():
@@ -320,6 +338,7 @@ def test_compare_list_node_array_handles_none_sides():
 # --------------------------------------------------------------------------- #
 # _float_equal / _float_array_equal — edge cases                              #
 # --------------------------------------------------------------------------- #
+
 
 def test_float_equal_both_nan_treated_equal():
     assert _float_equal(math.nan, math.nan) is True
@@ -352,6 +371,7 @@ def test_float_array_equal_both_none():
 # _sort_recursive                                                             #
 # --------------------------------------------------------------------------- #
 
+
 def test_sort_recursive_flat_list():
     assert _sort_recursive([3, 1, 2]) == [1, 2, 3]
 
@@ -374,6 +394,7 @@ def test_sort_recursive_passes_non_list_through():
 # --------------------------------------------------------------------------- #
 # format_input / _format_value / display                                      #
 # --------------------------------------------------------------------------- #
+
 
 def test_format_input_renders_kv_pairs():
     assert format_input({"nums": [1, 2], "target": 3}) == "nums = [1, 2], target = 3"
@@ -421,20 +442,21 @@ def test_display_primitive_uses_repr():
 # form, e.g. {"base": "ARRAY", "element": "INT32"} — not just flat strings.   #
 # --------------------------------------------------------------------------- #
 
-from bytedojo.runtime.python3.converters import _canonical
 
-
-@pytest.mark.parametrize("spec, expected", [
-    ({"base": "INT32"},                               "INT32"),
-    ({"base": "VOID"},                                "VOID"),
-    ({"base": "BINARY_TREE"},                         "TREE_NODE"),
-    ({"base": "LINKED_LIST"},                         "LIST_NODE"),
-    ({"base": "ARRAY", "element": "INT32"},           "INT32_ARRAY"),
-    ({"base": "ARRAY", "element": "STRING"},          "STRING_ARRAY"),
-    ({"base": "ARRAY", "element": "LINKED_LIST"},     "LIST_NODE_ARRAY"),
-    ({"base": "MATRIX", "element": "INT32"},          "INT32_MATRIX"),
-    ("INT32_ARRAY",                                   "INT32_ARRAY"),   # str passthrough
-])
+@pytest.mark.parametrize(
+    "spec, expected",
+    [
+        ({"base": "INT32"}, "INT32"),
+        ({"base": "VOID"}, "VOID"),
+        ({"base": "BINARY_TREE"}, "TREE_NODE"),
+        ({"base": "LINKED_LIST"}, "LIST_NODE"),
+        ({"base": "ARRAY", "element": "INT32"}, "INT32_ARRAY"),
+        ({"base": "ARRAY", "element": "STRING"}, "STRING_ARRAY"),
+        ({"base": "ARRAY", "element": "LINKED_LIST"}, "LIST_NODE_ARRAY"),
+        ({"base": "MATRIX", "element": "INT32"}, "INT32_MATRIX"),
+        ("INT32_ARRAY", "INT32_ARRAY"),  # str passthrough
+    ],
+)
 def test_canonical_flattens_dict_types(spec, expected):
     assert _canonical(spec) == expected
 

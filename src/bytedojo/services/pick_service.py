@@ -21,6 +21,7 @@ from bytedojo.core.repository import Repository
 
 class PickScope(str, Enum):
     """Which pool to pick from."""
+
     UNSOLVED = "unsolved"
     SOLVED = "solved"
     ALL = "all"
@@ -38,6 +39,7 @@ class PickScope(str, Enum):
 @dataclass
 class PickResult:
     """Outcome of a pick operation, with pool context for display."""
+
     picked: Optional[ProblemDetail] = None
     candidates: List[ProblemDetail] = field(default_factory=list)
     total_count: int = 0

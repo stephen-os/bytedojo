@@ -13,6 +13,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Optional
 
+from bytedojo.core.errors import SolutionNotFoundError, ToolchainMissingError
 from bytedojo.core.logger import get_logger
 from bytedojo.core.models.registered_problem import RegisteredProblem
 from bytedojo.core.repository import Repository
@@ -27,30 +28,18 @@ from bytedojo.services.problem_service import resolve_solution_path
 @dataclass
 class RunServiceResult:
     """
-    Outcome of running a registered problem.
-
-    Mutually-exclusive states:
-      - success: execution finished (regardless of exit code); `execution` set
-      - failed:  pre-flight check failed (e.g. missing file, missing
-                 toolchain, unsupported language); `error` set
+    Outcome of running a registered problem. Pre-flight failures raise
+    DojoError subclasses (§10) instead of returning a result.
 
     `version` and `file_path` reflect what was actually run — useful for
-    the CLI/TUI header so it shows the v1 path when `--version 1` was used
+    the CLI header so it shows the v1 path when `--version 1` was used
     even though the `problem` argument carries the latest path.
     """
+
     problem: RegisteredProblem
+    execution: ExecutionResult
     version: Optional[int] = None
     file_path: Optional[Path] = None
-    execution: Optional[ExecutionResult] = None
-    error: Optional[str] = None
-
-    @property
-    def success(self) -> bool:
-        return self.execution is not None
-
-    @property
-    def failed(self) -> bool:
-        return not self.success
 
 
 class RunService:
@@ -85,47 +74,48 @@ class RunService:
             f"timeout={timeout}s"
         )
 
-        # Resolve the solution file (latest, or a specific version)
+        # Resolve the solution file (latest, or a specific version). The
+        # resolved attempt's language drives the toolchain choice.
         resolved = resolve_solution_path(repo, problem, version=version)
         if not resolved.found:
-            return self._error(
-                problem,
-                _format_path_error(resolved, version),
-                version=resolved.version,
-            )
+            raise SolutionNotFoundError(_format_path_error(resolved, version))
         file_path = resolved.path
         run_version = resolved.version
-
-        # Carry version/path through to every early-return so the CLI/TUI
-        # header can show what was actually run.
-        ctx = {"version": run_version, "file_path": file_path}
+        language = resolved.language or problem.language
 
         # Resolve the toolchain
-        toolchain = get_toolchain(problem.language)
+        toolchain = get_toolchain(language)
         if toolchain is None:
-            return self._error(
-                problem,
-                f"{problem.language.value} has no registered toolchain.",
-                **ctx,
+            raise ToolchainMissingError(
+                f"{language.value} has no registered toolchain."
             )
 
         # Pre-flight: confirm the local toolchain is available
         status = toolchain.detect()
         if not status.found:
-            return self._error(problem, _format_missing_toolchain(status), **ctx)
+            raise ToolchainMissingError(_format_missing_toolchain(status))
 
         # Build dir for compiled artifacts; interpreted toolchains
         # (Python) ignore this argument.
-        build_dir = repo.build_dir / f"{problem.problem_id}_{problem.language.value}"
+        build_dir = repo.build_dir / f"{problem.problem_id}_{language.value}"
 
         # Execute. Defensive OSError catch in case a Toolchain implementation
         # forgets to handle a binary that vanishes between detect() and run.
         try:
             execution = toolchain.execute(
-                file_path, build_dir=build_dir, timeout=timeout,
+                file_path,
+                build_dir=build_dir,
+                timeout=timeout,
             )
         except OSError as e:
-            return self._error(problem, f"Execution failed: {e}", **ctx)
+            raise ToolchainMissingError(f"Execution failed: {e}") from e
+
+        # The run happened — count it on the attempt that was executed.
+        if run_version is not None:
+            with repo.session() as s:
+                s.attempts.increment_run_count(
+                    problem.source, problem.problem_id, run_version
+                )
 
         self.logger.debug(
             f"run_service: #{problem.problem_id} v{run_version} "
@@ -137,24 +127,6 @@ class RunService:
             version=run_version,
             file_path=file_path,
             execution=execution,
-        )
-
-    def _error(
-        self,
-        problem: RegisteredProblem,
-        message: str,
-        *,
-        version: Optional[int] = None,
-        file_path: Optional[Path] = None,
-    ) -> RunServiceResult:
-        self.logger.warning(
-            f"run_service: failed #{problem.problem_id} — {message}"
-        )
-        return RunServiceResult(
-            problem=problem,
-            version=version,
-            file_path=file_path,
-            error=message,
         )
 
 

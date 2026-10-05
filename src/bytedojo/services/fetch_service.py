@@ -1,26 +1,31 @@
 """
 Fetch service - orchestrates problem fetching and placement.
 
-Provides a unified API for fetching problems from local data and placing
-them into a repository. Returns rich result objects for logging/display.
+Fetching is restricted to the bundled catalog (§7): every id is
+validated up front so a batch either runs against fully supported
+problems or fails cleanly before touching the filesystem. Solution
+stubs are synthesised from the test bundle's signature (§11).
 """
 
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Optional, List
 
-from bytedojo.services import problem_service
+from bytedojo.core import corpus
+from bytedojo.core.errors import UnsupportedProblemError
 from bytedojo.core.formatters import extra_files_for, format_problem
 from bytedojo.core.logger import get_logger
 from bytedojo.core.models.attempt import Attempt
 from bytedojo.core.models.code_language import CodeLanguage
 from bytedojo.core.models.problem import Problem
+from bytedojo.core.models.test_bundle import TestBundle
 from bytedojo.core.repository import Repository
 
 
 @dataclass
 class FetchResult:
     """Result of a single fetch operation."""
+
     problem_id: int
     success: bool = False
     skipped: bool = False
@@ -45,6 +50,7 @@ class FetchResult:
 @dataclass
 class FetchBatchResult:
     """Aggregated results from a batch fetch operation."""
+
     results: List[FetchResult]
 
     @property
@@ -64,76 +70,13 @@ class FetchService:
     """
     Orchestrates problem fetching and placement.
 
-    Wraps problem_service (read) and repository (write) operations,
-    returning rich result objects for commands to log/display as needed.
+    Reads problem definitions + test bundles through the corpus gateway
+    and places formatter output via the Repository, returning rich
+    result objects for commands to render.
     """
 
     def __init__(self):
         self.logger = get_logger()
-
-    def fetch_problem(self, problem_id: int) -> Optional[Problem]:
-        """
-        Fetch problem data by ID.
-
-        Returns:
-            Problem if found, None otherwise.
-        """
-        self.logger.debug(f"fetch_service: loading problem #{problem_id}")
-        return problem_service.get_problem(problem_id)
-
-    def fetch_and_place(
-        self,
-        repo: Repository,
-        problem_id: int,
-        language: CodeLanguage,
-        *,
-        force: bool = False,
-        version: Optional[int] = None,
-        custom_path: Optional[Path] = None,
-    ) -> FetchResult:
-        """
-        Fetch a problem and place it into the repository.
-
-        Modes:
-            - default: Register new attempt, place under problems/.../v{N}/
-            - version: Rewrite existing tracked version in place
-            - custom_path: Place into custom directory (untracked)
-
-        Args:
-            repo: The repository to place into.
-            problem_id: Problem ID to fetch.
-            language: Language for starter code.
-            force: Create new attempt even if already registered.
-            version: Rewrite specific version in place.
-            custom_path: Custom directory for untracked placement.
-
-        Returns:
-            FetchResult with outcome, problem data, and target path.
-        """
-        self.logger.debug(
-            f"fetch_service: fetch_and_place #{problem_id} "
-            f"lang={language} force={force} version={version} path={custom_path}"
-        )
-
-        # Load problem
-        problem = problem_service.get_problem(problem_id)
-        if problem is None:
-            self.logger.warning(f"fetch_service: problem #{problem_id} not found")
-            return FetchResult(
-                problem_id=problem_id,
-                error="not found",
-            )
-
-        # Mode 1: Scratch (custom path, no DB)
-        if custom_path is not None:
-            return self._place_scratch(repo, problem, language, custom_path)
-
-        # Mode 2: Refetch existing version
-        if version is not None:
-            return self._place_version(repo, problem, language, version)
-
-        # Mode 3: Default (new attempt)
-        return self._place_default(repo, problem, language, force)
 
     def fetch_and_place_batch(
         self,
@@ -141,39 +84,32 @@ class FetchService:
         problem_ids: List[int],
         language: CodeLanguage,
         *,
-        force: bool = False,
+        new_attempt: bool = False,
         version: Optional[int] = None,
         custom_path: Optional[Path] = None,
     ) -> FetchBatchResult:
         """
         Fetch and place multiple problems.
 
-        Args:
-            repo: The repository to place into.
-            problem_ids: List of problem IDs to fetch.
-            language: Language for starter code.
-            force: Create new attempts even if already registered.
-            version: Rewrite specific version in place (applies to all).
-            custom_path: Custom directory for untracked placement.
-
-        Returns:
-            FetchBatchResult with all individual results.
+        Every id is validated against the catalog first; any unsupported
+        id aborts the whole batch with UnsupportedProblemError before
+        anything is placed.
         """
-        self.logger.debug(
-            f"fetch_service: batch fetch {len(problem_ids)} problems"
-        )
+        unsupported = [pid for pid in problem_ids if not corpus.has_problem(pid)]
+        if unsupported:
+            raise UnsupportedProblemError(unsupported)
 
-        results = []
-        for pid in problem_ids:
-            result = self.fetch_and_place(
+        results = [
+            self.fetch_and_place(
                 repo,
                 pid,
                 language,
-                force=force,
+                new_attempt=new_attempt,
                 version=version,
                 custom_path=custom_path,
             )
-            results.append(result)
+            for pid in problem_ids
+        ]
 
         batch_result = FetchBatchResult(results=results)
         self.logger.debug(
@@ -182,8 +118,46 @@ class FetchService:
             f"skipped={batch_result.skipped_count} "
             f"failed={batch_result.failed_count}"
         )
-
         return batch_result
+
+    def fetch_and_place(
+        self,
+        repo: Repository,
+        problem_id: int,
+        language: CodeLanguage,
+        *,
+        new_attempt: bool = False,
+        version: Optional[int] = None,
+        custom_path: Optional[Path] = None,
+    ) -> FetchResult:
+        """
+        Fetch a supported problem and place it into the repository.
+
+        Modes (mutually exclusive, validated by the command):
+            - default: register v1; refuse if the problem is already
+              registered (hint at --new-attempt / --version)
+            - new_attempt: register the next version v{N+1}
+            - version: rewrite tracked version N in place
+            - custom_path: place into a scratch directory (no DB entry)
+
+        Raises UnsupportedProblemError for ids outside the catalog.
+        """
+        self.logger.debug(
+            f"fetch_service: fetch_and_place #{problem_id} "
+            f"lang={language} new_attempt={new_attempt} "
+            f"version={version} path={custom_path}"
+        )
+
+        problem = corpus.problem(problem_id)
+        bundle = corpus.bundle(problem_id)
+
+        if custom_path is not None:
+            return self._place_scratch(repo, problem, bundle, language, custom_path)
+
+        if version is not None:
+            return self._place_version(repo, problem, bundle, language, version)
+
+        return self._place_default(repo, problem, bundle, language, new_attempt)
 
     # ------------------------------------------------------------------
     # Private helpers for each mode
@@ -193,6 +167,7 @@ class FetchService:
         self,
         repo: Repository,
         problem: Problem,
+        bundle: TestBundle,
         language: CodeLanguage,
         target_path: Path,
     ) -> None:
@@ -205,15 +180,16 @@ class FetchService:
         rewrites take care of "don't clobber my work" via the upstream
         version flow rather than per-file existence checks.
         """
-        repo.place_problem(target_path, format_problem(problem, language))
+        repo.place_problem(target_path, format_problem(problem, bundle, language))
         sibling_dir = target_path.parent
-        for filename, content in extra_files_for(problem, language).items():
+        for filename, content in extra_files_for(bundle, language).items():
             repo.place_problem(sibling_dir / filename, content)
 
     def _place_scratch(
         self,
         repo: Repository,
         problem: Problem,
+        bundle: TestBundle,
         language: CodeLanguage,
         custom_path: Path,
     ) -> FetchResult:
@@ -221,7 +197,7 @@ class FetchService:
         target = custom_path / problem.get_folder_name()
         solution_path = target / problem.get_solution_filename(language)
 
-        self._place_with_extras(repo, problem, language, solution_path)
+        self._place_with_extras(repo, problem, bundle, language, solution_path)
 
         self.logger.debug(
             f"fetch_service: placed #{problem.problem_detail.id} "
@@ -239,34 +215,37 @@ class FetchService:
         self,
         repo: Repository,
         problem: Problem,
+        bundle: TestBundle,
         language: CodeLanguage,
         version: int,
     ) -> FetchResult:
-        """Rewrite existing tracked version in place."""
-        target = repo.attempt_path(problem, language, version)
+        """Rewrite tracked version N in place (restores a deleted file too)."""
+        problem_id = problem.problem_detail.id
 
-        if not target.exists():
-            self.logger.warning(
-                f"fetch_service: #{problem.problem_detail.id} "
-                f"v{version} not found at {target}"
-            )
+        with repo.session() as s:
+            attempt = s.attempts.get("leetcode", problem_id, version)
+            available = [a.version for a in s.attempts.list("leetcode", problem_id)]
+
+        if attempt is None:
+            versions = ", ".join(f"v{v}" for v in available) or "none"
             return FetchResult(
-                problem_id=problem.problem_detail.id,
+                problem_id=problem_id,
                 skipped=True,
                 problem=problem,
                 version=version,
-                skip_reason=f"v{version} not found at {target}",
+                skip_reason=f"v{version} not registered (available: {versions})",
             )
 
-        self._place_with_extras(repo, problem, language, target)
+        target = repo.attempt_path(problem, attempt.language, version)
+        self._place_with_extras(repo, problem, bundle, attempt.language, target)
 
         self.logger.debug(
-            f"fetch_service: refetched #{problem.problem_detail.id} "
-            f"({language.value}) v{version} at {target}"
+            f"fetch_service: refetched #{problem_id} "
+            f"({attempt.language.value}) v{version} at {target}"
         )
 
         return FetchResult(
-            problem_id=problem.problem_detail.id,
+            problem_id=problem_id,
             success=True,
             problem=problem,
             target_path=target,
@@ -277,17 +256,16 @@ class FetchService:
         self,
         repo: Repository,
         problem: Problem,
+        bundle: TestBundle,
         language: CodeLanguage,
-        force: bool,
+        new_attempt: bool,
     ) -> FetchResult:
-        """Register new attempt and place under problems/."""
+        """Register an attempt and place under problems/."""
         problem_id = problem.problem_detail.id
 
-        # Check if already registered
-        if not force and repo.is_problem_registered("leetcode", problem_id, language):
+        if not new_attempt and repo.is_problem_registered("leetcode", problem_id):
             self.logger.debug(
-                f"fetch_service: skipped #{problem_id} ({language.value}), "
-                f"already registered"
+                f"fetch_service: skipped #{problem_id}, already registered"
             )
             return FetchResult(
                 problem_id=problem_id,
@@ -296,10 +274,9 @@ class FetchService:
                 skip_reason="already registered",
             )
 
-        # Register and place
         attempt: Attempt = repo.register_attempt(problem, language)
         target = repo.attempt_path(problem, language, attempt.version)
-        self._place_with_extras(repo, problem, language, target)
+        self._place_with_extras(repo, problem, bundle, language, target)
 
         self.logger.debug(
             f"fetch_service: placed #{problem_id} ({language.value}) "

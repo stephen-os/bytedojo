@@ -10,16 +10,19 @@ from bytedojo.core.models.problem_difficulty import ProblemDifficulty
 from bytedojo.core.models.problem_tag import ProblemTag
 from bytedojo.services.pick_service import PickResult, PickScope, PickService
 
-
 # --------------------------------------------------------------------------- #
 # PickScope                                                                   #
 # --------------------------------------------------------------------------- #
 
-@pytest.mark.parametrize("scope, label", [
-    (PickScope.UNSOLVED, "unsolved"),
-    (PickScope.SOLVED,   "registered"),
-    (PickScope.ALL,      "all"),
-])
+
+@pytest.mark.parametrize(
+    "scope, label",
+    [
+        (PickScope.UNSOLVED, "unsolved"),
+        (PickScope.SOLVED, "registered"),
+        (PickScope.ALL, "all"),
+    ],
+)
 def test_scope_display_label(scope, label):
     """SOLVED renders as 'registered' to match user-facing language."""
     assert scope.display_label == label
@@ -29,9 +32,11 @@ def test_scope_display_label(scope, label):
 # PickResult                                                                  #
 # --------------------------------------------------------------------------- #
 
+
 def test_pick_result_has_pick_true_when_picked_set():
-    pd = ProblemDetail(id=1, title="t", slug="s",
-                       difficulty=ProblemDifficulty.EASY, description="")
+    pd = ProblemDetail(
+        id=1, title="t", slug="s", difficulty=ProblemDifficulty.EASY, description=""
+    )
     assert PickResult(picked=pd, candidates=[pd]).has_pick is True
 
 
@@ -40,8 +45,9 @@ def test_pick_result_has_pick_false_when_none():
 
 
 def test_pick_result_pool_size_matches_candidates():
-    pd = ProblemDetail(id=1, title="t", slug="s",
-                       difficulty=ProblemDifficulty.EASY, description="")
+    pd = ProblemDetail(
+        id=1, title="t", slug="s", difficulty=ProblemDifficulty.EASY, description=""
+    )
     assert PickResult(candidates=[pd, pd, pd]).pool_size == 3
 
 
@@ -49,10 +55,16 @@ def test_pick_result_pool_size_matches_candidates():
 # pick — scope filtering                                                      #
 # --------------------------------------------------------------------------- #
 
+
 def _details(*ids) -> List[ProblemDetail]:
     return [
-        ProblemDetail(id=i, title=f"t{i}", slug=f"s{i}",
-                      difficulty=ProblemDifficulty.EASY, description="")
+        ProblemDetail(
+            id=i,
+            title=f"t{i}",
+            slug=f"s{i}",
+            difficulty=ProblemDifficulty.EASY,
+            description="",
+        )
         for i in ids
     ]
 
@@ -107,6 +119,7 @@ def test_pick_all_ignores_registration(repo, stub_query, registered_problem):
 # pick — empty pool                                                           #
 # --------------------------------------------------------------------------- #
 
+
 def test_pick_returns_none_when_no_candidates(repo, stub_query):
     """Empty pool -> picked is None, has_pick False, no exception."""
     stub_query["problems"] = []
@@ -117,7 +130,9 @@ def test_pick_returns_none_when_no_candidates(repo, stub_query):
 
 
 def test_pick_unsolved_returns_none_when_all_registered(
-    repo, stub_query, registered_problem,
+    repo,
+    stub_query,
+    registered_problem,
 ):
     """Only one problem, already registered -> nothing left under UNSOLVED."""
     stub_query["problems"] = _details(1)
@@ -130,6 +145,7 @@ def test_pick_unsolved_returns_none_when_all_registered(
 # pick — filter passthrough                                                   #
 # --------------------------------------------------------------------------- #
 
+
 def test_pick_forwards_difficulty_and_tags_to_query(repo, monkeypatch):
     captured = {}
 
@@ -138,7 +154,8 @@ def test_pick_forwards_difficulty_and_tags_to_query(repo, monkeypatch):
         return []
 
     monkeypatch.setattr(
-        "bytedojo.services.pick_service.problem_service.query_problems", spy,
+        "bytedojo.services.pick_service.problem_service.query_problems",
+        spy,
     )
 
     PickService().pick(

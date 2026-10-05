@@ -18,17 +18,18 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Callable, List, Optional, Tuple
 
+from bytedojo.core import corpus
+from bytedojo.core.errors import SolutionNotFoundError, ToolchainMissingError
 from bytedojo.core.logger import get_logger
 from bytedojo.core.models.code_language import CodeLanguage
 from bytedojo.core.models.problem_status import ProblemStatus
 from bytedojo.core.models.registered_problem import RegisteredProblem
 from bytedojo.core.models.test_bundle import TestBundle
-from bytedojo.core.paths import get_test_file
 from bytedojo.core.repository import Repository
 from bytedojo.core.toolchains import get_toolchain
 from bytedojo.runtime.python3 import RUNTIME_DIR as PYTHON_RUNTIME_DIR
 from bytedojo.services.problem_service import resolve_solution_path
-
+from bytedojo.services.review_service import ReviewService, ScheduleEffect
 
 #: Languages whose universal runner is wired into TestService.
 _SUPPORTED_LANGUAGES = frozenset({CodeLanguage.PYTHON})
@@ -44,10 +45,12 @@ _RESULTS_END = "<<<BYTEDOJO_RESULTS_END>>>"
 # Test result structs
 # ----------------------------------------------------------------------------
 
+
 @dataclass
 class TestCaseResult:
     """Result of running a single test case."""
-    __test__ = False    # don't let pytest mistake this for a test class
+
+    __test__ = False  # don't let pytest mistake this for a test class
 
     case_number: int
     passed: bool
@@ -61,7 +64,8 @@ class TestCaseResult:
 @dataclass
 class TestRunResult:
     """Result of running all test cases for a problem."""
-    __test__ = False    # don't let pytest mistake this for a test class
+
+    __test__ = False  # don't let pytest mistake this for a test class
 
     problem_id: int
     language: str
@@ -85,7 +89,9 @@ class TestRunResult:
 
     @property
     def status(self) -> str:
-        if self.compile_error:
+        # ERROR = the solution never got evaluated (compile failure or a
+        # runner crash before any case ran); FAILED = cases ran and lost.
+        if self.compile_error or (self.runtime_error and not self.case_results):
             return "error"
         if self.all_passed:
             return "passed"
@@ -101,36 +107,36 @@ class TestServiceResult:
 
     Mutually-exclusive states:
       - success: tests ran; `run_result` populated
-      - skipped: no test bundle / no cases (soft outcome, no DB update)
-      - failed:  pre-flight check failed (missing file, missing toolchain,
-                 unsupported language); `error` set
+      - skipped: bundle has zero cases (soft outcome, no DB update)
+
+    Pre-flight failures (missing file, missing toolchain, missing
+    bundle) raise DojoError subclasses (§10) instead.
     """
-    __test__ = False    # don't let pytest mistake this for a test class
+
+    __test__ = False  # don't let pytest mistake this for a test class
 
     problem: RegisteredProblem
     version: Optional[int] = None
     file_path: Optional[Path] = None
     run_result: Optional[TestRunResult] = None
+    schedule_effect: Optional[ScheduleEffect] = None
     skipped: bool = False
     skip_reason: Optional[str] = None
-    error: Optional[str] = None
 
     @property
     def success(self) -> bool:
         return self.run_result is not None
-
-    @property
-    def failed(self) -> bool:
-        return not self.success and not self.skipped
 
 
 # ----------------------------------------------------------------------------
 # TestService
 # ----------------------------------------------------------------------------
 
+
 class TestService:
     """Orchestrate test runs against the typed TestBundle pipeline."""
-    __test__ = False    # don't let pytest mistake this for a test class
+
+    __test__ = False  # don't let pytest mistake this for a test class
 
     def __init__(self):
         self.logger = get_logger()
@@ -160,81 +166,83 @@ class TestService:
             f"timeout={timeout}s"
         )
 
-        if problem.language not in _SUPPORTED_LANGUAGES:
-            return self._error(
-                problem,
-                f"The {problem.language.value} runner has not been ported to the "
-                f"typed test schema yet. Currently supported: "
-                f"{', '.join(sorted(l.value for l in _SUPPORTED_LANGUAGES))}.",
-            )
-
-        # Resolve the solution file (latest, or a specific version).
+        # Resolve the solution file (latest, or a specific version). The
+        # resolved attempt's language — not the problem row's — drives the
+        # runner choice, since older versions may be in another language.
         resolved = resolve_solution_path(repo, problem, version=version)
         if not resolved.found:
-            return self._error(
-                problem,
-                _format_path_error(resolved, version),
-                version=resolved.version,
-            )
+            raise SolutionNotFoundError(_format_path_error(resolved, version))
         file_path = resolved.path
         tested_version = resolved.version
+        language = resolved.language or problem.language
         ctx = {"version": tested_version, "file_path": file_path}
 
+        if language not in _SUPPORTED_LANGUAGES:
+            raise ToolchainMissingError(
+                f"The {language.value} runner has not been ported to the "
+                f"typed test schema yet. Currently supported: "
+                f"{', '.join(sorted(lang.value for lang in _SUPPORTED_LANGUAGES))}."
+            )
+
         # Confirm the language toolchain is available
-        toolchain = get_toolchain(problem.language)
+        toolchain = get_toolchain(language)
         if toolchain is None:
-            return self._error(
-                problem,
-                f"{problem.language.value} toolchain is not registered.",
-                **ctx,
+            raise ToolchainMissingError(
+                f"{language.value} toolchain is not registered."
             )
         status = toolchain.detect()
         if not status.found:
-            return self._error(
-                problem,
-                f"{problem.language.value} toolchain not found.\n"
-                + (f"  Missing: {', '.join(status.missing)}\n" if status.missing else "")
-                + (f"  Install: {status.install_hint}" if status.install_hint else ""),
-                **ctx,
+            raise ToolchainMissingError(
+                f"{language.value} toolchain not found.\n"
+                + (
+                    f"  Missing: {', '.join(status.missing)}\n"
+                    if status.missing
+                    else ""
+                )
+                + (f"  Install: {status.install_hint}" if status.install_hint else "")
             )
 
-        # Load the typed test bundle
-        bundle = TestBundle.load(problem.problem_id)
-        if bundle is None:
-            return self._error(
-                problem,
-                f"No test bundle for problem #{problem.problem_id}. "
-                f"Run the migration to regenerate data/tests/{problem.problem_id}.json.",
-                **ctx,
-            )
+        # Load the typed test bundle. Fetch guarantees every registered
+        # problem has one, so a BundleNotFoundError here is defensive
+        # and propagates as-is (§10).
+        bundle = corpus.bundle(problem.problem_id)
         if not bundle.cases:
             return self._skip(
-                problem, "Bundle has zero test cases", **ctx,
+                problem,
+                "Bundle has zero test cases",
+                **ctx,
             )
 
         # Prepare the per-problem build directory + drop the runner files in.
-        build_dir = self._prepare_build_dir(repo, problem)
+        build_dir = self._prepare_build_dir(repo, problem, language)
         try:
             self._stage_runtime(
-                language=problem.language,
+                language=language,
                 build_dir=build_dir,
                 solution_src=file_path,
                 problem_id=problem.problem_id,
             )
         except OSError as e:
-            return self._error(problem, f"Failed to prepare build dir: {e}", **ctx)
+            raise ToolchainMissingError(f"Failed to prepare build dir: {e}") from e
 
         # Compile (if needed) and invoke the language runtime
         try:
             stdout, stderr, compile_error = self._invoke_runner(
-                language=problem.language, build_dir=build_dir, timeout=timeout,
+                language=language,
+                build_dir=build_dir,
+                timeout=timeout,
             )
         except subprocess.TimeoutExpired:
             run_result = _all_timed_out(problem, bundle, timeout)
-            self._record_status(repo, problem, run_result, version=tested_version)
+            effect = self._record_status(
+                repo, problem, run_result, version=tested_version
+            )
             return TestServiceResult(
-                problem=problem, version=tested_version,
-                file_path=file_path, run_result=run_result,
+                problem=problem,
+                version=tested_version,
+                file_path=file_path,
+                run_result=run_result,
+                schedule_effect=effect,
             )
 
         # Compile-stage failure — short-circuit before we try to parse a
@@ -242,24 +250,34 @@ class TestService:
         # for languages added later.)
         if compile_error is not None:
             run_result = _compile_error_result(problem, bundle, compile_error)
-            self._record_status(repo, problem, run_result, version=tested_version)
+            effect = self._record_status(
+                repo, problem, run_result, version=tested_version
+            )
             return TestServiceResult(
-                problem=problem, version=tested_version,
-                file_path=file_path, run_result=run_result,
+                problem=problem,
+                version=tested_version,
+                file_path=file_path,
+                run_result=run_result,
+                schedule_effect=effect,
             )
 
         # Parse the JSON envelope between sentinels
         results_data, parse_error = _parse_envelope(stdout)
         if parse_error is not None:
             run_result = _runtime_error(problem, bundle, parse_error, stderr)
-            self._record_status(repo, problem, run_result, version=tested_version)
+            effect = self._record_status(
+                repo, problem, run_result, version=tested_version
+            )
             return TestServiceResult(
-                problem=problem, version=tested_version,
-                file_path=file_path, run_result=run_result,
+                problem=problem,
+                version=tested_version,
+                file_path=file_path,
+                run_result=run_result,
+                schedule_effect=effect,
             )
 
         run_result = _build_run_result(problem, bundle, results_data)
-        self._record_status(repo, problem, run_result, version=tested_version)
+        effect = self._record_status(repo, problem, run_result, version=tested_version)
 
         self.logger.debug(
             f"test_service: #{problem.problem_id} v{tested_version} "
@@ -272,20 +290,27 @@ class TestService:
             version=tested_version,
             file_path=file_path,
             run_result=run_result,
+            schedule_effect=effect,
         )
 
     # ------------------------------------------------------------------
     # Private helpers
     # ------------------------------------------------------------------
 
-    def _prepare_build_dir(self, repo: Repository, problem: RegisteredProblem) -> Path:
+    def _prepare_build_dir(
+        self,
+        repo: Repository,
+        problem: RegisteredProblem,
+        language: CodeLanguage,
+    ) -> Path:
         """Per-problem build directory under .dojo/build/."""
-        build_dir = repo.build_dir / f"{problem.problem_id}_{problem.language.value}"
+        build_dir = repo.build_dir / f"{problem.problem_id}_{language.value}"
         build_dir.mkdir(parents=True, exist_ok=True)
         return build_dir
 
     def _stage_runtime(
-        self, *,
+        self,
+        *,
         language: CodeLanguage,
         build_dir: Path,
         solution_src: Path,
@@ -295,7 +320,9 @@ class TestService:
 
         Python: copy solution.py + runner.py + converters.py + cases.json.
         """
-        shutil.copyfile(get_test_file(problem_id), build_dir / "cases.json")
+        (build_dir / "cases.json").write_text(
+            corpus.bundle_text(problem_id), encoding="utf-8"
+        )
 
         if language == CodeLanguage.PYTHON:
             shutil.copyfile(solution_src, build_dir / "solution.py")
@@ -307,13 +334,18 @@ class TestService:
                 if sibling.exists():
                     shutil.copyfile(sibling, build_dir / name)
             shutil.copyfile(PYTHON_RUNTIME_DIR / "runner.py", build_dir / "runner.py")
-            shutil.copyfile(PYTHON_RUNTIME_DIR / "converters.py", build_dir / "converters.py")
+            shutil.copyfile(
+                PYTHON_RUNTIME_DIR / "converters.py", build_dir / "converters.py"
+            )
             return
 
-        raise RuntimeError(f"_stage_runtime called for unsupported language: {language}")
+        raise RuntimeError(
+            f"_stage_runtime called for unsupported language: {language}"
+        )
 
     def _invoke_runner(
-        self, *,
+        self,
+        *,
         language: CodeLanguage,
         build_dir: Path,
         timeout: int,
@@ -323,11 +355,15 @@ class TestService:
             proc = subprocess.run(
                 [sys.executable, str(build_dir / "runner.py")],
                 cwd=build_dir,
-                capture_output=True, text=True, timeout=timeout,
+                capture_output=True,
+                text=True,
+                timeout=timeout,
             )
             return proc.stdout, proc.stderr, None
 
-        raise RuntimeError(f"_invoke_runner called for unsupported language: {language}")
+        raise RuntimeError(
+            f"_invoke_runner called for unsupported language: {language}"
+        )
 
     def _record_status(
         self,
@@ -336,42 +372,38 @@ class TestService:
         run_result: TestRunResult,
         *,
         version: Optional[int],
-    ) -> None:
-        """Persist test outcome to the attempt row + the problem summary.
+    ) -> ScheduleEffect:
+        """Persist test outcome and drive the §9 schedule state machine.
 
         The grade lands on both the versioned attempt (what `dojo query`
         reads) and the problem row (which also carries the pass/fail notes),
-        mirroring GradingService so the two never disagree.
+        mirroring GradingService so the two never disagree. Testing IS the
+        primary loop: a pass creates/advances the review track, a
+        fail/error lapses it.
         """
-        status = ProblemStatus.PASSED if run_result.all_passed else ProblemStatus.FAILED
+        status = ProblemStatus.from_string(run_result.status)
         output = f"Passed: {run_result.passed_count}/{run_result.total_cases}"
         if run_result.compile_error:
-            status = ProblemStatus.FAILED
             output = "Compile error"
+        elif run_result.runtime_error and not run_result.case_results:
+            output = "Runtime error"
 
-        with repo.open_db() as db:
+        with repo.session() as s:
             if version is not None:
-                db.update_attempt_status(
-                    problem.source, problem.problem_id, problem.language.value,
-                    version, status.value,
+                s.attempts.update_status(
+                    problem.source,
+                    problem.problem_id,
+                    version,
+                    status.value,
                 )
-            db.update_problem_status(problem.id, status.value, output)
+            s.problems.update_status(problem.id, status.value, output)
 
-    def _error(
-        self,
-        problem: RegisteredProblem,
-        reason: str,
-        *,
-        version: Optional[int] = None,
-        file_path: Optional[Path] = None,
-    ) -> TestServiceResult:
-        self.logger.warning(
-            f"test_service: pre-flight failed for #{problem.problem_id} — {reason}"
-        )
-        return TestServiceResult(
-            problem=problem, version=version,
-            file_path=file_path, error=reason,
-        )
+        reviews = ReviewService()
+        if status is ProblemStatus.PASSED:
+            return reviews.apply_pass(repo, problem.id)
+        if status in (ProblemStatus.FAILED, ProblemStatus.ERROR):
+            return reviews.apply_fail(repo, problem.id)
+        return ScheduleEffect(action="none")
 
     def _skip(
         self,
@@ -383,14 +415,18 @@ class TestService:
     ) -> TestServiceResult:
         self.logger.debug(f"test_service: skipped #{problem.problem_id} — {reason}")
         return TestServiceResult(
-            problem=problem, version=version,
-            file_path=file_path, skipped=True, skip_reason=reason,
+            problem=problem,
+            version=version,
+            file_path=file_path,
+            skipped=True,
+            skip_reason=reason,
         )
 
 
 # ----------------------------------------------------------------------------
 # Module-level helpers (no logger dependency, easier to unit-test)
 # ----------------------------------------------------------------------------
+
 
 def _parse_envelope(stdout: str):
     """Find the sentinel-wrapped JSON array; returns (data, error_message)."""
@@ -401,14 +437,16 @@ def _parse_envelope(stdout: str):
             f"No results envelope in runner stdout. "
             f"First 200 chars: {stdout[:200]!r}"
         )
-    payload = stdout[begin_idx + len(_RESULTS_BEGIN):end_idx].strip()
+    payload = stdout[begin_idx + len(_RESULTS_BEGIN) : end_idx].strip()
     try:
         return json.loads(payload), None
     except json.JSONDecodeError as e:
         return None, f"Failed to parse results JSON: {e}"
 
 
-def _build_run_result(problem, bundle: TestBundle, results_data: List[dict]) -> TestRunResult:
+def _build_run_result(
+    problem, bundle: TestBundle, results_data: List[dict]
+) -> TestRunResult:
     """Convert the runner's case envelopes into a TestRunResult struct."""
     case_results: List[TestCaseResult] = []
     passed = failed = errored = 0
@@ -464,7 +502,9 @@ def _all_timed_out(problem, bundle: TestBundle, timeout: int) -> TestRunResult:
     )
 
 
-def _runtime_error(problem, bundle: TestBundle, message: str, stderr: str) -> TestRunResult:
+def _runtime_error(
+    problem, bundle: TestBundle, message: str, stderr: str
+) -> TestRunResult:
     """Build a TestRunResult for a runner crash before any case ran."""
     detail = message.strip()
     if stderr.strip():

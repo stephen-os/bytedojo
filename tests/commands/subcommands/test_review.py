@@ -5,6 +5,7 @@ from datetime import date, timedelta
 import pytest
 from click.testing import CliRunner
 
+from bytedojo.core.errors import RepoNotFoundError
 from bytedojo.commands.subcommands.review import review
 from bytedojo.core.models.review_schedule import ReviewSchedule
 from bytedojo.core.models.review_stats import ReviewStats
@@ -14,16 +15,16 @@ from bytedojo.services.review_service import (
     ReviewQuality,
 )
 
-
 # --------------------------------------------------------------------------- #
 # Default subcommand: show due reviews                                        #
 # --------------------------------------------------------------------------- #
+
 
 def test_review_outside_repo_errors(tmp_path, monkeypatch):
     monkeypatch.chdir(tmp_path)
     result = CliRunner().invoke(review, [])
     assert result.exit_code != 0
-    assert "Not inside a .dojo repository" in result.output
+    assert isinstance(result.exception, RepoNotFoundError)
 
 
 def test_review_default_no_dues_caught_up_message(repo, monkeypatch):
@@ -53,8 +54,13 @@ def test_review_default_renders_due_reviews(repo, monkeypatch):
     review_row = ReviewSchedule(
         problem_id=1,
         next_review_date=date.today(),
-        interval_days=7, ease_factor=2.5, repetitions=1,
-        problem_num=42, title="Two Sum", source="leetcode", language="python3",
+        interval_days=7,
+        ease_factor=2.5,
+        repetitions=1,
+        problem_num=42,
+        title="Two Sum",
+        source="leetcode",
+        language="python3",
     )
     monkeypatch.setattr(
         "bytedojo.services.review_service.ReviewService.get_due_reviews",
@@ -65,12 +71,13 @@ def test_review_default_renders_due_reviews(repo, monkeypatch):
     assert result.exit_code == 0
     assert "Problems Due for Review" in result.output
     assert "Two Sum" in result.output
-    assert "42" in result.output      # display_id from problem_num
+    assert "42" in result.output  # display_id from problem_num
 
 
 # --------------------------------------------------------------------------- #
 # pick subcommand                                                             #
 # --------------------------------------------------------------------------- #
+
 
 def test_review_pick_caught_up(repo, monkeypatch):
     monkeypatch.setattr(
@@ -87,9 +94,14 @@ def test_review_pick_renders_chosen_problem(repo, monkeypatch):
     chosen = ReviewSchedule(
         problem_id=1,
         next_review_date=date.today() + timedelta(days=0),
-        interval_days=14, ease_factor=2.6, repetitions=3,
-        problem_num=42, title="Two Sum", source="leetcode",
-        language="python3", file_path="problems/0042-x/python3/v001/solution.py",
+        interval_days=14,
+        ease_factor=2.6,
+        repetitions=3,
+        problem_num=42,
+        title="Two Sum",
+        source="leetcode",
+        language="python3",
+        file_path="problems/0042-x/python3/v001/solution.py",
     )
     monkeypatch.setattr(
         "bytedojo.services.review_service.ReviewService.pick_random_due",
@@ -106,18 +118,24 @@ def test_review_pick_renders_chosen_problem(repo, monkeypatch):
     assert "Two Sum" in result.output
     assert "14 days" in result.output
     assert "ease 2.60" in result.output
-    assert "dojo review complete 42 --python --good" in result.output
+    assert "dojo test 42" in result.output
+    assert "dojo review complete 42" in result.output
 
 
 # --------------------------------------------------------------------------- #
 # complete subcommand                                                         #
 # --------------------------------------------------------------------------- #
 
+
 def test_review_complete_requires_quality_flag(repo, registered_problem, monkeypatch):
     monkeypatch.chdir(repo.root_dir)
     result = CliRunner().invoke(review, ["complete", "1"])
     assert result.exit_code != 0
-    assert "--easy" in result.output and "--good" in result.output and "--hard" in result.output
+    assert (
+        "--easy" in result.output
+        and "--good" in result.output
+        and "--hard" in result.output
+    )
 
 
 @pytest.fixture
@@ -127,10 +145,14 @@ def stub_complete(monkeypatch):
     def fake_complete(self, repo, problem_db_id, quality):
         state["calls"].append({"problem_db_id": problem_db_id, "quality": quality})
         return ReviewCompletionResult(
-            problem_db_id=problem_db_id, quality=quality,
-            previous_interval=7, next_interval=18,
-            previous_ease=2.5, next_ease=2.5,
-            previous_repetitions=1, next_repetitions=2,
+            problem_db_id=problem_db_id,
+            quality=quality,
+            previous_interval=7,
+            next_interval=18,
+            previous_ease=2.5,
+            next_ease=2.5,
+            previous_repetitions=1,
+            next_repetitions=2,
             next_review_date=date.today() + timedelta(days=18),
         )
 
@@ -141,13 +163,21 @@ def stub_complete(monkeypatch):
     return state
 
 
-@pytest.mark.parametrize("flag, expected", [
-    ("--easy", ReviewQuality.EASY),
-    ("--good", ReviewQuality.GOOD),
-    ("--hard", ReviewQuality.HARD),
-])
+@pytest.mark.parametrize(
+    "flag, expected",
+    [
+        ("--easy", ReviewQuality.EASY),
+        ("--good", ReviewQuality.GOOD),
+        ("--hard", ReviewQuality.HARD),
+    ],
+)
 def test_review_complete_quality_flags(
-    repo, registered_problem, monkeypatch, stub_complete, flag, expected,
+    repo,
+    registered_problem,
+    monkeypatch,
+    stub_complete,
+    flag,
+    expected,
 ):
     monkeypatch.chdir(repo.root_dir)
     result = CliRunner().invoke(review, ["complete", "1", flag])
@@ -155,7 +185,9 @@ def test_review_complete_quality_flags(
     assert stub_complete["calls"][0]["quality"] is expected
 
 
-def test_review_complete_renders_before_after(repo, registered_problem, monkeypatch, stub_complete):
+def test_review_complete_renders_before_after(
+    repo, registered_problem, monkeypatch, stub_complete
+):
     monkeypatch.chdir(repo.root_dir)
     result = CliRunner().invoke(review, ["complete", "1", "--good"])
     assert "Review Complete — GOOD" in result.output
@@ -165,9 +197,11 @@ def test_review_complete_renders_before_after(repo, registered_problem, monkeypa
 
 def test_review_complete_service_error_raises(repo, registered_problem, monkeypatch):
     """ReviewCompletionResult.error set -> ClickException."""
+
     def fake_complete(self, repo, problem_db_id, quality):
         return ReviewCompletionResult(
-            problem_db_id=problem_db_id, quality=quality,
+            problem_db_id=problem_db_id,
+            quality=quality,
             error="No review scheduled for this problem yet.",
         )
 
@@ -185,23 +219,27 @@ def test_review_complete_service_error_raises(repo, registered_problem, monkeypa
 # add subcommand                                                              #
 # --------------------------------------------------------------------------- #
 
+
 def test_review_add_dispatches_with_default_days(repo, registered_problem, monkeypatch):
     state = {"calls": []}
 
     def fake_add(self, repo, problem_db_id, *, days=None):
         state["calls"].append({"problem_db_id": problem_db_id, "days": days})
         return ReviewActionResult(
-            problem_db_id=problem_db_id, action="add",
-            interval_days=7, next_review_date=date.today() + timedelta(days=7),
+            problem_db_id=problem_db_id,
+            action="add",
+            interval_days=7,
+            next_review_date=date.today() + timedelta(days=7),
         )
 
     monkeypatch.setattr(
-        "bytedojo.services.review_service.ReviewService.add_review", fake_add,
+        "bytedojo.services.review_service.ReviewService.add_review",
+        fake_add,
     )
     monkeypatch.chdir(repo.root_dir)
     result = CliRunner().invoke(review, ["add", "1"])
     assert result.exit_code == 0
-    assert state["calls"][0]["days"] is None    # defer to configured default
+    assert state["calls"][0]["days"] is None  # defer to configured default
 
 
 def test_review_add_propagates_days_flag(repo, registered_problem, monkeypatch):
@@ -210,12 +248,15 @@ def test_review_add_propagates_days_flag(repo, registered_problem, monkeypatch):
     def fake_add(self, repo, problem_db_id, *, days=None):
         state["calls"].append({"days": days})
         return ReviewActionResult(
-            problem_db_id=problem_db_id, action="add",
-            interval_days=days, next_review_date=date.today() + timedelta(days=days or 0),
+            problem_db_id=problem_db_id,
+            action="add",
+            interval_days=days,
+            next_review_date=date.today() + timedelta(days=days or 0),
         )
 
     monkeypatch.setattr(
-        "bytedojo.services.review_service.ReviewService.add_review", fake_add,
+        "bytedojo.services.review_service.ReviewService.add_review",
+        fake_add,
     )
     monkeypatch.chdir(repo.root_dir)
     result = CliRunner().invoke(review, ["add", "1", "--days", "3"])
@@ -227,12 +268,14 @@ def test_review_add_propagates_days_flag(repo, registered_problem, monkeypatch):
 def test_review_add_service_error_raises(repo, registered_problem, monkeypatch):
     def fake_add(self, repo, problem_db_id, *, days=None):
         return ReviewActionResult(
-            problem_db_id=problem_db_id, action="add",
+            problem_db_id=problem_db_id,
+            action="add",
             error="Already in review queue.",
         )
 
     monkeypatch.setattr(
-        "bytedojo.services.review_service.ReviewService.add_review", fake_add,
+        "bytedojo.services.review_service.ReviewService.add_review",
+        fake_add,
     )
     monkeypatch.chdir(repo.root_dir)
     result = CliRunner().invoke(review, ["add", "1"])
@@ -244,18 +287,22 @@ def test_review_add_service_error_raises(repo, registered_problem, monkeypatch):
 # snooze subcommand                                                           #
 # --------------------------------------------------------------------------- #
 
+
 def test_review_snooze_default_days_is_one(repo, registered_problem, monkeypatch):
     state = {"calls": []}
 
     def fake_snooze(self, repo, problem_db_id, *, days=1):
         state["calls"].append({"days": days})
         return ReviewActionResult(
-            problem_db_id=problem_db_id, action="snooze",
-            interval_days=days, next_review_date=date.today() + timedelta(days=days),
+            problem_db_id=problem_db_id,
+            action="snooze",
+            interval_days=days,
+            next_review_date=date.today() + timedelta(days=days),
         )
 
     monkeypatch.setattr(
-        "bytedojo.services.review_service.ReviewService.snooze_review", fake_snooze,
+        "bytedojo.services.review_service.ReviewService.snooze_review",
+        fake_snooze,
     )
     monkeypatch.chdir(repo.root_dir)
     result = CliRunner().invoke(review, ["snooze", "1"])
@@ -270,12 +317,15 @@ def test_review_snooze_with_days(repo, registered_problem, monkeypatch):
     def fake_snooze(self, repo, problem_db_id, *, days=1):
         state["calls"].append({"days": days})
         return ReviewActionResult(
-            problem_db_id=problem_db_id, action="snooze",
-            interval_days=days, next_review_date=date.today() + timedelta(days=days),
+            problem_db_id=problem_db_id,
+            action="snooze",
+            interval_days=days,
+            next_review_date=date.today() + timedelta(days=days),
         )
 
     monkeypatch.setattr(
-        "bytedojo.services.review_service.ReviewService.snooze_review", fake_snooze,
+        "bytedojo.services.review_service.ReviewService.snooze_review",
+        fake_snooze,
     )
     monkeypatch.chdir(repo.root_dir)
     CliRunner().invoke(review, ["snooze", "1", "--days", "7"])
@@ -285,12 +335,14 @@ def test_review_snooze_with_days(repo, registered_problem, monkeypatch):
 def test_review_snooze_service_error_raises(repo, registered_problem, monkeypatch):
     def fake_snooze(self, repo, problem_db_id, *, days=1):
         return ReviewActionResult(
-            problem_db_id=problem_db_id, action="snooze",
+            problem_db_id=problem_db_id,
+            action="snooze",
             error="No review scheduled for this problem.",
         )
 
     monkeypatch.setattr(
-        "bytedojo.services.review_service.ReviewService.snooze_review", fake_snooze,
+        "bytedojo.services.review_service.ReviewService.snooze_review",
+        fake_snooze,
     )
     monkeypatch.chdir(repo.root_dir)
     result = CliRunner().invoke(review, ["snooze", "1"])
@@ -302,11 +354,13 @@ def test_review_snooze_service_error_raises(repo, registered_problem, monkeypatc
 # remove subcommand                                                           #
 # --------------------------------------------------------------------------- #
 
+
 def test_review_remove_happy_path(repo, registered_problem, monkeypatch):
     monkeypatch.setattr(
         "bytedojo.services.review_service.ReviewService.remove_review",
         lambda self, repo, problem_db_id: ReviewActionResult(
-            problem_db_id=problem_db_id, action="remove",
+            problem_db_id=problem_db_id,
+            action="remove",
         ),
     )
     monkeypatch.chdir(repo.root_dir)
@@ -319,7 +373,8 @@ def test_review_remove_service_error_raises(repo, registered_problem, monkeypatc
     monkeypatch.setattr(
         "bytedojo.services.review_service.ReviewService.remove_review",
         lambda self, repo, problem_db_id: ReviewActionResult(
-            problem_db_id=problem_db_id, action="remove",
+            problem_db_id=problem_db_id,
+            action="remove",
             error="No review scheduled for this problem.",
         ),
     )
@@ -333,17 +388,20 @@ def test_review_remove_service_error_raises(repo, registered_problem, monkeypatc
 # stats subcommand                                                            #
 # --------------------------------------------------------------------------- #
 
+
 def test_review_stats_outside_repo_errors(tmp_path, monkeypatch):
     monkeypatch.chdir(tmp_path)
     result = CliRunner().invoke(review, ["stats"])
     assert result.exit_code != 0
-    assert "Not inside a .dojo repository" in result.output
+    assert isinstance(result.exception, RepoNotFoundError)
 
 
 def test_review_stats_renders_counts(repo, monkeypatch):
     monkeypatch.setattr(
         "bytedojo.services.review_service.ReviewService.get_stats",
-        lambda self, repo: ReviewStats(due_today=2, due_this_week=5, total_in_review=12),
+        lambda self, repo: ReviewStats(
+            due_today=2, due_this_week=5, total_in_review=12
+        ),
     )
     monkeypatch.setattr(
         "bytedojo.services.review_service.ReviewService.get_review_frequency",

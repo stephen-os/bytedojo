@@ -15,15 +15,15 @@ from bytedojo.commands.subcommands.stats import stats
 from bytedojo.commands.subcommands.support import support
 
 __all__ = [
-    'init',
-    'grade',
-    'fetch',
-    'query',
-    'pick',
-    'review',
-    'settings',
-    'run',
-    'test',
-    'stats',
-    'support',
+    "init",
+    "grade",
+    "fetch",
+    "query",
+    "pick",
+    "review",
+    "settings",
+    "run",
+    "test",
+    "stats",
+    "support",
 ]

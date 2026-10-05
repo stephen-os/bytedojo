@@ -5,18 +5,23 @@ from click.testing import CliRunner
 from bytedojo import __author__, __version__
 from bytedojo.commands.bytedojo import bytedojo
 
-
 # --------------------------------------------------------------------------- #
 # Group structure                                                             #
 # --------------------------------------------------------------------------- #
+
 
 def test_dojo_help_lists_every_subcommand():
     """Every command registered via add_command shows up in --help."""
     result = CliRunner().invoke(bytedojo, ["--help"])
     assert result.exit_code == 0
     for cmd in (
-        "fetch", "grade", "init", "pick", "query",
-        "review", "settings",
+        "fetch",
+        "grade",
+        "init",
+        "pick",
+        "query",
+        "review",
+        "settings",
     ):
         assert cmd in result.output, f"{cmd!r} missing from --help"
 
@@ -34,6 +39,7 @@ def test_dojo_no_args_shows_usage_with_exit_2():
 # --------------------------------------------------------------------------- #
 # Eager flags: --version / --author / --desc                                  #
 # --------------------------------------------------------------------------- #
+
 
 def test_version_flag_prints_version_and_exits():
     result = CliRunner().invoke(bytedojo, ["--version"])
@@ -66,6 +72,7 @@ def test_eager_flag_skips_subcommand_invocation():
 # --------------------------------------------------------------------------- #
 # --debug toggles the logger level                                            #
 # --------------------------------------------------------------------------- #
+
 
 def test_debug_flag_initialises_debug_logger(monkeypatch):
     """The --debug flag flows through to setup_logger(debug=True)."""

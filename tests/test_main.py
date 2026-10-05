@@ -2,8 +2,10 @@
 
 import sys
 
-from bytedojo.main import _force_utf8_output
+import pytest
 
+from bytedojo.core.errors import RepoNotFoundError
+from bytedojo.main import _force_utf8_output, main
 
 _UTF8 = {"encoding": "utf-8", "errors": "replace"}
 
@@ -28,6 +30,7 @@ class _RaisingStream(_FakeStream):
 # --------------------------------------------------------------------------- #
 # _force_utf8_output                                                          #
 # --------------------------------------------------------------------------- #
+
 
 def test_reconfigures_both_streams_to_utf8(monkeypatch):
     """Box rules and ✓/✗ must survive a redirected cp1252 stdout."""
@@ -60,7 +63,7 @@ def test_survives_streams_without_reconfigure(monkeypatch):
     monkeypatch.setattr(sys, "stdout", object())
     monkeypatch.setattr(sys, "stderr", object())
 
-    _force_utf8_output()   # must not raise
+    _force_utf8_output()  # must not raise
 
 
 def test_survives_streams_that_refuse_reconfigure(monkeypatch):
@@ -69,4 +72,29 @@ def test_survives_streams_that_refuse_reconfigure(monkeypatch):
     monkeypatch.setattr(sys, "stdout", _RaisingStream())
     monkeypatch.setattr(sys, "stderr", _RaisingStream())
 
-    _force_utf8_output()   # must not raise
+    _force_utf8_output()  # must not raise
+
+
+# --------------------------------------------------------------------------- #
+# main — the §10 DojoError handler                                            #
+# --------------------------------------------------------------------------- #
+
+
+def test_main_renders_dojo_error_and_exits_with_its_code(monkeypatch, capsys):
+    """A DojoError is rendered (no traceback) and sets the exit code."""
+    from bytedojo.core.logger import setup_logger
+
+    setup_logger(debug=False)  # tracebacks are a --debug-only affordance
+
+    def raising():
+        raise RepoNotFoundError()
+
+    monkeypatch.setattr("bytedojo.main.bytedojo", raising)
+
+    with pytest.raises(SystemExit) as exc:
+        main()
+
+    assert exc.value.code == 1
+    err = capsys.readouterr().err
+    assert "Not inside a .dojo repository" in err
+    assert "Traceback" not in err

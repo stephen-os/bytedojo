@@ -3,21 +3,22 @@
 import pytest
 from click.testing import CliRunner
 
+from bytedojo.core.errors import RepoNotFoundError
 from bytedojo.commands.subcommands.query import query
 from bytedojo.core.models.problem_detail import ProblemDetail
 from bytedojo.core.models.problem_difficulty import ProblemDifficulty
 from bytedojo.core.models.problem_tag import ProblemTag
 
-
 # --------------------------------------------------------------------------- #
 # Pre-flight                                                                  #
 # --------------------------------------------------------------------------- #
+
 
 def test_query_outside_repo_errors(tmp_path, monkeypatch):
     monkeypatch.chdir(tmp_path)
     result = CliRunner().invoke(query, [])
     assert result.exit_code != 0
-    assert "Not inside a .dojo repository" in result.output
+    assert isinstance(result.exception, RepoNotFoundError)
 
 
 def test_query_unknown_difficulty_via_click_choice(repo, monkeypatch):
@@ -29,6 +30,7 @@ def test_query_unknown_difficulty_via_click_choice(repo, monkeypatch):
 # --------------------------------------------------------------------------- #
 # --list-tags shortcut (no interactive prompt)                                #
 # --------------------------------------------------------------------------- #
+
 
 def test_list_tags_outputs_known_tags(repo, monkeypatch):
     monkeypatch.setattr(
@@ -46,7 +48,8 @@ def test_list_tags_outputs_known_tags(repo, monkeypatch):
 
 def test_list_tags_empty_message(repo, monkeypatch):
     monkeypatch.setattr(
-        "bytedojo.services.problem_service.get_all_tags", lambda: [],
+        "bytedojo.services.problem_service.get_all_tags",
+        lambda: [],
     )
     monkeypatch.chdir(repo.root_dir)
     result = CliRunner().invoke(query, ["--list-tags"])
@@ -58,11 +61,16 @@ def test_list_tags_empty_message(repo, monkeypatch):
 # Interactive listing (provide 'q' to exit immediately)                       #
 # --------------------------------------------------------------------------- #
 
-def _detail(pid: int = 1, *, title: str = "P", difficulty=ProblemDifficulty.EASY,
-            tags=None) -> ProblemDetail:
+
+def _detail(
+    pid: int = 1, *, title: str = "P", difficulty=ProblemDifficulty.EASY, tags=None
+) -> ProblemDetail:
     return ProblemDetail(
-        id=pid, title=title, slug=f"p{pid}",
-        difficulty=difficulty, description=f"desc {pid}",
+        id=pid,
+        title=title,
+        slug=f"p{pid}",
+        difficulty=difficulty,
+        description=f"desc {pid}",
         tags=tags or [],
     )
 
@@ -77,10 +85,11 @@ def stub_query(monkeypatch):
         return list(state["problems"])
 
     monkeypatch.setattr(
-        "bytedojo.services.problem_service.query_problems", fake_query,
+        "bytedojo.services.problem_service.query_problems",
+        fake_query,
     )
     monkeypatch.setattr(
-        "bytedojo.core.attempt_service.AttemptService.get_all_stats",
+        "bytedojo.services.problem_service.get_attempt_status_map",
         lambda self: {},
     )
     return state
@@ -144,13 +153,16 @@ def test_query_invalid_id_format(repo, monkeypatch, stub_query):
 # Pagination loop navigation                                                  #
 # --------------------------------------------------------------------------- #
 
+
 def test_query_navigates_to_next_page(repo, monkeypatch, stub_query):
     """`n` advances; second page header appears in the output."""
     stub_query["problems"] = [_detail(i) for i in range(1, 51)]
     monkeypatch.chdir(repo.root_dir)
     # n then q.
     result = CliRunner().invoke(
-        query, ["--per-page", "20"], input="n\nq\n",
+        query,
+        ["--per-page", "20"],
+        input="n\nq\n",
     )
     assert "page 2 of 3" in result.output
 
@@ -159,7 +171,9 @@ def test_query_jump_to_invalid_page_reports_error(repo, monkeypatch, stub_query)
     stub_query["problems"] = [_detail(i) for i in range(1, 11)]
     monkeypatch.chdir(repo.root_dir)
     result = CliRunner().invoke(
-        query, ["--per-page", "5"], input="9\nq\n",
+        query,
+        ["--per-page", "5"],
+        input="9\nq\n",
     )
     assert "Invalid page" in result.output
 
@@ -168,6 +182,8 @@ def test_query_jump_to_negative_page_reports_error(repo, monkeypatch, stub_query
     stub_query["problems"] = [_detail(i) for i in range(1, 11)]
     monkeypatch.chdir(repo.root_dir)
     result = CliRunner().invoke(
-        query, ["--per-page", "5"], input="garbage\nq\n",
+        query,
+        ["--per-page", "5"],
+        input="garbage\nq\n",
     )
     assert "Invalid input" in result.output

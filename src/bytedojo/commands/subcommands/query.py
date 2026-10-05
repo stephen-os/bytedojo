@@ -3,73 +3,40 @@ Query command - Search problems from local data.
 """
 
 import click
-from pathlib import Path
 
+from bytedojo.commands._resolve import require_repo
+from bytedojo.commands.ui.renderers import render_query_page
 from bytedojo.core.logger import get_logger
-from bytedojo.core.repository import Repository
-from bytedojo.core.attempt_service import AttemptService
 from bytedojo.core.models.problem_difficulty import ProblemDifficulty
 from bytedojo.core.models.problem_status import ProblemStatus
 from bytedojo.core.models.problem_tag import ProblemTag
 from bytedojo.services import problem_service
-from bytedojo.commands.ui import dim, hint, status_short, difficulty_short
 
 
 def _get_best_status(status_map, problem_id):
-    """Get best status for a problem from status_map."""
-    lang_stats = status_map.get(problem_id, {})
-    if not lang_stats:
+    """Latest-attempt status for a problem, or UNKNOWN if never attempted."""
+    stats = status_map.get(problem_id)
+    if stats is None:
         return ProblemStatus.UNKNOWN
-
-    # Collect latest statuses from all languages
-    statuses = [stats.latest_status for stats in lang_stats.values()]
-
-    if ProblemStatus.PASSED in statuses:
-        return ProblemStatus.PASSED
-    elif ProblemStatus.FAILED in statuses:
-        return ProblemStatus.FAILED
-    elif ProblemStatus.SKIPPED in statuses:
-        return ProblemStatus.SKIPPED
-    elif ProblemStatus.UNGRADED in statuses:
-        return ProblemStatus.UNGRADED
-    return ProblemStatus.UNKNOWN
-
-
-def _display_page(all_problems, page, per_page, status_map):
-    """Display a single page of problems."""
-    total = len(all_problems)
-    total_pages = (total + per_page - 1) // per_page
-    page = max(1, min(page, total_pages))
-
-    start_idx = (page - 1) * per_page
-    end_idx = min(start_idx + per_page, total)
-    page_problems = all_problems[start_idx:end_idx]
-
-    # Display header
-    click.echo(f"\n  Problems {dim(f'(page {page}/{total_pages}, {total} total)')}\n")
-
-    # Display results
-    for problem in page_problems:
-        status = _get_best_status(status_map, problem.id)
-        status_icon = status_short(status.value)
-        diff_icon = difficulty_short(problem.difficulty.value)
-
-        click.echo(f"  {problem.id:>5}  {status_icon}  {diff_icon}  {problem.title}")
-
-    # Footer with pagination info
-    click.echo()
-    hint(f"n next  p prev  q quit  ·  page {page} of {total_pages}")
-
-    return page, total_pages
+    return stats.latest_status
 
 
 def _interactive_loop(all_problems, start_page, per_page, status_map):
     """Run interactive pagination loop."""
+
+    def status_lookup(problem_id):
+        return _get_best_status(status_map, problem_id).value
+
     total_pages = (len(all_problems) + per_page - 1) // per_page
     current_page = start_page
 
     while True:
-        current_page, total_pages = _display_page(all_problems, current_page, per_page, status_map)
+        current_page, total_pages = render_query_page(
+            all_problems,
+            current_page,
+            per_page,
+            status_lookup,
+        )
 
         # Show navigation help
         nav_hints = []
@@ -83,18 +50,22 @@ def _interactive_loop(all_problems, start_page, per_page, status_map):
         prompt = f"[{' | '.join(nav_hints)}]: "
 
         try:
-            user_input = click.prompt("", prompt_suffix=prompt, default="q", show_default=False).strip().lower()
+            user_input = (
+                click.prompt("", prompt_suffix=prompt, default="q", show_default=False)
+                .strip()
+                .lower()
+            )
         except click.Abort:
             break
 
-        if user_input in ('q', 'quit', ''):
+        if user_input in ("q", "quit", ""):
             break
-        elif user_input in ('n', 'next', '>'):
+        elif user_input in ("n", "next", ">"):
             if current_page < total_pages:
                 current_page += 1
             else:
                 click.echo("Already on last page.")
-        elif user_input in ('p', 'prev', '<'):
+        elif user_input in ("p", "prev", "<"):
             if current_page > 1:
                 current_page -= 1
             else:
@@ -112,41 +83,38 @@ def _interactive_loop(all_problems, start_page, per_page, status_map):
 
 
 @click.command()
-@click.argument('problem_ids', nargs=-1)
+@click.argument("problem_ids", nargs=-1)
 @click.option(
-    '--difficulty', '-d',
-    type=click.Choice(['easy', 'medium', 'hard', '1', '2', '3'], case_sensitive=False),
-    help='Filter by difficulty (easy/1, medium/2, hard/3)'
+    "--difficulty",
+    "-d",
+    type=click.Choice(["easy", "medium", "hard", "1", "2", "3"], case_sensitive=False),
+    help="Filter by difficulty (easy/1, medium/2, hard/3)",
 )
 @click.option(
-    '--tag', '-t',
+    "--tag",
+    "-t",
     multiple=True,
-    help='Filter by tag (comma-separated or multiple flags)'
+    help="Filter by tag (comma-separated or multiple flags)",
+)
+@click.option("--search", "-s", type=str, help="Search text in problem descriptions")
+@click.option(
+    "--page", "-p", type=int, default=1, help="Starting page number (default: 1)"
 )
 @click.option(
-    '--search', '-s',
-    type=str,
-    help='Search text in problem descriptions'
+    "--per-page", "-n", type=int, default=20, help="Problems per page (default: 20)"
 )
-@click.option(
-    '--page', '-p',
-    type=int,
-    default=1,
-    help='Starting page number (default: 1)'
-)
-@click.option(
-    '--per-page', '-n',
-    type=int,
-    default=20,
-    help='Problems per page (default: 20)'
-)
-@click.option(
-    '--list-tags',
-    is_flag=True,
-    help='List all available tags and exit'
-)
+@click.option("--list-tags", is_flag=True, help="List all available tags and exit")
 @click.pass_obj
-def query(ctx, problem_ids: tuple, difficulty: str, tag: tuple, search: str, page: int, per_page: int, list_tags: bool):
+def query(
+    ctx,
+    problem_ids: tuple,
+    difficulty: str,
+    tag: tuple,
+    search: str,
+    page: int,
+    per_page: int,
+    list_tags: bool,
+):
     """
     Search LeetCode problems with local status.
 
@@ -172,13 +140,13 @@ def query(ctx, problem_ids: tuple, difficulty: str, tag: tuple, search: str, pag
       dojo query --list-tags              # Show all tags
     """
     logger = get_logger()
-    logger.debug(f"query: problem_ids={problem_ids} difficulty={difficulty} tag={tag} "
-                 f"search={search} page={page} per_page={per_page} list_tags={list_tags}")
+    logger.debug(
+        f"query: problem_ids={problem_ids} difficulty={difficulty} tag={tag} "
+        f"search={search} page={page} per_page={per_page} list_tags={list_tags}"
+    )
 
     # Resolve repo
-    repo = Repository.find(Path.cwd())
-    if repo is None:
-        raise click.ClickException("Not inside a .dojo repository. Please run 'dojo init' first.")
+    repo = require_repo()
 
     # Handle --list-tags
     if list_tags:
@@ -206,7 +174,7 @@ def query(ctx, problem_ids: tuple, difficulty: str, tag: tuple, search: str, pag
         all_tags = []
         for t in tag:
             # Split by comma to support comma-separated tags
-            for part in t.split(','):
+            for part in t.split(","):
                 part = part.strip()
                 if part:
                     all_tags.append(ProblemTag.from_string(part))
@@ -227,10 +195,7 @@ def query(ctx, problem_ids: tuple, difficulty: str, tag: tuple, search: str, pag
 
     # Query problems
     problems = problem_service.query_problems(
-        ids=ids_list,
-        difficulty=difficulty_enum,
-        tags=tags_list,
-        search=search
+        ids=ids_list, difficulty=difficulty_enum, tags=tags_list, search=search
     )
     logger.debug(f"query: found {len(problems)} problems")
 
@@ -239,12 +204,7 @@ def query(ctx, problem_ids: tuple, difficulty: str, tag: tuple, search: str, pag
         return
 
     # Get status map if repo is initialized
-    status_map = {}
-    if repo.is_initialized:
-        attempts = AttemptService(repo)
-        all_stats = attempts.get_all_stats()
-        problem_ids_set = {p.id for p in problems}
-        status_map = {pid: stats for pid, stats in all_stats.items() if pid in problem_ids_set}
+    status_map = problem_service.get_attempt_status_map(repo)
 
     # Enter interactive pagination loop
     _interactive_loop(problems, page, per_page, status_map)

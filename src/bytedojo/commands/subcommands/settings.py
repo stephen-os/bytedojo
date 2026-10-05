@@ -1,19 +1,16 @@
 """
 Settings command - View and modify bytedojo settings.
+
+User preferences live in .dojo/settings.json (see core/settings.py for
+the key list); this command is a thin CLI over SettingsManager.
 """
 
 import click
-from pathlib import Path
 
+from bytedojo.commands._resolve import require_repo
 from bytedojo.core.logger import get_logger
-from bytedojo.core.settings import SettingsManager
-from bytedojo.core.database import Database
-from bytedojo.core.repository import Repository
-from bytedojo.commands.ui import accent, bold, success, error, dim, blank, kv, hint
-
-
-# Languages supported by CLI (user-facing names)
-SUPPORTED_LANGUAGES = ['python']
+from bytedojo.core.settings import SETTING_KEYS, SUPPORTED_LANGUAGES, SettingsManager
+from bytedojo.commands.ui import accent, bold, success, dim, blank, hint
 
 
 @click.group(invoke_without_command=True)
@@ -27,6 +24,7 @@ def settings(ctx):
       dojo settings list                         # Same as above
       dojo settings default-language python      # Set default language
       dojo settings review-frequency 7           # Set review frequency
+      dojo settings set organize-by-language true
     """
     # If no subcommand, show all settings
     if ctx.invoked_subcommand is None:
@@ -35,43 +33,31 @@ def settings(ctx):
 
 def _show_settings():
     """Display all current settings."""
-    repo = Repository.find(Path.cwd())
-    if repo is None:
-        raise click.ClickException("Not inside a .dojo repository. Please run 'dojo init' first.")
-
-    # Load and display settings
-    settings_manager = SettingsManager(repo.dojo_dir)
-    current_settings = settings_manager.load()
-
-    # Get database config
-    with Database(repo.db_path) as db:
-        review_freq = db.get_config('review_frequency_days', '7')
-        default_lang = db.get_config('default_language', 'python')
-        default_source = db.get_config('default_source', 'leetcode')
+    repo = require_repo()
+    current = SettingsManager(repo.dojo_dir).load()
 
     blank()
     click.echo(dim("  " + "─" * 50))
     click.echo(f"  {accent('ByteDojo Settings')}")
     click.echo(dim("  " + "─" * 50))
     blank()
-    click.echo(f"  {dim('defaults')}")
-    click.echo(f"    {dim('language')}     {bold(default_lang)}")
-    click.echo(f"    {dim('source')}       {default_source}")
-    blank()
-    click.echo(f"  {dim('review')}")
-    click.echo(f"    {dim('frequency')}    {review_freq} days")
-    blank()
-    click.echo(f"  {dim('leetcode')}")
-    click.echo(f"    {dim('organization')} {current_settings.leetcode.organization}")
+    click.echo(f"    {dim('default-language')}      {bold(current.default_language)}")
+    click.echo(
+        f"    {dim('review-frequency')}      {current.review_frequency_days} days"
+    )
+    click.echo(
+        f"    {dim('organize-by-language')}  "
+        f"{'true' if current.organize_by_language else 'false'}"
+    )
     blank()
     click.echo(dim("  " + "─" * 50))
-    hint("dojo settings default-language <python>")
-    hint("dojo settings review-frequency <days>")
+    hint("dojo settings set <key> <value>")
+    hint("keys: " + ", ".join(SETTING_KEYS))
     click.echo(dim("  " + "─" * 50))
     blank()
 
 
-@settings.command('list')
+@settings.command("list")
 def list_settings():
     """
     List all current settings.
@@ -82,8 +68,10 @@ def list_settings():
     _show_settings()
 
 
-@settings.command('default-language')
-@click.argument('language', type=click.Choice(SUPPORTED_LANGUAGES, case_sensitive=False))
+@settings.command("default-language")
+@click.argument(
+    "language", type=click.Choice(SUPPORTED_LANGUAGES, case_sensitive=False)
+)
 def default_language(language: str):
     """
     Set the default programming language.
@@ -94,110 +82,74 @@ def default_language(language: str):
     Examples:
       dojo settings default-language python    # Default (Python)
     """
-    logger = get_logger()
-    repo = Repository.find(Path.cwd())
-    if repo is None:
-        raise click.ClickException("Not inside a .dojo repository. Please run 'dojo init' first.")
+    _set_and_confirm("default-language", language)
 
-    with Database(repo.db_path) as db:
-        old_value = db.get_config('default_language', 'python')
-        new_value = language.lower()
-        db.set_config('default_language', new_value)
 
-        click.echo(f"  {success('✓')}  Default language set to {bold(new_value)}")
-        logger.debug(f"settings: default_language {old_value} -> {new_value}")
+@settings.command("review-frequency")
+@click.argument("days")
+def review_frequency(days: str):
+    """
+    Set the review frequency in days.
+
+    This is the base SM-2 interval: the gap scheduled when a problem
+    first passes. Default is 7 days.
+
+    Examples:
+      dojo settings review-frequency 7     # Review weekly (default)
+      dojo settings review-frequency 3     # Review every 3 days
+    """
+    _set_and_confirm("review-frequency", days)
 
 
 @settings.command()
-@click.argument('key')
-@click.argument('value')
+@click.argument("key")
+@click.argument("value")
 def set(key: str, value: str):
     """
     Set a configuration value.
 
     Examples:
-      dojo settings set leetcode.organization flat
-      dojo settings set leetcode.organization difficulty
+      dojo settings set review-frequency 14
+      dojo settings set organize-by-language true
     """
-    repo = Repository.find(Path.cwd())
-    if repo is None:
-        raise click.ClickException("Not inside a .dojo repository. Please run 'dojo init' first.")
-
-    # Validate known settings
-    valid_settings = {
-        "leetcode.organization": ["flat", "difficulty"]
-    }
-
-    if key not in valid_settings:
-        click.echo()
-        click.echo(f"  {error('Unknown setting:')} {bold(key)}")
-        click.echo(f"  {dim('Available settings:')}")
-        for setting_key, valid_values in valid_settings.items():
-            click.echo(f"    {dim(setting_key)}  {', '.join(valid_values)}")
-        raise click.ClickException(f"Unknown setting: {key}")
-
-    if value not in valid_settings[key]:
-        click.echo(f"  {error('Invalid value')} {bold(repr(value))} {dim('for')} {bold(key)}")
-        click.echo(f"  {dim('Valid values:')} {', '.join(valid_settings[key])}")
-        raise click.ClickException(f"Invalid value: {value}")
-
-    # Set the value
-    settings_manager = SettingsManager(repo.dojo_dir)
-    if settings_manager.set(key, value):
-        click.echo(f"  {success('✓')}  {bold(key)} set to {bold(value)}")
-    else:
-        raise click.ClickException(f"Failed to set {key}")
+    _set_and_confirm(key, value)
 
 
 @settings.command()
-@click.argument('key')
+@click.argument("key")
 def get(key: str):
     """
     Get a configuration value.
 
     Examples:
-      dojo settings get leetcode.organization
+      dojo settings get review-frequency
     """
-    repo = Repository.find(Path.cwd())
-    if repo is None:
-        raise click.ClickException("Not inside a .dojo repository. Please run 'dojo init' first.")
-
-    # Get the value
-    settings_manager = SettingsManager(repo.dojo_dir)
-    value = settings_manager.get(key)
-
+    repo = require_repo()
+    value = SettingsManager(repo.dojo_dir).get(key)
     if value is None:
-        raise click.ClickException(f"Unknown setting: {key}")
+        raise click.ClickException(
+            f"Unknown setting: {key}. Available: {', '.join(SETTING_KEYS)}"
+        )
+    click.echo(f"  {dim(key)} = {bold(str(value))}")
 
-    click.echo(f"  {dim(key)} = {bold(value)}")
 
+def _set_and_confirm(key: str, value: str) -> None:
+    """Shared set-validate-confirm flow for all setter subcommands."""
+    logger = get_logger()
+    repo = require_repo()
+    manager = SettingsManager(repo.dojo_dir)
+    old_value = manager.get(key)
+    try:
+        stored = manager.set(key, value)
+    except KeyError:
+        raise click.ClickException(
+            f"Unknown setting: {key}. Available: {', '.join(SETTING_KEYS)}"
+        )
+    except ValueError as e:
+        raise click.ClickException(str(e))
 
-@settings.command('review-frequency')
-@click.argument('days', type=int)
-def review_frequency(days: int):
-    """
-    Set the review frequency in days.
-
-    This controls how often problems are scheduled for review after passing tests.
-    Default is 7 days.
-
-    Examples:
-      dojo settings review-frequency 7     # Review weekly (default)
-      dojo settings review-frequency 3     # Review every 3 days
-      dojo settings review-frequency 14    # Review bi-weekly
-    """
-    if days < 1:
-        raise click.ClickException("Review frequency must be at least 1 day")
-
-    if days > 365:
-        raise click.ClickException("Review frequency cannot exceed 365 days")
-
-    repo = Repository.find(Path.cwd())
-    if repo is None:
-        raise click.ClickException("Not inside a .dojo repository. Please run 'dojo init' first.")
-
-    with Database(repo.db_path) as db:
-        old_value = db.get_config('review_frequency_days', '7')
-        db.set_config('review_frequency_days', str(days))
-
-        click.echo(f"  {success('✓')}  Review frequency set to {bold(str(days))} days  {dim(f'(was {old_value})')}")
+    click.echo(
+        f"  {success('✓')}  {bold(key)} set to {bold(str(stored))}"
+        f"  {dim(f'(was {old_value})')}"
+    )
+    logger.debug(f"settings: {key} {old_value} -> {stored}")

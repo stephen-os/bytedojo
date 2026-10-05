@@ -9,13 +9,12 @@ from bytedojo.services.review_service import (
     ReviewCompletionResult,
     ReviewQuality,
     ReviewService,
-    _apply_quality,
 )
-
 
 # --------------------------------------------------------------------------- #
 # ReviewQuality                                                               #
 # --------------------------------------------------------------------------- #
+
 
 def test_review_quality_values():
     assert ReviewQuality.HARD.value == "hard"
@@ -26,6 +25,7 @@ def test_review_quality_values():
 # --------------------------------------------------------------------------- #
 # Result dataclasses                                                          #
 # --------------------------------------------------------------------------- #
+
 
 def test_completion_result_success_when_no_error():
     r = ReviewCompletionResult(problem_db_id=1, quality=ReviewQuality.GOOD)
@@ -43,93 +43,116 @@ def test_action_result_success_failed():
 
 
 # --------------------------------------------------------------------------- #
-# _apply_quality — pure SM-2 step                                             #
+# ReviewQuality → scheduler quality mapping                                   #
 # --------------------------------------------------------------------------- #
 
-def test_apply_quality_hard_resets_interval_decreases_ease():
-    """HARD always reverts to 1 day and pushes ease down (clamped at MIN)."""
-    interval, ease, reps = _apply_quality(
-        ReviewQuality.HARD, current_interval=12, current_ease=2.5, repetitions=3,
-    )
-    assert interval == 1
-    assert ease == pytest.approx(2.3, abs=1e-6)   # 2.5 + (-0.2)
-    assert reps == 0
+
+def test_review_quality_maps_to_sm2_grades():
+    from bytedojo.core.scheduler import Quality
+
+    assert ReviewQuality.HARD.sm2 is Quality.HARD
+    assert ReviewQuality.GOOD.sm2 is Quality.GOOD
+    assert ReviewQuality.EASY.sm2 is Quality.EASY
 
 
-def test_apply_quality_hard_clamps_ease_at_min():
-    """Ease floor is 1.3 — HARD can't drive it below."""
-    _, ease, _ = _apply_quality(
-        ReviewQuality.HARD, current_interval=4, current_ease=1.4, repetitions=2,
-    )
-    assert ease == pytest.approx(1.3, abs=1e-6)
+# --------------------------------------------------------------------------- #
+# §9 transitions: apply_pass / apply_fail / apply_skip                        #
+# --------------------------------------------------------------------------- #
 
 
-def test_apply_quality_good_first_review_keeps_interval():
-    """With repetitions=0, first GOOD keeps current_interval (no ease multiply)."""
-    interval, ease, reps = _apply_quality(
-        ReviewQuality.GOOD, current_interval=7, current_ease=2.5, repetitions=0,
-    )
-    assert interval == 7
-    assert ease == 2.5     # GOOD doesn't change ease
-    assert reps == 1
+def test_apply_pass_creates_track_when_none(repo, registered_problem):
+    effect = ReviewService().apply_pass(repo, registered_problem.id)
+    assert effect.action == "created"
+    assert effect.interval_days == 7  # configured base
+    with repo.session() as s:
+        row = s.reviews.get(registered_problem.id)
+    assert row is not None
+    assert row.repetitions == 1
 
 
-def test_apply_quality_good_mid_track_multiplies_by_ease():
-    """With repetitions >= 1, interval = round(current * ease)."""
-    interval, _, reps = _apply_quality(
-        ReviewQuality.GOOD, current_interval=10, current_ease=2.5, repetitions=1,
-    )
-    assert interval == 25   # round(10 * 2.5)
-    assert reps == 2
+def test_apply_pass_advances_when_due(repo, registered_problem):
+    svc = ReviewService()
+    svc.initial_schedule(repo, registered_problem.id, days=0)  # due today
+
+    effect = svc.apply_pass(repo, registered_problem.id)
+    assert effect.action == "advanced"
+    with repo.session() as s:
+        row = s.reviews.get(registered_problem.id)
+    assert row.repetitions == 2
 
 
-def test_apply_quality_easy_bumps_ease_and_extends_interval():
-    """EASY: extra 1.3× bonus on top of the GOOD interval; ease += 0.15."""
-    interval, ease, reps = _apply_quality(
-        ReviewQuality.EASY, current_interval=10, current_ease=2.0, repetitions=1,
-    )
-    # GOOD baseline: round(10 * 2.0) = 20.  EASY bonus: round(20 * 1.3) = 26.
-    assert interval == 26
-    assert ease == pytest.approx(2.15, abs=1e-6)
-    assert reps == 2
+def test_apply_pass_leaves_undue_schedule_alone(repo, registered_problem):
+    """Early practice must not pull the review earlier or thrash state."""
+    svc = ReviewService()
+    svc.initial_schedule(repo, registered_problem.id, days=10)  # not due
+    with repo.session() as s:
+        before = s.reviews.get(registered_problem.id)
+
+    effect = svc.apply_pass(repo, registered_problem.id)
+    assert effect.action == "none"
+    with repo.session() as s:
+        after = s.reviews.get(registered_problem.id)
+    assert after.next_review_date == before.next_review_date
+    assert after.repetitions == before.repetitions
 
 
-def test_apply_quality_easy_clamps_ease_at_max():
-    """Ease ceiling is 3.0."""
-    _, ease, _ = _apply_quality(
-        ReviewQuality.EASY, current_interval=10, current_ease=2.95, repetitions=1,
-    )
-    assert ease == pytest.approx(3.0, abs=1e-6)
+def test_apply_fail_lapses_scheduled_problem(repo, registered_problem):
+    svc = ReviewService()
+    svc.initial_schedule(repo, registered_problem.id, days=10)
+
+    effect = svc.apply_fail(repo, registered_problem.id)
+    assert effect.action == "lapsed"
+    assert effect.interval_days == 1
+    with repo.session() as s:
+        row = s.reviews.get(registered_problem.id)
+    assert row.repetitions == 0
+    assert row.next_review_date == date.today() + timedelta(days=1)
 
 
-def test_apply_quality_good_clamps_interval_at_one():
-    """A degenerate current_interval=0 still yields at least 1 day."""
-    interval, _, _ = _apply_quality(
-        ReviewQuality.GOOD, current_interval=0, current_ease=2.5, repetitions=2,
-    )
-    assert interval >= 1
+def test_apply_fail_without_schedule_is_a_noop(repo, registered_problem):
+    effect = ReviewService().apply_fail(repo, registered_problem.id)
+    assert effect.action == "none"
+    with repo.session() as s:
+        assert s.reviews.get(registered_problem.id) is None
+
+
+def test_apply_skip_removes_the_track(repo, registered_problem):
+    svc = ReviewService()
+    svc.initial_schedule(repo, registered_problem.id)
+
+    effect = svc.apply_skip(repo, registered_problem.id)
+    assert effect.action == "removed"
+    with repo.session() as s:
+        assert s.reviews.get(registered_problem.id) is None
+
+
+def test_apply_skip_without_schedule_is_a_noop(repo, registered_problem):
+    assert ReviewService().apply_skip(repo, registered_problem.id).action == "none"
 
 
 # --------------------------------------------------------------------------- #
 # initial_schedule                                                            #
 # --------------------------------------------------------------------------- #
 
+
 def test_initial_schedule_uses_config_default(repo, registered_problem):
     interval = ReviewService().initial_schedule(repo, registered_problem.id)
-    assert interval == 7    # default review_frequency_days
+    assert interval == 7  # default review_frequency_days
 
 
 def test_initial_schedule_with_explicit_days(repo, registered_problem):
     interval = ReviewService().initial_schedule(
-        repo, registered_problem.id, days=14,
+        repo,
+        registered_problem.id,
+        days=14,
     )
     assert interval == 14
 
 
 def test_initial_schedule_writes_review_row(repo, registered_problem):
     ReviewService().initial_schedule(repo, registered_problem.id, days=5)
-    with repo.open_db() as db:
-        row = db.get_review(registered_problem.id)
+    with repo.session() as s:
+        row = s.reviews.get(registered_problem.id)
     assert row is not None
     assert row.interval_days == 5
 
@@ -137,6 +160,7 @@ def test_initial_schedule_writes_review_row(repo, registered_problem):
 # --------------------------------------------------------------------------- #
 # add_review                                                                  #
 # --------------------------------------------------------------------------- #
+
 
 def test_add_review_happy_path(repo, registered_problem):
     result = ReviewService().add_review(repo, registered_problem.id, days=3)
@@ -160,6 +184,7 @@ def test_add_review_errors_when_already_scheduled(repo, registered_problem):
 # snooze_review                                                               #
 # --------------------------------------------------------------------------- #
 
+
 def test_snooze_review_pushes_date_out(repo, registered_problem):
     svc = ReviewService()
     svc.add_review(repo, registered_problem.id, days=1)
@@ -179,14 +204,15 @@ def test_snooze_review_errors_when_no_track(repo, registered_problem):
 # remove_review                                                               #
 # --------------------------------------------------------------------------- #
 
+
 def test_remove_review_drops_the_track(repo, registered_problem):
     svc = ReviewService()
     svc.add_review(repo, registered_problem.id)
 
     result = svc.remove_review(repo, registered_problem.id)
     assert result.success
-    with repo.open_db() as db:
-        assert db.get_review(registered_problem.id) is None
+    with repo.session() as s:
+        assert s.reviews.get(registered_problem.id) is None
 
 
 def test_remove_review_errors_when_no_track(repo, registered_problem):
@@ -198,6 +224,7 @@ def test_remove_review_errors_when_no_track(repo, registered_problem):
 # --------------------------------------------------------------------------- #
 # complete_review                                                             #
 # --------------------------------------------------------------------------- #
+
 
 def test_complete_review_applies_sm2_and_records(repo, registered_problem):
     """End-to-end persistence path; SM-2 math is exercised by _apply_quality tests."""
@@ -217,7 +244,9 @@ def test_complete_review_applies_sm2_and_records(repo, registered_problem):
 
 def test_complete_review_errors_with_no_track(repo, registered_problem):
     result = ReviewService().complete_review(
-        repo, registered_problem.id, ReviewQuality.GOOD,
+        repo,
+        registered_problem.id,
+        ReviewQuality.GOOD,
     )
     assert result.failed
     assert "no review scheduled" in result.error.lower()
@@ -226,6 +255,7 @@ def test_complete_review_errors_with_no_track(repo, registered_problem):
 # --------------------------------------------------------------------------- #
 # Reads (get_due_reviews / pick_random_due / stats / frequency)               #
 # --------------------------------------------------------------------------- #
+
 
 def test_get_due_reviews_returns_due_today(repo, registered_problem):
     ReviewService().initial_schedule(repo, registered_problem.id, days=0)
@@ -265,12 +295,16 @@ def test_get_review_frequency_default(repo):
 # format_due_date — pure presentation logic                                   #
 # --------------------------------------------------------------------------- #
 
-@pytest.mark.parametrize("delta_days, expected", [
-    (0,   "Today"),
-    (1,   "Tomorrow"),
-    (3,   "In 3 days"),
-    (6,   "In 6 days"),
-])
+
+@pytest.mark.parametrize(
+    "delta_days, expected",
+    [
+        (0, "Today"),
+        (1, "Tomorrow"),
+        (3, "In 3 days"),
+        (6, "In 6 days"),
+    ],
+)
 def test_format_due_date_near_term(delta_days, expected):
     when = date.today() + timedelta(days=delta_days)
     assert ReviewService.format_due_date(when) == expected

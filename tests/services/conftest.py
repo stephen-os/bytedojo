@@ -6,7 +6,7 @@ and the `registered_problem` fixture were promoted to the top-level
 files still import the helpers from here for backward compatibility.
 """
 
-from tests.conftest import (    # noqa: F401 — re-exported for service tests
+from tests.conftest import (  # noqa: F401 — re-exported for service tests
     insert_registered_problem,
     make_problem,
 )

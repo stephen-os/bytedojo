@@ -3,67 +3,89 @@ pick - Pick a random problem.
 """
 
 import click
-from pathlib import Path
 
-from bytedojo.core.repository import Repository
-from bytedojo.core.logger import get_logger
+from bytedojo.commands._resolve import require_repo
+from bytedojo.commands.ui import dim
+from bytedojo.commands.ui.renderers import (
+    render_fetch_results,
+    render_pick,
+    render_pick_empty,
+)
+from bytedojo.core.models.code_language import CodeLanguage
 from bytedojo.core.models.problem_difficulty import ProblemDifficulty
 from bytedojo.core.models.problem_tag import ProblemTag
-from bytedojo.services import PickService, PickScope
-from bytedojo.commands.ui import bold, dim, difficulty_badge, blank, header, footer
+from bytedojo.core.repository import Repository
+from bytedojo.core.logger import get_logger
+from bytedojo.core.settings import SettingsManager
+from bytedojo.services import FetchService, PickService, PickScope
 
 
-# Define pick command
 @click.command()
-
-# Options
-
-# Difficulty filter
-@click.option('--difficulty', '-d',
-              type=click.Choice(['easy', 'medium', 'hard', '1', '2', '3'], case_sensitive=False),
-              help='Filter by difficulty (easy/1, medium/2, hard/3)')
-
-# Tag filter (multiple allowed)
-@click.option('--tag', '-t', 'tags', multiple=True,
-              help='Filter by algorithm tag (can be used multiple times)')
-
-# Scope flags (mutually exclusive)
-@click.option('--all', '-a', 'scope', flag_value='all',
-              help='Pick from all problems (ignore registration status)')
-@click.option('--solved', '-s', 'scope', flag_value='solved',
-              help='Pick from registered/solved problems only')
-
+@click.option(
+    "--difficulty",
+    "-d",
+    type=click.Choice(["easy", "medium", "hard", "1", "2", "3"], case_sensitive=False),
+    help="Filter by difficulty (easy/1, medium/2, hard/3)",
+)
+@click.option(
+    "--tag",
+    "-t",
+    "tags",
+    multiple=True,
+    help="Filter by algorithm tag (can be used multiple times)",
+)
+@click.option(
+    "--all",
+    "-a",
+    "scope",
+    flag_value="all",
+    help="Pick from all problems (ignore registration status)",
+)
+@click.option(
+    "--solved",
+    "-s",
+    "scope",
+    flag_value="solved",
+    help="Pick from registered/solved problems only",
+)
+@click.option(
+    "--fetch",
+    "fetch_now",
+    is_flag=True,
+    help="Fetch the picked problem immediately (non-interactive)",
+)
 @click.pass_obj
-def pick(ctx, difficulty: str | None, tags: tuple, scope: str | None):
+def pick(ctx, difficulty: str | None, tags: tuple, scope: str | None, fetch_now: bool):
     """
     Pick a random problem.
 
-    By default, selects from problems not yet registered in your .dojo database.
-
-    Scopes:
-      (default)    Pick from unsolved problems only
-      --all        Pick from all problems (ignore registration status)
-      --solved     Pick from registered/solved problems only
+    By default, selects from problems not yet registered and asks
+    whether to fetch it, pick again, or quit. Use --fetch to pick and
+    fetch in one step.
 
     Examples:
-      dojo pick                    # Random unsolved problem
+      dojo pick                    # Random unsolved problem (interactive)
       dojo pick -d easy            # Random easy problem
       dojo pick -t array           # Random array problem
-      dojo pick -d medium -t tree  # Random medium tree problem
+      dojo pick --fetch            # Pick and fetch without prompting
       dojo pick --all              # Random from all problems
       dojo pick --solved           # Random from already registered
     """
     logger = get_logger()
-    logger.debug(f"pick: difficulty={difficulty} tags={tags} scope={scope}")
+    logger.debug(
+        f"pick: difficulty={difficulty} tags={tags} scope={scope} " f"fetch={fetch_now}"
+    )
 
-    repo = Repository.find(Path.cwd())
-    if repo is None:
-        raise click.ClickException("Not inside a .dojo repository. Please run 'dojo init' first.")
+    repo = require_repo()
 
     # Resolve difficulty (None / "" -> NONE sentinel; unrecognized -> NONE + error)
-    diff = ProblemDifficulty.from_string(difficulty) if difficulty else ProblemDifficulty.NONE
+    diff = (
+        ProblemDifficulty.from_string(difficulty)
+        if difficulty
+        else ProblemDifficulty.NONE
+    )
     if difficulty and diff == ProblemDifficulty.NONE:
-        raise click.ClickException(f"Unknown difficulty: {difficulty}")
+        raise click.UsageError(f"Unknown difficulty: {difficulty}")
 
     # Resolve tags (drop UNKNOWN with a warning; fail if none are valid)
     parsed_tags = None
@@ -76,55 +98,52 @@ def pick(ctx, difficulty: str | None, tags: tuple, scope: str | None):
                 continue
             parsed_tags.append(tag)
         if not parsed_tags:
-            raise click.ClickException(f"No valid tags found in: {list(tags)}")
+            raise click.UsageError(f"No valid tags found in: {list(tags)}")
 
-    # Resolve scope
     pick_scope = {
-        'all': PickScope.ALL,
-        'solved': PickScope.SOLVED,
+        "all": PickScope.ALL,
+        "solved": PickScope.SOLVED,
     }.get(scope, PickScope.UNSOLVED)
 
-    # Pick
     service = PickService()
-    result = service.pick(repo, difficulty=diff, tags=parsed_tags, scope=pick_scope)
 
-    # Display
-    if result.total_count == 0:
-        click.echo(f"  {dim('No problems found matching your criteria.')}")
-        return
+    while True:
+        result = service.pick(repo, difficulty=diff, tags=parsed_tags, scope=pick_scope)
 
-    if not result.has_pick:
-        if result.scope == PickScope.SOLVED:
-            click.echo(f"  {dim('No registered problems matching your criteria.')}")
-        else:
-            click.echo(f"  {dim('All matching problems already registered.')}")
-            click.echo(
-                f"  {dim('total:')} {bold(str(result.total_count))}  "
-                f"{dim('registered:')} {bold(str(result.registered_count))}"
+        if not result.has_pick:
+            render_pick_empty(result)
+            return
+
+        render_pick(result)
+
+        if fetch_now:
+            _fetch_picked(repo, result.picked.id)
+            return
+
+        choice = (
+            click.prompt(
+                "",
+                prompt_suffix="  [f]etch / [r]epick / [q]uit: ",
+                default="q",
+                show_default=False,
             )
+            .strip()
+            .lower()
+        )
+
+        if choice in ("f", "fetch"):
+            _fetch_picked(repo, result.picked.id)
+            return
+        if choice in ("r", "repick"):
+            continue
+        click.echo(f"  {dim(f'dojo fetch {result.picked.id}')}")
         return
 
-    picked = result.picked
-    label = result.scope.display_label
 
-    header("Selected")
-    blank()
-    click.echo(
-        f"  {bold('#' + str(picked.id))}  {bold(picked.title)}  "
-        f"{difficulty_badge(picked.difficulty.value)}"
+def _fetch_picked(repo: Repository, problem_id: int) -> None:
+    """Fetch the picked problem in the configured default language."""
+    language = CodeLanguage.from_string(
+        SettingsManager(repo.dojo_dir).load().default_language
     )
-
-    if picked.tags:
-        tags_display = "  ".join(dim(t.value) for t in picked.tags[:5])
-        if len(picked.tags) > 5:
-            tags_display += f"  {dim(f'+{len(picked.tags) - 5} more')}"
-        blank()
-        click.echo(f"  {dim('Tags')}   {tags_display}")
-
-    blank()
-    click.echo(
-        f"  {dim('Pool')}   {bold(str(result.pool_size))} {label}  "
-        f"{dim('·')}  {bold(str(result.registered_count))} registered  "
-        f"{dim('·')}  {bold(str(result.total_count))} total"
-    )
-    footer(f"dojo fetch {picked.id}")
+    batch = FetchService().fetch_and_place_batch(repo, [problem_id], language)
+    render_fetch_results(batch)

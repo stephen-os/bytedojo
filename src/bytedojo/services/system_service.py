@@ -16,15 +16,20 @@ from bytedojo.core.logger import get_logger
 from bytedojo.core.repository import Repository
 from bytedojo.core.toolchains import ToolchainStatus, all_toolchains
 
+#: Minimum interpreter ByteDojo supports (also declared in pyproject).
+MIN_PYTHON = (3, 10)
+
 
 @dataclass
 class SystemReport:
     """Snapshot of environment + toolchain status."""
+
     bytedojo_version: str
     python_version: str
     python_executable: str
-    platform_name: str           # human-readable, e.g. "Windows 11"
-    platform_id: str             # technical, e.g. "win32"
+    platform_name: str  # human-readable, e.g. "Windows 11"
+    platform_id: str  # technical, e.g. "win32"
+    python_supported: bool = True
     repository_path: Optional[Path] = None
     toolchains: List[ToolchainStatus] = field(default_factory=list)
 
@@ -69,6 +74,7 @@ class SystemService:
             python_executable=sys.executable,
             platform_name=f"{platform.system()} {platform.release()}",
             platform_id=sys.platform,
+            python_supported=(info.major, info.minor) >= MIN_PYTHON,
             repository_path=repo_path,
             toolchains=toolchains,
         )

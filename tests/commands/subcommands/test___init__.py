@@ -4,10 +4,18 @@ import click
 
 from bytedojo.commands import subcommands
 
-
 _EXPECTED = {
-    "init", "grade", "fetch", "query", "pick",
-    "review", "settings", "run", "test", "stats", "support",
+    "init",
+    "grade",
+    "fetch",
+    "query",
+    "pick",
+    "review",
+    "settings",
+    "run",
+    "test",
+    "stats",
+    "support",
 }
 
 

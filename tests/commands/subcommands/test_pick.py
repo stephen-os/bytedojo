@@ -3,22 +3,23 @@
 import pytest
 from click.testing import CliRunner
 
+from bytedojo.core.errors import RepoNotFoundError
 from bytedojo.commands.subcommands.pick import pick
 from bytedojo.core.models.problem_detail import ProblemDetail
 from bytedojo.core.models.problem_difficulty import ProblemDifficulty
 from bytedojo.core.models.problem_tag import ProblemTag
 from bytedojo.services.pick_service import PickResult, PickScope
 
-
 # --------------------------------------------------------------------------- #
 # Pre-flight                                                                  #
 # --------------------------------------------------------------------------- #
+
 
 def test_pick_outside_repo_errors(tmp_path, monkeypatch):
     monkeypatch.chdir(tmp_path)
     result = CliRunner().invoke(pick, [])
     assert result.exit_code != 0
-    assert "Not inside a .dojo repository" in result.output
+    assert isinstance(result.exception, RepoNotFoundError)
 
 
 def test_pick_unknown_difficulty_string_via_click_choice(repo, monkeypatch):
@@ -41,11 +42,16 @@ def test_pick_unknown_tag_string_filtered_out(repo, monkeypatch):
 # Service wiring                                                              #
 # --------------------------------------------------------------------------- #
 
-def _detail(pid: int = 1, *, difficulty=ProblemDifficulty.EASY,
-            tags=None) -> ProblemDetail:
+
+def _detail(
+    pid: int = 1, *, difficulty=ProblemDifficulty.EASY, tags=None
+) -> ProblemDetail:
     return ProblemDetail(
-        id=pid, title=f"P{pid}", slug=f"p{pid}",
-        difficulty=difficulty, description="x",
+        id=pid,
+        title=f"P{pid}",
+        slug=f"p{pid}",
+        difficulty=difficulty,
+        description="x",
         tags=tags or [],
     )
 
@@ -55,26 +61,42 @@ def stub_pick(monkeypatch):
     """Replace PickService.pick; capture args + return a controllable result."""
     state = {"calls": [], "result": None}
 
-    def fake_pick(self, repo, *, difficulty=ProblemDifficulty.NONE, tags=None,
-                  scope=PickScope.UNSOLVED):
-        state["calls"].append({
-            "difficulty": difficulty, "tags": tags, "scope": scope,
-        })
+    def fake_pick(
+        self,
+        repo,
+        *,
+        difficulty=ProblemDifficulty.NONE,
+        tags=None,
+        scope=PickScope.UNSOLVED,
+    ):
+        state["calls"].append(
+            {
+                "difficulty": difficulty,
+                "tags": tags,
+                "scope": scope,
+            }
+        )
         if state["result"] is not None:
             return state["result"]
         picked = _detail(1)
-        return PickResult(picked=picked, candidates=[picked],
-                          total_count=1, registered_count=0, scope=scope)
+        return PickResult(
+            picked=picked,
+            candidates=[picked],
+            total_count=1,
+            registered_count=0,
+            scope=scope,
+        )
 
     monkeypatch.setattr(
-        "bytedojo.services.pick_service.PickService.pick", fake_pick,
+        "bytedojo.services.pick_service.PickService.pick",
+        fake_pick,
     )
     return state
 
 
 def test_pick_default_scope_is_unsolved(repo, monkeypatch, stub_pick):
     monkeypatch.chdir(repo.root_dir)
-    result = CliRunner().invoke(pick, [])
+    result = CliRunner().invoke(pick, [], input="q\n")
     assert result.exit_code == 0
     assert stub_pick["calls"][0]["scope"] is PickScope.UNSOLVED
 
@@ -112,7 +134,7 @@ def test_pick_multiple_tags(repo, monkeypatch, stub_pick):
 def test_pick_drops_unknown_tag_but_keeps_known(repo, monkeypatch, stub_pick):
     """Unknown tags are dropped (with warning), but a co-passed valid tag remains."""
     monkeypatch.chdir(repo.root_dir)
-    result = CliRunner().invoke(pick, ["-t", "array", "-t", "made-up-tag"])
+    result = CliRunner().invoke(pick, ["-t", "array", "-t", "made-up-tag"], input="q\n")
     assert result.exit_code == 0
     assert stub_pick["calls"][0]["tags"] == [ProblemTag.ARRAY]
 
@@ -121,21 +143,25 @@ def test_pick_drops_unknown_tag_but_keeps_known(repo, monkeypatch, stub_pick):
 # Output rendering                                                            #
 # --------------------------------------------------------------------------- #
 
+
 def test_pick_renders_picked_problem(repo, monkeypatch, stub_pick):
     monkeypatch.chdir(repo.root_dir)
-    result = CliRunner().invoke(pick, [])
+    result = CliRunner().invoke(pick, [], input="q\n")
     assert result.exit_code == 0
     assert "P1" in result.output
     assert "Easy" in result.output
-    assert "dojo fetch 1" in result.output
+    assert "dojo fetch 1" in result.output  # quit path leaves the manual hint
 
 
 def test_pick_renders_tag_list(repo, monkeypatch, stub_pick):
     """Tags appear with the comma-separated tag list."""
     picked = _detail(1, tags=[ProblemTag.ARRAY, ProblemTag.HASH_TABLE])
     stub_pick["result"] = PickResult(
-        picked=picked, candidates=[picked],
-        total_count=1, registered_count=0, scope=PickScope.UNSOLVED,
+        picked=picked,
+        candidates=[picked],
+        total_count=1,
+        registered_count=0,
+        scope=PickScope.UNSOLVED,
     )
     monkeypatch.chdir(repo.root_dir)
     result = CliRunner().invoke(pick, [])
@@ -146,8 +172,11 @@ def test_pick_renders_tag_list(repo, monkeypatch, stub_pick):
 def test_pick_no_candidates_unsolved(repo, monkeypatch, stub_pick):
     """UNSOLVED with everything registered -> 'all already registered' message."""
     stub_pick["result"] = PickResult(
-        picked=None, candidates=[],
-        total_count=5, registered_count=5, scope=PickScope.UNSOLVED,
+        picked=None,
+        candidates=[],
+        total_count=5,
+        registered_count=5,
+        scope=PickScope.UNSOLVED,
     )
     monkeypatch.chdir(repo.root_dir)
     result = CliRunner().invoke(pick, [])
@@ -156,8 +185,11 @@ def test_pick_no_candidates_unsolved(repo, monkeypatch, stub_pick):
 
 def test_pick_no_candidates_solved(repo, monkeypatch, stub_pick):
     stub_pick["result"] = PickResult(
-        picked=None, candidates=[],
-        total_count=5, registered_count=0, scope=PickScope.SOLVED,
+        picked=None,
+        candidates=[],
+        total_count=5,
+        registered_count=0,
+        scope=PickScope.SOLVED,
     )
     monkeypatch.chdir(repo.root_dir)
     result = CliRunner().invoke(pick, ["--solved"])
@@ -167,9 +199,62 @@ def test_pick_no_candidates_solved(repo, monkeypatch, stub_pick):
 def test_pick_empty_pool(repo, monkeypatch, stub_pick):
     """No matches at all -> 'No problems found' (different from 'all registered')."""
     stub_pick["result"] = PickResult(
-        picked=None, candidates=[],
-        total_count=0, registered_count=0, scope=PickScope.UNSOLVED,
+        picked=None,
+        candidates=[],
+        total_count=0,
+        registered_count=0,
+        scope=PickScope.UNSOLVED,
     )
     monkeypatch.chdir(repo.root_dir)
     result = CliRunner().invoke(pick, [])
     assert "No problems found" in result.output
+
+
+# --------------------------------------------------------------------------- #
+# Interactive prompt + --fetch                                                #
+# --------------------------------------------------------------------------- #
+
+
+@pytest.fixture
+def stub_fetch(monkeypatch):
+    """Capture FetchService.fetch_and_place_batch calls from pick."""
+    from bytedojo.services.fetch_service import FetchBatchResult, FetchResult
+
+    state = {"calls": []}
+
+    def fake_batch(self, repo, ids, lang, **kwargs):
+        state["calls"].append({"ids": ids, "lang": lang})
+        return FetchBatchResult(
+            results=[
+                FetchResult(problem_id=pid, success=True, version=1) for pid in ids
+            ]
+        )
+
+    monkeypatch.setattr(
+        "bytedojo.services.fetch_service.FetchService.fetch_and_place_batch",
+        fake_batch,
+    )
+    return state
+
+
+def test_pick_prompt_fetch_fetches_picked(repo, monkeypatch, stub_pick, stub_fetch):
+    monkeypatch.chdir(repo.root_dir)
+    result = CliRunner().invoke(pick, [], input="f\n")
+    assert result.exit_code == 0
+    assert stub_fetch["calls"] == [{"ids": [1], "lang": stub_fetch["calls"][0]["lang"]}]
+    assert "1 placed" in result.output
+
+
+def test_pick_prompt_repick_picks_again(repo, monkeypatch, stub_pick, stub_fetch):
+    monkeypatch.chdir(repo.root_dir)
+    result = CliRunner().invoke(pick, [], input="r\nq\n")
+    assert result.exit_code == 0
+    assert len(stub_pick["calls"]) == 2
+    assert stub_fetch["calls"] == []
+
+
+def test_pick_fetch_flag_is_non_interactive(repo, monkeypatch, stub_pick, stub_fetch):
+    monkeypatch.chdir(repo.root_dir)
+    result = CliRunner().invoke(pick, ["--fetch"])
+    assert result.exit_code == 0
+    assert stub_fetch["calls"][0]["ids"] == [1]

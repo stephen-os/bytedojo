@@ -4,15 +4,16 @@ import sys
 
 from bytedojo.services.system_service import SystemReport, SystemService
 
-
 # --------------------------------------------------------------------------- #
 # SystemReport properties                                                     #
 # --------------------------------------------------------------------------- #
+
 
 def _toolchain_status(found: bool):
     """Build a minimal ToolchainStatus stand-in for the property tests."""
     from bytedojo.core.models.code_language import CodeLanguage
     from bytedojo.core.toolchains.base import ToolchainStatus
+
     return ToolchainStatus(language=CodeLanguage.PYTHON, found=found)
 
 
@@ -23,7 +24,11 @@ def test_report_ready_count():
         python_executable="/p",
         platform_name="x",
         platform_id="x",
-        toolchains=[_toolchain_status(True), _toolchain_status(False), _toolchain_status(True)],
+        toolchains=[
+            _toolchain_status(True),
+            _toolchain_status(False),
+            _toolchain_status(True),
+        ],
     )
     assert report.ready_count == 2
     assert report.total_count == 3
@@ -32,8 +37,11 @@ def test_report_ready_count():
 
 def test_report_all_ready_when_every_toolchain_found():
     report = SystemReport(
-        bytedojo_version="1.0", python_version="3.12.0",
-        python_executable="/p", platform_name="x", platform_id="x",
+        bytedojo_version="1.0",
+        python_version="3.12.0",
+        python_executable="/p",
+        platform_name="x",
+        platform_id="x",
         toolchains=[_toolchain_status(True), _toolchain_status(True)],
     )
     assert report.all_ready is True
@@ -42,8 +50,11 @@ def test_report_all_ready_when_every_toolchain_found():
 def test_report_all_ready_false_when_no_toolchains():
     """Empty list -> not 'all ready'; nothing to be ready about."""
     report = SystemReport(
-        bytedojo_version="1.0", python_version="3.12.0",
-        python_executable="/p", platform_name="x", platform_id="x",
+        bytedojo_version="1.0",
+        python_version="3.12.0",
+        python_executable="/p",
+        platform_name="x",
+        platform_id="x",
     )
     assert report.total_count == 0
     assert report.all_ready is False
@@ -52,6 +63,7 @@ def test_report_all_ready_false_when_no_toolchains():
 # --------------------------------------------------------------------------- #
 # SystemService.check                                                         #
 # --------------------------------------------------------------------------- #
+
 
 def test_check_returns_python_metadata():
     report = SystemService().check()

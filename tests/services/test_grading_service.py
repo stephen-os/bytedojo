@@ -7,10 +7,10 @@ from bytedojo.services.grading_service import GradeResult, GradingService
 
 from tests.services.conftest import insert_registered_problem
 
-
 # --------------------------------------------------------------------------- #
 # GradeResult                                                                 #
 # --------------------------------------------------------------------------- #
+
 
 def test_grade_result_success_when_no_error(registered_problem):
     r = GradeResult(problem=registered_problem, status="passed")
@@ -28,15 +28,29 @@ def test_grade_result_failed_when_error_set(registered_problem):
 # grade — validation                                                          #
 # --------------------------------------------------------------------------- #
 
-@pytest.mark.parametrize("bad_status", [
-    "nope", "ungraded", "unknown", "Pass", "PASSED", "", "complete",
-])
+
+@pytest.mark.parametrize(
+    "bad_status",
+    [
+        "nope",
+        "ungraded",
+        "unknown",
+        "Pass",
+        "PASSED",
+        "",
+        "complete",
+    ],
+)
 def test_grade_rejects_invalid_status(repo, registered_problem, bad_status):
     """Anything outside passed / failed / skipped is rejected with an error."""
     result = GradingService().grade(repo, registered_problem, status=bad_status)
     assert result.failed
     assert "Invalid status" in result.error
-    assert "passed" in result.error and "failed" in result.error and "skipped" in result.error
+    assert (
+        "passed" in result.error
+        and "failed" in result.error
+        and "skipped" in result.error
+    )
 
 
 def test_grade_valid_statuses_match_problem_status_enum(repo, registered_problem):
@@ -48,8 +62,9 @@ def test_grade_valid_statuses_match_problem_status_enum(repo, registered_problem
 
 def test_grade_explicitly_rejects_ungraded(repo, registered_problem):
     """UNGRADED is a state, not a grade — must be rejected."""
-    result = GradingService().grade(repo, registered_problem,
-                                    status=ProblemStatus.UNGRADED.value)
+    result = GradingService().grade(
+        repo, registered_problem, status=ProblemStatus.UNGRADED.value
+    )
     assert result.failed
 
 
@@ -57,44 +72,45 @@ def test_grade_explicitly_rejects_ungraded(repo, registered_problem):
 # grade — persistence + review scheduling                                     #
 # --------------------------------------------------------------------------- #
 
+
 def test_grade_passed_records_status_in_db(repo, registered_problem):
     GradingService().grade(repo, registered_problem, status="passed")
-    with repo.open_db() as db:
-        fresh = db.get_problem("leetcode", 1, "python3")
+    with repo.session() as s:
+        fresh = s.problems.get("leetcode", 1)
     assert fresh.status is ProblemStatus.PASSED
 
 
 def test_grade_failed_records_status_in_db(repo, registered_problem):
     GradingService().grade(repo, registered_problem, status="failed")
-    with repo.open_db() as db:
-        fresh = db.get_problem("leetcode", 1, "python3")
+    with repo.session() as s:
+        fresh = s.problems.get("leetcode", 1)
     assert fresh.status is ProblemStatus.FAILED
 
 
 def test_grade_records_status_on_the_latest_attempt(repo, registered_problem):
     """`dojo query` reads the attempt row, so the grade has to land there too."""
-    with repo.open_db() as db:
-        db.create_attempt("leetcode", 1, "python3")
+    with repo.session() as s:
+        s.attempts.create("leetcode", 1, "python3")
 
     GradingService().grade(repo, registered_problem, status="passed")
 
-    with repo.open_db() as db:
-        attempt = db.get_attempt("leetcode", 1, "python3", 1)
+    with repo.session() as s:
+        attempt = s.attempts.get("leetcode", 1, version=1)
     assert attempt.status is ProblemStatus.PASSED
 
 
 def test_grade_leaves_older_attempt_versions_alone(repo, registered_problem):
     """Grading v2 must not rewrite the grade v1 was given."""
-    with repo.open_db() as db:
-        db.create_attempt("leetcode", 1, "python3")
-        db.create_attempt("leetcode", 1, "python3")
-        db.update_attempt_status("leetcode", 1, "python3", 1, "passed")
+    with repo.session() as s:
+        s.attempts.create("leetcode", 1, "python3")
+        s.attempts.create("leetcode", 1, "python3")
+        s.attempts.update_status("leetcode", 1, 1, "passed")
 
     GradingService().grade(repo, registered_problem, status="failed")
 
-    with repo.open_db() as db:
-        v1 = db.get_attempt("leetcode", 1, "python3", 1)
-        v2 = db.get_attempt("leetcode", 1, "python3", 2)
+    with repo.session() as s:
+        v1 = s.attempts.get("leetcode", 1, version=1)
+        v2 = s.attempts.get("leetcode", 1, version=2)
     assert v1.status is ProblemStatus.PASSED
     assert v2.status is ProblemStatus.FAILED
 
@@ -103,8 +119,8 @@ def test_grade_succeeds_when_the_problem_has_no_attempt_row(repo, registered_pro
     """A registered problem with no recorded attempt still grades cleanly."""
     result = GradingService().grade(repo, registered_problem, status="passed")
     assert result.success
-    with repo.open_db() as db:
-        assert db.get_problem("leetcode", 1, "python3").status is ProblemStatus.PASSED
+    with repo.session() as s:
+        assert s.problems.get("leetcode", 1).status is ProblemStatus.PASSED
 
 
 def test_grade_passed_schedules_a_review(repo, registered_problem):
@@ -127,7 +143,10 @@ def test_grade_skipped_does_not_schedule_a_review(repo, registered_problem):
 
 def test_grade_records_notes(repo, registered_problem):
     result = GradingService().grade(
-        repo, registered_problem, status="passed", notes="clean BFS",
+        repo,
+        registered_problem,
+        status="passed",
+        notes="clean BFS",
     )
     assert result.notes == "clean BFS"
 
@@ -135,17 +154,19 @@ def test_grade_records_notes(repo, registered_problem):
 def test_grade_carries_review_frequency_from_config(repo, registered_problem):
     """The default review_frequency_days is exposed on the result."""
     result = GradingService().grade(repo, registered_problem, status="passed")
-    assert result.review_frequency_days == 7    # default in fresh repo config
+    assert result.review_frequency_days == 7  # default in fresh repo config
 
 
 # --------------------------------------------------------------------------- #
 # list_by_status / list_ungraded                                              #
 # --------------------------------------------------------------------------- #
 
+
 def test_list_by_status_returns_only_matching(repo, registered_problem):
     # Add a second problem and grade them differently.
-    other = insert_registered_problem(repo, pid=2, slug="add-two-numbers",
-                                      title="Add Two Numbers")
+    other = insert_registered_problem(
+        repo, pid=2, slug="add-two-numbers", title="Add Two Numbers"
+    )
     GradingService().grade(repo, registered_problem, status="passed")
     GradingService().grade(repo, other, status="failed")
 

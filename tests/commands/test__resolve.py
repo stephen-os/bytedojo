@@ -3,23 +3,28 @@
 import click
 import pytest
 
+from bytedojo.core.errors import ProblemNotFoundError
 from bytedojo.commands._resolve import resolve_problem
 from bytedojo.core.models.registered_problem import RegisteredProblem
 
 from tests.services.conftest import insert_registered_problem
 
-
 # --------------------------------------------------------------------------- #
 # --last                                                                      #
 # --------------------------------------------------------------------------- #
 
+
 def test_last_returns_most_recent(repo, registered_problem):
     """--last short-circuits the find/disambiguate flow."""
-    other = insert_registered_problem(repo, pid=2, slug="b", title="B")
+    insert_registered_problem(repo, pid=2, slug="b", title="B")
 
     out = resolve_problem(
-        repo, language="python3",
-        identifier=None, name=None, desc=None, last=True,
+        repo,
+        language="python3",
+        identifier=None,
+        name=None,
+        desc=None,
+        last=True,
         command_name="test",
     )
     assert isinstance(out, RegisteredProblem)
@@ -30,35 +35,62 @@ def test_last_returns_most_recent(repo, registered_problem):
 
 def test_last_raises_when_no_problems_registered(repo):
     """No registrations -> actionable error pointing at fetch."""
-    with pytest.raises(click.ClickException, match="No python3 problems"):
+    with pytest.raises(ProblemNotFoundError, match="No problems registered"):
         resolve_problem(
-            repo, language="python3",
-            identifier=None, name=None, desc=None, last=True,
+            repo,
+            language="python3",
+            identifier=None,
+            name=None,
+            desc=None,
+            last=True,
             command_name="test",
         )
 
 
-def test_last_uses_python_in_help_examples_even_for_python3_lang(repo):
-    """Error message uses 'python' (CLI flag form), not 'python3' (canonical)."""
-    with pytest.raises(click.ClickException) as exc:
-        resolve_problem(
-            repo, language="python3",
-            identifier=None, name=None, desc=None, last=True,
-            command_name="test",
-        )
-    assert "--python" in exc.value.message
+def test_language_mismatch_warns_but_resolves(repo, registered_problem, capsys):
+    """An explicit language flag that disagrees with the latest attempt's
+    language warns on stderr instead of failing or picking another file."""
+    out = resolve_problem(
+        repo,
+        language="java",
+        identifier="1",
+        name=None,
+        desc=None,
+        last=False,
+        command_name="test",
+    )
+    assert out.problem_id == 1
+    assert "latest attempt" in capsys.readouterr().err
+
+
+def test_matching_language_does_not_warn(repo, registered_problem, capsys):
+    resolve_problem(
+        repo,
+        language="python3",
+        identifier="1",
+        name=None,
+        desc=None,
+        last=False,
+        command_name="test",
+    )
+    assert capsys.readouterr().err == ""
 
 
 # --------------------------------------------------------------------------- #
 # No selectors                                                                #
 # --------------------------------------------------------------------------- #
 
+
 def test_missing_selector_raises_with_examples(repo):
     """When require_selector is True (default), no flags -> actionable error."""
     with pytest.raises(click.ClickException) as exc:
         resolve_problem(
-            repo, language="python3",
-            identifier=None, name=None, desc=None, last=False,
+            repo,
+            language="python3",
+            identifier=None,
+            name=None,
+            desc=None,
+            last=False,
             command_name="grade",
         )
     msg = exc.value.message
@@ -75,8 +107,12 @@ def test_require_selector_false_falls_through_to_lookup(repo, registered_problem
     it instead of raising the missing-selector error.
     """
     out = resolve_problem(
-        repo, language="python3",
-        identifier=None, name=None, desc=None, last=False,
+        repo,
+        language="python3",
+        identifier=None,
+        name=None,
+        desc=None,
+        last=False,
         command_name="grade",
         require_selector=False,
     )
@@ -87,11 +123,16 @@ def test_require_selector_false_falls_through_to_lookup(repo, registered_problem
 # Unique match                                                                #
 # --------------------------------------------------------------------------- #
 
+
 def test_identifier_unique_match(repo, registered_problem):
     """Numeric ID maps straight to the matching registered problem."""
     out = resolve_problem(
-        repo, language="python3",
-        identifier="1", name=None, desc=None, last=False,
+        repo,
+        language="python3",
+        identifier="1",
+        name=None,
+        desc=None,
+        last=False,
         command_name="test",
     )
     assert out.problem_id == 1
@@ -99,10 +140,14 @@ def test_identifier_unique_match(repo, registered_problem):
 
 def test_no_match_raises_with_criteria_breakdown(repo):
     """The error names every filter the user actually supplied."""
-    with pytest.raises(click.ClickException) as exc:
+    with pytest.raises(ProblemNotFoundError) as exc:
         resolve_problem(
-            repo, language="python3",
-            identifier="99", name="nothing", desc=None, last=False,
+            repo,
+            language="python3",
+            identifier="99",
+            name="nothing",
+            desc=None,
+            last=False,
             command_name="test",
         )
     msg = exc.value.message
@@ -115,9 +160,10 @@ def test_no_match_raises_with_criteria_breakdown(repo):
 # Ambiguous match -> interactive disambiguation                               #
 # --------------------------------------------------------------------------- #
 
+
 def test_ambiguous_invokes_select_problem(repo, monkeypatch):
     """Multiple matches route through select_problem; helper returns the choice."""
-    a = insert_registered_problem(repo, pid=1, slug="a", title="Two Sum")
+    insert_registered_problem(repo, pid=1, slug="a", title="Two Sum")
     b = insert_registered_problem(repo, pid=2, slug="b", title="Two Sum II")
 
     chosen = {"pick": b}
@@ -127,8 +173,12 @@ def test_ambiguous_invokes_select_problem(repo, monkeypatch):
     )
 
     out = resolve_problem(
-        repo, language="python3",
-        identifier=None, name="Two Sum", desc=None, last=False,
+        repo,
+        language="python3",
+        identifier=None,
+        name="Two Sum",
+        desc=None,
+        last=False,
         command_name="test",
     )
     assert out is b
@@ -140,12 +190,17 @@ def test_ambiguous_cancelled_raises_abort(repo, monkeypatch):
     insert_registered_problem(repo, pid=2, slug="b", title="Two Sum II")
 
     monkeypatch.setattr(
-        "bytedojo.commands._resolve.select_problem", lambda matches: None,
+        "bytedojo.commands._resolve.select_problem",
+        lambda matches: None,
     )
 
     with pytest.raises(click.Abort):
         resolve_problem(
-            repo, language="python3",
-            identifier=None, name="Two Sum", desc=None, last=False,
+            repo,
+            language="python3",
+            identifier=None,
+            name="Two Sum",
+            desc=None,
+            last=False,
             command_name="test",
         )

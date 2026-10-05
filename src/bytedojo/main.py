@@ -1,12 +1,16 @@
 """
 ByteDojo - Main entry point.
 """
+
+import logging
 import os
 import sys
+import traceback
 
-import bytedojo
+import click
 
 from bytedojo.commands.bytedojo import bytedojo
+from bytedojo.core.errors import DojoError
 
 
 def _force_utf8_output():
@@ -29,9 +33,22 @@ def _force_utf8_output():
 
 
 def main():
-    """Entry point for the ByteDojo CLI."""
-    _force_utf8_output()
-    bytedojo()
+    """Entry point for the ByteDojo CLI.
 
-if __name__ == '__main__':
+    DojoError is the one approved way to fail (§10): the message is
+    rendered without a stack trace (unless --debug) and the process
+    exits with the error's code. Click keeps its own code 2 for usage
+    errors; SIGINT keeps 130.
+    """
+    _force_utf8_output()
+    try:
+        bytedojo()
+    except DojoError as e:
+        click.echo(click.style(f"  Error: {e.message}", fg="bright_red"), err=True)
+        if logging.getLogger("bytedojo").isEnabledFor(logging.DEBUG):
+            traceback.print_exc()
+        sys.exit(e.exit_code)
+
+
+if __name__ == "__main__":
     main()

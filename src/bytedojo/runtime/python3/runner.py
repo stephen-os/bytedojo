@@ -26,7 +26,6 @@ from pathlib import Path
 
 from converters import compare, display, format_input, parse_value
 
-
 BEGIN = "<<<BYTEDOJO_RESULTS_BEGIN>>>"
 END = "<<<BYTEDOJO_RESULTS_END>>>"
 
@@ -43,10 +42,18 @@ def run():
     here = Path(__file__).resolve().parent
     bundle_path = here / "cases.json"
     if not bundle_path.exists():
-        _emit([{
-            "case": 0, "passed": False, "input": "", "expected": "",
-            "actual": "", "error": f"cases.json not found at {bundle_path}",
-        }])
+        _emit(
+            [
+                {
+                    "case": 0,
+                    "passed": False,
+                    "input": "",
+                    "expected": "",
+                    "actual": "",
+                    "error": f"cases.json not found at {bundle_path}",
+                }
+            ]
+        )
         return
 
     with open(bundle_path, encoding="utf-8") as f:
@@ -61,13 +68,21 @@ def run():
     # user side gets caught by the top-level except below and reported
     # through the results envelope (instead of crashing the module load).
     from solution import Solution
+
     solution = Solution()
     if not hasattr(solution, method_name):
-        _emit([{
-            "case": 0, "passed": False, "input": "", "expected": "",
-            "actual": "",
-            "error": f"Solution class has no method `{method_name}`",
-        }])
+        _emit(
+            [
+                {
+                    "case": 0,
+                    "passed": False,
+                    "input": "",
+                    "expected": "",
+                    "actual": "",
+                    "error": f"Solution class has no method `{method_name}`",
+                }
+            ]
+        )
         return
     method = getattr(solution, method_name)
 
@@ -78,29 +93,35 @@ def run():
         expected_raw = case["expected"]
         try:
             # Positional args in signature order.
-            args = [parse_value(case["input"].get(p["name"]), p["type"]) for p in params]
+            args = [
+                parse_value(case["input"].get(p["name"]), p["type"]) for p in params
+            ]
             expected = parse_value(expected_raw, return_type)
 
             actual = method(*args)
 
             passed = compare(actual, expected, return_type, comparison)
-            results.append({
-                "case": case_id,
-                "passed": passed,
-                "input": input_str,
-                "expected": display(expected, return_type),
-                "actual": display(actual, return_type),
-                "error": None,
-            })
+            results.append(
+                {
+                    "case": case_id,
+                    "passed": passed,
+                    "input": input_str,
+                    "expected": display(expected, return_type),
+                    "actual": display(actual, return_type),
+                    "error": None,
+                }
+            )
         except Exception as e:
-            results.append({
-                "case": case_id,
-                "passed": False,
-                "input": input_str,
-                "expected": display(expected_raw, return_type),
-                "actual": "",
-                "error": f"{type(e).__name__}: {e}",
-            })
+            results.append(
+                {
+                    "case": case_id,
+                    "passed": False,
+                    "input": input_str,
+                    "expected": display(expected_raw, return_type),
+                    "actual": "",
+                    "error": f"{type(e).__name__}: {e}",
+                }
+            )
 
     _emit(results)
 
@@ -111,9 +132,16 @@ if __name__ == "__main__":
     except Exception as e:
         # Catastrophic failure — surface it as a single case-0 error so
         # the caller's parser still sees a valid envelope.
-        _emit([{
-            "case": 0, "passed": False, "input": "", "expected": "",
-            "actual": "",
-            "error": f"runner crash: {type(e).__name__}: {e}\n{traceback.format_exc()}",
-        }])
+        _emit(
+            [
+                {
+                    "case": 0,
+                    "passed": False,
+                    "input": "",
+                    "expected": "",
+                    "actual": "",
+                    "error": f"runner crash: {type(e).__name__}: {e}\n{traceback.format_exc()}",
+                }
+            ]
+        )
         sys.exit(1)
