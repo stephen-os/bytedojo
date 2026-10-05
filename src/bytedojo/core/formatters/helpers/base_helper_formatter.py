@@ -27,7 +27,11 @@ def node_structures(signature: TestSignature) -> List[DataStructure]:
 
     def visit(sig: Signature) -> None:
         for part in (sig.base, sig.element):
-            if part in _HELPER_STRUCTURES and part not in found:
+            if (
+                isinstance(part, DataStructure)
+                and part in _HELPER_STRUCTURES
+                and part not in found
+            ):
                 found.append(part)
 
     for param in signature.params:

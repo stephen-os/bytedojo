@@ -173,12 +173,11 @@ class TestService:
         # resolved attempt's language — not the problem row's — drives the
         # runner choice, since older versions may be in another language.
         resolved = resolve_solution_path(repo, problem, version=version)
-        if not resolved.found:
+        if resolved.path is None:
             raise SolutionNotFoundError(_format_path_error(resolved, version))
         file_path = resolved.path
         tested_version = resolved.version
         language = resolved.language or problem.language
-        ctx = {"version": tested_version, "file_path": file_path}
 
         if language not in _SUPPORTED_LANGUAGES:
             raise ToolchainMissingError(
@@ -213,7 +212,8 @@ class TestService:
             return self._skip(
                 problem,
                 "Bundle has zero test cases",
-                **ctx,
+                version=tested_version,
+                file_path=file_path,
             )
 
         # Prepare the per-problem build directory + drop the runner files in.

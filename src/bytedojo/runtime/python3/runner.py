@@ -24,7 +24,12 @@ import sys
 import traceback
 from pathlib import Path
 
-from converters import compare, display, format_input, parse_value
+from converters import (  # type: ignore[import-not-found]
+    compare,
+    display,
+    format_input,
+    parse_value,
+)
 
 BEGIN = "<<<BYTEDOJO_RESULTS_BEGIN>>>"
 END = "<<<BYTEDOJO_RESULTS_END>>>"
@@ -67,7 +72,7 @@ def run():
     # Import the user's solution lazily so SyntaxError / ImportError on the
     # user side gets caught by the top-level except below and reported
     # through the results envelope (instead of crashing the module load).
-    from solution import Solution
+    from solution import Solution  # type: ignore[import-not-found]
 
     solution = Solution()
     if not hasattr(solution, method_name):

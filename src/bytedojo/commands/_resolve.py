@@ -132,8 +132,9 @@ def _lookup(
             f"Fetch one first with: dojo fetch <id>"
         )
 
-    if lookup.is_unique:
-        return lookup.unique
+    unique = lookup.unique
+    if unique is not None:
+        return unique
 
     # Multiple matches — interactive disambiguation (CLI only)
     chosen = select_problem(lookup.matches)

@@ -169,9 +169,9 @@ def query(
             raise click.ClickException(str(e))
 
     # Convert tag strings to Tag enums (support comma-separated)
-    tags_list = None
+    tags_list: list[ProblemTag] | None = None
     if tag:
-        all_tags = []
+        all_tags: list[ProblemTag] = []
         for t in tag:
             # Split by comma to support comma-separated tags
             for part in t.split(","):

@@ -46,7 +46,8 @@ class DataStructure(str, Enum):
         """Parse from string; None if not a recognized data structure."""
         if not value:
             return None
-        return cls._value2member_map_.get(value.upper())
+        member = cls._value2member_map_.get(value.upper())
+        return member if isinstance(member, DataStructure) else None
 
     def __str__(self):
         """Return canonical name."""

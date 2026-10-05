@@ -77,7 +77,7 @@ class RunService:
         # Resolve the solution file (latest, or a specific version). The
         # resolved attempt's language drives the toolchain choice.
         resolved = resolve_solution_path(repo, problem, version=version)
-        if not resolved.found:
+        if resolved.path is None:
             raise SolutionNotFoundError(_format_path_error(resolved, version))
         file_path = resolved.path
         run_version = resolved.version

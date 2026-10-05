@@ -88,7 +88,7 @@ def pick(ctx, difficulty: str | None, tags: tuple, scope: str | None, fetch_now:
         raise click.UsageError(f"Unknown difficulty: {difficulty}")
 
     # Resolve tags (drop UNKNOWN with a warning; fail if none are valid)
-    parsed_tags = None
+    parsed_tags: list[ProblemTag] | None = None
     if tags:
         parsed_tags = []
         for tag_str in tags:
@@ -103,21 +103,22 @@ def pick(ctx, difficulty: str | None, tags: tuple, scope: str | None, fetch_now:
     pick_scope = {
         "all": PickScope.ALL,
         "solved": PickScope.SOLVED,
-    }.get(scope, PickScope.UNSOLVED)
+    }.get(scope or "", PickScope.UNSOLVED)
 
     service = PickService()
 
     while True:
         result = service.pick(repo, difficulty=diff, tags=parsed_tags, scope=pick_scope)
 
-        if not result.has_pick:
+        picked = result.picked
+        if picked is None:
             render_pick_empty(result)
             return
 
         render_pick(result)
 
         if fetch_now:
-            _fetch_picked(repo, result.picked.id)
+            _fetch_picked(repo, picked.id)
             return
 
         choice = (
@@ -132,11 +133,11 @@ def pick(ctx, difficulty: str | None, tags: tuple, scope: str | None, fetch_now:
         )
 
         if choice in ("f", "fetch"):
-            _fetch_picked(repo, result.picked.id)
+            _fetch_picked(repo, picked.id)
             return
         if choice in ("r", "repick"):
             continue
-        click.echo(f"  {dim(f'dojo fetch {result.picked.id}')}")
+        click.echo(f"  {dim(f'dojo fetch {picked.id}')}")
         return
 
 

@@ -51,14 +51,14 @@ def _canonical(type_spec: Any) -> str:
 
 def _tree_node_cls():
     """Pull TreeNode from the sibling tree_node module. Raises if missing."""
-    from tree_node import TreeNode  # noqa: WPS433 — intentional lazy import
+    from tree_node import TreeNode  # type: ignore[import-not-found]
 
     return TreeNode
 
 
 def _list_node_cls():
     """Pull ListNode from the sibling list_node module. Raises if missing."""
-    from list_node import ListNode  # noqa: WPS433 — intentional lazy import
+    from list_node import ListNode  # type: ignore[import-not-found]
 
     return ListNode
 

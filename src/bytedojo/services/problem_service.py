@@ -143,7 +143,7 @@ def parse_problem_ids(arguments: tuple) -> List[int]:
     Raises:
         ValueError: If parsing fails
     """
-    ids = []
+    ids: List[int] = []
 
     for arg in arguments:
         # Split by comma first

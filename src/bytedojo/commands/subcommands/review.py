@@ -148,7 +148,7 @@ def complete(
     )
 
     result = ReviewService().complete_review(repo, problem, ReviewQuality(quality))
-    if result.failed:
+    if result.error is not None:
         raise click.ClickException(result.error)
 
     render_review_completion(problem.title, result)
@@ -189,7 +189,7 @@ def add(
     """
     repo, problem = _resolve(language, identifier, name_search, desc_search, last)
     result = ReviewService().add_review(repo, problem.id, days=days)
-    if result.failed:
+    if result.error is not None:
         raise click.ClickException(result.error)
     render_review_action(problem.title, result)
 
@@ -224,7 +224,7 @@ def snooze(
     """
     repo, problem = _resolve(language, identifier, name_search, desc_search, last)
     result = ReviewService().snooze_review(repo, problem.id, days=days)
-    if result.failed:
+    if result.error is not None:
         raise click.ClickException(result.error)
     render_review_action(problem.title, result)
 
@@ -247,7 +247,7 @@ def remove(
     """
     repo, problem = _resolve(language, identifier, name_search, desc_search, last)
     result = ReviewService().remove_review(repo, problem.id)
-    if result.failed:
+    if result.error is not None:
         raise click.ClickException(result.error)
     render_review_action(problem.title, result)
 
