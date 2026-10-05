@@ -1,40 +1,45 @@
 # `dojo fetch`
 
-> Pull a LeetCode problem and place the starter solution on disk.
+> Place bundled problems on disk with a synthesised starter stub.
 
 ## Synopsis
 
 ```
 dojo fetch IDS [--python]
-              [--force | --version N | --path DIR]
+              [--new-attempt | --version N | --path DIR]
 ```
 
 ## Description
 
-Fetches one or more problems from the local LeetCode catalog and writes
-a starter solution (and any sibling node-class files) onto disk. Three
-mutually exclusive modes:
+Fully offline: problems come from the catalog bundled inside the
+package, never the network. Fetch is restricted to that catalog — every
+id is validated up front, and an unsupported id aborts the whole batch
+with a pointer at `dojo query` before anything is placed.
 
-- **default** — register a new attempt and place under
-  `problems/<id>-<slug>/python3/v{N}/solution.py`. A new attempt
-  bumps the version (`v001`, `v002`, ...).
-- **`--version N`** — rewrite the existing v{N} of a tracked problem
-  in place. Useful for refreshing the starter without losing version
-  history.
-- **`--path DIR`** — drop a one-off copy into a custom directory.
-  Untracked: no database entry, no version bump.
+Modes (mutually exclusive):
 
-The placed file includes:
+- **default** — register the problem and place v1 at
+  `problems/<id>-<slug>/v001/solution.py`. If the problem is already
+  registered the fetch is refused with a hint at the other modes.
+- **`--new-attempt` / `-na`** — add the next attempt version
+  (`v002`, `v003`, ...). Older versions keep their recorded outcome.
+- **`--version N`** — rewrite tracked version N in place (also restores
+  the file if it was deleted).
+- **`--path DIR`** — drop an untracked scratch copy into a custom
+  directory. No database entry, no version bump.
 
-- A header comment with problem ID + title + difficulty
-- The HTML-stripped problem description
-- Baseline imports (typing / collections / etc.)
-- The user's starter `class Solution`
-- An `if __name__ == "__main__"` stub for quick local runs
+The placed file is synthesised from the problem's bundled data:
 
-If the problem references `TreeNode` / `ListNode` / `Node`, the relevant
-sibling files (`tree_node.py`, `list_node.py`, etc.) are placed
-alongside so the solution runs as-is.
+- A header comment with problem ID + title + difficulty + tags
+- The problem description, worked examples and constraints
+- Baseline imports (`typing`, `collections`, `heapq`, ...)
+- A typed `class Solution` stub built from the test bundle's method
+  signature (e.g. `def twoSum(self, nums: List[int], target: int) -> List[int]:`)
+- An `if __name__ == "__main__":` stub for quick local runs
+
+If the signature uses `BINARY_TREE` / `LINKED_LIST` types, the matching
+sibling modules (`tree_node.py`, `list_node.py`) are placed alongside so
+the solution runs as-is.
 
 ## Arguments
 
@@ -48,39 +53,32 @@ alongside so the solution runs as-is.
 
 | Flag | Description | Default |
 | --- | --- | --- |
-| `--python`, `-py` | Fetch as Python | (default language from settings) |
-| `--force` | Create a new attempt even if the problem is already registered (bumps to v{N+1}) | `false` |
-| `--version N` | Refetch an existing tracked version, rewriting it in place | unset |
+| `--python`, `-py` | Fetch as Python | configured `default-language` |
+| `--new-attempt`, `-na` | Add the next attempt version even if already registered | `false` |
+| `--version N` | Rewrite tracked version N in place | unset |
 | `--path DIR` | Place into a custom directory; do not register in the DB | unset |
-
-`--force` is incompatible with `--version` and `--path`. `--version` is
-incompatible with `--path`.
 
 ## Examples
 
 ```bash
-# New attempt of problem #1.
+# Register and place v1 of problem #1.
 dojo fetch 1
 
-# Force a new attempt even if already registered.
-dojo fetch 1 --force
+# Add a fresh attempt (v2) of a problem you already have.
+dojo fetch 1 --new-attempt
 
-# Refresh v3 of problem #1 in place (overwrites that version).
+# Rewrite v3 of #1 in place (overwrites that version's file).
 dojo fetch 1 --version 3
 
-# Drop a one-off copy into ./scratch, untracked.
+# Untracked scratch copy.
 dojo fetch 1 --path ./scratch
 
-# Batch fetch: 1, 2, and 5 through 10.
-dojo fetch 1,2,5..10
+# Batch fetch with ranges.
+dojo fetch 1,5..10,15
 ```
-
-## Exit codes
-
-- `0` — at least one problem was placed; per-problem results printed inline
-- `1` — flag validation failed, unknown language, or repository missing
 
 ## See also
 
-- [`init`](init.md) — required first
-- [`grade`](grade.md) — record pass/fail once you've solved it
+- [`pick`](pick.md) — choose a random problem (with `--fetch` to grab it)
+- [`query`](query.md) — browse the supported catalog
+- [`test`](test.md) — run the bundled cases against your solution

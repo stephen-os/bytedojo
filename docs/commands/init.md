@@ -5,54 +5,40 @@
 ## Synopsis
 
 ```
-dojo init [--path PATH] [--force]
+dojo init [--path DIR] [--force]
 ```
 
 ## Description
 
-Initialises a ByteDojo repository — a sibling `.dojo/` directory next to
-your problems, holding the sqlite progress database, your settings, and
-the build cache.
+Creates the `.dojo/` directory that every other command discovers by
+walking up from the working directory. It contains:
 
-Created on first run:
+- `db.sqlite` — problems, versioned attempts, review schedule
+- `settings.json` — user preferences (see [`settings`](settings.md))
+- `.gitignore` — excludes build artifacts and logs
+- `README.md` — a short orientation file
+- `build/` — created on demand for test staging
 
-```
-.dojo/
-├── db.sqlite      # problem + attempt + review tracking
-├── settings.json  # local preferences
-├── .gitignore     # excludes build artefacts + logs
-└── README.md      # describes the layout
-```
-
-You'll typically run `init` once per workspace and never again. Use
-`--force` to wipe the existing `.dojo/` and start over.
+Running `init` where a `.dojo/` already exists fails with a hint;
+`--force` re-runs the bootstrap (existing rows are kept — the schema
+setup is idempotent).
 
 ## Options
 
 | Flag | Description | Default |
 | --- | --- | --- |
-| `--path PATH`, `-p PATH` | Directory to initialise. The `.dojo/` lands underneath it. | Current directory |
-| `--force` | Reinitialise even if `.dojo/` already exists | `false` |
+| `--path`, `-p` | Directory to initialize | current directory |
+| `--force` | Reinitialize even if `.dojo/` exists | `false` |
 
 ## Examples
 
 ```bash
-# Default: initialise in cwd.
-dojo init
-
-# Initialise in a specific directory.
-dojo init --path ./my-leetcode
-
-# Wipe and re-initialise.
-dojo init --force
+dojo init                 # Here
+dojo init -p ~/practice   # Somewhere else
+dojo init --force         # Re-run the bootstrap
 ```
-
-## Exit codes
-
-- `0` — repository created successfully
-- `1` — `.dojo/` already exists and `--force` was not passed
 
 ## See also
 
-- [`settings`](settings.md) — configure defaults after init
-- [`fetch`](fetch.md) — pull your first problem
+- [`fetch`](fetch.md) — the first thing to do afterwards
+- [`support`](support.md) — confirm the environment is ready

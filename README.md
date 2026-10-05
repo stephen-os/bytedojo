@@ -3,29 +3,38 @@
 </p>
 
 <p align="center">
-  <strong>A CLI for fetching, solving, and tracking LeetCode problems in Python</strong>
+  <strong>A fully offline CLI for practising LeetCode problems in Python, on a spaced-repetition schedule</strong>
 </p>
 
 <p align="center">
   <a href="#installation">Installation</a> •
   <a href="#quick-start">Quick Start</a> •
+  <a href="#the-loop">The Loop</a> •
   <a href="#commands">Commands</a> •
-  <a href="docs/commands/README.md">CLI Reference</a> •
-  <a href="#features">Features</a>
+  <a href="docs/commands/README.md">CLI Reference</a>
 </p>
 
 ---
 
 ## Features
 
-- **Python-First** - Fetch, solve, run, and test problems in Python
-- **LeetCode Integration** - Fetch problems directly with solution templates
-- **Local Test Runner** - Run your solution against bundled test cases
-- **Smart Search** - Find problems by ID, name, or description
-- **Scheduled Review** - Passed problems are scheduled for periodic review
-- **Progress Tracking** - Track solved problems with pass/fail/skip status
-- **Interactive Grading** - Browse and grade problems with pagination
-- **Build Directory** - Test artifacts kept separate in `.dojo/build/`
+- **Fully offline** — ~2,500 problems (statements + test cases) ship inside
+  the package. No network, no account, no scraping at runtime.
+- **Synthesised starter stubs** — `dojo fetch` builds a typed
+  `class Solution` stub from the problem's method signature, complete with
+  the prose description, examples and any `TreeNode`/`ListNode` helpers.
+- **Local test runner** — `dojo test` executes your solution against the
+  bundled cases and records the outcome.
+- **Spaced repetition (SM-2)** — passing a test schedules the problem to
+  resurface; passing it again when due advances the interval, failing
+  lapses it back to tomorrow.
+- **Versioned attempts** — re-attempts live side by side
+  (`v001`, `v002`, ...) and each keeps its recorded outcome.
+- **Smart search** — find problems by ID, name, description, difficulty
+  or tag.
+- **Python-only by design** — nothing *assumes* Python: formatters,
+  toolchains and the runner sit behind seams so a second language is
+  additive.
 
 ## Installation
 
@@ -39,14 +48,14 @@
 ```bash
 git clone https://github.com/stephen-os/bytedojo.git
 cd bytedojo
-pip install -e .
+pip install .
 ```
 
 ### Verify Installation
 
 ```bash
 dojo --version
-dojo --help
+dojo support
 ```
 
 ## Quick Start
@@ -55,163 +64,83 @@ dojo --help
 # 1. Initialize a dojo repository
 dojo init
 
-# 2. Fetch a problem
+# 2. Fetch a problem (or let dojo pick one: dojo pick --fetch)
 dojo fetch 1
 
-# 3. Solve the problem in the generated file
-#    problems/0001-two-sum/python3/v001/solution.py
+# 3. Solve it
+#    problems/0001-two-sum/v001/solution.py
 
-# 4. Run your solution locally
+# 4. Run it (executes the __main__ block)
 dojo run 1
 
-# 5. Run the bundled test cases
+# 5. Test it — a pass schedules the review automatically
 dojo test 1
 
-# 6. Grade your solution (passing schedules a review)
-dojo grade 1 --pass
-
-# 7. Review problems on schedule
+# 6. When reviews come due, see them and go again
 dojo review
 ```
 
+## The Loop
+
+```
+fetch → solve → run → test → (review comes due) → test again → ...
+```
+
+`dojo test` is the heart of the loop:
+
+| Outcome | Problem status | Schedule effect |
+| --- | --- | --- |
+| Pass, not yet scheduled | `PASSED` | Review created at the base interval (default 7 days) |
+| Pass, review due | `PASSED` | Review advanced (SM-2, quality *good*) |
+| Pass, review not yet due | `PASSED` | No change — early practice doesn't thrash the schedule |
+| Fail / error | `FAILED` / `ERROR` | Scheduled review lapses — due again tomorrow |
+
+`dojo grade` is the manual override (`--pass/--fail/--skip`) with the same
+schedule effects; `--skip` sets a problem aside and drops its review.
+`dojo review complete --easy/--good/--hard` exists to grade *recall
+quality* explicitly — a plain test pass on a due problem counts as *good*.
+
 ## Commands
 
-> Quick summary below. For every flag, every example, and the full
-> behaviour of each command, see the **[CLI Reference](docs/commands/README.md)**.
+| Command | What it does |
+| --- | --- |
+| `dojo init` | Create a `.dojo/` repository |
+| `dojo fetch IDS` | Place bundled problems (`1`, `1,2`, `1..10`); `--new-attempt` for v2+ |
+| `dojo run` | Execute a solution's `__main__` and count the run |
+| `dojo test` | Run the bundled cases, record the outcome, drive the schedule |
+| `dojo grade` | View status; manually pass/fail/skip |
+| `dojo pick` | Random problem by difficulty/tag; `--fetch` to grab it immediately |
+| `dojo query` | Browse/filter the bundled catalog |
+| `dojo review` | Due reviews; `pick`, `complete`, `add`, `snooze`, `remove`, `stats` |
+| `dojo stats` | Summary or per-problem attempt detail |
+| `dojo settings` | View/set `default-language`, `review-frequency`, `organize-by-language` |
+| `dojo support` | Environment + toolchain diagnostic (validates Python ≥ 3.10) |
 
-### Initialize
+Full reference with options and examples: [docs/commands](docs/commands/README.md).
 
-```bash
-dojo init                    # Create .dojo repository
-```
-
-### Fetch Problems
-
-```bash
-dojo fetch 1                 # Fetch problem #1
-dojo fetch 1,2,3             # Fetch multiple
-dojo fetch 1..10             # Fetch range
-dojo fetch 1 --force         # Overwrite existing
-```
-
-### Run Solutions
-
-```bash
-dojo run 1                   # Run problem #1
-dojo run --name "Two Sum"    # Search by name
-dojo run --last              # Run most recent
-```
-
-### Test Solutions
-
-```bash
-dojo test 1                  # Run bundled test cases for #1
-dojo test 1 --verbose        # Show every case result
-dojo test --last             # Test most recent
-```
-
-### Grade Solutions
-
-```bash
-dojo grade                   # Interactive batch grading
-dojo grade 1                 # Grade problem #1
-dojo grade 1 --pass          # Quick pass
-dojo grade 1 --fail          # Mark as failed
-dojo grade 1 --skip          # Skip for now
-dojo grade --last --pass     # Pass most recent
-```
-
-### Query & Pick Problems
-
-```bash
-dojo query                   # Browse all problems
-dojo query -d easy           # Filter by difficulty
-dojo query -t array          # Filter by tag
-dojo query --list-tags       # Show all tags
-
-dojo pick                    # Random unsolved problem
-dojo pick -d medium          # Random medium problem
-dojo pick -t tree            # Random tree problem
-```
-
-### Review System
-
-```bash
-dojo review                  # Show problems due for review
-dojo review --all            # Show all scheduled reviews
-dojo review pick             # Pick random due problem
-dojo review stats            # Review statistics
-```
-
-### Statistics
-
-```bash
-dojo stats                   # View progress summary
-dojo stats --list            # List all problems
-dojo stats --list --verbose  # List with per-problem attempt stats
-```
-
-### Settings
-
-```bash
-dojo settings                # View all settings
-dojo settings list           # Same as above
-
-# Default language (Python is the only supported language)
-dojo settings default-language python
-
-# Change review frequency
-dojo settings review-frequency 7     # Weekly (default)
-dojo settings review-frequency 14    # Bi-weekly
-```
-
-### Environment Diagnostics
-
-```bash
-dojo support                 # Environment + toolchain status
-```
-
-➡ **Full per-command reference: [docs/commands/](docs/commands/README.md)**
-
-## Directory Structure
+## Repository Layout
 
 ```
-your-project/
-├── .dojo/
-│   ├── db.sqlite            # Progress + attempts + reviews
-│   ├── settings.json        # Local preferences
-│   ├── .gitignore           # Excludes build artefacts
-│   ├── README.md            # Describes the layout
-│   └── build/               # Per-problem test cache
-│       └── 1_python3/
-│           └── ...
-├── problems/
-│   └── 0001-two-sum/
-│       └── python3/
-│           └── v001/
-│               ├── solution.py
-│               └── tree_node.py   # sibling files when needed
-└── README.md
+your-practice-repo/
+├── .dojo/                     # database, settings, build area
+└── problems/
+    └── 0001-two-sum/
+        ├── v001/
+        │   └── solution.py
+        └── v002/              # created by `dojo fetch 1 --new-attempt`
+            └── solution.py
 ```
 
-Each `dojo fetch` registers a new versioned attempt under
-`problems/<id>-<slug>/python3/v{NNN}/`. Refetching with `--version N`
-rewrites that specific version in place; refetching with `--force`
-bumps to the next version so v1's recorded test outcome stays intact.
+Versions are flat per problem — the version number is a monotonic attempt
+ordinal, and language is attempt metadata rather than a path segment. The
+optional `organize-by-language` setting reintroduces a `<language>/` path
+segment if you prefer it.
 
-## Development
+## Notes
 
-```bash
-# Install with dev dependencies
-pip install -e ".[dev]"
-
-# Run tests
-pytest
-
-# Run with coverage
-pytest --cov=bytedojo
-```
-
-## License
-
-MIT License - see [LICENSE](LICENSE) for details.
+- The corpus is frozen at what ships in the package; `dojo fetch` is
+  deliberately restricted to it so every fetched problem is runnable,
+  testable and gradable. Expanding the corpus is a planned follow-up.
+- Problem content is derived from LeetCode and bundled for personal,
+  non-commercial practice — see [NOTICE](NOTICE).
+- Code is MIT-licensed — see [LICENSE](LICENSE).

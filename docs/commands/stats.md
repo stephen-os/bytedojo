@@ -1,6 +1,6 @@
 # `dojo stats`
 
-> Repository statistics.
+> Repository statistics and per-problem attempt detail.
 
 ## Synopsis
 
@@ -10,52 +10,34 @@ dojo stats [--list] [--verbose] [--source TEXT] [--difficulty LEVEL]
 
 ## Description
 
-Two modes:
+Without flags: summary counts of registered problems grouped by
+difficulty and source. With `--list`: one card per registered problem
+(id, title, difficulty, language, fetch time, file path). Adding
+`--verbose` appends attempt counts — total attempts, latest version,
+pass/fail/skip tallies and how many times the solution was run.
 
-- **Summary mode (default)** — high-level numbers: total problems
-  registered, grouped by difficulty, grouped by source.
-- **List mode (`--list`)** — per-problem detail: one entry per
-  registered problem with source, difficulty, language, fetched
-  timestamp, and file path. Pass `--verbose` to also show attempt
-  stats for each problem: total attempts, latest version, and
-  pass / fail / skip / run counts.
-
-The two filter flags (`--source`, `--difficulty`) work in both modes
-but are most useful in `--list` mode.
+Attempt counts are aggregated across the problem's whole (flat) version
+history, whatever language each attempt was in.
 
 ## Options
 
 | Flag | Description | Default |
 | --- | --- | --- |
-| `--list` | Switch to per-problem listing | `false` |
-| `--verbose`, `-v` | Show detailed attempt info in `--list` mode | `false` |
-| `--source TEXT` | Filter by source (e.g. `leetcode`) | any |
-| `--difficulty LEVEL`, `-d LEVEL` | Filter by difficulty: `easy`, `medium`, or `hard` | any |
+| `--list` | List problems instead of the summary | `false` |
+| `--verbose`, `-v` | Include attempt counts per problem | `false` |
+| `--source` | Filter by source (e.g. `leetcode`) | any |
+| `--difficulty`, `-d` | `easy` / `medium` / `hard` | any |
 
 ## Examples
 
 ```bash
-# Summary view.
-dojo stats
-
-# All registered problems.
-dojo stats --list
-
-# Easy problems with attempt details.
-dojo stats --list -d easy --verbose
-
-# Problems from leetcode only.
-dojo stats --list --source leetcode
+dojo stats                     # Summary counts
+dojo stats --list              # All registered problems
+dojo stats --list -v           # ...with attempt counts and run tallies
+dojo stats --list -d easy      # Easy problems only
 ```
-
-## Exit codes
-
-- `0` — stats rendered
-- `1` — repository missing or invalid `--difficulty` value (click
-  rejects unknown choices before the command runs)
 
 ## See also
 
-- [`query`](query.md) — browse the local catalog (not just registered)
-- [`review`](review.md) — review-specific counts
-- [`support`](support.md) — environment status (not problem stats)
+- [`review`](review.md) — `review stats` for schedule counters
+- [`query`](query.md) — the whole catalog, not just what you registered

@@ -1,89 +1,65 @@
 # `dojo grade`
 
-> View solution status and manually apply pass/fail/skip.
+> Manually apply pass/fail/skip to a problem.
 
 ## Synopsis
 
 ```
-dojo grade [IDENTIFIER] [--name TEXT | --desc TEXT | --last]
-                       [--pass | --fail | --skip] [--manual]
-                       [--notes TEXT]
-                       [--python]
-                       [--per-page N]
+dojo grade [IDENTIFIER] [--name TEXT] [--desc TEXT] [--last]
+           [--manual | --pass | --fail | --skip] [--notes TEXT]
+           [--per-page N] [--python]
 ```
 
 ## Description
 
-This command has two flavours:
+`dojo test` is the normal grading path; `grade` is the manual override
+for when you solved something away from the runner (whiteboard, another
+machine) or want to set a problem aside. Grades land on both the latest
+attempt and the problem row, with the same schedule effects a test
+outcome would have:
 
-1. **View mode** — without a status flag and without `--manual`, it
-   simply renders the current grade for a problem (`PASSED` /
-   `FAILED` / `SKIPPED` / `UNGRADED`) along with the timestamp it was
-   last graded and any notes recorded with the grade.
+- `--pass` — creates the review track, or advances it if a review is due
+- `--fail` — lapses a scheduled review (due again tomorrow)
+- `--skip` — sets the problem aside and removes its review track
 
-2. **Grade mode** — apply a grade. Either:
-   - Pass a status flag directly: `--pass` / `--fail` / `--skip`
-   - Use `--manual` for an interactive `[P]ass / [F]ail / [S]kip /
-     [Q]uit` prompt that also asks for optional notes
-
-Grading a problem as **passed** schedules it for spaced-repetition
-review using the configured `review-frequency`. Subsequent review
-events (via [`review complete`](review.md)) progress the SM-2 state.
-
-Without an `IDENTIFIER` / selector flag, `dojo grade` enters an
-interactive batch view: a paginated list of every registered problem
-with its current status, where you can pick one to view or grade.
+With no selector at all, `grade` opens an interactive batch browser:
+page through every registered problem, select one by number to view and
+grade it manually.
 
 ## Arguments
 
-- `IDENTIFIER` (optional) — a problem ID. Omit for batch mode or when
-  using `--name` / `--desc` / `--last`.
+- `IDENTIFIER` (optional) — numeric problem ID. Omit it (and all other
+  selectors) for the batch browser.
 
 ## Options
 
 | Flag | Description | Default |
 | --- | --- | --- |
-| `--name TEXT`, `-n TEXT` | Fuzzy match against the problem title | unset |
-| `--desc TEXT`, `-d TEXT` | Keyword search in the description | unset |
-| `--last` | Most-recently-fetched problem in this language | `false` |
+| `--name`, `-n` | Fuzzy match on title | unset |
+| `--desc`, `-d` | Keyword search in description | unset |
+| `--last` | Most recently fetched problem | `false` |
+| `--manual`, `-m` | Prompt for a grade interactively | `false` |
 | `--pass`, `-p` | Mark as passed | `false` |
 | `--fail`, `-f` | Mark as failed | `false` |
-| `--skip`, `-s` | Mark as skipped | `false` |
-| `--manual`, `-m` | Show the interactive pass/fail/skip prompt | `false` |
-| `--notes TEXT` | Attach notes to the grade record | unset |
-| `--python`, `-py` | Operate on the Python version | (default language) |
-| `--per-page N` | Problems per page in batch view mode | `10` |
+| `--skip`, `-s` | Mark as skipped (drops the review track) | `false` |
+| `--notes TEXT` | Attach a note to the grade | unset |
+| `--per-page N` | Problems per page in the batch browser | `10` |
+| `--python`, `-py` | Language preference (warns on mismatch) | unset |
 
-`--pass`, `--fail`, and `--skip` are mutually exclusive.
+`--pass`, `--fail` and `--skip` are mutually exclusive.
 
 ## Examples
 
 ```bash
-# Interactive batch view of every registered problem.
-dojo grade
-
-# View status of problem #1 (no grade applied).
-dojo grade 1
-
-# Mark problem #1 as passed (schedules a review).
-dojo grade 1 --pass
-
-# Mark as failed with a note.
-dojo grade 1 -f --notes "TLE on case 7"
-
-# Search by title, then manually grade.
-dojo grade --name "Two Sum" --manual
-
-# Skip the last fetched problem.
-dojo grade --last --skip
+dojo grade                      # Browse all problems interactively
+dojo grade 1                    # View status of problem #1
+dojo grade 1 --pass             # Quick pass (schedules the review)
+dojo grade 1 -f --notes "TLE"   # Fail with a note
+dojo grade 1 --skip             # Set aside; drops the review track
+dojo grade 1 --manual           # Prompt for p/f/s interactively
 ```
-
-## Exit codes
-
-- `0` — view rendered or grade applied
-- `1` — pre-flight failure or invalid combination of status flags
 
 ## See also
 
-- [`review`](review.md) — track scheduled reviews after passing
-- [`query`](query.md) — browse problems with their current status
+- [`test`](test.md) — the automatic grading loop
+- [`review`](review.md) — the schedule those grades drive

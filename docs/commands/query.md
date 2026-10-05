@@ -1,84 +1,55 @@
 # `dojo query`
 
-> Browse / filter the local problem catalog.
+> Browse / filter the bundled problem catalog.
 
 ## Synopsis
 
 ```
-dojo query [PROBLEM_IDS ...] [--difficulty LEVEL]
-           [--tag TAG ...] [--search TEXT]
-           [--page N] [--per-page N]
-           [--list-tags]
+dojo query [PROBLEM_IDS ...] [--difficulty LEVEL] [--tag TAGS]
+           [--search TEXT] [--page N] [--per-page N] [--list-tags]
 ```
 
 ## Description
 
-Interactive paginated browser over the local LeetCode problem catalog.
-Renders each problem with:
+Pages through the bundled catalog — the exact set of problems `fetch`
+supports. Each row shows the problem id, your status for it
+(`✓` passed, `✗` failed, `!` error, `~` skipped, `·` untouched), its
+difficulty and title. Navigation after the listing:
 
-- ID + title
-- Difficulty marker (`E`/`M`/`H`)
-- Status marker — `[P]` passed, `[F]` failed, `[S]` skipped, `[ ]`
-  ungraded / not fetched. The marker reflects the best status across
-  every language you've attempted the problem in.
+```
+n = next page    p = prev page    # = jump to page    q = quit
+```
 
-Pagination loop accepts:
-
-- `n` / `next` / `>` — next page
-- `p` / `prev` / `<` — previous page
-- `<number>` — jump to that page
-- `q` / `quit` / Enter — exit
-
-Pass `--list-tags` to skip the browser entirely and just print every
-tag that appears in the catalog.
+`--search` matches the problem title first and falls back to the full
+description text.
 
 ## Arguments
 
-- `PROBLEM_IDS` (optional, multiple) — restrict the browser to specific
-  IDs. Accepts the same formats as [`fetch`](fetch.md): single,
-  comma list, range, mixed.
+- `PROBLEM_IDS` (optional) — restrict to ids/ranges: `1 2 3`, `1..50`,
+  `1,5..10,15`.
 
 ## Options
 
 | Flag | Description | Default |
 | --- | --- | --- |
-| `--difficulty LEVEL`, `-d LEVEL` | Filter by difficulty: `easy`, `medium`, `hard` | any |
-| `--tag TAG`, `-t TAG` | Filter by tag. Repeat or comma-separate for OR. | any |
-| `--search TEXT`, `-s TEXT` | Substring search in problem descriptions | unset |
-| `--page N`, `-p N` | Starting page | `1` |
-| `--per-page N`, `-n N` | Problems per page | `20` |
+| `--difficulty`, `-d` | `easy`/`1`, `medium`/`2`, `hard`/`3` | any |
+| `--tag`, `-t` | Filter by tag; repeatable or comma-separated | any |
+| `--search`, `-s` | Text search in titles + descriptions | unset |
+| `--page`, `-p` | Starting page | `1` |
+| `--per-page`, `-n` | Problems per page | `20` |
 | `--list-tags` | Print every available tag and exit | `false` |
 
 ## Examples
 
 ```bash
-# Browse everything.
-dojo query
-
-# Browse a specific range.
-dojo query 1..50
-
-# Easy array problems.
-dojo query -d easy -t array
-
-# Multiple tags (OR semantics).
-dojo query -t array,hash-table
-
-# Search descriptions.
-dojo query -s "binary search"
-
-# 50 per page, starting on page 3.
-dojo query -d medium -n 50 -p 3
-
-# Show all available tag names.
-dojo query --list-tags
+dojo query                          # Browse everything
+dojo query 1..50                    # Problems 1-50
+dojo query -d easy -t array         # Easy array problems
+dojo query -s "binary search"       # Text search
+dojo query --list-tags              # All tags
 ```
-
-## Exit codes
-
-- `0` — browser exited normally (or `--list-tags` printed and exited)
-- `1` — repository missing, unknown difficulty, or invalid ID format
 
 ## See also
 
-- [`pick`](pick.md) — random selection from the same filters
+- [`pick`](pick.md) — let dojo choose for you
+- [`fetch`](fetch.md) — grab what you found

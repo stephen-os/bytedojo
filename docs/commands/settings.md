@@ -5,93 +5,39 @@
 ## Synopsis
 
 ```
-dojo settings                                # show all settings
-dojo settings list                           # alias for the default view
-dojo settings default-language LANG          # change default language
-dojo settings review-frequency DAYS          # change review interval
-dojo settings set KEY VALUE                  # set a leetcode.* key
-dojo settings get KEY                        # read a leetcode.* key
+dojo settings [list]
+dojo settings default-language LANGUAGE
+dojo settings review-frequency DAYS
+dojo settings set KEY VALUE
+dojo settings get KEY
 ```
 
 ## Description
 
-Settings live in two places:
+User preferences live in `.dojo/settings.json` — one home, three keys:
 
-- **`.dojo/db.sqlite` `config` table** — runtime config (default
-  language, default source, review frequency)
-- **`.dojo/settings.json`** — per-source user preferences
-  (currently only `leetcode.organization`)
+| Key | Type | Default | Meaning |
+| --- | --- | --- | --- |
+| `default-language` | choice (`python`) | `python` | Language used when no `--python`-style flag is given |
+| `review-frequency` | int, 1–365 | `7` | Base SM-2 interval: the gap scheduled when a problem first passes |
+| `organize-by-language` | bool | `false` | Place future attempts under `problems/<id>-<slug>/<language>/v{N}/` instead of the flat layout |
 
-The default view (`dojo settings`, no subcommand) prints both blocks
-together so you can see every effective setting at once.
-
-## Subcommands
-
-### Default view / `list`
-
-Renders every setting under a header. No flags.
-
-### `default-language LANG`
-
-Set the default language used by `fetch`, `run`, `test`, and `grade`
-when no `--python` flag is given.
-
-| Argument | Allowed values |
-| --- | --- |
-| `LANG` | `python` (the only supported language) |
-
-### `review-frequency DAYS`
-
-Set the base interval (in days) used when a problem first enters the
-review track via `grade --pass`. Subsequent SM-2 progression after
-`review complete` is independent of this value.
-
-| Argument | Constraint |
-| --- | --- |
-| `DAYS` | integer; `1 <= DAYS <= 365` |
-
-### `set KEY VALUE`
-
-Set a typed key/value pair under `.dojo/settings.json`. Currently
-recognised:
-
-| Key | Allowed values | Meaning |
-| --- | --- | --- |
-| `leetcode.organization` | `flat`, `difficulty` | How fetched problems are laid out under `problems/` |
-
-Unknown keys and out-of-whitelist values are rejected with a clear
-error listing the valid options.
-
-### `get KEY`
-
-Read the current value of a `set`-style key. Errors on unknown keys.
+`default-language` and `review-frequency` have dedicated subcommands;
+`set`/`get` work for every key. Values are validated before saving
+(unknown keys and out-of-range values are rejected with the valid
+options listed).
 
 ## Examples
 
 ```bash
-# Show everything.
-dojo settings
-
-# Set the default language (Python).
-dojo settings default-language python
-
-# Review weekly instead of the default.
-dojo settings review-frequency 7
-
-# Switch to difficulty-keyed folder layout.
-dojo settings set leetcode.organization difficulty
-
-# Read a setting back.
-dojo settings get leetcode.organization
+dojo settings                              # Show all settings
+dojo settings default-language python      # Set default language
+dojo settings review-frequency 3           # First review after 3 days
+dojo settings set organize-by-language true
+dojo settings get review-frequency
 ```
-
-## Exit codes
-
-- `0` — view rendered or setting applied
-- `1` — repository missing, unknown subcommand argument, out-of-range
-  numeric value, or unknown / invalid `set`/`get` key
 
 ## See also
 
-- [`init`](init.md) — sets sensible defaults at repo creation
-- [`review`](review.md) — `review-frequency` controls its seed interval
+- [`review`](review.md) — what `review-frequency` feeds into
+- [`fetch`](fetch.md) — where `organize-by-language` changes paths

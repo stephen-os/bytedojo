@@ -8,12 +8,12 @@ Every command available under `dojo`. Each page has the same shape:
 | Command | One-liner |
 | --- | --- |
 | [`init`](init.md) | Create a `.dojo/` repository in the current (or chosen) directory |
-| [`fetch`](fetch.md) | Pull a LeetCode problem and place the starter solution on disk |
-| [`run`](run.md) | Execute a solution and capture its output |
-| [`test`](test.md) | Run the bundled test cases against a solution |
-| [`grade`](grade.md) | Manually apply pass/fail/skip to a solution |
+| [`fetch`](fetch.md) | Place bundled problems on disk with a synthesised starter stub |
+| [`run`](run.md) | Execute a solution's `__main__` and capture its output |
+| [`test`](test.md) | Run the bundled test cases; record the outcome and drive the review schedule |
+| [`grade`](grade.md) | Manually apply pass/fail/skip to a problem |
 | [`pick`](pick.md) | Pick a random problem matching difficulty / tag filters |
-| [`query`](query.md) | Browse / filter the local problem catalog |
+| [`query`](query.md) | Browse / filter the bundled problem catalog |
 | [`review`](review.md) | Spaced-repetition review system (group with subcommands) |
 | [`stats`](stats.md) | Repository statistics and per-problem attempt detail |
 | [`settings`](settings.md) | View and modify dojo settings (group with subcommands) |
@@ -21,36 +21,35 @@ Every command available under `dojo`. Each page has the same shape:
 
 ## Common patterns
 
-**Selectors.** `grade` and `review` accept the same set of selectors
-to identify which registered problem to act on:
+**Selectors.** `run`, `test`, `grade` and the `review` subcommands accept
+the same selectors to identify which registered problem to act on:
 
 - Positional `IDENTIFIER` — a numeric problem ID
 - `--name TEXT` / `-n TEXT` — fuzzy match against the problem title
 - `--desc TEXT` / `-d TEXT` — keyword search in the description
-- `--last` — most-recently-fetched problem in the configured language
+- `--last` — the most recently fetched problem
 
 If the lookup is ambiguous the CLI prompts; pass `--name`/`--desc` with
 something specific enough to disambiguate.
 
-**Language flag.** `--python` (`-py`) is accepted by every command that
-operates on a language-specific solution. Python is currently the only
-supported language; when the flag is omitted, the configured default
-language is used (see [`settings default-language`](settings.md)).
+**Language flag.** `--python` (`-py`) states a language *preference*.
+Language is attempt metadata, not identity: a problem's attempts share one
+version history regardless of language, and commands act on the resolved
+attempt. If you pass a language flag and the latest attempt is in a
+different language, the CLI warns instead of silently picking another file.
 
-**Repository discovery.** Every command walks up from the current
-directory looking for a `.dojo/` folder, so you can run them from any
-subdir of your dojo repo. If no `.dojo/` is found anywhere up the tree
-the command exits with `Not inside a .dojo repository. Please run 'dojo
-init' first.`
+**Repository discovery.** Every command (except `init` and `support`)
+walks up from the current directory looking for `.dojo/`. Not finding one
+is error exit code 1 with a pointer at `dojo init`.
 
-## Global flags
+## Exit codes
 
-These work on the top-level `dojo` group, before any subcommand:
-
-| Flag | Behaviour |
+| Code | Meaning |
 | --- | --- |
-| `--version` | Print the ByteDojo version and exit |
-| `--author` | Print the author and exit |
-| `--desc` | Print the project description and exit |
-| `--debug` | Enable debug-level logging for the remainder of the invocation |
-| `--help` | Show the top-level command listing |
+| 0 | Success |
+| 1 | A ByteDojo error — repository/problem/solution/bundle not found, unsupported problem id, missing toolchain, malformed data |
+| 2 | Click usage error (bad flags or arguments) |
+| 130 | Interrupted (Ctrl-C) |
+
+Error messages are actionable and never include a stack trace unless
+`--debug` is passed.
