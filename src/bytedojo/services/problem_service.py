@@ -21,6 +21,7 @@ from bytedojo.core.models.problem_detail import ProblemDetail
 from bytedojo.core.models.problem_difficulty import ProblemDifficulty
 from bytedojo.core.models.problem_tag import ProblemTag
 from bytedojo.core.models.registered_problem import RegisteredProblem
+from bytedojo.core.models.repository_stats import RepositoryStats
 from bytedojo.core.repository import Repository
 from bytedojo.core.search import find_problems as _find_problems
 
@@ -386,6 +387,23 @@ def get_last_registered_problem(
         return None
     with repo.session() as s:
         return s.problems.latest(source=source)
+
+
+def get_summary_stats(repo: Repository) -> RepositoryStats:
+    """Registered-problem counts for `dojo stats`."""
+    with repo.session() as s:
+        return s.problems.summary_stats()
+
+
+def list_registered_problems(
+    repo: Repository,
+    *,
+    source: Optional[str] = None,
+    difficulty: Optional[str] = None,
+) -> List[RegisteredProblem]:
+    """Registered problems matching the filters, ordered by problem id."""
+    with repo.session() as s:
+        return s.problems.list(source=source, difficulty=difficulty)
 
 
 def get_attempt_status_map(

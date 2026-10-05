@@ -385,3 +385,101 @@ def test_runner_envelope_contains_input_and_expected_strings(tmp_path):
     envelope = _parse_envelope(stdout)
     assert envelope[0]["input"] == "a = 1, b = 2"
     assert envelope[0]["expected"] == "3"
+
+
+# --------------------------------------------------------------------------- #
+# Regression: a user exception on one node-typed case must not collapse the   #
+# whole run (the except path once called display() on the raw expected list). #
+# --------------------------------------------------------------------------- #
+
+
+_TREE_NODE_MODULE = (
+    "class TreeNode:\n"
+    "    def __init__(self, val=0, left=None, right=None):\n"
+    "        self.val = val\n"
+    "        self.left = left\n"
+    "        self.right = right\n"
+)
+
+
+def test_runner_preserves_other_cases_when_a_tree_case_raises(tmp_path):
+    build = _stage(
+        tmp_path,
+        solution=(
+            "from tree_node import TreeNode\n"
+            "class Solution:\n"
+            "    def maxDepth(self, root):\n"
+            "        if root is not None and root.val == 99:\n"
+            "            raise RuntimeError('boom')\n"
+            "        if root is None:\n"
+            "            return 0\n"
+            "        return 1 + max(self.maxDepth(root.left),\n"
+            "                       self.maxDepth(root.right))\n"
+        ),
+        cases={
+            "schema_version": 1,
+            "problem_id": 104,
+            "title": "Max Depth",
+            "method": "maxDepth",
+            "signature": {
+                "params": [{"name": "root", "type": {"base": "BINARY_TREE"}}],
+                "returns": {"base": "INT32"},
+            },
+            "comparison": "exact",
+            "cases": [
+                {"case_id": 1, "input": {"root": [1, 2, 3]}, "expected": 2},
+                {"case_id": 2, "input": {"root": [99]}, "expected": 1},
+                {"case_id": 3, "input": {"root": []}, "expected": 0},
+            ],
+        },
+        extras={"tree_node.py": _TREE_NODE_MODULE},
+    )
+
+    code, stdout, _ = _invoke(build)
+    results = _parse_envelope(stdout)
+
+    assert code == 0
+    assert [r["case"] for r in results] == [1, 2, 3]
+    assert results[0]["passed"] is True
+    assert results[2]["passed"] is True
+    assert results[1]["passed"] is False
+    assert "RuntimeError: boom" in results[1]["error"]
+
+
+def test_runner_reports_crash_on_node_return_type_without_collapsing(tmp_path):
+    """Same regression on the *return* side: expected is a node structure."""
+    build = _stage(
+        tmp_path,
+        solution=(
+            "from tree_node import TreeNode\n"
+            "class Solution:\n"
+            "    def invertTree(self, root):\n"
+            "        if root is not None and root.val == 99:\n"
+            "            raise ValueError('nope')\n"
+            "        return root\n"
+        ),
+        cases={
+            "schema_version": 1,
+            "problem_id": 226,
+            "title": "Invert",
+            "method": "invertTree",
+            "signature": {
+                "params": [{"name": "root", "type": {"base": "BINARY_TREE"}}],
+                "returns": {"base": "BINARY_TREE"},
+            },
+            "comparison": "exact",
+            "cases": [
+                {"case_id": 1, "input": {"root": [99]}, "expected": [99]},
+                {"case_id": 2, "input": {"root": [1]}, "expected": [1]},
+            ],
+        },
+        extras={"tree_node.py": _TREE_NODE_MODULE},
+    )
+
+    _, stdout, _ = _invoke(build)
+    results = _parse_envelope(stdout)
+
+    assert [r["case"] for r in results] == [1, 2]
+    assert "ValueError: nope" in results[0]["error"]
+    assert results[0]["expected"] == "[99]"  # parsed + serialized, not crashed
+    assert results[1]["passed"] is True

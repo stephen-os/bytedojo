@@ -23,6 +23,7 @@ Thumbs.db
 # ByteDojo
 logs/
 *.log
+build/
 """.strip()
 
 README = """

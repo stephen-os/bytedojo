@@ -227,17 +227,14 @@ def test_remove_review_errors_when_no_track(repo, registered_problem):
 
 
 def test_complete_review_applies_sm2_and_records(repo, registered_problem):
-    """End-to-end persistence path; SM-2 math is exercised by _apply_quality tests."""
+    """End-to-end persistence path; the SM-2 math itself is covered in
+    tests/core/test_scheduler.py."""
     svc = ReviewService()
     svc.initial_schedule(repo, registered_problem.id, days=2)
 
-    result = svc.complete_review(repo, registered_problem.id, ReviewQuality.GOOD)
+    result = svc.complete_review(repo, registered_problem, ReviewQuality.GOOD)
     assert result.success
     assert result.previous_interval == 2
-    # schedule_review starts a fresh track at repetitions=1, so the first
-    # complete_review bumps to 2. The exact bookkeeping is documented in
-    # core/database.schedule_review; here we only confirm the result struct
-    # carries before/after values, persists, and computes a next date.
     assert result.next_repetitions == result.previous_repetitions + 1
     assert result.next_review_date is not None
 
@@ -245,11 +242,28 @@ def test_complete_review_applies_sm2_and_records(repo, registered_problem):
 def test_complete_review_errors_with_no_track(repo, registered_problem):
     result = ReviewService().complete_review(
         repo,
-        registered_problem.id,
+        registered_problem,
         ReviewQuality.GOOD,
     )
     assert result.failed
     assert "no review scheduled" in result.error.lower()
+
+
+def test_complete_review_marks_problem_passed(repo, registered_problem):
+    """§9: completing a review lands PASSED on both rows, even for --hard."""
+    from bytedojo.core.models.problem_status import ProblemStatus
+
+    with repo.session() as s:
+        s.attempts.create("leetcode", 1, "python3")
+    svc = ReviewService()
+    svc.initial_schedule(repo, registered_problem.id, days=0)
+    svc.apply_fail(repo, registered_problem.id)  # simulate an earlier lapse
+
+    result = svc.complete_review(repo, registered_problem, ReviewQuality.HARD)
+    assert result.success
+    with repo.session() as s:
+        assert s.problems.get("leetcode", 1).status is ProblemStatus.PASSED
+        assert s.attempts.get("leetcode", 1, version=1).status is ProblemStatus.PASSED
 
 
 # --------------------------------------------------------------------------- #

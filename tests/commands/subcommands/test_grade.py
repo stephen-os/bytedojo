@@ -204,3 +204,12 @@ def test_grade_service_error_is_displayed(repo, registered_problem, monkeypatch)
     # Doesn't raise — just echoes the error message.
     assert result.exit_code == 0
     assert "Invalid status" in result.output
+
+
+def test_grade_flags_without_selector_are_a_usage_error(repo, monkeypatch):
+    """`dojo grade --pass` with nothing to grade must not open the browser."""
+    monkeypatch.chdir(repo.root_dir)
+    for args in (["--pass"], ["--manual"], ["--notes", "x"]):
+        result = CliRunner().invoke(grade, args)
+        assert result.exit_code == 2, args
+        assert "selector" in result.output

@@ -21,6 +21,8 @@ from typing import List, Optional
 
 from bytedojo.core import scheduler
 from bytedojo.core.logger import get_logger
+from bytedojo.core.models.problem_status import ProblemStatus
+from bytedojo.core.models.registered_problem import RegisteredProblem
 from bytedojo.core.models.review_schedule import ReviewSchedule
 from bytedojo.core.models.review_stats import ReviewStats
 from bytedojo.core.repository import Repository
@@ -318,15 +320,20 @@ class ReviewService:
     def complete_review(
         self,
         repo: Repository,
-        problem_db_id: int,
+        problem: RegisteredProblem,
         quality: ReviewQuality,
     ) -> ReviewCompletionResult:
         """
         Apply an SM-2 update to a problem's review state and persist.
 
-        Errors if the problem has no review row yet — `dojo grade --pass`
-        (or R3's `dojo review add`) must run first to create the track.
+        Completing a review means the problem was solved again, so the
+        grade lands on both the problem row and the latest attempt
+        (status PASSED per §9) regardless of the recall quality.
+
+        Errors if the problem has no review row yet — a passing
+        `dojo test` (or `dojo review add`) must create the track first.
         """
+        problem_db_id = problem.id
         with repo.session() as s:
             existing = s.reviews.get(problem_db_id)
             if existing is None:
@@ -335,12 +342,16 @@ class ReviewService:
                     quality=quality,
                     error=(
                         "No review scheduled for this problem yet. "
-                        "Use `dojo grade <id> --pass` to start a review track."
+                        "Pass `dojo test <id>` to start a review track."
                     ),
                 )
 
             state = scheduler.review(_to_state(existing), quality.sm2, _base_days(repo))
             self._persist(s, problem_db_id, state)
+            s.problems.update_status(problem_db_id, ProblemStatus.PASSED.value)
+            s.attempts.update_latest_status(
+                problem.source, problem.problem_id, ProblemStatus.PASSED.value
+            )
 
         self.logger.debug(
             f"review_service: completed problem_db_id={problem_db_id} "

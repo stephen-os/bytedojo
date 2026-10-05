@@ -48,6 +48,7 @@ def test_create_initialises_dojo_dir_and_db(tmp_path):
     repo = Repository.create(tmp_path)
     assert repo is not None
     assert repo.dojo_dir.is_dir()
+    assert repo.build_dir.is_dir()
     assert repo.db_path.exists()
     assert (repo.dojo_dir / "settings.json").exists()
     assert (repo.dojo_dir / ".gitignore").exists()
@@ -169,6 +170,14 @@ def test_register_attempt_returns_attempt_with_v1(repo):
     assert attempt.version == 1
     assert attempt.problem_id == 1
     assert attempt.language is CodeLanguage.PYTHON
+
+
+def test_register_attempt_stores_relative_posix_file_path(repo):
+    """A committed .dojo must survive a repo move: no absolute paths."""
+    repo.register_attempt(_problem(), CodeLanguage.PYTHON)
+    with repo.session() as s:
+        stored = s.problems.get("leetcode", 1).file_path
+    assert stored == "problems/0001-two-sum/v001/solution.py"
 
 
 def test_register_attempt_twice_bumps_version(repo):

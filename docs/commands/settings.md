@@ -22,6 +22,10 @@ User preferences live in `.dojo/settings.json` — one home, three keys:
 | `review-frequency` | int, 1–365 | `7` | Base SM-2 interval: the gap scheduled when a problem first passes |
 | `organize-by-language` | bool | `false` | Place future attempts under `problems/<id>-<slug>/<language>/v{N}/` instead of the flat layout |
 
+`organize-by-language` only affects where *future* attempts are placed;
+attempts fetched earlier stay at their original paths, so toggle it
+before fetching rather than mid-history.
+
 `default-language` and `review-frequency` have dedicated subcommands;
 `set`/`get` work for every key. Values are validated before saving
 (unknown keys and out-of-range values are rejected with the valid

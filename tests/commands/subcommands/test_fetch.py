@@ -44,6 +44,13 @@ def test_version_and_path_are_mutually_exclusive(repo, monkeypatch, tmp_path):
     assert "mutually exclusive" in result.output
 
 
+def test_version_with_multiple_ids_errors(repo, monkeypatch):
+    monkeypatch.chdir(repo.root_dir)
+    result = CliRunner().invoke(fetch, ["1,2", "--version", "3"])
+    assert result.exit_code != 0
+    assert "single id" in result.output
+
+
 def test_new_attempt_with_version_errors(repo, monkeypatch):
     monkeypatch.chdir(repo.root_dir)
     result = CliRunner().invoke(fetch, ["1", "--new-attempt", "--version", "1"])

@@ -7,6 +7,7 @@ import click
 from bytedojo.commands._resolve import require_repo
 from bytedojo.commands.ui.renderers import render_problem_list, render_stats_summary
 from bytedojo.core.logger import get_logger
+from bytedojo.services import problem_service
 
 
 @click.command()
@@ -42,28 +43,19 @@ def stats(
 
     repo = require_repo()
 
-    with repo.session() as s:
-        if list_problems:
-            # ProblemDifficulty stores the capitalised form; the CLI accepts
-            # lowercase. Normalise so the exact-match WHERE clause hits.
-            problems = s.problems.list(
-                source=source,
-                difficulty=difficulty.capitalize() if difficulty else None,
-            )
-            attempt_stats = (
-                {
-                    p.problem_id: s.attempts.stats(p.source, p.problem_id)
-                    for p in problems
-                }
-                if verbose
-                else None
-            )
-        else:
-            summary = s.problems.summary_stats()
-
     if list_problems:
+        # ProblemDifficulty stores the capitalised form; the CLI accepts
+        # lowercase. Normalise so the exact-match WHERE clause hits.
+        problems = problem_service.list_registered_problems(
+            repo,
+            source=source,
+            difficulty=difficulty.capitalize() if difficulty else None,
+        )
+        attempt_stats = (
+            problem_service.get_attempt_status_map(repo) if verbose else None
+        )
         render_problem_list(problems, attempt_stats)
     else:
-        render_stats_summary(summary)
+        render_stats_summary(problem_service.get_summary_stats(repo))
 
     logger.debug("stats: complete")

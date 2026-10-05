@@ -77,9 +77,12 @@ def grade(
 
     # Batch mode: no identifier, name, desc, or last → browse all problems
     if not identifier and not name_search and not desc_search and not last:
-        with repo.session() as s:
-            problems = s.problems.list()
-        browse_problems(repo, problems, per_page)
+        if status is not None or manual or notes is not None:
+            raise click.UsageError(
+                "--pass/--fail/--skip/--manual/--notes need a problem "
+                "selector (id, --name, --desc or --last)."
+            )
+        browse_problems(repo, repo.get_registered_problems(), per_page)
         return
 
     # Single-problem mode: resolve, then view / grade

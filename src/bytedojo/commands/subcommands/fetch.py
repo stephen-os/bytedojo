@@ -97,6 +97,8 @@ def fetch(
     problem_ids = problem_service.parse_problem_ids(arguments)
     if not problem_ids:
         raise click.UsageError("No problem IDs provided")
+    if version is not None and len(problem_ids) > 1:
+        raise click.UsageError("--version rewrites one attempt; pass a single id")
 
     # Mode banner
     if custom_path is not None:

@@ -118,6 +118,31 @@ def test_test_run_result_status_ungraded_for_partial_passed_only():
     assert r2.status == "ungraded"
 
 
+def test_status_error_for_whole_run_timeout():
+    """A run that timed out never evaluated the solution -> error, not failed."""
+    r = _all_timed_out(_problem_stub(), _bundle(2), timeout=10)
+    assert r.status == "error"
+
+
+def test_status_error_for_runner_crash_sentinel():
+    """The runner's case-0 crash envelope (e.g. SyntaxError) is an error."""
+    r = _build_run_result(
+        _problem_stub(),
+        _bundle(1),
+        [
+            {
+                "case": 0,
+                "passed": False,
+                "input": "",
+                "expected": "",
+                "actual": "",
+                "error": "runner crash: SyntaxError: ...",
+            }
+        ],
+    )
+    assert r.status == "error"
+
+
 def test_test_service_result_states():
     fake_run = TestRunResult(
         problem_id=1,

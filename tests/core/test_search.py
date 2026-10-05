@@ -154,6 +154,13 @@ def test_find_problems_by_numeric_identifier(repo):
     assert [m.problem_id for m in matches] == [2]
 
 
+def test_find_problems_non_numeric_identifier_matches_nothing(repo):
+    """`dojo test two-sum` must not fan out to every registered problem."""
+    _seed(repo, pid=1)
+    with repo.session() as s:
+        assert find_problems(s.problems, identifier="two-sum") == []
+
+
 def test_find_problems_by_identifier_returns_empty_when_unknown(repo):
     _seed(repo, pid=1)
     with repo.session() as s:

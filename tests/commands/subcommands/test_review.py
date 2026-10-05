@@ -142,10 +142,10 @@ def test_review_complete_requires_quality_flag(repo, registered_problem, monkeyp
 def stub_complete(monkeypatch):
     state = {"calls": []}
 
-    def fake_complete(self, repo, problem_db_id, quality):
-        state["calls"].append({"problem_db_id": problem_db_id, "quality": quality})
+    def fake_complete(self, repo, problem, quality):
+        state["calls"].append({"problem_db_id": problem.id, "quality": quality})
         return ReviewCompletionResult(
-            problem_db_id=problem_db_id,
+            problem_db_id=problem.id,
             quality=quality,
             previous_interval=7,
             next_interval=18,
@@ -198,9 +198,9 @@ def test_review_complete_renders_before_after(
 def test_review_complete_service_error_raises(repo, registered_problem, monkeypatch):
     """ReviewCompletionResult.error set -> ClickException."""
 
-    def fake_complete(self, repo, problem_db_id, quality):
+    def fake_complete(self, repo, problem, quality):
         return ReviewCompletionResult(
-            problem_db_id=problem_db_id,
+            problem_db_id=problem.id,
             quality=quality,
             error="No review scheduled for this problem yet.",
         )

@@ -147,7 +147,7 @@ def complete(
         language=language,
     )
 
-    result = ReviewService().complete_review(repo, problem.id, ReviewQuality(quality))
+    result = ReviewService().complete_review(repo, problem, ReviewQuality(quality))
     if result.failed:
         raise click.ClickException(result.error)
 

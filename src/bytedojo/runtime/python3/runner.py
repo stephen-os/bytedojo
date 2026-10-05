@@ -91,15 +91,31 @@ def run():
         case_id = case["case_id"]
         input_str = format_input(case["input"])
         expected_raw = case["expected"]
+
+        # Parse the case data first, outside the user-code try: a failure
+        # here is corrupted data, and `expected` must be parsed before it
+        # can be display()ed for node types (the raw form is a plain list).
         try:
             # Positional args in signature order.
             args = [
                 parse_value(case["input"].get(p["name"]), p["type"]) for p in params
             ]
             expected = parse_value(expected_raw, return_type)
+        except Exception as e:
+            results.append(
+                {
+                    "case": case_id,
+                    "passed": False,
+                    "input": input_str,
+                    "expected": json.dumps(expected_raw),
+                    "actual": "",
+                    "error": f"case data invalid: {type(e).__name__}: {e}",
+                }
+            )
+            continue
 
+        try:
             actual = method(*args)
-
             passed = compare(actual, expected, return_type, comparison)
             results.append(
                 {
@@ -117,7 +133,7 @@ def run():
                     "case": case_id,
                     "passed": False,
                     "input": input_str,
-                    "expected": display(expected_raw, return_type),
+                    "expected": display(expected, return_type),
                     "actual": "",
                     "error": f"{type(e).__name__}: {e}",
                 }

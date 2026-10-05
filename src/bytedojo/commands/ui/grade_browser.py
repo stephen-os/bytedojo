@@ -115,8 +115,7 @@ def browse_problems(
                 view_and_grade_problem(repo, page_problems[selection - 1], manual=True)
 
                 # Refresh problems list after grading
-                with repo.session() as s:
-                    problems = s.problems.list()
+                problems = repo.get_registered_problems()
 
                 click.prompt(
                     "  Press Enter to continue", default="", show_default=False

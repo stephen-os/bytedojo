@@ -88,8 +88,11 @@ def find_problems(
     Returns:
         List of matching problems, sorted by relevance
     """
-    # If identifier is numeric, do exact match
-    if identifier and identifier.isdigit():
+    # An identifier is an exact numeric id — anything else matches nothing
+    # (use --name/--desc for text searches).
+    if identifier:
+        if not identifier.isdigit():
+            return []
         problem = problems.get(source, int(identifier))
         return [problem] if problem else []
 

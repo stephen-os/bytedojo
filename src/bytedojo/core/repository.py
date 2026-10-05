@@ -88,6 +88,7 @@ class Repository:
             return None
         logger.debug(f"Creating repository at {path} (force={force})")
         repo.dojo_dir.mkdir(exist_ok=True)
+        repo.build_dir.mkdir(exist_ok=True)
         _db.create_schema(repo.db_path)
         repo._write_default_settings()
         repo._write_gitignore()
@@ -177,11 +178,14 @@ class Repository:
 
         with self.session() as s:
             attempt = s.attempts.create(source, problem_id, language.value)
+            # Stored relative (posix) so a committed .dojo keeps working
+            # after the repo moves to another directory or machine.
+            target = self.attempt_path(problem, language, attempt.version)
             s.problems.register(
                 problem,
                 source=source,
                 language=language.value,
-                file_path=str(self.attempt_path(problem, language, attempt.version)),
+                file_path=target.relative_to(self.root_dir).as_posix(),
             )
             return attempt
 

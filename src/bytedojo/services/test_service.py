@@ -89,9 +89,12 @@ class TestRunResult:
 
     @property
     def status(self) -> str:
-        # ERROR = the solution never got evaluated (compile failure or a
-        # runner crash before any case ran); FAILED = cases ran and lost.
-        if self.compile_error or (self.runtime_error and not self.case_results):
+        # ERROR = the solution never got evaluated: compile failure, a
+        # whole-run crash/timeout (runtime_error), or the runner's own
+        # case-0 crash sentinel (real bundle cases are numbered from 1).
+        # FAILED = cases ran and lost.
+        runner_crashed = any(c.case_number == 0 for c in self.case_results)
+        if self.compile_error or self.runtime_error or runner_crashed:
             return "error"
         if self.all_passed:
             return "passed"
@@ -382,11 +385,12 @@ class TestService:
         fail/error lapses it.
         """
         status = ProblemStatus.from_string(run_result.status)
-        output = f"Passed: {run_result.passed_count}/{run_result.total_cases}"
         if run_result.compile_error:
             output = "Compile error"
-        elif run_result.runtime_error and not run_result.case_results:
+        elif status is ProblemStatus.ERROR:
             output = "Runtime error"
+        else:
+            output = f"Passed: {run_result.passed_count}/{run_result.total_cases}"
 
         with repo.session() as s:
             if version is not None:
