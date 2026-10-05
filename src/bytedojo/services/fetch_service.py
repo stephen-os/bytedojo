@@ -198,7 +198,7 @@ class FetchService:
     ) -> None:
         """
         Write the formatted solution file + any sibling files the formatter
-        asks for (e.g. `tree_node.py`, `ListNode.java`, `list_node.hpp`).
+        asks for (e.g. `tree_node.py`, `list_node.py`).
 
         Sibling files land next to the solution and follow the same
         overwrite semantics — fresh version dirs / `--version N`

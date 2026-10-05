@@ -13,7 +13,7 @@ from bytedojo.commands.ui import accent, bold, success, error, dim, blank, kv, h
 
 
 # Languages supported by CLI (user-facing names)
-SUPPORTED_LANGUAGES = ['python', 'java', 'cpp']
+SUPPORTED_LANGUAGES = ['python']
 
 
 @click.group(invoke_without_command=True)
@@ -25,7 +25,7 @@ def settings(ctx):
     Examples:
       dojo settings                              # Show all settings
       dojo settings list                         # Same as above
-      dojo settings default-language cpp         # Set default language
+      dojo settings default-language python      # Set default language
       dojo settings review-frequency 7           # Set review frequency
     """
     # If no subcommand, show all settings
@@ -65,7 +65,7 @@ def _show_settings():
     click.echo(f"    {dim('organization')} {current_settings.leetcode.organization}")
     blank()
     click.echo(dim("  " + "─" * 50))
-    hint("dojo settings default-language <python|java|cpp>")
+    hint("dojo settings default-language <python>")
     hint("dojo settings review-frequency <days>")
     click.echo(dim("  " + "─" * 50))
     blank()
@@ -88,13 +88,11 @@ def default_language(language: str):
     """
     Set the default programming language.
 
-    This sets the default language for fetch, run, and grade commands.
-    You can still override with --python, --java, or --cpp flags.
+    This sets the default language for fetch, run, test, and grade
+    commands. Override per-command with the --python flag.
 
     Examples:
       dojo settings default-language python    # Default (Python)
-      dojo settings default-language java      # Use Java by default
-      dojo settings default-language cpp       # Use C++ by default
     """
     logger = get_logger()
     repo = Repository.find(Path.cwd())

@@ -117,22 +117,6 @@ def test_fetch_python_flag_sets_language(repo, monkeypatch, captured):
     assert captured["calls"][0]["lang"] is CodeLanguage.PYTHON
 
 
-def test_fetch_java_flag(repo, monkeypatch, captured):
-    from bytedojo.core.models.code_language import CodeLanguage
-    monkeypatch.chdir(repo.root_dir)
-    result = CliRunner().invoke(fetch, ["1", "--java"])
-    assert result.exit_code == 0
-    assert captured["calls"][0]["lang"] is CodeLanguage.JAVA
-
-
-def test_fetch_cpp_flag(repo, monkeypatch, captured):
-    from bytedojo.core.models.code_language import CodeLanguage
-    monkeypatch.chdir(repo.root_dir)
-    result = CliRunner().invoke(fetch, ["1", "--cpp"])
-    assert result.exit_code == 0
-    assert captured["calls"][0]["lang"] is CodeLanguage.CPP
-
-
 def test_fetch_force_propagates(repo, monkeypatch, captured):
     monkeypatch.chdir(repo.root_dir)
     CliRunner().invoke(fetch, ["1", "--force"])

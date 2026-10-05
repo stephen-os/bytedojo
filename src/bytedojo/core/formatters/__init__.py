@@ -13,8 +13,6 @@ still gets a placeable file.
 from typing import Dict, Optional
 
 from bytedojo.core.formatters.solutions.base_solution_formatter import BaseSolutionFormatter
-from bytedojo.core.formatters.solutions.cpp_solution_formatter import CppSolutionFormatter
-from bytedojo.core.formatters.solutions.java_solution_formatter import JavaSolutionFormatter
 from bytedojo.core.formatters.solutions.python_solution_formatter import PythonSolutionFormatter
 from bytedojo.core.models.code_language import CodeLanguage
 from bytedojo.core.models.problem import Problem
@@ -22,8 +20,6 @@ from bytedojo.core.models.problem import Problem
 
 _REGISTRY: dict[CodeLanguage, type[BaseSolutionFormatter]] = {
     CodeLanguage.PYTHON: PythonSolutionFormatter,
-    CodeLanguage.JAVA:   JavaSolutionFormatter,
-    CodeLanguage.CPP:    CppSolutionFormatter,
 }
 
 
@@ -52,8 +48,6 @@ def extra_files_for(problem: Problem, language: CodeLanguage) -> Dict[str, str]:
 __all__ = [
     'BaseSolutionFormatter',
     'PythonSolutionFormatter',
-    'JavaSolutionFormatter',
-    'CppSolutionFormatter',
     'get_formatter',
     'format_problem',
     'extra_files_for',

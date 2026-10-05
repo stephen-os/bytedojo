@@ -35,10 +35,8 @@ from bytedojo.commands.ui import bold, success, warn, error, dim, problem_id
 @click.option('--path', 'custom_path', type=click.Path(path_type=Path), default=None,
               help='Place into a custom directory (untracked, no DB entry)')
 
-# Language flags (mutually exclusive)
+# Language flag
 @click.option('--python', '-py', 'language', flag_value='python3', help='Fetch as Python')
-@click.option('--java', 'language', flag_value='java', help='Fetch as Java')
-@click.option('--cpp', 'language', flag_value='cpp', help='Fetch as C++')
 
 @click.pass_obj
 def fetch(ctx, arguments: tuple, force: bool, version: int | None,
@@ -56,7 +54,7 @@ def fetch(ctx, arguments: tuple, force: bool, version: int | None,
       dojo fetch 1 --force               # Force a new attempt even if registered
       dojo fetch 1 --version 3           # Rewrite v3 of #1 in place
       dojo fetch 1 --path ./scratch      # Untracked, drop in ./scratch
-      dojo fetch 1,2,5..10 --java        # Multiple, Java
+      dojo fetch 1,2,5..10               # Multiple / ranges
     """
     logger = get_logger()
     logger.debug(f"fetch: args={arguments} force={force} version={version} "

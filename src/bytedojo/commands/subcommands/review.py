@@ -201,8 +201,6 @@ def pick(ctx):
 @click.option('--desc', '-d', 'desc_search', help='Search by description keywords')
 @click.option('--last', is_flag=True, help='Most recently fetched problem')
 @click.option('--python', '-py', 'language', flag_value='python3', help='Python version')
-@click.option('--java', 'language', flag_value='java', help='Java version')
-@click.option('--cpp', 'language', flag_value='cpp', help='C++ version')
 def complete(
     identifier: Optional[str],
     quality: Optional[str],
@@ -289,8 +287,6 @@ def _display_completion(title: str, r: ReviewCompletionResult) -> None:
 @click.option('--desc', '-d', 'desc_search', help='Search by description keywords')
 @click.option('--last', is_flag=True, help='Most recently fetched problem')
 @click.option('--python', '-py', 'language', flag_value='python3', help='Python version')
-@click.option('--java', 'language', flag_value='java', help='Java version')
-@click.option('--cpp', 'language', flag_value='cpp', help='C++ version')
 def add(
     identifier: Optional[str],
     days: Optional[int],
@@ -329,8 +325,6 @@ def add(
 @click.option('--desc', '-d', 'desc_search', help='Search by description keywords')
 @click.option('--last', is_flag=True, help='Most recently fetched problem')
 @click.option('--python', '-py', 'language', flag_value='python3', help='Python version')
-@click.option('--java', 'language', flag_value='java', help='Java version')
-@click.option('--cpp', 'language', flag_value='cpp', help='C++ version')
 def snooze(
     identifier: Optional[str],
     days: int,
@@ -367,8 +361,6 @@ def snooze(
 @click.option('--desc', '-d', 'desc_search', help='Search by description keywords')
 @click.option('--last', is_flag=True, help='Most recently fetched problem')
 @click.option('--python', '-py', 'language', flag_value='python3', help='Python version')
-@click.option('--java', 'language', flag_value='java', help='Java version')
-@click.option('--cpp', 'language', flag_value='cpp', help='C++ version')
 def remove(
     identifier: Optional[str],
     name_search: Optional[str],

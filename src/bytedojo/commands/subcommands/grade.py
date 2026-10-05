@@ -303,8 +303,6 @@ def _batch_view_loop(repo: Repository, problems: List[RegisteredProblem], per_pa
 @click.option('--skip', '-s', 'status_skip', is_flag=True, help='Mark as skipped')
 @click.option('--notes', type=str, default=None, help='Add notes')
 @click.option('--python', '-py', 'language', flag_value='python3', help='Select Python version')
-@click.option('--java', 'language', flag_value='java', help='Select Java version')
-@click.option('--cpp', 'language', flag_value='cpp', help='Select C++ version')
 @click.option('--per-page', type=int, default=10, help='Problems per page in list mode')
 def grade(
     identifier: Optional[str],

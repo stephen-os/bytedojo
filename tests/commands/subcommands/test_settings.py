@@ -57,18 +57,18 @@ def test_settings_list_matches_default_view(repo, monkeypatch):
 
 def test_default_language_persists(repo, monkeypatch):
     monkeypatch.chdir(repo.root_dir)
-    result = CliRunner().invoke(settings, ["default-language", "java"])
+    result = CliRunner().invoke(settings, ["default-language", "python"])
     assert result.exit_code == 0
     with repo.open_db() as db:
-        assert db.get_config("default_language") == "java"
+        assert db.get_config("default_language") == "python"
 
 
 def test_default_language_case_insensitive(repo, monkeypatch):
     monkeypatch.chdir(repo.root_dir)
-    result = CliRunner().invoke(settings, ["default-language", "CPP"])
+    result = CliRunner().invoke(settings, ["default-language", "PYTHON"])
     assert result.exit_code == 0
     with repo.open_db() as db:
-        assert db.get_config("default_language") == "cpp"
+        assert db.get_config("default_language") == "python"
 
 
 def test_default_language_rejects_unsupported(repo, monkeypatch):

@@ -65,7 +65,7 @@ class BaseSolutionFormatter(ABC):
         """Return sibling files to place alongside the solution file.
 
         Default: none. Override when the language emits node-class modules
-        (e.g. tree_node.py, TreeNode.java, tree_node.hpp).
+        (e.g. tree_node.py, list_node.py).
         """
         return {}
 
