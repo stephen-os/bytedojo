@@ -5,7 +5,7 @@
 ## Synopsis
 
 ```
-dojo fetch IDS [--python | --java | --cpp]
+dojo fetch IDS [--python]
               [--force | --version N | --path DIR]
 ```
 
@@ -16,7 +16,7 @@ a starter solution (and any sibling node-class files) onto disk. Three
 mutually exclusive modes:
 
 - **default** — register a new attempt and place under
-  `problems/<id>-<slug>/<lang>/v{N}/solution.<ext>`. A new attempt
+  `problems/<id>-<slug>/python3/v{N}/solution.py`. A new attempt
   bumps the version (`v001`, `v002`, ...).
 - **`--version N`** — rewrite the existing v{N} of a tracked problem
   in place. Useful for refreshing the starter without losing version
@@ -28,14 +28,13 @@ The placed file includes:
 
 - A header comment with problem ID + title + difficulty
 - The HTML-stripped problem description
-- Baseline imports for the language (typing / collections / etc.)
-- The user's starter `class Solution` (or `Solution.java` /
-  `solution.cpp`)
-- A `main()` / `if __name__ == "__main__"` stub for quick local runs
+- Baseline imports (typing / collections / etc.)
+- The user's starter `class Solution`
+- An `if __name__ == "__main__"` stub for quick local runs
 
 If the problem references `TreeNode` / `ListNode` / `Node`, the relevant
-sibling files (`tree_node.py`, `ListNode.java`, `tree_node.hpp`, etc.)
-are placed alongside so the solution compiles / runs as-is.
+sibling files (`tree_node.py`, `list_node.py`, etc.) are placed
+alongside so the solution runs as-is.
 
 ## Arguments
 
@@ -50,8 +49,6 @@ are placed alongside so the solution compiles / runs as-is.
 | Flag | Description | Default |
 | --- | --- | --- |
 | `--python`, `-py` | Fetch as Python | (default language from settings) |
-| `--java` | Fetch as Java | |
-| `--cpp` | Fetch as C++ | |
 | `--force` | Create a new attempt even if the problem is already registered (bumps to v{N+1}) | `false` |
 | `--version N` | Refetch an existing tracked version, rewriting it in place | unset |
 | `--path DIR` | Place into a custom directory; do not register in the DB | unset |
@@ -62,11 +59,11 @@ incompatible with `--path`.
 ## Examples
 
 ```bash
-# New attempt of problem #1 (uses configured default language).
+# New attempt of problem #1.
 dojo fetch 1
 
-# Fetch as Java; force a new attempt even if registered.
-dojo fetch 1 --java --force
+# Force a new attempt even if already registered.
+dojo fetch 1 --force
 
 # Refresh v3 of problem #1 in place (overwrites that version).
 dojo fetch 1 --version 3
@@ -74,8 +71,8 @@ dojo fetch 1 --version 3
 # Drop a one-off copy into ./scratch, untracked.
 dojo fetch 1 --path ./scratch
 
-# Batch fetch: 1, 2, and 5 through 10, in C++.
-dojo fetch 1,2,5..10 --cpp
+# Batch fetch: 1, 2, and 5 through 10.
+dojo fetch 1,2,5..10
 ```
 
 ## Exit codes

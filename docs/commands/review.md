@@ -59,7 +59,7 @@ the SM-2 state (`current interval`, `ease`) and the next-step command
 | `--name TEXT`, `-n TEXT` | Selector | |
 | `--desc TEXT`, `-d TEXT` | Selector | |
 | `--last` | Selector | |
-| `--python`/`--java`/`--cpp` | Language | configured default |
+| `--python` | Language | configured default |
 
 Errors if no quality flag is passed, or if the problem has no active
 review track (use `dojo grade --pass` or `dojo review add` first).

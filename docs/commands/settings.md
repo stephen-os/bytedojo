@@ -34,11 +34,11 @@ Renders every setting under a header. No flags.
 ### `default-language LANG`
 
 Set the default language used by `fetch`, `run`, `test`, and `grade`
-when no `--python` / `--java` / `--cpp` flag is given.
+when no `--python` flag is given.
 
 | Argument | Allowed values |
 | --- | --- |
-| `LANG` | `python`, `java`, `cpp` (case-insensitive) |
+| `LANG` | `python` (the only supported language) |
 
 ### `review-frequency DAYS`
 
@@ -72,8 +72,8 @@ Read the current value of a `set`-style key. Errors on unknown keys.
 # Show everything.
 dojo settings
 
-# Use Java for everything by default.
-dojo settings default-language java
+# Set the default language (Python).
+dojo settings default-language python
 
 # Review weekly instead of the default.
 dojo settings review-frequency 7

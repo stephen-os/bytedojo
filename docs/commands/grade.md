@@ -8,7 +8,7 @@
 dojo grade [IDENTIFIER] [--name TEXT | --desc TEXT | --last]
                        [--pass | --fail | --skip] [--manual]
                        [--notes TEXT]
-                       [--python | --java | --cpp]
+                       [--python]
                        [--per-page N]
 ```
 
@@ -52,8 +52,6 @@ with its current status, where you can pick one to view or grade.
 | `--manual`, `-m` | Show the interactive pass/fail/skip prompt | `false` |
 | `--notes TEXT` | Attach notes to the grade record | unset |
 | `--python`, `-py` | Operate on the Python version | (default language) |
-| `--java` | Operate on the Java version | |
-| `--cpp` | Operate on the C++ version | |
 | `--per-page N` | Problems per page in batch view mode | `10` |
 
 `--pass`, `--fail`, and `--skip` are mutually exclusive.

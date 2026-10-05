@@ -3,7 +3,7 @@
 </p>
 
 <p align="center">
-  <strong>A CLI for fetching, solving, and tracking LeetCode problems</strong>
+  <strong>A CLI for fetching, solving, and tracking LeetCode problems in Python</strong>
 </p>
 
 <p align="center">
@@ -18,13 +18,14 @@
 
 ## Features
 
-- **Multi-Language Support** - Fetch and solve problems in Python, Java, or C++
-- **Configurable Defaults** - Set your preferred language and settings
+- **Python-First** - Fetch, solve, run, and test problems in Python
 - **LeetCode Integration** - Fetch problems directly with solution templates
+- **Local Test Runner** - Run your solution against bundled test cases
 - **Smart Search** - Find problems by ID, name, or description
 - **Scheduled Review** - Passed problems are scheduled for periodic review
 - **Progress Tracking** - Track solved problems with pass/fail/skip status
 - **Interactive Grading** - Browse and grade problems with pagination
+- **Build Directory** - Test artifacts kept separate in `.dojo/build/`
 
 ## Installation
 
@@ -54,16 +55,22 @@ dojo --help
 # 1. Initialize a dojo repository
 dojo init
 
-# 2. Fetch a problem (uses your default language)
+# 2. Fetch a problem
 dojo fetch 1
 
 # 3. Solve the problem in the generated file
 #    problems/0001-two-sum/python3/v001/solution.py
 
-# 4. Grade your solution (passing schedules a review)
+# 4. Run your solution locally
+dojo run 1
+
+# 5. Run the bundled test cases
+dojo test 1
+
+# 6. Grade your solution (passing schedules a review)
 dojo grade 1 --pass
 
-# 5. Review problems on schedule
+# 7. Review problems on schedule
 dojo review
 ```
 
@@ -81,13 +88,26 @@ dojo init                    # Create .dojo repository
 ### Fetch Problems
 
 ```bash
-dojo fetch 1                 # Fetch problem #1 (default language)
-dojo fetch 1 --python        # Fetch as Python
-dojo fetch 1 --java          # Fetch as Java
-dojo fetch 1 --cpp           # Fetch as C++
+dojo fetch 1                 # Fetch problem #1
 dojo fetch 1,2,3             # Fetch multiple
 dojo fetch 1..10             # Fetch range
 dojo fetch 1 --force         # Overwrite existing
+```
+
+### Run Solutions
+
+```bash
+dojo run 1                   # Run problem #1
+dojo run --name "Two Sum"    # Search by name
+dojo run --last              # Run most recent
+```
+
+### Test Solutions
+
+```bash
+dojo test 1                  # Run bundled test cases for #1
+dojo test 1 --verbose        # Show every case result
+dojo test --last             # Test most recent
 ```
 
 ### Grade Solutions
@@ -123,20 +143,32 @@ dojo review pick             # Pick random due problem
 dojo review stats            # Review statistics
 ```
 
+### Statistics
+
+```bash
+dojo stats                   # View progress summary
+dojo stats --list            # List all problems
+dojo stats --list --verbose  # List with per-problem attempt stats
+```
+
 ### Settings
 
 ```bash
 dojo settings                # View all settings
 dojo settings list           # Same as above
 
-# Change default language
+# Default language (Python is the only supported language)
 dojo settings default-language python
-dojo settings default-language java
-dojo settings default-language cpp
 
 # Change review frequency
 dojo settings review-frequency 7     # Weekly (default)
 dojo settings review-frequency 14    # Bi-weekly
+```
+
+### Environment Diagnostics
+
+```bash
+dojo support                 # Environment + toolchain status
 ```
 
 ➡ **Full per-command reference: [docs/commands/](docs/commands/README.md)**
@@ -149,26 +181,21 @@ your-project/
 │   ├── db.sqlite            # Progress + attempts + reviews
 │   ├── settings.json        # Local preferences
 │   ├── .gitignore           # Excludes build artefacts
-│   └── README.md            # Describes the layout
+│   ├── README.md            # Describes the layout
+│   └── build/               # Per-problem test cache
+│       └── 1_python3/
+│           └── ...
 ├── problems/
 │   └── 0001-two-sum/
-│       ├── python3/
-│       │   └── v001/
-│       │       ├── solution.py
-│       │       └── tree_node.py   # sibling files when needed
-│       ├── java/
-│       │   └── v001/
-│       │       ├── Solution.java
-│       │       └── TreeNode.java
-│       └── cpp/
+│       └── python3/
 │           └── v001/
-│               ├── solution.cpp
-│               └── tree_node.hpp
+│               ├── solution.py
+│               └── tree_node.py   # sibling files when needed
 └── README.md
 ```
 
 Each `dojo fetch` registers a new versioned attempt under
-`problems/<id>-<slug>/<lang>/v{NNN}/`. Refetching with `--version N`
+`problems/<id>-<slug>/python3/v{NNN}/`. Refetching with `--version N`
 rewrites that specific version in place; refetching with `--force`
 bumps to the next version so v1's recorded test outcome stays intact.
 
