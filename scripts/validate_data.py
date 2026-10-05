@@ -84,6 +84,22 @@ def _install_node_stubs() -> None:
     sys.modules["list_node"] = list_mod
 
 
+def _shape_ok(value, canonical: str) -> bool:
+    """Reject shapes parse_value would silently mangle.
+
+    parse_value char-splits a string handed to an ARRAY/MATRIX slot and
+    accepts any length for CHAR — both are generator-artifact signatures,
+    not real data.
+    """
+    if value is None:
+        return True
+    if canonical.endswith(("_ARRAY", "_MATRIX")):
+        return isinstance(value, list)
+    if canonical == "CHAR":
+        return isinstance(value, str) and len(value) == 1
+    return True
+
+
 def _canonical_ok(type_spec) -> bool:
     """Whether a raw bundle type flattens into the supported vocabulary."""
     try:
@@ -173,6 +189,8 @@ def _check_bundle(path: Path, errors: list[str]) -> None:
     # reference solution returned None — an artifact, not a test case.
     returns_nullable = _canonical(returns) in _NULLABLE_RETURNS
 
+    returns_canonical = _canonical(returns)
+
     cases = data.get("cases", [])
     if not cases:
         errors.append(f"{rel}: bundle has zero cases")
@@ -183,6 +201,20 @@ def _check_bundle(path: Path, errors: list[str]) -> None:
                 f"{rel}: case {case_id} expected is null but the "
                 f"return type is not nullable"
             )
+        if not _shape_ok(case.get("expected"), returns_canonical):
+            errors.append(
+                f"{rel}: case {case_id} expected has the wrong shape for "
+                f"{returns_canonical} (parse_value would mangle it)"
+            )
+        for param in params:
+            name = param.get("name")
+            if not _shape_ok(
+                case.get("input", {}).get(name), _canonical(param.get("type"))
+            ):
+                errors.append(
+                    f"{rel}: case {case_id} input {name!r} has the wrong "
+                    f"shape for its declared type"
+                )
         for param in params:
             value = case.get("input", {}).get(param.get("name"))
             try:
