@@ -28,7 +28,7 @@ dojo support
   ByteDojo Support
   ──────────────────────────────────────────────────────
   Environment
-    ByteDojo    1.0.0
+    ByteDojo    1.1.0
     Python      3.12.4
     Platform    Windows 11  win32
     Repository  C:\code\practice
