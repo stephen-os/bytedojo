@@ -6,7 +6,6 @@ import click
 from pathlib import Path
 
 from bytedojo.core.repository import Repository
-from bytedojo.commands.ui import success, error, dim, hint
 
 
 @click.command()
@@ -29,11 +28,13 @@ def init(ctx, path: Path, force: bool):
     - .gitignore to exclude build artifacts
     """
     target = path if path is not None else Path.cwd()
+    existed = Repository(root_dir=target).exists
     if Repository.create(path=target, force=force) is not None:
-        click.echo(f"  {success('✓')}  Repository initialized at {dim(str(target))}")
+        verb = "Reinitialized existing" if existed else "Initialized empty"
+        click.echo(f"{verb} ByteDojo repository in {target}")
     else:
         click.echo(
-            f"  {error('✗')}  Failed to initialize repository at {dim(str(target))}"
+            f"error: .dojo already exists in {target} (use --force to reinitialize)",
+            err=True,
         )
-        hint("Use --force to reinitialize")
         raise SystemExit(1)

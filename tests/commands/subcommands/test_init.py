@@ -11,7 +11,7 @@ def test_init_creates_dojo_dir_in_cwd(tmp_path, monkeypatch):
     result = CliRunner().invoke(init, [])
     assert result.exit_code == 0
     assert (tmp_path / ".dojo").is_dir()
-    assert "initialized" in result.output.lower()
+    assert "Initialized empty ByteDojo repository" in result.output
 
 
 def test_init_respects_path_flag(tmp_path):
@@ -36,14 +36,15 @@ def test_init_short_path_flag(tmp_path):
 
 
 def test_init_fails_when_already_exists_without_force(tmp_path, monkeypatch):
-    """Second init on the same path exits 1 with a failure message."""
+    """Second init on the same path exits 1 with an error on stderr."""
     monkeypatch.chdir(tmp_path)
     first = CliRunner().invoke(init, [])
     assert first.exit_code == 0
 
     second = CliRunner().invoke(init, [])
     assert second.exit_code == 1
-    assert "failed" in second.output.lower()
+    assert "error: .dojo already exists" in second.stderr
+    assert "--force" in second.stderr
 
 
 def test_init_force_re_runs_on_existing(tmp_path, monkeypatch):
@@ -52,4 +53,12 @@ def test_init_force_re_runs_on_existing(tmp_path, monkeypatch):
     CliRunner().invoke(init, [])
     result = CliRunner().invoke(init, ["--force"])
     assert result.exit_code == 0
-    assert "initialized" in result.output.lower()
+    assert "Reinitialized existing ByteDojo repository" in result.output
+
+
+def test_init_force_on_fresh_dir_says_initialized(tmp_path, monkeypatch):
+    """--force on a directory with no .dojo is just a normal init."""
+    monkeypatch.chdir(tmp_path)
+    result = CliRunner().invoke(init, ["--force"])
+    assert result.exit_code == 0
+    assert "Initialized empty ByteDojo repository" in result.output

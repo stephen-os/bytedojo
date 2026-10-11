@@ -19,9 +19,9 @@ walking up from the working directory. It contains:
 - `README.md` — a short orientation file
 - `build/` — created on demand for test staging
 
-Running `init` where a `.dojo/` already exists fails with a hint;
-`--force` re-runs the bootstrap (existing rows are kept — the schema
-setup is idempotent).
+Running `init` where a `.dojo/` already exists fails with an error
+pointing at `--force`, which re-runs the bootstrap (existing rows are
+kept — the schema setup is idempotent).
 
 ## Options
 
