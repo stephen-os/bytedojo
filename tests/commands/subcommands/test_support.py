@@ -32,7 +32,7 @@ def _report(*, all_ready: bool = True, with_repo: bool = False) -> SystemReport:
         ),
     ]
     return SystemReport(
-        bytedojo_version="0.1.0",
+        bytedojo_version="1.0.0",
         python_version="3.12.0",
         python_executable="/usr/bin/python3",
         platform_name="Linux 6.6",
@@ -68,7 +68,7 @@ def test_support_renders_environment_block(monkeypatch):
     assert result.exit_code == 0
     assert "ByteDojo Support" in result.output
     assert "Environment" in result.output
-    assert "0.1.0" in result.output  # bytedojo version
+    assert "1.0.0" in result.output  # bytedojo version
     assert "3.12.0" in result.output  # python version
     assert "Linux 6.6" in result.output  # platform name
     # Path renders differently on Windows vs POSIX — check the tail segment.
